@@ -25,7 +25,7 @@ namespace posture
 }
 namespace transport
 {
-
+class LoadingComputerFactory_ABC;
 // =============================================================================
 // @class  PHY_RoleAction_Loading
 // Created: JVT 2004-08-03
@@ -43,7 +43,7 @@ public:
     //@}
 
 public:
-    explicit PHY_RoleAction_Loading( MIL_Agent_ABC& pion );
+    explicit PHY_RoleAction_Loading( MIL_Agent_ABC& pion, LoadingComputerFactory_ABC& fact );
     virtual ~PHY_RoleAction_Loading();
 
     //! @name CheckPoints
@@ -131,6 +131,7 @@ private:
     //! @name Member data
     //@{
     MIL_Agent_ABC& pion_;
+    LoadingComputerFactory_ABC& computerFactory_;
     E_State nState_;
     bool    bIsLoaded_;
     uint    nEndTimeStep_; // Load or unload

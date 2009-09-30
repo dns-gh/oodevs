@@ -42,6 +42,7 @@ namespace human
 namespace transport
 {
 	class TransportComputerFactory_ABC;
+	class LoadingComputerFactory_ABC;
 }
 
 class OnComponentFunctorComputerFactory_ABC;
@@ -76,6 +77,7 @@ public:
     std::auto_ptr< human::HealComputerFactory_ABC > healComputerFactory_;
     std::auto_ptr< OnComponentFunctorComputerFactory_ABC > onComponentFunctorComputerFactory_;
     std::auto_ptr< OnComponentLendedFunctorComputerFactory_ABC > onComponentLendedFunctorComputerFactory_;
+    std::auto_ptr< transport::LoadingComputerFactory_ABC > loadingComputerFactory_;
     //@}
 };
 

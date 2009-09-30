@@ -41,6 +41,8 @@
 
 #include "simulation_kernel/TransportCapacityComputer_ABC.h"
 #include "simulation_kernel/TransportWeightComputer_ABC.h"
+#include "simulation_kernel/HumanLoadingTimeComputer_ABC.h"
+#include "simulation_kernel/LoadedStateConsistencyComputer_ABC.h"
 
 #include "simulation_kernel/OnComponentComputer_ABC.h"
 #include "simulation_kernel/OnComponentLendedFunctorComputer_ABC.h"
@@ -1745,13 +1747,57 @@ void PHY_RolePion_Composantes::Execute( OnComponentLendedFunctorComputer_ABC& al
         }
     }
 }
-
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::LoadForTransport
+// Created: AHC 2009-09-23
+// -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable )
 {
 }
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::UnloadFromTransport
+// Created: AHC 2009-09-23
+// -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable )
 {
 }
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::CancelTransport
+// Created: AHC 2009-09-23
+// -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::CancelTransport    ( const MIL_Agent_ABC& transporter )
 {
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::Execute
+// Created: AHC 2009-09-30
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::Execute( transport::HumanLoadingTimeComputer_ABC& algorithm ) const
+{
+	for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+	{
+		const PHY_ComposantePion& composante= **it;
+		if( composante.CanBeLoaded() )
+			algorithm.AddHumans(composante.GetNbrUsableHumans());
+		if( composante.CanTransportHumans() )
+		{
+			const PHY_ComposanteTypePion& compType = composante.GetType();
+			algorithm.AddTime(compType.GetNbrHumansLoadedPerTimeStep  (), compType.GetNbrHumansUnloadedPerTimeStep());
+		}
+	}
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::Execute
+// Created: AHC 2009-09-30
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::Execute( transport::LoadedStateConsistencyComputer_ABC& algorithm ) const
+{
+	for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+	{
+		const PHY_ComposantePion& composante= **it;
+		algorithm.EnableCarrier(composante.CanTransportHumans());
+		algorithm.EnableLoadable(composante.CanBeLoaded());
+	}
 }

@@ -21,6 +21,7 @@
 #include "simulation_kernel/HealComputerFactory.h"
 #include "simulation_kernel/OnComponentFunctorComputerFactory.h"
 #include "simulation_kernel/OnComponentLendedFunctorComputerFactory.h"
+#include "simulation_kernel/LoadingComputerFactory.h"
 
 // -----------------------------------------------------------------------------
 // Name: AlgorithmsFactories constructor
@@ -38,6 +39,7 @@ AlgorithmsFactories::AlgorithmsFactories()
     , healComputerFactory_( new human::HealComputerFactory() )
     , onComponentFunctorComputerFactory_( new OnComponentFunctorComputerFactory() )
     , onComponentLendedFunctorComputerFactory_( new OnComponentLendedFunctorComputerFactory() )
+    , loadingComputerFactory_( new transport::LoadingComputerFactory() )
 {
     //NOTHING
 }

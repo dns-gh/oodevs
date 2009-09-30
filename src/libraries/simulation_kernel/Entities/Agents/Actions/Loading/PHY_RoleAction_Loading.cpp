@@ -11,14 +11,14 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleAction_Loading.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Roles/Transported/PHY_RolePion_Transported.h"
 #include "MIL_AgentServer.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 
 #include "simulation_kernel/PostureComputer_ABC.h"
+#include "HumanLoadingTimeComputer_ABC.h"
+#include "LoadedStateConsistencyComputer_ABC.h"
+#include "LoadingComputerFactory_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( transport::PHY_RoleAction_Loading, "PHY_RoleAction_Loading" )
 
@@ -29,23 +29,26 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RoleAction_Loading* role, const unsigned int /*version*/ )
 {
     MIL_Agent_ABC* const pion = &role->pion_;
-    archive << pion;
+    LoadingComputerFactory_ABC* const fact=&role->computerFactory_;
+    archive << pion << fact;
 }
 
 template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RoleAction_Loading* role, const unsigned int /*version*/ )
 {
     MIL_Agent_ABC* pion;
-    archive >> pion;
-    ::new( role )PHY_RoleAction_Loading( *pion );
+    LoadingComputerFactory_ABC* fact;
+    archive >> pion >> fact;
+    ::new( role )PHY_RoleAction_Loading( *pion, *fact );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Loading constructor
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
-PHY_RoleAction_Loading::PHY_RoleAction_Loading( MIL_Agent_ABC& pion )
+PHY_RoleAction_Loading::PHY_RoleAction_Loading( MIL_Agent_ABC& pion, LoadingComputerFactory_ABC& fact )
     : pion_                  ( pion )
+    , computerFactory_		  (fact)
     , bIsLoaded_              ( false )
     , nState_                 ( eNothing )
     , nEndTimeStep_           ( 0 )
@@ -104,46 +107,16 @@ void PHY_RoleAction_Loading::SetUnloadedState()
     CheckConsistency();
 }
 
-namespace
-{
-    struct sLoadingUnloadingTimesFunctor
-    {
-        sLoadingUnloadingTimesFunctor()
-            : nNbrHumans_                   ( 0 )
-            , rNbrHumansLoadedPerTimeStep_  ( 0. )
-            , rNbrHumansUnloadedPerTimeStep_( 0. )
-        {
-        }
-
-        void operator() ( const PHY_ComposantePion& composante )
-        {
-            if( composante.CanBeLoaded() )
-                nNbrHumans_ += composante.GetNbrUsableHumans();
-            const PHY_ComposanteTypePion& compType = composante.GetType();
-            if( composante.CanTransportHumans() )
-            {
-                rNbrHumansLoadedPerTimeStep_   += compType.GetNbrHumansLoadedPerTimeStep  ();
-                rNbrHumansUnloadedPerTimeStep_ += compType.GetNbrHumansUnloadedPerTimeStep();
-            }
-        }
-
-        uint     nNbrHumans_;
-        MT_Float rNbrHumansLoadedPerTimeStep_;
-        MT_Float rNbrHumansUnloadedPerTimeStep_;
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Loading::ComputeTimes
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
 MT_Float PHY_RoleAction_Loading::ComputeLoadingTime() const
 {
-    sLoadingUnloadingTimesFunctor func;
-    pion_.GetRole< PHY_RolePion_Composantes >().Apply( func );
-    if( func.rNbrHumansLoadedPerTimeStep_ == 0. )
+    const HumanLoadingTimeComputer_ABC& loadingTimeComputer = pion_.Execute(computerFactory_.CreateHumanLoadingTimeComputer());
+    if( loadingTimeComputer.GetHumansLoadedPerTimeStep() == 0. )
         return std::numeric_limits< MT_Float >::max();
-    return func.nNbrHumans_ / func.rNbrHumansLoadedPerTimeStep_;
+    return loadingTimeComputer.GetHumansCount() / loadingTimeComputer.GetHumansLoadedPerTimeStep();
 }
 
 // -----------------------------------------------------------------------------
@@ -152,11 +125,10 @@ MT_Float PHY_RoleAction_Loading::ComputeLoadingTime() const
 // -----------------------------------------------------------------------------
 MT_Float PHY_RoleAction_Loading::ComputeUnloadingTime() const
 {
-    sLoadingUnloadingTimesFunctor func;
-    pion_.GetRole< PHY_RolePion_Composantes >().Apply( func );
-    if( func.rNbrHumansUnloadedPerTimeStep_ == 0. )
+    const HumanLoadingTimeComputer_ABC& loadingTimeComputer = pion_.Execute(computerFactory_.CreateHumanLoadingTimeComputer());
+    if( loadingTimeComputer.GetHumansUnloadedPerTimeStep() == 0. )
         return std::numeric_limits< MT_Float >::max();
-    return func.nNbrHumans_ / func.rNbrHumansUnloadedPerTimeStep_;
+    return loadingTimeComputer.GetHumansCount() / loadingTimeComputer.GetHumansUnloadedPerTimeStep();
 }
 
 // -----------------------------------------------------------------------------
@@ -229,48 +201,22 @@ int PHY_RoleAction_Loading::Unload()
     return eErrorLoadUnloadInSameTime;
 }
 
-namespace
-{
-    struct sLoadedStateConsistency
-    {
-        sLoadedStateConsistency()
-            : bHasValidCarriers_( false )
-            , bHasValidLoadable_( false )
-        {
-        }
-
-        void operator() ( const PHY_ComposantePion& composante )
-        {
-            if( composante.CanTransportHumans() )
-                bHasValidCarriers_ = true;
-
-            if( composante.CanBeLoaded() )
-                bHasValidLoadable_ = true;
-        }
-
-        bool bHasValidCarriers_;
-        bool bHasValidLoadable_;
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Loading::CheckConsistency
 // Created: NLD 2004-10-07
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Loading::CheckConsistency()
 {
-
-    sLoadedStateConsistency func;
-    pion_.GetRole< PHY_RolePion_Composantes >().Apply( func );
+	const LoadedStateConsistencyComputer_ABC& comp = pion_.Execute(computerFactory_.CreateLoadedStateConsistencyComputer());
 
     if( bIsLoaded_ )
     {
-        if( !func.bHasValidCarriers_ && func.bHasValidLoadable_ )
+        if( !comp.HasValidCarrier() && comp.HasValidLoadable() )
             SetUnloadedState();
     }
     else
     {
-        if( !func.bHasValidLoadable_ )
+        if( !comp.HasValidLoadable() )
             SetLoadedState();
     }
 }
@@ -433,7 +379,10 @@ void PHY_RoleAction_Loading::UnloadFromTransport( const MIL_Agent_ABC& transport
 void PHY_RoleAction_Loading::CancelTransport    ( const MIL_Agent_ABC& transporter )
 {
 }
-
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Loading::DamageTransported
+// Created: AHC 2009-09-24
+// -----------------------------------------------------------------------------
 void PHY_RoleAction_Loading::DamageTransported( double rWeight, const PHY_ComposanteState& state, bool bTransportOnlyLoadable ) const
 {
 }
