@@ -11,13 +11,17 @@ includedFiles["sources/common/pions/missions/SoutenirEnMesureDe.bms"] = true
 {
     activations =
     {
-        { "BEH_MAJ_Pion_EniDangereux", {} },
-        { "BEH_MAJ_Pion_AgressiviteTir", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_ProgressionAvecEscortePossibleSur", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_MAJ_Pion_EniDangereux", { "onHalt" } },
+        { "BEH_MAJ_Pion_AgressiviteTir", { "onHalt" } },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Dep_ProgressionAvecEscortePossibleSur", { "onHalt" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_SoutenirEnMesureDe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -93,13 +97,17 @@ node "MIS_Pion_SoutenirSurPositionEnMesureDe"
 {
     activations =
     {
-        { "BEH_MAJ_Pion_EniDangereux", {} },
-        { "BEH_MAJ_Pion_AgressiviteTir", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_MAJ_Pion_EniDangereux", { "onHalt" } },
+        { "BEH_MAJ_Pion_AgressiviteTir", { "onHalt" } },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_SoutenirSurPositionEnMesureDe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -179,6 +187,8 @@ elseif switch_1 == eFinMission then
 
 node "BEH_MAJ_Pion_AgressiviteTir"
 {
+    feedbacks = { { { "onHalt" }, "BEH_MAJ_Pion_AgressiviteTir" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.rPH = self.params[1]
@@ -207,8 +217,12 @@ node "BEH_MAJ_Pion_EniDangereux"
 {
     activations =
     {
-        { "ACT_MAJ_EnnemiEnCours", {} },
+        { "ACT_MAJ_EnnemiEnCours", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_MAJ_Pion_EniDangereux" } },
 
     create = function( self )
     end,

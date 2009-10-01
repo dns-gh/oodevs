@@ -11,6 +11,8 @@ includedFiles["sources/common/pions/actions/Actions - Ordre.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_Suppression"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Ordre_Suppression" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ordre = self.params[1]

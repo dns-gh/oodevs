@@ -36,15 +36,19 @@ includedFiles["sources/melee/abc/pions/common/Behaviors.bms"] = true
 {
     activations =
     {
-        { "BEH_Mot_Pion_ABC_AffecterVariablesDEtat", {} },
-        { "BEH_MAJ_EtatDefaut", {} },
-        { "BEH_ROE", {} },
-        { "BEH_Ambiance", {} },
-        { "BEH_Nbc", {} },
-        { "BEH_Rens", {} },
-        { "BEH_Pion_ABC_Default", {} },
-        { "BEH_MAJ_Pion_ABC_EniDangereux", {} },
+        { "BEH_Mot_Pion_ABC_AffecterVariablesDEtat", { "onHalt" } },
+        { "BEH_MAJ_EtatDefaut", { "onHalt" } },
+        { "BEH_ROE", { "onHalt" } },
+        { "BEH_Ambiance", { "onHalt" } },
+        { "BEH_Nbc", { "onHalt" } },
+        { "BEH_Rens", { "onHalt" } },
+        { "BEH_Pion_ABC_Default", { "onHalt" } },
+        { "BEH_MAJ_Pion_ABC_EniDangereux", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Defaut" } },
 
     create = function( self )
         self._namedParams = {}
@@ -92,8 +96,12 @@ node "BEH_MAJ_Pion_ABC_EniDangereux"
 {
     activations =
     {
-        { "ACT_MAJ_EnnemiEnCours", {} },
+        { "ACT_MAJ_EnnemiEnCours", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_MAJ_Pion_ABC_EniDangereux" } },
 
     create = function( self )
     end,
@@ -121,10 +129,14 @@ node "BEH_Dep_Pion_ABC_SeCoordonnerAvec"
 {
     activations =
     {
-        { "ACT_Dep_ModulationVitesse", {} },
-        { "ACT_Dep_SePoster", {} },
-        { "ACT_Info_Trace", {} },
+        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
+        { "ACT_Dep_SePoster", { "onHalt" } },
+        { "ACT_Info_Trace", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_ABC_SeCoordonnerAvec" } },
 
     create = function( self )
         self._namedParams = {}
@@ -182,10 +194,14 @@ node "BEH_Lima_Pion_ABC_SePosterSurLCA"
 {
     activations =
     {
-        { "ACT_Dep_PasserSurLima", {} },
-        { "BEH_Dep_SePoster", {} },
-        { "ACT_Obs_EtablirVisionCur", {} },
+        { "ACT_Dep_PasserSurLima", { "onHalt" } },
+        { "BEH_Dep_SePoster", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionCur", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Lima_Pion_ABC_SePosterSurLCA" } },
 
     create = function( self )
     end,
@@ -198,7 +214,8 @@ node "BEH_Lima_Pion_ABC_SePosterSurLCA"
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( DEC_Agent_NiveauInstallation() == eNiveauInstallation_PosteReflexe ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Lima_Pion_ABC_SePosterSurLCA" } )
+Halt( self )
             do return end
         end
 
@@ -225,9 +242,13 @@ node "BEH_Lima_Pion_ABC_SePosterSurLCAR"
 {
     activations =
     {
-        { "ACT_Dep_SePoster", {} },
-        { "ACT_Dep_PasserSurLima", {} },
+        { "ACT_Dep_SePoster", { "onHalt" } },
+        { "ACT_Dep_PasserSurLima", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Lima_Pion_ABC_SePosterSurLCAR" } },
 
     create = function( self )
     end,
@@ -250,7 +271,8 @@ node "BEH_Lima_Pion_ABC_SePosterSurLCAR"
 ]]        end
 
         if( ( GetStateVariable( "VE_SePoster" ) == 0 or GetStateVariable( "VE_SePoster" ) == nil ) ) then
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Lima_Pion_ABC_SePosterSurLCAR" } )
+Halt( self )
             do return end
         end
 
@@ -276,9 +298,13 @@ node "BEH_Obs_Pion_ABC_ReconnaitrePoint"
 {
     activations =
     {
-        { "ACT_Obs_ReconnaitrePoint", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "ACT_Obs_ReconnaitrePoint", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Obs_Pion_ABC_ReconnaitrePoint" } },
 
     create = function( self )
         self._namedParams = {}
@@ -305,7 +331,8 @@ node "BEH_Obs_Pion_ABC_ReconnaitrePoint"
                                 do
                     DEC_Trace( "Fin reconnaissance point" )
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Obs_Pion_ABC_ReconnaitrePoint" } )
+Halt( self )
                     do return end
 
                 end
@@ -333,9 +360,13 @@ node "BEH_Obs_Pion_ABC_SePosterSurBond"
 {
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "ACT_Dep_SePoster", {} },
+        { "ACT_Info_Trace", { "onHalt" } },
+        { "ACT_Dep_SePoster", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Obs_Pion_ABC_SePosterSurBond" } },
 
     create = function( self )
         self._namedParams = {}
@@ -362,7 +393,8 @@ node "BEH_Obs_Pion_ABC_SePosterSurBond"
             do
                 if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Arret ) then
                     self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Obs_Pion_ABC_SePosterSurBond" } )
+Halt( self )
                     do return end
                 end
 
@@ -372,7 +404,8 @@ node "BEH_Obs_Pion_ABC_SePosterSurBond"
 do
                 if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_PosteReflexe ) then
                     self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Obs_Pion_ABC_SePosterSurBond" } )
+Halt( self )
                     do return end
                 end
 
@@ -398,9 +431,13 @@ node "BEH_Dep_Pion_ABC_RejoindrePositionAppuiPour"
 {
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Info_Trace", { "onHalt" } },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_ABC_RejoindrePositionAppuiPour" } },
 
     create = function( self )
         self._namedParams = {}
@@ -418,7 +455,8 @@ node "BEH_Dep_Pion_ABC_RejoindrePositionAppuiPour"
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_ABC_RejoindrePositionAppuiPour" } )
+Halt( self )
                     do return end
 
                 end
@@ -442,8 +480,12 @@ node "BEH_Pion_ABC_InstallerDispositif"
 {
     activations =
     {
-        { "ACT_Pion_ABC_InstallerDisposifif", {} },
+        { "ACT_Pion_ABC_InstallerDisposifif", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Pion_ABC_InstallerDispositif" } },
 
     create = function( self )
     end,
@@ -465,6 +507,8 @@ node "BEH_Pion_ABC_InstallerDispositif"
 
 node "ACT_Pion_ABC_InstallerDisposifif"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Pion_ABC_InstallerDisposifif" } },
+
     create = function( self )
     end,
 
@@ -493,9 +537,13 @@ node "ACT_Pion_ABC_InstallerDisposifif"
 
     activations =
     {
-        { "ACT_Dep_SePosterFaceA", {} },
-        { "ACT_Tir_Pion_ABC_FaireFeuSur", {} },
+        { "ACT_Dep_SePosterFaceA", { "onHalt" } },
+        { "ACT_Tir_Pion_ABC_FaireFeuSur", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Feu_Pion_ABC_ConduireLesFeuxSur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -519,6 +567,8 @@ node "ACT_Pion_ABC_InstallerDisposifif"
 
 node "BEH_MAJ_Pion_ABC_AgressiviteTir"
 {
+    feedbacks = { { { "onHalt" }, "BEH_MAJ_Pion_ABC_AgressiviteTir" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.rPH = self.params[1]
@@ -548,6 +598,8 @@ node "BEH_MAJ_Pion_ABC_AgressiviteTir"
 
 node "BEH_MAJ_Pion_ABC_AgressiviteManoeuvre"
 {
+    feedbacks = { { { "onHalt" }, "BEH_MAJ_Pion_ABC_AgressiviteManoeuvre" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.rValeur = self.params[1]
@@ -578,6 +630,8 @@ node "BEH_MAJ_Pion_ABC_AgressiviteManoeuvre"
 
 node "BEH_MAJ_Pion_ABC_EnvieTenir"
 {
+    feedbacks = { { { "onHalt" }, "BEH_MAJ_Pion_ABC_EnvieTenir" } },
+
     create = function( self )
     end,
 
@@ -606,6 +660,8 @@ node "BEH_MAJ_Pion_ABC_EnvieTenir"
 
 node "BEH_Mot_Pion_ABC_AffecterVariablesDEtat"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Mot_Pion_ABC_AffecterVariablesDEtat" } },
+
     create = function( self )
     end,
 
@@ -682,14 +738,20 @@ node "BEH_Dep_Pion_ABC_GererDeboucher"
 {
     activations =
     {
-        { "BEH_Ordre_SePosterPourDeboucher", {} },
-        { "ACT_Points_Suppression", {} },
+        { "BEH_Ordre_SePosterPourDeboucher", { "onHalt" } },
+        { "ACT_Points_Suppression", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_ABC_GererDeboucher" } },
 
     create = function( self )
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Regarder les eAvantPoint dans la liste des points interessants
 ]]--[[//-----------------------------------------------------------------------------
@@ -712,7 +774,7 @@ do
                                         local lima = DEC_GetLimaPoint( pointLima )
                                         --[[// Flaguer dans gestion des limas générique
 ]]if( not DEC_GetMissionLimaFlag( lima ) ) then
-                                            StartActivate( self.activations.BEH_Ordre_SePosterPourDeboucher, 1, { lima, } )
+                                            StartInstance( self, self.activations.BEH_Ordre_SePosterPourDeboucher, 1, { lima, } )
                                         end
 
                                     end
@@ -743,9 +805,13 @@ node "BEH_Ordre_SePosterPourDeboucher"
 {
     activations =
     {
-        { "ACT_Dep_SePoster", {} },
-        { "ACT_Dep_PasserSurLima", {} },
+        { "ACT_Dep_SePoster", { "onHalt" } },
+        { "ACT_Dep_PasserSurLima", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Ordre_SePosterPourDeboucher" } },
 
     create = function( self )
         self._namedParams = {}
@@ -771,7 +837,8 @@ node "BEH_Ordre_SePosterPourDeboucher"
             do
                 DEC_SetMissionLimaFlagHoraire( self._namedParams.LimaLD, true )
                 DEC_SetMissionLimaFlag( self._namedParams.LimaLD, true )
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "BEH_Ordre_SePosterPourDeboucher" } )
+Halt( self )
                 do return end
 
             end
@@ -791,14 +858,20 @@ node "BEH_Dep_Pion_ABC_GererDeboucherEclairage"
 {
     activations =
     {
-        { "BEH_Ordre_LivrerLigneDeboucher", {} },
-        { "ACT_Points_Suppression", {} },
+        { "BEH_Ordre_LivrerLigneDeboucher", { "onHalt" } },
+        { "ACT_Points_Suppression", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_ABC_GererDeboucherEclairage" } },
 
     create = function( self )
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Regarder les eAvantPoint dans la liste des points interessants
 ]]--[[//-----------------------------------------------------------------------------
@@ -821,7 +894,7 @@ do
                                         local lima = DEC_GetLimaPoint( pointLima )
                                         --[[// Flaguer dans gestion des limas générique
 ]]if( not DEC_GetMissionLimaFlag( lima ) ) then
-                                            StartActivate( self.activations.BEH_Ordre_LivrerLigneDeboucher, 1, { lima, } )
+                                            StartInstance( self, self.activations.BEH_Ordre_LivrerLigneDeboucher, 1, { lima, } )
                                         end
 
                                     end
@@ -852,9 +925,13 @@ node "BEH_Ordre_LivrerLigneDeboucher"
 {
     activations =
     {
-        { "ACT_Dep_SePoster", {} },
-        { "ACT_Dep_PasserSurLima", {} },
+        { "ACT_Dep_SePoster", { "onHalt" } },
+        { "ACT_Dep_PasserSurLima", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Ordre_LivrerLigneDeboucher" } },
 
     create = function( self )
         self._namedParams = {}
@@ -879,7 +956,8 @@ node "BEH_Ordre_LivrerLigneDeboucher"
         if( ( GetStateVariable( "VE_SePoster" ) == 0 or GetStateVariable( "VE_SePoster" ) == nil ) ) then
             do
                 DEC_SetMissionLimaFlag( self._namedParams.LimaLD, true )
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "BEH_Ordre_LivrerLigneDeboucher" } )
+Halt( self )
                 do return end
 
             end
@@ -899,8 +977,12 @@ node "BEH_Dep_Virtuel_ProgressionVers"
 {
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Virtuel_ProgressionVers" } },
 
     create = function( self )
         self._namedParams = {}
@@ -921,6 +1003,8 @@ node "BEH_Dep_Virtuel_ProgressionVers"
 
 node "BEH_Dep_Virtuel_PreparationAction"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Virtuel_PreparationAction" } },
+
     create = function( self )
     end,
 

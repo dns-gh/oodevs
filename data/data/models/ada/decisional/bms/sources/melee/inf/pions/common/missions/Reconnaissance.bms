@@ -11,12 +11,16 @@ includedFiles["sources/melee/inf/pions/common/missions/Reconnaissance.bms"] = tr
 {
     activations =
     {
-        { "BEH_Mot_Pion_Embarquer", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Obs_EtablirVisionCur", {} },
-        { "BEH_Dep_ProgressionSur", {} },
-        { "BEH_Lima_GererLimas", {} },
+        { "BEH_Mot_Pion_Embarquer", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionCur", { "onHalt" } },
+        { "BEH_Dep_ProgressionSur", { "onHalt" } },
+        { "BEH_Lima_GererLimas", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_INF_RecoAxe" } },
 
     create = function( self )
     end,

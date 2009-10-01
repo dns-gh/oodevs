@@ -16,10 +16,14 @@ node "MIS_Automate_CDT_INF_DonnerCoupArret"
 {
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Defaut", {} },
-        { "BEH_Conduite_Automate_INF_CoupArret", {} },
-        { "BEH_Conduite_Automate_INF_CadreStatique", {} },
+        { "BEH_Conduite_Automate_INF_Defaut", { "onHalt" } },
+        { "BEH_Conduite_Automate_INF_CoupArret", { "onHalt" } },
+        { "BEH_Conduite_Automate_INF_CadreStatique", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_INF_DonnerCoupArret" } },
 
     create = function( self )
         self._namedParams = {}
@@ -45,7 +49,8 @@ node "MIS_Automate_CDT_INF_DonnerCoupArret"
                 self.eActionMission = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_CDT_INF_DonnerCoupArret" } )
+Halt( self )
                     do return end
 
                 end

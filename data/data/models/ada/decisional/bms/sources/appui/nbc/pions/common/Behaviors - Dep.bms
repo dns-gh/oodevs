@@ -37,10 +37,14 @@ includedFiles["sources/appui/nbc/pions/common/Behaviors - Dep.bms"] = true
 {
     activations =
     {
-        { "ACT_Dep_PasserSurLima", {} },
-        { "BEH_Dep_SePoster", {} },
-        { "ACT_Obs_EtablirVisionCur", {} },
+        { "ACT_Dep_PasserSurLima", { "onHalt" } },
+        { "BEH_Dep_SePoster", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionCur", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Lima_Pion_NBC_SePosterSurLCA" } },
 
     create = function( self )
     end,
@@ -53,7 +57,8 @@ includedFiles["sources/appui/nbc/pions/common/Behaviors - Dep.bms"] = true
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( DEC_Agent_NiveauInstallation() == eNiveauInstallation_PosteReflexe ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Lima_Pion_NBC_SePosterSurLCA" } )
+Halt( self )
             do return end
         end
 
@@ -91,9 +96,13 @@ node "BEH_Obs_Pion_NBC_ReconnaitrePoint"
 {
     activations =
     {
-        { "ACT_Obs_ReconnaitrePoint", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "ACT_Obs_ReconnaitrePoint", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Obs_Pion_NBC_ReconnaitrePoint" } },
 
     create = function( self )
         self._namedParams = {}
@@ -117,7 +126,8 @@ node "BEH_Obs_Pion_NBC_ReconnaitrePoint"
                                 do
                     DEC_Trace( "Fin reconnaissance point" )
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Obs_Pion_NBC_ReconnaitrePoint" } )
+Halt( self )
                     do return end
 
                 end
@@ -145,9 +155,13 @@ node "BEH_Obs_Pion_NBC_SePosterSurBond"
 {
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "ACT_Dep_SePoster", {} },
+        { "ACT_Info_Trace", { "onHalt" } },
+        { "ACT_Dep_SePoster", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Obs_Pion_NBC_SePosterSurBond" } },
 
     create = function( self )
         self._namedParams = {}
@@ -174,7 +188,8 @@ node "BEH_Obs_Pion_NBC_SePosterSurBond"
             do
                 if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Arret ) then
                     self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Obs_Pion_NBC_SePosterSurBond" } )
+Halt( self )
                     do return end
                 end
 
@@ -184,7 +199,8 @@ node "BEH_Obs_Pion_NBC_SePosterSurBond"
 do
                 if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_PosteReflexe ) then
                     self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Obs_Pion_NBC_SePosterSurBond" } )
+Halt( self )
                     do return end
                 end
 

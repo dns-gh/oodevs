@@ -11,13 +11,17 @@ includedFiles["sources/population/asymetriques/common/pion/missions/CommettreAtt
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur", {} },
-        { "BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers", {} },
-        { "BEH_Eni_Pion_ASY_CommettreAttentatContreForcesArmees", {} },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "ACT_Info_Trace", { "onHalt" } },
+        { "BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur", { "onHalt" } },
+        { "BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers", { "onHalt" } },
+        { "BEH_Eni_Pion_ASY_CommettreAttentatContreForcesArmees", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_ASY_CommettreAttentatContreForcesArmees" } },
 
     create = function( self )
         self._namedParams = {}
@@ -36,7 +40,8 @@ includedFiles["sources/population/asymetriques/common/pion/missions/CommettreAtt
                 if( not DEC_Geometrie_EstPointDansFuseau( self.lieuAttentat ) ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
-                                                Halt( self )
+                                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ASY_CommettreAttentatContreForcesArmees" } )
+Halt( self )
                         do return end
 
                     end
@@ -174,7 +179,8 @@ elseif switch_1 == eSExfiltrer then
 ]]                cases_switch_1[5] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                                        Halt( self )
+                                        Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ASY_CommettreAttentatContreForcesArmees" } )
+Halt( self )
                     do return end
 
                                 end

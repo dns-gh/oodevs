@@ -68,10 +68,14 @@ include "Appui/Trans/Pions/Missions/FaireMouvement.bms"
 {
     activations =
     {
-        { "BEH_MAJ_EtatDefaut", {} },
-        { "BEH_Info_Pion_RendreCompte", {} },
-        { "BEH_Mot_Pion_Embarquer", {} },
+        { "BEH_MAJ_EtatDefaut", { "onHalt" } },
+        { "BEH_Info_Pion_RendreCompte", { "onHalt" } },
+        { "BEH_Mot_Pion_Embarquer", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Defaut" } },
 
     create = function( self )
         self._namedParams = {}

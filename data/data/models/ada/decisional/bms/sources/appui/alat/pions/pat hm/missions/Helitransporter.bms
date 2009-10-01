@@ -12,14 +12,18 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_Ordre_Suppression", {} },
-        { "BEH_Transport_Pion_ALAT_HM_Helitransporter", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
-        { "BEH_Manoeuvre_Pion_AllerStationner", {} },
-        { "BEH_Dep_Pion_ALAT_SePoser", {} },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "ACT_Ordre_Suppression", { "onHalt" } },
+        { "BEH_Transport_Pion_ALAT_HM_Helitransporter", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", { "onHalt" } },
+        { "BEH_Manoeuvre_Pion_AllerStationner", { "onHalt" } },
+        { "BEH_Dep_Pion_ALAT_SePoser", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_ALAT_Helitransporter" } },
 
     create = function( self )
         self._namedParams = {}
@@ -53,7 +57,8 @@ include "bit.lua"
             do
                 DEC_Warning( eRC_TransportImpossiblePasDeMoyens )
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_Helitransporter" } )
+Halt( self )
                 do return end
 
             end
@@ -114,13 +119,15 @@ do
                                                         do
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self.params.__returnValue = eActionImpossible
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_Helitransporter" } )
+Halt( self )
                                 do return end
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_Helitransporter" } )
+Halt( self )
                             do return end
 
                         end
@@ -152,13 +159,15 @@ elseif switch_1 == eSExfiltrer then
                                                         do
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self.params.__returnValue = eActionImpossible
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_Helitransporter" } )
+Halt( self )
                                 do return end
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_Helitransporter" } )
+Halt( self )
                             do return end
 
                         end
@@ -178,7 +187,8 @@ elseif switch_1 == eFinMission then
                                 DEC_Transport_Annuler()
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_Helitransporter" } )
+Halt( self )
                                 do return end
 
                             end

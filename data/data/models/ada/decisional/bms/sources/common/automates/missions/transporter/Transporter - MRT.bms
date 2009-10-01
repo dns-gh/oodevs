@@ -5,6 +5,8 @@ includedFiles["sources/common/automates/missions/transporter/Transporter - MRT.b
 ]]
 node "MIS_Automate_MRT_Transporter"
 {
+    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_Transporter" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission
@@ -22,7 +24,8 @@ node "MIS_Automate_MRT_Transporter"
                     do
                         DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
                                                 self.params.__returnValue = eActionImpossible
-                        Halt( self )
+                        Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_Transporter" } )
+Halt( self )
                         do return end
 
                     end
@@ -36,7 +39,8 @@ node "MIS_Automate_MRT_Transporter"
                     do
                         DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
                                                 self.params.__returnValue = eActionImpossible
-                        Halt( self )
+                        Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_Transporter" } )
+Halt( self )
                         do return end
 
                     end
@@ -47,7 +51,8 @@ node "MIS_Automate_MRT_Transporter"
 
         DEC_MRT_Valide()
                 self.params.__returnValue = eActionEffectuee
-        Halt( self )
+        Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_Transporter" } )
+Halt( self )
         do return end
 
     end,

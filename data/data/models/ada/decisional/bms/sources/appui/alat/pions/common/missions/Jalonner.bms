@@ -24,18 +24,22 @@ include "bit.lua"
 {
     activations =
     {
-        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "BEH_Manoeuvre_Pion_GererRecueil", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Eni_Pion_ALAT_GererUnitesDetectes", {} },
-        { "BEH_Eni_Pion_ALAT_GererEniJalonner", {} },
-        { "BEH_Eni_Pion_ALAT_JalonnerGererFeu", {} },
-        { "ACT_Maj_Pions_ObjectifCourant", {} },
-        { "ACT_Obs_EtablirVisionCur", {} },
-        { "BEH_Manoeuvre_Pion_AllerStationner", {} },
-        { "BEH_Dep_Pion_ALAT_SePoser", {} },
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", { "onHalt" } },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "BEH_Manoeuvre_Pion_GererRecueil", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Eni_Pion_ALAT_GererUnitesDetectes", { "onHalt" } },
+        { "BEH_Eni_Pion_ALAT_GererEniJalonner", { "onHalt" } },
+        { "BEH_Eni_Pion_ALAT_JalonnerGererFeu", { "onHalt" } },
+        { "ACT_Maj_Pions_ObjectifCourant", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionCur", { "onHalt" } },
+        { "BEH_Manoeuvre_Pion_AllerStationner", { "onHalt" } },
+        { "BEH_Dep_Pion_ALAT_SePoser", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_ALAT_Jalonner" } },
 
     create = function( self )
         self._namedParams = {}
@@ -105,13 +109,15 @@ elseif switch_1 == eSExfiltrer then
                                                         do
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self.params.__returnValue = eActionImpossible
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_Jalonner" } )
+Halt( self )
                                 do return end
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_Jalonner" } )
+Halt( self )
                             do return end
 
                         end
@@ -134,7 +140,8 @@ elseif switch_1 == eFinMission then
                                                         do
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_Jalonner" } )
+Halt( self )
                                 do return end
 
                             end
@@ -165,10 +172,14 @@ node "BEH_Eni_Pion_ALAT_GererEniJalonner"
 {
     activations =
     {
-        { "ACT_Maj_Pions_ObjectifEsquive", {} },
-        { "ACT_RC", {} },
-        { "BEH_Eni_Pion_ALAT_Jalonner", {} },
+        { "ACT_Maj_Pions_ObjectifEsquive", { "onHalt" } },
+        { "ACT_RC", { "onHalt" } },
+        { "BEH_Eni_Pion_ALAT_Jalonner", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_ALAT_GererEniJalonner" } },
 
     create = function( self )
         self._namedParams = {}
@@ -205,8 +216,12 @@ node "BEH_Eni_Pion_ALAT_JalonnerGererFeu"
 {
     activations =
     {
-        { "BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire", {} },
+        { "BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_ALAT_JalonnerGererFeu" } },
 
     create = function( self )
         self._namedParams = {}
@@ -217,7 +232,8 @@ node "BEH_Eni_Pion_ALAT_JalonnerGererFeu"
     activate = function( self )
         if( F_Pion_GeteEtatFeu( myself ) == eEtatFeu_Executer ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Eni_Pion_ALAT_JalonnerGererFeu" } )
+Halt( self )
             do return end
         end
 

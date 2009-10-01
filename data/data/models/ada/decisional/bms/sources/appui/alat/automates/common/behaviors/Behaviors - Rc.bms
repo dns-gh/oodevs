@@ -8,8 +8,12 @@ includedFiles["sources/appui/alat/automates/common/behaviors/Behaviors - Rc.bms"
 {
     activations =
     {
-        { "ACT_RC_Automate", {} },
+        { "ACT_RC_Automate", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_RC_Automate_ALAT_Situation" } },
 
     create = function( self )
     end,

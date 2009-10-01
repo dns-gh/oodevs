@@ -11,8 +11,12 @@ includedFiles["sources/common/pions/behaviors/Behaviors - ROE.bms"] = true
 {
     activations =
     {
-        { "BEH_ROE_Recevoir_OrdreInopine", {} },
+        { "BEH_ROE_Recevoir_OrdreInopine", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_ROE" } },
 
     create = function( self )
     end,
@@ -35,11 +39,15 @@ node "BEH_ROE_Recevoir_OrdreInopine"
 {
     activations =
     {
-        { "ACT_Maj_Pion_PasserEnTirLibre", {} },
-        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
-        { "ACT_Maj_Pion_PasserEnTirInterdit", {} },
-        { "ACT_Ordre_Suppression", {} },
+        { "ACT_Maj_Pion_PasserEnTirLibre", { "onHalt" } },
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", { "onHalt" } },
+        { "ACT_Maj_Pion_PasserEnTirInterdit", { "onHalt" } },
+        { "ACT_Ordre_Suppression", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_ROE_Recevoir_OrdreInopine" } },
 
     create = function( self )
     end,
@@ -107,8 +115,12 @@ node "BEH_ROE_GererTirInterdit"
 {
     activations =
     {
-        { "ACT_Tir_ChangerConsigne", {} },
+        { "ACT_Tir_ChangerConsigne", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_ROE_GererTirInterdit" } },
 
     create = function( self )
     end,
@@ -130,8 +142,12 @@ node "BEH_ROE_GererTirRestreint"
 {
     activations =
     {
-        { "ACT_Tir_ChangerConsigne", {} },
+        { "ACT_Tir_ChangerConsigne", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_ROE_GererTirRestreint" } },
 
     create = function( self )
     end,
@@ -153,8 +169,12 @@ node "BEH_ROE_GererTirLibre"
 {
     activations =
     {
-        { "ACT_Tir_ChangerConsigne", {} },
+        { "ACT_Tir_ChangerConsigne", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_ROE_GererTirLibre" } },
 
     create = function( self )
     end,

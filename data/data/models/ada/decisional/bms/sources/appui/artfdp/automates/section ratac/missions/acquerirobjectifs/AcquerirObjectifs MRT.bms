@@ -20,9 +20,13 @@ includedFiles["sources/appui/artfdp/automates/section ratac/missions/acquerirobj
 {
     activations =
     {
-        { "ACT_RC_Automate", {} },
-        { "BEH_Medo_Automate_PreparerMission_AcquerirObjectifs", {} },
+        { "ACT_RC_Automate", { "onHalt" } },
+        { "BEH_Medo_Automate_PreparerMission_AcquerirObjectifs", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_ASS_AcquerirObjectifs" } },
 
     create = function( self )
         self._namedParams = {}
@@ -54,7 +58,8 @@ includedFiles["sources/appui/artfdp/automates/section ratac/missions/acquerirobj
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_ASS_AcquerirObjectifs" } )
+Halt( self )
                 do return end
 
             end
@@ -66,7 +71,8 @@ includedFiles["sources/appui/artfdp/automates/section ratac/missions/acquerirobj
                                 do
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_ASS_AcquerirObjectifs" } )
+Halt( self )
                     do return end
 
                 end
@@ -83,10 +89,14 @@ node "BEH_Medo_Automate_PreparerMission_AcquerirObjectifs"
 {
     activations =
     {
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_ASS_AcquerirObjectifs", {} },
-        { "BEH_Medo_Automate_ASS_AssignerMission_PC", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", { "onHalt" } },
+        { "BEH_Medo_Automate_ASS_AcquerirObjectifs", { "onHalt" } },
+        { "BEH_Medo_Automate_ASS_AssignerMission_PC", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_PreparerMission_AcquerirObjectifs" } },
 
     create = function( self )
     end,
@@ -120,7 +130,8 @@ node "BEH_Medo_Automate_PreparerMission_AcquerirObjectifs"
                         do
                             DEC_Trace( "First echelon is empty" )
                                                         self.params.__returnValue = eActionImpossible
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_PreparerMission_AcquerirObjectifs" } )
+Halt( self )
                             do return end
 
                         end
@@ -142,7 +153,8 @@ elseif switch_1 == eMRT_AssignerMissions then
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_PreparerMission_AcquerirObjectifs" } )
+Halt( self )
                             do return end
 
                         end
@@ -153,7 +165,8 @@ elseif switch_1 == eMRT_AssignerMissions then
                             self.eValidationMRT = eActionEnCours
                                                         do
                                                                 self.params.__returnValue = eActionEffectuee
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_PreparerMission_AcquerirObjectifs" } )
+Halt( self )
                                 do return end
 
                             end
@@ -178,8 +191,12 @@ node "BEH_Medo_Automate_ASS_AcquerirObjectifs"
 {
     activations =
     {
-        { "BEH_Mission_Automate_ASS_AcquerirObjectifsA", {} },
+        { "BEH_Mission_Automate_ASS_AcquerirObjectifsA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ASS_AcquerirObjectifs" } },
 
     create = function( self )
         self._namedParams = {}
@@ -188,7 +205,9 @@ node "BEH_Medo_Automate_ASS_AcquerirObjectifs"
         self._namedParams.lstPtDeploiement = self.params[3]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.lstPtTmp = self.lstPtTmp or DEC_Geometrie_CreerListePoints()
         self.lstPtZone = self.lstPtZone or DEC_Geometrie_CreerListePoints()
         if( ModuleBegins() ) then
@@ -203,7 +222,7 @@ node "BEH_Medo_Automate_ASS_AcquerirObjectifs"
                         local ptZone = S_Geometrie_BarycentreZone( x_loc )
                         local ptDeploiement = S_Misc_Automate_ASS_ExtraitPoint_ProchePosition( self.lstPtTmp, ptZone )
                         DEC_ListePoints_PushBack( self.lstPtZone, ptZone )
-                        StartActivate( self.activations.BEH_Mission_Automate_ASS_AcquerirObjectifsA, 1, { ePhase_MRT, pion, ptDeploiement, x_loc, } )
+                        StartInstance( self, self.activations.BEH_Mission_Automate_ASS_AcquerirObjectifsA, 1, { ePhase_MRT, pion, ptDeploiement, x_loc, } )
                     end
 
                 end

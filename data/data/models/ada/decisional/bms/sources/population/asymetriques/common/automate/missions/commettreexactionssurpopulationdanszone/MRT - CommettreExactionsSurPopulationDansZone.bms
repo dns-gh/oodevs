@@ -11,16 +11,22 @@ includedFiles["sources/population/asymetriques/common/automate/missions/commettr
 {
     activations =
     {
-        { "BEH_Mission_Automate_ASY_AssignerCommettreExactionsA", {} },
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Mission_Automate_ASY_AssignerCommettreExactionsA", { "onHalt" } },
+        { "BEH_Medo_Automate_ControleCreationMission", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_ASY_CommettreExactionsSurPopulationDansZone" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.eValidationMRT = self.eValidationMRT or eActionEnCours
         self.missionExaction = self.missionExaction or self._namedParams.mission
         --[[//---------------------------------------------------------------------
@@ -37,7 +43,7 @@ includedFiles["sources/population/asymetriques/common/automate/missions/commettr
                         for _,pion in pairs( DEC_Automate_PionsAvecPC() ) do
                         local _continue = true
                             do
-                                StartActivate( self.activations.BEH_Mission_Automate_ASY_AssignerCommettreExactionsA, 1, { ePhase_MRT, pion, DEC_UserTypeList_GetAt( self.missionExaction.zones_, nCurrentZoneIndex ), } )
+                                StartInstance( self, self.activations.BEH_Mission_Automate_ASY_AssignerCommettreExactionsA, 1, { ePhase_MRT, pion, DEC_UserTypeList_GetAt( self.missionExaction.zones_, nCurrentZoneIndex ), } )
                                 if( nCurrentZoneIndex >= szListeZones - 1 ) then
                                     nCurrentZoneIndex = 0
                                 else
@@ -65,7 +71,8 @@ includedFiles["sources/population/asymetriques/common/automate/missions/commettr
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_ASY_CommettreExactionsSurPopulationDansZone" } )
+Halt( self )
                 do return end
 
             end
@@ -77,7 +84,8 @@ includedFiles["sources/population/asymetriques/common/automate/missions/commettr
                                 do
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_ASY_CommettreExactionsSurPopulationDansZone" } )
+Halt( self )
                     do return end
 
                 end
@@ -100,11 +108,15 @@ node "BEH_Mission_Automate_ASY_AssignerCommettreExactionsA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_AssignerCommettreExactionsDansZone", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_AssignerCommettreExactionsDansZone", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_ASY_AssignerCommettreExactionsA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -149,6 +161,8 @@ elseif switch_1 == eActionHalt
 
 node "ACT_Mission_Automate_AssignerCommettreExactionsDansZone"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_AssignerCommettreExactionsDansZone" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]

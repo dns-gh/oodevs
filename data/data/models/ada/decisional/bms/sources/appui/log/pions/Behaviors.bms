@@ -63,18 +63,22 @@ include "Appui/Log/Pions/Missions/Missions.bms"
 {
     activations =
     {
-        { "BEH_Mot_AffecterVariablesDEtat", {} },
-        { "BEH_MAJ_EtatDefaut", {} },
-        { "BEH_Ambiance", {} },
-        { "BEH_Nbc", {} },
-        { "BEH_ROE", {} },
-        { "BEH_Rens", {} },
-        { "BEH_Ordre_Pion_LOG_OrdresInopines", {} },
-        { "ACT_Misc_Pion_LOG_ActiverSante", {} },
-        { "ACT_Misc_Pion_LOG_ActiverMaintenance", {} },
-        { "ACT_Misc_Pion_LOG_ActiverRavitaillement", {} },
-        { "BEH_Log_Pion_GererActivationsChaines", {} },
+        { "BEH_Mot_AffecterVariablesDEtat", { "onHalt" } },
+        { "BEH_MAJ_EtatDefaut", { "onHalt" } },
+        { "BEH_Ambiance", { "onHalt" } },
+        { "BEH_Nbc", { "onHalt" } },
+        { "BEH_ROE", { "onHalt" } },
+        { "BEH_Rens", { "onHalt" } },
+        { "BEH_Ordre_Pion_LOG_OrdresInopines", { "onHalt" } },
+        { "ACT_Misc_Pion_LOG_ActiverSante", { "onHalt" } },
+        { "ACT_Misc_Pion_LOG_ActiverMaintenance", { "onHalt" } },
+        { "ACT_Misc_Pion_LOG_ActiverRavitaillement", { "onHalt" } },
+        { "BEH_Log_Pion_GererActivationsChaines", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Defaut" } },
 
     create = function( self )
         self._namedParams = {}
@@ -147,6 +151,8 @@ include "Appui/Log/Pions/Missions/Missions.bms"
 
 node "BEH_Mot_AffecterVariablesDEtat"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Mot_AffecterVariablesDEtat" } },
+
     create = function( self )
     end,
 
@@ -166,17 +172,23 @@ node "BEH_Ordre_Pion_LOG_OrdresInopines"
 {
     activations =
     {
-        { "ACT_Misc_Pion_LOG_PreterRemorqueurs", {} },
-        { "ACT_Misc_Pion_LOG_RecupererRemorqueurs", {} },
-        { "ACT_Misc_Pion_LOG_PreterVSRAM", {} },
-        { "ACT_Misc_Pion_LOG_RecupererVSRAM", {} },
-        { "ACT_Ordre_Suppression", {} },
+        { "ACT_Misc_Pion_LOG_PreterRemorqueurs", { "onHalt" } },
+        { "ACT_Misc_Pion_LOG_RecupererRemorqueurs", { "onHalt" } },
+        { "ACT_Misc_Pion_LOG_PreterVSRAM", { "onHalt" } },
+        { "ACT_Misc_Pion_LOG_RecupererVSRAM", { "onHalt" } },
+        { "ACT_Ordre_Suppression", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Ordre_Pion_LOG_OrdresInopines" } },
 
     create = function( self )
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
         for _,x in pairs( ordres_recus ) do
         local _continue = true
@@ -187,32 +199,32 @@ do
                     local cases_switch_1 = {}
                         if switch_1 == "Rep_OrderConduite_Pion_RenforcerEnRemorqueurs" then
                             local repOrdreRenforcer = repOrdre
-                            StartActivate( self.activations.ACT_Misc_Pion_LOG_PreterRemorqueurs, 1, { repOrdreRenforcer:GetpionARenforcer_(), repOrdreRenforcer:GetnbrRemorqueurs_(), } )
+                            StartInstance( self, self.activations.ACT_Misc_Pion_LOG_PreterRemorqueurs, 1, { repOrdreRenforcer:GetpionARenforcer_(), repOrdreRenforcer:GetnbrRemorqueurs_(), } )
                             
                                                 cases_switch_1[1] = true
 elseif switch_1 == "Rep_OrderConduite_Pion_TransfererRemorqueurs" then
                             local repOrdreTransferer = repOrdre
-                            StartActivate( self.activations.ACT_Misc_Pion_LOG_PreterRemorqueurs, 1, { repOrdreTransferer:GetpionARenforcer_(), repOrdreTransferer:GetnbrRemorqueurs_(), } )
+                            StartInstance( self, self.activations.ACT_Misc_Pion_LOG_PreterRemorqueurs, 1, { repOrdreTransferer:GetpionARenforcer_(), repOrdreTransferer:GetnbrRemorqueurs_(), } )
                             
                                                 cases_switch_1[2] = true
 elseif switch_1 == "Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs" then
                             local repOrdreReprendre = repOrdre
-                            StartActivate( self.activations.ACT_Misc_Pion_LOG_RecupererRemorqueurs, 1, { repOrdreReprendre:GetpionRenforce_(), repOrdreReprendre:GetnbrRemorqueurs_(), } )
+                            StartInstance( self, self.activations.ACT_Misc_Pion_LOG_RecupererRemorqueurs, 1, { repOrdreReprendre:GetpionRenforce_(), repOrdreReprendre:GetnbrRemorqueurs_(), } )
                             
                                                 cases_switch_1[3] = true
 elseif switch_1 == "Rep_OrderConduite_Pion_RenforcerEnVSRAM" then
                             local repOrdreRenforcer = repOrdre
-                            StartActivate( self.activations.ACT_Misc_Pion_LOG_PreterVSRAM, 1, { repOrdreRenforcer:GetpionARenforcer_(), repOrdreRenforcer:GetnbrAmbulances_(), } )
+                            StartInstance( self, self.activations.ACT_Misc_Pion_LOG_PreterVSRAM, 1, { repOrdreRenforcer:GetpionARenforcer_(), repOrdreRenforcer:GetnbrAmbulances_(), } )
                             
                                                 cases_switch_1[4] = true
 elseif switch_1 == "Rep_OrderConduite_Pion_TransfererVSRAM" then
                             local repOrdreTransferer = repOrdre
-                            StartActivate( self.activations.ACT_Misc_Pion_LOG_PreterVSRAM, 1, { repOrdreTransferer:GetpionARenforcer_(), repOrdreTransferer:GetnbrAmbulances_(), } )
+                            StartInstance( self, self.activations.ACT_Misc_Pion_LOG_PreterVSRAM, 1, { repOrdreTransferer:GetpionARenforcer_(), repOrdreTransferer:GetnbrAmbulances_(), } )
                             
                                                 cases_switch_1[5] = true
 elseif switch_1 == "Rep_OrderConduite_Pion_ReprendreAuxOrdresVSRAM" then
                             local repOrdreReprendre = repOrdre
-                            StartActivate( self.activations.ACT_Misc_Pion_LOG_RecupererVSRAM, 1, { repOrdreReprendre:GetpionRenforce_(), repOrdreReprendre:GetnbrAmbulances_(), } )
+                            StartInstance( self, self.activations.ACT_Misc_Pion_LOG_RecupererVSRAM, 1, { repOrdreReprendre:GetpionRenforce_(), repOrdreReprendre:GetnbrAmbulances_(), } )
                             
                                                 cases_switch_1[6] = true
 elseif switch_1 == "Rep_OrderConduite_ModifierRegimeTravailMaintenance" then
@@ -262,10 +274,14 @@ node "BEH_Log_Pion_GererActivationsChaines"
 {
     activations =
     {
-        { "ACT_Misc_Pion_LOG_ActiverSante", {} },
-        { "ACT_Misc_Pion_LOG_ActiverMaintenance", {} },
-        { "ACT_Misc_Pion_LOG_ActiverRavitaillement", {} },
+        { "ACT_Misc_Pion_LOG_ActiverSante", { "onHalt" } },
+        { "ACT_Misc_Pion_LOG_ActiverMaintenance", { "onHalt" } },
+        { "ACT_Misc_Pion_LOG_ActiverRavitaillement", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Log_Pion_GererActivationsChaines" } },
 
     create = function( self )
     end,
@@ -292,8 +308,12 @@ node "BEH_Dep_Virtuel_ProgressionVers"
 {
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Virtuel_ProgressionVers" } },
 
     create = function( self )
         self._namedParams = {}
@@ -314,6 +334,8 @@ node "BEH_Dep_Virtuel_ProgressionVers"
 
 node "BEH_Dep_Virtuel_PreparationAction"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Virtuel_PreparationAction" } },
+
     create = function( self )
     end,
 

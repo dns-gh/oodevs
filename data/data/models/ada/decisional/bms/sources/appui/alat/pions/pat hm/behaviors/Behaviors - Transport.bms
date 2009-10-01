@@ -19,14 +19,18 @@ include "bit.lua"
 {
     activations =
     {
-        { "ACT_RC_SurPion", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Maj_Pions_ObjectifEsquive", {} },
-        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
-        { "BEH_Dep_Pion_ALAT_SePoser", {} },
-        { "ACT_Transport_Pion_ALAT_HM_HelitransportEmbarquer", {} },
-        { "ACT_Transport_Pion_ALAT_HM_HelitransportDebarquer", {} },
+        { "ACT_RC_SurPion", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "ACT_Maj_Pions_ObjectifEsquive", { "onHalt" } },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "onHalt" } },
+        { "BEH_Dep_Pion_ALAT_SePoser", { "onHalt" } },
+        { "ACT_Transport_Pion_ALAT_HM_HelitransportEmbarquer", { "onHalt" } },
+        { "ACT_Transport_Pion_ALAT_HM_HelitransportDebarquer", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Transport_Pion_ALAT_HM_Helitransporter" } },
 
     create = function( self )
         self._namedParams = {}
@@ -71,7 +75,8 @@ do
 
         if( not bUnitesEnAttenteSurPtEmbarquement and DEC_Transport_EstTermine() ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Transport_Pion_ALAT_HM_Helitransporter" } )
+Halt( self )
             do return end
         end
 
@@ -160,13 +165,15 @@ do
                                                         do
                                 DEC_Transport_Annuler()
                                                                 self.params.__returnValue = eActionImpossible
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "BEH_Transport_Pion_ALAT_HM_Helitransporter" } )
+Halt( self )
                                 do return end
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "BEH_Transport_Pion_ALAT_HM_Helitransporter" } )
+Halt( self )
                             do return end
 
                         end
@@ -237,13 +244,15 @@ do
                                                         do
                                 DEC_Transport_Annuler()
                                                                 self.params.__returnValue = eActionImpossible
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "BEH_Transport_Pion_ALAT_HM_Helitransporter" } )
+Halt( self )
                                 do return end
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "BEH_Transport_Pion_ALAT_HM_Helitransporter" } )
+Halt( self )
                             do return end
 
                         end
@@ -275,13 +284,15 @@ elseif switch_1 == eTransporterAllerDebarquer then
                                                         do
                                 DEC_Transport_Annuler()
                                                                 self.params.__returnValue = eActionImpossible
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "BEH_Transport_Pion_ALAT_HM_Helitransporter" } )
+Halt( self )
                                 do return end
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "BEH_Transport_Pion_ALAT_HM_Helitransporter" } )
+Halt( self )
                             do return end
 
                         end
@@ -313,13 +324,15 @@ elseif switch_1 == eTransporterDebarquer then
                                                         do
                                 DEC_Transport_Annuler()
                                                                 self.params.__returnValue = eActionImpossible
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "BEH_Transport_Pion_ALAT_HM_Helitransporter" } )
+Halt( self )
                                 do return end
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "BEH_Transport_Pion_ALAT_HM_Helitransporter" } )
+Halt( self )
                             do return end
 
                         end
@@ -354,10 +367,14 @@ node "BEH_Transport_Pion_ALAT_HM_Extraire"
 
     activations =
     {
-        { "ACT_Maj_Pions_ObjectifEsquive", {} },
-        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
-        { "BEH_Dep_Pion_ALAT_RejoindrePion", {} },
+        { "ACT_Maj_Pions_ObjectifEsquive", { "onHalt" } },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "onHalt" } },
+        { "BEH_Dep_Pion_ALAT_RejoindrePion", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Transport_Pion_ALAT_HM_Extraire" } },
 
     create = function( self )
         self._namedParams = {}
@@ -386,7 +403,8 @@ node "BEH_Transport_Pion_ALAT_HM_Extraire"
                         do
                             myself.bEnCoursExtractionPersonnel_ = false
                                                         self.params.__returnValue = eActionEffectuee
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "BEH_Transport_Pion_ALAT_HM_Extraire" } )
+Halt( self )
                             do return end
 
                         end
@@ -418,7 +436,8 @@ elseif switch_1 == eExtraire then
                                 myself.bEnPhaseRavitaillement_ = true
                                 myself.bEnCoursExtractionPersonnel_ = false
                                                                 self.params.__returnValue = eActionEffectuee
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "BEH_Transport_Pion_ALAT_HM_Extraire" } )
+Halt( self )
                                 do return end
 
                             end

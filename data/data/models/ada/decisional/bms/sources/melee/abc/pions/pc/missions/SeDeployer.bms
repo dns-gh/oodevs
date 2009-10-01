@@ -11,10 +11,14 @@ includedFiles["sources/melee/abc/pions/pc/missions/SeDeployer.bms"] = true
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_ABC_PC_SeDeployer" } },
 
     create = function( self )
         self._namedParams = {}

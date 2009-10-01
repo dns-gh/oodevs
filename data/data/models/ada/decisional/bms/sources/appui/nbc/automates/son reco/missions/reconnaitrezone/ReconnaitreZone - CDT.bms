@@ -11,8 +11,12 @@ includedFiles["sources/appui/nbc/automates/son reco/missions/reconnaitrezone/Rec
 {
     activations =
     {
-        { "BEH_Conduite_Automate_NBC_ReconnaitreUneZone", {} },
+        { "BEH_Conduite_Automate_NBC_ReconnaitreUneZone", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_NBC_ReconnaitreUneZone" } },
 
     create = function( self )
         self._namedParams = {}

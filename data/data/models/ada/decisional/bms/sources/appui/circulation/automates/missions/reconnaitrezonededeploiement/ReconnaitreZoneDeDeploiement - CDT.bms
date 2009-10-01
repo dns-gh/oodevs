@@ -9,6 +9,8 @@ includedFiles["sources/appui/circulation/automates/missions/reconnaitrezonededep
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_LOG_ReconnaitreZoneDeDeploiement"
 {
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_LOG_ReconnaitreZoneDeDeploiement" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission

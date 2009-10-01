@@ -25,14 +25,18 @@ node "BEH_Defaut"
 {
     activations =
     {
-        { "BEH_MAJ_EtatDefaut", {} },
-        { "BEH_Mot_AffecterVariablesDEtat", {} },
-        { "BEH_Mot_Pion_Embarquer", {} },
-        { "BEH_Ambiance", {} },
-        { "BEH_ROE", {} },
-        { "BEH_Nbc", {} },
-        { "BEH_Rens", {} },
+        { "BEH_MAJ_EtatDefaut", { "onHalt" } },
+        { "BEH_Mot_AffecterVariablesDEtat", { "onHalt" } },
+        { "BEH_Mot_Pion_Embarquer", { "onHalt" } },
+        { "BEH_Ambiance", { "onHalt" } },
+        { "BEH_ROE", { "onHalt" } },
+        { "BEH_Nbc", { "onHalt" } },
+        { "BEH_Rens", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Defaut" } },
 
     create = function( self )
         self._namedParams = {}
@@ -80,6 +84,8 @@ node "BEH_Defaut"
 
 node "BEH_Mot_AffecterVariablesDEtat"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Mot_AffecterVariablesDEtat" } },
+
     create = function( self )
     end,
 
@@ -149,8 +155,12 @@ node "BEH_Dep_Virtuel_ProgressionVers"
 {
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Virtuel_ProgressionVers" } },
 
     create = function( self )
         self._namedParams = {}
@@ -171,6 +181,8 @@ node "BEH_Dep_Virtuel_ProgressionVers"
 
 node "BEH_Dep_Virtuel_PreparationAction"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Virtuel_PreparationAction" } },
+
     create = function( self )
     end,
 

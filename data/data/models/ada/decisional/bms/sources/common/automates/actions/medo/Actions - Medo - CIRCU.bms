@@ -10,6 +10,8 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - CIRCU.bms"
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "ACT_Mission_Automate_CIRCU_AssignerRenforcerA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_CIRCU_AssignerRenforcerA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -92,6 +94,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "ACT_Mission_Automate_LOG_AssignerSurveillerA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_LOG_AssignerSurveillerA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -168,6 +172,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "ACT_Mission_Automate_LOG_AssignerAppuyerMouvementDansZoneA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_LOG_AssignerAppuyerMouvementDansZoneA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -244,6 +250,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "ACT_Mission_Automate_LOG_AssignerMettreEnOeuvreZoneStationnementA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_LOG_AssignerMettreEnOeuvreZoneStationnementA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -320,6 +328,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "ACT_Mission_Automate_LOG_AssignerReconnaitreZoneContamineeA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_LOG_AssignerReconnaitreZoneContamineeA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -396,6 +406,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "ACT_Mission_Automate_LOG_AssignerBloquerZoneA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_LOG_AssignerBloquerZoneA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -472,6 +484,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "ACT_Mission_Automate_LOG_AssignerArmerPIAA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_LOG_AssignerArmerPIAA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -548,6 +562,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "ACT_Mission_Automate_LOG_AssignerReconnaitreItineraireA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_LOG_AssignerReconnaitreItineraireA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -624,6 +640,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "ACT_Mission_Automate_LOG_AssignerAppuyerMouvementA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_LOG_AssignerAppuyerMouvementA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -700,6 +718,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "ACT_Mission_Automate_LOG_AssignerReconnaitreZoneDeDeploiementA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_LOG_AssignerReconnaitreZoneDeDeploiementA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -776,6 +796,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "ACT_Mission_Automate_LOG_AssignerAppuyerFranchissementSurUnPointA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_LOG_AssignerAppuyerFranchissementSurUnPointA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]

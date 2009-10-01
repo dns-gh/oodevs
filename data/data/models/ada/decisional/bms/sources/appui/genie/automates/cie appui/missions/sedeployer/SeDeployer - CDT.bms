@@ -24,8 +24,12 @@ includedFiles["sources/appui/genie/automates/cie appui/missions/sedeployer/SeDep
 {
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_GEN_SeDeployer" } },
 
     create = function( self )
         self._namedParams = {}

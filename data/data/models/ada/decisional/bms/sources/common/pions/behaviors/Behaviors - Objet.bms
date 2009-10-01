@@ -11,8 +11,12 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Objet.bms"] = true
 {
     activations =
     {
-        { "BEH_Obj_RejoindreEmbossementLibre", {} },
+        { "BEH_Obj_RejoindreEmbossementLibre", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Obj_RejoindreEmbossements" } },
 
     create = function( self )
     end,
@@ -60,11 +64,15 @@ node "BEH_Obj_RejoindreEmbossementLibre"
 
     activations =
     {
-        { "ACT_Obj_OccuperEmbossement", {} },
-        { "ACT_Dep_SePoster", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Obj_OccuperEmbossement", { "onHalt" } },
+        { "ACT_Dep_SePoster", { "onHalt" } },
+        { "ACT_Info_Trace", { "onHalt" } },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Obj_RejoindreEmbossementLibre" } },
 
     create = function( self )
         self._namedParams = {}
@@ -78,7 +86,8 @@ node "BEH_Obj_RejoindreEmbossementLibre"
 ]]--[[// Conditions de terminaisons
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.embossement ) ) then
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Obj_RejoindreEmbossementLibre" } )
+Halt( self )
             do return end
         end
 

@@ -23,11 +23,15 @@ includedFiles["sources/melee/abc/automates/common/missions/recueillir/Recueillir
 {
     activations =
     {
-        { "BEH_Dispositif_Automate_ABC_GererLesAppuis_", {} },
-        { "BEH_Dispositif_Automate_ABC_GererLeDispositifStatiqueSurLima_", {} },
-        { "BEH_Conduite_Automate_ABC_Recueillir_FaireDecrocherLePEcl", {} },
-        { "BEH_RC_Automate_GererConditionOperationnelle", {} },
+        { "BEH_Dispositif_Automate_ABC_GererLesAppuis_", { "onHalt" } },
+        { "BEH_Dispositif_Automate_ABC_GererLeDispositifStatiqueSurLima_", { "onHalt" } },
+        { "BEH_Conduite_Automate_ABC_Recueillir_FaireDecrocherLePEcl", { "onHalt" } },
+        { "BEH_RC_Automate_GererConditionOperationnelle", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_ABC_Recueillir" } },
 
     create = function( self )
     end,
@@ -65,13 +69,19 @@ node "BEH_Conduite_Automate_ABC_Recueillir_FaireDecrocherLePEcl"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerDecrocherA", {} },
+        { "BEH_Mission_Automate_AssignerDecrocherA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_ABC_Recueillir_FaireDecrocherLePEcl" } },
 
     create = function( self )
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.mission = self.mission or DEC_GetMission( myself )
         self.pointArrivee = self.pointArrivee or S_Geometrie_BarycentreZone( self.mission.zoneRegroupement_ )
         if( S_Dispositif_Automate_ABC_EstPEclEnDanger() ) then
@@ -82,14 +92,14 @@ node "BEH_Conduite_Automate_ABC_Recueillir_FaireDecrocherLePEcl"
                 local _continue = true
                     do
                         local pionDEC = pion
-                        StartActivate( self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, pion, self.pointArrivee, F_Pion_GeteEtatEchelon( pionDEC ), } )
+                        StartInstance( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, pion, self.pointArrivee, F_Pion_GeteEtatEchelon( pionDEC ), } )
                     end
 --[[// Cas particulier pour le PC EI // MIA faire un truc plus propre
 ]]
                 end
 
                 if( myself:GetType() == "Peloton_EEI" ) then
-                    StartActivate( self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, DEC_Automate_PionPC(), self.pointArrivee, eEtatEchelon_Second, } )
+                    StartInstance( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, DEC_Automate_PionPC(), self.pointArrivee, eEtatEchelon_Second, } )
                 end
 
             end

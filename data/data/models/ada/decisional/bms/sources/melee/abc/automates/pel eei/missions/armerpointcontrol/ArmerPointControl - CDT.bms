@@ -22,8 +22,12 @@ includedFiles["sources/melee/abc/automates/pel eei/missions/armerpointcontrol/Ar
 {
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_ArmerPointDeControle", {} },
+        { "BEH_Conduite_Automate_ABC_ArmerPointDeControle", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_ArmerPointDeControle" } },
 
     create = function( self )
         self._namedParams = {}

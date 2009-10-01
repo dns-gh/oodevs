@@ -11,10 +11,14 @@ includedFiles["sources/appui/genie/automates/cie blindee/missions/degager obstac
 {
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
-        { "ACT_Warning", {} },
-        { "BEH_Mission_Automate_GEN_CDT_DegagerPlanObjets_", {} },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "onHalt" } },
+        { "ACT_Warning", { "onHalt" } },
+        { "BEH_Mission_Automate_GEN_CDT_DegagerPlanObjets_", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_GEN_DegagerObstaclesDansZone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -72,10 +76,14 @@ node "BEH_Mission_Automate_GEN_CDT_DegagerPlanObjets_"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerFaireMouvementA", {} },
-        { "BEH_Misc_Automate_GEN_GererReductionDesObstacles", {} },
-        { "BEH_Misc_Automate_GEN_GererRenforcementsPourDegagerObstacles", {} },
+        { "BEH_Mission_Automate_AssignerFaireMouvementA", { "onHalt" } },
+        { "BEH_Misc_Automate_GEN_GererReductionDesObstacles", { "onHalt" } },
+        { "BEH_Misc_Automate_GEN_GererRenforcementsPourDegagerObstacles", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_GEN_CDT_DegagerPlanObjets_" } },
 
     create = function( self )
         self._namedParams = {}
@@ -120,11 +128,15 @@ node "BEH_Misc_Automate_GEN_GererRenforcementsPourDegagerObstacles"
 {
     activations =
     {
-        { "BEH_Ordre_Automate_GEN_VerifierRenfortPourDetruireObjets", {} },
-        { "BEH_Misc_Automate_GEN_GererRenforcementObstacle", {} },
-        { "BEH_Misc_Automate_GEN_GererFinRenforcementObstacle", {} },
-        { "BEH_Mission_Automate_AssignerDecrocherA", {} },
+        { "BEH_Ordre_Automate_GEN_VerifierRenfortPourDetruireObjets", { "onHalt" } },
+        { "BEH_Misc_Automate_GEN_GererRenforcementObstacle", { "onHalt" } },
+        { "BEH_Misc_Automate_GEN_GererFinRenforcementObstacle", { "onHalt" } },
+        { "BEH_Mission_Automate_AssignerDecrocherA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Misc_Automate_GEN_GererRenforcementsPourDegagerObstacles" } },
 
     create = function( self )
         self._namedParams = {}
@@ -132,7 +144,9 @@ node "BEH_Misc_Automate_GEN_GererRenforcementsPourDegagerObstacles"
         self._namedParams.zoneRegroupement = self.params[2]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.positionRegroupement = self.positionRegroupement or S_Geometrie_BarycentreZone( self._namedParams.zoneRegroupement )
         --[[//-------------------------------------------------------------------------
 ]]--[[// CR sur renforcement 
@@ -180,7 +194,7 @@ do
                         --[[// cast
 ]]local groupe = pion
                         if( F_Pion_GeteEtatPhaseMission( groupe ) == eEtatPhaseMission_FinMission ) then
-                            StartActivate( self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, groupe, self.positionRegroupement, eEtatEchelon_Second, } )
+                            StartInstance( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, groupe, self.positionRegroupement, eEtatEchelon_Second, } )
                         end
 
                     end
@@ -204,9 +218,13 @@ node "BEH_Misc_Automate_GEN_GererReductionDesObstacles"
 {
     activations =
     {
-        { "BEH_Mission_Automate_Gen_AssignerDegagerObjetA", {} },
-        { "BEH_Mission_Automate_AssignerDecrocherA", {} },
+        { "BEH_Mission_Automate_Gen_AssignerDegagerObjetA", { "onHalt" } },
+        { "BEH_Mission_Automate_AssignerDecrocherA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Misc_Automate_GEN_GererReductionDesObstacles" } },
 
     create = function( self )
         self._namedParams = {}
@@ -214,7 +232,9 @@ node "BEH_Misc_Automate_GEN_GererReductionDesObstacles"
         self._namedParams.zoneRegroupement = self.params[2]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.positionRegroupement = self.positionRegroupement or S_Geometrie_BarycentreZone( self._namedParams.zoneRegroupement )
         --[[//copie ? --> NLD: oui
 ]]self.listeObjetsADegager = self.listeObjetsADegager or self._namedParams.obstacles
@@ -247,7 +267,7 @@ do
 ]]local section = pion
                         --[[// plus d'objets à traiter
 ]]if( F_Pion_GeteEtatPhaseMission( section ) == eEtatPhaseMission_FinMission ) then
-                            StartActivate( self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, pion, self.positionRegroupement, eEtatEchelon_Second, } )
+                            StartInstance( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, pion, self.positionRegroupement, eEtatEchelon_Second, } )
                         end
 
                     end
@@ -271,8 +291,12 @@ node "BEH_Mission_Automate_Gen_AssignerDegagerObjetA"
 {
     activations =
     {
-        { "BEH_Mission_Automate_GEN_AssignerDegagerA", {} },
+        { "BEH_Mission_Automate_GEN_AssignerDegagerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_Gen_AssignerDegagerObjetA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -283,7 +307,8 @@ node "BEH_Mission_Automate_Gen_AssignerDegagerObjetA"
     activate = function( self )
         --[[// Validité
 ]]if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.objet ) ) then
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Automate_Gen_AssignerDegagerObjetA" } )
+Halt( self )
             do return end
         end
 

@@ -20,6 +20,8 @@ includedFiles["sources/melee/inf/automates/common/Actions.bms"] = true
 ]]--[[// ----------------------------------------------------------------------------
 ]]node "ACT_Misc_Automate_INF_Defini_PionAppuiMobile"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Misc_Automate_INF_Defini_PionAppuiMobile" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionAppui = self.params[1]
@@ -45,6 +47,8 @@ includedFiles["sources/melee/inf/automates/common/Actions.bms"] = true
 ]]--[[// ----------------------------------------------------------------------------
 ]]node "ACT_MOT_Automate_INF_DemandeAppliqerFeux"
 {
+    feedbacks = { { { "onHalt" }, "ACT_MOT_Automate_INF_DemandeAppliqerFeux" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pMortier = self.params[1]
@@ -75,6 +79,8 @@ includedFiles["sources/melee/inf/automates/common/Actions.bms"] = true
 ]]--[[// ----------------------------------------------------------------------------
 ]]node "ACT_Conduite_Automate_INF_AffecterEchelonPion"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Conduite_Automate_INF_AffecterEchelonPion" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]

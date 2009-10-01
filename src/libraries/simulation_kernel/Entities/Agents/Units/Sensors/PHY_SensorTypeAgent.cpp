@@ -358,7 +358,6 @@ MT_Float PHY_SensorTypeAgent::ComputeExtinction( const PHY_RawVisionDataIterator
     return rDistanceModificator <= MT_Epsilon ? -1. : rVisionNRJ - env.Length() / rDistanceModificator ;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: PHY_SensorTypeAgent::InterpreteExtinction
 // Created: JVT 02-07-12

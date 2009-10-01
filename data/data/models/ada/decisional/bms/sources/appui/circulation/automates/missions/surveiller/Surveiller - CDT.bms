@@ -9,6 +9,8 @@ includedFiles["sources/appui/circulation/automates/missions/surveiller/Surveille
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_LOG_Surveiller"
 {
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_LOG_Surveiller" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission

@@ -87,11 +87,15 @@ node "BEH_Misc_Pion_INF_Default"
 {
     activations =
     {
-        { "BEH_MOT_Pion_INF_GarderSesDistances_GererTransport", {} },
-        { "BEH_MOT_Pion_INF_EtrePrudent_GererTransport", {} },
-        { "ACT_Dep_Pion_INF_ActiverFurtivite", {} },
-        { "BEH_Mot_Pion_Embarquer", {} },
+        { "BEH_MOT_Pion_INF_GarderSesDistances_GererTransport", { "onHalt" } },
+        { "BEH_MOT_Pion_INF_EtrePrudent_GererTransport", { "onHalt" } },
+        { "ACT_Dep_Pion_INF_ActiverFurtivite", { "onHalt" } },
+        { "BEH_Mot_Pion_Embarquer", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Misc_Pion_INF_Default" } },
 
     create = function( self )
     end,
@@ -124,8 +128,12 @@ node "BEH_Tir_Pion_INF_TirDebarque"
 {
     activations =
     {
-        { "ACT_Tir_Pion_INF_TirDebarque", {} },
+        { "ACT_Tir_Pion_INF_TirDebarque", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Tir_Pion_INF_TirDebarque" } },
 
     create = function( self )
         self._namedParams = {}

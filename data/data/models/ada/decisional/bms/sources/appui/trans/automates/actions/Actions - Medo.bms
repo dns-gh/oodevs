@@ -12,6 +12,8 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_ControleCreation_EnCours"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_ControleCreation_EnCours" } },
+
     create = function( self )
     end,
 
@@ -38,6 +40,8 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_ControleCreation_OK"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_ControleCreation_OK" } },
+
     create = function( self )
     end,
 
@@ -71,6 +75,8 @@ include "bit.lua"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_ControleCreation_NOK"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_ControleCreation_NOK" } },
+
     create = function( self )
     end,
 
@@ -95,6 +101,8 @@ include "bit.lua"
 ]]--[[// ****************************************************************************
 ]]node "ACT_Mission_Automate_TRANS_AssignerEtablirGererLiaisonA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_TRANS_AssignerEtablirGererLiaisonA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -165,6 +173,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_AssignerFaireMouvementSurItA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_AssignerFaireMouvementSurItA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -233,6 +243,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_AssignerFaireMouvementA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_AssignerFaireMouvementA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -305,6 +317,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_AssignerSeFaireTransporterA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_AssignerSeFaireTransporterA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]

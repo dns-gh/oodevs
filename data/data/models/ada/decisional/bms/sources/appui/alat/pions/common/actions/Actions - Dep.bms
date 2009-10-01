@@ -11,6 +11,8 @@ includedFiles["sources/appui/alat/pions/common/actions/Actions - Dep.bms"] = tru
         hauteur = 1,
     },
 
+    feedbacks = { { { "onHalt" }, "ACT_Dep_Pions_ALAT_Voler" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.hauteur = self.params[1]

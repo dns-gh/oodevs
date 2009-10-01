@@ -22,8 +22,12 @@ includedFiles["sources/melee/abc/pions/pat ei/missions/Escorter.bms"] = true
 {
     activations =
     {
-        { "BEH_Mission_Pion_ABC_Escorter", {} },
+        { "BEH_Mission_Pion_ABC_Escorter", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_ABC_EscorterUnite" } },
 
     create = function( self )
         self._namedParams = {}
@@ -37,13 +41,15 @@ includedFiles["sources/melee/abc/pions/pat ei/missions/Escorter.bms"] = true
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible ) then
             self.params.__returnValue = eActionImpossible
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ABC_EscorterUnite" } )
+Halt( self )
             do return end
         end
 
         if( self.eEtat == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ABC_EscorterUnite" } )
+Halt( self )
             do return end
         end
 
@@ -65,8 +71,12 @@ node "MIS_Pion_ABC_EscorterUnites"
 {
     activations =
     {
-        { "BEH_Mission_Pion_ABC_EscorterAutomate", {} },
+        { "BEH_Mission_Pion_ABC_EscorterAutomate", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_ABC_EscorterUnites" } },
 
     create = function( self )
         self._namedParams = {}
@@ -80,13 +90,15 @@ node "MIS_Pion_ABC_EscorterUnites"
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible ) then
             self.params.__returnValue = eActionImpossible
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ABC_EscorterUnites" } )
+Halt( self )
             do return end
         end
 
         if( self.eEtat == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ABC_EscorterUnites" } )
+Halt( self )
             do return end
         end
 

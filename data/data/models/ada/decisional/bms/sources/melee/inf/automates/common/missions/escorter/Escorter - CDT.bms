@@ -22,10 +22,14 @@ includedFiles["sources/melee/inf/automates/common/missions/escorter/Escorter - C
 {
     activations =
     {
-        { "BEH_Dispositif_Automate_INF_GererLesAppuis_", {} },
-        { "BEH_Dispositif_Automate_INF_GererLeDispositif_", {} },
-        { "BEH_RC_Automate_GererConditionOperationnelle", {} },
+        { "BEH_Dispositif_Automate_INF_GererLesAppuis_", { "onHalt" } },
+        { "BEH_Dispositif_Automate_INF_GererLeDispositif_", { "onHalt" } },
+        { "BEH_RC_Automate_GererConditionOperationnelle", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_Escorter" } },
 
     create = function( self )
         self._namedParams = {}
@@ -66,10 +70,14 @@ node "BEH_Conduite_Automate_INF_Escorter"
 {
     activations =
     {
-        { "BEH_Dispositif_Automate_INF_GererLesAppuis_", {} },
-        { "BEH_Dispositif_Automate_INF_GererLeDispositif_", {} },
-        { "BEH_RC_Automate_GererConditionOperationnelle", {} },
+        { "BEH_Dispositif_Automate_INF_GererLesAppuis_", { "onHalt" } },
+        { "BEH_Dispositif_Automate_INF_GererLeDispositif_", { "onHalt" } },
+        { "BEH_RC_Automate_GererConditionOperationnelle", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_Escorter" } },
 
     create = function( self )
         self._namedParams = {}

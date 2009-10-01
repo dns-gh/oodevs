@@ -11,9 +11,13 @@ includedFiles["sources/common/automates/missionsreactionpopulations/canaliserpop
 {
     activations =
     {
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Mission_Automate_AssignerCanaliserPopulationsAListe", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", { "onHalt" } },
+        { "BEH_Mission_Automate_AssignerCanaliserPopulationsAListe", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_CanaliserPopulations" } },
 
     create = function( self )
         self._namedParams = {}
@@ -29,7 +33,8 @@ includedFiles["sources/common/automates/missionsreactionpopulations/canaliserpop
             do
                 if( DIA_IsListEmpty( self._namedParams.mission.zones_ ) ) then
                     self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_CanaliserPopulations" } )
+Halt( self )
                     do return end
                 end
 
@@ -74,14 +79,16 @@ includedFiles["sources/common/automates/missionsreactionpopulations/canaliserpop
 elseif switch_1 == eMRT_MissionImpossible then
                     DEC_RC( eRC_MissionImpossible )
                                         self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_CanaliserPopulations" } )
+Halt( self )
                     do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_CanaliserPopulations" } )
+Halt( self )
                     do return end
 
                                 end

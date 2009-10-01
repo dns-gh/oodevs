@@ -6,6 +6,8 @@ include "Common/Automates/Behaviors.bms"
 
 node "BEH_Defaut"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Defaut" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.nDummy = self.params[1]

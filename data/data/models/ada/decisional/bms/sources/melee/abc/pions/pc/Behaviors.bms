@@ -67,8 +67,12 @@ objectifEsquive = 1,
 {
     activations =
     {
-        { "BEH_Mot_Pion_Embarquer", {} },
+        { "BEH_Mot_Pion_Embarquer", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Pion_ABC_Default" } },
 
     create = function( self )
     end,

@@ -32,8 +32,12 @@ includedFiles["sources/melee/abc/automates/common/Gestion pions detruits.bms"] =
 {
     activations =
     {
-        { "BEH_Dispositif_Automate_ABC_AssignerReleve", {} },
+        { "BEH_Dispositif_Automate_ABC_AssignerReleve", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dispositif_Automate_ABC_GererPionsDetruits_" } },
 
     create = function( self )
         self._namedParams = {}
@@ -118,6 +122,8 @@ node "BEH_Dispositif_Automate_ABC_AssignerReleve"
     {
         max = 1,
     },
+
+    feedbacks = { { { "onHalt" }, "BEH_Dispositif_Automate_ABC_AssignerReleve" } },
 
     create = function( self )
         self._namedParams = {}

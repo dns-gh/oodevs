@@ -9,6 +9,8 @@ includedFiles["sources/appui/rens/automates/roem/common/missions/renseignersur/R
 ]]--[[// *****************************************************************************
 ]]node "BEH_Automate_CDT_RENS_ROEM_RenseignerSur"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Automate_CDT_RENS_ROEM_RenseignerSur" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params[1]

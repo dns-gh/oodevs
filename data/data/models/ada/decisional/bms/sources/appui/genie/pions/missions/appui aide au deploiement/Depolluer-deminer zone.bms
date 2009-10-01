@@ -11,12 +11,16 @@ includedFiles["sources/appui/genie/pions/missions/appui aide au deploiement/Depo
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "BEH_Objet_Pion_GEN_DeminerZone", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "BEH_Objet_Pion_GEN_DeminerZone", { "onHalt" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_GEN_DepolluerZone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -38,7 +42,8 @@ includedFiles["sources/appui/genie/pions/missions/appui aide au deploiement/Depo
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                                                 self.params.__returnValue = eActionImpossible
-                        Halt( self )
+                        Feedback( self.feedbacks["onHalt"], { "MIS_Pion_GEN_DepolluerZone" } )
+Halt( self )
                         do return end
 
                     end
@@ -128,10 +133,14 @@ node "BEH_Objet_Pion_GEN_DeminerZone"
 {
     activations =
     {
-        { "BEH_Objet_Pion_GEN_Deminer", {} },
-        { "ACT_Pion_GEN_AttendreRenforcementPour", {} },
-        { "ACT_Info_Trace", {} },
+        { "BEH_Objet_Pion_GEN_Deminer", { "onHalt" } },
+        { "ACT_Pion_GEN_AttendreRenforcementPour", { "onHalt" } },
+        { "ACT_Info_Trace", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Objet_Pion_GEN_DeminerZone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -193,9 +202,13 @@ node "BEH_Objet_Pion_GEN_Deminer"
 
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
-        { "ACT_Obj_Pion_GEN_ReduireObstacle", {} },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "ACT_Obj_Pion_GEN_ReduireObstacle", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Objet_Pion_GEN_Deminer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -213,7 +226,8 @@ node "BEH_Objet_Pion_GEN_Deminer"
 ]]self.positionProcheObjet = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( DEC_ConnaissanceObjet_Localisation( self._namedParams.obj ) )
                 if( ( self.positionProcheObjet == 0 or self.positionProcheObjet == nil ) ) then
                     self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Objet_Pion_GEN_Deminer" } )
+Halt( self )
                     do return end
                 end
 

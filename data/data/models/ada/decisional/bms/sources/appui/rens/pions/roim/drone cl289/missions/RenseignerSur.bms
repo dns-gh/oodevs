@@ -14,14 +14,18 @@ include "bit.lua"
 {
     activations =
     {
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Obs_Pion_Rens_GererObservationDans", {} },
-        { "ACT_Connaissance_Rens_EnregistrerDonnees", {} },
-        { "BEH_Dep_ProgressionSur", {} },
-        { "ACT_Dep_Pion_RENS_VolerA", {} },
-        { "ACT_Connaissance_Rens_ExtraireDonnees", {} },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "ACT_Info_Trace", { "onHalt" } },
+        { "BEH_Obs_Pion_Rens_GererObservationDans", { "onHalt" } },
+        { "ACT_Connaissance_Rens_EnregistrerDonnees", { "onHalt" } },
+        { "BEH_Dep_ProgressionSur", { "onHalt" } },
+        { "ACT_Dep_Pion_RENS_VolerA", { "onHalt" } },
+        { "ACT_Connaissance_Rens_ExtraireDonnees", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_RENS_ROIM_CL289_RenseignerSur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -34,101 +38,101 @@ include "bit.lua"
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         --[[//---------------------------------------------------------------------
-        ]]--[[// Commencer le mode enregistrement
-        ]]--[[//---------------------------------------------------------------------
-        ]]if( ModuleBegins() ) then
-        do
-            --[[// imposssible si pas mise en oeuvre
-            ]]if( not myself.bMiseEnOeuvre_ ) then
+]]--[[// Commencer le mode enregistrement
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
             do
-                DEC_Trace( "----- Le drone doit être mise en oeuvre -----" )
-                DEC_RC( eRC_MissionImpossible )
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt( self )
-                return
-            end
-        end
+                --[[// imposssible si pas mise en oeuvre
+]]if( not myself.bMiseEnOeuvre_ ) then
+                    do
+                        DEC_Trace( "----- Le drone doit être mise en oeuvre -----" )
+                        DEC_RC( eRC_MissionImpossible )
+                                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_RENS_ROIM_CL289_RenseignerSur" } )
+Halt( self )
+                        do return end
 
-        if( myself.bEnExploitation_ ) then
-            do
-                DEC_Trace( "----- Le drone est en exploitation -----" )
-                DEC_RC( eRC_DroneEnExploitation )
-                DEC_RC( eRC_MissionImpossible )
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt( self )
-                return
-            end
-            --[[// pour être sur de revenir au point de départ
-            ]]                end
-
-            DEC_ListePoints_PushBack( self.ficelleDeVol, DEC_Agent_Position() )
-        end
-        --[[//=========================================================================
-        ]]--[[// SQUELETTE DE LA MISSION
-        ]]--[[//
-        ]]--[[// strength = 1
-        ]]--[[//
-        ]]--[[//=========================================================================
-        ]]        end
-
-        switch_1 = self.ePhaseMission
-        if switch_1 == ePreparerMission then
-            --[[//---------------------------------------------------------------------
-            ]]--[[// Preparation de la mission
-            ]]--[[//---------------------------------------------------------------------
-            ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-            self.ePhaseMission = eProgresser
-
-            --[[//---------------------------------------------------------------------
-            ]]--[[// Voler
-            ]]--[[//---------------------------------------------------------------------
-            ]]elseif switch_1 == eProgresser then
-            Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
-            Activate( self.activations.ACT_Info_Trace, 1, { "---------LANCEMENT DU DRONE---------", } )
-            --[[//---------------------------------------------------------------------
-            ]]--[[// Observation et enregistrement des donnees
-            ]]--[[//---------------------------------------------------------------------
-            ]]--[[// activation senseurds dans les ZR
-            ]]Activate( self.activations.BEH_Obs_Pion_Rens_GererObservationDans, 1, { self._namedParams.mission.zonesDeRecherche_, } )
-            Activate( self.activations.ACT_Connaissance_Rens_EnregistrerDonnees, 1, {} )--[[//SPE CL 289
-            ]]
-            --[[//---------------------------------------------------------------------
-            ]]--[[// Deplacement
-            ]]--[[//---------------------------------------------------------------------
-            ]]if( self.eEtat == eActionEffectuee ) then
-            do
-                self.eEtat = eActionEnCours
-                do
-                    self.ePhaseMission = eFinMission
-                    return
-
+                    end
                 end
 
+                if( myself.bEnExploitation_ ) then
+                    do
+                        DEC_Trace( "----- Le drone est en exploitation -----" )
+                        DEC_RC( eRC_DroneEnExploitation )
+                        DEC_RC( eRC_MissionImpossible )
+                                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_RENS_ROIM_CL289_RenseignerSur" } )
+Halt( self )
+                        do return end
+
+                    end
+--[[// pour être sur de revenir au point de départ
+]]                end
+
+            DEC_ListePoints_PushBack( self.ficelleDeVol, DEC_Agent_Position() )
             end
-        end
+--[[//=========================================================================
+]]--[[// SQUELETTE DE LA MISSION
+]]--[[//
+]]--[[// strength = 1
+]]--[[//
+]]--[[//=========================================================================
+]]        end
+
+        switch_1 = self.ePhaseMission
+                if switch_1 == ePreparerMission then
+                    --[[//---------------------------------------------------------------------
+]]--[[// Preparation de la mission
+]]--[[//---------------------------------------------------------------------
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    self.ePhaseMission = eProgresser
+                    
+                --[[//---------------------------------------------------------------------
+]]--[[// Voler
+]]--[[//---------------------------------------------------------------------
+            ]]elseif switch_1 == eProgresser then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
+                    Activate( self.activations.ACT_Info_Trace, 1, { "---------LANCEMENT DU DRONE---------", } )
+                    --[[//---------------------------------------------------------------------
+]]--[[// Observation et enregistrement des donnees
+]]--[[//---------------------------------------------------------------------
+]]--[[// activation senseurds dans les ZR
+]]Activate( self.activations.BEH_Obs_Pion_Rens_GererObservationDans, 1, { self._namedParams.mission.zonesDeRecherche_, } )
+                    Activate( self.activations.ACT_Connaissance_Rens_EnregistrerDonnees, 1, {} )--[[//SPE CL 289
+]]
+                    --[[//---------------------------------------------------------------------
+]]--[[// Deplacement
+]]--[[//---------------------------------------------------------------------
+]]if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhaseMission = eFinMission
+                                                                return
+
+                            end
+
+                        end
+                    end
 
         Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self.ficelleDeVol, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-        --[[// données doctrine 
-        ]]Activate( self.activations.ACT_Dep_Pion_RENS_VolerA, 1, { 350, } )
-
-        --[[//---------------------------------------------------------------------
-        ]]--[[// Fin de la mission  //SPE CL 289
-        ]]--[[//---------------------------------------------------------------------
+                    --[[// données doctrine 
+]]Activate( self.activations.ACT_Dep_Pion_RENS_VolerA, 1, { 350, } )
+                    
+                --[[//---------------------------------------------------------------------
+]]--[[// Fin de la mission  //SPE CL 289
+]]--[[//---------------------------------------------------------------------
         ]]elseif switch_1 == eFinMission then
-        --[[// IMPORTANT POUR AUTOMATE  
-        ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-        if( not myself.bEnExploitation_ and not myself.bMiseEnOeuvre_ ) then
-            Activate( self.activations.ACT_Connaissance_Rens_ExtraireDonnees, 1, {} )
-        end
+                    --[[// IMPORTANT POUR AUTOMATE  
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    if( not myself.bEnExploitation_ and not myself.bMiseEnOeuvre_ ) then
+                        Activate( self.activations.ACT_Connaissance_Rens_ExtraireDonnees, 1, {} )
+                    end
 
+                    
 
+                else
+                                end
 
-    else
-    end
-
-end,
+    end,
 
 --[[// *****************************************************************************
 ]]--[[// BEH_Obs_Pion_Rens_GererObservationDans
@@ -142,30 +146,36 @@ node "BEH_Obs_Pion_Rens_GererObservationDans"
 {
     activations =
     {
-        { "BEH_Obs_Pion_Rens_ActiverObservationDans", {} },
+        { "BEH_Obs_Pion_Rens_ActiverObservationDans", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Obs_Pion_Rens_GererObservationDans" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.zonesDeRecherche = self.params[1]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         --[[//---------------------------------------------------------------------
-        ]]--[[// Init
-        ]]--[[//---------------------------------------------------------------------
-        ]]if( ModuleBegins() ) then
-        do
-            for _,zone in pairs( self._namedParams.zonesDeRecherche ) do
+]]--[[// Init
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                for _,zone in pairs( self._namedParams.zonesDeRecherche ) do
                 local _continue = true
-                StartActivate( self.activations.BEH_Obs_Pion_Rens_ActiverObservationDans, 1, { zone, } )
+                    StartInstance( self, self.activations.BEH_Obs_Pion_Rens_ActiverObservationDans, 1, { zone, } )
+
+                end
 
             end
-
         end
-    end
 
-end,
+    end,
 
 --[[// *****************************************************************************
 ]]--[[// BEH_Obs_Pion_Rens_ActiverObservationDans
@@ -179,8 +189,12 @@ node "BEH_Obs_Pion_Rens_ActiverObservationDans"
 {
     activations =
     {
-        { "ACT_Obs_Rens_ActiverObservationDans", {} },
+        { "ACT_Obs_Rens_ActiverObservationDans", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Obs_Pion_Rens_ActiverObservationDans" } },
 
     create = function( self )
         self._namedParams = {}
@@ -194,26 +208,28 @@ node "BEH_Obs_Pion_Rens_ActiverObservationDans"
 
     end,
 
-    --[[// *****************************************************************************
-    ]]--[[// ACT_Obs_Rens_ActiverObservationDans
-    ]]--[[//
-    ]]--[[// Commentaires: dans cette action on enregistre la perception
-    ]]--[[//
-    ]]--[[// *****************************************************************************
-    ]]}
+--[[// *****************************************************************************
+]]--[[// ACT_Obs_Rens_ActiverObservationDans
+]]--[[//
+]]--[[// Commentaires: dans cette action on enregistre la perception
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
 
-    node "ACT_Obs_Rens_ActiverObservationDans"
-    {
-        create = function( self )
-            self._namedParams = {}
-            self._namedParams.zone = self.params[1]
-        end,
+node "ACT_Obs_Rens_ActiverObservationDans"
+{
+    feedbacks = { { { "onHalt" }, "ACT_Obs_Rens_ActiverObservationDans" } },
 
-        select = function( self )
-            --[[//---------------------------------------------------------------------
-            ]]--[[// Init
-            ]]--[[//---------------------------------------------------------------------
-            ]]        if( ModuleBegins() ) then
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.zone = self.params[1]
+    end,
+
+    select = function( self )
+        --[[//---------------------------------------------------------------------
+]]--[[// Init
+]]--[[//---------------------------------------------------------------------
+]]        if( ModuleBegins() ) then
             do
                 DEC_Trace( "---****----**** activation observation ****----****---" )
                 DEC_Perception_ActiverSenseurs()
@@ -223,10 +239,10 @@ node "BEH_Obs_Pion_Rens_ActiverObservationDans"
     end,
 
     deselect = function( self )
-    end,
+            end,
 
     destroy = function( self )
-        DEC_Trace( "---****----**** Desactivation observation ****----****---" )
+                DEC_Trace( "---****----**** Desactivation observation ****----****---" )
         DEC_Perception_DesactiverSenseurs()
     end,
 
@@ -240,21 +256,23 @@ node "BEH_Obs_Pion_Rens_ActiverObservationDans"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Connaissance_Rens_EnregistrerDonnees"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Connaissance_Rens_EnregistrerDonnees" } },
+
     create = function( self )
     end,
 
     select = function( self )
         --[[//---------------------------------------------------------------------
-        ]]--[[// Init
-        ]]--[[//---------------------------------------------------------------------
-        ]]if( ModuleBegins() ) then
-        do
-            DEC_Trace( "--------- Enregistrement des donnees ---------" )
-            DEC_Perception_ActiverModeEnregistrement()
+]]--[[// Init
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_Trace( "--------- Enregistrement des donnees ---------" )
+                DEC_Perception_ActiverModeEnregistrement()
+            end
         end
-    end
 
-end,
+    end,
 
 }
 
@@ -266,21 +284,23 @@ end,
 ]]--[[// *****************************************************************************
 ]]node "ACT_Connaissance_Rens_ExtraireDonnees"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Connaissance_Rens_ExtraireDonnees" } },
+
     create = function( self )
     end,
 
     select = function( self )
         --[[//---------------------------------------------------------------------
-        ]]--[[// Init
-        ]]--[[//---------------------------------------------------------------------
-        ]]if( ModuleBegins() ) then
-        do
-            DEC_Trace( "--------- Developpement des films ---------" )
-            DEC_Perception_DesactiverModeEnregistrement()
+]]--[[// Init
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_Trace( "--------- Developpement des films ---------" )
+                DEC_Perception_DesactiverModeEnregistrement()
+            end
         end
-    end
 
-end,
+    end,
 
 }
 

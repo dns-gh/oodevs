@@ -11,8 +11,12 @@ includedFiles["sources/common/automates/behaviors/Behaviors - Rens.bms"] = true
 {
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio", {} },
+        { "BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Rens_Automate_GererSilenceRadio" } },
 
     create = function( self )
     end,
@@ -41,15 +45,21 @@ node "BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio"
 {
     activations =
     {
-        { "BEH_Ordre_Automate_ConduitePasserEnSilenceRadio", {} },
-        { "BEH_Ordre_Automate_ConduiteFinSilenceRadio", {} },
-        { "ACT_Ordre_Suppression", {} },
+        { "BEH_Ordre_Automate_ConduitePasserEnSilenceRadio", { "onHalt" } },
+        { "BEH_Ordre_Automate_ConduiteFinSilenceRadio", { "onHalt" } },
+        { "ACT_Ordre_Suppression", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio" } },
 
     create = function( self )
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
         for _,x in pairs( ordres_recus ) do
         local _continue = true
@@ -60,14 +70,14 @@ do
                     local cases_switch_1 = {}
                         if switch_1 == "Rep_OrderConduite_PasserEnSilenceRadio" then
                             DEC_Trace( "$ --- ORDRE Passer en Silence Radio ---$" )
-                            StartActivate( self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadio, 1, {} )
-                            StopActivate( self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadio, {} )
+                            StartInstance( self, self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadio, 1, {} )
+                            StopInstance( self, self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadio, {} )
                             
                                                 cases_switch_1[1] = true
 elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadio" then
                             DEC_Trace( "$ --- ORDRE Autoriser Emissions Radio ---$" )
-                            StopActivate( self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadio, {} )
-                            StartActivate( self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadio, 1, {} )
+                            StopInstance( self, self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadio, {} )
+                            StartInstance( self, self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadio, 1, {} )
                             
                                                 cases_switch_1[2] = true
                         end
@@ -92,15 +102,21 @@ node "BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadar"
 {
     activations =
     {
-        { "BEH_Ordre_Automate_ConduitePasserEnSilenceRadar", {} },
-        { "BEH_Ordre_Automate_ConduiteFinSilenceRadar", {} },
-        { "ACT_Ordre_Suppression", {} },
+        { "BEH_Ordre_Automate_ConduitePasserEnSilenceRadar", { "onHalt" } },
+        { "BEH_Ordre_Automate_ConduiteFinSilenceRadar", { "onHalt" } },
+        { "ACT_Ordre_Suppression", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadar" } },
 
     create = function( self )
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
         for _,x in pairs( ordres_recus ) do
         local _continue = true
@@ -111,14 +127,14 @@ do
                     local cases_switch_1 = {}
                         if switch_1 == "Rep_OrderConduite_PasserEnSilenceRadar" then
                             DEC_Trace( "$ --- ORDRE Passer en Silence Radio ---$" )
-                            StartActivate( self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadar, 1, {} )
-                            StopActivate( self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadar, {} )
+                            StartInstance( self, self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadar, 1, {} )
+                            StopInstance( self, self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadar, {} )
                             
                                                 cases_switch_1[1] = true
 elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadar" then
                             DEC_Trace( "$ --- ORDRE Autoriser Emissions Radio ---$" )
-                            StopActivate( self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadar, {} )
-                            StartActivate( self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadar, 1, {} )
+                            StopInstance( self, self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadar, {} )
+                            StartInstance( self, self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadar, 1, {} )
                             
                                                 cases_switch_1[2] = true
                         end
@@ -143,8 +159,12 @@ node "BEH_Ordre_Automate_ConduitePasserEnSilenceRadio"
 {
     activations =
     {
-        { "ACT_Ordre_PasserEnSilenceRadio", {} },
+        { "ACT_Ordre_PasserEnSilenceRadio", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Ordre_Automate_ConduitePasserEnSilenceRadio" } },
 
     create = function( self )
     end,
@@ -181,8 +201,12 @@ node "BEH_Ordre_Automate_ConduiteFinSilenceRadio"
 {
     activations =
     {
-        { "ACT_Ordre_FinSilenceRadio", {} },
+        { "ACT_Ordre_FinSilenceRadio", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Ordre_Automate_ConduiteFinSilenceRadio" } },
 
     create = function( self )
     end,
@@ -213,6 +237,8 @@ do
 
 node "ACT_Ordre_PasserEnSilenceRadio"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Ordre_PasserEnSilenceRadio" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -238,6 +264,8 @@ node "ACT_Ordre_PasserEnSilenceRadio"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_FinSilenceRadio"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Ordre_FinSilenceRadio" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -265,8 +293,12 @@ node "ACT_Ordre_PasserEnSilenceRadio"
 {
     activations =
     {
-        { "ACT_Ordre_PasserEnSilenceRadar", {} },
+        { "ACT_Ordre_PasserEnSilenceRadar", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Ordre_Automate_ConduitePasserEnSilenceRadar" } },
 
     create = function( self )
     end,
@@ -302,8 +334,12 @@ node "BEH_Ordre_Automate_ConduiteFinSilenceRadar"
 {
     activations =
     {
-        { "ACT_Ordre_FinSilenceRadar", {} },
+        { "ACT_Ordre_FinSilenceRadar", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Ordre_Automate_ConduiteFinSilenceRadar" } },
 
     create = function( self )
     end,
@@ -334,6 +370,8 @@ do
 
 node "ACT_Ordre_FinSilenceRadar"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Ordre_FinSilenceRadar" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -359,6 +397,8 @@ node "ACT_Ordre_FinSilenceRadar"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_PasserEnSilenceRadar"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Ordre_PasserEnSilenceRadar" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]

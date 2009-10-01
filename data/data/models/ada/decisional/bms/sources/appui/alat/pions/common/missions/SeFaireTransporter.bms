@@ -10,14 +10,18 @@ includedFiles["sources/appui/alat/pions/common/missions/SeFaireTransporter.bms"]
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Obs_EtablirVisionCur", {} },
-        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
-        { "ACT_Dep_ALAT_TransportEnCours", {} },
-        { "BEH_Dep_Pion_ALAT_SePoser", {} },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionCur", { "onHalt" } },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "onHalt" } },
+        { "ACT_Dep_ALAT_TransportEnCours", { "onHalt" } },
+        { "BEH_Dep_Pion_ALAT_SePoser", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_SeFaireTransporter" } },
 
     create = function( self )
         self._namedParams = {}
@@ -92,7 +96,8 @@ do
                                 do
                                     DEC_FinMission()
                                                                         self.params.__returnValue = eActionEffectuee
-                                    Halt( self )
+                                    Feedback( self.feedbacks["onHalt"], { "MIS_Pion_SeFaireTransporter" } )
+Halt( self )
                                     do return end
 
                                 end
@@ -119,6 +124,8 @@ do
 
 node "ACT_Dep_ALAT_TransportEnCours"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Dep_ALAT_TransportEnCours" } },
+
     create = function( self )
     end,
 

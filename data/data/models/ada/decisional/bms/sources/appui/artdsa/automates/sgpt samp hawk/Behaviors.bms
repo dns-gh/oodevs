@@ -28,6 +28,8 @@ ennemi = 1,
 --[[//comportement générique aux ssgpt hawk
 ]]node "BEH_Automate_ASA_Defaut"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Automate_ASA_Defaut" } },
+
     create = function( self )
     end,
 

@@ -11,8 +11,12 @@ includedFiles["sources/appui/log/automates/missions/SeDeployer - CDT.bms"] = tru
 {
     activations =
     {
-        { "ACT_Ordre_Automate_LOG_OrdresInopines", {} },
+        { "ACT_Ordre_Automate_LOG_OrdresInopines", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_LOG_SeDeployer" } },
 
     create = function( self )
         self._namedParams = {}

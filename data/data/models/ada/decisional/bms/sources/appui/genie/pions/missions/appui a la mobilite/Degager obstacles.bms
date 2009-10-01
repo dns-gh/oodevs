@@ -14,11 +14,15 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_GEN_AllerReduireObstacle", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Dep_GEN_AllerReduireObstacle", { "onHalt" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_GEN_DegagerObstacles" } },
 
     create = function( self )
         self._namedParams = {}
@@ -102,9 +106,13 @@ node "BEH_Dep_GEN_AllerReduireObstacle"
 {
     activations =
     {
-        { "BEH_Dep_GEN_Retablir_ReagirFaceAObjetDeType", {} },
-        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_GEN_Retablir_ReagirFaceAObjetDeType", { "onHalt" } },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_GEN_AllerReduireObstacle" } },
 
     create = function( self )
         self._namedParams = {}
@@ -122,14 +130,16 @@ node "BEH_Dep_GEN_AllerReduireObstacle"
 ]]local loc = DEC_ConnaissanceObjet_Localisation( self._namedParams.obstacle )
                 if( ( loc == 0 or loc == nil ) ) then
                     self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_GEN_AllerReduireObstacle" } )
+Halt( self )
                     do return end
                 end
 
                 self.ptObst = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( loc )
                 if( ( self.ptObst == 0 or self.ptObst == nil ) ) then
                     self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_GEN_AllerReduireObstacle" } )
+Halt( self )
                     do return end
                 end
 
@@ -152,8 +162,12 @@ node "BEH_Dep_GEN_Retablir_ReagirFaceAObjetDeType"
 {
     activations =
     {
-        { "BEH_Objet_Pion_GEN_ReduireObstacle", {} },
+        { "BEH_Objet_Pion_GEN_ReduireObstacle", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_GEN_Retablir_ReagirFaceAObjetDeType" } },
 
     create = function( self )
         self._namedParams = {}

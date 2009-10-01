@@ -19,11 +19,15 @@ node "MIS_Pion_MILICE_PrendreEtTenir"
 {
     activations =
     {
-        { "BEH_MAJ_AgressiviteMission", {} },
-        { "BEH_Misc_Pion_DefinirTypeMission", {} },
-        { "BEH_Mission_Pion_Milice_PrendreEtTenir", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_MAJ_AgressiviteMission", { "onHalt" } },
+        { "BEH_Misc_Pion_DefinirTypeMission", { "onHalt" } },
+        { "BEH_Mission_Pion_Milice_PrendreEtTenir", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_MILICE_PrendreEtTenir" } },
 
     create = function( self )
         self._namedParams = {}
@@ -68,7 +72,8 @@ elseif switch_1 == eFinMission then
                         do
                             DEC_FinMission()
                                                         self.params.__returnValue = eActionEffectuee
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_MILICE_PrendreEtTenir" } )
+Halt( self )
                             do return end
 
                         end
@@ -91,8 +96,12 @@ node "BEH_Mission_Pion_Milice_PrendreEtTenir"
 {
     activations =
     {
-        { "BEH_Dep_Pion_Milice_PrendreEtTenir", {} },
+        { "BEH_Dep_Pion_Milice_PrendreEtTenir", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_Milice_PrendreEtTenir" } },
 
     create = function( self )
     end,
@@ -135,10 +144,14 @@ node "BEH_Dep_Pion_Milice_PrendreEtTenir"
 {
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
-        { "ACT_Info_Trace", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "ACT_Info_Trace", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_Milice_PrendreEtTenir" } },
 
     create = function( self )
         self._namedParams = {}
@@ -155,13 +168,15 @@ node "BEH_Dep_Pion_Milice_PrendreEtTenir"
             do
                                 do
                                         self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_Milice_PrendreEtTenir" } )
+Halt( self )
                     do return end
 
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_Milice_PrendreEtTenir" } )
+Halt( self )
                 do return end
 
             end
@@ -172,7 +187,8 @@ node "BEH_Dep_Pion_Milice_PrendreEtTenir"
                 self.eActionRejoindre = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_Milice_PrendreEtTenir" } )
+Halt( self )
                     do return end
 
                 end

@@ -20,8 +20,12 @@ includedFiles["sources/melee/abc/automates/pel eei/missions/tenir/Tenir - CDT.bm
 {
     activations =
     {
-        { "BEH_Auto_CDT_ABC_Tenir", {} },
+        { "BEH_Auto_CDT_ABC_Tenir", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_Tenir" } },
 
     create = function( self )
         self._namedParams = {}

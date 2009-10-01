@@ -19,8 +19,12 @@ includedFiles["sources/appui/artfdp/automates/bat reco sam/missions/reconnaitrez
 {
     activations =
     {
-        { "BEH_Conduite_Automate_ASS_ReconnaitreZonesDeploiement", {} },
+        { "BEH_Conduite_Automate_ASS_ReconnaitreZonesDeploiement", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ASS_ReconnaitreZonesDeploiement" } },
 
     create = function( self )
         self._namedParams = {}

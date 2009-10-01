@@ -17,9 +17,13 @@ include "bit.lua"
 
     activations =
     {
-        { "ACT_Dep_ModulationVitesse", {} },
-        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
+        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_ALAT_DecrocherFaceA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -37,13 +41,15 @@ include "bit.lua"
 ]]--[[//----------------------------------------------------------------------
 ]]if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.repUnite ) ) then
             self.params.__returnValue = eActionImpossible
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Eni_Pion_ALAT_DecrocherFaceA" } )
+Halt( self )
             do return end
         end
 
         if( DEC_ConnaissanceAgent_EstMort( self._namedParams.repUnite ) ) then
             self.params.__returnValue = eActionImpossible
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Eni_Pion_ALAT_DecrocherFaceA" } )
+Halt( self )
             do return end
         end
 
@@ -51,7 +57,8 @@ include "bit.lua"
 ]]--[[//la peine de decrocher
 ]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( self._namedParams.repUnite ) ) >= self.rDistanceEffective ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Eni_Pion_ALAT_DecrocherFaceA" } )
+Halt( self )
             do return end
         end
 
@@ -71,7 +78,8 @@ if( ( myself.ptRegroupement_ ~= 0 and myself.ptRegroupement_ ~= nil ) ) then
                 end
 
                 if( ( self.positionSurete == 0 or self.positionSurete == nil ) ) then
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Eni_Pion_ALAT_DecrocherFaceA" } )
+Halt( self )
                     do return end
                 end
 
@@ -83,7 +91,8 @@ if( ( myself.ptRegroupement_ ~= 0 and myself.ptRegroupement_ ~= nil ) ) then
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Eni_Pion_ALAT_DecrocherFaceA" } )
+Halt( self )
                     do return end
 
                 end
@@ -137,12 +146,16 @@ node "BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire"
 
     activations =
     {
-        { "ACT_Dep_SePosterFaceA", {} },
-        { "ACT_Obs_ObserverPoint", {} },
-        { "ACT_Misc_Delai", {} },
-        { "ACT_MAJ_EnnemiEnCours", {} },
-        { "BEH_Eni_Pion_ALAT_AllerDetruireEnnemi", {} },
+        { "ACT_Dep_SePosterFaceA", { "onHalt" } },
+        { "ACT_Obs_ObserverPoint", { "onHalt" } },
+        { "ACT_Misc_Delai", { "onHalt" } },
+        { "ACT_MAJ_EnnemiEnCours", { "onHalt" } },
+        { "BEH_Eni_Pion_ALAT_AllerDetruireEnnemi", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire" } },
 
     create = function( self )
         self._namedParams = {}
@@ -158,17 +171,20 @@ node "BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire"
         self.eEtat = self.eEtat or eActionEnCours
         --[[//si la connaissance est invalide, halter le comportement
 ]]if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.bufferConnaissanceAgent ) ) then
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire" } )
+Halt( self )
             do return end
         end
 
         if( not S_Eni_Pion_ALAT_PeutDetruire( myself, self._namedParams.bufferConnaissanceAgent ) ) then
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire" } )
+Halt( self )
             do return end
         end
 
         if( DEC_ConnaissanceAgent_EstMort( self._namedParams.bufferConnaissanceAgent ) ) then
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire" } )
+Halt( self )
             do return end
         end
 
@@ -231,13 +247,17 @@ node "BEH_Eni_Pion_ALAT_AllerDetruireEnnemi"
 
     activations =
     {
-        { "ACT_Misc_VerouillerConnaissance", {} },
-        { "ACT_Tir_DirectSur", {} },
-        { "ACT_Dep_SePoster", {} },
-        { "BEH_Eni_SePosterFaceA", {} },
-        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
-        { "BEH_Eni_Pion_ALAT_DecrocherFaceA", {} },
+        { "ACT_Misc_VerouillerConnaissance", { "onHalt" } },
+        { "ACT_Tir_DirectSur", { "onHalt" } },
+        { "ACT_Dep_SePoster", { "onHalt" } },
+        { "BEH_Eni_SePosterFaceA", { "onHalt" } },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "onHalt" } },
+        { "BEH_Eni_Pion_ALAT_DecrocherFaceA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_ALAT_AllerDetruireEnnemi" } },
 
     create = function( self )
         self._namedParams = {}
@@ -257,12 +277,14 @@ node "BEH_Eni_Pion_ALAT_AllerDetruireEnnemi"
         --[[//si la connaissance n'est plus valide, on arrete le comportement
 ]]--[[//ou si on n'a plus de quoi tirer dessus
 ]]if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.ennemi ) ) then
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Eni_Pion_ALAT_AllerDetruireEnnemi" } )
+Halt( self )
             do return end
         end
 
         if( not S_Eni_Pion_ALAT_PeutDetruire( myself, self._namedParams.ennemi ) ) then
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Eni_Pion_ALAT_AllerDetruireEnnemi" } )
+Halt( self )
             do return end
         end
 
@@ -309,7 +331,8 @@ node "BEH_Eni_Pion_ALAT_AllerDetruireEnnemi"
                         self.eEtatAttaque = eActionEnCours
                                                 do
                                                         self.params.__returnValue = eActionEffectuee
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "BEH_Eni_Pion_ALAT_AllerDetruireEnnemi" } )
+Halt( self )
                             do return end
 
                         end
@@ -366,12 +389,16 @@ node "BEH_Eni_Pion_ALAT_Jalonner"
 
     activations =
     {
-        { "ACT_RC", {} },
-        { "BEH_Eni_SePosterFaceA", {} },
-        { "ACT_Misc_VerouillerConnaissance", {} },
-        { "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers", {} },
-        { "BEH_Eni_Pion_ALAT_DecrocherFaceA", {} },
+        { "ACT_RC", { "onHalt" } },
+        { "BEH_Eni_SePosterFaceA", { "onHalt" } },
+        { "ACT_Misc_VerouillerConnaissance", { "onHalt" } },
+        { "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers", { "onHalt" } },
+        { "BEH_Eni_Pion_ALAT_DecrocherFaceA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_ALAT_Jalonner" } },
 
     create = function( self )
         self._namedParams = {}
@@ -384,12 +411,14 @@ node "BEH_Eni_Pion_ALAT_Jalonner"
         self.rDistanceEsquive = self.rDistanceEsquive or self.rDistanceEfficace + self._namedParams.distanceSecu
         --[[//Fin du comportement si la connaissance n'est plus valide    
 ]]if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.repEni ) ) then
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Eni_Pion_ALAT_Jalonner" } )
+Halt( self )
             do return end
         end
 
         if( DEC_ConnaissanceAgent_EstMort( self._namedParams.repEni ) ) then
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Eni_Pion_ALAT_Jalonner" } )
+Halt( self )
             do return end
         end
 
@@ -430,6 +459,8 @@ do
 
 node "BEH_Eni_Pion_ALAT_EviterContactsAvecEnnemisConnus"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_ALAT_EviterContactsAvecEnnemisConnus" } },
+
     create = function( self )
     end,
 

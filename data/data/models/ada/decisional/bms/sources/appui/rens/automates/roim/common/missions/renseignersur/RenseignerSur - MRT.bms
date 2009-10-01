@@ -11,9 +11,13 @@ includedFiles["sources/appui/rens/automates/roim/common/missions/renseignersur/R
 {
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "BEH_Mission_Automate_RENS_ROIM_AssignerMettreEnOeuvreA", {} },
+        { "ACT_Info_Trace", { "onHalt" } },
+        { "BEH_Mission_Automate_RENS_ROIM_AssignerMettreEnOeuvreA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_RENS_ROIM_AssignerMettreEnOeuvreA" } },
 
     create = function( self )
         self._namedParams = {}

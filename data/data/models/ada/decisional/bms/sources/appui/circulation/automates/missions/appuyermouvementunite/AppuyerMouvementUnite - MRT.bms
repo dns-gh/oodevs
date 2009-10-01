@@ -11,9 +11,13 @@ includedFiles["sources/appui/circulation/automates/missions/appuyermouvementunit
 {
     activations =
     {
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementAListe", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", { "onHalt" } },
+        { "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementAListe", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_LOG_AppuyerMouvement" } },
 
     create = function( self )
         self._namedParams = {}
@@ -78,7 +82,8 @@ includedFiles["sources/appui/circulation/automates/missions/appuyermouvementunit
 elseif switch_1 == eMRT_MissionImpossible then
                     --[[//DEC_RC( eRC_MissionImpossible );
 ]]                    self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_LOG_AppuyerMouvement" } )
+Halt( self )
                     do return end
 
                     
@@ -88,7 +93,8 @@ elseif switch_1 == eMRT_MissionImpossible then
 ]]elseif switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_LOG_AppuyerMouvement" } )
+Halt( self )
                     do return end
 
                     

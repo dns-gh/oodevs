@@ -21,12 +21,16 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
-        { "BEH_Dep_Pion_ALAT_RejoindrePion", {} },
-        { "BEH_Log_Pion_ALAT_SeRecompleterSurPlot", {} },
-        { "BEH_Log_Pion_ALAT_SeRecompleterSurTC2", {} },
-        { "BEH_Dep_Pion_ALAT_SePoser", {} },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "onHalt" } },
+        { "BEH_Dep_Pion_ALAT_RejoindrePion", { "onHalt" } },
+        { "BEH_Log_Pion_ALAT_SeRecompleterSurPlot", { "onHalt" } },
+        { "BEH_Log_Pion_ALAT_SeRecompleterSurTC2", { "onHalt" } },
+        { "BEH_Dep_Pion_ALAT_SePoser", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Log_Pion_ALAT_Recompletement" } },
 
     create = function( self )
     end,
@@ -69,7 +73,8 @@ include "bit.lua"
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "BEH_Log_Pion_ALAT_Recompletement" } )
+Halt( self )
                             do return end
 
                         end
@@ -132,7 +137,8 @@ elseif switch_1 == eRecompleter then
                                                         do
                                 myself.bEnPhaseRavitaillement_ = false
                                                                 self.params.__returnValue = eActionEffectuee
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "BEH_Log_Pion_ALAT_Recompletement" } )
+Halt( self )
                                 do return end
 
                             end
@@ -147,7 +153,8 @@ elseif switch_1 == eRecompleter then
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "BEH_Log_Pion_ALAT_Recompletement" } )
+Halt( self )
                             do return end
 
                         end
@@ -192,9 +199,13 @@ node "BEH_Log_Pion_ALAT_GererPlotsRavitaillement"
 {
     activations =
     {
-        { "BEH_Log_Pion_ALAT_Recompletement", {} },
-        { "BEH_Mot_Pion_ALAT_AffecterVariablesDEtat", {} },
+        { "BEH_Log_Pion_ALAT_Recompletement", { "onHalt" } },
+        { "BEH_Mot_Pion_ALAT_AffecterVariablesDEtat", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Log_Pion_ALAT_GererPlotsRavitaillement" } },
 
     create = function( self )
     end,
@@ -250,9 +261,13 @@ node "BEH_Log_Pion_ALAT_SeRecompleterSurPlot"
 {
     activations =
     {
-        { "ACT_RC", {} },
-        { "ACT_Misc_Delai", {} },
+        { "ACT_RC", { "onHalt" } },
+        { "ACT_Misc_Delai", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Log_Pion_ALAT_SeRecompleterSurPlot" } },
 
     create = function( self )
         self._namedParams = {}
@@ -263,7 +278,8 @@ node "BEH_Log_Pion_ALAT_SeRecompleterSurPlot"
         self.eEtat = self.eEtat or eActionEnCours
         if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.plotRavitaillement ) ) then
             self.params.__returnValue = eActionImpossible
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Log_Pion_ALAT_SeRecompleterSurPlot" } )
+Halt( self )
             do return end
         end
 
@@ -275,7 +291,8 @@ node "BEH_Log_Pion_ALAT_SeRecompleterSurPlot"
                     F_POLY_PION_ALAT_RECOMPLETEMENT( myself.porteeAction_, myself.ambianceMission_ )
                     Activate( self.activations.ACT_RC, 1, { eRC_RavitaillementTermine, } )
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Log_Pion_ALAT_SeRecompleterSurPlot" } )
+Halt( self )
                     do return end
 
                 end
@@ -290,7 +307,8 @@ node "BEH_Log_Pion_ALAT_SeRecompleterSurPlot"
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "BEH_Log_Pion_ALAT_SeRecompleterSurPlot" } )
+Halt( self )
                 do return end
 
             end
@@ -312,9 +330,13 @@ node "BEH_Log_Pion_ALAT_SeRecompleterSurTC2"
 {
     activations =
     {
-        { "ACT_RC", {} },
-        { "ACT_Misc_Delai", {} },
+        { "ACT_RC", { "onHalt" } },
+        { "ACT_Misc_Delai", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Log_Pion_ALAT_SeRecompleterSurTC2" } },
 
     create = function( self )
     end,
@@ -329,7 +351,8 @@ node "BEH_Log_Pion_ALAT_SeRecompleterSurTC2"
                     F_POLY_PION_ALAT_RECOMPLETEMENT( myself.porteeAction_, myself.ambianceMission_ )
                     Activate( self.activations.ACT_RC, 1, { eRC_RavitaillementTermine, } )
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Log_Pion_ALAT_SeRecompleterSurTC2" } )
+Halt( self )
                     do return end
 
                 end
@@ -344,7 +367,8 @@ node "BEH_Log_Pion_ALAT_SeRecompleterSurTC2"
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "BEH_Log_Pion_ALAT_SeRecompleterSurTC2" } )
+Halt( self )
                 do return end
 
             end
@@ -363,8 +387,12 @@ node "BEH_Log_Pion_ALAT_AjoutNouveauPlotsDansFuseau"
 {
     activations =
     {
-        { "BEH_Log_Pion_ALAT_GererPlotsRavitaillement", {} },
+        { "BEH_Log_Pion_ALAT_GererPlotsRavitaillement", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Log_Pion_ALAT_AjoutNouveauPlotsDansFuseau" } },
 
     create = function( self )
     end,

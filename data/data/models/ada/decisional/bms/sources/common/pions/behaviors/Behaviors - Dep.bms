@@ -19,10 +19,14 @@ include "bit.lua"
 
     activations =
     {
-        { "BEH_Dep_GererProgression", {} },
-        { "BEH_Dep_SeDeplacer", {} },
-        { "ACT_Obs_EtablirVisionCur", {} },
+        { "BEH_Dep_GererProgression", { "onHalt" } },
+        { "BEH_Dep_SeDeplacer", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionCur", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_ProgressionSur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -47,7 +51,8 @@ include "bit.lua"
                                 do
                     self.it = S_Misc_DetruireItineraire( self.it, "BEH_Dep_ProgressionSur" )
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_ProgressionSur" } )
+Halt( self )
                     do return end
 
                 end
@@ -89,10 +94,14 @@ node "BEH_Dep_ProgressionVers"
 
     activations =
     {
-        { "BEH_Dep_GererProgression", {} },
-        { "BEH_Dep_SeDeplacer", {} },
-        { "ACT_Obs_EtablirVisionCur", {} },
+        { "BEH_Dep_GererProgression", { "onHalt" } },
+        { "BEH_Dep_SeDeplacer", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionCur", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_ProgressionVers" } },
 
     create = function( self )
         self._namedParams = {}
@@ -111,7 +120,8 @@ node "BEH_Dep_ProgressionVers"
 
         --[[// si l'objectif à varié de plus de 1000 mètres, recalculer un itinéraire
 ]]if( DEC_Geometrie_Distance( self._namedParams.pointArrivee, self.pointARejoindre ) >= 1000 ) then
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Dep_ProgressionVers" } )
+Halt( self )
             do return end
         end
 
@@ -128,7 +138,8 @@ node "BEH_Dep_ProgressionVers"
                                 do
                     self.it = S_Misc_DetruireItineraire( self.it, "BEH_Dep_ProgressionVers" )
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_ProgressionVers" } )
+Halt( self )
                     do return end
 
                 end
@@ -159,9 +170,13 @@ node "BEH_Dep_SeDeplacer"
 {
     activations =
     {
-        { "ACT_Pions_SeDesinstaller", {} },
-        { "ACT_Dep_SeDeplacer", {} },
+        { "ACT_Pions_SeDesinstaller", { "onHalt" } },
+        { "ACT_Dep_SeDeplacer", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_SeDeplacer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -175,7 +190,8 @@ node "BEH_Dep_SeDeplacer"
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_SeDeplacer" } )
+Halt( self )
                     do return end
 
                 end
@@ -203,21 +219,27 @@ node "BEH_Dep_GererAvantPoint"
 {
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "BEH_Progression_Pion_INF_Aborder", {} },
-        { "BEH_Obs_Pion_Gen_ReconnaitrePoint", {} },
-        { "BEH_Obs_Pion_NBC_ReconnaitrePoint", {} },
-        { "BEH_Obs_Pion_ABC_ReconnaitrePoint", {} },
-        { "BEH_Obs_Pion_INF_RecoPoint_Copie", {} },
-        { "ACT_Points_Suppression", {} },
+        { "ACT_Info_Trace", { "onHalt" } },
+        { "BEH_Progression_Pion_INF_Aborder", { "onHalt" } },
+        { "BEH_Obs_Pion_Gen_ReconnaitrePoint", { "onHalt" } },
+        { "BEH_Obs_Pion_NBC_ReconnaitrePoint", { "onHalt" } },
+        { "BEH_Obs_Pion_ABC_ReconnaitrePoint", { "onHalt" } },
+        { "BEH_Obs_Pion_INF_RecoPoint_Copie", { "onHalt" } },
+        { "ACT_Points_Suppression", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_GererAvantPoint" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.typeProgression = self.params[1]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         local listePointInterressant = DEC_GetCategory( "points_interressants" )
         for _,x in pairs( listePointInterressant ) do
         local _continue = true
@@ -241,7 +263,7 @@ do
                                                     if( GetActivity() >= 1 and F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Vitesse ) then
                                                         do
                                                             Activate( self.activations.ACT_Info_Trace, 1, { "Sur avant bond", } )
-                                                            StartActivate( self.activations.BEH_Progression_Pion_INF_Aborder, 1, { DEC_GetDestPoint( repAvantPt ), } )
+                                                            StartInstance( self, self.activations.BEH_Progression_Pion_INF_Aborder, 1, { DEC_GetDestPoint( repAvantPt ), } )
                                                         end
                                                     end
 
@@ -255,19 +277,19 @@ elseif switch_1 == eTypePointParticulier then
                                                 pointVar = DEC_GetDestPoint( repAvantPt )
                                                 if( appuiGeniePions() ) then
 if( F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Vitesse ) then
-                                                        StartActivate( self.activations.BEH_Obs_Pion_Gen_ReconnaitrePoint, 1, { pointVar, } )
+                                                        StartInstance( self, self.activations.BEH_Obs_Pion_Gen_ReconnaitrePoint, 1, { pointVar, } )
                                                     end
                                                 end
 
                                                 if( appuiNbcPionsCommon() ) then
 if( F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Vitesse ) then
-                                                        StartActivate( self.activations.BEH_Obs_Pion_NBC_ReconnaitrePoint, 1, { pointVar, } )
+                                                        StartInstance( self, self.activations.BEH_Obs_Pion_NBC_ReconnaitrePoint, 1, { pointVar, } )
                                                     end
                                                 end
 
                                                 if( meleeAbcPionsCommon() ) then
 if( F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Vitesse ) then
-                                                        StartActivate( self.activations.BEH_Obs_Pion_ABC_ReconnaitrePoint, 1, { pointVar, } )
+                                                        StartInstance( self, self.activations.BEH_Obs_Pion_ABC_ReconnaitrePoint, 1, { pointVar, } )
                                                     end
                                                 end
 
@@ -276,7 +298,7 @@ if( F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Vitesse ) then
                                                         if( GetActivity() >= 1 and F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Vitesse ) then
                                                             do
                                                                 Activate( self.activations.ACT_Info_Trace, 1, { "Sur avant point", } )
-                                                                StartActivate( self.activations.BEH_Obs_Pion_INF_RecoPoint_Copie, 1, { DEC_GetRepPoint( pointVar ), S_TempsObservationPoint_Ambiance(), } )
+                                                                StartInstance( self, self.activations.BEH_Obs_Pion_INF_RecoPoint_Copie, 1, { DEC_GetRepPoint( pointVar ), S_TempsObservationPoint_Ambiance(), } )
                                                             end
                                                         end
 
@@ -315,20 +337,26 @@ node "BEH_Dep_GererPoint"
 {
     activations =
     {
-        { "BEH_Obs_Pion_NBC_SePosterSurBond", {} },
-        { "BEH_Obs_Pion_ABC_SePosterSurBond", {} },
-        { "BEH_Misc_Pion_INF_MAJ_Repli", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Poste_Pion_INF_ArretCourt", {} },
-        { "ACT_Points_Suppression", {} },
+        { "BEH_Obs_Pion_NBC_SePosterSurBond", { "onHalt" } },
+        { "BEH_Obs_Pion_ABC_SePosterSurBond", { "onHalt" } },
+        { "BEH_Misc_Pion_INF_MAJ_Repli", { "onHalt" } },
+        { "ACT_Info_Trace", { "onHalt" } },
+        { "BEH_Poste_Pion_INF_ArretCourt", { "onHalt" } },
+        { "ACT_Points_Suppression", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_GererPoint" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.typeProgression = self.params[1]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Regarder les points interssants
 ]]--[[//-----------------------------------------------------------------------------
@@ -346,10 +374,10 @@ do
 ]]if( ( bit.band( self._namedParams.typeProgression, DEC_GetTypePoint( repPoint ) ) ) ~= eProgressionDirect ) then
                             do
                                 if( appuiNbcPionsCommon() ) then
-                                    StartActivate( self.activations.BEH_Obs_Pion_NBC_SePosterSurBond, 1, { repPoint, } )
+                                    StartInstance( self, self.activations.BEH_Obs_Pion_NBC_SePosterSurBond, 1, { repPoint, } )
                                 else
 if( meleeAbcPionsCommon() ) then
-                                        StartActivate( self.activations.BEH_Obs_Pion_ABC_SePosterSurBond, 1, { repPoint, } )
+                                        StartInstance( self, self.activations.BEH_Obs_Pion_ABC_SePosterSurBond, 1, { repPoint, } )
                                     else
 if( meleeInfPionsCommon() ) then
                                             do
@@ -357,7 +385,7 @@ if( meleeInfPionsCommon() ) then
                                                     do
                                                         Activate( self.activations.BEH_Misc_Pion_INF_MAJ_Repli, 1, {} )
                                                         Activate( self.activations.ACT_Info_Trace, 1, { "Sur point ou bond", } )
-                                                        StartActivate( self.activations.BEH_Poste_Pion_INF_ArretCourt, 1, { repPoint:Getpoint_(), S_TempsObservationPoint_Ambiance(), } )
+                                                        StartInstance( self, self.activations.BEH_Poste_Pion_INF_ArretCourt, 1, { repPoint:Getpoint_(), S_TempsObservationPoint_Ambiance(), } )
                                                     end
                                                 end
 
@@ -396,12 +424,16 @@ node "BEH_Dep_GererProgression"
 
     activations =
     {
-        { "BEH_Lima_GererLimas", {} },
-        { "BEH_Dep_GererPoint", {} },
-        { "BEH_Dep_GererAvantPoint", {} },
-        { "ACT_Obs_ElargirObservation", {} },
-        { "BEH_Dep_ReagirFaceAObstacle", {} },
+        { "BEH_Lima_GererLimas", { "onHalt" } },
+        { "BEH_Dep_GererPoint", { "onHalt" } },
+        { "BEH_Dep_GererAvantPoint", { "onHalt" } },
+        { "ACT_Obs_ElargirObservation", { "onHalt" } },
+        { "BEH_Dep_ReagirFaceAObstacle", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_GererProgression" } },
 
     create = function( self )
         self._namedParams = {}
@@ -450,10 +482,14 @@ node "BEH_Dep_Progresser"
 {
     activations =
     {
-        { "BEH_Dep_GererProgression", {} },
-        { "ACT_Pions_SeDesinstaller", {} },
-        { "ACT_Dep_SeDeplacer", {} },
+        { "BEH_Dep_GererProgression", { "onHalt" } },
+        { "ACT_Pions_SeDesinstaller", { "onHalt" } },
+        { "ACT_Dep_SeDeplacer", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Progresser" } },
 
     create = function( self )
         self._namedParams = {}
@@ -471,7 +507,8 @@ node "BEH_Dep_Progresser"
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Progresser" } )
+Halt( self )
                     do return end
 
                 end
@@ -499,6 +536,8 @@ node "BEH_Dep_Progresser"
 
 node "BEH_Dep_ReagirFaceAObstacle"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Dep_ReagirFaceAObstacle" } },
+
     create = function( self )
     end,
 
@@ -545,8 +584,12 @@ node "BEH_Dep_SePoster"
 {
     activations =
     {
-        { "ACT_Dep_SePoster", {} },
+        { "ACT_Dep_SePoster", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_SePoster" } },
 
     create = function( self )
     end,
@@ -567,9 +610,13 @@ node "BEH_SePosterFaceAEni"
 {
     activations =
     {
-        { "ACT_Dep_SePosterFaceA", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "ACT_Dep_SePosterFaceA", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_SePosterFaceAEni" } },
 
     create = function( self )
         self._namedParams = {}
@@ -603,9 +650,13 @@ node "BEH_Dep_SePosterFaceADirectionDangereuse"
 {
     activations =
     {
-        { "ACT_Dep_SePosterFaceADir", {} },
-        { "ACT_Obs_EtablirVisionFaceADir", {} },
+        { "ACT_Dep_SePosterFaceADir", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionFaceADir", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_SePosterFaceADirectionDangereuse" } },
 
     create = function( self )
     end,
@@ -642,11 +693,15 @@ node "BEH_Dep_Suivre"
 {
     activations =
     {
-        { "BEH_Dep_Progresser", {} },
-        { "ACT_Dep_ModulationVitesse", {} },
-        { "ACT_Dep_SePoster", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "BEH_Dep_Progresser", { "onHalt" } },
+        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
+        { "ACT_Dep_SePoster", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Suivre" } },
 
     create = function( self )
         self._namedParams = {}
@@ -729,8 +784,12 @@ node "BEH_Dep_SuivreToujoursDeriere"
 {
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_SuivreToujoursDeriere" } },
 
     create = function( self )
         self._namedParams = {}
@@ -760,7 +819,8 @@ node "BEH_Dep_SuivreToujoursDeriere"
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_SuivreToujoursDeriere" } )
+Halt( self )
                     do return end
 
                 end
@@ -772,13 +832,15 @@ node "BEH_Dep_SuivreToujoursDeriere"
             do
                                 do
                                         self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_SuivreToujoursDeriere" } )
+Halt( self )
                     do return end
 
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "BEH_Dep_SuivreToujoursDeriere" } )
+Halt( self )
                 do return end
 
             end
@@ -800,12 +862,16 @@ node "BEH_Dep_Suivre_Elastique"
 {
     activations =
     {
-        { "BEH_Dep_Progresser", {} },
-        { "ACT_Dep_ModulationVitesse", {} },
-        { "ACT_Dep_SePoster", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
-        { "BEH_Dep_ReagirFaceAObstacle", {} },
+        { "BEH_Dep_Progresser", { "onHalt" } },
+        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
+        { "ACT_Dep_SePoster", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "onHalt" } },
+        { "BEH_Dep_ReagirFaceAObstacle", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Suivre_Elastique" } },
 
     create = function( self )
         self._namedParams = {}
@@ -814,7 +880,9 @@ node "BEH_Dep_Suivre_Elastique"
         self._namedParams.rDistanceMax = self.params[3]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
                 self.itVersAmi = self.itVersAmi or nil
         self.eComportement = self.eComportement or eCreerItineraire
         self.eEtat = self.eEtat or eActionEnCours
@@ -873,7 +941,7 @@ node "BEH_Dep_Suivre_Elastique"
                         end
                     end
 
-                    StartActivate( self.activations.BEH_Dep_ReagirFaceAObstacle, 1.1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatObstacle = v else rawset( t, k, v ) end end } ) )
+                    StartInstance( self, self.activations.BEH_Dep_ReagirFaceAObstacle, 1.1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatObstacle = v else rawset( t, k, v ) end end } ) )
                     
                                 cases_switch_1[2] = true
 

@@ -14,9 +14,13 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Dep_Pion_ABC_GererDeboucherEclairage", {} },
-        { "BEH_Mission_Pion_ABC_Eclairer", {} },
+        { "BEH_Dep_Pion_ABC_GererDeboucherEclairage", { "onHalt" } },
+        { "BEH_Mission_Pion_ABC_Eclairer", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_ABC_Eclairer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -46,7 +50,8 @@ include "bit.lua"
 ]]--[[// Comportement de la mission
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible or self.eEtat == eActionEffectuee ) then
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ABC_Eclairer" } )
+Halt( self )
             do return end
         end
 

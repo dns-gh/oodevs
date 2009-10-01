@@ -14,10 +14,14 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Dispositif_Automate_INF_GererLeDispositifRetrograde_", {} },
-        { "BEH_CoordDep_Automate_INF_CoordinationRetrograde_", {} },
-        { "BEH_Conduite_INF_Automate_Freiner_GererLesLC", {} },
+        { "BEH_Dispositif_Automate_INF_GererLeDispositifRetrograde_", { "onHalt" } },
+        { "BEH_CoordDep_Automate_INF_CoordinationRetrograde_", { "onHalt" } },
+        { "BEH_Conduite_INF_Automate_Freiner_GererLesLC", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_Freiner" } },
 
     create = function( self )
     end,
@@ -47,8 +51,12 @@ node "BEH_Conduite_INF_Automate_Freiner_GererLesLC"
 {
     activations =
     {
-        { "ACT_Ordre_Automate_PasserSurLC", {} },
+        { "ACT_Ordre_Automate_PasserSurLC", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Conduite_INF_Automate_Freiner_GererLesLC" } },
 
     create = function( self )
     end,
@@ -77,9 +85,13 @@ node "BEH_Dispositif_Automate_INF_GererLeDispositifRetrograde_"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerDecrocherA", {} },
-        { "BEH_Mission_Automate_INF_AssignerAppuyerA", {} },
+        { "BEH_Mission_Automate_AssignerDecrocherA", { "onHalt" } },
+        { "BEH_Mission_Automate_INF_AssignerAppuyerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dispositif_Automate_INF_GererLeDispositifRetrograde_" } },
 
     create = function( self )
     end,
@@ -148,9 +160,13 @@ node "BEH_CoordDep_Automate_INF_CoordinationRetrograde_"
 {
     activations =
     {
-        { "BEH_CoordDep_Automate_INF_CoordonnerJalonnement", {} },
-        { "BEH_CoordDep_Automate_INF_CoordonnerMouvement", {} },
+        { "BEH_CoordDep_Automate_INF_CoordonnerJalonnement", { "onHalt" } },
+        { "BEH_CoordDep_Automate_INF_CoordonnerMouvement", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_CoordDep_Automate_INF_CoordinationRetrograde_" } },
 
     create = function( self )
     end,
@@ -173,8 +189,12 @@ node "BEH_CoordDep_Automate_INF_CoordonnerJalonnement"
 {
     activations =
     {
-        { "ACT_Ordre_Automate_INF_Decrocher", {} },
+        { "ACT_Ordre_Automate_INF_Decrocher", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_CoordDep_Automate_INF_CoordonnerJalonnement" } },
 
     create = function( self )
     end,
@@ -228,8 +248,12 @@ node "BEH_CoordDep_Automate_INF_CoordonnerMouvement"
 {
     activations =
     {
-        { "ACT_Ordre_Automate_Pause", {} },
+        { "ACT_Ordre_Automate_Pause", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_CoordDep_Automate_INF_CoordonnerMouvement" } },
 
     create = function( self )
     end,
@@ -276,6 +300,8 @@ do
 
 node "ACT_Ordre_Automate_INF_Decrocher"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Ordre_Automate_INF_Decrocher" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -304,9 +330,13 @@ node "BEH_Conduite_Automate_INF_AppuyerCompromis"
 
     activations =
     {
-        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", {} },
-        { "BEH_Mission_Automate_INF_AssignerAppuyerA", {} },
+        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", { "onHalt" } },
+        { "BEH_Mission_Automate_INF_AssignerAppuyerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_AppuyerCompromis" } },
 
     create = function( self )
         self._namedParams = {}
@@ -314,7 +344,9 @@ node "BEH_Conduite_Automate_INF_AppuyerCompromis"
         self._namedParams.pAAppuyer = self.params[2]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         if( ModuleBegins() ) then
             do
                  do
@@ -322,7 +354,7 @@ node "BEH_Conduite_Automate_INF_AppuyerCompromis"
                     local cases_switch_1 = {}
                         if switch_1 == "Peloton_AMX"
                         or switch_1 == "Peloton_XL" then
-                                                    StartActivate( self.activations.BEH_Mission_Automate_ABC_AssignerSoutenirA, 1, { ePhase_CDT, self._namedParams.pPion, self._namedParams.pAAppuyer, eEtatEchelon_Second, } )
+                                                    StartInstance( self, self.activations.BEH_Mission_Automate_ABC_AssignerSoutenirA, 1, { ePhase_CDT, self._namedParams.pPion, self._namedParams.pAAppuyer, eEtatEchelon_Second, } )
                             
                                                 cases_switch_1[1] = true
 elseif switch_1 == "SectionInfanterie"
@@ -330,7 +362,7 @@ elseif switch_1 == "SectionInfanterie"
                         or switch_1 == "SectionInfanterie_HOT"
                         or switch_1 == "SectionInfanterie_Appui"
                         or switch_1 == "GroupeInfanterie_Mortier" then
-                                                    StartActivate( self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_CDT, self._namedParams.pPion, self._namedParams.pAAppuyer, eEtatEchelon_Second, } )
+                                                    StartInstance( self, self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_CDT, self._namedParams.pPion, self._namedParams.pAAppuyer, eEtatEchelon_Second, } )
                             
                                                 cases_switch_1[2] = true
                         end

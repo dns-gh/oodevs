@@ -14,9 +14,13 @@ includedFiles["sources/appui/trans/pions/behaviors/Behaviors - Dep.bms"] = true
 
     activations =
     {
-        { "BEH_Dep_SeDeplacer", {} },
-        { "ACT_Obs_EtablirVisionCur", {} },
+        { "BEH_Dep_SeDeplacer", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionCur", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_ProgressionVers" } },
 
     create = function( self )
         self._namedParams = {}
@@ -37,7 +41,8 @@ includedFiles["sources/appui/trans/pions/behaviors/Behaviors - Dep.bms"] = true
                                 do
                     self.it = S_Misc_DetruireItineraire( self.it, "BEH_Dep_ProgressionVers" )
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_ProgressionVers" } )
+Halt( self )
                     do return end
 
                 end
@@ -68,9 +73,13 @@ node "BEH_Dep_SeDeplacer"
 {
     activations =
     {
-        { "ACT_Pions_SeDesinstaller", {} },
-        { "ACT_Dep_SeDeplacer", {} },
+        { "ACT_Pions_SeDesinstaller", { "onHalt" } },
+        { "ACT_Dep_SeDeplacer", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_SeDeplacer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -84,7 +93,8 @@ node "BEH_Dep_SeDeplacer"
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_SeDeplacer" } )
+Halt( self )
                     do return end
 
                 end
@@ -112,9 +122,13 @@ node "BEH_Dep_SePosterFaceADirectionDangereuse"
 {
     activations =
     {
-        { "ACT_Dep_SePosterFaceADir", {} },
-        { "ACT_Obs_EtablirVisionFaceADir", {} },
+        { "ACT_Dep_SePosterFaceADir", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionFaceADir", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_SePosterFaceADirectionDangereuse" } },
 
     create = function( self )
     end,
@@ -139,8 +153,12 @@ node "BEH_Dep_Virtuel_ProgressionVers"
 {
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Virtuel_ProgressionVers" } },
 
     create = function( self )
         self._namedParams = {}
@@ -161,6 +179,8 @@ node "BEH_Dep_Virtuel_ProgressionVers"
 
 node "BEH_Dep_Virtuel_PreparationAction"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Virtuel_PreparationAction" } },
+
     create = function( self )
     end,
 

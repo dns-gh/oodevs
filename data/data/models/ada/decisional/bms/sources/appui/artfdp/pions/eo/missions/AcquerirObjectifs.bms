@@ -19,10 +19,14 @@ node "MIS_Pion_ASS_EO_AcquerirObjectifs"
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "BEH_Pion_ASS_AcquerirObjectifs_Mission", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "BEH_Pion_ASS_AcquerirObjectifs_Mission", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_ASS_EO_AcquerirObjectifs" } },
 
     create = function( self )
         self._namedParams = {}
@@ -63,7 +67,8 @@ elseif switch_1 == eFinMission then
                         do
                             DEC_FinMission()
                                                         self.params.__returnValue = eActionEffectuee
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ASS_EO_AcquerirObjectifs" } )
+Halt( self )
                             do return end
 
                         end

@@ -13,17 +13,21 @@ include "bit.lua"
 {
     activations =
     {
-        { "ACT_Maj_Pion_PasserEnTirLibre", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Obs_EtablirVisionCur", {} },
-        { "ACT_Maj_Pions_ObjectifEsquive", {} },
-        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
-        { "BEH_Eni_Pion_ALAT_GererEniDetruireDansZone", {} },
-        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
-        { "BEH_Manoeuvre_Pion_AllerStationner", {} },
-        { "BEH_Dep_Pion_ALAT_SePoser", {} },
+        { "ACT_Maj_Pion_PasserEnTirLibre", { "onHalt" } },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionCur", { "onHalt" } },
+        { "ACT_Maj_Pions_ObjectifEsquive", { "onHalt" } },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "onHalt" } },
+        { "BEH_Eni_Pion_ALAT_GererEniDetruireDansZone", { "onHalt" } },
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", { "onHalt" } },
+        { "BEH_Manoeuvre_Pion_AllerStationner", { "onHalt" } },
+        { "BEH_Dep_Pion_ALAT_SePoser", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_ALAT_DetruireNeutraliserDansZone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -84,13 +88,15 @@ include "bit.lua"
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self.params.__returnValue = eActionImpossible
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_DetruireNeutraliserDansZone" } )
+Halt( self )
                                 do return end
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_DetruireNeutraliserDansZone" } )
+Halt( self )
                             do return end
 
                         end
@@ -140,13 +146,15 @@ elseif switch_1 == eSExfiltrer then
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self.params.__returnValue = eActionImpossible
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_DetruireNeutraliserDansZone" } )
+Halt( self )
                                 do return end
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_DetruireNeutraliserDansZone" } )
+Halt( self )
                             do return end
 
                         end
@@ -166,7 +174,8 @@ elseif switch_1 == eFinMission then
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_DetruireNeutraliserDansZone" } )
+Halt( self )
                                 do return end
 
                             end
@@ -198,14 +207,18 @@ node "BEH_Eni_Pion_ALAT_GererEniDetruireDansZone"
 {
     activations =
     {
-        { "ACT_Obs_Pions_ALAT_Sonnette", {} },
-        { "ACT_RC", {} },
-        { "ACT_Obs_EtablirVisionFaceADir", {} },
-        { "ACT_Dep_SePoster", {} },
-        { "ACT_Maj_Pions_ObjectifEsquive", {} },
-        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
-        { "BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire", {} },
+        { "ACT_Obs_Pions_ALAT_Sonnette", { "onHalt" } },
+        { "ACT_RC", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionFaceADir", { "onHalt" } },
+        { "ACT_Dep_SePoster", { "onHalt" } },
+        { "ACT_Maj_Pions_ObjectifEsquive", { "onHalt" } },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "onHalt" } },
+        { "BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_ALAT_GererEniDetruireDansZone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -222,7 +235,8 @@ node "BEH_Eni_Pion_ALAT_GererEniDetruireDansZone"
         self.pointDislo = self.pointDislo or DEC_Geometrie_CreerPoint()
         self.directionCentreZone = self.directionCentreZone or DEC_Geometrie_CreerDirection( self._namedParams.pointDislocation, S_Geometrie_BarycentreZone( self._namedParams.zone ) )
         if( ( self.directionCentreZone == 0 or self.directionCentreZone == nil ) ) then
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Eni_Pion_ALAT_GererEniDetruireDansZone" } )
+Halt( self )
             do return end
         end
 
@@ -242,7 +256,8 @@ node "BEH_Eni_Pion_ALAT_GererEniDetruireDansZone"
             local cases_switch_1 = {}
                 if switch_1 == eRejoindre then
                     if( DEC_Geometrie_Distance( self._namedParams.pointDislocation, self.pointDislo ) > 5000 ) then
-                        Halt( self )
+                        Feedback( self.feedbacks["onHalt"], { "BEH_Eni_Pion_ALAT_GererEniDetruireDansZone" } )
+Halt( self )
                         do return end
                     end
 

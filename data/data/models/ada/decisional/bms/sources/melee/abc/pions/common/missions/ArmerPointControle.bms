@@ -22,15 +22,19 @@ includedFiles["sources/melee/abc/pions/common/missions/ArmerPointControle.bms"] 
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "BEH_MAJ_Pion_ABC_AgressiviteTir", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Info_Trace", {} },
-        { "ACT_Pion_ABC_CreerSiteSur", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "ACT_Pion_ABC_AnimerSite", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "BEH_MAJ_Pion_ABC_AgressiviteTir", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "ACT_Info_Trace", { "onHalt" } },
+        { "ACT_Pion_ABC_CreerSiteSur", { "onHalt" } },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "ACT_Pion_ABC_AnimerSite", { "onHalt" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_ABC_ArmerPointDeControle" } },
 
     create = function( self )
         self._namedParams = {}
@@ -59,7 +63,8 @@ includedFiles["sources/melee/abc/pions/common/missions/ArmerPointControle.bms"] 
 
         if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_ABC_ArmerPointDeControle" } )
+Halt( self )
             do return end
         end
 
@@ -151,6 +156,8 @@ node "ACT_Pion_ABC_AnimerSite"
         deplacement = 1,
     },
 
+    feedbacks = { { { "onHalt" }, "ACT_Pion_ABC_AnimerSite" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pointControle = self.params[1]
@@ -173,7 +180,8 @@ node "ACT_Pion_ABC_AnimerSite"
     deselect = function( self )
                 DEC_Trace( "Site non anime" )
         self.actionAnimer = DEC_StopAction( self.actionAnimer )
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "ACT_Pion_ABC_AnimerSite" } )
+Halt( self )
         do return end
 
     end,
@@ -193,6 +201,8 @@ node "ACT_Pion_ABC_AnimerSite"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Pion_ABC_CreerSiteSur"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Pion_ABC_CreerSiteSur" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.position = self.params[1]

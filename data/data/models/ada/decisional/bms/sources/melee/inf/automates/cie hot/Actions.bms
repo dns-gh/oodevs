@@ -14,6 +14,8 @@ includedFiles["sources/melee/inf/automates/cie hot/Actions.bms"] = true
 ]]
 node "ACT_Conduite_Automate_HOT_AppuiFreinage"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Conduite_Automate_HOT_AppuiFreinage" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionHOT = self.params[1]

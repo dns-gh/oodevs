@@ -8,12 +8,16 @@ includedFiles["sources/appui/artdsa/automates/sgpt samp hawk/missions/surveiller
 {
     activations =
     {
-        { "BEH_ROE_Automate_TirRestreint", {} },
-        { "BEH_Ordre_Automate_Poursuivre_", {} },
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_ASA_AssignerMissionsSurveillerAListe", {} },
-        { "BEH_Mission_Automate_AssignerStationnerA", {} },
+        { "BEH_ROE_Automate_TirRestreint", { "onHalt" } },
+        { "BEH_Ordre_Automate_Poursuivre_", { "onHalt" } },
+        { "BEH_Medo_Automate_ControleCreationMission", { "onHalt" } },
+        { "BEH_Medo_Automate_ASA_AssignerMissionsSurveillerAListe", { "onHalt" } },
+        { "BEH_Mission_Automate_AssignerStationnerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_ASA_HAWK_Surveiller" } },
 
     create = function( self )
         self._namedParams = {}
@@ -35,7 +39,8 @@ includedFiles["sources/appui/artdsa/automates/sgpt samp hawk/missions/surveiller
                     do
                         DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
                                                 self.params.__returnValue = eActionImpossible
-                        Halt( self )
+                        Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_ASA_HAWK_Surveiller" } )
+Halt( self )
                         do return end
 
                     end
@@ -85,14 +90,16 @@ includedFiles["sources/appui/artdsa/automates/sgpt samp hawk/missions/surveiller
 elseif switch_1 == eMRT_MissionImpossible then
                     DEC_RC( eRC_MissionImpossible )
                                         self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_ASA_HAWK_Surveiller" } )
+Halt( self )
                     do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_ASA_HAWK_Surveiller" } )
+Halt( self )
                     do return end
 
                 end

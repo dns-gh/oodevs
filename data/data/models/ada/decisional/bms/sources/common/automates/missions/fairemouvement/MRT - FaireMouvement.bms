@@ -11,9 +11,13 @@ includedFiles["sources/common/automates/missions/fairemouvement/MRT - FaireMouve
 {
     activations =
     {
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_AssignerFaireMouvementA", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", { "onHalt" } },
+        { "BEH_Medo_Automate_AssignerFaireMouvementA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_FaireMouvement" } },
 
     create = function( self )
         self._namedParams = {}
@@ -43,7 +47,8 @@ includedFiles["sources/common/automates/missions/fairemouvement/MRT - FaireMouve
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_FaireMouvement" } )
+Halt( self )
                 do return end
 
             end
@@ -55,7 +60,8 @@ includedFiles["sources/common/automates/missions/fairemouvement/MRT - FaireMouve
                                 do
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_FaireMouvement" } )
+Halt( self )
                     do return end
 
                 end
@@ -79,20 +85,26 @@ node "BEH_Medo_Automate_AssignerFaireMouvementA"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerFaireMouvementSurItA", {} },
+        { "BEH_Mission_Automate_AssignerFaireMouvementSurItA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_AssignerFaireMouvementA" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.listePions = self.params[1]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.mission = self.mission or DEC_GetMission( myself )
         if( ModuleBegins() ) then
 for _,pion in pairs( DEC_Automate_PionsAvecPC() ) do
             local _continue = true
-                StartActivate( self.activations.BEH_Mission_Automate_AssignerFaireMouvementSurItA, 1, { ePhase_MRT, pion, self.mission.itineraire_, } )
+                StartInstance( self, self.activations.BEH_Mission_Automate_AssignerFaireMouvementSurItA, 1, { ePhase_MRT, pion, self.mission.itineraire_, } )
 
             end
         end

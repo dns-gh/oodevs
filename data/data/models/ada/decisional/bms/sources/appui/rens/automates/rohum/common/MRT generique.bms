@@ -14,10 +14,14 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_RENS_ROHUM_AssignerRenseignerA", {} },
-        { "BEH_Medo_Automate_RENS_ROHUM_AssignerSExfiltrerA", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", { "onHalt" } },
+        { "BEH_Medo_Automate_RENS_ROHUM_AssignerRenseignerA", { "onHalt" } },
+        { "BEH_Medo_Automate_RENS_ROHUM_AssignerSExfiltrerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_RENS_ROHUM_AssignerMissions" } },
 
     create = function( self )
         self._namedParams = {}
@@ -170,7 +174,8 @@ elseif switch_2 == "T_Mission_Automate_RENS_ROHUM_OrienterGuider" then
 elseif switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_RENS_ROHUM_AssignerMissions" } )
+Halt( self )
                     do return end
 
                 end

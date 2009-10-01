@@ -26,8 +26,12 @@ includedFiles["sources/melee/abc/automates/sgpt chars inf/missions/flancgarder/F
 {
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_FlancGarder", {} },
+        { "BEH_Conduite_Automate_ABC_FlancGarder", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_FlancGarder" } },
 
     create = function( self )
         self._namedParams = {}

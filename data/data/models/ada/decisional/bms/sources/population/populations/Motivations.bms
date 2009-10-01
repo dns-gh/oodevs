@@ -32,6 +32,8 @@ motivation_plugin.motivations[ "MOT_Mission" ] =
 
 node "ActivatedByMOT_Mission"
 {
+    feedbacks = { { { "onHalt" }, "ActivatedByMOT_Mission" } },
+
     create = function( self )
     end,
 
@@ -84,8 +86,12 @@ node "ActivatedByMOT_Riposte"
 {
     activations =
     {
-        { "BEH_Pop_RepondreALaPriseAPartie", {} },
+        { "BEH_Pop_RepondreALaPriseAPartie", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "ActivatedByMOT_Riposte" } },
 
     create = function( self )
     end,
@@ -140,8 +146,12 @@ node "ActivatedByMOT_Stationner"
 {
     activations =
     {
-        { "BEH_Pop_Stationner", {} },
+        { "BEH_Pop_Stationner", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "ActivatedByMOT_Stationner" } },
 
     create = function( self )
     end,

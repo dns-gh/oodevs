@@ -6,6 +6,8 @@ includedFiles["sources/appui/alat/pions/common/actions/Actions - Log.bms"] = tru
 ]]--[[//------------------------------------------------------------------------------
 ]]node "ACT_Log_Pion_ALAT_RealiserPlotLogistique"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Log_Pion_ALAT_RealiserPlotLogistique" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.point = self.params[1]
@@ -44,28 +46,32 @@ includedFiles["sources/appui/alat/pions/common/actions/Actions - Log.bms"] = tru
                 if switch_1 == eActionObjetTerminee then
                     self.actionCreerPlot = DEC_StopAction( self.actionCreerPlot )
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "ACT_Log_Pion_ALAT_RealiserPlotLogistique" } )
+Halt( self )
                     do return end
 
                                 end
                 if cases_switch_1[1] or switch_1 == eActionObjetManqueDotation then
                     self.actionCreerPlot = DEC_StopAction( self.actionCreerPlot )
                                         self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "ACT_Log_Pion_ALAT_RealiserPlotLogistique" } )
+Halt( self )
                     do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionObjetImpossible then
                     self.actionCreerPlot = DEC_StopAction( self.actionCreerPlot )
                                         self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "ACT_Log_Pion_ALAT_RealiserPlotLogistique" } )
+Halt( self )
                     do return end
 
                                 end
                 if cases_switch_1[3] or switch_1 == eActionObjetPasDeCapacite then
                     self.actionCreerPlot = DEC_StopAction( self.actionCreerPlot )
                                         self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "ACT_Log_Pion_ALAT_RealiserPlotLogistique" } )
+Halt( self )
                     do return end
 
                                 end

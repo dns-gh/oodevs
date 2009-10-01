@@ -103,6 +103,8 @@ include "Melee/Abc/Pions/Pel AMX-ERC/Missions/Missions.bms"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Pion_ABC_Default"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Pion_ABC_Default" } },
+
     create = function( self )
     end,
 

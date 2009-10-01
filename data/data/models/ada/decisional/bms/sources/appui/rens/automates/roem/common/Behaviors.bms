@@ -28,13 +28,17 @@ includedFiles["sources/appui/rens/automates/roem/common/Behaviors.bms"] = true
 {
     activations =
     {
-        { "BEH_RC_Automate_Situation", {} },
-        { "BEH_Nbc_Automate_GererAlerteNiv4", {} },
-        { "BEH_Rens_Automate_GererSilenceRadio", {} },
-        { "BEH_ROE_Automate_GererOrdre", {} },
-        { "BEH_Misc_Automate_GererLesMoyens", {} },
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "BEH_RC_Automate_Situation", { "onHalt" } },
+        { "BEH_Nbc_Automate_GererAlerteNiv4", { "onHalt" } },
+        { "BEH_Rens_Automate_GererSilenceRadio", { "onHalt" } },
+        { "BEH_ROE_Automate_GererOrdre", { "onHalt" } },
+        { "BEH_Misc_Automate_GererLesMoyens", { "onHalt" } },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Defaut" } },
 
     create = function( self )
         self._namedParams = {}

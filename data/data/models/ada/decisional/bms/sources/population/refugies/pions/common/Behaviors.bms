@@ -20,8 +20,12 @@ includedFiles["sources/population/refugies/pions/common/Behaviors.bms"] = true
 {
     activations =
     {
-        { "BEH_MAJ_EtatDefaut", {} },
+        { "BEH_MAJ_EtatDefaut", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Defaut" } },
 
     create = function( self )
         self._namedParams = {}
@@ -46,8 +50,12 @@ node "BEH_Dep_Virtuel_ProgressionVers"
 {
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Virtuel_ProgressionVers" } },
 
     create = function( self )
         self._namedParams = {}
@@ -68,6 +76,8 @@ node "BEH_Dep_Virtuel_ProgressionVers"
 
 node "BEH_Dep_Virtuel_PreparationAction"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Virtuel_PreparationAction" } },
+
     create = function( self )
     end,
 

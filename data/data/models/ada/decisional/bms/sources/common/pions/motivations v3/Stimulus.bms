@@ -19,6 +19,8 @@ motivation_plugin.motivations = motivation_plugin.motivations or {}
 motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_Mission"
 node "ActivationForSTIM_Mission"
 {
+    feedbacks = { { { "onHalt" }, "ActivationForSTIM_Mission" } },
+
     activate = function( self )
         if( DEC_GetMission( myself ) ~= nil ) then
             SetStimulus( "STIM_Mission", 1 )
@@ -38,6 +40,8 @@ node "ActivationForSTIM_Mission"
 motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_PriseAPartieTirDirect"
 node "ActivationForSTIM_PriseAPartieTirDirect"
 {
+    feedbacks = { { { "onHalt" }, "ActivationForSTIM_PriseAPartieTirDirect" } },
+
     activate = function( self )
         local listeConnaissances = DEC_Connaissances_UnitesPrenantAPartie()
         if( not DIA_IsListEmpty( listeConnaissances ) ) then
@@ -58,6 +62,8 @@ node "ActivationForSTIM_PriseAPartieTirDirect"
 motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_PriseAPartieTirInDirect"
 node "ActivationForSTIM_PriseAPartieTirInDirect"
 {
+    feedbacks = { { { "onHalt" }, "ActivationForSTIM_PriseAPartieTirInDirect" } },
+
     activate = function( self )
         if( DEC_Agent_EstNeutralise() and ( DEC_Agent_NiveauInstallation() < eNiveauInstallation_PosteAmenage ) ) then
             SetStimulus( "STIM_PriseAPartieTirInDirect", 1 )
@@ -77,6 +83,8 @@ node "ActivationForSTIM_PriseAPartieTirInDirect"
 motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_PresenceEnisRendus"
 node "ActivationForSTIM_PresenceEnisRendus"
 {
+    feedbacks = { { { "onHalt" }, "ActivationForSTIM_PresenceEnisRendus" } },
+
     activate = function( self )
         --[[// Default
 ]]SetStimulus( "STIM_PresenceEnisRendus", 0 )
@@ -112,6 +120,8 @@ do
 motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_PresenceRefugies"
 node "ActivationForSTIM_PresenceRefugies"
 {
+    feedbacks = { { { "onHalt" }, "ActivationForSTIM_PresenceRefugies" } },
+
     activate = function( self )
         --[[// Default
 ]]SetStimulus( "STIM_PresenceRefugies", 0 )
@@ -147,6 +157,8 @@ do
 motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_PresenceZoneTirInterdit"
 node "ActivationForSTIM_PresenceZoneTirInterdit"
 {
+    feedbacks = { { { "onHalt" }, "ActivationForSTIM_PresenceZoneTirInterdit" } },
+
     activate = function( self )
         SetStimulus( "STIM_PresenceZoneTirInterdit", 0 )
         local listeObjet = DEC_Connaissances_CollisionsObjets()

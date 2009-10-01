@@ -22,8 +22,12 @@ includedFiles["sources/melee/abc/automates/sgpt blindes inf/missions/fixer/Fixer
 {
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_Fixer", {} },
+        { "BEH_Conduite_Automate_ABC_Fixer", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_Fixer" } },
 
     create = function( self )
         self._namedParams = {}

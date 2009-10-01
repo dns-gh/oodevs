@@ -8,20 +8,24 @@ includedFiles["sources/appui/artdsa/pions/satcp mistral/missions/Surveiller.bms"
 {
     activations =
     {
-        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
-        { "BEH_MAJ_AgressiviteMission", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Obs_EtablirVisionCur", {} },
-        { "ACT_Maj_Pions_ObjectifCourant", {} },
-        { "ACT_Maj_Pions_ObjectifEsquive", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "ACT_Dep_SePosterFaceADir", {} },
-        { "BEH_Eni_Pion_ASA_MISTRAL_GererEniSurveiller", {} },
-        { "BEH_Manoeuvre_Pion_ASA_SeDeployer", {} },
-        { "ACT_RC", {} },
-        { "ACT_Warning", {} },
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", { "onHalt" } },
+        { "BEH_MAJ_AgressiviteMission", { "onHalt" } },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionCur", { "onHalt" } },
+        { "ACT_Maj_Pions_ObjectifCourant", { "onHalt" } },
+        { "ACT_Maj_Pions_ObjectifEsquive", { "onHalt" } },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "ACT_Dep_SePosterFaceADir", { "onHalt" } },
+        { "BEH_Eni_Pion_ASA_MISTRAL_GererEniSurveiller", { "onHalt" } },
+        { "BEH_Manoeuvre_Pion_ASA_SeDeployer", { "onHalt" } },
+        { "ACT_RC", { "onHalt" } },
+        { "ACT_Warning", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_ASA_MISTRAL_Surveiller" } },
 
     create = function( self )
         self._namedParams = {}
@@ -111,7 +115,8 @@ elseif switch_1 == eFinMission then
                             F_Pion_SetobjectifEsquive( myself, nil )
                             DEC_FinMission()
                                                         self.params.__returnValue = eActionEffectuee
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ASA_MISTRAL_Surveiller" } )
+Halt( self )
                             do return end
 
                         end

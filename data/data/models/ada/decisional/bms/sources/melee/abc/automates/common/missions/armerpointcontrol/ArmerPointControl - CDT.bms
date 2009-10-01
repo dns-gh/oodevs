@@ -23,10 +23,14 @@ includedFiles["sources/melee/abc/automates/common/missions/armerpointcontrol/Arm
 {
     activations =
     {
-        { "BEH_Dispositif_Automate_ABC_GererLeDispositif_", {} },
-        { "BEH_RC_Automate_GererConditionOperationnelle", {} },
-        { "BEH_Dispositif_Automate_ABC_FaireArmerPointControle_", {} },
+        { "BEH_Dispositif_Automate_ABC_GererLeDispositif_", { "onHalt" } },
+        { "BEH_RC_Automate_GererConditionOperationnelle", { "onHalt" } },
+        { "BEH_Dispositif_Automate_ABC_FaireArmerPointControle_", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_ABC_ArmerPointDeControle" } },
 
     create = function( self )
         self._namedParams = {}
@@ -72,8 +76,12 @@ node "BEH_Dispositif_Automate_ABC_FaireArmerPointControle_"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerArmerPointControleA", {} },
+        { "BEH_Mission_Automate_AssignerArmerPointControleA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dispositif_Automate_ABC_FaireArmerPointControle_" } },
 
     create = function( self )
         self._namedParams = {}

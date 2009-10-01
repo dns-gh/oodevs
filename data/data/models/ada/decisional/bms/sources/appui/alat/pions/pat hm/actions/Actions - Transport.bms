@@ -15,6 +15,8 @@ includedFiles["sources/appui/alat/pions/pat hm/actions/Actions - Transport.bms"]
         deplacement = 1,
     },
 
+    feedbacks = { { { "onHalt" }, "ACT_Transport_Pion_ALAT_HM_HelitransportEmbarquer" } },
+
     create = function( self )
     end,
 
@@ -42,14 +44,16 @@ includedFiles["sources/appui/alat/pions/pat hm/actions/Actions - Transport.bms"]
 elseif switch_1 == eActionTransport_Finished then
                     self.actionEmbarquer = DEC_StopAction( self.actionEmbarquer )
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "ACT_Transport_Pion_ALAT_HM_HelitransportEmbarquer" } )
+Halt( self )
                     do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionTransport_Impossible then
                     self.actionEmbarquer = DEC_StopAction( self.actionEmbarquer )
                                         self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "ACT_Transport_Pion_ALAT_HM_HelitransportEmbarquer" } )
+Halt( self )
                     do return end
 
                                 end
@@ -81,6 +85,8 @@ elseif switch_1 == eActionTransport_Finished then
         deplacement = 1,
     },
 
+    feedbacks = { { { "onHalt" }, "ACT_Transport_Pion_ALAT_HM_HelitransportDebarquer" } },
+
     create = function( self )
     end,
 
@@ -110,14 +116,16 @@ elseif switch_1 == eActionTransport_Finished then
 elseif switch_1 == eActionTransport_Finished then
                     DEC_StopAction( self.actionDebarquer )
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "ACT_Transport_Pion_ALAT_HM_HelitransportDebarquer" } )
+Halt( self )
                     do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionTransport_Impossible then
                     DEC_StopAction( self.actionDebarquer )
                                         self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "ACT_Transport_Pion_ALAT_HM_HelitransportDebarquer" } )
+Halt( self )
                     do return end
 
                                 end
@@ -144,6 +152,8 @@ elseif switch_1 == eActionTransport_Finished then
 ]]--[[//------------------------------------------------------------------------------
 ]]node "ACT_Log_Pion_ALAT_HM_BloquerLiaisonSanitaire"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Log_Pion_ALAT_HM_BloquerLiaisonSanitaire" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]

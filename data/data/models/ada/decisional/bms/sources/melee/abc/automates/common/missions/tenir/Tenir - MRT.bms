@@ -12,9 +12,13 @@ includedFiles["sources/melee/abc/automates/common/missions/tenir/Tenir - MRT.bms
 {
     activations =
     {
-        { "BEH_Mission_Automate_ABC_AssignerBarrerA", {} },
-        { "ACT_Warning", {} },
+        { "BEH_Mission_Automate_ABC_AssignerBarrerA", { "onHalt" } },
+        { "ACT_Warning", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ABC_AssignerMissionBarrerA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -23,7 +27,9 @@ includedFiles["sources/melee/abc/automates/common/missions/tenir/Tenir - MRT.bms
         self._namedParams.eEtatEchelon = self.params[3]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.listePoint = self.listePoint or {}
         self.rIterateurPoint = self.rIterateurPoint or 0
         if( ( #( self._namedParams.selPions ) == 0 or #( self._namedParams.selPions ) == nil ) ) then
@@ -53,7 +59,7 @@ includedFiles["sources/melee/abc/automates/common/missions/tenir/Tenir - MRT.bms
                                 end
 
                                 local point = DEC_ListePoints_GetAt( self.listePoint, self.rIterateurPoint )
-                                StartActivate( self.activations.BEH_Mission_Automate_ABC_AssignerBarrerA, 1, { ePhase_MRT, pion, point, self._namedParams.eEtatEchelon, } )
+                                StartInstance( self, self.activations.BEH_Mission_Automate_ABC_AssignerBarrerA, 1, { ePhase_MRT, pion, point, self._namedParams.eEtatEchelon, } )
                                                                 self.rIterateurPoint = self.rIterateurPoint + 1
                             end
 

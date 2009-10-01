@@ -8,8 +8,12 @@ includedFiles["sources/appui/artdsa/automates/sgpt samp hawk/missions/surveiller
 {
     activations =
     {
-        { "BEH_Eni_ASA_HAWK_GererTirsSurveiller", {} },
+        { "BEH_Eni_ASA_HAWK_GererTirsSurveiller", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ASA_HAWK_Surveiller" } },
 
     create = function( self )
         self._namedParams = {}

@@ -11,9 +11,13 @@ includedFiles["sources/appui/circulation/automates/missions/surveiller/Surveille
 {
     activations =
     {
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Mission_Automate_CIRCU_AssignerSurveillerAListe", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", { "onHalt" } },
+        { "BEH_Mission_Automate_CIRCU_AssignerSurveillerAListe", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_LOG_Surveiller" } },
 
     create = function( self )
         self._namedParams = {}
@@ -38,7 +42,8 @@ includedFiles["sources/appui/circulation/automates/missions/surveiller/Surveille
                 self.listeLocalisations = self.listeLocalisations.first
                 if( nErrorCode ~= eNoError ) then
                     self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_LOG_Surveiller" } )
+Halt( self )
                     do return end
                 end
 
@@ -87,7 +92,8 @@ includedFiles["sources/appui/circulation/automates/missions/surveiller/Surveille
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eMRT_MissionImpossible then
                                         self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_LOG_Surveiller" } )
+Halt( self )
                     do return end
 
                     
@@ -97,7 +103,8 @@ elseif switch_1 == eMRT_MissionImpossible then
 ]]elseif switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_LOG_Surveiller" } )
+Halt( self )
                     do return end
 
                     

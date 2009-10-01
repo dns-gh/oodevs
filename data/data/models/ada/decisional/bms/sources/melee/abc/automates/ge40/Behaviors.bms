@@ -31,8 +31,12 @@ include "Melee/Abc/Automates/GE40/Missions/Missions.bms"
 {
     activations =
     {
-        { "ACT_AFFICHE_EtatDecisionnel", {} },
+        { "ACT_AFFICHE_EtatDecisionnel", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_GTIA_AFFICHE_temp" } },
 
     create = function( self )
     end,

@@ -14,8 +14,12 @@ include "Common/Automates/Actions/Medo/Actions - Medo - LOG.bms"
 {
     activations =
     {
-        { "BEH_Mission_Automate_LOG_AssignerSeDeployerA", {} },
+        { "BEH_Mission_Automate_LOG_AssignerSeDeployerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_LOG_AssignerSeDeployerAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -25,7 +29,9 @@ include "Common/Automates/Actions/Medo/Actions - Medo - LOG.bms"
         self._namedParams.eEtatEchelon = self.params[4]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         if( ModuleBegins() ) then
             do
                 local pointBuffer = nil
@@ -38,7 +44,7 @@ include "Common/Automates/Actions/Medo/Actions - Medo - LOG.bms"
                             pointBuffer = DEC_Geometrie_PositionAleatoireDansCercle( self._namedParams.positionDeploiement, 200 )
                         end
 
-                        StartActivate( self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerA, 1, { self._namedParams.ePhase, pion, pointBuffer, self._namedParams.eEtatEchelon, } )
+                        StartInstance( self, self.activations.BEH_Mission_Automate_LOG_AssignerSeDeployerA, 1, { self._namedParams.ePhase, pion, pointBuffer, self._namedParams.eEtatEchelon, } )
                     end
 
                 end
@@ -60,11 +66,15 @@ node "BEH_Mission_Automate_LOG_AssignerSeDeployerA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_LOG_AssignerSeDeployerA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_LOG_AssignerSeDeployerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_LOG_AssignerSeDeployerA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -112,8 +122,12 @@ node "BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesAListe"
 {
     activations =
     {
-        { "BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesA", {} },
+        { "BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -123,7 +137,9 @@ node "BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesAListe"
         self._namedParams.eEtatEchelon = self.params[4]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         if( ModuleBegins() ) then
             do
                 local pointBuffer = nil
@@ -136,7 +152,7 @@ node "BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesAListe"
                             pointBuffer = DEC_Geometrie_PositionAleatoireDansCercle( self._namedParams.positionDeploiement, 200 )
                         end
 
-                        StartActivate( self.activations.BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesA, 1, { self._namedParams.ePhase, pion, pointBuffer, self._namedParams.eEtatEchelon, } )
+                        StartInstance( self, self.activations.BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesA, 1, { self._namedParams.ePhase, pion, pointBuffer, self._namedParams.eEtatEchelon, } )
                     end
 
                 end
@@ -158,11 +174,15 @@ node "BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_LOG_AssignerDecontaminerBlessesA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_LOG_AssignerDecontaminerBlessesA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -210,8 +230,12 @@ node "BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesAListe"
 {
     activations =
     {
-        { "BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesA", {} },
+        { "BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -221,7 +245,9 @@ node "BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesAListe"
         self._namedParams.eEtatEchelon = self.params[4]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         if( ModuleBegins() ) then
             do
                 local pointBuffer = nil
@@ -234,7 +260,7 @@ node "BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesAListe"
                             pointBuffer = DEC_Geometrie_PositionAleatoireDansCercle( self._namedParams.positionDeploiement, 200 )
                         end
 
-                        StartActivate( self.activations.BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesA, 1, { self._namedParams.ePhase, pion, pointBuffer, self._namedParams.eEtatEchelon, } )
+                        StartInstance( self, self.activations.BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesA, 1, { self._namedParams.ePhase, pion, pointBuffer, self._namedParams.eEtatEchelon, } )
                     end
 
                 end
@@ -256,11 +282,15 @@ node "BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -308,8 +338,12 @@ node "BEH_Mission_Automate_LOG_AssignerTraiterBlessesAListe"
 {
     activations =
     {
-        { "BEH_Mission_Automate_LOG_AssignerTraiterBlessesA", {} },
+        { "BEH_Mission_Automate_LOG_AssignerTraiterBlessesA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_LOG_AssignerTraiterBlessesAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -319,7 +353,9 @@ node "BEH_Mission_Automate_LOG_AssignerTraiterBlessesAListe"
         self._namedParams.eEtatEchelon = self.params[4]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         if( ModuleBegins() ) then
             do
                 local pointBuffer = nil
@@ -332,7 +368,7 @@ node "BEH_Mission_Automate_LOG_AssignerTraiterBlessesAListe"
                             pointBuffer = DEC_Geometrie_PositionAleatoireDansCercle( self._namedParams.positionDeploiement, 200 )
                         end
 
-                        StartActivate( self.activations.BEH_Mission_Automate_LOG_AssignerTraiterBlessesA, 1, { self._namedParams.ePhase, pion, pointBuffer, self._namedParams.eEtatEchelon, } )
+                        StartInstance( self, self.activations.BEH_Mission_Automate_LOG_AssignerTraiterBlessesA, 1, { self._namedParams.ePhase, pion, pointBuffer, self._namedParams.eEtatEchelon, } )
                     end
 
                 end
@@ -354,11 +390,15 @@ node "BEH_Mission_Automate_LOG_AssignerTraiterBlessesA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_LOG_AssignerTraiterBlessesA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_LOG_AssignerTraiterBlessesA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_LOG_AssignerTraiterBlessesA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -406,8 +446,12 @@ node "BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalAListe"
 {
     activations =
     {
-        { "BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalA", {} },
+        { "BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -417,7 +461,9 @@ node "BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalAListe"
         self._namedParams.eEtatEchelon = self.params[4]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         if( ModuleBegins() ) then
             do
                 local pointBuffer = nil
@@ -430,7 +476,7 @@ node "BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalAListe"
                             pointBuffer = DEC_Geometrie_PositionAleatoireDansCercle( self._namedParams.positionDeploiement, 200 )
                         end
 
-                        StartActivate( self.activations.BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalA, 1, { self._namedParams.ePhase, pion, pointBuffer, self._namedParams.eEtatEchelon, } )
+                        StartInstance( self, self.activations.BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalA, 1, { self._namedParams.ePhase, pion, pointBuffer, self._namedParams.eEtatEchelon, } )
                     end
 
                 end
@@ -452,11 +498,15 @@ node "BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -504,8 +554,12 @@ node "BEH_Mission_Automate_LOG_AssignerReparerAListe"
 {
     activations =
     {
-        { "BEH_Mission_Automate_LOG_AssignerReparerA", {} },
+        { "BEH_Mission_Automate_LOG_AssignerReparerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_LOG_AssignerReparerAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -515,7 +569,9 @@ node "BEH_Mission_Automate_LOG_AssignerReparerAListe"
         self._namedParams.eEtatEchelon = self.params[4]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         if( ModuleBegins() ) then
             do
                 local pointBuffer = nil
@@ -528,7 +584,7 @@ node "BEH_Mission_Automate_LOG_AssignerReparerAListe"
                             pointBuffer = DEC_Geometrie_PositionAleatoireDansCercle( self._namedParams.positionDeploiement, 200 )
                         end
 
-                        StartActivate( self.activations.BEH_Mission_Automate_LOG_AssignerReparerA, 1, { self._namedParams.ePhase, pion, pointBuffer, self._namedParams.eEtatEchelon, } )
+                        StartInstance( self, self.activations.BEH_Mission_Automate_LOG_AssignerReparerA, 1, { self._namedParams.ePhase, pion, pointBuffer, self._namedParams.eEtatEchelon, } )
                     end
 
                 end
@@ -550,11 +606,15 @@ node "BEH_Mission_Automate_LOG_AssignerReparerA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_LOG_AssignerReparerA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_LOG_AssignerReparerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_LOG_AssignerReparerA" } },
 
     create = function( self )
         self._namedParams = {}

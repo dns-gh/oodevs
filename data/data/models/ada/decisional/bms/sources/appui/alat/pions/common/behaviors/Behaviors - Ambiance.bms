@@ -8,8 +8,12 @@ includedFiles["sources/appui/alat/pions/common/behaviors/Behaviors - Ambiance.bm
 {
     activations =
     {
-        { "ACT_Ordre_Suppression", {} },
+        { "ACT_Ordre_Suppression", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_ALAT_Ambiance" } },
 
     create = function( self )
     end,

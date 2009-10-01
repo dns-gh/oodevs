@@ -12,9 +12,13 @@ includedFiles["sources/appui/nbc/automates/common/missions/reconnaitresitesrota/
 {
     activations =
     {
-        { "BEH_Dispositif_Automate_NBC_GererPionsDetruits_", {} },
-        { "BEH_Conduite_Automate_NBC_FaireReconnaitreLesSitesROTA", {} },
+        { "BEH_Dispositif_Automate_NBC_GererPionsDetruits_", { "onHalt" } },
+        { "BEH_Conduite_Automate_NBC_FaireReconnaitreLesSitesROTA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_NBC_ReconnaitreSitesROTA" } },
 
     create = function( self )
     end,
@@ -44,10 +48,14 @@ node "BEH_Conduite_Automate_NBC_FaireReconnaitreLesSitesROTA"
 {
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "BEH_Obj_Automate_NBC_AssignerReconnaitreSiteA", {} },
-        { "BEH_Mission_Automate_AssignerSuivreA", {} },
+        { "ACT_Info_Trace", { "onHalt" } },
+        { "BEH_Obj_Automate_NBC_AssignerReconnaitreSiteA", { "onHalt" } },
+        { "BEH_Mission_Automate_AssignerSuivreA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_NBC_FaireReconnaitreLesSitesROTA" } },
 
     create = function( self )
     end,
@@ -105,8 +113,12 @@ node "BEH_Obj_Automate_NBC_AssignerReconnaitreSiteA"
 {
     activations =
     {
-        { "BEH_Mission_Automate_NBC_AssignerReconnaitreSiteA", {} },
+        { "BEH_Mission_Automate_NBC_AssignerReconnaitreSiteA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Obj_Automate_NBC_AssignerReconnaitreSiteA" } },
 
     create = function( self )
         self._namedParams = {}

@@ -14,11 +14,15 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
-        { "ACT_Warning", {} },
-        { "BEH_Conduite_Automate_GEN_OuvrirAxe_GererSE_", {} },
-        { "BEH_Mission_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcement", {} },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "onHalt" } },
+        { "ACT_Warning", { "onHalt" } },
+        { "BEH_Conduite_Automate_GEN_OuvrirAxe_GererSE_", { "onHalt" } },
+        { "BEH_Mission_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcement", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_GEN_OuvrirItineraires" } },
 
     create = function( self )
         self._namedParams = {}
@@ -71,11 +75,15 @@ node "BEH_Mission_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcement"
 {
     activations =
     {
-        { "BEH_Misc_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcementDe", {} },
-        { "BEH_Objet_Automate_GEN_VerifierRenfortPourContourner", {} },
-        { "BEH_Misc_Automate_GEN_GererRenforcementObstacle", {} },
-        { "BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstacle", {} },
+        { "BEH_Misc_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcementDe", { "onHalt" } },
+        { "BEH_Objet_Automate_GEN_VerifierRenfortPourContourner", { "onHalt" } },
+        { "BEH_Misc_Automate_GEN_GererRenforcementObstacle", { "onHalt" } },
+        { "BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstacle", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcement" } },
 
     create = function( self )
     end,
@@ -150,8 +158,12 @@ node "BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstacle"
 {
     activations =
     {
-        { "BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstaclePour", {} },
+        { "BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstaclePour", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstacle" } },
 
     create = function( self )
         self._namedParams = {}
@@ -190,8 +202,12 @@ node "BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstaclePour"
 {
     activations =
     {
-        { "ACT_Ordre_Automate_Interrompre", {} },
+        { "ACT_Ordre_Automate_Interrompre", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstaclePour" } },
 
     create = function( self )
         self._namedParams = {}
@@ -225,6 +241,8 @@ node "BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstaclePour"
 
 node "BEH_Misc_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcementDe"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Misc_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcementDe" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -263,8 +281,12 @@ node "BEH_Conduite_Automate_GEN_OuvrirAxe_GererSE_"
 {
     activations =
     {
-        { "BEH_Conduite_Automate_GEN_OuvrirAxe_FaireSuivre", {} },
+        { "BEH_Conduite_Automate_GEN_OuvrirAxe_FaireSuivre", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_GEN_OuvrirAxe_GererSE_" } },
 
     create = function( self )
     end,
@@ -306,8 +328,12 @@ node "BEH_Conduite_Automate_GEN_OuvrirAxe_FaireSuivre"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSuivreA", {} },
+        { "BEH_Mission_Automate_AssignerSuivreA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_GEN_OuvrirAxe_FaireSuivre" } },
 
     create = function( self )
     end,

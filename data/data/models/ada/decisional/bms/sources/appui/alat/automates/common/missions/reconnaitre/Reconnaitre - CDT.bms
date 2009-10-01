@@ -16,16 +16,20 @@ includedFiles["sources/appui/alat/automates/common/missions/reconnaitre/Reconnai
 {
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
-        { "BEH_Mission_Automate_AssignerSuivreAListe", {} },
-        { "BEH_Manoeuvre_Automate_ALAT_GererReleves", {} },
-        { "BEH_Log_Automate_ALAT_GererRavitaillementsCoordonne", {} },
-        { "BEH_Manoeuvre_Automate_ALAT_GererEtalementDispositif", {} },
-        { "BEH_Automate_ALAT_CoordonnerFeux", {} },
-        { "BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX", {} },
-        { "BEH_ROE_Automate_TirRestreint", {} },
-        { "BEH_Mission_Automate_AssignerStationnerAListe", {} },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "onHalt" } },
+        { "BEH_Mission_Automate_AssignerSuivreAListe", { "onHalt" } },
+        { "BEH_Manoeuvre_Automate_ALAT_GererReleves", { "onHalt" } },
+        { "BEH_Log_Automate_ALAT_GererRavitaillementsCoordonne", { "onHalt" } },
+        { "BEH_Manoeuvre_Automate_ALAT_GererEtalementDispositif", { "onHalt" } },
+        { "BEH_Automate_ALAT_CoordonnerFeux", { "onHalt" } },
+        { "BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX", { "onHalt" } },
+        { "BEH_ROE_Automate_TirRestreint", { "onHalt" } },
+        { "BEH_Mission_Automate_AssignerStationnerAListe", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ALAT_Reconnaitre" } },
 
     create = function( self )
         self._namedParams = {}

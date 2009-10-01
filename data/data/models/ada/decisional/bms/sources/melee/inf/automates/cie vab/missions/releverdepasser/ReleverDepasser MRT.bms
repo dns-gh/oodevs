@@ -16,8 +16,12 @@ node "MIS_Automate_MRT_INF_Relever"
 {
     activations =
     {
-        { "BEH_Medo_Automate_INF_PreparerMission_Manoeuvre", {} },
+        { "BEH_Medo_Automate_INF_PreparerMission_Manoeuvre", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_INF_Relever" } },
 
     create = function( self )
         self._namedParams = {}
@@ -47,7 +51,8 @@ node "MIS_Automate_MRT_INF_Relever"
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_INF_Relever" } )
+Halt( self )
                 do return end
 
             end
@@ -60,7 +65,8 @@ node "MIS_Automate_MRT_INF_Relever"
                     DEC_Trace( "MIS_Automate_MRT_INF_Relever : fin MRT" )
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_INF_Relever" } )
+Halt( self )
                     do return end
 
                 end

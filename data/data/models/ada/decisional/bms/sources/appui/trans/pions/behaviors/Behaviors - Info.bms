@@ -13,21 +13,25 @@ includedFiles["sources/appui/trans/pions/behaviors/Behaviors - Info.bms"] = true
 {
     activations =
     {
-        { "BEH_Info_Pion_RendreCompteSurEtatOperationnel", {} },
-        { "BEH_Info_Pion_RendreCompteSurAmbiance", {} },
-        { "BEH_Info_Pion_RendreCompteSurNBC", {} },
-        { "BEH_Info_Pion_RendreCompteSurROE", {} },
-        { "BEH_Info_Pion_RendreCompteSurSilenceRadio", {} },
-        { "BEH_Info_Pion_RendreCompteSurSilenceRadar", {} },
-        { "BEH_Info_Pion_RendreCompteSurPresencePop", {} },
-        { "BEH_Info_Pion_RendreCompteSurPriseAPartiParArt", {} },
-        { "BEH_Info_Pion_RendreCompteSurSituationDeplacement", {} },
-        { "BEH_Info_Pion_RendreCompteSurSituationMissions", {} },
-        { "BEH_Info_Pion_RendreCompteSurLima", {} },
-        { "BEH_Info_Pion_RendreCompteSurSituationCoordination", {} },
-        { "BEH_Info_Pion_RendreCompteSurPriseAPartiParEnis", {} },
-        { "BEH_Info_Pion_RendreCompteSurPriseDeContact", {} },
+        { "BEH_Info_Pion_RendreCompteSurEtatOperationnel", { "onHalt" } },
+        { "BEH_Info_Pion_RendreCompteSurAmbiance", { "onHalt" } },
+        { "BEH_Info_Pion_RendreCompteSurNBC", { "onHalt" } },
+        { "BEH_Info_Pion_RendreCompteSurROE", { "onHalt" } },
+        { "BEH_Info_Pion_RendreCompteSurSilenceRadio", { "onHalt" } },
+        { "BEH_Info_Pion_RendreCompteSurSilenceRadar", { "onHalt" } },
+        { "BEH_Info_Pion_RendreCompteSurPresencePop", { "onHalt" } },
+        { "BEH_Info_Pion_RendreCompteSurPriseAPartiParArt", { "onHalt" } },
+        { "BEH_Info_Pion_RendreCompteSurSituationDeplacement", { "onHalt" } },
+        { "BEH_Info_Pion_RendreCompteSurSituationMissions", { "onHalt" } },
+        { "BEH_Info_Pion_RendreCompteSurLima", { "onHalt" } },
+        { "BEH_Info_Pion_RendreCompteSurSituationCoordination", { "onHalt" } },
+        { "BEH_Info_Pion_RendreCompteSurPriseAPartiParEnis", { "onHalt" } },
+        { "BEH_Info_Pion_RendreCompteSurPriseDeContact", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Info_Pion_RendreCompte" } },
 
     create = function( self )
     end,
@@ -72,8 +76,12 @@ node "BEH_Info_Pion_RendreCompteSurNBC"
 {
     activations =
     {
-        { "ACT_RC", {} },
+        { "ACT_RC", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Info_Pion_RendreCompteSurNBC" } },
 
     create = function( self )
     end,
@@ -119,8 +127,12 @@ node "BEH_Info_Pion_RendreCompteSurROE"
 {
     activations =
     {
-        { "ACT_RC", {} },
+        { "ACT_RC", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Info_Pion_RendreCompteSurROE" } },
 
     create = function( self )
     end,
@@ -162,8 +174,12 @@ node "BEH_Info_Pion_RendreCompteSurLima"
 {
     activations =
     {
-        { "ACT_RC_SurLima", {} },
+        { "ACT_RC_SurLima", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Info_Pion_RendreCompteSurLima" } },
 
     create = function( self )
     end,
@@ -232,8 +248,12 @@ node "BEH_Info_Pion_RendreCompteSurSituationCoordination"
 {
     activations =
     {
-        { "ACT_RC", {} },
+        { "ACT_RC", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Info_Pion_RendreCompteSurSituationCoordination" } },
 
     create = function( self )
     end,
@@ -281,8 +301,12 @@ node "BEH_Info_Pion_RendreCompteSurSilenceRadio"
 {
     activations =
     {
-        { "ACT_RC", {} },
+        { "ACT_RC", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Info_Pion_RendreCompteSurSilenceRadio" } },
 
     create = function( self )
     end,
@@ -319,8 +343,12 @@ node "BEH_Info_Pion_RendreCompteSurSilenceRadar"
 {
     activations =
     {
-        { "ACT_RC", {} },
+        { "ACT_RC", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Info_Pion_RendreCompteSurSilenceRadar" } },
 
     create = function( self )
     end,
@@ -357,8 +385,12 @@ node "BEH_Info_Pion_RendreCompteSurEtatOperationnel"
 {
     activations =
     {
-        { "ACT_RC", {} },
+        { "ACT_RC", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Info_Pion_RendreCompteSurEtatOperationnel" } },
 
     create = function( self )
     end,
@@ -397,8 +429,12 @@ node "BEH_Info_Pion_RendreCompteSurAmbiance"
 {
     activations =
     {
-        { "ACT_RC", {} },
+        { "ACT_RC", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Info_Pion_RendreCompteSurAmbiance" } },
 
     create = function( self )
     end,
@@ -432,8 +468,12 @@ node "BEH_Info_Pion_RendreCompteSurSituationMissions"
 {
     activations =
     {
-        { "ACT_RC", {} },
+        { "ACT_RC", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Info_Pion_RendreCompteSurSituationMissions" } },
 
     create = function( self )
     end,
@@ -458,9 +498,13 @@ node "BEH_Info_Pion_RendreCompteSurPriseAPartiParArt"
 {
     activations =
     {
-        { "ACT_Warning", {} },
-        { "ACT_RC", {} },
+        { "ACT_Warning", { "onHalt" } },
+        { "ACT_RC", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Info_Pion_RendreCompteSurPriseAPartiParArt" } },
 
     create = function( self )
     end,
@@ -489,17 +533,23 @@ node "BEH_Info_Pion_RendreCompteSurPriseAPartiParEnis"
 {
     activations =
     {
-        { "BEH_Info_Pion_RendreCompteSurPriseAPartiDe", {} },
+        { "BEH_Info_Pion_RendreCompteSurPriseAPartiDe", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Info_Pion_RendreCompteSurPriseAPartiParEnis" } },
 
     create = function( self )
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         local listeUnitesPrenantAPartie = DEC_Connaissances_UnitesPrenantAPartie()
         for _,repEni in pairs( listeUnitesPrenantAPartie ) do
         local _continue = true
-            StartActivate( self.activations.BEH_Info_Pion_RendreCompteSurPriseAPartiDe, 1, { repEni, } )
+            StartInstance( self, self.activations.BEH_Info_Pion_RendreCompteSurPriseAPartiDe, 1, { repEni, } )
 
         end
 
@@ -517,8 +567,12 @@ node "BEH_Info_Pion_RendreCompteSurPriseAPartiDe"
 {
     activations =
     {
-        { "ACT_RC", {} },
+        { "ACT_RC", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Info_Pion_RendreCompteSurPriseAPartiDe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -530,7 +584,8 @@ node "BEH_Info_Pion_RendreCompteSurPriseAPartiDe"
 ]]--[[// Validité
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.repEni ) ) then
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Info_Pion_RendreCompteSurPriseAPartiDe" } )
+Halt( self )
             do return end
         end
 
@@ -555,16 +610,22 @@ node "BEH_Info_Pion_RendreCompteSurPriseDeContact"
 {
     activations =
     {
-        { "ACT_RC", {} },
+        { "ACT_RC", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Info_Pion_RendreCompteSurPriseDeContact" } },
 
     create = function( self )
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         --[[// vrai pendant au moins un tic
 ]]if( F_Pion_GeteEtatFeu( myself ) == eEtatFeu_Executer ) then
-            StartActivate( self.activations.ACT_RC, 1, { eRC_PriseContact, } )
+            StartInstance( self, self.activations.ACT_RC, 1, { eRC_PriseContact, } )
         end
 
     end,
@@ -581,13 +642,19 @@ node "BEH_Info_Pion_RendreCompteSurPresencePop"
 {
     activations =
     {
-        { "ACT_RC", {} },
+        { "ACT_RC", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Info_Pion_RendreCompteSurPresencePop" } },
 
     create = function( self )
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         local eValidite = nil
         for _,eniRendu in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Prisoniers
@@ -598,7 +665,7 @@ do
                 Activate( self.activations.ACT_RC, 1, { eRC_PresenceEnnemiRendu, } )
                 local campPrisonniers = DEC_Connaissances_ObjetAmiLePlusProche( S_TypeObject_ToString( eTypeObjectCampPrisonniers ) )
                 if( ( campPrisonniers == 0 or campPrisonniers == nil ) ) then
-                    StartActivate( self.activations.ACT_RC, 1, { eRC_PasDeCampPrisonniersDisponible, } )
+                    StartInstance( self, self.activations.ACT_RC, 1, { eRC_PasDeCampPrisonniersDisponible, } )
                 else
                     Activate( self.activations.ACT_RC, 1, { eRC_OrientationEnnemiRenduVersCampPrisonniers, } )
                 end
@@ -616,7 +683,7 @@ do
                 Activate( self.activations.ACT_RC, 1, { eRC_PresencePopulation, } )
                 local campRefugies = DEC_Connaissances_ObjetAmiLePlusProche( S_TypeObject_ToString( eTypeObjectCampRefugies ) )
                 if( ( campRefugies == 0 or campRefugies == nil ) ) then
-                    StartActivate( self.activations.ACT_RC, 1, { eRC_PasDeCampRefugiesDisponible, } )
+                    StartInstance( self, self.activations.ACT_RC, 1, { eRC_PasDeCampRefugiesDisponible, } )
                 else
                     Activate( self.activations.ACT_RC, 1, { eRC_OrientationPopulationVersCampRefugies, } )
                 end
@@ -639,9 +706,13 @@ node "BEH_Info_Pion_RendreCompteSurSituationDeplacement"
 {
     activations =
     {
-        { "ACT_RC_SurObjet", {} },
-        { "ACT_RC", {} },
+        { "ACT_RC_SurObjet", { "onHalt" } },
+        { "ACT_RC", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Info_Pion_RendreCompteSurSituationDeplacement" } },
 
     create = function( self )
     end,
@@ -716,11 +787,15 @@ node "BEH_Info_Mos"
 {
     activations =
     {
-        { "BEH_Info_RenseignerSurRapFor", {} },
-        { "BEH_Info_RenseignerSurROE", {} },
-        { "BEH_Info_RenseignerSurEtatDec", {} },
-        { "BEH_Info_RenseignerSurEtatOperationnel", {} },
+        { "BEH_Info_RenseignerSurRapFor", { "onHalt" } },
+        { "BEH_Info_RenseignerSurROE", { "onHalt" } },
+        { "BEH_Info_RenseignerSurEtatDec", { "onHalt" } },
+        { "BEH_Info_RenseignerSurEtatOperationnel", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Info_Mos" } },
 
     create = function( self )
     end,
@@ -749,6 +824,8 @@ node "BEH_Info_Mos"
 
 node "BEH_Info_RenseignerSurRapFor"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Info_RenseignerSurRapFor" } },
+
     create = function( self )
     end,
 
@@ -768,9 +845,13 @@ node "BEH_Info_RenseignerSurROE"
 {
     activations =
     {
-        { "ACT_Info_EtatROE", {} },
-        { "ACT_Info_EtatROEPopulation", {} },
+        { "ACT_Info_EtatROE", { "onHalt" } },
+        { "ACT_Info_EtatROEPopulation", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Info_RenseignerSurROE" } },
 
     create = function( self )
     end,
@@ -845,8 +926,12 @@ node "BEH_Info_RenseignerSurEtatDec"
 {
     activations =
     {
-        { "ACT_Info_EtatDec", {} },
+        { "ACT_Info_EtatDec", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Info_RenseignerSurEtatDec" } },
 
     create = function( self )
     end,
@@ -885,8 +970,12 @@ node "BEH_Info_RenseignerSurEtatOperationnel"
 {
     activations =
     {
-        { "ACT_Info_EtatOperationnel", {} },
+        { "ACT_Info_EtatOperationnel", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Info_RenseignerSurEtatOperationnel" } },
 
     create = function( self )
     end,

@@ -11,9 +11,13 @@ includedFiles["sources/appui/genie/automates/cie appui/missions/sedeployer/SeDep
 {
     activations =
     {
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_AssignerFaireMouvementAGenie", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", { "onHalt" } },
+        { "BEH_Medo_Automate_AssignerFaireMouvementAGenie", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_GEN_SeDeployer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -43,7 +47,8 @@ includedFiles["sources/appui/genie/automates/cie appui/missions/sedeployer/SeDep
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_GEN_SeDeployer" } )
+Halt( self )
                 do return end
 
             end
@@ -55,7 +60,8 @@ includedFiles["sources/appui/genie/automates/cie appui/missions/sedeployer/SeDep
                                 do
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_GEN_SeDeployer" } )
+Halt( self )
                     do return end
 
                 end
@@ -79,8 +85,12 @@ node "BEH_Medo_Automate_AssignerFaireMouvementAGenie"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerStationnerA", {} },
+        { "BEH_Mission_Automate_AssignerStationnerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_AssignerFaireMouvementAGenie" } },
 
     create = function( self )
         self._namedParams = {}
@@ -88,7 +98,9 @@ node "BEH_Medo_Automate_AssignerFaireMouvementAGenie"
         self._namedParams.zone = self.params[2]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.mission = self.mission or DEC_GetMission( myself )
         self.positionSite = self.positionSite or S_Geometrie_BarycentreZone( self._namedParams.zone )
         --[[//---------------------------------------------------------------------
@@ -102,7 +114,7 @@ node "BEH_Medo_Automate_AssignerFaireMouvementAGenie"
                 local _continue = true
                     do
                         local position = DEC_Geometrie_PositionAleatoireDansCercle( self.positionSite, 300 )
-                        StartActivate( self.activations.BEH_Mission_Automate_AssignerStationnerA, 1, { ePhase_MRT, pion, position, } )
+                        StartInstance( self, self.activations.BEH_Mission_Automate_AssignerStationnerA, 1, { ePhase_MRT, pion, position, } )
                     end
 
                 end

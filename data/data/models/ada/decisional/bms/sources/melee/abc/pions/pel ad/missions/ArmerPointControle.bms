@@ -23,9 +23,13 @@ includedFiles["sources/melee/abc/pions/pel ad/missions/ArmerPointControle.bms"] 
 {
     activations =
     {
-        { "ACT_Dep_PasserEnModeFurtif", {} },
-        { "BEH_Mission_Pion_ABC_ArmerPointDeControle", {} },
+        { "ACT_Dep_PasserEnModeFurtif", { "onHalt" } },
+        { "BEH_Mission_Pion_ABC_ArmerPointDeControle", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_ABC_ArmerPointDeControle" } },
 
     create = function( self )
         self._namedParams = {}
@@ -39,13 +43,15 @@ includedFiles["sources/melee/abc/pions/pel ad/missions/ArmerPointControle.bms"] 
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible ) then
             self.params.__returnValue = eActionImpossible
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ABC_ArmerPointDeControle" } )
+Halt( self )
             do return end
         end
 
         if( self.eEtat == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ABC_ArmerPointDeControle" } )
+Halt( self )
             do return end
         end
 

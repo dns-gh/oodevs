@@ -20,8 +20,12 @@ include "bit.lua"
 
     activations =
     {
-        { "ACT_Dep_Pions_ALAT_Voler", {} },
+        { "ACT_Dep_Pions_ALAT_Voler", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_ALAT_SePoser" } },
 
     create = function( self )
     end,
@@ -55,12 +59,16 @@ node "BEH_Dep_Pion_ALAT_Voler"
 
     activations =
     {
-        { "ACT_Dep_PasserEnModeFurtif", {} },
-        { "BEH_Dep_Pion_ALAT_SecondeAllure", {} },
-        { "BEH_Dep_Pion_ALAT_SecondeAllureAvecAppuis", {} },
-        { "BEH_Dep_Pion_ALAT_TroisiemeAllure", {} },
-        { "BEH_Dep_Pion_ALAT_TroisiemeAllureAvecAppuis", {} },
+        { "ACT_Dep_PasserEnModeFurtif", { "onHalt" } },
+        { "BEH_Dep_Pion_ALAT_SecondeAllure", { "onHalt" } },
+        { "BEH_Dep_Pion_ALAT_SecondeAllureAvecAppuis", { "onHalt" } },
+        { "BEH_Dep_Pion_ALAT_TroisiemeAllure", { "onHalt" } },
+        { "BEH_Dep_Pion_ALAT_TroisiemeAllureAvecAppuis", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_ALAT_Voler" } },
 
     create = function( self )
     end,
@@ -102,9 +110,13 @@ node "BEH_Dep_Pion_ALAT_PremiereAllure"
 {
     activations =
     {
-        { "ACT_Dep_Pions_ALAT_Voler", {} },
-        { "ACT_Dep_ModulationVitesse", {} },
+        { "ACT_Dep_Pions_ALAT_Voler", { "onHalt" } },
+        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_ALAT_PremiereAllure" } },
 
     create = function( self )
     end,
@@ -120,9 +132,13 @@ node "BEH_Dep_Pion_ALAT_PremiereAllureAvecAppuis"
 {
     activations =
     {
-        { "ACT_Dep_Pions_ALAT_Voler", {} },
-        { "ACT_Dep_ModulationVitesse", {} },
+        { "ACT_Dep_Pions_ALAT_Voler", { "onHalt" } },
+        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_ALAT_PremiereAllureAvecAppuis" } },
 
     create = function( self )
     end,
@@ -141,9 +157,13 @@ node "BEH_Dep_Pion_ALAT_SecondeAllure"
 {
     activations =
     {
-        { "ACT_Dep_Pions_ALAT_Voler", {} },
-        { "ACT_Dep_ModulationVitesse", {} },
+        { "ACT_Dep_Pions_ALAT_Voler", { "onHalt" } },
+        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_ALAT_SecondeAllure" } },
 
     create = function( self )
     end,
@@ -159,9 +179,13 @@ node "BEH_Dep_Pion_ALAT_SecondeAllureAvecAppuis"
 {
     activations =
     {
-        { "ACT_Dep_Pions_ALAT_Voler", {} },
-        { "ACT_Dep_ModulationVitesse", {} },
+        { "ACT_Dep_Pions_ALAT_Voler", { "onHalt" } },
+        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_ALAT_SecondeAllureAvecAppuis" } },
 
     create = function( self )
     end,
@@ -180,9 +204,13 @@ node "BEH_Dep_Pion_ALAT_TroisiemeAllure"
 {
     activations =
     {
-        { "ACT_Dep_Pions_ALAT_Voler", {} },
-        { "ACT_Dep_ModulationVitesse", {} },
+        { "ACT_Dep_Pions_ALAT_Voler", { "onHalt" } },
+        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_ALAT_TroisiemeAllure" } },
 
     create = function( self )
     end,
@@ -198,9 +226,13 @@ node "BEH_Dep_Pion_ALAT_TroisiemeAllureAvecAppuis"
 {
     activations =
     {
-        { "ACT_Dep_Pions_ALAT_Voler", {} },
-        { "ACT_Dep_ModulationVitesse", {} },
+        { "ACT_Dep_Pions_ALAT_Voler", { "onHalt" } },
+        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_ALAT_TroisiemeAllureAvecAppuis" } },
 
     create = function( self )
     end,
@@ -222,8 +254,12 @@ node "BEH_Dep_Pion_ALAT_RejoindrePoint"
 {
     activations =
     {
-        { "BEH_Dep_Pion_ALAT_RejoindreParItineraire", {} },
+        { "BEH_Dep_Pion_ALAT_RejoindreParItineraire", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_ALAT_RejoindrePoint" } },
 
     create = function( self )
         self._namedParams = {}
@@ -246,18 +282,21 @@ node "BEH_Dep_Pion_ALAT_RejoindrePoint"
 
         if( DEC_Geometrie_PositionsEgales( myself:DEC_Agent_Position(), self._namedParams.point ) ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_ALAT_RejoindrePoint" } )
+Halt( self )
             do return end
         end
 
         if( DEC_Geometrie_Distance( self._namedParams.point, self.pointARejoindre ) >= 4000 ) then
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_ALAT_RejoindrePoint" } )
+Halt( self )
             do return end
         end
 
         if( self.eEtat ~= eActionEnCours ) then
             self.params.__returnValue = self.eEtat
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_ALAT_RejoindrePoint" } )
+Halt( self )
             do return end
         else
             Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindreParItineraire, 1, setmetatable( { self.listePoints, self._namedParams.typeProgression, self._namedParams.ePathType, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
@@ -276,8 +315,12 @@ node "BEH_Dep_Pion_ALAT_RejoindrePion"
 {
     activations =
     {
-        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_ALAT_RejoindrePion" } },
 
     create = function( self )
         self._namedParams = {}
@@ -297,12 +340,14 @@ node "BEH_Dep_Pion_ALAT_RejoindrePion"
 
         if( DEC_Geometrie_PositionsEgales( myself:DEC_Agent_Position(), self.positionPion ) ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_ALAT_RejoindrePion" } )
+Halt( self )
             do return end
         end
 
         if( DEC_Geometrie_Distance( self._namedParams.pion:DEC_Agent_Position(), self.positionPion ) > self._namedParams.distanceAvantRelance ) then
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_ALAT_RejoindrePion" } )
+Halt( self )
             do return end
         end
 
@@ -358,10 +403,14 @@ node "BEH_Dep_Pion_ALAT_RejoindreParItineraire"
 {
     activations =
     {
-        { "BEH_Dep_Pion_ALAT_Voler", {} },
-        { "ACT_Obs_EtablirVisionCur", {} },
-        { "BEH_Dep_Progresser", {} },
+        { "BEH_Dep_Pion_ALAT_Voler", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionCur", { "onHalt" } },
+        { "BEH_Dep_Progresser", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_ALAT_RejoindreParItineraire" } },
 
     create = function( self )
         self._namedParams = {}
@@ -381,14 +430,16 @@ node "BEH_Dep_Pion_ALAT_RejoindreParItineraire"
         local forceEnvieRejoindre = 0
         local envieArret = 0
         if( S_Misc_EstDetruitPhysique() ) then
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_ALAT_RejoindreParItineraire" } )
+Halt( self )
             do return end
         end
 
         if( g_bRecalculItineraire ) then
             do
                 g_bRecalculItineraire = false
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_ALAT_RejoindreParItineraire" } )
+Halt( self )
                 do return end
 
             end
@@ -399,7 +450,8 @@ node "BEH_Dep_Pion_ALAT_RejoindreParItineraire"
             do
                 self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_ALAT_RejoindreParItineraire" )
                                 self.params.__returnValue = eActionEffectuee
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_ALAT_RejoindreParItineraire" } )
+Halt( self )
                 do return end
 
             end
@@ -432,7 +484,8 @@ node "BEH_Dep_Pion_ALAT_RejoindreParItineraire"
                                 do
                     self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_ALAT_RejoindreParItineraire" )
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_ALAT_RejoindreParItineraire" } )
+Halt( self )
                     do return end
 
                 end
@@ -460,7 +513,8 @@ node "BEH_Dep_Pion_ALAT_RejoindreParItineraire"
 elseif switch_1 == eItineraire_Invalide then
                     self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_ALAT_RejoindreParItineraire" )
                                         self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_ALAT_RejoindreParItineraire" } )
+Halt( self )
                     do return end
 
                                 end
@@ -470,14 +524,16 @@ elseif switch_1 == eItineraire_Invalide then
 elseif switch_1 == eItineraire_Impossible then
                     self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_ALAT_RejoindreParItineraire" )
                                         self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_ALAT_RejoindreParItineraire" } )
+Halt( self )
                     do return end
 
                                 end
                 if cases_switch_1[4] or switch_1 == eItineraire_Annule then
                     self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_ALAT_RejoindreParItineraire" )
                                         self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_ALAT_RejoindreParItineraire" } )
+Halt( self )
                     do return end
 
                                 end
@@ -501,8 +557,12 @@ node "BEH_Dep_Pion_ALAT_SEloignerPositionVers"
 {
     activations =
     {
-        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_ALAT_SEloignerPositionVers" } },
 
     create = function( self )
         self._namedParams = {}
@@ -524,7 +584,8 @@ node "BEH_Dep_Pion_ALAT_SEloignerPositionVers"
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_ALAT_SEloignerPositionVers" } )
+Halt( self )
                     do return end
 
                 end
@@ -547,8 +608,12 @@ node "BEH_Dep_Pion_ALAT_Suivre"
 {
     activations =
     {
-        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_ALAT_Suivre" } },
 
     create = function( self )
         self._namedParams = {}
@@ -574,7 +639,8 @@ node "BEH_Dep_Pion_ALAT_Suivre"
         end
 
         if( DEC_Geometrie_Distance( self.pointARejoindre, self.positionDebut ) >= 2000 ) then
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_ALAT_Suivre" } )
+Halt( self )
             do return end
         end
 
@@ -583,7 +649,8 @@ node "BEH_Dep_Pion_ALAT_Suivre"
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_ALAT_Suivre" } )
+Halt( self )
                     do return end
 
                 end
@@ -595,13 +662,15 @@ node "BEH_Dep_Pion_ALAT_Suivre"
             do
                                 do
                                         self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_ALAT_Suivre" } )
+Halt( self )
                     do return end
 
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_ALAT_Suivre" } )
+Halt( self )
                 do return end
 
             end
@@ -622,10 +691,14 @@ node "BEH_Dep_Pion_ALAT_SuivreSurFlanc"
 {
     activations =
     {
-        { "ACT_Maj_Pions_ObjectifEsquive", {} },
-        { "ACT_Obs_EtablirVisionFaceADir", {} },
-        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
+        { "ACT_Maj_Pions_ObjectifEsquive", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionFaceADir", { "onHalt" } },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_ALAT_SuivreSurFlanc" } },
 
     create = function( self )
         self._namedParams = {}
@@ -647,7 +720,8 @@ node "BEH_Dep_Pion_ALAT_SuivreSurFlanc"
 
         --[[//$$$$ GGR : 6000 = distance avant relance du pathfind
 ]]if( DEC_Geometrie_Distance( self.pointARejoindre, self.pointDebut ) >= 6000 ) then
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_ALAT_SuivreSurFlanc" } )
+Halt( self )
             do return end
         end
 
@@ -658,7 +732,8 @@ node "BEH_Dep_Pion_ALAT_SuivreSurFlanc"
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_ALAT_SuivreSurFlanc" } )
+Halt( self )
                     do return end
 
                 end
@@ -670,13 +745,15 @@ node "BEH_Dep_Pion_ALAT_SuivreSurFlanc"
             do
                                 do
                                         self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_ALAT_SuivreSurFlanc" } )
+Halt( self )
                     do return end
 
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_ALAT_SuivreSurFlanc" } )
+Halt( self )
                 do return end
 
             end
@@ -701,8 +778,12 @@ node "BEH_Dep_Pion_ALAT_IntercepterConnaissances"
 {
     activations =
     {
-        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_ALAT_IntercepterConnaissances" } },
 
     create = function( self )
         self._namedParams = {}
@@ -727,7 +808,8 @@ do
                     DEC_Copie_Point( pointBuffer, self.pointInterception )
                 else
                     self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_ALAT_IntercepterConnaissances" } )
+Halt( self )
                     do return end
                 end
 
@@ -736,7 +818,8 @@ do
 
         if( self.eEtat ~= eActionEnCours ) then
             self.params.__returnValue = self.eEtat
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_ALAT_IntercepterConnaissances" } )
+Halt( self )
             do return end
         else
             Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { self.pointInterception, self._namedParams.typeProgression, self._namedParams.ePathType, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
@@ -753,11 +836,15 @@ node "BEH_Dep_Pion_ALAT_EclairerItinerairePion"
 {
     activations =
     {
-        { "ACT_Maj_Pions_ObjectifEsquive", {} },
-        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
-        { "ACT_Misc_Delai", {} },
-        { "BEH_Dep_Pion_ALAT_RejoindrePion", {} },
+        { "ACT_Maj_Pions_ObjectifEsquive", { "onHalt" } },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "onHalt" } },
+        { "ACT_Misc_Delai", { "onHalt" } },
+        { "BEH_Dep_Pion_ALAT_RejoindrePion", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_ALAT_EclairerItinerairePion" } },
 
     create = function( self )
         self._namedParams = {}
@@ -777,7 +864,8 @@ node "BEH_Dep_Pion_ALAT_EclairerItinerairePion"
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_ALAT_EclairerItinerairePion" } )
+Halt( self )
                     do return end
 
                 end

@@ -30,15 +30,19 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Misc_Pion_DefinirTypeMission", {} },
-        { "BEH_MAJ_AgressiviteMission", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "BEH_Delai_Pion_INF_PreparerMission", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_Pion_INF_Appuyer", {} },
-        { "BEH_Eni_Pion_VAB_Appuyer", {} },
-        { "BEH_Poste_Pion_INF_TomberEnGarde", {} },
+        { "BEH_Misc_Pion_DefinirTypeMission", { "onHalt" } },
+        { "BEH_MAJ_AgressiviteMission", { "onHalt" } },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "BEH_Delai_Pion_INF_PreparerMission", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Dep_Pion_INF_Appuyer", { "onHalt" } },
+        { "BEH_Eni_Pion_VAB_Appuyer", { "onHalt" } },
+        { "BEH_Poste_Pion_INF_TomberEnGarde", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_INF_Appuyer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -61,7 +65,8 @@ include "bit.lua"
                     do
                         DEC_Warning( eRC_MissionImpossible )
                                                 self.params.__returnValue = eActionImpossible
-                        Halt( self )
+                        Feedback( self.feedbacks["onHalt"], { "MIS_Pion_INF_Appuyer" } )
+Halt( self )
                         do return end
 
                     end
@@ -116,7 +121,8 @@ elseif switch_1 == eFinMission then
                                 DEC_Trace( "fin mission" )
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_INF_Appuyer" } )
+Halt( self )
                                 do return end
 
                             end
@@ -146,10 +152,14 @@ node "BEH_Eni_Pion_VAB_Appuyer"
 {
     activations =
     {
-        { "BEH_Dep_Pion_INF_PreciserContact", {} },
-        { "ACT_Misc_UnitesEnAppui_EnPosition", {} },
-        { "BEH_Eni_Pion_VAB_ManoeuvreDetruire", {} },
+        { "BEH_Dep_Pion_INF_PreciserContact", { "onHalt" } },
+        { "ACT_Misc_UnitesEnAppui_EnPosition", { "onHalt" } },
+        { "BEH_Eni_Pion_VAB_ManoeuvreDetruire", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_VAB_Appuyer" } },
 
     create = function( self )
         self._namedParams = {}

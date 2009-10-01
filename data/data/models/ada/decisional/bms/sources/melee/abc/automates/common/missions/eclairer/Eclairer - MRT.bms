@@ -22,8 +22,12 @@ includedFiles["sources/melee/abc/automates/common/missions/eclairer/Eclairer - M
 {
     activations =
     {
-        { "BEH_Mission_Automate_ABC_AssignerEclairerA", {} },
+        { "BEH_Mission_Automate_ABC_AssignerEclairerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ABC_AssignerMissionEclairerA" } },
 
     create = function( self )
         self._namedParams = {}

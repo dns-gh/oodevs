@@ -65,8 +65,12 @@ node "BEH_Mission_Automate_INF_AssignerAppuyerA_Max"
 
     activations =
     {
-        { "BEH_Mission_Automate_INF_AssignerAppuyerA", {} },
+        { "BEH_Mission_Automate_INF_AssignerAppuyerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_INF_AssignerAppuyerA_Max" } },
 
     create = function( self )
         self._namedParams = {}
@@ -86,11 +90,15 @@ node "BEH_Mission_Automate_INF_AssignerAppuyerA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_INF_AssignerAppuyerA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_INF_AssignerAppuyerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_INF_AssignerAppuyerA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -147,11 +155,15 @@ node "BEH_Mission_Automate_INF_AssignerA_Semparer"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_INF_AssignerA_Semparer", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_INF_AssignerA_Semparer", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_INF_AssignerA_Semparer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -195,12 +207,16 @@ node "BEH_Mission_Automate_INF_AssignerReconnaitreA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ABC_AssignerReconnaitreA", {} },
-        { "ACT_Mission_Automate_INF_AssignerA_Reconnaitre", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_ABC_AssignerReconnaitreA", { "onHalt" } },
+        { "ACT_Mission_Automate_INF_AssignerA_Reconnaitre", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_INF_AssignerReconnaitreA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -261,12 +277,16 @@ node "BEH_Mission_Automate_INF_AssignerA_ReconnaitrePt"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ABC_AssignerReconnaitrePtA", {} },
-        { "ACT_Mission_Automate_INF_AssignerA_ReconnaitrePt", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_ABC_AssignerReconnaitrePtA", { "onHalt" } },
+        { "ACT_Mission_Automate_INF_AssignerA_ReconnaitrePt", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_INF_AssignerA_ReconnaitrePt" } },
 
     create = function( self )
         self._namedParams = {}
@@ -329,12 +349,16 @@ node "BEH_Mission_Automate_INF_AssignerA_Reduire"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ABC_AssignerReduireA", {} },
-        { "ACT_Mission_Automate_INF_AssignerA_Reduire", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_ABC_AssignerReduireA", { "onHalt" } },
+        { "ACT_Mission_Automate_INF_AssignerA_Reduire", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_INF_AssignerA_Reduire" } },
 
     create = function( self )
         self._namedParams = {}
@@ -398,11 +422,15 @@ node "BEH_Mission_Automate_INF_AssignerA_PrendrePreciserContact"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_INF_AssignerA_PrendrePreciserContact", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_INF_AssignerA_PrendrePreciserContact", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_INF_AssignerA_PrendrePreciserContact" } },
 
     create = function( self )
         self._namedParams = {}
@@ -447,12 +475,16 @@ node "BEH_Mission_Automate_INF_AssignerA_Fixer"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ABC_AssignerFixerA", {} },
-        { "ACT_Mission_Automate_INF_AssignerA_Fixer", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_ABC_AssignerFixerA", { "onHalt" } },
+        { "ACT_Mission_Automate_INF_AssignerA_Fixer", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_INF_AssignerA_Fixer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -517,11 +549,15 @@ node "BEH_Mission_Automate_INF_AssignerA_Interdire"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_INF_AssignerA_Interdire", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_INF_AssignerA_Interdire", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_INF_AssignerA_Interdire" } },
 
     create = function( self )
         self._namedParams = {}
@@ -566,11 +602,15 @@ node "BEH_Mission_Automate_INF_AssignerA_Defendre"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_INF_AssignerA_Defendre", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_INF_AssignerA_Defendre", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_INF_AssignerA_Defendre" } },
 
     create = function( self )
         self._namedParams = {}
@@ -615,11 +655,15 @@ node "BEH_Mission_Automate_INF_AssignerA_Freiner"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_INF_AssignerA_Freiner", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_INF_AssignerA_Freiner", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_INF_AssignerA_Freiner" } },
 
     create = function( self )
         self._namedParams = {}
@@ -667,11 +711,15 @@ node "BEH_Mission_Automate_INF_AssignerA_Couvrir"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_INF_AssignerA_Couvrir", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_INF_AssignerA_Couvrir", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_INF_AssignerA_Couvrir" } },
 
     create = function( self )
         self._namedParams = {}
@@ -717,11 +765,15 @@ node "BEH_Mission_Automate_INF_AssignerA_SurveillerZone"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_INF_AssignerA_SurveillerZone", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_INF_AssignerA_SurveillerZone", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_INF_AssignerA_SurveillerZone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -766,11 +818,15 @@ node "BEH_Mission_Automate_INF_AssignerA_SurveillerSurPosition"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_INF_AssignerA_SurveillerSurPosition", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_INF_AssignerA_SurveillerSurPosition", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_INF_AssignerA_SurveillerSurPosition" } },
 
     create = function( self )
         self._namedParams = {}
@@ -815,11 +871,15 @@ node "BEH_Mission_Automate_INF_AssignerA_Controler"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_INF_AssignerA_Controler", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_INF_AssignerA_Controler", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_INF_AssignerA_Controler" } },
 
     create = function( self )
         self._namedParams = {}
@@ -865,11 +925,15 @@ node "BEH_Mission_Automate_INF_AssignerA_Harceler"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_INF_AssignerA_Harceler", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_INF_AssignerA_Harceler", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_INF_AssignerA_Harceler" } },
 
     create = function( self )
         self._namedParams = {}
@@ -916,11 +980,15 @@ node "BEH_Mission_Automate_INF_AssignerA_Barrer"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_INF_AssignerA_Barrer", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_INF_AssignerA_Barrer", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_INF_AssignerA_Barrer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -961,11 +1029,15 @@ node "BEH_Mission_Automate_INF_AssignerA_BarrerDansZone"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_INF_AssignerA_Barrer", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_INF_AssignerA_Barrer", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_INF_AssignerA_BarrerDansZone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -1010,11 +1082,15 @@ node "BEH_Mission_Automate_INF_AssignerA_SeDeplacer"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "BEH_Mission_Automate_AssignerFaireMouvementA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "BEH_Mission_Automate_AssignerFaireMouvementA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_INF_AssignerA_SeDeplacer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -1062,11 +1138,15 @@ node "BEH_Mission_Automate_INF_AssignerEscorterA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_INF_AssignerEscorterA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_INF_AssignerEscorterA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_INF_AssignerEscorterA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -1114,11 +1194,15 @@ node "BEH_Mission_Automate_INF_AssignerEscorterAutomateA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_INF_AssignerEscorterUnitesA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_INF_AssignerEscorterUnitesA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_INF_AssignerEscorterAutomateA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -1166,11 +1250,15 @@ node "BEH_Mission_Automate_INF_AssignerSoutenirA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_INF_AssignerSoutenirA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_INF_AssignerSoutenirA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_INF_AssignerSoutenirA" } },
 
     create = function( self )
         self._namedParams = {}

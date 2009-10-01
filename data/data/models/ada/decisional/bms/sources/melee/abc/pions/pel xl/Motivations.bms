@@ -52,6 +52,8 @@ motivation_plugin.statevariables[ "VE_RapForInfiltration" ] =
 ]]motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_TirEffectue"
 node "ActivationForSTIM_TirEffectue"
 {
+    feedbacks = { { { "onHalt" }, "ActivationForSTIM_TirEffectue" } },
+
     activate = function( self )
         --[[//Defaut
 ]]SetStimulus( "STIM_TirEffectue", 0 )
@@ -89,8 +91,12 @@ node "ActivatedByMOT_AcquerirEnis"
 {
     activations =
     {
-        { "BEH_MOT_TirerSurEnis", {} },
+        { "BEH_MOT_TirerSurEnis", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "ActivatedByMOT_AcquerirEnis" } },
 
     create = function( self )
     end,
@@ -151,8 +157,12 @@ node "ActivatedByMOT_SInfiltrer"
 {
     activations =
     {
-        { "BEH_Pion_ABC_GarderSesDistancesPourSInfiltrer", {} },
+        { "BEH_Pion_ABC_GarderSesDistancesPourSInfiltrer", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "ActivatedByMOT_SInfiltrer" } },
 
     create = function( self )
     end,

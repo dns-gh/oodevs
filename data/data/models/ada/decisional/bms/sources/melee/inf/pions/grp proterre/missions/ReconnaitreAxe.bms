@@ -14,15 +14,19 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Misc_Pion_DefinirTypeMission", {} },
-        { "BEH_MAJ_AgressiviteMission", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "BEH_Eni_Pion_VAB_RecoAxe", {} },
-        { "BEH_Mission_Pion_INF_RecoAxe", {} },
-        { "BEH_MOT_Pion_INF_Debarquer", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Poste_Pion_INF_TomberEnGarde", {} },
+        { "BEH_Misc_Pion_DefinirTypeMission", { "onHalt" } },
+        { "BEH_MAJ_AgressiviteMission", { "onHalt" } },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "BEH_Eni_Pion_VAB_RecoAxe", { "onHalt" } },
+        { "BEH_Mission_Pion_INF_RecoAxe", { "onHalt" } },
+        { "BEH_MOT_Pion_INF_Debarquer", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Poste_Pion_INF_TomberEnGarde", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_INF_ReconnaitreAxe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -86,7 +90,8 @@ include "bit.lua"
                                 DEC_Trace( "Fin mission de mission reconnaitre un axe" )
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_INF_ReconnaitreAxe" } )
+Halt( self )
                                 do return end
 
                             end
@@ -123,18 +128,25 @@ node "BEH_Eni_Pion_VAB_RecoAxe"
 {
     activations =
     {
-        { "BEH_Dep_Pion_INF_GererDispositif_Offensif", {} },
-        { "BEH_Eni_Pion_VAB_ManoeuvreDetruire", {} },
+        { "BEH_Dep_Pion_INF_GererDispositif_Offensif", { "onHalt" } },
+        { "BEH_Eni_Pion_VAB_ManoeuvreDetruire", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_VAB_RecoAxe" } },
 
     create = function( self )
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         --[[// Si on quitte notre fuseau, on reinitialise toute les manoeuvres sur 
 ]]--[[// les ennemis
 ]]if( not DEC_Geometrie_EstPointDansFuseau( DEC_Agent_Position() ) ) then
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Eni_Pion_VAB_RecoAxe" } )
+Halt( self )
             do return end
         end
 
@@ -165,7 +177,7 @@ do
                     local rForceReco = S_Force_DistanceReco( DEC_ConnaissanceAgent_Position( ksEni ), 4000 )
                     --[[// Le comportement doit etre starte car une fois que l'unite est 
 ]]--[[// detruite, il retablit le dispositif.
-]]StartActivate( self.activations.BEH_Dep_Pion_INF_GererDispositif_Offensif, rForce * rForceReco, { ksEni, true, } )
+]]StartInstance( self, self.activations.BEH_Dep_Pion_INF_GererDispositif_Offensif, rForce * rForceReco, { ksEni, true, } )
                     --[[// On lance l'assaut si le niveau de perception attendu est atteind
 ]]if( S_Eni_EstNiveauPerceptionGTIA( ksEni, F_Pion_GeteNiveauAction( myself ) ) ) then
                         Activate( self.activations.BEH_Eni_Pion_VAB_ManoeuvreDetruire, 1.1 * ( 2.5 + rForce ) * rForceReco, { ksEni, true, } )

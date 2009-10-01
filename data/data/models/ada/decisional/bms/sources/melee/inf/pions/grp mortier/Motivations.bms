@@ -43,8 +43,12 @@ node "ActivatedByMOT_AppliquerLesFeux"
 {
     activations =
     {
-        { "BEH_MOT_Pion_Mortier_AppliquerLesFeux", {} },
+        { "BEH_MOT_Pion_Mortier_AppliquerLesFeux", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "ActivatedByMOT_AppliquerLesFeux" } },
 
     create = function( self )
     end,

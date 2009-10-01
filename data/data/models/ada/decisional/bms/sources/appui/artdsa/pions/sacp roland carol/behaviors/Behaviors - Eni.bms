@@ -17,8 +17,12 @@ includedFiles["sources/appui/artdsa/pions/sacp roland carol/behaviors/Behaviors 
 
     activations =
     {
-        { "BEH_Eni_Pion_ASA_InterceptionBalistique_Direct", {} },
+        { "BEH_Eni_Pion_ASA_InterceptionBalistique_Direct", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_ASA_Roland_Carol_InterceptionBalistique" } },
 
     create = function( self )
         self._namedParams = {}
@@ -55,8 +59,12 @@ node "BEH_Eni_Pion_ASA_GererEniDefendreZone"
 {
     activations =
     {
-        { "BEH_Eni_Pion_ASA_Roland_Carol_InterceptionBalistique", {} },
+        { "BEH_Eni_Pion_ASA_Roland_Carol_InterceptionBalistique", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_ASA_GererEniDefendreZone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -87,8 +95,12 @@ node "BEH_Eni_Pion_ASA_GererEniDefendreSite"
 {
     activations =
     {
-        { "BEH_Eni_Pion_ASA_Roland_Carol_InterceptionBalistique", {} },
+        { "BEH_Eni_Pion_ASA_Roland_Carol_InterceptionBalistique", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_ASA_GererEniDefendreSite" } },
 
     create = function( self )
         self._namedParams = {}
@@ -116,8 +128,12 @@ node "BEH_Eni_Pion_ASA_RolandCarol_GererEniSurveiller"
 {
     activations =
     {
-        { "BEH_Eni_Pion_ASA_Roland_Carol_InterceptionBalistique", {} },
+        { "BEH_Eni_Pion_ASA_Roland_Carol_InterceptionBalistique", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_ASA_RolandCarol_GererEniSurveiller" } },
 
     create = function( self )
     end,

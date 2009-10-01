@@ -15,10 +15,14 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_CoordDep_Automate_ABC_CoordonnerPEAvecSE_", {} },
-        { "BEH_CoordDep_Automate_ABC_CoordonnerPEAvecPEcl_", {} },
-        { "BEH_CoordDep_Automate_ABC_CoordonnerPEcl_", {} },
+        { "BEH_CoordDep_Automate_ABC_CoordonnerPEAvecSE_", { "onHalt" } },
+        { "BEH_CoordDep_Automate_ABC_CoordonnerPEAvecPEcl_", { "onHalt" } },
+        { "BEH_CoordDep_Automate_ABC_CoordonnerPEcl_", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_CoordDep_Automate_ABC_AssurerLaCoordinationInterne_" } },
 
     create = function( self )
     end,
@@ -44,8 +48,12 @@ node "BEH_CoordDep_Automate_ABC_CoordonnerPEAvecSE_"
 {
     activations =
     {
-        { "BEH_CoordDep_Automate_ABC_ActiverCoordinnationSur", {} },
+        { "BEH_CoordDep_Automate_ABC_ActiverCoordinnationSur", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_CoordDep_Automate_ABC_CoordonnerPEAvecSE_" } },
 
     create = function( self )
     end,
@@ -77,8 +85,12 @@ node "BEH_CoordDep_Automate_ABC_CoordonnerPEcl_"
 {
     activations =
     {
-        { "BEH_CoordDep_Automate_ABC_ActiverCoordinnationSur", {} },
+        { "BEH_CoordDep_Automate_ABC_ActiverCoordinnationSur", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_CoordDep_Automate_ABC_CoordonnerPEcl_" } },
 
     create = function( self )
     end,
@@ -111,8 +123,12 @@ node "BEH_CoordDep_Automate_ABC_SeCoordonnerAvecAmi_"
 {
     activations =
     {
-        { "BEH_CoordDep_Automate_ABC_ActiverCoordinationAmisSur", {} },
+        { "BEH_CoordDep_Automate_ABC_ActiverCoordinationAmisSur", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_CoordDep_Automate_ABC_SeCoordonnerAvecAmi_" } },
 
     create = function( self )
         self._namedParams = {}
@@ -138,9 +154,13 @@ node "BEH_CoordDep_Automate_ABC_ActiverCoordinationAmisSur"
 {
     activations =
     {
-        { "ACT_Info_Automate_Trace", {} },
-        { "ACT_Ordre_Automate_Pause", {} },
+        { "ACT_Info_Automate_Trace", { "onHalt" } },
+        { "ACT_Ordre_Automate_Pause", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_CoordDep_Automate_ABC_ActiverCoordinationAmisSur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -222,8 +242,12 @@ node "BEH_CoordDep_Automate_ABC_ActiverCoordinnationSur"
 {
     activations =
     {
-        { "ACT_Ordre_Automate_Ralentir", {} },
+        { "ACT_Ordre_Automate_Ralentir", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_CoordDep_Automate_ABC_ActiverCoordinnationSur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -289,9 +313,13 @@ node "BEH_CoordDep_Automate_ABC_CoordonnerPEAvecPEcl_"
 {
     activations =
     {
-        { "ACT_Info_Automate_Trace", {} },
-        { "BEH_CoordDep_Automate_ABC_CoordonnerPEAvecPEcl", {} },
+        { "ACT_Info_Automate_Trace", { "onHalt" } },
+        { "BEH_CoordDep_Automate_ABC_CoordonnerPEAvecPEcl", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_CoordDep_Automate_ABC_CoordonnerPEAvecPEcl_" } },
 
     create = function( self )
     end,
@@ -325,8 +353,12 @@ node "BEH_CoordDep_Automate_ABC_CoordonnerPEAvecPEcl"
 {
     activations =
     {
-        { "ACT_Ordre_Automate_Pause", {} },
+        { "ACT_Ordre_Automate_Pause", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_CoordDep_Automate_ABC_CoordonnerPEAvecPEcl" } },
 
     create = function( self )
         self._namedParams = {}
@@ -377,10 +409,14 @@ node "BEH_CoordDep_Automate_ABC_CoordinationRetrograde_"
 {
     activations =
     {
-        { "BEH_CoordDep_Automate_ABC_CoordonnerJalonnement", {} },
-        { "BEH_CoordDep_Automate_ABC_CoordonnerFreinage", {} },
-        { "BEH_CoordDep_Automate_ABC_CoordonnerMouvement", {} },
+        { "BEH_CoordDep_Automate_ABC_CoordonnerJalonnement", { "onHalt" } },
+        { "BEH_CoordDep_Automate_ABC_CoordonnerFreinage", { "onHalt" } },
+        { "BEH_CoordDep_Automate_ABC_CoordonnerMouvement", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_CoordDep_Automate_ABC_CoordinationRetrograde_" } },
 
     create = function( self )
     end,
@@ -406,8 +442,12 @@ node "BEH_CoordDep_Automate_ABC_CoordonnerFreinage"
 {
     activations =
     {
-        { "ACT_Ordre_Automate_Decrocher", {} },
+        { "ACT_Ordre_Automate_Decrocher", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_CoordDep_Automate_ABC_CoordonnerFreinage" } },
 
     create = function( self )
         self._namedParams = {}
@@ -456,8 +496,12 @@ node "BEH_CoordDep_Automate_ABC_CoordonnerJalonnement"
 {
     activations =
     {
-        { "ACT_Ordre_Automate_Decrocher", {} },
+        { "ACT_Ordre_Automate_Decrocher", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_CoordDep_Automate_ABC_CoordonnerJalonnement" } },
 
     create = function( self )
         self._namedParams = {}
@@ -506,8 +550,12 @@ node "BEH_CoordDep_Automate_ABC_CoordonnerMouvement"
 {
     activations =
     {
-        { "ACT_Ordre_Automate_Pause", {} },
+        { "ACT_Ordre_Automate_Pause", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_CoordDep_Automate_ABC_CoordonnerMouvement" } },
 
     create = function( self )
     end,

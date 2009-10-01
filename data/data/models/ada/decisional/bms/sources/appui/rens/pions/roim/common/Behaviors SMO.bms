@@ -11,8 +11,12 @@ includedFiles["sources/appui/rens/pions/roim/common/Behaviors SMO.bms"] = true
 {
     activations =
     {
-        { "BEH_Dep_Pion_Rens_GererEmbarquementDrone", {} },
+        { "BEH_Dep_Pion_Rens_GererEmbarquementDrone", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_Rens_GererDrones" } },
 
     create = function( self )
     end,
@@ -61,9 +65,13 @@ node "BEH_Dep_Pion_Rens_GererEmbarquementDrone"
 {
     activations =
     {
-        { "BEH_Transport_Pion_Rens_GererEmbarquementDrone", {} },
-        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Transport_Pion_Rens_GererEmbarquementDrone", { "onHalt" } },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_Rens_GererEmbarquementDrone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -108,9 +116,13 @@ node "BEH_Transport_Pion_Rens_GererEmbarquementDrone"
 {
     activations =
     {
-        { "BEH_Transport_Pion_Rens_EmbarquerDrone", {} },
-        { "BEH_Transport_Pion_Rens_ExploiterDrone", {} },
+        { "BEH_Transport_Pion_Rens_EmbarquerDrone", { "onHalt" } },
+        { "BEH_Transport_Pion_Rens_ExploiterDrone", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Transport_Pion_Rens_GererEmbarquementDrone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -140,8 +152,12 @@ node "BEH_Transport_Pion_Rens_EmbarquerDrone"
 {
     activations =
     {
-        { "ACT_Misc_Pion_Rens_EmbarquerDrone", {} },
+        { "ACT_Misc_Pion_Rens_EmbarquerDrone", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Transport_Pion_Rens_EmbarquerDrone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -164,9 +180,13 @@ node "BEH_Transport_Pion_Rens_ExploiterDrone"
 {
     activations =
     {
-        { "ACT_RC", {} },
-        { "ACT_Misc_Pion_Rens_ExploiterDrone", {} },
+        { "ACT_RC", { "onHalt" } },
+        { "ACT_Misc_Pion_Rens_ExploiterDrone", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Transport_Pion_Rens_ExploiterDrone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -226,6 +246,8 @@ node "BEH_Transport_Pion_Rens_ExploiterDrone"
 
 node "ACT_Misc_Pion_Rens_EmbarquerDrone"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Misc_Pion_Rens_EmbarquerDrone" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionDrone = self.params[1]
@@ -251,6 +273,8 @@ node "ACT_Misc_Pion_Rens_EmbarquerDrone"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Misc_Pion_Rens_ExploiterDrone"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Misc_Pion_Rens_ExploiterDrone" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionDrone = self.params[1]

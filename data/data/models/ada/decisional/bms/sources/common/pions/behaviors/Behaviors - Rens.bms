@@ -11,8 +11,12 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Rens.bms"] = true
 {
     activations =
     {
-        { "BEH_Rens_Recevoir_OrdreInopine", {} },
+        { "BEH_Rens_Recevoir_OrdreInopine", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Rens" } },
 
     create = function( self )
     end,
@@ -34,8 +38,12 @@ node "BEH_Rens_Recevoir_OrdreInopine"
 {
     activations =
     {
-        { "ACT_Ordre_Suppression", {} },
+        { "ACT_Ordre_Suppression", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Rens_Recevoir_OrdreInopine" } },
 
     create = function( self )
     end,
@@ -88,9 +96,13 @@ node "BEH_Rens_PasserEnSilenceRadio"
 {
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "ACT_Rens_CommuterRadio", {} },
+        { "ACT_Info_Trace", { "onHalt" } },
+        { "ACT_Rens_CommuterRadio", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Rens_PasserEnSilenceRadio" } },
 
     create = function( self )
     end,
@@ -118,8 +130,12 @@ node "BEH_Rens_PasserEnSilenceRadar"
 {
     activations =
     {
-        { "ACT_Pion_Rens_PasserEnSilenceRadar", {} },
+        { "ACT_Pion_Rens_PasserEnSilenceRadar", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Rens_PasserEnSilenceRadar" } },
 
     create = function( self )
         self._namedParams = {}

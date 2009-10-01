@@ -23,8 +23,12 @@ includedFiles["sources/melee/abc/automates/sgpt blindes inf/missions/reconnaitre
 {
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_ReconnaitreUnAxe", {} },
+        { "BEH_Conduite_Automate_ABC_ReconnaitreUnAxe", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_Reconnaitre" } },
 
     create = function( self )
         self._namedParams = {}

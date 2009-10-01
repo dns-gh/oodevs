@@ -11,9 +11,13 @@ includedFiles["sources/appui/rens/pions/rohum/urh/pat urh/missions/RenseignerSur
 {
     activations =
     {
-        { "BEH_Dep_Pion_GererFurtivite", {} },
-        { "BEH_Mission_Pion_RENS_RenseignerSur", {} },
+        { "BEH_Dep_Pion_GererFurtivite", { "onHalt" } },
+        { "BEH_Mission_Pion_RENS_RenseignerSur", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_RENS_ROHUM_RenseignerSur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -27,13 +31,15 @@ includedFiles["sources/appui/rens/pions/rohum/urh/pat urh/missions/RenseignerSur
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible ) then
             self.params.__returnValue = eActionImpossible
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_RENS_ROHUM_RenseignerSur" } )
+Halt( self )
             do return end
         end
 
         if( self.eEtat == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_RENS_ROHUM_RenseignerSur" } )
+Halt( self )
             do return end
         end
 

@@ -11,8 +11,12 @@ includedFiles["sources/appui/artfdp/automates/dlo/missions/acquerirobjectifs/Acq
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSuivreA", {} },
+        { "BEH_Mission_Automate_AssignerSuivreA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ASS_AcquerirObjectifsDLO" } },
 
     create = function( self )
         self._namedParams = {}

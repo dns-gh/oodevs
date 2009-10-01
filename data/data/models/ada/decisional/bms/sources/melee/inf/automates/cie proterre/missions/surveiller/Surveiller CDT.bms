@@ -16,8 +16,12 @@ node "MIS_Automate_CDT_INF_Surveiller"
 {
     activations =
     {
-        { "BEH_Situation_Automate_INF_Surveiller", {} },
+        { "BEH_Situation_Automate_INF_Surveiller", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_INF_Surveiller" } },
 
     create = function( self )
         self._namedParams = {}
@@ -50,10 +54,14 @@ node "BEH_Situation_Automate_INF_Surveiller"
 {
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Defaut", {} },
-        { "BEH_Conduite_Automate_INF_GererAppuis_INF", {} },
-        { "BEH_Conduite_Automate_INF_GererAppuis_ABC", {} },
+        { "BEH_Conduite_Automate_INF_Defaut", { "onHalt" } },
+        { "BEH_Conduite_Automate_INF_GererAppuis_INF", { "onHalt" } },
+        { "BEH_Conduite_Automate_INF_GererAppuis_ABC", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Situation_Automate_INF_Surveiller" } },
 
     create = function( self )
     end,

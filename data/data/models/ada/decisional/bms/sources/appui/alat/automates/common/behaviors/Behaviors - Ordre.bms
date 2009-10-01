@@ -9,6 +9,8 @@ includedFiles["sources/appui/alat/automates/common/behaviors/Behaviors - Ordre.b
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_Automate_ALAT_ChangerParametresRecompletement"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Ordre_Automate_ALAT_ChangerParametresRecompletement" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -33,9 +35,13 @@ node "BEH_Ordre_Automate_ALAT_ChangerParametresRecompletement"
 {
     activations =
     {
-        { "BEH_Ordre_Automate_ALAT_ChangerParametresRecompletementPions", {} },
-        { "ACT_Ordre_Suppression", {} },
+        { "BEH_Ordre_Automate_ALAT_ChangerParametresRecompletementPions", { "onHalt" } },
+        { "ACT_Ordre_Suppression", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Ordre_Automate_ALAT_ChangerParametresRecompletement" } },
 
     create = function( self )
     end,
@@ -66,8 +72,12 @@ node "BEH_Ordre_Automate_ALAT_ChangerParametresRecompletementPions"
 {
     activations =
     {
-        { "ACT_Ordre_Automate_ALAT_ChangerParametresRecompletement", {} },
+        { "ACT_Ordre_Automate_ALAT_ChangerParametresRecompletement", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Ordre_Automate_ALAT_ChangerParametresRecompletementPions" } },
 
     create = function( self )
         self._namedParams = {}

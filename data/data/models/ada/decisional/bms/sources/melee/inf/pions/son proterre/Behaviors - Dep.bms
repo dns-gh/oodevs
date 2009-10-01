@@ -33,8 +33,12 @@ node "BEH_Dep_Pion_INF_AborderEnnemi"
 {
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_INF_AborderEnnemi" } },
 
     create = function( self )
         self._namedParams = {}

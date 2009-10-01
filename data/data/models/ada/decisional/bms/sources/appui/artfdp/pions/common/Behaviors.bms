@@ -34,15 +34,19 @@ node "BEH_Defaut"
 {
     activations =
     {
-        { "BEH_MAJ_EtatDefaut", {} },
-        { "BEH_MAJ_Pion_ASS_TirDefaut", {} },
-        { "BEH_Mot_AffecterVariablesDEtat", {} },
-        { "BEH_Mot_Pion_Embarquer", {} },
-        { "BEH_Ambiance", {} },
-        { "BEH_ROE", {} },
-        { "BEH_Nbc", {} },
-        { "BEH_Rens", {} },
+        { "BEH_MAJ_EtatDefaut", { "onHalt" } },
+        { "BEH_MAJ_Pion_ASS_TirDefaut", { "onHalt" } },
+        { "BEH_Mot_AffecterVariablesDEtat", { "onHalt" } },
+        { "BEH_Mot_Pion_Embarquer", { "onHalt" } },
+        { "BEH_Ambiance", { "onHalt" } },
+        { "BEH_ROE", { "onHalt" } },
+        { "BEH_Nbc", { "onHalt" } },
+        { "BEH_Rens", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Defaut" } },
 
     create = function( self )
         self._namedParams = {}
@@ -98,6 +102,8 @@ do
 
 node "BEH_Mot_AffecterVariablesDEtat"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Mot_AffecterVariablesDEtat" } },
+
     create = function( self )
     end,
 
@@ -166,18 +172,24 @@ node "BEH_Dep_Pion_ASS_ChangerDePosition_Sauvegarde"
 {
     activations =
     {
-        { "ACT_Misc_Delai", {} },
-        { "ACT_RC", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Misc_Delai", { "onHalt" } },
+        { "ACT_RC", { "onHalt" } },
+        { "ACT_Info_Trace", { "onHalt" } },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_ASS_ChangerDePosition_Sauvegarde" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.ptCentre = self.params[1]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.ptTir = self.ptTir or nil
         self.eAction = self.eAction or eActionEnCours
         if( self.eAction == eActionEnCours ) then
@@ -192,7 +204,7 @@ node "BEH_Dep_Pion_ASS_ChangerDePosition_Sauvegarde"
                 self.ptTir = DEC_Geometrie_PositionAleatoireSurCercle( self._namedParams.ptCentre, 500 )
                 Activate( self.activations.ACT_RC, 1, { eRC_ChangementDePosition, } )
                 Activate( self.activations.ACT_Info_Trace, 1, { "Changement position : horaire", } )
-                StartActivate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptTir, eProgressionDirect, eTypeItiMouvement, } )
+                StartInstance( self, self.activations.BEH_Dep_ProgressionVers, 1, { self.ptTir, eProgressionDirect, eTypeItiMouvement, } )
                 self.eAction = eActionEnCours
             end
         end
@@ -205,12 +217,16 @@ node "BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement"
 {
     activations =
     {
-        { "ACT_RC", {} },
-        { "ACT_Misc_Delai", {} },
-        { "ACT_Dep_SePoster", {} },
-        { "ACT_Obs_ReconnaitrePoint", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "ACT_RC", { "onHalt" } },
+        { "ACT_Misc_Delai", { "onHalt" } },
+        { "ACT_Dep_SePoster", { "onHalt" } },
+        { "ACT_Obs_ReconnaitrePoint", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement" } },
 
     create = function( self )
         self._namedParams = {}
@@ -221,7 +237,8 @@ node "BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement"
         self.eAction = self.eAction or eActionEnCours
         if( self.eAction == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement" } )
+Halt( self )
             do return end
         end
 
@@ -238,8 +255,12 @@ node "BEH_MAJ_Pion_ASS_TirDefaut"
 {
     activations =
     {
-        { "ACT_Info_Pion_ASS_DisponibiliteAuTir", {} },
+        { "ACT_Info_Pion_ASS_DisponibiliteAuTir", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_MAJ_Pion_ASS_TirDefaut" } },
 
     create = function( self )
     end,
@@ -280,8 +301,12 @@ node "BEH_Dep_Virtuel_ProgressionVers"
 {
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Virtuel_ProgressionVers" } },
 
     create = function( self )
         self._namedParams = {}
@@ -298,6 +323,8 @@ node "BEH_Dep_Virtuel_ProgressionVers"
 
 node "BEH_Dep_Virtuel_PreparationAction"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Virtuel_PreparationAction" } },
+
     create = function( self )
     end,
 

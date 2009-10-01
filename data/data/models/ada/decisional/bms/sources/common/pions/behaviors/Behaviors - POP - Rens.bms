@@ -14,8 +14,12 @@ include "bit.lua"
 {
     activations =
     {
-        { "ACT_Pion_RenseignerSurPop", {} },
+        { "ACT_Pion_RenseignerSurPop", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Pop_RenseignerAuContact" } },
 
     create = function( self )
     end,
@@ -50,8 +54,12 @@ node "BEH_Pion_RenseignerSurPops"
 {
     activations =
     {
-        { "BEH_Pion_RenseignerSurPop", {} },
+        { "BEH_Pion_RenseignerSurPop", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Pion_RenseignerSurPops" } },
 
     create = function( self )
     end,
@@ -95,8 +103,12 @@ node "BEH_Pion_RenseignerSurPop"
 {
     activations =
     {
-        { "ACT_Pion_RenseignerSurPop", {} },
+        { "ACT_Pion_RenseignerSurPop", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Pion_RenseignerSurPop" } },
 
     create = function( self )
         self._namedParams = {}

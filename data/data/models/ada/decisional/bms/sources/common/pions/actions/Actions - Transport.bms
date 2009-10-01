@@ -17,6 +17,8 @@ includedFiles["sources/common/pions/actions/Actions - Transport.bms"] = true
         deplacement = 1,
     },
 
+    feedbacks = { { { "onHalt" }, "ACT_Transport_Pion_TransportEmbarquer" } },
+
     create = function( self )
     end,
 
@@ -57,7 +59,8 @@ elseif switch_1 == eActionTransport_Finished then
 
                     self.actionEmbarquer = DEC_StopAction( self.actionEmbarquer )
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "ACT_Transport_Pion_TransportEmbarquer" } )
+Halt( self )
                     do return end
 
                     
@@ -67,7 +70,8 @@ elseif switch_1 == eActionTransport_Finished then
 
                     self.actionEmbarquer = DEC_StopAction( self.actionEmbarquer )
                                         self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "ACT_Transport_Pion_TransportEmbarquer" } )
+Halt( self )
                     do return end
 
                     
@@ -100,6 +104,8 @@ elseif switch_1 == eActionTransport_Finished then
     {
         deplacement = 1,
     },
+
+    feedbacks = { { { "onHalt" }, "ACT_Transport_Pion_TransportDebarquer" } },
 
     create = function( self )
     end,
@@ -141,7 +147,8 @@ elseif switch_1 == eActionTransport_Finished then
 
                     self.actionDebarquer = DEC_StopAction( self.actionDebarquer )
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "ACT_Transport_Pion_TransportDebarquer" } )
+Halt( self )
                     do return end
 
                     
@@ -151,7 +158,8 @@ elseif switch_1 == eActionTransport_Finished then
 
                     self.actionDebarquer = DEC_StopAction( self.actionDebarquer )
                                         self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "ACT_Transport_Pion_TransportDebarquer" } )
+Halt( self )
                     do return end
 
                     

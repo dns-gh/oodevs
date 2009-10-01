@@ -21,6 +21,8 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - GEN.bms"] 
 ]]--[[// ****************************************************************************
 ]]node "ACT_Mission_Automate_GEN_AssignerRenforcerA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_GEN_AssignerRenforcerA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -104,6 +106,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// ****************************************************************************
 ]]node "ACT_Mission_Automate_GEN_AssignerDegagerObstacleA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_GEN_AssignerDegagerObstacleA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -184,6 +188,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// ****************************************************************************
 ]]node "ACT_Mission_Automate_GEN_AssignerContournerObstacleA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_GEN_AssignerContournerObstacleA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -264,6 +270,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// ****************************************************************************
 ]]node "ACT_Mission_Automate_GEN_AssignerReconnaitreZoneA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_GEN_AssignerReconnaitreZoneA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -344,6 +352,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// ****************************************************************************
 ]]node "ACT_Mission_Automate_GEN_AssignerOuvrirItineraireA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_GEN_AssignerOuvrirItineraireA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -424,6 +434,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// ****************************************************************************
 ]]node "ACT_Mission_Automate_GEN_AssignerRetablirItineraireA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_GEN_AssignerRetablirItineraireA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -504,6 +516,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// ****************************************************************************
 ]]node "ACT_Mission_Automate_GEN_AssignerReconnaitreSiteA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_GEN_AssignerReconnaitreSiteA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -584,6 +598,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// ****************************************************************************
 ]]node "ACT_Mission_Automate_GEN_AssignerEquiperExploiterA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_GEN_AssignerEquiperExploiterA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -668,6 +684,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// ****************************************************************************
 ]]node "ACT_Mission_Automate_GEN_AssignerRealiserTravauxA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_GEN_AssignerRealiserTravauxA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]

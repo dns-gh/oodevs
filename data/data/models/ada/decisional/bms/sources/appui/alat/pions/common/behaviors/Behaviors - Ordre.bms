@@ -11,8 +11,12 @@ includedFiles["sources/appui/alat/pions/common/behaviors/Behaviors - Ordre.bms"]
 {
     activations =
     {
-        { "ACT_Ordre_Suppression", {} },
+        { "ACT_Ordre_Suppression", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Ordre_Pion_ALAT_ChangerParametresRecompletement" } },
 
     create = function( self )
     end,

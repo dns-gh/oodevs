@@ -9,6 +9,8 @@ includedFiles["sources/common/automates/actions/Actions - Ordre.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_Automate_Pause"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Ordre_Automate_Pause" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -35,6 +37,8 @@ includedFiles["sources/common/automates/actions/Actions - Ordre.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_Automate_Continue"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Ordre_Automate_Continue" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -54,6 +58,8 @@ includedFiles["sources/common/automates/actions/Actions - Ordre.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_Automate_Ralentir"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Ordre_Automate_Ralentir" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -81,6 +87,8 @@ includedFiles["sources/common/automates/actions/Actions - Ordre.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_Automate_Interrompre"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Ordre_Automate_Interrompre" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -107,6 +115,8 @@ includedFiles["sources/common/automates/actions/Actions - Ordre.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_Automate_PasserEnAmbianceVitesse"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Ordre_Automate_PasserEnAmbianceVitesse" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -127,6 +137,8 @@ includedFiles["sources/common/automates/actions/Actions - Ordre.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_Automate_PasserEnAmbianceSurete"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Ordre_Automate_PasserEnAmbianceSurete" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -147,6 +159,8 @@ includedFiles["sources/common/automates/actions/Actions - Ordre.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_Automate_Decrocher"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Ordre_Automate_Decrocher" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -174,6 +188,8 @@ includedFiles["sources/common/automates/actions/Actions - Ordre.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_Automate_TenirSurLR"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Ordre_Automate_TenirSurLR" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -201,6 +217,8 @@ includedFiles["sources/common/automates/actions/Actions - Ordre.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_Automate_Tenir"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Ordre_Automate_Tenir" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -228,6 +246,8 @@ includedFiles["sources/common/automates/actions/Actions - Ordre.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_Automate_PasserSurLC"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Ordre_Automate_PasserSurLC" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]

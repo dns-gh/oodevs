@@ -11,9 +11,13 @@ includedFiles["sources/appui/rens/pions/rohum/rbrr/pat recherche blindee/mission
 {
     activations =
     {
-        { "BEH_Dep_Pion_GererFurtivite", {} },
-        { "BEH_Mission_Pion_RENS_SExfiltrer", {} },
+        { "BEH_Dep_Pion_GererFurtivite", { "onHalt" } },
+        { "BEH_Mission_Pion_RENS_SExfiltrer", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_RENS_ROHUM_SExfiltrer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -27,13 +31,15 @@ includedFiles["sources/appui/rens/pions/rohum/rbrr/pat recherche blindee/mission
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible ) then
             self.params.__returnValue = eActionImpossible
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_RENS_ROHUM_SExfiltrer" } )
+Halt( self )
             do return end
         end
 
         if( self.eEtat == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_RENS_ROHUM_SExfiltrer" } )
+Halt( self )
             do return end
         end
 

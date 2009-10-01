@@ -17,6 +17,8 @@ includedFiles["sources/common/pions/actions/Actions - Embarquement.bms"] = true
         debarquement = 1,
     },
 
+    feedbacks = { { { "onHalt" }, "ACT_Transport_Pion_Embarquer" } },
+
     create = function( self )
     end,
 
@@ -44,7 +46,8 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     DEC_Trace( "Loading of troops : ignore carrier" )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "ACT_Transport_Pion_Embarquer" } )
+Halt( self )
                     do return end
 
                                 end
@@ -52,7 +55,8 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     DEC_Trace( "Loading of troops : end" )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "ACT_Transport_Pion_Embarquer" } )
+Halt( self )
                     do return end
 
                                 end
@@ -95,6 +99,8 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
     {
         debarquement = 1,
     },
+
+    feedbacks = { { { "onHalt" }, "ACT_Transport_MaintenirEtat" } },
 
     create = function( self )
         self._namedParams = {}

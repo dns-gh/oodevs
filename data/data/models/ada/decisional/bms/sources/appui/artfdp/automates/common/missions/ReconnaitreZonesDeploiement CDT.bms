@@ -17,9 +17,13 @@ node "BEH_Conduite_Automate_ASS_ReconnaitreZonesDeploiement"
 {
     activations =
     {
-        { "BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA", {} },
-        { "BEH_Conduite_Automate_ASS_FaireSuivreDispositif", {} },
+        { "BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA", { "onHalt" } },
+        { "BEH_Conduite_Automate_ASS_FaireSuivreDispositif", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_ASS_ReconnaitreZonesDeploiement" } },
 
     create = function( self )
     end,
@@ -70,8 +74,12 @@ node "BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA"
 {
     activations =
     {
-        { "BEH_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA", {} },
+        { "BEH_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -79,9 +87,11 @@ node "BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA"
         self._namedParams.ptZone = self.params[2]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         if( ModuleBegins() ) then
-            StartActivate( self.activations.BEH_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA, 1, { ePhase_CDT, self._namedParams.pPion, self._namedParams.ptZone, } )
+            StartInstance( self, self.activations.BEH_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA, 1, { ePhase_CDT, self._namedParams.pPion, self._namedParams.ptZone, } )
         end
 
     end,
@@ -92,8 +102,12 @@ node "BEH_Conduite_Automate_ASS_FaireSuivreDispositif"
 {
     activations =
     {
-        { "BEH_Conduite_Automate_ASS_SuivreA", {} },
+        { "BEH_Conduite_Automate_ASS_SuivreA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_ASS_FaireSuivreDispositif" } },
 
     create = function( self )
     end,
@@ -138,8 +152,12 @@ node "BEH_Conduite_Automate_ASS_SuivreA"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSuivreA", {} },
+        { "BEH_Mission_Automate_AssignerSuivreA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_ASS_SuivreA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -147,9 +165,11 @@ node "BEH_Conduite_Automate_ASS_SuivreA"
         self._namedParams.pAAppuyer = self.params[2]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         if( ModuleBegins() ) then
-            StartActivate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_CDT, self._namedParams.pPion, self._namedParams.pAAppuyer, } )
+            StartInstance( self, self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_CDT, self._namedParams.pPion, self._namedParams.pAAppuyer, } )
         end
 
     end,

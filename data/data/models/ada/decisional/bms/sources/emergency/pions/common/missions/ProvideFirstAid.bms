@@ -17,12 +17,16 @@ includedFiles["sources/emergency/pions/common/missions/ProvideFirstAid.bms"] = t
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "ACT_RC", {} },
-        { "BEH_Pion_Emergency_ProvideFirstAid", {} },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "ACT_RC", { "onHalt" } },
+        { "BEH_Pion_Emergency_ProvideFirstAid", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_Emergency_ProvideFirstAid" } },
 
     create = function( self )
         self._namedParams = {}
@@ -77,7 +81,8 @@ elseif switch_1 == eFinMission then
                         do
                             DEC_FinMission()
                                                         self.params.__returnValue = eActionEffectuee
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_Emergency_ProvideFirstAid" } )
+Halt( self )
                             do return end
 
                         end
@@ -96,9 +101,13 @@ node "BEH_Pion_Emergency_ProvideFirstAid"
 {
     activations =
     {
-        { "ACT_Pion_Emergency_Influence", {} },
-        { "ACT_Pion_Emergency_UnloadActivity", {} },
+        { "ACT_Pion_Emergency_Influence", { "onHalt" } },
+        { "ACT_Pion_Emergency_UnloadActivity", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Pion_Emergency_ProvideFirstAid" } },
 
     create = function( self )
     end,

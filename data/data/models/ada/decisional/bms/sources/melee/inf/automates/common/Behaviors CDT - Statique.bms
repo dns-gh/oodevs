@@ -21,8 +21,12 @@ node "BEH_Situation_Automate_INF_CadreDefensif_InstallerPC"
 {
     activations =
     {
-        { "BEH_Conduite_Automate_INF_AssignerMission_PC", {} },
+        { "BEH_Conduite_Automate_INF_AssignerMission_PC", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Situation_Automate_INF_CadreDefensif_InstallerPC" } },
 
     create = function( self )
     end,
@@ -54,9 +58,13 @@ node "BEH_Conduite_Automate_INF_AssignerMission_PC"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSuivreA", {} },
-        { "BEH_Mission_Automate_AssignerFaireMouvementA", {} },
+        { "BEH_Mission_Automate_AssignerSuivreA", { "onHalt" } },
+        { "BEH_Mission_Automate_AssignerFaireMouvementA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_AssignerMission_PC" } },
 
     create = function( self )
         self._namedParams = {}

@@ -14,8 +14,12 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Dispositif_Automate_FaireSuivreLeSE", {} },
+        { "BEH_Dispositif_Automate_FaireSuivreLeSE", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_PrendreEnComptePrisonniers" } },
 
     create = function( self )
         self._namedParams = {}
@@ -48,8 +52,12 @@ node "BEH_Dispositif_Automate_FaireSuivreLeSE"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSuivreA", {} },
+        { "BEH_Mission_Automate_AssignerSuivreA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dispositif_Automate_FaireSuivreLeSE" } },
 
     create = function( self )
     end,

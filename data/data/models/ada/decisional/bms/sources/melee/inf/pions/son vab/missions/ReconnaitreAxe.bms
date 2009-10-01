@@ -14,15 +14,19 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Misc_Pion_DefinirTypeMission", {} },
-        { "BEH_MAJ_AgressiviteMission", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "BEH_Eni_Pion_VAB_RecoAxe", {} },
-        { "BEH_Mission_Pion_INF_RecoAxe", {} },
-        { "BEH_MOT_Pion_INF_Debarquer", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Misc_Pion_DefinirTypeMission", { "onHalt" } },
+        { "BEH_MAJ_AgressiviteMission", { "onHalt" } },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "BEH_Eni_Pion_VAB_RecoAxe", { "onHalt" } },
+        { "BEH_Mission_Pion_INF_RecoAxe", { "onHalt" } },
+        { "BEH_MOT_Pion_INF_Debarquer", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_INF_ReconnaitreAxe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -127,17 +131,24 @@ node "BEH_Eni_Pion_VAB_RecoAxe"
 {
     activations =
     {
-        { "BEH_Dep_Pion_INF_GererDispositif_Offensif", {} },
-        { "BEH_Eni_Pion_VAB_ManoeuvreDetruire", {} },
+        { "BEH_Dep_Pion_INF_GererDispositif_Offensif", { "onHalt" } },
+        { "BEH_Eni_Pion_VAB_ManoeuvreDetruire", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_VAB_RecoAxe" } },
 
     create = function( self )
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         --[[// On traite l'unite si elle est dans le fuseau de la section    								
 ]]        if( not DEC_Geometrie_EstPointDansFuseau( DEC_Agent_Position() ) ) then
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Eni_Pion_VAB_RecoAxe" } )
+Halt( self )
             do return end
         end
 
@@ -167,7 +178,7 @@ do
                     if _continue then
                     local rForce = GetMotivation( "MOT_ManoeuvrerSurEnis" ) + S_Force_ActionContre( ksEni )
                     local rForceReco = S_Force_DistanceReco( DEC_ConnaissanceAgent_Position( ksEni ), 4000 )
-                    StartActivate( self.activations.BEH_Dep_Pion_INF_GererDispositif_Offensif, rForce * rForceReco, { ksEni, true, } )
+                    StartInstance( self, self.activations.BEH_Dep_Pion_INF_GererDispositif_Offensif, rForce * rForceReco, { ksEni, true, } )
                     if( S_Eni_EstNiveauPerceptionGTIA( ksEni, F_Pion_GeteNiveauAction( myself ) ) ) then
                         Activate( self.activations.BEH_Eni_Pion_VAB_ManoeuvreDetruire, 1.1 * ( 2.5 + rForce ) * rForceReco, { ksEni, true, } )
                     end

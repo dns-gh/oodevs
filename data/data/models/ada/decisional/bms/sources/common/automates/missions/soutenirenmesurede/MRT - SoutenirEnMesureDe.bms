@@ -11,9 +11,13 @@ includedFiles["sources/common/automates/missions/soutenirenmesurede/MRT - Souten
 {
     activations =
     {
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_AssignerFaireSoutenirEnMesureDe", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", { "onHalt" } },
+        { "BEH_Medo_Automate_AssignerFaireSoutenirEnMesureDe", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_SoutenirEnMesureDe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -43,7 +47,8 @@ includedFiles["sources/common/automates/missions/soutenirenmesurede/MRT - Souten
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_SoutenirEnMesureDe" } )
+Halt( self )
                 do return end
 
             end
@@ -55,7 +60,8 @@ includedFiles["sources/common/automates/missions/soutenirenmesurede/MRT - Souten
                                 do
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_SoutenirEnMesureDe" } )
+Halt( self )
                     do return end
 
                 end
@@ -79,20 +85,26 @@ node "BEH_Medo_Automate_AssignerFaireSoutenirEnMesureDe"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSoutenirEnMesureDeA", {} },
+        { "BEH_Mission_Automate_AssignerSoutenirEnMesureDeA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_AssignerFaireSoutenirEnMesureDe" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.listePions = self.params[1]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.mission = self.mission or DEC_GetMission( myself )
         if( ModuleBegins() ) then
 for _,pion in pairs( DEC_Automate_PionsAvecPC() ) do
             local _continue = true
-                StartActivate( self.activations.BEH_Mission_Automate_AssignerSoutenirEnMesureDeA, 1, { ePhase_MRT, pion, self.mission.itineraire_, } )
+                StartInstance( self, self.activations.BEH_Mission_Automate_AssignerSoutenirEnMesureDeA, 1, { ePhase_MRT, pion, self.mission.itineraire_, } )
 
             end
         end
@@ -111,9 +123,13 @@ node "MIS_Automate_MRT_SoutenirSurPositionEnMesureDe"
 {
     activations =
     {
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_AssignerFaireSoutenirSurPositionEnMesureDe", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", { "onHalt" } },
+        { "BEH_Medo_Automate_AssignerFaireSoutenirSurPositionEnMesureDe", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_SoutenirSurPositionEnMesureDe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -143,7 +159,8 @@ node "MIS_Automate_MRT_SoutenirSurPositionEnMesureDe"
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_SoutenirSurPositionEnMesureDe" } )
+Halt( self )
                 do return end
 
             end
@@ -155,7 +172,8 @@ node "MIS_Automate_MRT_SoutenirSurPositionEnMesureDe"
                                 do
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_SoutenirSurPositionEnMesureDe" } )
+Halt( self )
                     do return end
 
                 end
@@ -179,8 +197,12 @@ node "BEH_Medo_Automate_AssignerFaireSoutenirSurPositionEnMesureDe"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSoutenirSurPositionEnMesureDeA", {} },
+        { "BEH_Mission_Automate_AssignerSoutenirSurPositionEnMesureDeA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_AssignerFaireSoutenirSurPositionEnMesureDe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -188,7 +210,9 @@ node "BEH_Medo_Automate_AssignerFaireSoutenirSurPositionEnMesureDe"
         self._namedParams.locPosition = self.params[2]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.centre = self.centre or S_Geometrie_BarycentreZone( self._namedParams.locPosition )
         self.mission = self.mission or DEC_GetMission( myself )
         if( ModuleBegins() ) then
@@ -196,7 +220,7 @@ for _,pion in pairs( DEC_Automate_PionsAvecPC() ) do
             local _continue = true
                 do
                     local position = DEC_Geometrie_PositionAleatoireDansCercle( self.centre, 500 )
-                    StartActivate( self.activations.BEH_Mission_Automate_AssignerSoutenirSurPositionEnMesureDeA, 1, { ePhase_MRT, pion, position, } )
+                    StartInstance( self, self.activations.BEH_Mission_Automate_AssignerSoutenirSurPositionEnMesureDeA, 1, { ePhase_MRT, pion, position, } )
                 end
 
             end

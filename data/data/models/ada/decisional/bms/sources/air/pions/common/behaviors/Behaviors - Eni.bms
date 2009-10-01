@@ -19,8 +19,12 @@ include "bit.lua"
 
     activations =
     {
-        { "ACT_Tir_IndirectSurPosition", {} },
+        { "ACT_Tir_IndirectSurPosition", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_AIR_FrappeIndirecteSur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -36,7 +40,8 @@ include "bit.lua"
 ]]        self.eEtatAttaque = self.eEtatAttaque or eActionEnCours
         if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.ennemi ) ) then
             self.params.__returnValue = eActionImpossible
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Eni_Pion_AIR_FrappeIndirecteSur" } )
+Halt( self )
             do return end
         end
 

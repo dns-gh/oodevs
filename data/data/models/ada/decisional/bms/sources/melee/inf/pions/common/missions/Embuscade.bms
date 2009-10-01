@@ -27,12 +27,16 @@ include "bit.lua"
 {
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "ACT_Obj_Pion_INF_RealiserBouchonMines", {} },
-        { "ACT_Obj_Pion_INF_PreparerAbattis", {} },
-        { "ACT_Misc_Pion_DelaiInstallation", {} },
-        { "ACT_Obj_Pion_INF_Activer", {} },
+        { "ACT_Info_Trace", { "onHalt" } },
+        { "ACT_Obj_Pion_INF_RealiserBouchonMines", { "onHalt" } },
+        { "ACT_Obj_Pion_INF_PreparerAbattis", { "onHalt" } },
+        { "ACT_Misc_Pion_DelaiInstallation", { "onHalt" } },
+        { "ACT_Obj_Pion_INF_Activer", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Obj_Pion_INF_GererInstallationObstacle" } },
 
     create = function( self )
         self._namedParams = {}
@@ -40,7 +44,9 @@ include "bit.lua"
         self._namedParams.eTypeObjet = self.params[2]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.locEmbuscade = self.locEmbuscade or nil
         self.eAction = self.eAction or eActionEnCours
         self.eActionAbattis = self.eActionAbattis or eActionEnCours
@@ -141,7 +147,7 @@ elseif switch_1 == eActiverObstacle then
                             --[[// Si il est a porte de tir, on lance l'assaut    				    				
 ]]if( S_Geometrie_EstProcheLocalisation( DEC_ConnaissanceAgent_Position( F_Pion_GeteniEnCours( myself ) ), DEC_ConnaissanceObjet_Localisation( self.repObj ), 200 ) ) then
                                 do
-                                    StartActivate( self.activations.ACT_Obj_Pion_INF_Activer, 1, { self.repObj, } )
+                                    StartInstance( self, self.activations.ACT_Obj_Pion_INF_Activer, 1, { self.repObj, } )
                                     self.ePhase = ePrendreContact
                                                                         self.params.__returnValue = eActionEffectuee
                                     return
@@ -176,8 +182,12 @@ node "BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc"
 {
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc" } },
 
     create = function( self )
         self._namedParams = {}
@@ -202,7 +212,8 @@ node "BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc"
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc" } )
+Halt( self )
                 do return end
 
             end
@@ -214,7 +225,8 @@ node "BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc"
                 self.eAction = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc" } )
+Halt( self )
                     do return end
 
                 end
@@ -235,12 +247,16 @@ node "BEH_Eni_Pion_INF_DetruireEmbuscade"
 {
     activations =
     {
-        { "ACT_Maj_Pion_PasserEnTirLibre", {} },
-        { "BEH_MOT_DesactiveSauvegarde", {} },
-        { "BEH_Obj_Pion_INF_GererInstallationObstacle", {} },
-        { "ACT_Misc_Delai", {} },
-        { "ACT_MAJ_EnnemiEnCours", {} },
+        { "ACT_Maj_Pion_PasserEnTirLibre", { "onHalt" } },
+        { "BEH_MOT_DesactiveSauvegarde", { "onHalt" } },
+        { "BEH_Obj_Pion_INF_GererInstallationObstacle", { "onHalt" } },
+        { "ACT_Misc_Delai", { "onHalt" } },
+        { "ACT_MAJ_EnnemiEnCours", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_INF_DetruireEmbuscade" } },
 
     create = function( self )
         self._namedParams = {}
@@ -248,7 +264,9 @@ node "BEH_Eni_Pion_INF_DetruireEmbuscade"
         self._namedParams.eTypeObj = self.params[2]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.eActionDelai = self.eActionDelai or eActionEnCours
         self.eActionObst = self.eActionObst or eActionEnCours
         if( self.eActionDelai == eActionEffectuee ) then
@@ -276,10 +294,10 @@ do
                 --[[// On fait l'assaut
 ]]if( S_Tir_EstAPorteePosturesReelles( x, GetStateVariable( "VE_Agressivite_Tir" ) ) ) then
                     do
-                        StartActivate( self.activations.BEH_Obj_Pion_INF_GererInstallationObstacle, 0.5, setmetatable( { self._namedParams.ptEmbuscade, self._namedParams.eTypeObj, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionObst = v else rawset( t, k, v ) end end } ) )
+                        StartInstance( self, self.activations.BEH_Obj_Pion_INF_GererInstallationObstacle, 0.5, setmetatable( { self._namedParams.ptEmbuscade, self._namedParams.eTypeObj, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionObst = v else rawset( t, k, v ) end end } ) )
                         --[[// Au bout de 3 min, on retourne au point de regroupement
 ]]if( F_Pion_GeteEtatFeu( myself ) == eEtatFeu_Executer ) then
-                            StartActivate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, 1, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionDelai = v else rawset( t, k, v ) end end } ) )
+                            StartInstance( self, self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, 1, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionDelai = v else rawset( t, k, v ) end end } ) )
                         end
 
                         Activate( self.activations.ACT_MAJ_EnnemiEnCours, 1, { x, } )

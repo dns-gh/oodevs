@@ -9,6 +9,8 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - LOG.bms"] 
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_LOG_AssignerSeDeployerA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_LOG_AssignerSeDeployerA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -89,6 +91,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_LOG_AssignerDecontaminerBlessesA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_LOG_AssignerDecontaminerBlessesA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -169,6 +173,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_LOG_AssignerReparerA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_LOG_AssignerReparerA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -249,6 +255,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -329,6 +337,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_LOG_AssignerTraiterBlessesA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_LOG_AssignerTraiterBlessesA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -409,6 +419,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]

@@ -22,8 +22,12 @@ includedFiles["sources/melee/abc/automates/sgpt chars ecl/missions/couvrir/Couvr
 {
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_Couvrir", {} },
+        { "BEH_Conduite_Automate_ABC_Couvrir", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_Couvrir" } },
 
     create = function( self )
         self._namedParams = {}

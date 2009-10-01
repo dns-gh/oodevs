@@ -11,12 +11,16 @@ include "bit.lua"
 {
     activations =
     {
-        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_Ordre_Suppression", {} },
-        { "BEH_Transport_Pion_Transporter", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", { "onHalt" } },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "ACT_Ordre_Suppression", { "onHalt" } },
+        { "BEH_Transport_Pion_Transporter", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_Transporter" } },
 
     create = function( self )
         self._namedParams = {}
@@ -52,7 +56,8 @@ include "bit.lua"
                 DEC_Trace( "Il n'y a pas de pion transportable dans la liste passée en argument" )
                 DEC_Warning( eRC_TransportImpossiblePasDeMoyens )
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_Transporter" } )
+Halt( self )
                 do return end
 
             end
@@ -114,13 +119,15 @@ do
                                 DEC_Trace( "transport Impossible" )
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self.params.__returnValue = eActionImpossible
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_Transporter" } )
+Halt( self )
                                 do return end
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_Transporter" } )
+Halt( self )
                             do return end
 
                         end
@@ -137,7 +144,8 @@ elseif switch_1 == eFinMission then
                             DEC_Transport_Annuler()
                             DEC_FinMission()
                                                         self.params.__returnValue = eActionEffectuee
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_Transporter" } )
+Halt( self )
                             do return end
 
                         end

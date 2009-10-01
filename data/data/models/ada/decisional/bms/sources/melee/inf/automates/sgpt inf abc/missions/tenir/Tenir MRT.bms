@@ -16,8 +16,12 @@ node "MIS_Automate_MRT_INF_Tenir"
 {
     activations =
     {
-        { "BEH_Medo_Automate_INF_PreparerMission_Statique", {} },
+        { "BEH_Medo_Automate_INF_PreparerMission_Statique", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_INF_Tenir" } },
 
     create = function( self )
         self._namedParams = {}
@@ -46,7 +50,8 @@ node "MIS_Automate_MRT_INF_Tenir"
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_INF_Tenir" } )
+Halt( self )
                 do return end
 
             end
@@ -59,7 +64,8 @@ node "MIS_Automate_MRT_INF_Tenir"
                     DEC_Trace( "MIS_Automate_MRT_INF_Tenir : fin MRT" )
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_INF_Tenir" } )
+Halt( self )
                     do return end
 
                 end

@@ -10,6 +10,8 @@ includedFiles["sources/population/populations/Actions - misc.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Info_Trace"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Info_Trace" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.message = self.params[1]
@@ -32,6 +34,8 @@ includedFiles["sources/population/populations/Actions - misc.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_Suppression"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Ordre_Suppression" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ordre = self.params[1]
@@ -51,6 +55,8 @@ includedFiles["sources/population/populations/Actions - misc.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Misc_Delai"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Misc_Delai" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.id = self.params[1]
@@ -72,7 +78,8 @@ includedFiles["sources/population/populations/Actions - misc.bms"] = true
                 if( self._namedParams.rDelai * 60 <= DEC_TempsSim() - self.rTempsDebut ) then
                     do
                                                 self.params.__returnValue = eActionEffectuee
-                        Halt( self )
+                        Feedback( self.feedbacks["onHalt"], { "ACT_Misc_Delai" } )
+Halt( self )
                         do return end
 
                     end

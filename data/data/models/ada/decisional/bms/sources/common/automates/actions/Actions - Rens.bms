@@ -9,6 +9,8 @@ includedFiles["sources/common/automates/actions/Actions - Rens.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Automate_Rens_PartageConnaissancesDansZoneAvec"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Automate_Rens_PartageConnaissancesDansZoneAvec" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.automate = self.params[1]
@@ -42,6 +44,8 @@ includedFiles["sources/common/automates/actions/Actions - Rens.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Automate_Rens_PartageConnaissancesAvec"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Automate_Rens_PartageConnaissancesAvec" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.automate = self.params[1]

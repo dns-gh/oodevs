@@ -16,6 +16,8 @@ includedFiles["sources/emergency/automates/common/missions/Actions - Medo.bms"] 
 ]]--[[//=============================================================================
 ]]node "ACT_Mission_Automate_Emergency_AssignerA_EvacuateArea"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_Emergency_AssignerA_EvacuateArea" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]

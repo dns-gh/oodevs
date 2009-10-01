@@ -26,10 +26,14 @@ include "bit.lua"
 {
     activations =
     {
-        { "ACT_Info_Automate_Trace", {} },
-        { "ACT_Ordre_Automate_Ralentir", {} },
-        { "ACT_Ordre_Automate_Pause", {} },
+        { "ACT_Info_Automate_Trace", { "onHalt" } },
+        { "ACT_Ordre_Automate_Ralentir", { "onHalt" } },
+        { "ACT_Ordre_Automate_Pause", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_CoordDep_Automate_AvecPions" } },
 
     create = function( self )
         self._namedParams = {}
@@ -139,8 +143,12 @@ node "BEH_CoordDep_Automate_INF_AvecAutomate"
 {
     activations =
     {
-        { "BEH_CoordDep_Automate_INF_AvecAutomate_Pion", {} },
+        { "BEH_CoordDep_Automate_INF_AvecAutomate_Pion", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_CoordDep_Automate_INF_AvecAutomate" } },
 
     create = function( self )
         self._namedParams = {}
@@ -186,9 +194,13 @@ node "BEH_CoordDep_Automate_INF_AvecAutomate_Pion"
 {
     activations =
     {
-        { "ACT_Ordre_Automate_Pause", {} },
-        { "ACT_Info_Automate_Trace", {} },
+        { "ACT_Ordre_Automate_Pause", { "onHalt" } },
+        { "ACT_Info_Automate_Trace", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_CoordDep_Automate_INF_AvecAutomate_Pion" } },
 
     create = function( self )
         self._namedParams = {}
@@ -295,9 +307,13 @@ node "BEH_CoordDep_Automate_INF_Retrograde"
 {
     activations =
     {
-        { "ACT_Info_Automate_Trace", {} },
-        { "ACT_Ordre_Automate_Pause", {} },
+        { "ACT_Info_Automate_Trace", { "onHalt" } },
+        { "ACT_Ordre_Automate_Pause", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_CoordDep_Automate_INF_Retrograde" } },
 
     create = function( self )
     end,
@@ -374,6 +390,8 @@ node "BEH_CoordDep_Automate_INF_Retrograde"
 
 node "BEH_Automate_INF_ConduitePause"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Automate_INF_ConduitePause" } },
+
     create = function( self )
     end,
 
@@ -386,10 +404,14 @@ node "BEH_Conduite_Automate_INF_FlancGarder"
 {
     activations =
     {
-        { "BEH_CoordDep_Automate_INF_AvecAutomate", {} },
-        { "BEH_Conduite_Automate_INF_FlancGarder_Regroupement", {} },
-        { "BEH_Conduite_Automate_INF_FlancGarder_Tenir", {} },
+        { "BEH_CoordDep_Automate_INF_AvecAutomate", { "onHalt" } },
+        { "BEH_Conduite_Automate_INF_FlancGarder_Regroupement", { "onHalt" } },
+        { "BEH_Conduite_Automate_INF_FlancGarder_Tenir", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_FlancGarder" } },
 
     create = function( self )
         self._namedParams = {}
@@ -408,8 +430,12 @@ node "BEH_Conduite_Automate_INF_FlancGarder_Regroupement"
 {
     activations =
     {
-        { "ACT_Conduite_Automate_PointRegroupement_Pion", {} },
+        { "ACT_Conduite_Automate_PointRegroupement_Pion", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_FlancGarder_Regroupement" } },
 
     create = function( self )
         self._namedParams = {}
@@ -453,8 +479,12 @@ node "BEH_Conduite_Automate_INF_FlancGarder_Tenir"
 {
     activations =
     {
-        { "ACT_Ordre_Automate_Pause", {} },
+        { "ACT_Ordre_Automate_Pause", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_FlancGarder_Tenir" } },
 
     create = function( self )
         self._namedParams = {}

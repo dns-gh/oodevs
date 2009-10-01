@@ -12,14 +12,18 @@ includedFiles["sources/melee/abc/pions/common/missions/Eclairer.bms"] = true
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "BEH_MAJ_Pion_ABC_AgressiviteTir", {} },
-        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Dep_ProgressionSur", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "BEH_MAJ_Pion_ABC_AgressiviteTir", { "onHalt" } },
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "ACT_Info_Trace", { "onHalt" } },
+        { "BEH_Dep_ProgressionSur", { "onHalt" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_ABC_Eclairer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -46,7 +50,8 @@ includedFiles["sources/melee/abc/pions/common/missions/Eclairer.bms"] = true
 
         if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_ABC_Eclairer" } )
+Halt( self )
             do return end
         end
 

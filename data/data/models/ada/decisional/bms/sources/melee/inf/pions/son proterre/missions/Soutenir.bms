@@ -26,8 +26,12 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Mission_Pion_INF_SoutenirUneUnite", {} },
+        { "BEH_Mission_Pion_INF_SoutenirUneUnite", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_INF_Soutenir" } },
 
     create = function( self )
         self._namedParams = {}
@@ -41,13 +45,15 @@ include "bit.lua"
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible ) then
             self.params.__returnValue = eActionImpossible
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_INF_Soutenir" } )
+Halt( self )
             do return end
         end
 
         if( self.eEtat == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_INF_Soutenir" } )
+Halt( self )
             do return end
         end
 
@@ -66,16 +72,20 @@ node "BEH_Mission_Pion_INF_SoutenirUneUnite"
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "BEH_MAJ_Pion_INF_AgressiviteTir", {} },
-        { "BEH_MOT_DesactiveSauvegarde", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Info_Trace", {} },
-        { "ACT_Dep_ModulationVitesse", {} },
-        { "BEH_Dep_Pion_MILAN_Appuyer", {} },
-        { "BEH_Dep_Suivre", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "BEH_MAJ_Pion_INF_AgressiviteTir", { "onHalt" } },
+        { "BEH_MOT_DesactiveSauvegarde", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "ACT_Info_Trace", { "onHalt" } },
+        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
+        { "BEH_Dep_Pion_MILAN_Appuyer", { "onHalt" } },
+        { "BEH_Dep_Suivre", { "onHalt" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_INF_SoutenirUneUnite" } },
 
     create = function( self )
         self._namedParams = {}
@@ -211,10 +221,14 @@ node "BEH_Dep_Pion_MILAN_Appuyer"
 {
     activations =
     {
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Dep_Pion_INF_RejoindrePositionAppuiPour", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "ACT_Info_Trace", { "onHalt" } },
+        { "BEH_Dep_Pion_INF_RejoindrePositionAppuiPour", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_MILAN_Appuyer" } },
 
     create = function( self )
         self._namedParams = {}

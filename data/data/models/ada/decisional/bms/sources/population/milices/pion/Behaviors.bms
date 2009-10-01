@@ -119,15 +119,19 @@ node "BEH_Defaut"
 {
     activations =
     {
-        { "ACT_Maj_Pion_PasserEnTirLibre", {} },
-        { "BEH_MAJ_EtatDefaut", {} },
-        { "BEH_Mot_AffecterVariablesDEtat", {} },
-        { "BEH_Ambiance", {} },
-        { "BEH_ROE", {} },
-        { "BEH_Nbc", {} },
-        { "BEH_Rens", {} },
-        { "ACT_MAJ_EnnemiEnCours", {} },
+        { "ACT_Maj_Pion_PasserEnTirLibre", { "onHalt" } },
+        { "BEH_MAJ_EtatDefaut", { "onHalt" } },
+        { "BEH_Mot_AffecterVariablesDEtat", { "onHalt" } },
+        { "BEH_Ambiance", { "onHalt" } },
+        { "BEH_ROE", { "onHalt" } },
+        { "BEH_Nbc", { "onHalt" } },
+        { "BEH_Rens", { "onHalt" } },
+        { "ACT_MAJ_EnnemiEnCours", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Defaut" } },
 
     create = function( self )
         self._namedParams = {}
@@ -185,10 +189,14 @@ node "BEH_Obs_Pion_INF_SurveillerSecteur"
 {
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "ACT_Obs_SurveillerZone", {} },
-        { "ACT_Obs_ObserverZone", {} },
+        { "ACT_Info_Trace", { "onHalt" } },
+        { "ACT_Obs_SurveillerZone", { "onHalt" } },
+        { "ACT_Obs_ObserverZone", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Obs_Pion_INF_SurveillerSecteur" } },
 
     create = function( self )
         self._namedParams = {}

@@ -3,6 +3,8 @@ includedFiles["sources/common/pions/actions/Actions - Points.bms"] = true
 
 node "ACT_Points_Suppression"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Points_Suppression" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ptABC = self.params[1]

@@ -22,8 +22,12 @@ includedFiles["sources/melee/abc/automates/pel eei/missions/donnercouparret/Donn
 {
     activations =
     {
-        { "BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionStatique", {} },
+        { "BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionStatique", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_ABC_DonnerCoupArret" } },
 
     create = function( self )
         self._namedParams = {}

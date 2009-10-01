@@ -11,8 +11,12 @@ includedFiles["sources/appui/nbc/automates/son re/missions/reconnaitresitesrota/
 {
     activations =
     {
-        { "BEH_Conduite_Automate_NBC_ReconnaitreSitesROTA", {} },
+        { "BEH_Conduite_Automate_NBC_ReconnaitreSitesROTA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_NBC_ReconnaitreDesSitesROTA" } },
 
     create = function( self )
         self._namedParams = {}

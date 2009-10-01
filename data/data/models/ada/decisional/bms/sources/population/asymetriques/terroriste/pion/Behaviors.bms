@@ -95,6 +95,8 @@ include "Population/Asymetriques/Common/Pion/Missions/CommettreExactions.bms"
 ]]--[[//=============================================================================
 ]]node "BEH_Defaut"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Defaut" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.nDummy = self.params[1]
@@ -111,6 +113,8 @@ include "Population/Asymetriques/Common/Pion/Missions/CommettreExactions.bms"
 
 node "ACT_ASY_DevenirVisible"
 {
+    feedbacks = { { { "onHalt" }, "ACT_ASY_DevenirVisible" } },
+
     create = function( self )
     end,
 

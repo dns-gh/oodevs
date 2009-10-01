@@ -9,6 +9,8 @@ includedFiles["sources/common/automates/actions/Actions - RC.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_RC_Automate"
 {
+    feedbacks = { { { "onHalt" }, "ACT_RC_Automate" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.eTypeRC = self.params[1]
@@ -31,6 +33,8 @@ includedFiles["sources/common/automates/actions/Actions - RC.bms"] = true
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_MAJ_Automate_EtatPhaseMission"
 {
+    feedbacks = { { { "onHalt" }, "ACT_MAJ_Automate_EtatPhaseMission" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.eEtatPhaseMission = self.params[1]
@@ -60,6 +64,8 @@ includedFiles["sources/common/automates/actions/Actions - RC.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_RC_Automate_SurLima"
 {
+    feedbacks = { { { "onHalt" }, "ACT_RC_Automate_SurLima" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.eTypeLima = self.params[1]
@@ -82,6 +88,8 @@ includedFiles["sources/common/automates/actions/Actions - RC.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_RC_Automate_SurPion"
 {
+    feedbacks = { { { "onHalt" }, "ACT_RC_Automate_SurPion" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.eTypeRC = self.params[1]

@@ -11,8 +11,12 @@ includedFiles["sources/appui/rens/automates/rohum/cder rbrr/missions/renseigners
 {
     activations =
     {
-        { "BEH_Auto_CDT_RENS_ROHUM_RenseignerSur", {} },
+        { "BEH_Auto_CDT_RENS_ROHUM_RenseignerSur", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_RENS_ROHUM_RenseignerSur" } },
 
     create = function( self )
         self._namedParams = {}

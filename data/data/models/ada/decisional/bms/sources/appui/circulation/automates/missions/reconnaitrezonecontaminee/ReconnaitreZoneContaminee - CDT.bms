@@ -9,6 +9,8 @@ includedFiles["sources/appui/circulation/automates/missions/reconnaitrezoneconta
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_LOG_ReconnaitreZoneContaminee"
 {
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_LOG_ReconnaitreZoneContaminee" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission

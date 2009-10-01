@@ -14,6 +14,8 @@ includedFiles["sources/common/pions/actions/Actions - Nbc.bms"] = true
         deplacement = 1,
     },
 
+    feedbacks = { { { "onHalt" }, "ACT_Pion_Nbc_DemanderDecontaminationSur" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.siteDecontamination = self.params[1]
@@ -47,6 +49,8 @@ includedFiles["sources/common/pions/actions/Actions - Nbc.bms"] = true
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_Nbc_PasserEnNiveauNBC"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Nbc_PasserEnNiveauNBC" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.eEtatNbc = self.params[1]

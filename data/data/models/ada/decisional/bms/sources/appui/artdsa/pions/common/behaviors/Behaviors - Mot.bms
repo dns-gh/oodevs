@@ -6,6 +6,8 @@ includedFiles["sources/appui/artdsa/pions/common/behaviors/Behaviors - Mot.bms"]
 ]]--[[// *****************************************************************************
 ]]node "BEH_Mot_Pion_ASA_AffecterVariablesDEtat"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Mot_Pion_ASA_AffecterVariablesDEtat" } },
+
     create = function( self )
     end,
 

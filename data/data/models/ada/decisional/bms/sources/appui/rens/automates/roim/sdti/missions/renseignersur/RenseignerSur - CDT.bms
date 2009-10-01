@@ -11,10 +11,14 @@ includedFiles["sources/appui/rens/automates/roim/sdti/missions/renseignersur/Ren
 {
     activations =
     {
-        { "BEH_Dispositif_Automate_RENS_GererPionsDetruits_", {} },
-        { "BEH_Dispositif_Automate_RENS_GererLeSE_", {} },
-        { "BEH_Conduite_Automate_RENS_ROIM_SDTI_GererMiseEnOeuvre", {} },
+        { "BEH_Dispositif_Automate_RENS_GererPionsDetruits_", { "onHalt" } },
+        { "BEH_Dispositif_Automate_RENS_GererLeSE_", { "onHalt" } },
+        { "BEH_Conduite_Automate_RENS_ROIM_SDTI_GererMiseEnOeuvre", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_RENS_ROIM_SDTI_RenseignerSur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -52,14 +56,20 @@ node "BEH_Conduite_Automate_RENS_ROIM_SDTI_GererMiseEnOeuvre"
 {
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "BEH_Conduite_Automate_RENS_ROIM_SDTI_LancerDrone", {} },
+        { "ACT_Info_Trace", { "onHalt" } },
+        { "BEH_Conduite_Automate_RENS_ROIM_SDTI_LancerDrone", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_RENS_ROIM_SDTI_GererMiseEnOeuvre" } },
 
     create = function( self )
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.bLancementEffectue = self.bLancementEffectue or false
         local pionDrone = S_Dispositif_Automate_RENS_ObtenirPionDroneMiseEnOeuvre( Drone_SDTI )
         --[[//-----------------------------------------------------------------------------
@@ -78,7 +88,7 @@ node "BEH_Conduite_Automate_RENS_ROIM_SDTI_GererMiseEnOeuvre"
 
         if( not self.bLancementEffectue ) then
             do
-                StartActivate( self.activations.BEH_Conduite_Automate_RENS_ROIM_SDTI_LancerDrone, 1, { pionDrone, } )
+                StartInstance( self, self.activations.BEH_Conduite_Automate_RENS_ROIM_SDTI_LancerDrone, 1, { pionDrone, } )
                 self.bLancementEffectue = true
             end
         end
@@ -97,9 +107,13 @@ node "BEH_Conduite_Automate_RENS_ROIM_SDTI_LancerDrone"
 {
     activations =
     {
-        { "ACT_RC_Automate", {} },
-        { "BEH_Mission_Automate_RENS_ROIM_SDTI_AssignerRenseignerSur", {} },
+        { "ACT_RC_Automate", { "onHalt" } },
+        { "BEH_Mission_Automate_RENS_ROIM_SDTI_AssignerRenseignerSur", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_RENS_ROIM_SDTI_LancerDrone" } },
 
     create = function( self )
         self._namedParams = {}

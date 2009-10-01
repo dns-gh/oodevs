@@ -661,6 +661,35 @@ do
     end )
 end
 
+local emptyTable = {}
+
+StartInstance = function( self, activation, weight, param )
+    self.starts[ activation ] = self.starts[ activation ] or {}
+    self.starts[ activation ][ param or emptyTable ] = weight
+end
+
+StopInstance = function( self, activation, param )
+    if self.starts[ activation ] then
+        self.starts[ activation ][ param or emptyTable ] = nil
+    end
+end
+
+ActivateWithStart = function( self )
+    self.starts = self.starts or {}
+    self:internalactivate()
+    for activation, instances in pairs( self.starts ) do
+        for param, weight in pairs( instances ) do
+            Activate( activation, weight, param )
+        end
+    end
+end
+
+OnHalt = function( self, instanceParameters, parameters )
+    if self.starts and self.starts[ self.activations[ parameters[1] ] ] then
+        self.starts[ self.activations[ parameters[1] ] ][ instanceParameters or emptyTable ] = nil
+    end
+end
+
 behavior_model = 
 {
     StartTask = StartEvent,

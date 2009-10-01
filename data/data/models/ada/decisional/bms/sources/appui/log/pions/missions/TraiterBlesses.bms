@@ -13,12 +13,16 @@ includedFiles["sources/appui/log/pions/missions/TraiterBlesses.bms"] = true
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "BEH_Pion_Log_Traiter", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "BEH_Pion_Log_Traiter", { "onHalt" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_LOG_TraiterBlesses" } },
 
     create = function( self )
         self._namedParams = {}
@@ -113,10 +117,14 @@ node "BEH_Pion_Log_Traiter"
 {
     activations =
     {
-        { "ACT_Pions_SInstaller", {} },
-        { "ACT_Pion_Log_ActiverFonctionSoin", {} },
-        { "ACT_Pion_Log_DispositifInstalle", {} },
+        { "ACT_Pions_SInstaller", { "onHalt" } },
+        { "ACT_Pion_Log_ActiverFonctionSoin", { "onHalt" } },
+        { "ACT_Pion_Log_DispositifInstalle", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Pion_Log_Traiter" } },
 
     create = function( self )
     end,
@@ -142,6 +150,8 @@ node "BEH_Pion_Log_Traiter"
 
 node "ACT_Pion_Log_ActiverFonctionSoin"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Pion_Log_ActiverFonctionSoin" } },
+
     create = function( self )
     end,
 

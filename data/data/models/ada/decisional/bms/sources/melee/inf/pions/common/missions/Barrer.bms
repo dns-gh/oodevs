@@ -20,19 +20,25 @@ includedFiles["sources/melee/inf/pions/common/missions/Barrer.bms"] = true
 {
     activations =
     {
-        { "BEH_Mot_Pion_Embarquer", {} },
-        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", {} },
-        { "ACT_RC", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dispositif_Pion_VAB_InstallationDefensive", {} },
-        { "ACT_Misc_Pion_DelaiInstallation", {} },
-        { "BEH_Eni_Pion_INF_Tenir", {} },
+        { "BEH_Mot_Pion_Embarquer", { "onHalt" } },
+        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", { "onHalt" } },
+        { "ACT_RC", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Dispositif_Pion_VAB_InstallationDefensive", { "onHalt" } },
+        { "ACT_Misc_Pion_DelaiInstallation", { "onHalt" } },
+        { "BEH_Eni_Pion_INF_Tenir", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_INF_Barrer" } },
 
     create = function( self )
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.mission = self.mission or DEC_GetMission( myself )
         self.ePhase = self.ePhase or eSeMettreEnPlace
         self.eAction = self.eAction or eActionEnCours
@@ -68,7 +74,7 @@ elseif switch_1 == eInstallerDispositif then
                     --[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );				
 ]]--[[// detectabilite tres faible
 ]]--[[// vulnerabilite faible								
-]]StartActivate( self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1, { self.mission.positionABarrer_, false, } )
+]]StartInstance( self, self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1, { self.mission.positionABarrer_, false, } )
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours

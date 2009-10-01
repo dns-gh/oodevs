@@ -11,9 +11,13 @@ includedFiles["sources/appui/artfdp/automates/dlo/missions/acquerirobjectifs/Acq
 {
     activations =
     {
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_AssignerAcquerirObjectifsA", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", { "onHalt" } },
+        { "BEH_Medo_Automate_AssignerAcquerirObjectifsA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_ASS_AcquerirObjectifsDLO" } },
 
     create = function( self )
         self._namedParams = {}
@@ -43,7 +47,8 @@ includedFiles["sources/appui/artfdp/automates/dlo/missions/acquerirobjectifs/Acq
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_ASS_AcquerirObjectifsDLO" } )
+Halt( self )
                 do return end
 
             end
@@ -55,7 +60,8 @@ includedFiles["sources/appui/artfdp/automates/dlo/missions/acquerirobjectifs/Acq
                                 do
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_ASS_AcquerirObjectifsDLO" } )
+Halt( self )
                     do return end
 
                 end
@@ -79,8 +85,12 @@ node "BEH_Medo_Automate_AssignerAcquerirObjectifsA"
 {
     activations =
     {
-        { "BEH_Mission_Automate_ASS_DLOAcquerirObjectifsA", {} },
+        { "BEH_Mission_Automate_ASS_DLOAcquerirObjectifsA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_AssignerAcquerirObjectifsA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -89,7 +99,9 @@ node "BEH_Medo_Automate_AssignerAcquerirObjectifsA"
         self._namedParams.listeCompagniesAAppuyer = self.params[3]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         local rIterateurZones = 0
         local rIterateurUnites = 0
         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
@@ -108,7 +120,7 @@ do
 
                 local secteur = DEC_UserTypeList_GetAt( self._namedParams.listeZonesObjectifs, rIterateurZones )
                 local uniteAAppuyer = DIA_GetAt( self._namedParams.listeCompagniesAAppuyer, rIterateurUnites )
-                StartActivate( self.activations.BEH_Mission_Automate_ASS_DLOAcquerirObjectifsA, 1, { ePhase_MRT, pion, secteur, uniteAAppuyer, eEtatEchelon_Premier, } )
+                StartInstance( self, self.activations.BEH_Mission_Automate_ASS_DLOAcquerirObjectifsA, 1, { ePhase_MRT, pion, secteur, uniteAAppuyer, eEtatEchelon_Premier, } )
                                 rIterateurZones = rIterateurZones + 1
                                 rIterateurUnites = rIterateurUnites + 1
             end

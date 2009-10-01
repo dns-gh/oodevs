@@ -13,10 +13,14 @@ includedFiles["sources/population/refugies/automates/refugie/missions/SeRendreVe
 {
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_Refugies_AssignerFaireMouvementA", {} },
+        { "ACT_Info_Trace", { "onHalt" } },
+        { "BEH_Medo_Automate_ControleCreationMission", { "onHalt" } },
+        { "BEH_Medo_Automate_Refugies_AssignerFaireMouvementA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_FaireMouvementVersCampRefugies" } },
 
     create = function( self )
         self._namedParams = {}
@@ -33,7 +37,8 @@ includedFiles["sources/population/refugies/automates/refugie/missions/SeRendreVe
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "----- Pas de camps de refugies ----- ", } )
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_FaireMouvementVersCampRefugies" } )
+Halt( self )
                 do return end
 
             end
@@ -61,7 +66,8 @@ includedFiles["sources/population/refugies/automates/refugie/missions/SeRendreVe
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_FaireMouvementVersCampRefugies" } )
+Halt( self )
                 do return end
 
             end
@@ -73,7 +79,8 @@ includedFiles["sources/population/refugies/automates/refugie/missions/SeRendreVe
                                 do
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_FaireMouvementVersCampRefugies" } )
+Halt( self )
                     do return end
 
                 end
@@ -97,8 +104,12 @@ node "BEH_Medo_Automate_Refugies_AssignerFaireMouvementA"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerFaireMouvementA", {} },
+        { "BEH_Mission_Automate_AssignerFaireMouvementA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_Refugies_AssignerFaireMouvementA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -106,7 +117,9 @@ node "BEH_Medo_Automate_Refugies_AssignerFaireMouvementA"
         self._namedParams.posCampPrisonnier = self.params[2]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         --[[//---------------------------------------------------------------------
 ]]--[[// Assignation des missions
 ]]--[[//---------------------------------------------------------------------	
@@ -114,7 +127,7 @@ node "BEH_Medo_Automate_Refugies_AssignerFaireMouvementA"
             do
                 for _,pion in pairs( DEC_Automate_PionsAvecPC() ) do
                 local _continue = true
-                    StartActivate( self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, 1, { ePhase_MRT, pion, self._namedParams.posCampPrisonnier, eEtatEchelon_Second, } )
+                    StartInstance( self, self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, 1, { ePhase_MRT, pion, self._namedParams.posCampPrisonnier, eEtatEchelon_Second, } )
 
                 end
 

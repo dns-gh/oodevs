@@ -11,14 +11,18 @@ includedFiles["sources/appui/genie/pions/missions/appui a la contre mobilite/Act
 {
     activations =
     {
-        { "ACT_RC", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "ACT_Obj_Pion_GEN_ActiverObstacle", {} },
-        { "ACT_Obj_Pion_GEN_ValoriserObstacle", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "ACT_RC", { "onHalt" } },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "ACT_Obj_Pion_GEN_ActiverObstacle", { "onHalt" } },
+        { "ACT_Obj_Pion_GEN_ValoriserObstacle", { "onHalt" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_GEN_ActiverObstacle" } },
 
     create = function( self )
         self._namedParams = {}
@@ -27,7 +31,8 @@ includedFiles["sources/appui/genie/pions/missions/appui a la contre mobilite/Act
 
     activate = function( self )
         if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.mission.obstacle_ ) ) then
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_GEN_ActiverObstacle" } )
+Halt( self )
             do return end
         end
 
@@ -60,7 +65,8 @@ includedFiles["sources/appui/genie/pions/missions/appui a la contre mobilite/Act
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                                                 self.params.__returnValue = eActionImpossible
-                        Halt( self )
+                        Feedback( self.feedbacks["onHalt"], { "MIS_Pion_GEN_ActiverObstacle" } )
+Halt( self )
                         do return end
 
                     end
@@ -72,7 +78,8 @@ includedFiles["sources/appui/genie/pions/missions/appui a la contre mobilite/Act
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                                                 self.params.__returnValue = eActionImpossible
-                        Halt( self )
+                        Feedback( self.feedbacks["onHalt"], { "MIS_Pion_GEN_ActiverObstacle" } )
+Halt( self )
                         do return end
 
                     end

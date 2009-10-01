@@ -25,6 +25,8 @@ motivation_plugin.motivations = motivation_plugin.motivations or {}
 motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_Mission"
 node "ActivationForSTIM_Mission"
 {
+    feedbacks = { { { "onHalt" }, "ActivationForSTIM_Mission" } },
+
     activate = function( self )
         if( DEC_GetMission( myself ) ~= nil ) then
             SetStimulus( "STIM_Mission", 1 )
@@ -44,6 +46,8 @@ node "ActivationForSTIM_Mission"
 motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_PriseAPartieTirDirect"
 node "ActivationForSTIM_PriseAPartieTirDirect"
 {
+    feedbacks = { { { "onHalt" }, "ActivationForSTIM_PriseAPartieTirDirect" } },
+
     activate = function( self )
         if( not DIA_IsListEmpty( DEC_Connaissances_UnitesPrenantAPartie() ) ) then
             SetStimulus( "STIM_PriseAPartieTirDirect", 1 )
@@ -63,6 +67,8 @@ node "ActivationForSTIM_PriseAPartieTirDirect"
 motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_PriseAPartieTirInDirect"
 node "ActivationForSTIM_PriseAPartieTirInDirect"
 {
+    feedbacks = { { { "onHalt" }, "ActivationForSTIM_PriseAPartieTirInDirect" } },
+
     activate = function( self )
         if( DEC_Agent_EstNeutralise() and ( DEC_Agent_NiveauInstallation() < eNiveauInstallation_PosteAmenage ) ) then
             SetStimulus( "STIM_PriseAPartieTirInDirect", 1 )

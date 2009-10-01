@@ -25,11 +25,15 @@ include "Common/Automates/Actions/Medo/Actions - Medo - ASS.bms"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -76,11 +80,15 @@ node "BEH_Mission_Automate_ASS_AcquerirObjectifsA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ASS_AcquerirObjectifsA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_ASS_AcquerirObjectifsA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_ASS_AcquerirObjectifsA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -128,11 +136,15 @@ node "BEH_Mission_Automate_ASS_DLOAcquerirObjectifsA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ASS_DLOAcquerirObjectifsA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_ASS_DLOAcquerirObjectifsA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_ASS_DLOAcquerirObjectifsA" } },
 
     create = function( self )
         self._namedParams = {}

@@ -11,13 +11,17 @@ includedFiles["sources/population/asymetriques/common/pion/missions/Renseigner.b
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Info_Trace", {} },
-        { "ACT_RC", {} },
-        { "ACT_Pion_ASY_Renseigner", {} },
-        { "ACT_Misc_Delai", {} },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "ACT_Info_Trace", { "onHalt" } },
+        { "ACT_RC", { "onHalt" } },
+        { "ACT_Pion_ASY_Renseigner", { "onHalt" } },
+        { "ACT_Misc_Delai", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_ASY_Renseigner" } },
 
     create = function( self )
         self._namedParams = {}
@@ -74,7 +78,8 @@ do
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                                        Halt( self )
+                                        Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ASY_Renseigner" } )
+Halt( self )
                     do return end
 
                                 end
@@ -92,6 +97,8 @@ elseif switch_1 == eFinMission then
 
 node "ACT_Pion_ASY_Renseigner"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Pion_ASY_Renseigner" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.destinataire = self.params[1]

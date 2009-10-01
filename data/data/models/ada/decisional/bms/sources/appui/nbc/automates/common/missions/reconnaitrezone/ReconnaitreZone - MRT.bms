@@ -12,17 +12,23 @@ includedFiles["sources/appui/nbc/automates/common/missions/reconnaitrezone/Recon
 {
     activations =
     {
-        { "ACT_Warning", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Mission_Automate_NBC_AssignerReconnaitreZoneA", {} },
+        { "ACT_Warning", { "onHalt" } },
+        { "ACT_Info_Trace", { "onHalt" } },
+        { "BEH_Mission_Automate_NBC_AssignerReconnaitreZoneA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_NBC_AssignerReconnaitreZoneA" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.selPions = self.params[1]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         local mission = DEC_GetMission( myself )
         self.listeZone = self.listeZone or {}
         self.nErrorCode = self.nErrorCode or nil
@@ -64,7 +70,7 @@ do
                         --[[// Récuperation du secteur courant
 ]]local zone = DEC_UserTypeList_GetAt( self.listeZone, rIterateurZone )
                         --[[// Assignation de la mission
-]]StartActivate( self.activations.BEH_Mission_Automate_NBC_AssignerReconnaitreZoneA, 1, { ePhase_MRT, pion, zone, } )
+]]StartInstance( self, self.activations.BEH_Mission_Automate_NBC_AssignerReconnaitreZoneA, 1, { ePhase_MRT, pion, zone, } )
                                                 rIterateurZone = rIterateurZone + 1
                     end
 

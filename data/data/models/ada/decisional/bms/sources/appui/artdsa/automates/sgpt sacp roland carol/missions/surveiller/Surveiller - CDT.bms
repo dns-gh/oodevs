@@ -6,6 +6,8 @@ includedFiles["sources/appui/artdsa/automates/sgpt sacp roland carol/missions/su
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "MIS_Automate_CDT_ASA_Surveiller"
 {
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ASA_Surveiller" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission

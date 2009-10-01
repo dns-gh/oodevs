@@ -15,9 +15,13 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_GTIA_RepartirPionsMeleeDansFuseaux", {} },
-        { "BEH_GTIA_RepartirPionsDansFuseaux", {} },
+        { "BEH_GTIA_RepartirPionsMeleeDansFuseaux", { "onHalt" } },
+        { "BEH_GTIA_RepartirPionsDansFuseaux", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_GTIA_RepartirDansFuseaux" } },
 
     create = function( self )
         self._namedParams = {}
@@ -67,8 +71,12 @@ node "BEH_GTIA_RepartirPionsDansFuseaux"
 {
     activations =
     {
-        { "ACT_GTIA_AssignerFuseau", {} },
+        { "ACT_GTIA_AssignerFuseau", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_GTIA_RepartirPionsDansFuseaux" } },
 
     create = function( self )
         self._namedParams = {}
@@ -105,10 +113,14 @@ node "BEH_GTIA_RepartirPionsMeleeDansFuseaux"
 {
     activations =
     {
-        { "BEH_GTIA_AssignerFuseauMeleeSuivantTerrain", {} },
-        { "BEH_GTIA_AssignerFuseauMeleeSuivantEnisEmbarques", {} },
-        { "BEH_GTIA_AssignerFuseauMeleeSuivantEnisDebarques", {} },
+        { "BEH_GTIA_AssignerFuseauMeleeSuivantTerrain", { "onHalt" } },
+        { "BEH_GTIA_AssignerFuseauMeleeSuivantEnisEmbarques", { "onHalt" } },
+        { "BEH_GTIA_AssignerFuseauMeleeSuivantEnisDebarques", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_GTIA_RepartirPionsMeleeDansFuseaux" } },
 
     create = function( self )
         self._namedParams = {}
@@ -140,8 +152,12 @@ node "BEH_GTIA_AssignerFuseauMeleeSuivantTerrain"
 {
     activations =
     {
-        { "ACT_GTIA_AssignerFuseau", {} },
+        { "ACT_GTIA_AssignerFuseau", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssignerFuseauMeleeSuivantTerrain" } },
 
     create = function( self )
         self._namedParams = {}
@@ -189,8 +205,12 @@ node "BEH_GTIA_AssignerFuseauMeleeSuivantEnisDebarques"
 {
     activations =
     {
-        { "ACT_GTIA_AssignerFuseau", {} },
+        { "ACT_GTIA_AssignerFuseau", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssignerFuseauMeleeSuivantEnisDebarques" } },
 
     create = function( self )
         self._namedParams = {}
@@ -242,8 +262,12 @@ node "BEH_GTIA_AssignerFuseauMeleeSuivantEnisEmbarques"
 {
     activations =
     {
-        { "ACT_GTIA_AssignerFuseau", {} },
+        { "ACT_GTIA_AssignerFuseau", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssignerFuseauMeleeSuivantEnisEmbarques" } },
 
     create = function( self )
         self._namedParams = {}
@@ -293,6 +317,8 @@ do
 
 node "ACT_GTIA_AssignerFuseau"
 {
+    feedbacks = { { { "onHalt" }, "ACT_GTIA_AssignerFuseau" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]

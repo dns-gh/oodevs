@@ -16,9 +16,13 @@ node "MIS_Automate_CDT_INF_RecueillirUnite"
 {
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Defaut", {} },
-        { "BEH_Conduite_Automate_INF_CadreStatique", {} },
+        { "BEH_Conduite_Automate_INF_Defaut", { "onHalt" } },
+        { "BEH_Conduite_Automate_INF_CadreStatique", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_INF_RecueillirUnite" } },
 
     create = function( self )
         self._namedParams = {}
@@ -45,7 +49,8 @@ node "MIS_Automate_CDT_INF_RecueillirUnite"
                 self.eActionMission = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_CDT_INF_RecueillirUnite" } )
+Halt( self )
                     do return end
 
                 end

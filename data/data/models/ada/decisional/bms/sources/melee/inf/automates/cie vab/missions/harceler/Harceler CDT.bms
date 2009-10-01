@@ -16,9 +16,13 @@ node "MIS_Automate_CDT_INF_Harceler"
 {
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Defaut", {} },
-        { "BEH_Conduite_Automate_INF_Harceler", {} },
+        { "BEH_Conduite_Automate_INF_Defaut", { "onHalt" } },
+        { "BEH_Conduite_Automate_INF_Harceler", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_INF_Harceler" } },
 
     create = function( self )
         self._namedParams = {}
@@ -44,7 +48,8 @@ node "MIS_Automate_CDT_INF_Harceler"
                 self.eActionMission = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_CDT_INF_Harceler" } )
+Halt( self )
                     do return end
 
                 end
@@ -65,10 +70,14 @@ node "BEH_Conduite_Automate_INF_Harceler"
 {
     activations =
     {
-        { "BEH_Situation_Automate_INF_Harceler_GestionSituation", {} },
-        { "BEH_Dispositif_Automate_INF_GererLesPionsDetruits", {} },
-        { "BEH_Dispositif_Automate_INF_GererReleve", {} },
+        { "BEH_Situation_Automate_INF_Harceler_GestionSituation", { "onHalt" } },
+        { "BEH_Dispositif_Automate_INF_GererLesPionsDetruits", { "onHalt" } },
+        { "BEH_Dispositif_Automate_INF_GererReleve", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_Harceler" } },
 
     create = function( self )
     end,
@@ -100,16 +109,22 @@ node "BEH_Situation_Automate_INF_Harceler_GestionSituation"
 {
     activations =
     {
-        { "BEH_Situation_Automate_INF_FinDeMission_Sur", {} },
-        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", {} },
-        { "BEH_Mission_Automate_INF_AssignerAppuyerA", {} },
-        { "BEH_Conduite_Automate_INF_Harceler_FaireRejoindrePositionRegroupement", {} },
+        { "BEH_Situation_Automate_INF_FinDeMission_Sur", { "onHalt" } },
+        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", { "onHalt" } },
+        { "BEH_Mission_Automate_INF_AssignerAppuyerA", { "onHalt" } },
+        { "BEH_Conduite_Automate_INF_Harceler_FaireRejoindrePositionRegroupement", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Situation_Automate_INF_Harceler_GestionSituation" } },
 
     create = function( self )
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         local selEnTete = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
         for _,x in pairs( DEC_Automate_PionsSansPC() ) do
         local _continue = true
@@ -126,7 +141,7 @@ do
                                 local cases_switch_2 = {}
                                     if switch_2 == "T_Mission_Pion_INF_Harceler"
                                     or switch_2 == "T_Mission_Pion_INF_ControlerSecteur" then
-                                        StartActivate( self.activations.BEH_Situation_Automate_INF_FinDeMission_Sur, 1, { x_pion, } )
+                                        StartInstance( self, self.activations.BEH_Situation_Automate_INF_FinDeMission_Sur, 1, { x_pion, } )
                                         
                                                                         cases_switch_2[1] = true
 elseif switch_2 == "T_Mission_Pion_INF_DetruireEmbuscade"
@@ -166,7 +181,7 @@ elseif switch_3 == "SectionInfanterie"
                                                 cases_switch_1[1] = true
 elseif switch_1 == eEtatPhaseMission_ArriveSurLocalisation then
                             if( S_Misc_EstMissionAffectee_Pion( x_pion, "T_Mission_Pion_INF_Harceler" ) ) then
-                                StartActivate( self.activations.BEH_Conduite_Automate_INF_Harceler_FaireRejoindrePositionRegroupement, 1, {} )
+                                StartInstance( self, self.activations.BEH_Conduite_Automate_INF_Harceler_FaireRejoindrePositionRegroupement, 1, {} )
                             end
 
                             
@@ -188,9 +203,13 @@ node "BEH_Conduite_Automate_INF_Harceler_FaireRejoindrePositionRegroupement"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerStationnerA", {} },
-        { "BEH_Mission_Automate_AssignerFaireMouvementA", {} },
+        { "BEH_Mission_Automate_AssignerStationnerA", { "onHalt" } },
+        { "BEH_Mission_Automate_AssignerFaireMouvementA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_Harceler_FaireRejoindrePositionRegroupement" } },
 
     create = function( self )
     end,

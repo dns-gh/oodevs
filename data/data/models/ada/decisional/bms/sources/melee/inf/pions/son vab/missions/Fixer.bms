@@ -20,14 +20,18 @@ node "MIS_Pion_INF_Fixer"
 {
     activations =
     {
-        { "ACT_RC", {} },
-        { "BEH_Misc_Pion_DefinirTypeMission", {} },
-        { "BEH_MAJ_AgressiviteMission", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "BEH_Mission_Pion_VAB_Fixer", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Poste_Pion_INF_TomberEnGarde", {} },
+        { "ACT_RC", { "onHalt" } },
+        { "BEH_Misc_Pion_DefinirTypeMission", { "onHalt" } },
+        { "BEH_MAJ_AgressiviteMission", { "onHalt" } },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "BEH_Mission_Pion_VAB_Fixer", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Poste_Pion_INF_TomberEnGarde", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_INF_Fixer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -54,7 +58,8 @@ node "MIS_Pion_INF_Fixer"
 
                         Activate( self.activations.ACT_RC, 1, { eRC_MissionImpossible, } )
                                                 self.params.__returnValue = eActionImpossible
-                        Halt( self )
+                        Feedback( self.feedbacks["onHalt"], { "MIS_Pion_INF_Fixer" } )
+Halt( self )
                         do return end
 
                     end
@@ -83,7 +88,8 @@ node "MIS_Pion_INF_Fixer"
             do
                 Activate( self.activations.ACT_RC, 1, { eRC_MissionImpossible, } )
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_INF_Fixer" } )
+Halt( self )
                 do return end
 
             end
@@ -119,7 +125,8 @@ node "MIS_Pion_INF_Fixer"
                                                         do
                                 DEC_Trace( "fin mission fixer" )
                                 DEC_FinMission()
-                                                                Halt( self )
+                                                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_INF_Fixer" } )
+Halt( self )
                                 do return end
 
                             end
@@ -144,24 +151,30 @@ node "BEH_Mission_Pion_VAB_Fixer"
 {
     activations =
     {
-        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", {} },
-        { "BEH_Dep_Pion_INF_PreciserMaintenirContact", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
-        { "BEH_Eni_Pion_VAB_Fixer", {} },
-        { "BEH_Obs_Pion_INF_EnReconnaissance", {} },
+        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", { "onHalt" } },
+        { "BEH_Dep_Pion_INF_PreciserMaintenirContact", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "onHalt" } },
+        { "BEH_Eni_Pion_VAB_Fixer", { "onHalt" } },
+        { "BEH_Obs_Pion_INF_EnReconnaissance", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_VAB_Fixer" } },
 
     create = function( self )
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
                 self.mission = self.mission or DEC_GetMission( myself )
         self.ksMission = self.ksMission or self.mission.ennemi_
         self.eActionPreciser = self.eActionPreciser or eActionEnCours
         self.eAction = self.eAction or eActionEnCours
         if( ModuleBegins() ) then
             do
-                StartActivate( self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
+                StartInstance( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
             end
 --[[// Lorsque l'action est impossible
 ]]        end
@@ -174,7 +187,8 @@ node "BEH_Mission_Pion_VAB_Fixer"
                 end
 
                                 self.params.__returnValue = eFinMission
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_VAB_Fixer" } )
+Halt( self )
                 do return end
 
             end
@@ -188,7 +202,8 @@ node "BEH_Mission_Pion_VAB_Fixer"
                     end
 
                                         self.params.__returnValue = eFinMission
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_VAB_Fixer" } )
+Halt( self )
                     do return end
 
                 end

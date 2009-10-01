@@ -22,8 +22,12 @@ includedFiles["sources/melee/abc/automates/sgpt chars inf/missions/interdire/Int
 {
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_Interdire", {} },
+        { "BEH_Conduite_Automate_ABC_Interdire", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_Interdire" } },
 
     create = function( self )
         self._namedParams = {}

@@ -11,14 +11,18 @@ includedFiles["sources/common/pions/missionsreactionpopulations/Canaliser.bms"] 
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Dep_Virtuel_ProgressionVers", {} },
-        { "ACT_Pion_Canaliser", {} },
-        { "BEH_Dep_Virtuel_PreparationAction", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "ACT_Info_Trace", { "onHalt" } },
+        { "BEH_Dep_Virtuel_ProgressionVers", { "onHalt" } },
+        { "ACT_Pion_Canaliser", { "onHalt" } },
+        { "BEH_Dep_Virtuel_PreparationAction", { "onHalt" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_CanaliserPopulations" } },
 
     create = function( self )
         self._namedParams = {}
@@ -47,7 +51,8 @@ includedFiles["sources/common/pions/missionsreactionpopulations/Canaliser.bms"] 
 
         if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_CanaliserPopulations" } )
+Halt( self )
             do return end
         end
 
@@ -58,7 +63,8 @@ includedFiles["sources/common/pions/missionsreactionpopulations/Canaliser.bms"] 
                 self.objectif = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( self.localisation )
                 if( ( self.objectif == 0 or self.objectif == nil ) ) then
                     self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "MIS_Pion_CanaliserPopulations" } )
+Halt( self )
                     do return end
                 end
 
@@ -107,7 +113,8 @@ elseif switch_1 == eAnimer then
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                                        Halt( self )
+                                        Feedback( self.feedbacks["onHalt"], { "MIS_Pion_CanaliserPopulations" } )
+Halt( self )
                     do return end
 
                 end
@@ -127,6 +134,8 @@ elseif switch_1 == eFinMission then
 
 node "ACT_Pion_Canaliser"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Pion_Canaliser" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.loc = self.params[1]

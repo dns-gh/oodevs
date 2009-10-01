@@ -6,6 +6,8 @@ includedFiles["sources/appui/artdsa/automates/sgpt satcp mistral/missions/defend
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "MIS_Automate_CDT_ASA_DefendreItineraire"
 {
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ASA_DefendreItineraire" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission

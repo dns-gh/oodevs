@@ -11,10 +11,14 @@ includedFiles["sources/appui/artfdp/automates/dlo/missions/se deployer/SeDeploye
 {
     activations =
     {
-        { "ACT_RC_Automate", {} },
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_AssignerSeDeployerA", {} },
+        { "ACT_RC_Automate", { "onHalt" } },
+        { "BEH_Medo_Automate_ControleCreationMission", { "onHalt" } },
+        { "BEH_Medo_Automate_AssignerSeDeployerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_ASS_SeDeployer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -46,7 +50,8 @@ includedFiles["sources/appui/artfdp/automates/dlo/missions/se deployer/SeDeploye
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_ASS_SeDeployer" } )
+Halt( self )
                 do return end
 
             end
@@ -58,7 +63,8 @@ includedFiles["sources/appui/artfdp/automates/dlo/missions/se deployer/SeDeploye
                                 do
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_ASS_SeDeployer" } )
+Halt( self )
                     do return end
 
                 end

@@ -14,12 +14,16 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_Pion_AllerRecupererPrisonniers", {} },
-        { "BEH_Dep_Pion_AllerDebarquerPrisonniers", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Dep_Pion_AllerRecupererPrisonniers", { "onHalt" } },
+        { "BEH_Dep_Pion_AllerDebarquerPrisonniers", { "onHalt" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_PrendreEnComptePrisonniers" } },
 
     create = function( self )
         self._namedParams = {}
@@ -122,8 +126,12 @@ node "BEH_Dep_Pion_AllerRecupererPrisonniers"
 {
     activations =
     {
-        { "BEH_Dep_Pion_GererEmbarquementPrisonnier", {} },
+        { "BEH_Dep_Pion_GererEmbarquementPrisonnier", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_AllerRecupererPrisonniers" } },
 
     create = function( self )
         self._namedParams = {}
@@ -156,9 +164,13 @@ node "BEH_Dep_Pion_GererEmbarquementPrisonnier"
 {
     activations =
     {
-        { "ACT_Transport_Pion_EmbarquerPrisonnier", {} },
-        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Transport_Pion_EmbarquerPrisonnier", { "onHalt" } },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_GererEmbarquementPrisonnier" } },
 
     create = function( self )
         self._namedParams = {}
@@ -186,9 +198,13 @@ node "BEH_Dep_Pion_AllerDebarquerPrisonniers"
 {
     activations =
     {
-        { "ACT_Transport_Pion_DebarquerPrisonnierDansCamp", {} },
-        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Transport_Pion_DebarquerPrisonnierDansCamp", { "onHalt" } },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_AllerDebarquerPrisonniers" } },
 
     create = function( self )
         self._namedParams = {}
@@ -202,7 +218,8 @@ node "BEH_Dep_Pion_AllerDebarquerPrisonniers"
         --[[// Gestion erreur
 ]]if( ( self.localisation == 0 or self.localisation == nil ) ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_AllerDebarquerPrisonniers" } )
+Halt( self )
             do return end
         end
 
@@ -214,7 +231,8 @@ node "BEH_Dep_Pion_AllerDebarquerPrisonniers"
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                                                 self.params.__returnValue = eActionEffectuee
-                        Halt( self )
+                        Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_AllerDebarquerPrisonniers" } )
+Halt( self )
                         do return end
 
                     end
@@ -249,6 +267,8 @@ node "BEH_Dep_Pion_AllerDebarquerPrisonniers"
 
 node "ACT_Transport_Pion_EmbarquerPrisonnier"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Transport_Pion_EmbarquerPrisonnier" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.prisonnier = self.params[1]
@@ -271,6 +291,8 @@ node "ACT_Transport_Pion_EmbarquerPrisonnier"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Transport_Pion_DebarquerPrisonnierDansCamp"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Transport_Pion_DebarquerPrisonnierDansCamp" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.prisonnier = self.params[1]

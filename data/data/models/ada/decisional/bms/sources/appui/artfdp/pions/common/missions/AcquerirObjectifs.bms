@@ -21,10 +21,14 @@ includedFiles["sources/appui/artfdp/pions/common/missions/AcquerirObjectifs.bms"
 {
     activations =
     {
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_Suivre_Elastique", {} },
-        { "BEH_Obs_Pion_ASS_ReconnaissanceZone", {} },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Dep_Suivre_Elastique", { "onHalt" } },
+        { "BEH_Obs_Pion_ASS_ReconnaissanceZone", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Pion_ASS_AcquerirObjectifs_Mission" } },
 
     create = function( self )
     end,
@@ -58,9 +62,13 @@ node "BEH_Obs_Pion_ASS_ReconnaissanceZone"
 {
     activations =
     {
-        { "ACT_Obs_SurveillerZone", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "ACT_Obs_SurveillerZone", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Obs_Pion_ASS_ReconnaissanceZone" } },
 
     create = function( self )
         self._namedParams = {}

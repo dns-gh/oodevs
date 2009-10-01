@@ -23,11 +23,15 @@ includedFiles["sources/appui/nbc/automates/common/MRT generique.bms"] = true
 {
     activations =
     {
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_NBC_AssignerReconnaitreA", {} },
-        { "BEH_Medo_Automate_NBC_AssignerDecontaminerZoneA", {} },
-        { "BEH_Medo_Automate_NBC_AssignerReconnaitreZoneA", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", { "onHalt" } },
+        { "BEH_Medo_Automate_NBC_AssignerReconnaitreA", { "onHalt" } },
+        { "BEH_Medo_Automate_NBC_AssignerDecontaminerZoneA", { "onHalt" } },
+        { "BEH_Medo_Automate_NBC_AssignerReconnaitreZoneA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_NBC_DonnerLesOrdresPourMission" } },
 
     create = function( self )
         self._namedParams = {}
@@ -243,7 +247,8 @@ elseif switch_2 == "T_Mission_Automate_NBC_ReconnaitreUneZone" then
 elseif switch_1 == eMRT_MissionImpossible then
                     DEC_RC( eRC_MissionImpossible )
                                         self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_NBC_DonnerLesOrdresPourMission" } )
+Halt( self )
                     do return end
 
                 --[[//-----------------------------------------------------------------------------
@@ -253,7 +258,8 @@ elseif switch_1 == eMRT_MissionImpossible then
                 if cases_switch_1[3] or switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_NBC_DonnerLesOrdresPourMission" } )
+Halt( self )
                     do return end
 
                 end

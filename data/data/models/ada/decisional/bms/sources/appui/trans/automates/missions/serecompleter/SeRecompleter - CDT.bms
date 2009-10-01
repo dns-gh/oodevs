@@ -9,6 +9,8 @@ includedFiles["sources/appui/trans/automates/missions/serecompleter/SeRecomplete
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_SeRecompleter"
 {
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_SeRecompleter" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission

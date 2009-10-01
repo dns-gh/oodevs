@@ -25,23 +25,29 @@ node "BEH_Mission_Pion_INF_Harceler"
 {
     activations =
     {
-        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", {} },
-        { "BEH_Mot_Pion_Embarquer", {} },
-        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "ACT_RC", {} },
-        { "BEH_Obs_Pion_INF_SurveillerSecteur", {} },
-        { "BEH_Dispositif_Pion_VAB_InstallationDefensive", {} },
-        { "ACT_Dep_PasserEnModeFurtif", {} },
-        { "ACT_Misc_Pion_DelaiInstallation", {} },
-        { "BEH_Pion_INF_Detruire_Harceler", {} },
+        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", { "onHalt" } },
+        { "BEH_Mot_Pion_Embarquer", { "onHalt" } },
+        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "ACT_RC", { "onHalt" } },
+        { "BEH_Obs_Pion_INF_SurveillerSecteur", { "onHalt" } },
+        { "BEH_Dispositif_Pion_VAB_InstallationDefensive", { "onHalt" } },
+        { "ACT_Dep_PasserEnModeFurtif", { "onHalt" } },
+        { "ACT_Misc_Pion_DelaiInstallation", { "onHalt" } },
+        { "BEH_Pion_INF_Detruire_Harceler", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_INF_Harceler" } },
 
     create = function( self )
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
                 self.mission = self.mission or DEC_GetMission( myself )
         self.ePhase = self.ePhase or eSeMettreEnPlace
         self.eAction = self.eAction or eActionEnCours
@@ -54,7 +60,7 @@ node "BEH_Mission_Pion_INF_Harceler"
                 --[[// Determine la position dans le secteur d'arrive			
 ]]self.ptMission = S_Geometrie_BarycentreZone( self.mission.secteur_ )
                 --[[// Verifie que l'on est bien dans son fuseau
-]]StartActivate( self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
+]]StartInstance( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
             end
 --[[// Lorsqu'un comportement  ne  peut  pas  s'effectuer  correctement, la mission 
 ]]--[[// s'arrete
@@ -65,13 +71,15 @@ node "BEH_Mission_Pion_INF_Harceler"
                                 do
                     DEC_Warning( eRC_MissionImpossible )
                                         self.params.__returnValue = eFinMission
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_INF_Harceler" } )
+Halt( self )
                     do return end
 
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_INF_Harceler" } )
+Halt( self )
                 do return end
 
             end
@@ -128,8 +136,8 @@ do
                     Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
                     --[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
-]]StartActivate( self.activations.BEH_Obs_Pion_INF_SurveillerSecteur, 1, { self.mission.secteur_, } )
-                    StartActivate( self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1.1, { self.ptMission, false, } )
+]]StartInstance( self, self.activations.BEH_Obs_Pion_INF_SurveillerSecteur, 1, { self.mission.secteur_, } )
+                    StartInstance( self, self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1.1, { self.ptMission, false, } )
                     Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )
                     if( self.eAction == eActionEffectuee ) then
                         do
@@ -178,9 +186,13 @@ node "BEH_Pion_INF_Detruire_Harceler"
 {
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
-        { "BEH_Pion_INF_Detruire_CoupDeMain", {} },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "BEH_Pion_INF_Detruire_CoupDeMain", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Pion_INF_Detruire_Harceler" } },
 
     create = function( self )
         self._namedParams = {}
@@ -209,7 +221,8 @@ node "BEH_Pion_INF_Detruire_Harceler"
                                                     DEC_Trace( "Erreur MRT : Decoupage de la zone " .. EnumToString( eCodeLocRgpt, E_LocalisationFunctionsReturnCode ) )
                                                         do
                                                                 self.params.__returnValue = eActionImpossible
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "BEH_Pion_INF_Detruire_Harceler" } )
+Halt( self )
                                 do return end
 
                             end

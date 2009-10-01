@@ -14,9 +14,13 @@ include "bit.lua"
 {
     activations =
     {
-        { "ACT_MAJ_EtatDec", {} },
-        { "BEH_MOT_Pion_MARINE_GarderSesDistancesFaceA", {} },
+        { "ACT_MAJ_EtatDec", { "onHalt" } },
+        { "BEH_MOT_Pion_MARINE_GarderSesDistancesFaceA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_MOT_Pion_MARINE_GarderSesDistances" } },
 
     create = function( self )
     end,
@@ -66,9 +70,13 @@ node "BEH_MOT_Pion_MARINE_GarderSesDistancesFaceA"
 
     activations =
     {
-        { "BEH_SePosterFaceAEni", {} },
-        { "BEH_Eni_Pion_MARINE_DecrocherFaceA", {} },
+        { "BEH_SePosterFaceAEni", { "onHalt" } },
+        { "BEH_Eni_Pion_MARINE_DecrocherFaceA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_MOT_Pion_MARINE_GarderSesDistancesFaceA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -111,6 +119,8 @@ node "BEH_MOT_Pion_MARINE_GarderSesDistancesFaceA"
 
 node "BEH_Mot_Pion_MARINE_AffecterVariablesDEtat"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Mot_Pion_MARINE_AffecterVariablesDEtat" } },
+
     create = function( self )
     end,
 

@@ -14,8 +14,12 @@ include "bit.lua"
 {
     activations =
     {
-        { "ACT_Ordre_Suppression", {} },
+        { "ACT_Ordre_Suppression", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Ordre_Inopine" } },
 
     create = function( self )
     end,

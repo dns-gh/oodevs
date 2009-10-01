@@ -22,8 +22,12 @@ includedFiles["sources/melee/abc/automates/common/missions/reconnaitreaxe/Reconn
 {
     activations =
     {
-        { "BEH_Mission_Automate_ABC_AssignerReconnaitreA", {} },
+        { "BEH_Mission_Automate_ABC_AssignerReconnaitreA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ABC_AssignerMissionReconnaitreAxeA" } },
 
     create = function( self )
         self._namedParams = {}

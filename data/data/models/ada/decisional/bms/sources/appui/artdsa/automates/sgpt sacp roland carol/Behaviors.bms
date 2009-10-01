@@ -24,6 +24,8 @@ ennemi = 1,
 ]]--[[//---------------------------------------------------
 ]]node "BEH_Automate_ASA_Defaut"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Automate_ASA_Defaut" } },
+
     create = function( self )
     end,
 

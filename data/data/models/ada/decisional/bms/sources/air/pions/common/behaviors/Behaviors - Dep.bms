@@ -20,8 +20,12 @@ include "bit.lua"
 
     activations =
     {
-        { "ACT_Dep_Pions_AIR_Voler", {} },
+        { "ACT_Dep_Pions_AIR_Voler", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_AIR_SePoserEnAttenteDe" } },
 
     create = function( self )
     end,
@@ -44,8 +48,12 @@ node "BEH_Dep_Pion_AIR_SePoser"
 
     activations =
     {
-        { "ACT_Dep_Pions_AIR_Voler", {} },
+        { "ACT_Dep_Pions_AIR_Voler", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_AIR_SePoser" } },
 
     create = function( self )
     end,
@@ -74,12 +82,16 @@ node "BEH_Dep_Pion_AIR_Voler"
 
     activations =
     {
-        { "ACT_Dep_PasserEnModeFurtif", {} },
-        { "BEH_Dep_Pion_AIR_SecondeAllure", {} },
-        { "BEH_Dep_Pion_AIR_SecondeAllureAvecAppuis", {} },
-        { "BEH_Dep_Pion_AIR_TroisiemeAllure", {} },
-        { "BEH_Dep_Pion_AIR_TroisiemeAllureAvecAppuis", {} },
+        { "ACT_Dep_PasserEnModeFurtif", { "onHalt" } },
+        { "BEH_Dep_Pion_AIR_SecondeAllure", { "onHalt" } },
+        { "BEH_Dep_Pion_AIR_SecondeAllureAvecAppuis", { "onHalt" } },
+        { "BEH_Dep_Pion_AIR_TroisiemeAllure", { "onHalt" } },
+        { "BEH_Dep_Pion_AIR_TroisiemeAllureAvecAppuis", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_AIR_Voler" } },
 
     create = function( self )
     end,
@@ -122,9 +134,13 @@ node "BEH_Dep_Pion_AIR_PremiereAllure"
 {
     activations =
     {
-        { "ACT_Dep_Pions_AIR_Voler", {} },
-        { "ACT_Dep_ModulationVitesse", {} },
+        { "ACT_Dep_Pions_AIR_Voler", { "onHalt" } },
+        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_AIR_PremiereAllure" } },
 
     create = function( self )
     end,
@@ -140,9 +156,13 @@ node "BEH_Dep_Pion_AIR_PremiereAllureAvecAppuis"
 {
     activations =
     {
-        { "ACT_Dep_Pions_AIR_Voler", {} },
-        { "ACT_Dep_ModulationVitesse", {} },
+        { "ACT_Dep_Pions_AIR_Voler", { "onHalt" } },
+        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_AIR_PremiereAllureAvecAppuis" } },
 
     create = function( self )
     end,
@@ -159,9 +179,13 @@ node "BEH_Dep_Pion_AIR_SecondeAllure"
 {
     activations =
     {
-        { "ACT_Dep_Pions_AIR_Voler", {} },
-        { "ACT_Dep_ModulationVitesse", {} },
+        { "ACT_Dep_Pions_AIR_Voler", { "onHalt" } },
+        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_AIR_SecondeAllure" } },
 
     create = function( self )
     end,
@@ -177,9 +201,13 @@ node "BEH_Dep_Pion_AIR_SecondeAllureAvecAppuis"
 {
     activations =
     {
-        { "ACT_Dep_Pions_AIR_Voler", {} },
-        { "ACT_Dep_ModulationVitesse", {} },
+        { "ACT_Dep_Pions_AIR_Voler", { "onHalt" } },
+        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_AIR_SecondeAllureAvecAppuis" } },
 
     create = function( self )
     end,
@@ -196,9 +224,13 @@ node "BEH_Dep_Pion_AIR_TroisiemeAllure"
 {
     activations =
     {
-        { "ACT_Dep_Pions_AIR_Voler", {} },
-        { "ACT_Dep_ModulationVitesse", {} },
+        { "ACT_Dep_Pions_AIR_Voler", { "onHalt" } },
+        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_AIR_TroisiemeAllure" } },
 
     create = function( self )
     end,
@@ -214,9 +246,13 @@ node "BEH_Dep_Pion_AIR_TroisiemeAllureAvecAppuis"
 {
     activations =
     {
-        { "ACT_Dep_Pions_AIR_Voler", {} },
-        { "ACT_Dep_ModulationVitesse", {} },
+        { "ACT_Dep_Pions_AIR_Voler", { "onHalt" } },
+        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_AIR_TroisiemeAllureAvecAppuis" } },
 
     create = function( self )
     end,
@@ -238,8 +274,12 @@ node "BEH_Dep_Pion_AIR_RejoindrePoint"
 {
     activations =
     {
-        { "BEH_Dep_Pion_AIR_RejoindreParItineraire", {} },
+        { "BEH_Dep_Pion_AIR_RejoindreParItineraire", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_AIR_RejoindrePoint" } },
 
     create = function( self )
         self._namedParams = {}
@@ -259,7 +299,8 @@ node "BEH_Dep_Pion_AIR_RejoindrePoint"
         self.eEtat = self.eEtat or eActionEnCours
         if( ( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.point ) == 0 or DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.point ) == nil ) ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_AIR_RejoindrePoint" } )
+Halt( self )
             do return end
         end
 
@@ -269,7 +310,8 @@ node "BEH_Dep_Pion_AIR_RejoindrePoint"
 
         if( self.eEtat ~= eActionEnCours ) then
             self.params.__returnValue = self.eEtat
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_AIR_RejoindrePoint" } )
+Halt( self )
             do return end
         else
             Activate( self.activations.BEH_Dep_Pion_AIR_RejoindreParItineraire, 1, setmetatable( { self.listePoints, self._namedParams.typeProgression, self._namedParams.ePathType, self._namedParams.distanceMin, self._namedParams.distanceMax, self._namedParams.forceDelaiSucces, self._namedParams.forceDelaiPenalite, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
@@ -288,8 +330,12 @@ node "BEH_Dep_Pion_AIR_RejoindrePion"
 {
     activations =
     {
-        { "BEH_Dep_Pion_AIR_RejoindrePoint", {} },
+        { "BEH_Dep_Pion_AIR_RejoindrePoint", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_AIR_RejoindrePion" } },
 
     create = function( self )
         self._namedParams = {}
@@ -315,12 +361,14 @@ node "BEH_Dep_Pion_AIR_RejoindrePion"
 
         if( ( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self.positionPion ) == 0 or DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self.positionPion ) == nil ) ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_AIR_RejoindrePion" } )
+Halt( self )
             do return end
         end
 
         if( DEC_Geometrie_Distance( self._namedParams.pion:DEC_Agent_Position(), self.positionPion ) >= self._namedParams.distanceAvantRelance ) then
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_AIR_RejoindrePion" } )
+Halt( self )
             do return end
         end
 
@@ -377,11 +425,15 @@ node "BEH_Dep_Pion_AIR_RejoindreParItineraire"
 {
     activations =
     {
-        { "BEH_Dep_Pion_AIR_Voler", {} },
-        { "ACT_Obs_EtablirVisionCur", {} },
-        { "BEH_Dep_Progresser", {} },
-        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_Pion_AIR_Voler", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionCur", { "onHalt" } },
+        { "BEH_Dep_Progresser", { "onHalt" } },
+        { "ACT_Info_Trace", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_AIR_RejoindreParItineraire" } },
 
     create = function( self )
         self._namedParams = {}
@@ -410,7 +462,8 @@ node "BEH_Dep_Pion_AIR_RejoindreParItineraire"
             do
                 self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_AIR_RejoindreParItineraire" )
                                 self.params.__returnValue = eActionEffectuee
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_AIR_RejoindreParItineraire" } )
+Halt( self )
                 do return end
 
             end
@@ -437,7 +490,8 @@ node "BEH_Dep_Pion_AIR_RejoindreParItineraire"
                                 do
                     self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_AIR_RejoindreParItineraire" )
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_AIR_RejoindreParItineraire" } )
+Halt( self )
                     do return end
 
                 end
@@ -483,7 +537,8 @@ node "BEH_Dep_Pion_AIR_RejoindreParItineraire"
                                         do
                                             self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_AIR_RejoindreParItineraire" )
                                                                                         self.params.__returnValue = eActionEffectuee
-                                            Halt( self )
+                                            Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_AIR_RejoindreParItineraire" } )
+Halt( self )
                                             do return end
 
                                         end
@@ -503,7 +558,8 @@ elseif switch_1 == eItineraire_Invalide then
 
                     self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_AIR_RejoindreParItineraire" )
                                         self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_AIR_RejoindreParItineraire" } )
+Halt( self )
                     do return end
 
                                 end
@@ -519,14 +575,16 @@ elseif switch_1 == eItineraire_Impossible then
 
                     self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_AIR_RejoindreParItineraire" )
                                         self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_AIR_RejoindreParItineraire" } )
+Halt( self )
                     do return end
 
                                 end
                 if cases_switch_1[4] or switch_1 == eItineraire_Annule then
                     self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_AIR_RejoindreParItineraire" )
                                         self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_AIR_RejoindreParItineraire" } )
+Halt( self )
                     do return end
 
                                 end
@@ -550,8 +608,12 @@ node "BEH_Dep_Pion_AIR_SEloignerPositionVers"
 {
     activations =
     {
-        { "BEH_Dep_Pion_AIR_RejoindrePoint", {} },
+        { "BEH_Dep_Pion_AIR_RejoindrePoint", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_AIR_SEloignerPositionVers" } },
 
     create = function( self )
         self._namedParams = {}
@@ -574,7 +636,8 @@ node "BEH_Dep_Pion_AIR_SEloignerPositionVers"
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_AIR_SEloignerPositionVers" } )
+Halt( self )
                     do return end
 
                 end
@@ -602,8 +665,12 @@ node "BEH_Dep_Pion_AIR_Suivre"
 {
     activations =
     {
-        { "BEH_Dep_Pion_AIR_RejoindrePoint", {} },
+        { "BEH_Dep_Pion_AIR_RejoindrePoint", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_AIR_Suivre" } },
 
     create = function( self )
         self._namedParams = {}
@@ -640,7 +707,8 @@ do
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_AIR_Suivre" } )
+Halt( self )
                     do return end
 
                 end
@@ -652,13 +720,15 @@ do
             do
                                 do
                                         self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_AIR_Suivre" } )
+Halt( self )
                     do return end
 
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_AIR_Suivre" } )
+Halt( self )
                 do return end
 
             end
@@ -680,10 +750,14 @@ node "BEH_Dep_Pion_AIR_SuivreSurFlanc"
 {
     activations =
     {
-        { "ACT_Maj_Pions_ObjectifEsquive", {} },
-        { "ACT_Obs_EtablirVisionFaceADir", {} },
-        { "BEH_Dep_Pion_AIR_RejoindrePoint", {} },
+        { "ACT_Maj_Pions_ObjectifEsquive", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionFaceADir", { "onHalt" } },
+        { "BEH_Dep_Pion_AIR_RejoindrePoint", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_AIR_SuivreSurFlanc" } },
 
     create = function( self )
         self._namedParams = {}
@@ -710,7 +784,8 @@ node "BEH_Dep_Pion_AIR_SuivreSurFlanc"
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_AIR_SuivreSurFlanc" } )
+Halt( self )
                     do return end
 
                 end
@@ -722,13 +797,15 @@ node "BEH_Dep_Pion_AIR_SuivreSurFlanc"
             do
                                 do
                                         self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_AIR_SuivreSurFlanc" } )
+Halt( self )
                     do return end
 
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_AIR_SuivreSurFlanc" } )
+Halt( self )
                 do return end
 
             end

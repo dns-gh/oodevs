@@ -23,8 +23,12 @@ includedFiles["sources/melee/abc/automates/common/missions/jalonner/Jalonner - M
 {
     activations =
     {
-        { "BEH_Mission_Automate_ABC_AssignerJalonnerA", {} },
+        { "BEH_Mission_Automate_ABC_AssignerJalonnerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ABC_AssignerMissionJalonerA" } },
 
     create = function( self )
         self._namedParams = {}

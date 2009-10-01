@@ -21,19 +21,23 @@ node "BEH_Medo_Automate_INF_PreparerMission_Retrograde"
 {
     activations =
     {
-        { "ACT_Medo_Automate_AffecterFuseaux", {} },
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_INF_AssignerInterdire_Lima", {} },
-        { "BEH_Medo_Automate_INF_AssignerSurveiller_Lima", {} },
-        { "BEH_Medo_Automate_INF_AssignerDecrocher_RgptDansZone", {} },
-        { "BEH_Medo_Automate_INF_AssignerMissionRetrogradeVers_PC", {} },
-        { "BEH_Medo_Automate_INF_OrganiserMissions_Freiner", {} },
-        { "BEH_Medo_Automate_INF_AssignerFreiner", {} },
-        { "BEH_Medo_Automate_INF_AssignerAppuyerFreinage", {} },
-        { "BEH_Medo_Automate_INF_AssignerMissionRetrograde_PC", {} },
-        { "BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier", {} },
-        { "BEH_Medo_Automate_INF_InitialiseSE", {} },
+        { "ACT_Medo_Automate_AffecterFuseaux", { "onHalt" } },
+        { "BEH_Medo_Automate_ControleCreationMission", { "onHalt" } },
+        { "BEH_Medo_Automate_INF_AssignerInterdire_Lima", { "onHalt" } },
+        { "BEH_Medo_Automate_INF_AssignerSurveiller_Lima", { "onHalt" } },
+        { "BEH_Medo_Automate_INF_AssignerDecrocher_RgptDansZone", { "onHalt" } },
+        { "BEH_Medo_Automate_INF_AssignerMissionRetrogradeVers_PC", { "onHalt" } },
+        { "BEH_Medo_Automate_INF_OrganiserMissions_Freiner", { "onHalt" } },
+        { "BEH_Medo_Automate_INF_AssignerFreiner", { "onHalt" } },
+        { "BEH_Medo_Automate_INF_AssignerAppuyerFreinage", { "onHalt" } },
+        { "BEH_Medo_Automate_INF_AssignerMissionRetrograde_PC", { "onHalt" } },
+        { "BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier", { "onHalt" } },
+        { "BEH_Medo_Automate_INF_InitialiseSE", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_INF_PreparerMission_Retrograde" } },
 
     create = function( self )
         self._namedParams = {}
@@ -153,7 +157,8 @@ elseif switch_2 == "T_Mission_Automate_INF_AppuyerUnFreinage" then
                             DEC_Trace( "Pas de 1er echelon" )
                             DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
                                                         self.params.__returnValue = eActionImpossible
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_INF_PreparerMission_Retrograde" } )
+Halt( self )
                             do return end
 
                         end
@@ -192,7 +197,8 @@ elseif switch_1 == eMRT_AssignerMissions then
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_INF_PreparerMission_Retrograde" } )
+Halt( self )
                             do return end
 
                         end
@@ -205,7 +211,8 @@ elseif switch_1 == eMRT_AssignerMissions then
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_INF_PreparerMission_Retrograde" } )
+Halt( self )
                             do return end
 
                         end
@@ -216,7 +223,8 @@ elseif switch_1 == eMRT_AssignerMissions then
                             self.eValidationMRT = eActionEnCours
                                                         do
                                                                 self.params.__returnValue = eActionEffectuee
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_INF_PreparerMission_Retrograde" } )
+Halt( self )
                                 do return end
 
                             end
@@ -257,7 +265,8 @@ elseif switch_2 == "T_Mission_Automate_INF_AppuyerUnFreinage" then
                             else
                                 DEC_Trace( "Mission Inconnue" )
                                                                 self.params.__returnValue = eActionImpossible
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_INF_PreparerMission_Retrograde" } )
+Halt( self )
                                 do return end
 
                                                         end
@@ -287,8 +296,12 @@ node "BEH_Medo_Automate_INF_OrganiserMissions_Freiner"
 {
     activations =
     {
-        { "BEH_Mission_Automate_INF_AssignerAppuyerA", {} },
+        { "BEH_Mission_Automate_INF_AssignerAppuyerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_INF_OrganiserMissions_Freiner" } },
 
     create = function( self )
         self._namedParams = {}
@@ -296,7 +309,9 @@ node "BEH_Medo_Automate_INF_OrganiserMissions_Freiner"
         self._namedParams.selPions_AC = self.params[2]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.bAppui = self.bAppui or true
         local rItPion = 0
         local rItLoc = 0
@@ -331,7 +346,7 @@ node "BEH_Medo_Automate_INF_OrganiserMissions_Freiner"
                                             do
                                                 pionAppui = DIA_GetAt( self._namedParams.selPions_AC, rItPion )
                                                                                                 do
-                                                    StartActivate( self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_MRT, pionAppui, x_inf, eEtatEchelon_Second, } )
+                                                    StartInstance( self, self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_MRT, pionAppui, x_inf, eEtatEchelon_Second, } )
                                                 end
 
                                                                                                 rItPion = rItPion + 1
@@ -351,7 +366,7 @@ do
 
                                                 pionAppui = DIA_GetAt( self._namedParams.selPions_AC, rItPion )
                                                 do
-                                                    StartActivate( self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_MRT, pionAppui, x_inf, eEtatEchelon_Second, } )
+                                                    StartInstance( self, self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_MRT, pionAppui, x_inf, eEtatEchelon_Second, } )
                                                 end
 
                                                                                                 rItPion = rItPion + 1
@@ -366,7 +381,7 @@ do
                                                     do
                                                         pionAppui = DIA_GetAt( self._namedParams.selPions_AC, rItPion )
                                                                                                                 do
-                                                            StartActivate( self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_MRT, pionAppui, x_inf, eEtatEchelon_Second, } )
+                                                            StartInstance( self, self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_MRT, pionAppui, x_inf, eEtatEchelon_Second, } )
                                                         end
 
                                                     end
@@ -402,21 +417,27 @@ node "BEH_Medo_Automate_INF_AssignerFreiner"
 {
     activations =
     {
-        { "BEH_Mission_Automate_INF_AssignerA_Freiner", {} },
+        { "BEH_Mission_Automate_INF_AssignerA_Freiner", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_INF_AssignerFreiner" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.selPions_PE = self.params[1]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.ptRgpt_Foo = self.ptRgpt_Foo or nil
         --[[// Mission Pion		
 ]]if( ModuleBegins() ) then
 for _,x_inf in pairs( self._namedParams.selPions_PE ) do
             local _continue = true
-                StartActivate( self.activations.BEH_Mission_Automate_INF_AssignerA_Freiner, 1, { ePhase_MRT, x_inf, self.ptRgpt_Foo, } )
+                StartInstance( self, self.activations.BEH_Mission_Automate_INF_AssignerA_Freiner, 1, { ePhase_MRT, x_inf, self.ptRgpt_Foo, } )
 
             end
         end
@@ -429,8 +450,12 @@ node "BEH_Medo_Automate_INF_AssignerDecrocher_RgptDansZone"
 {
     activations =
     {
-        { "BEH_Medo_Automate_INF_AssignerDecrocherA_RgptDansZone", {} },
+        { "BEH_Medo_Automate_INF_AssignerDecrocherA_RgptDansZone", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_INF_AssignerDecrocher_RgptDansZone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -438,12 +463,14 @@ node "BEH_Medo_Automate_INF_AssignerDecrocher_RgptDansZone"
         self._namedParams.locRgpt = self.params[2]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         --[[// Mission Pion		
 ]]if( ModuleBegins() ) then
 for _,x_inf in pairs( self._namedParams.selPions_PE ) do
             local _continue = true
-                StartActivate( self.activations.BEH_Medo_Automate_INF_AssignerDecrocherA_RgptDansZone, 1, { x_inf, self._namedParams.locRgpt, } )
+                StartInstance( self, self.activations.BEH_Medo_Automate_INF_AssignerDecrocherA_RgptDansZone, 1, { x_inf, self._namedParams.locRgpt, } )
 
             end
         end
@@ -456,8 +483,12 @@ node "BEH_Medo_Automate_INF_AssignerDecrocherA_RgptDansZone"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerDecrocherA", {} },
+        { "BEH_Mission_Automate_AssignerDecrocherA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_INF_AssignerDecrocherA_RgptDansZone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -476,8 +507,12 @@ node "BEH_Medo_Automate_INF_AssignerInterdire_Lima"
 {
     activations =
     {
-        { "BEH_Medo_Automate_INF_AssignerInterdire_Lima_PourPion", {} },
+        { "BEH_Medo_Automate_INF_AssignerInterdire_Lima_PourPion", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_INF_AssignerInterdire_Lima" } },
 
     create = function( self )
         self._namedParams = {}
@@ -485,11 +520,13 @@ node "BEH_Medo_Automate_INF_AssignerInterdire_Lima"
         self._namedParams.lima = self.params[2]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         if( ModuleBegins() ) then
 for _,x in pairs( self._namedParams.lstPionsAttaque ) do
             local _continue = true
-                StartActivate( self.activations.BEH_Medo_Automate_INF_AssignerInterdire_Lima_PourPion, 1, { x, self._namedParams.lima, } )
+                StartInstance( self, self.activations.BEH_Medo_Automate_INF_AssignerInterdire_Lima_PourPion, 1, { x, self._namedParams.lima, } )
 
             end
         end
@@ -502,9 +539,13 @@ node "BEH_Medo_Automate_INF_AssignerInterdire_Lima_PourPion"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "BEH_Mission_Automate_INF_AssignerA_Interdire", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "BEH_Mission_Automate_INF_AssignerA_Interdire", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_INF_AssignerInterdire_Lima_PourPion" } },
 
     create = function( self )
         self._namedParams = {}
@@ -512,7 +553,9 @@ node "BEH_Medo_Automate_INF_AssignerInterdire_Lima_PourPion"
         self._namedParams.lima = self.params[2]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
                 self.ptLima = self.ptLima or nil
         self.ptInterdire = self.ptInterdire or nil
         self.ptRecherche = self.ptRecherche or nil
@@ -527,7 +570,7 @@ node "BEH_Medo_Automate_INF_AssignerInterdire_Lima_PourPion"
                     do
                         DEC_Trace( "Pas de position LCAR : Impossible d'assigner mission." )
                         DEC_Warning( eRC_MissionImpossibleLimaInvalide )
-                        StartActivate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
+                        StartInstance( self, self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
                                                 self.params.__returnValue = eActionImpossible
                         return
 
@@ -565,8 +608,12 @@ node "BEH_Medo_Automate_INF_AssignerSurveiller_Lima"
 {
     activations =
     {
-        { "BEH_Medo_Automate_INF_AssignerSurveiller_Lima_PourPion", {} },
+        { "BEH_Medo_Automate_INF_AssignerSurveiller_Lima_PourPion", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_INF_AssignerSurveiller_Lima" } },
 
     create = function( self )
         self._namedParams = {}
@@ -574,11 +621,13 @@ node "BEH_Medo_Automate_INF_AssignerSurveiller_Lima"
         self._namedParams.lima = self.params[2]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         if( ModuleBegins() ) then
 for _,x in pairs( self._namedParams.lstPionsSurveillance ) do
             local _continue = true
-                StartActivate( self.activations.BEH_Medo_Automate_INF_AssignerSurveiller_Lima_PourPion, 1, { x, self._namedParams.lima, } )
+                StartInstance( self, self.activations.BEH_Medo_Automate_INF_AssignerSurveiller_Lima_PourPion, 1, { x, self._namedParams.lima, } )
 
             end
         end
@@ -595,9 +644,13 @@ node "BEH_Medo_Automate_INF_AssignerSurveiller_Lima_PourPion"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "BEH_Mission_Automate_INF_AssignerA_SurveillerSurPosition", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "BEH_Mission_Automate_INF_AssignerA_SurveillerSurPosition", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_INF_AssignerSurveiller_Lima_PourPion" } },
 
     create = function( self )
         self._namedParams = {}
@@ -605,7 +658,9 @@ node "BEH_Medo_Automate_INF_AssignerSurveiller_Lima_PourPion"
         self._namedParams.lima = self.params[2]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
                 self.ptLima = self.ptLima or nil
         self.bCalcul = self.bCalcul or false
         if( ModuleBegins() ) then
@@ -618,7 +673,7 @@ node "BEH_Medo_Automate_INF_AssignerSurveiller_Lima_PourPion"
                     do
                         DEC_Trace( "Pas de position LCAR : Impossible d'assigner mission." )
                         DEC_Warning( eRC_MissionImpossibleLimaInvalide )
-                        StartActivate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
+                        StartInstance( self, self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
                     end
                 end
 
@@ -642,9 +697,13 @@ node "BEH_Medo_Automate_INF_AssignerAppuyerFreinage"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "BEH_Mission_Automate_INF_AssignerAppuyerA", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "BEH_Mission_Automate_INF_AssignerAppuyerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_INF_AssignerAppuyerFreinage" } },
 
     create = function( self )
         self._namedParams = {}
@@ -652,7 +711,9 @@ node "BEH_Medo_Automate_INF_AssignerAppuyerFreinage"
         self._namedParams.compagnie = self.params[2]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         local selPionsAppui_PE = S_ObtenirTousPionsPour( self._namedParams.compagnie, eEtatEchelon_Premier )
         if( ( #( self._namedParams.selPions_PE ) == 0 or #( self._namedParams.selPions_PE ) == nil ) ) then
             do
@@ -682,7 +743,7 @@ node "BEH_Medo_Automate_INF_AssignerAppuyerFreinage"
                         if( rIt_Pion < #( selPionsAppui_PE ) ) then
                             do
                                 local pionAppui = DIA_GetAt( selPionsAppui_PE, rIt_Pion )
-                                StartActivate( self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_MRT, x_pion, pionAppui, eEtatEchelon_Premier, } )
+                                StartInstance( self, self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_MRT, x_pion, pionAppui, eEtatEchelon_Premier, } )
                             end
                         end
 

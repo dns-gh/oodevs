@@ -11,9 +11,13 @@ includedFiles["sources/melee/abc/pions/pat milan/missions/AppuyerSurPosition.bms
 {
     activations =
     {
-        { "ACT_Dep_PasserEnModeFurtif", {} },
-        { "BEH_Mission_Pion_ABC_AppuyerSurPosition", {} },
+        { "ACT_Dep_PasserEnModeFurtif", { "onHalt" } },
+        { "BEH_Mission_Pion_ABC_AppuyerSurPosition", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_ABC_AppuyerSurPosition" } },
 
     create = function( self )
         self._namedParams = {}
@@ -27,13 +31,15 @@ includedFiles["sources/melee/abc/pions/pat milan/missions/AppuyerSurPosition.bms
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible ) then
             self.params.__returnValue = eActionImpossible
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ABC_AppuyerSurPosition" } )
+Halt( self )
             do return end
         end
 
         if( self.eEtat == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ABC_AppuyerSurPosition" } )
+Halt( self )
             do return end
         end
 

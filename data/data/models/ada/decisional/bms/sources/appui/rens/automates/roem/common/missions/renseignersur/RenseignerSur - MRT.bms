@@ -11,8 +11,12 @@ includedFiles["sources/appui/rens/automates/roem/common/missions/renseignersur/R
 {
     activations =
     {
-        { "BEH_Mission_Automate_RENS_ROEM_AssignerRenseignerA", {} },
+        { "BEH_Mission_Automate_RENS_ROEM_AssignerRenseignerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_RENS_ROEM_AssignerRenseignerA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -36,8 +40,12 @@ node "BEH_Medo_Automate_RENS_ROEM_AssignerMettreEnOeuvreA"
 {
     activations =
     {
-        { "BEH_Mission_Automate_RENS_ROEM_AssignerMettreEnOeuvreA", {} },
+        { "BEH_Mission_Automate_RENS_ROEM_AssignerMettreEnOeuvreA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_RENS_ROEM_AssignerMettreEnOeuvreA" } },
 
     create = function( self )
         self._namedParams = {}

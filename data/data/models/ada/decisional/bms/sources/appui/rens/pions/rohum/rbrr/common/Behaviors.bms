@@ -11,14 +11,18 @@ includedFiles["sources/appui/rens/pions/rohum/rbrr/common/Behaviors.bms"] = true
 {
     activations =
     {
-        { "BEH_Dep_Pion_GererFurtivite", {} },
-        { "BEH_MAJ_EtatDefaut", {} },
-        { "BEH_ROE", {} },
-        { "BEH_Ambiance", {} },
-        { "BEH_Nbc", {} },
-        { "BEH_Rens", {} },
-        { "BEH_Mot_Pion_Embarquer", {} },
+        { "BEH_Dep_Pion_GererFurtivite", { "onHalt" } },
+        { "BEH_MAJ_EtatDefaut", { "onHalt" } },
+        { "BEH_ROE", { "onHalt" } },
+        { "BEH_Ambiance", { "onHalt" } },
+        { "BEH_Nbc", { "onHalt" } },
+        { "BEH_Rens", { "onHalt" } },
+        { "BEH_Mot_Pion_Embarquer", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Defaut" } },
 
     create = function( self )
         self._namedParams = {}
@@ -65,6 +69,8 @@ includedFiles["sources/appui/rens/pions/rohum/rbrr/common/Behaviors.bms"] = true
 
 node "BEH_Mot_Pion_Rens_AffecterVariablesDEtat"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Mot_Pion_Rens_AffecterVariablesDEtat" } },
+
     create = function( self )
     end,
 

@@ -14,12 +14,16 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Pop_RejoindreInstallation", {} },
-        { "BEH_Pop_RejoindrePoint", {} },
-        { "BEH_Pop_PAPPions", {} },
-        { "BEH_Pop_RalentissementPions", {} },
-        { "BEH_Pop_DegraderInstallations", {} },
+        { "BEH_Pop_RejoindreInstallation", { "onHalt" } },
+        { "BEH_Pop_RejoindrePoint", { "onHalt" } },
+        { "BEH_Pop_PAPPions", { "onHalt" } },
+        { "BEH_Pop_RalentissementPions", { "onHalt" } },
+        { "BEH_Pop_DegraderInstallations", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Population_CommettreExactions" } },
 
     create = function( self )
         self._namedParams = {}

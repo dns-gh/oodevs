@@ -27,14 +27,18 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Misc_Pion_DefinirTypeMission", {} },
-        { "BEH_MAJ_AgressiviteMission", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "BEH_Eni_Pion_VAB_RecoPoint", {} },
-        { "BEH_Mission_Pion_VAB_RecoPoint", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Poste_Pion_INF_TomberEnGarde", {} },
+        { "BEH_Misc_Pion_DefinirTypeMission", { "onHalt" } },
+        { "BEH_MAJ_AgressiviteMission", { "onHalt" } },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "BEH_Eni_Pion_VAB_RecoPoint", { "onHalt" } },
+        { "BEH_Mission_Pion_VAB_RecoPoint", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Poste_Pion_INF_TomberEnGarde", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_INF_ReconnaitrePoint" } },
 
     create = function( self )
         self._namedParams = {}
@@ -111,7 +115,8 @@ include "bit.lua"
                                 DEC_Trace( "Fin reconnaissance du point " .. DEC_PointToString( self.pt ) )
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_INF_ReconnaitrePoint" } )
+Halt( self )
                                 do return end
 
                             end
@@ -136,29 +141,35 @@ node "BEH_Mission_Pion_VAB_RecoPoint"
 {
     activations =
     {
-        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", {} },
-        { "BEH_Mot_Pion_Embarquer", {} },
-        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
-        { "ACT_Obs_ReconnaitrePoint", {} },
-        { "BEH_MOT_Pion_INF_Debarquer", {} },
-        { "BEH_Obs_Pion_INF_RecoPoint", {} },
-        { "ACT_Dep_Pion_INF_Arret", {} },
+        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", { "onHalt" } },
+        { "BEH_Mot_Pion_Embarquer", { "onHalt" } },
+        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "onHalt" } },
+        { "ACT_Obs_ReconnaitrePoint", { "onHalt" } },
+        { "BEH_MOT_Pion_INF_Debarquer", { "onHalt" } },
+        { "BEH_Obs_Pion_INF_RecoPoint", { "onHalt" } },
+        { "ACT_Dep_Pion_INF_Arret", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_VAB_RecoPoint" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.pt = self.params[1]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.ePhase = self.ePhase or eRejoindre
         self.eAction = self.eAction or eActionEnCours
         self.eActionRejoindre = self.eActionRejoindre or eActionEnCours
         if( ModuleBegins() ) then
             do
                 --[[// Verifie que l'on est bien dans son fuseau
-]]StartActivate( self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
+]]StartInstance( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
             end
         end
 
@@ -194,7 +205,7 @@ node "BEH_Mission_Pion_VAB_RecoPoint"
                 --[[//Observation de l'objectif
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eObserver then
-                    StartActivate( self.activations.ACT_Obs_ReconnaitrePoint, 1, { self._namedParams.pt, } )
+                    StartInstance( self, self.activations.ACT_Obs_ReconnaitrePoint, 1, { self._namedParams.pt, } )
                     Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1.2, {} )
                     if( self.eAction == eActionEffectuee ) then
                         do
@@ -220,7 +231,8 @@ elseif switch_1 == eFouiller then
                         do
                             self.eAction = eActionEnCours
                                                         self.params.__returnValue = eFinMission
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_VAB_RecoPoint" } )
+Halt( self )
                             do return end
 
                         end
@@ -248,9 +260,13 @@ node "BEH_Eni_Pion_VAB_RecoPoint"
 {
     activations =
     {
-        { "ACT_RC_SurEni", {} },
-        { "ACT_Dep_SePosterFaceA", {} },
+        { "ACT_RC_SurEni", { "onHalt" } },
+        { "ACT_Dep_SePosterFaceA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_VAB_RecoPoint" } },
 
     create = function( self )
     end,

@@ -37,10 +37,14 @@ include "bit.lua"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ControleCreationMission" } },
 
     create = function( self )
         self._namedParams = {}
@@ -58,7 +62,8 @@ include "bit.lua"
 
         if( ( self.eAction_OK == eActionEffectuee ) or ( ( self._namedParams.rN_Pion == 0 or self._namedParams.rN_Pion == nil ) ) ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_ControleCreationMission" } )
+Halt( self )
             do return end
         end
 
@@ -79,11 +84,15 @@ node "BEH_Mission_Automate_AssignerSuivreA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_AssignerSuivreA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_AssignerSuivreA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_AssignerSuivreA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -130,8 +139,12 @@ node "BEH_Mission_Automate_AssignerSuivreAListe"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSuivreA", {} },
+        { "BEH_Mission_Automate_AssignerSuivreA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_AssignerSuivreAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -140,11 +153,13 @@ node "BEH_Mission_Automate_AssignerSuivreAListe"
         self._namedParams.pASuivre = self.params[3]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         if( ModuleBegins() ) then
 for _,x in pairs( self._namedParams.listePions ) do
             local _continue = true
-                StartActivate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { self._namedParams.ePhase, x, self._namedParams.pASuivre, } )
+                StartInstance( self, self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { self._namedParams.ePhase, x, self._namedParams.pASuivre, } )
 
             end
         end
@@ -163,11 +178,15 @@ node "BEH_Medo_Automate_AssignerMissionTransporterA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_AssignerTransporterA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_AssignerTransporterA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_AssignerMissionTransporterA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -217,8 +236,12 @@ node "BEH_Medo_Automate_AssignerMissionsTransporterAListe"
 {
     activations =
     {
-        { "BEH_Medo_Automate_AssignerMissionTransporterA", {} },
+        { "BEH_Medo_Automate_AssignerMissionTransporterA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_AssignerMissionsTransporterAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -230,7 +253,9 @@ node "BEH_Medo_Automate_AssignerMissionsTransporterAListe"
         self._namedParams.avecMateriel = self.params[6]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         assert( #( self._namedParams.listePions ) <= #( self._namedParams.listeUnitesATransporter ), "Trop de Pions Pour Transporter" )
         if( ModuleBegins() ) then
@@ -273,7 +298,7 @@ do
                             end
                         end
 
-                        StartActivate( self.activations.BEH_Medo_Automate_AssignerMissionTransporterA, 1, { self._namedParams.ePhase, x, self._namedParams.pointEmbarquement, self._namedParams.pointDebarquement, listePionsATransporterBuffer, self._namedParams.avecMateriel, } )
+                        StartInstance( self, self.activations.BEH_Medo_Automate_AssignerMissionTransporterA, 1, { self._namedParams.ePhase, x, self._namedParams.pointEmbarquement, self._namedParams.pointDebarquement, listePionsATransporterBuffer, self._namedParams.avecMateriel, } )
                     end
 
                 end
@@ -295,11 +320,15 @@ node "BEH_Mission_Automate_AssignerFaireMouvementA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_AssignerFaireMouvementA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_AssignerFaireMouvementA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_AssignerFaireMouvementA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -347,11 +376,15 @@ node "BEH_Mission_Automate_AssignerPrendreEnComptePrisonniersA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_AssignerPrendreEnComptePrisonniersA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_AssignerPrendreEnComptePrisonniersA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_AssignerPrendreEnComptePrisonniersA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -400,11 +433,15 @@ node "BEH_Mission_Automate_AssignerOrienterRefugiesA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_AssignerOrienterRefugiesA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_AssignerOrienterRefugiesA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_AssignerOrienterRefugiesA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -453,8 +490,12 @@ node "BEH_Mission_Automate_AssignerFaireMouvementAListe"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerFaireMouvementA", {} },
+        { "BEH_Mission_Automate_AssignerFaireMouvementA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_AssignerFaireMouvementAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -463,13 +504,15 @@ node "BEH_Mission_Automate_AssignerFaireMouvementAListe"
         self._namedParams.dest = self.params[3]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         if( ModuleBegins() ) then
             do
                 for _,x in pairs( self._namedParams.listePions ) do
                 local _continue = true
                     do
-                        StartActivate( self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, 1, { self._namedParams.ePhase, x, DEC_Geometrie_PositionAleatoireDansCercle( self._namedParams.dest, 400 ), eEtatEchelon_Premier, } )
+                        StartInstance( self, self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, 1, { self._namedParams.ePhase, x, DEC_Geometrie_PositionAleatoireDansCercle( self._namedParams.dest, 400 ), eEtatEchelon_Premier, } )
                     end
 
                 end
@@ -491,11 +534,15 @@ node "BEH_Mission_Automate_AssignerFaireMouvementSurItA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_AssignerFaireMouvementSurItA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_AssignerFaireMouvementSurItA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_AssignerFaireMouvementSurItA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -542,11 +589,15 @@ node "BEH_Mission_Automate_AssignerSoutenirEnMesureDeA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_AssignerSoutenirEnMesureDe", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_AssignerSoutenirEnMesureDe", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_AssignerSoutenirEnMesureDeA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -593,11 +644,15 @@ node "BEH_Mission_Automate_AssignerSoutenirSurPositionEnMesureDeA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_AssignerSoutenirSurPositionEnMesureDe", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_AssignerSoutenirSurPositionEnMesureDe", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_AssignerSoutenirSurPositionEnMesureDeA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -644,11 +699,15 @@ node "BEH_Mission_Automate_AssignerSeFaireTransporterA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_AssignerSeFaireTransporterA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_AssignerSeFaireTransporterA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_AssignerSeFaireTransporterA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -695,11 +754,15 @@ node "BEH_Mission_Automate_AssignerFranchir"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_AssignerFranchir", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_AssignerFranchir", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_AssignerFranchir" } },
 
     create = function( self )
         self._namedParams = {}
@@ -751,11 +814,15 @@ node "BEH_Mission_Automate_AssignerSeFaireDecontaminerA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_AssignerSeFaireDecontaminerA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_AssignerSeFaireDecontaminerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_AssignerSeFaireDecontaminerA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -767,7 +834,8 @@ node "BEH_Mission_Automate_AssignerSeFaireDecontaminerA"
 
     activate = function( self )
         if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.siteDecontamination ) ) then
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Automate_AssignerSeFaireDecontaminerA" } )
+Halt( self )
             do return end
         end
 
@@ -808,8 +876,12 @@ node "BEH_Mission_Automate_AssignerStationnerAListe"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerStationnerA", {} },
+        { "BEH_Mission_Automate_AssignerStationnerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_AssignerStationnerAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -818,13 +890,15 @@ node "BEH_Mission_Automate_AssignerStationnerAListe"
         self._namedParams.pointArrivee = self.params[3]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         if( ModuleBegins() ) then
             do
                 for _,x in pairs( self._namedParams.listePions ) do
                 local _continue = true
                     do
-                        StartActivate( self.activations.BEH_Mission_Automate_AssignerStationnerA, 1, { self._namedParams.ePhase, x, self._namedParams.pointArrivee, } )
+                        StartInstance( self, self.activations.BEH_Mission_Automate_AssignerStationnerA, 1, { self._namedParams.ePhase, x, self._namedParams.pointArrivee, } )
                     end
 
                 end
@@ -846,11 +920,15 @@ node "BEH_Mission_Automate_AssignerStationnerA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_AssignerStationnerA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_AssignerStationnerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_AssignerStationnerA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -897,11 +975,15 @@ node "BEH_Mission_Automate_AssignerDecrocherA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_AssignerDecrocherA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_AssignerDecrocherA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_AssignerDecrocherA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -949,11 +1031,15 @@ node "BEH_Mission_Automate_AssignerInterdireFranchissementPopulationsA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_AssignerInterdireFranchissementPopulationsA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_AssignerInterdireFranchissementPopulationsA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_AssignerInterdireFranchissementPopulationsA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -1000,8 +1086,12 @@ node "BEH_Mission_Automate_AssignerInterdireFranchissementPopulationsAListe"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerInterdireFranchissementPopulationsA", {} },
+        { "BEH_Mission_Automate_AssignerInterdireFranchissementPopulationsA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_AssignerInterdireFranchissementPopulationsAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -1010,7 +1100,9 @@ node "BEH_Mission_Automate_AssignerInterdireFranchissementPopulationsAListe"
         self._namedParams.points = self.params[3]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
@@ -1022,7 +1114,7 @@ node "BEH_Mission_Automate_AssignerInterdireFranchissementPopulationsAListe"
                         end
 
                         local point = DEC_ListePoints_GetAt( self._namedParams.points, iterateur )
-                        StartActivate( self.activations.BEH_Mission_Automate_AssignerInterdireFranchissementPopulationsA, 1, { self._namedParams.ePhase, x, point, } )
+                        StartInstance( self, self.activations.BEH_Mission_Automate_AssignerInterdireFranchissementPopulationsA, 1, { self._namedParams.ePhase, x, point, } )
                                                 iterateur = iterateur + 1
                     end
 
@@ -1045,11 +1137,15 @@ node "BEH_Mission_Automate_AssignerFiltrerPopulationsA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_AssignerFiltrerPopulationsA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_AssignerFiltrerPopulationsA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_AssignerFiltrerPopulationsA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -1096,8 +1192,12 @@ node "BEH_Mission_Automate_AssignerFiltrerPopulationsAListe"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerFiltrerPopulationsA", {} },
+        { "BEH_Mission_Automate_AssignerFiltrerPopulationsA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_AssignerFiltrerPopulationsAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -1106,7 +1206,9 @@ node "BEH_Mission_Automate_AssignerFiltrerPopulationsAListe"
         self._namedParams.points = self.params[3]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
@@ -1118,7 +1220,7 @@ node "BEH_Mission_Automate_AssignerFiltrerPopulationsAListe"
                         end
 
                         local point = DEC_ListePoints_GetAt( self._namedParams.points, iterateur )
-                        StartActivate( self.activations.BEH_Mission_Automate_AssignerFiltrerPopulationsA, 1, { self._namedParams.ePhase, x, point, } )
+                        StartInstance( self, self.activations.BEH_Mission_Automate_AssignerFiltrerPopulationsA, 1, { self._namedParams.ePhase, x, point, } )
                                                 iterateur = iterateur + 1
                     end
 
@@ -1141,11 +1243,15 @@ node "BEH_Mission_Automate_AssignerSecuriserZoneContrePopulationsA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_AssignerSecuriserZoneContrePopulationsA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_AssignerSecuriserZoneContrePopulationsA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_AssignerSecuriserZoneContrePopulationsA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -1192,8 +1298,12 @@ node "BEH_Mission_Automate_AssignerSecuriserZoneContrePopulationsAListe"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSecuriserZoneContrePopulationsA", {} },
+        { "BEH_Mission_Automate_AssignerSecuriserZoneContrePopulationsA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_AssignerSecuriserZoneContrePopulationsAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -1202,7 +1312,9 @@ node "BEH_Mission_Automate_AssignerSecuriserZoneContrePopulationsAListe"
         self._namedParams.points = self.params[3]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
@@ -1214,7 +1326,7 @@ node "BEH_Mission_Automate_AssignerSecuriserZoneContrePopulationsAListe"
                         end
 
                         local point = DEC_ListePoints_GetAt( self._namedParams.points, iterateur )
-                        StartActivate( self.activations.BEH_Mission_Automate_AssignerSecuriserZoneContrePopulationsA, 1, { self._namedParams.ePhase, x, point, } )
+                        StartInstance( self, self.activations.BEH_Mission_Automate_AssignerSecuriserZoneContrePopulationsA, 1, { self._namedParams.ePhase, x, point, } )
                                                 iterateur = iterateur + 1
                     end
 
@@ -1237,11 +1349,15 @@ node "BEH_Mission_Automate_AssignerControlerPopulationsDansZoneA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_AssignerControlerPopulationsDansZoneA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_AssignerControlerPopulationsDansZoneA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_AssignerControlerPopulationsDansZoneA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -1288,8 +1404,12 @@ node "BEH_Mission_Automate_AssignerControlerPopulationsDansZoneAListe"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerControlerPopulationsDansZoneA", {} },
+        { "BEH_Mission_Automate_AssignerControlerPopulationsDansZoneA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_AssignerControlerPopulationsDansZoneAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -1298,7 +1418,9 @@ node "BEH_Mission_Automate_AssignerControlerPopulationsDansZoneAListe"
         self._namedParams.listeLocalisations = self.params[3]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
@@ -1310,7 +1432,7 @@ node "BEH_Mission_Automate_AssignerControlerPopulationsDansZoneAListe"
                         end
 
                         local localisationBuffer = DEC_UserTypeList_GetAt( self._namedParams.listeLocalisations, iterateur )
-                        StartActivate( self.activations.BEH_Mission_Automate_AssignerControlerPopulationsDansZoneA, 1, { self._namedParams.ePhase, x, localisationBuffer, } )
+                        StartInstance( self, self.activations.BEH_Mission_Automate_AssignerControlerPopulationsDansZoneA, 1, { self._namedParams.ePhase, x, localisationBuffer, } )
                                                 iterateur = iterateur + 1
                     end
 
@@ -1333,11 +1455,15 @@ node "BEH_Mission_Automate_AssignerCanaliserPopulationsA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_AssignerCanaliserPopulationsA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_AssignerCanaliserPopulationsA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_AssignerCanaliserPopulationsA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -1384,8 +1510,12 @@ node "BEH_Mission_Automate_AssignerCanaliserPopulationsAListe"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerCanaliserPopulationsA", {} },
+        { "BEH_Mission_Automate_AssignerCanaliserPopulationsA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_AssignerCanaliserPopulationsAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -1394,7 +1524,9 @@ node "BEH_Mission_Automate_AssignerCanaliserPopulationsAListe"
         self._namedParams.listeLocalisations = self.params[3]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
@@ -1406,7 +1538,7 @@ node "BEH_Mission_Automate_AssignerCanaliserPopulationsAListe"
                         end
 
                         local localisationBuffer = DEC_UserTypeList_GetAt( self._namedParams.listeLocalisations, iterateur )
-                        StartActivate( self.activations.BEH_Mission_Automate_AssignerCanaliserPopulationsA, 1, { self._namedParams.ePhase, x, localisationBuffer, } )
+                        StartInstance( self, self.activations.BEH_Mission_Automate_AssignerCanaliserPopulationsA, 1, { self._namedParams.ePhase, x, localisationBuffer, } )
                                                 iterateur = iterateur + 1
                     end
 

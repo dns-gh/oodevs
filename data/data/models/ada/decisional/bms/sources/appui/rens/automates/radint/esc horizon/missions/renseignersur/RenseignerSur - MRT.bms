@@ -14,11 +14,15 @@ include "bit.lua"
 {
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_RENS_RADINT_AssignerRenseignerA", {} },
-        { "BEH_Medo_Automate_RENS_RADINT_MettreEnOeuvreA", {} },
+        { "ACT_Info_Trace", { "onHalt" } },
+        { "BEH_Medo_Automate_ControleCreationMission", { "onHalt" } },
+        { "BEH_Medo_Automate_RENS_RADINT_AssignerRenseignerA", { "onHalt" } },
+        { "BEH_Medo_Automate_RENS_RADINT_MettreEnOeuvreA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_RENS_RADINT_RenseignerSur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -60,7 +64,8 @@ include "bit.lua"
                     do
                         Activate( self.activations.ACT_Info_Trace, 1, { "Unadapted units for the mission", } )
                                                 self.params.__returnValue = eActionImpossible
-                        Halt( self )
+                        Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_RENS_RADINT_RenseignerSur" } )
+Halt( self )
                         do return end
 
                     end
@@ -80,7 +85,8 @@ include "bit.lua"
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_RENS_RADINT_RenseignerSur" } )
+Halt( self )
                 do return end
 
             end
@@ -92,7 +98,8 @@ include "bit.lua"
                                 do
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_RENS_RADINT_RenseignerSur" } )
+Halt( self )
                     do return end
 
                 end
@@ -117,8 +124,12 @@ node "BEH_Medo_Automate_RENS_RADINT_MettreEnOeuvreA"
 {
     activations =
     {
-        { "BEH_Mission_Automate_RENS_RADINT_AssignerMettreEnOeuvreA", {} },
+        { "BEH_Mission_Automate_RENS_RADINT_AssignerMettreEnOeuvreA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_RENS_RADINT_MettreEnOeuvreA" } },
 
     create = function( self )
         self._namedParams = {}

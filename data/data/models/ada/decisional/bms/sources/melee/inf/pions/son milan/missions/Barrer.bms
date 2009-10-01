@@ -19,15 +19,19 @@ node "MIS_Pion_INF_Barrer"
 {
     activations =
     {
-        { "BEH_Misc_Pion_DefinirTypeMission", {} },
-        { "BEH_MAJ_AgressiviteMission", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_Ordre_Suppression", {} },
-        { "BEH_Mission_Pion_INF_Barrer", {} },
-        { "BEH_Manoeuvre_RompreContact", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Poste_Pion_INF_TomberEnGarde", {} },
+        { "BEH_Misc_Pion_DefinirTypeMission", { "onHalt" } },
+        { "BEH_MAJ_AgressiviteMission", { "onHalt" } },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "ACT_Ordre_Suppression", { "onHalt" } },
+        { "BEH_Mission_Pion_INF_Barrer", { "onHalt" } },
+        { "BEH_Manoeuvre_RompreContact", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Poste_Pion_INF_TomberEnGarde", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_INF_Barrer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -95,7 +99,8 @@ do
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_INF_Barrer" } )
+Halt( self )
                 do return end
 
             end
@@ -160,7 +165,8 @@ do
 ]]--[[//-----------------------------------------------------------------------------					
 ]]DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_INF_Barrer" } )
+Halt( self )
                                 do return end
 
                             end
@@ -188,10 +194,14 @@ node "BEH_Pion_INF_Barrer_DispositifArret"
 {
     activations =
     {
-        { "BEH_Obj_RejoindreEmbossements", {} },
-        { "ACT_Transport_Pion_INF_Debarquer", {} },
-        { "ACT_Obs_EtablirVisionFaceADir", {} },
+        { "BEH_Obj_RejoindreEmbossements", { "onHalt" } },
+        { "ACT_Transport_Pion_INF_Debarquer", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionFaceADir", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Pion_INF_Barrer_DispositifArret" } },
 
     create = function( self )
     end,

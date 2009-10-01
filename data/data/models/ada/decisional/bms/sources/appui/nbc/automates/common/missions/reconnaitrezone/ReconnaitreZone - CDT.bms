@@ -11,9 +11,13 @@ includedFiles["sources/appui/nbc/automates/common/missions/reconnaitrezone/Recon
 {
     activations =
     {
-        { "BEH_Dispositif_Automate_NBC_FaireSuivreLeSE_", {} },
-        { "BEH_CoordDep_Automate_NBC_AssurerLaCoordinationInterne_", {} },
+        { "BEH_Dispositif_Automate_NBC_FaireSuivreLeSE_", { "onHalt" } },
+        { "BEH_CoordDep_Automate_NBC_AssurerLaCoordinationInterne_", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_NBC_ReconnaitreUneZone" } },
 
     create = function( self )
     end,

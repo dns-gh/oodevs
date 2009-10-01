@@ -11,11 +11,15 @@ includedFiles["sources/appui/genie/automates/cie blindee/missions/retablir itine
 {
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
-        { "ACT_Warning", {} },
-        { "BEH_Conduite_Automate_GEN_OuvrirAxe_GererSE_", {} },
-        { "BEH_Mission_Automate_GEN_CDT_RetablirItinerairesGererRenforcement", {} },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "onHalt" } },
+        { "ACT_Warning", { "onHalt" } },
+        { "BEH_Conduite_Automate_GEN_OuvrirAxe_GererSE_", { "onHalt" } },
+        { "BEH_Mission_Automate_GEN_CDT_RetablirItinerairesGererRenforcement", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_GEN_RetablirItineraires" } },
 
     create = function( self )
         self._namedParams = {}
@@ -69,11 +73,15 @@ node "BEH_Mission_Automate_GEN_CDT_RetablirItinerairesGererRenforcement"
 {
     activations =
     {
-        { "BEH_Misc_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcementDe", {} },
-        { "BEH_Objet_Automate_GEN_VerifierRenfortPourDetruireObjet", {} },
-        { "BEH_Misc_Automate_GEN_GererRenforcementReductionObstacle", {} },
-        { "BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstacle", {} },
+        { "BEH_Misc_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcementDe", { "onHalt" } },
+        { "BEH_Objet_Automate_GEN_VerifierRenfortPourDetruireObjet", { "onHalt" } },
+        { "BEH_Misc_Automate_GEN_GererRenforcementReductionObstacle", { "onHalt" } },
+        { "BEH_Misc_Automate_GEN_GererFinRenforcementBrechageObstacle", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_GEN_CDT_RetablirItinerairesGererRenforcement" } },
 
     create = function( self )
     end,
@@ -149,8 +157,12 @@ node "BEH_Misc_Automate_GEN_GererRenforcementReductionObstacle"
 {
     activations =
     {
-        { "BEH_Misc_Automate_GEN_GererRenforcementReductionObstaclePour", {} },
+        { "BEH_Misc_Automate_GEN_GererRenforcementReductionObstaclePour", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Misc_Automate_GEN_GererRenforcementReductionObstacle" } },
 
     create = function( self )
         self._namedParams = {}
@@ -225,8 +237,12 @@ node "BEH_Misc_Automate_GEN_GererRenforcementReductionObstaclePour"
 {
     activations =
     {
-        { "BEH_Mission_Automate_GEN_RenforcerRepObjet", {} },
+        { "BEH_Mission_Automate_GEN_RenforcerRepObjet", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Misc_Automate_GEN_GererRenforcementReductionObstaclePour" } },
 
     create = function( self )
         self._namedParams = {}

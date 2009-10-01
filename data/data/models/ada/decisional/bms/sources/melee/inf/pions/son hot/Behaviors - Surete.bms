@@ -41,10 +41,14 @@ include "bit.lua"
 
     activations =
     {
-        { "BEH_Dep_Pion_HOT_AppuyerFreinage", {} },
-        { "BEH_Dep_Pion_INF_Appuyer", {} },
-        { "BEH_Eni_Pion_HOT_Appuyer", {} },
+        { "BEH_Dep_Pion_HOT_AppuyerFreinage", { "onHalt" } },
+        { "BEH_Dep_Pion_INF_Appuyer", { "onHalt" } },
+        { "BEH_Eni_Pion_HOT_Appuyer", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Manoeuvre_Pion_HOT_Appuyer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -88,10 +92,14 @@ node "BEH_Eni_Pion_HOT_Appuyer"
 {
     activations =
     {
-        { "BEH_Feu_Pion_INF_ConduireLesFeux_Sur", {} },
-        { "ACT_Misc_UnitesEnAppui_EnPosition", {} },
-        { "ACT_Dep_SePosterFaceA", {} },
+        { "BEH_Feu_Pion_INF_ConduireLesFeux_Sur", { "onHalt" } },
+        { "ACT_Misc_UnitesEnAppui_EnPosition", { "onHalt" } },
+        { "ACT_Dep_SePosterFaceA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_HOT_Appuyer" } },
 
     create = function( self )
     end,
@@ -150,14 +158,18 @@ node "BEH_Dep_Pion_HOT_AppuyerFreinage"
 {
     activations =
     {
-        { "ACT_Misc_Pion_Ambiance", {} },
-        { "ACT_Dep_ModulationVitesse", {} },
-        { "ACT_Dep_PasserEnModeFurtif", {} },
-        { "ACT_RC", {} },
-        { "BEH_Dep_Pion_INF_RejoindrePositionAppui", {} },
-        { "ACT_Obs_EtablirVisionFaceADir", {} },
-        { "ACT_Misc_UnitesEnAppui_EnPosition", {} },
+        { "ACT_Misc_Pion_Ambiance", { "onHalt" } },
+        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
+        { "ACT_Dep_PasserEnModeFurtif", { "onHalt" } },
+        { "ACT_RC", { "onHalt" } },
+        { "BEH_Dep_Pion_INF_RejoindrePositionAppui", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionFaceADir", { "onHalt" } },
+        { "ACT_Misc_UnitesEnAppui_EnPosition", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_HOT_AppuyerFreinage" } },
 
     create = function( self )
         self._namedParams = {}
@@ -166,7 +178,9 @@ node "BEH_Dep_Pion_HOT_AppuyerFreinage"
         self._namedParams.rDist_SuiviMax = self.params[3]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
                 self.eAction = self.eAction or eActionEnCours
         self.ePhase = self.ePhase or eAppuyer
         self.repCurEni = self.repCurEni or nil
@@ -196,7 +210,7 @@ node "BEH_Dep_Pion_HOT_AppuyerFreinage"
             local cases_switch_1 = {}
                 if switch_1 == eAppuyer then
                     Activate( self.activations.ACT_RC, 1, { eRC_PasseEnAppui, } )
-                    StartActivate( self.activations.BEH_Dep_Pion_INF_RejoindrePositionAppui, 1, { self._namedParams.tAmi, self.repCurEni, eProgressionDirect, } )
+                    StartInstance( self, self.activations.BEH_Dep_Pion_INF_RejoindrePositionAppui, 1, { self._namedParams.tAmi, self.repCurEni, eProgressionDirect, } )
                     
                                 cases_switch_1[1] = true
 elseif switch_1 == eSePoster then

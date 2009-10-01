@@ -28,17 +28,21 @@ include "bit.lua"
 {
     activations =
     {
-        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Maj_Pions_ObjectifEsquive", {} },
-        { "ACT_Obs_EtablirVisionCur", {} },
-        { "BEH_Obs_Pion_ALAT_ReconnaitreZone", {} },
-        { "BEH_Eni_Pion_ALAT_GererUnitesDetectes", {} },
-        { "BEH_Eni_Pion_ALAT_GererEniSurveiller", {} },
-        { "BEH_Manoeuvre_Pion_AllerStationner", {} },
-        { "BEH_Dep_Pion_ALAT_SePoser", {} },
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", { "onHalt" } },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "ACT_Maj_Pions_ObjectifEsquive", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionCur", { "onHalt" } },
+        { "BEH_Obs_Pion_ALAT_ReconnaitreZone", { "onHalt" } },
+        { "BEH_Eni_Pion_ALAT_GererUnitesDetectes", { "onHalt" } },
+        { "BEH_Eni_Pion_ALAT_GererEniSurveiller", { "onHalt" } },
+        { "BEH_Manoeuvre_Pion_AllerStationner", { "onHalt" } },
+        { "BEH_Dep_Pion_ALAT_SePoser", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_ALAT_Surveiller" } },
 
     create = function( self )
         self._namedParams = {}
@@ -70,7 +74,8 @@ include "bit.lua"
                     do
                         DEC_Warning( eRC_MissionImpossible )
                                                 self.params.__returnValue = eActionImpossible
-                        Halt( self )
+                        Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_Surveiller" } )
+Halt( self )
                         do return end
 
                     end
@@ -129,13 +134,15 @@ do
                                                         do
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self.params.__returnValue = eActionImpossible
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_Surveiller" } )
+Halt( self )
                                 do return end
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_Surveiller" } )
+Halt( self )
                             do return end
 
                         end
@@ -176,13 +183,15 @@ elseif switch_1 == eSExfiltrer then
                                                         do
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self.params.__returnValue = eActionImpossible
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_Surveiller" } )
+Halt( self )
                                 do return end
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_Surveiller" } )
+Halt( self )
                             do return end
 
                         end
@@ -202,7 +211,8 @@ elseif switch_1 == eFinMission then
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_Surveiller" } )
+Halt( self )
                                 do return end
 
                             end
@@ -233,8 +243,12 @@ node "BEH_Eni_Pion_ALAT_GererEniSurveiller"
 {
     activations =
     {
-        { "BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire", {} },
+        { "BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_ALAT_GererEniSurveiller" } },
 
     create = function( self )
         self._namedParams = {}

@@ -11,16 +11,22 @@ includedFiles["sources/appui/genie/automates/cie blindee/missions/ouvrir itinera
 {
     activations =
     {
-        { "ACT_Warning", {} },
-        { "BEH_Medo_Automate_GEN_MRT_AssignerOuvrirItineraire", {} },
+        { "ACT_Warning", { "onHalt" } },
+        { "BEH_Medo_Automate_GEN_MRT_AssignerOuvrirItineraire", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_GEN_OuvrirItineraires" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         local listeSectionGenie = S_Cherche_Automate_Filtre_TypePion( DEC_Automate_PionsSansPC(), "SectionGenie" )
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
@@ -31,7 +37,8 @@ includedFiles["sources/appui/genie/automates/cie blindee/missions/ouvrir itinera
 ]]if( ( #( listeSectionGenie ) == 0 or #( listeSectionGenie ) == nil ) ) then
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
-                                                Halt( self )
+                                                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_GEN_OuvrirItineraires" } )
+Halt( self )
                         do return end
 
                     end
@@ -40,7 +47,7 @@ includedFiles["sources/appui/genie/automates/cie blindee/missions/ouvrir itinera
                 S_Dispositif_Automate_Init()
                 DEC_SetMission( myself, self._namedParams.mission )
                 DEC_Trace( "------------------ To open paths ------------------" )
-                StartActivate( self.activations.BEH_Medo_Automate_GEN_MRT_AssignerOuvrirItineraire, 1, { listeSectionGenie, self._namedParams.mission.itineraires_, } )
+                StartInstance( self, self.activations.BEH_Medo_Automate_GEN_MRT_AssignerOuvrirItineraire, 1, { listeSectionGenie, self._namedParams.mission.itineraires_, } )
             end
         end
 
@@ -58,9 +65,13 @@ node "BEH_Medo_Automate_GEN_MRT_AssignerOuvrirItineraire"
 {
     activations =
     {
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_GEN_MRT_FaireOuvrir", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", { "onHalt" } },
+        { "BEH_Medo_Automate_GEN_MRT_FaireOuvrir", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_GEN_MRT_AssignerOuvrirItineraire" } },
 
     create = function( self )
         self._namedParams = {}
@@ -81,7 +92,8 @@ node "BEH_Medo_Automate_GEN_MRT_AssignerOuvrirItineraire"
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_GEN_MRT_AssignerOuvrirItineraire" } )
+Halt( self )
                 do return end
 
             end
@@ -92,7 +104,8 @@ node "BEH_Medo_Automate_GEN_MRT_AssignerOuvrirItineraire"
                 self.eValidationMRT = eActionEnCours
                                 do
                     DEC_MRT_Valide()
-                                        Halt( self )
+                                        Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_GEN_MRT_AssignerOuvrirItineraire" } )
+Halt( self )
                     do return end
 
                 end
@@ -116,8 +129,12 @@ node "BEH_Medo_Automate_GEN_MRT_FaireOuvrir"
 {
     activations =
     {
-        { "BEH_Mission_Automate_GEN_AssignerOuvrirItineraireA", {} },
+        { "BEH_Mission_Automate_GEN_AssignerOuvrirItineraireA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_GEN_MRT_FaireOuvrir" } },
 
     create = function( self )
         self._namedParams = {}
@@ -125,7 +142,9 @@ node "BEH_Medo_Automate_GEN_MRT_FaireOuvrir"
         self._namedParams.itineraires = self.params[2]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.listePoints = self.listePoints or {}
         self.rIterateurItineraire = self.rIterateurItineraire or 0
         --[[// Sécurité mais testé dans le comportement au dessus
@@ -152,7 +171,7 @@ node "BEH_Medo_Automate_GEN_MRT_FaireOuvrir"
                         --[[// Récuperation du secteur courant
 ]]local iti = DEC_UserTypeList_GetAt( self._namedParams.itineraires, self.rIterateurItineraire )
                         --[[// Assignation de la mission
-]]StartActivate( self.activations.BEH_Mission_Automate_GEN_AssignerOuvrirItineraireA, 1, { ePhase_MRT, pion, iti, eEtatEchelon_Premier, } )
+]]StartInstance( self, self.activations.BEH_Mission_Automate_GEN_AssignerOuvrirItineraireA, 1, { ePhase_MRT, pion, iti, eEtatEchelon_Premier, } )
                                                 self.rIterateurItineraire = self.rIterateurItineraire + 1--[[// itineraire suivant
 ]]
                     end

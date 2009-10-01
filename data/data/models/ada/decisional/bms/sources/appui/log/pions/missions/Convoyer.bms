@@ -13,13 +13,17 @@ includedFiles["sources/appui/log/pions/missions/Convoyer.bms"] = true
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_RC", {} },
-        { "BEH_Dep_LOG_Suivre", {} },
-        { "ACT_Misc_Pion_LOG_Charger", {} },
-        { "ACT_Misc_Pion_LOG_Decharger", {} },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "ACT_RC", { "onHalt" } },
+        { "BEH_Dep_LOG_Suivre", { "onHalt" } },
+        { "ACT_Misc_Pion_LOG_Charger", { "onHalt" } },
+        { "ACT_Misc_Pion_LOG_Decharger", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_LOG_Convoyer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -145,11 +149,15 @@ node "BEH_Dep_LOG_Suivre"
 {
     activations =
     {
-        { "BEH_Dep_Progresser", {} },
-        { "ACT_Dep_ModulationVitesse", {} },
-        { "ACT_Dep_SePoster", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "BEH_Dep_Progresser", { "onHalt" } },
+        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
+        { "ACT_Dep_SePoster", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_LOG_Suivre" } },
 
     create = function( self )
         self._namedParams = {}

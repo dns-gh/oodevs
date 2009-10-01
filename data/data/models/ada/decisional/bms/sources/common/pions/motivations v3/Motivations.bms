@@ -41,6 +41,8 @@ motivation_plugin.motivations[ "MOT_Mission" ] =
 
 node "ActivatedByMOT_Mission"
 {
+    feedbacks = { { { "onHalt" }, "ActivatedByMOT_Mission" } },
+
     create = function( self )
     end,
 
@@ -97,8 +99,12 @@ node "ActivatedByMOT_GarderSesDistances"
 {
     activations =
     {
-        { "BEH_MOT_GarderSesDistances", {} },
+        { "BEH_MOT_GarderSesDistances", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "ActivatedByMOT_GarderSesDistances" } },
 
     create = function( self )
     end,
@@ -163,8 +169,12 @@ node "ActivatedByMOT_GarderSesDistanceFaceATirsIndirects"
 {
     activations =
     {
-        { "BEH_MOT_GarderSesDistancesFaceATirsIndirects", {} },
+        { "BEH_MOT_GarderSesDistancesFaceATirsIndirects", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "ActivatedByMOT_GarderSesDistanceFaceATirsIndirects" } },
 
     create = function( self )
     end,
@@ -231,8 +241,12 @@ node "ActivatedByMOT_EtrePrudent"
 {
     activations =
     {
-        { "BEH_MOT_EtrePrudent", {} },
+        { "BEH_MOT_EtrePrudent", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "ActivatedByMOT_EtrePrudent" } },
 
     create = function( self )
     end,
@@ -297,8 +311,12 @@ node "ActivatedByMOT_Tenir"
 {
     activations =
     {
-        { "BEH_MOT_TenirFaceAuxEnis", {} },
+        { "BEH_MOT_TenirFaceAuxEnis", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "ActivatedByMOT_Tenir" } },
 
     create = function( self )
     end,
@@ -354,6 +372,8 @@ node "ActivatedByMOT_Tenir"
 
 node "ActivatedByMOT_ManoeuvrerSurEnis"
 {
+    feedbacks = { { { "onHalt" }, "ActivatedByMOT_ManoeuvrerSurEnis" } },
+
     create = function( self )
     end,
 
@@ -414,8 +434,12 @@ node "ActivatedByMOT_TirerSurEnis"
 {
     activations =
     {
-        { "BEH_MOT_TirerSurEnis", {} },
+        { "BEH_MOT_TirerSurEnis", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "ActivatedByMOT_TirerSurEnis" } },
 
     create = function( self )
     end,
@@ -475,8 +499,12 @@ node "ActivatedByMOT_RiposterSurEnis"
 {
     activations =
     {
-        { "BEH_MOT_RiposterSurEnis", {} },
+        { "BEH_MOT_RiposterSurEnis", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "ActivatedByMOT_RiposterSurEnis" } },
 
     create = function( self )
     end,
@@ -540,8 +568,12 @@ node "ActivatedByMOT_SePoster"
 {
     activations =
     {
-        { "BEH_MOT_SePoster", {} },
+        { "BEH_MOT_SePoster", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "ActivatedByMOT_SePoster" } },
 
     create = function( self )
     end,
@@ -602,8 +634,12 @@ node "ActivatedByMOT_Ralentir"
 {
     activations =
     {
-        { "BEH_MOT_Ralentir", {} },
+        { "BEH_MOT_Ralentir", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "ActivatedByMOT_Ralentir" } },
 
     create = function( self )
     end,
@@ -663,8 +699,12 @@ node "ActivatedByMOT_PasserEnAlerteDeNiveau4"
 {
     activations =
     {
-        { "BEH_MOT_PasserEnAlerteDeNiveau4", {} },
+        { "BEH_MOT_PasserEnAlerteDeNiveau4", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "ActivatedByMOT_PasserEnAlerteDeNiveau4" } },
 
     create = function( self )
     end,
@@ -723,8 +763,12 @@ node "ActivatedByMOT_PasserEnSilenceRadio"
 {
     activations =
     {
-        { "BEH_MOT_PasserEnSilenceRadio", {} },
+        { "BEH_MOT_PasserEnSilenceRadio", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "ActivatedByMOT_PasserEnSilenceRadio" } },
 
     create = function( self )
     end,
@@ -783,8 +827,12 @@ node "ActivatedByMOT_PasserEnSilenceRadar"
 {
     activations =
     {
-        { "BEH_MOT_SilenceRadars", {} },
+        { "BEH_MOT_SilenceRadars", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "ActivatedByMOT_PasserEnSilenceRadar" } },
 
     create = function( self )
     end,
@@ -843,8 +891,12 @@ node "ActivatedByMOT_PasserEnTirRestreint"
 {
     activations =
     {
-        { "BEH_MOT_PasserEnTirRestreint", {} },
+        { "BEH_MOT_PasserEnTirRestreint", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "ActivatedByMOT_PasserEnTirRestreint" } },
 
     create = function( self )
     end,
@@ -904,8 +956,12 @@ node "ActivatedByMOT_PasserEnTirInterdit"
 {
     activations =
     {
-        { "BEH_MOT_PasserEnTirInterdit", {} },
+        { "BEH_MOT_PasserEnTirInterdit", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "ActivatedByMOT_PasserEnTirInterdit" } },
 
     create = function( self )
     end,
@@ -964,8 +1020,12 @@ node "ActivatedByMOT_PasserEnTirLibre"
 {
     activations =
     {
-        { "BEH_MOT_PasserEnTirLibre", {} },
+        { "BEH_MOT_PasserEnTirLibre", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "ActivatedByMOT_PasserEnTirLibre" } },
 
     create = function( self )
     end,
@@ -1024,6 +1084,8 @@ node "ActivatedByMOT_PasserEnTirLibre"
 
 node "ActivatedByMOT_PreparationMission"
 {
+    feedbacks = { { { "onHalt" }, "ActivatedByMOT_PreparationMission" } },
+
     create = function( self )
     end,
 

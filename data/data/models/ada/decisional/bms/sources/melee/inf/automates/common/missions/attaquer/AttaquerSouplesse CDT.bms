@@ -26,16 +26,22 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Situation_Automate_INF_Attaquer_SurLD", {} },
+        { "BEH_Situation_Automate_INF_Attaquer_SurLD", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Situation_Automate_INF_Attaquer" } },
 
     create = function( self )
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
                 local selPions_PE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
         if( ( #( selPions_PE ) ~= 0 and #( selPions_PE ) ~= nil ) and #( selPions_PE ) == S_Conduite_Pions_EtatLima( selPions_PE, eEtatLima_LD ) ) then
-            StartActivate( self.activations.BEH_Situation_Automate_INF_Attaquer_SurLD, 1, { selPions_PE, } )
+            StartInstance( self, self.activations.BEH_Situation_Automate_INF_Attaquer_SurLD, 1, { selPions_PE, } )
         end
 
     end,
@@ -46,8 +52,12 @@ node "BEH_Situation_Automate_INF_Attaquer_SurLD"
 {
     activations =
     {
-        { "BEH_Conduite_Automate_AssignerSemparerA", {} },
+        { "BEH_Conduite_Automate_AssignerSemparerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Situation_Automate_INF_Attaquer_SurLD" } },
 
     create = function( self )
         self._namedParams = {}
@@ -69,15 +79,21 @@ node "BEH_Conduite_Automate_AssignerSemparerA"
 {
     activations =
     {
-        { "BEH_Mission_Automate_INF_AssignerA_Semparer", {} },
+        { "BEH_Mission_Automate_INF_AssignerA_Semparer", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_AssignerSemparerA" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.selPions_PE = self.params[1]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
                 self.mission = self.mission or DEC_GetMission( myself )
         self.lstObjectifs = self.lstObjectifs or DEC_Geometrie_CreerListePoints()
         if( ModuleBegins() ) then
@@ -95,7 +111,7 @@ node "BEH_Conduite_Automate_AssignerSemparerA"
                                 local ptProche = DEC_Geometrie_CreerPoint()
                                 DEC_Copie_Point( DEC_ListePoints_GetAt( self.lstObjectifs, rIdProche ), ptProche )
                                 DEC_ListePoints_Remove( self.lstObjectifs, rIdProche )
-                                StartActivate( self.activations.BEH_Mission_Automate_INF_AssignerA_Semparer, 1, { ePhase_CDT, x_pion, ptProche, } )
+                                StartInstance( self, self.activations.BEH_Mission_Automate_INF_AssignerA_Semparer, 1, { ePhase_CDT, x_pion, ptProche, } )
                             end
                         end
 

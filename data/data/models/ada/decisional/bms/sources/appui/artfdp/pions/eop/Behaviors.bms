@@ -79,18 +79,24 @@ include "Appui/ArtFdp/Pions/EOP/Missions/AcquerirObjectifs.bms"
 {
     activations =
     {
-        { "ACT_Transport_Pion_EOP_Debarquer", {} },
-        { "ACT_Transport_MaintenirEtat", {} },
+        { "ACT_Transport_Pion_EOP_Debarquer", { "onHalt" } },
+        { "ACT_Transport_MaintenirEtat", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mot_Pion_EOP_Debarquer" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.bRecupererTransporteur = self.params[1]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         if( DEC_Agent_TransporteursPret() and DEC_Agent_EstEmbarque() ) then
-            StartActivate( self.activations.ACT_Transport_Pion_EOP_Debarquer, 2.01, { self._namedParams.bRecupererTransporteur, } )
+            StartInstance( self, self.activations.ACT_Transport_Pion_EOP_Debarquer, 2.01, { self._namedParams.bRecupererTransporteur, } )
         end
 
         Activate( self.activations.ACT_Transport_MaintenirEtat, 2, { eEtatTransport_Debarque, } )
@@ -105,6 +111,8 @@ include "Appui/ArtFdp/Pions/EOP/Missions/AcquerirObjectifs.bms"
 
 node "BEH_Transport_Pion_EOP_RecupererTransporteur"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Transport_Pion_EOP_RecupererTransporteur" } },
+
     create = function( self )
     end,
 

@@ -14,20 +14,26 @@ includedFiles["sources/appui/rens/pions/radint/common/missions/SeFaireDecontamin
 {
     activations =
     {
-        { "ACT_Dep_Pion_RENS_VolerA", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "ACT_Pion_Nbc_DemanderDecontaminationSur", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "ACT_Dep_Pion_RENS_VolerA", { "onHalt" } },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "ACT_Pion_Nbc_DemanderDecontaminationSur", { "onHalt" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_SeFaireDecontaminer" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.ePhaseMission = self.ePhaseMission or eSeFaireDecontaminer
         self.eEtat = self.eEtat or eActionEnCours
         self.positionSite = self.positionSite or S_Obj_Position( self._namedParams.mission.siteDecontamination_ )
@@ -36,7 +42,7 @@ includedFiles["sources/appui/rens/pions/radint/common/missions/SeFaireDecontamin
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
                 DEC_SetMission( myself, self._namedParams.mission )
                 DEC_Trace( "** MIS_Pion_SeFaireDecontaminer **" )
-                StartActivate( self.activations.ACT_Dep_Pion_RENS_VolerA, 1, { 30, } )
+                StartInstance( self, self.activations.ACT_Dep_Pion_RENS_VolerA, 1, { 30, } )
             end
         end
 
@@ -102,7 +108,7 @@ elseif switch_1 == eFinDecontamination then
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    StopActivate( self.activations.ACT_Dep_Pion_RENS_VolerA, { 30, } )
+                    StopInstance( self, self.activations.ACT_Dep_Pion_RENS_VolerA, { 30, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
                                 cases_switch_1[3] = true
                 end

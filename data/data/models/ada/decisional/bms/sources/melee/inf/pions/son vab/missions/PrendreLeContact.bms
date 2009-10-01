@@ -20,22 +20,28 @@ node "MIS_Pion_INF_PrendrePreciserContact"
 {
     activations =
     {
-        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", {} },
-        { "BEH_Misc_Pion_DefinirTypeMission", {} },
-        { "BEH_MAJ_AgressiviteMission", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "BEH_Mot_Pion_Embarquer", {} },
-        { "BEH_Mission_Pion_VAB_PrendrePreciserContact", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Poste_Pion_INF_TomberEnGarde", {} },
+        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", { "onHalt" } },
+        { "BEH_Misc_Pion_DefinirTypeMission", { "onHalt" } },
+        { "BEH_MAJ_AgressiviteMission", { "onHalt" } },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "BEH_Mot_Pion_Embarquer", { "onHalt" } },
+        { "BEH_Mission_Pion_VAB_PrendrePreciserContact", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Poste_Pion_INF_TomberEnGarde", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_INF_PrendrePreciserContact" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.eAction = self.eAction or eActionEnCours
         self.ePhase = self.ePhase or ePrendreContact
         self.eCurrentPhase = self.eCurrentPhase or eDetruire
@@ -56,13 +62,14 @@ node "MIS_Pion_INF_PrendrePreciserContact"
                         DEC_Trace( "N'arrive pas a prendre connaissance de l'unite" )
                         DEC_Warning( eRC_MissionImpossible )
                                                 self.params.__returnValue = eActionImpossible
-                        Halt( self )
+                        Feedback( self.feedbacks["onHalt"], { "MIS_Pion_INF_PrendrePreciserContact" } )
+Halt( self )
                         do return end
 
                     end
                 end
 
-                StartActivate( self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
+                StartInstance( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
             end
         end
 
@@ -85,7 +92,8 @@ node "MIS_Pion_INF_PrendrePreciserContact"
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_INF_PrendrePreciserContact" } )
+Halt( self )
                 do return end
 
             end
@@ -117,7 +125,8 @@ elseif switch_1 == eFinMission then
                                 DEC_Trace( "Fin mission de mission 'Prendre Preciser Contact'" )
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_INF_PrendrePreciserContact" } )
+Halt( self )
                                 do return end
 
                             end
@@ -142,10 +151,14 @@ node "BEH_Mission_Pion_VAB_PrendrePreciserContact"
 {
     activations =
     {
-        { "BEH_Dep_Pion_INF_GererDispositif_Offensif", {} },
-        { "ACT_Misc_Pion_Ambiance", {} },
-        { "BEH_Eni_Pion_VAB_ManoeuvreDetruire", {} },
+        { "BEH_Dep_Pion_INF_GererDispositif_Offensif", { "onHalt" } },
+        { "ACT_Misc_Pion_Ambiance", { "onHalt" } },
+        { "BEH_Eni_Pion_VAB_ManoeuvreDetruire", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_VAB_PrendrePreciserContact" } },
 
     create = function( self )
     end,
@@ -164,7 +177,8 @@ node "BEH_Mission_Pion_VAB_PrendrePreciserContact"
                 end
 
                                 self.params.__returnValue = eFinMission
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_VAB_PrendrePreciserContact" } )
+Halt( self )
                 do return end
 
             end

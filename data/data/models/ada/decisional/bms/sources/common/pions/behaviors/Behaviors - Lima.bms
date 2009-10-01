@@ -13,20 +13,26 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Lima.bms"] = true
 {
     activations =
     {
-        { "BEH_Lima_Pion_SePosterSurLC", {} },
-        { "BEH_Lima_Pion_Gen_SePosterSurLCA", {} },
-        { "BEH_Lima_Pion_NBC_SePosterSurLCA", {} },
-        { "BEH_Lima_Pion_ABC_SePosterSurLCA", {} },
-        { "BEH_Lima_Pion_INF_SurLCA", {} },
-        { "BEH_Lima_Pion_ABC_PasserSurLD", {} },
-        { "BEH_Lima_Pion_INF_SurLD", {} },
-        { "ACT_Limas_Suppression", {} },
+        { "BEH_Lima_Pion_SePosterSurLC", { "onHalt" } },
+        { "BEH_Lima_Pion_Gen_SePosterSurLCA", { "onHalt" } },
+        { "BEH_Lima_Pion_NBC_SePosterSurLCA", { "onHalt" } },
+        { "BEH_Lima_Pion_ABC_SePosterSurLCA", { "onHalt" } },
+        { "BEH_Lima_Pion_INF_SurLCA", { "onHalt" } },
+        { "BEH_Lima_Pion_ABC_PasserSurLD", { "onHalt" } },
+        { "BEH_Lima_Pion_INF_SurLD", { "onHalt" } },
+        { "ACT_Limas_Suppression", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Lima_GererLimas" } },
 
     create = function( self )
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Traiter les points interressants
 ]]--[[//-----------------------------------------------------------------------------
@@ -48,7 +54,7 @@ do
 ]]--[[//-------------------------------------------------------------
 ]]local lima = DEC_GetLimaPoint( pointLima )
                                     if( not DEC_GetMissionLimaFlag( lima ) ) then
-                                        StartActivate( self.activations.BEH_Lima_Pion_SePosterSurLC, 1, { lima, } )
+                                        StartInstance( self, self.activations.BEH_Lima_Pion_SePosterSurLC, 1, { lima, } )
                                     end
 
                                     
@@ -94,7 +100,7 @@ if( appuiGeniePions() ) then
                                                             if( F_Pion_GeteEtatAmbiance( myself ) == eEtatAmbiance_Vitesse ) then
                                                                 do
                                                                     F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Surete )
-                                                                    StartActivate( self.activations.BEH_Lima_Pion_Gen_SePosterSurLCA, 1, {} )
+                                                                    StartInstance( self, self.activations.BEH_Lima_Pion_Gen_SePosterSurLCA, 1, {} )
                                                                 end
                                                             end
 
@@ -105,7 +111,7 @@ if( appuiNbcPionsCommon() ) then
                                                                 if( F_Pion_GeteEtatAmbiance( myself ) == eEtatAmbiance_Vitesse ) then
                                                                     do
                                                                         F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Surete )
-                                                                        StartActivate( self.activations.BEH_Lima_Pion_NBC_SePosterSurLCA, 1, {} )
+                                                                        StartInstance( self, self.activations.BEH_Lima_Pion_NBC_SePosterSurLCA, 1, {} )
                                                                     end
                                                                 else
                                                                     SetStateVariable( "VE_NiveauNBC", 4 )
@@ -118,7 +124,7 @@ if( meleeAbcPionsCommon() ) then
                                                                     if( F_Pion_GeteEtatAmbiance( myself ) == eEtatAmbiance_Vitesse ) then
                                                                         do
                                                                             F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Surete )
-                                                                            StartActivate( self.activations.BEH_Lima_Pion_ABC_SePosterSurLCA, 1, {} )
+                                                                            StartInstance( self, self.activations.BEH_Lima_Pion_ABC_SePosterSurLCA, 1, {} )
                                                                         end
                                                                     end
 
@@ -126,7 +132,7 @@ if( meleeAbcPionsCommon() ) then
                                                             else
 if( meleeInfPionsCommon() ) then
                                                                     do
-                                                                        StartActivate( self.activations.BEH_Lima_Pion_INF_SurLCA, 1, {} )
+                                                                        StartInstance( self, self.activations.BEH_Lima_Pion_INF_SurLCA, 1, {} )
                                                                     end
                                                                 end
                                                             end
@@ -149,10 +155,10 @@ elseif switch_1 == eTypeLima_LD then
                                     if( not DEC_GetMissionLimaFlag( lima ) ) then
                                         do
                                             if( meleeAbcPionsCommon() ) then
-                                                StartActivate( self.activations.BEH_Lima_Pion_ABC_PasserSurLD, 1, {} )
+                                                StartInstance( self, self.activations.BEH_Lima_Pion_ABC_PasserSurLD, 1, {} )
                                             else
 if( meleeInfPionsCommon() ) then
-                                                    StartActivate( self.activations.BEH_Lima_Pion_INF_SurLD, 1, { lima, } )
+                                                    StartInstance( self, self.activations.BEH_Lima_Pion_INF_SurLD, 1, { lima, } )
                                                 end
                                             end
 
@@ -192,10 +198,14 @@ node "BEH_Lima_GererLCAR"
 {
     activations =
     {
-        { "BEH_Lima_Pion_ABC_SePosterSurLCAR", {} },
-        { "BEH_Lima_Pion_INF_SurLCAR", {} },
-        { "ACT_Limas_Suppression", {} },
+        { "BEH_Lima_Pion_ABC_SePosterSurLCAR", { "onHalt" } },
+        { "BEH_Lima_Pion_INF_SurLCAR", { "onHalt" } },
+        { "ACT_Limas_Suppression", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Lima_GererLCAR" } },
 
     create = function( self )
         self._namedParams = {}
@@ -203,7 +213,9 @@ node "BEH_Lima_GererLCAR"
         self._namedParams.bPosteInitiale = self.params[2]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------
@@ -237,7 +249,7 @@ if( meleeAbcPionsCommon() ) then
                                                             do
                                                                 if( self.bPosteActif ) then
                                                                     do
-                                                                        StartActivate( self.activations.BEH_Lima_Pion_ABC_SePosterSurLCAR, 1, {} )
+                                                                        StartInstance( self, self.activations.BEH_Lima_Pion_ABC_SePosterSurLCAR, 1, {} )
                                                                         self.bPosteActif = false
                                                                     end
                                                                 else
@@ -247,7 +259,7 @@ if( meleeAbcPionsCommon() ) then
                                                             end
                                                         else
 if( F_POLY_LIMA_PION_SUR_LCAR() ) then
-                                                                StartActivate( self.activations.BEH_Lima_Pion_INF_SurLCAR, 1, {} )
+                                                                StartInstance( self, self.activations.BEH_Lima_Pion_INF_SurLCAR, 1, {} )
                                                             end
                                                         end
                                                     end
@@ -291,10 +303,14 @@ node "BEH_Lima_GererLR"
 {
     activations =
     {
-        { "ACT_Dep_PasserSurLima", {} },
-        { "BEH_Lima_Pion_INF_SurLR", {} },
-        { "ACT_Limas_Suppression", {} },
+        { "ACT_Dep_PasserSurLima", { "onHalt" } },
+        { "BEH_Lima_Pion_INF_SurLR", { "onHalt" } },
+        { "ACT_Limas_Suppression", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Lima_GererLR" } },
 
     create = function( self )
     end,
@@ -366,9 +382,13 @@ node "BEH_Lima_GererLIA"
 {
     activations =
     {
-        { "ACT_Dep_PasserSurLima", {} },
-        { "ACT_Limas_Suppression", {} },
+        { "ACT_Dep_PasserSurLima", { "onHalt" } },
+        { "ACT_Limas_Suppression", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Lima_GererLIA" } },
 
     create = function( self )
     end,
@@ -421,9 +441,13 @@ node "BEH_Lima_Pion_SePosterSurLC"
 {
     activations =
     {
-        { "BEH_Ordre_SePoster_EnAttente", {} },
-        { "ACT_Dep_PasserSurLima", {} },
+        { "BEH_Ordre_SePoster_EnAttente", { "onHalt" } },
+        { "ACT_Dep_PasserSurLima", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Lima_Pion_SePosterSurLC" } },
 
     create = function( self )
         self._namedParams = {}
@@ -438,7 +462,8 @@ node "BEH_Lima_Pion_SePosterSurLC"
 ]]DEC_SetMissionLimaFlag( self._namedParams.limaLC, true )
                 DEC_SetMissionLimaFlagHoraire( self._namedParams.limaLC, true )
                                 self.params.__returnValue = eActionEffectuee
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "BEH_Lima_Pion_SePosterSurLC" } )
+Halt( self )
                 do return end
 
             end

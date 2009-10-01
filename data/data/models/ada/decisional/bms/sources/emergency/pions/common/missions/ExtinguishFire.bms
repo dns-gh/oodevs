@@ -17,12 +17,16 @@ includedFiles["sources/emergency/pions/common/missions/ExtinguishFire.bms"] = tr
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "ACT_RC", {} },
-        { "BEH_Pion_Emergency_ExtinguishFire", {} },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "ACT_RC", { "onHalt" } },
+        { "BEH_Pion_Emergency_ExtinguishFire", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_Emergency_ExtinguishFire" } },
 
     create = function( self )
         self._namedParams = {}
@@ -77,7 +81,8 @@ elseif switch_1 == eFinMission then
                         do
                             DEC_FinMission()
                                                         self.params.__returnValue = eActionEffectuee
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_Emergency_ExtinguishFire" } )
+Halt( self )
                             do return end
 
                         end
@@ -94,6 +99,8 @@ elseif switch_1 == eFinMission then
 
 node "BEH_Pion_Emergency_ExtinguishFire"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Pion_Emergency_ExtinguishFire" } },
+
     create = function( self )
     end,
 

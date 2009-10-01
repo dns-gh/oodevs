@@ -22,15 +22,19 @@ includedFiles["sources/melee/abc/automates/common/missions/appuyer/Appuyer - CDT
 {
     activations =
     {
-        { "BEH_CoordDep_Automate_ABC_AssurerLaCoordinationInterne_", {} },
-        { "BEH_Dispositif_Automate_ABC_GererLesAppuis_", {} },
-        { "BEH_Dispositif_Automate_ABC_GererLeDispositif_", {} },
-        { "BEH_RC_Automate_GererConditionOperationnelle", {} },
-        { "ACT_Info_Automate_Trace", {} },
-        { "ACT_RC_Automate", {} },
-        { "BEH_CoordDep_Automate_ABC_SeCoordonnerAvecAmi_", {} },
-        { "BEH_Ordre_Automate_Attendre_", {} },
+        { "BEH_CoordDep_Automate_ABC_AssurerLaCoordinationInterne_", { "onHalt" } },
+        { "BEH_Dispositif_Automate_ABC_GererLesAppuis_", { "onHalt" } },
+        { "BEH_Dispositif_Automate_ABC_GererLeDispositif_", { "onHalt" } },
+        { "BEH_RC_Automate_GererConditionOperationnelle", { "onHalt" } },
+        { "ACT_Info_Automate_Trace", { "onHalt" } },
+        { "ACT_RC_Automate", { "onHalt" } },
+        { "BEH_CoordDep_Automate_ABC_SeCoordonnerAvecAmi_", { "onHalt" } },
+        { "BEH_Ordre_Automate_Attendre_", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_ABC_Appuyer" } },
 
     create = function( self )
         self._namedParams = {}

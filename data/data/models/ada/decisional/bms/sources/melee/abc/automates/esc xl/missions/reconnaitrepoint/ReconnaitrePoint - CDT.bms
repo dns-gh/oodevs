@@ -24,8 +24,12 @@ includedFiles["sources/melee/abc/automates/esc xl/missions/reconnaitrepoint/Reco
 {
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_ReconnaitrePointSurete", {} },
+        { "BEH_Conduite_Automate_ABC_ReconnaitrePointSurete", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_ReconnaitrePoint" } },
 
     create = function( self )
         self._namedParams = {}

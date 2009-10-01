@@ -12,6 +12,8 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - RENS.bms"]
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_RENS_ROHUM_AssignerRenseignerA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_RENS_ROHUM_AssignerRenseignerA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -91,6 +93,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_RENS_ROHUM_AssignerSExfiltrerA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_RENS_ROHUM_AssignerSExfiltrerA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -176,6 +180,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_RENS_ROIM_CL289_AssignerRenseignerSur"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_RENS_ROIM_CL289_AssignerRenseignerSur" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -258,6 +264,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_RENS_ROIM_SDTI_AssignerRenseignerSur"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_RENS_ROIM_SDTI_AssignerRenseignerSur" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -337,6 +345,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_RENS_ROIM_AssignerMettreEnOeuvreA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_RENS_ROIM_AssignerMettreEnOeuvreA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -419,6 +429,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_RENS_ROEM_AssignerAppuyerA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_RENS_ROEM_AssignerAppuyerA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -501,6 +513,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_RENS_ROEM_AssignerRenseignerA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_RENS_ROEM_AssignerRenseignerA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -580,6 +594,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_RENS_ROEM_AssignerMettreEnOeuvreA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_RENS_ROEM_AssignerMettreEnOeuvreA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -662,6 +678,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_RENS_RADINT_AssignerRenseignerA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_RENS_RADINT_AssignerRenseignerA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -741,6 +759,8 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_RENS_RADINT_AssignerMettreEnOeuvreA"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_RENS_RADINT_AssignerMettreEnOeuvreA" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]

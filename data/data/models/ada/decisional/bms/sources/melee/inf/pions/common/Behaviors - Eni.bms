@@ -24,10 +24,14 @@ include "bit.lua"
 {
     activations =
     {
-        { "ACT_MAJ_EnnemiEnCours", {} },
-        { "BEH_Feu_Pion_INF_TirFixer", {} },
-        { "BEH_Feu_Pion_INF_ConduireLesFeux_Sur", {} },
+        { "ACT_MAJ_EnnemiEnCours", { "onHalt" } },
+        { "BEH_Feu_Pion_INF_TirFixer", { "onHalt" } },
+        { "BEH_Feu_Pion_INF_ConduireLesFeux_Sur", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_INF_DetruitEtFixe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -47,7 +51,8 @@ include "bit.lua"
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "BEH_Eni_Pion_INF_DetruitEtFixe" } )
+Halt( self )
                 do return end
 
             end
@@ -55,7 +60,8 @@ include "bit.lua"
 
         if( self.eAction == eActionEffectuee or DEC_ConnaissanceAgent_EstDetruitTactique( self._namedParams.repEni ) ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Eni_Pion_INF_DetruitEtFixe" } )
+Halt( self )
             do return end
         end
 

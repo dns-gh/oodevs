@@ -22,9 +22,13 @@ includedFiles["sources/melee/abc/automates/common/missions/controlerzone/Control
 {
     activations =
     {
-        { "ACT_Warning", {} },
-        { "BEH_Mission_Automate_ABC_AssignerControlerA", {} },
+        { "ACT_Warning", { "onHalt" } },
+        { "BEH_Mission_Automate_ABC_AssignerControlerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ABC_AssignerControlerZoneA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -33,7 +37,9 @@ includedFiles["sources/melee/abc/automates/common/missions/controlerzone/Control
         self._namedParams.eEtatEchelon = self.params[3]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.listeSousSecteurs = self.listeSousSecteurs or {}
         self.rIterateurSecteur = self.rIterateurSecteur or 0
         if( ( #( self._namedParams.selPions ) == 0 or #( self._namedParams.selPions ) == nil ) ) then
@@ -70,7 +76,7 @@ do
                         end
 
                         local secteur = DEC_UserTypeList_GetAt( self.listeSousSecteurs, self.rIterateurSecteur )
-                        StartActivate( self.activations.BEH_Mission_Automate_ABC_AssignerControlerA, 1, { ePhase_MRT, pion, secteur, self._namedParams.eEtatEchelon, } )
+                        StartInstance( self, self.activations.BEH_Mission_Automate_ABC_AssignerControlerA, 1, { ePhase_MRT, pion, secteur, self._namedParams.eEtatEchelon, } )
                                                 self.rIterateurSecteur = self.rIterateurSecteur + 1
                     end
 

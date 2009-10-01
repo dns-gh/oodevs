@@ -10,6 +10,8 @@ includedFiles["sources/appui/log/pions/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Misc_Pion_LOG_ActiverSante"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Misc_Pion_LOG_ActiverSante" } },
+
     create = function( self )
     end,
 
@@ -40,6 +42,8 @@ includedFiles["sources/appui/log/pions/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Misc_Pion_LOG_ActiverMaintenance"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Misc_Pion_LOG_ActiverMaintenance" } },
+
     create = function( self )
     end,
 
@@ -70,6 +74,8 @@ includedFiles["sources/appui/log/pions/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Misc_Pion_LOG_ActiverRavitaillement"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Misc_Pion_LOG_ActiverRavitaillement" } },
+
     create = function( self )
     end,
 
@@ -100,6 +106,8 @@ includedFiles["sources/appui/log/pions/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Misc_Pion_LOG_Charger"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Misc_Pion_LOG_Charger" } },
+
     create = function( self )
     end,
 
@@ -152,6 +160,8 @@ includedFiles["sources/appui/log/pions/Actions.bms"] = true
         deplacement = 1,
     },
 
+    feedbacks = { { { "onHalt" }, "ACT_Misc_Pion_LOG_Decharger" } },
+
     create = function( self )
     end,
 
@@ -196,6 +206,8 @@ includedFiles["sources/appui/log/pions/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Misc_Pion_LOG_PreterVSRAM"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Misc_Pion_LOG_PreterVSRAM" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionA = self.params[1]
@@ -207,7 +219,8 @@ includedFiles["sources/appui/log/pions/Actions.bms"] = true
         self.bFinManoeuvre = self.bFinManoeuvre or false
         if( self.bFinManoeuvre ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "ACT_Misc_Pion_LOG_PreterVSRAM" } )
+Halt( self )
             do return end
         end
 
@@ -240,6 +253,8 @@ includedFiles["sources/appui/log/pions/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Misc_Pion_LOG_RecupererVSRAM"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Misc_Pion_LOG_RecupererVSRAM" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionDe = self.params[1]
@@ -249,7 +264,8 @@ includedFiles["sources/appui/log/pions/Actions.bms"] = true
     select = function( self )
         DEC_RecupererVSRAM( self._namedParams.pionDe, self._namedParams.fAmb )
                 self.params.__returnValue = eActionEffectuee
-        Halt( self )
+        Feedback( self.feedbacks["onHalt"], { "ACT_Misc_Pion_LOG_RecupererVSRAM" } )
+Halt( self )
         do return end
 
     end,
@@ -264,6 +280,8 @@ includedFiles["sources/appui/log/pions/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Misc_Pion_LOG_PreterRemorqueurs"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Misc_Pion_LOG_PreterRemorqueurs" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionA = self.params[1]
@@ -275,7 +293,8 @@ includedFiles["sources/appui/log/pions/Actions.bms"] = true
         self.bFinManoeuvre = self.bFinManoeuvre or false
         if( self.bFinManoeuvre ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "ACT_Misc_Pion_LOG_PreterRemorqueurs" } )
+Halt( self )
             do return end
         end
 
@@ -308,6 +327,8 @@ includedFiles["sources/appui/log/pions/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Misc_Pion_LOG_RecupererRemorqueurs"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Misc_Pion_LOG_RecupererRemorqueurs" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionDe = self.params[1]
@@ -317,7 +338,8 @@ includedFiles["sources/appui/log/pions/Actions.bms"] = true
     select = function( self )
         DEC_RecupererRemorqueurs( self._namedParams.pionDe, self._namedParams.fAmb )
                 self.params.__returnValue = eActionEffectuee
-        Halt( self )
+        Feedback( self.feedbacks["onHalt"], { "ACT_Misc_Pion_LOG_RecupererRemorqueurs" } )
+Halt( self )
         do return end
 
     end,

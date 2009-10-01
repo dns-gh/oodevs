@@ -14,10 +14,14 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
-        { "ACT_Warning", {} },
-        { "BEH_Conduite_Automate_GEN_RecoZoneDeploiement_GererSE_", {} },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "onHalt" } },
+        { "ACT_Warning", { "onHalt" } },
+        { "BEH_Conduite_Automate_GEN_RecoZoneDeploiement_GererSE_", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_GEN_ReconnaitreZone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -68,8 +72,12 @@ node "BEH_Conduite_Automate_GEN_RecoZoneDeploiement_GererSE_"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSuivreA", {} },
+        { "BEH_Mission_Automate_AssignerSuivreA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_GEN_RecoZoneDeploiement_GererSE_" } },
 
     create = function( self )
     end,

@@ -18,8 +18,12 @@ includedFiles["sources/appui/rens/pions/common/Behaviors.bms"] = true
 {
     activations =
     {
-        { "ACT_Dep_Pion_Rens_ActiverFurtivite", {} },
+        { "ACT_Dep_Pion_Rens_ActiverFurtivite", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_MOT_Rens_ActiverFurtivite" } },
 
     create = function( self )
     end,
@@ -41,8 +45,12 @@ node "BEH_Dep_Pion_GererFurtivite"
 {
     activations =
     {
-        { "BEH_MAJ_Pion_Rens_Furtivite", {} },
+        { "BEH_MAJ_Pion_Rens_Furtivite", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_GererFurtivite" } },
 
     create = function( self )
     end,
@@ -64,6 +72,8 @@ node "BEH_Dep_Pion_GererFurtivite"
 
 node "BEH_MAJ_Pion_Rens_Furtivite"
 {
+    feedbacks = { { { "onHalt" }, "BEH_MAJ_Pion_Rens_Furtivite" } },
+
     create = function( self )
     end,
 
@@ -93,8 +103,12 @@ node "BEH_Rens_EnSurveillanceDe"
 {
     activations =
     {
-        { "ACT_Obs_SurveillerZone", {} },
+        { "ACT_Obs_SurveillerZone", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Rens_EnSurveillanceDe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -120,8 +134,12 @@ node "BEH_Rens_EnSurveillanceRadarDe"
 {
     activations =
     {
-        { "ACT_Obs_Pion_RENS_ActiverRadarDans", {} },
+        { "ACT_Obs_Pion_RENS_ActiverRadarDans", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Rens_EnSurveillanceRadarDe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -147,8 +165,12 @@ node "BEH_Rens_EnEcouteSur"
 {
     activations =
     {
-        { "ACT_Obs_Pion_RENS_ActiverEcouteDans", {} },
+        { "ACT_Obs_Pion_RENS_ActiverEcouteDans", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Rens_EnEcouteSur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -174,8 +196,12 @@ node "BEH_Rens_EnEcouteRadarSur"
 {
     activations =
     {
-        { "ACT_Obs_Pion_RENS_ActiverEcouteRadarDans", {} },
+        { "ACT_Obs_Pion_RENS_ActiverEcouteRadarDans", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Rens_EnEcouteRadarSur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -201,8 +227,12 @@ node "BEH_Rens_ActiverBrouillage"
 {
     activations =
     {
-        { "ACT_Obs_Pion_RENS_ActiverBrouillage", {} },
+        { "ACT_Obs_Pion_RENS_ActiverBrouillage", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Rens_ActiverBrouillage" } },
 
     create = function( self )
         self._namedParams = {}
@@ -227,8 +257,12 @@ node "BEH_Dep_Virtuel_ProgressionVers"
 {
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Virtuel_ProgressionVers" } },
 
     create = function( self )
         self._namedParams = {}
@@ -249,6 +283,8 @@ node "BEH_Dep_Virtuel_ProgressionVers"
 
 node "BEH_Dep_Virtuel_PreparationAction"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Virtuel_PreparationAction" } },
+
     create = function( self )
     end,
 

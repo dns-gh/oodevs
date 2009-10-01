@@ -21,8 +21,12 @@ includedFiles["sources/common/automates/missions/sefairetransporter/MRT - SeFair
 {
     activations =
     {
-        { "BEH_Medo_Automate_PreparerMission_SeFaireTransporter", {} },
+        { "BEH_Medo_Automate_PreparerMission_SeFaireTransporter", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_SeFaireTransporter" } },
 
     create = function( self )
         self._namedParams = {}
@@ -48,7 +52,8 @@ includedFiles["sources/common/automates/missions/sefairetransporter/MRT - SeFair
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_SeFaireTransporter" } )
+Halt( self )
                 do return end
 
             end
@@ -60,7 +65,8 @@ includedFiles["sources/common/automates/missions/sefairetransporter/MRT - SeFair
                                 do
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_SeFaireTransporter" } )
+Halt( self )
                     do return end
 
                 end
@@ -83,9 +89,13 @@ node "BEH_Medo_Automate_PreparerMission_SeFaireTransporter"
 {
     activations =
     {
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_FaireTransporter_DansZone", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", { "onHalt" } },
+        { "BEH_Medo_Automate_FaireTransporter_DansZone", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_PreparerMission_SeFaireTransporter" } },
 
     create = function( self )
         self._namedParams = {}
@@ -110,7 +120,8 @@ node "BEH_Medo_Automate_PreparerMission_SeFaireTransporter"
 ]]if( ( #( self.selPions ) == 0 or #( self.selPions ) == nil ) ) then
                         do
                                                         self.params.__returnValue = eActionImpossible
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_PreparerMission_SeFaireTransporter" } )
+Halt( self )
                             do return end
 
                         end
@@ -129,7 +140,8 @@ elseif switch_1 == eMRT_AssignerMissions then
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_PreparerMission_SeFaireTransporter" } )
+Halt( self )
                             do return end
 
                         end
@@ -140,7 +152,8 @@ elseif switch_1 == eMRT_AssignerMissions then
                             self.eValidationMRT = eActionEnCours
                                                         do
                                                                 self.params.__returnValue = eActionEffectuee
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_PreparerMission_SeFaireTransporter" } )
+Halt( self )
                                 do return end
 
                             end
@@ -170,8 +183,12 @@ node "BEH_Medo_Automate_FaireTransporter_DansZone"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSeFaireTransporterA_DansZone", {} },
+        { "BEH_Mission_Automate_AssignerSeFaireTransporterA_DansZone", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_FaireTransporter_DansZone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -201,8 +218,12 @@ node "BEH_Mission_Automate_AssignerSeFaireTransporterA_DansZone"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSeFaireTransporterA", {} },
+        { "BEH_Mission_Automate_AssignerSeFaireTransporterA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_AssignerSeFaireTransporterA_DansZone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -210,10 +231,12 @@ node "BEH_Mission_Automate_AssignerSeFaireTransporterA_DansZone"
         self._namedParams.ptZone = self.params[2]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.ptTransport = self.ptTransport or DEC_Geometrie_PositionAleatoireDansCercle( self._namedParams.ptZone, 100 )
         if( ModuleBegins() ) then
-            StartActivate( self.activations.BEH_Mission_Automate_AssignerSeFaireTransporterA, 1, { ePhase_MRT, self._namedParams.pion, self.ptTransport, } )
+            StartInstance( self, self.activations.BEH_Mission_Automate_AssignerSeFaireTransporterA, 1, { ePhase_MRT, self._namedParams.pion, self.ptTransport, } )
         end
 
     end,

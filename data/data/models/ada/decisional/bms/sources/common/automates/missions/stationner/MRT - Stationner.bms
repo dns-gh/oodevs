@@ -20,9 +20,13 @@ includedFiles["sources/common/automates/missions/stationner/MRT - Stationner.bms
 {
     activations =
     {
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_AssignerStationnerA", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", { "onHalt" } },
+        { "BEH_Medo_Automate_AssignerStationnerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_Stationner" } },
 
     create = function( self )
         self._namedParams = {}
@@ -52,7 +56,8 @@ includedFiles["sources/common/automates/missions/stationner/MRT - Stationner.bms
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_Stationner" } )
+Halt( self )
                 do return end
 
             end
@@ -64,7 +69,8 @@ includedFiles["sources/common/automates/missions/stationner/MRT - Stationner.bms
                                 do
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_Stationner" } )
+Halt( self )
                     do return end
 
                 end
@@ -88,15 +94,21 @@ node "BEH_Medo_Automate_AssignerStationnerA"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerStationnerA", {} },
+        { "BEH_Mission_Automate_AssignerStationnerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_AssignerStationnerA" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.listePions = self.params[1]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.mission = self.mission or DEC_GetMission( myself )
         self.positionSite = self.positionSite or S_Geometrie_BarycentreZone( self.mission.zoneAttente_ )
         assert( ( self.positionSite ~= 0 and self.positionSite ~= nil ), "BEH_Medo_Automate_AssignerStationnerA zone arrivée invalide" )
@@ -111,7 +123,7 @@ node "BEH_Medo_Automate_AssignerStationnerA"
                 local _continue = true
                     do
                         local position = DEC_Geometrie_PositionAleatoireDansCercle( self.positionSite, 300 )
-                        StartActivate( self.activations.BEH_Mission_Automate_AssignerStationnerA, 1, { ePhase_MRT, pion, position, } )
+                        StartInstance( self, self.activations.BEH_Mission_Automate_AssignerStationnerA, 1, { ePhase_MRT, pion, position, } )
                     end
 
                 end

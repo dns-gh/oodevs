@@ -70,8 +70,12 @@ etat_ROE = 1,
 {
     activations =
     {
-        { "BEH_Mot_Pion_Embarquer", {} },
+        { "BEH_Mot_Pion_Embarquer", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Misc_Pion_INF_Default" } },
 
     create = function( self )
     end,
@@ -86,8 +90,12 @@ node "BEH_Tir_Pion_INF_TirDebarque"
 {
     activations =
     {
-        { "ACT_Tir_DirectSur", {} },
+        { "ACT_Tir_DirectSur", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Tir_Pion_INF_TirDebarque" } },
 
     create = function( self )
         self._namedParams = {}
@@ -109,8 +117,12 @@ node "BEH_Eni_Pion_INF_GererContactEni"
 {
     activations =
     {
-        { "BEH_Eni_Pion_INF_DetruitEtFixe", {} },
+        { "BEH_Eni_Pion_INF_DetruitEtFixe", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_INF_GererContactEni" } },
 
     create = function( self )
         self._namedParams = {}

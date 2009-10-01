@@ -11,8 +11,12 @@ includedFiles["sources/appui/nbc/pions/pat dec/missions/DecontaminerZone.bms"] =
 {
     activations =
     {
-        { "BEH_Mission_Pion_NBC_DecontaminerZone", {} },
+        { "BEH_Mission_Pion_NBC_DecontaminerZone", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_NBC_DecontaminerZone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -26,13 +30,15 @@ includedFiles["sources/appui/nbc/pions/pat dec/missions/DecontaminerZone.bms"] =
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible ) then
             self.params.__returnValue = eActionImpossible
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_NBC_DecontaminerZone" } )
+Halt( self )
             do return end
         end
 
         if( self.eEtat == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_NBC_DecontaminerZone" } )
+Halt( self )
             do return end
         end
 

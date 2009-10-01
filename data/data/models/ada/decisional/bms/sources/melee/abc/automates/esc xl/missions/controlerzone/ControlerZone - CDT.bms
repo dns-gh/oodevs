@@ -20,8 +20,12 @@ includedFiles["sources/melee/abc/automates/esc xl/missions/controlerzone/Control
 {
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_ControlerZone", {} },
+        { "BEH_Conduite_Automate_ABC_ControlerZone", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_Controler" } },
 
     create = function( self )
         self._namedParams = {}

@@ -15,8 +15,12 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_GTIA_GererAppuiEnDefensePour", {} },
+        { "BEH_GTIA_GererAppuiEnDefensePour", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_GTIA_GererAppuisInternesEnDefense" } },
 
     create = function( self )
     end,
@@ -44,8 +48,12 @@ node "BEH_GTIA_GererAppuiEnDefensePour"
 {
     activations =
     {
-        { "BEH_GTIA_AssignerMissionsPourAppuyerEnDefense", {} },
+        { "BEH_GTIA_AssignerMissionsPourAppuyerEnDefense", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_GTIA_GererAppuiEnDefensePour" } },
 
     create = function( self )
         self._namedParams = {}
@@ -73,15 +81,21 @@ node "BEH_GTIA_AssignerMissionsPourAppuyerEnDefense"
 {
     activations =
     {
-        { "ACT_GTIA_AssignerMissionAppuyerPourDefense", {} },
+        { "ACT_GTIA_AssignerMissionAppuyerPourDefense", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssignerMissionsPourAppuyerEnDefense" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionAAppuyer = self.params[1]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         --[[// On récupère les pions de second échelons "en mesure de" 
 ]]local listePionsSE = S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Second )
         local listePionSEAppui = S_Cherche_GE_Filtre_EnMesureDe( S_Cherche_GE_AutomateOperationnels( listePionsSE ) )
@@ -90,7 +104,7 @@ node "BEH_GTIA_AssignerMissionsPourAppuyerEnDefense"
         local _continue = true
 do
                 local pion = x
-                StartActivate( self.activations.ACT_GTIA_AssignerMissionAppuyerPourDefense, S_Force_GE_DistanceAgent( self._namedParams.pionAAppuyer, pion ), { pion, self._namedParams.pionAAppuyer, F_Automat_Getfuseau( self._namedParams.pionAAppuyer ), "T_Mission_Automate_ABC_Tenir", } )
+                StartInstance( self, self.activations.ACT_GTIA_AssignerMissionAppuyerPourDefense, S_Force_GE_DistanceAgent( self._namedParams.pionAAppuyer, pion ), { pion, self._namedParams.pionAAppuyer, F_Automat_Getfuseau( self._namedParams.pionAAppuyer ), "T_Mission_Automate_ABC_Tenir", } )
             end
 --[[// Assignation missions INF
 ]]
@@ -100,7 +114,7 @@ do
         local _continue = true
 do
                 local pion = x
-                StartActivate( self.activations.ACT_GTIA_AssignerMissionAppuyerPourDefense, S_Force_GE_DistanceAgent( self._namedParams.pionAAppuyer, pion ), { pion, self._namedParams.pionAAppuyer, F_Automat_Getfuseau( self._namedParams.pionAAppuyer ), "T_Mission_Automate_INF_DefendreFerme", } )
+                StartInstance( self, self.activations.ACT_GTIA_AssignerMissionAppuyerPourDefense, S_Force_GE_DistanceAgent( self._namedParams.pionAAppuyer, pion ), { pion, self._namedParams.pionAAppuyer, F_Automat_Getfuseau( self._namedParams.pionAAppuyer ), "T_Mission_Automate_INF_DefendreFerme", } )
             end
 
         end
@@ -117,6 +131,8 @@ do
 
 node "ACT_GTIA_AssignerMissionAppuyerPourDefense"
 {
+    feedbacks = { { { "onHalt" }, "ACT_GTIA_AssignerMissionAppuyerPourDefense" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]

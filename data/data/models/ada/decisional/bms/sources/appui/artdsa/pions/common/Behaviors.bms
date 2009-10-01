@@ -37,17 +37,21 @@ include "Appui/ArtDsa/Pions/Common/Behaviors/Behaviors - Mot.bms"
 {
     activations =
     {
-        { "BEH_ASA_Defaut", {} },
-        { "BEH_Pion_ASA_GererInstallation", {} },
-        { "BEH_Mot_Pion_ASA_AffecterVariablesDEtat", {} },
-        { "BEH_MAJ_EtatDefaut", {} },
-        { "BEH_Mot_Pion_Embarquer", {} },
-        { "BEH_Ambiance", {} },
-        { "BEH_Nbc", {} },
-        { "BEH_Rens", {} },
-        { "BEH_ROE", {} },
-        { "BEH_Info_Pion_RendreCompte", {} },
+        { "BEH_ASA_Defaut", { "onHalt" } },
+        { "BEH_Pion_ASA_GererInstallation", { "onHalt" } },
+        { "BEH_Mot_Pion_ASA_AffecterVariablesDEtat", { "onHalt" } },
+        { "BEH_MAJ_EtatDefaut", { "onHalt" } },
+        { "BEH_Mot_Pion_Embarquer", { "onHalt" } },
+        { "BEH_Ambiance", { "onHalt" } },
+        { "BEH_Nbc", { "onHalt" } },
+        { "BEH_Rens", { "onHalt" } },
+        { "BEH_ROE", { "onHalt" } },
+        { "BEH_Info_Pion_RendreCompte", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Defaut" } },
 
     create = function( self )
         self._namedParams = {}
@@ -104,6 +108,8 @@ include "Appui/ArtDsa/Pions/Common/Behaviors/Behaviors - Mot.bms"
 
 node "BEH_Pion_ASA_GererInstallation"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Pion_ASA_GererInstallation" } },
+
     create = function( self )
     end,
 
@@ -129,8 +135,12 @@ node "BEH_Dep_Virtuel_ProgressionVers"
 {
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Virtuel_ProgressionVers" } },
 
     create = function( self )
         self._namedParams = {}
@@ -151,6 +161,8 @@ node "BEH_Dep_Virtuel_ProgressionVers"
 
 node "BEH_Dep_Virtuel_PreparationAction"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Virtuel_PreparationAction" } },
+
     create = function( self )
     end,
 

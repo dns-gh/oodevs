@@ -31,10 +31,14 @@ include "Common/Pions/behaviors/behaviors - POP - Rens.bms"
 {
     activations =
     {
-        { "BEH_ROE_Recevoir_OrdreInopinePopulation", {} },
-        { "BEH_Pop_RC", {} },
-        { "BEH_Pop_RenseignerAuContact", {} },
+        { "BEH_ROE_Recevoir_OrdreInopinePopulation", { "onHalt" } },
+        { "BEH_Pop_RC", { "onHalt" } },
+        { "BEH_Pop_RenseignerAuContact", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Default_ReactionPopulations" } },
 
     create = function( self )
     end,
@@ -54,6 +58,8 @@ include "Common/Pions/behaviors/behaviors - POP - Rens.bms"
 
 node "BEH_Pop_RC"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Pop_RC" } },
+
     create = function( self )
     end,
 

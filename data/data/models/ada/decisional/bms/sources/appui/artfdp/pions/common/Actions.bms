@@ -19,6 +19,8 @@ node "ACT_Obj_Pion_ASS_RealiserObjet"
         deplacement = 1,
     },
 
+    feedbacks = { { { "onHalt" }, "ACT_Obj_Pion_ASS_RealiserObjet" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.eTypeObjet = self.params[1]
@@ -39,7 +41,8 @@ node "ACT_Obj_Pion_ASS_RealiserObjet"
                     do
                         --[[// RC_ TravauxImpossible
 ]]                        self.params.__returnValue = eActionImpossible
-                        Halt( self )
+                        Feedback( self.feedbacks["onHalt"], { "ACT_Obj_Pion_ASS_RealiserObjet" } )
+Halt( self )
                         do return end
 
                     end
@@ -48,7 +51,8 @@ node "ACT_Obj_Pion_ASS_RealiserObjet"
                 local xType = S_TypeObject_ToString( self._namedParams.eTypeObjet )
                 if( not DEC_Agent_PeutConstruireObjet( xType ) ) then
                     self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "ACT_Obj_Pion_ASS_RealiserObjet" } )
+Halt( self )
                     do return end
                 end
 
@@ -88,7 +92,8 @@ elseif switch_1 == eActionObjetTerminee then
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "ACT_Obj_Pion_ASS_RealiserObjet" } )
+Halt( self )
                     do return end
 
                     
@@ -96,7 +101,8 @@ elseif switch_1 == eActionObjetTerminee then
                     DEC_Trace( "object construction: no capability" )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "ACT_Obj_Pion_ASS_RealiserObjet" } )
+Halt( self )
                     do return end
 
                     
@@ -108,7 +114,8 @@ elseif switch_1 == eActionObjetTerminee then
                 if cases_switch_1[4] or switch_1 == eActionObjetImpossible then
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "ACT_Obj_Pion_ASS_RealiserObjet" } )
+Halt( self )
                     do return end
 
                     
@@ -153,6 +160,8 @@ node "ACT_Info_Pion_ASS_DisponibiliteAuTir"
         tir_indirect = 1,
     },
 
+    feedbacks = { { { "onHalt" }, "ACT_Info_Pion_ASS_DisponibiliteAuTir" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.eDisponibiliteAuTir = self.params[1]
@@ -179,6 +188,8 @@ node "ACT_Tir_Pion_ASS_SurPosition"
         tir_indirect = 1,
         deplacement = 1,
     },
+
+    feedbacks = { { { "onHalt" }, "ACT_Tir_Pion_ASS_SurPosition" } },
 
     create = function( self )
         self._namedParams = {}
@@ -217,7 +228,8 @@ node "ACT_Tir_Pion_ASS_SurPosition"
                     DEC_Trace( "fire on: disabled knowledge" )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "ACT_Tir_Pion_ASS_SurPosition" } )
+Halt( self )
                     do return end
 
                                 end
@@ -234,7 +246,8 @@ node "ACT_Tir_Pion_ASS_SurPosition"
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "ACT_Tir_Pion_ASS_SurPosition" } )
+Halt( self )
                     do return end
 
                                 end
@@ -262,7 +275,8 @@ node "ACT_Tir_Pion_ASS_SurPosition"
 ]]
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "ACT_Tir_Pion_ASS_SurPosition" } )
+Halt( self )
                     do return end
 
                                 end
@@ -271,7 +285,8 @@ node "ACT_Tir_Pion_ASS_SurPosition"
                     DEC_RC( eRC_TirAnnule )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "ACT_Tir_Pion_ASS_SurPosition" } )
+Halt( self )
                     do return end
 
                                 end
@@ -330,6 +345,8 @@ node "ACT_MAJ_Pion_ASS_EtatTirIndirect"
         tir_indirect = 1,
     },
 
+    feedbacks = { { { "onHalt" }, "ACT_MAJ_Pion_ASS_EtatTirIndirect" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.eTir = self.params[1]
@@ -347,6 +364,8 @@ node "ACT_Tir_Pion_ASS_PreparerTirSur"
     {
         tir_indirect = 1,
     },
+
+    feedbacks = { { { "onHalt" }, "ACT_Tir_Pion_ASS_PreparerTirSur" } },
 
     create = function( self )
         self._namedParams = {}

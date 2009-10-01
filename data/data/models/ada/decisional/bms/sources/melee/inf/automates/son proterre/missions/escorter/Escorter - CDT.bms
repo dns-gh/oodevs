@@ -22,8 +22,12 @@ includedFiles["sources/melee/inf/automates/son proterre/missions/escorter/Escort
 {
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Escorter", {} },
+        { "BEH_Conduite_Automate_INF_Escorter", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_INF_EscorterUnite" } },
 
     create = function( self )
         self._namedParams = {}
@@ -56,8 +60,12 @@ node "MIS_Automate_CDT_INF_EscorterUnites"
 {
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Escorter", {} },
+        { "BEH_Conduite_Automate_INF_Escorter", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_INF_EscorterUnites" } },
 
     create = function( self )
         self._namedParams = {}

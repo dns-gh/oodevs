@@ -13,8 +13,12 @@ includedFiles["sources/appui/circulation/pions/missions/aide a mobilite dans zon
 {
     activations =
     {
-        { "BEH_Pion_CIRCU_RealiserObjetDansZone", {} },
+        { "BEH_Pion_CIRCU_RealiserObjetDansZone", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_LOG_AppuyerFranchissementSurUnPoint" } },
 
     create = function( self )
         self._namedParams = {}
@@ -25,7 +29,8 @@ includedFiles["sources/appui/circulation/pions/missions/aide a mobilite dans zon
         --[[// Validité de la connaissance
 ]]if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.mission.pontFlottant_ ) ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_LOG_AppuyerFranchissementSurUnPoint" } )
+Halt( self )
             do return end
         end
 

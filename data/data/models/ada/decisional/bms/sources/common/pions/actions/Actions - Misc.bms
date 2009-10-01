@@ -11,6 +11,8 @@ includedFiles["sources/common/pions/actions/Actions - Misc.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Misc_Pion_DelaiInstallation"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Misc_Pion_DelaiInstallation" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.eNiveau = self.params[1]
@@ -19,7 +21,8 @@ includedFiles["sources/common/pions/actions/Actions - Misc.bms"] = true
     select = function( self )
         if( DEC_Agent_NiveauInstallation() >= self._namedParams.eNiveau ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "ACT_Misc_Pion_DelaiInstallation" } )
+Halt( self )
             do return end
         end
 
@@ -40,6 +43,8 @@ includedFiles["sources/common/pions/actions/Actions - Misc.bms"] = true
         installation = 1,
     },
 
+    feedbacks = { { { "onHalt" }, "ACT_Pions_SInstaller" } },
+
     create = function( self )
     end,
 
@@ -55,6 +60,8 @@ node "ACT_Pions_SeDesinstaller"
     {
         installation = 1,
     },
+
+    feedbacks = { { { "onHalt" }, "ACT_Pions_SeDesinstaller" } },
 
     create = function( self )
     end,

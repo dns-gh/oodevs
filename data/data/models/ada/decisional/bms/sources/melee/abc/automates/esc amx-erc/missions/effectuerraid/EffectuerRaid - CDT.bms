@@ -22,8 +22,12 @@ includedFiles["sources/melee/abc/automates/esc amx-erc/missions/effectuerraid/Ef
 {
     activations =
     {
-        { "BEH_Auto_CDT_ABC_Attaquer", {} },
+        { "BEH_Auto_CDT_ABC_Attaquer", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_EffectuerRaid" } },
 
     create = function( self )
         self._namedParams = {}

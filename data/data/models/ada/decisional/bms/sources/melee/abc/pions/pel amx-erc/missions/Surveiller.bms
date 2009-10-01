@@ -23,8 +23,12 @@ includedFiles["sources/melee/abc/pions/pel amx-erc/missions/Surveiller.bms"] = t
 {
     activations =
     {
-        { "BEH_Mission_Pion_ABC_SurveillerSecteur", {} },
+        { "BEH_Mission_Pion_ABC_SurveillerSecteur", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_ABC_Surveiller" } },
 
     create = function( self )
         self._namedParams = {}
@@ -38,13 +42,15 @@ includedFiles["sources/melee/abc/pions/pel amx-erc/missions/Surveiller.bms"] = t
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible ) then
             self.params.__returnValue = eActionImpossible
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ABC_Surveiller" } )
+Halt( self )
             do return end
         end
 
         if( self.eEtat == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ABC_Surveiller" } )
+Halt( self )
             do return end
         end
 

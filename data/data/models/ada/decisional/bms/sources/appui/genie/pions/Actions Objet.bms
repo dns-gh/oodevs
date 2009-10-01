@@ -18,6 +18,8 @@ include "bit.lua"
         deplacement = 1,
     },
 
+    feedbacks = { { { "onHalt" }, "ACT_Obj_Pion_GEN_RealiserTravaux" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.objet = self.params[1]
@@ -167,6 +169,8 @@ if( type == S_TypeObject_ToString( eTypeObjectBouchonMines ) ) then
         deplacement = 1,
     },
 
+    feedbacks = { { { "onHalt" }, "ACT_Obj_Pion_GEN_PreparerObstacle" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.obstacle = self.params[1]
@@ -282,6 +286,8 @@ if( type == S_TypeObject_ToString( eTypeObjectBouchonMines ) ) then
 ]]--[[// ******************************************************************************
 ]]node "ACT_Obj_Pion_GEN_ActiverObstacle"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Obj_Pion_GEN_ActiverObstacle" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.repObj = self.params[1]
@@ -329,6 +335,8 @@ if( type == S_TypeObject_ToString( eTypeObjectBouchonMines ) ) then
     {
         obstacle = 1,
     },
+
+    feedbacks = { { { "onHalt" }, "ACT_Obj_Pion_GEN_ValoriserObstacle" } },
 
     create = function( self )
         self._namedParams = {}
@@ -445,6 +453,8 @@ if( type == S_TypeObject_ToString( eTypeObjectBouchonMines ) ) then
         deplacement = 1,
     },
 
+    feedbacks = { { { "onHalt" }, "ACT_Obj_Pion_GEN_ReduireObstacle" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.repObj = self.params[1]
@@ -558,6 +568,8 @@ if( type == S_TypeObject_ToString( eTypeObjectBouchonMines ) ) then
         deplacement = 1,
     },
 
+    feedbacks = { { { "onHalt" }, "ACT_Obj_Pion_GEN_CreerContournement" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.repObj = self.params[1]
@@ -669,6 +681,8 @@ if( type == S_TypeObject_ToString( eTypeObjectBouchonMines ) ) then
         obstacle = 1,
         deplacement = 1,
     },
+
+    feedbacks = { { { "onHalt" }, "ACT_Obj_Pion_GEN_ReprendreTravaux" } },
 
     create = function( self )
         self._namedParams = {}

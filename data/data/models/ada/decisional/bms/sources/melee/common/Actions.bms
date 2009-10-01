@@ -21,6 +21,8 @@ includedFiles["sources/melee/common/Actions.bms"] = true
 ]]--[[// ============================================================================
 ]]node "ACT_Misc_UnitesEnAppui_EnPosition"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Misc_UnitesEnAppui_EnPosition" } },
+
     create = function( self )
     end,
 
@@ -47,6 +49,8 @@ includedFiles["sources/melee/common/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Misc_Pion_Melee_Escorter"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Misc_Pion_Melee_Escorter" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionAmi = self.params[1]

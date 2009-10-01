@@ -8,11 +8,15 @@ includedFiles["sources/appui/alat/automates/common/missions/attaquer une formati
 {
     activations =
     {
-        { "BEH_ROE_Automate_TirLibre", {} },
-        { "BEH_Ordre_Automate_Poursuivre_", {} },
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_ALAT_AssignerMissionsAttaquerUneForamtionAeromobileAListe", {} },
+        { "BEH_ROE_Automate_TirLibre", { "onHalt" } },
+        { "BEH_Ordre_Automate_Poursuivre_", { "onHalt" } },
+        { "BEH_Medo_Automate_ControleCreationMission", { "onHalt" } },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionsAttaquerUneForamtionAeromobileAListe", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_ALAT_AttaquerFormationAeromobile" } },
 
     create = function( self )
         self._namedParams = {}
@@ -35,7 +39,8 @@ includedFiles["sources/appui/alat/automates/common/missions/attaquer une formati
                     do
                         DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
                                                 self.params.__returnValue = eActionImpossible
-                        Halt( self )
+                        Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_ALAT_AttaquerFormationAeromobile" } )
+Halt( self )
                         do return end
 
                     end
@@ -86,7 +91,8 @@ includedFiles["sources/appui/alat/automates/common/missions/attaquer une formati
 elseif switch_1 == eMRT_MissionImpossible then
                     DEC_RC( eRC_MissionImpossible )
                                         self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_ALAT_AttaquerFormationAeromobile" } )
+Halt( self )
                     do return end
 
                 --[[//---------------------------------------------------------------------
@@ -96,7 +102,8 @@ elseif switch_1 == eMRT_MissionImpossible then
                 if cases_switch_1[2] or switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_ALAT_AttaquerFormationAeromobile" } )
+Halt( self )
                     do return end
 
                                 end

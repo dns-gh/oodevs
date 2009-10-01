@@ -16,9 +16,13 @@ includedFiles["sources/melee/abc/automates/common/missions/recueillir/Recueillir
 {
     activations =
     {
-        { "ACT_Warning", {} },
-        { "BEH_Mission_Automate_ABC_AssignerBarrerA", {} },
+        { "ACT_Warning", { "onHalt" } },
+        { "BEH_Mission_Automate_ABC_AssignerBarrerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ABC_Recueillir_AssignerMissionBarrerA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -26,7 +30,9 @@ includedFiles["sources/melee/abc/automates/common/missions/recueillir/Recueillir
         self._namedParams.eEtatEchelon = self.params[2]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.rIterateurPosition = self.rIterateurPosition or 0
         self.listePositions = self.listePositions or {}
         if( ( #( self._namedParams.selPions ) == 0 or #( self._namedParams.selPions ) == nil ) ) then
@@ -74,7 +80,7 @@ do
                         --[[// Position courante d'installation
 ]]local positionInstallation = DEC_ListePoints_GetAt( self.listePositions, self.rIterateurPosition )
                         --[[// Assignation de la mission
-]]StartActivate( self.activations.BEH_Mission_Automate_ABC_AssignerBarrerA, 1, { ePhase_MRT, pion, positionInstallation, self._namedParams.eEtatEchelon, } )
+]]StartInstance( self, self.activations.BEH_Mission_Automate_ABC_AssignerBarrerA, 1, { ePhase_MRT, pion, positionInstallation, self._namedParams.eEtatEchelon, } )
                                                 self.rIterateurPosition = self.rIterateurPosition + 1
                     end
 
@@ -97,9 +103,13 @@ node "BEH_Medo_Automate_ABC_Recueillir_AssignerMissionSurveillerA"
 {
     activations =
     {
-        { "ACT_Warning", {} },
-        { "BEH_Mission_Automate_ABC_AssignerSurveillerA", {} },
+        { "ACT_Warning", { "onHalt" } },
+        { "BEH_Mission_Automate_ABC_AssignerSurveillerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ABC_Recueillir_AssignerMissionSurveillerA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -107,7 +117,9 @@ node "BEH_Medo_Automate_ABC_Recueillir_AssignerMissionSurveillerA"
         self._namedParams.eEtatEchelon = self.params[2]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.rIterateurPosition = self.rIterateurPosition or 0
         self.listePositions = self.listePositions or {}
         if( ( #( self._namedParams.selPions ) == 0 or #( self._namedParams.selPions ) == nil ) ) then
@@ -155,7 +167,7 @@ do
                         --[[// Position courante d'installation
 ]]local positionInstallation = DEC_ListePoints_GetAt( self.listePositions, self.rIterateurPosition )
                         --[[// Assignation de la mission
-]]StartActivate( self.activations.BEH_Mission_Automate_ABC_AssignerSurveillerA, 1, { ePhase_MRT, pion, positionInstallation, self._namedParams.eEtatEchelon, } )
+]]StartInstance( self, self.activations.BEH_Mission_Automate_ABC_AssignerSurveillerA, 1, { ePhase_MRT, pion, positionInstallation, self._namedParams.eEtatEchelon, } )
                                                 self.rIterateurPosition = self.rIterateurPosition + 1
                     end
 

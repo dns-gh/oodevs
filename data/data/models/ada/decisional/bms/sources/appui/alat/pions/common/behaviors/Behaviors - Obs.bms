@@ -16,10 +16,14 @@ includedFiles["sources/appui/alat/pions/common/behaviors/Behaviors - Obs.bms"] =
 {
     activations =
     {
-        { "ACT_Obs_Pions_ALAT_EnregistrerPuisAllerReconnaitreNonVus", {} },
-        { "ACT_Obs_EtablirVisionCur", {} },
-        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
+        { "ACT_Obs_Pions_ALAT_EnregistrerPuisAllerReconnaitreNonVus", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionCur", { "onHalt" } },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Obs_Pion_ALAT_ReconnaitreZone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -55,7 +59,8 @@ for _,y in pairs( DEC_Connaissances_UnitesEnnemiesVivantesDansZone( self._namedP
                         local _continue = true
 if( x == y ) then
                                 self.params.__returnValue = eActionEffectuee
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "BEH_Obs_Pion_ALAT_ReconnaitreZone" } )
+Halt( self )
                                 do return end
                             end
 
@@ -69,7 +74,8 @@ if( x == y ) then
 elseif switch_1 == eSePoster then
                     if( DEC_ALAT_ReconnaissanceNonVuTerminee() ) then
                         self.params.__returnValue = eActionEffectuee
-                        Halt( self )
+                        Feedback( self.feedbacks["onHalt"], { "BEH_Obs_Pion_ALAT_ReconnaitreZone" } )
+Halt( self )
                         do return end
                     end
 
@@ -97,12 +103,16 @@ node "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers"
 
     activations =
     {
-        { "ACT_Misc_VerouillerConnaissance", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
-        { "ACT_Dep_SePosterFaceA", {} },
-        { "ACT_Misc_Delai", {} },
-        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
+        { "ACT_Misc_VerouillerConnaissance", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "onHalt" } },
+        { "ACT_Dep_SePosterFaceA", { "onHalt" } },
+        { "ACT_Misc_Delai", { "onHalt" } },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers" } },
 
     create = function( self )
         self._namedParams = {}
@@ -117,7 +127,8 @@ node "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers"
         self.eEtatDeplacement = self.eEtatDeplacement or eActionEnCours
         if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.eni ) ) then
             self.params.__returnValue = eActionImpossible
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers" } )
+Halt( self )
             do return end
         end
 
@@ -135,13 +146,15 @@ node "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers"
             do
                                 do
                                         self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers" } )
+Halt( self )
                     do return end
 
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers" } )
+Halt( self )
                 do return end
 
             end
@@ -152,7 +165,8 @@ node "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers"
                 self.eEtatDeplacement = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers" } )
+Halt( self )
                     do return end
 
                 end
@@ -164,13 +178,15 @@ node "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers"
             do
                                 do
                                         self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers" } )
+Halt( self )
                     do return end
 
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers" } )
+Halt( self )
                 do return end
 
             end
@@ -207,8 +223,12 @@ node "BEH_Obs_Pion_ALAT_ReconnaitreUnite"
 
     activations =
     {
-        { "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers", {} },
+        { "BEH_Obs_Pion_ALAT_ProgressionTactiqueVers", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Obs_Pion_ALAT_ReconnaitreUnite" } },
 
     create = function( self )
         self._namedParams = {}
@@ -221,13 +241,15 @@ node "BEH_Obs_Pion_ALAT_ReconnaitreUnite"
         self.eEtat = self.eEtat or eActionEnCours
         if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.eni ) ) then
             self.params.__returnValue = eActionImpossible
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Obs_Pion_ALAT_ReconnaitreUnite" } )
+Halt( self )
             do return end
         end
 
         if( DEC_ConnaissanceAgent_EstMort( self._namedParams.eni ) ) then
             self.params.__returnValue = eActionImpossible
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Obs_Pion_ALAT_ReconnaitreUnite" } )
+Halt( self )
             do return end
         end
 
@@ -252,8 +274,12 @@ node "BEH_Eni_Pion_ALAT_GererUnitesDetectes"
 {
     activations =
     {
-        { "BEH_Obs_Pion_ALAT_ReconnaitreUnite", {} },
+        { "BEH_Obs_Pion_ALAT_ReconnaitreUnite", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_ALAT_GererUnitesDetectes" } },
 
     create = function( self )
     end,

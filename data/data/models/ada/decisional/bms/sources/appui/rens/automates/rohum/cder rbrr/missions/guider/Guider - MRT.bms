@@ -9,6 +9,8 @@ includedFiles["sources/appui/rens/automates/rohum/cder rbrr/missions/guider/Guid
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_MRT_RENS_ROHUM_OrienterGuider"
 {
+    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_RENS_ROHUM_OrienterGuider" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission

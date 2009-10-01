@@ -8,6 +8,8 @@ includedFiles["sources/common/pions/actions/Actions - Pop.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Pion_RenseignerSurPop"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Pion_RenseignerSurPop" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pop = self.params[1]
@@ -44,6 +46,8 @@ includedFiles["sources/common/pions/actions/Actions - Pop.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Pion_Securiser"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Pion_Securiser" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pop = self.params[1]
@@ -84,6 +88,8 @@ includedFiles["sources/common/pions/actions/Actions - Pop.bms"] = true
     {
         controlePopulation = 1,
     },
+
+    feedbacks = { { { "onHalt" }, "ACT_Pion_Animer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -152,6 +158,8 @@ includedFiles["sources/common/pions/actions/Actions - Pop.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Pion_CreerObjetSur"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Pion_CreerObjetSur" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.localisation = self.params[1]
@@ -182,6 +190,8 @@ includedFiles["sources/common/pions/actions/Actions - Pop.bms"] = true
     {
         controlePopulation = 1,
     },
+
+    feedbacks = { { { "onHalt" }, "ACT_Pion_FuirPopulations" } },
 
     create = function( self )
     end,

@@ -34,13 +34,17 @@ include "Appui/Genie/Automates/Cie Blindee/Missions/Missions.bms"
 {
     activations =
     {
-        { "BEH_RC_Automate_Situation", {} },
-        { "BEH_Ordre_Automate_GEN_ActiverObstacle", {} },
-        { "BEH_Nbc_Automate_GererAlerteNiv4", {} },
-        { "BEH_ROE_Automate_GererOrdre", {} },
-        { "BEH_Misc_Automate_GererLesMoyens", {} },
-        { "BEH_Rens_Automate_GererSilenceRadio", {} },
+        { "BEH_RC_Automate_Situation", { "onHalt" } },
+        { "BEH_Ordre_Automate_GEN_ActiverObstacle", { "onHalt" } },
+        { "BEH_Nbc_Automate_GererAlerteNiv4", { "onHalt" } },
+        { "BEH_ROE_Automate_GererOrdre", { "onHalt" } },
+        { "BEH_Misc_Automate_GererLesMoyens", { "onHalt" } },
+        { "BEH_Rens_Automate_GererSilenceRadio", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Defaut" } },
 
     create = function( self )
         self._namedParams = {}
@@ -93,9 +97,13 @@ node "BEH_Ordre_Automate_GEN_ActiverObstacle"
 {
     activations =
     {
-        { "ACT_Ordre_Automate_GEN_Activer", {} },
-        { "ACT_Ordre_Suppression", {} },
+        { "ACT_Ordre_Automate_GEN_Activer", { "onHalt" } },
+        { "ACT_Ordre_Suppression", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Ordre_Automate_GEN_ActiverObstacle" } },
 
     create = function( self )
     end,
@@ -138,8 +146,12 @@ node "BEH_Objet_Automate_GEN_VerifierRenfortPourConstruireObjets"
 {
     activations =
     {
-        { "BEH_Objet_Automate_GEN_VerifierRenfortPourConstruire", {} },
+        { "BEH_Objet_Automate_GEN_VerifierRenfortPourConstruire", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Objet_Automate_GEN_VerifierRenfortPourConstruireObjets" } },
 
     create = function( self )
         self._namedParams = {}
@@ -167,8 +179,12 @@ node "BEH_Objet_Automate_GEN_VerifierRenfortPourConstruire"
 {
     activations =
     {
-        { "ACT_Info_Automate_GEN_RendreComptePourRenfort", {} },
+        { "ACT_Info_Automate_GEN_RendreComptePourRenfort", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Objet_Automate_GEN_VerifierRenfortPourConstruire" } },
 
     create = function( self )
         self._namedParams = {}
@@ -205,8 +221,12 @@ node "BEH_Ordre_Automate_GEN_VerifierRenfortPourDetruireObjets"
 {
     activations =
     {
-        { "BEH_Objet_Automate_GEN_VerifierRenfortPourDetruireObjet", {} },
+        { "BEH_Objet_Automate_GEN_VerifierRenfortPourDetruireObjet", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Ordre_Automate_GEN_VerifierRenfortPourDetruireObjets" } },
 
     create = function( self )
         self._namedParams = {}
@@ -236,8 +256,12 @@ node "BEH_Objet_Automate_GEN_VerifierRenfortPourDetruireObjet"
 {
     activations =
     {
-        { "ACT_Info_Automate_GEN_RendreComptePourRenfort", {} },
+        { "ACT_Info_Automate_GEN_RendreComptePourRenfort", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Objet_Automate_GEN_VerifierRenfortPourDetruireObjet" } },
 
     create = function( self )
         self._namedParams = {}
@@ -274,8 +298,12 @@ node "BEH_Objet_Automate_GEN_VerifierRenfortPourContournerObjets"
 {
     activations =
     {
-        { "BEH_Objet_Automate_GEN_VerifierRenfortPourContourner", {} },
+        { "BEH_Objet_Automate_GEN_VerifierRenfortPourContourner", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Objet_Automate_GEN_VerifierRenfortPourContournerObjets" } },
 
     create = function( self )
         self._namedParams = {}
@@ -305,8 +333,12 @@ node "BEH_Objet_Automate_GEN_VerifierRenfortPourContourner"
 {
     activations =
     {
-        { "ACT_Info_Automate_GEN_RendreComptePourRenfort", {} },
+        { "ACT_Info_Automate_GEN_RendreComptePourRenfort", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Objet_Automate_GEN_VerifierRenfortPourContourner" } },
 
     create = function( self )
         self._namedParams = {}
@@ -315,7 +347,8 @@ node "BEH_Objet_Automate_GEN_VerifierRenfortPourContourner"
 
     activate = function( self )
         if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.objet ) ) then
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Objet_Automate_GEN_VerifierRenfortPourContourner" } )
+Halt( self )
             do return end
         end
 
@@ -346,6 +379,8 @@ do
 
 node "ACT_Info_Automate_GEN_RendreComptePourRenfort"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Info_Automate_GEN_RendreComptePourRenfort" } },
+
     create = function( self )
     end,
 
@@ -373,6 +408,8 @@ node "ACT_Info_Automate_GEN_RendreComptePourRenfort"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_Automate_GEN_Activer"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Ordre_Automate_GEN_Activer" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.objetAActiver = self.params[1]

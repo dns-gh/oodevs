@@ -11,9 +11,13 @@ includedFiles["sources/common/pions/behaviors/Behaviors - POP - Roe.bms"] = true
 {
     activations =
     {
-        { "ACT_Tir_ChangerConsignePopulation", {} },
-        { "ACT_RC", {} },
+        { "ACT_Tir_ChangerConsignePopulation", { "onHalt" } },
+        { "ACT_RC", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_ROE_GererEmploiForceInterdit" } },
 
     create = function( self )
     end,
@@ -35,9 +39,13 @@ node "BEH_ROE_GererMaintienADistanceParMoyensNonLetaux"
 {
     activations =
     {
-        { "ACT_Tir_ChangerConsignePopulation", {} },
-        { "ACT_RC", {} },
+        { "ACT_Tir_ChangerConsignePopulation", { "onHalt" } },
+        { "ACT_RC", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_ROE_GererMaintienADistanceParMoyensNonLetaux" } },
 
     create = function( self )
     end,
@@ -59,9 +67,13 @@ node "BEH_ROE_GererDispersionParMoyensDeDefenseActifs"
 {
     activations =
     {
-        { "ACT_Tir_ChangerConsignePopulation", {} },
-        { "ACT_RC", {} },
+        { "ACT_Tir_ChangerConsignePopulation", { "onHalt" } },
+        { "ACT_RC", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_ROE_GererDispersionParMoyensDeDefenseActifs" } },
 
     create = function( self )
     end,
@@ -83,9 +95,13 @@ node "BEH_ROE_GererArmesLetalesAutorisees"
 {
     activations =
     {
-        { "ACT_Tir_ChangerConsignePopulation", {} },
-        { "ACT_RC", {} },
+        { "ACT_Tir_ChangerConsignePopulation", { "onHalt" } },
+        { "ACT_RC", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_ROE_GererArmesLetalesAutorisees" } },
 
     create = function( self )
     end,
@@ -107,12 +123,16 @@ node "BEH_ROE_Recevoir_OrdreInopinePopulation"
 {
     activations =
     {
-        { "ACT_Maj_Pion_PasserEnEmploiForceInterdit", {} },
-        { "ACT_Maj_Pion_PasserEnMaintienADistanceParMoyensNonLetaux", {} },
-        { "ACT_Maj_Pion_PasserEnDispersionParMoyensDeDefenseActifs", {} },
-        { "ACT_Maj_Pion_PasserEnArmesLetalesAutorisees", {} },
-        { "ACT_Ordre_Suppression", {} },
+        { "ACT_Maj_Pion_PasserEnEmploiForceInterdit", { "onHalt" } },
+        { "ACT_Maj_Pion_PasserEnMaintienADistanceParMoyensNonLetaux", { "onHalt" } },
+        { "ACT_Maj_Pion_PasserEnDispersionParMoyensDeDefenseActifs", { "onHalt" } },
+        { "ACT_Maj_Pion_PasserEnArmesLetalesAutorisees", { "onHalt" } },
+        { "ACT_Ordre_Suppression", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_ROE_Recevoir_OrdreInopinePopulation" } },
 
     create = function( self )
     end,

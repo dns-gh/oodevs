@@ -59,8 +59,12 @@ etat_ROE = 1,
 {
     activations =
     {
-        { "BEH_Eni_GererDemandesDeTirsCentralisees", {} },
+        { "BEH_Eni_GererDemandesDeTirsCentralisees", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_ASA_Defaut" } },
 
     create = function( self )
     end,

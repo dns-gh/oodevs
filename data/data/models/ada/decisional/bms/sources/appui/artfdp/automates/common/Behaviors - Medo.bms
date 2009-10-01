@@ -17,10 +17,14 @@ node "BEH_Medo_Automate_PreparerMission_ReconnaitreZonesDeploiement"
 {
     activations =
     {
-        { "ACT_Medo_Automate_AffecterFuseaux", {} },
-        { "BEH_Medo_Automate_ControleCreationMission", {} },
-        { "BEH_Medo_Automate_ASS_AssignerMission_PC", {} },
+        { "ACT_Medo_Automate_AffecterFuseaux", { "onHalt" } },
+        { "BEH_Medo_Automate_ControleCreationMission", { "onHalt" } },
+        { "BEH_Medo_Automate_ASS_AssignerMission_PC", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_PreparerMission_ReconnaitreZonesDeploiement" } },
 
     create = function( self )
     end,
@@ -54,7 +58,8 @@ node "BEH_Medo_Automate_PreparerMission_ReconnaitreZonesDeploiement"
                         do
                             DEC_Trace( "First echelon units is empty" )
                                                         self.params.__returnValue = eActionImpossible
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_PreparerMission_ReconnaitreZonesDeploiement" } )
+Halt( self )
                             do return end
 
                         end
@@ -118,7 +123,8 @@ elseif switch_1 == eMRT_AssignerMissions then
 ]]--[[// On verifie juste que la batterie peut effectuer la mission
 ]]--[[// if(  eActionMRT == eActionImpossible)    {         {}         halt(eActionImpossible);    }
 ]]                    self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_PreparerMission_ReconnaitreZonesDeploiement" } )
+Halt( self )
                     do return end
 
                     if( self.eValidationMRT == eActionImpossible ) then
@@ -128,7 +134,8 @@ elseif switch_1 == eMRT_AssignerMissions then
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_PreparerMission_ReconnaitreZonesDeploiement" } )
+Halt( self )
                             do return end
 
                         end
@@ -139,7 +146,8 @@ elseif switch_1 == eMRT_AssignerMissions then
                             self.eValidationMRT = eActionEnCours
                                                         do
                                                                 self.params.__returnValue = eActionEffectuee
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_PreparerMission_ReconnaitreZonesDeploiement" } )
+Halt( self )
                                 do return end
 
                             end
@@ -164,15 +172,21 @@ node "BEH_Medo_Automate_ASS_AssignerMission_PC"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSuivreA", {} },
+        { "BEH_Mission_Automate_AssignerSuivreA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ASS_AssignerMission_PC" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.selPion = self.params[1]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         if( ModuleBegins() ) then
             do
                 --[[//-----------------------------------------------------------------------------
@@ -196,7 +210,7 @@ node "BEH_Medo_Automate_ASS_AssignerMission_PC"
                 end
 
                 if( ( pAppui ~= 0 and pAppui ~= nil ) ) then
-                    StartActivate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_MRT, DEC_Automate_PionPC(), pAppui, } )
+                    StartInstance( self, self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_MRT, DEC_Automate_PionPC(), pAppui, } )
                 end
 
             end

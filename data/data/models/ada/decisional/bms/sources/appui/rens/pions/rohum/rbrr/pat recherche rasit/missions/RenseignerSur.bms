@@ -11,13 +11,17 @@ includedFiles["sources/appui/rens/pions/rohum/rbrr/pat recherche rasit/missions/
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_Info_Trace", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Rens_EnSurveillanceRadarDe", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "ACT_Info_Trace", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Rens_EnSurveillanceRadarDe", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "onHalt" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_RENS_ROHUM_RenseignerSur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -43,7 +47,8 @@ includedFiles["sources/appui/rens/pions/rohum/rbrr/pat recherche rasit/missions/
 
         if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_RENS_ROHUM_RenseignerSur" } )
+Halt( self )
             do return end
         end
 

@@ -22,10 +22,14 @@ includedFiles["sources/melee/abc/automates/common/missions/reconnaitrepoint sure
 {
     activations =
     {
-        { "BEH_Dispositif_Automate_ABC_GererLesAppuis_", {} },
-        { "BEH_Dispositif_Automate_ABC_GererLeDispositif_", {} },
-        { "BEH_RC_Automate_GererConditionOperationnelle", {} },
+        { "BEH_Dispositif_Automate_ABC_GererLesAppuis_", { "onHalt" } },
+        { "BEH_Dispositif_Automate_ABC_GererLeDispositif_", { "onHalt" } },
+        { "BEH_RC_Automate_GererConditionOperationnelle", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_ABC_ReconnaitrePointSurete" } },
 
     create = function( self )
     end,

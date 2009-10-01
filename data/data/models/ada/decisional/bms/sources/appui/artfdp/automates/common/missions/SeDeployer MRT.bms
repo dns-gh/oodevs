@@ -22,15 +22,21 @@ includedFiles["sources/appui/artfdp/automates/common/missions/SeDeployer MRT.bms
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerFaireMouvementA_Aleatoire", {} },
+        { "BEH_Mission_Automate_AssignerFaireMouvementA_Aleatoire", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_AssignerSeDeployerA" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.listePions = self.params[1]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.mission = self.mission or DEC_GetMission( myself )
         self.ptSite = self.ptSite or S_Geometrie_BarycentreZone( self.mission.zoneDeploiement_ )
         --[[//---------------------------------------------------------------------
@@ -41,7 +47,7 @@ includedFiles["sources/appui/artfdp/automates/common/missions/SeDeployer MRT.bms
 ]]if( ModuleBegins() ) then
 for _,pion in pairs( self._namedParams.listePions ) do
             local _continue = true
-                StartActivate( self.activations.BEH_Mission_Automate_AssignerFaireMouvementA_Aleatoire, 1, { pion, self.ptSite, } )
+                StartInstance( self, self.activations.BEH_Mission_Automate_AssignerFaireMouvementA_Aleatoire, 1, { pion, self.ptSite, } )
 
             end
         end
@@ -54,8 +60,12 @@ node "BEH_Mission_Automate_AssignerFaireMouvementA_Aleatoire"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerFaireMouvementA", {} },
+        { "BEH_Mission_Automate_AssignerFaireMouvementA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_AssignerFaireMouvementA_Aleatoire" } },
 
     create = function( self )
         self._namedParams = {}

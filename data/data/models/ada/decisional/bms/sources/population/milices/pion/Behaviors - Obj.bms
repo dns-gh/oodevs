@@ -41,8 +41,12 @@ includedFiles["sources/population/milices/pion/Behaviors - Obj.bms"] = true
 {
     activations =
     {
-        { "ACT_Obj_Pion_INF_RealiserBouchonMines", {} },
+        { "ACT_Obj_Pion_INF_RealiserBouchonMines", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Obj_Pion_VAB_InstallerPlanObstacle" } },
 
     create = function( self )
         self._namedParams = {}
@@ -57,7 +61,8 @@ includedFiles["sources/population/milices/pion/Behaviors - Obj.bms"] = true
             do
                 if( ( self._namedParams.locMine == 0 or self._namedParams.locMine == nil ) ) then
                     self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Obj_Pion_VAB_InstallerPlanObstacle" } )
+Halt( self )
                     do return end
                 end
 
@@ -65,7 +70,8 @@ includedFiles["sources/population/milices/pion/Behaviors - Obj.bms"] = true
                 self.ptMission = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( self._namedParams.locMine )
                 if( ( self.ptMission == 0 or self.ptMission == nil ) ) then
                     self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Obj_Pion_VAB_InstallerPlanObstacle" } )
+Halt( self )
                     do return end
                 end
 
@@ -73,7 +79,8 @@ includedFiles["sources/population/milices/pion/Behaviors - Obj.bms"] = true
                 if( ( self.locPtMine == 0 or self.locPtMine == nil ) ) then
 --[[// Pour le moment, on fait un bouchon de mines
 ]]                    self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Obj_Pion_VAB_InstallerPlanObstacle" } )
+Halt( self )
                     do return end
                 end
 
@@ -82,7 +89,8 @@ includedFiles["sources/population/milices/pion/Behaviors - Obj.bms"] = true
 
         if( self.eAction ~= eActionEnCours ) then
             self.params.__returnValue = self.eAction
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Obj_Pion_VAB_InstallerPlanObstacle" } )
+Halt( self )
             do return end
         end
 

@@ -11,12 +11,16 @@ includedFiles["sources/air/pions/common/missions/Suivre.bms"] = true
 {
     activations =
     {
-        { "ACT_Info_Trace", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_Pion_AIR_Suivre", {} },
-        { "BEH_Dep_Pion_AIR_SePoser", {} },
+        { "ACT_Info_Trace", { "onHalt" } },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Dep_Pion_AIR_Suivre", { "onHalt" } },
+        { "BEH_Dep_Pion_AIR_SePoser", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_Suivre" } },
 
     create = function( self )
         self._namedParams = {}
@@ -58,7 +62,8 @@ elseif switch_1 == eFinMission then
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_Suivre" } )
+Halt( self )
                                 do return end
 
                             end

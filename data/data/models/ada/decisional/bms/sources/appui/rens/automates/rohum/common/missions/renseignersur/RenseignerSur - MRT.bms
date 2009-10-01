@@ -11,9 +11,13 @@ includedFiles["sources/appui/rens/automates/rohum/common/missions/renseignersur/
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "BEH_Mission_Automate_RENS_ROHUM_AssignerRenseignerA", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "BEH_Mission_Automate_RENS_ROHUM_AssignerRenseignerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_RENS_ROHUM_AssignerRenseignerA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -21,7 +25,9 @@ includedFiles["sources/appui/rens/automates/rohum/common/missions/renseignersur/
         self._namedParams.eEtatEchelon = self.params[2]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.mission = self.mission or DEC_GetMission( myself )
         --[[// Parcours de la liste
 ]]self.rIterateurSecteur = self.rIterateurSecteur or 0
@@ -42,7 +48,7 @@ includedFiles["sources/appui/rens/automates/rohum/common/missions/renseignersur/
                         DEC_Trace( "Impossiblde de trouver des sous secteurs dans localisation" )
                         --[[// JCR : 11/08/2005 10:55                        
 ]]DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
-                        StartActivate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
+                        StartInstance( self, self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
                                                 self.params.__returnValue = eActionImpossible
                         return
 
@@ -61,7 +67,7 @@ do
                         end
 
                         local secteur = DEC_UserTypeList_GetAt( listeSousSecteurs, self.rIterateurSecteur )
-                        StartActivate( self.activations.BEH_Mission_Automate_RENS_ROHUM_AssignerRenseignerA, 1, { ePhase_MRT, pion, secteur, self._namedParams.eEtatEchelon, } )
+                        StartInstance( self, self.activations.BEH_Mission_Automate_RENS_ROHUM_AssignerRenseignerA, 1, { ePhase_MRT, pion, secteur, self._namedParams.eEtatEchelon, } )
                                                 self.rIterateurSecteur = self.rIterateurSecteur + 1
                     end
 

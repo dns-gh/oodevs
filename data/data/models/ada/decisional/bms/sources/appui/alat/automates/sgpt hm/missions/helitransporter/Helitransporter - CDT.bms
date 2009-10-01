@@ -20,14 +20,18 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
-        { "ACT_Ordre_Suppression", {} },
-        { "BEH_Medo_Automate_ALAT_HM_SynchroniserTransport", {} },
-        { "BEH_Medo_Automate_ALAT_AssignerMissionsHeliporterAListe", {} },
-        { "BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX", {} },
-        { "BEH_ROE_Automate_TirRestreint", {} },
-        { "BEH_Mission_Automate_AssignerStationnerAListe", {} },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "onHalt" } },
+        { "ACT_Ordre_Suppression", { "onHalt" } },
+        { "BEH_Medo_Automate_ALAT_HM_SynchroniserTransport", { "onHalt" } },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionsHeliporterAListe", { "onHalt" } },
+        { "BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX", { "onHalt" } },
+        { "BEH_ROE_Automate_TirRestreint", { "onHalt" } },
+        { "BEH_Mission_Automate_AssignerStationnerAListe", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ALAT_Helitransporter" } },
 
     create = function( self )
         self._namedParams = {}
@@ -57,7 +61,8 @@ include "bit.lua"
                     do
                         DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
                                                 self.params.__returnValue = eActionImpossible
-                        Halt( self )
+                        Feedback( self.feedbacks["onHalt"], { "MIS_Automate_CDT_ALAT_Helitransporter" } )
+Halt( self )
                         do return end
 
                     end
@@ -89,7 +94,8 @@ include "bit.lua"
             do
                 DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_CDT_ALAT_Helitransporter" } )
+Halt( self )
                 do return end
 
             end

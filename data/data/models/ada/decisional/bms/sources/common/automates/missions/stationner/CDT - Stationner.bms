@@ -19,8 +19,12 @@ includedFiles["sources/common/automates/missions/stationner/CDT - Stationner.bms
 {
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_Stationner" } },
 
     create = function( self )
         self._namedParams = {}
@@ -39,7 +43,8 @@ includedFiles["sources/common/automates/missions/stationner/CDT - Stationner.bms
         if( self.eEtatODC == eActionHalt ) then
             do
                                 self.params.__returnValue = eActionEffectuee
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_CDT_Stationner" } )
+Halt( self )
                 do return end
 
                 self.eEtatODC = eActionEnCours

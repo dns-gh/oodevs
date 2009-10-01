@@ -8,6 +8,8 @@ includedFiles["sources/appui/alat/automates/sgpt hm/missions/helitransporter/Hel
 ]]--[[//------------------------------------------------------------------------------
 ]]node "MIS_Automate_MRT_ALAT_Helitransporter"
 {
+    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_ALAT_Helitransporter" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission
@@ -23,7 +25,8 @@ includedFiles["sources/appui/alat/automates/sgpt hm/missions/helitransporter/Hel
                     do
                         DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
                                                 self.params.__returnValue = eActionImpossible
-                        Halt( self )
+                        Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_ALAT_Helitransporter" } )
+Halt( self )
                         do return end
 
                     end
@@ -37,7 +40,8 @@ includedFiles["sources/appui/alat/automates/sgpt hm/missions/helitransporter/Hel
                     do
                         DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
                                                 self.params.__returnValue = eActionImpossible
-                        Halt( self )
+                        Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_ALAT_Helitransporter" } )
+Halt( self )
                         do return end
 
                     end
@@ -49,7 +53,8 @@ includedFiles["sources/appui/alat/automates/sgpt hm/missions/helitransporter/Hel
 
         DEC_MRT_Valide()
                 self.params.__returnValue = eActionEffectuee
-        Halt( self )
+        Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_ALAT_Helitransporter" } )
+Halt( self )
         do return end
 
     end,

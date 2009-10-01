@@ -11,9 +11,13 @@ includedFiles["sources/appui/trans/automates/behaviors/Behaviors - Ordre.bms"] =
 {
     activations =
     {
-        { "BEH_Ordre_Automate_Interrompre_", {} },
-        { "ACT_Ordre_Suppression", {} },
+        { "BEH_Ordre_Automate_Interrompre_", { "onHalt" } },
+        { "ACT_Ordre_Suppression", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Ordre_Automate_RecevoirOrdreInopine" } },
 
     create = function( self )
     end,
@@ -54,8 +58,12 @@ node "BEH_Ordre_Automate_Interrompre_"
 {
     activations =
     {
-        { "ACT_Ordre_Automate_Interrompre", {} },
+        { "ACT_Ordre_Automate_Interrompre", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Ordre_Automate_Interrompre_" } },
 
     create = function( self )
     end,

@@ -15,8 +15,12 @@ includedFiles["sources/common/automates/behaviors/Behaviors - Misc.bms"] = true
 {
     activations =
     {
-        { "ACT_Misc_Automate_Gerer", {} },
+        { "ACT_Misc_Automate_Gerer", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Misc_Automate_GererLesMoyens" } },
 
     create = function( self )
     end,
@@ -43,6 +47,8 @@ includedFiles["sources/common/automates/behaviors/Behaviors - Misc.bms"] = true
 
 node "ACT_Misc_Automate_Gerer"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Misc_Automate_Gerer" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -74,8 +80,12 @@ node "ACT_Misc_Automate_Gerer"
 {
     activations =
     {
-        { "ACT_Automate_CreerObjetSur", {} },
+        { "ACT_Automate_CreerObjetSur", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Automate_CreerPosteControle" } },
 
     create = function( self )
         self._namedParams = {}
@@ -109,8 +119,12 @@ node "BEH_Automate_CreerZoneSecurisee"
 {
     activations =
     {
-        { "ACT_Automate_CreerObjetSur", {} },
+        { "ACT_Automate_CreerObjetSur", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Automate_CreerZoneSecurisee" } },
 
     create = function( self )
         self._namedParams = {}

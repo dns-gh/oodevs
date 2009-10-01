@@ -11,16 +11,20 @@ includedFiles["sources/melee/inf/pions/son vab/missions/OrganiserUnCheckPoint.bm
 {
     activations =
     {
-        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
-        { "BEH_Misc_Pion_DefinirTypeMission", {} },
-        { "BEH_MAJ_AgressiviteMission", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_Ordre_Suppression", {} },
-        { "BEH_Mission_Pion_VAB_OrganiserUnCheckPoint", {} },
-        { "BEH_Manoeuvre_RompreContact", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Poste_Pion_INF_TomberEnGarde", {} },
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", { "onHalt" } },
+        { "BEH_Misc_Pion_DefinirTypeMission", { "onHalt" } },
+        { "BEH_MAJ_AgressiviteMission", { "onHalt" } },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "ACT_Ordre_Suppression", { "onHalt" } },
+        { "BEH_Mission_Pion_VAB_OrganiserUnCheckPoint", { "onHalt" } },
+        { "BEH_Manoeuvre_RompreContact", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Poste_Pion_INF_TomberEnGarde", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_INF_OrganiserUnCheckPoint" } },
 
     create = function( self )
         self._namedParams = {}
@@ -113,7 +117,8 @@ elseif switch_1 == eFinMission then
 ]]DEC_Trace( "mission MIS_Pion_INF_Defendre: fin" )
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_INF_OrganiserUnCheckPoint" } )
+Halt( self )
                                 do return end
 
                             end
@@ -138,19 +143,25 @@ node "BEH_Mission_Pion_VAB_OrganiserUnCheckPoint"
 {
     activations =
     {
-        { "BEH_Mot_Pion_Embarquer", {} },
-        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", {} },
-        { "ACT_RC", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Obj_Pion_VAB_InstallerCheckPoint", {} },
-        { "BEH_Dispositif_Pion_VAB_InstallationDefensive", {} },
-        { "ACT_Misc_Pion_DelaiInstallation", {} },
+        { "BEH_Mot_Pion_Embarquer", { "onHalt" } },
+        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", { "onHalt" } },
+        { "ACT_RC", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Obj_Pion_VAB_InstallerCheckPoint", { "onHalt" } },
+        { "BEH_Dispositif_Pion_VAB_InstallationDefensive", { "onHalt" } },
+        { "ACT_Misc_Pion_DelaiInstallation", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_VAB_OrganiserUnCheckPoint" } },
 
     create = function( self )
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.mission = self.mission or DEC_GetMission( myself )
         self.ePhase = self.ePhase or eSeMettreEnPlace
         self.eAction = self.eAction or eActionEnCours
@@ -182,8 +193,8 @@ elseif switch_1 == eInstallerDispositif then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
                     --[[// On surveille la zone en meme temps que l'on prepare
 ]]--[[// On fait d'abord debarquer				
-]]StartActivate( self.activations.BEH_Obj_Pion_VAB_InstallerCheckPoint, 1.1, { self.mission.pointInstallation_, } )
-                    StartActivate( self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1.1, { self.mission.pointInstallation_, false, } )
+]]StartInstance( self, self.activations.BEH_Obj_Pion_VAB_InstallerCheckPoint, 1.1, { self.mission.pointInstallation_, } )
+                    StartInstance( self, self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1.1, { self.mission.pointInstallation_, false, } )
                     --[[// Demander aux appuis de se mettre en place.
 ]]--[[// preparation 5min
 ]]if( self.eAction == eActionEffectuee ) then

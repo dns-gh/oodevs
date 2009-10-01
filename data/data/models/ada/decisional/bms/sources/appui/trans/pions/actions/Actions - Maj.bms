@@ -14,6 +14,8 @@ includedFiles["sources/appui/trans/pions/actions/Actions - Maj.bms"] = true
         etat_Mission = 1,
     },
 
+    feedbacks = { { { "onHalt" }, "ACT_MAJ_EtatPhaseMission" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.eEtatPhaseMission = self.params[1]
@@ -44,6 +46,8 @@ includedFiles["sources/appui/trans/pions/actions/Actions - Maj.bms"] = true
     {
         etat_Destruction = 1,
     },
+
+    feedbacks = { { { "onHalt" }, "ACT_MAJ_EtatDestruction" } },
 
     create = function( self )
         self._namedParams = {}
@@ -77,6 +81,8 @@ includedFiles["sources/appui/trans/pions/actions/Actions - Maj.bms"] = true
         etat_Dec = 1,
     },
 
+    feedbacks = { { { "onHalt" }, "ACT_MAJ_EtatDec" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.eEtatDec = self.params[1]
@@ -108,6 +114,8 @@ includedFiles["sources/appui/trans/pions/actions/Actions - Maj.bms"] = true
     {
         etat_OrdreCoordination = 1,
     },
+
+    feedbacks = { { { "onHalt" }, "ACT_MAJ_EtatOrdreCoordination" } },
 
     create = function( self )
         self._namedParams = {}

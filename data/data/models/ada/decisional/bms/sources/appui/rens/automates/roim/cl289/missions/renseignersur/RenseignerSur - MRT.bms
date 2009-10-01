@@ -11,8 +11,12 @@ includedFiles["sources/appui/rens/automates/roim/cl289/missions/renseignersur/Re
 {
     activations =
     {
-        { "BEH_Medo_Automate_RENS_ROIM_AssignerMissions", {} },
+        { "BEH_Medo_Automate_RENS_ROIM_AssignerMissions", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_RENS_ROIM_CL289_RenseignerSur" } },
 
     create = function( self )
         self._namedParams = {}

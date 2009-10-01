@@ -28,23 +28,29 @@ includedFiles["sources/melee/inf/pions/grp mortier/missions/Appuyer.bms"] = true
 {
     activations =
     {
-        { "BEH_Misc_Pion_DefinirTypeMission", {} },
-        { "BEH_MAJ_AgressiviteMission", {} },
-        { "BEH_MOT_DesactiveSauvegarde", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "BEH_Ordre_Pion_Mortier_AppliquerLesFeux", {} },
-        { "ACT_Ordre_Suppression", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_Pion_INF_Appuyer", {} },
-        { "BEH_Poste_Pion_INF_TomberEnGarde", {} },
+        { "BEH_Misc_Pion_DefinirTypeMission", { "onHalt" } },
+        { "BEH_MAJ_AgressiviteMission", { "onHalt" } },
+        { "BEH_MOT_DesactiveSauvegarde", { "onHalt" } },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "BEH_Ordre_Pion_Mortier_AppliquerLesFeux", { "onHalt" } },
+        { "ACT_Ordre_Suppression", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Dep_Pion_INF_Appuyer", { "onHalt" } },
+        { "BEH_Poste_Pion_INF_TomberEnGarde", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_INF_Appuyer" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.eAction = self.eAction or eActionEnCours
         self.ePhase = self.ePhase or ePreparerMission
         self.repAmi = self.repAmi or self._namedParams.mission.uniteAAppuyer_
@@ -58,7 +64,8 @@ includedFiles["sources/melee/inf/pions/grp mortier/missions/Appuyer.bms"] = true
                     do
                         DEC_Warning( eRC_MissionImpossible )
                                                 self.params.__returnValue = eActionImpossible
-                        Halt( self )
+                        Feedback( self.feedbacks["onHalt"], { "MIS_Pion_INF_Appuyer" } )
+Halt( self )
                         do return end
 
                     end
@@ -90,7 +97,7 @@ do
                 if( repOrdreCond:GetType() == "Rep_OrderConduite_Pion_AppliquerFeux" ) then
                     do
                         local repOrdre_Tir = repOrdreCond
-                        StartActivate( self.activations.BEH_Ordre_Pion_Mortier_AppliquerLesFeux, 10, { repOrdre_Tir:GetpointCible_(), repOrdre_Tir:GetnbIT_(), repOrdre_Tir:Getmunitions_(), } )
+                        StartInstance( self, self.activations.BEH_Ordre_Pion_Mortier_AppliquerLesFeux, 10, { repOrdre_Tir:GetpointCible_(), repOrdre_Tir:GetnbIT_(), repOrdre_Tir:Getmunitions_(), } )
                     end
                 end
 
@@ -128,7 +135,8 @@ elseif switch_1 == eFinMission then
 
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_INF_Appuyer" } )
+Halt( self )
                                 do return end
 
                             end

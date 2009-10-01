@@ -23,21 +23,27 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Mot_Pion_Embarquer", {} },
-        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "ACT_RC", {} },
-        { "BEH_Dispositif_Pion_VAB_InstallationDefensive", {} },
-        { "ACT_Misc_Pion_DelaiInstallation", {} },
-        { "ACT_Dep_PasserEnModeFurtif", {} },
-        { "BEH_Pion_INF_Detruire_DetruireParCoupDeMain", {} },
+        { "BEH_Mot_Pion_Embarquer", { "onHalt" } },
+        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "ACT_RC", { "onHalt" } },
+        { "BEH_Dispositif_Pion_VAB_InstallationDefensive", { "onHalt" } },
+        { "ACT_Misc_Pion_DelaiInstallation", { "onHalt" } },
+        { "ACT_Dep_PasserEnModeFurtif", { "onHalt" } },
+        { "BEH_Pion_INF_Detruire_DetruireParCoupDeMain", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_INF_DetruireParCoupDeMain" } },
 
     create = function( self )
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.mission = self.mission or DEC_GetMission( myself )
         self.ePhase = self.ePhase or eSeMettreEnPlace
         self.eAction = self.eAction or eActionEnCours
@@ -52,13 +58,15 @@ include "bit.lua"
                                 do
                     DEC_Warning( eRC_MissionImpossible )
                                         self.params.__returnValue = eFinMission
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_INF_DetruireParCoupDeMain" } )
+Halt( self )
                     do return end
 
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_INF_DetruireParCoupDeMain" } )
+Halt( self )
                 do return end
 
             end
@@ -114,7 +122,7 @@ do
                     Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
                     --[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
-]]StartActivate( self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1.1, { self.mission.pointRegroupement_, false, } )
+]]StartInstance( self, self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1.1, { self.mission.pointRegroupement_, false, } )
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
@@ -142,7 +150,8 @@ do
                         do
                             self.eActionDeplacement = eActionEnCours
                                                         self.params.__returnValue = eFinMission
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_INF_DetruireParCoupDeMain" } )
+Halt( self )
                             do return end
 
                         end
@@ -174,12 +183,16 @@ node "BEH_Pion_INF_Detruire_DetruireParCoupDeMain"
 {
     activations =
     {
-        { "ACT_RC", {} },
-        { "ACT_Misc_Delai", {} },
-        { "ACT_Dep_SePoster", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Pion_INF_Detruire_CoupDeMain", {} },
+        { "ACT_RC", { "onHalt" } },
+        { "ACT_Misc_Delai", { "onHalt" } },
+        { "ACT_Dep_SePoster", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Pion_INF_Detruire_CoupDeMain", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Pion_INF_Detruire_DetruireParCoupDeMain" } },
 
     create = function( self )
         self._namedParams = {}
@@ -247,9 +260,13 @@ node "BEH_Obj_Pion_INF_DestructionTerrain_DansZone"
 {
     activations =
     {
-        { "ACT_Obj_Pion_INF_RealiserObjet", {} },
-        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Obj_Pion_INF_RealiserObjet", { "onHalt" } },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Obj_Pion_INF_DestructionTerrain_DansZone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -270,7 +287,8 @@ node "BEH_Obj_Pion_INF_DestructionTerrain_DansZone"
                 self.ptMission = S_Geometrie_BarycentreZone( self._namedParams.locZone )
                 if( ( self.ptMission == 0 or self.ptMission == nil ) ) then
                     self.params.__returnValue = eActionImpossible
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Obj_Pion_INF_DestructionTerrain_DansZone" } )
+Halt( self )
                     do return end
                 end
 
@@ -296,7 +314,8 @@ node "BEH_Obj_Pion_INF_DestructionTerrain_DansZone"
 
         if( self.bReturnHalt or self.eAction ~= eActionEnCours ) then
             self.params.__returnValue = self.eAction
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Obj_Pion_INF_DestructionTerrain_DansZone" } )
+Halt( self )
             do return end
         end
 
@@ -334,11 +353,15 @@ node "BEH_Pion_INF_Detruire_CoupDeMain"
 {
     activations =
     {
-        { "BEH_Obj_Pion_INF_Detruire_ElementsTerrain", {} },
-        { "BEH_Obj_Pion_INF_Detruire_Objets", {} },
-        { "BEH_Misc_Pion_DefinirTypeMission", {} },
-        { "BEH_Eni_Pion_VAB_Offensif_Manoeuvre", {} },
+        { "BEH_Obj_Pion_INF_Detruire_ElementsTerrain", { "onHalt" } },
+        { "BEH_Obj_Pion_INF_Detruire_Objets", { "onHalt" } },
+        { "BEH_Misc_Pion_DefinirTypeMission", { "onHalt" } },
+        { "BEH_Eni_Pion_VAB_Offensif_Manoeuvre", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Pion_INF_Detruire_CoupDeMain" } },
 
     create = function( self )
         self._namedParams = {}
@@ -378,16 +401,22 @@ node "BEH_Obj_Pion_INF_Detruire_Objets"
 {
     activations =
     {
-        { "BEH_Dep_Pion_INF_IntervenirSurObjectif", {} },
-        { "BEH_Obj_Pion_INF_DetruireObjet", {} },
+        { "BEH_Dep_Pion_INF_IntervenirSurObjectif", { "onHalt" } },
+        { "BEH_Obj_Pion_INF_DetruireObjet", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Obj_Pion_INF_Detruire_Objets" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.zone = self.params[1]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.ptZone = self.ptZone or S_Geometrie_BarycentreZone( self._namedParams.zone )
         if( ModuleBegins() ) then
             do
@@ -403,8 +432,8 @@ node "BEH_Obj_Pion_INF_Detruire_Objets"
             {    */]]--[[//    }
 ]]local rForceObj = S_Obj_ForceDistance( x_obj )
                         --[[// On ne fait qu'une seule manoeuvre par nuit
-]]StartActivate( self.activations.BEH_Dep_Pion_INF_IntervenirSurObjectif, rForceObj, { DEC_ConnaissanceObjet_Localisation( x_obj ), } )
-                        StartActivate( self.activations.BEH_Obj_Pion_INF_DetruireObjet, 1.5 * rForceObj, { x_obj, } )
+]]StartInstance( self, self.activations.BEH_Dep_Pion_INF_IntervenirSurObjectif, rForceObj, { DEC_ConnaissanceObjet_Localisation( x_obj ), } )
+                        StartInstance( self, self.activations.BEH_Obj_Pion_INF_DetruireObjet, 1.5 * rForceObj, { x_obj, } )
                                                 return
 
                     end
@@ -426,17 +455,23 @@ node "BEH_Obj_Pion_INF_Detruire_ElementsTerrain"
 {
     activations =
     {
-        { "BEH_Obj_Pion_INF_DestructionTerrain_DansZone", {} },
+        { "BEH_Obj_Pion_INF_DestructionTerrain_DansZone", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Obj_Pion_INF_Detruire_ElementsTerrain" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.zone = self.params[1]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         if( ModuleBegins() ) then
-            StartActivate( self.activations.BEH_Obj_Pion_INF_DestructionTerrain_DansZone, 1, { self._namedParams.zone, } )
+            StartInstance( self, self.activations.BEH_Obj_Pion_INF_DestructionTerrain_DansZone, 1, { self._namedParams.zone, } )
         end
 
     end,
@@ -457,8 +492,12 @@ node "BEH_Dep_Pion_INF_IntervenirSurObjectif"
 
     activations =
     {
-        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_INF_IntervenirSurObjectif" } },
 
     create = function( self )
         self._namedParams = {}
@@ -478,7 +517,8 @@ node "BEH_Dep_Pion_INF_IntervenirSurObjectif"
                             self.eAction = eActionEnCours
                                                         do
                                                                 self.params.__returnValue = eActionEffectuee
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_INF_IntervenirSurObjectif" } )
+Halt( self )
                                 do return end
 
                             end
@@ -510,23 +550,30 @@ node "BEH_Obj_Pion_INF_DetruireObjet"
 
     activations =
     {
-        { "ACT_Obj_Pion_INF_Detruire", {} },
+        { "ACT_Obj_Pion_INF_Detruire", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Obj_Pion_INF_DetruireObjet" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.ksObj = self.params[1]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.ksObj ) ) then
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Obj_Pion_INF_DetruireObjet" } )
+Halt( self )
             do return end
         end
 
         local locObj = DEC_ConnaissanceObjet_Localisation( self._namedParams.ksObj )
         if( S_Geometrie_EstProcheLocalisation( DEC_Agent_Position(), locObj, 250 ) ) then
-            StartActivate( self.activations.ACT_Obj_Pion_INF_Detruire, 1, { self._namedParams.ksObj, } )
+            StartInstance( self, self.activations.ACT_Obj_Pion_INF_Detruire, 1, { self._namedParams.ksObj, } )
         end
 
     end,

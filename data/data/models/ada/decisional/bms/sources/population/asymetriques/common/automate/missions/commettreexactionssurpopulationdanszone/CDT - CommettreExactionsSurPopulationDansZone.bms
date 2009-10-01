@@ -11,8 +11,12 @@ includedFiles["sources/population/asymetriques/common/automate/missions/commettr
 {
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ASY_CommettreExactionsSurPopulationDansZone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -31,7 +35,8 @@ includedFiles["sources/population/asymetriques/common/automate/missions/commettr
         if( self.eEtatODC == eActionHalt ) then
             do
                                 self.params.__returnValue = eActionEffectuee
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_CDT_ASY_CommettreExactionsSurPopulationDansZone" } )
+Halt( self )
                 do return end
 
                 self.eEtatODC = eActionEnCours

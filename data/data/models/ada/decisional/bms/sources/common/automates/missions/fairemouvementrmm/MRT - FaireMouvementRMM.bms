@@ -20,8 +20,12 @@ includedFiles["sources/common/automates/missions/fairemouvementrmm/MRT - FaireMo
 {
     activations =
     {
-        { "BEH_Automate_MRT_SeDeplacer", {} },
+        { "BEH_Automate_MRT_SeDeplacer", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_FaireMouvementRMM" } },
 
     create = function( self )
         self._namedParams = {}
@@ -72,7 +76,8 @@ elseif switch_1 == eTerminerMission then
                     --[[//Fin MRT
 ]]DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_FaireMouvementRMM" } )
+Halt( self )
                     do return end
 
                 end

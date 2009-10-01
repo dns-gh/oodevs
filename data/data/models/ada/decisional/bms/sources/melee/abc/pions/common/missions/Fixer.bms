@@ -23,13 +23,17 @@ includedFiles["sources/melee/abc/pions/common/missions/Fixer.bms"] = true
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "BEH_MAJ_Pion_ABC_AgressiviteTir", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "BEH_MAJ_Pion_ABC_AgressiviteTir", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "ACT_Info_Trace", { "onHalt" } },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_ABC_Fixer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -45,7 +49,8 @@ includedFiles["sources/melee/abc/pions/common/missions/Fixer.bms"] = true
         self.positionEni = self.positionEni or DEC_ConnaissanceAgent_Position( self._namedParams.mission.uniteAFixer_ )
         --[[// si la position de la connaissance n'est pas valide
 ]]if( ( self.positionEni == 0 or self.positionEni == nil ) ) then
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_ABC_Fixer" } )
+Halt( self )
             do return end
         end
 
@@ -64,7 +69,8 @@ includedFiles["sources/melee/abc/pions/common/missions/Fixer.bms"] = true
 
         if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_ABC_Fixer" } )
+Halt( self )
             do return end
         end
 

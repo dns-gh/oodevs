@@ -11,13 +11,17 @@ includedFiles["sources/common/automates/behaviors/Behaviors - Ordre.bms"] = true
 {
     activations =
     {
-        { "BEH_Ordre_Automate_Ralentir_", {} },
-        { "BEH_Ordre_Automate_Attendre_", {} },
-        { "BEH_Ordre_Automate_Poursuivre_", {} },
-        { "BEH_Ordre_Automate_Decrocher_", {} },
-        { "BEH_Ordre_Automate_TenirSurLR_", {} },
-        { "BEH_Ordre_Automate_Tenir_", {} },
+        { "BEH_Ordre_Automate_Ralentir_", { "onHalt" } },
+        { "BEH_Ordre_Automate_Attendre_", { "onHalt" } },
+        { "BEH_Ordre_Automate_Poursuivre_", { "onHalt" } },
+        { "BEH_Ordre_Automate_Decrocher_", { "onHalt" } },
+        { "BEH_Ordre_Automate_TenirSurLR_", { "onHalt" } },
+        { "BEH_Ordre_Automate_Tenir_", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_MAJ_Automate_RecevoirOrdreGE" } },
 
     create = function( self )
     end,
@@ -64,18 +68,24 @@ node "BEH_Ordre_Automate_RecevoirOrdreInopine"
 {
     activations =
     {
-        { "BEH_Ordre_Automate_Interrompre_", {} },
-        { "BEH_Ordre_Automate_Attendre_", {} },
-        { "BEH_Ordre_Automate_Poursuivre_", {} },
-        { "BEH_Ordre_Automate_AmbianceSurete_", {} },
-        { "BEH_Ordre_Automate_AmbianceVitesse_", {} },
-        { "ACT_Ordre_Suppression", {} },
+        { "BEH_Ordre_Automate_Interrompre_", { "onHalt" } },
+        { "BEH_Ordre_Automate_Attendre_", { "onHalt" } },
+        { "BEH_Ordre_Automate_Poursuivre_", { "onHalt" } },
+        { "BEH_Ordre_Automate_AmbianceSurete_", { "onHalt" } },
+        { "BEH_Ordre_Automate_AmbianceVitesse_", { "onHalt" } },
+        { "ACT_Ordre_Suppression", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Ordre_Automate_RecevoirOrdreInopine" } },
 
     create = function( self )
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
                 local ordres_recus = DEC_GetCategory( "ordres_recus" )
         for _,x in pairs( ordres_recus ) do
         local _continue = true
@@ -94,14 +104,14 @@ do
                         elseif switch_1 == "Rep_OrderConduite_AttendreSePoster" then
                             DEC_Trace( "$ --- ORDRE Attendre ---$" )
                             g_bOrdreAnibas = true
-                            StartActivate( self.activations.BEH_Ordre_Automate_Attendre_, 1, {} )
+                            StartInstance( self, self.activations.BEH_Ordre_Automate_Attendre_, 1, {} )
                             
                                                 cases_switch_1[2] = true
 elseif switch_1 == "Rep_OrderConduite_Deboucher"
                         or switch_1 == "Rep_OrderConduite_Poursuivre" then
                             DEC_Trace( "$ --- ORDRE Poursuivre ---$" )
                             g_bOrdreAnibas = false
-                            StopActivate( self.activations.BEH_Ordre_Automate_Attendre_, {} )
+                            StopInstance( self, self.activations.BEH_Ordre_Automate_Attendre_, {} )
                             Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )--[[// Cas des LC
 ]]
                             
@@ -146,8 +156,12 @@ node "BEH_Ordre_Automate_Interrompre_"
 {
     activations =
     {
-        { "ACT_Ordre_Automate_Interrompre", {} },
+        { "ACT_Ordre_Automate_Interrompre", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Ordre_Automate_Interrompre_" } },
 
     create = function( self )
     end,
@@ -176,8 +190,12 @@ node "BEH_Ordre_Automate_Attendre_"
 {
     activations =
     {
-        { "ACT_Ordre_Automate_Pause", {} },
+        { "ACT_Ordre_Automate_Pause", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Ordre_Automate_Attendre_" } },
 
     create = function( self )
     end,
@@ -220,8 +238,12 @@ node "BEH_Ordre_Automate_Ralentir_"
 {
     activations =
     {
-        { "ACT_Ordre_Automate_Ralentir", {} },
+        { "ACT_Ordre_Automate_Ralentir", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Ordre_Automate_Ralentir_" } },
 
     create = function( self )
     end,
@@ -265,8 +287,12 @@ node "BEH_Ordre_Automate_Poursuivre_"
 {
     activations =
     {
-        { "ACT_Ordre_Automate_Continue", {} },
+        { "ACT_Ordre_Automate_Continue", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Ordre_Automate_Poursuivre_" } },
 
     create = function( self )
     end,
@@ -293,8 +319,12 @@ node "BEH_Ordre_Automate_Decrocher_"
 {
     activations =
     {
-        { "ACT_Ordre_Automate_Decrocher", {} },
+        { "ACT_Ordre_Automate_Decrocher", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Ordre_Automate_Decrocher_" } },
 
     create = function( self )
     end,
@@ -321,8 +351,12 @@ node "BEH_Ordre_Automate_AmbianceSurete_"
 {
     activations =
     {
-        { "ACT_Ordre_Automate_PasserEnAmbianceSurete", {} },
+        { "ACT_Ordre_Automate_PasserEnAmbianceSurete", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Ordre_Automate_AmbianceSurete_" } },
 
     create = function( self )
     end,
@@ -349,8 +383,12 @@ node "BEH_Ordre_Automate_AmbianceVitesse_"
 {
     activations =
     {
-        { "ACT_Ordre_Automate_PasserEnAmbianceVitesse", {} },
+        { "ACT_Ordre_Automate_PasserEnAmbianceVitesse", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Ordre_Automate_AmbianceVitesse_" } },
 
     create = function( self )
     end,
@@ -377,8 +415,12 @@ node "BEH_Ordre_Automate_TenirSurLR_"
 {
     activations =
     {
-        { "ACT_Ordre_Automate_TenirSurLR", {} },
+        { "ACT_Ordre_Automate_TenirSurLR", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Ordre_Automate_TenirSurLR_" } },
 
     create = function( self )
     end,
@@ -405,8 +447,12 @@ node "BEH_Ordre_Automate_Tenir_"
 {
     activations =
     {
-        { "ACT_Ordre_Automate_Tenir", {} },
+        { "ACT_Ordre_Automate_Tenir", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Ordre_Automate_Tenir_" } },
 
     create = function( self )
     end,

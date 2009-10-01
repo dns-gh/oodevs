@@ -13,19 +13,25 @@ includedFiles["sources/appui/rens/pions/radint/common/missions/FaireMouvement.bm
 {
     activations =
     {
-        { "ACT_Dep_Pion_RENS_VolerA", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Dep_ProgressionSur", {} },
+        { "ACT_Dep_Pion_RENS_VolerA", { "onHalt" } },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "ACT_Info_Trace", { "onHalt" } },
+        { "BEH_Dep_ProgressionSur", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_FaireMouvement" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.ePhase = self.ePhase or ePreparerMission
         self.eEtat = self.eEtat or eActionEnCours
         if( ModuleBegins() ) then
@@ -38,7 +44,7 @@ includedFiles["sources/appui/rens/pions/radint/common/missions/FaireMouvement.bm
                 local position = DEC_Geometrie_PositionAleatoireDansCercle( pointFinItineraire, 300 )
                 DEC_ListePoints_PushBack( self._namedParams.mission.itineraire_, position )
                 DEC_Trace( "** MIS_Pion_FaireMouvement **" )
-                StartActivate( self.activations.ACT_Dep_Pion_RENS_VolerA, 1, { 30, } )
+                StartInstance( self, self.activations.ACT_Dep_Pion_RENS_VolerA, 1, { 30, } )
             end
         end
 
@@ -83,7 +89,7 @@ elseif switch_1 == eProgresser then
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    StopActivate( self.activations.ACT_Dep_Pion_RENS_VolerA, { 30, } )
+                    StopInstance( self, self.activations.ACT_Dep_Pion_RENS_VolerA, { 30, } )
                     
                                 cases_switch_1[3] = true
                 end

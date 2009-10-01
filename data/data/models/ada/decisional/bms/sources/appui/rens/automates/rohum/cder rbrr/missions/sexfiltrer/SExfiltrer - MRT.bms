@@ -11,8 +11,12 @@ includedFiles["sources/appui/rens/automates/rohum/cder rbrr/missions/sexfiltrer/
 {
     activations =
     {
-        { "BEH_Medo_Automate_RENS_ROHUM_AssignerMissions", {} },
+        { "BEH_Medo_Automate_RENS_ROHUM_AssignerMissions", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_RENS_ROHUM_SExfiltrer" } },
 
     create = function( self )
         self._namedParams = {}

@@ -12,19 +12,23 @@ include "bit.lua"
 {
     activations =
     {
-        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_Maj_Pions_ObjectifEsquive", {} },
-        { "ACT_Maj_Pions_ObjectifCourant", {} },
-        { "ACT_Obs_EtablirVisionCur", {} },
-        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Obs_Pion_ALAT_ReconnaitreZone", {} },
-        { "BEH_Eni_Pion_ALAT_GererEniRecoDansLaProfondeur", {} },
-        { "BEH_Manoeuvre_Pion_AllerStationner", {} },
-        { "BEH_Dep_Pion_ALAT_SePoser", {} },
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", { "onHalt" } },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "ACT_Maj_Pions_ObjectifEsquive", { "onHalt" } },
+        { "ACT_Maj_Pions_ObjectifCourant", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionCur", { "onHalt" } },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "ACT_Info_Trace", { "onHalt" } },
+        { "BEH_Obs_Pion_ALAT_ReconnaitreZone", { "onHalt" } },
+        { "BEH_Eni_Pion_ALAT_GererEniRecoDansLaProfondeur", { "onHalt" } },
+        { "BEH_Manoeuvre_Pion_AllerStationner", { "onHalt" } },
+        { "BEH_Dep_Pion_ALAT_SePoser", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_ALAT_ReconnaitreDansLaProfondeur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -51,7 +55,8 @@ include "bit.lua"
                     do
                         DEC_Warning( eRC_MissionImpossible )
                                                 self.params.__returnValue = eActionImpossible
-                        Halt( self )
+                        Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_ReconnaitreDansLaProfondeur" } )
+Halt( self )
                         do return end
 
                     end
@@ -104,13 +109,15 @@ include "bit.lua"
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self.params.__returnValue = eActionImpossible
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_ReconnaitreDansLaProfondeur" } )
+Halt( self )
                                 do return end
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_ReconnaitreDansLaProfondeur" } )
+Halt( self )
                             do return end
 
                         end
@@ -171,13 +178,15 @@ elseif switch_1 == eReconnaitre then
                                                         do
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self.params.__returnValue = eActionImpossible
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_ReconnaitreDansLaProfondeur" } )
+Halt( self )
                                 do return end
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_ReconnaitreDansLaProfondeur" } )
+Halt( self )
                             do return end
 
                         end
@@ -229,13 +238,15 @@ elseif switch_1 == eSExfiltrer then
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self.params.__returnValue = eActionImpossible
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_ReconnaitreDansLaProfondeur" } )
+Halt( self )
                                 do return end
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_ReconnaitreDansLaProfondeur" } )
+Halt( self )
                             do return end
 
                         end
@@ -255,7 +266,8 @@ elseif switch_1 == eFinMission then
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
-                                Halt( self )
+                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_ReconnaitreDansLaProfondeur" } )
+Halt( self )
                                 do return end
 
                             end
@@ -286,8 +298,12 @@ node "BEH_Eni_Pion_ALAT_GererEniRecoDansLaProfondeur"
 {
     activations =
     {
-        { "BEH_Obs_Pion_ALAT_ReconnaitreUnite", {} },
+        { "BEH_Obs_Pion_ALAT_ReconnaitreUnite", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_ALAT_GererEniRecoDansLaProfondeur" } },
 
     create = function( self )
         self._namedParams = {}

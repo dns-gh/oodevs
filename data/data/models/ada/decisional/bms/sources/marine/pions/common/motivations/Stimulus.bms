@@ -21,6 +21,8 @@ motivation_plugin.motivations = motivation_plugin.motivations or {}
 motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_Mission"
 node "ActivationForSTIM_Mission"
 {
+    feedbacks = { { { "onHalt" }, "ActivationForSTIM_Mission" } },
+
     activate = function( self )
         if( DEC_GetMission( myself ) ~= nil ) then
             SetStimulus( "STIM_Mission", 1 )
@@ -40,6 +42,8 @@ node "ActivationForSTIM_Mission"
 motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_PriseAPartieTirDirect"
 node "ActivationForSTIM_PriseAPartieTirDirect"
 {
+    feedbacks = { { { "onHalt" }, "ActivationForSTIM_PriseAPartieTirDirect" } },
+
     activate = function( self )
         local listeEniPAP = DEC_Connaissances_AgentsPrenantAPartie()
         if( not DIA_IsListEmpty( listeEniPAP ) ) then
@@ -60,6 +64,8 @@ node "ActivationForSTIM_PriseAPartieTirDirect"
 motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_PriseAPartieTirInDirect"
 node "ActivationForSTIM_PriseAPartieTirInDirect"
 {
+    feedbacks = { { { "onHalt" }, "ActivationForSTIM_PriseAPartieTirInDirect" } },
+
     activate = function( self )
     --[[// $$$$ MIA 2004-11-03: a faire
 ]]--[[// *****************************************************************************
@@ -74,6 +80,8 @@ node "ActivationForSTIM_PriseAPartieTirInDirect"
 motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_PopulationDangereuse"
 node "ActivationForSTIM_PopulationDangereuse"
 {
+    feedbacks = { { { "onHalt" }, "ActivationForSTIM_PopulationDangereuse" } },
+
     activate = function( self )
         local lstPops = DEC_Connaissances_Populations()
         for _,pop in pairs( lstPops ) do
@@ -105,6 +113,8 @@ do
 motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_PriseAPartiParPopulation"
 node "ActivationForSTIM_PriseAPartiParPopulation"
 {
+    feedbacks = { { { "onHalt" }, "ActivationForSTIM_PriseAPartiParPopulation" } },
+
     activate = function( self )
         if( not DIA_IsListEmpty( DEC_Connaissances_PopulationsPrenantAPartie() ) ) then
             do
@@ -126,6 +136,8 @@ node "ActivationForSTIM_PriseAPartiParPopulation"
 motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_TenirFaceAPopulation"
 node "ActivationForSTIM_TenirFaceAPopulation"
 {
+    feedbacks = { { { "onHalt" }, "ActivationForSTIM_TenirFaceAPopulation" } },
+
     activate = function( self )
         if( ( DEC_Agent_EtatOpsMajeur() == 0 or DEC_Agent_EtatOpsMajeur() == nil ) ) then
             do

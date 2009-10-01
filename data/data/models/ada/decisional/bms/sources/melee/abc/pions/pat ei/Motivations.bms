@@ -55,8 +55,12 @@ node "ActivatedByMOT_SInfiltrer"
 {
     activations =
     {
-        { "BEH_Pion_ABC_GarderSesDistancesPourSInfiltrer", {} },
+        { "BEH_Pion_ABC_GarderSesDistancesPourSInfiltrer", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "ActivatedByMOT_SInfiltrer" } },
 
     create = function( self )
     end,
@@ -117,8 +121,12 @@ node "ActivatedByMOT_PoursuivreFaceAEni"
 {
     activations =
     {
-        { "BEH_MOT_DesactiveSauvegarde", {} },
+        { "BEH_MOT_DesactiveSauvegarde", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "ActivatedByMOT_PoursuivreFaceAEni" } },
 
     create = function( self )
     end,

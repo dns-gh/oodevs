@@ -6,6 +6,8 @@ includedFiles["sources/appui/artdsa/automates/sgpt sacp roland carol/missions/de
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "MIS_Automate_CDT_ASA_DefendreZone"
 {
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ASA_DefendreZone" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission

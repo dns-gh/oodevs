@@ -29,9 +29,13 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Dispositif_Automate_ABC_AssignerSoutienAuPE", {} },
-        { "BEH_Dispositif_Automate_ABC_GererMortier", {} },
+        { "BEH_Dispositif_Automate_ABC_AssignerSoutienAuPE", { "onHalt" } },
+        { "BEH_Dispositif_Automate_ABC_GererMortier", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dispositif_Automate_ABC_GererLesAppuis_" } },
 
     create = function( self )
     end,
@@ -58,8 +62,12 @@ node "BEH_Dispositif_Automate_ABC_GererMortier"
 {
     activations =
     {
-        { "BEH_Mission_Automate_INF_AssignerAppuyerA", {} },
+        { "BEH_Mission_Automate_INF_AssignerAppuyerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dispositif_Automate_ABC_GererMortier" } },
 
     create = function( self )
     end,
@@ -86,8 +94,12 @@ node "BEH_Dispositif_Automate_ABC_AssignerSoutienAuPE"
 {
     activations =
     {
-        { "BEH_Dispositif_Automate_ABC_AssignerSoutien", {} },
+        { "BEH_Dispositif_Automate_ABC_AssignerSoutien", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dispositif_Automate_ABC_AssignerSoutienAuPE" } },
 
     create = function( self )
     end,
@@ -138,8 +150,12 @@ node "BEH_Dispositif_Automate_ABC_AssignerSoutien"
 
     activations =
     {
-        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", {} },
+        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dispositif_Automate_ABC_AssignerSoutien" } },
 
     create = function( self )
         self._namedParams = {}
@@ -166,8 +182,12 @@ node "BEH_Dispositif_Automate_ABC_RendreDisposnibleLeSE"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSuivreA", {} },
+        { "BEH_Mission_Automate_AssignerSuivreA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dispositif_Automate_ABC_RendreDisposnibleLeSE" } },
 
     create = function( self )
     end,
@@ -214,9 +234,13 @@ node "BEH_Dispositif_Automate_ABC_GererLeDispositif_"
 {
     activations =
     {
-        { "BEH_Dispositif_Automate_ABC_GererPionsDetruits_", {} },
-        { "BEH_Dispositif_Automate_ABC_GererLeSE_", {} },
+        { "BEH_Dispositif_Automate_ABC_GererPionsDetruits_", { "onHalt" } },
+        { "BEH_Dispositif_Automate_ABC_GererLeSE_", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dispositif_Automate_ABC_GererLeDispositif_" } },
 
     create = function( self )
         self._namedParams = {}
@@ -273,8 +297,12 @@ node "BEH_Dispositif_Automate_ABC_GererLeSE_"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerMissionsSE", {} },
+        { "BEH_Mission_Automate_AssignerMissionsSE", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dispositif_Automate_ABC_GererLeSE_" } },
 
     create = function( self )
     end,
@@ -326,8 +354,12 @@ node "BEH_Mission_Automate_AssignerMissionsSE"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSuivreA", {} },
+        { "BEH_Mission_Automate_AssignerSuivreA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_AssignerMissionsSE" } },
 
     create = function( self )
         self._namedParams = {}
@@ -351,7 +383,8 @@ node "BEH_Mission_Automate_AssignerMissionsSE"
 ]]        end
 
         if( ( DEC_GetMission( self._namedParams.pion ) == 0 or DEC_GetMission( self._namedParams.pion ) == nil ) and F_Pion_GeteEtatDestruction( self._namedParams.pion ) ~= eEtatDestruction_Total ) then
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Automate_AssignerMissionsSE" } )
+Halt( self )
             do return end
         end
 
@@ -369,13 +402,19 @@ node "BEH_Dispositif_Automate_ABC_GererLeDispositifRetrograde_"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerDecrocherA", {} },
+        { "BEH_Mission_Automate_AssignerDecrocherA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dispositif_Automate_ABC_GererLeDispositifRetrograde_" } },
 
     create = function( self )
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.positionArrivee = self.positionArrivee or DEC_Geometrie_CalculerPointArrivee()
         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Mission aux pions sans missions --> Faire mouveemnt vers la fin du fuseau 
@@ -384,7 +423,7 @@ node "BEH_Dispositif_Automate_ABC_GererLeDispositifRetrograde_"
         local _continue = true
 do
                 local pionDEC = pion
-                StartActivate( self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, pion, self.positionArrivee, F_Pion_GeteEtatEchelon( pionDEC ), } )
+                StartInstance( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, pion, self.positionArrivee, F_Pion_GeteEtatEchelon( pionDEC ), } )
             end
 
         end
@@ -403,9 +442,13 @@ node "BEH_Dispositif_Automate_ABC_GererLeDispositifStatique_"
 {
     activations =
     {
-        { "BEH_Dispositif_Automate_ABC_GererPionsDetruits_", {} },
-        { "BEH_Dispositif_Automate_ABC_GererLeSEStatique_", {} },
+        { "BEH_Dispositif_Automate_ABC_GererPionsDetruits_", { "onHalt" } },
+        { "BEH_Dispositif_Automate_ABC_GererLeSEStatique_", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dispositif_Automate_ABC_GererLeDispositifStatique_" } },
 
     create = function( self )
         self._namedParams = {}
@@ -460,15 +503,21 @@ node "BEH_Dispositif_Automate_ABC_GererLeSEStatique_"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerFaireMouvementA", {} },
+        { "BEH_Mission_Automate_AssignerFaireMouvementA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dispositif_Automate_ABC_GererLeSEStatique_" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.positionInstallation = self.params[1]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.point = self.point or nil
         self.listePoints = self.listePoints or {}
         self.direction = self.direction or nil
@@ -500,7 +549,7 @@ node "BEH_Dispositif_Automate_ABC_GererLeSEStatique_"
 
                                 self.point = DEC_ListePoints_GetAt( self.listePoints, rIterateurPoint )
                                 self.point = DEC_Geometrie_PositionTranslateDir( self.point, self.direction, 1500 )
-                                StartActivate( self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, 1, { ePhase_CDT, pion, self.point, eEtatEchelon_Second, } )
+                                StartInstance( self, self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, 1, { ePhase_CDT, pion, self.point, eEtatEchelon_Second, } )
                                                                 rIterateurPoint = rIterateurPoint + 1
                             end
 
@@ -533,9 +582,13 @@ node "BEH_Dispositif_Automate_ABC_GererLeDispositifStatiqueSurLima_"
 {
     activations =
     {
-        { "BEH_Dispositif_Automate_ABC_GererPionsDetruits_", {} },
-        { "BEH_Dispositif_Automate_ABC_GererLeSEStatiqueSurLima_", {} },
+        { "BEH_Dispositif_Automate_ABC_GererPionsDetruits_", { "onHalt" } },
+        { "BEH_Dispositif_Automate_ABC_GererLeSEStatiqueSurLima_", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dispositif_Automate_ABC_GererLeDispositifStatiqueSurLima_" } },
 
     create = function( self )
         self._namedParams = {}
@@ -590,15 +643,21 @@ node "BEH_Dispositif_Automate_ABC_GererLeSEStatiqueSurLima_"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerFaireMouvementA", {} },
+        { "BEH_Mission_Automate_AssignerFaireMouvementA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Dispositif_Automate_ABC_GererLeSEStatiqueSurLima_" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.lima = self.params[1]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.point = self.point or nil
         self.listePoints = self.listePoints or {}
         self.direction = self.direction or nil
@@ -629,7 +688,7 @@ node "BEH_Dispositif_Automate_ABC_GererLeSEStatiqueSurLima_"
 
                                 self.point = DEC_ListePoints_GetAt( self.listePoints, rIterateurPoint )
                                 self.point = DEC_Geometrie_PositionTranslateDir( self.point, self.direction, 1500 )
-                                StartActivate( self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, 1, { ePhase_CDT, pion, self.point, eEtatEchelon_Second, } )
+                                StartInstance( self, self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, 1, { ePhase_CDT, pion, self.point, eEtatEchelon_Second, } )
                                                                 rIterateurPoint = rIterateurPoint + 1
                             end
 

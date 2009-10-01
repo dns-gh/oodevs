@@ -9,6 +9,8 @@ includedFiles["sources/appui/circulation/automates/missions/appuyermouvementunit
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_LOG_AppuyerMouvement"
 {
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_LOG_AppuyerMouvement" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission

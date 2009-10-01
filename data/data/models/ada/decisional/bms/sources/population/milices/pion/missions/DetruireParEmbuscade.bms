@@ -20,16 +20,20 @@ node "MIS_Pion_MILICE_DetruireEmbuscade"
 {
     activations =
     {
-        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
-        { "BEH_Misc_Pion_DefinirTypeMission", {} },
-        { "BEH_MAJ_AgressiviteMission", {} },
-        { "ACT_Misc_Pion_MILICE_MAJ_PositionRegroupement", {} },
-        { "BEH_Ordre_Inopine", {} },
-        { "BEH_Eni_Pion_Milice_DetruireEmbuscade", {} },
-        { "BEH_Mission_Pion_Milice_DetruireEmbuscade", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", { "onHalt" } },
+        { "BEH_Misc_Pion_DefinirTypeMission", { "onHalt" } },
+        { "BEH_MAJ_AgressiviteMission", { "onHalt" } },
+        { "ACT_Misc_Pion_MILICE_MAJ_PositionRegroupement", { "onHalt" } },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "BEH_Eni_Pion_Milice_DetruireEmbuscade", { "onHalt" } },
+        { "BEH_Mission_Pion_Milice_DetruireEmbuscade", { "onHalt" } },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_MILICE_DetruireEmbuscade" } },
 
     create = function( self )
         self._namedParams = {}
@@ -137,7 +141,8 @@ elseif switch_1 == eFinMission then
                         do
                             DEC_FinMission()
                                                         self.params.__returnValue = eActionEffectuee
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_MILICE_DetruireEmbuscade" } )
+Halt( self )
                             do return end
 
                         end
@@ -161,21 +166,27 @@ node "BEH_Mission_Pion_Milice_DetruireEmbuscade"
 {
     activations =
     {
-        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", {} },
-        { "ACT_RC", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Dep_PasserEnModeFurtif", {} },
-        { "BEH_Obj_Pion_INF_GererInstallationObstacle", {} },
-        { "BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc", {} },
-        { "ACT_Dep_Pion_MILICE_ActiverFurtivite", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
-        { "ACT_Obs_ObserverZone", {} },
+        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", { "onHalt" } },
+        { "ACT_RC", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "ACT_Dep_PasserEnModeFurtif", { "onHalt" } },
+        { "BEH_Obj_Pion_INF_GererInstallationObstacle", { "onHalt" } },
+        { "BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc", { "onHalt" } },
+        { "ACT_Dep_Pion_MILICE_ActiverFurtivite", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "onHalt" } },
+        { "ACT_Obs_ObserverZone", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_Milice_DetruireEmbuscade" } },
 
     create = function( self )
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.mission = self.mission or DEC_GetMission( myself )
         self.ePhase = self.ePhase or eRejoindre
         self.eAction = self.eAction or eActionEnCours
@@ -199,13 +210,15 @@ node "BEH_Mission_Pion_Milice_DetruireEmbuscade"
                                 do
                     DEC_RC( eRC_MissionImpossible )
                                         self.params.__returnValue = eFinMission
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_Milice_DetruireEmbuscade" } )
+Halt( self )
                     do return end
 
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_Milice_DetruireEmbuscade" } )
+Halt( self )
                 do return end
 
             end
@@ -238,14 +251,14 @@ node "BEH_Mission_Pion_Milice_DetruireEmbuscade"
 elseif switch_1 == eInstallerDispositif then
                     Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
-                    StartActivate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )--[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
+                    StartInstance( self, self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )--[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
 ]]--[[// On fait en sorte de ne pas etre vu
 ]]
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
                                                         do
-                                StartActivate( self.activations.BEH_Obj_Pion_INF_GererInstallationObstacle, 1.5, { self.ptEmbuscade, self.mission.natureObstacle_, } )
+                                StartInstance( self, self.activations.BEH_Obj_Pion_INF_GererInstallationObstacle, 1.5, { self.ptEmbuscade, self.mission.natureObstacle_, } )
                                 self.ePhase = eSurveiller
                                                                 self.params.__returnValue = self.ePhase
                                 return
@@ -287,8 +300,12 @@ node "BEH_Eni_Pion_Milice_DetruireEmbuscade"
 {
     activations =
     {
-        { "BEH_Eni_Pion_INF_DetruireEmbuscade", {} },
+        { "BEH_Eni_Pion_INF_DetruireEmbuscade", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_Milice_DetruireEmbuscade" } },
 
     create = function( self )
         self._namedParams = {}

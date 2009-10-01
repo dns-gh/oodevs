@@ -11,8 +11,12 @@ includedFiles["sources/appui/circulation/pions/missions/aide a mobilite dans zon
 {
     activations =
     {
-        { "BEH_Pion_CIRCU_RealiserObjetDansZone", {} },
+        { "BEH_Pion_CIRCU_RealiserObjetDansZone", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_LOG_BloquerZone" } },
 
     create = function( self )
         self._namedParams = {}

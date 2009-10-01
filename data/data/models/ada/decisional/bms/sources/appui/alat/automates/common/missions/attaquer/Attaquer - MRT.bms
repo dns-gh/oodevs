@@ -8,6 +8,8 @@ includedFiles["sources/appui/alat/automates/common/missions/attaquer/Attaquer - 
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "MIS_Automate_MRT_ALAT_Attaquer"
 {
+    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_ALAT_Attaquer" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission
@@ -26,7 +28,8 @@ includedFiles["sources/appui/alat/automates/common/missions/attaquer/Attaquer - 
                     do
                         DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
                                                 self.params.__returnValue = eActionImpossible
-                        Halt( self )
+                        Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_ALAT_Attaquer" } )
+Halt( self )
                         do return end
 
                     end
@@ -37,7 +40,8 @@ includedFiles["sources/appui/alat/automates/common/missions/attaquer/Attaquer - 
 
         DEC_MRT_Valide()
                 self.params.__returnValue = eActionEffectuee
-        Halt( self )
+        Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_ALAT_Attaquer" } )
+Halt( self )
         do return end
 
     end,

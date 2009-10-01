@@ -17,21 +17,27 @@ node "BEH_Conduite_Automate_INF_RompreContact"
 {
     activations =
     {
-        { "BEH_Conduite_Automate_INF_DesactiveSauvegarde", {} },
-        { "BEH_CoordDep_Automate_INF_Retrograde", {} },
-        { "BEH_Conduite_Automate_INF_GererAppuis_INF", {} },
-        { "BEH_Conduite_Automate_INF_GererAppui_Mortier", {} },
-        { "BEH_Conduite_Automate_INF_GererAppuis_ABC", {} },
+        { "BEH_Conduite_Automate_INF_DesactiveSauvegarde", { "onHalt" } },
+        { "BEH_CoordDep_Automate_INF_Retrograde", { "onHalt" } },
+        { "BEH_Conduite_Automate_INF_GererAppuis_INF", { "onHalt" } },
+        { "BEH_Conduite_Automate_INF_GererAppui_Mortier", { "onHalt" } },
+        { "BEH_Conduite_Automate_INF_GererAppuis_ABC", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_RompreContact" } },
 
     create = function( self )
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         if( ModuleBegins() ) then
             do
                 --[[// Comportements non continues
-]]StartActivate( self.activations.BEH_Conduite_Automate_INF_DesactiveSauvegarde, 1, { 30, } )
+]]StartInstance( self, self.activations.BEH_Conduite_Automate_INF_DesactiveSauvegarde, 1, { 30, } )
             end
 --[[// 30 min
 ]]--[[//-----------------------------------------------------------------------------

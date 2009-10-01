@@ -11,8 +11,12 @@ includedFiles["sources/appui/genie/automates/cie blindee/missions/degager obstac
 {
     activations =
     {
-        { "ACT_Warning", {} },
+        { "ACT_Warning", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_GEN_DegagerObstaclesDansZone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -36,7 +40,8 @@ includedFiles["sources/appui/genie/automates/cie blindee/missions/degager obstac
                 if( ( #( listePionsGenie ) == 0 or #( listePionsGenie ) == nil ) ) then
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
-                                                Halt( self )
+                                                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_GEN_DegagerObstaclesDansZone" } )
+Halt( self )
                         do return end
 
                     end

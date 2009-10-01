@@ -11,8 +11,12 @@ includedFiles["sources/appui/genie/automates/cie blindee/missions/realiser trava
 {
     activations =
     {
-        { "ACT_Warning", {} },
+        { "ACT_Warning", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_GEN_RealiserTravaux" } },
 
     create = function( self )
         self._namedParams = {}
@@ -35,7 +39,8 @@ includedFiles["sources/appui/genie/automates/cie blindee/missions/realiser trava
                 if( ( #( listePionsGenie ) == 0 or #( listePionsGenie ) == nil ) ) then
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
-                                                Halt( self )
+                                                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_GEN_RealiserTravaux" } )
+Halt( self )
                         do return end
 
                     end

@@ -25,9 +25,13 @@ includedFiles["sources/common/automates/behaviors/Behaviors - NBC.bms"] = true
 {
     activations =
     {
-        { "BEH_Ordre_Automate_ConduiteSurAlerteNBC", {} },
-        { "BEH_Ordre_Automate_RecevoirOrdreSurAlerteNBC", {} },
+        { "BEH_Ordre_Automate_ConduiteSurAlerteNBC", { "onHalt" } },
+        { "BEH_Ordre_Automate_RecevoirOrdreSurAlerteNBC", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Nbc_Automate_GererAlerteNiv4" } },
 
     create = function( self )
     end,
@@ -68,15 +72,21 @@ node "BEH_Ordre_Automate_RecevoirOrdreSurAlerteNBC"
 {
     activations =
     {
-        { "BEH_Ordre_Automate_ConduiteSurAlerteNBC", {} },
-        { "BEH_Ordre_Automate_ConduiteSurFinAlerteNBC", {} },
-        { "ACT_Ordre_Suppression", {} },
+        { "BEH_Ordre_Automate_ConduiteSurAlerteNBC", { "onHalt" } },
+        { "BEH_Ordre_Automate_ConduiteSurFinAlerteNBC", { "onHalt" } },
+        { "ACT_Ordre_Suppression", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Ordre_Automate_RecevoirOrdreSurAlerteNBC" } },
 
     create = function( self )
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Recevoir un ordre
 ]]--[[//-----------------------------------------------------------------------------
@@ -90,14 +100,14 @@ do
                     local cases_switch_1 = {}
                         if switch_1 == "Rep_OrderConduite_MettreTenueNBC" then
                             DEC_Trace( "$ --- ORDRE Mettre tenue NBC ---$" )
-                            StartActivate( self.activations.BEH_Ordre_Automate_ConduiteSurAlerteNBC, 1, {} )
-                            StopActivate( self.activations.BEH_Ordre_Automate_ConduiteSurFinAlerteNBC, {} )
+                            StartInstance( self, self.activations.BEH_Ordre_Automate_ConduiteSurAlerteNBC, 1, {} )
+                            StopInstance( self, self.activations.BEH_Ordre_Automate_ConduiteSurFinAlerteNBC, {} )
                             
                                                 cases_switch_1[1] = true
 elseif switch_1 == "Rep_OrderConduite_EnleverTenueNBC" then
                             DEC_Trace( "$ --- ORDRE Enlever tenue NBC ---$" )
-                            StopActivate( self.activations.BEH_Ordre_Automate_ConduiteSurAlerteNBC, {} )
-                            StartActivate( self.activations.BEH_Ordre_Automate_ConduiteSurFinAlerteNBC, 1, {} )
+                            StopInstance( self, self.activations.BEH_Ordre_Automate_ConduiteSurAlerteNBC, {} )
+                            StartInstance( self, self.activations.BEH_Ordre_Automate_ConduiteSurFinAlerteNBC, 1, {} )
                             
                                                 cases_switch_1[2] = true
                         end
@@ -122,9 +132,13 @@ node "BEH_Ordre_Automate_ConduiteSurAlerteNBC"
 {
     activations =
     {
-        { "ACT_RC_Automate", {} },
-        { "ACT_Ordre_MettreTenueNBC", {} },
+        { "ACT_RC_Automate", { "onHalt" } },
+        { "ACT_Ordre_MettreTenueNBC", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Ordre_Automate_ConduiteSurAlerteNBC" } },
 
     create = function( self )
     end,
@@ -161,9 +175,13 @@ node "BEH_Ordre_Automate_ConduiteSurFinAlerteNBC"
 {
     activations =
     {
-        { "ACT_RC_Automate", {} },
-        { "ACT_Ordre_EnleverTenueNBC", {} },
+        { "ACT_RC_Automate", { "onHalt" } },
+        { "ACT_Ordre_EnleverTenueNBC", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Ordre_Automate_ConduiteSurFinAlerteNBC" } },
 
     create = function( self )
     end,
@@ -198,6 +216,8 @@ do
 
 node "ACT_Ordre_MettreTenueNBC"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Ordre_MettreTenueNBC" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -223,6 +243,8 @@ node "ACT_Ordre_MettreTenueNBC"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_EnleverTenueNBC"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Ordre_EnleverTenueNBC" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]

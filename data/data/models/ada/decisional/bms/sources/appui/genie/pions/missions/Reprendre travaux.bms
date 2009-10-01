@@ -12,12 +12,16 @@ includedFiles["sources/appui/genie/pions/missions/Reprendre travaux.bms"] = true
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "BEH_Objet_Pion_GEN_ReprendreTravaux", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "BEH_Objet_Pion_GEN_ReprendreTravaux", { "onHalt" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_GEN_ReprendreTravaux" } },
 
     create = function( self )
         self._namedParams = {}
@@ -26,7 +30,8 @@ includedFiles["sources/appui/genie/pions/missions/Reprendre travaux.bms"] = true
 
     activate = function( self )
         if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.mission.travail_ ) ) then
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_GEN_ReprendreTravaux" } )
+Halt( self )
             do return end
         end
 
@@ -44,7 +49,8 @@ includedFiles["sources/appui/genie/pions/missions/Reprendre travaux.bms"] = true
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                                                 self.params.__returnValue = eActionImpossible
-                        Halt( self )
+                        Feedback( self.feedbacks["onHalt"], { "MIS_Pion_GEN_ReprendreTravaux" } )
+Halt( self )
                         do return end
 
                     end
@@ -102,7 +108,8 @@ elseif switch_1 == eRealiserObstacle then
                         do
                             DEC_RC( eRC_MissionImpossible )
                                                         self.params.__returnValue = eActionImpossible
-                            Halt( self )
+                            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_GEN_ReprendreTravaux" } )
+Halt( self )
                             do return end
 
                         end
@@ -139,10 +146,14 @@ node "BEH_Objet_Pion_GEN_ReprendreTravaux"
 
     activations =
     {
-        { "ACT_Obj_Pion_GEN_ReprendreTravaux", {} },
-        { "ACT_Dep_SePoster", {} },
-        { "ACT_Pion_GEN_AttendreRenforcementPour", {} },
+        { "ACT_Obj_Pion_GEN_ReprendreTravaux", { "onHalt" } },
+        { "ACT_Dep_SePoster", { "onHalt" } },
+        { "ACT_Pion_GEN_AttendreRenforcementPour", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Objet_Pion_GEN_ReprendreTravaux" } },
 
     create = function( self )
         self._namedParams = {}
@@ -155,7 +166,8 @@ node "BEH_Objet_Pion_GEN_ReprendreTravaux"
 ]]--[[// Validité de l'objet
 ]]--[[//-----------------------------------------------------------------
 ]]if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.obj ) ) then
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Objet_Pion_GEN_ReprendreTravaux" } )
+Halt( self )
             do return end
         end
 

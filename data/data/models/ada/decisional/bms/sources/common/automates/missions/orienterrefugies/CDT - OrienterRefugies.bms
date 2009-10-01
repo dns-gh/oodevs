@@ -12,8 +12,12 @@ includedFiles["sources/common/automates/missions/orienterrefugies/CDT - Orienter
 {
     activations =
     {
-        { "BEH_Dispositif_Automate_FaireSuivreLeSE", {} },
+        { "BEH_Dispositif_Automate_FaireSuivreLeSE", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_OrienterRefugies" } },
 
     create = function( self )
         self._namedParams = {}

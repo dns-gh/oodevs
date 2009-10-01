@@ -20,20 +20,26 @@ includedFiles["sources/melee/inf/pions/common/missions/Interdire.bms"] = true
 {
     activations =
     {
-        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", {} },
-        { "BEH_Mot_Pion_Embarquer", {} },
-        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", {} },
-        { "ACT_RC", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "BEH_Dispositif_Pion_VAB_InstallationDefensive", {} },
-        { "ACT_Misc_Pion_DelaiInstallation", {} },
-        { "BEH_Eni_Pion_INF_Tenir", {} },
+        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", { "onHalt" } },
+        { "BEH_Mot_Pion_Embarquer", { "onHalt" } },
+        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", { "onHalt" } },
+        { "ACT_RC", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Dispositif_Pion_VAB_InstallationDefensive", { "onHalt" } },
+        { "ACT_Misc_Pion_DelaiInstallation", { "onHalt" } },
+        { "BEH_Eni_Pion_INF_Tenir", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_INF_Interdire" } },
 
     create = function( self )
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         self.mission = self.mission or DEC_GetMission( myself )
         self.ePhase = self.ePhase or eSeMettreEnPlace
         self.eAction = self.eAction or eActionEnCours
@@ -42,7 +48,7 @@ includedFiles["sources/melee/inf/pions/common/missions/Interdire.bms"] = true
             do
                 --[[// situation tactique
 ]]DEC_Trace( "Mission 'Interdire' : debut" )
-                StartActivate( self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
+                StartInstance( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
             end
         end
 
@@ -81,7 +87,7 @@ elseif switch_1 == eInstallerDispositif then
                     --[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
 ]]--[[// On surveille la zone en meme temps que l'on prepare
 ]]--[[// On fait d'abord debarquer				
-]]StartActivate( self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1, { self.mission.pointAInterdire_, self.mission.preparerTerrain_, } )
+]]StartInstance( self, self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1, { self.mission.pointAInterdire_, self.mission.preparerTerrain_, } )
                     --[[// Prepare la mission d'interdiction
 ]]--[[// action ACT_RC( eRC_FinInstallation );
 ]]if( self.eAction == eActionEffectuee ) then

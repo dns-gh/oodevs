@@ -20,8 +20,12 @@ includedFiles["sources/melee/abc/automates/pel eei/missions/contreattaquer/Contr
 {
     activations =
     {
-        { "BEH_Auto_CDT_ABC_Attaquer", {} },
+        { "BEH_Auto_CDT_ABC_Attaquer", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_ContreAttaquer" } },
 
     create = function( self )
         self._namedParams = {}

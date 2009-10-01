@@ -24,6 +24,8 @@ includedFiles["sources/appui/nbc/automates/common/Gestion pions detruits.bms"] =
 ]]--[[// *****************************************************************************
 ]]node "BEH_Dispositif_Automate_NBC_GererPionsDetruits_"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Dispositif_Automate_NBC_GererPionsDetruits_" } },
+
     create = function( self )
     end,
 

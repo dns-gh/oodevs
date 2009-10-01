@@ -13,10 +13,14 @@ includedFiles["sources/appui/genie/pions/Behaviors Mouvement.bms"] = true
 {
     activations =
     {
-        { "ACT_Dep_PasserSurLima", {} },
-        { "BEH_Dep_SePoster", {} },
-        { "ACT_Obs_EtablirVisionCur", {} },
+        { "ACT_Dep_PasserSurLima", { "onHalt" } },
+        { "BEH_Dep_SePoster", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionCur", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Lima_Pion_Gen_SePosterSurLCA" } },
 
     create = function( self )
     end,
@@ -29,7 +33,8 @@ includedFiles["sources/appui/genie/pions/Behaviors Mouvement.bms"] = true
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( DEC_Agent_NiveauInstallation() == eNiveauInstallation_PosteReflexe ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Lima_Pion_Gen_SePosterSurLCA" } )
+Halt( self )
             do return end
         end
 
@@ -65,9 +70,13 @@ node "BEH_Obs_Pion_Gen_ReconnaitrePoint"
 {
     activations =
     {
-        { "ACT_Obs_ReconnaitrePoint", {} },
-        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "ACT_Obs_ReconnaitrePoint", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionVersPt", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Obs_Pion_Gen_ReconnaitrePoint" } },
 
     create = function( self )
         self._namedParams = {}
@@ -90,7 +99,8 @@ node "BEH_Obs_Pion_Gen_ReconnaitrePoint"
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Obs_Pion_Gen_ReconnaitrePoint" } )
+Halt( self )
                     do return end
 
                 end

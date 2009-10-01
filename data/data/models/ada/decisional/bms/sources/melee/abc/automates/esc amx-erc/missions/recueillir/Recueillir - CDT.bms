@@ -22,8 +22,12 @@ includedFiles["sources/melee/abc/automates/esc amx-erc/missions/recueillir/Recue
 {
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_Recueillir", {} },
+        { "BEH_Conduite_Automate_ABC_Recueillir", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_RecueillirUnite" } },
 
     create = function( self )
         self._namedParams = {}

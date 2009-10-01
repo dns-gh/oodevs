@@ -11,8 +11,12 @@ includedFiles["sources/melee/abc/pions/pel ad/missions/OrganiserAceuilRefugies.b
 {
     activations =
     {
-        { "BEH_Mission_Pion_ABC_OrganiserAccueilColonneRefugies", {} },
+        { "BEH_Mission_Pion_ABC_OrganiserAccueilColonneRefugies", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_ABC_OrganiserAccueilColonneRefugies" } },
 
     create = function( self )
         self._namedParams = {}
@@ -26,13 +30,15 @@ includedFiles["sources/melee/abc/pions/pel ad/missions/OrganiserAceuilRefugies.b
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible ) then
             self.params.__returnValue = eActionImpossible
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ABC_OrganiserAccueilColonneRefugies" } )
+Halt( self )
             do return end
         end
 
         if( self.eEtat == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ABC_OrganiserAccueilColonneRefugies" } )
+Halt( self )
             do return end
         end
 

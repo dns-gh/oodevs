@@ -13,10 +13,14 @@ includedFiles["sources/common/automates/behaviors/Behaviors - CoordDep.bms"] = t
 {
     activations =
     {
-        { "ACT_Info_Automate_Trace", {} },
-        { "ACT_Info_Trace", {} },
-        { "ACT_Ordre_Automate_Ralentir", {} },
+        { "ACT_Info_Automate_Trace", { "onHalt" } },
+        { "ACT_Info_Trace", { "onHalt" } },
+        { "ACT_Ordre_Automate_Ralentir", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_CoordDep_Automate_ActiverCoordinationSur" } },
 
     create = function( self )
         self._namedParams = {}

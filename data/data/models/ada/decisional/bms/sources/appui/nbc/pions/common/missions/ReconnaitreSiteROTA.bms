@@ -13,13 +13,17 @@ includedFiles["sources/appui/nbc/pions/common/missions/ReconnaitreSiteROTA.bms"]
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", {} },
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Dep_ProgressionVers", {} },
-        { "BEH_Pion_Nbc_ReconnaitreSiteROTA", {} },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Ordre_Inopine", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "ACT_Info_Trace", { "onHalt" } },
+        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "BEH_Pion_Nbc_ReconnaitreSiteROTA", { "onHalt" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_NBC_ReconnaitreUnSiteROTA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -57,7 +61,8 @@ includedFiles["sources/appui/nbc/pions/common/missions/ReconnaitreSiteROTA.bms"]
 
         if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
             self.params.__returnValue = eActionEffectuee
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_NBC_ReconnaitreUnSiteROTA" } )
+Halt( self )
             do return end
         end
 
@@ -164,8 +169,12 @@ node "BEH_Pion_Nbc_ReconnaitreSiteROTA"
 {
     activations =
     {
-        { "ACT_Pion_Nbc_ReconnaitreSiteROTA", {} },
+        { "ACT_Pion_Nbc_ReconnaitreSiteROTA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Pion_Nbc_ReconnaitreSiteROTA" } },
 
     create = function( self )
         self._namedParams = {}

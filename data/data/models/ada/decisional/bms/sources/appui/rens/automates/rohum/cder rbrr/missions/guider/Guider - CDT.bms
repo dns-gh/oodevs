@@ -11,8 +11,12 @@ includedFiles["sources/appui/rens/automates/rohum/cder rbrr/missions/guider/Guid
 {
     activations =
     {
-        { "BEH_Connaissance_Automate_RENS_ROHUM_AssurerLaLiaisonAvec", {} },
+        { "BEH_Connaissance_Automate_RENS_ROHUM_AssurerLaLiaisonAvec", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_RENS_ROHUM_OrienterGuider" } },
 
     create = function( self )
         self._namedParams = {}

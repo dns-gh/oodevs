@@ -25,6 +25,8 @@ includedFiles["sources/melee/common/Behaviors - Mot.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "BEH_Mot_AffecterVariablesDEtat"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Mot_AffecterVariablesDEtat" } },
+
     create = function( self )
     end,
 
@@ -58,8 +60,12 @@ node "BEH_MOT_TenirFaceAuxEnnemis"
 {
     activations =
     {
-        { "ACT_Dep_SePosterFaceA", {} },
+        { "ACT_Dep_SePosterFaceA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_MOT_TenirFaceAuxEnnemis" } },
 
     create = function( self )
     end,

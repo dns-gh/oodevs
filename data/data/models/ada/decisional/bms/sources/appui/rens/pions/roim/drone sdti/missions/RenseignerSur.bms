@@ -11,12 +11,16 @@ includedFiles["sources/appui/rens/pions/roim/drone sdti/missions/RenseignerSur.b
 {
     activations =
     {
-        { "ACT_MAJ_EtatPhaseMission", {} },
-        { "ACT_Info_Trace", {} },
-        { "BEH_Dep_ProgressionSur", {} },
-        { "ACT_Dep_Pion_RENS_VolerA", {} },
-        { "ACT_Obs_Pion_RENS_ActiverCamera", {} },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "ACT_Info_Trace", { "onHalt" } },
+        { "BEH_Dep_ProgressionSur", { "onHalt" } },
+        { "ACT_Dep_Pion_RENS_VolerA", { "onHalt" } },
+        { "ACT_Obs_Pion_RENS_ActiverCamera", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_RENS_ROIM_SDTI_RenseignerSur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -29,91 +33,91 @@ includedFiles["sources/appui/rens/pions/roim/drone sdti/missions/RenseignerSur.b
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         --[[//---------------------------------------------------------------------
-        ]]--[[// Commencer le mode enregistrement
-        ]]--[[//---------------------------------------------------------------------
-        ]]if( ModuleBegins() ) then
-        do
-            --[[// imposssible si pas mise en oeuvre
-            ]]if( not myself.bMiseEnOeuvre_ ) then
+]]--[[// Commencer le mode enregistrement
+]]--[[//---------------------------------------------------------------------
+]]if( ModuleBegins() ) then
             do
-                DEC_Trace( "----- Le drone doit être mise en oeuvre -----" )
-                DEC_RC( eRC_MissionImpossible )
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt( self )
-                return
-            end
-        end
+                --[[// imposssible si pas mise en oeuvre
+]]if( not myself.bMiseEnOeuvre_ ) then
+                    do
+                        DEC_Trace( "----- Le drone doit être mise en oeuvre -----" )
+                        DEC_RC( eRC_MissionImpossible )
+                                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_RENS_ROIM_SDTI_RenseignerSur" } )
+Halt( self )
+                        do return end
 
-        if( myself.bEnExploitation_ ) then
-            do
-                DEC_Trace( "----- Le drone est en exploitation -----" )
-                DEC_RC( eRC_DroneEnExploitation )
-                DEC_RC( eRC_MissionImpossible )
-                self.deselect = function() end
-                self.destroy = function() end
-                Halt( self )
-                return
-            end
-            --[[// pour être sur de revenir au point de départ
-            ]]                end
-
-            DEC_ListePoints_PushBack( self.ficelleDeVol, DEC_Agent_Position() )
-        end
-        --[[//=========================================================================
-        ]]--[[// SQUELETTE DE LA MISSION
-        ]]--[[//
-        ]]--[[// strength = 1
-        ]]--[[//
-        ]]--[[//=========================================================================
-        ]]        end
-
-        switch_1 = self.ePhaseMission
-        if switch_1 == ePreparerMission then
-            --[[//---------------------------------------------------------------------
-            ]]--[[// Preparation de la mission
-            ]]--[[//---------------------------------------------------------------------
-            ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-            self.ePhaseMission = eProgresser
-
-            --[[//---------------------------------------------------------------------
-            ]]--[[// Voler
-            ]]--[[//---------------------------------------------------------------------
-            ]]elseif switch_1 == eProgresser then
-            Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
-            Activate( self.activations.ACT_Info_Trace, 1, { "DRONE LAUNCHED", } )
-            --[[// Progression
-            ]]if( self.eEtat == eActionEffectuee ) then
-            do
-                self.eEtat = eActionEnCours
-                do
-                    self.ePhaseMission = eFinMission
-                    return
-
+                    end
                 end
 
+                if( myself.bEnExploitation_ ) then
+                    do
+                        DEC_Trace( "----- Le drone est en exploitation -----" )
+                        DEC_RC( eRC_DroneEnExploitation )
+                        DEC_RC( eRC_MissionImpossible )
+                                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_RENS_ROIM_SDTI_RenseignerSur" } )
+Halt( self )
+                        do return end
+
+                    end
+--[[// pour être sur de revenir au point de départ
+]]                end
+
+            DEC_ListePoints_PushBack( self.ficelleDeVol, DEC_Agent_Position() )
             end
-        end
+--[[//=========================================================================
+]]--[[// SQUELETTE DE LA MISSION
+]]--[[//
+]]--[[// strength = 1
+]]--[[//
+]]--[[//=========================================================================
+]]        end
+
+        switch_1 = self.ePhaseMission
+                if switch_1 == ePreparerMission then
+                    --[[//---------------------------------------------------------------------
+]]--[[// Preparation de la mission
+]]--[[//---------------------------------------------------------------------
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    self.ePhaseMission = eProgresser
+                    
+                --[[//---------------------------------------------------------------------
+]]--[[// Voler
+]]--[[//---------------------------------------------------------------------
+            ]]elseif switch_1 == eProgresser then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
+                    Activate( self.activations.ACT_Info_Trace, 1, { "DRONE LAUNCHED", } )
+                    --[[// Progression
+]]if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhaseMission = eFinMission
+                                                                return
+
+                            end
+
+                        end
+                    end
 
         Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self.ficelleDeVol, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-        --[[// Prendre de la hauteur
-        ]]--[[// données doctrine 
-        ]]Activate( self.activations.ACT_Dep_Pion_RENS_VolerA, 1, { 1000, } )
-        Activate( self.activations.ACT_Obs_Pion_RENS_ActiverCamera, 1, {} )--[[// active pd toute la durée du vol, temps réel 
-        ]]
-
-        --[[//---------------------------------------------------------------------
-        ]]--[[// Fin de la mission 
-        ]]--[[//---------------------------------------------------------------------
+                    --[[// Prendre de la hauteur
+]]--[[// données doctrine 
+]]Activate( self.activations.ACT_Dep_Pion_RENS_VolerA, 1, { 1000, } )
+                    Activate( self.activations.ACT_Obs_Pion_RENS_ActiverCamera, 1, {} )--[[// active pd toute la durée du vol, temps réel 
+]]
+                    
+                --[[//---------------------------------------------------------------------
+]]--[[// Fin de la mission 
+]]--[[//---------------------------------------------------------------------
         ]]elseif switch_1 == eFinMission then
-        --[[// IMPORTANT POUR AUTOMATE
-        ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    --[[// IMPORTANT POUR AUTOMATE
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    
 
+                else
+                                end
 
-    else
-    end
-
-end,
+    end,
 
 }
 

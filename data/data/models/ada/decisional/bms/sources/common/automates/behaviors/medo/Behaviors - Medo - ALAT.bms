@@ -25,8 +25,12 @@ include "Common/Automates/Actions/Medo/Actions - Medo - ALAT.bms"
 {
     activations =
     {
-        { "BEH_Medo_Automate_ALAT_AssignerMissionSurveillerA", {} },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionSurveillerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionsSurveillerAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -37,7 +41,9 @@ include "Common/Automates/Actions/Medo/Actions - Medo - ALAT.bms"
         self._namedParams.plotsRavitaillements = self.params[5]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         if( ModuleBegins() ) then
             do
@@ -50,7 +56,7 @@ include "Common/Automates/Actions/Medo/Actions - Medo - ALAT.bms"
                             iterateur = 0
                         end
 
-                        StartActivate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionSurveillerA, 1, { self._namedParams.ePhase, x, DEC_UserTypeList_GetAt( self._namedParams.listeLocalisations, iterateur ), self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillements, } )
+                        StartInstance( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionSurveillerA, 1, { self._namedParams.ePhase, x, DEC_UserTypeList_GetAt( self._namedParams.listeLocalisations, iterateur ), self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillements, } )
                                                 iterateur = iterateur + 1
                     end
 
@@ -69,8 +75,12 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsIMEXAListe"
 {
     activations =
     {
-        { "BEH_Medo_Automate_ALAT_AssignerMissionIMEXA", {} },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionIMEXA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionsIMEXAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -81,7 +91,9 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsIMEXAListe"
         self._namedParams.plotsRavitaillement = self.params[5]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         if( ModuleBegins() ) then
             do
@@ -124,7 +136,7 @@ do
                             end
                         end
 
-                        StartActivate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionIMEXA, 1, { self._namedParams.ePhase, x, listePionsAAppuyerIMEXBuffer, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, } )
+                        StartInstance( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionIMEXA, 1, { self._namedParams.ePhase, x, listePionsAAppuyerIMEXBuffer, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, } )
                     end
 
                 end
@@ -142,8 +154,12 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsAllerSeRecompleterAListe"
 {
     activations =
     {
-        { "BEH_Medo_Automate_ALAT_AssignerMissionAllerSeRecompleterA", {} },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionAllerSeRecompleterA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionsAllerSeRecompleterAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -152,13 +168,15 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsAllerSeRecompleterAListe"
         self._namedParams.plotsRavitaillement = self.params[3]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 for _,x in pairs( self._namedParams.listePions ) do
                 local _continue = true
-                    StartActivate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionAllerSeRecompleterA, 1, { self._namedParams.ePhase, x, self._namedParams.plotsRavitaillement, } )
+                    StartInstance( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionAllerSeRecompleterA, 1, { self._namedParams.ePhase, x, self._namedParams.plotsRavitaillement, } )
 
                 end
 
@@ -175,8 +193,12 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsHeliporterPlotsRavitaillementAListe
 {
     activations =
     {
-        { "BEH_Medo_Automate_ALAT_AssignerMissionHeliporterPlotsRavitaillementA", {} },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionHeliporterPlotsRavitaillementA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionsHeliporterPlotsRavitaillementAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -187,13 +209,15 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsHeliporterPlotsRavitaillementAListe
         self._namedParams.plotsRavitaillement = self.params[5]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 for _,x in pairs( self._namedParams.listePions ) do
                 local _continue = true
-                    StartActivate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionHeliporterPlotsRavitaillementA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.pointDebarquement, self._namedParams.plotsRavitaillement, } )
+                    StartInstance( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionHeliporterPlotsRavitaillementA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.pointDebarquement, self._namedParams.plotsRavitaillement, } )
 
                 end
 
@@ -210,8 +234,12 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsReconnaitreContourEniAListe"
 {
     activations =
     {
-        { "BEH_Medo_Automate_ALAT_AssignerMissionReconnaitreContourEniA", {} },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionReconnaitreContourEniA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionsReconnaitreContourEniAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -221,13 +249,15 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsReconnaitreContourEniAListe"
         self._namedParams.plotsRavitaillement = self.params[4]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 for _,x in pairs( self._namedParams.listePions ) do
                 local _continue = true
-                    StartActivate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionReconnaitreContourEniA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, } )
+                    StartInstance( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionReconnaitreContourEniA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, } )
 
                 end
 
@@ -244,8 +274,12 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsJalonnerAListe"
 {
     activations =
     {
-        { "BEH_Medo_Automate_ALAT_AssignerMissionJalonnerA", {} },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionJalonnerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionsJalonnerAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -256,13 +290,15 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsJalonnerAListe"
         self._namedParams.ciblesPrioritaires = self.params[5]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 for _,x in pairs( self._namedParams.listePions ) do
                 local _continue = true
-                    StartActivate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionJalonnerA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.ciblesPrioritaires, } )
+                    StartInstance( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionJalonnerA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.ciblesPrioritaires, } )
 
                 end
 
@@ -279,8 +315,12 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsFreinerAListe"
 {
     activations =
     {
-        { "BEH_Medo_Automate_ALAT_AssignerMissionFreinerA", {} },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionFreinerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionsFreinerAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -291,13 +331,15 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsFreinerAListe"
         self._namedParams.ciblesPrioritaires = self.params[5]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 for _,x in pairs( self._namedParams.listePions ) do
                 local _continue = true
-                    StartActivate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionFreinerA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.ciblesPrioritaires, } )
+                    StartInstance( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionFreinerA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.ciblesPrioritaires, } )
 
                 end
 
@@ -312,8 +354,12 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsAttaquerAListe"
 {
     activations =
     {
-        { "BEH_Medo_Automate_ALAT_AssignerMissionAttaquerA", {} },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionAttaquerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionsAttaquerAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -324,13 +370,15 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsAttaquerAListe"
         self._namedParams.ciblesPrioritaires = self.params[5]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 for _,x in pairs( self._namedParams.listePions ) do
                 local _continue = true
-                    StartActivate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionAttaquerA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.ciblesPrioritaires, } )
+                    StartInstance( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionAttaquerA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.ciblesPrioritaires, } )
 
                 end
 
@@ -348,8 +396,12 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsAttaquerUneForamtionAeromobileAList
 {
     activations =
     {
-        { "BEH_Medo_Automate_ALAT_AssignerMissionAttaquerUneFormationAeromobileA", {} },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionAttaquerUneFormationAeromobileA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionsAttaquerUneForamtionAeromobileAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -360,7 +412,9 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsAttaquerUneForamtionAeromobileAList
         self._namedParams.listeEnis = self.params[5]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         if( ModuleBegins() ) then
             do
@@ -402,7 +456,7 @@ do
                             end
                         end
 
-                        StartActivate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionAttaquerUneFormationAeromobileA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, listeEnisADetruire, } )
+                        StartInstance( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionAttaquerUneFormationAeromobileA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, listeEnisADetruire, } )
                     end
 
                 end
@@ -421,8 +475,12 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsDetruireNeutraliserDansZoneAListe"
 {
     activations =
     {
-        { "BEH_Medo_Automate_ALAT_AssignerMissionDetruireNeutraliserDansZoneA", {} },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionDetruireNeutraliserDansZoneA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionsDetruireNeutraliserDansZoneAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -436,7 +494,9 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsDetruireNeutraliserDansZoneAListe"
         self._namedParams.neutraliser = self.params[8]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         if( ModuleBegins() ) then
             do
@@ -446,7 +506,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsDetruireNeutraliserDansZoneAListe"
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                                                 self.params.__returnValue = eActionImpossible
-                        Halt( self )
+                        Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_ALAT_AssignerMissionsDetruireNeutraliserDansZoneAListe" } )
+Halt( self )
                         do return end
 
                     end
@@ -463,7 +524,7 @@ do
 
                         local localisationBuffer = DEC_UserTypeList_GetAt( listeZones, iterateurLocalisation )
                         --[[//attribue un point de dislocation et une zone pour le pion
-]]StartActivate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionDetruireNeutraliserDansZoneA, 1, { self._namedParams.ePhase, x, localisationBuffer, self._namedParams.pointDislocation, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.ciblesPrioritaires, self._namedParams.neutraliser, } )
+]]StartInstance( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionDetruireNeutraliserDansZoneA, 1, { self._namedParams.ePhase, x, localisationBuffer, self._namedParams.pointDislocation, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.ciblesPrioritaires, self._namedParams.neutraliser, } )
                                                 iterateurLocalisation = iterateurLocalisation + 1
                     end
 
@@ -482,8 +543,12 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsEclairerAListe"
 {
     activations =
     {
-        { "BEH_Medo_Automate_ALAT_AssignerMissionEclairerA", {} },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionEclairerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionsEclairerAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -493,14 +558,16 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsEclairerAListe"
         self._namedParams.plotsRavitaillement = self.params[4]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 for _,x in pairs( self._namedParams.listePions ) do
                 local _continue = true
                     do
-                        StartActivate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionEclairerA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, } )
+                        StartInstance( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionEclairerA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, } )
                     end
 
                 end
@@ -518,8 +585,12 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsReconnaitreDansLaProfondeurAListe"
 {
     activations =
     {
-        { "BEH_Medo_Automate_ALAT_AssignerMissionReconnaitreDansLaProfondeurA", {} },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionReconnaitreDansLaProfondeurA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionsReconnaitreDansLaProfondeurAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -531,7 +602,9 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsReconnaitreDansLaProfondeurAListe"
         self._namedParams.plotsRavitaillement = self.params[6]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         if( ModuleBegins() ) then
             do
@@ -546,7 +619,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsReconnaitreDansLaProfondeurAListe"
                         local localisationBuffer = DEC_UserTypeList_GetAt( self._namedParams.listeLocalisations, iterateur )
                         --[[//recherche du point le plus proche de la zone
 ]]local pointBuffer = S_Geometrie_PointPlusProcheLocalisation( localisationBuffer, self._namedParams.listePoints )
-                        StartActivate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionReconnaitreDansLaProfondeurA, 1, { self._namedParams.ePhase, x, pointBuffer, localisationBuffer, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, } )
+                        StartInstance( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionReconnaitreDansLaProfondeurA, 1, { self._namedParams.ePhase, x, pointBuffer, localisationBuffer, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, } )
                                                 iterateur = iterateur + 1
                     end
 
@@ -565,8 +638,12 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsEscorterAListe"
 {
     activations =
     {
-        { "BEH_Medo_Automate_ALAT_AssignerMissionEscorterA", {} },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionEscorterA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionsEscorterAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -578,14 +655,16 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsEscorterAListe"
         self._namedParams.uniteAEscorter = self.params[6]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 for _,x in pairs( self._namedParams.listePions ) do
                 local _continue = true
                     do
-                        StartActivate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionEscorterA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillements, self._namedParams.ciblesPrioritaires, self._namedParams.uniteAEscorter, } )
+                        StartInstance( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionEscorterA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillements, self._namedParams.ciblesPrioritaires, self._namedParams.uniteAEscorter, } )
                     end
 
                 end
@@ -607,8 +686,12 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsHeliporterAListe"
 {
     activations =
     {
-        { "BEH_Medo_Automate_ALAT_AssignerMissionHeliporterA", {} },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionHeliporterA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionsHeliporterAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -622,7 +705,9 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsHeliporterAListe"
         self._namedParams.avecMateriel = self.params[8]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         assert( #( self._namedParams.listePions ) <= #( self._namedParams.listeUnitesAHeliporter ), "Trop de Pions Pour Transporter" )
         if( ModuleBegins() ) then
@@ -665,7 +750,7 @@ do
                             end
                         end
 
-                        StartActivate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionHeliporterA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.pointEmbarquement, self._namedParams.pointDebarquement, self._namedParams.plotsRavitaillement, listePionsAHeliporterBuffer, self._namedParams.avecMateriel, } )
+                        StartInstance( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionHeliporterA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.pointEmbarquement, self._namedParams.pointDebarquement, self._namedParams.plotsRavitaillement, listePionsAHeliporterBuffer, self._namedParams.avecMateriel, } )
                     end
 
                 end
@@ -687,8 +772,12 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsHelitransporterAListe"
 {
     activations =
     {
-        { "BEH_Medo_Automate_ALAT_AssignerMissionHelitransporterA", {} },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionHelitransporterA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionsHelitransporterAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -702,7 +791,9 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsHelitransporterAListe"
         self._namedParams.avecMateriel = self.params[8]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         assert( #( self._namedParams.listePions ) <= #( self._namedParams.listeUnitesAHelitransporter ), "Trop de Pions Pour Transporter" )
         if( ModuleBegins() ) then
@@ -745,7 +836,7 @@ do
                             end
                         end
 
-                        StartActivate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionHelitransporterA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.pointEmbarquement, self._namedParams.pointDebarquement, self._namedParams.plotsRavitaillement, listePionsAHelitransporterBuffer, self._namedParams.avecMateriel, } )
+                        StartInstance( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionHelitransporterA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.pointEmbarquement, self._namedParams.pointDebarquement, self._namedParams.plotsRavitaillement, listePionsAHelitransporterBuffer, self._namedParams.avecMateriel, } )
                     end
 
                 end
@@ -763,8 +854,12 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsAppuyerDirectAuContactAListe"
 {
     activations =
     {
-        { "BEH_Medo_Automate_ALAT_AssignerMissionAppuyerDirectAuContactA", {} },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionAppuyerDirectAuContactA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionsAppuyerDirectAuContactAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -776,14 +871,16 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsAppuyerDirectAuContactAListe"
         self._namedParams.unitesAAppuyer = self.params[6]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 for _,x in pairs( self._namedParams.listePions ) do
                 local _continue = true
                     do
-                        StartActivate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionAppuyerDirectAuContactA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.ciblesPrioritaires, self._namedParams.unitesAAppuyer, } )
+                        StartInstance( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionAppuyerDirectAuContactA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.ciblesPrioritaires, self._namedParams.unitesAAppuyer, } )
                     end
 
                 end
@@ -801,8 +898,12 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsCouvrirAListe"
 {
     activations =
     {
-        { "BEH_Medo_Automate_ALAT_AssignerMissionCouvrirA", {} },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionCouvrirA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionsCouvrirAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -816,7 +917,9 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsCouvrirAListe"
         self._namedParams.angle = self.params[8]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         if( ModuleBegins() ) then
             do
@@ -830,7 +933,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsCouvrirAListe"
                         end
 
                         local directionBuffer = DEC_UserTypeList_GetAt( directionsCouverture, iterateur )
-                        StartActivate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionCouvrirA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillements, self._namedParams.ciblesPrioritaires, self._namedParams.uniteACouvrir, directionBuffer, } )
+                        StartInstance( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionCouvrirA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillements, self._namedParams.ciblesPrioritaires, self._namedParams.uniteACouvrir, directionBuffer, } )
                                                 iterateur = iterateur + 1
                     end
 
@@ -849,8 +952,12 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsFlancGarderAListe"
 {
     activations =
     {
-        { "BEH_Medo_Automate_ALAT_AssignerMissionCouvrirA", {} },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionCouvrirA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionsFlancGarderAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -864,7 +971,9 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsFlancGarderAListe"
         self._namedParams.angle = self.params[8]
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         if( ModuleBegins() ) then
             do
@@ -908,7 +1017,7 @@ do
                         end
 
                         directionBuffer = DEC_UserTypeList_GetAt( directionsFlancGardeDroite, iterateur )
-                        StartActivate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionCouvrirA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillements, self._namedParams.ciblesPrioritaires, self._namedParams.uniteACouvrir, directionBuffer, } )
+                        StartInstance( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionCouvrirA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillements, self._namedParams.ciblesPrioritaires, self._namedParams.uniteACouvrir, directionBuffer, } )
                                                 iterateur = iterateur + 1
                     end
 
@@ -923,7 +1032,7 @@ do
                         end
 
                         directionBuffer = DEC_UserTypeList_GetAt( directionsFlancGardeGauche, iterateur )
-                        StartActivate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionCouvrirA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillements, self._namedParams.ciblesPrioritaires, self._namedParams.uniteACouvrir, directionBuffer, } )
+                        StartInstance( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionCouvrirA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillements, self._namedParams.ciblesPrioritaires, self._namedParams.uniteACouvrir, directionBuffer, } )
                                                 iterateur = iterateur + 1
                     end
 
@@ -943,11 +1052,15 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionDetruireNeutraliserDansZoneA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ALAT_AssignerDetruireNeutraliserDansZoneA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_ALAT_AssignerDetruireNeutraliserDansZoneA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionDetruireNeutraliserDansZoneA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -993,11 +1106,15 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionHeliporterPlotsRavitaillementA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ALAT_AssignerHeliporterPlotsRavitaillementA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_ALAT_AssignerHeliporterPlotsRavitaillementA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionHeliporterPlotsRavitaillementA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -1040,11 +1157,15 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionAllerSeRecompleterA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ALAT_AssignerAllerAllerSeRecompleterA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_ALAT_AssignerAllerAllerSeRecompleterA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionAllerSeRecompleterA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -1085,11 +1206,15 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionIMEXA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ALAT_AssignerIMEXA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_ALAT_AssignerIMEXA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionIMEXA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -1132,11 +1257,15 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionSurveillerA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ALAT_AssignerSurveillerA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_ALAT_AssignerSurveillerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionSurveillerA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -1179,11 +1308,15 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionReconnaitreContourEniA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ALAT_AssignerReconnaitreContourEniA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_ALAT_AssignerReconnaitreContourEniA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionReconnaitreContourEniA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -1225,11 +1358,15 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionJalonnerA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ALAT_AssignerJalonnerA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_ALAT_AssignerJalonnerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionJalonnerA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -1272,11 +1409,15 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionFreinerA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ALAT_AssignerFreinerA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_ALAT_AssignerFreinerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionFreinerA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -1319,11 +1460,15 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionAttaquerA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ALAT_AssignerAttaquerA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_ALAT_AssignerAttaquerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionAttaquerA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -1366,11 +1511,15 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionAttaquerUneFormationAeromobileA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ALAT_AssignerAttaquerUneFormationAeromobileA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_ALAT_AssignerAttaquerUneFormationAeromobileA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionAttaquerUneFormationAeromobileA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -1413,11 +1562,15 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionReconnaitreDansLaProfondeurA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ALAT_AssignerReconnaitreDansLaProfondeurA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_ALAT_AssignerReconnaitreDansLaProfondeurA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionReconnaitreDansLaProfondeurA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -1461,11 +1614,15 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionEscorterA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ALAT_AssignerEscorterA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_ALAT_AssignerEscorterA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionEscorterA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -1509,11 +1666,15 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionHeliporterA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ALAT_AssignerHeliporterA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_ALAT_AssignerHeliporterA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionHeliporterA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -1559,11 +1720,15 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionHelitransporterA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ALAT_AssignerHelitransporterA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_ALAT_AssignerHelitransporterA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionHelitransporterA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -1609,11 +1774,15 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionEclairerA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ALAT_AssignerEclairerA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_ALAT_AssignerEclairerA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionEclairerA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -1655,11 +1824,15 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionAppuyerDirectAuContactA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ALAT_AssignerAppuyerDirectAuContactA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_ALAT_AssignerAppuyerDirectAuContactA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionAppuyerDirectAuContactA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -1703,11 +1876,15 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionCouvrirA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
-        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
-        { "ACT_Mission_Automate_ControleCreation_OK", {} },
-        { "ACT_Mission_Automate_ALAT_AssignerCouvrirA", {} },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
+        { "ACT_Mission_Automate_ALAT_AssignerCouvrirA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_AssignerMissionCouvrirA" } },
 
     create = function( self )
         self._namedParams = {}

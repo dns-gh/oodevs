@@ -27,11 +27,15 @@ include "bit.lua"
 
     activations =
     {
-        { "ACT_MAJ_EnnemiEnCours", {} },
-        { "BEH_Feu_Pion_INF_TirTactique_Couverture", {} },
-        { "BEH_Feu_Pion_INF_TirCouverture_Fixe", {} },
-        { "BEH_Feu_Pion_INF_ConduireLesFeux_Sur", {} },
+        { "ACT_MAJ_EnnemiEnCours", { "onHalt" } },
+        { "BEH_Feu_Pion_INF_TirTactique_Couverture", { "onHalt" } },
+        { "BEH_Feu_Pion_INF_TirCouverture_Fixe", { "onHalt" } },
+        { "BEH_Feu_Pion_INF_ConduireLesFeux_Sur", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Feu_Pion_VAB_Detruire_SurEni" } },
 
     create = function( self )
         self._namedParams = {}
@@ -46,7 +50,8 @@ include "bit.lua"
             do
                 if( DEC_ConnaissanceAgent_EstMort( self._namedParams.ksEni ) or ( self._namedParams.bDestructionTactique and DEC_ConnaissanceAgent_EstDetruitTactique( self._namedParams.ksEni ) ) ) then
                     self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "BEH_Feu_Pion_VAB_Detruire_SurEni" } )
+Halt( self )
                     do return end
                 end
 
@@ -61,7 +66,8 @@ include "bit.lua"
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "BEH_Feu_Pion_VAB_Detruire_SurEni" } )
+Halt( self )
                 do return end
 
             end
@@ -73,7 +79,8 @@ include "bit.lua"
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "BEH_Feu_Pion_VAB_Detruire_SurEni" } )
+Halt( self )
                 do return end
 
             end
@@ -94,7 +101,8 @@ include "bit.lua"
                 --[[// Eni detruit, arret les tirs de couverture		
 ]]DEC_RC( eRC_EnnemiDetruit, self._namedParams.ksEni )
                                 self.params.__returnValue = eActionEffectuee
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "BEH_Feu_Pion_VAB_Detruire_SurEni" } )
+Halt( self )
                 do return end
 
             end

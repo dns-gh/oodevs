@@ -11,10 +11,14 @@ includedFiles["sources/melee/inf/automates/cie vab/missions/freiner/Freiner CDT.
 {
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Defaut", {} },
-        { "BEH_Conduite_Automate_INF_Freiner", {} },
-        { "BEH_Conduite_Automate_INF_GererOrdre_Mortier", {} },
+        { "BEH_Conduite_Automate_INF_Defaut", { "onHalt" } },
+        { "BEH_Conduite_Automate_INF_Freiner", { "onHalt" } },
+        { "BEH_Conduite_Automate_INF_GererOrdre_Mortier", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_INF_Freiner" } },
 
     create = function( self )
         self._namedParams = {}
@@ -37,7 +41,8 @@ includedFiles["sources/melee/inf/automates/cie vab/missions/freiner/Freiner CDT.
                 self.eActionMission = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_CDT_INF_Freiner" } )
+Halt( self )
                     do return end
 
                 end

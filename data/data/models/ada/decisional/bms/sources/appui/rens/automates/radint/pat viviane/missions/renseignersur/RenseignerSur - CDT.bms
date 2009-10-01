@@ -9,6 +9,8 @@ includedFiles["sources/appui/rens/automates/radint/pat viviane/missions/renseign
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_RENS_RADINT_RenseignerSur"
 {
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_RENS_RADINT_RenseignerSur" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission

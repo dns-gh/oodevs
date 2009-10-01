@@ -17,14 +17,18 @@ include "Common/Automates/Behaviors/Medo/Behaviors - Medo - ASA.bms"
 {
     activations =
     {
-        { "BEH_RC_Automate_Situation", {} },
-        { "BEH_ROE_Automate_GererOrdre", {} },
-        { "BEH_Nbc_Automate_GererAlerteNiv4", {} },
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
-        { "BEH_Rens_Automate_GererSilenceRadio", {} },
-        { "BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadar", {} },
-        { "BEH_Automate_ASA_Defaut", {} },
+        { "BEH_RC_Automate_Situation", { "onHalt" } },
+        { "BEH_ROE_Automate_GererOrdre", { "onHalt" } },
+        { "BEH_Nbc_Automate_GererAlerteNiv4", { "onHalt" } },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "onHalt" } },
+        { "BEH_Rens_Automate_GererSilenceRadio", { "onHalt" } },
+        { "BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadar", { "onHalt" } },
+        { "BEH_Automate_ASA_Defaut", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Defaut" } },
 
     create = function( self )
         self._namedParams = {}

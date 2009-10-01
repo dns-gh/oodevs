@@ -15,8 +15,12 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_RiposteSurPopulation", {} },
+        { "BEH_RiposteSurPopulation", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_MOT_RiposteSurPopulations" } },
 
     create = function( self )
     end,
@@ -45,8 +49,12 @@ node "BEH_MOT_DecrochageFaceAPopulations"
 {
     activations =
     {
-        { "BEH_Pop_Pion_PresAuDecrochageFaceA", {} },
+        { "BEH_Pop_Pion_PresAuDecrochageFaceA", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_MOT_DecrochageFaceAPopulations" } },
 
     create = function( self )
     end,
@@ -89,8 +97,12 @@ node "BEH_MOT_PasserEnEmploiForceInterdit"
 {
     activations =
     {
-        { "BEH_ROE_GererEmploiForceInterdit", {} },
+        { "BEH_ROE_GererEmploiForceInterdit", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_MOT_PasserEnEmploiForceInterdit" } },
 
     create = function( self )
     end,
@@ -111,8 +123,12 @@ node "BEH_MOT_PasserEnMaintienADistanceParMoyensNonLetaux"
 {
     activations =
     {
-        { "BEH_ROE_GererMaintienADistanceParMoyensNonLetaux", {} },
+        { "BEH_ROE_GererMaintienADistanceParMoyensNonLetaux", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_MOT_PasserEnMaintienADistanceParMoyensNonLetaux" } },
 
     create = function( self )
     end,
@@ -133,8 +149,12 @@ node "BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs"
 {
     activations =
     {
-        { "BEH_ROE_GererDispersionParMoyensDeDefenseActifs", {} },
+        { "BEH_ROE_GererDispersionParMoyensDeDefenseActifs", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs" } },
 
     create = function( self )
     end,
@@ -155,8 +175,12 @@ node "BEH_MOT_PasserEnArmesLetalesAutorisees"
 {
     activations =
     {
-        { "BEH_ROE_GererArmesLetalesAutorisees", {} },
+        { "BEH_ROE_GererArmesLetalesAutorisees", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_MOT_PasserEnArmesLetalesAutorisees" } },
 
     create = function( self )
     end,

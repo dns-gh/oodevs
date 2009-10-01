@@ -23,9 +23,13 @@ includedFiles["sources/melee/inf/automates/sgpt inf ac/missions/reconnaissanceof
 {
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Defaut", {} },
-        { "BEH_Conduite_Automate_INF_CadreOffensif", {} },
+        { "BEH_Conduite_Automate_INF_Defaut", { "onHalt" } },
+        { "BEH_Conduite_Automate_INF_CadreOffensif", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_INF_ReconnaissanceOffensive" } },
 
     create = function( self )
         self._namedParams = {}
@@ -51,7 +55,8 @@ includedFiles["sources/melee/inf/automates/sgpt inf ac/missions/reconnaissanceof
                 self.eActionMission = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Halt( self )
+                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_CDT_INF_ReconnaissanceOffensive" } )
+Halt( self )
                     do return end
 
                 end

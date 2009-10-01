@@ -15,10 +15,14 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_GTIA_SePosterSurEntreeFuseau", {} },
-        { "BEH_GTIA_AssurerLaCoordinationInterne", {} },
-        { "BEH_GTIA_AssurerLaCoordinationExterne", {} },
+        { "BEH_GTIA_SePosterSurEntreeFuseau", { "onHalt" } },
+        { "BEH_GTIA_AssurerLaCoordinationInterne", { "onHalt" } },
+        { "BEH_GTIA_AssurerLaCoordinationExterne", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssurerLaCoordination" } },
 
     create = function( self )
     end,
@@ -49,9 +53,13 @@ node "BEH_GTIA_AssurerLaCoordinationInterne"
 {
     activations =
     {
-        { "BEH_GTIA_AssurerLaCoordinationInterEchelonDistanceMin", {} },
-        { "BEH_GTIA_AssurerLaCoordinationInterEchelonDistanceMax", {} },
+        { "BEH_GTIA_AssurerLaCoordinationInterEchelonDistanceMin", { "onHalt" } },
+        { "BEH_GTIA_AssurerLaCoordinationInterEchelonDistanceMax", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssurerLaCoordinationInterne" } },
 
     create = function( self )
     end,
@@ -88,8 +96,12 @@ node "BEH_GTIA_SePosterSurEntreeFuseau"
 {
     activations =
     {
-        { "ACT_GTIA_Automate_DonnerOrdreAttendre", {} },
+        { "ACT_GTIA_Automate_DonnerOrdreAttendre", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_GTIA_SePosterSurEntreeFuseau" } },
 
     create = function( self )
         self._namedParams = {}
@@ -119,27 +131,33 @@ node "BEH_GTIA_AssurerLaCoordinationExterne"
 {
     activations =
     {
-        { "BEH_GTIA_Automate_Attendre", {} },
-        { "BEH_GTIA_Automate_Poursuivre", {} },
-        { "ACT_Ordre_Suppression", {} },
+        { "BEH_GTIA_Automate_Attendre", { "onHalt" } },
+        { "BEH_GTIA_Automate_Poursuivre", { "onHalt" } },
+        { "ACT_Ordre_Suppression", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssurerLaCoordinationExterne" } },
 
     create = function( self )
     end,
 
-    activate = function( self )
+    activate = ActivateWithStart,
+
+    internalactivate = function( self )
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
         for _,ordre in pairs( ordres_recus ) do
         local _continue = true
 do
                 local repOrdre = ordre
                 if( repOrdre:GetType() == "Rep_OrderConduite_AttendreSePoster" ) then
-                    StartActivate( self.activations.BEH_GTIA_Automate_Attendre, 1, { DEC_Automate_AutomatesSubordonnes(), } )
+                    StartInstance( self, self.activations.BEH_GTIA_Automate_Attendre, 1, { DEC_Automate_AutomatesSubordonnes(), } )
                 end
 
                 if( repOrdre:GetType() == "Rep_OrderConduite_Deboucher" or repOrdre:GetType() == "Rep_OrderConduite_Poursuivre" ) then
                     do
-                        StopActivate( self.activations.BEH_GTIA_Automate_Attendre, { DEC_Automate_AutomatesSubordonnes(), } )
+                        StopInstance( self, self.activations.BEH_GTIA_Automate_Attendre, { DEC_Automate_AutomatesSubordonnes(), } )
                         Activate( self.activations.BEH_GTIA_Automate_Poursuivre, 1, { DEC_Automate_AutomatesSubordonnes(), } )
                     end
                 end
@@ -163,8 +181,12 @@ node "BEH_GTIA_Automate_Attendre"
 {
     activations =
     {
-        { "ACT_GTIA_Automate_DonnerOrdreAttendre", {} },
+        { "ACT_GTIA_Automate_DonnerOrdreAttendre", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_GTIA_Automate_Attendre" } },
 
     create = function( self )
         self._namedParams = {}
@@ -204,8 +226,12 @@ node "BEH_GTIA_Automate_Poursuivre"
 {
     activations =
     {
-        { "ACT_GTIA_Automate_DonnerOrdrePoursuivre", {} },
+        { "ACT_GTIA_Automate_DonnerOrdrePoursuivre", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_GTIA_Automate_Poursuivre" } },
 
     create = function( self )
         self._namedParams = {}
@@ -234,8 +260,12 @@ node "BEH_GTIA_AssurerLaCoordinationInterEchelonDistanceMax"
 {
     activations =
     {
-        { "ACT_GTIA_Automate_DonnerOrdreRalentir", {} },
+        { "ACT_GTIA_Automate_DonnerOrdreRalentir", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssurerLaCoordinationInterEchelonDistanceMax" } },
 
     create = function( self )
         self._namedParams = {}
@@ -281,8 +311,12 @@ node "BEH_GTIA_AssurerLaCoordinationInterEchelonDistanceMin"
 {
     activations =
     {
-        { "ACT_GTIA_Automate_DonnerOrdreAttendre", {} },
+        { "ACT_GTIA_Automate_DonnerOrdreAttendre", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssurerLaCoordinationInterEchelonDistanceMin" } },
 
     create = function( self )
         self._namedParams = {}
@@ -325,6 +359,8 @@ if( DEC_Geometrie_CalculerAutomateDistanceLigneArriere( self.resultatCalcul, pio
 
 node "ACT_GTIA_Automate_DonnerOrdreAttendre"
 {
+    feedbacks = { { { "onHalt" }, "ACT_GTIA_Automate_DonnerOrdreAttendre" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -352,6 +388,8 @@ node "ACT_GTIA_Automate_DonnerOrdreAttendre"
 ]]--[[// *****************************************************************************
 ]]node "ACT_GTIA_Automate_DonnerOrdrePoursuivre"
 {
+    feedbacks = { { { "onHalt" }, "ACT_GTIA_Automate_DonnerOrdrePoursuivre" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -379,6 +417,8 @@ node "ACT_GTIA_Automate_DonnerOrdreAttendre"
 ]]--[[// *****************************************************************************
 ]]node "ACT_GTIA_Automate_DonnerOrdreRalentir"
 {
+    feedbacks = { { { "onHalt" }, "ACT_GTIA_Automate_DonnerOrdreRalentir" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]

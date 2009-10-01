@@ -21,6 +21,8 @@ includedFiles["sources/population/milices/common/Behaviors - Mot.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "BEH_Mot_AffecterVariablesDEtat"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Mot_AffecterVariablesDEtat" } },
+
     create = function( self )
     end,
 
@@ -56,8 +58,12 @@ node "BEH_MOT_Milice_TirerSurEnis"
 {
     activations =
     {
-        { "BEH_MOT_GererLesFeuxSur", {} },
+        { "BEH_MOT_GererLesFeuxSur", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_MOT_Milice_TirerSurEnis" } },
 
     create = function( self )
     end,

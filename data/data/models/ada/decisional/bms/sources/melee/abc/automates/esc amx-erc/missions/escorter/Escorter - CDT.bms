@@ -22,8 +22,12 @@ includedFiles["sources/melee/abc/automates/esc amx-erc/missions/escorter/Escorte
 {
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_Escorter", {} },
+        { "BEH_Conduite_Automate_ABC_Escorter", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_EscorterUnite" } },
 
     create = function( self )
         self._namedParams = {}
@@ -56,8 +60,12 @@ node "MIS_Automate_CDT_ABC_EscorterUnites"
 {
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_Escorter", {} },
+        { "BEH_Conduite_Automate_ABC_Escorter", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_EscorterUnites" } },
 
     create = function( self )
         self._namedParams = {}

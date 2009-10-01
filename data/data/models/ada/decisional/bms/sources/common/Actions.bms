@@ -9,6 +9,8 @@ includedFiles["sources/common/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Warning"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Warning" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.typeRC = self.params[1]
@@ -32,6 +34,8 @@ includedFiles["sources/common/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Misc_Delai"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Misc_Delai" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.id = self.params[1]
@@ -53,7 +57,8 @@ includedFiles["sources/common/Actions.bms"] = true
                 if( self._namedParams.rDelai * 60 <= DEC_TempsSim() - self.rTempsDebut ) then
                     do
                                                 self.params.__returnValue = eActionEffectuee
-                        Halt( self )
+                        Feedback( self.feedbacks["onHalt"], { "ACT_Misc_Delai" } )
+Halt( self )
                         do return end
 
                     end
@@ -75,6 +80,8 @@ includedFiles["sources/common/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Info_Trace"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Info_Trace" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.message = self.params[1]
@@ -97,6 +104,8 @@ includedFiles["sources/common/Actions.bms"] = true
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_AFFICHE_EtatDecisionnel"
 {
+    feedbacks = { { { "onHalt" }, "ACT_AFFICHE_EtatDecisionnel" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.cle = self.params[1]

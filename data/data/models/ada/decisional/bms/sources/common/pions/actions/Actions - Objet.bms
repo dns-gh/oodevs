@@ -11,6 +11,8 @@ includedFiles["sources/common/pions/actions/Actions - Objet.bms"] = true
 ]]--[[// pas d'actuateurs!
 ]]node "ACT_Obj_OccuperEmbossement"
 {
+    feedbacks = { { { "onHalt" }, "ACT_Obj_OccuperEmbossement" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.repEmbossement = self.params[1]
@@ -49,6 +51,8 @@ includedFiles["sources/common/pions/actions/Actions - Objet.bms"] = true
         deplacement = 1,
     },
 
+    feedbacks = { { { "onHalt" }, "ACT_Obj_Pion_AnimerSite" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.ksObjet = self.params[1]
@@ -72,7 +76,8 @@ includedFiles["sources/common/pions/actions/Actions - Objet.bms"] = true
     deselect = function( self )
                 DEC_Trace( "Site non anime" )
         self.actionAnimer = DEC_StopAction( self.actionAnimer )
-                Halt( self )
+                Feedback( self.feedbacks["onHalt"], { "ACT_Obj_Pion_AnimerSite" } )
+Halt( self )
         do return end
 
     end,

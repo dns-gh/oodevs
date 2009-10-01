@@ -9,6 +9,8 @@ include "bit.lua"
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "BEH_Log_Automate_ALAT_GererPlotsRavitaillement"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Log_Automate_ALAT_GererPlotsRavitaillement" } },
+
     create = function( self )
     end,
 
@@ -73,6 +75,8 @@ do
 
 node "BEH_Log_Automate_ALAT_AjoutNouveauxPlotsDansFuseau"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Log_Automate_ALAT_AjoutNouveauxPlotsDansFuseau" } },
+
     create = function( self )
     end,
 
@@ -101,6 +105,8 @@ do
 
 node "BEH_Log_Automate_ALAT_GererRavitaillementsCoordonne"
 {
+    feedbacks = { { { "onHalt" }, "BEH_Log_Automate_ALAT_GererRavitaillementsCoordonne" } },
+
     create = function( self )
         self._namedParams = {}
         self._namedParams.listePions = self.params[1]
@@ -115,7 +121,8 @@ node "BEH_Log_Automate_ALAT_GererRavitaillementsCoordonne"
         local totalTpsAlertesRav = 0
         local bufferPionAlat = nil
         if( #( listePionsACoordonner ) < 2 ) then
-            Halt( self )
+            Feedback( self.feedbacks["onHalt"], { "BEH_Log_Automate_ALAT_GererRavitaillementsCoordonne" } )
+Halt( self )
             do return end
         end
 
@@ -164,9 +171,13 @@ node "BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX"
 {
     activations =
     {
-        { "BEH_Medo_Automate_ALAT_AssignerMissionsHeliporterPlotsRavitaillementAListe", {} },
-        { "BEH_Medo_Automate_ALAT_AssignerMissionsIMEXAListe", {} },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionsHeliporterPlotsRavitaillementAListe", { "onHalt" } },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionsIMEXAListe", { "onHalt" } },
     },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX" } },
 
     create = function( self )
         self._namedParams = {}
