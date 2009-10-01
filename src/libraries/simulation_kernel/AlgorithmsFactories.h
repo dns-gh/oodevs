@@ -26,6 +26,7 @@ namespace posture
 namespace dotation
 {
     class ConsumptionComputerFactory_ABC;
+    class DotationComputerFactory_ABC;
 }
 namespace moving
 {
@@ -64,6 +65,19 @@ public:
     virtual ~AlgorithmsFactories();
     //@}
 
+    //! @name CheckPoints
+    //@{
+    template< typename Archive > void serialize( Archive&, const uint );
+    //@}
+
+private:
+    //! @name CheckPoints
+    //@{
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const AlgorithmsFactories* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, AlgorithmsFactories* factories, const unsigned int /*version*/ );
+    //@}
+
+public:
     //! @name Attribute
     //@{
     std::auto_ptr< firing::WeaponAvailabilityComputerFactory_ABC > weaponAvailabilityComputerFactory_;
@@ -77,8 +91,30 @@ public:
     std::auto_ptr< human::HealComputerFactory_ABC > healComputerFactory_;
     std::auto_ptr< OnComponentFunctorComputerFactory_ABC > onComponentFunctorComputerFactory_;
     std::auto_ptr< OnComponentLendedFunctorComputerFactory_ABC > onComponentLendedFunctorComputerFactory_;
+    std::auto_ptr< dotation::DotationComputerFactory_ABC > dotationComputerFactory_;
     std::auto_ptr< transport::LoadingComputerFactory_ABC > loadingComputerFactory_;
     //@}
 };
+
+template< typename Archive >
+void save_construct_data( Archive& archive, const AlgorithmsFactories* role, const unsigned int /*version*/ )
+{
+    //NOTHING
+}
+template< typename Archive >
+void load_construct_data( Archive& archive, AlgorithmsFactories* factories, const unsigned int /*version*/ )
+{
+    ::new( factories )AlgorithmsFactories();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AlgorithmsFactories serialize
+// Created: MGD 2009-09-30
+// -----------------------------------------------------------------------------
+template< typename Archive > void AlgorithmsFactories::serialize( Archive&, const uint )
+{
+    //NOTHING
+}
+
 
 #endif // __AlgorithmsFactories_h_

@@ -35,7 +35,7 @@ public:
     //@{
     virtual void Reset();
     virtual void SetHeight( double height );
-    virtual double GetHeight();
+    virtual double GetHeight() const;
     //@}
 
 private:

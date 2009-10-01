@@ -23,8 +23,8 @@ class MIL_AgentPionLOGSupply : public MIL_AgentPionLOG_ABC
 {
 
 public:
-             MIL_AgentPionLOGSupply( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, xml::xistream& xis );
-             MIL_AgentPionLOGSupply( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate );
+             MIL_AgentPionLOGSupply( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis );
+             MIL_AgentPionLOGSupply( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories );
     virtual ~MIL_AgentPionLOGSupply();
 
     //! @name CheckPoints

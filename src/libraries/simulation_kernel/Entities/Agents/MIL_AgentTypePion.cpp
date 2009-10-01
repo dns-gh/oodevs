@@ -302,18 +302,18 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
 // Name: MIL_AgentTypePion::InstanciatePion
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePion::InstanciatePion( uint nID, MIL_Automate& automate, xml::xistream& xis ) const
+MIL_AgentPion* MIL_AgentTypePion::InstanciatePion( uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis ) const
 {
-    return new MIL_AgentPion( *this, nID, automate, xis );
+    return new MIL_AgentPion( *this, nID, automate, algorithmFactories, xis );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePion::InstanciatePion
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePion::InstanciatePion( uint nID, MIL_Automate& automate ) const
+MIL_AgentPion* MIL_AgentTypePion::InstanciatePion( uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories ) const
 {
-    return new MIL_AgentPion( *this, nID, automate );
+    return new MIL_AgentPion( *this, nID, automate, algorithmFactories );
 }
 
 // -----------------------------------------------------------------------------
@@ -321,35 +321,35 @@ MIL_AgentPion* MIL_AgentTypePion::InstanciatePion( uint nID, MIL_Automate& autom
 // Created: MGD 2009-08-13
 // @TODO REPLACE BY XML in factory
 // -----------------------------------------------------------------------------
-void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, AlgorithmsFactories& algorithmsFactories ) const
+void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion ) const
 {
     pion.RegisterRole< NET_RolePion_Dotations         >( pion );
     pion.RegisterRole< PHY_RolePion_Reinforcement     >( pion );
-    pion.RegisterRole< PHY_RolePion_Posture           >( pion, *algorithmsFactories.postureComputerFactory_ );
-    pion.RegisterRole< PHY_RolePion_Location          >( pion, *algorithmsFactories.locationComputerFactory_ );
-    pion.RegisterRole< dotation::PHY_RolePion_Dotations         >( pion, *algorithmsFactories.consumptionComputerFactory_, *algorithmsFactories.onComponentFunctorComputerFactory_ );
-    pion.RegisterRole< human::PHY_RolePion_Humans     >( pion, *algorithmsFactories.healComputerFactory_ );
+    pion.RegisterRole< PHY_RolePion_Posture           >( pion );
+    pion.RegisterRole< PHY_RolePion_Location          >( pion );
+    pion.RegisterRole< dotation::PHY_RolePion_Dotations >( pion );
+    pion.RegisterRole< human::PHY_RolePion_Humans     >( pion );
     pion.RegisterRole< PHY_RolePion_Composantes       >( pion );
-    pion.RegisterRole< PHY_RolePion_Perceiver         >( pion, *algorithmsFactories.detectionComputerFactory_ );
+    pion.RegisterRole< PHY_RolePion_Perceiver         >( pion );
     pion.RegisterRole< nbc::PHY_RolePion_NBC          >( pion );
     pion.RegisterRole< PHY_RolePion_Communications    >( pion );
     pion.RegisterRole< PHY_RolePion_HumanFactors      >();
-    pion.RegisterRole< transport::PHY_RolePion_Transported       >( pion );
-    pion.RegisterRole< surrender::PHY_RolePion_Surrender         >( pion );
+    pion.RegisterRole< transport::PHY_RolePion_Transported >( pion );
+    pion.RegisterRole< surrender::PHY_RolePion_Surrender >( pion );
     pion.RegisterRole< PHY_RolePion_Refugee           >( pion );
     pion.RegisterRole< PHY_RolePion_Population        >( pion );
-    pion.RegisterRole< transport::PHY_RoleAction_Loading         >( pion, *algorithmsFactories.loadingComputerFactory_);
-    pion.RegisterRole< transport::PHY_RoleAction_Transport       >( pion, *algorithmsFactories.transportComputerFactory_);
+    pion.RegisterRole< transport::PHY_RoleAction_Loading >( pion);
+    pion.RegisterRole< transport::PHY_RoleAction_Transport >( pion );
     pion.RegisterRole< PHY_RoleAction_Moving          >( pion );
     pion.RegisterRole< PHY_RoleAction_Objects         >( pion );
-    pion.RegisterRole< firing::PHY_RoleAction_DirectFiring    >( pion, *algorithmsFactories.weaponAvailabilityComputerFactory_, *algorithmsFactories.composantesAbleToBeFiredComputerFactory_ );
-    pion.RegisterRole< firing::PHY_RoleAction_IndirectFiring  >( pion, *algorithmsFactories.weaponAvailabilityComputerFactory_ );
+    pion.RegisterRole< firing::PHY_RoleAction_DirectFiring    >( pion );
+    pion.RegisterRole< firing::PHY_RoleAction_IndirectFiring  >( pion );
     pion.RegisterRole< DEC_RolePion_Decision          >( pion );
     pion.RegisterRole< PHY_RoleAction_FolkInfluence   >();
     pion.RegisterRole< DEC_Representations            >();
 
     if( pion.CanFly() )
-        pion.RegisterRole< PHY_RoleAction_Flying >( pion, *algorithmsFactories.moveComputerFactory_ );
+        pion.RegisterRole< PHY_RoleAction_Flying >( pion );
     else
         pion.RegisterRole< PHY_RoleAction_InterfaceFlying >();
 }

@@ -17,7 +17,7 @@
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 
 class PHY_ActionFly;
-class MIL_Entity_ABC;
+class MIL_Agent_ABC;
 
 namespace location
 {
@@ -26,10 +26,6 @@ namespace location
 namespace posture
 {
     class PostureComputer_ABC;
-}
-namespace moving
-{
-    class MoveComputerFactory_ABC;
 }
 // =============================================================================
 // @class  PHY_RoleAction_Flying
@@ -41,7 +37,7 @@ class PHY_RoleAction_Flying : public PHY_RoleAction_InterfaceFlying
 {
 
 public:
-    explicit PHY_RoleAction_Flying( MIL_Entity_ABC& entity, const moving::MoveComputerFactory_ABC& moveComputerFactory );
+    explicit PHY_RoleAction_Flying( MIL_Agent_ABC& entity );
     virtual ~PHY_RoleAction_Flying();
 
     //! @name CheckPoints
@@ -82,12 +78,10 @@ private:
 private:
     //! @name Member data
     //@{
-    MIL_Entity_ABC& entity_;
+    MIL_Agent_ABC& entity_;
     MIL_Effect_Fly effectFly_;
     PHY_ActionFly* pActionFly_;
     double         rHeight_;
-
-    const moving::MoveComputerFactory_ABC& moveComputerFactory_;
     //@}
 };
 

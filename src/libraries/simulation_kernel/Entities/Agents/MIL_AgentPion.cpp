@@ -71,6 +71,8 @@
 #include "Tools/MIL_Tools.h"
 #include "Tools/MIL_IDManager.h"
 
+#include "simulation_kernel/AlgorithmsFactories.h"
+
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( MIL_AgentPion, "MIL_AgentPion" )
@@ -90,9 +92,11 @@ void save_construct_data( Archive& archive, const MIL_AgentPion* pion, const uns
 {
 	unsigned int nTypeID = pion->GetType().GetID();
     unsigned int nID = pion->GetID();
+    const AlgorithmsFactories* const algorithmFactories = &pion->algorithmFactories_;
 	archive << nTypeID
 			<< nID
-			<< pion->pAutomate_;
+			<< pion->pAutomate_
+            << algorithmFactories;
 }
 
 template< typename Archive >
@@ -100,23 +104,28 @@ void load_construct_data( Archive& archive, MIL_AgentPion* pion, const unsigned 
 {
 	unsigned int nTypeID, nID;
 	MIL_Automate* pAutomate = 0;
-    archive >> nTypeID >> nID >> pAutomate;
+    AlgorithmsFactories* algorithmFactories = 0;
+    archive >> nTypeID
+            >> nID
+            >> pAutomate
+            >> algorithmFactories;
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( nTypeID );
     assert( pType );
-    ::new( pion )MIL_AgentPion( *pType, nID, *pAutomate );
+    ::new( pion )MIL_AgentPion( *pType, nID, *pAutomate, *algorithmFactories );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion constructor
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, xml::xistream& xis )
+MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis )
     : MIL_Agent_ABC            ( type.GetName(), xis, nID )
     , pType_                   ( &type )
     , bIsPC_                   ( xml::attribute< bool >( xis, "command-post", false ) )
     , pAutomate_               ( &automate )
     , pKnowledgeBlackBoard_    (  new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
     , orderManager_            ( *new MIL_PionOrderManager( *this ) )
+    , algorithmFactories_      ( algorithmFactories )
 {
 }
 
@@ -124,13 +133,14 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Autom
 // Name: MIL_AgentPion constructor
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
-MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate )
+MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories )
     : MIL_Agent_ABC            ( type.GetName(), nID )
     , pType_                   ( &type )
     , bIsPC_                   ( false )
     , pAutomate_               ( &automate )
     , pKnowledgeBlackBoard_    (  new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
     , orderManager_            ( *new MIL_PionOrderManager( *this ) )
+    , algorithmFactories_      ( algorithmFactories )
 {
 }
 
@@ -138,13 +148,14 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Autom
 // Name: MIL_AgentPion constructor
 // Created: LDC 2009-04-23
 // -----------------------------------------------------------------------------
-MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& automate )
+MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories )
     : MIL_Agent_ABC        ( "", 0)
     , pType_               ( &type )
     , bIsPC_               ()
     , pAutomate_           ( &automate )
     , pKnowledgeBlackBoard_( 0 )
     , orderManager_        ( *new MIL_PionOrderManager( *this ) )
+    , algorithmFactories_  ( algorithmFactories )
 {
     automate.RegisterPion( *this );
 }
@@ -1070,4 +1081,13 @@ MIL_PionOrderManager& MIL_AgentPion::GetOrderManager()
 const MIL_PionOrderManager& MIL_AgentPion::GetOrderManager() const
 {
     return orderManager_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::GetAlgorithms
+// Created: MGD 2009-09-30
+// -----------------------------------------------------------------------------
+const AlgorithmsFactories& MIL_AgentPion::GetAlgorithms() const
+{
+    return algorithmFactories_;
 }

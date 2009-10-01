@@ -38,18 +38,18 @@ MIL_AgentTypePionLOGSupply::~MIL_AgentTypePionLOGSupply()
 // Name: MIL_AgentTypePionLOGSupply::InstanciatePion
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePionLOGSupply::InstanciatePion( uint nID, MIL_Automate& automate, xml::xistream& xis ) const
+MIL_AgentPion* MIL_AgentTypePionLOGSupply::InstanciatePion( uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis ) const
 {
-    return new MIL_AgentPionLOGSupply( *this, nID, automate, xis );
+    return new MIL_AgentPionLOGSupply( *this, nID, automate, algorithmFactories, xis );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOGSupply::InstanciatePion
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePionLOGSupply::InstanciatePion( uint nID, MIL_Automate& automate ) const
+MIL_AgentPion* MIL_AgentTypePionLOGSupply::InstanciatePion( uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories ) const
 {
-    return new MIL_AgentPionLOGSupply( *this, nID, automate );
+    return new MIL_AgentPionLOGSupply( *this, nID, automate, algorithmFactories );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,9 +57,9 @@ MIL_AgentPion* MIL_AgentTypePionLOGSupply::InstanciatePion( uint nID, MIL_Automa
 // Created: MGD 2009-08-13
 // @TODO REPLACE BY XML in factory
 // -----------------------------------------------------------------------------
-void MIL_AgentTypePionLOGSupply::RegisterRoles( MIL_AgentPion& pion, AlgorithmsFactories& algorithmsFactories ) const
+void MIL_AgentTypePionLOGSupply::RegisterRoles( MIL_AgentPion& pion ) const
 {
-    MIL_AgentTypePion::RegisterRoles( pion, algorithmsFactories );
+    MIL_AgentTypePion::RegisterRoles( pion );
     pion.RegisterRole< PHY_RolePionLOG_Supply >( static_cast< MIL_AgentPionLOG_ABC& >( pion ) );//@TODO remove cast when AgentPionLOG will be deleted
 }
 

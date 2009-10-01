@@ -23,8 +23,6 @@ class MIL_ToxicEffectManipulator;
 
 namespace transport
 {
-	class TransportComputerFactory_ABC;
-	class TransportWeightComputerFactory_ABC;
 
 // =============================================================================
 // @class  PHY_RoleAction_Transport
@@ -62,7 +60,7 @@ public:
     //@}
 
 public:
-    PHY_RoleAction_Transport( MIL_AgentPion& pion, const TransportComputerFactory_ABC&);
+    PHY_RoleAction_Transport( MIL_AgentPion& pion );
     virtual ~PHY_RoleAction_Transport();
 
     //! @name CheckPoints
@@ -150,7 +148,6 @@ private:
 
 private:
           MIL_AgentPion&        transporter_;
-    const TransportComputerFactory_ABC& pTransportComputerFactory_;
           bool                  bHasChanged_;
           E_State               nState_;
           bool                  bLoadUnloadHasBeenUpdated_;

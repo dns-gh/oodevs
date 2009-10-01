@@ -19,12 +19,16 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory_IndirectFire_ABC.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 
+#include "simulation_kernel/AlgorithmsFactories.h"
+#include "simulation_kernel/DotationComputer_ABC.h"
+#include "simulation_kernel/DotationComputerFactory_ABC.h"
+
 using namespace firing;
 // -----------------------------------------------------------------------------
 // Name: PHY_SmokeData constructor
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
-PHY_SmokeData::PHY_SmokeData( const MIL_AgentPion& firer, const PHY_IndirectFireDotationClass& indirectWeaponCategory, uint nNbrAmmo )
+PHY_SmokeData::PHY_SmokeData( MIL_AgentPion& firer, const PHY_IndirectFireDotationClass& indirectWeaponCategory, uint nNbrAmmo )
     : firer_                 ( firer )
     , indirectWeaponCategory_( indirectWeaponCategory )
     , nNbrAmmo_              ( nNbrAmmo )
@@ -53,7 +57,10 @@ void PHY_SmokeData::operator()( const PHY_ComposantePion& compFirer, PHY_Weapon&
     const PHY_DotationCategory_IndirectFire_ABC* pIndirectFireData = weapon.GetDotationCategory().GetIndirectFireData();
     if( !pIndirectFireData || pIndirectFireData->GetIndirectFireDotationCategory() != indirectWeaponCategory_ )
         return;
-    if( firer_.GetRole< dotation::PHY_RoleInterface_Dotations >().GetDotationValue( weapon.GetDotationCategory() ) < nNbrAmmo_ )
+
+    dotation::DotationComputer_ABC& dotationComputer = firer_.GetAlgorithms().dotationComputerFactory_->Create();
+    firer_.Execute( dotationComputer );
+    if( dotationComputer.GetDotationValue( weapon.GetDotationCategory() ) < nNbrAmmo_ )
         return;
     pWeapon_ = &weapon;
 }

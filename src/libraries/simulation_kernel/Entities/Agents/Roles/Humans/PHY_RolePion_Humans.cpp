@@ -20,6 +20,7 @@
 #include "Entities/Orders/MIL_Report.h"
 #include "Network/NET_ASN_Messages.h"
 
+#include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/HealComputer_ABC.h"
 #include "simulation_kernel/HealComputerFactory_ABC.h"
 
@@ -32,19 +33,15 @@ template< typename Archive >
 inline void save_construct_data( Archive& archive, const PHY_RolePion_Humans* role, const unsigned int /*version*/ )
 {
     MIL_AgentPion* const pion = &role->pion_;
-    const HealComputerFactory_ABC* const healComputerFactory = &role->healComputerFactory_;
-    archive << pion
-            << healComputerFactory;
+    archive << pion;
 }
 
 template< typename Archive >
 inline void load_construct_data( Archive& archive, PHY_RolePion_Humans* role, const unsigned int /*version*/ )
 {
 	MIL_AgentPion* pion;
-    HealComputerFactory_ABC* healComputerFactory;
-	archive >> pion
-          >> healComputerFactory;
-	::new( role )PHY_RolePion_Humans( *pion, *healComputerFactory );
+	archive >> pion;
+	::new( role )PHY_RolePion_Humans( *pion );
 }
 
 // -----------------------------------------------------------------------------
@@ -88,9 +85,8 @@ void PHY_RolePion_Humans::T_HumanData::serialize( Archive& file, const uint )
 // Name: PHY_RolePion_Humans constructor
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
-PHY_RolePion_Humans::PHY_RolePion_Humans( MIL_AgentPion& pion, const HealComputerFactory_ABC& healComputerFactory )
+PHY_RolePion_Humans::PHY_RolePion_Humans( MIL_AgentPion& pion )
     : pion_                   ( pion )
-    , healComputerFactory_    ( healComputerFactory )
     , humansData_             ( PHY_HumanRank::GetHumanRanks().size(), T_HumanData() )
     , nNbrHumansDataChanged_  ( humansData_.size() )
     , nNbrUsableHumans_       ( 0 )
@@ -166,7 +162,7 @@ void PHY_RolePion_Humans::ChangeHumansAvailability( const PHY_HumanRank& rank, u
     const T_HumanData& humanData = humansData_[ rank.GetID() ];
     nNewNbrFullyAliveHumans = std::min( nNewNbrFullyAliveHumans, humanData.nNbrTotal_ );
 
-    HealComputer_ABC& healComputer = healComputerFactory_.Create();
+    HealComputer_ABC& healComputer = pion_.GetAlgorithms().healComputerFactory_->Create();
     pion_.Execute( static_cast< OnComponentComputer_ABC& >( healComputer ) );
 
     if( nNewNbrFullyAliveHumans > humanData.nNbrOperational_ )
@@ -181,7 +177,7 @@ void PHY_RolePion_Humans::ChangeHumansAvailability( const PHY_HumanRank& rank, u
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::HealAllHumans()
 {
-    HealComputer_ABC& healComputer = healComputerFactory_.Create();
+    HealComputer_ABC& healComputer = pion_.GetAlgorithms().healComputerFactory_->Create();
     pion_.Execute( static_cast< OnComponentComputer_ABC& >( healComputer ) );
     healComputer.HealAll();
 }
@@ -389,7 +385,7 @@ void PHY_RolePion_Humans::NotifyHumanChanged( PHY_Human& human, const PHY_Human&
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2 ) const
 {
-    HealComputer_ABC& healComputer = healComputerFactory_.Create();
+    HealComputer_ABC& healComputer = pion_.GetAlgorithms().healComputerFactory_->Create();
     pion_.Execute( static_cast< OnComponentComputer_ABC& >( healComputer ) );
     healComputer.EvacuateWoundedHumans( destinationTC2 );
 }
@@ -400,7 +396,7 @@ void PHY_RolePion_Humans::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Humans::HasWoundedHumansToEvacuate() const
 {
-    HealComputer_ABC& healComputer = healComputerFactory_.Create();
+    HealComputer_ABC& healComputer = pion_.GetAlgorithms().healComputerFactory_->Create();
     pion_.Execute( static_cast< OnComponentComputer_ABC& >( healComputer ) );
     return healComputer.HasWoundedHumansToEvacuate();
 }

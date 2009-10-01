@@ -20,12 +20,16 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 
+#include "simulation_kernel/AlgorithmsFactories.h"
+#include "simulation_kernel/DotationComputer_ABC.h"
+#include "simulation_kernel/DotationComputerFactory_ABC.h"
+
 using namespace firing;
 // -----------------------------------------------------------------------------
 // Name: PHY_MunitionForIndirectFireData constructor
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
-PHY_MunitionForIndirectFireData::PHY_MunitionForIndirectFireData( const MIL_AgentPion& firer, const PHY_IndirectFireDotationClass& indirectWeaponCategory, const MT_Vector2D& vTargetPosition  )
+PHY_MunitionForIndirectFireData::PHY_MunitionForIndirectFireData( MIL_AgentPion& firer, const PHY_IndirectFireDotationClass& indirectWeaponCategory, const MT_Vector2D& vTargetPosition  )
     : firer_                 ( firer )
     , indirectWeaponCategory_( indirectWeaponCategory )
     , vTargetPosition_       ( vTargetPosition )
@@ -64,9 +68,10 @@ void PHY_MunitionForIndirectFireData::operator()( const PHY_ComposantePion& comp
     if( pChoosenMunition_ && weapon.GetDotationCategory() == *pChoosenMunition_ )
         return;
 
-    const dotation::PHY_RoleInterface_Dotations& roleDotations = firer_.GetRole< dotation::PHY_RoleInterface_Dotations >();
+    dotation::DotationComputer_ABC& dotationComputer = firer_.GetAlgorithms().dotationComputerFactory_->Create();
+    firer_.Execute( dotationComputer );
 
-    if( !pChoosenMunition_ || roleDotations.GetDotationValue( *pChoosenMunition_ ) < roleDotations.GetDotationValue( weapon.GetDotationCategory() ) )
+    if( !pChoosenMunition_ || dotationComputer.GetDotationValue( *pChoosenMunition_ ) < dotationComputer.GetDotationValue( weapon.GetDotationCategory() ) )
         pChoosenMunition_ = &weapon.GetDotationCategory();
 }
 

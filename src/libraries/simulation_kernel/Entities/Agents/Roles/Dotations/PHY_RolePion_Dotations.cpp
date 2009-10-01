@@ -28,9 +28,12 @@
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include <xeumeuleu/xml.h>
 
+#include "simulation_kernel/AlgorithmsFactories.h"
+
 #include "simulation_kernel/ConsumptionComputer_ABC.h"
 #include "simulation_kernel/ConsumptionComputerFactory_ABC.h"
 #include "simulation_kernel/MoveComputer_ABC.h"
+#include "simulation_kernel/DotationComputer_ABC.h"
 #include "simulation_kernel/OnComponentFunctor_ABC.h"
 
 #include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
@@ -83,37 +86,27 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePion_Dotations* role, const unsigned int /*version*/ )
 {
     MIL_AgentPion* const pion = &role->pion_;
-    const ConsumptionComputerFactory_ABC* const consumptionComputerFactory = &role->consumptionComputerFactory_;
-    const OnComponentFunctorComputerFactory_ABC* const dotationComputerFactory = &role->onComponentFunctorComputerFactory_;
-    archive << pion
-            << consumptionComputerFactory
-            << dotationComputerFactory;
+    archive << pion;
 }
 
 template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RolePion_Dotations* role, const unsigned int /*version*/ )
 {
 	MIL_AgentPion* pion;
-    ConsumptionComputerFactory_ABC* consumptionComputerFactory;
-    OnComponentFunctorComputerFactory_ABC* dotationComputerFactory;
-	archive >> pion
-            >> consumptionComputerFactory
-            >> dotationComputerFactory;
-	::new( role )PHY_RolePion_Dotations( *pion, *consumptionComputerFactory, *dotationComputerFactory );
+	archive >> pion;
+	::new( role )PHY_RolePion_Dotations( *pion );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Dotations constructor
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
-PHY_RolePion_Dotations::PHY_RolePion_Dotations( MIL_AgentPion& pion, const ConsumptionComputerFactory_ABC& consumptionComputerFactory, const OnComponentFunctorComputerFactory_ABC& onComponentFunctorComputerFactory )
+PHY_RolePion_Dotations::PHY_RolePion_Dotations( MIL_AgentPion& pion )
     : pion_                      ( pion )
     , pCurrentConsumptionMode_   ( 0 )
     , pPreviousConsumptionMode_  ( 0 )
     , reservedConsumptions_      ()
     , pDotations_                ( 0 )
-    , consumptionComputerFactory_( consumptionComputerFactory )
-    , onComponentFunctorComputerFactory_( onComponentFunctorComputerFactory )
 {
     pDotations_ = new PHY_DotationGroupContainer( *this );
     pion.GetType().GetUnitType().GetTC1Capacities().RegisterCapacities( *pDotations_ );
@@ -270,7 +263,7 @@ bool PHY_RolePion_Dotations::SetConsumptionMode( const PHY_ConsumptionType& cons
     pDotations_->CancelConsumptionReservations();
 
     sConsumptionReservation func( consumptionMode, *pDotations_ );
-    OnComponentComputer_ABC& dotationComputer = onComponentFunctorComputerFactory_.Create( func );
+    OnComponentComputer_ABC& dotationComputer = pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( func );
     pion_.Execute( dotationComputer );
 
     if( func.bReservationOK_ )
@@ -285,7 +278,7 @@ bool PHY_RolePion_Dotations::SetConsumptionMode( const PHY_ConsumptionType& cons
     if( pCurrentConsumptionMode_ )
     {
         sConsumptionReservation funcRollback( *pCurrentConsumptionMode_, *pDotations_ );
-        OnComponentComputer_ABC& dotationComputer = onComponentFunctorComputerFactory_.Create( funcRollback );
+        OnComponentComputer_ABC& dotationComputer = pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( funcRollback );
         pion_.Execute( dotationComputer );
         assert( funcRollback.bReservationOK_ );
     }
@@ -359,7 +352,7 @@ MT_Float PHY_RolePion_Dotations::GetMaxTimeForConsumption( const PHY_Consumption
 {
     assert( pDotations_ );
     sConsumptionTimeExpectancy func( mode );
-    OnComponentComputer_ABC& dotationComputer = onComponentFunctorComputerFactory_.Create( func );
+    OnComponentComputer_ABC& dotationComputer = pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( func );
     pion_.Execute( dotationComputer );
     return func.GetNbrTicksForConsumption( *pDotations_ );
 }
@@ -420,7 +413,7 @@ void PHY_RolePion_Dotations::Update( bool bIsDead )
 
     assert( pDotations_ );
     
-    ConsumptionComputer_ABC& consumptionComputer = consumptionComputerFactory_.Create();
+    ConsumptionComputer_ABC& consumptionComputer = pion_.GetAlgorithms().consumptionComputerFactory_->Create();
     pion_.Execute( consumptionComputer );
     SetConsumptionMode( consumptionComputer.Result() );
 
@@ -452,43 +445,14 @@ void PHY_RolePion_Dotations::Clean()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Dotations::GetDotationValue
+// Name: PHY_RolePion_Dotations::NotifyConsumeDotation
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Dotations::GetDotationValue( const PHY_DotationCategory& category ) const
+void PHY_RolePion_Dotations::NotifyConsumeDotation( const PHY_DotationCategory& category, double rNbr )
 {
     assert( pDotations_ );
-    return pDotations_->GetValue( category );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Dotations::HasDotation
-// Created: NLD 2005-04-18
-// -----------------------------------------------------------------------------
-bool PHY_RolePion_Dotations::HasDotation( const PHY_DotationCategory& category ) const
-{
-    assert( pDotations_ );
-    return pDotations_->GetValue( category ) > 0.;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Dotations::GetDotationCapacity
-// Created: NLD 2004-09-16
-// -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Dotations::GetDotationCapacity( const PHY_DotationCategory& category ) const
-{
-    assert( pDotations_ );
-    return pDotations_->GetCapacity( category );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Dotations::ConsumeDotation
-// Created: NLD 2004-09-15
-// -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Dotations::ConsumeDotation( const PHY_DotationCategory& category, MT_Float rNbr )
-{
-    assert( pDotations_ );
-    return pDotations_->Consume( category, rNbr );
+    double nConsumed = pDotations_->Consume( category, rNbr );
+    assert( nConsumed == rNbr );
 }
 
 // -----------------------------------------------------------------------------
@@ -572,13 +536,22 @@ void PHY_RolePion_Dotations::SendFullState( NET_ASN_MsgUnitAttributes& asn ) con
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::Execute
+// Name: PHY_RolePion_Dotations::Execute
 // Created: MGD 2009-09-21
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Dotations::Execute( moving::MoveComputer_ABC& algorithm ) const
 {
     if( pCurrentConsumptionMode_ != &PHY_ConsumptionType::moving_ )//@TODO MGD is it really a good modifier
         algorithm.NotifyNoDotation();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::Execute
+// Created: MGD 2009-09-30
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Dotations::Execute( dotation::DotationComputer_ABC& algorithm ) const
+{
+    algorithm.SetDotationContainer( *pDotations_ );
 }
 
 } // namespace dotation

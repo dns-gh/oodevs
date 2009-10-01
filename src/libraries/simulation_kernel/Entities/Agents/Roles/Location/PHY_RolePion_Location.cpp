@@ -32,6 +32,7 @@
 #include "Hla/HLA_UpdateFunctor.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
+#include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/LocationComputer_ABC.h"
 #include "simulation_kernel/LocationComputerFactory_ABC.h"
 
@@ -43,26 +44,22 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePion_Location* role, const unsigned int /*version*/ )
 {
     MIL_AgentPion* const pion = &role->pion_;
-    const LocationComputerFactory_ABC* const locationComputerFactory = &role->locationComputerFactory_;
-    archive << pion
-            << locationComputerFactory;
+    archive << pion;
 }
 
 template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RolePion_Location* role, const unsigned int /*version*/ )
 {
 	MIL_AgentPion* pion;
-    LocationComputerFactory_ABC* locationComputerFactory;
-	archive >> pion
-            >> locationComputerFactory;
-	::new( role )PHY_RolePion_Location( *pion, *locationComputerFactory );
+	archive >> pion;
+	::new( role )PHY_RolePion_Location( *pion );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Location constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-PHY_RolePion_Location::PHY_RolePion_Location( MIL_AgentPion& pion, const location::LocationComputerFactory_ABC& locationComputerFactory )
+PHY_RolePion_Location::PHY_RolePion_Location( MIL_AgentPion& pion )
     : pion_                     ( pion    )
     , vDirection_               (  0.,  0. )
     , vPosition_                ( -1., -1. )    //$$$ Devrait être 'NULL'
@@ -74,7 +71,6 @@ PHY_RolePion_Location::PHY_RolePion_Location( MIL_AgentPion& pion, const locatio
     , bDirectionHasChanged_     ( true     )
     , bCurrentSpeedHasChanged_  ( true     )
     , bHeightHasChanged_        ( true     )
-    , locationComputerFactory_  ( locationComputerFactory)
 {
 }
 
@@ -490,9 +486,7 @@ void PHY_RolePion_Location::Update( bool bIsDead )
         Move( vPosition_, vDirection_, 0. );
     }
 
-    location::LocationComputer_ABC& locationComputer = locationComputerFactory_.Create();
-    pion_.Execute(locationComputer );
-    SetHeight( locationComputer.GetHeight() );
+    SetHeight( pion_.Execute(pion_.GetAlgorithms().locationComputerFactory_->Create() ).GetHeight() );
 
 }
 

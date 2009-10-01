@@ -20,11 +20,6 @@
 
 class MIL_AgentPion;
 
-namespace location
-{
-    class LocationComputerFactory_ABC;
-}
-
 // =============================================================================
 // @class  PHY_RolePion_Location
 // Created: JVT 2004-08-03
@@ -33,7 +28,7 @@ class PHY_RolePion_Location : public PHY_RoleInterface_Location
 {
 
 public:
-    explicit PHY_RolePion_Location( MIL_AgentPion& pion, const location::LocationComputerFactory_ABC& locationComputerFactory );
+    explicit PHY_RolePion_Location( MIL_AgentPion& pion );
     virtual ~PHY_RolePion_Location();
 
     //! @name CheckPoints
@@ -108,8 +103,6 @@ private:
     MT_Float       rCurrentSpeed_;
     bool           bHasDoneMagicMove_;
     bool           bHasMove_;
-
-    const location::LocationComputerFactory_ABC& locationComputerFactory_;
 
     bool bPositionHasChanged_;
     bool bDirectionHasChanged_;

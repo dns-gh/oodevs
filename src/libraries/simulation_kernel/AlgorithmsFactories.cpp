@@ -21,7 +21,10 @@
 #include "simulation_kernel/HealComputerFactory.h"
 #include "simulation_kernel/OnComponentFunctorComputerFactory.h"
 #include "simulation_kernel/OnComponentLendedFunctorComputerFactory.h"
+#include "simulation_kernel/DotationComputerFactory.h"
 #include "simulation_kernel/LoadingComputerFactory.h"
+
+BOOST_CLASS_EXPORT_GUID( AlgorithmsFactories, "AlgorithmsFactories" )
 
 // -----------------------------------------------------------------------------
 // Name: AlgorithmsFactories constructor
@@ -39,6 +42,7 @@ AlgorithmsFactories::AlgorithmsFactories()
     , healComputerFactory_( new human::HealComputerFactory() )
     , onComponentFunctorComputerFactory_( new OnComponentFunctorComputerFactory() )
     , onComponentLendedFunctorComputerFactory_( new OnComponentLendedFunctorComputerFactory() )
+    , dotationComputerFactory_( new dotation::DotationComputerFactory() )
     , loadingComputerFactory_( new transport::LoadingComputerFactory() )
 {
     //NOTHING

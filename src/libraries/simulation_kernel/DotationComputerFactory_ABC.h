@@ -7,36 +7,34 @@
 //
 // *****************************************************************************
 
-#ifndef __LocationComputer_ABC_h_
-#define __LocationComputer_ABC_h_
+#ifndef __DotationComputerFactory_ABC_h_
+#define __DotationComputerFactory_ABC_h_
 
-namespace location
+namespace dotation
 {
-
+    class DotationComputer_ABC;
 // =============================================================================
-/** @class  LocationComputer_ABC
-    @brief  LocationComputer_ABC
+/** @class  DotationComputerFactory_ABC
+    @brief  DotationComputerFactory_ABC
 */
-// Created: MGD 2009-09-15
+// Created: MGD 2009-08-13
 // =============================================================================
-class LocationComputer_ABC
+class DotationComputerFactory_ABC : private boost::noncopyable
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             LocationComputer_ABC();
-    virtual ~LocationComputer_ABC();
+             DotationComputerFactory_ABC();
+    virtual ~DotationComputerFactory_ABC();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Reset() = 0;
-    virtual void SetHeight( double height ) = 0;
-    virtual double GetHeight() const = 0;
+    virtual DotationComputer_ABC& Create() const = 0;
     //@}
 };
 
-} // namespace firing
+}
 
-#endif // __LocationComputer_ABC_h_
+#endif // __DotationComputerFactory_ABC_h_

@@ -241,3 +241,12 @@ DEC_KnowledgeBlackBoard_AgentPion& MIL_AgentHLA::GetKnowledge() const
 {
     throw std::runtime_error( __FUNCTION__ " not available for HLA Agents" );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentHLA::GetKnowledge
+// Created: MGD 2009-09-30
+// -----------------------------------------------------------------------------
+const AlgorithmsFactories& MIL_AgentHLA::GetAlgorithms() const
+{
+    throw std::runtime_error( __FUNCTION__ " not available for HLA Agents" );
+}

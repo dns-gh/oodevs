@@ -53,7 +53,6 @@ public:
     //! @name Operations
     //@{
     virtual const PHY_ConsumptionType& GetConsumptionMode() const = 0;
-    virtual       bool                 HasDotation       ( const PHY_DotationCategory& category ) const = 0;
     //@}
 
     virtual void ReadOverloading              ( xml::xistream& xis ) = 0;
@@ -70,9 +69,6 @@ public:
 
     //! @name Dotations management
     //@{
-    virtual MT_Float GetDotationCapacity( const PHY_DotationCategory& category ) const = 0;
-    virtual MT_Float GetDotationValue   ( const PHY_DotationCategory& category ) const = 0;
-    virtual MT_Float ConsumeDotation    ( const PHY_DotationCategory& category, MT_Float rNbr ) = 0;
     virtual MT_Float SupplyDotation     ( const PHY_DotationCategory& category, MT_Float rNbr ) = 0;
     virtual void     ResupplyDotations  () = 0;
     virtual void     ResupplyDotations  ( const PHY_AmmoDotationClass& ammoDotationClass, MT_Float rFactor ) = 0;

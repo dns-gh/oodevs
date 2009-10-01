@@ -126,11 +126,8 @@ void PHY_RoleAction_Objects_DataComputer::ConsumeDotations( const PHY_DotationCa
 {
     for( RIT_PionDataVector it = pionsData_.rbegin(); it != pionsData_.rend(); ++it )
     {
-        nNbr -= it->ConsumeDotations( category, nNbr );
-        if( nNbr == 0 )
-            return;
+        it->ConsumeDotations( category, nNbr );
     }
-    assert( !__FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------

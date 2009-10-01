@@ -44,13 +44,4 @@ const PHY_ConsumptionType& PHY_RoleHLA_Dotations::GetConsumptionMode() const
     return entity_.GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture().GetConsumptionMode();
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleHLA_Dotations::HasDotation
-// Created: NLD 2005-04-18
-// -----------------------------------------------------------------------------
-bool PHY_RoleHLA_Dotations::HasDotation( const PHY_DotationCategory& /*category*/ ) const
-{
-    return true;
-}
-
 } // namespace dotation

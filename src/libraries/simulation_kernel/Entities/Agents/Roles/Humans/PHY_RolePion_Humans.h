@@ -16,7 +16,6 @@
 
 namespace human
 {
-  class HealComputerFactory_ABC;
 
 // =============================================================================
 // @class  PHY_RolePion_Humans
@@ -26,7 +25,7 @@ class PHY_RolePion_Humans : public PHY_RoleInterface_Humans
 {
 
 public:
-    explicit PHY_RolePion_Humans( MIL_AgentPion& pion, const human::HealComputerFactory_ABC& healComputerFactory );
+    explicit PHY_RolePion_Humans( MIL_AgentPion& pion );
     virtual ~PHY_RolePion_Humans();
 
     //! @name CheckPoints
@@ -130,8 +129,6 @@ private:
     T_MedicalHumanStateSet medicalHumanStates_;
     uint                   nTickRcMedicalQuerySent_;
     E_EvacuationMode       nEvacuationMode_;
-
-    const human::HealComputerFactory_ABC& healComputerFactory_;
 
 	template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Humans* role, const unsigned int /*version*/ );
 	template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Humans* role, const unsigned int /*version*/ );

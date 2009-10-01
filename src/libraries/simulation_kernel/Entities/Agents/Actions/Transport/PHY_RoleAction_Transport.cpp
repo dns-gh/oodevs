@@ -18,6 +18,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Network/NET_ASN_Messages.h"
 
+#include "simulation_kernel/AlgorithmsFactories.h"
 #include "TransportCapacityComputerFactory_ABC.h"
 #include "TransportCapacityComputer_ABC.h"
 #include "TransportPermissionComputer_ABC.h"
@@ -34,18 +35,15 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RoleAction_Transport* role, const unsigned int /*version*/ )
 {
     const MIL_AgentPion* const pion = &role->transporter_;
-    const TransportComputerFactory_ABC* const f1 = &role->pTransportComputerFactory_;
-    archive << pion
-            << f1;
+    archive << pion;
 }
 
 template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RoleAction_Transport* role, const unsigned int /*version*/ )
 {
     MIL_AgentPion* pion;
-    TransportComputerFactory_ABC* f1;
-    archive >> pion >> f1;
-    ::new( role )PHY_RoleAction_Transport( *pion, *f1);
+    archive >> pion;
+    ::new( role )PHY_RoleAction_Transport( *pion );
 }
 
 // -----------------------------------------------------------------------------
@@ -103,9 +101,8 @@ void PHY_RoleAction_Transport::sTransportData::serialize( Archive& file, const u
 // Name: PHY_RoleAction_Transport constructor
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
-PHY_RoleAction_Transport::PHY_RoleAction_Transport( MIL_AgentPion& pion, const TransportComputerFactory_ABC& capacityFactory)
+PHY_RoleAction_Transport::PHY_RoleAction_Transport( MIL_AgentPion& pion )
     : transporter_             ( pion )
-    , pTransportComputerFactory_(capacityFactory)
     , nState_                   ( eNothing )
     , bLoadUnloadHasBeenUpdated_( false )
     , rWeightTransported_       ( 0. )
@@ -156,7 +153,7 @@ int PHY_RoleAction_Transport::Load()
 
     if( nState_ == eLoading )
     {
-    	const TransportCapacityComputer_ABC& comp = transporter_.Execute( pTransportComputerFactory_.CreateCapacityComputer() );
+    	const TransportCapacityComputer_ABC& comp = transporter_.Execute( transporter_.GetAlgorithms().transportComputerFactory_->CreateCapacityComputer() );
 
         if( comp.WeightLoadedPerTimeStep() == 0. )
             return eErrorNoCarriers;
@@ -218,7 +215,7 @@ int PHY_RoleAction_Transport::Unload()
 
     if( nState_ == eUnloading )
     {
-    	const TransportCapacityComputer_ABC& comp = transporter_.Execute( pTransportComputerFactory_.CreateCapacityComputer() );
+    	const TransportCapacityComputer_ABC& comp = transporter_.Execute( transporter_.GetAlgorithms().transportComputerFactory_->CreateCapacityComputer() );
         if( comp.WeightUnloadedPerTimeStep() == 0. )
             return eErrorNoCarriers;
 
@@ -321,7 +318,7 @@ void PHY_RoleAction_Transport::ApplyContamination  ( const MIL_ToxicEffectManipu
 // Name: PHY_RoleAction_Transport::ApplyPoisonous
 // Created: AHC 2009-09-22
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Transport::ApplyPoisonous                  ( const MIL_ToxicEffectManipulator& contamination )
+void PHY_RoleAction_Transport::ApplyPoisonous( const MIL_ToxicEffectManipulator& contamination )
 {
 	// nothing ??
 }
@@ -332,7 +329,7 @@ void PHY_RoleAction_Transport::ApplyPoisonous                  ( const MIL_Toxic
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Transport::CheckConsistency()
 {
-    if( transporter_.Execute( pTransportComputerFactory_.CreateCapacityComputer() ).WeightCapacity() == 0. )
+    if( transporter_.Execute( transporter_.GetAlgorithms().transportComputerFactory_->CreateCapacityComputer() ).WeightCapacity() == 0. )
         Cancel();
 }
 
@@ -360,15 +357,15 @@ bool PHY_RoleAction_Transport::AddPion( MIL_Agent_ABC& transported, bool bTransp
            || transportedPions_.find( &transported ) != transportedPions_.end() )
         return false;
    
-    if(!transported.Execute(pTransportComputerFactory_.CreatePermissionComputer()).CanBeLoaded())
+    if(!transported.Execute( transporter_.GetAlgorithms().transportComputerFactory_->CreatePermissionComputer()).CanBeLoaded())
     	return false;
 
-    const TransportWeightComputer_ABC& weightComp = transported.Execute(pTransportComputerFactory_.CreateWeightComputer(&LoadableStrategy(bTransportOnlyLoadable)));
+    const TransportWeightComputer_ABC& weightComp = transported.Execute( transporter_.GetAlgorithms().transportComputerFactory_->CreateWeightComputer(&LoadableStrategy(bTransportOnlyLoadable)));
     if( weightComp.TotalTransportedWeight() <= 0. )
         return false;
 
     if( !bTransportOnlyLoadable && weightComp.HeaviestTransportedWeight() >
-		transporter_.Execute( pTransportComputerFactory_.CreateCapacityComputer() ).MaxComposanteTransportedWeight() )
+		transporter_.Execute( transporter_.GetAlgorithms().transportComputerFactory_->CreateCapacityComputer() ).MaxComposanteTransportedWeight() )
         return false;
 
     transportedPions_[ &transported ].sTransportData::sTransportData( weightComp.TotalTransportedWeight(), bTransportOnlyLoadable );
@@ -385,12 +382,12 @@ bool PHY_RoleAction_Transport::MagicLoadPion( MIL_Agent_ABC& transported, bool b
         || transportedPions_.find( &transported ) != transportedPions_.end() )
         return false;
 
-    if(!transported.Execute(pTransportComputerFactory_.CreatePermissionComputer()).CanBeLoaded())
+    if(!transported.Execute( transporter_.GetAlgorithms().transportComputerFactory_->CreatePermissionComputer()).CanBeLoaded())
        	return false;
 
     transported.Apply(&TransportNotificationHandler_ABC::LoadForTransport, transporter_, bTransportOnlyLoadable );
     sTransportData& data = transportedPions_[ &transported ].sTransportData::sTransportData(
-    		transported.Execute(pTransportComputerFactory_.CreateWeightComputer(&LoadableStrategy(bTransportOnlyLoadable))).TotalTransportedWeight(),
+    		transported.Execute( transporter_.GetAlgorithms().transportComputerFactory_->CreateWeightComputer(&LoadableStrategy(bTransportOnlyLoadable))).TotalTransportedWeight(),
     		bTransportOnlyLoadable );
     data.rRemainingWeight_   = 0.;
     data.rTransportedWeight_ = data.rTotalWeight_;
@@ -444,12 +441,12 @@ bool PHY_RoleAction_Transport::CanTransportPion( MIL_Agent_ABC& transported, boo
     if( transporter_ == transported )
         return false;
 
-    const TransportWeightComputer_ABC& weightComp = transported.Execute(pTransportComputerFactory_.CreateWeightComputer(&LoadableStrategy(bTransportOnlyLoadable)));
+    const TransportWeightComputer_ABC& weightComp = transported.Execute( transporter_.GetAlgorithms().transportComputerFactory_->CreateWeightComputer(&LoadableStrategy(bTransportOnlyLoadable)));
     if( weightComp.TotalTransportedWeight() <= 0. )
         return false;
 
     if( !bTransportOnlyLoadable && weightComp.HeaviestTransportedWeight() >
-		 transporter_.Execute( pTransportComputerFactory_.CreateCapacityComputer() ).MaxComposanteTransportedWeight() )
+		 transporter_.Execute( transporter_.GetAlgorithms().transportComputerFactory_->CreateCapacityComputer() ).MaxComposanteTransportedWeight() )
         return false;
     return true;
 }

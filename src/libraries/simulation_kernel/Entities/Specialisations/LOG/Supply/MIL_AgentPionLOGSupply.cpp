@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentPionLOGSupply.h"
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePionLOG_Supply.h"
+#include "simulation_kernel/AlgorithmsFactories.h"
 
 BOOST_CLASS_EXPORT_GUID( MIL_AgentPionLOGSupply, "MIL_AgentPionLOGSupply" )
 
@@ -21,9 +22,11 @@ void save_construct_data( Archive& archive, const MIL_AgentPionLOGSupply* pion, 
 	unsigned int nTypeID = pion->GetType().GetID();
     unsigned int nID = pion->GetID() ;
 	const MIL_Automate* const pAutomate = &pion->GetAutomate();
-	archive << nTypeID 
-            << nID 
-            << pAutomate;
+    const AlgorithmsFactories* const algorithmFactories = &pion->GetAlgorithms();
+    archive << nTypeID 
+        << nID 
+        << pAutomate
+        << algorithmFactories;
 }
 
 template< typename Archive >
@@ -31,18 +34,22 @@ void load_construct_data( Archive& archive, MIL_AgentPionLOGSupply* pion, const 
 {
 	unsigned int nTypeID, nID;
 	MIL_Automate* pAutomate = 0;
-    archive >> nTypeID >> nID >> pAutomate;
+    AlgorithmsFactories* algorithmFactories;
+    archive >> nTypeID
+        >> nID
+        >> pAutomate
+        >> algorithmFactories;
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( nTypeID );
     assert( pType );
-    ::new( pion )MIL_AgentPionLOGSupply( *pType, nID, *pAutomate );
+    ::new( pion )MIL_AgentPionLOGSupply( *pType, nID, *pAutomate, *algorithmFactories );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPionLOGSupply constructor
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-MIL_AgentPionLOGSupply::MIL_AgentPionLOGSupply( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, xml::xistream& xis )
-    : MIL_AgentPionLOG_ABC( type, nID, automate, xis )
+MIL_AgentPionLOGSupply::MIL_AgentPionLOGSupply( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis )
+    : MIL_AgentPionLOG_ABC( type, nID, automate, algorithmFactories, xis )
 {
 }
 
@@ -50,8 +57,8 @@ MIL_AgentPionLOGSupply::MIL_AgentPionLOGSupply( const MIL_AgentTypePion& type, u
 // Name: MIL_AgentPionLOGSupply constructor
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
-MIL_AgentPionLOGSupply::MIL_AgentPionLOGSupply( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate )
-    : MIL_AgentPionLOG_ABC( type, nID, automate )
+MIL_AgentPionLOGSupply::MIL_AgentPionLOGSupply( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories )
+    : MIL_AgentPionLOG_ABC( type, nID, automate, algorithmFactories )
 {
 }
 

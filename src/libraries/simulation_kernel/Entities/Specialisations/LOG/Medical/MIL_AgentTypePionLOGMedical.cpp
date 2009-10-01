@@ -39,18 +39,18 @@ MIL_AgentTypePionLOGMedical::~MIL_AgentTypePionLOGMedical()
 // Name: MIL_AgentTypePionLOGMedical::InstanciatePion
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePionLOGMedical::InstanciatePion( uint nID, MIL_Automate& automate, xml::xistream& xis ) const
+MIL_AgentPion* MIL_AgentTypePionLOGMedical::InstanciatePion( uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis ) const
 {
-    return new MIL_AgentPionLOGMedical( *this, nID, automate, xis );
+    return new MIL_AgentPionLOGMedical( *this, nID, automate, algorithmFactories, xis );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOGMedical::InstanciatePion
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePionLOGMedical::InstanciatePion( uint nID, MIL_Automate& automate ) const
+MIL_AgentPion* MIL_AgentTypePionLOGMedical::InstanciatePion( uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories ) const
 {
-    return new MIL_AgentPionLOGMedical( *this, nID, automate );
+    return new MIL_AgentPionLOGMedical( *this, nID, automate, algorithmFactories );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,10 +58,10 @@ MIL_AgentPion* MIL_AgentTypePionLOGMedical::InstanciatePion( uint nID, MIL_Autom
 // Created: MGD 2009-08-13
 // @TODO REPLACE BY XML in AgentFactory
 // -----------------------------------------------------------------------------
-void MIL_AgentTypePionLOGMedical::RegisterRoles( MIL_AgentPion& pion, AlgorithmsFactories& algorithmsFactories ) const
+void MIL_AgentTypePionLOGMedical::RegisterRoles( MIL_AgentPion& pion ) const
 {
-    MIL_AgentTypePion::RegisterRoles( pion, algorithmsFactories  );
-    pion.RegisterRole< PHY_RolePionLOG_Medical >( static_cast< MIL_AgentPionLOG_ABC& >( pion ), *algorithmsFactories.onComponentFunctorComputerFactory_, *algorithmsFactories.onComponentLendedFunctorComputerFactory_ );//@TODO remove cast when AgentPionLOG will be deleted   
+    MIL_AgentTypePion::RegisterRoles( pion );
+    pion.RegisterRole< PHY_RolePionLOG_Medical >( static_cast< MIL_AgentPionLOG_ABC& >( pion ) );//@TODO remove cast when AgentPionLOG will be deleted   
 }
 
 

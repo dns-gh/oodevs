@@ -33,6 +33,8 @@ class DEC_KS_AgentQuerier;
 class HLA_UpdateFunctor;
 class MIL_EntityManager;
 
+class AlgorithmsFactories;
+
 // =============================================================================
 // @class  MIL_AgentPion
 // Created: JVT 2004-08-03
@@ -41,8 +43,8 @@ class MIL_AgentPion : public MIL_Agent_ABC
 {
 
 public:
-             MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, xml::xistream& xis );    // Pion dans ODB
-             MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate ); // Creation dynamique (convois, ...)
+             MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis );    // Pion dans ODB
+             MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories ); // Creation dynamique (convois, ...)
     virtual ~MIL_AgentPion();
 
     //! @name CheckPoints
@@ -67,6 +69,7 @@ public:
             MIL_PionOrderManager&              GetOrderManager();
     virtual DEC_Decision_ABC&                  GetDecision    (); //$$$ Dérolifier DEC_Decision_ABC
     virtual const   DEC_Decision_ABC&                  GetDecision    () const; //$$$ Dérolifier DEC_Decision_ABC
+    virtual const AlgorithmsFactories& GetAlgorithms() const;
 
     virtual       MIL_Army_ABC&       GetArmy            () const;
                   MIL_KnowledgeGroup& GetKnowledgeGroup  () const;
@@ -132,7 +135,7 @@ public:
     //@}
 
 protected:
-    MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& automate );
+    MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories );
 
 private:
     //! @name Operations
@@ -158,6 +161,8 @@ private:
     const MIL_AgentTypePion*  pType_;
           bool                bIsPC_;
           MIL_Automate*       pAutomate_;
+    
+    const AlgorithmsFactories& algorithmFactories_;
 
     // Knowledge
     DEC_KnowledgeBlackBoard_AgentPion* pKnowledgeBlackBoard_;

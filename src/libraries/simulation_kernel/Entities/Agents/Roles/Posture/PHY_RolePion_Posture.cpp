@@ -17,6 +17,7 @@
 #include "Network/NET_ASN_Messages.h"
 #include "Hla/HLA_UpdateFunctor.h"
 
+#include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/PostureComputer_ABC.h"
 #include "simulation_kernel/PostureComputerFactory_ABC.h"
 #include "simulation_kernel/ConsumptionComputer_ABC.h"
@@ -32,26 +33,22 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePion_Posture* role, const unsigned int /*version*/ )
 {
     const MIL_AgentPion* const pion = &role->pion_;
-    const PostureComputerFactory_ABC* const postureComputerFactory = &role->postureComputerFactory_;
-    archive << pion
-            << postureComputerFactory;
+    archive << pion;
 }
 
 template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RolePion_Posture* role, const unsigned int /*version*/ )
 {
 	MIL_AgentPion* pion;
-    PostureComputerFactory_ABC* postureComputerFactory;
-    archive >> pion
-            >> postureComputerFactory;
-    ::new( role )PHY_RolePion_Posture( *pion, *postureComputerFactory );
+    archive >> pion;
+    ::new( role )PHY_RolePion_Posture( *pion );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Posture constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-PHY_RolePion_Posture::PHY_RolePion_Posture( MIL_AgentPion& pion, const posture::PostureComputerFactory_ABC& postureComputerFactory )
+PHY_RolePion_Posture::PHY_RolePion_Posture( MIL_AgentPion& pion )
     : pion_                                ( pion )
     , pCurrentPosture_                     ( &PHY_Posture::arret_ )
     , pLastPosture_                        ( &PHY_Posture::arret_ )
@@ -70,7 +67,6 @@ PHY_RolePion_Posture::PHY_RolePion_Posture( MIL_AgentPion& pion, const posture::
     , rLastInstallationStateSent_          ( 0. )
     , bInstallationSetUpInProgress_        ( false )
     , bInstallationStateHasChanged_        ( true )
-    , postureComputerFactory_              ( postureComputerFactory )
 {
     // NOTHING
 }
@@ -186,9 +182,9 @@ void PHY_RolePion_Posture::Update( bool bIsDead )
     params.rStealthFactor_ = rStealthFactor_;
     params.rTimingFactor_ = rTimingFactor_;
 
-    posture::PostureComputer_ABC& postureComputer = postureComputerFactory_.Create( params ); 
-    pion_.Execute( postureComputer );
-    PostureComputer_ABC::Results& result = postureComputer.Result(); 
+    PostureComputer_ABC& computer = pion_.GetAlgorithms().postureComputerFactory_->Create( params );
+    pion_.Execute( computer );
+    PostureComputer_ABC::Results& result = computer.Result(); 
     if( result.newPosture_ )
         ChangePosture( *result.newPosture_ );
     ChangePostureCompletionPercentage( result.postureCompletionPercentage_ );

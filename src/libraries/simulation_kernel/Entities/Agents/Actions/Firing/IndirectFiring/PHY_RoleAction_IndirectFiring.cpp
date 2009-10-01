@@ -21,6 +21,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
 
+#include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/WeaponAvailabilityComputer_ABC.h"
 #include "simulation_kernel/WeaponAvailabilityComputerFactory_ABC.h"
 
@@ -33,29 +34,24 @@ using namespace firing;
 template< typename Archive >
 void firing::save_construct_data( Archive& archive, const PHY_RoleAction_IndirectFiring* role, const unsigned int /*version*/ )
 {
-    const WeaponAvailabilityComputerFactory_ABC* const weaponAvailabilityComputerFactory = &role->weaponAvailabilityComputerFactory_;
     MIL_AgentPion* const pion = &role->pion_;
-    archive << pion
-            << weaponAvailabilityComputerFactory;
+    archive << pion;
 }
 
 template< typename Archive >
 void firing::load_construct_data( Archive& archive, PHY_RoleAction_IndirectFiring* role, const unsigned int /*version*/ )
 {
     MIL_AgentPion* pion;
-    WeaponAvailabilityComputerFactory_ABC* weaponAvailabilityComputerFactory;
-    archive >> pion
-            >> weaponAvailabilityComputerFactory;
-    ::new( role )PHY_RoleAction_IndirectFiring( *pion, *weaponAvailabilityComputerFactory );
+    archive >> pion;
+    ::new( role )PHY_RoleAction_IndirectFiring( *pion );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_IndirectFiring constructor
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-PHY_RoleAction_IndirectFiring::PHY_RoleAction_IndirectFiring( MIL_AgentPion& pion, const WeaponAvailabilityComputerFactory_ABC& weaponAvailabilityComputerFactory )
+PHY_RoleAction_IndirectFiring::PHY_RoleAction_IndirectFiring( MIL_AgentPion& pion )
     : pion_     ( pion )
-    , weaponAvailabilityComputerFactory_ ( weaponAvailabilityComputerFactory )
 {
     // NOTHING
 }
@@ -96,7 +92,7 @@ int PHY_RoleAction_IndirectFiring::Fire( MIL_Effect_IndirectFire* pEffect )
 
     // Firers  
     PHY_IndirectFireData firerWeapons( pion_, *pEffect );
-    std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( weaponAvailabilityComputerFactory_.Create( firerWeapons) );
+    std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( pion_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( firerWeapons) );
     pion_.Execute( *weaponAvailabilityComputer );
 
     if( !firerWeapons.HasWeaponsReady() )
@@ -148,7 +144,7 @@ int PHY_RoleAction_IndirectFiring::ThrowSmoke( const MT_Vector2D& vTargetPositio
 
     
     PHY_SmokeData smokeData( pion_, PHY_IndirectFireDotationClass::fumigene_, nNbrAmmo );
-    std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( weaponAvailabilityComputerFactory_.Create( smokeData ) );
+    std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( pion_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( smokeData ) );
     pion_.Execute( *weaponAvailabilityComputer );
     
     PHY_Weapon* pWeapon = smokeData.GetWeapon();
@@ -167,7 +163,7 @@ int PHY_RoleAction_IndirectFiring::ThrowSmoke( const MT_Vector2D& vTargetPositio
 const PHY_DotationCategory* PHY_RoleAction_IndirectFiring::GetMunitionForIndirectFire( const PHY_IndirectFireDotationClass& indirectWeaponCategory, const MT_Vector2D& vTargetPosition )
 {  
     PHY_MunitionForIndirectFireData fireData( pion_, indirectWeaponCategory, vTargetPosition );
-    std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( weaponAvailabilityComputerFactory_.Create( fireData ) );
+    std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( pion_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( fireData ) );
     pion_.Execute( *weaponAvailabilityComputer );
     
     return fireData.GetChoosenMunition();

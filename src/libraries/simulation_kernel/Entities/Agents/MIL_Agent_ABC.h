@@ -22,6 +22,7 @@ class MIL_Population;
 class DEC_Decision_ABC;
 class DEC_Knowledge_Agent;
 class DEC_KnowledgeBlackBoard_AgentPion;
+class AlgorithmsFactories;
 
 // =============================================================================
 // @class  MIL_Agent_ABC
@@ -51,6 +52,8 @@ public:
     
     virtual       DEC_Decision_ABC& GetDecision() = 0;
     virtual const DEC_Decision_ABC& GetDecision() const = 0;
+
+    virtual const AlgorithmsFactories& GetAlgorithms() const = 0;
 
     virtual bool BelongsTo( const MIL_KnowledgeGroup& group ) const = 0;
     //@}

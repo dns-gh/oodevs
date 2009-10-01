@@ -18,6 +18,10 @@
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 
+#include "simulation_kernel/AlgorithmsFactories.h"
+#include "simulation_kernel/DotationComputer_ABC.h"
+#include "simulation_kernel/DotationComputerFactory_ABC.h"
+
 using namespace firing;
 
 MT_Random PHY_DirectFireData::randomGenerator_;
@@ -139,7 +143,9 @@ void PHY_DirectFireData::operator() ( const PHY_ComposantePion& compFirer, PHY_W
     if( pAmmoDotationClass_ && ( !weapon.GetDotationCategory().GetAmmoDotationClass() || *weapon.GetDotationCategory().GetAmmoDotationClass() != *pAmmoDotationClass_ ) )
         return;
 
-    if( !firer_.GetRole< dotation::PHY_RoleInterface_Dotations >().HasDotation( weapon.GetDotationCategory() ) )
+    dotation::DotationComputer_ABC& dotationComputer = firer_.GetAlgorithms().dotationComputerFactory_->Create();
+    firer_.Execute( dotationComputer );
+    if( !dotationComputer.HasDotation( weapon.GetDotationCategory() ) )
         bHasWeaponsAndNoAmmo_ = true;
     else
     {

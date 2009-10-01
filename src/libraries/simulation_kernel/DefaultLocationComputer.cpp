@@ -55,7 +55,7 @@ void DefaultLocationComputer::SetHeight( double height )
 // Name: DefaultLocationComputer::SetHeight
 // Created: MGD 2009-09-21
 // -----------------------------------------------------------------------------
-double DefaultLocationComputer::GetHeight()
+double DefaultLocationComputer::GetHeight() const
 {
     return height_;
 }

@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentPionLOGMedical.h"
 #include "Entities/Agents/Roles/Logistic/Medical/PHY_RolePionLOG_Medical.h"
+#include "simulation_kernel/AlgorithmsFactories.h"
 
 BOOST_CLASS_EXPORT_GUID( MIL_AgentPionLOGMedical, "MIL_AgentPionLOGMedical" )
 
@@ -21,9 +22,11 @@ void save_construct_data( Archive& archive, const MIL_AgentPionLOGMedical* pion,
 	unsigned int nTypeID = pion->GetType().GetID();
     unsigned int nID = pion->GetID() ;
 	const MIL_Automate* const pAutomate = &pion->GetAutomate();
-	archive << nTypeID 
+    const AlgorithmsFactories* const algorithmFactories = &pion->GetAlgorithms();
+    archive << nTypeID 
             << nID 
-            << pAutomate;
+            << pAutomate
+            << algorithmFactories;
 }
 
 template< typename Archive >
@@ -31,18 +34,22 @@ void load_construct_data( Archive& archive, MIL_AgentPionLOGMedical* pion, const
 {
 	unsigned int nTypeID, nID;
 	MIL_Automate* pAutomate = 0;
-    archive >> nTypeID >> nID >> pAutomate;
+    AlgorithmsFactories* algorithmFactories = 0;
+    archive >> nTypeID
+        >> nID
+        >> pAutomate
+        >> algorithmFactories;
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( nTypeID );
     assert( pType );
-    ::new( pion )MIL_AgentPionLOGMedical( *pType, nID, *pAutomate );
+    ::new( pion )MIL_AgentPionLOGMedical( *pType, nID, *pAutomate, *algorithmFactories );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPionLOGMedical constructor
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-MIL_AgentPionLOGMedical::MIL_AgentPionLOGMedical( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, xml::xistream& xis )
-    : MIL_AgentPionLOG_ABC( type, nID, automate, xis )
+MIL_AgentPionLOGMedical::MIL_AgentPionLOGMedical( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis )
+    : MIL_AgentPionLOG_ABC( type, nID, automate, algorithmFactories, xis )
 { 
 }
 
@@ -50,8 +57,8 @@ MIL_AgentPionLOGMedical::MIL_AgentPionLOGMedical( const MIL_AgentTypePion& type,
 // Name: MIL_AgentPionLOGMedical constructor
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
-MIL_AgentPionLOGMedical::MIL_AgentPionLOGMedical( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate)
-    : MIL_AgentPionLOG_ABC( type, nID, automate )
+MIL_AgentPionLOGMedical::MIL_AgentPionLOGMedical( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories)
+    : MIL_AgentPionLOG_ABC( type, nID, automate, algorithmFactories )
 {
 }
 

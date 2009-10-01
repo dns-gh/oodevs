@@ -19,7 +19,6 @@
 
 namespace detection
 {
-    class DetectionComputerFactory_ABC;
     class DetectionComputer_ABC;
 }
 // =============================================================================
@@ -51,7 +50,7 @@ public:
     //@}
 
 public:
-    explicit PHY_RolePion_Perceiver( MIL_AgentPion& pion, const detection::DetectionComputerFactory_ABC& detectionComputerFactory );
+    explicit PHY_RolePion_Perceiver( MIL_AgentPion& pion);
     virtual ~PHY_RolePion_Perceiver();
 
     //! @name CheckPoints
@@ -213,8 +212,6 @@ private:
     bool bHasChanged_;
     bool bExternalMustChangeState_;
     bool bRadarStateHasChanged_;
-
-    const detection::DetectionComputerFactory_ABC& detectionComputerFactory_;
 
 private:
     static const uint nNbrStepsBetweenPeriphericalVision_;

@@ -52,6 +52,7 @@
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_World.h"
 
+#include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/DetectionComputer_ABC.h"
 #include "simulation_kernel/DetectionComputerFactory_ABC.h"
 
@@ -65,28 +66,23 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePion_Perceiver* role, const unsigned int /*version*/ )
 {
     MIL_AgentPion* const pion = &role->pion_;
-    const DetectionComputerFactory_ABC* const detectionComputerFactory = &role->detectionComputerFactory_;
-    archive << pion
-            << detectionComputerFactory;
+    archive << pion;
 }
 
 template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RolePion_Perceiver* role, const unsigned int /*version*/ )
 {
 	MIL_AgentPion* pion;
-    DetectionComputerFactory_ABC* detectionComputerFactory;
-    archive >> pion
-            >> detectionComputerFactory;
-    ::new( role )PHY_RolePion_Perceiver( *pion, *detectionComputerFactory );
+    archive >> pion;
+    ::new( role )PHY_RolePion_Perceiver( *pion );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver constructor
 // Created: NLD 2004-08-19
 // -----------------------------------------------------------------------------
-PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_AgentPion& pion, const detection::DetectionComputerFactory_ABC& detectionComputerFactory )
+PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_AgentPion& pion )
     : pion_                        ( pion )
-    , detectionComputerFactory_    ( detectionComputerFactory )
     , rMaxAgentPerceptionDistance_ ( 0. )
     , rMaxObjectPerceptionDistance_( 0. )
     , bPeriphericalVisionEnabled_  ( false )
@@ -913,7 +909,7 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
         TER_World::GetWorld().GetAgentManager().GetListWithinCircle( pion_.GetRole< PHY_RoleInterface_Location >().GetPosition(), GetMaxAgentPerceptionDistance(), perceivableAgents );
         
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
-            (**itPerception).Execute( perceivableAgents, detectionComputerFactory_ );
+            (**itPerception).Execute( perceivableAgents, *pion_.GetAlgorithms().detectionComputerFactory_ );
         
         TER_Object_ABC::T_ObjectVector perceivableObjects;
         TER_World::GetWorld().GetObjectManager().GetListWithinCircle( pion_.GetRole< PHY_RoleInterface_Location>().GetPosition(), GetMaxObjectPerceptionDistance(), perceivableObjects );

@@ -29,8 +29,6 @@ class DEC_Knowledge_Agent;
 
 namespace firing
 {
-    class WeaponAvailabilityComputerFactory_ABC;
-    class ComposantesAbleToBeFiredComputerFactory_ABC;
 // =============================================================================
 // @class  PHY_RoleAction_DirectFiring
 // Created: JVT 2004-08-03
@@ -46,7 +44,7 @@ public:
     //@}
 
 public:
-             PHY_RoleAction_DirectFiring( MIL_AgentPion& pion, const WeaponAvailabilityComputerFactory_ABC& weaponAvailabilityComputerFactory, const ComposantesAbleToBeFiredComputerFactory_ABC& composantesAbleToBeFiredComputerFactory );
+             PHY_RoleAction_DirectFiring( MIL_AgentPion& pion );
     virtual ~PHY_RoleAction_DirectFiring();
 
     //! @name Checkpoints
@@ -102,8 +100,6 @@ private:
 
 private:
     MIL_AgentPion& pion_;
-    const WeaponAvailabilityComputerFactory_ABC& weaponAvailabilityComputerFactory_;
-    const ComposantesAbleToBeFiredComputerFactory_ABC& composantesAbleToBeFiredComputerFactory_;
     
 };
 

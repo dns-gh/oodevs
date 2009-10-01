@@ -26,6 +26,11 @@
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Tools/MIL_Tools.h"
 #include "Tools/xmlcodecs.h"
+
+#include "simulation_kernel/AlgorithmsFactories.h"
+#include "simulation_kernel/DotationComputer_ABC.h"
+#include "simulation_kernel/DotationComputerFactory_ABC.h"
+
 #include <xeumeuleu/xml.h>
 
 PHY_WeaponType::T_WeaponTypeMap PHY_WeaponType::weaponTypes_;
@@ -278,7 +283,11 @@ MT_Float PHY_WeaponType::GetDangerosity( const MIL_AgentPion& firer, const MIL_A
 {
     assert( pDotationCategory_ );
 
-    if( !pDirectFireData_ || !firer.GetRole< dotation::PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )
+    dotation::DotationComputer_ABC& dotationComputer = firer.GetAlgorithms().dotationComputerFactory_->Create();
+    MIL_AgentPion& localFirer = const_cast< MIL_AgentPion& >( firer );
+    localFirer.Execute( dotationComputer );
+
+    if( !pDirectFireData_ || !dotationComputer.HasDotation( *pDotationCategory_ ) )//@TODO MGD See if it's possible to merge all HasDotation of this class
         return 0.;
     return pDirectFireData_->GetDangerosity( firer, target, targetComposanteType, bUsePH );
 }
@@ -291,7 +300,11 @@ MT_Float PHY_WeaponType::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_C
 {
     assert( pDotationCategory_ );
 
-    if( !pDirectFireData_ || !firer.GetRole< dotation::PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )
+    dotation::DotationComputer_ABC& dotationComputer = firer.GetAlgorithms().dotationComputerFactory_->Create();
+    MIL_Agent_ABC& localFirer = const_cast< MIL_Agent_ABC& >( firer );
+    localFirer.Execute( dotationComputer );
+
+    if( !pDirectFireData_ || !dotationComputer.HasDotation( *pDotationCategory_ ) )
         return 0.;
     return pDirectFireData_->GetDangerosity( targetComposanteType, rDistBtwFirerAndTarget );
 }
@@ -304,7 +317,11 @@ MT_Float PHY_WeaponType::GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const 
 {
     assert( pDotationCategory_ );
 
-    if( !pDirectFireData_ || !firer.GetRole< dotation::PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )
+    dotation::DotationComputer_ABC& dotationComputer = firer.GetAlgorithms().dotationComputerFactory_->Create();
+    MIL_Agent_ABC& localFirer = const_cast< MIL_Agent_ABC& >( firer );
+    localFirer.Execute( dotationComputer );
+
+    if( !pDirectFireData_ || !dotationComputer.HasDotation( *pDotationCategory_ ) )
         return 0.;   
     return pDirectFireData_->GetMaxRangeToFireOn( targetComposanteType, rWantedPH );
 }
@@ -317,7 +334,11 @@ MT_Float PHY_WeaponType::GetMinRangeToFireOn( const MIL_Agent_ABC& firer, const 
 {
     assert( pDotationCategory_ );
 
-    if( !pDirectFireData_ || !firer.GetRole< dotation::PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )
+    dotation::DotationComputer_ABC& dotationComputer = firer.GetAlgorithms().dotationComputerFactory_->Create();
+    MIL_Agent_ABC& localFirer = const_cast< MIL_Agent_ABC& >( firer );
+    localFirer.Execute( dotationComputer );
+
+    if( !pDirectFireData_ || !dotationComputer.HasDotation( *pDotationCategory_ ) )
         return std::numeric_limits< MT_Float >::max(); 
     return pDirectFireData_->GetMinRangeToFireOn( targetComposanteType, rWantedPH );
 }
@@ -330,7 +351,11 @@ MT_Float PHY_WeaponType::GetMaxRangeToFireOnWithPosture( const MIL_AgentPion& fi
 {
     assert( pDotationCategory_ );
 
-    if( !pDirectFireData_ || !firer.GetRole< dotation::PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )
+    dotation::DotationComputer_ABC& dotationComputer = firer.GetAlgorithms().dotationComputerFactory_->Create();
+    MIL_AgentPion& localFirer = const_cast< MIL_AgentPion& >( firer );
+    localFirer.Execute( dotationComputer );
+
+    if( !pDirectFireData_ || !dotationComputer.HasDotation( *pDotationCategory_ ) )
         return 0.;
     return pDirectFireData_->GetMaxRangeToFireOnWithPosture( targetComposanteType, firer, target, rWantedPH );
 }
@@ -343,7 +368,11 @@ MT_Float PHY_WeaponType::GetMinRangeToFireOnWithPosture( const MIL_AgentPion& fi
 {
     assert( pDotationCategory_ );
 
-    if( !pDirectFireData_ || !firer.GetRole< dotation::PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )
+    dotation::DotationComputer_ABC& dotationComputer = firer.GetAlgorithms().dotationComputerFactory_->Create();
+    MIL_AgentPion& localFirer = const_cast< MIL_AgentPion& >( firer );
+    localFirer.Execute( dotationComputer );
+
+    if( !pDirectFireData_ || !dotationComputer.HasDotation( *pDotationCategory_ ) )
         return 0.;
     return pDirectFireData_->GetMinRangeToFireOnWithPosture( targetComposanteType, firer, target, rWantedPH );
 }
@@ -357,7 +386,11 @@ MT_Float PHY_WeaponType::GetMaxRangeToIndirectFire( const MIL_Agent_ABC& firer, 
     if ( !pIndirectFireData_ )
         return -1.;
 
-    if( bCheckDotationsAvailability && !firer.GetRole< dotation::PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )
+    dotation::DotationComputer_ABC& dotationComputer = firer.GetAlgorithms().dotationComputerFactory_->Create();
+    MIL_Agent_ABC& localFirer = const_cast< MIL_Agent_ABC& >( firer );
+    localFirer.Execute( dotationComputer );
+
+    if( bCheckDotationsAvailability && !dotationComputer.HasDotation( *pDotationCategory_ ) )
         return -1.;
         
     return pIndirectFireData_->GetMaxRange();
@@ -372,7 +405,11 @@ MT_Float PHY_WeaponType::GetMinRangeToIndirectFire( const MIL_Agent_ABC& firer, 
     if ( !pIndirectFireData_ )
       return std::numeric_limits< MT_Float >::max();
 
-    if( bCheckDotationsAvailability && !firer.GetRole< dotation::PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )
+    dotation::DotationComputer_ABC& dotationComputer = firer.GetAlgorithms().dotationComputerFactory_->Create();
+    MIL_Agent_ABC& localFirer = const_cast< MIL_Agent_ABC& >( firer );
+    localFirer.Execute( dotationComputer );
+
+    if( bCheckDotationsAvailability && !dotationComputer.HasDotation( *pDotationCategory_ ) )
         return std::numeric_limits< MT_Float >::max();
         
     return pIndirectFireData_->GetMinRange();

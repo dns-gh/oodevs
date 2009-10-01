@@ -16,6 +16,7 @@
 #include "PHY_RoleInterface_Dotations.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "SurrenderNotificationHandler_ABC.h"
+#include "ConsumeDotationNotificationHandler_ABC.h"
 
 
 namespace xml
@@ -24,11 +25,9 @@ namespace xml
     class xistream;
 }
 
-class OnComponentFunctorComputerFactory_ABC;
-
 namespace dotation
 {
-    class ConsumptionComputerFactory_ABC;
+    class DotationComputer_ABC;
 }
 namespace moving
 {
@@ -43,11 +42,13 @@ namespace dotation
 // =============================================================================
 class PHY_RolePion_Dotations : public PHY_RoleInterface_Dotations
                              , public tools::AlgorithmModifier_ABC< moving::MoveComputer_ABC >
+                             , public tools::AlgorithmModifier_ABC< dotation::DotationComputer_ABC >
 							 , public surrender::SurrenderNotificationHandler_ABC
+                             , public ConsumeDotationNotificationHandler_ABC
 {
 
 public:
-    explicit PHY_RolePion_Dotations( MIL_AgentPion& pion, const ConsumptionComputerFactory_ABC& consumptionComputerFactory, const OnComponentFunctorComputerFactory_ABC& onComponentFunctorComputerFactory );
+    explicit PHY_RolePion_Dotations( MIL_AgentPion& pion );
     virtual ~PHY_RolePion_Dotations();
 
     //! @name CheckPoints
@@ -68,6 +69,7 @@ public:
 
     void NotifyCaptured();
     void NotifyReleased();
+    virtual void NotifyConsumeDotation( const PHY_DotationCategory& category, double rNbr );
     //@}
 
     //! @name Operations 
@@ -76,18 +78,15 @@ public:
     void Clean     ();
     bool HasChanged() const;
     virtual void Execute( moving::MoveComputer_ABC& algorithm ) const;
+    virtual void Execute( dotation::DotationComputer_ABC& algorithm ) const;
     //@}
 
     //! @name Dotations management
     //@{
-    virtual bool     HasDotation        ( const PHY_DotationCategory& category ) const;
-            MT_Float GetDotationCapacity( const PHY_DotationCategory& category ) const;
-            MT_Float GetDotationValue   ( const PHY_DotationCategory& category ) const;
-            MT_Float ConsumeDotation    ( const PHY_DotationCategory& category, MT_Float rNbr );
-            MT_Float SupplyDotation     ( const PHY_DotationCategory& category, MT_Float rNbr );
-            void     ResupplyDotations  ();
-            void     ResupplyDotations  ( const PHY_AmmoDotationClass& ammoDotationClass, MT_Float rFactor );
-            void     ResupplyDotations  ( const PHY_DotationType&      type             , MT_Float rFactor );
+    MT_Float SupplyDotation     ( const PHY_DotationCategory& category, MT_Float rNbr );
+    void     ResupplyDotations  ();
+    void     ResupplyDotations  ( const PHY_AmmoDotationClass& ammoDotationClass, MT_Float rFactor );
+    void     ResupplyDotations  ( const PHY_DotationType&      type             , MT_Float rFactor );
     //@}
 
     //! @name Consumption management
@@ -130,9 +129,6 @@ private:
     const PHY_ConsumptionType*  pCurrentConsumptionMode_;
     const PHY_ConsumptionType*  pPreviousConsumptionMode_;
           T_DotationReservedMap reservedConsumptions_;
-
-    const ConsumptionComputerFactory_ABC& consumptionComputerFactory_;
-    const OnComponentFunctorComputerFactory_ABC& onComponentFunctorComputerFactory_;
 
 	template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Dotations* role, const unsigned int /*version*/ );
 	template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Dotations* role, const unsigned int /*version*/ );

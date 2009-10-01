@@ -22,10 +22,6 @@ class MIL_AgentPion;
 class NET_ASN_MsgUnitAttributes;
 class HLA_UpdateFunctor;
 
-namespace posture
-{
-    class PostureComputerFactory_ABC;
-}
 namespace dotation
 {
     class ConsumptionComputer_ABC;
@@ -45,7 +41,7 @@ class PHY_RolePion_Posture : public PHY_RoleInterface_Posture
 {
 
 public:
-    explicit  PHY_RolePion_Posture( MIL_AgentPion& pion, const posture::PostureComputerFactory_ABC& postureComputerFactory );
+    explicit  PHY_RolePion_Posture( MIL_AgentPion& pion );
     virtual ~PHY_RolePion_Posture();
 
     //! @name CheckPoints
@@ -131,8 +127,6 @@ private:
           bool           bDiscreteModeEnabled_;
           MT_Float       rStealthFactor_;
           bool           bIsStealth_;
-
-    const posture::PostureComputerFactory_ABC& postureComputerFactory_;
 
           // Installation
           MT_Float       rInstallationState_;

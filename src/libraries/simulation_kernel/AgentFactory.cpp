@@ -53,8 +53,8 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
     uint        id;
     xis >> xml::attribute( "id", id );//TODO refactor IDManager to reserve ID
 
-    MIL_AgentPion* pPion = type.InstanciatePion( id, automate, xis );//@TODO REPLACE WHEN PIONLOG WILL BE DELETED
-    type.RegisterRoles( *pPion, *algorithmsFactories_ );
+    MIL_AgentPion* pPion = type.InstanciatePion( id, automate, *algorithmsFactories_, xis );//@TODO REPLACE WHEN PIONLOG WILL BE DELETED
+    type.RegisterRoles( *pPion );
     
     std::string strPosition;
     xis >> xml::attribute( "position", strPosition );
@@ -73,8 +73,8 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
 // -----------------------------------------------------------------------------
 MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition )
 {
-    MIL_AgentPion* pPion = type.InstanciatePion( idManager_.GetFreeId(), automate );
-    type.RegisterRoles( *pPion, *algorithmsFactories_ );
+    MIL_AgentPion* pPion = type.InstanciatePion( idManager_.GetFreeId(), automate, *algorithmsFactories_ );
+    type.RegisterRoles( *pPion );
 
     Initialize( *pPion, automate, vPosition );
     return pPion;

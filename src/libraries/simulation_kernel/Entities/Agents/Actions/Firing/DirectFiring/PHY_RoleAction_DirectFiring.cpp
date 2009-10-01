@@ -27,6 +27,7 @@
 #include "Knowledge/DEC_Knowledge_Population.h"
 #include "Knowledge/MIL_Knowledgegroup.h"
 
+#include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/WeaponAvailabilityComputer_ABC.h"
 #include "simulation_kernel/ComposantesAbleToBeFiredComputer_ABC.h"
 #include "simulation_kernel/WeaponAvailabilityComputerFactory_ABC.h"
@@ -39,34 +40,24 @@ BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_DirectFiring, "PHY_RoleAction_DirectFiri
 template< typename Archive >
 void firing::save_construct_data( Archive& archive, const PHY_RoleAction_DirectFiring* role, const unsigned int /*version*/ )
 {
-    const WeaponAvailabilityComputerFactory_ABC* const weaponAvailabilityComputerFactory = &role->weaponAvailabilityComputerFactory_;
-    const ComposantesAbleToBeFiredComputerFactory_ABC* const composantesAbleToBeFiredComputerFactory = &role->composantesAbleToBeFiredComputerFactory_;
     MIL_AgentPion* const pion = &role->pion_;
-    archive << pion
-            << weaponAvailabilityComputerFactory
-            << composantesAbleToBeFiredComputerFactory;
+    archive << pion;
 }
 
 template< typename Archive >
 void firing::load_construct_data( Archive& archive, PHY_RoleAction_DirectFiring* role, const unsigned int /*version*/ )
 {
     MIL_AgentPion* pion;
-    WeaponAvailabilityComputerFactory_ABC* weaponAvailabilityComputerFactory;
-    ComposantesAbleToBeFiredComputerFactory_ABC* composantesAbleToBeFiredComputerFactory;
-    archive >> pion
-            >> weaponAvailabilityComputerFactory
-            >> composantesAbleToBeFiredComputerFactory;
-    ::new( role )PHY_RoleAction_DirectFiring( *pion, *weaponAvailabilityComputerFactory, *composantesAbleToBeFiredComputerFactory );
+    archive >> pion;
+    ::new( role )PHY_RoleAction_DirectFiring( *pion );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_DirectFiring constructor
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-PHY_RoleAction_DirectFiring::PHY_RoleAction_DirectFiring( MIL_AgentPion& pion, const WeaponAvailabilityComputerFactory_ABC& weaponAvailabilityComputerFactory, const ComposantesAbleToBeFiredComputerFactory_ABC& composantesAbleToBeFiredComputerFactory )
+PHY_RoleAction_DirectFiring::PHY_RoleAction_DirectFiring( MIL_AgentPion& pion )
     : pion_     ( pion )
-    , weaponAvailabilityComputerFactory_ ( weaponAvailabilityComputerFactory )
-    , composantesAbleToBeFiredComputerFactory_ ( composantesAbleToBeFiredComputerFactory )
 {
 }
 
@@ -178,7 +169,7 @@ int PHY_RoleAction_DirectFiring::FirePion( DEC_Knowledge_Agent* pEnemy, PHY_Dire
 
     // Firers
     PHY_DirectFireData firerWeapons( pion_, nComposanteFiringType, nFiringMode, rPercentageComposantesToUse, pAmmoDotationClass ); 
-    std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( weaponAvailabilityComputerFactory_.Create( firerWeapons) );
+    std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( pion_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( firerWeapons) );
     pion_.Execute( *weaponAvailabilityComputer );
 
     const uint nNbrWeaponsUsable = firerWeapons.GetNbrWeaponsUsable();
@@ -197,7 +188,7 @@ int PHY_RoleAction_DirectFiring::FirePion( DEC_Knowledge_Agent* pEnemy, PHY_Dire
     // Targets
     const bool bFireOnlyOnMajorComposantes = ( nComposanteFiredType == PHY_DirectFireData::eFireOnlyOnMajorComposantes );
 
-    ComposantesAbleToBeFiredComputer_ABC& componentAbleToBeFiredComputer = composantesAbleToBeFiredComputerFactory_.Create( bFireOnlyOnMajorComposantes );
+    ComposantesAbleToBeFiredComputer_ABC& componentAbleToBeFiredComputer = pion_.GetAlgorithms().composantesAbleToBeFiredComputerFactory_->Create( bFireOnlyOnMajorComposantes );
     pTarget->Execute( static_cast< OnComponentComputer_ABC& >( componentAbleToBeFiredComputer ) );
     PHY_Composante_ABC::T_ComposanteVector& targets = componentAbleToBeFiredComputer.ResultLimited( nNbrWeaponsUsable );
 
@@ -247,7 +238,8 @@ void PHY_RoleAction_DirectFiring::FireZone( const MIL_Object_ABC& object, PHY_Fi
         capacity->RetrieveTargets( object, targets );
     
     PHY_DirectFireData firerWeapons( pion_, PHY_DirectFireData::eFireUsingOnlyComposantesLoadable, PHY_DirectFireData::eFiringModeNormal ); 
-    std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( weaponAvailabilityComputerFactory_.Create( firerWeapons) );
+    //@TODO MGD Remove auto_ptr for WeaponAvailabilityFactory
+    std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( pion_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( firerWeapons) );
     pion_.Execute( *weaponAvailabilityComputer );
 
     for( CIT_TargetVector itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
@@ -292,7 +284,7 @@ int PHY_RoleAction_DirectFiring::FirePopulation( uint nTargetKnowledgeID, PHY_Fi
    
     // Firers
     PHY_DirectFireData firerWeapons( pion_, PHY_DirectFireData::eFireUsingOnlyComposantesLoadable, PHY_DirectFireData::eFiringModeNormal, 1., &PHY_AmmoDotationClass::mitraille_ ); 
-    std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( weaponAvailabilityComputerFactory_.Create( firerWeapons) );
+    std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( pion_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( firerWeapons) );
     pion_.Execute( *weaponAvailabilityComputer );
 
     const uint nNbrWeaponsUsable = firerWeapons.GetNbrWeaponsUsable();

@@ -19,6 +19,11 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 
+#include "simulation_kernel/AlgorithmsFactories.h"
+#include "simulation_kernel/DotationComputer_ABC.h"
+#include "simulation_kernel/DotationComputerFactory_ABC.h"
+#include "simulation_kernel/ConsumeDotationNotificationHandler_ABC.h"
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Objects_DataComputerPionData
 // Created: NLD 2004-10-01
@@ -126,16 +131,20 @@ void PHY_RoleAction_Objects_DataComputerPionData::RollbackConsumptionsReservatio
 uint PHY_RoleAction_Objects_DataComputerPionData::GetDotationValue( const PHY_DotationCategory& category ) const
 {
     assert( pPion_ );
-    return ( uint ) pPion_->GetRole< dotation::PHY_RoleInterface_Dotations >().GetDotationValue( category ); 
+
+    dotation::DotationComputer_ABC& dotationComputer = pPion_->GetAlgorithms().dotationComputerFactory_->Create();
+    pPion_->Execute( dotationComputer );
+
+    return ( uint ) dotationComputer.GetDotationValue( category ); 
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Objects_DataComputerPionData::ConsumeDotations
 // Created: NLD 2007-02-13
 // -----------------------------------------------------------------------------
-uint PHY_RoleAction_Objects_DataComputerPionData::ConsumeDotations( const PHY_DotationCategory& category, uint nNbr )
+void PHY_RoleAction_Objects_DataComputerPionData::ConsumeDotations( const PHY_DotationCategory& category, uint nNbr )
 {
-    return (uint)pPion_->GetRole< dotation::PHY_RoleInterface_Dotations >().ConsumeDotation( category, nNbr );    
+    pPion_->Apply( &dotation::ConsumeDotationNotificationHandler_ABC::NotifyConsumeDotation, category, nNbr );  
 }
 
 // -----------------------------------------------------------------------------

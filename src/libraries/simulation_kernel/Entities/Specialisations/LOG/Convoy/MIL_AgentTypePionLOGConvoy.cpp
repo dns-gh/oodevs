@@ -38,18 +38,18 @@ MIL_AgentTypePionLOGConvoy::~MIL_AgentTypePionLOGConvoy()
 // Name: MIL_AgentTypePionLOGConvoy::InstanciatePion
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePionLOGConvoy::InstanciatePion( uint nID, MIL_Automate& automate, xml::xistream& xis ) const
+MIL_AgentPion* MIL_AgentTypePionLOGConvoy::InstanciatePion( uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis ) const
 {
-    return new MIL_AgentPionLOGConvoy( *this, nID, automate, xis );
+    return new MIL_AgentPionLOGConvoy( *this, nID, automate, algorithmFactories, xis );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOGConvoy::InstanciatePion
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePionLOGConvoy::InstanciatePion( uint nID, MIL_Automate& automate ) const
+MIL_AgentPion* MIL_AgentTypePionLOGConvoy::InstanciatePion( uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories ) const
 {
-    return new MIL_AgentPionLOGConvoy( *this, nID, automate );
+    return new MIL_AgentPionLOGConvoy( *this, nID, automate, algorithmFactories );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,9 +57,9 @@ MIL_AgentPion* MIL_AgentTypePionLOGConvoy::InstanciatePion( uint nID, MIL_Automa
 // Created: MGD 2009-08-13
 // @TODO REPLACE BY XML in AgentFactory
 // -----------------------------------------------------------------------------
-void MIL_AgentTypePionLOGConvoy::RegisterRoles( MIL_AgentPion& pion, AlgorithmsFactories& algorithmsFactories ) const
+void MIL_AgentTypePionLOGConvoy::RegisterRoles( MIL_AgentPion& pion ) const
 {
-    MIL_AgentTypePion::RegisterRoles( pion, algorithmsFactories );
+    MIL_AgentTypePion::RegisterRoles( pion );
     pion.RegisterRole< PHY_RolePionLOGConvoy_Supply >( pion );  
 }
 

@@ -19,6 +19,10 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
 
+#include "simulation_kernel/AlgorithmsFactories.h"
+#include "simulation_kernel/DotationComputer_ABC.h"
+#include "simulation_kernel/DotationComputerFactory_ABC.h"
+
 using namespace firing;
 // -----------------------------------------------------------------------------
 // Name: PHY_IndirectFireData::sComposanteWeapons::sComposanteWeapons
@@ -93,7 +97,9 @@ void PHY_IndirectFireData::operator() ( const PHY_ComposantePion& compFirer, PHY
     if( !compFirer.CanFire() || !effect_.CanWeaponBeUsed( weapon ) ) 
         return;
 
-    if( !firer_.GetRole< dotation::PHY_RoleInterface_Dotations >().HasDotation( weapon.GetDotationCategory() ) )
+    dotation::DotationComputer_ABC& dotationComputer = firer_.GetAlgorithms().dotationComputerFactory_->Create();
+    firer_.Execute( dotationComputer );
+    if( !dotationComputer.HasDotation( weapon.GetDotationCategory() ) )
         bHasWeaponsAndNoAmmo_ = true;
     else
     {

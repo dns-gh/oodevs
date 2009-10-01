@@ -51,7 +51,7 @@ public:
 
     uint     GetDotationValue                ( const PHY_DotationCategory& category ) const;
 
-    uint     ConsumeDotations                ( const PHY_DotationCategory& category, uint nNbr );
+    void     ConsumeDotations                ( const PHY_DotationCategory& category, uint nNbr );
     uint     RecoverDotations                ( const PHY_DotationCategory& category, uint nNbr );
     void     GetTotalOperationTime           ( MT_Float& rOperationTime, uint& nNbrComposantes ) const;
     //@}
