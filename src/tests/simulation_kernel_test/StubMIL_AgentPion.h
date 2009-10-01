@@ -6,7 +6,8 @@
 class StubMIL_AgentPion : public MIL_AgentPion
 {
 public:
-             StubMIL_AgentPion( MIL_AgentTypePion& type, MIL_Automate& automate ) : MIL_AgentPion( type, automate ) {}
+             StubMIL_AgentPion( MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories) :
+            	 MIL_AgentPion( type, automate, algorithmFactories ) {}
     virtual ~StubMIL_AgentPion() {}
 };
 

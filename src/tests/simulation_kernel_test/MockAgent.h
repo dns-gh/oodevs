@@ -69,6 +69,8 @@ public:
     virtual       DEC_Decision_ABC& GetDecision   () { throw; }
     virtual const DEC_Decision_ABC& GetDecision   () const { throw; }
 
+    virtual const AlgorithmsFactories& GetAlgorithms() const { throw; }
+
     MOCKPP_CONST_CHAINABLE0          ( MockAgent, uint, GetID );
     MOCKPP_CONST_CHAINABLE0          ( MockAgent, bool, IsDead );
     MOCKPP_CONST_CHAINABLE0          ( MockAgent, bool, IsNeutralized );

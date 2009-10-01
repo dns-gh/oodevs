@@ -31,7 +31,7 @@ public:
     //@{
     explicit MockRolePerceiver( )
                  : mockpp::ChainableMockObject( MOCKPP_PCHAR( "MockRolePerceiver" ) )
-                 , PHY_RolePion_Perceiver( *(MIL_AgentPion*)0, *(detection::DetectionComputerFactory_ABC*)0  )
+                 , PHY_RolePion_Perceiver( *(MIL_AgentPion*)0 )
                  , NotifyExternalPerception_mocker( "NotifyExternalPerception", this )
              {}
     virtual ~MockRolePerceiver() {}

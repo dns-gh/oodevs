@@ -16,25 +16,29 @@
 #include "StubMIL_AutomateType.h"
 #include "Decision/DEC_Model.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "AlgorithmsFactories.h"
 #include <xeumeuleu/xml.h>
 
 struct FixturePion
 {
-    FixturePion()
+    FixturePion() :
+    		algorithmsFactories_( new AlgorithmsFactories())
     {
         xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
         xis.start( "main" );
         std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
+
         pModel_.reset( new DEC_Model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes ) );
         pType_.reset( new StubMIL_AgentTypePion( *pModel_ ) );
         pTypeAutomat_.reset( new StubMIL_AutomateType( *pModel_ ) );
         pAutomat_.reset( new StubMIL_Automate( *pTypeAutomat_ ) );
-        pPion_.reset( new StubMIL_AgentPion( *pType_, *pAutomat_ ) );
+        pPion_.reset( new StubMIL_AgentPion( *pType_, *pAutomat_, *algorithmsFactories_ ) );
     }
     ~FixturePion()
     {
     }
 
+    std::auto_ptr< AlgorithmsFactories > 	   algorithmsFactories_;
     std::auto_ptr< DEC_Model >             pModel_;
     std::auto_ptr< StubMIL_AgentTypePion > pType_;
     std::auto_ptr< StubMIL_AutomateType >  pTypeAutomat_;
