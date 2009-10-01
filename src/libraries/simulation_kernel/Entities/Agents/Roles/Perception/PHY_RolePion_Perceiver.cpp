@@ -56,6 +56,8 @@
 #include "simulation_kernel/DetectionComputer_ABC.h"
 #include "simulation_kernel/DetectionComputerFactory_ABC.h"
 
+#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+
 using namespace detection;
 
 const uint PHY_RolePion_Perceiver::nNbrStepsBetweenPeriphericalVision_ = 12; //$$$ En dur ...
@@ -90,7 +92,8 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_AgentPion& pion )
     , vSensorInfo_                 ( )
     , nSensorMode_                 ( eNormal )
     , bHasChanged_                 ( true )
-    , bExternalMustChangeState_    ( false )
+    , bExternalMustChangePerception_( false )
+    , bExternalMustChangeRadar_    ( false )
     , bRadarStateHasChanged_       ( true )
     , pPerceptionCoupDeSonde_      ( 0 )
     , pPerceptionRecoPoint_        ( 0 )
@@ -785,7 +788,7 @@ void PHY_RolePion_Perceiver::PreparePerceptionData()
     PHY_RoleInterface_Location&             roleLocation    = pion_.GetRole< PHY_RoleInterface_Location       >();
     PHY_RolePion_Composantes&          roleComposantes = pion_.GetRole< PHY_RolePion_Composantes    >();
     if(    !roleLocation.HasLocationChanged() 
-        && !bExternalMustChangeState_
+        && !bExternalMustChangePerception_
         && !pion_.GetRole< transport::PHY_RoleAction_Loading   >().HasChanged()
         && !pion_.GetRole< transport::PHY_RoleInterface_Transported >().HasChanged()
         && !pion_.GetRole< surrender::PHY_RoleInterface_Surrender   >().HasChanged()
@@ -815,7 +818,7 @@ void PHY_RolePion_Perceiver::PrepareRadarData()
 {
 
     PHY_RolePion_Composantes& roleComposantes = pion_.GetRole< PHY_RolePion_Composantes >();
-    if(    !roleComposantes.HasChanged()
+    if(    !bExternalMustChangeRadar_
         && !pion_.GetRole< transport::PHY_RoleAction_Loading   >().HasChanged()
         && !pion_.GetRole< transport::PHY_RoleInterface_Transported >().HasChanged()
         && !pion_.GetRole< surrender::PHY_RoleInterface_Surrender   >().HasChanged() )
@@ -1020,6 +1023,13 @@ void PHY_RolePion_Perceiver::Update( bool /*bIsDead*/ )
         
     if ( pPerceptionRecoObjects_ )
         pPerceptionRecoObjects_->Update();
+
+    if( HasChanged() )
+    {
+        if( HasRadarStateChanged() )
+            pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
+    }
 }
 
 // =============================================================================
@@ -1318,7 +1328,8 @@ bool PHY_RolePion_Perceiver::HasRadarStateChanged() const
 void PHY_RolePion_Perceiver::Clean()
 {
     bHasChanged_           = false;
-    bExternalMustChangeState_ = false;
+    bExternalMustChangePerception_ = false;
+    bExternalMustChangeRadar_ = false;
     bRadarStateHasChanged_ = false;
 }
 
@@ -1363,7 +1374,8 @@ void PHY_RolePion_Perceiver::Execute( detection::DetectionComputer_ABC& algorith
 // Name: PHY_RolePion_Perceiver::NotifyHasChanged
 // Created: MGD 2009-09-29
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Perceiver::NotifyHasChanged()
+void PHY_RolePion_Perceiver::NotifyComponentHasChanged()
 {
-    bExternalMustChangeState_ = true;
+    bExternalMustChangePerception_ = true;
+    bExternalMustChangeRadar_ = true;
 }

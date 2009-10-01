@@ -72,7 +72,6 @@ public:
     //@{
     void Update    ( bool bIsDead );
     void Clean     ();
-    bool HasChanged() const;
 
     void CheckConsistency();
     //@}
@@ -136,6 +135,7 @@ private:
 private:
     //! @name Tools
     //@{
+    bool HasChanged() const;
     void     ComputeLoadingTime  ( MT_Float& rLoadingTime, MT_Float& rWeightToLoad ) const;
     MT_Float ComputeUnloadingTime() const;
 

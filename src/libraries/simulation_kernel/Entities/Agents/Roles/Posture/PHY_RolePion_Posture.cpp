@@ -23,6 +23,8 @@
 #include "simulation_kernel/ConsumptionComputer_ABC.h"
 #include "simulation_kernel/DetectionComputer_ABC.h"
 
+#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+
 using namespace posture;
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Posture, "PHY_RolePion_Posture" )
@@ -189,6 +191,9 @@ void PHY_RolePion_Posture::Update( bool bIsDead )
         ChangePosture( *result.newPosture_ );
     ChangePostureCompletionPercentage( result.postureCompletionPercentage_ );
     bIsStealth_ = result.bIsStealth_;
+
+    if( HasChanged() )
+        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
 }
 
 // -----------------------------------------------------------------------------

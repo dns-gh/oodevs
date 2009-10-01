@@ -67,7 +67,7 @@ public:
     virtual bool                            HandleComposanteForRepair    ( PHY_MaintenanceComposanteState& composanteState );
     virtual int                             GetAvailabilityScoreForRepair( PHY_MaintenanceComposanteState& composanteState );
 
-    virtual void NotifyHasChanged();
+    virtual void NotifyComponentHasChanged();
     //@}
 
     //! @name Tools

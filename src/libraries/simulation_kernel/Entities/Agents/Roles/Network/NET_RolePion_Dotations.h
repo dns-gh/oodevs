@@ -14,7 +14,7 @@
 
 #include "NET_RoleInterface_Dotations.h"
 #include "game_asn/Simulation.h"
-#include "ComponentsChangedNotificationHandler_ABC.h"
+#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 
 class PHY_ComposanteTypePion;
 class PHY_Dotation;
@@ -28,7 +28,7 @@ class NET_ASN_MsgUnitAttributes;
 // Created: JVT 2004-08-03
 // =============================================================================
 class NET_RolePion_Dotations : public NET_RoleInterface_Dotations
-                             , public component::ComponentsChangedNotificationHandler_ABC
+                             , public network::NetworkNotificationHandler_ABC
 {
 
 public:
@@ -49,7 +49,8 @@ public:
 
     //! @name Notification
     //@{
-    virtual void NotifyHasChanged();
+    virtual void NotifyDataHasChanged();
+    virtual void NotifyVisionConeDataHasChanged();
     //@}
 
 private:

@@ -8,26 +8,26 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-#include "HumansChangedNotificationHandler_ABC.h"
+#include "NetworkNotificationHandler_ABC.h"
 
-namespace human {
+namespace network {
 
 // -----------------------------------------------------------------------------
-// Name: HumansChangedNotificationHandler_ABC::HumansChangedNotificationHandler_ABC
+// Name: NetworkNotificationHandler_ABC::NetworkNotificationHandler_ABC
 // Created: MGD 2009-09-29
 // -----------------------------------------------------------------------------
-HumansChangedNotificationHandler_ABC::HumansChangedNotificationHandler_ABC()
+NetworkNotificationHandler_ABC::NetworkNotificationHandler_ABC()
 {
 
 }
 
 // -----------------------------------------------------------------------------
-// Name: HumansChangedNotificationHandler_ABC::HumansChangedNotificationHandler_ABC
+// Name: NetworkNotificationHandler_ABC::NetworkNotificationHandler_ABC
 // Created: MGD 2009-09-29
 // -----------------------------------------------------------------------------
-HumansChangedNotificationHandler_ABC::~HumansChangedNotificationHandler_ABC()
+NetworkNotificationHandler_ABC::~NetworkNotificationHandler_ABC()
 {
 
 }
 
-} //namespace human
+} //namespace network

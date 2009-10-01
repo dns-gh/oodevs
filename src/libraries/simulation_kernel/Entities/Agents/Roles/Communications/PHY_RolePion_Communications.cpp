@@ -14,6 +14,9 @@
 #include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
+
+#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+
 #include <xeumeuleu/xml.h>
 
 MT_Float PHY_RolePion_Communications::rCoefSpeedModificator_         = 0.;
@@ -177,7 +180,10 @@ void PHY_RolePion_Communications::SendChangedState( NET_ASN_MsgUnitAttributes& m
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Communications::Update( bool /*bIsDead*/ )
 {
-    // NOTHING
+    if( HasChanged() )
+    {
+        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+    } 
 }
 
 // -----------------------------------------------------------------------------

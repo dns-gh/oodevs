@@ -16,6 +16,8 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Network/NET_ASN_Messages.h"
 
+#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Reinforcement, "PHY_RolePion_Reinforcement" )
 
 template< typename Archive >
@@ -154,6 +156,9 @@ void PHY_RolePion_Reinforcement::Update( bool bIsDead )
         CancelReinforcement();
     else
         pion_.GetRole< PHY_RoleInterface_Location >().Follow( *pPionReinforced_ );
+
+    if( HasChanged() )
+        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
 }
 
 // -----------------------------------------------------------------------------

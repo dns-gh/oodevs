@@ -17,7 +17,7 @@
 #include "Entities/Actions/PHY_FireDamages_Agent.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 
-#include "simulation_kernel/HumansChangedNotificationHandler_ABC.h"
+#include "simulation_kernel/HumansActionsNotificationHandler_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_HumansComposante, "PHY_HumansComposante" )
 
@@ -245,8 +245,8 @@ void PHY_HumansComposante::NotifyComposanteTransfered( PHY_RoleInterface_Composa
     for ( PHY_Human::CIT_HumanVector it = humans_.begin(); it != humans_.end(); ++it )
     {
         (**it).CancelLogisticRequest();
-        const_cast< MIL_AgentPion& >( src.GetPion() ).Apply( &human::HumansChangedNotificationHandler_ABC::NotifyHumanRemoved, **it );
-        const_cast< MIL_AgentPion& >( dest.GetPion() ).Apply( &human::HumansChangedNotificationHandler_ABC::NotifyHumanAdded, **it );
+        const_cast< MIL_AgentPion& >( src.GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanRemoved, **it );
+        const_cast< MIL_AgentPion& >( dest.GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanAdded, **it );
     }
 }
 
@@ -262,7 +262,7 @@ void PHY_HumansComposante::NotifyHumanAdded( PHY_Human& human )
         ++ nNbrUsableHumans_;        
     }
     assert( pComposante_ );
-    const_cast< MIL_AgentPion& >( pComposante_->GetRole().GetPion() ).Apply( &human::HumansChangedNotificationHandler_ABC::NotifyHumanAdded, human );
+    const_cast< MIL_AgentPion& >( pComposante_->GetRole().GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanAdded, human );
 }
     
 // -----------------------------------------------------------------------------
@@ -278,7 +278,7 @@ void PHY_HumansComposante::NotifyHumanRemoved( PHY_Human& human )
     }
 
     assert( pComposante_ );
-    const_cast< MIL_AgentPion& >( pComposante_->GetRole().GetPion() ).Apply( &human::HumansChangedNotificationHandler_ABC::NotifyHumanRemoved, human );
+    const_cast< MIL_AgentPion& >( pComposante_->GetRole().GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanRemoved, human );
     if( !IsViable() )
         pComposante_->ReinitializeState( PHY_ComposanteState::dead_ );
 }
@@ -301,7 +301,7 @@ void PHY_HumansComposante::NotifyHumanChanged( PHY_Human& human, const PHY_Human
     }
   
     assert( pComposante_ );
-    const_cast< MIL_AgentPion& >( pComposante_->GetRole().GetPion() ).Apply( &human::HumansChangedNotificationHandler_ABC::NotifyHumanChanged, human, copyOfOldHumanState );
+    const_cast< MIL_AgentPion& >( pComposante_->GetRole().GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanChanged, human, copyOfOldHumanState );
     if( !IsViable() )
         pComposante_->ReinitializeState( PHY_ComposanteState::dead_ );
 }

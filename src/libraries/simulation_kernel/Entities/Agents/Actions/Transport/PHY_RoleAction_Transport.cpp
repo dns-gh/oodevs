@@ -25,6 +25,8 @@
 #include "TransportWeightComputer_ABC.h"
 #include "TransportNotificationHandler_ABC.h"
 
+#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+
 BOOST_CLASS_EXPORT_GUID( transport::PHY_RoleAction_Transport, "PHY_RoleAction_Transport" )
 BOOST_CLASS_EXPORT_GUID( transport::PHY_RoleAction_Transport::sTransportData, "PHY_RoleAction_Transport::sTransportData" )
 
@@ -531,6 +533,11 @@ void PHY_RoleAction_Transport::Update( bool /*bIsDead*/ )
 {
     if( !bLoadUnloadHasBeenUpdated_ )
         nState_ = eNothing;
+
+    if( HasChanged() )
+    {
+        transporter_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -18,6 +18,8 @@
 #include "Entities/Objects/MIL_ToxicEffectManipulator.h"
 #include "ToxicEffectHandler_ABC.h"
 
+#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+
 BOOST_CLASS_EXPORT_GUID( nbc::PHY_RolePion_NBC, "PHY_RolePion_NBC" )
 
 // =============================================================================
@@ -292,7 +294,8 @@ void PHY_RolePion_NBC::RemoveNbcProtectionSuit()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_NBC::Update( bool /*bIsDead*/ )
 {
-    // NOTHING
+    if( HasChanged() )
+        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
 }
 
 // -----------------------------------------------------------------------------

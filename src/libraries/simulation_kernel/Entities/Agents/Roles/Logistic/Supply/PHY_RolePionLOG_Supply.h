@@ -74,7 +74,7 @@ public:
     virtual void StopUsingForLogistic ( PHY_ComposantePion& composante );
 
 
-    virtual void NotifyHasChanged();
+    virtual void NotifyComponentHasChanged();
     //@}
 
     //! @name Stock supply

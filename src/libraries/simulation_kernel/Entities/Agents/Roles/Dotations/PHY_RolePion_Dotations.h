@@ -76,7 +76,6 @@ public:
     //@{
     void Update    ( bool bIsDead );
     void Clean     ();
-    bool HasChanged() const;
     virtual void Execute( moving::MoveComputer_ABC& algorithm ) const;
     virtual void Execute( dotation::DotationComputer_ABC& algorithm ) const;
     //@}
@@ -123,6 +122,11 @@ public:
     //@}
 
 private:
+    //! @name Tools
+    //@{
+    bool HasChanged() const;
+    //@}
+
           MIL_AgentPion&              pion_;
           PHY_DotationGroupContainer* pDotations_;
 

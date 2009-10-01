@@ -39,6 +39,8 @@
 #include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
 
+#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+
 BOOST_CLASS_EXPORT_GUID( dotation::PHY_RolePion_Dotations, "PHY_RolePion_Dotations" )
 
 namespace boost
@@ -422,6 +424,11 @@ void PHY_RolePion_Dotations::Update( bool bIsDead )
     pCurrentConsumptionMode_  = 0;
 
     pDotations_->ConsumeFireReservations();
+
+    if( HasChanged() )
+    {
+        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+    }
 }
 
 // -----------------------------------------------------------------------------

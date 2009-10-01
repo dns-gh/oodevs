@@ -19,6 +19,8 @@
 #include "Entities/MIL_Army.h"
 #include "SurrenderNotificationHandler_ABC.h"
 
+#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+
 BOOST_CLASS_EXPORT_GUID( surrender::PHY_RolePion_Surrender, "PHY_RolePion_Surrender" )
 
 namespace surrender
@@ -89,6 +91,12 @@ void PHY_RolePion_Surrender::Update( bool /*bIsDead*/ )
 {
     if( pPrison_ && pPrison_->IsMarkedForDestruction() )
         pPrison_ = 0;
+
+    if( HasChanged() )
+    {
+        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
+    }
 }
 
 // -----------------------------------------------------------------------------

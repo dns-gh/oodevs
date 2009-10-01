@@ -77,6 +77,7 @@
 
 #include "Knowledge/DEC_Knowledge_Def.h"
 
+#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_RolePion_Decision, "DEC_RolePion_Decision" )
 

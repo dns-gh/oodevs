@@ -46,7 +46,6 @@ public:
     //@{
     void Update    ( bool bIsDead );
     void Clean     ();
-    bool HasChanged() const;
     //@}
 
     //! @name Operations
@@ -77,6 +76,11 @@ public:
     //@}
 
 private:
+    //! @name Notifications
+    //@{
+    bool HasChanged() const;
+    //@}
+
     //! @name Notifications
     //@{
     void NotifyReinforcementAdded  ( MIL_AgentPion& reinforcement );

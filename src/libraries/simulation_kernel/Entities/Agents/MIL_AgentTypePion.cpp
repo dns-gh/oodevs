@@ -333,7 +333,7 @@ void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion ) const
     pion.RegisterRole< PHY_RolePion_Perceiver         >( pion );
     pion.RegisterRole< nbc::PHY_RolePion_NBC          >( pion );
     pion.RegisterRole< PHY_RolePion_Communications    >( pion );
-    pion.RegisterRole< PHY_RolePion_HumanFactors      >();
+    pion.RegisterRole< PHY_RolePion_HumanFactors      >( pion );
     pion.RegisterRole< transport::PHY_RolePion_Transported >( pion );
     pion.RegisterRole< surrender::PHY_RolePion_Surrender >( pion );
     pion.RegisterRole< PHY_RolePion_Refugee           >( pion );

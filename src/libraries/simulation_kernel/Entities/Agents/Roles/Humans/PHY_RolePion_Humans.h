@@ -13,7 +13,7 @@
 #define __PHY_RolePion_Humans_h_
 
 #include "PHY_RoleInterface_Humans.h"
-#include "HumansChangedNotificationHandler_ABC.h"
+#include "HumansActionsNotificationHandler_ABC.h"
 
 namespace human
 {
@@ -23,7 +23,7 @@ namespace human
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RolePion_Humans : public PHY_RoleInterface_Humans
-                          , public HumansChangedNotificationHandler_ABC
+                          , public HumansActionsNotificationHandler_ABC
 {
 
 public:

@@ -21,6 +21,8 @@
 #include "LoadedStateConsistencyComputer_ABC.h"
 #include "LoadingComputerFactory_ABC.h"
 
+#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+
 BOOST_CLASS_EXPORT_GUID( transport::PHY_RoleAction_Loading, "PHY_RoleAction_Loading" )
 
 namespace transport
@@ -333,6 +335,12 @@ void PHY_RoleAction_Loading::Update( bool /*bIsDead*/ )
 {
     if( !bHasBeenUpdated_ )
         nState_ = eNothing;
+
+    if( HasChanged() )
+    {
+        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
+    }
 }
 
 // -----------------------------------------------------------------------------

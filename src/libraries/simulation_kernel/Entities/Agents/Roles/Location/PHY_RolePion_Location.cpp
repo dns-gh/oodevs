@@ -36,6 +36,8 @@
 #include "simulation_kernel/LocationComputer_ABC.h"
 #include "simulation_kernel/LocationComputerFactory_ABC.h"
 
+#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+
 using namespace location;
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Location, "PHY_RolePion_Location" )
@@ -487,6 +489,11 @@ void PHY_RolePion_Location::Update( bool bIsDead )
     }
 
     SetHeight( pion_.Execute(pion_.GetAlgorithms().locationComputerFactory_->Create() ).GetHeight() );
+
+    if( HasLocationChanged() )
+        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+    if( HasSpeedChanged() )
+        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
 
 }
 

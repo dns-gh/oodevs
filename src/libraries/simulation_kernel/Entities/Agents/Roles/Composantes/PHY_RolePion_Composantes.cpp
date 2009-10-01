@@ -20,7 +20,6 @@
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Agents/Roles/Network/NET_RolePion_Dotations.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
-#include "Entities/Agents/Roles/Humans/PHY_RoleInterface_Humans.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Roles/Logistic/Maintenance/PHY_MaintenanceComposanteState.h"
@@ -47,6 +46,7 @@
 #include "simulation_kernel/OnComponentComputer_ABC.h"
 #include "simulation_kernel/OnComponentLendedFunctorComputer_ABC.h"
 #include "simulation_kernel/ComponentsChangedNotificationHandler_ABC.h"
+#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Composantes, "PHY_RolePion_Composantes" )
 
@@ -106,6 +106,7 @@ PHY_RolePion_Composantes::PHY_RolePion_Composantes( MIL_AgentPion& pion )
     , pMajorComposante_            ( 0 )
     , nNeutralizationEndTimeStep_  ( 0 )
     , bLoansChanged_               ( false )
+    , bExternalMustChange_         ( false )
     , nTickRcMaintenanceQuerySent_ ( 0 )
 {
 
@@ -458,7 +459,7 @@ void PHY_RolePion_Composantes::ChangeComposantesAvailability( const PHY_Composan
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::UpdateOperationalStates()
 {
-    if( !HasChanged() && !pion_.GetRole< PHY_RoleInterface_Humans >().HasChanged() )
+    if( !HasChanged() && !bExternalMustChange_ )
         return;
 
     MT_Float rMajorOpStateValue    = 0.;
@@ -550,7 +551,11 @@ void PHY_RolePion_Composantes::Update( bool /*bIsDead*/ )
         (**it).Update();
 
     if( HasChanged() )
-        pion_.Apply( &component::ComponentsChangedNotificationHandler_ABC::NotifyHasChanged );
+    {
+        pion_.Apply( &component::ComponentsChangedNotificationHandler_ABC::NotifyComponentHasChanged );
+        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
+    }
 
     UpdateOperationalStates();
     UpdateMajorComposante  ();
@@ -569,6 +574,7 @@ void PHY_RolePion_Composantes::Clean()
         nNbrComposanteChanged_ = 0;
     }
     bLoansChanged_            = false;
+    bExternalMustChange_      = false;
     bOperationalStateChanged_ = false;
 
     for( CIT_MaintenanceComposanteStateSet it = maintenanceComposanteStates_.begin(); it != maintenanceComposanteStates_.end(); ++it )
@@ -1684,4 +1690,13 @@ void PHY_RolePion_Composantes::Execute( transport::LoadedStateConsistencyCompute
 		algorithm.EnableCarrier(composante.CanTransportHumans());
 		algorithm.EnableLoadable(composante.CanBeLoaded());
 	}
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::Execute
+// Created: MGD 2009-09-30
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::NotifyHumanHasChanged()
+{
+    bExternalMustChange_ = true;
 }

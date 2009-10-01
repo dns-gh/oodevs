@@ -37,7 +37,6 @@ public:
     //@{
     void Update    ( bool bIsDead );
     void Clean     ();
-    bool HasChanged() const;
     //@}
 
     //! @name Main
@@ -61,6 +60,11 @@ public:
     //@}
 
 private:
+    //! @name Tools
+    //@{
+    bool HasChanged() const;
+    //@}
+
           MIL_AgentPion&    pion_;
           bool              bManaged_;
     const MIL_Object_ABC*   pCamp_;

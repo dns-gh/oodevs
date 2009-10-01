@@ -16,6 +16,8 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Automates/MIL_Automate.h"
 
+#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Refugee, "PHY_RolePion_Refugee" )
 
 template< typename Archive >
@@ -76,6 +78,11 @@ void PHY_RolePion_Refugee::Update( bool /*bIsDead*/ )
 {
     if( pCamp_ && pCamp_->IsMarkedForDestruction() )
         pCamp_ = 0;
+
+    if( HasChanged() )
+    {
+        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+    }
 }
 
 // -----------------------------------------------------------------------------

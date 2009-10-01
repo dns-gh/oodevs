@@ -17,6 +17,8 @@
 #include "TransportNotificationHandler_ABC.h"
 #include "SurrenderNotificationHandler_ABC.h"
 
+#include "simulation_kernel/HumansChangedNotificationHandler_ABC.h"
+
 namespace xml
 {
     class xostream;
@@ -54,6 +56,7 @@ class PHY_RolePion_Composantes : public PHY_RoleInterface_Composantes
                                , public nbc::ToxicEffectHandler_ABC
                                , public transport::TransportNotificationHandler_ABC
                                , public surrender::SurrenderNotificationHandler_ABC
+                               , public human::HumansChangedNotificationHandler_ABC
 {
 
 
@@ -85,6 +88,8 @@ public:
     virtual void Execute( OnComponentLendedFunctorComputer_ABC& algorithm ) const;
 
     template< typename T > void                ApplyOnWeapons     ( T& t ) const;
+
+    virtual void NotifyHumanHasChanged();
 
 
     virtual void Update( bool bIsDead );
@@ -183,7 +188,6 @@ public:
     //@{          
     virtual       MT_Float       GetOperationalState     () const;
     virtual       double       GetMajorOperationalState() const;
-    virtual       bool           HasChanged              () const;
     virtual       bool           IsUsable                () const;                    
     virtual const MIL_AgentPion& GetPion                 () const;    
     //@}
@@ -249,6 +253,7 @@ private:
 
     //! @name Tools
     //@{
+    virtual bool HasChanged() const;
     void UpdateOperationalStates();
     void UpdateMajorComposante  ();
 
@@ -282,6 +287,7 @@ private:
     T_LoanMap              borrowedComposantes_;
 
     bool                   bLoansChanged_;
+    bool                   bExternalMustChange_;
 
     // Maintenance
     T_MaintenanceComposanteStateSet maintenanceComposanteStates_;

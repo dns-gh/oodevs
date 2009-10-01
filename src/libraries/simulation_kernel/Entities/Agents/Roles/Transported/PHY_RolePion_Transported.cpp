@@ -20,6 +20,7 @@
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
 #include "TransportPermissionComputer_ABC.h"
+#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( transport::PHY_RolePion_Transported, "PHY_RolePion_Transported" )
 
@@ -216,6 +217,12 @@ void PHY_RolePion_Transported::Update( bool /*bIsDead*/ )
     if( !pTransporter_ )
         return;
     pion_.GetRole< PHY_RoleInterface_Location >().Follow( *pTransporter_ );
+
+    if( HasChanged() )
+    {
+        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -55,7 +55,7 @@ public:
     virtual void UpdateLogistic( bool bIsDead );
     virtual void Clean         ();
 
-    virtual void NotifyHasChanged();
+    virtual void NotifyComponentHasChanged();
 
     virtual void EnableSystem          ();
     virtual void DisableSystem         ();

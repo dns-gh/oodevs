@@ -70,7 +70,6 @@ public:
 
     //! @name Operations
     //@{    
-    bool                       HasChanged        () const;
     void                       Update            ( bool bIsDead );
     void                       Clean             ();
     void                       ExecutePerceptions();
@@ -81,12 +80,10 @@ public:
     void SetVisionModeNormal   ();
     void SetVisionModeDirection( const MT_Vector2D& vDirection );
     void SetVisionModePoint    ( const MT_Vector2D& vPoint );
-
-            bool HasRadarStateChanged() const;
     virtual bool IsUsingActiveRadar  () const;
 
     virtual void Execute( detection::DetectionComputer_ABC& algorithm ) const;
-    virtual void NotifyHasChanged();
+    virtual void NotifyComponentHasChanged();
     //@}
 
     //! @name Perceptions
@@ -173,6 +170,8 @@ private:
 private:
     //! @name Tools
     //@{
+    bool HasChanged() const;
+    bool HasRadarStateChanged() const;
     bool CanPerceive                   () const;
     void PreparePerceptionData         ();
     void PrepareRadarData              ();
@@ -210,7 +209,8 @@ private:
     MT_Vector2D  vSensorInfo_;
 
     bool bHasChanged_;
-    bool bExternalMustChangeState_;
+    bool bExternalMustChangePerception_;
+    bool bExternalMustChangeRadar_;
     bool bRadarStateHasChanged_;
 
 private:

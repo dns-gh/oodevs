@@ -992,7 +992,7 @@ void PHY_RolePionLOG_Medical::SendChangedState() const
 // Name: PHY_RolePionLOG_Medical::NotifyHasChanged
 // Created: MGD 2009-09-29
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Medical::NotifyHasChanged()
+void PHY_RolePionLOG_Medical::NotifyComponentHasChanged()
 {
     bExternalMustChangeState_ = true;
 }

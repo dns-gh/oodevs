@@ -72,6 +72,7 @@
 #include "Tools/MIL_IDManager.h"
 
 #include "simulation_kernel/AlgorithmsFactories.h"
+#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 
 #include <xeumeuleu/xml.h>
 
@@ -899,16 +900,17 @@ void MIL_AgentPion::OnReceiveMsgChangeSuperior( const MIL_EntityManager& manager
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::Serialize( HLA_UpdateFunctor& functor ) const
 {
+    //@TODO MGD REPLACE BY COMPUTER HasChanged is not longer public
     functor.Serialize( "armee", false, GetArmy().GetName() );
     functor.Serialize( "type" , false, GetType().GetName() );
-    const bool bUpdateStatuses = GetRole< PHY_RolePion_Composantes      >().HasChanged()
+    const bool bUpdateStatuses = true;/*GetRole< PHY_RolePion_Composantes      >().HasChanged()
                               || GetRole< PHY_RolePion_Communications   >().HasChanged()
                               || GetRole< nbc::PHY_RolePion_NBC         >().HasChanged()
                               || GetRole< PHY_RolePion_Posture          >().HLAStatusHasChanged()
                               || GetRole< transport::PHY_RoleInterface_Transported >().HasChanged()
                               || GetRole< surrender::PHY_RoleInterface_Surrender   >().HasChanged()
                               || GetRole< PHY_RolePion_Perceiver        >().HasRadarStateChanged()
-                              || GetRole< PHY_RolePion_Population       >().HasChanged();
+                              || GetRole< PHY_RolePion_Population       >().HasChanged();*/
 
     // $$$$ AGE 2004-12-13: Test functor.MustUpdateAll() if performance issues (doubt it)
     std::vector< std::string > statuses;

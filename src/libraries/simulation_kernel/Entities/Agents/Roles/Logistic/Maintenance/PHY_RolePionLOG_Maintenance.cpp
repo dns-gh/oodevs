@@ -841,7 +841,7 @@ void PHY_RolePionLOG_Maintenance::DisableSystem()
 // Name: PHY_RolePionLOG_Maintenance::NotifyHasChanged
 // Created: MGD 2009-09-29
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Maintenance::NotifyHasChanged()
+void PHY_RolePionLOG_Maintenance::NotifyComponentHasChanged()
 {
     bExternalMustChangeState_ = true;
 }

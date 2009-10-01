@@ -25,6 +25,7 @@ class NET_ASN_MsgUnitAttributes;
 class PHY_Morale;
 class PHY_Experience;
 class PHY_Tiredness;
+class MIL_Entity_ABC;
 
 namespace posture
 {
@@ -40,7 +41,7 @@ class PHY_RolePion_HumanFactors : public PHY_RoleInterface_HumanFactors
 {
 
 public:
-             PHY_RolePion_HumanFactors();
+             PHY_RolePion_HumanFactors( MIL_Entity_ABC& entity );
     virtual ~PHY_RolePion_HumanFactors();
 
     //! @name CheckPoints
@@ -56,7 +57,6 @@ public:
     //@{
     void Update    ( bool bIsDead );
     void Clean     ();
-    bool HasChanged() const;
     virtual void Execute( posture::PostureComputer_ABC& algorithm ) const;
     //@}
 
@@ -95,13 +95,20 @@ private:
     const PHY_Experience* pExperience_;
     const PHY_Tiredness*  pTiredness_;
 
+    MIL_Entity_ABC& entity_;
+
 private:
     //! @name Helpers
     //@{
+    bool HasChanged() const;
     void ReadFacteursHumains( xml::xistream& xis );
     void ReadFatigue        ( xml::xistream& xis );
     void ReadMoral          ( xml::xistream& xis );
     void ReadExperience     ( xml::xistream& xis );
+
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_HumanFactors* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_HumanFactors* role, const unsigned int /*version*/ );
+
     //@}
 };
 

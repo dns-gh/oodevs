@@ -7,25 +7,26 @@
 //
 // *****************************************************************************
 
-#ifndef __ComponentsChangedNotificationHandler_ABC_H__
-#define __ComponentsChangedNotificationHandler_ABC_H__
+#ifndef __NetworkNotificationHandler_ABC_H__
+#define __NetworkNotificationHandler_ABC_H__
 
-namespace component {
+namespace network {
 
 // =============================================================================
-/** @class  ComponentsChangedNotificationHandler_ABC
-    @brief  ComponentsChangedNotificationHandler_ABC
+/** @class  NetworkNotificationHandler_ABC
+@brief  NetworkNotificationHandler_ABC
 */
 // Created: MGD 2009-09-24
 // =============================================================================
-class ComponentsChangedNotificationHandler_ABC {
+class NetworkNotificationHandler_ABC {
 public:
-	ComponentsChangedNotificationHandler_ABC();
-	virtual ~ComponentsChangedNotificationHandler_ABC();
+    NetworkNotificationHandler_ABC();
+    virtual ~NetworkNotificationHandler_ABC();
 
-	virtual void NotifyComponentHasChanged() = 0;
+    virtual void NotifyDataHasChanged() = 0;
+    virtual void NotifyVisionConeDataHasChanged() = 0;
 };
 
-} // namespace component
+} // namespace network
 
-#endif /* __ComponentsChangedNotificationHandler_ABC_H__ */
+#endif /* __NetworkNotificationHandler_ABC_H__ */

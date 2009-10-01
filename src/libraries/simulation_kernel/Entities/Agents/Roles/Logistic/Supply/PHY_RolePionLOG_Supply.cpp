@@ -560,7 +560,7 @@ const MIL_AgentPionLOG_ABC& PHY_RolePionLOG_Supply::GetPion() const
 // Name: PHY_RolePionLOG_Supply::NotifyHasChanged
 // Created: MGD 2009-09-29
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Supply::NotifyHasChanged()
+void PHY_RolePionLOG_Supply::NotifyComponentHasChanged()
 {
     bExternalMustChangeState_ = true;
 }

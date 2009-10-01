@@ -23,6 +23,8 @@
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/HealComputer_ABC.h"
 #include "simulation_kernel/HealComputerFactory_ABC.h"
+#include "simulation_kernel/HumansChangedNotificationHandler_ABC.h"
+#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( human::PHY_RolePion_Humans, "PHY_RolePion_Humans" )
 
@@ -193,6 +195,12 @@ void PHY_RolePion_Humans::Update( bool /*bIsDead*/ )
         PHY_Human& human = **it;
         ++it; 
         human.Update(); // !!! Can erase the human from humansToUpdate_
+    }
+
+    if( HasChanged() )
+    {
+        pion_.Apply( &human::HumansChangedNotificationHandler_ABC::NotifyHumanHasChanged );
+        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
     }
 }
 

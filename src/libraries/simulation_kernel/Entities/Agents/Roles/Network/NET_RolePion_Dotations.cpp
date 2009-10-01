@@ -13,7 +13,6 @@
 #include "NET_RolePion_Dotations.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
-#include "Entities/Agents/Roles/Humans/PHY_RoleInterface_Humans.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
@@ -29,10 +28,12 @@
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Roles/Refugee/PHY_RoleInterface_Refugee.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
+#include "Entities/Agents/Roles/Humans/PHY_RoleInterface_Humans.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
+
 
 #include "Network/NET_ASN_Messages.h"
 
@@ -94,24 +95,11 @@ void NET_RolePion_Dotations::serialize( Archive& file, const uint )
 bool NET_RolePion_Dotations::DataUpdated() const
 {
     assert( pPion_ );
-
-    if(    pPion_->GetRole< PHY_RoleInterface_Posture           >().HasChanged()
-        || bExternalMustUpdateData_
+//@TODO Remove HasChanged in interface and hla
+    if( bExternalMustUpdateData_
         || pPion_->GetRole< PHY_RoleInterface_Location          >().HasLocationChanged()
         || pPion_->GetRole< PHY_RoleInterface_Location          >().HasSpeedChanged()
-        || pPion_->GetRole< PHY_RoleInterface_Reinforcement     >().HasChanged()
-        || pPion_->GetRole< nbc::PHY_RoleInterface_NBC          >().HasChanged()
-        || pPion_->GetRole< PHY_RoleInterface_Communications    >().HasChanged()
-        || pPion_->GetRole< transport::PHY_RoleInterface_Transported >().HasChanged()
-        || pPion_->GetRole< transport::PHY_RoleAction_Transport  >().HasChanged()
-        || pPion_->GetRole< PHY_RoleInterface_HumanFactors      >().HasChanged()
-        || pPion_->GetRole< transport::PHY_RoleAction_Loading              >().HasChanged()
-        || pPion_->GetRole< surrender::PHY_RoleInterface_Surrender         >().HasChanged()
-        || pPion_->GetRole< PHY_RoleInterface_Refugee           >().HasChanged()
-        || pPion_->GetRole< PHY_RoleInterface_Perceiver         >().HasRadarStateChanged() 
         || pPion_->GetRole< DEC_RolePion_Decision               >().HasStateChanged()
-        || pPion_->GetRole< dotation::PHY_RoleInterface_Dotations         >().HasChanged()
-        || pPion_->GetRole< human::PHY_RoleInterface_Humans            >().HasChanged()
         || pPion_->IsDead()        != bLastStateDead_
         || pPion_->IsNeutralized() != bLastStateNeutralized_ )
         return true;
@@ -163,12 +151,7 @@ void NET_RolePion_Dotations::SendChangedState() const
     // Debug - Cones de vision
     if( MIL_AgentServer::GetWorkspace().GetAgentServer().MustSendUnitVisionCones() )
     {
-        if(    pPion_->GetRole< PHY_RoleInterface_Location      >().HasLocationChanged()
-            || bExternalMustUpdateVisionCones_
-            || pPion_->GetRole< PHY_RoleInterface_Perceiver     >().HasChanged()
-            || pPion_->GetRole< transport::PHY_RoleAction_Loading          >().HasChanged()
-            || pPion_->GetRole< transport::PHY_RoleInterface_Transported   >().HasChanged()
-            || pPion_->GetRole< surrender::PHY_RoleInterface_Surrender     >().HasChanged()
+        if(    bExternalMustUpdateVisionCones_
             || MIL_AgentServer::GetWorkspace().GetAgentServer().MustInitUnitVisionCones() )
             pPion_->GetRole< PHY_RoleInterface_Perceiver        >().SendDebugState(); //$$ BOF
     }
@@ -290,11 +273,19 @@ void NET_RolePion_Dotations::Clean()
 }
 
 // -----------------------------------------------------------------------------
-// Name: NET_RolePion_Dotations::NotifyHasChanged
+// Name: NET_RolePion_Dotations::NotifyComponentHasChanged
 // Created: MGD 2009-09-29
 // -----------------------------------------------------------------------------
-void NET_RolePion_Dotations::NotifyHasChanged()
+void NET_RolePion_Dotations::NotifyDataHasChanged()
 {
     bExternalMustUpdateData_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_RolePion_Dotations::NotifyHumanHasChanged
+// Created: MGD 2009-09-29
+// -----------------------------------------------------------------------------
+void NET_RolePion_Dotations::NotifyVisionConeDataHasChanged()
+{
     bExternalMustUpdateVisionCones_ = true;
 }

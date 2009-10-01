@@ -48,7 +48,6 @@ public:
     //@{
     virtual void Update    ( bool bIsDead );
     virtual void Clean     ();
-    virtual bool HasChanged() const;
     //@}
 
     //! @name Transport
@@ -76,6 +75,11 @@ public:
     //@}
 
 private:
+    //! @name Tools
+    //@{
+    virtual bool HasChanged() const;
+    //@}
+
           MIL_AgentPion& pion_;
           bool           bHasChanged_;
     const MIL_Agent_ABC* pTransporter_;

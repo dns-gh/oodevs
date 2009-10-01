@@ -56,7 +56,6 @@ public:
     //@{
     void Update    ( bool bIsDead );
     void Clean     ();
-    bool HasChanged() const;
     virtual void Execute( dotation::ConsumptionComputer_ABC& algorithm ) const;
     virtual void Execute( detection::DetectionComputer_ABC& algorithm ) const;
 
@@ -112,6 +111,7 @@ public:
 private:
     //! @name Tools
     //@{
+    bool HasChanged() const;
     void     ChangePosture                    ( const PHY_Posture& newPosture );
     void     ChangePostureCompletionPercentage( const MT_Float rNewPercentage );
     void     Uninstall                        ();

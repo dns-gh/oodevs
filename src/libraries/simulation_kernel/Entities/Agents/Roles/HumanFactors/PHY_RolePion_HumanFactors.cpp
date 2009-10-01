@@ -16,20 +16,38 @@
 #include "Entities/Agents/Units/HumanFactors/PHY_Experience.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Tiredness.h"
 
+#include "simulation_kernel/Entities/MIL_Entity_ABC.h"
 #include "simulation_kernel/PostureComputer_ABC.h"
+#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_HumanFactors, "PHY_RolePion_HumanFactors" )
+
+template< typename Archive >
+void save_construct_data( Archive& archive, const PHY_RolePion_HumanFactors* role, const unsigned int /*version*/ )
+{
+    MIL_Entity_ABC* const entity = &role->entity_;
+    archive << entity;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, PHY_RolePion_HumanFactors* role, const unsigned int /*version*/ )
+{
+    MIL_Entity_ABC* entity;
+    archive >> entity;
+    ::new( role )PHY_RolePion_HumanFactors( *entity );
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_HumanFactors constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-PHY_RolePion_HumanFactors::PHY_RolePion_HumanFactors()
+PHY_RolePion_HumanFactors::PHY_RolePion_HumanFactors( MIL_Entity_ABC& entity )
     : bHasChanged_                  ( true )
     , pMorale_                      ( &PHY_Morale    ::bon_     )
     , pExperience_                  ( &PHY_Experience::veteran_ )
     , pTiredness_                   ( &PHY_Tiredness ::normal_  )
+    , entity_                       ( entity )
 {
     // NOTHING
 }
@@ -177,7 +195,10 @@ void PHY_RolePion_HumanFactors::SendChangedState( NET_ASN_MsgUnitAttributes& msg
 // -----------------------------------------------------------------------------
 void PHY_RolePion_HumanFactors::Update( bool /*bIsDead*/ )
 {
-    // NOTHING
+    if( HasChanged() )
+    {
+        entity_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+    }
 }
 
 // -----------------------------------------------------------------------------
