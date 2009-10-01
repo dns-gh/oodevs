@@ -74,10 +74,6 @@ public:
     //@{
     bool                   HasWoundedHumansToEvacuate      () const;
     void                   EvacuateWoundedHumans           ( MIL_AutomateLOG& destinationTC2 ) const;
-
-    void                   NotifyHumanBackFromMedical      ( PHY_MedicalHumanState& humanState ) const;
-    PHY_MedicalHumanState* NotifyHumanWaitingForMedical    ( PHY_Human& human ) const;
-    PHY_MedicalHumanState* NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 ) const;
     //@}
 
     //! @name Accessors

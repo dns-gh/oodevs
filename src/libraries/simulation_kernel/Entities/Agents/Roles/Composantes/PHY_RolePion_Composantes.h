@@ -123,13 +123,6 @@ public:
     virtual PHY_MaintenanceComposanteState* NotifyComposanteWaitingForMaintenance( PHY_ComposantePion& composante );
     virtual void                            NotifyComposanteBackFromMaintenance  ( PHY_MaintenanceComposanteState& composanteState );
 
-    //! @name Logistic - Medical
-    //@{
-    virtual PHY_MedicalHumanState* NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 );
-    virtual PHY_MedicalHumanState* NotifyHumanWaitingForMedical    ( PHY_Human& human );
-    virtual void                   NotifyHumanBackFromMedical      ( PHY_MedicalHumanState& humanState );
-    //@}
-
     //! @name Logistic - Supply
     //@{
 
@@ -184,10 +177,6 @@ public:
     virtual void NotifyComposanteRemoved ( PHY_ComposantePion& composante );
     virtual void NotifyComposanteChanged ( PHY_ComposantePion& composante, const PHY_ComposanteState& oldState );
     virtual void NotifyComposanteRepaired();
-
-    virtual void NotifyHumanAdded  ( PHY_Human& human );
-    virtual void NotifyHumanRemoved( PHY_Human& human );
-    virtual void NotifyHumanChanged( PHY_Human& human, const PHY_Human& copyOfOldHumanState );
     //@}
 
     //! @name Accessors

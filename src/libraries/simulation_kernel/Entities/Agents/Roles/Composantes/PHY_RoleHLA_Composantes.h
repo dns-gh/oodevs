@@ -125,13 +125,6 @@ public:
     virtual PHY_ComposantePion*             GetAvailableHauler                   ( const PHY_ComposanteTypePion& composanteType ) const { return NULL; };
     //@}
 
-    //! @name Logistic - Medical
-    //@{
-    virtual PHY_MedicalHumanState* NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 ) { return NULL; };
-    virtual PHY_MedicalHumanState* NotifyHumanWaitingForMedical    ( PHY_Human& human ) { return NULL; };
-    virtual void                   NotifyHumanBackFromMedical      ( PHY_MedicalHumanState& humanState ) {};
-    //@}
-
     //! @name Prisoners
     //@{
     virtual void NotifyCaptured() {};
@@ -149,10 +142,6 @@ public:
     virtual void NotifyComposanteRemoved ( PHY_ComposantePion& composante ) {};
     virtual void NotifyComposanteChanged ( PHY_ComposantePion& composante, const PHY_ComposanteState& oldState ) {};
     virtual void NotifyComposanteRepaired() {};
-
-    virtual void NotifyHumanAdded  ( PHY_Human& human ) {};
-    virtual void NotifyHumanRemoved( PHY_Human& human ) {};
-    virtual void NotifyHumanChanged( PHY_Human& human, const PHY_Human& copyOfOldHumanState ) {};
     //@}
 
     //! @name Accessors

@@ -13,6 +13,7 @@
 #define __PHY_RolePion_Humans_h_
 
 #include "PHY_RoleInterface_Humans.h"
+#include "HumansChangedNotificationHandler_ABC.h"
 
 namespace human
 {
@@ -22,6 +23,7 @@ namespace human
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RolePion_Humans : public PHY_RoleInterface_Humans
+                          , public HumansChangedNotificationHandler_ABC
 {
 
 public:
@@ -53,8 +55,8 @@ public:
     virtual void                   EvacuateWoundedHumans           ( MIL_AutomateLOG& destinationTC2 ) const;
     virtual bool                   HasWoundedHumansToEvacuate      () const;   
     virtual void                   ChangeEvacuationMode            ( E_EvacuationMode nMode );
-    virtual PHY_MedicalHumanState* NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 ); // Imex
-    virtual PHY_MedicalHumanState* NotifyHumanWaitingForMedical    ( PHY_Human& human );
+    virtual void                   NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 ); // Imex
+    virtual void                   NotifyHumanWaitingForMedical    ( PHY_Human& human );
     virtual void                   NotifyHumanBackFromMedical      ( PHY_MedicalHumanState& humanState );
     //@}
 

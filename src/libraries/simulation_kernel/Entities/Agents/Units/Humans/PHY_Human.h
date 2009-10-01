@@ -93,6 +93,7 @@ public:
     bool NeedEvacuation(); // NeedMedical() && pas encore pris en charge
     void Evacuate      ( MIL_AutomateLOG& destinationTC2 );
     bool NeedMedical   () const;
+    void SetMedicalState( PHY_MedicalHumanState* pMedicalState );
     
     void NotifyHandledByMedical ();
     bool NotifyBackToWar        ();

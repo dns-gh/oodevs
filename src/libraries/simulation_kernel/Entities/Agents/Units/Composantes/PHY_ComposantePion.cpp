@@ -229,41 +229,6 @@ void PHY_ComposantePion::TransferComposante( PHY_RoleInterface_Composantes& newR
 }
 
 // =============================================================================
-// NOTIFICATIONS HUMANS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::NotifyHumanAdded
-// Created: NLD 2005-01-07
-// -----------------------------------------------------------------------------
-void PHY_ComposantePion::NotifyHumanAdded( PHY_Human& human )
-{
-    assert( pRole_ );
-    pRole_->NotifyHumanAdded( human );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::NotifyHumanRemoved
-// Created: NLD 2005-01-07
-// -----------------------------------------------------------------------------
-void PHY_ComposantePion::NotifyHumanRemoved( PHY_Human& human )
-{
-    assert( pRole_ );
-    pRole_->NotifyHumanRemoved( human );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::NotifyHumanChanged
-// Created: NLD 2005-01-07
-// -----------------------------------------------------------------------------
-void PHY_ComposantePion::NotifyHumanChanged( PHY_Human& human, const PHY_Human& copyOfOldHumanState )
-{
-    assert( pRole_ );
-    pRole_->NotifyHumanChanged( human, copyOfOldHumanState );
-}
-
-
-// =============================================================================
 // OPERATIONS
 // =============================================================================
 
@@ -556,36 +521,6 @@ void PHY_ComposantePion::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2 
 {
     assert( pHumans_ );
     pHumans_->EvacuateWoundedHumans( destinationTC2 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::NotifyHumanEvacuatedByThirdParty
-// Created: NLD 2005-08-01
-// -----------------------------------------------------------------------------
-PHY_MedicalHumanState* PHY_ComposantePion::NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 ) const
-{
-    assert( pRole_ );
-    return pRole_->NotifyHumanEvacuatedByThirdParty( human, destinationTC2 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::NotifyHumanWaitingForMedical
-// Created: NLD 2005-01-10
-// -----------------------------------------------------------------------------
-PHY_MedicalHumanState* PHY_ComposantePion::NotifyHumanWaitingForMedical( PHY_Human& human ) const
-{
-    assert( pRole_ );
-    return pRole_->NotifyHumanWaitingForMedical( human );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::NotifyHumanBackFromMedical
-// Created: NLD 2005-01-10
-// -----------------------------------------------------------------------------
-void PHY_ComposantePion::NotifyHumanBackFromMedical( PHY_MedicalHumanState& humanState ) const
-{
-    assert( pRole_ );
-    pRole_->NotifyHumanBackFromMedical( humanState );
 }
 
 // =============================================================================

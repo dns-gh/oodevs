@@ -405,30 +405,37 @@ bool PHY_RolePion_Humans::HasWoundedHumansToEvacuate() const
 // Name: PHY_RolePion_Humans::NotifyHumanEvacuatedByThirdParty
 // Created: NLD 2005-01-10
 // -----------------------------------------------------------------------------
-PHY_MedicalHumanState* PHY_RolePion_Humans::NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 )
+void PHY_RolePion_Humans::NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 )
 {
 
     
     PHY_MedicalHumanState* pMedicalHumanState = destinationTC2.MedicalHandleHumanEvacuatedByThirdParty( pion_, human );
     if( !pMedicalHumanState )
-        return 0;
+    {
+        human.SetMedicalState( 0 );
+        return;
+    }
     
     bool bOut = medicalHumanStates_.insert( pMedicalHumanState ).second;
     assert( bOut );
-    return pMedicalHumanState;
+    human.SetMedicalState( pMedicalHumanState );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Humans::NotifyHumanWaitingForMedical
 // Created: NLD 2005-01-10
 // -----------------------------------------------------------------------------
-PHY_MedicalHumanState* PHY_RolePion_Humans::NotifyHumanWaitingForMedical( PHY_Human& human )
+void PHY_RolePion_Humans::NotifyHumanWaitingForMedical( PHY_Human& human )
 {
 
     
     MIL_AutomateLOG* pTC2 = pion_.GetAutomate().GetTC2();
     if ( !pTC2 || nEvacuationMode_ == eEvacuationMode_Manual )
-        return 0;
+    {
+        human.SetMedicalState( 0 );
+        return;
+    }
+
 
     // Pas de RC si log non branchée ou si RC envoyé au tick précédent
     const uint nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
@@ -438,11 +445,14 @@ PHY_MedicalHumanState* PHY_RolePion_Humans::NotifyHumanWaitingForMedical( PHY_Hu
 
     PHY_MedicalHumanState* pMedicalHumanState = pTC2->MedicalHandleHumanForEvacuation( pion_, human );
     if( !pMedicalHumanState )
-        return 0;
+    {
+        human.SetMedicalState( 0 );
+        return;
+    }
     
     bool bOut = medicalHumanStates_.insert( pMedicalHumanState ).second;
     assert( bOut );
-    return pMedicalHumanState;
+    human.SetMedicalState( pMedicalHumanState );
 }
 
 // -----------------------------------------------------------------------------

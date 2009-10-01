@@ -19,6 +19,9 @@
 #include "Entities/Orders/MIL_Report.h"
 #include "MIL_AgentServer.h"
 #include "MIL_Singletons.h"
+
+#include "simulation_kernel/HumansChangedNotificationHandler_ABC.h"
+
 #include <boost/bind.hpp>
 
 BOOST_CLASS_EXPORT_GUID( PHY_Human, "PHY_Human" )
@@ -153,7 +156,7 @@ void PHY_Human::CancelLogisticRequest()
     if( pMedicalState_ )
     {
         PHY_Human oldHumanState( *this );
-        pComposante_->NotifyHumanBackFromMedical( *pMedicalState_ );
+        const_cast< MIL_AgentPion& >( pComposante_->GetComposante().GetRole().GetPion() ).Apply( &human::HumansChangedNotificationHandler_ABC::NotifyHumanBackFromMedical, *pMedicalState_ );
         if( pComposante_->GetComposante().GetState() == PHY_ComposanteState::maintenance_ )
             nLocation_ = eMaintenance;
         else 
@@ -172,7 +175,7 @@ void PHY_Human::CancelLogisticRequest()
 void PHY_Human::Evacuate( MIL_AutomateLOG& destinationTC2 )
 {
     if( NeedEvacuation() )
-        pMedicalState_ = pComposante_->NotifyHumanEvacuatedByThirdParty( *this, destinationTC2 );
+        const_cast< MIL_AgentPion& >( pComposante_->GetComposante().GetRole().GetPion() ).Apply( &human::HumansChangedNotificationHandler_ABC::NotifyHumanEvacuatedByThirdParty, *this, destinationTC2 );
 }
 
 // -----------------------------------------------------------------------------
@@ -415,7 +418,7 @@ void PHY_Human::Update()
 
     // Demande santé
     if( NeedMedical() && !pMedicalState_ )
-        pMedicalState_ = pComposante_->NotifyHumanWaitingForMedical( *this );
+        const_cast< MIL_AgentPion& >( pComposante_->GetComposante().GetRole().GetPion() ).Apply( &human::HumansChangedNotificationHandler_ABC::NotifyHumanWaitingForMedical, *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -519,4 +522,13 @@ bool PHY_Human::NeedMedical() const
 bool PHY_Human::NeedEvacuation()
 {
     return NeedMedical() && !pMedicalState_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Human::SetMedicalState
+// Created: MGd 2009-10-01
+// -----------------------------------------------------------------------------
+void PHY_Human::SetMedicalState( PHY_MedicalHumanState* pMedicalState )
+{
+    pMedicalState_ = pMedicalState;
 }

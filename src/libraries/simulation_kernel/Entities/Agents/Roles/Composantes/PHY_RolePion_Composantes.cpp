@@ -698,33 +698,6 @@ void PHY_RolePion_Composantes::NotifyComposanteRepaired()
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::NotifyHumanAdded
-// Created: NLD 2005-01-07
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::NotifyHumanAdded( PHY_Human& human )
-{
-    pion_.GetRole< PHY_RoleInterface_Humans >().NotifyHumanAdded( human );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::NotifyHumanRemoved
-// Created: NLD 2005-01-07
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::NotifyHumanRemoved( PHY_Human& human )
-{
-    pion_.GetRole< PHY_RoleInterface_Humans >().NotifyHumanRemoved( human );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::NotifyHumanChanged
-// Created: NLD 2005-01-07
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::NotifyHumanChanged( PHY_Human& human, const PHY_Human& copyOfOldHumanState )
-{
-    pion_.GetRole< PHY_RoleInterface_Humans >().NotifyHumanChanged( human, copyOfOldHumanState );
-}
-
 // =============================================================================
 // PERCEPTION
 // =============================================================================
@@ -1394,37 +1367,6 @@ void PHY_RolePion_Composantes::NotifyComposanteBackFromMaintenance( PHY_Maintena
 {
     int nOut = maintenanceComposanteStates_.erase( &composanteState );
     assert( nOut == 1 );
-}
-
-// =============================================================================
-// LOGISTIC - MEDICAL
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::NotifyHumanEvacuatedByThirdParty
-// Created: NLD 2005-08-01
-// -----------------------------------------------------------------------------
-PHY_MedicalHumanState* PHY_RolePion_Composantes::NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 )
-{
-    return pion_.GetRole< PHY_RoleInterface_Humans >().NotifyHumanEvacuatedByThirdParty( human, destinationTC2 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::NotifyHumanWaitingForMedical
-// Created: NLD 2005-01-10
-// -----------------------------------------------------------------------------
-PHY_MedicalHumanState* PHY_RolePion_Composantes::NotifyHumanWaitingForMedical( PHY_Human& human )
-{
-    return pion_.GetRole< PHY_RoleInterface_Humans >().NotifyHumanWaitingForMedical( human );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::NotifyHumanBackFromMedical
-// Created: NLD 2005-01-10
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::NotifyHumanBackFromMedical( PHY_MedicalHumanState& humanState )
-{
-    pion_.GetRole< PHY_RoleInterface_Humans >().NotifyHumanBackFromMedical( humanState );
 }
 
 // =============================================================================

@@ -107,9 +107,6 @@ public:
     //@{
     bool                   HasWoundedHumansToEvacuate      () const;
     void                   EvacuateWoundedHumans           ( MIL_AutomateLOG& destinationTC2 ) const;
-    PHY_MedicalHumanState* NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 ) const;
-    PHY_MedicalHumanState* NotifyHumanWaitingForMedical    ( PHY_Human& human ) const;
-    void                   NotifyHumanBackFromMedical      ( PHY_MedicalHumanState& humanState ) const;
     bool                   CanEvacuateCasualties           () const;
     bool                   CanEvacuateCasualty             ( const PHY_Human& human ) const;
     bool                   CanCollectCasualties            () const;
@@ -136,10 +133,6 @@ public:
     uint HealHumans        ( const PHY_HumanRank& rank, uint nNbrToChange );
     uint WoundHumans       ( const PHY_HumanRank& rank, uint nNbrToChange, const PHY_HumanWound& wound );
     bool ChangeHumanRank   ( const PHY_HumanRank& oldRank, const PHY_HumanRank&  newRank , const PHY_HumanWound& wound );
-
-    void NotifyHumanAdded  ( PHY_Human& human );
-    void NotifyHumanRemoved( PHY_Human& human );
-    void NotifyHumanChanged( PHY_Human& human, const PHY_Human& copyOfOldHumanState );
     //@}
 
     //! @name Fire / Dangerosity

@@ -106,13 +106,6 @@ public:
     virtual PHY_MaintenanceComposanteState* NotifyComposanteWaitingForMaintenance( PHY_ComposantePion& composante ) = 0;
     virtual void                            NotifyComposanteBackFromMaintenance  ( PHY_MaintenanceComposanteState& composanteState ) = 0;
 
-    //! @name Logistic - Medical
-    //@{
-    virtual PHY_MedicalHumanState* NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 ) = 0;
-    virtual PHY_MedicalHumanState* NotifyHumanWaitingForMedical    ( PHY_Human& human ) = 0;
-    virtual void                   NotifyHumanBackFromMedical      ( PHY_MedicalHumanState& humanState ) = 0;
-    //@}
-
     //! @name Operations
     //@{
     virtual const PHY_Volume*          GetSignificantVolume       ( const PHY_SensorTypeAgent& sensorType ) const = 0;
@@ -152,10 +145,6 @@ public:
     virtual void NotifyComposanteRemoved ( PHY_ComposantePion& composante ) = 0;
     virtual void NotifyComposanteChanged ( PHY_ComposantePion& composante, const PHY_ComposanteState& oldState ) = 0;
     virtual void NotifyComposanteRepaired() = 0;
-
-    virtual void NotifyHumanAdded  ( PHY_Human& human ) = 0;
-    virtual void NotifyHumanRemoved( PHY_Human& human ) = 0;
-    virtual void NotifyHumanChanged( PHY_Human& human, const PHY_Human& copyOfOldHumanState ) = 0;
     //@}
 
     //! @name Accessors

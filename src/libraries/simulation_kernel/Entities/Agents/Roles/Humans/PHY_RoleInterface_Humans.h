@@ -55,21 +55,11 @@ public:
     virtual uint GetNbrHumans      ( const PHY_HumanRank& rank ) const = 0;
     //@}
 
-    //! @name Notifications
-    //@{
-    virtual void NotifyHumanAdded  ( PHY_Human& human ) = 0;
-    virtual void NotifyHumanRemoved( PHY_Human& human ) = 0;
-    virtual void NotifyHumanChanged( PHY_Human& human, const PHY_Human& copyOfOldHumanState ) = 0;
-    //@}
-
     //! @name Medical
     //@{
     virtual void                   EvacuateWoundedHumans           ( MIL_AutomateLOG& destinationTC2 ) const = 0;
     virtual bool                   HasWoundedHumansToEvacuate      () const = 0;   
     virtual void                   ChangeEvacuationMode            ( E_EvacuationMode nMode ) = 0;
-    virtual PHY_MedicalHumanState* NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 ) = 0; // Imex
-    virtual PHY_MedicalHumanState* NotifyHumanWaitingForMedical    ( PHY_Human& human ) = 0;
-    virtual void                   NotifyHumanBackFromMedical      ( PHY_MedicalHumanState& humanState ) = 0;
     //@}
 
     //! @name Operations
