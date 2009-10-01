@@ -19,7 +19,6 @@
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Agents/Roles/Network/NET_RolePion_Dotations.h"
-#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Roles/Logistic/Maintenance/PHY_MaintenanceComposanteState.h"
@@ -47,6 +46,7 @@
 #include "simulation_kernel/OnComponentLendedFunctorComputer_ABC.h"
 #include "simulation_kernel/ComponentsChangedNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+#include "simulation_kernel/DotationsActionsNotificationHandler_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Composantes, "PHY_RolePion_Composantes" )
 
@@ -635,7 +635,7 @@ void PHY_RolePion_Composantes::NotifyComposanteAdded( PHY_ComposantePion& compos
     UpdateDataWhenComposanteAdded( composante.GetState(), composanteTypes_[ &composante.GetType() ] );
 
     if( composante.GetState().IsUsable() )
-        pion_.GetRole< dotation::PHY_RoleInterface_Dotations >().RegisterDotationsCapacities( composante.GetType().GetDotationCapacities() );
+        pion_.Apply( &dotation::DotationsActionsNotificationHandler_ABC::RegisterDotationsCapacities, composante.GetType().GetDotationCapacities() );
 }
 
 // -----------------------------------------------------------------------------
@@ -652,7 +652,7 @@ void PHY_RolePion_Composantes::NotifyComposanteRemoved( PHY_ComposantePion& comp
     composantes_.erase( it );
 
     if( composante.GetState().IsUsable() )
-        pion_.GetRole< dotation::PHY_RoleInterface_Dotations >().UnregisterDotationsCapacities( composante.GetType().GetDotationCapacities() );
+        pion_.Apply( &dotation::DotationsActionsNotificationHandler_ABC::UnregisterDotationsCapacities, composante.GetType().GetDotationCapacities() );
 
     pion_.GetRole< transport::PHY_RoleAction_Loading   >().CheckConsistency();
     pion_.GetRole< transport::PHY_RoleAction_Transport >().CheckConsistency();
@@ -673,9 +673,9 @@ void PHY_RolePion_Composantes::NotifyComposanteChanged( PHY_ComposantePion& comp
     UpdateDataWhenComposanteAdded  ( newState, properties );
 
     if( !newState.IsUsable() && oldState.IsUsable() )
-        pion_.GetRole< dotation::PHY_RoleInterface_Dotations >().UnregisterDotationsCapacities( composante.GetType().GetDotationCapacities() );
+        pion_.Apply( &dotation::DotationsActionsNotificationHandler_ABC::UnregisterDotationsCapacities, composante.GetType().GetDotationCapacities() );
     else if( newState.IsUsable() && !oldState.IsUsable() )
-        pion_.GetRole< dotation::PHY_RoleInterface_Dotations >().RegisterDotationsCapacities( composante.GetType().GetDotationCapacities() );
+        pion_.Apply( &dotation::DotationsActionsNotificationHandler_ABC::RegisterDotationsCapacities, composante.GetType().GetDotationCapacities() );
 
     pion_.GetRole< transport::PHY_RoleAction_Transport >().NotifyComposanteChanged( composante );
 

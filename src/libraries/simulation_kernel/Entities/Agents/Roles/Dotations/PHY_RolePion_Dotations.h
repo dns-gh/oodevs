@@ -17,6 +17,7 @@
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "SurrenderNotificationHandler_ABC.h"
 #include "ConsumeDotationNotificationHandler_ABC.h"
+#include "DotationsActionsNotificationHandler_ABC.h"
 
 
 namespace xml
@@ -45,6 +46,7 @@ class PHY_RolePion_Dotations : public PHY_RoleInterface_Dotations
                              , public tools::AlgorithmModifier_ABC< dotation::DotationComputer_ABC >
 							 , public surrender::SurrenderNotificationHandler_ABC
                              , public ConsumeDotationNotificationHandler_ABC
+                             , public DotationsActionsNotificationHandler_ABC
 {
 
 public:
@@ -64,12 +66,14 @@ public:
     //! @name External operations
     //@{
     void ReadOverloading              ( xml::xistream& xis );
-    void RegisterDotationsCapacities  ( const PHY_DotationCapacities& capacities );
-    void UnregisterDotationsCapacities( const PHY_DotationCapacities& capacities );
+    //@}
 
+    //! @name Notification
     void NotifyCaptured();
     void NotifyReleased();
     virtual void NotifyConsumeDotation( const PHY_DotationCategory& category, double rNbr );
+    virtual void RegisterDotationsCapacities  ( const PHY_DotationCapacities& capacities );
+    virtual void UnregisterDotationsCapacities( const PHY_DotationCapacities& capacities );
     //@}
 
     //! @name Operations 

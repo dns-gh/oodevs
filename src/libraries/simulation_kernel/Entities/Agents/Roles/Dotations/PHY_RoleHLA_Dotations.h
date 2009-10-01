@@ -39,8 +39,6 @@ public:
     //@}
 
     virtual void ReadOverloading              ( xml::xistream& xis ) {};
-    virtual void RegisterDotationsCapacities  ( const PHY_DotationCapacities& capacities ) {};
-    virtual void UnregisterDotationsCapacities( const PHY_DotationCapacities& capacities ) {};
 
     virtual void NotifyCaptured() {};
     virtual void NotifyReleased() {};
