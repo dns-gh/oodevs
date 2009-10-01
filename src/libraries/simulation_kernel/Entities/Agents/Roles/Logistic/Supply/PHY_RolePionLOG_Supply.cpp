@@ -19,9 +19,17 @@
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationStockContainer.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Network/NET_ASN_Messages.h"
+
+#include "simulation_kernel/AlgorithmsFactories.h"
+#include "simulation_kernel/OnComponentFunctor_ABC.h"
+#include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
+#include "simulation_kernel/OnComponentFunctorComputerFactory.h"
+#include "simulation_kernel/OnComponentLendedFunctorComputer_ABC.h"
+#include "simulation_kernel/OnComponentLendedFunctorComputerFactory.h"
+
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePionLOG_Supply, "PHY_RolePionLOG_Supply" )
@@ -108,6 +116,28 @@ void PHY_RolePionLOG_Supply::ReadOverloading( xml::xistream& xis )
 // 
 // =============================================================================
 
+// =============================================================================
+// Available Convoy //@TODO MGD MERGE all Logictic OnComponentFunctor in one file
+// =============================================================================
+class AvailableConvoyFunctor : public OnComponentFunctor_ABC
+{
+
+public:
+    AvailableConvoyFunctor( const PHY_DotationCategory& dotationCategory )
+        : dotationCategory_( dotationCategory )
+        , pSelectedConvoy_( 0 )
+    {
+    }
+
+    void operator() ( PHY_ComposantePion& composante )
+    {
+        if( composante.CanBePartOfConvoy() && composante.CanTransportStock( dotationCategory_ ) )
+            pSelectedConvoy_ = &composante;
+    }
+
+    const PHY_DotationCategory& dotationCategory_;
+    PHY_ComposantePion* pSelectedConvoy_;
+};
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Supply::GetAvailableConvoyTransporter
 // Created: NLD 2005-02-07
@@ -117,7 +147,9 @@ PHY_ComposantePion* PHY_RolePionLOG_Supply::GetAvailableConvoyTransporter( const
     if( !bSystemEnabled_ )
         return 0;
 
-    return pion_.GetRole< PHY_RoleInterface_Composantes >().GetAvailableConvoyTransporter( dotationCategory );
+    AvailableConvoyFunctor functor( dotationCategory );
+    pion_.Execute( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+    return functor.pSelectedConvoy_;
 }
 
 // -----------------------------------------------------------------------------
@@ -157,6 +189,58 @@ void PHY_RolePionLOG_Supply::RemoveStockReservation( const PHY_DotationCategory&
 // TOOLS
 // =============================================================================
 
+// =============================================================================
+// ConvoyTransportersUse //@TODO MGD MERGE all Logictic OnComponentFunctor in one file
+// =============================================================================
+class ConvoyTransportersUseFunctor : public OnComponentFunctor_ABC
+{
+
+public:
+    ConvoyTransportersUseFunctor( PHY_Composante_ABC::T_ComposanteUseMap& composanteUse )
+        : composanteUse_( composanteUse )
+    {
+    }
+
+    void operator() ( PHY_ComposantePion& composante )
+    {
+        if( composante.CouldBePartOfConvoy() )
+        {
+            PHY_Composante_ABC::T_ComposanteUse& data = composanteUse_[ &composante.GetType() ];
+            ++ data.nNbrTotal_;
+
+            if( composante.GetState().IsUsable() )
+            {
+                ++ data.nNbrAvailable_;
+                if( !composante.CanBePartOfConvoy() )
+                    ++ data.nNbrUsed_;
+            }
+        }
+    }
+
+    PHY_Composante_ABC::T_ComposanteUseMap& composanteUse_;
+};
+
+class ConvoyLendedTransportersUseFunctor : public OnComponentFunctor_ABC
+{
+
+public:
+    ConvoyLendedTransportersUseFunctor( PHY_Composante_ABC::T_ComposanteUseMap& composanteUse )
+        : composanteUse_( composanteUse )
+    {
+    }
+
+    void operator() ( PHY_ComposantePion& composante )
+    {
+        if( composante.CouldBePartOfConvoy() )
+        {
+            PHY_Composante_ABC::T_ComposanteUse& data = composanteUse_[ &composante.GetType() ];
+            ++ data.nNbrTotal_;
+            ++ data.nNbrLent_;
+        }
+    }
+
+    PHY_Composante_ABC::T_ComposanteUseMap& composanteUse_;
+};
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Supply::GetConvoyTransportersAvailabilityRatio
 // Created: NLD 2005-01-05
@@ -164,12 +248,16 @@ void PHY_RolePionLOG_Supply::RemoveStockReservation( const PHY_DotationCategory&
 MT_Float PHY_RolePionLOG_Supply::GetConvoyTransportersAvailabilityRatio() const
 {
 
-    PHY_RoleInterface_Composantes::T_ComposanteUseMap composanteUse;
-    pion_.GetRole< PHY_RoleInterface_Composantes >().GetConvoyTransportersUse( composanteUse );
+    PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
+
+    ConvoyTransportersUseFunctor functor( composanteUse );
+    pion_.Execute( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+    ConvoyLendedTransportersUseFunctor functor2( composanteUse );
+    pion_.Execute( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functor2 ) );
 
     uint nNbrTotal                  = 0;
     uint nNbrAvailableAllowedToWork = 0;
-    for( PHY_RoleInterface_Composantes::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
+    for( PHY_Composante_ABC::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
     {
         nNbrTotal                  += it->second.nNbrTotal_;
         nNbrAvailableAllowedToWork += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
@@ -340,7 +428,7 @@ void PHY_RolePionLOG_Supply::Clean()
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
 static
-void SendComposanteUse( const PHY_RoleInterface_Composantes::T_ComposanteUseMap& data, ASN1T__SeqOfLogSupplyEquimentAvailability& asn )
+void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, ASN1T__SeqOfLogSupplyEquimentAvailability& asn )
 {
     asn.n = data.size();
     if( data.empty() )
@@ -348,7 +436,7 @@ void SendComposanteUse( const PHY_RoleInterface_Composantes::T_ComposanteUseMap&
 
     ASN1T_LogSupplyEquimentAvailability* pData = new ASN1T_LogSupplyEquimentAvailability[ data.size() ];
     uint i = 0;
-    for( PHY_RoleInterface_Composantes::CIT_ComposanteUseMap itData = data.begin(); itData != data.end(); ++itData )
+    for( PHY_Composante_ABC::CIT_ComposanteUseMap itData = data.begin(); itData != data.end(); ++itData )
     {
         ASN1T_LogSupplyEquimentAvailability& data = pData[ i++ ];
         data.type_equipement = itData->first->GetMosID();
@@ -378,8 +466,12 @@ void PHY_RolePionLOG_Supply::SendFullState() const
     asn().oid_pion        = pion_.GetID();
     asn().chaine_activee  = bSystemEnabled_;
   
-    PHY_RoleInterface_Composantes::T_ComposanteUseMap composanteUse;
-    pion_.GetRole< PHY_RoleInterface_Composantes >().GetConvoyTransportersUse( composanteUse );
+    PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
+    ConvoyTransportersUseFunctor functor( composanteUse );
+    pion_.Execute( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+    ConvoyLendedTransportersUseFunctor functor2( composanteUse );
+    pion_.Execute( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functor2 ) );
+
     SendComposanteUse( composanteUse, asn().disponibilites_transporteurs_convois  );
 
     assert( pStocks_ );
@@ -415,8 +507,12 @@ void PHY_RolePionLOG_Supply::SendChangedState() const
 
         asn().chaine_activee  = bSystemEnabled_;
       
-        PHY_RoleInterface_Composantes::T_ComposanteUseMap composanteUse;
-        pion_.GetRole< PHY_RoleInterface_Composantes >().GetConvoyTransportersUse( composanteUse );
+        PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
+        ConvoyTransportersUseFunctor functor( composanteUse );
+        pion_.Execute( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+        ConvoyLendedTransportersUseFunctor functor2( composanteUse );
+        pion_.Execute( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functor2 ) );
+
         SendComposanteUse( composanteUse, asn().disponibilites_transporteurs_convois );
     }
 

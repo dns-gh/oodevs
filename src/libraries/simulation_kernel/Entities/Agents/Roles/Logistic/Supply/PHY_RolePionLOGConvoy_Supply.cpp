@@ -72,6 +72,7 @@ void PHY_RolePionLOGConvoy_Supply::serialize( Archive& file, const uint )
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOGConvoy_Supply::Update( bool bIsDead )
 { 
+    //@TODO AHC Add RolePionLOGConvoy in move compute modifiers
     if( bIsDead )
         pion_.GetRole< PHY_RoleInterface_Location >().Follow( pion_.GetAutomate().GetPionPC() );
 }

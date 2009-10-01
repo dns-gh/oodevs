@@ -133,11 +133,6 @@ public:
     //! @name Logistic - Supply
     //@{
 
-    //$$$$ a deplacer (functor)
-    virtual PHY_ComposantePion* GetAvailableConvoyTransporter( const PHY_DotationCategory& dotationCategory ) const;
-    virtual void                GetConvoyTransportersUse     ( T_ComposanteUseMap& composanteUse ) const;
-    //@}
-
     //! @name Prisoners
     //@{
     virtual void NotifyCaptured();

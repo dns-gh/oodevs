@@ -53,19 +53,6 @@ class PHY_RoleInterface_Composantes : public tools::Role_ABC
 {
 
 public:
-    //! @name Types
-    //@{
-    struct T_ComposanteUse
-    {
-        uint nNbrAvailable_;
-        uint nNbrUsed_;
-        uint nNbrTotal_; // nNbrTotal_ >= nNbrAvailable_ >= nNbrUsed_
-        uint nNbrLent_;
-    };
-
-    typedef std::map< const PHY_ComposanteTypePion*, T_ComposanteUse > T_ComposanteUseMap;
-    typedef T_ComposanteUseMap::const_iterator                         CIT_ComposanteUseMap;
-
     typedef PHY_RoleInterface_Composantes RoleInterface;
 
     typedef std::set< PHY_MaintenanceComposanteState* >     T_MaintenanceComposanteStateSet;
@@ -124,14 +111,6 @@ public:
     virtual PHY_MedicalHumanState* NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 ) = 0;
     virtual PHY_MedicalHumanState* NotifyHumanWaitingForMedical    ( PHY_Human& human ) = 0;
     virtual void                   NotifyHumanBackFromMedical      ( PHY_MedicalHumanState& humanState ) = 0;
-    //@}
-
-    //! @name Logistic - Supply
-    //@{
-
-    //$$$$ a deplacer (functor)
-    virtual PHY_ComposantePion* GetAvailableConvoyTransporter( const PHY_DotationCategory& dotationCategory ) const = 0;
-    virtual void                GetConvoyTransportersUse     ( T_ComposanteUseMap& composanteUse ) const = 0;
     //@}
 
     //! @name Operations

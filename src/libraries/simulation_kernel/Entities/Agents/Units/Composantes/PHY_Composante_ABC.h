@@ -22,9 +22,24 @@ class PHY_Composante_ABC : private boost::noncopyable
 {
 
 public:
+    //! @name Types
+    //@{
     typedef std::vector< PHY_Composante_ABC* >  T_ComposanteVector;
     typedef T_ComposanteVector::iterator        IT_ComposanteVector;
     typedef T_ComposanteVector::const_iterator  CIT_ComposanteVector;
+
+ 
+    struct T_ComposanteUse
+    {
+        uint nNbrAvailable_;
+        uint nNbrUsed_;
+        uint nNbrTotal_; // nNbrTotal_ >= nNbrAvailable_ >= nNbrUsed_
+        uint nNbrLent_;
+    };
+
+    typedef std::map< const PHY_ComposanteType_ABC*, T_ComposanteUse > T_ComposanteUseMap;
+    typedef T_ComposanteUseMap::const_iterator                         CIT_ComposanteUseMap;
+    //@}
 
              PHY_Composante_ABC() {}
     virtual ~PHY_Composante_ABC() {}

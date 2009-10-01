@@ -15,7 +15,7 @@
 #include "MIL.h"
 
 #include "OnComponentFunctor_ABC.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 
 class PHY_ComposantePion;
 class PHY_ComposanteTypePion;
@@ -297,7 +297,7 @@ class GetComponentUseFunctor : public OnComponentFunctor_ABC
 {
 
 public:
-    GetComponentUseFunctor( ComposanteUsePredicate_ABC& functor, PHY_RolePion_Composantes::T_ComposanteUseMap& result )
+    GetComponentUseFunctor( ComposanteUsePredicate_ABC& functor, PHY_Composante_ABC::T_ComposanteUseMap& result )
         : functor_( functor )
         , result_( result )
     {
@@ -307,7 +307,7 @@ public:
     {
         if( functor_( composante.GetType() ) )
         {
-            PHY_RolePion_Composantes::T_ComposanteUse& data = result_[ &composante.GetType() ];
+            PHY_Composante_ABC::T_ComposanteUse& data = result_[ &composante.GetType() ];
             ++ data.nNbrTotal_;
 
             if( composante.GetState().IsUsable() )
@@ -320,7 +320,7 @@ public:
     }
 
     ComposanteUsePredicate_ABC& functor_;
-    PHY_RolePion_Composantes::T_ComposanteUseMap& result_;
+    PHY_Composante_ABC::T_ComposanteUseMap& result_;
 };
 
 // =============================================================================
@@ -331,7 +331,7 @@ class GetComponentLendedUseFunctor : public OnComponentFunctor_ABC
 {
 
 public:
-    GetComponentLendedUseFunctor( ComposanteUsePredicate_ABC& functor, PHY_RolePion_Composantes::T_ComposanteUseMap& result )
+    GetComponentLendedUseFunctor( ComposanteUsePredicate_ABC& functor, PHY_Composante_ABC::T_ComposanteUseMap& result )
         : functor_( functor )
         , result_( result )
     {
@@ -341,14 +341,14 @@ public:
     {
         if( functor_( composante.GetType() ) )
         {
-            PHY_RolePion_Composantes::T_ComposanteUse& data = result_[ &composante.GetType() ];
+            PHY_Composante_ABC::T_ComposanteUse& data = result_[ &composante.GetType() ];
             ++ data.nNbrTotal_;
             ++ data.nNbrLent_;
         }
     }
 
     ComposanteUsePredicate_ABC& functor_;
-    PHY_RolePion_Composantes::T_ComposanteUseMap& result_;
+    PHY_Composante_ABC::T_ComposanteUseMap& result_;
 };
 
 #endif // __PHY_ComposantePredicates_h_

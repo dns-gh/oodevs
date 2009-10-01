@@ -1346,64 +1346,6 @@ MT_Float PHY_RolePion_Composantes::GetDangerosity( const DEC_Knowledge_Agent& ta
 }
 
 // =============================================================================
-// LOGISTIC - SUPPLY $$$ a deplacer (functor)
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetAvailableConvoyTransporter
-// Created: NLD 2005-01-27
-// -----------------------------------------------------------------------------
-PHY_ComposantePion* PHY_RolePion_Composantes::GetAvailableConvoyTransporter( const PHY_DotationCategory& dotationCategory ) const
-{
-    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        PHY_ComposantePion& composante = **it;
-
-        if( composante.CanBePartOfConvoy() && composante.CanTransportStock( dotationCategory ) )
-            return &composante;
-    }
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetConvoyTransportersUse
-// Created: NLD 2005-01-27
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::GetConvoyTransportersUse( T_ComposanteUseMap& composanteUse ) const
-{
-    composanteUse.clear();
-    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        if( (**it).CouldBePartOfConvoy() )
-        {
-            T_ComposanteUse& data = composanteUse[ &(**it).GetType() ];
-            ++ data.nNbrTotal_;
-
-            if( (**it).GetState().IsUsable() )
-            {
-                ++ data.nNbrAvailable_;
-                if( !(**it).CanBePartOfConvoy() )
-                    ++ data.nNbrUsed_;
-            }
-        }
-    }
-
-    for( CIT_LoanMap itLoan = lentComposantes_.begin(); itLoan != lentComposantes_.end(); ++itLoan )
-    {
-        const PHY_ComposantePion::T_ComposantePionVector& composantes = itLoan->second;
-        for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes.begin(); it != composantes.end(); ++it )
-        {
-            if( (**it).CouldBePartOfConvoy() )
-            {
-                T_ComposanteUse& data = composanteUse[ &(**it).GetType() ];
-                ++ data.nNbrTotal_;
-                ++ data.nNbrLent_;
-            }
-        }
-    }
-}
-
-// =============================================================================
 // LOGISTIC - MAINTENANCE
 // =============================================================================
 

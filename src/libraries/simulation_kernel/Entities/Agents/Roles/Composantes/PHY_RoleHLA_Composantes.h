@@ -132,14 +132,6 @@ public:
     virtual void                   NotifyHumanBackFromMedical      ( PHY_MedicalHumanState& humanState ) {};
     //@}
 
-    //! @name Logistic - Supply
-    //@{
-
-    //$$$$ a deplacer (functor)
-    virtual PHY_ComposantePion* GetAvailableConvoyTransporter( const PHY_DotationCategory& dotationCategory ) const { return NULL; };
-    virtual void                GetConvoyTransportersUse     ( T_ComposanteUseMap& composanteUse ) const {};
-    //@}
-
     //! @name Prisoners
     //@{
     virtual void NotifyCaptured() {};
