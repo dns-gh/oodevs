@@ -663,14 +663,24 @@ end
 
 local emptyTable = {}
 
+local hash = function( table )
+    local result = "" 
+    for i,j in pairs( table ) do
+        if i ~= "__returnValue" then
+            result = result .. tostring( i ) .. tostring( j )
+        end
+    end
+    return result
+end
+
 StartInstance = function( self, activation, weight, param )
     self.starts[ activation ] = self.starts[ activation ] or {}
-    self.starts[ activation ][ param or emptyTable ] = weight
+    self.starts[ activation ][ hash( param or emptyTable ) ] = { param, weight }
 end
 
 StopInstance = function( self, activation, param )
     if self.starts[ activation ] then
-        self.starts[ activation ][ param or emptyTable ] = nil
+        self.starts[ activation ][ hash( param or emptyTable ) ] = nil
     end
 end
 
@@ -678,15 +688,15 @@ ActivateWithStart = function( self )
     self.starts = self.starts or {}
     self:internalactivate()
     for activation, instances in pairs( self.starts ) do
-        for param, weight in pairs( instances ) do
-            Activate( activation, weight, param )
+        for hashvalue, paramweight in pairs( instances ) do
+            Activate( activation, paramweight[2], paramweight[1] )
         end
     end
 end
 
 OnHalt = function( self, instanceParameters, parameters )
-    if self.starts and self.starts[ self.activations[ parameters[1] ] ] then
-        self.starts[ self.activations[ parameters[1] ] ][ instanceParameters or emptyTable ] = nil
+    if self.starts then
+        self.starts[ self.activations[ parameters[1] ] ][ hash( instanceParameters or emptyTable ) ] = nil
     end
 end
 
