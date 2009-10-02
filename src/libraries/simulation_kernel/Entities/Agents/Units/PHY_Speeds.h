@@ -17,7 +17,10 @@ namespace xml
     class xistream;
 }
 
+namespace moving
+{
 class PHY_RoleAction_Moving;
+}
 
 // =============================================================================
 /** @class  PHY_Speeds
@@ -32,7 +35,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit PHY_Speeds( xml::xistream& xis );
-    explicit PHY_Speeds( const PHY_RoleAction_Moving& role );
+    explicit PHY_Speeds( const moving::PHY_RoleAction_Moving& role );
     virtual ~PHY_Speeds();
     //@}
 

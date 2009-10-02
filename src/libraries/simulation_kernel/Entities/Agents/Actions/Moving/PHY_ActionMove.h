@@ -17,7 +17,10 @@
 #include <boost/shared_ptr.hpp>
 
 class MIL_AgentPion;
-class PHY_RoleAction_Moving;
+namespace moving
+{
+	class PHY_RoleAction_Moving;
+}
 class DEC_Path_ABC;
 class DEC_Agent_Path;
 class DEC_Decision_ABC;
@@ -59,7 +62,7 @@ private:
 
 private:
     MIL_AgentPion&                      pion_;   
-    PHY_RoleAction_Moving&              role_;
+    moving::PHY_RoleAction_Moving&      role_;
     boost::shared_ptr< DEC_Agent_Path > pMainPath_;
     boost::shared_ptr< DEC_Agent_Path > pJoiningPath_;
     T_ObjectKnowledgeSet                objectAvoidAttempts_;

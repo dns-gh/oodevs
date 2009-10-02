@@ -16,6 +16,7 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+#include "simulation_kernel/SpeedComputer_ABC.h"
 
 #include <xeumeuleu/xml.h>
 
@@ -241,11 +242,10 @@ bool PHY_RolePion_Communications::CanCommunicate() const
 // Name: PHY_RolePion_Communications::ModifySpeed
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Communications::ModifySpeed( MT_Float rSpeed ) const
+void PHY_RolePion_Communications::Execute(moving::SpeedComputer_ABC& algorithm) const
 {
-    if( jammers_.empty() )
-        return rSpeed;
-    return rSpeed *= rCoefSpeedModificator_;
+    if( !jammers_.empty() )
+    	algorithm.AddModifier(rCoefSpeedModificator_, false);
 }
 
 // -----------------------------------------------------------------------------

@@ -31,7 +31,7 @@
 // -----------------------------------------------------------------------------
 void DEC_MiscFunctions::SetCurrentSpeedModificator( MIL_AgentPion& callerAgent, MT_Float rFactor )
 {
-    callerAgent.GetRole< PHY_RoleAction_Moving >().SetSpeedModificator( rFactor );
+    callerAgent.GetRole< moving::PHY_RoleAction_Moving >().SetSpeedModificator( rFactor );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,7 +40,7 @@ void DEC_MiscFunctions::SetCurrentSpeedModificator( MIL_AgentPion& callerAgent, 
 // -----------------------------------------------------------------------------
 void DEC_MiscFunctions::SetMaxSpeedModificator( MIL_AgentPion& callerAgent, MT_Float rFactor )
 {
-    callerAgent.GetRole< PHY_RoleAction_Moving >().SetMaxSpeedModificator( rFactor );
+    callerAgent.GetRole< moving::PHY_RoleAction_Moving >().SetMaxSpeedModificator( rFactor );
 }
 
 // =============================================================================

@@ -217,7 +217,7 @@ float DEC_AutomateFunctions::PionTimeToMoveDistance( const DEC_Decision_ABC* pio
 {
     assert( pion );
     const MT_Float rDistance = MIL_Tools::ConvertMeterToSim( distance );
-    const MT_Float rMaxSpeed = pion->GetPion().GetRole< PHY_RoleAction_Moving >().GetMaxSpeedWithReinforcement();
+    const MT_Float rMaxSpeed = pion->GetPion().GetRole< moving::PHY_RoleAction_Moving >().GetMaxSpeedWithReinforcement();
     return rMaxSpeed != 0. ? float( MIL_Tools::ConvertSimToMinutes( rDistance / rMaxSpeed ) ) : std::numeric_limits< float >::max();
 }
 

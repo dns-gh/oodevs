@@ -275,17 +275,6 @@ void PHY_RoleInterface_Supply::ConvoyEndMission()
     // NOTHING
 }
 
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Supply::ModifySpeed
-// Created: NLD 2007-02-05
-// -----------------------------------------------------------------------------
-MT_Float PHY_RoleInterface_Supply::ModifySpeed( MT_Float rSpeed ) const
-{
-    return rSpeed;
-}
-
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleInterface_Supply::SendChangedState
 // Created: NLD 2004-12-30

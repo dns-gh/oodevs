@@ -37,7 +37,7 @@
 PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, boost::shared_ptr< DEC_Path_ABC > pPath )
     : PHY_DecisionCallbackAction_ABC( pion )
     , pion_               ( pion )
-    , role_               ( pion.GetRole< PHY_RoleAction_Moving >() )
+    , role_               ( pion.GetRole< moving::PHY_RoleAction_Moving >() )
     , pMainPath_          ( boost::dynamic_pointer_cast< DEC_Agent_Path >( pPath ) )
     , objectAvoidAttempts_()
     , objectsToAvoid_     ()

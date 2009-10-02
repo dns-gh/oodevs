@@ -831,7 +831,7 @@ MT_Float MIL_Automate::GetAlivePionsMaxSpeed() const
     for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
     {
         const MIL_AgentPion& pion = **it;
-        const MT_Float rSpeed = pion.GetRole< PHY_RoleAction_Moving >().GetMaxSpeed();
+        const MT_Float rSpeed = pion.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSpeed();
         if( rSpeed != 0. )
             rMaxSpeed = std::min( rMaxSpeed, rSpeed );
     }

@@ -32,12 +32,17 @@ namespace posture
     class PostureComputer_ABC;
 }
 
+namespace moving
+{
+	class SpeedComputer_ABC;
+}
 // =============================================================================
 // @class  PHY_RolePion_HumanFactors
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RolePion_HumanFactors : public PHY_RoleInterface_HumanFactors
                                 , public tools::AlgorithmModifier_ABC< posture::PostureComputer_ABC >
+								, public tools::AlgorithmModifier_ABC< moving::SpeedComputer_ABC >
 {
 
 public:
@@ -58,6 +63,7 @@ public:
     void Update    ( bool bIsDead );
     void Clean     ();
     virtual void Execute( posture::PostureComputer_ABC& algorithm ) const;
+    virtual void Execute( moving::SpeedComputer_ABC& algorithm ) const;
     //@}
 
     //! @name Main
@@ -76,7 +82,6 @@ public:
             
      //! @name Operations
      //@{
-    MT_Float ModifyMaxSpeed              ( MT_Float rSpeed    ) const;
     MT_Float ModifyReloadingDuration     ( MT_Float rDuration ) const;
     MT_Float ModifyPH                    ( MT_Float rPH       ) const;
     MT_Float GetSensorDistanceModificator() const;

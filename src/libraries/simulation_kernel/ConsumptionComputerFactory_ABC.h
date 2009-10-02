@@ -10,9 +10,12 @@
 #ifndef __ConsumptionComputerFactory_ABC_h_
 #define __ConsumptionComputerFactory_ABC_h_
 
+class PHY_ConsumptionType;
+
 namespace dotation
 {
     class ConsumptionComputer_ABC;
+    class ConsumptionModeChangeRequest_ABC;
 // =============================================================================
 /** @class  ConsumptionComputerFactory_ABC
     @brief  ConsumptionComputerFactory_ABC
@@ -31,7 +34,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual ConsumptionComputer_ABC& Create() const = 0;
+    virtual ConsumptionComputer_ABC& CreateConsumptionComputer() const = 0;
+    virtual ConsumptionModeChangeRequest_ABC& CreateConsumptionModeChangeRequest(const PHY_ConsumptionType&) const =0;
     //@}
 };
 

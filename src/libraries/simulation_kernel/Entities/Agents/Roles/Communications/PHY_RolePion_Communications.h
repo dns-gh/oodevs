@@ -13,6 +13,7 @@
 #define __PHY_RolePion_Communications_h_
 
 #include "PHY_RoleInterface_Communications.h"
+#include "MT_Tools/AlgorithmModifier_ABC.h"
 
 namespace xml
 {
@@ -23,11 +24,16 @@ class MIL_CommunicationsAgentType;
 class NET_ASN_MsgUnitAttributes;
 class MIL_AgentPion;
 
+namespace moving
+{
+	class SpeedComputer_ABC;
+}
 // =============================================================================
 // @class  PHY_RolePion_Communications
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RolePion_Communications : public PHY_RoleInterface_Communications
+	,public tools::AlgorithmModifier_ABC<moving::SpeedComputer_ABC>
 {
 
 public:
@@ -62,7 +68,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual MT_Float ModifySpeed            ( MT_Float rSpeed    ) const;
+    virtual void Execute(moving::SpeedComputer_ABC& algorithm) const;
     virtual MT_Float ModifyReloadingDuration( MT_Float rDuration ) const;
     //@}
 

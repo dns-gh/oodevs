@@ -38,7 +38,10 @@ namespace transport
 	class HumanLoadingTimeComputer_ABC;
 	class LoadedStateConsistencyComputer_ABC;
 }
-
+namespace moving
+{
+	class SpeedComputer_ABC;
+}
 class OnComponentComputer_ABC;
 class OnComponentLendedFunctorComputer_ABC;
 
@@ -54,6 +57,7 @@ class PHY_RolePion_Composantes : public PHY_RoleInterface_Composantes
                                , public tools::AlgorithmModifier_ABC< OnComponentLendedFunctorComputer_ABC >
 							   , public tools::AlgorithmModifier_ABC< transport::HumanLoadingTimeComputer_ABC>
 							   , public tools::AlgorithmModifier_ABC< transport::LoadedStateConsistencyComputer_ABC>
+							   , public tools::AlgorithmModifier_ABC< moving::SpeedComputer_ABC >
                                , public nbc::ToxicEffectHandler_ABC
                                , public transport::TransportNotificationHandler_ABC
                                , public transport::TransportChangeNotificationHandler_ABC
@@ -86,6 +90,7 @@ public:
     virtual void Execute( transport::TransportWeightComputer_ABC& algorithm ) const;
     virtual void Execute( transport::HumanLoadingTimeComputer_ABC& algorithm ) const;
     virtual void Execute( transport::LoadedStateConsistencyComputer_ABC& algorithm ) const;
+    virtual void Execute( moving::SpeedComputer_ABC& algorithm ) const; // TODO replace with Execute( OnComponentComputer_ABC
     virtual void Execute( OnComponentComputer_ABC& algorithm ) const;
     virtual void Execute( OnComponentLendedFunctorComputer_ABC& algorithm ) const;
 

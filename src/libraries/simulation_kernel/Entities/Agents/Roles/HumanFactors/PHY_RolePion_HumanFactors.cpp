@@ -19,6 +19,7 @@
 #include "simulation_kernel/Entities/MIL_Entity_ABC.h"
 #include "simulation_kernel/PostureComputer_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+#include "simulation_kernel/SpeedComputer_ABC.h"
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_HumanFactors, "PHY_RolePion_HumanFactors" )
@@ -259,12 +260,12 @@ void PHY_RolePion_HumanFactors::SetTiredness( const PHY_Tiredness& tiredness )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_HumanFactors::ModifyMaxSpeed
-// Created: NLD 2004-11-29
+// Name: PHY_RolePion_HumanFactors::Execute
+// Created: AHC 2009-10-02
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_HumanFactors::ModifyMaxSpeed( MT_Float rSpeed ) const
+void PHY_RolePion_HumanFactors::Execute( moving::SpeedComputer_ABC& algorithm ) const
 {
-    return rSpeed * pExperience_->GetCoefMaxSpeedModificator() * pTiredness_->GetCoefMaxSpeedModificator();
+	algorithm.AddModifier(pExperience_->GetCoefMaxSpeedModificator() * pTiredness_->GetCoefMaxSpeedModificator(),true);
 }
 
 // -----------------------------------------------------------------------------

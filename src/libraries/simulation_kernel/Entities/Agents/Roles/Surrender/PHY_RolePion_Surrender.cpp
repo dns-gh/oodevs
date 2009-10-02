@@ -20,6 +20,7 @@
 #include "SurrenderNotificationHandler_ABC.h"
 
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+#include "simulation_kernel/MoveComputer_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( surrender::PHY_RolePion_Surrender, "PHY_RolePion_Surrender" )
 
@@ -251,4 +252,13 @@ bool PHY_RolePion_Surrender::IsPrisoner() const
     return bPrisoner_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Surrender::Execute
+// Created: AHC 2009-10-02
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Surrender::Execute(moving::MoveComputer_ABC& algorithm) const
+{
+	if(IsSurrendered())
+		algorithm.NotifySurrendered();
+}
 } // namespace surrender

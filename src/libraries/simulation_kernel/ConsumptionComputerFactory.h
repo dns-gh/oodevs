@@ -13,6 +13,7 @@
 #include "simulation_kernel/ConsumptionComputerFactory_ABC.h"
 #include "simulation_kernel/PostureComputer_ABC.h"
 
+
 namespace dotation
 {
 // =============================================================================
@@ -33,13 +34,15 @@ public:
 
     //! @name Operations
     //@{
-    virtual ConsumptionComputer_ABC& Create() const;
+    virtual ConsumptionComputer_ABC& CreateConsumptionComputer() const;
+    virtual ConsumptionModeChangeRequest_ABC& CreateConsumptionModeChangeRequest(const PHY_ConsumptionType&) const;
     //@}
 
 private:
     //! @name Operations
     //@{
     std::auto_ptr< ConsumptionComputer_ABC > pConsumptionComputer_;
+    std::auto_ptr< ConsumptionModeChangeRequest_ABC> pConsumptionModeChangeRequest_;
     //@}
 };
 

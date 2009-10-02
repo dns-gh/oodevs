@@ -13,6 +13,9 @@
 namespace moving
 {
     class MoveComputer_ABC;
+    class SpeedComputer_ABC;
+    class SpeedStrategy_ABC;
+    class MaxSlopeComputer_ABC;
 // =============================================================================
 /** @class  MoveComputerFactory_ABC
     @brief  MoveComputerFactory_ABC
@@ -31,7 +34,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual MoveComputer_ABC& Create() const = 0;
+    virtual MoveComputer_ABC& CreateMoveComputer() const = 0;
+    virtual SpeedComputer_ABC& CreateSpeedComputer(const SpeedStrategy_ABC& strategy) const =0;
+    virtual MaxSlopeComputer_ABC& CreateMaxSlopeComputer() const =0;
     //@}
 };
 

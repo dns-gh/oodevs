@@ -13,12 +13,17 @@
 #define __PHY_RolePion_NBC_h_
 
 #include "PHY_RoleInterface_NBC.h"
+#include "MT_Tools/AlgorithmModifier_ABC.h"
 
 class NET_ASN_MsgUnitAttributes;
 class MIL_ToxicEffectManipulator;
 class MIL_NbcAgentType;
 class MIL_AgentPion;
 
+namespace moving
+{
+class SpeedComputer_ABC;
+}
 namespace nbc
 {
 
@@ -26,7 +31,8 @@ namespace nbc
 // @class  PHY_RolePion_NBC
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RolePion_NBC : public PHY_RoleInterface_NBC
+class PHY_RolePion_NBC : public PHY_RoleInterface_NBC,
+	public tools::AlgorithmModifier_ABC<moving::SpeedComputer_ABC>
 {
 
 public:
@@ -54,8 +60,9 @@ public:
     void WearNbcProtectionSuit  ();
     void RemoveNbcProtectionSuit();
 
-    MT_Float ModifyMaxSpeed         ( MT_Float rSpeed    ) const;
     MT_Float ModifyReloadingDuration( MT_Float rDuration ) const;
+
+    void Execute(moving::SpeedComputer_ABC& algorithm) const;
     //@}
 
     //! @name Accessors

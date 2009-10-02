@@ -13,16 +13,27 @@
 #define __PHY_RolePion_Reinforcement_h_
 
 #include "PHY_RoleInterface_Reinforcement.h"
-#include "TransportNotificationHandler_ABC.h"
+#include "simulation_kernel/TransportNotificationHandler_ABC.h"
+#include "simulation_kernel/ConsumptionChangeRequestHandler_ABC.h"
+#include "MT_Tools/AlgorithmModifier_ABC.h"
 
 class MIL_AgentPion;
 class NET_ASN_MsgUnitAttributes;
+
+namespace moving
+{
+	class SpeedComputer_ABC;
+	class MoveComputer_ABC;
+}
 
 // =============================================================================
 // @class  PHY_RolePion_Reinforcement
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RolePion_Reinforcement : public PHY_RoleInterface_Reinforcement,
+	public tools::AlgorithmModifier_ABC< moving::SpeedComputer_ABC>,
+	public tools::AlgorithmModifier_ABC< moving::MoveComputer_ABC>,
+	public dotation::ConsumptionChangeRequestHandler_ABC,
 	public transport::TransportNotificationHandler_ABC
 {
 
@@ -46,6 +57,7 @@ public:
     //@{
     void Update    ( bool bIsDead );
     void Clean     ();
+    virtual void Execute(moving::MoveComputer_ABC& algorithm) const;
     //@}
 
     //! @name Operations
@@ -55,11 +67,13 @@ public:
     bool IsReinforcing      () const;
     bool IsReinforced       () const;
     bool IsReinforcedBy     ( MIL_AgentPion& pion ) const;
+    void Execute( moving::SpeedComputer_ABC& algorithm ) const;
+    void ChangeConsumptionMode(dotation::ConsumptionModeChangeRequest_ABC& request);
     //@}
 
-    //! @name Event
+	//! @name Event
     //@{
-    virtual void LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
+    void LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );	
     //@}
 
     //! @name Network

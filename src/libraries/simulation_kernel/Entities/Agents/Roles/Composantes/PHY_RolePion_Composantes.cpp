@@ -35,6 +35,7 @@
 #include "simulation_kernel/TransportWeightComputer_ABC.h"
 #include "simulation_kernel/HumanLoadingTimeComputer_ABC.h"
 #include "simulation_kernel/LoadedStateConsistencyComputer_ABC.h"
+#include "simulation_kernel/SpeedComputer_ABC.h"
 
 #include "simulation_kernel/OnComponentComputer_ABC.h"
 #include "simulation_kernel/OnComponentLendedFunctorComputer_ABC.h"
@@ -1660,6 +1661,15 @@ void PHY_RolePion_Composantes::Execute( transport::LoadedStateConsistencyCompute
 		const PHY_ComposantePion& composante= **it;
 		algorithm.EnableCarrier(composante.CanTransportHumans());
 		algorithm.EnableLoadable(composante.CanBeLoaded());
+	}
+}
+
+void PHY_RolePion_Composantes::Execute( moving::SpeedComputer_ABC& algorithm ) const
+{
+	for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+	{
+		const PHY_ComposantePion& composante= **it;
+		algorithm.ApplyOnComponent(composante);
 	}
 }
 

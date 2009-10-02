@@ -13,18 +13,24 @@
 #define __PHY_RolePion_Surrender_h_
 
 #include "PHY_RoleInterface_Surrender.h"
+#include "MT_Tools/AlgorithmModifier_ABC.h"
 
 class NET_ASN_MsgUnitAttributes;
 class MIL_AgentPion;
 class MIL_Army;
 
+namespace moving
+{
+	class MoveComputer_ABC;
+}
 namespace surrender
 {
 // =============================================================================
 // @class  PHY_RolePion_Surrender
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RolePion_Surrender : public PHY_RoleInterface_Surrender
+class PHY_RolePion_Surrender : public PHY_RoleInterface_Surrender,
+	public tools::AlgorithmModifier_ABC<moving::MoveComputer_ABC>
 {
 
 public:
@@ -40,6 +46,7 @@ public:
     //@{
     virtual void Update    ( bool bIsDead );
     virtual void Clean     ();
+    virtual void Execute(moving::MoveComputer_ABC& algorithm) const;
     //@}
 
     //! @name Main

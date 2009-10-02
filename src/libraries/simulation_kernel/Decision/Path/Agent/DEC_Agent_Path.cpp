@@ -45,8 +45,8 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const T_PointVe
     , fuseau_                  () //$$$ Debile
     , automateFuseau_          () //$$$ Debile
     , vDirDanger_              ( queryMaker.GetOrderManager().GetDirDanger() )
-    , unitSpeeds_              ( queryMaker.GetRole< PHY_RoleAction_Moving >() ) 
-    , rMaxSlope_               ( queryMaker.GetRole< PHY_RoleAction_Moving >().GetMaxSlope() )
+    , unitSpeeds_              ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >() )
+    , rMaxSlope_               ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSlope() )
     , pathKnowledgeAgents_     ()
     , pathKnowledgeObjects_    ( )
     , rCostOutsideOfAllObjects_( 0. )
@@ -76,8 +76,8 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, std::vector< bo
     , fuseau_                  () //$$$ Debile
     , automateFuseau_          () //$$$ Debile
     , vDirDanger_              ( queryMaker.GetOrderManager().GetDirDanger() )
-    , unitSpeeds_              ( queryMaker.GetRole< PHY_RoleAction_Moving >() ) 
-    , rMaxSlope_               ( queryMaker.GetRole< PHY_RoleAction_Moving >().GetMaxSlope() )
+    , unitSpeeds_              ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >() )
+    , rMaxSlope_               ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSlope() )
     , pathKnowledgeAgents_     ()
     , pathKnowledgeObjects_    ( )
     , rCostOutsideOfAllObjects_( 0. )
@@ -108,8 +108,8 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const MT_Vector
     , fuseau_                   () //$$$ Debile
     , automateFuseau_           () //$$$ Debile
     , vDirDanger_               ( queryMaker.GetOrderManager().GetDirDanger() )
-    , unitSpeeds_               ( queryMaker.GetRole< PHY_RoleAction_Moving >() ) 
-    , rMaxSlope_                ( queryMaker.GetRole< PHY_RoleAction_Moving >().GetMaxSlope() )
+    , unitSpeeds_               ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >() )
+    , rMaxSlope_                ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSlope() )
     , pathKnowledgeAgents_      ()
     , pathKnowledgeObjects_     ( )
     , rCostOutsideOfAllObjects_( 0. )
@@ -140,7 +140,7 @@ DEC_Agent_Path::DEC_Agent_Path( const DEC_Agent_Path& rhs )
     , automateFuseau_          () //$$$ Debile
     , vDirDanger_              ( rhs.vDirDanger_ )
  //   , unitSpeeds_               ( rhs.unitSpeeds_ ) $$$ TODO
-    , unitSpeeds_              ( queryMaker_.GetRole< PHY_RoleAction_Moving >() )
+    , unitSpeeds_              ( queryMaker_.GetRole< moving::PHY_RoleAction_Moving >() )
     , rMaxSlope_               ( rhs.rMaxSlope_ )
     , pathKnowledgeAgents_     ()
     , pathKnowledgeObjects_    ( )

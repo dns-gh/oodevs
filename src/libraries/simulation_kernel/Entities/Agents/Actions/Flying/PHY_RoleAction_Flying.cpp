@@ -131,7 +131,7 @@ void PHY_RoleAction_Flying::Fly()
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Flying::Apply( MT_Float rHeight )
 {
-    moving::MoveComputer_ABC& moveComputer = entity_.GetAlgorithms().moveComputerFactory_->Create();//@TODO MGD see to share algorthms and execute them just one time by step
+    moving::MoveComputer_ABC& moveComputer = entity_.GetAlgorithms().moveComputerFactory_->CreateMoveComputer();//@TODO MGD see to share algorthms and execute them just one time by step
     entity_.Execute( moveComputer );
 
     if ( moveComputer.CanMove() || rHeight <= 0. )

@@ -20,6 +20,11 @@
 class MIL_AgentPion;
 class NET_ASN_MsgUnitAttributes;
 
+namespace moving
+{
+	class MoveComputer_ABC;
+}
+
 namespace transport
 {
 	class TransportPermissionComputer_ABC;
@@ -29,6 +34,7 @@ namespace transport
 // =============================================================================
 class PHY_RolePion_Transported : public PHY_RoleInterface_Transported,
 	public tools::AlgorithmModifier_ABC<TransportPermissionComputer_ABC>,
+	public tools::AlgorithmModifier_ABC<moving::MoveComputer_ABC>,
 	public TransportNotificationHandler_ABC
 {
 
@@ -48,6 +54,7 @@ public:
     //@{
     virtual void Update    ( bool bIsDead );
     virtual void Clean     ();
+    virtual void Execute(moving::MoveComputer_ABC& algorithm) const;
     //@}
 
     //! @name Transport

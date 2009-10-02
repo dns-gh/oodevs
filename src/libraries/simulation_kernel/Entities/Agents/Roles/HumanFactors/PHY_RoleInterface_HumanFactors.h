@@ -59,7 +59,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual MT_Float ModifyMaxSpeed              ( MT_Float rSpeed    ) const = 0;
     virtual MT_Float ModifyReloadingDuration     ( MT_Float rDuration ) const = 0;
     virtual MT_Float ModifyPH                    ( MT_Float rPH       ) const = 0;
     virtual MT_Float GetSensorDistanceModificator() const = 0;

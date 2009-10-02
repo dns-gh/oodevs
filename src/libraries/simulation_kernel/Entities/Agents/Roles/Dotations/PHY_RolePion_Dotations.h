@@ -18,7 +18,7 @@
 #include "SurrenderNotificationHandler_ABC.h"
 #include "ConsumeDotationNotificationHandler_ABC.h"
 #include "DotationsActionsNotificationHandler_ABC.h"
-
+#include "simulation_kernel/ConsumptionChangeRequestHandler_ABC.h"
 
 namespace xml
 {
@@ -44,6 +44,7 @@ namespace dotation
 class PHY_RolePion_Dotations : public PHY_RoleInterface_Dotations
                              , public tools::AlgorithmModifier_ABC< moving::MoveComputer_ABC >
                              , public tools::AlgorithmModifier_ABC< dotation::DotationComputer_ABC >
+							 , public dotation::ConsumptionChangeRequestHandler_ABC
 							 , public surrender::SurrenderNotificationHandler_ABC
                              , public ConsumeDotationNotificationHandler_ABC
                              , public DotationsActionsNotificationHandler_ABC
@@ -82,6 +83,7 @@ public:
     void Clean     ();
     virtual void Execute( moving::MoveComputer_ABC& algorithm ) const;
     virtual void Execute( dotation::DotationComputer_ABC& algorithm ) const;
+    virtual void ChangeConsumptionMode(ConsumptionModeChangeRequest_ABC& request);
     //@}
 
     //! @name Dotations management

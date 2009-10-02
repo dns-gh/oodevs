@@ -25,6 +25,10 @@ namespace posture
 {
     class PostureComputer_ABC;
 }
+
+namespace moving
+{
+
 // =============================================================================
 // @class  PHY_RoleAction_Moving
 // Created: JVT 2004-08-03
@@ -43,7 +47,6 @@ public:
 
 public:
              PHY_RoleAction_Moving( MIL_AgentPion& pion );
-             PHY_RoleAction_Moving();
     virtual ~PHY_RoleAction_Moving();
 
     //! @name CheckPoints
@@ -61,12 +64,12 @@ public:
 
     //! @name Operations
     //@{
-            MT_Float GetMaxSlope                 () const;
-            MT_Float GetMaxSpeedWithReinforcement() const;
-    virtual MT_Float GetSpeedWithReinforcement   ( const TerrainData& environment ) const;
-    virtual MT_Float GetMaxSpeed                 () const;
-            void     SetSpeedModificator         ( MT_Float rFactor );
-            void     SetMaxSpeedModificator      ( MT_Float rFactor );
+            double GetMaxSlope                 () const;
+            double GetMaxSpeedWithReinforcement() const;
+    virtual double GetSpeedWithReinforcement   ( const TerrainData& environment ) const;
+    virtual double GetMaxSpeed                 () const;
+            void     SetSpeedModificator         ( double rFactor );
+            void     SetMaxSpeedModificator      ( double rFactor );
     //@}
 
     //! @name Network
@@ -77,7 +80,7 @@ public:
 
     //! @name Tools
     //@{
-    MT_Vector2D ExtrapolatePosition( const MT_Float rTime, const bool bBoundOnPath ) const;
+    MT_Vector2D ExtrapolatePosition( const double rTime, const bool bBoundOnPath ) const;
     //@}
                 
 private:
@@ -86,7 +89,7 @@ private:
     virtual const MT_Vector2D& GetPosition () const;
     virtual const MT_Vector2D& GetDirection() const;
     
-    virtual void ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, MT_Float rSpeed, MT_Float rWalkedDistance );
+    virtual void ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, double rSpeed, double rWalkedDistance );
     //@}
 
     //! @name Notifications
@@ -109,12 +112,12 @@ private:
 
     //! @name Speed management
     //@{
-            MT_Float GetMaxSpeed              ( const TerrainData& environment ) const;
-            MT_Float GetMaxSpeed              ( const MIL_Object_ABC& object ) const;
-            MT_Float ApplyMaxSpeedModificators( MT_Float rSpeed ) const;
-            MT_Float ApplySpeedModificators   ( MT_Float rSpeed ) const;
+            double GetMaxSpeed              ( const TerrainData& environment ) const;
+            double GetMaxSpeed              ( const MIL_Object_ABC& object ) const;
+            double ApplyMaxSpeedModificators( double rSpeed ) const;
+            double ApplySpeedModificators   ( double rSpeed ) const;
 
-    virtual MT_Float GetSpeedWithReinforcement( const TerrainData& environment, const MIL_Object_ABC& object ) const;
+    virtual double GetSpeedWithReinforcement( const TerrainData& environment, const MIL_Object_ABC& object ) const;
     //@}
 
     //! @name Network
@@ -133,12 +136,16 @@ private:
     MIL_AgentPion&              pion_;
     PHY_RoleInterface_Location* pRoleLocation_;
     double                      rSpeed_;
-    MT_Float                    rSpeedModificator_;
-    MT_Float                    rMaxSpeedModificator_;
+    double                    rSpeedModificator_;
+    double                    rMaxSpeedModificator_;
 
     // Network
     bool bCurrentPathHasChanged_;
     bool bEnvironmentHasChanged_;
+
+    friend class SpeedComputerStrategy;
 };
+
+} // namespace moving
 
 #endif // __PHY_RoleAction_Moving_h_

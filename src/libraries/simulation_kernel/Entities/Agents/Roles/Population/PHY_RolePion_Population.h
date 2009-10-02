@@ -13,15 +13,22 @@
 #define __PHY_RolePion_Population_h_
 
 #include "PHY_RoleInterface_Population.h"
+#include "MT_Tools/AlgorithmModifier_ABC.h"
 
 class NET_ASN_MsgUnitAttributes;
 class MIL_Agent_ABC;
+
+namespace moving
+{
+	class SpeedComputer_ABC;
+}
 
 // =============================================================================
 // @class  PHY_RolePion_Population
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RolePion_Population : public PHY_RoleInterface_Population
+class PHY_RolePion_Population : public PHY_RoleInterface_Population,
+	public tools::AlgorithmModifier_ABC<moving::SpeedComputer_ABC>
 {
 
 public:
@@ -38,11 +45,11 @@ public:
     void Update    ( bool bIsDead );
     void Clean     ();
     bool HasChanged() const;
+    virtual void Execute( moving::SpeedComputer_ABC& algorithm ) const;
     //@}
 
     //! @name Operations
     //@{
-    MT_Float ModifyMaxSpeed         ( MT_Float rSpeed    ) const;
     MT_Float ModifyReloadingDuration( MT_Float rDuration ) const;
 
     virtual bool IsInvulnerable        () const;

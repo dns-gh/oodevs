@@ -16,6 +16,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "simulation_kernel/SpeedComputer_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePionLOGConvoy_Supply, "PHY_RolePionLOGConvoy_Supply" )
 
@@ -197,11 +198,10 @@ void PHY_RolePionLOGConvoy_Supply::ConvoyEndMission()
 // Name: PHY_RolePionLOGConvoy_Supply::ModifySpeed
 // Created: NLD 2007-02-05
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePionLOGConvoy_Supply::ModifySpeed( MT_Float rSpeed ) const
+void PHY_RolePionLOGConvoy_Supply::Execute(moving::SpeedComputer_ABC& algorithm) const
 {
-    if( !pConvoy_ )
-        return rSpeed;
-    return pConvoy_->ModifySpeed( rSpeed );
+    if( pConvoy_ )
+        algorithm.AddModifier(pConvoy_->ModifySpeed( 1 ), false); // TODO change SpeedComputer_ABC interface
 }
 
 // -----------------------------------------------------------------------------

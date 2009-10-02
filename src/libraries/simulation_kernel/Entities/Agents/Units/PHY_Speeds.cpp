@@ -45,7 +45,7 @@ PHY_Speeds::PHY_Speeds( xml::xistream& xis )
 // Name: PHY_Speeds constructor
 // Created: AGE 2005-02-03
 // -----------------------------------------------------------------------------
-PHY_Speeds::PHY_Speeds( const PHY_RoleAction_Moving& role )
+PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_Moving& role )
     : rMaxSpeed_                ( role.GetMaxSpeedWithReinforcement() )
     , rBaseSpeed_               ( role.GetSpeedWithReinforcement( TerrainData() ) )
     , rAreaSpeeds_              ( new MT_Float[ 8  ] )

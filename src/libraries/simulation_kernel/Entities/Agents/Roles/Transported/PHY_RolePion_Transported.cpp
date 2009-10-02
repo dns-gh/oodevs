@@ -19,9 +19,9 @@
 #include "Network/NET_ASN_Messages.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
-#include "TransportPermissionComputer_ABC.h"
+#include "simulation_kernel/TransportPermissionComputer_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
-#include "simulation_kernel/TransportChangeNotificationHandler_ABC.h"
+#include "simulation_kernel/MoveComputer_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( transport::PHY_RolePion_Transported, "PHY_RolePion_Transported" )
 
@@ -286,9 +286,21 @@ bool PHY_RolePion_Transported::HasHumanTransportersToRecover() const
     return !vHumanTransporterPosition_.IsZero();
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Transported::Execute
+// Created: AHC 2009-09-24
+// -----------------------------------------------------------------------------
 void PHY_RolePion_Transported::Execute(TransportPermissionComputer_ABC& alg) const
 {
 	alg.AllowLoading(!IsTransported());
 }
-
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Transported::Execute
+// Created: AHC 2009-10-02
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Transported::Execute(moving::MoveComputer_ABC& algorithm) const
+{
+	if(IsTransported())
+		algorithm.NotifyTransported();
+}
 } // namespace transport

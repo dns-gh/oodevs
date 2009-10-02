@@ -29,3 +29,4 @@ PHY_RoleInterface_Reinforcement::~PHY_RoleInterface_Reinforcement()
 {
     // NOTHING
 }
+

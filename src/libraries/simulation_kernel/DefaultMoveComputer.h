@@ -35,6 +35,10 @@ public:
     //@{
     virtual void Reset();
     virtual void NotifyNoDotation();
+    virtual void NotifyReinforcing();
+    virtual void NotifyTransported();
+    virtual void NotifySurrendered();
+    virtual void NotifyCannotFly();
     virtual bool CanMove() const;
     //@}
 
@@ -42,6 +46,7 @@ private:
     //! @name Attribute
     //@{
     bool bCanMove_;
+    bool isSurrendered_;
     //@}
 
 };

@@ -200,7 +200,7 @@ void NET_RolePion_Dotations::SendChangedState() const
     SendMsg( msg );
 
     // Other messages
-    pPion_->GetRole< PHY_RoleAction_Moving          >().SendChangedState        (); // Itineraire
+    pPion_->GetRole< moving::PHY_RoleAction_Moving          >().SendChangedState        (); // Itineraire
     pPion_->GetRole< PHY_RoleInterface_Composantes  >().SendLogisticChangedState(); // Consignes logistiques maintenance
     pPion_->GetRole< human::PHY_RoleInterface_Humans       >().SendLogisticChangedState(); // Consignes logistiques santé
     
@@ -249,7 +249,7 @@ void NET_RolePion_Dotations::SendFullState() const
     SendMsg( msg );
 
     // Other messages
-    pPion_->GetRole< PHY_RoleAction_Moving          >().SendFullState        (); // Itineraire
+    pPion_->GetRole< moving::PHY_RoleAction_Moving          >().SendFullState        (); // Itineraire
     pPion_->GetRole< PHY_RoleInterface_Composantes  >().SendLogisticFullState(); // Consignes logistiques maintenance
     pPion_->GetRole< human::PHY_RoleInterface_Humans       >().SendLogisticFullState(); // Consignes logistiques santé
     PHY_RoleInterface_Maintenance* roleMaintenance = pPion_->Retrieve< PHY_RoleInterface_Maintenance >();

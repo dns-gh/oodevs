@@ -35,6 +35,7 @@
 #include "simulation_kernel/MoveComputer_ABC.h"
 #include "simulation_kernel/DotationComputer_ABC.h"
 #include "simulation_kernel/OnComponentFunctor_ABC.h"
+#include "simulation_kernel/ConsumptionModeChangeRequest_ABC.h"
 
 #include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
@@ -415,7 +416,7 @@ void PHY_RolePion_Dotations::Update( bool bIsDead )
 
     assert( pDotations_ );
     
-    ConsumptionComputer_ABC& consumptionComputer = pion_.GetAlgorithms().consumptionComputerFactory_->Create();
+    ConsumptionComputer_ABC& consumptionComputer = pion_.GetAlgorithms().consumptionComputerFactory_->CreateConsumptionComputer();
     pion_.Execute( consumptionComputer );
     SetConsumptionMode( consumptionComputer.Result() );
 
@@ -561,4 +562,13 @@ void PHY_RolePion_Dotations::Execute( dotation::DotationComputer_ABC& algorithm 
     algorithm.SetDotationContainer( *pDotations_ );
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::Execute
+// Created: AHC 2009-10-02
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Dotations::ChangeConsumptionMode(ConsumptionModeChangeRequest_ABC& request)
+{
+	bool ok = SetConsumptionMode(request.GetType());
+	request.ConsumptionModeChanged(ok, this);
+}
 } // namespace dotation

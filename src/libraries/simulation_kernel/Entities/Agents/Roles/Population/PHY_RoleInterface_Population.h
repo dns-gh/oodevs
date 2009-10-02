@@ -39,7 +39,6 @@ public:
     virtual void Update    ( bool bIsDead ) = 0;
     virtual void Clean     () = 0;
     virtual bool HasChanged() const = 0;
-    virtual MT_Float ModifyMaxSpeed         ( MT_Float rSpeed    ) const = 0;
     virtual MT_Float ModifyReloadingDuration( MT_Float rDuration ) const = 0;
     virtual MT_Float GetCollidingPopulationDensity() const = 0;
     //@}

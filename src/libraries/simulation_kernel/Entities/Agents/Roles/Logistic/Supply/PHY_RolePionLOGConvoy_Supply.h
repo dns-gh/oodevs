@@ -17,6 +17,11 @@
 class MIL_AgentPion;
 class PHY_StockConvoy;
 
+namespace moving
+{
+	class SpeedComputer_ABC;
+}
+
 // =============================================================================
 // @class  PHY_RolePionLOGConvoy_Supply
 // Created: JVT 2004-08-03
@@ -53,7 +58,7 @@ public:
     virtual const MIL_Automate*    ConvoyGetSuppliedAutomate () const;
     virtual       void             ConvoyEndMission          ();
 
-    virtual       MT_Float         ModifySpeed               ( MT_Float rSpeed ) const;
+    virtual void Execute(moving::SpeedComputer_ABC& algorithm) const;
     //@}
 
     //! @name Events

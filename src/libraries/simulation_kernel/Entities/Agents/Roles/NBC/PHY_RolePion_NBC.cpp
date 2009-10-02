@@ -19,6 +19,7 @@
 #include "ToxicEffectHandler_ABC.h"
 
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+#include "simulation_kernel/SpeedComputer_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( nbc::PHY_RolePion_NBC, "PHY_RolePion_NBC" )
 
@@ -198,14 +199,13 @@ void PHY_RolePion_NBC::Decontaminate( MT_Float rRatioAgentsWorking )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_NBC::ModifyMaxSpeed
-// Created: NLD 2004-09-23
+// Name: PHY_RolePion_NBC::Execute
+// Created: AHC 2009-10-02
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_NBC::ModifyMaxSpeed( MT_Float rSpeed ) const
+void PHY_RolePion_NBC::Execute(moving::SpeedComputer_ABC& algorithm) const
 {
     if( bNbcProtectionSuitWorn_ )
-        return rSpeed * MIL_NbcAgentType::GetCoefMaxSpeedModificator();
-    return rSpeed;
+    	algorithm.AddModifier(MIL_NbcAgentType::GetCoefMaxSpeedModificator(),true);
 }
 
 // -----------------------------------------------------------------------------

@@ -16,7 +16,10 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Network/NET_ASN_Messages.h"
 
+#include "simulation_kernel/SpeedComputer_ABC.h"
+#include "simulation_kernel/MoveComputer_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+#include "simulation_kernel/ConsumptionModeChangeRequest_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Reinforcement, "PHY_RolePion_Reinforcement" )
 
@@ -260,10 +263,49 @@ const PHY_RolePion_Reinforcement::T_PionSet& PHY_RolePion_Reinforcement::GetRein
     return reinforcements_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Reinforcement::LoadForTransport
+// Created: AHC 2009-09-23
+// -----------------------------------------------------------------------------
 void PHY_RolePion_Reinforcement::LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable )
 {
 	CancelReinforcement();
 	const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = GetReinforcements();
 	while( !reinforcements.empty() )
 	   (**reinforcements.begin()).GetRole< PHY_RoleInterface_Reinforcement >().CancelReinforcement();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Reinforcement::Execute
+// Created: AHC 2009-10-01
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Reinforcement::Execute( moving::SpeedComputer_ABC& algorithm ) const
+{
+	for ( CIT_PionSet itPion = reinforcements_.begin(); itPion != reinforcements_.end(); ++itPion )
+	{
+		MIL_AgentPion& reinforcement = **itPion;
+		algorithm.ApplyOnReinforcement(reinforcement);
+	}
+}
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Reinforcement::Execute
+// Created: AHC 2009-10-01
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Reinforcement::Execute(moving::MoveComputer_ABC& algorithm) const
+{
+	if(IsReinforcing())
+		algorithm.NotifyReinforcing();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Reinforcement::Execute
+// Created: AHC 2009-10-02
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Reinforcement::ChangeConsumptionMode(dotation::ConsumptionModeChangeRequest_ABC& request)
+{
+	for ( CIT_PionSet itPion = reinforcements_.begin(); itPion != reinforcements_.end(); ++itPion )
+	{
+		MIL_AgentPion& reinforcement = **itPion;
+		reinforcement.Apply(&ConsumptionChangeRequestHandler_ABC::ChangeConsumptionMode, request);
+	}
 }

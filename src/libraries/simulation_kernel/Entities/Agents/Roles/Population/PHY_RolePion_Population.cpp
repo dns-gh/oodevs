@@ -15,6 +15,7 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_Knowledge_PopulationCollision.h"
 #include "Network/NET_ASN_Messages.h"
+#include "simulation_kernel/SpeedComputer_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Population, "PHY_RolePion_Population" )
 
@@ -68,21 +69,16 @@ void PHY_RolePion_Population::serialize( Archive& file, const uint )
 // Name: PHY_RolePion_Population::ModifyMaxSpeed
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Population::ModifyMaxSpeed( MT_Float rSpeed ) const
+void PHY_RolePion_Population::Execute( moving::SpeedComputer_ABC& algorithm ) const
 {
-
-
     T_KnowledgePopulationCollisionVector collisions;
     pion_.GetKnowledge().GetPopulationsColliding( collisions );
 
-    MT_Float rMaxSpeed = rSpeed;
     for( CIT_KnowledgePopulationCollisionVector it = collisions.begin(); it != collisions.end(); ++it )
     {
         const DEC_Knowledge_PopulationCollision& population = **it;
-        rMaxSpeed = std::min( rMaxSpeed, population.GetPionMaxSpeed() );
+        algorithm.ApplyOnPopulation(population );
     }
-
-    return rMaxSpeed;
 }
 
 // -----------------------------------------------------------------------------

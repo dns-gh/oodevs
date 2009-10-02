@@ -82,7 +82,7 @@ int DEC_PathFunctions::GetPathState( MIL_AgentPion& /*callerAgent*/, DEC_Path_AB
 boost::shared_ptr< MT_Vector2D > DEC_PathFunctions::ExtrapolatePosition( const MIL_AgentPion& callerAgent, const MT_Float time, bool bBoundOnPath )
 {
     MT_Float simulationTime        = MIL_Tools::ConvertMinutesToSim( time );
-    boost::shared_ptr< MT_Vector2D > pPos( new MT_Vector2D( callerAgent.GetRole< PHY_RoleAction_Moving >().ExtrapolatePosition( simulationTime, bBoundOnPath ) ) );
+    boost::shared_ptr< MT_Vector2D > pPos( new MT_Vector2D( callerAgent.GetRole< moving::PHY_RoleAction_Moving >().ExtrapolatePosition( simulationTime, bBoundOnPath ) ) );
     return pPos;
 }
 
@@ -106,7 +106,7 @@ std::pair< bool, std::pair< int, float > > DEC_PathFunctions::GetNextObjectOnPat
     T_KnowledgeObjectVector knowledges;
     callerAgent.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledges, rHeight, filter );
 
-    if( knowledges.empty() || !callerAgent.GetRole< PHY_RoleAction_Moving >().ComputeFutureObjectCollision( position, knowledges, rDistanceCollision, &pObjectColliding ) )
+    if( knowledges.empty() || !callerAgent.GetRole< moving::PHY_RoleAction_Moving >().ComputeFutureObjectCollision( position, knowledges, rDistanceCollision, &pObjectColliding ) )
     {
         result.first = false;
         return result;
@@ -138,7 +138,7 @@ boost::shared_ptr< MT_Vector2D > DEC_PathFunctions::GetLastPointOfPath( const MI
 // -----------------------------------------------------------------------------
 bool DEC_PathFunctions::IsMovingOnPath( const MIL_AgentPion& callerAgent, const DEC_Path_ABC* pPath )
 {
-    return pPath ? callerAgent.GetRole< PHY_RoleAction_Moving >().IsMovingOn( *pPath ) : false;    
+    return pPath ? callerAgent.GetRole< moving::PHY_RoleAction_Moving >().IsMovingOn( *pPath ) : false;
 }
 
 // -----------------------------------------------------------------------------

@@ -102,7 +102,6 @@ public:
     virtual const MIL_Automate*    ConvoyGetSuppliedAutomate () const;
     virtual       void             ConvoyEndMission          () ;
 
-    virtual       MT_Float         ModifySpeed               ( MT_Float rSpeed ) const;
     //@}
     //@}
 
