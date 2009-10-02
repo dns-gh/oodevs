@@ -22,6 +22,7 @@
 #include "LoadingComputerFactory_ABC.h"
 
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+#include "simulation_kernel/TransportChangeNotificationHandler_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( transport::PHY_RoleAction_Loading, "PHY_RoleAction_Loading" )
 
@@ -91,6 +92,7 @@ void PHY_RoleAction_Loading::SetLoadedState()
     assert( !bIsLoaded_ );
     bIsLoaded_   = true;
     bHasChanged_ = true;
+    pion_.Apply( &transport::TransportChangeNotificationHandler_ABC::NotifyIsLoaded );
     CheckConsistency();
 }
 
@@ -104,6 +106,7 @@ void PHY_RoleAction_Loading::SetUnloadedState()
     assert( bIsLoaded_ );
     bHasChanged_ = true;
     bIsLoaded_   = false;
+    pion_.Apply( &transport::TransportChangeNotificationHandler_ABC::NotifyIsUnLoaded );
     CheckConsistency();
 }
 
@@ -340,6 +343,7 @@ void PHY_RoleAction_Loading::Update( bool /*bIsDead*/ )
     {
         pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
         pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
+        pion_.Apply( &transport::TransportChangeNotificationHandler_ABC::NotifyTransportHasChanged );
     }
 }
 
@@ -378,20 +382,7 @@ void PHY_RoleAction_Loading::UnloadFromTransport( const MIL_Agent_ABC& transport
 {
 	ForceUnloadedState ();
 }
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Loading::CancelTransport
-// Created: AHC 2009-09-24
-// -----------------------------------------------------------------------------
-void PHY_RoleAction_Loading::CancelTransport    ( const MIL_Agent_ABC& transporter )
-{
-}
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Loading::DamageTransported
-// Created: AHC 2009-09-24
-// -----------------------------------------------------------------------------
-void PHY_RoleAction_Loading::DamageTransported( double rWeight, const PHY_ComposanteState& state, bool bTransportOnlyLoadable ) const
-{
-}
+
 } // namespace transport
 
 

@@ -267,16 +267,3 @@ void PHY_RolePion_Reinforcement::LoadForTransport   ( const MIL_Agent_ABC& trans
 	while( !reinforcements.empty() )
 	   (**reinforcements.begin()).GetRole< PHY_RoleInterface_Reinforcement >().CancelReinforcement();
 }
-void PHY_RolePion_Reinforcement::UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable )
-{
-
-}
-void PHY_RolePion_Reinforcement::CancelTransport    ( const MIL_Agent_ABC& transporter )
-{
-
-}
-
-void PHY_RolePion_Reinforcement::DamageTransported( double rWeight, const PHY_ComposanteState& state, bool bTransportOnlyLoadable ) const
-{
-
-}

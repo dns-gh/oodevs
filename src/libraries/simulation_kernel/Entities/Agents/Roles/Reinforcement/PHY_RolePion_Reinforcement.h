@@ -55,11 +55,11 @@ public:
     bool IsReinforcing      () const;
     bool IsReinforced       () const;
     bool IsReinforcedBy     ( MIL_AgentPion& pion ) const;
+    //@}
 
-    void LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
-	void UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
-	void CancelTransport    ( const MIL_Agent_ABC& transporter );
-	virtual void DamageTransported( double rWeight, const PHY_ComposanteState& state, bool bTransportOnlyLoadable ) const;
+    //! @name Event
+    //@{
+    virtual void LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
     //@}
 
     //! @name Network

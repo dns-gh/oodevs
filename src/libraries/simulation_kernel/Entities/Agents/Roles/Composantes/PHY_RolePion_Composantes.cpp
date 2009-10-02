@@ -18,15 +18,9 @@
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
-#include "Entities/Agents/Roles/Network/NET_RolePion_Dotations.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Roles/Logistic/Maintenance/PHY_MaintenanceComposanteState.h"
-#include "Entities/Agents/Roles/Logistic/Supply/PHY_RoleInterface_Supply.h"
-#include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
-#include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_SmokeData.h"
-#include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Actions/PHY_FireResults_ABC.h"
 #include "Entities/MIL_Army.h"
@@ -107,6 +101,9 @@ PHY_RolePion_Composantes::PHY_RolePion_Composantes( MIL_AgentPion& pion )
     , nNeutralizationEndTimeStep_  ( 0 )
     , bLoansChanged_               ( false )
     , bExternalMustChange_         ( false )
+    , bTransportHasChanged_        ( false )
+    , bIsLoaded_                   ( false )
+    , bIsSurrender_                ( false )
     , nTickRcMaintenanceQuerySent_ ( 0 )
 {
 
@@ -524,8 +521,7 @@ void PHY_RolePion_Composantes::UpdateOperationalStates()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::UpdateMajorComposante()
 {
-    if( !HasChanged() && !pion_.GetRole< transport::PHY_RoleAction_Loading >().HasChanged() &&
-    		!pion_.GetRole< transport::PHY_RoleInterface_Transported >().HasChanged() )
+    if( !HasChanged() && !bTransportHasChanged_ )
         return;
 
     pMajorComposante_ = 0;
@@ -575,6 +571,7 @@ void PHY_RolePion_Composantes::Clean()
     }
     bLoansChanged_            = false;
     bExternalMustChange_      = false;
+    bTransportHasChanged_     = false;
     bOperationalStateChanged_ = false;
 
     for( CIT_MaintenanceComposanteStateSet it = maintenanceComposanteStates_.begin(); it != maintenanceComposanteStates_.end(); ++it )
@@ -654,8 +651,7 @@ void PHY_RolePion_Composantes::NotifyComposanteRemoved( PHY_ComposantePion& comp
     if( composante.GetState().IsUsable() )
         pion_.Apply( &dotation::DotationsActionsNotificationHandler_ABC::UnregisterDotationsCapacities, composante.GetType().GetDotationCapacities() );
 
-    pion_.GetRole< transport::PHY_RoleAction_Loading   >().CheckConsistency();
-    pion_.GetRole< transport::PHY_RoleAction_Transport >().CheckConsistency();
+    pion_.Apply( &transport::TransportNotificationHandler_ABC::CheckConsistency );
 }
 
 // -----------------------------------------------------------------------------
@@ -677,14 +673,8 @@ void PHY_RolePion_Composantes::NotifyComposanteChanged( PHY_ComposantePion& comp
     else if( newState.IsUsable() && !oldState.IsUsable() )
         pion_.Apply( &dotation::DotationsActionsNotificationHandler_ABC::RegisterDotationsCapacities, composante.GetType().GetDotationCapacities() );
 
-    pion_.GetRole< transport::PHY_RoleAction_Transport >().NotifyComposanteChanged( composante );
-
-    PHY_RoleInterface_Supply* role = pion_.Retrieve< PHY_RoleInterface_Supply >();
-    if( role )
-        role->NotifyComposanteChanged( composante );
-
-    pion_.GetRole< transport::PHY_RoleAction_Loading   >().CheckConsistency();
-    pion_.GetRole< transport::PHY_RoleAction_Transport >().CheckConsistency();
+    pion_.Apply( &transport::TransportNotificationHandler_ABC::NotifyComposanteChanged, composante );
+    pion_.Apply( &transport::TransportNotificationHandler_ABC::CheckConsistency );
 }
 
 // -----------------------------------------------------------------------------
@@ -905,7 +895,7 @@ void PHY_RolePion_Composantes::Neutralize()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::WoundLoadedHumans( const PHY_ComposantePion& composanteChanged, const PHY_ComposanteState& newState, PHY_FireDamages_Agent& fireDamages )
 {
-    if( !pion_.GetRole< transport::PHY_RoleAction_Loading >().IsLoaded() )
+    if( !bIsLoaded_ )
         return;
 
     if( !composanteChanged.CanTransportHumans() )
@@ -1293,7 +1283,7 @@ MT_Float PHY_RolePion_Composantes::GetDangerosity( const DEC_Knowledge_Agent& ta
 
 
     if( target.IsAFriend( pion_.GetArmy() ) == eTristate_True
-        ||  pion_.GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered() )
+        ||  bIsSurrender_ )
         return 0.;
 
     // Target is dead
@@ -1304,7 +1294,7 @@ MT_Float PHY_RolePion_Composantes::GetDangerosity( const DEC_Knowledge_Agent& ta
     MT_Float rDangerosity = 0.;
 
     // Fight score
-    const PHY_RoleInterface_Location& myLocation = pion_.GetRole< PHY_RoleInterface_Location >();
+    const PHY_RoleInterface_Location& myLocation = pion_.GetRole< PHY_RoleInterface_Location >(); //@TODO AHC
     const MT_Vector3D sourcePosition( myLocation.GetPosition().rX_, myLocation.GetPosition().rY_, myLocation.GetAltitude() );
     const MT_Vector3D targetPosition( target.GetPosition().rX_, target.GetPosition().rY_, target.GetAltitude() );
     const MT_Float    rDistBtwSourceAndTarget = sourcePosition.Distance( targetPosition );
@@ -1458,6 +1448,7 @@ void PHY_RolePion_Composantes::NotifyCaptured()
         if( composante.GetState().IsUsable() )
             composante.ReinitializeState( PHY_ComposanteState::prisoner_ );
     }
+    bIsSurrender_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -1472,6 +1463,7 @@ void PHY_RolePion_Composantes::NotifyReleased()
         if( composante.GetState().IsUsable() )
             composante.ReinitializeState( PHY_ComposanteState::undamaged_ );
     }
+    bIsSurrender_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -1637,27 +1629,6 @@ void PHY_RolePion_Composantes::Execute( OnComponentLendedFunctorComputer_ABC& al
         }
     }
 }
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::LoadForTransport
-// Created: AHC 2009-09-23
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable )
-{
-}
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::UnloadFromTransport
-// Created: AHC 2009-09-23
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable )
-{
-}
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::CancelTransport
-// Created: AHC 2009-09-23
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::CancelTransport    ( const MIL_Agent_ABC& transporter )
-{
-}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::Execute
@@ -1693,10 +1664,36 @@ void PHY_RolePion_Composantes::Execute( transport::LoadedStateConsistencyCompute
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::Execute
+// Name: PHY_RolePion_Composantes::NotifyHumanHasChanged
 // Created: MGD 2009-09-30
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::NotifyHumanHasChanged()
 {
     bExternalMustChange_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::NotifyTransportHasChanged
+// Created: MGD 2009-10-02
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::NotifyTransportHasChanged()
+{
+    bTransportHasChanged_ = true;
+}
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::NotifyIsLoaded
+// Created: MGD 2009-10-02
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::NotifyIsLoaded()
+{
+    bIsLoaded_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::NotifyIsUnLoaded
+// Created: MGD 2009-10-02
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::NotifyIsUnLoaded()
+{
+    bIsLoaded_ = false;
 }

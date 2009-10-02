@@ -186,16 +186,6 @@ void PHY_RoleInterface_Supply::ResupplyStocks( const PHY_DotationCategory& /*cat
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Supply::NotifyComposanteChanged
-// Created: NLD 2005-02-10
-// -----------------------------------------------------------------------------
-void PHY_RoleInterface_Supply::NotifyComposanteChanged( PHY_ComposantePion& /*composante*/ )
-{
-    // NOTHING
-}
-
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RoleInterface_Supply::AssignConvoy
 // Created: NLD 2005-02-09
 // -----------------------------------------------------------------------------

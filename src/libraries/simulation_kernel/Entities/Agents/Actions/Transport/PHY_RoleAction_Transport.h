@@ -14,6 +14,7 @@
 
 #include "MT_Tools/Role_ABC.h"
 #include "Entities/Agents/Roles/NBC/ToxicEffectHandler_ABC.h"
+#include "TransportNotificationHandler_ABC.h"
 
 class NET_ASN_MsgUnitAttributes;
 class MIL_Agent_ABC;
@@ -30,6 +31,7 @@ namespace transport
 // =============================================================================
 class PHY_RoleAction_Transport : public tools::Role_ABC
 							   , public nbc::ToxicEffectHandler_ABC
+                               , public transport::TransportNotificationHandler_ABC
                                , private boost::noncopyable
 {
 
@@ -72,14 +74,18 @@ public:
     //@{
     void Update    ( bool bIsDead );
     void Clean     ();
-
-    void CheckConsistency();
     //@}
 
     //! @name Operations
     //@{
     int  GetInitialReturnCode() const;
     int  GetFinalReturnCode  () const;
+    //@}
+
+    //! @name Event handler
+    //@{
+    virtual void NotifyComposanteChanged( const PHY_ComposantePion& composante );
+    virtual void CheckConsistency();
     //@}
 
     //! @name Action
@@ -102,7 +108,6 @@ public:
 
     //! @name Notifications on transporter
     //@{
-    void NotifyComposanteChanged     ( const PHY_ComposantePion& composante );
     virtual void     ApplyContamination              ( const MIL_ToxicEffectManipulator& contamination ) ;
     virtual void     ApplyPoisonous                  ( const MIL_ToxicEffectManipulator& contamination ) ;
     //@}

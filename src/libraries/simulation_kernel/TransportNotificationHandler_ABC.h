@@ -10,6 +10,7 @@
 
 class MIL_Agent_ABC;
 class PHY_ComposanteState;
+class PHY_ComposantePion;
 
 namespace transport
 {
@@ -19,11 +20,14 @@ public:
     TransportNotificationHandler_ABC();
     virtual  ~TransportNotificationHandler_ABC();
 
-    virtual void LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable ) = 0;
-    virtual void UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable ) = 0;
-    virtual void CancelTransport    ( const MIL_Agent_ABC& transporter ) = 0;
+    virtual void LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable ) {};
+    virtual void UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable ) {};
+    virtual void CancelTransport    ( const MIL_Agent_ABC& transporter ) {};
 
-    virtual void DamageTransported( double rWeight, const PHY_ComposanteState& state, bool bTransportOnlyLoadable ) const = 0;
+    virtual void DamageTransported( double rWeight, const PHY_ComposanteState& state, bool bTransportOnlyLoadable ) const {};
+    virtual void NotifyComposanteChanged( const PHY_ComposantePion& composante ) {};
+
+    virtual void CheckConsistency() {};
 };
 
 }

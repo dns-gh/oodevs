@@ -69,16 +69,14 @@ public:
     int  Unload         ();
     void UnloadSuspended();
 
-    void CheckConsistency  (); // Appelé quand l'état des composantes d'un pion change
     void ForceUnloadedState();
     //@}
 
     //! @name Event handler
 	//@{
-    void LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
-	void UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
-	void CancelTransport    ( const MIL_Agent_ABC& transporter );
-	virtual void DamageTransported( double rWeight, const PHY_ComposanteState& state, bool bTransportOnlyLoadable ) const;
+    virtual void LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
+	virtual void UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
+	virtual void CheckConsistency();
 	//@}
 
     //! @name Network

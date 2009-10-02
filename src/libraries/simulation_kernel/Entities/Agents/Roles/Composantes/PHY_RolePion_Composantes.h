@@ -15,6 +15,7 @@
 #include "PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/NBC/ToxicEffectHandler_ABC.h"
 #include "TransportNotificationHandler_ABC.h"
+#include "TransportChangeNotificationHandler_ABC.h"
 #include "SurrenderNotificationHandler_ABC.h"
 
 #include "simulation_kernel/HumansChangedNotificationHandler_ABC.h"
@@ -55,6 +56,7 @@ class PHY_RolePion_Composantes : public PHY_RoleInterface_Composantes
 							   , public tools::AlgorithmModifier_ABC< transport::LoadedStateConsistencyComputer_ABC>
                                , public nbc::ToxicEffectHandler_ABC
                                , public transport::TransportNotificationHandler_ABC
+                               , public transport::TransportChangeNotificationHandler_ABC
                                , public surrender::SurrenderNotificationHandler_ABC
                                , public human::HumansChangedNotificationHandler_ABC
 {
@@ -90,6 +92,9 @@ public:
     template< typename T > void                ApplyOnWeapons     ( T& t ) const;
 
     virtual void NotifyHumanHasChanged();
+    virtual void NotifyTransportHasChanged();
+    virtual void NotifyIsLoaded();
+    virtual void NotifyIsUnLoaded();
 
 
     virtual void Update( bool bIsDead );
@@ -170,9 +175,6 @@ public:
 
     //! @name Load / unload / transport
     //@{
-    virtual void LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
-    virtual void UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
-    virtual void CancelTransport    ( const MIL_Agent_ABC& transporter );
     virtual void DamageTransported( MT_Float rWeight, const PHY_ComposanteState& state, bool bTransportOnlyLoadable ) const;
     //@}
 
@@ -288,6 +290,9 @@ private:
 
     bool                   bLoansChanged_;
     bool                   bExternalMustChange_;
+    bool                   bTransportHasChanged_;
+    bool                   bIsLoaded_;
+    bool                   bIsSurrender_;
 
     // Maintenance
     T_MaintenanceComposanteStateSet maintenanceComposanteStates_;

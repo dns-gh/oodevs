@@ -55,7 +55,7 @@ public:
     virtual void LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
     virtual void UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
     virtual void CancelTransport    ( const MIL_Agent_ABC& transporter );
-    void DamageTransported( double rWeight, const PHY_ComposanteState& state, bool bTransportOnlyLoadable ) const;
+
     virtual bool IsTransported      () const;
     void Execute(TransportPermissionComputer_ABC& alg) const;
     //@}

@@ -21,6 +21,7 @@
 
 #include "TransportPermissionComputer_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+#include "simulation_kernel/TransportChangeNotificationHandler_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( transport::PHY_RolePion_Transported, "PHY_RolePion_Transported" )
 
@@ -222,6 +223,7 @@ void PHY_RolePion_Transported::Update( bool /*bIsDead*/ )
     {
         pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
         pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
+        pion_.Apply( &transport::TransportChangeNotificationHandler_ABC::NotifyTransportHasChanged );
     }
 }
 
@@ -282,11 +284,6 @@ bool PHY_RolePion_Transported::IsTransported() const
 bool PHY_RolePion_Transported::HasHumanTransportersToRecover() const
 {
     return !vHumanTransporterPosition_.IsZero();
-}
-
-void PHY_RolePion_Transported::DamageTransported( double rWeight, const PHY_ComposanteState& state, bool bTransportOnlyLoadable ) const
-{
-
 }
 
 void PHY_RolePion_Transported::Execute(TransportPermissionComputer_ABC& alg) const

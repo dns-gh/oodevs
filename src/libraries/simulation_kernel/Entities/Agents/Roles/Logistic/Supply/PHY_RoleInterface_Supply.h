@@ -88,11 +88,6 @@ public:
     virtual void ResupplyStocks   ( const PHY_DotationCategory& category, MT_Float rNbr );
     //@}
 
-    //! @name Events
-    //@{
-    virtual void NotifyComposanteChanged( PHY_ComposantePion& composante );
-    //@}
-
     //! @name Convoy
     //@{
     virtual       void             AssignConvoy              ( PHY_StockConvoy& convoy );
