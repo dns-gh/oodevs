@@ -149,7 +149,7 @@ public:
 
     //! @name Accessors
     //@{          
-    virtual       bool           HasChanged              () const = 0;
+    virtual       bool           HasChanged              () const = 0;//@TODO MGD CLEAN ALL hasChanged on interface and move private
     virtual       bool           IsUsable                () const = 0;                    
     virtual const MIL_AgentPion& GetPion                 () const = 0;    
     //@}

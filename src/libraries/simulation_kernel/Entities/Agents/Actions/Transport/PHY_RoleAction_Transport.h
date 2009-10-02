@@ -86,6 +86,8 @@ public:
     //@{
     virtual void NotifyComposanteChanged( const PHY_ComposantePion& composante );
     virtual void CheckConsistency();
+    virtual void MagicLoadPion   ( MIL_Agent_ABC& pion, bool bTransportOnlyLoadable );
+    virtual void MagicUnloadPion ( MIL_Agent_ABC& pion );
     //@}
 
     //! @name Action
@@ -95,8 +97,6 @@ public:
 
     bool AddPion         ( MIL_Agent_ABC& pion, bool bTransportOnlyLoadable );
     void Cancel          ();
-    bool MagicLoadPion   ( MIL_Agent_ABC& pion, bool bTransportOnlyLoadable );
-    bool MagicUnloadPion ( MIL_Agent_ABC& pion );
     bool CanTransportPion( MIL_Agent_ABC& transported, bool bTransportOnlyLoadable ) const;
     bool IsLoaded        ( const MIL_Agent_ABC& transported ) const;
 

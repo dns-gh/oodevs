@@ -378,14 +378,14 @@ bool PHY_RoleAction_Transport::AddPion( MIL_Agent_ABC& transported, bool bTransp
 // Name: PHY_RoleAction_Transport::MagicLoadPion
 // Created: NLD 2005-04-18
 // -----------------------------------------------------------------------------
-bool PHY_RoleAction_Transport::MagicLoadPion( MIL_Agent_ABC& transported, bool bTransportOnlyLoadable )
+void PHY_RoleAction_Transport::MagicLoadPion( MIL_Agent_ABC& transported, bool bTransportOnlyLoadable )
 {
     if(   transported == transporter_
         || transportedPions_.find( &transported ) != transportedPions_.end() )
-        return false;
+        return;
 
     if(!transported.Execute( transporter_.GetAlgorithms().transportComputerFactory_->CreatePermissionComputer()).CanBeLoaded())
-       	return false;
+       	return;
 
     transported.Apply(&TransportNotificationHandler_ABC::LoadForTransport, transporter_, bTransportOnlyLoadable );
     sTransportData& data = transportedPions_[ &transported ].sTransportData::sTransportData(
@@ -396,18 +396,17 @@ bool PHY_RoleAction_Transport::MagicLoadPion( MIL_Agent_ABC& transported, bool b
     rWeightTransported_ += data.rTotalWeight_;
     
     bHasChanged_ = true;
-    return true;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Transport::MagicUnloadPion
 // Created: NLD 2005-04-19
 // -----------------------------------------------------------------------------
-bool PHY_RoleAction_Transport::MagicUnloadPion( MIL_Agent_ABC& transported )
+void PHY_RoleAction_Transport::MagicUnloadPion( MIL_Agent_ABC& transported )
 {
     IT_TransportedPionMap it = transportedPions_.find( &transported );
     if( it == transportedPions_.end() )
-        return false;
+        return;
 
     transported.Apply(&TransportNotificationHandler_ABC::UnloadFromTransport, transporter_, it->second.bTransportOnlyLoadable_ );
 
@@ -415,7 +414,6 @@ bool PHY_RoleAction_Transport::MagicUnloadPion( MIL_Agent_ABC& transported )
     rWeightTransported_ -= it->second.rTransportedWeight_;
     transportedPions_.erase( it );
     bHasChanged_ = true;
-    return true;
 }
 
 // -----------------------------------------------------------------------------

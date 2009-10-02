@@ -13,15 +13,20 @@
 #define __PHY_RolePion_Refugee_h_
 
 #include "PHY_RoleInterface_Refugee.h"
+#include "simulation_kernel/RefugeeActionsNotificationHandler_ABC.h"
 
 class NET_ASN_MsgUnitAttributes;
 class MIL_AgentPion;
+
+namespace refugee
+{
 
 // =============================================================================
 // @class  PHY_RolePion_Refugee
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RolePion_Refugee : public PHY_RoleInterface_Refugee
+                           , public refugee::RefugeeActionsNotificationHandler_ABC
 {
 
 public:
@@ -39,12 +44,11 @@ public:
     void Clean     ();
     //@}
 
-    //! @name Main
+    //! @name Event
     //@{
-    virtual bool Orientate( const MIL_AgentPion& pionManaging );
-    virtual bool Release  ();
-    virtual bool Release  ( const MIL_Object_ABC& camp );
-
+    virtual void Orientate( MIL_AgentPion& pionManaging );
+    virtual void Release  ( MIL_AgentPion& callerAgent );
+    virtual void ReleaseCamp( MIL_AgentPion& callerAgent, const MIL_Object_ABC& camp );
     //@}
 
     //! @name Accessors
@@ -74,5 +78,7 @@ private:
 	template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Refugee* role, const unsigned int /*version*/ );
 
 };
+
+} //namespace refugee
 
 #endif // __PHY_RolePion_Refugee_h_

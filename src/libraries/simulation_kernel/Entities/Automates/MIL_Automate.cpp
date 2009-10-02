@@ -19,7 +19,6 @@
 #include "Entities/MIL_Formation.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Refugee/PHY_RoleInterface_Refugee.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"

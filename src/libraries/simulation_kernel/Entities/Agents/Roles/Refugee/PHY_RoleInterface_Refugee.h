@@ -41,14 +41,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool Orientate( const MIL_AgentPion& pionManaging ) = 0;
-    virtual bool Release  () = 0;
-    virtual bool Release  ( const MIL_Object_ABC& camp ) = 0;
-    //@}
-
     virtual void Update    ( bool bIsDead ) = 0;
     virtual void Clean     () = 0;
-    virtual bool HasChanged() const = 0;
     //@}
 
     //! @name Network

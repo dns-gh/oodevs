@@ -163,6 +163,7 @@ void NET_RolePion_Dotations::SendChangedState() const
     assert( pPion_ );
     msg().oid = pPion_->GetID();
 
+    //@TODO MGD REPLACE by computer visitor
     pPion_->GetRole< human::PHY_RoleInterface_Humans           >().SendChangedState( msg );
     pPion_->GetRole< dotation::PHY_RoleInterface_Dotations        >().SendChangedState( msg );
     pPion_->GetRole< PHY_RoleInterface_Posture          >().SendChangedState( msg ); // Current, old, pourcentage

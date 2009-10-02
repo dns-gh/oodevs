@@ -15,10 +15,15 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "simulation_kernel/Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
 
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+#include "simulation_kernel/TransportNotificationHandler_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Refugee, "PHY_RolePion_Refugee" )
+BOOST_CLASS_EXPORT_GUID( refugee::PHY_RolePion_Refugee, "PHY_RolePion_Refugee" )
+
+namespace refugee
+{
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePion_Refugee* role, const unsigned int /*version*/ )
@@ -89,51 +94,54 @@ void PHY_RolePion_Refugee::Update( bool /*bIsDead*/ )
 // Name: PHY_RolePion_Refugee::Orientate
 // Created: NLD 2007-02-15
 // -----------------------------------------------------------------------------
-bool PHY_RolePion_Refugee::Orientate( const MIL_AgentPion& pionManaging )
+void PHY_RolePion_Refugee::Orientate( MIL_AgentPion& pionManaging )
 {
-
     if( !pion_.GetType().IsRefugee() )
-        return false;
+        return;
 
     pCamp_       = 0;
     bManaged_    = true;
     bHasChanged_ = true;
     pion_.GetAutomate().NotifyRefugeeOriented( pionManaging );
-    return true;
+
+    bool bTransportOnlyLoadable = false;
+    pionManaging.Apply( &transport::TransportNotificationHandler_ABC::MagicLoadPion, pion_, bTransportOnlyLoadable );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Refugee::Release
 // Created: NLD 2007-02-15
 // -----------------------------------------------------------------------------
-bool PHY_RolePion_Refugee::Release()
+void PHY_RolePion_Refugee::Release( MIL_AgentPion& callerAgent )
 {
 
     if( !pion_.GetType().IsRefugee() || !bManaged_ )
-        return false;
+        return;
 
     pCamp_       = 0;
     bManaged_    = false;
     bHasChanged_ = true;
     pion_.GetAutomate().NotifyRefugeeReleased();
-    return true;
+
+    callerAgent.Apply( &transport::TransportNotificationHandler_ABC::MagicUnloadPion, pion_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Refugee::Release
 // Created: NLD 2007-02-15
 // -----------------------------------------------------------------------------
-bool PHY_RolePion_Refugee::Release( const MIL_Object_ABC& camp )
+void PHY_RolePion_Refugee::ReleaseCamp( MIL_AgentPion& callerAgent, const MIL_Object_ABC& camp )
 {
 
     if( !pion_.GetType().IsRefugee() || !bManaged_ )
-        return false;
+        return;
     
     pCamp_       = &camp;
     bManaged_    = true;
     bHasChanged_ = true;
     pion_.GetAutomate().NotifyRefugeeReleased( camp );
-    return true;
+
+    callerAgent.Apply( &transport::TransportNotificationHandler_ABC::MagicUnloadPion, pion_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -193,3 +201,5 @@ bool PHY_RolePion_Refugee::IsManaged() const
 {
     return bManaged_;
 }
+
+} // namespace refugee

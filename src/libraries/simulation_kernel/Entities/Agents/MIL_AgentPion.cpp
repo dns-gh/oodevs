@@ -194,7 +194,7 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const uint )
     //{ PHY_RoleInterface_Medical     * pRole; file >> pRole; RegisterRole( pRole ); } 
     //{ PHY_RoleInterface_Supply      * pRole; file >> pRole; RegisterRole( pRole ); } 
     { surrender::PHY_RolePion_Surrender        * pRole; file >> pRole; RegisterRole( pRole ); }
-    { PHY_RolePion_Refugee          * pRole; file >> pRole; RegisterRole( pRole ); }
+    { refugee::PHY_RolePion_Refugee          * pRole; file >> pRole; RegisterRole( pRole ); }
     { PHY_RolePion_Population       * pRole; file >> pRole; RegisterRole( pRole ); }
     { transport::PHY_RoleAction_Loading        * pRole; file >> pRole; RegisterRole( pRole ); }
     { transport::PHY_RoleAction_Transport      * pRole; file >> pRole; RegisterRole( pRole ); }
@@ -238,7 +238,7 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const uint ) const
     //SaveRole< PHY_RolePion_Medical           >( *this, file );
     //SaveRole< PHY_RolePion_Supply            >( *this, file );
     SaveRole< surrender::PHY_RolePion_Surrender         >( *this, file );
-    SaveRole< PHY_RolePion_Refugee           >( *this, file );
+    SaveRole< refugee::PHY_RolePion_Refugee           >( *this, file );
     SaveRole< PHY_RolePion_Population        >( *this, file );
     SaveRole< transport::PHY_RoleAction_Loading         >( *this, file );
     SaveRole< transport::PHY_RoleAction_Transport       >( *this, file );
@@ -383,7 +383,7 @@ void MIL_AgentPion::UpdatePhysicalState()
     GetRole< PHY_RolePion_HumanFactors      >().Update( bIsDead );
     GetRole< transport::PHY_RolePion_Transported       >().Update( bIsDead );
     GetRole< surrender::PHY_RolePion_Surrender         >().Update( bIsDead );
-    GetRole< PHY_RolePion_Refugee           >().Update( bIsDead );    
+    GetRole< refugee::PHY_RolePion_Refugee           >().Update( bIsDead );    
     GetRole< PHY_RolePion_Population        >().Update( bIsDead );    
     GetRole< PHY_RolePion_Perceiver         >().Update( bIsDead ); // Doit être après PHY_RolePion_Composantes $$$ pourri - utiliser des observers
     GetRole< transport::PHY_RoleAction_Loading         >().Update( bIsDead );
@@ -451,7 +451,7 @@ void MIL_AgentPion::Clean()
     GetRole< PHY_RolePion_Communications    >().Clean();
     GetRole< PHY_RolePion_HumanFactors      >().Clean();
     GetRole< surrender::PHY_RoleInterface_Surrender    >().Clean();
-    GetRole< PHY_RolePion_Refugee           >().Clean();
+    GetRole< refugee::PHY_RolePion_Refugee           >().Clean();
     GetRole< PHY_RolePion_Population        >().Clean();
     GetRole< transport::PHY_RoleInterface_Transported  >().Clean();
     GetRole< transport::PHY_RoleAction_Transport       >().Clean();
@@ -931,7 +931,7 @@ void MIL_AgentPion::Serialize( HLA_UpdateFunctor& functor ) const
     if( GetRole< surrender::PHY_RoleInterface_Surrender >().IsPrisoner() )
         statuses.push_back( "prisonnier" );
     // $$$$ NLD 2007-02-14: Surrender
-    if( GetRole< PHY_RolePion_Refugee >().IsManaged() )
+    if( GetRole< refugee::PHY_RolePion_Refugee >().IsManaged() )
         statuses.push_back( "refugie_prisencompte" );
     if( GetRole< PHY_RolePion_Population >().IsInvulnerable() )
         statuses.push_back( "invulnerable_population" );

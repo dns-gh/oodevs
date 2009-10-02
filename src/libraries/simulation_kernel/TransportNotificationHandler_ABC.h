@@ -24,6 +24,9 @@ public:
     virtual void UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable ) {};
     virtual void CancelTransport    ( const MIL_Agent_ABC& transporter ) {};
 
+    virtual void MagicLoadPion   ( MIL_Agent_ABC& pion, bool bTransportOnlyLoadable ) {};
+    virtual void MagicUnloadPion ( MIL_Agent_ABC& pion ) {};
+
     virtual void DamageTransported( double rWeight, const PHY_ComposanteState& state, bool bTransportOnlyLoadable ) const {};
     virtual void NotifyComposanteChanged( const PHY_ComposantePion& composante ) {};
 

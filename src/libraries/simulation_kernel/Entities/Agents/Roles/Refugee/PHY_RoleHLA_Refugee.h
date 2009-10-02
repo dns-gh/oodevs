@@ -31,13 +31,6 @@ public:
     virtual bool IsManaged( const MIL_Object_ABC& camp ) const;
     //@}
 
-    //! @name Operations
-    //@{
-    virtual bool Orientate( const MIL_AgentPion& pionManaging );
-    virtual bool Release  ();
-    virtual bool Release  ( const MIL_Object_ABC& camp );
-    //@}
-
     //! @name Modifiers
     //@{
     void ChangeStatus( const std::vector< std::string >& statuses );
@@ -45,7 +38,6 @@ public:
 
     virtual void Update    ( bool bIsDead ) {};
     virtual void Clean     () {};
-    virtual bool HasChanged() const { return false; };
     //@}
 
     //! @name Network

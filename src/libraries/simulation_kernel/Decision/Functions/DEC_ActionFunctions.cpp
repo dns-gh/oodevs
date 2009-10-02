@@ -27,6 +27,8 @@
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 
+#include "simulation_kernel/RefugeeActionsNotificationHandler_ABC.h"
+
 namespace
 {
     bool IsNotCampKnowledgeOrHasLogisticCapacity( DEC_Knowledge_Agent* pKnowledge, DEC_Knowledge_Object* pCampKnowledge )
@@ -91,8 +93,8 @@ bool DEC_ActionFunctions::Prisoners_IsUnloadedInCamp( MIL_AgentPion& callerAgent
 // -----------------------------------------------------------------------------
 void DEC_ActionFunctions::Refugees_OrientateAndLoad( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge )
 {
-	if( pKnowledge && pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Refugee >().Orientate( callerAgent ) )
-        callerAgent.GetRole< transport::PHY_RoleAction_Transport >().MagicLoadPion( pKnowledge->GetAgentKnown(), false /*bTransportOnlyLoadable*/ );
+	if( pKnowledge )
+        pKnowledge->GetAgentKnown().Apply( &refugee::RefugeeActionsNotificationHandler_ABC::Orientate, callerAgent );      
 }
    
 // -----------------------------------------------------------------------------
@@ -103,8 +105,7 @@ void DEC_ActionFunctions::Refugees_Unload( MIL_AgentPion& callerAgent, DEC_Knowl
 {
 	if( !pKnowledge )
         return;
-    pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Refugee >().Release();
-    callerAgent.GetRole< transport::PHY_RoleAction_Transport >().MagicUnloadPion( pKnowledge->GetAgentKnown() );
+    pKnowledge->GetAgentKnown().Apply( &refugee::RefugeeActionsNotificationHandler_ABC::Release, callerAgent );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,11 +114,10 @@ void DEC_ActionFunctions::Refugees_Unload( MIL_AgentPion& callerAgent, DEC_Knowl
 // -----------------------------------------------------------------------------
 void DEC_ActionFunctions::Refugees_UnloadInCamp( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge, unsigned int campKnowledgeID )
 {
-	DEC_Knowledge_Object* pCampKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( campKnowledgeID, callerAgent.GetArmy          () );
+	DEC_Knowledge_Object* pCampKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( campKnowledgeID, callerAgent.GetArmy() );
     if( IsNotCampKnowledgeOrHasLogisticCapacity( pKnowledge, pCampKnowledge ) )
         return;
-    callerAgent.GetRole< transport::PHY_RoleAction_Transport >().MagicUnloadPion( pKnowledge->GetAgentKnown() );
-    pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Refugee >().Release( *pCampKnowledge->GetObjectKnown() );
+    pKnowledge->GetAgentKnown().Apply( &refugee::RefugeeActionsNotificationHandler_ABC::ReleaseCamp, callerAgent, *pCampKnowledge->GetObjectKnown() );
 }
 
 // -----------------------------------------------------------------------------
