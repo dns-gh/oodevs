@@ -47,13 +47,13 @@ public:
     //! @name Action interface
     //@{
     virtual void Fly();
-    virtual void SetFlyingHeight( MT_Float rHeight );
+    virtual void SetFlyingHeight( double rHeight );
     virtual bool IsFlying() const;
     //@}
 
     //! @name Effect interface
     //@{
-    virtual void Apply( MT_Float rHeight );
+    virtual void Apply( double rHeight );
     //@}
 };
 

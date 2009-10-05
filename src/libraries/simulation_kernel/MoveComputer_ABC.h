@@ -32,15 +32,16 @@ public:
     //! @name Operations
     //@{
     virtual void Reset() = 0;
-    virtual void NotifyNoDotation() = 0;
     virtual void NotifyReinforcing() =0;
     virtual void NotifyTransported() =0;
     virtual void NotifySurrendered() =0;
     virtual void NotifyCannotFly() =0;
     virtual bool CanMove() const = 0;
+    virtual bool CanMoveOverride() const = 0;
     //@}
 };
 
 } // namespace moving
 
 #endif // __MoveComputer_ABC_h_
+

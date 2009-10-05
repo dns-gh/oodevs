@@ -21,7 +21,10 @@
 #include "simulation_kernel/LocationComputer_ABC.h"
 #include "simulation_kernel/PostureComputer_ABC.h"
 #include "simulation_kernel/MoveComputer_ABC.h"
-#include "simulation_kernel/MoveComputerFactory_ABC.h"
+#include "simulation_kernel/ConsumptionComputerFactory_ABC.h"
+#include "simulation_kernel/ConsumptionModeChangeRequest_ABC.h"
+#include "simulation_kernel/ConsumptionChangeRequestHandler_ABC.h"
+#include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_Flying, "PHY_RoleAction_Flying" )
 
@@ -105,7 +108,7 @@ bool PHY_RoleAction_Flying::Land()
 // Name: PHY_RoleAction_Flying::SetFlyingHeight
 // Created: JVT 2004-11-02
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Flying::SetFlyingHeight( MT_Float rHeight )
+void PHY_RoleAction_Flying::SetFlyingHeight( double rHeight )
 {
     effectFly_.SetFlyingHeight( std::max( 0., rHeight ) );
 
@@ -129,12 +132,14 @@ void PHY_RoleAction_Flying::Fly()
 // Created: NLD 2004-10-04
 // Modified: JVT 2004-11-02
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Flying::Apply( MT_Float rHeight )
+void PHY_RoleAction_Flying::Apply( double rHeight )
 {
-    moving::MoveComputer_ABC& moveComputer = entity_.GetAlgorithms().moveComputerFactory_->CreateMoveComputer();//@TODO MGD see to share algorthms and execute them just one time by step
-    entity_.Execute( moveComputer );
+    dotation::ConsumptionModeChangeRequest_ABC& request =
+    		entity_.GetAlgorithms().consumptionComputerFactory_->CreateConsumptionModeChangeRequest(PHY_ConsumptionType::moving_);
+    entity_.Apply(&dotation::ConsumptionChangeRequestHandler_ABC::ChangeConsumptionMode,request); // automatic rollback
 
-    if ( moveComputer.CanMove() || rHeight <= 0. )
+
+    if ( !request.AllChanged() || rHeight <= 0. )
     {
         Land();
     }
@@ -199,4 +204,12 @@ void PHY_RoleAction_Flying::Execute( posture::PostureComputer_ABC& algorithm ) c
         algorithm.SetPostureMovement();
 }
 
-
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::Execute
+// Created: AHC 2009-10-05
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Flying::Execute( moving::MoveComputer_ABC& algorithm ) const
+{
+	if(pActionFly_ == 0)
+		algorithm.NotifyCannotFly();
+}

@@ -27,6 +27,10 @@ namespace posture
 {
     class PostureComputer_ABC;
 }
+namespace moving
+{
+    class MoveComputer_ABC;
+}
 // =============================================================================
 // @class  PHY_RoleAction_Flying
 // Created: JVT 2004-08-03
@@ -34,6 +38,7 @@ namespace posture
 class PHY_RoleAction_Flying : public PHY_RoleAction_InterfaceFlying
                             , public tools::AlgorithmModifier_ABC< location::LocationComputer_ABC >
                             , public tools::AlgorithmModifier_ABC< posture::PostureComputer_ABC >
+							, public tools::AlgorithmModifier_ABC< moving::MoveComputer_ABC >
 {
 
 public:
@@ -55,13 +60,13 @@ public:
     //! @name Action interface
     //@{
     virtual void Fly            ();
-    virtual void SetFlyingHeight( MT_Float rHeight );
+    virtual void SetFlyingHeight( double rHeight );
     virtual bool IsFlying       () const;
     //@}
 
     //! @name Effect interface
     //@{
-    virtual void Apply( MT_Float rHeight );
+    virtual void Apply( double rHeight );
     //@}
 
 private:
@@ -73,6 +78,7 @@ private:
     template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RoleAction_Flying* role, const unsigned int /*version*/ );
     virtual void Execute( location::LocationComputer_ABC& algorithm ) const;
     virtual void Execute( posture::PostureComputer_ABC& algorithm ) const;
+    virtual void Execute( moving::MoveComputer_ABC& algorithm ) const;
     //@}
 
 private:

@@ -14,8 +14,6 @@
 #include "PHY_RoleAction_Moving.h"
 
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h" // CanMove + HasResources
-#include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h" // CanMove
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -39,6 +37,7 @@
 #include "simulation_kernel/MoveComputerFactory_ABC.h"
 #include "simulation_kernel/ConsumptionComputerFactory_ABC.h"
 #include "simulation_kernel/ConsumptionModeChangeRequest_ABC.h"
+#include "simulation_kernel/ConsumptionChangeRequestHandler_ABC.h"
 #include "AlgorithmsFactories.h"
 
 BOOST_CLASS_EXPORT_GUID( moving::PHY_RoleAction_Moving, "PHY_RoleAction_Moving" )
@@ -390,7 +389,6 @@ void PHY_RoleAction_Moving::NotifyMovingOnPathPoint( const DEC_PathPoint& /*poin
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Moving::NotifyMovingOnSpecialPoint( const DEC_PathPoint& point )
 {
-
     point.SendToDIA( pion_.GetRole< DEC_Representations >() );
 }
 
@@ -423,9 +421,7 @@ bool PHY_RoleAction_Moving::CanMove() const
 	moving::MoveComputer_ABC& moveComputer = pion_.GetAlgorithms().moveComputerFactory_->CreateMoveComputer();
 	pion_.Execute(moveComputer);
 
-	return moveComputer.CanMove();
-
-    // TODOreturn      pion_.GetRole< PHY_RoleAction_InterfaceFlying >().CanMove()
+	return moveComputer.CanMoveOverride() || moveComputer.CanMove();
 }
 
 // -----------------------------------------------------------------------------
@@ -443,12 +439,15 @@ bool PHY_RoleAction_Moving::CanObjectInteractWith( const MIL_Object_ABC& object 
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Moving::HasResources()
 {
-    if( pion_.GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered() )
+	moving::MoveComputer_ABC& moveComputer = pion_.GetAlgorithms().moveComputerFactory_->CreateMoveComputer();
+		pion_.Execute(moveComputer);
+
+	if (moveComputer.CanMoveOverride())
         return true;
     
     dotation::ConsumptionModeChangeRequest_ABC& request =
     		pion_.GetAlgorithms().consumptionComputerFactory_->CreateConsumptionModeChangeRequest(PHY_ConsumptionType::moving_);
-    pion_.Execute(request); // automatic rollback
+    pion_.Apply(&dotation::ConsumptionChangeRequestHandler_ABC::ChangeConsumptionMode,request); // automatic rollback
 
     return request.AllChanged();
 }

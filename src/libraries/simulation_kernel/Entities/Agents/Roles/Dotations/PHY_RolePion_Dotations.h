@@ -42,7 +42,6 @@ namespace dotation
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RolePion_Dotations : public PHY_RoleInterface_Dotations
-                             , public tools::AlgorithmModifier_ABC< moving::MoveComputer_ABC >
                              , public tools::AlgorithmModifier_ABC< dotation::DotationComputer_ABC >
 							 , public dotation::ConsumptionChangeRequestHandler_ABC
 							 , public surrender::SurrenderNotificationHandler_ABC
@@ -81,7 +80,6 @@ public:
     //@{
     void Update    ( bool bIsDead );
     void Clean     ();
-    virtual void Execute( moving::MoveComputer_ABC& algorithm ) const;
     virtual void Execute( dotation::DotationComputer_ABC& algorithm ) const;
     virtual void ChangeConsumptionMode(ConsumptionModeChangeRequest_ABC& request);
     //@}

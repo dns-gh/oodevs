@@ -44,16 +44,6 @@ void DefaultMoveComputer::Reset()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DefaultMoveComputer::NotifyNoDotation
-// Created: MGD 2009-09-21
-// -----------------------------------------------------------------------------
-void DefaultMoveComputer::NotifyNoDotation()
-{
-    bCanMove_ = false;
-    //@TODO MGD ADD error message to know why we can't move?
-}
-
-// -----------------------------------------------------------------------------
 // Name: DefaultMoveComputer::NotifyReinforcing
 // Created: MGD 2009-09-21
 // -----------------------------------------------------------------------------
@@ -92,4 +82,12 @@ void DefaultMoveComputer::NotifyCannotFly()
 bool DefaultMoveComputer::CanMove() const
 {
     return isSurrendered_|| bCanMove_;
+}
+// -----------------------------------------------------------------------------
+// Name: DefaultMoveComputer::CanMoveOverride
+// Created: AHC 2009-10-02
+// -----------------------------------------------------------------------------
+bool DefaultMoveComputer::CanMoveOverride() const
+{
+	return isSurrendered_;
 }

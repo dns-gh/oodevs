@@ -544,16 +544,6 @@ void PHY_RolePion_Dotations::SendFullState( NET_ASN_MsgUnitAttributes& asn ) con
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Dotations::Execute
-// Created: MGD 2009-09-21
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Dotations::Execute( moving::MoveComputer_ABC& algorithm ) const
-{
-    if( pCurrentConsumptionMode_ != &PHY_ConsumptionType::moving_ )//@TODO MGD is it really a good modifier
-        algorithm.NotifyNoDotation();
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::Execute
 // Created: MGD 2009-09-30
 // -----------------------------------------------------------------------------

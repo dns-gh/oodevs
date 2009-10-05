@@ -34,12 +34,12 @@ public:
     //! @name Operations
     //@{
     virtual void Reset();
-    virtual void NotifyNoDotation();
     virtual void NotifyReinforcing();
     virtual void NotifyTransported();
     virtual void NotifySurrendered();
     virtual void NotifyCannotFly();
     virtual bool CanMove() const;
+    bool CanMoveOverride() const;
     //@}
 
 private:
