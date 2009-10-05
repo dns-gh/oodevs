@@ -142,8 +142,7 @@ private:
     // Network
     bool bCurrentPathHasChanged_;
     bool bEnvironmentHasChanged_;
-
-    friend class SpeedComputerStrategy;
+    bool bHasMove_;
 };
 
 } // namespace moving

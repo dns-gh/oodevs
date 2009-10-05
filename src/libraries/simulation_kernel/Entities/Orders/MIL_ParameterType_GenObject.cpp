@@ -11,11 +11,8 @@
 
 #include "MIL_ParameterType_GenObject.h"
 
-#include "Network/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
-#include "Decision/DEC_Tools.h"
 #include "MIL_MissionParameter_ABC.h"
-#include "Entities/MIL_EntityManager.h"
 
 //-----------------------------------------------------------------------------
 // Name: MIL_ParameterType_GenObject constructor
@@ -64,5 +61,6 @@ void MIL_ParameterType_GenObject::CleanAfterSerialization( ASN1T_MissionParamete
     assert( to.value.t == T_MissionParameter_value_plannedWork );
     assert( to.value.u.plannedWork );
     NET_ASN_Tools::Delete( *to.value.u.plannedWork );
+
     delete to.value.u.plannedWork;    
 }

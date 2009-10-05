@@ -41,8 +41,6 @@
 #include "MIL_ParameterType_IndirectFire.h"
 #include "MIL_ParameterType_String.h"
 #include "MIL_ParameterType_ObjectiveList.h"
-#include "MIL_OrderType_ABC.h"
-#include "Decision/DEC_Tools.h"
 
 // =============================================================================
 // FACTORY

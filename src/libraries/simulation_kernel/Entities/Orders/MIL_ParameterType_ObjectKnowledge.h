@@ -10,8 +10,6 @@
 #ifndef __MIL_ParameterType_ObjectKnowledge_h_
 #define __MIL_ParameterType_ObjectKnowledge_h_
 
-#include "MIL.h"
-
 #include "MIL_ParameterType_ABC.h"
 
 // =============================================================================

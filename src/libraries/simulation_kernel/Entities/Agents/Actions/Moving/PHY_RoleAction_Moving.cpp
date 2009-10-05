@@ -68,31 +68,31 @@ double maxSpeedEnvObj(const PHY_ComposantePion& comp, const TerrainData& environ
 class SpeedComputerStrategy : public moving::SpeedStrategy_ABC
 {
 public:
-	SpeedComputerStrategy(bool isMaxSpeed, bool withReinforcement, const MIL_Object_ABC& obj, const TerrainData* env=0) :
-			withReinforcement_(withReinforcement), isMax_(isMaxSpeed)
+	SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, const MIL_Object_ABC& obj, const TerrainData* env=0 )
+        : withReinforcement_( withReinforcement ), isMax_( isMaxSpeed )
 	{
 		if(env)
 		{
-			compFunctor_ = boost::bind(maxSpeedEnvObj, _1, boost::cref(*env), boost::cref(obj));
+			compFunctor_ = boost::bind( maxSpeedEnvObj, _1, boost::cref( *env ), boost::cref( obj ) );
             pionFunctor_ = isMaxSpeed ? 
-                boost::mem_fn(&PHY_RoleAction_Moving::GetMaxSpeedWithReinforcement) :
-                (boost::function< double(const PHY_RoleAction_Moving&)>)boost::bind(&PHY_RoleAction_Moving::GetSpeedWithReinforcement,_1,boost::cref(*env),boost::cref(obj));
+                boost::mem_fn( &PHY_RoleAction_Moving::GetMaxSpeedWithReinforcement ) :
+                ( boost::function< double( const PHY_RoleAction_Moving&)> )boost::bind( &PHY_MovingEntity_ABC::GetSpeedWithReinforcement, _1, boost::cref( *env ), boost::cref( obj ) );
 		}
 		else
 		{
-            compFunctor_ = boost::bind(boost::mem_fn<double,PHY_ComposantePion,const MIL_Object_ABC&>(&PHY_ComposantePion::GetMaxSpeed), _1, boost::cref(obj) );
-            pionFunctor_ = boost::mem_fn(&PHY_RoleAction_Moving::GetMaxSpeedWithReinforcement);
+            compFunctor_ = boost::bind( boost::mem_fn<double, PHY_ComposantePion, const MIL_Object_ABC&>( &PHY_ComposantePion::GetMaxSpeed ), _1, boost::cref( obj ) );
+            pionFunctor_ = boost::mem_fn( &PHY_RoleAction_Moving::GetMaxSpeedWithReinforcement );
 		}
 	}
-	SpeedComputerStrategy(bool isMaxSpeed, bool withReinforcement, const TerrainData* env=0) :
-			withReinforcement_(withReinforcement), isMax_(isMaxSpeed)
+	SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, const TerrainData* env=0 ) :
+			withReinforcement_( withReinforcement ), isMax_( isMaxSpeed )
 	{
 		if(env)
 		{
-			compFunctor_ = boost::bind(boost::mem_fn<double,PHY_ComposantePion,const TerrainData&>(&PHY_ComposantePion::GetMaxSpeed), _1, boost::cref(*env));
+			compFunctor_ = boost::bind( boost::mem_fn<double,PHY_ComposantePion,const TerrainData&>( &PHY_ComposantePion::GetMaxSpeed ), _1, boost::cref( *env ) );
             pionFunctor_ = isMaxSpeed ? 
-                boost::mem_fn(&PHY_RoleAction_Moving::GetMaxSpeedWithReinforcement):
-                (boost::function< double(const PHY_RoleAction_Moving&)>)boost::bind(&PHY_RoleAction_Moving::GetSpeedWithReinforcement,_1,boost::cref(*env));			
+                boost::mem_fn( &PHY_RoleAction_Moving::GetMaxSpeedWithReinforcement ):
+                ( boost::function< double( const PHY_RoleAction_Moving& )> )boost::bind( &PHY_RoleAction_Moving::GetSpeedWithReinforcement, _1, boost::cref( *env ) );			
 		}
 		else
 		{
@@ -137,6 +137,7 @@ PHY_RoleAction_Moving::PHY_RoleAction_Moving( MIL_AgentPion& pion )
     , rMaxSpeedModificator_  ( 1. )
     , bCurrentPathHasChanged_( true )
     , bEnvironmentHasChanged_( true )
+    , bHasMove_              ( false )
 {
     // NOTHING
 }
@@ -369,6 +370,7 @@ const MT_Vector2D& PHY_RoleAction_Moving::GetDirection() const
 void PHY_RoleAction_Moving::ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, double rSpeed, double /*rWalkedDistance*/ )
 {
     rSpeed_ = rSpeed;
+    bHasMove_ = ( rSpeed != 0. );
     assert( pRoleLocation_ );
     return pRoleLocation_->Move( position, direction, rSpeed );
 }
@@ -469,6 +471,8 @@ void PHY_RoleAction_Moving::SendRC( int nReportID ) const
 void PHY_RoleAction_Moving::Update( bool /*bIsDead*/ )
 {
     // NOTHING
+    if (!bHasMove_)
+        rSpeed_ = 0.;
 }
 
 // -----------------------------------------------------------------------------
@@ -481,6 +485,7 @@ void PHY_RoleAction_Moving::Clean()
 
     bCurrentPathHasChanged_ = false;
     bEnvironmentHasChanged_ = false;
+    bHasMove_               = false;
 }
 
 // -----------------------------------------------------------------------------

@@ -10,8 +10,6 @@
 #ifndef __MIL_ParameterType_Point_h_
 #define __MIL_ParameterType_Point_h_
 
-#include "MIL.h"
-
 #include "MIL_ParameterType_ABC.h"
 
 // =============================================================================

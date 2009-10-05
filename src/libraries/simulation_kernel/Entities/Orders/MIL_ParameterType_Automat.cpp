@@ -11,9 +11,6 @@
 
 #include "MIL_ParameterType_Automat.h"
 
-#include "Network/NET_AsnException.h"
-#include "Network/NET_ASN_Tools.h"
-#include "Decision/DEC_Tools.h"
 #include "MIL_MissionParameter_ABC.h"
 
 //-----------------------------------------------------------------------------
