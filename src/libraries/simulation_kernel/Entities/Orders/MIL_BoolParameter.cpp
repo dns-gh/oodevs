@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_BoolParameter.h"
-#include "MIL_ParameterType_Bool.h"
+#include "simulation_orders/MIL_ParameterType_Bool.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_BoolParameter constructor

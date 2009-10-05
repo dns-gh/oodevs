@@ -10,7 +10,7 @@
 #ifndef __MIL_BaseParameter_h_
 #define __MIL_BaseParameter_h_
 
-#include "MIL_MissionParameter_ABC.h"
+#include "simulation_orders/MIL_MissionParameter_ABC.h"
 #include "game_asn/Simulation.h"
 
 // =============================================================================

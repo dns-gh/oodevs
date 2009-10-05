@@ -1,8 +1,8 @@
 #ifndef __MockMIL_Mission_ABC_h_
 #define __MockMIL_Mission_ABC_h_
 
+#include "simulation_orders/MIL_ParameterType_ABC.h"
 #include "Entities/Orders/MIL_Mission_ABC.h"
-#include "Entities/Orders/MIL_ParameterType_ABC.h"
 #include "Entities/Orders/MIL_MissionParameterVisitor_ABC.h"
 #include "StubMIL_MissionParameter_ABC.h"
 

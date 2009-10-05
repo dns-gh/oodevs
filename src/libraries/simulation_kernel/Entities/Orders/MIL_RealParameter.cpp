@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_RealParameter.h"
-#include "MIL_ParameterType_Numeric.h"
+#include "simulation_orders/MIL_ParameterType_Numeric.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_RealParameter constructor

@@ -18,6 +18,7 @@
 #include "MIL_IntelligenceOrdersVisitor_ABC.h"
 #include "Network/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
+#include "game_asn/ASN_Delete.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderContext constructor
@@ -99,7 +100,7 @@ namespace
         {
             for( unsigned int i = 0; i < asn.value.u.limasOrder->n; ++i )
             {
-                NET_ASN_Tools::Delete( asn.value.u.limasOrder->elem[ i ].lima );
+                ASN_Delete::Delete( asn.value.u.limasOrder->elem[ i ].lima );
                 if( asn.value.u.limasOrder->elem[ i ].fonctions.n > 0 )
                     delete [] asn.value.u.limasOrder->elem[ i ].fonctions.elem;
             }
@@ -111,7 +112,7 @@ namespace
     void CleanLimit( ASN1T_MissionParameter& asn )
     {
         if( asn.value.u.line )
-            NET_ASN_Tools::Delete( asn.value.u.line->coordinates );
+            ASN_Delete::Delete( asn.value.u.line->coordinates );
         delete asn.value.u.line;
     }
 

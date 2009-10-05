@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentKnowledgeParameter.h"
 
-#include "MIL_ParameterType_AgentKnowledge.h"
+#include "simulation_orders/MIL_ParameterType_AgentKnowledge.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 

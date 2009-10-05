@@ -21,6 +21,8 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_ASN_Messages.h"
 
+#include "game_asn/ASN_Delete.h"
+
 #include "ConstructionAttribute.h"
 #include "MineAttribute.h"
 #include "BypassAttribute.h"
@@ -327,7 +329,7 @@ void Object::SendCreation() const
     std::for_each( attributes_.begin(), attributes_.end(), 
                     boost::bind( &ObjectAttribute_ABC::SendFullState, _1, boost::ref( asn().attributes ) ) );
     asn.Send();
-    NET_ASN_Tools::Delete( asn().location );
+    ASN_Delete::Delete( asn().location );
 }
 
 // -----------------------------------------------------------------------------
@@ -395,7 +397,7 @@ void Object::SendMsgUpdate() const
     xAttrToUpdate_ = 0;
 
     if( asn().m.locationPresent )
-        NET_ASN_Tools::Delete( asn().location );
+        ASN_Delete::Delete( asn().location );
 }
 
 // -----------------------------------------------------------------------------

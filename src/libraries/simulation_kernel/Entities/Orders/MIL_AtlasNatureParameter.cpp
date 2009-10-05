@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_AtlasNatureParameter.h"
 
-#include "MIL_ParameterType_NatureAtlas.h"
+#include "simulation_orders/MIL_ParameterType_NatureAtlas.h"
 #include "Network/NET_ASN_Tools.h"
 
 // -----------------------------------------------------------------------------

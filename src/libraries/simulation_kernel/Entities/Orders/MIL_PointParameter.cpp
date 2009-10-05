@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_PointParameter.h"
-#include "MIL_ParameterType_Point.h"
+#include "simulation_orders/MIL_ParameterType_Point.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Tools/MIL_Tools.h"
 

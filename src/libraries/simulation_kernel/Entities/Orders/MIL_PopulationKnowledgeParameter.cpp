@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_PopulationKnowledgeParameter.h"
-#include "MIL_ParameterType_PopulationKnowledge.h"
+#include "simulation_orders/MIL_ParameterType_PopulationKnowledge.h"
 #include "Knowledge/DEC_KnowledgeResolver_ABC.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
 

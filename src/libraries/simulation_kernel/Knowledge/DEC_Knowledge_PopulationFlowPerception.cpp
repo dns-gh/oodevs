@@ -21,6 +21,7 @@
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
+#include "game_asn/ASN_Delete.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_PopulationFlowPerception, "DEC_Knowledge_PopulationFlowPerception" )
 
@@ -227,7 +228,7 @@ void DEC_Knowledge_PopulationFlowPerception::SendStateToNewClient() const
     asn().flow_oid       = pPopulationFlowPerceived_->GetID();
     NET_ASN_Tools::WritePath( shape_, asn().visible_flow );
     asn.Send();
-    NET_ASN_Tools::Delete( asn().visible_flow );
+    ASN_Delete::Delete( asn().visible_flow );
 }
 
 // -----------------------------------------------------------------------------

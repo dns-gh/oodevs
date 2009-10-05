@@ -11,11 +11,11 @@
 
 #include "simulation_kernel_pch.h"
 
+#include "MIL_AgentServer.h"
 #include "MIL_Report.h"
-#include "MIL_ParameterType_ABC.h"
+#include "simulation_orders/MIL_ParameterType_ABC.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
-#include "MIL_AgentServer.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
 #include <xeumeuleu/xml.h>
 #include "MIL_MissionParameterFactory.h"

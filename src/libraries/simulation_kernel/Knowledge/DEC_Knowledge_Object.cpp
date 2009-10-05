@@ -40,6 +40,8 @@
 
 #include <boost/bind.hpp>
 
+#include "game_asn/ASN_Delete.h"
+
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_Object, "DEC_Knowledge_Object" )
 
 // -----------------------------------------------------------------------------
@@ -547,7 +549,7 @@ void DEC_Knowledge_Object::UpdateOnNetwork()
         delete [] asn().automat_perception.elem; //$$$ RAM
 
     if( asn().m.locationPresent )
-        NET_ASN_Tools::Delete( asn().location );
+        ASN_Delete::Delete( asn().location );
 }
 
 // -----------------------------------------------------------------------------

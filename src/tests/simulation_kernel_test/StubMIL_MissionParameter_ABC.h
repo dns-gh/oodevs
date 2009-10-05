@@ -10,7 +10,7 @@
 #ifndef __StubMIL_MissionParameter_ABC_h_
 #define __StubMIL_MissionParameter_ABC_h_
 
-#include "Entities/Orders/MIL_MissionParameter_ABC.h"
+#include "simulation_orders/MIL_MissionParameter_ABC.h"
 
 // =============================================================================
 /** @class  StubMIL_MissionParameter_ABC

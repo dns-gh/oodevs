@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_StringParameter.h"
-#include "MIL_ParameterType_String.h"
+#include "simulation_orders/MIL_ParameterType_String.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_StringParameter constructor

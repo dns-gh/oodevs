@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_LogMedicalPrioritiesParameter.h"
-#include "MIL_ParameterType_MedicalPriorities.h"
+#include "simulation_orders/MIL_ParameterType_MedicalPriorities.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 
 // -----------------------------------------------------------------------------

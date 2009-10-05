@@ -39,26 +39,6 @@ public:
     static bool CopyNatureAtlas ( const ASN1T_AtlasNature& asn, int& value );
     //@}
 
-    // @name Misc tools
-    //@{
-    static void Delete( ASN1T_MissionObjective&         asn );
-    static void Delete( ASN1T_MissionObjectiveList&     asn );
-    static void Delete( ASN1T_PlannedWork&              asn );
-    static void Delete( ASN1T_PlannedWorkList&          asn );
-    static void Delete( ASN1T_UnitList&                 asn );
-    static void Delete( ASN1T_AutomatList&              asn );
-    static void Delete( ASN1T_Polygon&                  asn );
-    static void Delete( ASN1T_PolygonList&              asn );
-    static void Delete( ASN1T_PointList&                asn );
-    static void Delete( ASN1T_PathList&                 asn );
-    static void Delete( ASN1T_LocationList&             asn );
-    static void Delete( ASN1T_UnitKnowledgeList&        asn );
-    static void Delete( ASN1T_ObjectKnowledgeList&      asn );
-    static void Delete( ASN1T_LogMedicalPriorities&     asn );
-    static void Delete( ASN1T_LogMaintenancePriorities& asn );
-    static void Delete( ASN1T_CoordLatLongList& asn );
-    //@}
-
     //! @name Decoding tools
     //@{
     static bool ReadLine      ( const ASN1T_Line&         asn, TER_Localisation& localisation );

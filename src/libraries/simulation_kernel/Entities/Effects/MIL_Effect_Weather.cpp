@@ -17,6 +17,7 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Tools/MIL_IDManager.h"
+#include "game_asn/ASN_Delete.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Effect_Weather constructor
@@ -79,7 +80,7 @@ void MIL_Effect_Weather::SendMsgStartEffect() const
     NET_ASN_Tools::WriteEllipse( surface_, asnMsg().location );
 
     asnMsg.Send();
-    NET_ASN_Tools::Delete( asnMsg().location );
+    ASN_Delete::Delete( asnMsg().location );
 }
 
 //-----------------------------------------------------------------------------

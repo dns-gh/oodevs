@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_PolygonParameter.h"
-#include "MIL_ParameterType_Polygon.h"
+#include "simulation_orders/MIL_ParameterType_Polygon.h"
 #include "Network/NET_ASN_Tools.h"
 
 // -----------------------------------------------------------------------------

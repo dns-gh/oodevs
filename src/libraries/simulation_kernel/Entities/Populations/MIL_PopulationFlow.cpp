@@ -25,6 +25,7 @@
 #include "Decision/Path/DEC_PathPoint.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
+#include "game_asn/ASN_Delete.h"
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_Tools.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
@@ -655,9 +656,9 @@ void MIL_PopulationFlow::SendFullState() const
 
     asnMsg.Send();
 
-    NET_ASN_Tools::Delete( asnMsg().flux );
+    ASN_Delete::Delete( asnMsg().flux );
     if( asnMsg().m.itinerairePresent )
-        NET_ASN_Tools::Delete( asnMsg().itineraire );
+        ASN_Delete::Delete( asnMsg().itineraire );
 }
 
 // -----------------------------------------------------------------------------
@@ -712,9 +713,9 @@ void MIL_PopulationFlow::SendChangedState() const
     asnMsg.Send();
 
     if( asnMsg().m.fluxPresent )
-        NET_ASN_Tools::Delete( asnMsg().flux );
+        ASN_Delete::Delete( asnMsg().flux );
     if( asnMsg().m.itinerairePresent )
-        NET_ASN_Tools::Delete( asnMsg().itineraire );
+        ASN_Delete::Delete( asnMsg().itineraire );
 }
 
 // -----------------------------------------------------------------------------

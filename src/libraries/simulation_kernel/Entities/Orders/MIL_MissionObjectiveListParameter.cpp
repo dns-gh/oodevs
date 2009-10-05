@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_MissionObjectiveListParameter.h"
-#include "MIL_ParameterType_ObjectiveList.h"
+#include "simulation_orders/MIL_ParameterType_ObjectiveList.h"
 #include "Decision/DEC_Objective.h"
 #include "Network/NET_AsnException.h"
 

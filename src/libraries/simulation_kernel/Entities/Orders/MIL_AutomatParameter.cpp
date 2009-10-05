@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_AutomatParameter.h"
 
-#include "MIL_ParameterType_Automat.h"
+#include "simulation_orders/MIL_ParameterType_Automat.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/MIL_EntityManager_ABC.h"
 #include "Network/NET_ASN_Tools.h"

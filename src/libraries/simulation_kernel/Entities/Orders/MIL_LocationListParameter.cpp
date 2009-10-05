@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_LocationListParameter.h"
 
-#include "MIL_ParameterType_LocationList.h"
+#include "simulation_orders/MIL_ParameterType_LocationList.h"
 #include "Network/NET_ASN_Tools.h"
 
 // -----------------------------------------------------------------------------

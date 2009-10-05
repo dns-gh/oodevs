@@ -27,6 +27,7 @@
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
+#include "game_asn/ASN_Delete.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_PopulationFlow, "DEC_Knowledge_PopulationFlow" )
 
@@ -374,7 +375,7 @@ void DEC_Knowledge_PopulationFlow::SendFullState() const
     if( asnMsg().m.portions_fluxPresent )
     {
         for( uint i = 0; i < asnMsg().portions_flux.n; ++i )
-            NET_ASN_Tools::Delete( asnMsg().portions_flux.elem[ i ].forme );
+            ASN_Delete::Delete( asnMsg().portions_flux.elem[ i ].forme );
         if( asnMsg().portions_flux.n > 0 )
             delete [] asnMsg().portions_flux.elem;
     }
@@ -457,7 +458,7 @@ void DEC_Knowledge_PopulationFlow::UpdateOnNetwork() const
     if( asnMsg().m.portions_fluxPresent )
     {
         for( uint i = 0; i < asnMsg().portions_flux.n; ++i )
-            NET_ASN_Tools::Delete( asnMsg().portions_flux.elem[ i ].forme );
+            ASN_Delete::Delete( asnMsg().portions_flux.elem[ i ].forme );
         if( asnMsg().portions_flux.n > 0 )
             delete [] asnMsg().portions_flux.elem;
     }

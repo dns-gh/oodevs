@@ -122,7 +122,13 @@
         <build-lib name="simulation_terrain" pattern="lib${ant.project.name}_simulation_terrain-${platform}-mt@{suffix}" suffix="-gd"/>
     </target>
 
-    <target name="library.simulation_kernel" description="build simulation_kernel static library" depends="library.tools,library.game_asn,library.simulation_terrain">
+    <target name="library.simulation_orders" description="build simulation_orders static library" depends="library.tools,library.game_asn">
+        <build-lib name="simulation_orders" pattern="lib${ant.project.name}_simulation_orders-${platform}-mt@{suffix}" suffix="-gd">
+            <includepath path="${include.dir}/masasn"/>
+        </build-lib>
+    </target>
+
+    <target name="library.simulation_kernel" description="build simulation_kernel static library" depends="library.tools,library.game_asn,library.simulation_terrain,library.simulation_orders">
         <build-lib name="simulation_kernel" pattern="lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/masasn"/>
             <includepath path="${libraries.dir}/simulation_kernel"/> <!-- pour MIL.h -->
@@ -349,6 +355,7 @@
                          lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}
                          lib${ant.project.name}_game_asn-${platform}-mt@{suffix}
                          lib${ant.project.name}_simulation_terrain-${platform}-mt@{suffix}
+                         lib${ant.project.name}_simulation_orders-${platform}-mt@{suffix}
                          lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix}">
             <syslibset libs="dbghelp,psapi,shell32,iphlpapi"/>
             <includepath path="${libraries.dir}/simulation_kernel"/>
@@ -594,6 +601,7 @@
                          lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}
                          lib${ant.project.name}_game_asn-${platform}-mt@{suffix}
                          lib${ant.project.name}_simulation_terrain-${platform}-mt@{suffix}
+                         lib${ant.project.name}_simulation_orders-${platform}-mt@{suffix}
                          lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix}"
                    depends="mt,din,dia3,terrain,boost,xerces">
             <syslibset libs="dbghelp,psapi,shell32,iphlpapi"/>

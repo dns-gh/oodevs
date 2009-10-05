@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_PlannedWorkParameter.h"
-#include "MIL_ParameterType_GenObject.h"
+#include "simulation_orders/MIL_ParameterType_GenObject.h"
 #include "Decision/DEC_Gen_Object.h"
 
 // -----------------------------------------------------------------------------

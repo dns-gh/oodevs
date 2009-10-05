@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_DirectionParameter.h"
 
-#include "MIL_ParameterType_Direction.h"
+#include "simulation_orders/MIL_ParameterType_Direction.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_DirectionParameter constructor

@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_ObjectKnowledgeListParameter.h"
 
-#include "MIL_ParameterType_ObjectKnowledgeList.h"
+#include "simulation_orders/MIL_ParameterType_ObjectKnowledgeList.h"
 #include "Knowledge/DEC_KnowledgeResolver_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 

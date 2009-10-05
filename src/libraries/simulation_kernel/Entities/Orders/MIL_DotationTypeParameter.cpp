@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_DotationTypeParameter.h"
-#include "MIL_ParameterType_DotationType.h"
+#include "simulation_orders/MIL_ParameterType_DotationType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 

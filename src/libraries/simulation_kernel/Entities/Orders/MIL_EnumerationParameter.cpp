@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_EnumerationParameter.h"
-#include "MIL_ParameterType_Enumeration.h"
+#include "simulation_orders/MIL_ParameterType_Enumeration.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EnumerationParameter constructor

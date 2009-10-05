@@ -9,12 +9,6 @@
 //
 // *****************************************************************************
 
-#include "Entities/Orders/MIL_Report.h"
-#include "Entities/Orders/MIL_MissionParameter_ABC.h"
-#include "Entities/Orders/MIL_MissionParameterFactory.h"
-#include "Entities/Agents/MIL_AgentPion.h"
-#include "Network/NET_ASN_Tools.h"
-
 // -----------------------------------------------------------------------------
 // Name: template< typename T > static void DEC_MiscFunctions::Report
 // Created: LDC 2009-06-16
@@ -262,7 +256,7 @@ void DEC_MiscFunctions::DebugDrawPoints(const T& caller, std::vector< boost::sha
     asn().oid = caller.GetID();
     NET_ASN_Tools::WriteCoordinates( points, asn().coordinates );
     asn.Send();
-    NET_ASN_Tools::Delete( asn().coordinates );
+    ASN_Delete::Delete( asn().coordinates );
 }
 
 // -----------------------------------------------------------------------------

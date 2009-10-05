@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_TirIndirectParameter.h"
-#include "MIL_ParameterType_IndirectFire.h"
+#include "simulation_orders/MIL_ParameterType_IndirectFire.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_TirIndirectParameter constructor

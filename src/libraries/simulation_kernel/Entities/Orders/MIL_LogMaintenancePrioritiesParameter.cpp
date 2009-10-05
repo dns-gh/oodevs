@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_LogMaintenancePrioritiesParameter.h"
-#include "MIL_ParameterType_MaintenancePriorities.h"
+#include "simulation_orders/MIL_ParameterType_MaintenancePriorities.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteTypePion.h"
 
 // -----------------------------------------------------------------------------

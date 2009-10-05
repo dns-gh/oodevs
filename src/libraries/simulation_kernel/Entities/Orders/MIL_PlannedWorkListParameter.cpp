@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_PlannedWorkListParameter.h"
-#include "MIL_ParameterType_GenObjectList.h"
+#include "simulation_orders/MIL_ParameterType_GenObjectList.h"
 #include "Decision/DEC_Gen_Object.h"
 #include "Network/NET_AsnException.h"
 

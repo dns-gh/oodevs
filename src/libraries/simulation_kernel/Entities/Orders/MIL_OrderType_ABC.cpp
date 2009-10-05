@@ -14,7 +14,7 @@
 #include "Decision/DEC_Tools.h"
 #include "Network/NET_AsnException.h"
 #include <xeumeuleu/xml.h>
-#include "MIL_MissionParameter_ABC.h"
+#include "simulation_orders/MIL_MissionParameter_ABC.h"
 #include <boost/shared_ptr.hpp>
 
 //-----------------------------------------------------------------------------

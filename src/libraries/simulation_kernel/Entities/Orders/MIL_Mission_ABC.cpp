@@ -11,7 +11,7 @@
 #include "MIL_Mission_ABC.h"
 #include "MIL_MissionType_ABC.h"
 #include "MIL_MissionParameterFactory.h"
-#include "MIL_MissionParameter_ABC.h"
+#include "simulation_orders/MIL_MissionParameter_ABC.h"
 #include "MIL_MissionParameterVisitor_ABC.h"
 
 namespace
