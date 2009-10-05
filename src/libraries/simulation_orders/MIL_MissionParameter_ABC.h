@@ -11,6 +11,7 @@
 #define __MIL_MissionParameter_ABC_h_
 
 #include <boost/shared_ptr.hpp>
+#include "game_asn/Simulation.h"
 
 class DEC_Decision_ABC;
 class DEC_Gen_Object;
