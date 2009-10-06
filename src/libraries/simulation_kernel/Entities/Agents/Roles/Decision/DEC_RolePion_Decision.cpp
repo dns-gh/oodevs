@@ -724,7 +724,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_Geometry_SplitLocalisation",
         boost::function< std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int >( TER_Localisation*, unsigned int ) >( boost::bind( &DEC_GeometryFunctions::SplitLocalisationInParts< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Geometry_SplitLocalisationSurface",
-        boost::function< std::vector< boost::shared_ptr< TER_Localisation > >( TER_Localisation*, unsigned int ) >( boost::bind( &DEC_GeometryFunctions::SplitLocalisationInSurfaces< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2 ) ) );
+        boost::function< std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int >( TER_Localisation*, unsigned int ) >( boost::bind( &DEC_GeometryFunctions::SplitLocalisationInSurfaces< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_DecoupeFuseauEnTroncons",
         boost::function< std::vector< boost::shared_ptr< TER_Localisation > >( const MT_Float ) >( boost::bind( &DEC_GeometryFunctions::SplitLocalisationInSections< MIL_AgentPion >, boost::ref( GetPion() ), _1  ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPositionObstacle",

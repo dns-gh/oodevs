@@ -91,7 +91,7 @@ public:
     template< typename T > static boost::shared_ptr< MT_Vector2D > ComputePointBeforeLima( const T& caller, int phaseLine, float distanceBefore );
     template< typename T > static boost::shared_ptr< MT_Vector2D > ComputePointBeforeLimaInFuseau( const T& caller, uint limaID, MT_Float rDistBeforeLima, const MIL_Fuseau* pFuseau );
     template< typename T > static std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > SplitLocalisationInParts   ( const T& caller, TER_Localisation* pLocalisation, unsigned int nNbrParts );
-    template< typename T > static std::vector< boost::shared_ptr< TER_Localisation > > SplitLocalisationInSurfaces( const T& caller, TER_Localisation* pLocalisation, const MT_Float rAverageArea );
+    template< typename T > static std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > SplitLocalisationInSurfaces( const T& caller, TER_Localisation* pLocalisation, const MT_Float rAverageArea );
     template< typename T > static std::vector< boost::shared_ptr< TER_Localisation > > SplitLocalisationInSections( const T& caller, const MT_Float rSectionLength );
     template< typename T > static boost::shared_ptr< MT_Vector2D > ComputeLocalisationBarycenterInFuseau( const T& caller, TER_Localisation* pLocalisation );
     static std::vector< boost::shared_ptr< MT_Vector2D > > ComputeLocalisationPointsForPionsInFuseau( const std::vector< DEC_Decision_ABC* >& pions, TER_Localisation* pLocalisation, MT_Vector2D* pDirDanger, MT_Float rDistMaxBtwPoints );

@@ -56,7 +56,7 @@ std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > 
      std::vector< boost::shared_ptr< TER_Localisation > > result;
 
     TER_Localisation clippedLocalisation;
-    unsigned int errCode = eNoError;
+    unsigned int errCode = eError_LocalisationPasDansFuseau;
     if ( ClipLocalisationInFuseau( *pLocalisation, caller.GetOrderManager().GetFuseau(), clippedLocalisation ) )
         errCode = SplitLocalisation( *pLocalisation, nNbrParts, result );
     return std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int >( result, errCode );
@@ -67,19 +67,20 @@ std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > 
 // Created: JVT 2004-11-03
 // -----------------------------------------------------------------------------
 template< typename T >
-std::vector< boost::shared_ptr< TER_Localisation > > DEC_GeometryFunctions::SplitLocalisationInSurfaces( const T& caller, TER_Localisation* pLocalisation, const MT_Float rAverageArea )
+std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > DEC_GeometryFunctions::SplitLocalisationInSurfaces( const T& caller, TER_Localisation* pLocalisation, const MT_Float rAverageArea )
 {
     assert( pLocalisation );
 
     std::vector< boost::shared_ptr< TER_Localisation > > result;
     
     TER_Localisation clippedLocalisation;
+    unsigned int errCode = eError_LocalisationPasDansFuseau;
     if ( ClipLocalisationInFuseau( *pLocalisation, caller.GetOrderManager().GetFuseau(), clippedLocalisation ) )
     {
         const uint nNbrParts = std::max( (uint)1, (uint)( pLocalisation->GetArea() / rAverageArea ) );
-        SplitLocalisation( *pLocalisation, nNbrParts, result );
+        errCode = SplitLocalisation( *pLocalisation, nNbrParts, result );
     }
-    return result;
+    return std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int >( result, errCode );
 }
 
 // -----------------------------------------------------------------------------
