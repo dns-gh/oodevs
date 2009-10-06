@@ -22,20 +22,20 @@ class NET_ASN_MsgUnitAttributes;
 
 namespace moving
 {
-	class MoveComputer_ABC;
+    class MoveComputer_ABC;
 }
 
 namespace transport
 {
-	class TransportPermissionComputer_ABC;
+    class TransportPermissionComputer_ABC;
 // =============================================================================
 // @class  PHY_RolePion_Transported
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RolePion_Transported : public PHY_RoleInterface_Transported,
-	public tools::AlgorithmModifier_ABC<TransportPermissionComputer_ABC>,
-	public tools::AlgorithmModifier_ABC<moving::MoveComputer_ABC>,
-	public TransportNotificationHandler_ABC
+    public tools::AlgorithmModifier_ABC<TransportPermissionComputer_ABC>,
+    public tools::AlgorithmModifier_ABC<moving::MoveComputer_ABC>,
+    public TransportNotificationHandler_ABC
 {
 
 public:
@@ -95,7 +95,7 @@ private:
     MT_Vector2D  vHumanTransporterPosition_; // position des 'VABs' quand seuls les humains sont héliportés
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Transported* role, const unsigned int /*version*/ );
-  	template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Transported* role, const unsigned int /*version*/ );
+      template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Transported* role, const unsigned int /*version*/ );
 
 };
 

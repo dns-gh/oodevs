@@ -38,7 +38,7 @@ void save_construct_data( Archive& archive, const PHY_RolePion_Transported* role
 template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RolePion_Transported* role, const unsigned int /*version*/ )
 {
-	MIL_AgentPion* pion;
+    MIL_AgentPion* pion;
     archive >> pion;
     ::new( role )PHY_RolePion_Transported( *pion );
 }
@@ -73,7 +73,7 @@ PHY_RolePion_Transported::~PHY_RolePion_Transported()
 void PHY_RolePion_Transported::load( MIL_CheckPointInArchive& file, const uint )
 {
     file >> ::boost::serialization::base_object< PHY_RoleInterface_Transported >( *this )
-		 >> const_cast< MIL_Agent_ABC*& >( pTransporter_ )
+         >> const_cast< MIL_Agent_ABC*& >( pTransporter_ )
          >> vLoadingPosition_
          >> vHumanTransporterPosition_;
          
@@ -88,7 +88,7 @@ void PHY_RolePion_Transported::load( MIL_CheckPointInArchive& file, const uint )
 void PHY_RolePion_Transported::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     file << ::boost::serialization::base_object< PHY_RoleInterface_Transported >( *this )
-		 << pTransporter_
+         << pTransporter_
          << vLoadingPosition_
          << vHumanTransporterPosition_;
 }
@@ -292,7 +292,7 @@ bool PHY_RolePion_Transported::HasHumanTransportersToRecover() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Transported::Execute(TransportPermissionComputer_ABC& alg) const
 {
-	alg.AllowLoading(!IsTransported());
+    alg.AllowLoading(!IsTransported());
 }
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Transported::Execute
@@ -300,7 +300,7 @@ void PHY_RolePion_Transported::Execute(TransportPermissionComputer_ABC& alg) con
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Transported::Execute(moving::MoveComputer_ABC& algorithm) const
 {
-	if(IsTransported())
-		algorithm.NotifyTransported();
+    if(IsTransported())
+        algorithm.NotifyTransported();
 }
 } // namespace transport

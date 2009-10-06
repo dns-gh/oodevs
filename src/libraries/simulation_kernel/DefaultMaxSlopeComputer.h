@@ -1,9 +1,11 @@
-/*
- * DefaultMaxSlopeComputer.h
- *
- *  Created on: 2 oct. 2009
- *      Author: ahc
- */
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2009 MASA Group
+//
+// *****************************************************************************
 
 #ifndef __moving_DefaultMaxSlopeComputer_H__
 #define __moving_DefaultMaxSlopeComputer_H__
@@ -13,18 +15,33 @@
 namespace moving
 {
 
+// =============================================================================
+/** @class  DefaultMaxSlopeComputer
+    @brief  DefaultMaxSlopeComputer
+*/
+// Created: AHC 2009-10-01
+// =============================================================================
 class DefaultMaxSlopeComputer : public MaxSlopeComputer_ABC
 {
 public:
-	DefaultMaxSlopeComputer();
-	virtual ~DefaultMaxSlopeComputer();
+    //! @name Constructors/Destructor
+    //@{
+    DefaultMaxSlopeComputer();
+    virtual ~DefaultMaxSlopeComputer();
+    //@}
 
-	void ApplyOnComponent( PHY_ComposantePion& component );
-	void Reset();
-	double GetMaxSlope() const;
+    //! @name Operations
+    //@{
+    void ApplyOnComponent( PHY_ComposantePion& component );
+    void Reset();
+    double GetMaxSlope() const;
+    //@}
 private:
-	double maxSlope_;
-	bool hasUsableComponent_;
+    //! @name Attributes
+    //@{
+    double maxSlope_;
+    bool hasUsableComponent_;
+    //@}
 };
 
 }

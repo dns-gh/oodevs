@@ -1,22 +1,32 @@
-/*
- * TransportNotificationHandler_ABC.cpp
- *
- *  Created on: 24 sept. 2009
- *      Author: ahc
- */
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2009 MASA Group
+//
+// *****************************************************************************
+
 #include "simulation_kernel_pch.h"
 #include "TransportNotificationHandler_ABC.h"
 
 namespace transport
 {
+// -----------------------------------------------------------------------------
+// Name: TransportNotificationHandler_ABC constructor
+// Created: AHC 2009-10-01
+// -----------------------------------------------------------------------------
+TransportNotificationHandler_ABC::TransportNotificationHandler_ABC()
+{
+}
 
-  TransportNotificationHandler_ABC::TransportNotificationHandler_ABC()
-  {
-  }
-
-  TransportNotificationHandler_ABC::~TransportNotificationHandler_ABC()
-  {
-  }
+// -----------------------------------------------------------------------------
+// Name: TransportNotificationHandler_ABC destructor
+// Created: AHC 2009-10-01
+// -----------------------------------------------------------------------------
+TransportNotificationHandler_ABC::~TransportNotificationHandler_ABC()
+{
+}
 
 // -----------------------------------------------------------------------------
 // Name: TransportNotificationHandler_ABC::LoadForTransport

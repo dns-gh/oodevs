@@ -13,14 +13,26 @@ namespace transport
 class HumanLoadingTimeComputer_ABC;
 class LoadedStateConsistencyComputer_ABC;
 
+// =============================================================================
+/** @class  ConsumptionChangeRequestHandler_ABC
+    @brief  ConsumptionChangeRequestHandler_ABC
+*/
+// Created: AHC 2009-10-01
+// =============================================================================
 class LoadingComputerFactory_ABC
 {
 public:
-	LoadingComputerFactory_ABC();
-	virtual ~LoadingComputerFactory_ABC();
+    //! @name Constructors/Destructor
+    //@{
+    LoadingComputerFactory_ABC();
+    virtual ~LoadingComputerFactory_ABC();
+    //@}
 
-	virtual HumanLoadingTimeComputer_ABC& CreateHumanLoadingTimeComputer() =0;
-	virtual LoadedStateConsistencyComputer_ABC& CreateLoadedStateConsistencyComputer() =0;
+    //! @name Constructors/Destructor
+    //@{
+    virtual HumanLoadingTimeComputer_ABC& CreateHumanLoadingTimeComputer() =0;
+    virtual LoadedStateConsistencyComputer_ABC& CreateLoadedStateConsistencyComputer() =0;
+    //@}
 };
 
 }

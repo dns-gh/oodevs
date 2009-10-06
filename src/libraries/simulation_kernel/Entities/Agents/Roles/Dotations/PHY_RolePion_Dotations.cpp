@@ -95,9 +95,9 @@ void save_construct_data( Archive& archive, const PHY_RolePion_Dotations* role, 
 template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RolePion_Dotations* role, const unsigned int /*version*/ )
 {
-	MIL_AgentPion* pion;
-	archive >> pion;
-	::new( role )PHY_RolePion_Dotations( *pion );
+    MIL_AgentPion* pion;
+    archive >> pion;
+    ::new( role )PHY_RolePion_Dotations( *pion );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,7 +135,7 @@ PHY_RolePion_Dotations::~PHY_RolePion_Dotations()
 void PHY_RolePion_Dotations::load( MIL_CheckPointInArchive& file, const uint )
 {
     file >> ::boost::serialization::base_object< PHY_RoleInterface_Dotations >( *this )
-		 >> pDotations_;
+         >> pDotations_;
          
     uint nID;
     file >> nID;
@@ -156,7 +156,7 @@ void PHY_RolePion_Dotations::save( MIL_CheckPointOutArchive& file, const uint ) 
     unsigned current  = ( pCurrentConsumptionMode_  ? pCurrentConsumptionMode_->GetID()  : (uint)-1 ) ,
              previous = ( pPreviousConsumptionMode_ ? pPreviousConsumptionMode_->GetID() : (uint)-1 );
     file << ::boost::serialization::base_object< PHY_RoleInterface_Dotations >( *this )
-		 << pDotations_
+         << pDotations_
          << current
          << previous
          << reservedConsumptions_;
@@ -558,7 +558,7 @@ void PHY_RolePion_Dotations::Execute( dotation::DotationComputer_ABC& algorithm 
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Dotations::ChangeConsumptionMode(ConsumptionModeChangeRequest_ABC& request)
 {
-	bool ok = SetConsumptionMode(request.GetType());
-	request.ConsumptionModeChanged(ok, this);
+    bool ok = SetConsumptionMode(request.GetType());
+    request.ConsumptionModeChanged(ok, this);
 }
 } // namespace dotation

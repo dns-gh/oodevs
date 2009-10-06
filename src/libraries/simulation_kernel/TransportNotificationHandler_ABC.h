@@ -1,9 +1,11 @@
-/*
- * TransportNotificationHandler_ABC.h
- *
- *  Created on: 24 sept. 2009
- *      Author: ahc
- */
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2009 MASA Group
+//
+// *****************************************************************************
 
 #ifndef __transport_TransportNotificationHandler_ABC_H__
 #define __transport_TransportNotificationHandler_ABC_H__
@@ -14,14 +16,25 @@ class PHY_ComposantePion;
 
 namespace transport
 {
+// =============================================================================
+/** @class  TransportNotificationHandler_ABC
+    @brief  TransportNotificationHandler_ABC
+*/
+// Created: AHC 2009-10-01
+// =============================================================================
 class TransportNotificationHandler_ABC
 {
 public:
+    //! @name Constructors/Destructor
+    //@{
     TransportNotificationHandler_ABC();
     virtual  ~TransportNotificationHandler_ABC();
+    //@}
 
+    //! @name Operations
+    //@{
     virtual void LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
-    virtual void UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );;
+    virtual void UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
     virtual void CancelTransport    ( const MIL_Agent_ABC& transporter );
 
     virtual void MagicLoadPion   ( MIL_Agent_ABC& pion, bool bTransportOnlyLoadable );
@@ -31,6 +44,7 @@ public:
     virtual void NotifyComposanteChanged( const PHY_ComposantePion& composante );
 
     virtual void CheckConsistency();
+    //@}
 };
 
 }

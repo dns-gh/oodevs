@@ -1,9 +1,11 @@
-/*
- * TransportPermissionComputer.h
- *
- *  Created on: 25 sept. 2009
- *      Author: ahc
- */
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2009 MASA Group
+//
+// *****************************************************************************
 
 #ifndef __transportTransportPermissionComputer_H__
 #define __transportTransportPermissionComputer_H__
@@ -13,18 +15,33 @@
 namespace transport
 {
 
+// =============================================================================
+/** @class  ConsumptionChangeRequestHandler_ABC
+    @brief  ConsumptionChangeRequestHandler_ABC
+*/
+// Created: AHC 2009-10-01
+// =============================================================================
 class DefaultTransportPermissionComputer: public transport::TransportPermissionComputer_ABC
 {
 public:
-	DefaultTransportPermissionComputer();
-	virtual ~DefaultTransportPermissionComputer();
+    //! @name Constructors/Destructor
+    //@{
+    DefaultTransportPermissionComputer();
+    virtual ~DefaultTransportPermissionComputer();
+    //@}
 
-	void Reset();
-	void AllowLoading(bool doAllow);
-	bool CanBeLoaded() const;
+    //! @name Operations
+    //@{
+    void Reset();
+    void AllowLoading(bool doAllow);
+    bool CanBeLoaded() const;
+    //@}
 
 private:
-	bool  allow_;
+    //! @name Attributes
+    //@{
+    bool  allow_;
+    //@}
 };
 
 }

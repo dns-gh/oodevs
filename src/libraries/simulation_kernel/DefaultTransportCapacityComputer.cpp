@@ -1,9 +1,11 @@
-/*
- * DefaultTransportCapacityComputer.cpp
- *
- *  Created on: 23 sept. 2009
- *      Author: ahc
- */
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2009 MASA Group
+//
+// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 
@@ -12,53 +14,90 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 
 namespace transport {
-
+    
+    
+// -----------------------------------------------------------------------------
+// Name: DefaultTransportCapacityComputer constructor
+// Created: AHC 2009-10-01
+// -----------------------------------------------------------------------------
 DefaultTransportCapacityComputer::DefaultTransportCapacityComputer() :
-	rWeightCapacity_                ( 0. )
-	, rWeightLoadedPerTimeStep_       ( 0. )
-	, rWeightUnloadedPerTimeStep_     ( 0. )
-	, rMaxComposanteTransportedWeight_( 0. )
+    rWeightCapacity_                ( 0. )
+    , rWeightLoadedPerTimeStep_       ( 0. )
+    , rWeightUnloadedPerTimeStep_     ( 0. )
+    , rMaxComposanteTransportedWeight_( 0. )
 {
-	// TODO Auto-generated constructor stub
+    // TODO Auto-generated constructor stub
 
 }
 
+// -----------------------------------------------------------------------------
+// Name: DefaultTransportCapacityComputer destructor
+// Created: AHC 2009-10-01
+// -----------------------------------------------------------------------------
 DefaultTransportCapacityComputer::~DefaultTransportCapacityComputer()
 {
 }
 
+// -----------------------------------------------------------------------------
+// Name: DefaultTransportCapacityComputer::Reset
+// Created: AHC 2009-10-01
+// -----------------------------------------------------------------------------
 void DefaultTransportCapacityComputer::Reset()
 {
-	rWeightCapacity_=
-		rWeightLoadedPerTimeStep_       =
-		rWeightUnloadedPerTimeStep_     =
-		rMaxComposanteTransportedWeight_ = 0. ;
+    rWeightCapacity_=
+        rWeightLoadedPerTimeStep_       =
+        rWeightUnloadedPerTimeStep_     =
+        rMaxComposanteTransportedWeight_ = 0. ;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DefaultTransportCapacityComputer::ApplyOnComposante
+// Created: AHC 2009-10-01
+// -----------------------------------------------------------------------------
 void DefaultTransportCapacityComputer::ApplyOnComposante( PHY_ComposantePion& composante )
 {
-	if( composante.CanTransportPion() )
-	{
-		rWeightCapacity_                 += composante.GetPionTransporterWeightCapacity           ();
-		rWeightLoadedPerTimeStep_        += composante.GetPionTransporterWeightLoadedPerTimeStep  ();
-		rWeightUnloadedPerTimeStep_      += composante.GetPionTransporterWeightUnloadedPerTimeStep();
-		rMaxComposanteTransportedWeight_  = std::max( rMaxComposanteTransportedWeight_, composante.GetPionTransporterWeightCapacity() );
-	}
+    if( composante.CanTransportPion() )
+    {
+        rWeightCapacity_                 += composante.GetPionTransporterWeightCapacity           ();
+        rWeightLoadedPerTimeStep_        += composante.GetPionTransporterWeightLoadedPerTimeStep  ();
+        rWeightUnloadedPerTimeStep_      += composante.GetPionTransporterWeightUnloadedPerTimeStep();
+        rMaxComposanteTransportedWeight_  = std::max( rMaxComposanteTransportedWeight_, composante.GetPionTransporterWeightCapacity() );
+    }
 }
+
+// -----------------------------------------------------------------------------
+// Name: DefaultTransportCapacityComputer::WeightCapacity
+// Created: AHC 2009-10-01
+// -----------------------------------------------------------------------------
 double DefaultTransportCapacityComputer::WeightCapacity() const
 {
-	return rWeightCapacity_;
+    return rWeightCapacity_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DefaultTransportCapacityComputer::WeightLoadedPerTimeStep
+// Created: AHC 2009-10-01
+// -----------------------------------------------------------------------------
 double DefaultTransportCapacityComputer::WeightLoadedPerTimeStep() const
 {
-	return rWeightLoadedPerTimeStep_;
+    return rWeightLoadedPerTimeStep_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DefaultTransportCapacityComputer::WeightUnloadedPerTimeStep
+// Created: AHC 2009-10-01
+// -----------------------------------------------------------------------------
 double DefaultTransportCapacityComputer::WeightUnloadedPerTimeStep() const
 {
-	return rWeightUnloadedPerTimeStep_;
+    return rWeightUnloadedPerTimeStep_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DefaultTransportCapacityComputer::MaxComposanteTransportedWeight
+// Created: AHC 2009-10-01
+// -----------------------------------------------------------------------------
 double DefaultTransportCapacityComputer::MaxComposanteTransportedWeight() const
 {
-	return rMaxComposanteTransportedWeight_;
+    return rMaxComposanteTransportedWeight_;
 }
 }

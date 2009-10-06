@@ -77,9 +77,9 @@ void save_construct_data( Archive& archive, const PHY_RolePion_NBC* role, const 
 template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RolePion_NBC* role, const unsigned int /*version*/ )
 {
-	MIL_AgentPion* pion;
-	archive >> pion;
-	::new( role )PHY_RolePion_NBC( *pion );
+    MIL_AgentPion* pion;
+    archive >> pion;
+    ::new( role )PHY_RolePion_NBC( *pion );
 }
 
 // -----------------------------------------------------------------------------
@@ -114,7 +114,7 @@ template< typename Archive >
 void PHY_RolePion_NBC::serialize( Archive& file, const uint )
 {
     file & ::boost::serialization::base_object< PHY_RoleInterface_NBC >( *this )
-		 & nbcAgentTypesContaminating_
+         & nbcAgentTypesContaminating_
          & bNbcProtectionSuitWorn_
          & rContaminationState_;
 }
@@ -137,11 +137,11 @@ void PHY_RolePion_NBC::Poison( const MIL_ToxicEffectManipulator& contamination )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_NBC::Contaminate( const MIL_ToxicEffectManipulator& contamination )
 {
-	if( contamination.GetQuantity() < 1e-15 ) // TODO
-		return;
+    if( contamination.GetQuantity() < 1e-15 ) // TODO
+        return;
     
     if( ! bNbcProtectionSuitWorn_ )
-    	pion_.Apply(& nbc::ToxicEffectHandler_ABC::ApplyContamination, contamination);
+        pion_.Apply(& nbc::ToxicEffectHandler_ABC::ApplyContamination, contamination);
 
     nbcAgentTypesContaminating_.insert( &contamination.GetType() );
     
@@ -205,7 +205,7 @@ void PHY_RolePion_NBC::Decontaminate( MT_Float rRatioAgentsWorking )
 void PHY_RolePion_NBC::Execute(moving::SpeedComputer_ABC& algorithm) const
 {
     if( bNbcProtectionSuitWorn_ )
-    	algorithm.AddModifier(MIL_NbcAgentType::GetCoefMaxSpeedModificator(),true);
+        algorithm.AddModifier(MIL_NbcAgentType::GetCoefMaxSpeedModificator(),true);
 }
 
 // -----------------------------------------------------------------------------

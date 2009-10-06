@@ -1,9 +1,11 @@
-/*
- * TransportCapacityComputerFactory_ABC.h
- *
- *  Created on: 23 sept. 2009
- *      Author: ahc
- */
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2009 MASA Group
+//
+// *****************************************************************************
 
 #ifndef __transport_TransportCapacityComputerFactory_ABC_H__
 #define __transport_TransportCapacityComputerFactory_ABC_H__
@@ -15,20 +17,32 @@ class TransportWeightComputer_ABC;
 class TransportPermissionComputer_ABC;
 class TransportStrategy_ABC;
 
+// =============================================================================
+/** @class  TransportComputerFactory_ABC
+    @brief  TransportComputerFactory_ABC
+*/
+// Created: AHC 2009-10-01
+// =============================================================================
 class TransportComputerFactory_ABC
 {
 public:
-	TransportComputerFactory_ABC();
-	virtual ~TransportComputerFactory_ABC();
+    //! @name Constructors/Destructor
+    //@{
+    TransportComputerFactory_ABC();
+    virtual ~TransportComputerFactory_ABC();
+    //@}
 
-	template< typename Archive > void serialize( Archive&, const uint ) {}
-
-	//! @name Operations
-	//@{
-	virtual TransportCapacityComputer_ABC& CreateCapacityComputer( ) const = 0;
-	virtual TransportWeightComputer_ABC& CreateWeightComputer(const TransportStrategy_ABC*) const =0;
-	virtual TransportPermissionComputer_ABC& CreatePermissionComputer() const = 0;
-	//@}
+    //! @name Serialization
+    //@{
+    template< typename Archive > void serialize( Archive&, const uint ) {}
+    //@}
+        
+    //! @name Operations
+    //@{
+    virtual TransportCapacityComputer_ABC& CreateCapacityComputer( ) const = 0;
+    virtual TransportWeightComputer_ABC& CreateWeightComputer(const TransportStrategy_ABC*) const =0;
+    virtual TransportPermissionComputer_ABC& CreatePermissionComputer() const = 0;
+    //@}
 };
 
 }

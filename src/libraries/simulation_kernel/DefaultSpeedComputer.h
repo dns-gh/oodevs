@@ -1,9 +1,11 @@
-/*
- * DefaultSpeedComputer.h
- *
- *  Created on: 1 oct. 2009
- *      Author: ahc
- */
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2009 MASA Group
+//
+// *****************************************************************************
 
 #ifndef DEFAULTSPEEDCOMPUTER_H_
 #define DEFAULTSPEEDCOMPUTER_H_
@@ -13,23 +15,37 @@
 namespace moving
 {
 
+// =============================================================================
+/** @class  DefaultSpeedComputer
+    @brief  DefaultSpeedComputer
+*/
+// Created: AHC 2009-10-01
+// =============================================================================
 class DefaultSpeedComputer : public SpeedComputer_ABC
 {
 public:
-	DefaultSpeedComputer();
-	virtual ~DefaultSpeedComputer();
+    //! @name Constructors/Destructor
+    //@{
+    DefaultSpeedComputer();
+    virtual ~DefaultSpeedComputer();
 
-	void Reset(const SpeedStrategy_ABC* strategy);
-	void ApplyOnComponent(const PHY_ComposantePion&);
-	void ApplyOnReinforcement( MIL_AgentPion&);
-	void ApplyOnPopulation( const DEC_Knowledge_PopulationCollision&);
-	void AddModifier(double ratio, bool isMax=true);
-	double GetSpeed() const;
+    //! @name Operations
+    //@{
+    void Reset(const SpeedStrategy_ABC* strategy);
+    void ApplyOnComponent(const PHY_ComposantePion&);
+    void ApplyOnReinforcement( MIL_AgentPion&);
+    void ApplyOnPopulation( const DEC_Knowledge_PopulationCollision&);
+    void AddModifier(double ratio, bool isMax=true);
+    double GetSpeed() const;
+    //@}
 private:
-	const SpeedStrategy_ABC* strategy_;
-	double speed_;
-	bool hasUsableComponent_;
-	double speedRatio_;
+    //! @name Attributes
+    //@{
+    const SpeedStrategy_ABC* strategy_;
+    double speed_;
+    bool hasUsableComponent_;
+    double speedRatio_;
+    //@}
 };
 
 }

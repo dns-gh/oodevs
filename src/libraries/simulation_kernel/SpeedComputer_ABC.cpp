@@ -1,9 +1,11 @@
-/*
- * SpeedComputer_ABC.cpp
- *
- *  Created on: 1 oct. 2009
- *      Author: ahc
- */
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2009 MASA Group
+//
+// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 
@@ -11,26 +13,37 @@
 
 namespace moving
 {
+    
+// -----------------------------------------------------------------------------
+// Name: SpeedStrategy_ABC constructor
+// Created: AHC 2009-10-01
+// -----------------------------------------------------------------------------
 SpeedStrategy_ABC::SpeedStrategy_ABC()
 {
-	// TODO Auto-generated constructor stub
-
 }
 
+// -----------------------------------------------------------------------------
+// Name: SpeedStrategy_ABC destructor
+// Created: AHC 2009-10-01
+// -----------------------------------------------------------------------------
 SpeedStrategy_ABC::~SpeedStrategy_ABC()
 {
-	// TODO Auto-generated destructor stub
 }
 
+// -----------------------------------------------------------------------------
+// Name: SpeedComputer_ABC constructor
+// Created: AHC 2009-10-01
+// -----------------------------------------------------------------------------
 SpeedComputer_ABC::SpeedComputer_ABC()
 {
-	// TODO Auto-generated constructor stub
-
 }
 
+// -----------------------------------------------------------------------------
+// Name: SpeedComputer_ABC destructor
+// Created: AHC 2009-10-01
+// -----------------------------------------------------------------------------
 SpeedComputer_ABC::~SpeedComputer_ABC()
 {
-	// TODO Auto-generated destructor stub
 }
 
 }

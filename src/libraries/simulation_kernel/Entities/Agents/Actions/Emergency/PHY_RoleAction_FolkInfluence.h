@@ -46,7 +46,10 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint ) {}
+    template< typename Archive > void serialize( Archive& ar, const uint )
+    {
+        ar & boost::serialization::base_object< tools::Role_ABC >( *this );
+    }
     //@}
 
     //! @name 

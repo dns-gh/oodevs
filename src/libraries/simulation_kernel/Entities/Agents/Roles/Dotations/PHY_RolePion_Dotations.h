@@ -43,8 +43,8 @@ namespace dotation
 // =============================================================================
 class PHY_RolePion_Dotations : public PHY_RoleInterface_Dotations
                              , public tools::AlgorithmModifier_ABC< dotation::DotationComputer_ABC >
-							 , public dotation::ConsumptionChangeRequestHandler_ABC
-							 , public surrender::SurrenderNotificationHandler_ABC
+                             , public dotation::ConsumptionChangeRequestHandler_ABC
+                             , public surrender::SurrenderNotificationHandler_ABC
                              , public ConsumeDotationNotificationHandler_ABC
                              , public DotationsActionsNotificationHandler_ABC
 {
@@ -138,8 +138,8 @@ private:
     const PHY_ConsumptionType*  pPreviousConsumptionMode_;
           T_DotationReservedMap reservedConsumptions_;
 
-	template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Dotations* role, const unsigned int /*version*/ );
-	template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Dotations* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Dotations* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Dotations* role, const unsigned int /*version*/ );
 };
 
 } // namespace dotation

@@ -21,7 +21,7 @@ class MIL_Army;
 
 namespace moving
 {
-	class MoveComputer_ABC;
+    class MoveComputer_ABC;
 }
 namespace surrender
 {
@@ -30,7 +30,7 @@ namespace surrender
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RolePion_Surrender : public PHY_RoleInterface_Surrender,
-	public tools::AlgorithmModifier_ABC<moving::MoveComputer_ABC>
+    public tools::AlgorithmModifier_ABC<moving::MoveComputer_ABC>
 {
 
 public:
@@ -83,8 +83,8 @@ private:
     const MIL_Object_ABC*      pPrison_;
           bool                 bHasChanged_;
 
-      	template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Surrender* role, const unsigned int /*version*/ );
-      	template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Surrender* role, const unsigned int /*version*/ );
+          template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Surrender* role, const unsigned int /*version*/ );
+          template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Surrender* role, const unsigned int /*version*/ );
 
 };
 

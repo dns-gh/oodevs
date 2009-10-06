@@ -1,9 +1,11 @@
-/*
- * TransportCapacityComputerFactory_ABC.cpp
- *
- *  Created on: 23 sept. 2009
- *      Author: ahc
- */
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2009 MASA Group
+//
+// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 
@@ -11,13 +13,20 @@
 
 namespace transport {
 
-TransportComputerFactory_ABC::TransportComputerFactory_ABC() {
-	// TODO Auto-generated constructor stub
-
+// -----------------------------------------------------------------------------
+// Name: TransportComputerFactory_ABC constructor
+// Created: AHC 2009-10-01
+// -----------------------------------------------------------------------------
+TransportComputerFactory_ABC::TransportComputerFactory_ABC() 
+{
 }
 
-TransportComputerFactory_ABC::~TransportComputerFactory_ABC() {
-	// TODO Auto-generated destructor stub
+// -----------------------------------------------------------------------------
+// Name: TransportComputerFactory_ABC destructor
+// Created: AHC 2009-10-01
+// -----------------------------------------------------------------------------
+TransportComputerFactory_ABC::~TransportComputerFactory_ABC() 
+{
 }
 
 }

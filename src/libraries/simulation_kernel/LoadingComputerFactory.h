@@ -1,9 +1,11 @@
-/*
- * LoadingComputerFactory.h
- *
- *  Created on: 30 sept. 2009
- *      Author: ahc
- */
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2009 MASA Group
+//
+// *****************************************************************************
 
 #ifndef __transport_LoadingComputerFactory_H__
 #define __transport_LoadingComputerFactory_H__
@@ -13,17 +15,32 @@
 namespace transport
 {
 
+// =============================================================================
+/** @class  LoadingComputerFactory
+    @brief  LoadingComputerFactory
+*/
+// Created: AHC 2009-10-01
+// =============================================================================
 class LoadingComputerFactory: public transport::LoadingComputerFactory_ABC
 {
 public:
-	LoadingComputerFactory();
-	virtual ~LoadingComputerFactory();
+    //! @name Constructors/Destructor
+    //@{
+    LoadingComputerFactory();
+    virtual ~LoadingComputerFactory();
+    //@}
 
-	HumanLoadingTimeComputer_ABC& CreateHumanLoadingTimeComputer();
-	LoadedStateConsistencyComputer_ABC& CreateLoadedStateConsistencyComputer();
+    //! @name Operations
+    //@{
+    HumanLoadingTimeComputer_ABC& CreateHumanLoadingTimeComputer();
+    LoadedStateConsistencyComputer_ABC& CreateLoadedStateConsistencyComputer();
+    //@}
 private:
-	std::auto_ptr<HumanLoadingTimeComputer_ABC> humanLoadingTimeComputer_;
-	std::auto_ptr<LoadedStateConsistencyComputer_ABC> loadedStateConsistencyComputer_;
+    //! @name Attributes
+    //@{
+    std::auto_ptr<HumanLoadingTimeComputer_ABC> humanLoadingTimeComputer_;
+    std::auto_ptr<LoadedStateConsistencyComputer_ABC> loadedStateConsistencyComputer_;
+    //@}
 };
 
 }

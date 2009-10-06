@@ -126,7 +126,8 @@ template< typename Archive >
 inline
 void PHY_RolePion_Communications::serialize( Archive& file, const uint )
 {
-    file & jammers_
+    file & boost::serialization::base_object< PHY_RoleInterface_Communications >( *this )
+         & jammers_
          & bBlackoutActivated_
          & bHasChanged_;
 }

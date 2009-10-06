@@ -74,8 +74,8 @@ private:
     const MIL_Object_ABC*   pCamp_;
           bool              bHasChanged_;
 
-	template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Refugee* role, const unsigned int /*version*/ );
-	template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Refugee* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Refugee* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Refugee* role, const unsigned int /*version*/ );
 
 };
 

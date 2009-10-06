@@ -1,9 +1,11 @@
-/*
- * TransportPermissionComputer_ABC.h
- *
- *  Created on: 25 sept. 2009
- *      Author: ahc
- */
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2009 MASA Group
+//
+// *****************************************************************************
 
 #ifndef __transport_TransportPermissionComputer_ABC_H__
 #define __transport_TransportPermissionComputer_ABC_H__
@@ -11,15 +13,27 @@
 namespace transport
 {
 
+// =============================================================================
+/** @class  TransportPermissionComputer_ABC
+    @brief  TransportPermissionComputer_ABC
+*/
+// Created: AHC 2009-10-01
+// =============================================================================
 class TransportPermissionComputer_ABC
 {
 public:
-	TransportPermissionComputer_ABC();
-	virtual ~TransportPermissionComputer_ABC();
+    //! @name Constructors/Destructor
+    //@{
+    TransportPermissionComputer_ABC();
+    virtual ~TransportPermissionComputer_ABC();
+    //@}
 
-	virtual void Reset() =0;
-	virtual void AllowLoading(bool doAllow) =0;
-	virtual bool CanBeLoaded() const = 0;
+    //! @name Operations
+    //@{
+    virtual void Reset() =0;
+    virtual void AllowLoading(bool doAllow) =0;
+    virtual bool CanBeLoaded() const = 0;
+    //@}
 };
 
 }

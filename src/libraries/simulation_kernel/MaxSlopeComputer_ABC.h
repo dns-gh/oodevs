@@ -1,9 +1,11 @@
-/*
- * MaxSlopeComputer_ABC.h
- *
- *  Created on: 2 oct. 2009
- *      Author: ahc
- */
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2009 MASA Group
+//
+// *****************************************************************************
 
 #ifndef __moving_MaxSlopeComputer_ABC_H__
 #define __moving_MaxSlopeComputer_ABC_H__
@@ -13,14 +15,26 @@
 namespace moving
 {
 
+// =============================================================================
+/** @class  MaxSlopeComputer_ABC
+    @brief  MaxSlopeComputer_ABC
+*/
+// Created: AHC 2009-10-01
+// =============================================================================
 class MaxSlopeComputer_ABC : public OnComponentComputer_ABC
 {
 public:
-	MaxSlopeComputer_ABC();
-	virtual ~MaxSlopeComputer_ABC();
+    //! @name Constructors/Destructor
+    //@{
+    MaxSlopeComputer_ABC();
+    virtual ~MaxSlopeComputer_ABC();
+    //@}
 
-	virtual void Reset() =0;
-	virtual double GetMaxSlope() const =0;
+    //! @name Operations
+    //@{
+    virtual void Reset() =0;
+    virtual double GetMaxSlope() const =0;
+    //@}
 };
 
 }

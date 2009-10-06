@@ -1,9 +1,11 @@
-/*
- * DefaultMaxSlopeComputer.cpp
- *
- *  Created on: 2 oct. 2009
- *      Author: ahc
- */
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2009 MASA Group
+//
+// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 
@@ -13,32 +15,54 @@
 namespace moving
 {
 
+// -----------------------------------------------------------------------------
+// Name: DefaultMaxSlopeComputer constructor
+// Created: AHC 2009-10-01
+// -----------------------------------------------------------------------------
 DefaultMaxSlopeComputer::DefaultMaxSlopeComputer() :
-		maxSlope_ (std::numeric_limits<double>::max()),
-		hasUsableComponent_(false)
+        maxSlope_ (std::numeric_limits<double>::max()),
+        hasUsableComponent_(false)
 {
 }
 
+// -----------------------------------------------------------------------------
+// Name: DefaultMaxSlopeComputer destructor
+// Created: AHC 2009-10-01
+// -----------------------------------------------------------------------------
 DefaultMaxSlopeComputer::~DefaultMaxSlopeComputer()
 {
 }
 
+// -----------------------------------------------------------------------------
+// Name: DefaultMaxSlopeComputer::ApplyOnComponent
+// Created: AHC 2009-10-01
+// -----------------------------------------------------------------------------
 void DefaultMaxSlopeComputer::ApplyOnComponent( PHY_ComposantePion& component )
 {
-	 if( component.CanMove() )
-	{
-		 hasUsableComponent_ = true;
-		maxSlope_ = std::min( maxSlope_, component.GetType().GetMaxSlope() );
-	}
+     if( component.CanMove() )
+    {
+         hasUsableComponent_ = true;
+        maxSlope_ = std::min( maxSlope_, component.GetType().GetMaxSlope() );
+    }
 }
+
+// -----------------------------------------------------------------------------
+// Name: DefaultMaxSlopeComputer::Reset
+// Created: AHC 2009-10-01
+// -----------------------------------------------------------------------------
 void DefaultMaxSlopeComputer::Reset()
 {
-	maxSlope_ = std::numeric_limits<double>::max();
-	hasUsableComponent_ = false;
+    maxSlope_ = std::numeric_limits<double>::max();
+    hasUsableComponent_ = false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DefaultMaxSlopeComputer::GetMaxSlope
+// Created: AHC 2009-10-01
+// -----------------------------------------------------------------------------
 double DefaultMaxSlopeComputer::GetMaxSlope() const
 {
-	return hasUsableComponent_ ? maxSlope_ : 0;
+    return hasUsableComponent_ ? maxSlope_ : 0;
 }
 
 }

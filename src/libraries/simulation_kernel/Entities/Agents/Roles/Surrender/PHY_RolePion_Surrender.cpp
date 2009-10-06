@@ -37,7 +37,7 @@ void save_construct_data( Archive& archive, const PHY_RolePion_Surrender* role, 
 template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RolePion_Surrender* role, const unsigned int /*version*/ )
 {
-	MIL_AgentPion* pion;
+    MIL_AgentPion* pion;
     archive >> pion;
     ::new( role )PHY_RolePion_Surrender( *pion );
 }
@@ -76,7 +76,7 @@ template< typename Archive >
 void PHY_RolePion_Surrender::serialize( Archive& file, const uint )
 {
     file & boost::serialization::base_object< PHY_RoleInterface_Surrender >( *this )
-		 & bPrisoner_
+         & bPrisoner_
          & const_cast< MIL_Object_ABC*& >( pPrison_ );
 }
 
@@ -258,7 +258,7 @@ bool PHY_RolePion_Surrender::IsPrisoner() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Surrender::Execute(moving::MoveComputer_ABC& algorithm) const
 {
-	if(IsSurrendered())
-		algorithm.NotifySurrendered();
+    if(IsSurrendered())
+        algorithm.NotifySurrendered();
 }
 } // namespace surrender

@@ -1,9 +1,11 @@
-/*
- * DefaultHumanLoadingTimeComputer.h
- *
- *  Created on: 30 sept. 2009
- *      Author: ahc
- */
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2009 MASA Group
+//
+// *****************************************************************************
 
 #ifndef DEFAULTHUMANLOADINGTIMECOMPUTER_H_
 #define DEFAULTHUMANLOADINGTIMECOMPUTER_H_
@@ -13,22 +15,37 @@
 namespace transport
 {
 
+// =============================================================================
+/** @class  DefaultHumanLoadingTimeComputer
+    @brief  DefaultHumanLoadingTimeComputer
+*/
+// Created: AHC 2009-10-01
+// =============================================================================
 class DefaultHumanLoadingTimeComputer: public transport::HumanLoadingTimeComputer_ABC
 {
 public:
-	DefaultHumanLoadingTimeComputer();
-	virtual ~DefaultHumanLoadingTimeComputer();
+    //! @name Constructors/Destructor
+    //@{
+    DefaultHumanLoadingTimeComputer();
+    virtual ~DefaultHumanLoadingTimeComputer();
+    //@}
 
-	void Reset();
-	void AddHumans(int humansCount);
-	void AddTime(double loadingPerTimeStep, double unloadingPerTimeStep);
-	int GetHumansCount() const;
-	double GetHumansLoadedPerTimeStep() const;
-	double GetHumansUnloadedPerTimeStep() const;
+    //! @name Operations
+    //@{
+    void Reset();
+    void AddHumans(int humansCount);
+    void AddTime(double loadingPerTimeStep, double unloadingPerTimeStep);
+    int GetHumansCount() const;
+    double GetHumansLoadedPerTimeStep() const;
+    double GetHumansUnloadedPerTimeStep() const;
+    //@}
 private:
-	int humansCount_;
-	double humansLoadedPerTimeStep_;
-	double humansUnloadedPerTimeStep_;
+    //! @name Attributes
+    //@{
+    int humansCount_;
+    double humansLoadedPerTimeStep_;
+    double humansUnloadedPerTimeStep_;
+    //@}
 };
 
 }
