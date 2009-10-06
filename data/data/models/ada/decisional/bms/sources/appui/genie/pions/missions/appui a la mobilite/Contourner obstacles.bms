@@ -174,7 +174,11 @@ node "BEH_Dep_GEN_Ouvrir_ReagirFaceAObjetDeType"
     activate = function( self )
         local repObjet = nil
         local rDist = 0
-        local bObjetProcheSurItineraire = DEC_Itineraire_ProchainObjet( repObjet, rDist, self._namedParams.eTypeObjet )
+        local bObjetProcheSurItineraire = false
+        bObjetProcheSurItineraire = DEC_Itineraire_ProchainObjet( repObjet, rDist, self._namedParams.eTypeObjet )
+        repObjet = bObjetProcheSurItineraire.second.first
+        rDist = bObjetProcheSurItineraire.second.second
+        bObjetProcheSurItineraire = bObjetProcheSurItineraire.first
         if( bObjetProcheSurItineraire and DEC_ConnaissanceObjet_EstValide( repObjet ) and rDist < 200 and not S_Obj_EstContourne( repObjet ) ) then
             Activate( self.activations.BEH_Objet_Pion_GEN_BrecherObstacle, 1, { repObjet, } )
         end

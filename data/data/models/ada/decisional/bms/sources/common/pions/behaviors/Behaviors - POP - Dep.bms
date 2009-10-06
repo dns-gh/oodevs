@@ -91,8 +91,6 @@ node "BEH_EsquiverLaPopulationIncontrolable"
             do
                 local eValiditeRequete = nil
                 self.prevDomination = DEC_ConnaissancePopulation_Domination( self._namedParams.pop, eValiditeRequete )
-                eValiditeRequete = self.prevDomination.second
-                self.prevDomination = self.prevDomination.first
             end
 --[[//on checke les changements de ROE
 ]]        end
@@ -111,8 +109,6 @@ node "BEH_EsquiverLaPopulationIncontrolable"
                 self.eROEPopulation = eRoe
                 local eValiditeRequete = nil
                 self.prevDomination = DEC_ConnaissancePopulation_Domination( self._namedParams.pop, eValiditeRequete )
-                eValiditeRequete = self.prevDomination.second
-                self.prevDomination = self.prevDomination.first
                                 Feedback( self.feedbacks["onHalt"], { "BEH_EsquiverLaPopulationIncontrolable" } )
 Halt( self )
                 do return end
