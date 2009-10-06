@@ -1,5 +1,7 @@
 -- Functions used that are neither DEC_, DIA_ nor S_ :
 
+require "math"
+
 include "Common/Types.bms"
 
 function BoolToString( boolVar )
