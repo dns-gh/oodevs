@@ -38,6 +38,7 @@
 #include "simulation_kernel/ConsumptionComputerFactory_ABC.h"
 #include "simulation_kernel/ConsumptionModeChangeRequest_ABC.h"
 #include "simulation_kernel/ConsumptionChangeRequestHandler_ABC.h"
+#include "simulation_kernel/ObjectCollisionNotificationHandler_ABC.h"
 #include "AlgorithmsFactories.h"
 
 BOOST_CLASS_EXPORT_GUID( moving::PHY_RoleAction_Moving, "PHY_RoleAction_Moving" )
@@ -406,8 +407,7 @@ void PHY_RoleAction_Moving::NotifyMovingOnSpecialPoint( const DEC_PathPoint& poi
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Moving::NotifyMovingInsideObject( MIL_Object_ABC& object )
 {
-    assert( pRoleLocation_ );
-    pRoleLocation_->NotifyMovingInsideObject( object );
+    pion_.Apply(&terrain::ObjectCollisionNotificationHandler_ABC::NotifyMovingInsideObject, object );
 }
 
 // -----------------------------------------------------------------------------
@@ -416,8 +416,7 @@ void PHY_RoleAction_Moving::NotifyMovingInsideObject( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Moving::NotifyMovingOutsideObject( MIL_Object_ABC& object )
 {
-    assert( pRoleLocation_ );
-    pRoleLocation_->NotifyMovingOutsideObject( object );
+    pion_.Apply(&terrain::ObjectCollisionNotificationHandler_ABC::NotifyMovingInsideObject, object );
 }
 
 // -----------------------------------------------------------------------------

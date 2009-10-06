@@ -37,11 +37,11 @@ public:
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetDirectionShadow )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( NotifyPopulationCollision_Flow )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( NotifyPopulationCollision_Concentration )
-        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( NotifyObjectCollision )
+        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( NotifyTerrainObjectCollision )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( NotifyMovingInsideObject )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( NotifyMovingOutsideObject )
-        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( NotifyPutInsideObject )
-        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( NotifyPutOutsideObject )
+        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( NotifyTerrainPutInsideObject )
+        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( NotifyTerrainPutOutsideObject )
     {
     }
     virtual ~MockRoleLocation() {}
@@ -73,11 +73,11 @@ public:
     MOCKPP_VOID_CHAINABLE_EXT1       ( MockRoleLocation, NotifyPopulationCollision, MIL_PopulationFlow&, _Flow, MIL_PopulationFlow );
     MOCKPP_VOID_CHAINABLE_EXT1       ( MockRoleLocation, NotifyPopulationCollision, MIL_PopulationConcentration&, _Concentration, MIL_PopulationConcentration );
 
-    MOCKPP_VOID_CHAINABLE_EXT1       ( MockRoleLocation, NotifyObjectCollision, MIL_Object_ABC&, , MIL_Object_ABC );
+    MOCKPP_VOID_CHAINABLE_EXT1       ( MockRoleLocation, NotifyTerrainObjectCollision, MIL_Object_ABC&, , MIL_Object_ABC );
     MOCKPP_VOID_CHAINABLE_EXT1       ( MockRoleLocation, NotifyMovingInsideObject, MIL_Object_ABC&, , MIL_Object_ABC );
     MOCKPP_VOID_CHAINABLE_EXT1       ( MockRoleLocation, NotifyMovingOutsideObject, MIL_Object_ABC&, , MIL_Object_ABC );
-    MOCKPP_VOID_CHAINABLE_EXT1       ( MockRoleLocation, NotifyPutInsideObject, MIL_Object_ABC&, , MIL_Object_ABC );
-    MOCKPP_VOID_CHAINABLE_EXT1       ( MockRoleLocation, NotifyPutOutsideObject, MIL_Object_ABC&, , MIL_Object_ABC );
+    MOCKPP_VOID_CHAINABLE_EXT1       ( MockRoleLocation, NotifyTerrainPutInsideObject, MIL_Object_ABC&, , MIL_Object_ABC );
+    MOCKPP_VOID_CHAINABLE_EXT1       ( MockRoleLocation, NotifyTerrainPutOutsideObject, MIL_Object_ABC&, , MIL_Object_ABC );
 
     virtual void Update( bool bIsDead ) {};
     virtual void Clean () {};

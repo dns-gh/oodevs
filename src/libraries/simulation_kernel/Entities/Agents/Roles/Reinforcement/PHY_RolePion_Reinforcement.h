@@ -16,6 +16,7 @@
 #include "simulation_kernel/TransportNotificationHandler_ABC.h"
 #include "simulation_kernel/ConsumptionChangeRequestHandler_ABC.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
+#include "simulation_kernel/ObjectCollisionNotificationHandler_ABC.h"
 
 class MIL_AgentPion;
 class NET_ASN_MsgUnitAttributes;
@@ -34,7 +35,8 @@ class PHY_RolePion_Reinforcement : public PHY_RoleInterface_Reinforcement,
 	public tools::AlgorithmModifier_ABC< moving::SpeedComputer_ABC>,
 	public tools::AlgorithmModifier_ABC< moving::MoveComputer_ABC>,
 	public dotation::ConsumptionChangeRequestHandler_ABC,
-	public transport::TransportNotificationHandler_ABC
+	public transport::TransportNotificationHandler_ABC,
+	public terrain::ObjectCollisionNotificationHandler_ABC
 {
 
 public:
@@ -71,9 +73,13 @@ public:
     void ChangeConsumptionMode(dotation::ConsumptionModeChangeRequest_ABC& request);
     //@}
 
-	//! @name Event
+	//! @name Event handlers
     //@{
-    void LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );	
+    void LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
+    void NotifyMovingInsideObject ( MIL_Object_ABC& object );
+    void NotifyMovingOutsideObject( MIL_Object_ABC& object );
+    void NotifyPutInsideObject( MIL_Object_ABC& object );
+    void NotifyPutOutsideObject( MIL_Object_ABC& object );
     //@}
 
     //! @name Network

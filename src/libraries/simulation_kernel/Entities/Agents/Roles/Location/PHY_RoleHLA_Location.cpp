@@ -45,61 +45,25 @@ PHY_RoleHLA_Location::~PHY_RoleHLA_Location()
 // Name: PHY_RoleHLA_Location::NotifyObjectCollision
 // Created: AGE 2004-11-09
 // -----------------------------------------------------------------------------
-void PHY_RoleHLA_Location::NotifyObjectCollision( MIL_Object_ABC& /*object*/ )
+void PHY_RoleHLA_Location::NotifyTerrainObjectCollision( MIL_Object_ABC& /*object*/ )
 {
     // NOTHING (used for knowledge)
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleHLA_Location::NotifyPopulationCollision
-// Created: NLD 2005-10-21
-// -----------------------------------------------------------------------------
-void PHY_RoleHLA_Location::NotifyPopulationCollision( MIL_PopulationFlow& /*population*/ )
-{
-    // NOTHING ?
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleHLA_Location::NotifyPopulationCollision
-// Created: NLD 2005-10-21
-// -----------------------------------------------------------------------------
-void PHY_RoleHLA_Location::NotifyPopulationCollision( MIL_PopulationConcentration& /*population*/ )
-{
-    // NOTHING ?
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleHLA_Location::NotifyMovingInsideObject
+// Name: PHY_RoleHLA_Location::NotifyTerrainPutInsideObject
 // Created: NLD 2004-11-25
 // -----------------------------------------------------------------------------
-void PHY_RoleHLA_Location::NotifyMovingInsideObject( MIL_Object_ABC& object )
-{
-    object.NotifyAgentMovingInside( pion_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleHLA_Location::NotifyMovingOutsideObject
-// Created: NLD 2004-11-25
-// -----------------------------------------------------------------------------
-void PHY_RoleHLA_Location::NotifyMovingOutsideObject( MIL_Object_ABC& object )
-{
-    object.NotifyAgentMovingOutside( pion_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleHLA_Location::NotifyPutInsideObject
-// Created: NLD 2004-11-25
-// -----------------------------------------------------------------------------
-void PHY_RoleHLA_Location::NotifyPutInsideObject( MIL_Object_ABC& object )
+void PHY_RoleHLA_Location::NotifyTerrainPutInsideObject( MIL_Object_ABC& object )
 {
     object.NotifyAgentPutInside( pion_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleHLA_Location::NotifyPutOutsideObject
+// Name: PHY_RoleHLA_Location::NotifyTerrainPutOutsideObject
 // Created: NLD 2004-11-25
 // -----------------------------------------------------------------------------
-void PHY_RoleHLA_Location::NotifyPutOutsideObject( MIL_Object_ABC& object )
+void PHY_RoleHLA_Location::NotifyTerrainPutOutsideObject( MIL_Object_ABC& object )
 {
     object.NotifyAgentPutOutside( pion_ );
 }

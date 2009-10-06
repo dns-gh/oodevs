@@ -41,14 +41,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyPopulationCollision( MIL_PopulationFlow&          population ) = 0;
-    virtual void NotifyPopulationCollision( MIL_PopulationConcentration& population ) = 0;
-    virtual void NotifyObjectCollision    ( MIL_Object_ABC& object ) = 0;
+    virtual void NotifyTerrainObjectCollision    ( MIL_Object_ABC& object ) = 0;
 
-    virtual void NotifyMovingInsideObject ( MIL_Object_ABC& object ) = 0;
-    virtual void NotifyMovingOutsideObject( MIL_Object_ABC& object ) = 0;
-    virtual void NotifyPutInsideObject    ( MIL_Object_ABC& object ) = 0;
-    virtual void NotifyPutOutsideObject   ( MIL_Object_ABC& object ) = 0;
+    virtual void NotifyTerrainPutInsideObject    ( MIL_Object_ABC& object ) = 0;
+    virtual void NotifyTerrainPutOutsideObject   ( MIL_Object_ABC& object ) = 0;
 
     virtual void Update( bool bIsDead ) = 0;
     virtual void Clean () = 0;

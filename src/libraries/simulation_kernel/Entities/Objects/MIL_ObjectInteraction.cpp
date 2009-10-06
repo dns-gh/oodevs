@@ -89,14 +89,14 @@ void MIL_ObjectInteraction::UpdateInteraction( MIL_Object_ABC& object, const TER
                          newInside      .begin(), newInside      .end(), 
                          std::insert_iterator< T_AgentSet >( intersection, intersection.end() ) );
     for( CIT_AgentSet it = intersection.begin(); it != intersection.end(); ++it )
-        (**it).GetRole< PHY_RoleInterface_Location >().NotifyPutOutsideObject( object );
+        (**it).GetRole< PHY_RoleInterface_Location >().NotifyTerrainPutOutsideObject( object );
 
     intersection.clear();
     std::set_difference( newInside      .begin(), newInside      .end(), 
                          agentInsideSet_.begin(), agentInsideSet_.end(), 
                          std::insert_iterator< T_AgentSet >( intersection, intersection.end() ) );
     for( CIT_AgentSet it = intersection.begin(); it != intersection.end(); ++it )
-        (**it).GetRole< PHY_RoleInterface_Location >().NotifyPutInsideObject( object );
+        (**it).GetRole< PHY_RoleInterface_Location >().NotifyTerrainPutInsideObject( object );
 }
 
 // -----------------------------------------------------------------------------
@@ -167,7 +167,7 @@ void MIL_ObjectInteraction::NotifyAgentPutOutside( MIL_Agent_ABC& agent )
 void MIL_ObjectInteraction::ClearInteraction( MIL_Object_ABC& object )
 {
     while( !agentInsideSet_.empty() )
-        (**agentInsideSet_.begin()).GetRole< PHY_RoleInterface_Location >().NotifyPutOutsideObject( object );
+        (**agentInsideSet_.begin()).GetRole< PHY_RoleInterface_Location >().NotifyTerrainPutOutsideObject( object );
 }
 
 // -----------------------------------------------------------------------------

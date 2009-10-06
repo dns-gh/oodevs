@@ -24,6 +24,7 @@
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
+#include "simulation_kernel/PopulationCollisionNotificationHandler_ABC.h"
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( MIL_PopulationConcentration, "MIL_PopulationConcentration" )
@@ -155,7 +156,7 @@ void MIL_PopulationConcentration::UpdateLocation()
 // -----------------------------------------------------------------------------
 void MIL_PopulationConcentration::NotifyCollision( MIL_Agent_ABC& agent )
 {
-    agent.GetRole< PHY_RoleInterface_Location >().NotifyPopulationCollision( *this );
+    agent.Apply( &population::PopulationCollisionNotificationHandler_ABC::NotifyConcentrationCollision, *this );
 }
 
 // -----------------------------------------------------------------------------

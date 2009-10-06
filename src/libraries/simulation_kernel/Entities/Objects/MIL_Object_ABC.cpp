@@ -77,7 +77,7 @@ void MIL_Object_ABC::Initialize( const TER_Localisation& localisation )
     TER_Agent_ABC::T_AgentPtrVector agentsInsideObject;
     TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( GetLocalisation(), agentsInsideObject );
     for( TER_Agent_ABC::CIT_AgentPtrVector itAgent = agentsInsideObject.begin(); itAgent != agentsInsideObject.end(); ++itAgent )
-        static_cast< PHY_RoleInterface_Location& >( **itAgent ).NotifyPutInsideObject( *this );
+        static_cast< PHY_RoleInterface_Location& >( **itAgent ).NotifyTerrainPutInsideObject( *this );
 }
 
 // =============================================================================

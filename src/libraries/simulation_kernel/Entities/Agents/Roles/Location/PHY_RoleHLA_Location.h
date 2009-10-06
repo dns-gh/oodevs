@@ -38,14 +38,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyPopulationCollision( MIL_PopulationFlow&          population );
-    virtual void NotifyPopulationCollision( MIL_PopulationConcentration& population );
-    virtual void NotifyObjectCollision    ( MIL_Object_ABC& object );
+    virtual void NotifyTerrainObjectCollision    ( MIL_Object_ABC& object );
 
-    virtual void NotifyMovingInsideObject ( MIL_Object_ABC& object );
-    virtual void NotifyMovingOutsideObject( MIL_Object_ABC& object );
-    virtual void NotifyPutInsideObject    ( MIL_Object_ABC& object );
-    virtual void NotifyPutOutsideObject   ( MIL_Object_ABC& object );
+    virtual void NotifyTerrainPutInsideObject    ( MIL_Object_ABC& object );
+    virtual void NotifyTerrainPutOutsideObject   ( MIL_Object_ABC& object );
 
     void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
 

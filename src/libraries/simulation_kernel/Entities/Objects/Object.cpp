@@ -249,7 +249,7 @@ void Object::ProcessAgentExiting( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void Object::ProcessAgentMovingInside( MIL_Agent_ABC& agent )
 {
-    agent.GetRole< PHY_RoleInterface_Location >().NotifyObjectCollision( *this );
+    agent.GetRole< PHY_RoleInterface_Location >().NotifyTerrainObjectCollision( *this );
     std::for_each( interactives_.begin(), interactives_.end(), 
                    boost::bind( &MIL_InteractiveContainer_ABC::ProcessAgentMovingInside, _1, boost::ref( *this ), boost::ref( agent ) ) );
 }
@@ -260,7 +260,7 @@ void Object::ProcessAgentMovingInside( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void Object::ProcessAgentInside( MIL_Agent_ABC& agent )
 {
-    agent.GetRole< PHY_RoleInterface_Location >().NotifyObjectCollision( *this );
+    agent.GetRole< PHY_RoleInterface_Location >().NotifyTerrainObjectCollision( *this );
     std::for_each( interactives_.begin(), interactives_.end(), 
                    boost::bind( &MIL_InteractiveContainer_ABC::ProcessAgentInside, _1, boost::ref( *this ), boost::ref( agent ) ) );
 }

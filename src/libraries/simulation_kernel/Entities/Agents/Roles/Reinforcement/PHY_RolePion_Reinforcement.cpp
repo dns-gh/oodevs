@@ -20,6 +20,7 @@
 #include "simulation_kernel/MoveComputer_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/ConsumptionModeChangeRequest_ABC.h"
+#include "simulation_kernel/ObjectCollisionNotificationHandler_ABC.h""
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Reinforcement, "PHY_RolePion_Reinforcement" )
 
@@ -151,7 +152,6 @@ void PHY_RolePion_Reinforcement::CancelReinforcement()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Reinforcement::Update( bool bIsDead )
 {
-
     if( !pPionReinforced_ )
         return;
 
@@ -308,4 +308,48 @@ void PHY_RolePion_Reinforcement::ChangeConsumptionMode(dotation::ConsumptionMode
 		MIL_AgentPion& reinforcement = **itPion;
 		reinforcement.Apply(&ConsumptionChangeRequestHandler_ABC::ChangeConsumptionMode, request);
 	}
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Reinforcement::NotifyMovingOutsideObject
+// Created: AHC 2009-10-06
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Reinforcement::NotifyMovingInsideObject( MIL_Object_ABC& object )
+{
+    const T_PionSet& reinforcements = GetReinforcements();
+    for( CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
+        (**it).Apply(&terrain::ObjectCollisionNotificationHandler_ABC::NotifyMovingInsideObject, object );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Reinforcement::NotifyMovingOutsideObject
+// Created: AHC 2009-10-06
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Reinforcement::NotifyMovingOutsideObject( MIL_Object_ABC& object )
+{
+    const T_PionSet& reinforcements = GetReinforcements();
+    for( CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
+        (**it).Apply(&terrain::ObjectCollisionNotificationHandler_ABC::NotifyMovingOutsideObject, object );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Reinforcement::NotifyPutInsideObject
+// Created: AHC 2009-10-06
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Reinforcement::NotifyPutInsideObject( MIL_Object_ABC& object )
+{
+    const T_PionSet& reinforcements = GetReinforcements();
+        for( CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
+            (**it).Apply(&terrain::ObjectCollisionNotificationHandler_ABC::NotifyPutInsideObject, object );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Reinforcement::NotifyPutOutsideObject
+// Created: AHC 2009-10-06
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Reinforcement::NotifyPutOutsideObject( MIL_Object_ABC& object )
+{
+    const T_PionSet& reinforcements = GetReinforcements();
+        for( CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
+            (**it).Apply(&terrain::ObjectCollisionNotificationHandler_ABC::NotifyPutOutsideObject, object );
 }

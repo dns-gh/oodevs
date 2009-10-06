@@ -29,6 +29,7 @@
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_Tools.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
+#include "simulation_kernel/PopulationCollisionNotificationHandler_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( MIL_PopulationFlow, "MIL_PopulationFlow" )
 
@@ -551,7 +552,7 @@ void MIL_PopulationFlow::UpdateLocation()
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::NotifyCollision( MIL_Agent_ABC& agent )
 {
-    agent.GetRole< PHY_RoleInterface_Location >().NotifyPopulationCollision( *this );
+    agent.Apply( &population::PopulationCollisionNotificationHandler_ABC::NotifyFlowCollision, *this );
 }
 
 // -----------------------------------------------------------------------------

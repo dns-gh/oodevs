@@ -104,7 +104,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NoNBC )
     MockAgent agent;
     agent.RegisterRole< MockRoleLocation >();
     {
-        MOCKPP_CHAINER_FOR( MockRoleLocation, NotifyObjectCollision ) ( &agent.GetRole< MockRoleLocation >() ).expects( mockpp::once() );
+        MOCKPP_CHAINER_FOR( MockRoleLocation, NotifyTerrainObjectCollision ) ( &agent.GetRole< MockRoleLocation >() ).expects( mockpp::once() );
         MOCKPP_CHAINER_FOR( MockRoleLocation, GetPositionShadow )     ( &agent.GetRole< MockRoleLocation >() )
             .expects( mockpp::once() ).will( returnValue( static_cast< const MT_Vector2D* >( &position ) ) );
     }
@@ -180,7 +180,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NBC )
     MockAgent agent;
     agent.RegisterRole< MockRoleLocation >();    
     {
-        MOCKPP_CHAINER_FOR( MockRoleLocation, NotifyObjectCollision ) ( &agent.GetRole< MockRoleLocation >() ).expects( mockpp::once() );
+        MOCKPP_CHAINER_FOR( MockRoleLocation, NotifyTerrainObjectCollision ) ( &agent.GetRole< MockRoleLocation >() ).expects( mockpp::once() );
         MOCKPP_CHAINER_FOR( MockRoleLocation, GetPositionShadow )     ( &agent.GetRole< MockRoleLocation >() )
             .expects( mockpp::once() ).will( returnValue( static_cast< const MT_Vector2D* >( &position ) ) );
     }
@@ -231,7 +231,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Protection )
     MockAgent agent;
     agent.RegisterRole< MockRoleLocation >();    
     {
-        MOCKPP_CHAINER_FOR( MockRoleLocation, NotifyObjectCollision ) ( &agent.GetRole< MockRoleLocation >() ).expects( mockpp::once() );
+        MOCKPP_CHAINER_FOR( MockRoleLocation, NotifyTerrainObjectCollision ) ( &agent.GetRole< MockRoleLocation >() ).expects( mockpp::once() );
         MOCKPP_CHAINER_FOR( MockRoleLocation, GetPositionShadow )     ( &agent.GetRole< MockRoleLocation >() )
             .expects( mockpp::once() ).will( returnValue( static_cast< const MT_Vector2D* >( &position ) ) );
     }
@@ -323,7 +323,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Supply )
     }
     agent.RegisterRole< MockRoleLocation >();
     {
-        MOCKPP_CHAINER_FOR( MockRoleLocation, NotifyObjectCollision )( &agent.GetRole< MockRoleLocation >() ).expects( mockpp::once() );
+        MOCKPP_CHAINER_FOR( MockRoleLocation, NotifyTerrainObjectCollision )( &agent.GetRole< MockRoleLocation >() ).expects( mockpp::once() );
         MOCKPP_CHAINER_FOR( MockRoleLocation, GetPositionShadow )    ( &agent.GetRole< MockRoleLocation >() )
             .expects( mockpp::once() ).will( returnValue( static_cast< const MT_Vector2D* >( &position ) ) );
     }

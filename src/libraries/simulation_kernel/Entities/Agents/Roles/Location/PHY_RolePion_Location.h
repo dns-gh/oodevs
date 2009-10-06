@@ -17,6 +17,8 @@
 #include "PHY_RoleInterface_Location.h"
 
 #include "MT_Tools/AlgorithmModifier_ABC.h"
+#include "simulation_kernel/PopulationCollisionNotificationHandler_ABC.h"
+#include "simulation_kernel/ObjectCollisionNotificationHandler_ABC.h"
 
 class MIL_AgentPion;
 
@@ -24,7 +26,9 @@ class MIL_AgentPion;
 // @class  PHY_RolePion_Location
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RolePion_Location : public PHY_RoleInterface_Location
+class PHY_RolePion_Location : public PHY_RoleInterface_Location,
+    public population::PopulationCollisionNotificationHandler_ABC,
+    public terrain::ObjectCollisionNotificationHandler_ABC
 {
 
 public:
@@ -51,15 +55,19 @@ public:
     virtual void Move     ( const MT_Vector2D& vNewPosition, const MT_Vector2D& vNewDirection, MT_Float rNewSpeed );
     virtual void Follow   ( const MIL_Agent_ABC& agent );
 
-    virtual void NotifyPopulationCollision( MIL_PopulationFlow&          population );
-    virtual void NotifyPopulationCollision( MIL_PopulationConcentration& population );
-    virtual void NotifyObjectCollision    ( MIL_Object_ABC& object );
+    virtual void NotifyTerrainObjectCollision    ( MIL_Object_ABC& object );
+    virtual void NotifyTerrainPutInsideObject    ( MIL_Object_ABC& object );
+    virtual void NotifyTerrainPutOutsideObject   ( MIL_Object_ABC& object );
+    //@}
 
+    //! @name Event handlers
+    //@{
     virtual void NotifyMovingInsideObject ( MIL_Object_ABC& object );
     virtual void NotifyMovingOutsideObject( MIL_Object_ABC& object );
-    virtual void NotifyPutInsideObject    ( MIL_Object_ABC& object );
-    virtual void NotifyPutOutsideObject   ( MIL_Object_ABC& object );
-
+    virtual void NotifyPutInsideObject( MIL_Object_ABC& object ) ;
+    virtual void NotifyPutOutsideObject( MIL_Object_ABC& object );
+    virtual void NotifyFlowCollision( MIL_PopulationFlow&          population );
+    virtual void NotifyConcentrationCollision( MIL_PopulationConcentration& population );
     //@}
 
     //! @name Accessors

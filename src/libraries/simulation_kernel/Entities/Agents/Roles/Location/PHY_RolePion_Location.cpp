@@ -11,15 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Location.h"
-#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
-#include "Entities/Agents/Roles/Reinforcement/PHY_RoleInterface_Reinforcement.h"
-#include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
-#include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
-#include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
-#include "Entities/Agents/Roles/Communications/PHY_RoleInterface_Communications.h"
-#include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
-#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
@@ -35,7 +26,8 @@
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/LocationComputer_ABC.h"
 #include "simulation_kernel/LocationComputerFactory_ABC.h"
-
+#include "simulation_kernel/MoveComputer_ABC.h"
+#include "simulation_kernel/MoveComputerFactory_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 
 using namespace location;
@@ -208,7 +200,6 @@ void PHY_RolePion_Location::SetCurrentSpeed( MT_Float rSpeed )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::Move( const MT_Vector2D& vNewPosition, const MT_Vector2D& vNewDirection, MT_Float rNewSpeed )
 {
-
     SetCurrentSpeed( rNewSpeed     );
     SetPosition    ( vNewPosition  );
     SetDirection   ( vNewDirection );
@@ -264,9 +255,10 @@ void PHY_RolePion_Location::Show( const MT_Vector2D& vPosition )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::MagicMove( const MT_Vector2D& vPosition )
 {
+    moving::MoveComputer_ABC& moveComputer = pion_.GetAlgorithms().moveComputerFactory_->CreateMoveComputer();
+    pion_.Execute(moveComputer);
 
-    if(    pion_.GetRole< PHY_RoleInterface_Reinforcement      >().IsReinforcing()
-        || pion_.GetRole< transport::PHY_RoleInterface_Transported   >().IsTransported() )
+    if(!moveComputer.CanMove() && !moveComputer.CanMoveOverride())
         return;
 
     Hide();
@@ -281,9 +273,8 @@ void PHY_RolePion_Location::MagicMove( const MT_Vector2D& vPosition )
 // Name: PHY_RolePion_Location::NotifyPopulationCollision
 // Created: NLD 2005-10-21
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Location::NotifyPopulationCollision( MIL_PopulationFlow& population )
+void PHY_RolePion_Location::NotifyFlowCollision( MIL_PopulationFlow& population )
 {
-
     pion_.GetKnowledge().GetKsPopulationInteraction().NotifyPopulationCollision( population );
 }
 
@@ -291,9 +282,8 @@ void PHY_RolePion_Location::NotifyPopulationCollision( MIL_PopulationFlow& popul
 // Name: PHY_RolePion_Location::NotifyPopulationCollision
 // Created: NLD 2005-10-21
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Location::NotifyPopulationCollision( MIL_PopulationConcentration& population )
+void PHY_RolePion_Location::NotifyConcentrationCollision( MIL_PopulationConcentration& population )
 {
-
     pion_.GetKnowledge().GetKsPopulationInteraction().NotifyPopulationCollision( population );
 }
 
@@ -301,9 +291,8 @@ void PHY_RolePion_Location::NotifyPopulationCollision( MIL_PopulationConcentrati
 // Name: PHY_RolePion_Location::NotifyObjectCollision
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Location::NotifyObjectCollision( MIL_Object_ABC& object )
+void PHY_RolePion_Location::NotifyTerrainObjectCollision( MIL_Object_ABC& object )
 {
-
     pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectCollision( object, vPosition_ );
 }
 
@@ -314,9 +303,6 @@ void PHY_RolePion_Location::NotifyObjectCollision( MIL_Object_ABC& object )
 void PHY_RolePion_Location::NotifyMovingInsideObject( MIL_Object_ABC& object )
 {
     object.NotifyAgentMovingInside( pion_ );
-    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pion_.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
-    for( PHY_RoleInterface_Reinforcement::CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
-        (**it).GetRole< PHY_RolePion_Location >().NotifyMovingInsideObject( object );
 }
 
 // -----------------------------------------------------------------------------
@@ -325,12 +311,7 @@ void PHY_RolePion_Location::NotifyMovingInsideObject( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::NotifyMovingOutsideObject( MIL_Object_ABC& object )
 {
-
-    
     object.NotifyAgentMovingOutside( pion_ );
-    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pion_.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
-    for( PHY_RoleInterface_Reinforcement::CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
-        (**it).GetRole< PHY_RolePion_Location >().NotifyMovingOutsideObject( object );
 }
 
 // -----------------------------------------------------------------------------
@@ -339,12 +320,7 @@ void PHY_RolePion_Location::NotifyMovingOutsideObject( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::NotifyPutInsideObject( MIL_Object_ABC& object )
 {
-
-    
     object.NotifyAgentPutInside( pion_ );
-    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pion_.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
-    for( PHY_RoleInterface_Reinforcement::CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
-        (**it).GetRole< PHY_RolePion_Location >().NotifyPutInsideObject( object );
 }
 
 // -----------------------------------------------------------------------------
@@ -353,12 +329,7 @@ void PHY_RolePion_Location::NotifyPutInsideObject( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::NotifyPutOutsideObject( MIL_Object_ABC& object )
 {
-
-    
     object.NotifyAgentPutOutside( pion_ );
-    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pion_.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
-    for( PHY_RoleInterface_Reinforcement::CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
-        (**it).GetRole< PHY_RolePion_Location >().NotifyPutOutsideObject( object );
 }
 
 // =============================================================================
@@ -527,4 +498,14 @@ bool PHY_RolePion_Location::HasSpeedChanged() const
 bool PHY_RolePion_Location::HasLocationChanged() const
 {
     return bPositionHasChanged_ || bDirectionHasChanged_ || bHeightHasChanged_;
+}
+
+void PHY_RolePion_Location::NotifyTerrainPutInsideObject( MIL_Object_ABC& object )
+{
+    pion_.Apply(&terrain::ObjectCollisionNotificationHandler_ABC::NotifyPutInsideObject, object );
+}
+
+void PHY_RolePion_Location::NotifyTerrainPutOutsideObject( MIL_Object_ABC& object )
+{
+    pion_.Apply(&terrain::ObjectCollisionNotificationHandler_ABC::NotifyPutOutsideObject, object );
 }
