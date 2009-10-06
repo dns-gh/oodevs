@@ -183,8 +183,6 @@ SectionGroup "Exercises" s_exo
         !insertmacro OT.AddExercise "esag" "Angers" "s_exo1"
         !insertmacro OT.AddExercise "CENTORSEM" "Paris_Est" "s_exo2"
         !insertmacro OT.AddExercise "puma" "larochelle" "s_exo3"
-        !insertmacro OT.AddExercise "Cabourg" "Cabourg" "s_exo17"
-        !insertmacro OT.AddExercise "Ares" "Blois" "s_exo18"
         !insertmacro OT.AddExercise "tutorials\01 - Generalites" "Paris_Est" "s_exo4"
         !insertmacro OT.AddExercise "tutorials\02 - Jeu" "Paris_Est" "s_exo5"
         !insertmacro OT.AddExercise "tutorials\03 - Mission" "Paris_Est" "s_exo6"
@@ -198,6 +196,9 @@ SectionGroup "Exercises" s_exo
         !insertmacro OT.AddExercise "tutorials\08 - Fonctions Avancees" "Paris_Est" "s_exo14"
         !insertmacro OT.AddExercise "tutorials\09 - Rejeu et AAA" "Paris_Est" "s_exo15"
         !insertmacro OT.AddExercise "tutorials\10 - Preparation" "Paris_Est" "s_exo16"
+        !insertmacro OT.AddExercise "Cabourg" "Cabourg" "s_exo17"
+        !insertmacro OT.AddExercise "Ares" "Blois" "s_exo18"
+        !insertmacro OT.AddExercise "Tests de Validation" "Angers_x9" "s_exo19"
     !endif
 
 SectionGroupEnd
@@ -216,6 +217,7 @@ SectionGroup "Terrains" s_ter
         !insertmacro OT.AddTerrain "larochelle" "s_ter3"
         !insertmacro OT.AddTerrain "Cabourg" "s_ter4"
         !insertmacro OT.AddTerrain "Blois" "s_ter5"
+        !insertmacro OT.AddTerrain "Angers_x9" "s_ter6"
     !endif
 
 SectionGroupEnd
@@ -327,6 +329,7 @@ Function .onSelChange
         !insertmacro OT.CheckDependency "s_exo16" "s_ter2"
         !insertmacro OT.CheckDependency "s_exo17" "s_ter4"
         !insertmacro OT.CheckDependency "s_exo18" "s_ter5"
+        !insertmacro OT.CheckDependency "s_exo19" "s_ter6"
     !endif
      
 FunctionEnd
