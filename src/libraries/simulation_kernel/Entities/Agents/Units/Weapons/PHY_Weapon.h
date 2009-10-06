@@ -59,7 +59,7 @@ public:
 private:
     //! @name Tools
     //@{
-    MT_Float ModifyReloadingDuration( const MIL_AgentPion& firer, MT_Float rDuration ) const;
+    double ModifyReloadingDuration( MIL_AgentPion& firer, double rDuration ) const;
     //@}
 
 private:

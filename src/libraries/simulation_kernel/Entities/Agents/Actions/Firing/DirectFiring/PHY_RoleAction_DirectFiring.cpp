@@ -169,8 +169,8 @@ int PHY_RoleAction_DirectFiring::FirePion( DEC_Knowledge_Agent* pEnemy, PHY_Dire
 
     // Firers
     PHY_DirectFireData firerWeapons( pion_, nComposanteFiringType, nFiringMode, rPercentageComposantesToUse, pAmmoDotationClass ); 
-    std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( pion_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( firerWeapons) );
-    pion_.Execute( *weaponAvailabilityComputer );
+    WeaponAvailabilityComputer_ABC& weaponAvailabilityComputer( pion_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( firerWeapons) );
+    pion_.Execute( weaponAvailabilityComputer );
 
     const uint nNbrWeaponsUsable = firerWeapons.GetNbrWeaponsUsable();
     if( nNbrWeaponsUsable == 0 )
@@ -238,9 +238,8 @@ void PHY_RoleAction_DirectFiring::FireZone( const MIL_Object_ABC& object, PHY_Fi
         capacity->RetrieveTargets( object, targets );
     
     PHY_DirectFireData firerWeapons( pion_, PHY_DirectFireData::eFireUsingOnlyComposantesLoadable, PHY_DirectFireData::eFiringModeNormal ); 
-    //@TODO MGD Remove auto_ptr for WeaponAvailabilityFactory
-    std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( pion_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( firerWeapons) );
-    pion_.Execute( *weaponAvailabilityComputer );
+    WeaponAvailabilityComputer_ABC&  weaponAvailabilityComputer( pion_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( firerWeapons) );
+    pion_.Execute( weaponAvailabilityComputer );
 
     for( CIT_TargetVector itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
     {
@@ -284,8 +283,8 @@ int PHY_RoleAction_DirectFiring::FirePopulation( uint nTargetKnowledgeID, PHY_Fi
    
     // Firers
     PHY_DirectFireData firerWeapons( pion_, PHY_DirectFireData::eFireUsingOnlyComposantesLoadable, PHY_DirectFireData::eFiringModeNormal, 1., &PHY_AmmoDotationClass::mitraille_ ); 
-    std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( pion_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( firerWeapons) );
-    pion_.Execute( *weaponAvailabilityComputer );
+    WeaponAvailabilityComputer_ABC&  weaponAvailabilityComputer( pion_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( firerWeapons) );
+    pion_.Execute( weaponAvailabilityComputer );
 
     const uint nNbrWeaponsUsable = firerWeapons.GetNbrWeaponsUsable();
     if( nNbrWeaponsUsable == 0 )

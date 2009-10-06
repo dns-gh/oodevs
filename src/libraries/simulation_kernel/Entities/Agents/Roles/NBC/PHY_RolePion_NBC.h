@@ -20,6 +20,10 @@ class MIL_ToxicEffectManipulator;
 class MIL_NbcAgentType;
 class MIL_AgentPion;
 
+namespace firing
+{
+    class WeaponReloadingComputer_ABC;
+}
 namespace moving
 {
 class SpeedComputer_ABC;
@@ -33,6 +37,7 @@ namespace nbc
 // =============================================================================
 class PHY_RolePion_NBC : public PHY_RoleInterface_NBC,
 	public tools::AlgorithmModifier_ABC<moving::SpeedComputer_ABC>
+                       , public tools::AlgorithmModifier_ABC< firing::WeaponReloadingComputer_ABC >
 {
 
 public:
@@ -60,7 +65,7 @@ public:
     void WearNbcProtectionSuit  ();
     void RemoveNbcProtectionSuit();
 
-    MT_Float ModifyReloadingDuration( MT_Float rDuration ) const;
+    virtual void Execute( firing::WeaponReloadingComputer_ABC& algorithm ) const;
 
     void Execute(moving::SpeedComputer_ABC& algorithm) const;
     //@}

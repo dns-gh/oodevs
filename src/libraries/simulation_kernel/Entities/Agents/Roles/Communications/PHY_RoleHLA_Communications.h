@@ -37,7 +37,6 @@ public:
     virtual void DeactivateBlackout();
 
     virtual MT_Float ModifySpeed            ( MT_Float rSpeed    ) const;
-    virtual MT_Float ModifyReloadingDuration( MT_Float rDuration ) const;
     //@}
 
     //! @name Modifiers

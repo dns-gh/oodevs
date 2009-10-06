@@ -7,37 +7,34 @@
 //
 // *****************************************************************************
 
-#ifndef __DetectionComputerFactory_ABC_h_
-#define __DetectionComputerFactory_ABC_h_
+#ifndef __WeaponReloadingComputerFactory_ABC_h_
+#define __WeaponReloadingComputerFactory_ABC_h_
 
-class MIL_Agent_ABC;
-namespace detection
+namespace firing
 {
-    class DetectionComputer_ABC;
-    class PerceptionDistanceComputer_ABC;
+    class WeaponReloadingComputer_ABC;
 // =============================================================================
-/** @class  DetectionComputerFactory_ABC
-    @brief  DetectionComputerFactory_ABC
+/** @class  WeaponReloadingComputerFactory_ABC
+    @brief  WeaponReloadingComputerFactory_ABC
 */
 // Created: MGD 2009-08-13
 // =============================================================================
-class DetectionComputerFactory_ABC : private boost::noncopyable
+class WeaponReloadingComputerFactory_ABC : private boost::noncopyable
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             DetectionComputerFactory_ABC();
-    virtual ~DetectionComputerFactory_ABC();
+             WeaponReloadingComputerFactory_ABC();
+    virtual ~WeaponReloadingComputerFactory_ABC();
     //@}
 
     //! @name Operations
     //@{
-    virtual DetectionComputer_ABC& Create( MIL_Agent_ABC& target ) const = 0;
-    virtual PerceptionDistanceComputer_ABC& CreateDistanceComputer() const = 0;
+    virtual WeaponReloadingComputer_ABC& Create( double duration ) const = 0;
     //@}
 };
 
 }
 
-#endif // __DetectionComputerFactory_ABC_h_
+#endif // __WeaponReloadingComputerFactory_ABC_h_

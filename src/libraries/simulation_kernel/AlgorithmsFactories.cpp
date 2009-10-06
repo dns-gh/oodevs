@@ -23,6 +23,7 @@
 #include "simulation_kernel/OnComponentLendedFunctorComputerFactory.h"
 #include "simulation_kernel/DotationComputerFactory.h"
 #include "simulation_kernel/LoadingComputerFactory.h"
+#include "simulation_kernel/WeaponReloadingComputerFactory.h"
 
 BOOST_CLASS_EXPORT_GUID( AlgorithmsFactories, "AlgorithmsFactories" )
 
@@ -44,6 +45,7 @@ AlgorithmsFactories::AlgorithmsFactories()
     , onComponentLendedFunctorComputerFactory_( new OnComponentLendedFunctorComputerFactory() )
     , dotationComputerFactory_( new dotation::DotationComputerFactory() )
     , loadingComputerFactory_( new transport::LoadingComputerFactory() )
+    , weaponReloadingComputerFactory_( new firing::WeaponReloadingComputerFactory() )
 {
     //NOTHING
 }

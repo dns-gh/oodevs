@@ -9,35 +9,35 @@
 
 #include "simulation_kernel_pch.h"
 
-#include "simulation_kernel/WeaponAvailabilityComputerFactory.h"
-#include "simulation_kernel/DefaultWeaponAvailabilityComputer.h"
+#include "simulation_kernel/WeaponReloadingComputerFactory.h"
+#include "simulation_kernel/DefaultWeaponReloadingComputer.h"
 
 using namespace firing;
 // -----------------------------------------------------------------------------
-// Name: WeaponAvailabilityComputerFactory constructor
+// Name: WeaponReloadingComputerFactory constructor
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-WeaponAvailabilityComputerFactory::WeaponAvailabilityComputerFactory()
-    : pWeaponAvailabilityComputer_( new DefaultWeaponAvailabilityComputer() )
+WeaponReloadingComputerFactory::WeaponReloadingComputerFactory()
+: pComputer_( new DefaultWeaponReloadingComputer() )
 {
     //NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: WeaponAvailabilityComputerFactory destructor
+// Name: WeaponReloadingComputerFactory destructor
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-WeaponAvailabilityComputerFactory::~WeaponAvailabilityComputerFactory()
+WeaponReloadingComputerFactory::~WeaponReloadingComputerFactory()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: WeaponAvailabilityComputerFactory destructor
+// Name: WeaponReloadingComputerFactory destructor
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-WeaponAvailabilityComputer_ABC& WeaponAvailabilityComputerFactory::Create( FireData_ABC& firerWeapons ) const
+WeaponReloadingComputer_ABC& WeaponReloadingComputerFactory::Create( double duration ) const
 {
-    pWeaponAvailabilityComputer_->Reset( firerWeapons );
-    return *pWeaponAvailabilityComputer_;
+    pComputer_->Reset( duration );
+    return *pComputer_;
 }

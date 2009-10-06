@@ -14,11 +14,7 @@
 #include "PHY_WeaponType.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
-#include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
-#include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
-#include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory_IndirectFire_ABC.h"
@@ -27,6 +23,10 @@
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
 #include "MIL_Time_ABC.h"
+
+#include "simulation_kernel/AlgorithmsFactories.h"
+#include "simulation_kernel/WeaponReloadingComputerFactory_ABC.h"
+#include "simulation_kernel/WeaponReloadingComputer_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Weapon constructor
@@ -146,13 +146,10 @@ MT_Float PHY_Weapon::GetMinRangeToIndirectFire() const
 // Created: NLD 2004-11-04
 // -----------------------------------------------------------------------------
 inline
-MT_Float PHY_Weapon::ModifyReloadingDuration( const MIL_AgentPion& firer, MT_Float rDuration ) const
+double PHY_Weapon::ModifyReloadingDuration( MIL_AgentPion& firer, double rDuration ) const
 {
-    rDuration = firer.GetRole< nbc::PHY_RoleInterface_NBC            >().ModifyReloadingDuration( rDuration );
-    rDuration = firer.GetRole< PHY_RoleInterface_Communications >().ModifyReloadingDuration( rDuration );
-    rDuration = firer.GetRole< PHY_RoleInterface_HumanFactors   >().ModifyReloadingDuration( rDuration );
-    rDuration = firer.GetRole< PHY_RoleInterface_Population     >().ModifyReloadingDuration( rDuration );
-    return rDuration;
+    const firing::WeaponReloadingComputer_ABC& computer = firer.Execute( firer.GetAlgorithms().weaponReloadingComputerFactory_->Create( rDuration ) );
+    return computer.GetDuration();
 }
 
 // -----------------------------------------------------------------------------

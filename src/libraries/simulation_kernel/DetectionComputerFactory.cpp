@@ -11,6 +11,7 @@
 
 #include "simulation_kernel/DetectionComputerFactory.h"
 #include "simulation_kernel/DefaultDetectionComputer.h"
+#include "simulation_kernel/DefaultPerceptionDistanceComputer.h"
 
 using namespace detection;
 // -----------------------------------------------------------------------------
@@ -19,6 +20,7 @@ using namespace detection;
 // -----------------------------------------------------------------------------
 DetectionComputerFactory::DetectionComputerFactory() 
 : pDetectionComputer_( new DefaultDetectionComputer() )
+, pDistanceComputer_( new DefaultPerceptionDistanceComputer() )
 {
 }
 
@@ -32,11 +34,21 @@ DetectionComputerFactory::~DetectionComputerFactory()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DetectionComputerFactory destructor
+// Name: DetectionComputerFactory Create
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
 DetectionComputer_ABC& DetectionComputerFactory::Create( MIL_Agent_ABC& target ) const
 {
     pDetectionComputer_->Reset( target );
     return *pDetectionComputer_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DetectionComputerFactory Create
+// Created: MGD 2009-10-06
+// -----------------------------------------------------------------------------
+PerceptionDistanceComputer_ABC& DetectionComputerFactory::CreateDistanceComputer() const
+{
+    pDistanceComputer_->Reset();
+    return *pDistanceComputer_;
 }

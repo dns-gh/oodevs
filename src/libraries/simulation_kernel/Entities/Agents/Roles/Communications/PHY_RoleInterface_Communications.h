@@ -40,7 +40,6 @@ public:
     virtual void ActivateBlackout  () = 0;
     virtual void DeactivateBlackout() = 0;
 
-    virtual MT_Float ModifyReloadingDuration( MT_Float rDuration ) const = 0;
     //@}
 
     //! @name Operations

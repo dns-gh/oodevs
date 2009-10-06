@@ -56,7 +56,6 @@ public:
     virtual void WearNbcProtectionSuit  () = 0;
     virtual void RemoveNbcProtectionSuit() = 0;
 
-    virtual MT_Float ModifyReloadingDuration( MT_Float rDuration ) const = 0;
     //@}
 
     //! @name Network

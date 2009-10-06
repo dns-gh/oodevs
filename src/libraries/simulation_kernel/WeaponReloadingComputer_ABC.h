@@ -7,38 +7,36 @@
 //
 // *****************************************************************************
 
-#ifndef __WeaponAvailabilityComputer_ABC_h_
-#define __WeaponAvailabilityComputer_ABC_h_
+#ifndef __WeaponReloadingComputer_ABC_h_
+#define __WeaponReloadingComputer_ABC_h_
+
+
+#include "simulation_kernel/OnComponentComputer_ABC.h"
+#include "simulation_kernel/Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
 
 class PHY_ComposantePion;
-class PHY_Weapon;
 
 namespace firing
 {
-    class FireData_ABC;
+
 // =============================================================================
-/** @class  WeaponAvailabilitycomputer_ABC
-    @brief  WeaponAvailabilitycomputer_ABC
+/** @class  WeaponReloadingComputer_ABC
+    @brief  WeaponReloadingComputer_ABC
 */
 // Created: MGD 2009-09-15
 // =============================================================================
-class WeaponAvailabilityComputer_ABC
+class WeaponReloadingComputer_ABC
 {
 
 public:
-    //! @name Constructors/Destructor
-    //@{
-             WeaponAvailabilityComputer_ABC();
-    virtual ~WeaponAvailabilityComputer_ABC();
-    //@}
-
     //! @name Operations
     //@{
-    virtual void Reset( FireData_ABC& firerWeapons ) = 0;
-    virtual void ApplyOnWeapon( const PHY_ComposantePion& firer, PHY_Weapon& weapon ) = 0;
+    virtual void Reset( double initialDuration ) = 0;
+    virtual void AddModifier( double modifier ) = 0;
+    virtual double GetDuration() const = 0;
     //@}
 };
 
 } // namespace firing
 
-#endif // __WeaponAvailabilityComputer_ABC_h_
+#endif // __WeaponReloadingComputer_ABC_h_

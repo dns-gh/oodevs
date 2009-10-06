@@ -26,13 +26,13 @@ class WeaponAvailabilityComputerFactory_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             WeaponAvailabilityComputerFactory_ABC();
+    WeaponAvailabilityComputerFactory_ABC();
     virtual ~WeaponAvailabilityComputerFactory_ABC();
     //@}
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< WeaponAvailabilityComputer_ABC > Create( FireData_ABC& firerWeapons ) const = 0;
+    virtual WeaponAvailabilityComputer_ABC& Create( FireData_ABC& firerWeapons ) const = 0;
     //@}
 };
 

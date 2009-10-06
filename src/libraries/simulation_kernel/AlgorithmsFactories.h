@@ -13,6 +13,7 @@
 namespace firing
 {
     class WeaponAvailabilityComputerFactory_ABC;
+    class WeaponReloadingComputerFactory_ABC;
     class ComposantesAbleToBeFiredComputerFactory_ABC;
 }
 namespace location
@@ -93,6 +94,7 @@ public:
     std::auto_ptr< OnComponentLendedFunctorComputerFactory_ABC > onComponentLendedFunctorComputerFactory_;
     std::auto_ptr< dotation::DotationComputerFactory_ABC > dotationComputerFactory_;
     std::auto_ptr< transport::LoadingComputerFactory_ABC > loadingComputerFactory_;
+    std::auto_ptr< firing::WeaponReloadingComputerFactory_ABC > weaponReloadingComputerFactory_;
     //@}
 };
 

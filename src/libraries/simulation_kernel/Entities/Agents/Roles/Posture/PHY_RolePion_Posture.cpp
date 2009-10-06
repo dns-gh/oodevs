@@ -22,6 +22,7 @@
 #include "simulation_kernel/PostureComputerFactory_ABC.h"
 #include "simulation_kernel/ConsumptionComputer_ABC.h"
 #include "simulation_kernel/DetectionComputer_ABC.h"
+#include "simulation_kernel/PerceptionDistanceComputer_ABC.h"
 
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 
@@ -494,4 +495,13 @@ void PHY_RolePion_Posture::Execute( detection::DetectionComputer_ABC& algorithm 
 {
     if( bIsStealth_ && algorithm.GetTarget() == pion_ )
         algorithm.NotifyStealth();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::Execute
+// Created: MGD 2009-10-06
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Posture::Execute( detection::PerceptionDistanceComputer_ABC& algorithm ) const
+{
+    algorithm.AddModifier( rElongationFactor_ );
 }

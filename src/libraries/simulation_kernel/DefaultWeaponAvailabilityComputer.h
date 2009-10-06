@@ -14,7 +14,6 @@
 
 namespace firing
 {
-    class FireData_ABC;
 // =============================================================================
 /** @class  DefaultWeaponAvailabilitycomputer
     @brief  DefaultWeaponAvailabilitycomputer
@@ -27,19 +26,20 @@ class DefaultWeaponAvailabilityComputer : public WeaponAvailabilityComputer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DefaultWeaponAvailabilityComputer( FireData_ABC& firerWeapons );
+             DefaultWeaponAvailabilityComputer();
     virtual ~DefaultWeaponAvailabilityComputer();
     //@}
 
     //! @name Operations
     //@{
+    virtual void Reset( FireData_ABC& firerWeapons );
     virtual void ApplyOnWeapon( const PHY_ComposantePion& firer, PHY_Weapon& weapon );
     //@}
 
 private:
     //! @name Member data
     //@{
-    FireData_ABC& firerWeapons_; //TODO MGD Fusionner WeaponAvailabilityComputer et PHY_DirectFireData , ajouter la stratégie à ce moment
+    FireData_ABC* pFirerWeapons_; //TODO MGD Fusionner WeaponAvailabilityComputer et PHY_DirectFireData , ajouter la stratégie à ce moment
     //@}
 };
 

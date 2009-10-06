@@ -17,6 +17,8 @@
 #include "Network/NET_ASN_Messages.h"
 #include "simulation_kernel/SpeedComputer_ABC.h"
 
+#include "simulation_kernel/WeaponReloadingComputer_ABC.h"
+
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Population, "PHY_RolePion_Population" )
 
 template< typename Archive >
@@ -82,13 +84,11 @@ void PHY_RolePion_Population::Execute( moving::SpeedComputer_ABC& algorithm ) co
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Population::ModifyReloadingDuration
-// Created: NLD 2005-11-02
+// Name: PHY_RolePion_Population::Execute
+// Created: NLD 2009-10-05
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Population::ModifyReloadingDuration( MT_Float rDuration ) const
+void PHY_RolePion_Population::Execute( firing::WeaponReloadingComputer_ABC& algorithm ) const
 {
-
-
     T_KnowledgePopulationCollisionVector collisions;
     pion_.GetKnowledge().GetPopulationsColliding( collisions );
 
@@ -99,7 +99,7 @@ MT_Float PHY_RolePion_Population::ModifyReloadingDuration( MT_Float rDuration ) 
         rFactor = std::max( rFactor, population.GetPionReloadingTimeFactor() );
     }
 
-    return rDuration * rFactor;
+    return algorithm.AddModifier( rFactor );
 }
 
 // -----------------------------------------------------------------------------

@@ -19,7 +19,10 @@
 #include "simulation_kernel/Entities/MIL_Entity_ABC.h"
 #include "simulation_kernel/PostureComputer_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+#include "simulation_kernel/WeaponReloadingComputer_ABC.h"
 #include "simulation_kernel/SpeedComputer_ABC.h"
+#include "simulation_kernel/PerceptionDistanceComputer_ABC.h"
+
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_HumanFactors, "PHY_RolePion_HumanFactors" )
@@ -269,12 +272,13 @@ void PHY_RolePion_HumanFactors::Execute( moving::SpeedComputer_ABC& algorithm ) 
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_HumanFactors::ModifyReloadingDuration
-// Created: NLD 2004-11-29
+// Name: PHY_RolePion_HumanFactors::Execute
+// Created: NLD 2009-10-05
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_HumanFactors::ModifyReloadingDuration( MT_Float rDuration ) const
+void PHY_RolePion_HumanFactors::Execute( firing::WeaponReloadingComputer_ABC& algorithm ) const
 {
-    return rDuration * pExperience_->GetCoefReloadingTimeModificator() * pTiredness_->GetCoefReloadingTimeModificator();
+    algorithm.AddModifier( pExperience_->GetCoefReloadingTimeModificator() );
+    algorithm.AddModifier( pTiredness_->GetCoefReloadingTimeModificator() );
 }
 
 // -----------------------------------------------------------------------------
@@ -284,15 +288,6 @@ MT_Float PHY_RolePion_HumanFactors::ModifyReloadingDuration( MT_Float rDuration 
 MT_Float PHY_RolePion_HumanFactors::ModifyPH( MT_Float rPH ) const
 {
     return rPH * pExperience_->GetCoefPhModificator() * pTiredness_->GetCoefPhModificator();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_HumanFactors::GetSensorDistanceModificator
-// Created: NLD 2004-11-29
-// -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_HumanFactors::GetSensorDistanceModificator() const
-{
-    return pExperience_->GetCoefSensorDistanceModificator() * pTiredness_->GetCoefSensorDistanceModificator();
 }
 
 // -----------------------------------------------------------------------------
@@ -323,4 +318,14 @@ void PHY_RolePion_HumanFactors::Execute( posture::PostureComputer_ABC& algorithm
 {
     algorithm.AddCoefficientModifier( pExperience_->GetCoefPostureTimeModificator() );
     algorithm.AddCoefficientModifier( pTiredness_->GetCoefPostureTimeModificator() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DefaultPostureComputer::Execute
+// Created: MGD 2009-10-06
+// -----------------------------------------------------------------------------
+void PHY_RolePion_HumanFactors::Execute( detection::PerceptionDistanceComputer_ABC& algorithm ) const
+{
+    algorithm.AddModifier( pExperience_->GetCoefSensorDistanceModificator() );
+    algorithm.AddModifier( pTiredness_->GetCoefSensorDistanceModificator() );
 }

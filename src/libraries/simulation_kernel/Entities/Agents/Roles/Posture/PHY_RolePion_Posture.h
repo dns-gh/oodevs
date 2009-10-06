@@ -29,6 +29,7 @@ namespace dotation
 namespace detection
 {
     class DetectionComputer_ABC;
+    class PerceptionDistanceComputer_ABC;
 }
 
 // =============================================================================
@@ -38,6 +39,7 @@ namespace detection
 class PHY_RolePion_Posture : public PHY_RoleInterface_Posture
                            , public tools::AlgorithmModifier_ABC< dotation::ConsumptionComputer_ABC >
                            , public tools::AlgorithmModifier_ABC< detection::DetectionComputer_ABC >
+                           , public tools::AlgorithmModifier_ABC< detection::PerceptionDistanceComputer_ABC >
 {
 
 public:
@@ -58,6 +60,7 @@ public:
     void Clean     ();
     virtual void Execute( dotation::ConsumptionComputer_ABC& algorithm ) const;
     virtual void Execute( detection::DetectionComputer_ABC& algorithm ) const;
+    void Execute( detection::PerceptionDistanceComputer_ABC& algorithm ) const;
 
     // Override automatic postures
     virtual void SetPosturePostePrepareGenie  ();

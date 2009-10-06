@@ -85,16 +85,6 @@ MT_Float PHY_RoleHLA_Communications::ModifySpeed            ( MT_Float rSpeed   
 	return rSpeed;
 }
 
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleHLA_Communications::ModifyReloadingDuration
-// Created: AHC 2009-08-18
-// -----------------------------------------------------------------------------
-MT_Float PHY_RoleHLA_Communications::ModifyReloadingDuration( MT_Float rDuration ) const
-{
-	return rDuration;
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Communications::ChangeStatus
 // Created: AGE 2004-12-02

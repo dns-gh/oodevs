@@ -18,8 +18,7 @@ using namespace firing;
 // Name: DefaultWeaponAvailabilityComputer::DefaultWeaponAvailabilityComputer
 // Created: MGD 2009-09-15
 // -----------------------------------------------------------------------------
-DefaultWeaponAvailabilityComputer::DefaultWeaponAvailabilityComputer( FireData_ABC& firerWeapons )
-    : firerWeapons_( firerWeapons )
+DefaultWeaponAvailabilityComputer::DefaultWeaponAvailabilityComputer()
 {
 
 }
@@ -33,11 +32,21 @@ DefaultWeaponAvailabilityComputer::~DefaultWeaponAvailabilityComputer()
 
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: DefaultWeaponAvailabilityComputer::Reset
+// Created: MGD 2009-10-05
+// -----------------------------------------------------------------------------
+void DefaultWeaponAvailabilityComputer::Reset( FireData_ABC& firerWeapons )
+{
+    pFirerWeapons_ = &firerWeapons;
+}
+
 // -----------------------------------------------------------------------------
 // Name: DefaultWeaponAvailabilityComputer::Execute
 // Created: MGD 2009-09-15
 // -----------------------------------------------------------------------------
 void DefaultWeaponAvailabilityComputer::ApplyOnWeapon( const PHY_ComposantePion& firer, PHY_Weapon& weapon )
 {
-    firerWeapons_( firer, weapon );
+    (*pFirerWeapons_)( firer, weapon );
 }

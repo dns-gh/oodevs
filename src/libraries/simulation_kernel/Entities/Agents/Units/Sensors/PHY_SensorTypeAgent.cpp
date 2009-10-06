@@ -26,6 +26,11 @@
 #include "Meteo/RawVisionData/PHY_RawVisionDataIterator.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Tools/MIL_Tools.h"
+
+#include "AlgorithmsFactories.h"
+#include "DetectionComputerFactory_ABC.h"
+#include "PerceptionDistanceComputer_ABC.h"
+
 #include <xeumeuleu/xml.h>
 
 namespace
@@ -281,11 +286,9 @@ MT_Float PHY_SensorTypeAgent::GetSourceFactor( const MIL_AgentPion& source ) con
     MT_Float rModificator =   postureSourceFactors_[ nOldPostureIdx ] + sourcePosture.GetPostureCompletionPercentage()
                           * ( postureSourceFactors_[ nCurPostureIdx ] - postureSourceFactors_[ nOldPostureIdx ] );
 
-    // Elongation
-    rModificator *= sourcePosture.GetElongationFactor();
 
-    // Human factors
-    rModificator *= source.GetRole< PHY_RoleInterface_HumanFactors >().GetSensorDistanceModificator();
+    MIL_AgentPion& tempSource = const_cast< MIL_AgentPion& >( source );//@TODO MGD FIND A BETTER WAY
+    rModificator *= tempSource.Execute( tempSource.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer() ).GetFactor();
 
     // Population
     const MT_Float rPopulationDensity = source.GetRole< PHY_RoleInterface_Population >().GetCollidingPopulationDensity();

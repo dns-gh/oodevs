@@ -16,6 +16,7 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+#include "simulation_kernel/WeaponReloadingComputer_ABC.h"
 #include "simulation_kernel/SpeedComputer_ABC.h"
 
 #include <xeumeuleu/xml.h>
@@ -250,12 +251,11 @@ void PHY_RolePion_Communications::Execute(moving::SpeedComputer_ABC& algorithm) 
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Communications::ModifyReloadingDuration
-// Created: NLD 2004-10-07
+// Name: PHY_RolePion_Communications::Execute
+// Created: MGD 2009-10-05
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Communications::ModifyReloadingDuration( MT_Float rDuration ) const
+void PHY_RolePion_Communications::Execute( firing::WeaponReloadingComputer_ABC& algorithm ) const
 {
-    if( jammers_.empty() )
-        return rDuration;
-    return rDuration *= rCoefReloadingTimeModificator_;
+    if( !jammers_.empty() )
+        algorithm.AddModifier( rCoefReloadingTimeModificator_ );
 }

@@ -92,8 +92,8 @@ int PHY_RoleAction_IndirectFiring::Fire( MIL_Effect_IndirectFire* pEffect )
 
     // Firers  
     PHY_IndirectFireData firerWeapons( pion_, *pEffect );
-    std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( pion_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( firerWeapons) );
-    pion_.Execute( *weaponAvailabilityComputer );
+    WeaponAvailabilityComputer_ABC& weaponAvailabilityComputer( pion_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( firerWeapons) );
+    pion_.Execute( weaponAvailabilityComputer );
 
     if( !firerWeapons.HasWeaponsReady() )
     {
@@ -144,8 +144,8 @@ int PHY_RoleAction_IndirectFiring::ThrowSmoke( const MT_Vector2D& vTargetPositio
 
     
     PHY_SmokeData smokeData( pion_, PHY_IndirectFireDotationClass::fumigene_, nNbrAmmo );
-    std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( pion_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( smokeData ) );
-    pion_.Execute( *weaponAvailabilityComputer );
+    WeaponAvailabilityComputer_ABC&  weaponAvailabilityComputer( pion_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( smokeData ) );
+    pion_.Execute( weaponAvailabilityComputer );
     
     PHY_Weapon* pWeapon = smokeData.GetWeapon();
     if( !pWeapon )
@@ -163,8 +163,8 @@ int PHY_RoleAction_IndirectFiring::ThrowSmoke( const MT_Vector2D& vTargetPositio
 const PHY_DotationCategory* PHY_RoleAction_IndirectFiring::GetMunitionForIndirectFire( const PHY_IndirectFireDotationClass& indirectWeaponCategory, const MT_Vector2D& vTargetPosition )
 {  
     PHY_MunitionForIndirectFireData fireData( pion_, indirectWeaponCategory, vTargetPosition );
-    std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( pion_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( fireData ) );
-    pion_.Execute( *weaponAvailabilityComputer );
+    WeaponAvailabilityComputer_ABC&  weaponAvailabilityComputer( pion_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( fireData ) );
+    pion_.Execute( weaponAvailabilityComputer );
     
     return fireData.GetChoosenMunition();
 }

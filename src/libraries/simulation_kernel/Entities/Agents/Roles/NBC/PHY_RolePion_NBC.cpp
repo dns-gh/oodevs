@@ -19,6 +19,7 @@
 #include "ToxicEffectHandler_ABC.h"
 
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+#include "simulation_kernel/WeaponReloadingComputer_ABC.h"
 #include "simulation_kernel/SpeedComputer_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( nbc::PHY_RolePion_NBC, "PHY_RolePion_NBC" )
@@ -209,14 +210,13 @@ void PHY_RolePion_NBC::Execute(moving::SpeedComputer_ABC& algorithm) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_NBC::ModifyReloadingDuration
-// Created: NLD 2004-10-07
+// Name: PHY_RolePion_NBC::Execute
+// Created: MGD 2009-10-05
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_NBC::ModifyReloadingDuration( MT_Float rDuration ) const
+void PHY_RolePion_NBC::Execute( firing::WeaponReloadingComputer_ABC& algorithm ) const
 {
     if( bNbcProtectionSuitWorn_ )
-        return rDuration * MIL_NbcAgentType::GetCoefReloadingTimeModificator();
-    return rDuration;
+        algorithm.AddModifier( MIL_NbcAgentType::GetCoefReloadingTimeModificator() );
 }
 
 // -----------------------------------------------------------------------------

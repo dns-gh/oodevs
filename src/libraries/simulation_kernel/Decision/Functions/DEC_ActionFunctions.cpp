@@ -28,6 +28,7 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 
 #include "simulation_kernel/RefugeeActionsNotificationHandler_ABC.h"
+#include "simulation_kernel/TransportNotificationHandler_ABC.h"
 
 namespace
 {
@@ -44,7 +45,10 @@ namespace
 void DEC_ActionFunctions::Prisoners_CaptureAndLoad( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge )
 {
     if( pKnowledge && pKnowledge->GetAgentKnown().GetRole< surrender::PHY_RoleInterface_Surrender >().Capture( callerAgent ) )
-        callerAgent.GetRole< transport::PHY_RoleAction_Transport >().MagicLoadPion( pKnowledge->GetAgentKnown(), false /*bTransportOnlyLoadable*/ );
+    {
+        bool transportOnlyLoadable = false;
+        callerAgent.Apply( &transport::TransportNotificationHandler_ABC::MagicLoadPion, pKnowledge->GetAgentKnown(), transportOnlyLoadable );
+    }
 }
    
 // -----------------------------------------------------------------------------
@@ -178,7 +182,7 @@ void DEC_ActionFunctions::Transport_AddPions( MIL_AgentPion& callerAgent, const 
 void DEC_ActionFunctions::Transport_MagicLoadPion( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable  )
 {
     assert( pPion );
-    callerAgent.GetRole< transport::PHY_RoleAction_Transport >().MagicLoadPion( pPion->GetPion(), bTransportOnlyLoadable );
+    callerAgent.Apply( &transport::TransportNotificationHandler_ABC::MagicLoadPion, pPion->GetPion(), bTransportOnlyLoadable );
 }
 
 // -----------------------------------------------------------------------------
@@ -190,7 +194,7 @@ void DEC_ActionFunctions::Transport_MagicLoadPions( MIL_AgentPion& callerAgent, 
     for( std::vector< DEC_Decision_ABC* >::const_iterator itPion = pions.begin(); itPion != pions.end(); ++itPion )
     {   
         MIL_AgentPion& pion = ( *itPion )->GetPion();
-        callerAgent.GetRole< transport::PHY_RoleAction_Transport >().MagicLoadPion( pion, bTransportOnlyLoadable );
+        callerAgent.Apply( &transport::TransportNotificationHandler_ABC::MagicLoadPion, pion, bTransportOnlyLoadable );
     }
 }
 

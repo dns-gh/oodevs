@@ -55,6 +55,7 @@
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/DetectionComputer_ABC.h"
 #include "simulation_kernel/DetectionComputerFactory_ABC.h"
+#include "simulation_kernel/PerceptionDistanceComputer_ABC.h"
 
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 
@@ -574,9 +575,7 @@ void PHY_RolePion_Perceiver::DisableFlyingShellDetection( int id )
 // -----------------------------------------------------------------------------
 MT_Float PHY_RolePion_Perceiver::GetMaxAgentPerceptionDistance() const
 {
-    return    rMaxAgentPerceptionDistance_ 
-            * pion_.GetRole< PHY_RoleInterface_Posture      >().GetElongationFactor() 
-            * pion_.GetRole< PHY_RoleInterface_HumanFactors >().GetSensorDistanceModificator();
+    return rMaxAgentPerceptionDistance_ * pion_.Execute( pion_.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer() ).GetFactor();
 }
 
 // -----------------------------------------------------------------------------
@@ -586,10 +585,7 @@ MT_Float PHY_RolePion_Perceiver::GetMaxAgentPerceptionDistance() const
 inline
 MT_Float PHY_RolePion_Perceiver::GetMaxObjectPerceptionDistance() const
 {
-
-    return   rMaxObjectPerceptionDistance_             
-           * pion_.GetRole< PHY_RoleInterface_Posture      >().GetElongationFactor() 
-           * pion_.GetRole< PHY_RoleInterface_HumanFactors >().GetSensorDistanceModificator();
+    return rMaxObjectPerceptionDistance_ * pion_.Execute( pion_.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer() ).GetFactor();
 }
 
 // -----------------------------------------------------------------------------

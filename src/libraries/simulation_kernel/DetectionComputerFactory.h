@@ -34,12 +34,14 @@ public:
     //! @name Operations
     //@{
     virtual DetectionComputer_ABC& Create( MIL_Agent_ABC& target ) const;
+    virtual PerceptionDistanceComputer_ABC& CreateDistanceComputer() const;
     //@}
 
 private:
     //! @name Operations
     //@{
     std::auto_ptr< DetectionComputer_ABC > pDetectionComputer_;
+    std::auto_ptr< PerceptionDistanceComputer_ABC > pDistanceComputer_;
     //@}
 };
 

@@ -15,20 +15,27 @@
 #include "PHY_RoleInterface_Population.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 
+#include "MT_Tools/AlgorithmModifier_ABC.h"
+
 class NET_ASN_MsgUnitAttributes;
 class MIL_Agent_ABC;
 
+namespace firing
+{
+    class WeaponReloadingComputer_ABC;
+}
 namespace moving
 {
-	class SpeedComputer_ABC;
+    class SpeedComputer_ABC;
 }
 
 // =============================================================================
 // @class  PHY_RolePion_Population
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RolePion_Population : public PHY_RoleInterface_Population,
-	public tools::AlgorithmModifier_ABC<moving::SpeedComputer_ABC>
+class PHY_RolePion_Population : public PHY_RoleInterface_Population
+                              , public tools::AlgorithmModifier_ABC<moving::SpeedComputer_ABC>
+                              , public tools::AlgorithmModifier_ABC< firing::WeaponReloadingComputer_ABC >
 {
 
 public:
@@ -50,7 +57,7 @@ public:
 
     //! @name Operations
     //@{
-    MT_Float ModifyReloadingDuration( MT_Float rDuration ) const;
+    virtual void Execute( firing::WeaponReloadingComputer_ABC& algorithm ) const;
 
     virtual bool IsInvulnerable        () const;
 

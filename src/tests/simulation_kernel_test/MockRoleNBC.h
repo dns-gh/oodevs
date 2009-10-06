@@ -59,7 +59,6 @@ public:
     virtual void RemoveNbcProtectionSuit() {};
 
     virtual MT_Float ModifyMaxSpeed         ( MT_Float rSpeed    ) const { return 0; };
-    virtual MT_Float ModifyReloadingDuration( MT_Float rDuration ) const { return 0; };
     //@}
 
     //! @name Network

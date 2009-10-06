@@ -24,6 +24,11 @@ class MIL_CommunicationsAgentType;
 class NET_ASN_MsgUnitAttributes;
 class MIL_AgentPion;
 
+namespace firing
+{
+    class WeaponReloadingComputer_ABC;
+}
+
 namespace moving
 {
 	class SpeedComputer_ABC;
@@ -33,6 +38,7 @@ namespace moving
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RolePion_Communications : public PHY_RoleInterface_Communications
+                                  , public tools::AlgorithmModifier_ABC< firing::WeaponReloadingComputer_ABC >
 	,public tools::AlgorithmModifier_ABC<moving::SpeedComputer_ABC>
 {
 
@@ -68,8 +74,8 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Execute( firing::WeaponReloadingComputer_ABC& algorithm ) const;
     virtual void Execute(moving::SpeedComputer_ABC& algorithm) const;
-    virtual MT_Float ModifyReloadingDuration( MT_Float rDuration ) const;
     //@}
 
     //! @name Network
