@@ -49,16 +49,17 @@ const MT_Vector2D& DEC_GeometryFunctions::GetPosition( const MIL_Automate& autom
 // Modified: JVT 2004-11-03
 // -----------------------------------------------------------------------------
 template< typename T >
- std::vector< boost::shared_ptr< TER_Localisation > > DEC_GeometryFunctions::SplitLocalisationInParts( const T& caller, TER_Localisation* pLocalisation, unsigned int nNbrParts )
+std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > DEC_GeometryFunctions::SplitLocalisationInParts( const T& caller, TER_Localisation* pLocalisation, unsigned int nNbrParts )
 {
     assert( pLocalisation );
 
      std::vector< boost::shared_ptr< TER_Localisation > > result;
 
     TER_Localisation clippedLocalisation;
+    unsigned int errCode = eNoError;
     if ( ClipLocalisationInFuseau( *pLocalisation, caller.GetOrderManager().GetFuseau(), clippedLocalisation ) )
-        SplitLocalisation( *pLocalisation, nNbrParts, result );
-    return result;
+        errCode = SplitLocalisation( *pLocalisation, nNbrParts, result );
+    return std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int >( result, errCode );
 }
 
 // -----------------------------------------------------------------------------
