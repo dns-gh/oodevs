@@ -695,7 +695,7 @@ ActivateWithStart = function( self )
 end
 
 OnHalt = function( self, instanceParameters, parameters )
-    if self.starts then
+    if self.starts and self.starts[ self.activations[ parameters[1] ] ] then
         self.starts[ self.activations[ parameters[1] ] ][ hash( instanceParameters or emptyTable ) ] = nil
     end
 end
