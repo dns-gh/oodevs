@@ -27,7 +27,7 @@
 PHY_ActionPrepareObject::PHY_ActionPrepareObject( MIL_AgentPion& pion, const std::string& strType, const TER_Localisation* pLocalisation )
     : PHY_DecisionCallbackAction_ABC     ( pion )
     , role_              ( pion.GetRole< PHY_RoleAction_Objects >() )
-    , pObject_           ( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( pion.GetArmy(), strType, pLocalisation, EnumDemolitionTargetType::reserved ) )
+    , pObject_           ( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( pion.GetArmy(), strType, pLocalisation, EnumDemolitionTargetType::reserved, std::vector< double >() ) )
 {    
     Callback( role_.GetInitialReturnCode() );
 }

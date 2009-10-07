@@ -89,12 +89,12 @@ void MIL_ObjectLoader::ReadCapacity( const std::string& capacity, xml::xistream&
 // Name: MIL_ObjectLoader::CreateObject
 // Created: JCR 2008-06-03
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& location, bool reserved ) const
+MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& location, bool reserved, const std::vector< double >& parameters ) const
 {
     CIT_Prototypes it = prototypes_.find( type );
     if( it == prototypes_.end() )
         throw std::runtime_error( __FUNCTION__ " - Unknown object type: " + type );
-    Object* object = new Object( MIL_IDManager::GetFreeId(), *it->second, army, &location, "", reserved );
+    Object* object = new Object( MIL_IDManager::GetFreeId(), *it->second, army, &location, "", reserved, parameters );
     object->Finalize();
     return object;
 }

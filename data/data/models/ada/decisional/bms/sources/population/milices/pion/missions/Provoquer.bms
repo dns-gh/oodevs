@@ -1,0 +1,99 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/population/milices/pion/missions/Provoquer.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[/** \file S VAB - Actions.hal
+ *
+ * $Author: Ggr $
+ * $Modtime: 25/08/05 19:16 $
+ * $Revision: 12 $
+ *
+ */]]--[[// Created: JCR 03-02-13
+]]--[[// *****************************************************************************
+]]--[[//------------------------------------------------------------------------------
+]]--[[//Rejoins une position et cree un site de deploiement
+]]--[[//------------------------------------------------------------------------------
+]]
+
+node "MIS_Pion_MILICE_Provoquer"
+{
+    activations =
+    {
+        { "BEH_MAJ_AgressiviteMission", { "onHalt" } },
+        { "BEH_Mission_Pion_Milice_Provoquer", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+    },
+
+    onHalt = OnHalt,
+
+    feedbacks = { { { "onHalt" }, "MIS_Pion_MILICE_Provoquer" } },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+                self.ePhase = self.ePhase or eReconnaitre
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                F_Pion_SeteEtatEchelon( myself, eEtatEchelon_Second )
+                DEC_Trace( "Reception mission 'Provoquer'" )
+            end
+        end
+
+        Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eDetecte, 0.3, } )
+         do
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eReconnaitre then
+                    Activate( self.activations.BEH_Mission_Pion_Milice_Provoquer, GetMotivation( "MOT_Mission" ), {} )
+                    --[[//-----------------------------------------------------------------------------
+]]
+                --[[// Fin de mission
+]]--[[//-----------------------------------------------------------------------------
+]]--[[/*
+				if( 	eAction == eActionEffectuee )    {        	eAction=eActionEnCours;        									{										
+										DEC_Trace(  "Fin mission de mission reconnaitre un axe"  );										
+										DEC_RC( eRC_MissionTerminee );
+										halt(eActionEffectuee);
+									}
+								  
+    }
+				*/]]                cases_switch_1[1] = true
+elseif switch_1 == eFinMission then
+                    --[[// Prendre Preciser contact
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eRC_FinMission, } )
+                    
+                                cases_switch_1[2] = true
+
+                else
+                                end
+            end
+
+    end,
+
+}
+
+node "BEH_Mission_Pion_Milice_Provoquer"
+{
+    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_Milice_Provoquer" } },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        self.mission = self.mission or DEC_GetMission( myself )
+        
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_MILICE_Provoquer = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_MILICE_Provoquer, "BEH_MAJ_AgressiviteMission", nodes.BEH_MAJ_AgressiviteMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_MILICE_Provoquer, "BEH_Mission_Pion_Milice_Provoquer", nodes.BEH_Mission_Pion_Milice_Provoquer }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_MILICE_Provoquer, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }

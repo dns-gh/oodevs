@@ -157,18 +157,19 @@ ASN1T_EnumObjectErrorCode MIL_ObjectManager::CreateObject( const ASN1T_MagicActi
 // Created: JCR 2008-06-03
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation )
-{
-    return builder_->BuildObject( type, army, localisation, EnumDemolitionTargetType::preliminary );    
+{    
+    std::vector< double > noParameter;
+    return builder_->BuildObject( type, army, localisation, EnumDemolitionTargetType::preliminary, noParameter );    
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectManager::CreateObject
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, ASN1T_EnumDemolitionTargetType obstacleType )
+MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, ASN1T_EnumDemolitionTargetType obstacleType, const std::vector< double >& parameters )
 {
 	if ( pLocalisation )
-        return builder_->BuildObject( type, army, *pLocalisation, obstacleType );
+        return builder_->BuildObject( type, army, *pLocalisation, obstacleType, parameters );
     return 0;
 }
 

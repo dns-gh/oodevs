@@ -30,7 +30,7 @@ public:
     typedef MIL_AgentPion ActorType;
 
 public:
-             PHY_ActionConstructObject( MIL_AgentPion& pion, const std::string& strType, const TER_Localisation* );
+             PHY_ActionConstructObject( MIL_AgentPion& pion, const std::string& strType, const TER_Localisation*, const std::vector< double >& parameters );
     virtual ~PHY_ActionConstructObject();
 
     //! @name Operations

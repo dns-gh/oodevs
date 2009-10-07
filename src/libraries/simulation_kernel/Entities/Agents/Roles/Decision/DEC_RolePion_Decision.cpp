@@ -316,8 +316,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
             boost::function< PHY_Action_ABC* ( const PHY_DotationCategory*, float, MT_Vector2D* ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionIndirectFire_Position, const PHY_DotationCategory*, float, MT_Vector2D* >, boost::ref( GetPion() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_StartTirIndirectSurConnaissance",
             boost::function< PHY_Action_ABC*( const PHY_DotationCategory*, float, unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionIndirectFire_Knowledge, const PHY_DotationCategory*, float, unsigned int >, boost::ref( GetPion() ), _1, _2, _3 ) ) );
-    brain.RegisterFunction( "DEC_StartCreerObjet",
-            boost::function< PHY_Action_ABC*( const std::string&, const TER_Localisation* ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionConstructObject, const std::string&, const TER_Localisation* >, boost::ref( GetPion() ), _1, _2 ) ) );
+    brain.RegisterFunction( "DEC_StartCreateObject",
+        boost::function< PHY_Action_ABC*( const std::string&, const TER_Localisation*, const std::vector< double >& ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionConstructObject, const std::string&, const TER_Localisation*, const std::vector< double >& >, boost::ref( GetPion() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_StartPreparerObjet",
             boost::function< PHY_Action_ABC*( const std::string&, const TER_Localisation* ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionPrepareObject, const std::string&, const TER_Localisation* >, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_StartDetruireObjet",
