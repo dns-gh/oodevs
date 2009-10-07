@@ -246,7 +246,7 @@ node "ACT_Obj_Pion_GEN_RealiserZoneMobilite"
 
         if( self.bInit and DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
             do
-                self.act = DEC_StartCreerObjet( myself.objMisEnCours_, S_TypeObject_ToString( eTypeObjet ), self._namedParams.loc )
+                self.act = DEC_StartCreerObjet( myself.objMisEnCours_, S_TypeObject_ToString( self._namedParams.eTypeObjet ), self._namedParams.loc )
                 actionCallbacks[ self.act ] = function( arg ) self.eActionObjet = arg end
                 actionKnowledgeCallbacks[ self.act ] = function( arg ) myself.objMisEnCours_ = arg end
 

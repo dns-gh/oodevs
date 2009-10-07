@@ -325,7 +325,7 @@ Halt( self )
                 end
 
                 DEC_Trace( "debut tir fantassins" )
-                self.actionID = DEC_StartTirIndirectSurConnaissance( DEC_Tir_MunitionPourTirIndirect( eObus_Explosif, DEC_ConnaissanceAgent_Position( ksTir ) ), self._namedParams.rIT, self._namedParams.ksTir )
+                self.actionID = DEC_StartTirIndirectSurConnaissance( DEC_Tir_MunitionPourTirIndirect( eObus_Explosif, DEC_ConnaissanceAgent_Position( self._namedParams.ksTir ) ), self._namedParams.rIT, self._namedParams.ksTir )
                 actionCallbacks[ self.actionID ] = function( arg ) self.eTir = arg end
 
                 self.bReprendre = true
