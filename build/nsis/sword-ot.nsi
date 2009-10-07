@@ -198,7 +198,7 @@ SectionGroup "Exercises" s_exo
         !insertmacro OT.AddExercise "tutorials\10 - Preparation" "Paris_Est" "s_exo16"
         !insertmacro OT.AddExercise "Cabourg" "Cabourg" "s_exo17"
         !insertmacro OT.AddExercise "Ares" "Blois" "s_exo18"
-        !insertmacro OT.AddExercise "Tests de Validation" "Angers_x9" "s_exo19"
+        !insertmacro OT.AddExercise "ValidationTests" "Angers_x9" "s_exo19"
     !endif
 
 SectionGroupEnd
