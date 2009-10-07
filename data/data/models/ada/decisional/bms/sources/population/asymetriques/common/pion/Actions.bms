@@ -16,8 +16,6 @@ includedFiles["sources/population/asymetriques/common/pion/Actions.bms"] = true
         tir_indirect = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Eni_Pion_ASY_CommettreAttentatContrePopulation" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pop = self.params[1]
@@ -37,8 +35,7 @@ includedFiles["sources/population/asymetriques/common/pion/Actions.bms"] = true
         end
 
                 self.params.__returnValue = eActionEffectuee
-        Feedback( self.feedbacks["onHalt"], { "ACT_Eni_Pion_ASY_CommettreAttentatContrePopulation" } )
-Halt( self )
+        Halt( self )
         do return end
 
     end,
@@ -58,8 +55,6 @@ Halt( self )
         deplacement = 1,
         tir_indirect = 1,
     },
-
-    feedbacks = { { { "onHalt" }, "ACT_Eni_Pion_ASY_CommettreAttentatContreInstallation" } },
 
     create = function( self )
         self._namedParams = {}
@@ -81,8 +76,7 @@ Halt( self )
         end
 
                 self.params.__returnValue = eActionEffectuee
-        Feedback( self.feedbacks["onHalt"], { "ACT_Eni_Pion_ASY_CommettreAttentatContreInstallation" } )
-Halt( self )
+        Halt( self )
         do return end
 
     end,
@@ -102,8 +96,6 @@ Halt( self )
         deplacement = 1,
         tir_indirect = 1,
     },
-
-    feedbacks = { { { "onHalt" }, "ACT_Eni_Pion_ASY_DetruireComposanteMajeure" } },
 
     create = function( self )
         self._namedParams = {}
@@ -158,8 +150,6 @@ Halt( self )
         tir_indirect = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Eni_Pion_ASY_AssassinerOfficier" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.repEni = self.params[1]
@@ -198,8 +188,6 @@ do
     {
         tir = 1,
     },
-
-    feedbacks = { { { "onHalt" }, "ACT_Eni_Pion_ASY_CommettreExactions" } },
 
     create = function( self )
         self._namedParams = {}

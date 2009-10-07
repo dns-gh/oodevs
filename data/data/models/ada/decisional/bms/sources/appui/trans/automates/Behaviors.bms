@@ -60,12 +60,8 @@ include "Appui/Trans/Automates/Missions/SeFaireTransporter/CDT - SeFaireTranspor
 {
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "onHalt" } },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Defaut" } },
 
     create = function( self )
         self._namedParams = {}

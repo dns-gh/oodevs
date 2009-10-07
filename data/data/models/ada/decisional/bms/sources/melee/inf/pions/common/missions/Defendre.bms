@@ -22,25 +22,19 @@ node "BEH_Mission_Pion_INF_Defendre"
 {
     activations =
     {
-        { "BEH_Mot_Pion_Embarquer", { "onHalt" } },
-        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", { "onHalt" } },
-        { "ACT_RC", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Dispositif_Pion_VAB_InstallationDefensive", { "onHalt" } },
-        { "ACT_Misc_Pion_DelaiInstallation", { "onHalt" } },
-        { "BEH_Eni_Pion_INF_Tenir", { "onHalt" } },
+        { "BEH_Mot_Pion_Embarquer", {} },
+        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", {} },
+        { "ACT_RC", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dispositif_Pion_VAB_InstallationDefensive", {} },
+        { "ACT_Misc_Pion_DelaiInstallation", {} },
+        { "BEH_Eni_Pion_INF_Tenir", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_INF_Defendre" } },
 
     create = function( self )
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         self.mission = self.mission or DEC_GetMission( myself )
         self.ePhase = self.ePhase or eSeMettreEnPlace
         self.eAction = self.eAction or eActionEnCours
@@ -73,7 +67,7 @@ elseif switch_1 == eInstallerDispositif then
                     --[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
 ]]--[[// On surveille la zone en meme temps que l'on prepare
 ]]--[[// On fait d'abord debarquer				
-]]StartInstance( self, self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1, { self.mission.pointADefendre_, self.mission.preparerTerrain_, } )
+]]StartActivateOverride( self, self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1, { self.mission.pointADefendre_, self.mission.preparerTerrain_, } )
                     --[[// preparation 5min
 ]]if( self.eAction == eActionEffectuee ) then
                         do

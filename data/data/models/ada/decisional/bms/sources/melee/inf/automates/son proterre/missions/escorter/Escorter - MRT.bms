@@ -22,12 +22,8 @@ includedFiles["sources/melee/inf/automates/son proterre/missions/escorter/Escort
 {
     activations =
     {
-        { "BEH_Medo_Automate_INF_DonnerLesOrdresPourMissionDynamique", { "onHalt" } },
+        { "BEH_Medo_Automate_INF_DonnerLesOrdresPourMissionDynamique", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_INF_EscorterUnite" } },
 
     create = function( self )
         self._namedParams = {}
@@ -77,12 +73,8 @@ node "MIS_Automate_MRT_INF_EscorterUnites"
 {
     activations =
     {
-        { "BEH_Medo_Automate_INF_DonnerLesOrdresPourMissionDynamique", { "onHalt" } },
+        { "BEH_Medo_Automate_INF_DonnerLesOrdresPourMissionDynamique", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_INF_EscorterUnites" } },
 
     create = function( self )
         self._namedParams = {}

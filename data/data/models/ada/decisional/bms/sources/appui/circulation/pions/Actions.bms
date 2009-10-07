@@ -9,8 +9,6 @@ includedFiles["sources/appui/circulation/pions/Actions.bms"] = true
 ]]--[[// ****************************************************************************
 ]]node "ACT_Misc_Pion_LOG_EquiperItineraire"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Misc_Pion_LOG_EquiperItineraire" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.Iti = self.params[1]
@@ -51,8 +49,6 @@ includedFiles["sources/appui/circulation/pions/Actions.bms"] = true
     {
         deplacement = 1,
     },
-
-    feedbacks = { { { "onHalt" }, "ACT_Obj_Pion_LOG_RealiserTravaux" } },
 
     create = function( self )
         self._namedParams = {}
@@ -139,8 +135,6 @@ elseif switch_1 == eActionObjetTerminee then
 ]]--[[// ******************************************************************************
 ]]node "ACT_LOG_FaireMesure"
 {
-    feedbacks = { { { "onHalt" }, "ACT_LOG_FaireMesure" } },
-
     create = function( self )
     end,
 
@@ -190,8 +184,6 @@ elseif switch_1 == eActionObjetTerminee then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Misc_Pion_Circu_PreterRemorqueurs"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Misc_Pion_Circu_PreterRemorqueurs" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionA = self.params[1]
@@ -203,8 +195,7 @@ elseif switch_1 == eActionObjetTerminee then
         self.bFinManoeuvre = self.bFinManoeuvre or false
         if( self.bFinManoeuvre ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "ACT_Misc_Pion_Circu_PreterRemorqueurs" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -237,8 +228,6 @@ Halt( self )
 ]]--[[// *****************************************************************************
 ]]node "ACT_Misc_Pion_Circu_RecupererRemorqueurs"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Misc_Pion_Circu_RecupererRemorqueurs" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionDe = self.params[1]
@@ -248,8 +237,7 @@ Halt( self )
     select = function( self )
         DEC_RecupererRemorqueurs( self._namedParams.pionDe, self._namedParams.fAmb )
                 self.params.__returnValue = eActionEffectuee
-        Feedback( self.feedbacks["onHalt"], { "ACT_Misc_Pion_Circu_RecupererRemorqueurs" } )
-Halt( self )
+        Halt( self )
         do return end
 
     end,

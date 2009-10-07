@@ -17,8 +17,6 @@ includedFiles["sources/appui/artfdp/automates/bat cobra/missions/se deployer/SeD
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_ASS_SeDeployer"
 {
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ASS_SeDeployer" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission

@@ -78,12 +78,8 @@ include "Appui/Rens/Automates/Rohum/Common/Missions/RenseignerSur/RenseignerSur 
 {
     activations =
     {
-        { "ACT_Automate_Rens_PartageConnaissancesAvec", { "onHalt" } },
+        { "ACT_Automate_Rens_PartageConnaissancesAvec", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Connaissance_Automate_RENS_ROHUM_AssurerLaLiaisonAvec" } },
 
     create = function( self )
         self._namedParams = {}

@@ -12,8 +12,6 @@ includedFiles["sources/emergency/pions/common/Actions.bms"] = true
 ]]
 node "ACT_Pion_Emergency_BlockRoad"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Pion_Emergency_BlockRoad" } },
-
     create = function( self )
     end,
 
@@ -39,8 +37,7 @@ node "ACT_Pion_Emergency_BlockRoad"
 elseif switch_1 == eActionInfluence_Impossible then
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Pion_Emergency_BlockRoad" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                     
@@ -77,8 +74,6 @@ Halt( self )
 
 node "ACT_Pion_Emergency_Influence"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Pion_Emergency_Influence" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.name = self.params[1]
@@ -116,8 +111,7 @@ node "ACT_Pion_Emergency_Influence"
 elseif switch_1 == eActionInfluence_Impossible then
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Pion_Emergency_Influence" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                     
@@ -154,8 +148,6 @@ Halt( self )
 
 node "ACT_Pion_Emergency_InfluenceInArea"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Pion_Emergency_InfluenceInArea" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.name = self.params[1]
@@ -187,8 +179,7 @@ elseif switch_1 == eActionInfluence_Impossible then
                     self.actionID = DEC_StopAction( self.actionID )
                     DEC_Trace( "influence impossible." )
                                         self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Pion_Emergency_InfluenceInArea" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                     
@@ -225,8 +216,6 @@ Halt( self )
 
 node "ACT_Pion_Emergency_TriggerActivity"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Pion_Emergency_TriggerActivity" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.name = self.params[1]
@@ -264,8 +253,7 @@ node "ACT_Pion_Emergency_TriggerActivity"
 elseif switch_1 == eActionInfluence_Impossible then
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Pion_Emergency_TriggerActivity" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                     
@@ -302,8 +290,6 @@ Halt( self )
 
 node "ACT_Pion_Emergency_TriggerActivityInArea"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Pion_Emergency_TriggerActivityInArea" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.name = self.params[1]
@@ -333,8 +319,7 @@ node "ACT_Pion_Emergency_TriggerActivityInArea"
 elseif switch_1 == eActionInfluence_Impossible then
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Pion_Emergency_TriggerActivityInArea" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                     
@@ -371,8 +356,6 @@ Halt( self )
 
 node "ACT_Pion_Emergency_UnloadActivity"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Pion_Emergency_UnloadActivity" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.name = self.params[1]
@@ -410,8 +393,7 @@ node "ACT_Pion_Emergency_UnloadActivity"
 elseif switch_1 == eActionInfluence_Impossible then
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Pion_Emergency_UnloadActivity" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                     
@@ -453,8 +435,6 @@ node "ACT_Obj_Pion_Emergency_RealiserObjet"
         deplacement = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Obj_Pion_Emergency_RealiserObjet" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.eTypeObjet = self.params[1]
@@ -473,15 +453,13 @@ node "ACT_Obj_Pion_Emergency_RealiserObjet"
             do
                 if( ( self._namedParams.locObjet == 0 or self._namedParams.locObjet == nil ) ) then
                     self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Obj_Pion_Emergency_RealiserObjet" } )
-Halt( self )
+                    Halt( self )
                     do return end
                 end
 
                 if( not DEC_Agent_PeutConstruireObjet( S_TypeObject_ToString( self._namedParams.eTypeObjet ) ) ) then
                     self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Obj_Pion_Emergency_RealiserObjet" } )
-Halt( self )
+                    Halt( self )
                     do return end
                 end
 
@@ -522,8 +500,7 @@ elseif switch_1 == eActionObjetTerminee then
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Obj_Pion_Emergency_RealiserObjet" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                     
@@ -531,8 +508,7 @@ Halt( self )
                     DEC_Trace( "object construction: no capability" )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Obj_Pion_Emergency_RealiserObjet" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                     
@@ -544,8 +520,7 @@ Halt( self )
                 if cases_switch_1[4] or switch_1 == eActionObjetImpossible then
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Obj_Pion_Emergency_RealiserObjet" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                     

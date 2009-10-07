@@ -11,16 +11,12 @@ includedFiles["sources/appui/artfdp/pions/son auf1/missions/AssurerMiseEnOeuvreS
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "BEH_Pion_ASS_GererOrdre_AppliquerFeux", { "onHalt" } },
-        { "BEH_Info_Pion_ASS_GererDisponibiliteAuTir", { "onHalt" } },
-        { "BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_Pion_ASS_GererOrdre_AppliquerFeux", {} },
+        { "BEH_Info_Pion_ASS_GererDisponibiliteAuTir", {} },
+        { "BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_ASS_AssurerMiseEnOeuvreSurPosition" } },
 
     create = function( self )
         self._namedParams = {}
@@ -68,8 +64,7 @@ elseif switch_1 == eFinMission then
                         do
                             DEC_FinMission()
                                                         self.params.__returnValue = eActionEffectuee
-                            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ASS_AssurerMiseEnOeuvreSurPosition" } )
-Halt( self )
+                            Halt( self )
                             do return end
 
                         end

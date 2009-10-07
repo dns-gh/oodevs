@@ -11,14 +11,10 @@ includedFiles["sources/population/populations/missions/Manifester.bms"] = true
 {
     activations =
     {
-        { "BEH_Pop_RejoindrePoint", { "onHalt" } },
-        { "BEH_Pop_PAPPions", { "onHalt" } },
-        { "BEH_Pop_RalentissementPions", { "onHalt" } },
+        { "BEH_Pop_RejoindrePoint", {} },
+        { "BEH_Pop_PAPPions", {} },
+        { "BEH_Pop_RalentissementPions", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Population_Manifester" } },
 
     create = function( self )
         self._namedParams = {}

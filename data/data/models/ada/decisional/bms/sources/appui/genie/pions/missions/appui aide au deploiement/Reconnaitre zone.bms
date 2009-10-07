@@ -11,17 +11,13 @@ includedFiles["sources/appui/genie/pions/missions/appui aide au deploiement/Reco
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
-        { "ACT_Obs_ReconnaitrePoint", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Dep_ModulationVitesse", {} },
+        { "ACT_Obs_ReconnaitrePoint", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_GEN_ReconnaitreZone" } },
 
     create = function( self )
         self._namedParams = {}

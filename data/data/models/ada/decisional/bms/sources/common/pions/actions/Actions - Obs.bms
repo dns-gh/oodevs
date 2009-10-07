@@ -28,8 +28,6 @@ end
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_Misc_VerouillerConnaissance"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Misc_VerouillerConnaissance" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.connaissance = self.params[1]
@@ -44,8 +42,7 @@ end
                 local eEtatRequete = DEC_ConnaissanceAgent_Verrouiller( self._namedParams.connaissance )
                 if( eEtatRequete == eRequeteInvalide ) then
                     self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Misc_VerouillerConnaissance" } )
-Halt( self )
+                    Halt( self )
                     do return end
                 end
 
@@ -72,8 +69,6 @@ Halt( self )
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_Obs_ElargirObservation"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Obs_ElargirObservation" } },
-
     create = function( self )
     end,
 
@@ -111,8 +106,6 @@ Halt( self )
         reconnaissance = 1,
         deplacement = 1,
     },
-
-    feedbacks = { { { "onHalt" }, "ACT_Obs_ReconnaitrePoint" } },
 
     create = function( self )
         self._namedParams = {}
@@ -183,8 +176,6 @@ Halt( self )
         reconnaissance = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Obs_ObserverZone" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pointAReconnaitre = self.params[1]
@@ -240,8 +231,7 @@ Halt( self )
 
         end
 
-                Feedback( self.feedbacks["onHalt"], { "ACT_Obs_ObserverZone" } )
-Halt( self )
+                Halt( self )
             return
     end,
 
@@ -278,8 +268,6 @@ Halt( self )
     {
         reconnaissance = 1,
     },
-
-    feedbacks = { { { "onHalt" }, "ACT_Obs_ObserverPoint" } },
 
     create = function( self )
         self._namedParams = {}
@@ -335,7 +323,7 @@ Halt( self )
         DEC_Perception_DesactiverReconnaissancePoint( self.perceptionPoint )
         DEC_Perception_DesactiverDetectionObjetLocalisation( self.pPtObj )
                 Feedback( self.feedbacks["onHalt"], { "ACT_Obs_ObserverPoint" } )
-Halt( self )
+                Halt( self )
             return
     end,
 
@@ -366,8 +354,6 @@ Halt( self )
 ]]--[[// *****************************************************************************
 ]]node "ACT_Obs_SurveillerZone"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Obs_SurveillerZone" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.zone = self.params[1]
@@ -405,8 +391,6 @@ Halt( self )
         observation = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Obs_EtablirVisionCur" } },
-
     create = function( self )
     end,
 
@@ -437,8 +421,6 @@ Halt( self )
     {
         observation = 1,
     },
-
-    feedbacks = { { { "onHalt" }, "ACT_Obs_EtablirVisionFaceADir" } },
 
     create = function( self )
         self._namedParams = {}
@@ -472,8 +454,6 @@ Halt( self )
     {
         observation = 1,
     },
-
-    feedbacks = { { { "onHalt" }, "ACT_Obs_EtablirVisionVersPt" } },
 
     create = function( self )
         self._namedParams = {}

@@ -81,18 +81,14 @@ include "Appui/Rens/Pions/Roim/Son mise en oeuvre SDTI/Missions/Missions.bms"
 {
     activations =
     {
-        { "BEH_Mot_Pion_Rens_AffecterVariablesDEtat", { "onHalt" } },
-        { "BEH_MAJ_EtatDefaut", { "onHalt" } },
-        { "BEH_Dep_Pion_Rens_GererDrones", { "onHalt" } },
-        { "BEH_ROE", { "onHalt" } },
-        { "BEH_Ambiance", { "onHalt" } },
-        { "BEH_Nbc", { "onHalt" } },
-        { "BEH_Rens", { "onHalt" } },
+        { "BEH_Mot_Pion_Rens_AffecterVariablesDEtat", {} },
+        { "BEH_MAJ_EtatDefaut", {} },
+        { "BEH_Dep_Pion_Rens_GererDrones", {} },
+        { "BEH_ROE", {} },
+        { "BEH_Ambiance", {} },
+        { "BEH_Nbc", {} },
+        { "BEH_Rens", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Defaut" } },
 
     create = function( self )
         self._namedParams = {}
@@ -140,8 +136,6 @@ include "Appui/Rens/Pions/Roim/Son mise en oeuvre SDTI/Missions/Missions.bms"
 
 node "BEH_Mot_Pion_Rens_AffecterVariablesDEtat"
 {
-    feedbacks = { { { "onHalt" }, "BEH_Mot_Pion_Rens_AffecterVariablesDEtat" } },
-
     create = function( self )
     end,
 

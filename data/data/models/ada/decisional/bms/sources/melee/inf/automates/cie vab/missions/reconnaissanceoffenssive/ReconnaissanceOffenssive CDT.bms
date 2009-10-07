@@ -23,13 +23,9 @@ includedFiles["sources/melee/inf/automates/cie vab/missions/reconnaissanceoffens
 {
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Defaut", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_CadreOffensif", { "onHalt" } },
+        { "BEH_Conduite_Automate_INF_Defaut", {} },
+        { "BEH_Conduite_Automate_INF_CadreOffensif", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_INF_ReconnaissanceOffensive" } },
 
     create = function( self )
         self._namedParams = {}
@@ -55,8 +51,7 @@ includedFiles["sources/melee/inf/automates/cie vab/missions/reconnaissanceoffens
                 self.eActionMission = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_CDT_INF_ReconnaissanceOffensive" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end

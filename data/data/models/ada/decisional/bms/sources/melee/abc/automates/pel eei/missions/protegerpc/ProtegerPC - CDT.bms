@@ -19,8 +19,6 @@ includedFiles["sources/melee/abc/automates/pel eei/missions/protegerpc/ProtegerP
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_ABC_ProtegerPC"
 {
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_ProtegerPC" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission

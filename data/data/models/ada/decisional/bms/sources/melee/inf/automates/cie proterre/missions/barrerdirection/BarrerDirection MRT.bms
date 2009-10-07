@@ -16,12 +16,8 @@ node "MIS_Automate_MRT_INF_BarrerDirection"
 {
     activations =
     {
-        { "BEH_Medo_Automate_INF_PreparerMission_Statique", { "onHalt" } },
+        { "BEH_Medo_Automate_INF_PreparerMission_Statique", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_INF_BarrerDirection" } },
 
     create = function( self )
         self._namedParams = {}
@@ -51,8 +47,7 @@ node "MIS_Automate_MRT_INF_BarrerDirection"
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_INF_BarrerDirection" } )
-Halt( self )
+                Halt( self )
                 do return end
 
             end
@@ -65,8 +60,7 @@ Halt( self )
                     DEC_Trace( "MIS_Automate_MRT_INF_BarrerDirection : fin MRT" )
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_INF_BarrerDirection" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end

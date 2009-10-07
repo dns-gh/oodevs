@@ -23,8 +23,6 @@ include "Common/Automates/Actions/Actions - Rens.bms"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_ControleCreation_OK"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_ControleCreation_OK" } },
-
     create = function( self )
     end,
 
@@ -58,8 +56,6 @@ include "Common/Automates/Actions/Actions - Rens.bms"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_ControleCreation_NOK"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_ControleCreation_NOK" } },
-
     create = function( self )
     end,
 
@@ -84,8 +80,6 @@ include "Common/Automates/Actions/Actions - Rens.bms"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_ControleCreation_EnCours"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_ControleCreation_EnCours" } },
-
     create = function( self )
     end,
 
@@ -112,8 +106,6 @@ include "Common/Automates/Actions/Actions - Rens.bms"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Info_Automate_Trace"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Info_Automate_Trace" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.message = self.params[1]
@@ -137,8 +129,6 @@ include "Common/Automates/Actions/Actions - Rens.bms"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_Suppression"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Ordre_Suppression" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ordre = self.params[1]

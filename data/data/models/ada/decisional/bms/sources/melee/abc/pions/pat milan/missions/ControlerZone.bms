@@ -22,13 +22,9 @@ includedFiles["sources/melee/abc/pions/pat milan/missions/ControlerZone.bms"] = 
 {
     activations =
     {
-        { "ACT_Dep_PasserEnModeFurtif", { "onHalt" } },
-        { "BEH_Mission_Pion_ABC_ControlerSecteur", { "onHalt" } },
+        { "ACT_Dep_PasserEnModeFurtif", {} },
+        { "BEH_Mission_Pion_ABC_ControlerSecteur", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_ABC_ControlerZone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -42,15 +38,13 @@ includedFiles["sources/melee/abc/pions/pat milan/missions/ControlerZone.bms"] = 
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible ) then
             self.params.__returnValue = eActionImpossible
-            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ABC_ControlerZone" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
         if( self.eEtat == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ABC_ControlerZone" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 

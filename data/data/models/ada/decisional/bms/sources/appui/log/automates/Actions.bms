@@ -11,12 +11,8 @@ includedFiles["sources/appui/log/automates/Actions.bms"] = true
 {
     activations =
     {
-        { "ACT_Ordre_Suppression", { "onHalt" } },
+        { "ACT_Ordre_Suppression", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "ACT_Ordre_Automate_LOG_OrdresInopines" } },
 
     create = function( self )
     end,

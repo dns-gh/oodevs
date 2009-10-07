@@ -10,8 +10,6 @@ includedFiles["sources/appui/alat/automates/common/behaviors/Behaviors - Manoeuv
 ]]--[[//------------------------------------------------------------------------------
 ]]node "BEH_Manoeuvre_Automate_ALAT_GererEtalementDispositif"
 {
-    feedbacks = { { { "onHalt" }, "BEH_Manoeuvre_Automate_ALAT_GererEtalementDispositif" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.listePions = self.params[1]
@@ -126,12 +124,8 @@ node "BEH_Manoeuvre_Automate_ALAT_GererReleves"
 {
     activations =
     {
-        { "BEH_Dispositif_Automate_ALAT_AssignerReleve", { "onHalt" } },
+        { "BEH_Dispositif_Automate_ALAT_AssignerReleve", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Manoeuvre_Automate_ALAT_GererReleves" } },
 
     create = function( self )
         self._namedParams = {}
@@ -239,12 +233,8 @@ node "BEH_Dispositif_Automate_ALAT_AssignerReleve"
 {
     activations =
     {
-        { "ACT_Conduite_Automate_ALAT_ReleverUnite", { "onHalt" } },
+        { "ACT_Conduite_Automate_ALAT_ReleverUnite", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dispositif_Automate_ALAT_AssignerReleve" } },
 
     create = function( self )
         self._namedParams = {}

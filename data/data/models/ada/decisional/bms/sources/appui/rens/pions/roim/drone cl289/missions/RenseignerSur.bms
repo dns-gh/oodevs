@@ -14,18 +14,14 @@ include "bit.lua"
 {
     activations =
     {
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "BEH_Obs_Pion_Rens_GererObservationDans", { "onHalt" } },
-        { "ACT_Connaissance_Rens_EnregistrerDonnees", { "onHalt" } },
-        { "BEH_Dep_ProgressionSur", { "onHalt" } },
-        { "ACT_Dep_Pion_RENS_VolerA", { "onHalt" } },
-        { "ACT_Connaissance_Rens_ExtraireDonnees", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Obs_Pion_Rens_GererObservationDans", {} },
+        { "ACT_Connaissance_Rens_EnregistrerDonnees", {} },
+        { "BEH_Dep_ProgressionSur", {} },
+        { "ACT_Dep_Pion_RENS_VolerA", {} },
+        { "ACT_Connaissance_Rens_ExtraireDonnees", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_RENS_ROIM_CL289_RenseignerSur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -47,8 +43,7 @@ include "bit.lua"
                     do
                         DEC_Trace( "----- Le drone doit être mise en oeuvre -----" )
                         DEC_RC( eRC_MissionImpossible )
-                                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_RENS_ROIM_CL289_RenseignerSur" } )
-Halt( self )
+                                                Halt( self )
                         do return end
 
                     end
@@ -59,8 +54,7 @@ Halt( self )
                         DEC_Trace( "----- Le drone est en exploitation -----" )
                         DEC_RC( eRC_DroneEnExploitation )
                         DEC_RC( eRC_MissionImpossible )
-                                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_RENS_ROIM_CL289_RenseignerSur" } )
-Halt( self )
+                                                Halt( self )
                         do return end
 
                     end
@@ -146,21 +140,15 @@ node "BEH_Obs_Pion_Rens_GererObservationDans"
 {
     activations =
     {
-        { "BEH_Obs_Pion_Rens_ActiverObservationDans", { "onHalt" } },
+        { "BEH_Obs_Pion_Rens_ActiverObservationDans", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Obs_Pion_Rens_GererObservationDans" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.zonesDeRecherche = self.params[1]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//---------------------------------------------------------------------
@@ -168,7 +156,7 @@ node "BEH_Obs_Pion_Rens_GererObservationDans"
             do
                 for _,zone in pairs( self._namedParams.zonesDeRecherche ) do
                 local _continue = true
-                    StartInstance( self, self.activations.BEH_Obs_Pion_Rens_ActiverObservationDans, 1, { zone, } )
+                    StartActivateOverride( self, self.activations.BEH_Obs_Pion_Rens_ActiverObservationDans, 1, { zone, } )
 
                 end
 
@@ -189,12 +177,8 @@ node "BEH_Obs_Pion_Rens_ActiverObservationDans"
 {
     activations =
     {
-        { "ACT_Obs_Rens_ActiverObservationDans", { "onHalt" } },
+        { "ACT_Obs_Rens_ActiverObservationDans", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Obs_Pion_Rens_ActiverObservationDans" } },
 
     create = function( self )
         self._namedParams = {}
@@ -218,8 +202,6 @@ node "BEH_Obs_Pion_Rens_ActiverObservationDans"
 
 node "ACT_Obs_Rens_ActiverObservationDans"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Obs_Rens_ActiverObservationDans" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.zone = self.params[1]
@@ -256,8 +238,6 @@ node "ACT_Obs_Rens_ActiverObservationDans"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Connaissance_Rens_EnregistrerDonnees"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Connaissance_Rens_EnregistrerDonnees" } },
-
     create = function( self )
     end,
 
@@ -284,8 +264,6 @@ node "ACT_Obs_Rens_ActiverObservationDans"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Connaissance_Rens_ExtraireDonnees"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Connaissance_Rens_ExtraireDonnees" } },
-
     create = function( self )
     end,
 

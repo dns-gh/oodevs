@@ -16,14 +16,10 @@ node "MIS_Automate_CDT_INF_AttaquerSouplesse"
 {
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Defaut", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_CadreOffensif", { "onHalt" } },
-        { "BEH_Situation_Automate_INF_Attaquer", { "onHalt" } },
+        { "BEH_Conduite_Automate_INF_Defaut", {} },
+        { "BEH_Conduite_Automate_INF_CadreOffensif", {} },
+        { "BEH_Situation_Automate_INF_Attaquer", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_INF_AttaquerSouplesse" } },
 
     create = function( self )
         self._namedParams = {}
@@ -48,8 +44,7 @@ node "MIS_Automate_CDT_INF_AttaquerSouplesse"
                 self.eActionMission = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_CDT_INF_AttaquerSouplesse" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end

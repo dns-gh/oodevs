@@ -11,13 +11,9 @@ includedFiles["sources/appui/circulation/automates/missions/reconnaitrezonededep
 {
     activations =
     {
-        { "BEH_Medo_Automate_ControleCreationMission", { "onHalt" } },
-        { "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneDeDeploiementAListe", { "onHalt" } },
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneDeDeploiementAListe", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_LOG_ReconnaitreZoneDeDeploiement" } },
 
     create = function( self )
         self._namedParams = {}
@@ -41,8 +37,7 @@ includedFiles["sources/appui/circulation/automates/missions/reconnaitrezonededep
                 self.listeLoclisations = self.listeLoclisations.first
                 if( nErrorCode ~= eNoError ) then
                     self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_LOG_ReconnaitreZoneDeDeploiement" } )
-Halt( self )
+                    Halt( self )
                     do return end
                 end
 
@@ -91,8 +86,7 @@ Halt( self )
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eMRT_MissionImpossible then
                                         self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_LOG_ReconnaitreZoneDeDeploiement" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                     
@@ -102,8 +96,7 @@ Halt( self )
 ]]elseif switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_LOG_ReconnaitreZoneDeDeploiement" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                     

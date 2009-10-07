@@ -11,14 +11,10 @@ includedFiles["sources/common/automates/missions/orienterrefugies/MRT - Orienter
 {
     activations =
     {
-        { "ACT_Warning", { "onHalt" } },
-        { "BEH_Medo_Automate_ControleCreationMission", { "onHalt" } },
-        { "BEH_Mission_Automate_AssignerOrienterRefugiesA", { "onHalt" } },
+        { "ACT_Warning", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Mission_Automate_AssignerOrienterRefugiesA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_OrienterRefugies" } },
 
     create = function( self )
         self._namedParams = {}
@@ -53,8 +49,7 @@ includedFiles["sources/common/automates/missions/orienterrefugies/MRT - Orienter
                 if( ( point == 0 or point == nil ) ) then
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleZoneHorsFuseau, } )
-                                                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_OrienterRefugies" } )
-Halt( self )
+                                                Halt( self )
                         do return end
 
                     end
@@ -74,8 +69,7 @@ Halt( self )
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_OrienterRefugies" } )
-Halt( self )
+                Halt( self )
                 do return end
 
             end
@@ -87,8 +81,7 @@ Halt( self )
                                 do
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_OrienterRefugies" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end

@@ -23,8 +23,6 @@ node "ACT_Obj_Pion_INF_RealiserBouchonMines"
         deplacement = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Obj_Pion_INF_RealiserBouchonMines" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.locObjet = self.params[1]
@@ -42,8 +40,7 @@ node "ACT_Obj_Pion_INF_RealiserBouchonMines"
             do
                 if( not DEC_Agent_PeutConstruireObjet( S_TypeObject_ToString( eTypeObjectBouchonMines ) ) ) then
                     self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Obj_Pion_INF_RealiserBouchonMines" } )
-Halt( self )
+                    Halt( self )
                     do return end
                 end
 
@@ -67,8 +64,7 @@ elseif switch_1 == eActionObjetTerminee then
                     --[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMine );
 ]]self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Obj_Pion_INF_RealiserBouchonMines" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                     
@@ -78,8 +74,7 @@ Halt( self )
                 if cases_switch_1[3] or switch_1 == eActionObjetImpossible then
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Obj_Pion_INF_RealiserBouchonMines" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                     
@@ -125,8 +120,6 @@ Halt( self )
         deplacement = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Obj_Pion_INF_RealiserObjet" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.eTypeObjet = self.params[1]
@@ -147,8 +140,7 @@ Halt( self )
                     do
                         DEC_Trace( "realisation objet : impossible" )
                                                 self.params.__returnValue = eActionImpossible
-                        Feedback( self.feedbacks["onHalt"], { "ACT_Obj_Pion_INF_RealiserObjet" } )
-Halt( self )
+                        Halt( self )
                         do return end
 
                     end
@@ -173,8 +165,7 @@ elseif switch_1 == eActionObjetTerminee then
                     DEC_RC( eRC_FinTravaux )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Obj_Pion_INF_RealiserObjet" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                     
@@ -183,8 +174,7 @@ Halt( self )
                     self.actionID = DEC_StopAction( self.actionID )
                     --[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMine );
 ]]                    self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Obj_Pion_INF_RealiserObjet" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                     
@@ -195,8 +185,7 @@ Halt( self )
                 if cases_switch_1[4] or switch_1 == eActionObjetImpossible then
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Obj_Pion_INF_RealiserObjet" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                     
@@ -245,8 +234,6 @@ Halt( self )
         deplacement = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Obj_Pion_INF_PreparerAbattis" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.locObjet = self.params[1]
@@ -265,8 +252,7 @@ Halt( self )
                 DEC_Trace( "preparation abatti ( l = " .. FloatToString( self._namedParams.rLongueur ) .. " ) : debut" )
                 if( not DEC_Agent_PeutConstruireObjet( S_TypeObject_ToString( eTypeObjectAbatti ) ) ) then
                     self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Obj_Pion_INF_PreparerAbattis" } )
-Halt( self )
+                    Halt( self )
                     do return end
                 end
 
@@ -288,8 +274,7 @@ elseif switch_1 == eActionObjetTerminee then
                     DEC_RC( eRC_FinTravaux )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Obj_Pion_INF_PreparerAbattis" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                     
@@ -297,8 +282,7 @@ Halt( self )
                 or switch_1 == eActionObjetManqueDotation then
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Obj_Pion_INF_PreparerAbattis" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                     
@@ -346,8 +330,6 @@ node "ACT_Obj_Pion_INF_Activer"
         deplacement = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Obj_Pion_INF_Activer" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.repObj = self.params[1]
@@ -362,8 +344,7 @@ node "ACT_Obj_Pion_INF_Activer"
             do
                 DEC_Trace( "activation : fin" )
                                 self.params.__returnValue = eActionEffectuee
-                Feedback( self.feedbacks["onHalt"], { "ACT_Obj_Pion_INF_Activer" } )
-Halt( self )
+                Halt( self )
                 do return end
 
             end
@@ -371,8 +352,7 @@ Halt( self )
 do
                 DEC_Trace( "activation : impossible" )
                                 self.params.__returnValue = eActionImpossible
-                Feedback( self.feedbacks["onHalt"], { "ACT_Obj_Pion_INF_Activer" } )
-Halt( self )
+                Halt( self )
                 do return end
 
             end
@@ -389,8 +369,6 @@ Halt( self )
     {
         deplacement = 1,
     },
-
-    feedbacks = { { { "onHalt" }, "ACT_Obj_Pion_INF_Detruire" } },
 
     create = function( self )
         self._namedParams = {}
@@ -423,8 +401,7 @@ elseif switch_1 == eActionObjetTerminee then
                     DEC_Trace( "destruction : fin" )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Obj_Pion_INF_Detruire" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                     
@@ -432,8 +409,7 @@ Halt( self )
                 or switch_1 == eActionObjetManqueDotation then
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Obj_Pion_INF_Detruire" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                     
@@ -477,8 +453,6 @@ Halt( self )
 
 node "ACT_Misc_Pion_MILICE_MAJ_PositionRegroupement"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Misc_Pion_MILICE_MAJ_PositionRegroupement" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ptRegroupement = self.params[1]
@@ -512,8 +486,6 @@ node "ACT_Misc_Pion_MILICE_MAJ_PositionRegroupement"
 
 node "ACT_Dep_Pion_MILICE_ActiverFurtivite"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Dep_Pion_MILICE_ActiverFurtivite" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.rFurtivite = self.params[1]
@@ -545,8 +517,6 @@ node "ACT_Misc_Pion_Ambiance"
     {
         etat_Ambiance = 1,
     },
-
-    feedbacks = { { { "onHalt" }, "ACT_Misc_Pion_Ambiance" } },
 
     create = function( self )
         self._namedParams = {}

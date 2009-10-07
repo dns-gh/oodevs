@@ -51,14 +51,10 @@ include "Common/Pions/Behaviors/behaviors - Transport.bms"
 {
     activations =
     {
-        { "BEH_Info_Mos", { "onHalt" } },
-        { "BEH_Info_Pion_RendreCompte", { "onHalt" } },
-        { "BEH_Default_ReactionPopulations", { "onHalt" } },
+        { "BEH_Info_Mos", {} },
+        { "BEH_Info_Pion_RendreCompte", {} },
+        { "BEH_Default_ReactionPopulations", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "DefaultBehavior" } },
 
     create = function( self )
     end,

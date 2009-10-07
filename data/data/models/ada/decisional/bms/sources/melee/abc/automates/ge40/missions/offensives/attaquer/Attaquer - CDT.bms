@@ -14,18 +14,14 @@ include "bit.lua"
 {
     activations =
     {
-        { "ACT_GTIA_AnalyserSituationPourAttaquer", { "onHalt" } },
-        { "BEH_GTIA_OrganiserLesMoyensPourAttaquer", { "onHalt" } },
-        { "BEH_GTIA_RendreCompte", { "onHalt" } },
-        { "BEH_GTIA_EchelonnerDispositif", { "onHalt" } },
-        { "BEH_GTIA_RepartirDansFuseaux", { "onHalt" } },
-        { "BEH_GTIA_GererAppuisInternes", { "onHalt" } },
-        { "BEH_GTIA_AssignerLesOrdresPourAttaquer", { "onHalt" } },
+        { "ACT_GTIA_AnalyserSituationPourAttaquer", {} },
+        { "BEH_GTIA_OrganiserLesMoyensPourAttaquer", {} },
+        { "BEH_GTIA_RendreCompte", {} },
+        { "BEH_GTIA_EchelonnerDispositif", {} },
+        { "BEH_GTIA_RepartirDansFuseaux", {} },
+        { "BEH_GTIA_GererAppuisInternes", {} },
+        { "BEH_GTIA_AssignerLesOrdresPourAttaquer", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_GTIA_Attaquer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -89,12 +85,8 @@ node "BEH_GTIA_OrganiserLesMoyensPourAttaquer"
 {
     activations =
     {
-        { "BEH_GTIA_OrganiserMoyensVersPionsOp", { "onHalt" } },
+        { "BEH_GTIA_OrganiserMoyensVersPionsOp", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_OrganiserLesMoyensPourAttaquer" } },
 
     create = function( self )
     end,
@@ -115,8 +107,6 @@ node "BEH_GTIA_OrganiserLesMoyensPourAttaquer"
 
 node "ACT_GTIA_AnalyserSituationPourAttaquer"
 {
-    feedbacks = { { { "onHalt" }, "ACT_GTIA_AnalyserSituationPourAttaquer" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.objectifsPrioritaires = self.params[1]
@@ -149,13 +139,9 @@ node "ACT_GTIA_AnalyserSituationPourAttaquer"
 {
     activations =
     {
-        { "BEH_GTIA_AssignerLesMissions", { "onHalt" } },
-        { "BEH_GTIA_AssurerLaCoordination", { "onHalt" } },
+        { "BEH_GTIA_AssignerLesMissions", {} },
+        { "BEH_GTIA_AssurerLaCoordination", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssignerLesOrdresPourAttaquer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -179,16 +165,12 @@ node "BEH_GTIA_AssignerLesMissions"
 {
     activations =
     {
-        { "BEH_GTIA_AssignerMissionsEcl", { "onHalt" } },
-        { "BEH_GTIA_AssignerMissionsPE", { "onHalt" } },
-        { "BEH_GTIA_AssignerMissionsSE", { "onHalt" } },
-        { "BEH_GTIA_AssignerMissionsSEAppui", { "onHalt" } },
-        { "BEH_GTIA_AssignerMissionsPC", { "onHalt" } },
+        { "BEH_GTIA_AssignerMissionsEcl", {} },
+        { "BEH_GTIA_AssignerMissionsPE", {} },
+        { "BEH_GTIA_AssignerMissionsSE", {} },
+        { "BEH_GTIA_AssignerMissionsSEAppui", {} },
+        { "BEH_GTIA_AssignerMissionsPC", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssignerLesMissions" } },
 
     create = function( self )
         self._namedParams = {}
@@ -217,12 +199,8 @@ node "BEH_GTIA_AssignerMissionsEcl"
 {
     activations =
     {
-        { "BEH_GTIA_AssignerMissionMeleeA", { "onHalt" } },
+        { "BEH_GTIA_AssignerMissionMeleeA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssignerMissionsEcl" } },
 
     create = function( self )
         self._namedParams = {}
@@ -250,12 +228,8 @@ node "BEH_GTIA_AssignerMissionsPE"
 {
     activations =
     {
-        { "ACT_GTIA_AssignerMission", { "onHalt" } },
+        { "ACT_GTIA_AssignerMission", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssignerMissionsPE" } },
 
     create = function( self )
         self._namedParams = {}
@@ -313,12 +287,8 @@ node "BEH_GTIA_AssignerMissionsSE"
 {
     activations =
     {
-        { "BEH_GTIA_AssignerMissionMeleeA", { "onHalt" } },
+        { "BEH_GTIA_AssignerMissionMeleeA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssignerMissionsSE" } },
 
     create = function( self )
         self._namedParams = {}
@@ -354,12 +324,8 @@ node "BEH_GTIA_AssignerMissionMeleeA"
 {
     activations =
     {
-        { "ACT_GTIA_AssignerMission", { "onHalt" } },
+        { "ACT_GTIA_AssignerMission", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssignerMissionMeleeA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -383,14 +349,10 @@ node "BEH_GTIA_AssignerMissionsSEAppui"
 {
     activations =
     {
-        { "BEH_GTIA_AssignerMissionLogA", { "onHalt" } },
-        { "BEH_GTIA_AssignerMissionGenieA", { "onHalt" } },
-        { "BEH_GTIA_AssignerMissionART", { "onHalt" } },
+        { "BEH_GTIA_AssignerMissionLogA", {} },
+        { "BEH_GTIA_AssignerMissionGenieA", {} },
+        { "BEH_GTIA_AssignerMissionART", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssignerMissionsSEAppui" } },
 
     create = function( self )
         self._namedParams = {}
@@ -434,12 +396,8 @@ node "BEH_GTIA_AssignerMissionsPC"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ABC_AssignerSeDeployerA", { "onHalt" } },
+        { "ACT_Mission_Automate_ABC_AssignerSeDeployerA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssignerMissionsPC" } },
 
     create = function( self )
         self._namedParams = {}
@@ -462,12 +420,8 @@ node "BEH_GTIA_AssignerMissionLogA"
 {
     activations =
     {
-        { "ACT_GTIA_AssignerMissionDeployerTC2", { "onHalt" } },
+        { "ACT_GTIA_AssignerMissionDeployerTC2", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssignerMissionLogA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -494,12 +448,8 @@ node "BEH_GTIA_AssignerMissionGenieA"
 {
     activations =
     {
-        { "ACT_GTIA_AssignerMissionOuvrirItineraireA", { "onHalt" } },
+        { "ACT_GTIA_AssignerMissionOuvrirItineraireA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssignerMissionGenieA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -523,12 +473,8 @@ node "BEH_GTIA_AssignerMissionART"
 {
     activations =
     {
-        { "ACT_GTIA_AssignerMissionAcquerirObjectifA", { "onHalt" } },
+        { "ACT_GTIA_AssignerMissionAcquerirObjectifA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssignerMissionART" } },
 
     create = function( self )
         self._namedParams = {}
@@ -555,8 +501,6 @@ node "BEH_GTIA_AssignerMissionART"
 
 node "ACT_GTIA_AssignerMission"
 {
-    feedbacks = { { { "onHalt" }, "ACT_GTIA_AssignerMission" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -670,8 +614,6 @@ elseif switch_1 == "T_Mission_Automate_INF_Semparer" then
 ]]--[[// *****************************************************************************
 ]]node "ACT_GTIA_AssignerMissionDeployerTC2"
 {
-    feedbacks = { { { "onHalt" }, "ACT_GTIA_AssignerMissionDeployerTC2" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -702,8 +644,6 @@ elseif switch_1 == "T_Mission_Automate_INF_Semparer" then
 ]]--[[// *****************************************************************************
 ]]node "ACT_GTIA_AssignerMissionAcquerirObjectifA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_GTIA_AssignerMissionAcquerirObjectifA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionDLO = self.params[1]
@@ -736,8 +676,6 @@ elseif switch_1 == "T_Mission_Automate_INF_Semparer" then
 ]]--[[// *****************************************************************************
 ]]node "ACT_GTIA_AssignerMissionOuvrirItineraireA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_GTIA_AssignerMissionOuvrirItineraireA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionGenie = self.params[1]

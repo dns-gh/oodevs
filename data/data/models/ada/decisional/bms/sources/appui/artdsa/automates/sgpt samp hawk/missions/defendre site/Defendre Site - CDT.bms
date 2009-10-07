@@ -8,12 +8,8 @@ includedFiles["sources/appui/artdsa/automates/sgpt samp hawk/missions/defendre s
 {
     activations =
     {
-        { "BEH_Eni_ASA_HAWK_GererTirsDefendreSite", { "onHalt" } },
+        { "BEH_Eni_ASA_HAWK_GererTirsDefendreSite", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ASA_HAWK_DefendreSite" } },
 
     create = function( self )
         self._namedParams = {}

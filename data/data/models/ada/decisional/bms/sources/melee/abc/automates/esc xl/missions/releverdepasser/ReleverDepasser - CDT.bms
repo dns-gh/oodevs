@@ -24,12 +24,8 @@ includedFiles["sources/melee/abc/automates/esc xl/missions/releverdepasser/Relev
 {
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_ReleverEnDepassant", { "onHalt" } },
+        { "BEH_Conduite_Automate_ABC_ReleverEnDepassant", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_ReleverEnDepassant" } },
 
     create = function( self )
         self._namedParams = {}

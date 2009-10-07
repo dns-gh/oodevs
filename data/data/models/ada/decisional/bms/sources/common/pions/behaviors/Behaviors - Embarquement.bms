@@ -18,22 +18,16 @@ include "Common/Pions/Actions/Actions - Embarquement.bms"
 {
     activations =
     {
-        { "ACT_Transport_Pion_Embarquer", { "onHalt" } },
-        { "ACT_Transport_MaintenirEtat", { "onHalt" } },
+        { "ACT_Transport_Pion_Embarquer", {} },
+        { "ACT_Transport_MaintenirEtat", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mot_Pion_Embarquer" } },
 
     create = function( self )
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         if( DEC_Agent_TransporteursPret() and ( not DEC_Agent_EstEmbarque() ) ) then
-            StartInstance( self, self.activations.ACT_Transport_Pion_Embarquer, 2.01, {} )
+            StartActivateOverride( self, self.activations.ACT_Transport_Pion_Embarquer, 2.01, {} )
         end
 
         Activate( self.activations.ACT_Transport_MaintenirEtat, 2, { eEtatTransport_Embarque, } )

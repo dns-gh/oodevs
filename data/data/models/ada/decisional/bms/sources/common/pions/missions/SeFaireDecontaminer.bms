@@ -14,16 +14,12 @@ includedFiles["sources/common/pions/missions/SeFaireDecontaminer.bms"] = true
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "ACT_Pion_Nbc_DemanderDecontaminationSur", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Pion_Nbc_DemanderDecontaminationSur", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_SeFaireDecontaminer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -41,8 +37,7 @@ includedFiles["sources/common/pions/missions/SeFaireDecontaminer.bms"] = true
 ]]if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.mission.siteDecontamination_ ) ) then
             do
                 DEC_RC( eRC_MissionImpossible )
-                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_SeFaireDecontaminer" } )
-Halt( self )
+                                Halt( self )
                 do return end
 
             end

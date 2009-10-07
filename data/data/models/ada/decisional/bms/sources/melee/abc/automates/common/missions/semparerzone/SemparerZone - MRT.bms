@@ -11,13 +11,9 @@ includedFiles["sources/melee/abc/automates/common/missions/semparerzone/Semparer
 {
     activations =
     {
-        { "ACT_Warning", { "onHalt" } },
-        { "BEH_Mission_Automate_ABC_AssignerSemparerZoneA", { "onHalt" } },
+        { "ACT_Warning", {} },
+        { "BEH_Mission_Automate_ABC_AssignerSemparerZoneA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ABC_AssignerMissionSemparerZoneA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -26,9 +22,7 @@ includedFiles["sources/melee/abc/automates/common/missions/semparerzone/Semparer
         self._namedParams.eEtatEchelon = self.params[3]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         self.listeSecteur = self.listeSecteur or {}
         self.rIterateurSecteur = self.rIterateurSecteur or 0
         self.nErrorCode = self.nErrorCode or nil
@@ -72,7 +66,7 @@ do
                         --[[// Récuperation du secteur courant
 ]]local secteur = DEC_UserTypeList_GetAt( self.listeSecteur, self.rIterateurSecteur )
                         --[[// Assignation de la mission
-]]StartInstance( self, self.activations.BEH_Mission_Automate_ABC_AssignerSemparerZoneA, 1, { ePhase_MRT, pion, secteur, self._namedParams.eEtatEchelon, } )
+]]StartActivateOverride( self, self.activations.BEH_Mission_Automate_ABC_AssignerSemparerZoneA, 1, { ePhase_MRT, pion, secteur, self._namedParams.eEtatEchelon, } )
                                                 self.rIterateurSecteur = self.rIterateurSecteur + 1
                     end
 

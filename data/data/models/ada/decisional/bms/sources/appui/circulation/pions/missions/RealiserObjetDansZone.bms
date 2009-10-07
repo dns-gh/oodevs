@@ -11,16 +11,12 @@ includedFiles["sources/appui/circulation/pions/missions/RealiserObjetDansZone.bm
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "ACT_Obj_Pion_LOG_RealiserTravaux", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Obj_Pion_LOG_RealiserTravaux", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pion_CIRCU_RealiserObjetDansZone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -94,15 +90,13 @@ elseif switch_1 == eRealiserTravaux then
                                 end
 
                                                                 self.params.__returnValue = eActionImpossible
-                                Feedback( self.feedbacks["onHalt"], { "BEH_Pion_CIRCU_RealiserObjetDansZone" } )
-Halt( self )
+                                Halt( self )
                                 do return end
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Feedback( self.feedbacks["onHalt"], { "BEH_Pion_CIRCU_RealiserObjetDansZone" } )
-Halt( self )
+                            Halt( self )
                             do return end
 
                         end

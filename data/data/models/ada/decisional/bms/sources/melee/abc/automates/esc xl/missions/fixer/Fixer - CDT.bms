@@ -22,12 +22,8 @@ includedFiles["sources/melee/abc/automates/esc xl/missions/fixer/Fixer - CDT.bms
 {
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_Fixer", { "onHalt" } },
+        { "BEH_Conduite_Automate_ABC_Fixer", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_Fixer" } },
 
     create = function( self )
         self._namedParams = {}

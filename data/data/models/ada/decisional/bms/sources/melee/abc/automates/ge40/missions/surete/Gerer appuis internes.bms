@@ -15,12 +15,8 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_GTIA_GererAppuiDansZonePour", { "onHalt" } },
+        { "BEH_GTIA_GererAppuiDansZonePour", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_GererAppuisInternesPourSurete" } },
 
     create = function( self )
     end,
@@ -48,24 +44,18 @@ node "BEH_GTIA_GererAppuiDansZonePour"
 {
     activations =
     {
-        { "BEH_GTIA_AssignerMissionsPourAppuyerDansZone", { "onHalt" } },
+        { "BEH_GTIA_AssignerMissionsPourAppuyerDansZone", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_GererAppuiDansZonePour" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.listePEEnDifficultes = self.params[1]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         for _,pion in pairs( self._namedParams.listePEEnDifficultes ) do
         local _continue = true
-            StartInstance( self, self.activations.BEH_GTIA_AssignerMissionsPourAppuyerDansZone, 1, { pion, } )
+            StartActivateOverride( self, self.activations.BEH_GTIA_AssignerMissionsPourAppuyerDansZone, 1, { pion, } )
 
         end
 
@@ -83,21 +73,15 @@ node "BEH_GTIA_AssignerMissionsPourAppuyerDansZone"
 {
     activations =
     {
-        { "ACT_GTIA_AssignerMissionAppuyerPourSurete", { "onHalt" } },
+        { "ACT_GTIA_AssignerMissionAppuyerPourSurete", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssignerMissionsPourAppuyerDansZone" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionAAppuyer = self.params[1]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         --[[// On récupère les pions de second échelons "en mesure de" 
 ]]local listePionsSE = S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Second )
         local listePionSEAppui = S_Cherche_GE_Filtre_EnMesureDe( S_Cherche_GE_AutomateOperationnels( listePionsSE ) )
@@ -106,7 +90,7 @@ node "BEH_GTIA_AssignerMissionsPourAppuyerDansZone"
         local _continue = true
 do
                 local pion = x
-                StartInstance( self, self.activations.ACT_GTIA_AssignerMissionAppuyerPourSurete, S_Force_GE_DistanceAgent( self._namedParams.pionAAppuyer, pion ), { pion, self._namedParams.pionAAppuyer, F_Automat_Getfuseau( self._namedParams.pionAAppuyer ), "T_Mission_Automate_ABC_Semparer", F_Automat_Getzone( self._namedParams.pionAAppuyer ), } )
+                StartActivateOverride( self, self.activations.ACT_GTIA_AssignerMissionAppuyerPourSurete, S_Force_GE_DistanceAgent( self._namedParams.pionAAppuyer, pion ), { pion, self._namedParams.pionAAppuyer, F_Automat_Getfuseau( self._namedParams.pionAAppuyer ), "T_Mission_Automate_ABC_Semparer", F_Automat_Getzone( self._namedParams.pionAAppuyer ), } )
             end
 --[[// Assignation missions INF
 ]]
@@ -116,7 +100,7 @@ do
         local _continue = true
 do
                 local pion = x
-                StartInstance( self, self.activations.ACT_GTIA_AssignerMissionAppuyerPourSurete, S_Force_GE_DistanceAgent( self._namedParams.pionAAppuyer, pion ), { pion, self._namedParams.pionAAppuyer, F_Automat_Getfuseau( self._namedParams.pionAAppuyer ), "T_Mission_Automate_INF_Semparer", F_Automat_Getzone( self._namedParams.pionAAppuyer ), } )
+                StartActivateOverride( self, self.activations.ACT_GTIA_AssignerMissionAppuyerPourSurete, S_Force_GE_DistanceAgent( self._namedParams.pionAAppuyer, pion ), { pion, self._namedParams.pionAAppuyer, F_Automat_Getfuseau( self._namedParams.pionAAppuyer ), "T_Mission_Automate_INF_Semparer", F_Automat_Getzone( self._namedParams.pionAAppuyer ), } )
             end
 
         end
@@ -133,8 +117,6 @@ do
 
 node "ACT_GTIA_AssignerMissionAppuyerPourSurete"
 {
-    feedbacks = { { { "onHalt" }, "ACT_GTIA_AssignerMissionAppuyerPourSurete" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionAppui = self.params[1]

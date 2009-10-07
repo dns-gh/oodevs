@@ -16,16 +16,12 @@ node "MIS_Pion_INF_EscorterUnite"
 {
     activations =
     {
-        { "BEH_Misc_Pion_DefinirTypeMission", { "onHalt" } },
-        { "BEH_MAJ_AgressiviteMission", { "onHalt" } },
-        { "BEH_Mission_Pion_VAB_EscorterUnConvoi", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Poste_Pion_INF_TomberEnGarde", { "onHalt" } },
+        { "BEH_Misc_Pion_DefinirTypeMission", {} },
+        { "BEH_MAJ_AgressiviteMission", {} },
+        { "BEH_Mission_Pion_VAB_EscorterUnConvoi", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Poste_Pion_INF_TomberEnGarde", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_INF_EscorterUnite" } },
 
     create = function( self )
         self._namedParams = {}
@@ -76,8 +72,7 @@ elseif switch_1 == eFinMission then
 ]]DEC_Trace( "Mission 'Escorter un convoi' : fin" )
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
-                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_INF_EscorterUnite" } )
-Halt( self )
+                                Halt( self )
                                 do return end
 
                             end
@@ -102,33 +97,27 @@ node "BEH_Mission_Pion_VAB_EscorterUnConvoi"
 {
     activations =
     {
-        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", { "onHalt" } },
-        { "ACT_Misc_Pion_Melee_Escorter", { "onHalt" } },
-        { "BEH_Mot_Pion_Embarquer", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
-        { "BEH_Dep_Suivre", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "BEH_Dep_Progresser", { "onHalt" } },
+        { "BEH_Lima_Pion_RejoindreFuseau_EnAttente", {} },
+        { "ACT_Misc_Pion_Melee_Escorter", {} },
+        { "BEH_Mot_Pion_Embarquer", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Dep_ModulationVitesse", {} },
+        { "BEH_Dep_Suivre", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_Progresser", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_VAB_EscorterUnConvoi" } },
 
     create = function( self )
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         self.mission = self.mission or DEC_GetMission( myself )
         self.pionConvoi = self.pionConvoi or self.mission.uniteAEscorter_
         self.eAction = self.eAction or eActionEnCours
         self.ePhase = self.ePhase or eEscorter
         if( ModuleBegins() ) then
             do
-                StartInstance( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
+                StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
             end
         end
 
@@ -180,8 +169,7 @@ elseif switch_1 == eEscorter then
                         do
                             self.eAction = eActionEnCours
                                                         self.params.__returnValue = eFinMission
-                            Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_VAB_EscorterUnConvoi" } )
-Halt( self )
+                            Halt( self )
                             do return end
 
                         end
@@ -201,12 +189,8 @@ node "BEH_Dep_Pion_INF_SeCoordonnerSurEscorte"
 {
     activations =
     {
-        { "ACT_Dep_SePoster", { "onHalt" } },
+        { "ACT_Dep_SePoster", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_INF_SeCoordonnerSurEscorte" } },
 
     create = function( self )
         self._namedParams = {}
@@ -234,12 +218,8 @@ node "BEH_Dep_Pion_INF_Escorter"
 {
     activations =
     {
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "BEH_Dep_ProgressionVers", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_INF_Escorter" } },
 
     create = function( self )
         self._namedParams = {}
@@ -251,8 +231,7 @@ node "BEH_Dep_Pion_INF_Escorter"
         self.ptEnAvance = self.ptEnAvance or self._namedParams.pionAmi:DEC_Itineraire_ExtrapolerPosition( 2, true )
         if( self.eAction ~= eActionEnCours ) then
             self.params.__returnValue = eActionHalt
-            Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_INF_Escorter" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 

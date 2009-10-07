@@ -23,8 +23,6 @@ includedFiles["sources/appui/alat/automates/common/missions/couvrir/Couvrir - MR
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "MIS_Automate_MRT_ALAT_Couvrir"
 {
-    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_ALAT_Couvrir" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission
@@ -47,8 +45,7 @@ includedFiles["sources/appui/alat/automates/common/missions/couvrir/Couvrir - MR
                     do
                         DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
                                                 self.params.__returnValue = eActionImpossible
-                        Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_ALAT_Couvrir" } )
-Halt( self )
+                        Halt( self )
                         do return end
 
                     end
@@ -61,8 +58,7 @@ Halt( self )
 
         DEC_MRT_Valide()
                 self.params.__returnValue = eActionEffectuee
-        Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_ALAT_Couvrir" } )
-Halt( self )
+        Halt( self )
         do return end
 
     end,

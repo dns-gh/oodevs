@@ -13,12 +13,8 @@ includedFiles["sources/appui/nbc/automates/son reco/missions/reconnaitreaxe/Reco
 {
     activations =
     {
-        { "BEH_Medo_Automate_NBC_DonnerLesOrdresPourMission", { "onHalt" } },
+        { "BEH_Medo_Automate_NBC_DonnerLesOrdresPourMission", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_NBC_ReconnaitreUnAxe" } },
 
     create = function( self )
         self._namedParams = {}

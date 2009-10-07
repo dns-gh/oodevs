@@ -28,12 +28,8 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSuivreA", { "onHalt" } },
+        { "BEH_Mission_Automate_AssignerSuivreA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dispositif_Automate_RENS_GererLeSE_" } },
 
     create = function( self )
     end,

@@ -13,21 +13,17 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "onHalt" } },
-        { "ACT_ROE_Automate_DonnerOrdreTirLibre", { "onHalt" } },
-        { "ACT_Ordre_Automate_Continue", { "onHalt" } },
-        { "ACT_ROE_Automate_DonnerOrdreTirRestreint", { "onHalt" } },
-        { "BEH_Mission_Automate_AssignerFaireMouvementA", { "onHalt" } },
-        { "ACT_Ordre_Automate_Pause", { "onHalt" } },
-        { "BEH_Automate_ALAT_CoordonnerFeux", { "onHalt" } },
-        { "BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX", { "onHalt" } },
-        { "BEH_ROE_Automate_TirRestreint", { "onHalt" } },
-        { "BEH_Mission_Automate_AssignerStationnerAListe", { "onHalt" } },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "ACT_ROE_Automate_DonnerOrdreTirLibre", {} },
+        { "ACT_Ordre_Automate_Continue", {} },
+        { "ACT_ROE_Automate_DonnerOrdreTirRestreint", {} },
+        { "BEH_Mission_Automate_AssignerFaireMouvementA", {} },
+        { "ACT_Ordre_Automate_Pause", {} },
+        { "BEH_Automate_ALAT_CoordonnerFeux", {} },
+        { "BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX", {} },
+        { "BEH_ROE_Automate_TirRestreint", {} },
+        { "BEH_Mission_Automate_AssignerStationnerAListe", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ALAT_RecueillirFormationAeromobile" } },
 
     create = function( self )
         self._namedParams = {}

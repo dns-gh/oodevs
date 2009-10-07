@@ -23,12 +23,8 @@ includedFiles["sources/melee/abc/automates/esc amx-erc/missions/eclairer/Eclaire
 {
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_Eclairer", { "onHalt" } },
+        { "BEH_Conduite_Automate_ABC_Eclairer", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_Eclairer" } },
 
     create = function( self )
         self._namedParams = {}

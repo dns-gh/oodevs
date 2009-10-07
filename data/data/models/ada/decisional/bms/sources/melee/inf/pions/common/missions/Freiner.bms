@@ -21,26 +21,20 @@ node "BEH_Mission_Pion_INF_Freiner"
 {
     activations =
     {
-        { "BEH_Mot_Pion_Embarquer", { "onHalt" } },
-        { "BEH_Delai_Pion_INF_PreparerMission", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Dep_Pion_INF_Freiner_Decrocher", { "onHalt" } },
-        { "BEH_Lima_GererLCAR", { "onHalt" } },
-        { "BEH_Lima_GererLR", { "onHalt" } },
-        { "BEH_Lima_Pion_INF_GererLIA", { "onHalt" } },
-        { "BEH_Dep_ProgressionSur", { "onHalt" } },
+        { "BEH_Mot_Pion_Embarquer", {} },
+        { "BEH_Delai_Pion_INF_PreparerMission", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_Pion_INF_Freiner_Decrocher", {} },
+        { "BEH_Lima_GererLCAR", {} },
+        { "BEH_Lima_GererLR", {} },
+        { "BEH_Lima_Pion_INF_GererLIA", {} },
+        { "BEH_Dep_ProgressionSur", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_INF_Freiner" } },
 
     create = function( self )
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
                 self.mission = self.mission or DEC_GetMission( myself )
         self.ePhase = self.ePhase or ePreparerMission
         self.eAction = self.eAction or eActionEnCours
@@ -54,15 +48,13 @@ node "BEH_Mission_Pion_INF_Freiner"
                                 do
                     DEC_Warning( eRC_MissionImpossible )
                                         self.params.__returnValue = eFinMission
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_INF_Freiner" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_INF_Freiner" } )
-Halt( self )
+                Halt( self )
                 do return end
 
             end
@@ -93,7 +85,7 @@ elseif switch_1 == eSurveiller then
                     --[[// eEtatPhaseMission_EnPosition
 ]]--[[// Attendre de se degager ...								
 ]]if( F_Pion_GeteEtatLima( myself ) ~= eEtatLima_LCAR ) then
-                        StartInstance( self, self.activations.BEH_Dep_Pion_INF_Freiner_Decrocher, 1.1, {} )
+                        StartActivateOverride( self, self.activations.BEH_Dep_Pion_INF_Freiner_Decrocher, 1.1, {} )
                     end
 
                                 cases_switch_1[2] = true
@@ -117,7 +109,7 @@ elseif switch_1 == eSurveiller then
                         do
                             --[[// Arrete de decrocher ( si 2 LCAR sont proches )
 ]]if( self.ePhase == eFreiner ) then
-                                StopInstance( self, self.activations.BEH_Dep_Pion_INF_Freiner_Decrocher, {} )
+                                StopActivateOverride( self, self.activations.BEH_Dep_Pion_INF_Freiner_Decrocher, {} )
                             end
 
                             self.ePhase = eSurveiller
@@ -158,13 +150,9 @@ node "BEH_Dep_Pion_INF_Freiner_Decrocher"
 {
     activations =
     {
-        { "ACT_Tir_INF_FumigeneVersEni", { "onHalt" } },
-        { "BEH_MOT_Pion_INF_Debarquer", { "onHalt" } },
+        { "ACT_Tir_INF_FumigeneVersEni", {} },
+        { "BEH_MOT_Pion_INF_Debarquer", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_INF_Freiner_Decrocher" } },
 
     create = function( self )
     end,
@@ -198,8 +186,7 @@ node "BEH_Dep_Pion_INF_Freiner_Decrocher"
 
         if( DEC_Agent_EstEmbarque() ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_INF_Freiner_Decrocher" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 

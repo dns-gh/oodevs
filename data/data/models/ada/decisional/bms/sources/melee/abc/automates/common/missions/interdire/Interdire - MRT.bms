@@ -11,13 +11,9 @@ includedFiles["sources/melee/abc/automates/common/missions/interdire/Interdire -
 {
     activations =
     {
-        { "ACT_Warning", { "onHalt" } },
-        { "BEH_Mission_Automate_ABC_AssignerBarrerA", { "onHalt" } },
+        { "ACT_Warning", {} },
+        { "BEH_Mission_Automate_ABC_AssignerBarrerA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ABC_Interdire_AssignerMissionBarrerA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -25,9 +21,7 @@ includedFiles["sources/melee/abc/automates/common/missions/interdire/Interdire -
         self._namedParams.eEtatEchelon = self.params[2]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         --[[// Parcours de la liste
 ]]self.rIterateurPosition = self.rIterateurPosition or 0
         self.listePositions = self.listePositions or {}
@@ -83,7 +77,7 @@ do
                         --[[// On recupère la position courante
 ]]local positionInstallation = DEC_ListePoints_GetAt( self.listePositions, self.rIterateurPosition )
                         --[[// Assignation de la mission
-]]StartInstance( self, self.activations.BEH_Mission_Automate_ABC_AssignerBarrerA, 1, { ePhase_MRT, pion, positionInstallation, self._namedParams.eEtatEchelon, } )
+]]StartActivateOverride( self, self.activations.BEH_Mission_Automate_ABC_AssignerBarrerA, 1, { ePhase_MRT, pion, positionInstallation, self._namedParams.eEtatEchelon, } )
                                                 self.rIterateurPosition = self.rIterateurPosition + 1
                     end
 
@@ -106,13 +100,9 @@ node "BEH_Medo_Automate_ABC_Interdire_AssignerMissionSurveillerA"
 {
     activations =
     {
-        { "ACT_Warning", { "onHalt" } },
-        { "BEH_Mission_Automate_ABC_AssignerSurveillerA", { "onHalt" } },
+        { "ACT_Warning", {} },
+        { "BEH_Mission_Automate_ABC_AssignerSurveillerA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ABC_Interdire_AssignerMissionSurveillerA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -120,9 +110,7 @@ node "BEH_Medo_Automate_ABC_Interdire_AssignerMissionSurveillerA"
         self._namedParams.eEtatEchelon = self.params[2]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         --[[// Parcours de la liste
 ]]self.rIterateurPosition = self.rIterateurPosition or 0
         self.listePositions = self.listePositions or {}
@@ -178,7 +166,7 @@ do
                         --[[// On recupère la position courante
 ]]local positionInstallation = DEC_ListePoints_GetAt( self.listePositions, self.rIterateurPosition )
                         --[[// Assignation de la mission
-]]StartInstance( self, self.activations.BEH_Mission_Automate_ABC_AssignerSurveillerA, 1, { ePhase_MRT, pion, positionInstallation, self._namedParams.eEtatEchelon, } )
+]]StartActivateOverride( self, self.activations.BEH_Mission_Automate_ABC_AssignerSurveillerA, 1, { ePhase_MRT, pion, positionInstallation, self._namedParams.eEtatEchelon, } )
                                                 self.rIterateurPosition = self.rIterateurPosition + 1
                     end
 

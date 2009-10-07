@@ -11,14 +11,10 @@ includedFiles["sources/appui/rens/automates/roim/cl289/missions/renseignersur/Re
 {
     activations =
     {
-        { "BEH_Dispositif_Automate_RENS_GererPionsDetruits_", { "onHalt" } },
-        { "BEH_Dispositif_Automate_RENS_GererLeSE_", { "onHalt" } },
-        { "BEH_Conduite_Automate_RENS_ROIM_CL289_GererMiseEnOeuvre", { "onHalt" } },
+        { "BEH_Dispositif_Automate_RENS_GererPionsDetruits_", {} },
+        { "BEH_Dispositif_Automate_RENS_GererLeSE_", {} },
+        { "BEH_Conduite_Automate_RENS_ROIM_CL289_GererMiseEnOeuvre", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_RENS_ROIM_CL289_RenseignerSur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -56,20 +52,14 @@ node "BEH_Conduite_Automate_RENS_ROIM_CL289_GererMiseEnOeuvre"
 {
     activations =
     {
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "BEH_Conduite_Automate_RENS_ROIM_CL289_LancerDrone", { "onHalt" } },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Conduite_Automate_RENS_ROIM_CL289_LancerDrone", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_RENS_ROIM_CL289_GererMiseEnOeuvre" } },
 
     create = function( self )
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         self.bLancementEffectue = self.bLancementEffectue or false
         local pionDrone = S_Dispositif_Automate_RENS_ObtenirPionDroneMiseEnOeuvre( Drone_CL289 )
         --[[//-----------------------------------------------------------------------------
@@ -88,7 +78,7 @@ node "BEH_Conduite_Automate_RENS_ROIM_CL289_GererMiseEnOeuvre"
 
         if( not self.bLancementEffectue ) then
             do
-                StartInstance( self, self.activations.BEH_Conduite_Automate_RENS_ROIM_CL289_LancerDrone, 1, { pionDrone, } )
+                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_RENS_ROIM_CL289_LancerDrone, 1, { pionDrone, } )
                 self.bLancementEffectue = true
             end
         end
@@ -107,13 +97,9 @@ node "BEH_Conduite_Automate_RENS_ROIM_CL289_LancerDrone"
 {
     activations =
     {
-        { "ACT_RC_Automate", { "onHalt" } },
-        { "BEH_Mission_Automate_RENS_ROIM_CL289_AssignerRenseignerSur", { "onHalt" } },
+        { "ACT_RC_Automate", {} },
+        { "BEH_Mission_Automate_RENS_ROIM_CL289_AssignerRenseignerSur", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_RENS_ROIM_CL289_LancerDrone" } },
 
     create = function( self )
         self._namedParams = {}

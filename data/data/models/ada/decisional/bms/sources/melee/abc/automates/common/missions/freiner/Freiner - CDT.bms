@@ -14,14 +14,10 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Dispositif_Automate_ABC_GererLeDispositifRetrograde_", { "onHalt" } },
-        { "BEH_CoordDep_Automate_ABC_CoordinationRetrograde_", { "onHalt" } },
-        { "BEH_Conduite_ABC_Automate_Freiner_GererLesLC", { "onHalt" } },
+        { "BEH_Dispositif_Automate_ABC_GererLeDispositifRetrograde_", {} },
+        { "BEH_CoordDep_Automate_ABC_CoordinationRetrograde_", {} },
+        { "BEH_Conduite_ABC_Automate_Freiner_GererLesLC", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_ABC_Freiner" } },
 
     create = function( self )
     end,
@@ -51,12 +47,8 @@ node "BEH_Conduite_ABC_Automate_Freiner_GererLesLC"
 {
     activations =
     {
-        { "ACT_Ordre_Automate_PasserSurLC", { "onHalt" } },
+        { "ACT_Ordre_Automate_PasserSurLC", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_ABC_Automate_Freiner_GererLesLC" } },
 
     create = function( self )
     end,

@@ -6,8 +6,6 @@ includedFiles["sources/air/pions/common/behaviors/Behaviors - Mot.bms"] = true
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "BEH_Mot_Pion_AIR_AffecterVariablesDEtat"
 {
-    feedbacks = { { { "onHalt" }, "BEH_Mot_Pion_AIR_AffecterVariablesDEtat" } },
-
     create = function( self )
     end,
 

@@ -20,12 +20,8 @@ includedFiles["sources/melee/abc/automates/esc xl/missions/tenir/Tenir - MRT.bms
 {
     activations =
     {
-        { "BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionStatique", { "onHalt" } },
+        { "BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionStatique", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_ABC_Tenir" } },
 
     create = function( self )
         self._namedParams = {}

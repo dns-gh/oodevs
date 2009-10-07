@@ -9,8 +9,6 @@ includedFiles["sources/population/refugies/automates/refugie/missions/SeRendreVe
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_FaireMouvementVersCampRefugies"
 {
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_FaireMouvementVersCampRefugies" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission

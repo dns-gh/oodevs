@@ -11,16 +11,12 @@ includedFiles["sources/population/asymetriques/common/pion/missions/CommettreExa
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers", { "onHalt" } },
-        { "BEH_Eni_Pion_ASY_CommettreExactionDans", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers", {} },
+        { "BEH_Eni_Pion_ASY_CommettreExactionDans", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_ASY_CommettreExactionsSurPopulationDansZone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -37,8 +33,7 @@ includedFiles["sources/population/asymetriques/common/pion/missions/CommettreExa
                 if( not DEC_Geometrie_EstPointDansFuseau( self.objectif ) ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
-                                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ASY_CommettreExactionsSurPopulationDansZone" } )
-Halt( self )
+                                                Halt( self )
                         do return end
 
                     end
@@ -88,8 +83,7 @@ elseif switch_1 == eNettoyer then
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                                        Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ASY_CommettreExactionsSurPopulationDansZone" } )
-Halt( self )
+                                        Halt( self )
                     do return end
 
                                 end

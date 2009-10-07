@@ -18,12 +18,8 @@ node "MIS_Automate_MRT_INF_Controler"
 {
     activations =
     {
-        { "BEH_Medo_Automate_INF_PreparerMission_Zone", { "onHalt" } },
+        { "BEH_Medo_Automate_INF_PreparerMission_Zone", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_INF_Controler" } },
 
     create = function( self )
         self._namedParams = {}
@@ -53,8 +49,7 @@ node "MIS_Automate_MRT_INF_Controler"
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_INF_Controler" } )
-Halt( self )
+                Halt( self )
                 do return end
 
             end
@@ -67,8 +62,7 @@ Halt( self )
                     DEC_Trace( "T_Mission_Automate_INF_Controler : fin MRT" )
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_INF_Controler" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end

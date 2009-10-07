@@ -14,16 +14,12 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Dep_ProgressionSur", { "onHalt" } },
-        { "BEH_Dep_GEN_Ouvrir_ReagirFaceAObstacles", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionSur", {} },
+        { "BEH_Dep_GEN_Ouvrir_ReagirFaceAObstacles", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_GEN_OuvrirItineraire" } },
 
     create = function( self )
         self._namedParams = {}
@@ -101,12 +97,8 @@ node "BEH_Dep_GEN_Ouvrir_ReagirFaceAObstacles"
 {
     activations =
     {
-        { "BEH_Objet_Pion_GEN_BrecherObstacle", { "onHalt" } },
+        { "BEH_Objet_Pion_GEN_BrecherObstacle", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_GEN_Ouvrir_ReagirFaceAObstacles" } },
 
     create = function( self )
     end,
@@ -137,13 +129,9 @@ node "BEH_Objet_Pion_GEN_BrecherObstacle"
 {
     activations =
     {
-        { "BEH_Objet_Pion_GEN_ReduireObstacle", { "onHalt" } },
-        { "BEH_Objet_Pion_GEN_Brecher", { "onHalt" } },
+        { "BEH_Objet_Pion_GEN_ReduireObstacle", {} },
+        { "BEH_Objet_Pion_GEN_Brecher", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Objet_Pion_GEN_BrecherObstacle" } },
 
     create = function( self )
         self._namedParams = {}
@@ -175,14 +163,10 @@ node "BEH_Objet_Pion_GEN_Brecher"
 {
     activations =
     {
-        { "ACT_Obj_Pion_GEN_CreerContournement", { "onHalt" } },
-        { "ACT_Dep_SePoster", { "onHalt" } },
-        { "ACT_Pion_GEN_AttendreRenforcementPour", { "onHalt" } },
+        { "ACT_Obj_Pion_GEN_CreerContournement", {} },
+        { "ACT_Dep_SePoster", {} },
+        { "ACT_Pion_GEN_AttendreRenforcementPour", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Objet_Pion_GEN_Brecher" } },
 
     create = function( self )
         self._namedParams = {}
@@ -197,8 +181,7 @@ node "BEH_Objet_Pion_GEN_Brecher"
             do
                 --[[// hum hum
 ]]myself.objMisEnCours_ = nil
-                                Feedback( self.feedbacks["onHalt"], { "BEH_Objet_Pion_GEN_Brecher" } )
-Halt( self )
+                                Halt( self )
                 do return end
 
             end
@@ -239,8 +222,6 @@ node "ACT_Pion_GEN_AttendreRenforcementPour"
         max = 1--[[// tres important
 ]],
     },
-
-    feedbacks = { { { "onHalt" }, "ACT_Pion_GEN_AttendreRenforcementPour" } },
 
     create = function( self )
         self._namedParams = {}

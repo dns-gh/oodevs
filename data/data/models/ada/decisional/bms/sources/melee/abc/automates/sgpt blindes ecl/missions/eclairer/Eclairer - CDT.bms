@@ -22,12 +22,8 @@ includedFiles["sources/melee/abc/automates/sgpt blindes ecl/missions/eclairer/Ec
 {
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_Eclairer", { "onHalt" } },
+        { "BEH_Conduite_Automate_ABC_Eclairer", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_Eclairer" } },
 
     create = function( self )
         self._namedParams = {}

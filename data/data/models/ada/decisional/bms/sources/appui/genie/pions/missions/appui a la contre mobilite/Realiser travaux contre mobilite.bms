@@ -11,15 +11,11 @@ includedFiles["sources/appui/genie/pions/missions/appui a la contre mobilite/Rea
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Dep_GEN_AllerFaireTravauxSur", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_GEN_AllerFaireTravauxSur", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_GEN_RealiserTravauxContreMobilite" } },
 
     create = function( self )
         self._namedParams = {}

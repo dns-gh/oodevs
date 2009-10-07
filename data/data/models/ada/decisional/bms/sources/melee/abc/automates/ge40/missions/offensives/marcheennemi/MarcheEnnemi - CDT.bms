@@ -11,18 +11,14 @@ includedFiles["sources/melee/abc/automates/ge40/missions/offensives/marcheennemi
 {
     activations =
     {
-        { "ACT_GTIA_AnalyserSituationPourReconnaitre", { "onHalt" } },
-        { "BEH_GTIA_OrganiserLesMoyensPourAttaquer", { "onHalt" } },
-        { "BEH_GTIA_RendreCompte", { "onHalt" } },
-        { "BEH_GTIA_GererAppuisInternes", { "onHalt" } },
-        { "BEH_GTIA_EchelonnerDispositif", { "onHalt" } },
-        { "BEH_GTIA_RepartirDansFuseaux", { "onHalt" } },
-        { "BEH_GTIA_AssignerLesOrdresPourReconnaitre", { "onHalt" } },
+        { "ACT_GTIA_AnalyserSituationPourReconnaitre", {} },
+        { "BEH_GTIA_OrganiserLesMoyensPourAttaquer", {} },
+        { "BEH_GTIA_RendreCompte", {} },
+        { "BEH_GTIA_GererAppuisInternes", {} },
+        { "BEH_GTIA_EchelonnerDispositif", {} },
+        { "BEH_GTIA_RepartirDansFuseaux", {} },
+        { "BEH_GTIA_AssignerLesOrdresPourReconnaitre", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_GTIA_MarcheEnnemi" } },
 
     create = function( self )
         self._namedParams = {}
@@ -83,8 +79,6 @@ includedFiles["sources/melee/abc/automates/ge40/missions/offensives/marcheennemi
 
 node "ACT_GTIA_AnalyserSituationPourReconnaitre"
 {
-    feedbacks = { { { "onHalt" }, "ACT_GTIA_AnalyserSituationPourReconnaitre" } },
-
     create = function( self )
     end,
 
@@ -115,13 +109,9 @@ node "ACT_GTIA_AnalyserSituationPourReconnaitre"
 {
     activations =
     {
-        { "BEH_GTIA_AssignerLesMissionsReconnaissance", { "onHalt" } },
-        { "BEH_GTIA_AssurerLaCoordination", { "onHalt" } },
+        { "BEH_GTIA_AssignerLesMissionsReconnaissance", {} },
+        { "BEH_GTIA_AssurerLaCoordination", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssignerLesOrdresPourReconnaitre" } },
 
     create = function( self )
     end,
@@ -144,16 +134,12 @@ node "BEH_GTIA_AssignerLesMissionsReconnaissance"
 {
     activations =
     {
-        { "BEH_GTIA_AssignerMissionsEcl", { "onHalt" } },
-        { "BEH_GTIA_AssignerMissionsRecoPE", { "onHalt" } },
-        { "BEH_GTIA_AssignerMissionsSE", { "onHalt" } },
-        { "BEH_GTIA_AssignerMissionsSEAppui", { "onHalt" } },
-        { "BEH_GTIA_AssignerMissionsPC", { "onHalt" } },
+        { "BEH_GTIA_AssignerMissionsEcl", {} },
+        { "BEH_GTIA_AssignerMissionsRecoPE", {} },
+        { "BEH_GTIA_AssignerMissionsSE", {} },
+        { "BEH_GTIA_AssignerMissionsSEAppui", {} },
+        { "BEH_GTIA_AssignerMissionsPC", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssignerLesMissionsReconnaissance" } },
 
     create = function( self )
     end,
@@ -183,12 +169,8 @@ node "BEH_GTIA_AssignerMissionsRecoPE"
 {
     activations =
     {
-        { "ACT_GTIA_AssignerMission", { "onHalt" } },
+        { "ACT_GTIA_AssignerMission", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssignerMissionsRecoPE" } },
 
     create = function( self )
         self._namedParams = {}

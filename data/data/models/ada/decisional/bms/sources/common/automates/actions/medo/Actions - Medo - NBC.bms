@@ -11,8 +11,6 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - NBC.bms"] 
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_NBC_AssignerReconnaitreA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_NBC_AssignerReconnaitreA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -25,8 +23,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - NBC.bms"] 
 ]]if( not ( ( self.dest ~= 0 and self.dest ~= nil ) ) ) then
             do
                                 self.params.__returnValue = eActionImpossible
-                Feedback( self.feedbacks["onHalt"], { "ACT_Mission_Automate_NBC_AssignerReconnaitreA" } )
-Halt( self )
+                Halt( self )
                 do return end
 
             end
@@ -103,8 +100,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_NBC_AssignerArmerSiteA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_NBC_AssignerArmerSiteA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -184,8 +179,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_NBC_AssignerReconnaitreZoneA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_NBC_AssignerReconnaitreZoneA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -265,8 +258,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_NBC_AssignerReconnaitreSiteA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_NBC_AssignerReconnaitreSiteA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -346,8 +337,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_NBC_AssignerDecontaminerZoneA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_NBC_AssignerDecontaminerZoneA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]

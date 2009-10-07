@@ -15,12 +15,8 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Misc.bms"] = true
 {
     activations =
     {
-        { "ACT_MAJ_EnAppuiPionMobile", { "onHalt" } },
+        { "ACT_MAJ_EnAppuiPionMobile", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Misc_Defini_AppuisMobile" } },
 
     create = function( self )
     end,
@@ -51,8 +47,6 @@ node "BEH_Misc_Pion_DefinirTypeMission"
     {
         max = 1,
     },
-
-    feedbacks = { { { "onHalt" }, "BEH_Misc_Pion_DefinirTypeMission" } },
 
     create = function( self )
         self._namedParams = {}

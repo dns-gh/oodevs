@@ -15,8 +15,6 @@ motivation_plugin.motivations = motivation_plugin.motivations or {}
 motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_Mission"
 node "ActivationForSTIM_Mission"
 {
-    feedbacks = { { { "onHalt" }, "ActivationForSTIM_Mission" } },
-
     activate = function( self )
         if( DEC_GetMission( myself ) ~= nil ) then
             SetStimulus( "STIM_Mission", 1 )
@@ -34,8 +32,6 @@ node "ActivationForSTIM_Mission"
 motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_PriseAPartieTirDirect"
 node "ActivationForSTIM_PriseAPartieTirDirect"
 {
-    feedbacks = { { { "onHalt" }, "ActivationForSTIM_PriseAPartieTirDirect" } },
-
     activate = function( self )
         local lstPions = DEC_Connaissances_PionsPrenantAPartie()
         for _,pion in pairs( lstPions ) do
@@ -82,8 +78,6 @@ do
 motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_ZoneSecurisee"
 node "ActivationForSTIM_ZoneSecurisee"
 {
-    feedbacks = { { { "onHalt" }, "ActivationForSTIM_ZoneSecurisee" } },
-
     activate = function( self )
         local lstSecus = DEC_Connaissances_PionsSecurisant()
         for _,secu in pairs( lstSecus ) do

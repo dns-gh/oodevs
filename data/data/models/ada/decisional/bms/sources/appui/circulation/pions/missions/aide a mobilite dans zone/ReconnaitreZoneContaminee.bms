@@ -11,17 +11,13 @@ includedFiles["sources/appui/circulation/pions/missions/aide a mobilite dans zon
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "BEH_LOG_Pion_FaireDesMesures", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_LOG_Pion_FaireDesMesures", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_LOG_ReconnaitreZoneContaminee" } },
 
     create = function( self )
         self._namedParams = {}
@@ -34,8 +30,7 @@ includedFiles["sources/appui/circulation/pions/missions/aide a mobilite dans zon
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_LOG_ReconnaitreZoneContaminee" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 

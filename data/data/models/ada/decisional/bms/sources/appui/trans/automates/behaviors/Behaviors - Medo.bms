@@ -17,14 +17,10 @@ include "Appui/Trans/Automates/Actions/Actions - Medo.bms"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ControleCreationMission" } },
 
     create = function( self )
         self._namedParams = {}
@@ -42,8 +38,7 @@ include "Appui/Trans/Automates/Actions/Actions - Medo.bms"
 
         if( ( self.eAction_OK == eActionEffectuee ) or ( ( self._namedParams.rN_Pion == 0 or self._namedParams.rN_Pion == nil ) ) ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_ControleCreationMission" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -67,12 +62,8 @@ node "BEH_Mission_Automate_TRANS_AssignerEtablirGererLiaisonAListe"
 {
     activations =
     {
-        { "BEH_Mission_Automate_TRANS_AssignerEtablirGererLiaisonA", { "onHalt" } },
+        { "BEH_Mission_Automate_TRANS_AssignerEtablirGererLiaisonA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_TRANS_AssignerEtablirGererLiaisonAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -81,15 +72,13 @@ node "BEH_Mission_Automate_TRANS_AssignerEtablirGererLiaisonAListe"
         self._namedParams.position = self.params[3]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 for _,x in pairs( self._namedParams.listePions ) do
                 local _continue = true
-                    StartInstance( self, self.activations.BEH_Mission_Automate_TRANS_AssignerEtablirGererLiaisonA, 1, { self._namedParams.ePhase, x, self._namedParams.position, } )
+                    StartActivateOverride( self, self.activations.BEH_Mission_Automate_TRANS_AssignerEtablirGererLiaisonA, 1, { self._namedParams.ePhase, x, self._namedParams.position, } )
 
                 end
 
@@ -110,15 +99,11 @@ node "BEH_Mission_Automate_AssignerFaireMouvementSurItA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_AssignerFaireMouvementSurItA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_AssignerFaireMouvementSurItA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_AssignerFaireMouvementSurItA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -168,15 +153,11 @@ node "BEH_Mission_Automate_TRANS_AssignerEtablirGererLiaisonA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_TRANS_AssignerEtablirGererLiaisonA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_TRANS_AssignerEtablirGererLiaisonA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_TRANS_AssignerEtablirGererLiaisonA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -223,15 +204,11 @@ node "BEH_Mission_Automate_AssignerFaireMouvementA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_AssignerFaireMouvementA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_AssignerFaireMouvementA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_AssignerFaireMouvementA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -279,15 +256,11 @@ node "BEH_Mission_Automate_AssignerSeFaireTransporterA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_AssignerSeFaireTransporterA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_AssignerSeFaireTransporterA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_AssignerSeFaireTransporterA" } },
 
     create = function( self )
         self._namedParams = {}

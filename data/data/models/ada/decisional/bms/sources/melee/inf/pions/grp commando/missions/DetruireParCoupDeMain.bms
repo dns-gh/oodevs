@@ -18,24 +18,20 @@ include "bit.lua"
 {
     activations =
     {
-        { "ACT_Maj_Pion_PasserEnTirLibre", { "onHalt" } },
-        { "BEH_Misc_Defini_AppuisMobile", { "onHalt" } },
-        { "BEH_MAJ_AgressiviteMission", { "onHalt" } },
-        { "BEH_Misc_Pion_DefinirTypeMission", { "onHalt" } },
-        { "ACT_Misc_Pion_INF_MAJ_PositionRegroupement", { "onHalt" } },
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_Ordre_Suppression", { "onHalt" } },
-        { "ACT_Dep_Pion_INF_ActiverFurtivite", { "onHalt" } },
-        { "ACT_Dep_PasserEnModeFurtif", { "onHalt" } },
-        { "BEH_Mission_Pion_INF_DetruireParCoupDeMain", { "onHalt" } },
-        { "BEH_Manoeuvre_RompreContact", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Poste_Pion_INF_TomberEnGarde", { "onHalt" } },
+        { "ACT_Maj_Pion_PasserEnTirLibre", {} },
+        { "BEH_Misc_Defini_AppuisMobile", {} },
+        { "BEH_MAJ_AgressiviteMission", {} },
+        { "BEH_Misc_Pion_DefinirTypeMission", {} },
+        { "ACT_Misc_Pion_INF_MAJ_PositionRegroupement", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_Ordre_Suppression", {} },
+        { "ACT_Dep_Pion_INF_ActiverFurtivite", {} },
+        { "ACT_Dep_PasserEnModeFurtif", {} },
+        { "BEH_Mission_Pion_INF_DetruireParCoupDeMain", {} },
+        { "BEH_Manoeuvre_RompreContact", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Poste_Pion_INF_TomberEnGarde", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_INF_DetruireParCoupDeMain" } },
 
     create = function( self )
         self._namedParams = {}
@@ -161,8 +157,7 @@ do
                                                         do
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
-                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_INF_DetruireParCoupDeMain" } )
-Halt( self )
+                                Halt( self )
                                 do return end
 
                             end

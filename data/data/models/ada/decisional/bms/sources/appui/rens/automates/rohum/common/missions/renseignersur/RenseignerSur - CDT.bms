@@ -11,12 +11,8 @@ includedFiles["sources/appui/rens/automates/rohum/common/missions/renseignersur/
 {
     activations =
     {
-        { "BEH_Dispositif_Automate_RENS_GererPionsDetruits_", { "onHalt" } },
+        { "BEH_Dispositif_Automate_RENS_GererPionsDetruits_", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Auto_CDT_RENS_ROHUM_RenseignerSur" } },
 
     create = function( self )
     end,

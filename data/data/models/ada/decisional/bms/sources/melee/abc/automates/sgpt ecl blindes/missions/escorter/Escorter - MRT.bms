@@ -11,12 +11,8 @@ includedFiles["sources/melee/abc/automates/sgpt ecl blindes/missions/escorter/Es
 {
     activations =
     {
-        { "BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionDynamique", { "onHalt" } },
+        { "BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionDynamique", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_ABC_EscorterUnite" } },
 
     create = function( self )
         self._namedParams = {}
@@ -66,12 +62,8 @@ node "MIS_Automate_MRT_ABC_EscorterUnites"
 {
     activations =
     {
-        { "BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionDynamique", { "onHalt" } },
+        { "BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionDynamique", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_ABC_EscorterUnites" } },
 
     create = function( self )
         self._namedParams = {}

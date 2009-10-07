@@ -13,20 +13,16 @@ include "bit.lua"
 {
     activations =
     {
-        { "ACT_Maj_Pion_PasserEnTirLibre", { "onHalt" } },
-        { "BEH_MAJ_AgressiviteMission", { "onHalt" } },
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_Obs_EtablirVisionCur", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "BEH_Dep_SuivreToujoursDeriere", { "onHalt" } },
-        { "ACT_RC", { "onHalt" } },
-        { "BEH_Eni_Pion_ASA_GererEniDefendreUnites", { "onHalt" } },
+        { "ACT_Maj_Pion_PasserEnTirLibre", {} },
+        { "BEH_MAJ_AgressiviteMission", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Obs_EtablirVisionCur", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_SuivreToujoursDeriere", {} },
+        { "ACT_RC", {} },
+        { "BEH_Eni_Pion_ASA_GererEniDefendreUnites", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_ASA_DefendreUnites" } },
 
     create = function( self )
         self._namedParams = {}
@@ -106,8 +102,7 @@ elseif switch_1 == eFinMission then
                             F_Pion_SetobjectifEsquive( myself, nil )
                             DEC_FinMission()
                                                         self.params.__returnValue = eActionEffectuee
-                            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ASA_DefendreUnites" } )
-Halt( self )
+                            Halt( self )
                             do return end
 
                         end
@@ -133,12 +128,8 @@ node "BEH_Eni_Pion_ASA_GererEniDefendreUnites"
 {
     activations =
     {
-        { "BEH_Eni_Pion_ASA_Roland_Carol_InterceptionBalistique", { "onHalt" } },
+        { "BEH_Eni_Pion_ASA_Roland_Carol_InterceptionBalistique", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_ASA_GererEniDefendreUnites" } },
 
     create = function( self )
         self._namedParams = {}

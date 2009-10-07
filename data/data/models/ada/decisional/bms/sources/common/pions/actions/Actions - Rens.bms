@@ -10,8 +10,6 @@ includedFiles["sources/common/pions/actions/Actions - Rens.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Rens_CommuterRadio"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Rens_CommuterRadio" } },
-
     create = function( self )
     end,
 
@@ -40,8 +38,6 @@ includedFiles["sources/common/pions/actions/Actions - Rens.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Pion_Rens_PasserEnSilenceRadar"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Pion_Rens_PasserEnSilenceRadar" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.typeRadar = self.params[1]
@@ -72,8 +68,6 @@ includedFiles["sources/common/pions/actions/Actions - Rens.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Pion_Rens_PartageConnaissancesDansZoneAvec"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Pion_Rens_PartageConnaissancesDansZoneAvec" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.automate = self.params[1]
@@ -130,8 +124,6 @@ includedFiles["sources/common/pions/actions/Actions - Rens.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Pion_Rens_PartageConnaissancesAvec"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Pion_Rens_PartageConnaissancesAvec" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.automate = self.params[1]

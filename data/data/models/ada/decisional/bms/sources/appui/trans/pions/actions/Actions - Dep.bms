@@ -14,8 +14,6 @@ includedFiles["sources/appui/trans/pions/actions/Actions - Dep.bms"] = true
         deplacement = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Dep_SeDeplacer" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.it = self.params[1]
@@ -63,8 +61,7 @@ elseif switch_1 == eEtatActionDeplacement_ManqueCarburant then
 elseif switch_1 == eEtatActionDeplacement_Termine then
                     self.actionDeplacement = DEC_StopAction( self.actionDeplacement )
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Dep_SeDeplacer" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                     
@@ -112,8 +109,6 @@ elseif switch_1 == eEtatActionDeplacement_DejaEnDeplacement then
         deplacement = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Dep_SePoster" } },
-
     create = function( self )
     end,
 
@@ -134,8 +129,6 @@ elseif switch_1 == eEtatActionDeplacement_DejaEnDeplacement then
     {
         deplacement = 1,
     },
-
-    feedbacks = { { { "onHalt" }, "ACT_Dep_SePosterFaceADir" } },
 
     create = function( self )
         self._namedParams = {}

@@ -11,12 +11,8 @@ includedFiles["sources/melee/inf/automates/cie vab/missions/freiner/Freiner MRT.
 {
     activations =
     {
-        { "BEH_Medo_Automate_INF_DonnerLesOrdresPourMissionRetrograde", { "onHalt" } },
+        { "BEH_Medo_Automate_INF_DonnerLesOrdresPourMissionRetrograde", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_INF_Freiner" } },
 
     create = function( self )
         self._namedParams = {}
@@ -46,8 +42,7 @@ includedFiles["sources/melee/inf/automates/cie vab/missions/freiner/Freiner MRT.
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_INF_Freiner" } )
-Halt( self )
+                Halt( self )
                 do return end
 
             end
@@ -60,8 +55,7 @@ Halt( self )
                     DEC_Trace( "MIS_Automate_MRT_INF_Freiner : fin MRT" )
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_INF_Freiner" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end
@@ -89,15 +83,11 @@ node "BEH_Medo_Automate_INF_DonnerLesOrdresPourMissionRetrograde"
 {
     activations =
     {
-        { "ACT_Info_Automate_Trace", { "onHalt" } },
-        { "BEH_Medo_Automate_ControleCreationMission", { "onHalt" } },
-        { "BEH_Medo_Automate_INF_AssignerMissionFreinerA", { "onHalt" } },
-        { "ACT_Warning", { "onHalt" } },
+        { "ACT_Info_Automate_Trace", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Medo_Automate_INF_AssignerMissionFreinerA", {} },
+        { "ACT_Warning", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_INF_DonnerLesOrdresPourMissionRetrograde" } },
 
     create = function( self )
         self._namedParams = {}
@@ -214,8 +204,7 @@ elseif switch_1 == eMRT_MissionImpossible then
 elseif switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_INF_DonnerLesOrdresPourMissionRetrograde" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end
@@ -237,12 +226,8 @@ node "BEH_Medo_Automate_INF_AssignerMissionFreinerA"
 {
     activations =
     {
-        { "BEH_Mission_Automate_INF_AssignerFreinerA", { "onHalt" } },
+        { "BEH_Mission_Automate_INF_AssignerFreinerA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_INF_AssignerMissionFreinerA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -282,15 +267,11 @@ node "BEH_Mission_Automate_INF_AssignerFreinerA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_INF_AssignerFreinerA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_INF_AssignerFreinerA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_INF_AssignerFreinerA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -335,8 +316,6 @@ elseif switch_1 == eActionHalt
 
 node "ACT_Mission_Automate_INF_AssignerFreinerA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_INF_AssignerFreinerA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]

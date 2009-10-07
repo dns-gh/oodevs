@@ -14,15 +14,11 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Dep_GEN_AllerContournerObstacle", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_GEN_AllerContournerObstacle", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_GEN_ContournerObstacles" } },
 
     create = function( self )
         self._namedParams = {}
@@ -103,13 +99,9 @@ node "BEH_Dep_GEN_AllerContournerObstacle"
 {
     activations =
     {
-        { "BEH_Dep_GEN_Ouvrir_ReagirFaceAObjetDeType", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "BEH_Dep_GEN_Ouvrir_ReagirFaceAObjetDeType", {} },
+        { "BEH_Dep_ProgressionVers", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_GEN_AllerContournerObstacle" } },
 
     create = function( self )
         self._namedParams = {}
@@ -127,16 +119,14 @@ node "BEH_Dep_GEN_AllerContournerObstacle"
 ]]local loc = DEC_ConnaissanceObjet_Localisation( self._namedParams.obstacle )
                 if( loc == nil ) then
                     self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_GEN_AllerContournerObstacle" } )
-Halt( self )
+                    Halt( self )
                     do return end
                 end
 
                 self.ptObst = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( loc )
                 if( self.ptObst == nil ) then
                     self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_GEN_AllerContournerObstacle" } )
-Halt( self )
+                    Halt( self )
                     do return end
                 end
 
@@ -159,12 +149,8 @@ node "BEH_Dep_GEN_Ouvrir_ReagirFaceAObjetDeType"
 {
     activations =
     {
-        { "BEH_Objet_Pion_GEN_BrecherObstacle", { "onHalt" } },
+        { "BEH_Objet_Pion_GEN_BrecherObstacle", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_GEN_Ouvrir_ReagirFaceAObjetDeType" } },
 
     create = function( self )
         self._namedParams = {}

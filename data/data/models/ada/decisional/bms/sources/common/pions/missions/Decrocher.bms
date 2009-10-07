@@ -14,34 +14,28 @@ includedFiles["sources/common/pions/missions/Decrocher.bms"] = true
 {
     activations =
     {
-        { "BEH_MOT_DesactiveSauvegarde", { "onHalt" } },
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "BEH_Lima_GererLR", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "BEH_MOT_DesactiveSauvegarde", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Lima_GererLR", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_Decrocher" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         if( ModuleBegins() ) then
             do
                 DEC_SetMission( myself, self._namedParams.mission )
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
-                StartInstance( self, self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )
+                StartActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )
             end
         end
 
@@ -86,7 +80,7 @@ elseif switch_1 == eDecrocher then
                 --[[// 4) Fin de la mission
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
-                    StopInstance( self, self.activations.BEH_MOT_DesactiveSauvegarde, {} )
+                    StopActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, {} )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
                     

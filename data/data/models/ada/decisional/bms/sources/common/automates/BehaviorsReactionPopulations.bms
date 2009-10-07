@@ -14,12 +14,8 @@ include "Common/Automates/Behaviors/Behaviors - POP - ROE.bms"
 {
     activations =
     {
-        { "BEH_ROE_Automate_RecevoirOrdreInopinePopulation", { "onHalt" } },
+        { "BEH_ROE_Automate_RecevoirOrdreInopinePopulation", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Default_Automate_ReactionPopulations" } },
 
     create = function( self )
     end,

@@ -11,13 +11,9 @@ includedFiles["sources/appui/rens/automates/rohum/common/missions/sexfiltrer/SEx
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "BEH_Mission_Automate_RENS_ROHUM_AssignerSExfiltrerA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "BEH_Mission_Automate_RENS_ROHUM_AssignerSExfiltrerA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_RENS_ROHUM_AssignerSExfiltrerA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -25,9 +21,7 @@ includedFiles["sources/appui/rens/automates/rohum/common/missions/sexfiltrer/SEx
         self._namedParams.eEtatEchelon = self.params[2]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         self.mission = self.mission or DEC_GetMission( myself )
         self.centreZone = self.centreZone or DEC_Geometrie_CalculerBarycentreLocalisationDansFuseau( self.mission.zoneDeRegroupement_ )
         --[[//---------------------------------------------------------------------
@@ -39,7 +33,7 @@ includedFiles["sources/appui/rens/automates/rohum/common/missions/sexfiltrer/SEx
 ]]if( self.centreZone == nil ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
-                        StartInstance( self, self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
+                        StartActivateOverride( self, self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
                                                 return
 
                     end
@@ -47,7 +41,7 @@ includedFiles["sources/appui/rens/automates/rohum/common/missions/sexfiltrer/SEx
 
                 for _,pion in pairs( DEC_Automate_PionsAvecPC() ) do
                 local _continue = true
-                    StartInstance( self, self.activations.BEH_Mission_Automate_RENS_ROHUM_AssignerSExfiltrerA, 1, { ePhase_MRT, pion, self.mission.zoneDeRegroupement_, self._namedParams.eEtatEchelon, } )
+                    StartActivateOverride( self, self.activations.BEH_Mission_Automate_RENS_ROHUM_AssignerSExfiltrerA, 1, { ePhase_MRT, pion, self.mission.zoneDeRegroupement_, self._namedParams.eEtatEchelon, } )
 
                 end
 

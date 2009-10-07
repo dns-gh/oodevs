@@ -28,15 +28,11 @@ include "Common/Automates/Actions/Medo/Actions - Medo - RENS.bms"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_RENS_ROHUM_AssignerRenseignerA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_RENS_ROHUM_AssignerRenseignerA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_RENS_ROHUM_AssignerRenseignerA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -84,15 +80,11 @@ node "BEH_Mission_Automate_RENS_ROHUM_AssignerSExfiltrerA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_RENS_ROHUM_AssignerSExfiltrerA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_RENS_ROHUM_AssignerSExfiltrerA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_RENS_ROHUM_AssignerSExfiltrerA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -138,8 +130,6 @@ elseif switch_1 == eActionHalt
 
 node "BEH_Mission_Automate_RENS_ROHUM_AssignerGuiderA"
 {
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_RENS_ROHUM_AssignerGuiderA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -170,15 +160,11 @@ node "BEH_Mission_Automate_RENS_ROIM_SDTI_AssignerRenseignerSur"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_RENS_ROIM_SDTI_AssignerRenseignerSur", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_RENS_ROIM_SDTI_AssignerRenseignerSur", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_RENS_ROIM_SDTI_AssignerRenseignerSur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -226,15 +212,11 @@ node "BEH_Mission_Automate_RENS_ROIM_CL289_AssignerRenseignerSur"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_RENS_ROIM_CL289_AssignerRenseignerSur", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_RENS_ROIM_CL289_AssignerRenseignerSur", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_RENS_ROIM_CL289_AssignerRenseignerSur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -283,15 +265,11 @@ node "BEH_Mission_Automate_RENS_ROIM_AssignerMettreEnOeuvreA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_RENS_ROIM_AssignerMettreEnOeuvreA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_RENS_ROIM_AssignerMettreEnOeuvreA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_RENS_ROIM_AssignerMettreEnOeuvreA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -342,15 +320,11 @@ node "BEH_Mission_Automate_RENS_ROEM_AssignerAppuyerA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_RENS_ROEM_AssignerAppuyerA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_RENS_ROEM_AssignerAppuyerA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_RENS_ROEM_AssignerAppuyerA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -399,15 +373,11 @@ node "BEH_Mission_Automate_RENS_ROEM_AssignerRenseignerA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_RENS_ROEM_AssignerRenseignerA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_RENS_ROEM_AssignerRenseignerA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_RENS_ROEM_AssignerRenseignerA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -455,15 +425,11 @@ node "BEH_Mission_Automate_RENS_ROEM_AssignerMettreEnOeuvreA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_RENS_ROEM_AssignerMettreEnOeuvreA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_RENS_ROEM_AssignerMettreEnOeuvreA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_RENS_ROEM_AssignerMettreEnOeuvreA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -514,15 +480,11 @@ node "BEH_Mission_Automate_RENS_RADINT_AssignerRenseignerA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_RENS_RADINT_AssignerRenseignerA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_RENS_RADINT_AssignerRenseignerA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_RENS_RADINT_AssignerRenseignerA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -570,15 +532,11 @@ node "BEH_Mission_Automate_RENS_RADINT_AssignerMettreEnOeuvreA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_RENS_RADINT_AssignerMettreEnOeuvreA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_RENS_RADINT_AssignerMettreEnOeuvreA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_RENS_RADINT_AssignerMettreEnOeuvreA" } },
 
     create = function( self )
         self._namedParams = {}

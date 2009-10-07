@@ -9,8 +9,6 @@ includedFiles["sources/appui/circulation/automates/missions/reconnaitreitinerair
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_LOG_ReconnaitreItineraire"
 {
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_LOG_ReconnaitreItineraire" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission

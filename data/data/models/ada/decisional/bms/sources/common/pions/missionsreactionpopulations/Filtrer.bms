@@ -11,13 +11,9 @@ includedFiles["sources/common/pions/missionsreactionpopulations/Filtrer.bms"] = 
 {
     activations =
     {
-        { "BEH_MAJ_AgressiviteMission", { "onHalt" } },
-        { "BEH_Pop_Pion_BloquerPopulation", { "onHalt" } },
+        { "BEH_MAJ_AgressiviteMission", {} },
+        { "BEH_Pop_Pion_BloquerPopulation", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_FiltrerPopulations" } },
 
     create = function( self )
         self._namedParams = {}
@@ -33,8 +29,7 @@ includedFiles["sources/common/pions/missionsreactionpopulations/Filtrer.bms"] = 
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_FiltrerPopulations" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -48,8 +43,7 @@ Halt( self )
                 if( not DEC_Geometrie_EstPointDansFuseau( self.objectif ) ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
-                                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_FiltrerPopulations" } )
-Halt( self )
+                                                Halt( self )
                         do return end
 
                     end
@@ -63,8 +57,7 @@ Halt( self )
 
         if( self.eEtatAction == eActionHalt ) then
             do
-                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_FiltrerPopulations" } )
-Halt( self )
+                                Halt( self )
                 do return end
 
             end

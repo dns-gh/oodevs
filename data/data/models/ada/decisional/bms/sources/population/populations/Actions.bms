@@ -14,8 +14,6 @@ includedFiles["sources/population/populations/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Pop_RalentissementPions"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Pop_RalentissementPions" } },
-
     create = function( self )
     end,
 
@@ -41,8 +39,6 @@ includedFiles["sources/population/populations/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Pop_PAPPions"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Pop_PAPPions" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.rIntensite = self.params[1]
@@ -105,8 +101,6 @@ includedFiles["sources/population/populations/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Pop_PAPPion"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Pop_PAPPion" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -170,8 +164,6 @@ includedFiles["sources/population/populations/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Pop_DegraderInstallations"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Pop_DegraderInstallations" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.zone = self.params[1]
@@ -217,8 +209,6 @@ includedFiles["sources/population/populations/Actions.bms"] = true
         deplacement = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Pop_Stationner" } },
-
     create = function( self )
     end,
 
@@ -250,8 +240,6 @@ includedFiles["sources/population/populations/Actions.bms"] = true
     {
         deplacement = 1,
     },
-
-    feedbacks = { { { "onHalt" }, "ACT_Pop_RejoindrePoint" } },
 
     create = function( self )
         self._namedParams = {}

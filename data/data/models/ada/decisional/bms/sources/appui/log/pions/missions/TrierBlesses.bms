@@ -13,16 +13,12 @@ includedFiles["sources/appui/log/pions/missions/TrierBlesses.bms"] = true
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "BEH_Pion_Log_Trier", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Pion_Log_Trier", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_LOG_TrierBlesses" } },
 
     create = function( self )
         self._namedParams = {}
@@ -113,14 +109,10 @@ node "BEH_Pion_Log_Trier"
 {
     activations =
     {
-        { "ACT_Pions_SInstaller", { "onHalt" } },
-        { "ACT_Pion_Log_ActiverFonctionSoin", { "onHalt" } },
-        { "ACT_Pion_Log_ActiverFonctionTri", { "onHalt" } },
+        { "ACT_Pions_SInstaller", {} },
+        { "ACT_Pion_Log_ActiverFonctionSoin", {} },
+        { "ACT_Pion_Log_ActiverFonctionTri", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pion_Log_Trier" } },
 
     create = function( self )
     end,
@@ -146,8 +138,6 @@ node "BEH_Pion_Log_Trier"
 
 node "ACT_Pion_Log_ActiverFonctionTri"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Pion_Log_ActiverFonctionTri" } },
-
     create = function( self )
     end,
 

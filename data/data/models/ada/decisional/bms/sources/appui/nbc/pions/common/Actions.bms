@@ -20,8 +20,6 @@ includedFiles["sources/appui/nbc/pions/common/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Pion_Nbc_CreerSiteSur"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Pion_Nbc_CreerSiteSur" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.position = self.params[1]
@@ -55,8 +53,6 @@ includedFiles["sources/appui/nbc/pions/common/Actions.bms"] = true
     {
         deplacement = 1,
     },
-
-    feedbacks = { { { "onHalt" }, "ACT_Pion_Nbc_AnimerSite" } },
 
     create = function( self )
         self._namedParams = {}
@@ -92,8 +88,7 @@ includedFiles["sources/appui/nbc/pions/common/Actions.bms"] = true
             DEC_Message( eRC_SiteDecontaminationDesactive )
         end
 
-                Feedback( self.feedbacks["onHalt"], { "ACT_Pion_Nbc_AnimerSite" } )
-Halt( self )
+                Halt( self )
         do return end
 
     end,
@@ -123,8 +118,6 @@ Halt( self )
     {
         deplacement = 1,
     },
-
-    feedbacks = { { { "onHalt" }, "ACT_Pion_Nbc_ReconnaitreSiteROTA" } },
 
     create = function( self )
         self._namedParams = {}

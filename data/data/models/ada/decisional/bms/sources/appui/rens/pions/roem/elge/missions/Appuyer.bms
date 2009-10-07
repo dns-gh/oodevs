@@ -11,26 +11,20 @@ includedFiles["sources/appui/rens/pions/roem/elge/missions/Appuyer.bms"] = true
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "BEH_Objet_Rens_ActiverBrouilleur", { "onHalt" } },
-        { "BEH_Objet_Rens_DeposerBrouilleur", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_Info_Trace", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Objet_Rens_ActiverBrouilleur", {} },
+        { "BEH_Objet_Rens_DeposerBrouilleur", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_RENS_ROEM_Appuyer" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
@@ -48,8 +42,7 @@ includedFiles["sources/appui/rens/pions/roem/elge/missions/Appuyer.bms"] = true
 
         if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_RENS_ROEM_Appuyer" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -99,7 +92,7 @@ elseif switch_1 == eAppuyer then
                         do
                             self.eEtat = eActionEnCours
                                                         do
-                                StartInstance( self, self.activations.BEH_Objet_Rens_ActiverBrouilleur, 1, { eTypeObjectZoneBrouillage, } )
+                                StartActivateOverride( self, self.activations.BEH_Objet_Rens_ActiverBrouilleur, 1, { eTypeObjectZoneBrouillage, } )
                                 self.ePhaseMission = eFinMission
                                                                 return
 
@@ -141,8 +134,6 @@ elseif switch_1 == eFinMission then
 
 node "BEH_Objet_Rens_DeposerBrouilleur"
 {
-    feedbacks = { { { "onHalt" }, "BEH_Objet_Rens_DeposerBrouilleur" } },
-
     create = function( self )
     end,
 
@@ -167,13 +158,9 @@ node "BEH_Objet_Rens_ActiverBrouilleur"
 {
     activations =
     {
-        { "ACT_Misc_Delai", { "onHalt" } },
-        { "ACT_Obs_Pion_RENS_ActiverBrouillage", { "onHalt" } },
+        { "ACT_Misc_Delai", {} },
+        { "ACT_Obs_Pion_RENS_ActiverBrouillage", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Objet_Rens_ActiverBrouilleur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -186,8 +173,7 @@ node "BEH_Objet_Rens_ActiverBrouilleur"
             do
                 self.eEtat = eActionEnCours
                                 do
-                                        Feedback( self.feedbacks["onHalt"], { "BEH_Objet_Rens_ActiverBrouilleur" } )
-Halt( self )
+                                        Halt( self )
                     do return end
 
                 end

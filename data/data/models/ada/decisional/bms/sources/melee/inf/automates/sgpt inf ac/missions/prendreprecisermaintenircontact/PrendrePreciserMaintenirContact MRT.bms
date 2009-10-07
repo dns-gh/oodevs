@@ -16,12 +16,8 @@ node "MIS_Automate_MRT_INF_PrendrePreciserMaintenirContact"
 {
     activations =
     {
-        { "BEH_Medo_Automate_INF_PreparerMission_Manoeuvre", { "onHalt" } },
+        { "BEH_Medo_Automate_INF_PreparerMission_Manoeuvre", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_INF_PrendrePreciserMaintenirContact" } },
 
     create = function( self )
         self._namedParams = {}
@@ -50,8 +46,7 @@ node "MIS_Automate_MRT_INF_PrendrePreciserMaintenirContact"
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_INF_PrendrePreciserMaintenirContact" } )
-Halt( self )
+                Halt( self )
                 do return end
 
             end
@@ -64,8 +59,7 @@ Halt( self )
                     DEC_Trace( "T_Mission_Automate_INF_PrendrePreciserMaintenirContact : fin MRT" )
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_INF_PrendrePreciserMaintenirContact" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end

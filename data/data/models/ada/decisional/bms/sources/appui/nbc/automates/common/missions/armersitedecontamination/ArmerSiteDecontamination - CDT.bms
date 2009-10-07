@@ -11,15 +11,11 @@ includedFiles["sources/appui/nbc/automates/common/missions/armersitedecontaminat
 {
     activations =
     {
-        { "BEH_Dispositif_Automate_NBC_FaireSuivreLeSE_", { "onHalt" } },
-        { "BEH_CoordDep_Automate_NBC_AssurerLaCoordinationInterne_", { "onHalt" } },
-        { "BEH_Dispositif_Automate_NBC_GererPionsDetruits_", { "onHalt" } },
-        { "BEH_Dispositif_Automate_NBC_FaireArmerSite_", { "onHalt" } },
+        { "BEH_Dispositif_Automate_NBC_FaireSuivreLeSE_", {} },
+        { "BEH_CoordDep_Automate_NBC_AssurerLaCoordinationInterne_", {} },
+        { "BEH_Dispositif_Automate_NBC_GererPionsDetruits_", {} },
+        { "BEH_Dispositif_Automate_NBC_FaireArmerSite_", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_NBC_ArmerUnSiteDeDecontamination" } },
 
     create = function( self )
     end,
@@ -52,13 +48,9 @@ node "BEH_Dispositif_Automate_NBC_FaireArmerSite_"
 {
     activations =
     {
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "BEH_Mission_Automate_NBC_AssignerArmerSiteA", { "onHalt" } },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Mission_Automate_NBC_AssignerArmerSiteA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dispositif_Automate_NBC_FaireArmerSite_" } },
 
     create = function( self )
         self._namedParams = {}

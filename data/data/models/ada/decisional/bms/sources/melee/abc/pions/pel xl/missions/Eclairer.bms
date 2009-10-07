@@ -23,12 +23,8 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Mission_Pion_ABC_Eclairer", { "onHalt" } },
+        { "BEH_Mission_Pion_ABC_Eclairer", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_ABC_Eclairer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -41,8 +37,7 @@ include "bit.lua"
 ]]--[[// Terminaison
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible or self.eEtat == eActionEffectuee ) then
-            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ABC_Eclairer" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 

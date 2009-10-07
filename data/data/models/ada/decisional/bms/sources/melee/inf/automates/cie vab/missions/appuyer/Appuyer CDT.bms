@@ -16,14 +16,10 @@ node "MIS_Automate_CDT_INF_Appuyer"
 {
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Defaut", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_CadreOffensif", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_Appuyer", { "onHalt" } },
+        { "BEH_Conduite_Automate_INF_Defaut", {} },
+        { "BEH_Conduite_Automate_INF_CadreOffensif", {} },
+        { "BEH_Conduite_Automate_INF_Appuyer", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_INF_Appuyer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -49,8 +45,7 @@ node "MIS_Automate_CDT_INF_Appuyer"
                 self.eActionMission = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_CDT_INF_Appuyer" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end

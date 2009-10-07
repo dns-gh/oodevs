@@ -29,8 +29,6 @@ motivation_plugin.motivations[ "MOT_ASA_TirerSurEnis" ] =
 
 node "ActivatedByMOT_ASA_TirerSurEnis"
 {
-    feedbacks = { { { "onHalt" }, "ActivatedByMOT_ASA_TirerSurEnis" } },
-
     create = function( self )
     end,
 

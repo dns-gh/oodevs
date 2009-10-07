@@ -14,8 +14,6 @@ includedFiles["sources/common/automates/actions/Actions - Medo.bms"] = true
 ]]
 node "ACT_Mission_Automate_AssignerTransporterA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_AssignerTransporterA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -90,8 +88,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Medo_Automate_AffecterFuseaux"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Medo_Automate_AffecterFuseaux" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.sPionFuseau = self.params[1]
@@ -102,8 +98,7 @@ elseif switch_1 == ePhase_CDT then
             DEC_MRT_AffecteFuseaux( self._namedParams.sPionFuseau )
         else
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "ACT_Medo_Automate_AffecterFuseaux" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -119,8 +114,6 @@ Halt( self )
 ]]--[[// *****************************************************************************
 ]]node "ACT_Medo_Automate_AffecterFuseaux_Compagnie"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Medo_Automate_AffecterFuseaux_Compagnie" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pFuseau = self.params[1]
@@ -139,8 +132,7 @@ do
                 DIA_Remove( self.sPionFuseau, self._namedParams.pFuseau )
                 DEC_Trace( "affectation fuseau : fin" )
                                 self.params.__returnValue = eActionEffectuee
-                Feedback( self.feedbacks["onHalt"], { "ACT_Medo_Automate_AffecterFuseaux_Compagnie" } )
-Halt( self )
+                Halt( self )
                 do return end
 
             end
@@ -158,8 +150,6 @@ Halt( self )
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_AssignerFaireMouvementA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_AssignerFaireMouvementA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -240,8 +230,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_AssignerPrendreEnComptePrisonniersA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_AssignerPrendreEnComptePrisonniersA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -321,8 +309,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_AssignerOrienterRefugiesA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_AssignerOrienterRefugiesA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -402,8 +388,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_AssignerFaireMouvementSurItA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_AssignerFaireMouvementSurItA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -482,8 +466,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_AssignerSoutenirEnMesureDe"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_AssignerSoutenirEnMesureDe" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -562,8 +544,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_AssignerSoutenirSurPositionEnMesureDe"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_AssignerSoutenirSurPositionEnMesureDe" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -639,8 +619,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_AssignerSuivreA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_AssignerSuivreA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -719,8 +697,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_AssignerSeFaireTransporterA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_AssignerSeFaireTransporterA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -801,8 +777,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_AssignerFranchir"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_AssignerFranchir" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -885,8 +859,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_AssignerSeFaireDecontaminerA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_AssignerSeFaireDecontaminerA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -967,8 +939,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_AssignerStationnerA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_AssignerStationnerA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -1047,8 +1017,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_AssignerDecrocherA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_AssignerDecrocherA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -1128,8 +1096,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_AssignerFiltrerPopulationsA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_AssignerFiltrerPopulationsA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -1208,8 +1174,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_AssignerInterdireFranchissementPopulationsA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_AssignerInterdireFranchissementPopulationsA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -1288,8 +1252,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_AssignerSecuriserZoneContrePopulationsA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_AssignerSecuriserZoneContrePopulationsA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -1370,8 +1332,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_AssignerControlerPopulationsDansZoneA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_AssignerControlerPopulationsDansZoneA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -1450,8 +1410,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_AssignerCanaliserPopulationsA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_AssignerCanaliserPopulationsA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -1530,8 +1488,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Automate_CreerObjetSur"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Automate_CreerObjetSur" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.localisation = self.params[1]

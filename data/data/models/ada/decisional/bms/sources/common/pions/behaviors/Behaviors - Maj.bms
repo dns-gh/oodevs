@@ -11,14 +11,10 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Maj.bms"] = true
 {
     activations =
     {
-        { "BEH_MAJ_EtatOperationnel", { "onHalt" } },
-        { "ACT_MAJ_EtatDec", { "onHalt" } },
-        { "ACT_MAJ_EtatOrdreCoordination", { "onHalt" } },
+        { "BEH_MAJ_EtatOperationnel", {} },
+        { "ACT_MAJ_EtatDec", {} },
+        { "ACT_MAJ_EtatOrdreCoordination", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MAJ_EtatDefaut" } },
 
     create = function( self )
     end,
@@ -45,8 +41,6 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Maj.bms"] = true
 
 node "BEH_MAJ_AgressiviteMission"
 {
-    feedbacks = { { { "onHalt" }, "BEH_MAJ_AgressiviteMission" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.eNiveauAction = self.params[1]
@@ -82,13 +76,9 @@ node "BEH_MAJ_EtatOperationnel"
 {
     activations =
     {
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "ACT_MAJ_EtatDestruction", { "onHalt" } },
+        { "ACT_Info_Trace", {} },
+        { "ACT_MAJ_EtatDestruction", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MAJ_EtatOperationnel" } },
 
     create = function( self )
     end,
@@ -129,8 +119,6 @@ node "BEH_MAJ_EtatOperationnel"
 
 node "BEH_MAJ_Pion_EnvieTenir"
 {
-    feedbacks = { { { "onHalt" }, "BEH_MAJ_Pion_EnvieTenir" } },
-
     create = function( self )
     end,
 

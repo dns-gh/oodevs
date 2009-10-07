@@ -14,13 +14,9 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Pop_Pion_EsquiveFaceA", { "onHalt" } },
-        { "BEH_EsquiverLaPopulationIncontrolable", { "onHalt" } },
+        { "BEH_Pop_Pion_EsquiveFaceA", {} },
+        { "BEH_EsquiverLaPopulationIncontrolable", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pop_Pion_PresAuDecrochageFaceA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -33,8 +29,7 @@ include "bit.lua"
         --[[//on checke les changements de ROE, on reinitialise dans ce cas
 ]]local eRoe = DEC_Agent_RoePopulation()
         if( eRoe ~= self.eROEPopulation ) then
-            Feedback( self.feedbacks["onHalt"], { "BEH_Pop_Pion_PresAuDecrochageFaceA" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -67,13 +62,9 @@ node "BEH_EsquiverLaPopulationIncontrolable"
 {
     activations =
     {
-        { "ACT_Misc_Delai", { "onHalt" } },
-        { "BEH_Pop_Pion_EsquiveFaceA", { "onHalt" } },
+        { "ACT_Misc_Delai", {} },
+        { "BEH_Pop_Pion_EsquiveFaceA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_EsquiverLaPopulationIncontrolable" } },
 
     create = function( self )
         self._namedParams = {}
@@ -109,8 +100,7 @@ node "BEH_EsquiverLaPopulationIncontrolable"
                 self.eROEPopulation = eRoe
                 local eValiditeRequete = nil
                 self.prevDomination = DEC_ConnaissancePopulation_Domination( self._namedParams.pop, eValiditeRequete )
-                                Feedback( self.feedbacks["onHalt"], { "BEH_EsquiverLaPopulationIncontrolable" } )
-Halt( self )
+                                Halt( self )
                 do return end
 --[[//pour forcer à tuer l'instance de ACT_Misc_Delai
 ]]
@@ -192,14 +182,10 @@ node "BEH_Pop_Pion_EsquiveFaceA"
 
     activations =
     {
-        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
-        { "ACT_Dep_SeDeplacer", { "onHalt" } },
-        { "ACT_Pion_FuirPopulations", { "onHalt" } },
+        { "ACT_Dep_ModulationVitesse", {} },
+        { "ACT_Dep_SeDeplacer", {} },
+        { "ACT_Pion_FuirPopulations", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pop_Pion_EsquiveFaceA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -236,8 +222,7 @@ node "BEH_Pop_Pion_EsquiveFaceA"
                     end
                 else
 do
-                                                Feedback( self.feedbacks["onHalt"], { "BEH_Pop_Pion_EsquiveFaceA" } )
-Halt( self )
+                                                Halt( self )
                         do return end
 --[[//destruction des points et itineraires
 ]]
@@ -248,8 +233,7 @@ Halt( self )
         end
 
         if( self.eEtat == eActionEffectuee and DEC_UserTypeList_Contient( DEC_Connaissances_CollisionsPopulations(), self._namedParams.pop ) ) then
-            Feedback( self.feedbacks["onHalt"], { "BEH_Pop_Pion_EsquiveFaceA" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -276,14 +260,10 @@ node "BEH_Pop_Pion_SecuriserPopulation"
 
     activations =
     {
-        { "ACT_Pion_Securiser", { "onHalt" } },
-        { "BEH_Dep_Virtuel_PreparationAction", { "onHalt" } },
-        { "BEH_Dep_Virtuel_ProgressionVers", { "onHalt" } },
+        { "ACT_Pion_Securiser", {} },
+        { "BEH_Dep_Virtuel_PreparationAction", {} },
+        { "BEH_Dep_Virtuel_ProgressionVers", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pop_Pion_SecuriserPopulation" } },
 
     create = function( self )
         self._namedParams = {}
@@ -331,12 +311,8 @@ node "BEH_Pop_Pion_SecuriserPopulationDans"
 {
     activations =
     {
-        { "BEH_Pop_Pion_SecuriserPopulation", { "onHalt" } },
+        { "BEH_Pop_Pion_SecuriserPopulation", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pop_Pion_SecuriserPopulationDans" } },
 
     create = function( self )
         self._namedParams = {}
@@ -381,19 +357,15 @@ node "BEH_Pop_Pion_BloquerPopulation"
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "BEH_Dep_Virtuel_ProgressionVers", { "onHalt" } },
-        { "BEH_Pop_GererPositionBarrage", { "onHalt" } },
-        { "ACT_Pion_CreerObjetSur", { "onHalt" } },
-        { "BEH_Pop_Pion_AnimerBlocagePopulation", { "onHalt" } },
-        { "BEH_Dep_Virtuel_PreparationAction", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_Virtuel_ProgressionVers", {} },
+        { "BEH_Pop_GererPositionBarrage", {} },
+        { "ACT_Pion_CreerObjetSur", {} },
+        { "BEH_Pop_Pion_AnimerBlocagePopulation", {} },
+        { "BEH_Dep_Virtuel_PreparationAction", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pop_Pion_BloquerPopulation" } },
 
     create = function( self )
         self._namedParams = {}
@@ -503,13 +475,9 @@ node "BEH_Pop_GererPositionBarrage"
 {
     activations =
     {
-        { "BEH_Dep_Virtuel_ProgressionVers", { "onHalt" } },
-        { "BEH_Pop_Pion_RejoindrePopulationLaPlusProche", { "onHalt" } },
+        { "BEH_Dep_Virtuel_ProgressionVers", {} },
+        { "BEH_Pop_Pion_RejoindrePopulationLaPlusProche", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pop_GererPositionBarrage" } },
 
     create = function( self )
         self._namedParams = {}
@@ -541,13 +509,9 @@ node "BEH_Pop_Pion_AnimerBlocagePopulation"
 {
     activations =
     {
-        { "ACT_Pion_Animer", { "onHalt" } },
-        { "BEH_AttaqueDePopulation", { "onHalt" } },
+        { "ACT_Pion_Animer", {} },
+        { "BEH_AttaqueDePopulation", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pop_Pion_AnimerBlocagePopulation" } },
 
     create = function( self )
         self._namedParams = {}
@@ -595,12 +559,8 @@ node "BEH_Pop_Pion_RejoindrePopulationLaPlusProche"
 {
     activations =
     {
-        { "BEH_Pop_Pion_RejoindrePopulation", { "onHalt" } },
+        { "BEH_Pop_Pion_RejoindrePopulation", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pop_Pion_RejoindrePopulationLaPlusProche" } },
 
     create = function( self )
         self._namedParams = {}
@@ -642,13 +602,9 @@ node "BEH_Pop_Pion_RejoindrePopulation"
 
     activations =
     {
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "BEH_Dep_SePoster", { "onHalt" } },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_SePoster", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pop_Pion_RejoindrePopulation" } },
 
     create = function( self )
         self._namedParams = {}

@@ -11,17 +11,13 @@ includedFiles["sources/common/pions/missionsreactionpopulations/Renseigner.bms"]
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Dep_Virtuel_ProgressionVers", { "onHalt" } },
-        { "BEH_Pion_RenseignerSurPops", { "onHalt" } },
-        { "BEH_Dep_Virtuel_PreparationAction", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_Virtuel_ProgressionVers", {} },
+        { "BEH_Pion_RenseignerSurPops", {} },
+        { "BEH_Dep_Virtuel_PreparationAction", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_RenseignerSurPopulations" } },
 
     create = function( self )
         self._namedParams = {}
@@ -40,8 +36,7 @@ includedFiles["sources/common/pions/missionsreactionpopulations/Renseigner.bms"]
                 if( not DEC_Geometrie_EstPointDansFuseau( self.objectif ) ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
-                                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_RenseignerSurPopulations" } )
-Halt( self )
+                                                Halt( self )
                         do return end
 
                     end
@@ -94,8 +89,7 @@ do
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                                        Feedback( self.feedbacks["onHalt"], { "MIS_Pion_RenseignerSurPopulations" } )
-Halt( self )
+                                        Halt( self )
                     do return end
 
                                 end

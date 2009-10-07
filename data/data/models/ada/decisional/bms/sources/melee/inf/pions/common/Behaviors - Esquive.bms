@@ -37,12 +37,8 @@ node "BEH_Manoeuvre_RompreContact"
 
     activations =
     {
-        { "BEH_Manoeuvre_Pion_INF_SeReplier", { "onHalt" } },
+        { "BEH_Manoeuvre_Pion_INF_SeReplier", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Manoeuvre_RompreContact" } },
 
     create = function( self )
     end,
@@ -53,8 +49,7 @@ node "BEH_Manoeuvre_RompreContact"
 ]]--[[// behavior BEH_Decrocher(); //  ? Stimulus, Esquive		
 ]]if( F_Pion_GetobjectifEsquive( myself ) == nil and myself.ptRegroupement_ == nil ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "BEH_Manoeuvre_RompreContact" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -97,22 +92,16 @@ node "BEH_Manoeuvre_Pion_INF_SeReplier"
 
     activations =
     {
-        { "BEH_Mot_Pion_Embarquer", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "BEH_Mot_Pion_Embarquer", {} },
+        { "BEH_Dep_ProgressionVers", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Manoeuvre_Pion_INF_SeReplier" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.ptRepli = self.params[1]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         self.ePhase = self.ePhase or eCalculerPosition
         self.eAction = self.eAction or eActionEnCours
         self.eActionEmb = self.eActionEmb or eActionEnCours
@@ -127,8 +116,7 @@ node "BEH_Manoeuvre_Pion_INF_SeReplier"
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Feedback( self.feedbacks["onHalt"], { "BEH_Manoeuvre_Pion_INF_SeReplier" } )
-Halt( self )
+                Halt( self )
                 do return end
 
             end
@@ -139,8 +127,7 @@ Halt( self )
                 self.eAction = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Manoeuvre_Pion_INF_SeReplier" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end
@@ -149,7 +136,7 @@ Halt( self )
         end
 
         if( not S_EstADistanceTir_Pt( self.ptDepart ) ) then
-            StartInstance( self, self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+            StartActivateOverride( self, self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
         end
 
         if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.ptRepli, 0 ) ) then
@@ -168,8 +155,6 @@ Halt( self )
 
 node "BEH_Misc_Pion_INF_MAJ_Repli"
 {
-    feedbacks = { { { "onHalt" }, "BEH_Misc_Pion_INF_MAJ_Repli" } },
-
     create = function( self )
     end,
 

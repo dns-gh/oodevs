@@ -14,22 +14,18 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_RC_Automate_Situation_Ambiance", { "onHalt" } },
-        { "BEH_RC_Automate_Situation_RapFor", { "onHalt" } },
-        { "BEH_RC_Automate_Situation_NBC", { "onHalt" } },
-        { "BEH_RC_Automate_Situation_ROE", { "onHalt" } },
-        { "BEH_RC_Automate_Situation_Radio", { "onHalt" } },
-        { "BEH_RC_Automate_Situation_Radar", { "onHalt" } },
-        { "BEH_RC_Automate_Situation_Coordination", { "onHalt" } },
-        { "BEH_RC_Automate_Situation_Neutralisation", { "onHalt" } },
-        { "BEH_RC_Automate_Situation_Contact", { "onHalt" } },
-        { "BEH_RC_Automate_Situation_Mission", { "onHalt" } },
-        { "BEH_RC_Automate_Situation_Limas", { "onHalt" } },
+        { "BEH_RC_Automate_Situation_Ambiance", {} },
+        { "BEH_RC_Automate_Situation_RapFor", {} },
+        { "BEH_RC_Automate_Situation_NBC", {} },
+        { "BEH_RC_Automate_Situation_ROE", {} },
+        { "BEH_RC_Automate_Situation_Radio", {} },
+        { "BEH_RC_Automate_Situation_Radar", {} },
+        { "BEH_RC_Automate_Situation_Coordination", {} },
+        { "BEH_RC_Automate_Situation_Neutralisation", {} },
+        { "BEH_RC_Automate_Situation_Contact", {} },
+        { "BEH_RC_Automate_Situation_Mission", {} },
+        { "BEH_RC_Automate_Situation_Limas", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_RC_Automate_Situation" } },
 
     create = function( self )
     end,
@@ -73,12 +69,8 @@ node "BEH_RC_Automate_Situation_Neutralisation"
 {
     activations =
     {
-        { "ACT_RC_Automate", { "onHalt" } },
+        { "ACT_RC_Automate", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_RC_Automate_Situation_Neutralisation" } },
 
     create = function( self )
     end,
@@ -113,12 +105,8 @@ node "BEH_RC_Automate_Situation_Ambiance"
 {
     activations =
     {
-        { "ACT_RC_Automate", { "onHalt" } },
+        { "ACT_RC_Automate", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_RC_Automate_Situation_Ambiance" } },
 
     create = function( self )
     end,
@@ -158,12 +146,8 @@ node "BEH_RC_Automate_Situation_Coordination"
 {
     activations =
     {
-        { "BEH_RC_Automate_Sur", { "onHalt" } },
+        { "BEH_RC_Automate_Sur", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_RC_Automate_Situation_Coordination" } },
 
     create = function( self )
     end,
@@ -201,12 +185,8 @@ node "BEH_RC_Automate_Situation_RapFor"
 {
     activations =
     {
-        { "BEH_RC_Automate_Situation_RapForDef", { "onHalt" } },
+        { "BEH_RC_Automate_Situation_RapForDef", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_RC_Automate_Situation_RapFor" } },
 
     create = function( self )
     end,
@@ -228,12 +208,8 @@ node "BEH_RC_Automate_Situation_RapForDef"
 {
     activations =
     {
-        { "ACT_Warning", { "onHalt" } },
+        { "ACT_Warning", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_RC_Automate_Situation_RapForDef" } },
 
     create = function( self )
     end,
@@ -258,12 +234,8 @@ node "BEH_RC_Automate_Situation_ROE"
 {
     activations =
     {
-        { "BEH_RC_Automate_Sur", { "onHalt" } },
+        { "BEH_RC_Automate_Sur", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_RC_Automate_Situation_ROE" } },
 
     create = function( self )
     end,
@@ -316,12 +288,8 @@ node "BEH_RC_Automate_Situation_Radio"
 {
     activations =
     {
-        { "BEH_RC_Automate_Sur", { "onHalt" } },
+        { "BEH_RC_Automate_Sur", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_RC_Automate_Situation_Radio" } },
 
     create = function( self )
     end,
@@ -359,12 +327,8 @@ node "BEH_RC_Automate_Situation_Radar"
 {
     activations =
     {
-        { "BEH_RC_Automate_Sur", { "onHalt" } },
+        { "BEH_RC_Automate_Sur", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_RC_Automate_Situation_Radar" } },
 
     create = function( self )
     end,
@@ -402,13 +366,9 @@ node "BEH_RC_Automate_Situation_NBC"
 {
     activations =
     {
-        { "ACT_RC_Automate", { "onHalt" } },
-        { "BEH_RC_Automate_Sur", { "onHalt" } },
+        { "ACT_RC_Automate", {} },
+        { "BEH_RC_Automate_Sur", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_RC_Automate_Situation_NBC" } },
 
     create = function( self )
     end,
@@ -460,21 +420,15 @@ node "BEH_RC_Automate_Situation_Mission"
 {
     activations =
     {
-        { "ACT_RC_Automate", { "onHalt" } },
-        { "ACT_MAJ_Automate_EtatPhaseMission", { "onHalt" } },
-        { "BEH_RC_Automate_Situation_FinMission", { "onHalt" } },
+        { "ACT_RC_Automate", {} },
+        { "ACT_MAJ_Automate_EtatPhaseMission", {} },
+        { "BEH_RC_Automate_Situation_FinMission", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_RC_Automate_Situation_Mission" } },
 
     create = function( self )
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         --[[//-------------------------------------------------------------------------
 ]]--[[// Situation mission
 ]]--[[//-------------------------------------------------------------------------
@@ -498,8 +452,8 @@ do
                             end
 
                                 if _continue then
-                                StartInstance( self, self.activations.ACT_RC_Automate, 1, { eTypeRC, } )
-                                StartInstance( self, self.activations.ACT_MAJ_Automate_EtatPhaseMission, 1, { F_Pion_GeteEtatPhaseMission( pion ), } )
+                                StartActivateOverride( self, self.activations.ACT_RC_Automate, 1, { eTypeRC, } )
+                                StartActivateOverride( self, self.activations.ACT_MAJ_Automate_EtatPhaseMission, 1, { F_Pion_GeteEtatPhaseMission( pion ), } )
                             end
                         end
                     end
@@ -527,12 +481,8 @@ node "BEH_RC_Automate_Situation_FinMission"
 {
     activations =
     {
-        { "BEH_RC_Automate_Sur", { "onHalt" } },
+        { "BEH_RC_Automate_Sur", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_RC_Automate_Situation_FinMission" } },
 
     create = function( self )
     end,
@@ -585,19 +535,13 @@ node "BEH_RC_Automate_Situation_Contact"
 {
     activations =
     {
-        { "ACT_RC_Automate", { "onHalt" } },
+        { "ACT_RC_Automate", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_RC_Automate_Situation_Contact" } },
 
     create = function( self )
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         for _,x in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Sur tous les pions même le PC...
 ]]--[[//-------------------------------------------------------------------------
@@ -606,7 +550,7 @@ node "BEH_RC_Automate_Situation_Contact"
 do
                 local pion = x
                 if( F_Pion_GeteEtatFeu( pion ) == eEtatFeu_Executer ) then
-                    StartInstance( self, self.activations.ACT_RC_Automate, 1, { eRC_PriseContact, } )
+                    StartActivateOverride( self, self.activations.ACT_RC_Automate, 1, { eRC_PriseContact, } )
                 end
 
             end
@@ -627,12 +571,8 @@ node "BEH_RC_Automate_Situation_Limas"
 {
     activations =
     {
-        { "BEH_RC_Automate_SurLima", { "onHalt" } },
+        { "BEH_RC_Automate_SurLima", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_RC_Automate_Situation_Limas" } },
 
     create = function( self )
     end,
@@ -660,22 +600,16 @@ node "BEH_RC_Automate_SurLima"
 {
     activations =
     {
-        { "ACT_RC_Automate_SurLima", { "onHalt" } },
-        { "ACT_RC_Automate", { "onHalt" } },
+        { "ACT_RC_Automate_SurLima", {} },
+        { "ACT_RC_Automate", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_RC_Automate_SurLima" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.eTypeLima = self.params[1]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         for _,x in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Le premier pion a atteindre la lima = CR
 ]]--[[//-------------------------------------------------------------------------
@@ -701,7 +635,7 @@ elseif switch_1 == eTypeLima_LD then
 elseif switch_1 == eTypeLima_LCA
                                 or switch_1 == eTypeLima_LIA
                                 or switch_1 == eTypeLima_LR then
-                                                                    StartInstance( self, self.activations.ACT_RC_Automate_SurLima, 1, { self._namedParams.eTypeLima, } )
+                                                                    StartActivateOverride( self, self.activations.ACT_RC_Automate_SurLima, 1, { self._namedParams.eTypeLima, } )
                                     --[[// Passage sur  LCA une seule fois! mais pas forcément en même temps
 ]]
                                                                 cases_switch_1[3] = true
@@ -729,12 +663,8 @@ node "BEH_RC_Automate_Sur"
 {
     activations =
     {
-        { "BEH_RC_Automate", { "onHalt" } },
+        { "BEH_RC_Automate", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_RC_Automate_Sur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -759,12 +689,8 @@ node "BEH_RC_Automate"
 {
     activations =
     {
-        { "ACT_RC_Automate", { "onHalt" } },
+        { "ACT_RC_Automate", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_RC_Automate" } },
 
     create = function( self )
         self._namedParams = {}

@@ -41,12 +41,8 @@ includedFiles["sources/melee/inf/pions/son proterre/Behaviors - Obj.bms"] = true
 {
     activations =
     {
-        { "ACT_Obj_Pion_INF_RealiserBouchonMines", { "onHalt" } },
+        { "ACT_Obj_Pion_INF_RealiserBouchonMines", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Obj_Pion_VAB_InstallerPlanObstacle" } },
 
     create = function( self )
         self._namedParams = {}
@@ -61,8 +57,7 @@ includedFiles["sources/melee/inf/pions/son proterre/Behaviors - Obj.bms"] = true
             do
                 if( ( self._namedParams.locMine == 0 or self._namedParams.locMine == nil ) ) then
                     self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Obj_Pion_VAB_InstallerPlanObstacle" } )
-Halt( self )
+                    Halt( self )
                     do return end
                 end
 
@@ -70,8 +65,7 @@ Halt( self )
                 self.ptMission = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( self._namedParams.locMine )
                 if( ( self.ptMission == 0 or self.ptMission == nil ) ) then
                     self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Obj_Pion_VAB_InstallerPlanObstacle" } )
-Halt( self )
+                    Halt( self )
                     do return end
                 end
 
@@ -79,8 +73,7 @@ Halt( self )
                 if( ( self.locPtMine == 0 or self.locPtMine == nil ) ) then
 --[[// Pour le moment, on fait un bouchon de mines
 ]]                    self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Obj_Pion_VAB_InstallerPlanObstacle" } )
-Halt( self )
+                    Halt( self )
                     do return end
                 end
 
@@ -89,8 +82,7 @@ Halt( self )
 
         if( self.eAction ~= eActionEnCours ) then
             self.params.__returnValue = self.eAction
-            Feedback( self.feedbacks["onHalt"], { "BEH_Obj_Pion_VAB_InstallerPlanObstacle" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -109,13 +101,9 @@ node "BEH_Obj_Pion_VAB_InstallerCheckPoint"
 {
     activations =
     {
-        { "ACT_Obj_Pion_INF_RealiserObjet", { "onHalt" } },
-        { "ACT_Obj_Pion_AnimerSite", { "onHalt" } },
+        { "ACT_Obj_Pion_INF_RealiserObjet", {} },
+        { "ACT_Obj_Pion_AnimerSite", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Obj_Pion_VAB_InstallerCheckPoint" } },
 
     create = function( self )
         self._namedParams = {}
@@ -144,8 +132,7 @@ node "BEH_Obj_Pion_VAB_InstallerCheckPoint"
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Feedback( self.feedbacks["onHalt"], { "BEH_Obj_Pion_VAB_InstallerCheckPoint" } )
-Halt( self )
+                Halt( self )
                 do return end
 
             end
@@ -194,12 +181,8 @@ node "BEH_Obj_Pion_VAB_NettoyerObstacle"
 {
     activations =
     {
-        { "ACT_Obj_Pion_INF_Detruire", { "onHalt" } },
+        { "ACT_Obj_Pion_INF_Detruire", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Obj_Pion_VAB_NettoyerObstacle" } },
 
     create = function( self )
     end,
@@ -214,8 +197,7 @@ node "BEH_Obj_Pion_VAB_NettoyerObstacle"
 ]]self.repObj = DEC_Connaissances_ObjetLePlusProche( S_TypeObject_ToString( eTypeObjectBouchonMines ) )
                 if( ( self.repObj == 0 or self.repObj == nil ) ) then
                     self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Obj_Pion_VAB_NettoyerObstacle" } )
-Halt( self )
+                    Halt( self )
                     do return end
                 end
 
@@ -226,15 +208,13 @@ Halt( self )
             do
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Obj_Pion_VAB_NettoyerObstacle" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Feedback( self.feedbacks["onHalt"], { "BEH_Obj_Pion_VAB_NettoyerObstacle" } )
-Halt( self )
+                Halt( self )
                 do return end
 
             end
@@ -245,8 +225,7 @@ Halt( self )
                 self.eAction = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Obj_Pion_VAB_NettoyerObstacle" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end

@@ -11,12 +11,8 @@ includedFiles["sources/melee/abc/automates/ge40/missions/fairemouvement/FaireMou
 {
     activations =
     {
-        { "BEH_GTIA_AssignerLesOrdresPourFaireMouvement", { "onHalt" } },
+        { "BEH_GTIA_AssignerLesOrdresPourFaireMouvement", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_GTIA_FaireMouvement" } },
 
     create = function( self )
         self._namedParams = {}
@@ -63,13 +59,9 @@ node "BEH_GTIA_AssignerLesOrdresPourFaireMouvement"
 {
     activations =
     {
-        { "ACT_GTIA_AssignerMissionFaireMouvementA", { "onHalt" } },
-        { "BEH_GTIA_AssignerMissionsFaireMouvementPC", { "onHalt" } },
+        { "ACT_GTIA_AssignerMissionFaireMouvementA", {} },
+        { "BEH_GTIA_AssignerMissionsFaireMouvementPC", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssignerLesOrdresPourFaireMouvement" } },
 
     create = function( self )
         self._namedParams = {}
@@ -98,12 +90,8 @@ node "BEH_GTIA_AssignerMissionsFaireMouvementPC"
 {
     activations =
     {
-        { "ACT_Mission_Automate_AssignerFaireMouvementA", { "onHalt" } },
+        { "ACT_Mission_Automate_AssignerFaireMouvementA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssignerMissionsFaireMouvementPC" } },
 
     create = function( self )
         self._namedParams = {}
@@ -126,8 +114,6 @@ node "BEH_GTIA_AssignerMissionsFaireMouvementPC"
 
 node "ACT_GTIA_AssignerMissionFaireMouvementA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_GTIA_AssignerMissionFaireMouvementA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]

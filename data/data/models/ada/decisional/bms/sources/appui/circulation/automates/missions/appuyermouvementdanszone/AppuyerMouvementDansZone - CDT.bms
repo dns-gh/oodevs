@@ -11,12 +11,8 @@ includedFiles["sources/appui/circulation/automates/missions/appuyermouvementdans
 {
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "onHalt" } },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_LOG_AppuyerMouvementDansZone" } },
 
     create = function( self )
         self._namedParams = {}

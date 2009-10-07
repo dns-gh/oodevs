@@ -14,13 +14,9 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Eni_Pion_ASY_RejoindrePopulationDansZone", { "onHalt" } },
-        { "BEH_Eni_Pion_ASY_CommettreExactionsSurPopulation", { "onHalt" } },
+        { "BEH_Eni_Pion_ASY_RejoindrePopulationDansZone", {} },
+        { "BEH_Eni_Pion_ASY_CommettreExactionsSurPopulation", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_ASY_CommettreExactionDans" } },
 
     create = function( self )
         self._namedParams = {}
@@ -65,13 +61,9 @@ node "BEH_Eni_Pion_ASY_CommettreExactionsSurPopulation"
 {
     activations =
     {
-        { "ACT_Eni_Pion_ASY_CommettreExactions", { "onHalt" } },
-        { "ACT_Misc_Delai", { "onHalt" } },
+        { "ACT_Eni_Pion_ASY_CommettreExactions", {} },
+        { "ACT_Misc_Delai", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_ASY_CommettreExactionsSurPopulation" } },
 
     create = function( self )
         self._namedParams = {}
@@ -108,12 +100,8 @@ node "BEH_Eni_Pion_ASY_RejoindrePopulationDansZone"
 {
     activations =
     {
-        { "BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers", { "onHalt" } },
+        { "BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_ASY_RejoindrePopulationDansZone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -154,12 +142,8 @@ node "BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers"
 
     activations =
     {
-        { "BEH_Dep_SeDeplacer", { "onHalt" } },
+        { "BEH_Dep_SeDeplacer", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers" } },
 
     create = function( self )
         self._namedParams = {}
@@ -178,8 +162,7 @@ node "BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers"
                                 do
                     self.it = S_Misc_DetruireItineraire( self.it, "BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers" )
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end
@@ -211,12 +194,8 @@ node "BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur"
 
     activations =
     {
-        { "BEH_Dep_SeDeplacer", { "onHalt" } },
+        { "BEH_Dep_SeDeplacer", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -235,8 +214,7 @@ node "BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur"
                                 do
                     self.it = S_Misc_DetruireItineraire( self.it, "BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur" )
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end
@@ -262,12 +240,8 @@ node "BEH_Dep_Virtuel_ProgressionVers"
 {
     activations =
     {
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "BEH_Dep_ProgressionVers", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_Virtuel_ProgressionVers" } },
 
     create = function( self )
         self._namedParams = {}
@@ -288,8 +262,6 @@ node "BEH_Dep_Virtuel_ProgressionVers"
 
 node "BEH_Dep_Virtuel_PreparationAction"
 {
-    feedbacks = { { { "onHalt" }, "BEH_Dep_Virtuel_PreparationAction" } },
-
     create = function( self )
     end,
 
@@ -311,13 +283,9 @@ node "BEH_Eni_Pion_ASY_CommettreAttentatContreForcesArmees"
 {
     activations =
     {
-        { "ACT_Eni_Pion_ASY_AssassinerOfficier", { "onHalt" } },
-        { "ACT_Eni_Pion_ASY_DetruireComposanteMajeure", { "onHalt" } },
+        { "ACT_Eni_Pion_ASY_AssassinerOfficier", {} },
+        { "ACT_Eni_Pion_ASY_DetruireComposanteMajeure", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_ASY_CommettreAttentatContreForcesArmees" } },
 
     create = function( self )
         self._namedParams = {}

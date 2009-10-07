@@ -11,12 +11,8 @@ includedFiles["sources/appui/nbc/automates/son dec/missions/armersitedecontamina
 {
     activations =
     {
-        { "BEH_Conduite_Automate_NBC_ArmerUnSiteDeDecontamination", { "onHalt" } },
+        { "BEH_Conduite_Automate_NBC_ArmerUnSiteDeDecontamination", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_NBC_ArmerUnSiteDeDecontamination" } },
 
     create = function( self )
         self._namedParams = {}

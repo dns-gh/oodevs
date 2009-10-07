@@ -17,30 +17,24 @@ node "MIS_Pion_INF_Harceler"
 {
     activations =
     {
-        { "BEH_Misc_Defini_AppuisMobile", { "onHalt" } },
-        { "BEH_Misc_Pion_DefinirTypeMission", { "onHalt" } },
-        { "BEH_MAJ_AgressiviteMission", { "onHalt" } },
-        { "ACT_Misc_Pion_INF_MAJ_PositionRegroupement", { "onHalt" } },
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "BEH_Mission_Pion_INF_Harceler", { "onHalt" } },
-        { "BEH_Obj_Pion_VAB_NettoyerObstacle", { "onHalt" } },
-        { "BEH_Manoeuvre_RompreContact", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Poste_Pion_INF_TomberEnGarde", { "onHalt" } },
+        { "BEH_Misc_Defini_AppuisMobile", {} },
+        { "BEH_Misc_Pion_DefinirTypeMission", {} },
+        { "BEH_MAJ_AgressiviteMission", {} },
+        { "ACT_Misc_Pion_INF_MAJ_PositionRegroupement", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_Mission_Pion_INF_Harceler", {} },
+        { "BEH_Obj_Pion_VAB_NettoyerObstacle", {} },
+        { "BEH_Manoeuvre_RompreContact", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Poste_Pion_INF_TomberEnGarde", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_INF_Harceler" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         self.ePhaseMission = self.ePhaseMission or eSeMettreEnPlace
         self.ePhase = self.ePhase or eSurveiller
         self.eAction = self.eAction or eActionEnCours
@@ -89,7 +83,7 @@ node "MIS_Pion_INF_Harceler"
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eSeReplier then
                     if( F_Pion_GeteniEnCours( myself ) == nil ) then
-                        StartInstance( self, self.activations.BEH_Obj_Pion_VAB_NettoyerObstacle, 1.2, {} )
+                        StartActivateOverride( self, self.activations.BEH_Obj_Pion_VAB_NettoyerObstacle, 1.2, {} )
                     end
 
                     if( self.eAction == eActionEffectuee ) then
@@ -117,8 +111,7 @@ do
                                                         do
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
-                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_INF_Harceler" } )
-Halt( self )
+                                Halt( self )
                                 do return end
 
                             end

@@ -11,12 +11,8 @@ includedFiles["sources/appui/genie/automates/cie blindee/missions/franchir de vi
 {
     activations =
     {
-        { "ACT_Warning", { "onHalt" } },
+        { "ACT_Warning", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_GEN_FranchirDeViveForce" } },
 
     create = function( self )
         self._namedParams = {}
@@ -39,8 +35,7 @@ includedFiles["sources/appui/genie/automates/cie blindee/missions/franchir de vi
                 if( ( #( listePionsGenie ) == 0 or #( listePionsGenie ) == nil ) ) then
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
-                                                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_GEN_FranchirDeViveForce" } )
-Halt( self )
+                                                Halt( self )
                         do return end
 
                     end

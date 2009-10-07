@@ -25,15 +25,11 @@ include "Common/Automates/Actions/Medo/Actions - Medo - GEN.bms"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_GEN_AssignerRenforcerA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_GEN_AssignerRenforcerA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_GEN_AssignerRenforcerA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -82,15 +78,11 @@ node "BEH_Mission_Automate_GEN_AssignerDegagerA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_GEN_AssignerDegagerObstacleA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_GEN_AssignerDegagerObstacleA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_GEN_AssignerDegagerA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -138,15 +130,11 @@ node "BEH_Mission_Automate_GEN_AssignerContournerA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_GEN_AssignerContournerObstacleA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_GEN_AssignerContournerObstacleA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_GEN_AssignerContournerA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -194,15 +182,11 @@ node "BEH_Mission_Automate_GEN_AssignerReconnaitreZoneA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_GEN_AssignerReconnaitreZoneA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_GEN_AssignerReconnaitreZoneA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_GEN_AssignerReconnaitreZoneA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -250,15 +234,11 @@ node "BEH_Mission_Automate_GEN_AssignerOuvrirItineraireA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_GEN_AssignerOuvrirItineraireA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_GEN_AssignerOuvrirItineraireA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_GEN_AssignerOuvrirItineraireA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -306,15 +286,11 @@ node "BEH_Mission_Automate_GEN_AssignerRetablirItineraireA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_GEN_AssignerRetablirItineraireA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_GEN_AssignerRetablirItineraireA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_GEN_AssignerRetablirItineraireA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -362,15 +338,11 @@ node "BEH_Mission_Automate_GEN_AssignerReconnaitreSiteA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_GEN_AssignerReconnaitreSiteA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_GEN_AssignerReconnaitreSiteA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_GEN_AssignerReconnaitreSiteA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -418,15 +390,11 @@ node "BEH_Mission_Automate_GEN_AssignerEquiperExploiterA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_GEN_AssignerEquiperExploiterA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_GEN_AssignerEquiperExploiterA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_GEN_AssignerEquiperExploiterA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -476,15 +444,11 @@ node "BEH_Mission_Automate_GEN_AssignerMissionConstruireA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_GEN_AssignerRealiserTravauxA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_GEN_AssignerRealiserTravauxA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_GEN_AssignerMissionConstruireA" } },
 
     create = function( self )
         self._namedParams = {}

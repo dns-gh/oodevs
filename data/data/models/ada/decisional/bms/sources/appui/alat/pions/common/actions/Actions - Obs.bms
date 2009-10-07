@@ -12,8 +12,6 @@ includedFiles["sources/appui/alat/pions/common/actions/Actions - Obs.bms"] = tru
         surveiller = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Obs_Pions_ALAT_EnregistrerPuisAllerReconnaitreNonVus" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.zone = self.params[1]
@@ -50,8 +48,6 @@ includedFiles["sources/appui/alat/pions/common/actions/Actions - Obs.bms"] = tru
 ]]--[[//------------------------------------------------------------------------------
 ]]node "ACT_Obs_Pions_ALAT_Sonnette"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Obs_Pions_ALAT_Sonnette" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.localisation = self.params[1]

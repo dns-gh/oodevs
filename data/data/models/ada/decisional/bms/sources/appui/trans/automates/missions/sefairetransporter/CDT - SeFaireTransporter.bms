@@ -18,8 +18,6 @@ includedFiles["sources/appui/trans/automates/missions/sefairetransporter/CDT - S
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_SeFaireTransporter"
 {
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_SeFaireTransporter" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission

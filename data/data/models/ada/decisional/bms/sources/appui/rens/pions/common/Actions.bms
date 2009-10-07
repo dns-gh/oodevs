@@ -12,8 +12,6 @@ includedFiles["sources/appui/rens/pions/common/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Dep_Pion_Rens_ActiverFurtivite"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Dep_Pion_Rens_ActiverFurtivite" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.rFurtivite = self.params[1]
@@ -43,8 +41,6 @@ includedFiles["sources/appui/rens/pions/common/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Pion_Rens_AssurerLaLiaisonAvec"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Pion_Rens_AssurerLaLiaisonAvec" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionAmi = self.params[1]
@@ -116,8 +112,6 @@ includedFiles["sources/appui/rens/pions/common/Actions.bms"] = true
         deplacement = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Obs_Pion_RENS_ActiverRadarDans" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.zone = self.params[1]
@@ -178,8 +172,6 @@ includedFiles["sources/appui/rens/pions/common/Actions.bms"] = true
     {
         deplacement = 1,
     },
-
-    feedbacks = { { { "onHalt" }, "ACT_Obs_Pion_RENS_ActiverEcouteDans" } },
 
     create = function( self )
         self._namedParams = {}
@@ -242,8 +234,6 @@ includedFiles["sources/appui/rens/pions/common/Actions.bms"] = true
         deplacement = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Obs_Pion_RENS_ActiverEcouteRadarDans" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.zone = self.params[1]
@@ -300,8 +290,6 @@ includedFiles["sources/appui/rens/pions/common/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Obs_Pion_RENS_ActiverBrouillage"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Obs_Pion_RENS_ActiverBrouillage" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.eTypeObjectZoneBrouillage = self.params[1]
@@ -362,8 +350,6 @@ includedFiles["sources/appui/rens/pions/common/Actions.bms"] = true
         hauteur = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Dep_Pion_RENS_VolerA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.hauteur = self.params[1]
@@ -409,8 +395,6 @@ includedFiles["sources/appui/rens/pions/common/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Connaissance_Rens_EnregistrerDonnees"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Connaissance_Rens_EnregistrerDonnees" } },
-
     create = function( self )
     end,
 
@@ -446,8 +430,6 @@ includedFiles["sources/appui/rens/pions/common/Actions.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Connaissance_Rens_ExploiterDonnees"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Connaissance_Rens_ExploiterDonnees" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.rDelai = self.params[1]
@@ -482,8 +464,7 @@ includedFiles["sources/appui/rens/pions/common/Actions.bms"] = true
                 if( self._namedParams.rDelai * 60 <= DEC_TempsSim() - self.rTempsDebut ) then
                     do
                                                 self.params.__returnValue = eActionEffectuee
-                        Feedback( self.feedbacks["onHalt"], { "ACT_Connaissance_Rens_ExploiterDonnees" } )
-Halt( self )
+                        Halt( self )
                         do return end
 
                     end
@@ -505,8 +486,6 @@ Halt( self )
 ]]--[[// *****************************************************************************
 ]]node "ACT_Connaissance_Rens_ExtraireDonnees"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Connaissance_Rens_ExtraireDonnees" } },
-
     create = function( self )
     end,
 
@@ -541,8 +520,6 @@ Halt( self )
 ]]--[[// *****************************************************************************
 ]]node "ACT_Pion_Rens_InstallerDisposifif"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Pion_Rens_InstallerDisposifif" } },
-
     create = function( self )
     end,
 

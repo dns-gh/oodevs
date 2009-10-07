@@ -23,12 +23,8 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_MOT_Pion_INF_GarderSesDistancesFaceA", { "onHalt" } },
+        { "BEH_MOT_Pion_INF_GarderSesDistancesFaceA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MOT_Pion_INF_GarderSesDistances" } },
 
     create = function( self )
     end,
@@ -52,28 +48,22 @@ node "BEH_MOT_Pion_INF_GarderSesDistancesFaceA"
 {
     activations =
     {
-        { "ACT_Tir_INF_FumigeneVersEni", { "onHalt" } },
-        { "ACT_MAJ_EnnemiEnCours", { "onHalt" } },
+        { "ACT_Tir_INF_FumigeneVersEni", {} },
+        { "ACT_MAJ_EnnemiEnCours", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MOT_Pion_INF_GarderSesDistancesFaceA" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.ksEni = self.params[1]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         self.bAutoriseDebarquement = self.bAutoriseDebarquement or ( myself:GetType() ~= "SectionInfanterie_HOT" ) or ( not DEC_Agent_EstPC() )
         if( ModuleBegins() ) then
             do
                 --[[// Tir les fumigenes	
 ]]if( DEC_ConnaissanceAgent_PercoitUnite( self._namedParams.ksEni ) ) then
-                    StartInstance( self, self.activations.ACT_Tir_INF_FumigeneVersEni, 1, { self._namedParams.ksEni, } )
+                    StartActivateOverride( self, self.activations.ACT_Tir_INF_FumigeneVersEni, 1, { self._namedParams.ksEni, } )
                 end
 
             end
@@ -94,25 +84,19 @@ node "BEH_MOT_Pion_INF_GarderSesDistances_GererTransport"
 {
     activations =
     {
-        { "BEH_MOT_Pion_INF_Debarquer", { "onHalt" } },
+        { "BEH_MOT_Pion_INF_Debarquer", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MOT_Pion_INF_GarderSesDistances_GererTransport" } },
 
     create = function( self )
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         if( DEC_Agent_EstEmbarque() and ( eNiveauInstallation_Poste == DEC_Agent_NiveauInstallation() ) ) then
             do
                 local lstEnisDangereux = DEC_Connaissances_UnitesEnnemiesDangereuses()
                 for _,ksEni in pairs( lstEnisDangereux ) do
                 local _continue = true
-                    StartInstance( self, self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
+                    StartActivateOverride( self, self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
 
                 end
 
@@ -133,25 +117,19 @@ node "BEH_MOT_Pion_INF_EtrePrudent_GererTransport"
 {
     activations =
     {
-        { "BEH_MOT_Pion_INF_Debarquer", { "onHalt" } },
+        { "BEH_MOT_Pion_INF_Debarquer", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MOT_Pion_INF_EtrePrudent_GererTransport" } },
 
     create = function( self )
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         if( F_Pion_GeteEtatDecPrudence( myself ) == eEtatDecPrudence_Actif and DEC_Agent_EstEmbarque() ) then
             do
                 local lstEnisDangereux = DEC_Connaissances_UnitesEnnemiesDangereuses()
                 for _,ksEni in pairs( lstEnisDangereux ) do
                 local _continue = true
-                    StartInstance( self, self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )--[[// : strength = 1.1 * S_Force_DangerSur( ksEni );
+                    StartActivateOverride( self, self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )--[[// : strength = 1.1 * S_Force_DangerSur( ksEni );
 ]]
 
                 end
@@ -171,13 +149,9 @@ node "BEH_Mot_Delai_Pion_INF_AugmenterAgression"
 {
     activations =
     {
-        { "ACT_Misc_Delai", { "onHalt" } },
-        { "BEH_MOT_DesactiveSauvegarde", { "onHalt" } },
+        { "ACT_Misc_Delai", {} },
+        { "BEH_MOT_DesactiveSauvegarde", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mot_Delai_Pion_INF_AugmenterAgression" } },
 
     create = function( self )
         self._namedParams = {}
@@ -195,8 +169,7 @@ node "BEH_Mot_Delai_Pion_INF_AugmenterAgression"
                 self.eAction = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Mot_Delai_Pion_INF_AugmenterAgression" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end
@@ -215,8 +188,6 @@ Halt( self )
 
 node "BEH_MOT_Pion_InitialisePreparationMission"
 {
-    feedbacks = { { { "onHalt" }, "BEH_MOT_Pion_InitialisePreparationMission" } },
-
     create = function( self )
     end,
 
@@ -234,8 +205,6 @@ node "BEH_MOT_Pion_InitialisePreparationMission"
 
 node "BEH_MOT_Pion_INF_InitialisePoste"
 {
-    feedbacks = { { { "onHalt" }, "BEH_MOT_Pion_INF_InitialisePoste" } },
-
     create = function( self )
     end,
 
@@ -257,22 +226,16 @@ node "BEH_MOT_Pion_INF_Debarquer"
 {
     activations =
     {
-        { "ACT_Transport_Pion_INF_Debarquer", { "onHalt" } },
-        { "ACT_Transport_MaintenirEtat", { "onHalt" } },
+        { "ACT_Transport_Pion_INF_Debarquer", {} },
+        { "ACT_Transport_MaintenirEtat", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MOT_Pion_INF_Debarquer" } },
 
     create = function( self )
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         if( DEC_Agent_TransporteursPret() and DEC_Agent_EstEmbarque() ) then
-            StartInstance( self, self.activations.ACT_Transport_Pion_INF_Debarquer, 2.01, {} )
+            StartActivateOverride( self, self.activations.ACT_Transport_Pion_INF_Debarquer, 2.01, {} )
         end
 
         Activate( self.activations.ACT_Transport_MaintenirEtat, 2, { eEtatTransport_Debarque, } )

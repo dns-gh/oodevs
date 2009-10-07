@@ -31,12 +31,8 @@ node "ActivatedByMOT_Furtivite"
 {
     activations =
     {
-        { "BEH_MOT_Rens_ActiverFurtivite", { "onHalt" } },
+        { "BEH_MOT_Rens_ActiverFurtivite", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "ActivatedByMOT_Furtivite" } },
 
     create = function( self )
     end,

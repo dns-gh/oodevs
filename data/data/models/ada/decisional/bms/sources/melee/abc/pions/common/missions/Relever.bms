@@ -20,18 +20,14 @@ includedFiles["sources/melee/abc/pions/common/missions/Relever.bms"] = true
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "BEH_MAJ_Pion_ABC_AgressiviteTir", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
-        { "ACT_Misc_ReleverUnite", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_MAJ_Pion_ABC_AgressiviteTir", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Dep_ModulationVitesse", {} },
+        { "ACT_Misc_ReleverUnite", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_ABC_ReleverUnite" } },
 
     create = function( self )
         self._namedParams = {}
@@ -63,8 +59,7 @@ includedFiles["sources/melee/abc/pions/common/missions/Relever.bms"] = true
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_ABC_ReleverUnite" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -74,8 +69,7 @@ Halt( self )
                     do
                         DEC_Trace( "==> L'unité n'a pas les moyens d'effectuer la relever" )
                                                 self.params.__returnValue = eActionImpossible
-                        Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_ABC_ReleverUnite" } )
-Halt( self )
+                        Halt( self )
                         do return end
 
                     end
@@ -83,8 +77,7 @@ Halt( self )
 
                 if( ( DEC_GetMission( self._namedParams.mission.uniteARelever_ ) == 0 or DEC_GetMission( self._namedParams.mission.uniteARelever_ ) == nil ) ) then
                     self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_ABC_ReleverUnite" } )
-Halt( self )
+                    Halt( self )
                     do return end
                 end
 
@@ -148,8 +141,6 @@ elseif switch_1 == eRelever then
 
 node "ACT_Misc_ReleverUnite"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Misc_ReleverUnite" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]

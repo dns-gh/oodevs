@@ -11,16 +11,12 @@ includedFiles["sources/appui/rens/pions/roim/drone sdti/missions/RenseignerSur.b
 {
     activations =
     {
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "BEH_Dep_ProgressionSur", { "onHalt" } },
-        { "ACT_Dep_Pion_RENS_VolerA", { "onHalt" } },
-        { "ACT_Obs_Pion_RENS_ActiverCamera", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_ProgressionSur", {} },
+        { "ACT_Dep_Pion_RENS_VolerA", {} },
+        { "ACT_Obs_Pion_RENS_ActiverCamera", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_RENS_ROIM_SDTI_RenseignerSur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -42,8 +38,7 @@ includedFiles["sources/appui/rens/pions/roim/drone sdti/missions/RenseignerSur.b
                     do
                         DEC_Trace( "----- Le drone doit être mise en oeuvre -----" )
                         DEC_RC( eRC_MissionImpossible )
-                                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_RENS_ROIM_SDTI_RenseignerSur" } )
-Halt( self )
+                                                Halt( self )
                         do return end
 
                     end
@@ -54,8 +49,7 @@ Halt( self )
                         DEC_Trace( "----- Le drone est en exploitation -----" )
                         DEC_RC( eRC_DroneEnExploitation )
                         DEC_RC( eRC_MissionImpossible )
-                                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_RENS_ROIM_SDTI_RenseignerSur" } )
-Halt( self )
+                                                Halt( self )
                         do return end
 
                     end

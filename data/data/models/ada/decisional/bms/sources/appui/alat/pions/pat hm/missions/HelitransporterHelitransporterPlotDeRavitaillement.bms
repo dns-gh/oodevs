@@ -14,23 +14,19 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_Maj_Pions_ObjectifEsquive", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "ACT_Obs_EtablirVisionCur", { "onHalt" } },
-        { "BEH_Dep_Pion_ALAT_RejoindrePion", { "onHalt" } },
-        { "BEH_Log_Pion_ALAT_SeRecompleterSurTC2", { "onHalt" } },
-        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "onHalt" } },
-        { "ACT_Log_Pion_ALAT_RealiserPlotLogistique", { "onHalt" } },
-        { "ACT_Maj_Pion_PasserEnTirSurRiposte", { "onHalt" } },
-        { "BEH_Manoeuvre_Pion_AllerStationner", { "onHalt" } },
-        { "BEH_Dep_Pion_ALAT_SePoser", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Maj_Pions_ObjectifEsquive", {} },
+        { "ACT_Info_Trace", {} },
+        { "ACT_Obs_EtablirVisionCur", {} },
+        { "BEH_Dep_Pion_ALAT_RejoindrePion", {} },
+        { "BEH_Log_Pion_ALAT_SeRecompleterSurTC2", {} },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
+        { "ACT_Log_Pion_ALAT_RealiserPlotLogistique", {} },
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
+        { "BEH_Manoeuvre_Pion_AllerStationner", {} },
+        { "BEH_Dep_Pion_ALAT_SePoser", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement" } },
 
     create = function( self )
         self._namedParams = {}
@@ -48,8 +44,7 @@ include "bit.lua"
 do
                 DEC_Warning( eRC_MissionImpossible )
                                 self.params.__returnValue = eActionImpossible
-                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement" } )
-Halt( self )
+                Halt( self )
                 do return end
 
             end
@@ -96,15 +91,13 @@ Halt( self )
                                                         do
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self.params.__returnValue = eActionImpossible
-                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement" } )
-Halt( self )
+                                Halt( self )
                                 do return end
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement" } )
-Halt( self )
+                            Halt( self )
                             do return end
 
                         end
@@ -131,15 +124,13 @@ elseif switch_1 == eAttendre then
                                                         do
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self.params.__returnValue = eActionImpossible
-                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement" } )
-Halt( self )
+                                Halt( self )
                                 do return end
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement" } )
-Halt( self )
+                            Halt( self )
                             do return end
 
                         end
@@ -164,15 +155,13 @@ elseif switch_1 == eHelitransporter then
                                                         do
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self.params.__returnValue = eActionImpossible
-                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement" } )
-Halt( self )
+                                Halt( self )
                                 do return end
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement" } )
-Halt( self )
+                            Halt( self )
                             do return end
 
                         end
@@ -225,15 +214,13 @@ elseif switch_1 == eSExfiltrer then
                                                         do
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self.params.__returnValue = eActionImpossible
-                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement" } )
-Halt( self )
+                                Halt( self )
                                 do return end
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement" } )
-Halt( self )
+                            Halt( self )
                             do return end
 
                         end
@@ -253,8 +240,7 @@ elseif switch_1 == eFinMission then
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
-                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement" } )
-Halt( self )
+                                Halt( self )
                                 do return end
 
                             end

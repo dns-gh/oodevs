@@ -14,16 +14,12 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Dep_ProgressionSur", { "onHalt" } },
-        { "BEH_Dep_GEN_Retablir_ReagirFaceAObstacles", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionSur", {} },
+        { "BEH_Dep_GEN_Retablir_ReagirFaceAObstacles", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_GEN_RetablirItineraire" } },
 
     create = function( self )
         self._namedParams = {}
@@ -107,12 +103,8 @@ node "BEH_Dep_GEN_Retablir_ReagirFaceAObstacles"
 {
     activations =
     {
-        { "BEH_Objet_Pion_GEN_ReduireObstacle", { "onHalt" } },
+        { "BEH_Objet_Pion_GEN_ReduireObstacle", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_GEN_Retablir_ReagirFaceAObstacles" } },
 
     create = function( self )
     end,
@@ -143,14 +135,10 @@ node "BEH_Objet_Pion_GEN_ReduireObstacle"
 {
     activations =
     {
-        { "ACT_Obj_Pion_GEN_ReduireObstacle", { "onHalt" } },
-        { "ACT_Pion_GEN_AttendreRenforcementPour", { "onHalt" } },
-        { "ACT_Dep_SePoster", { "onHalt" } },
+        { "ACT_Obj_Pion_GEN_ReduireObstacle", {} },
+        { "ACT_Pion_GEN_AttendreRenforcementPour", {} },
+        { "ACT_Dep_SePoster", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Objet_Pion_GEN_ReduireObstacle" } },
 
     create = function( self )
         self._namedParams = {}
@@ -165,8 +153,7 @@ node "BEH_Objet_Pion_GEN_ReduireObstacle"
             do
                 --[[// hum hum
 ]]myself.objMisEnCours_ = 0
-                                Feedback( self.feedbacks["onHalt"], { "BEH_Objet_Pion_GEN_ReduireObstacle" } )
-Halt( self )
+                                Halt( self )
                 do return end
 
             end

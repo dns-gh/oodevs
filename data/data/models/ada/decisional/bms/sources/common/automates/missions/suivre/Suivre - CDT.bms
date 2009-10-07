@@ -11,13 +11,9 @@ includedFiles["sources/common/automates/missions/suivre/Suivre - CDT.bms"] = tru
 {
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "onHalt" } },
-        { "BEH_CoordDep_Automate_ActiverCoordinationAmisSur", { "onHalt" } },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "BEH_CoordDep_Automate_ActiverCoordinationAmisSur", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_Suivre" } },
 
     create = function( self )
         self._namedParams = {}
@@ -33,8 +29,7 @@ includedFiles["sources/common/automates/missions/suivre/Suivre - CDT.bms"] = tru
         if( self.eEtatODC == eActionHalt ) then
             do
                                 self.params.__returnValue = eActionEffectuee
-                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_CDT_Suivre" } )
-Halt( self )
+                Halt( self )
                 do return end
 
                 self.eEtatODC = eActionEnCours
@@ -58,12 +53,8 @@ node "BEH_CoordDep_Automate_ActiverCoordinationAmisSur"
 {
     activations =
     {
-        { "ACT_Ordre_Automate_Pause", { "onHalt" } },
+        { "ACT_Ordre_Automate_Pause", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_CoordDep_Automate_ActiverCoordinationAmisSur" } },
 
     create = function( self )
         self._namedParams = {}

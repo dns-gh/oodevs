@@ -14,14 +14,10 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "BEH_Pion_ASS_RATAC_AcquerirObjectifs_Mission", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_Pion_ASS_RATAC_AcquerirObjectifs_Mission", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_ASS_RATAC_AcquerirObjectifs" } },
 
     create = function( self )
         self._namedParams = {}
@@ -61,8 +57,7 @@ elseif switch_1 == eFinMission then
                         do
                             DEC_FinMission()
                                                         self.params.__returnValue = eActionEffectuee
-                            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ASS_RATAC_AcquerirObjectifs" } )
-Halt( self )
+                            Halt( self )
                             do return end
 
                         end
@@ -87,15 +82,11 @@ node "BEH_Pion_ASS_RATAC_AcquerirObjectifs_Mission"
 {
     activations =
     {
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_RC", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "ACT_Obs_Pion_ASS_ActiverRadar_DansZone", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_RC", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Obs_Pion_ASS_ActiverRadar_DansZone", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pion_ASS_RATAC_AcquerirObjectifs_Mission" } },
 
     create = function( self )
     end,

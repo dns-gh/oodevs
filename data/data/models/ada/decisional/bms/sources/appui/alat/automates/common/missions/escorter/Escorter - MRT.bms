@@ -14,13 +14,9 @@ includedFiles["sources/appui/alat/automates/common/missions/escorter/Escorter - 
 {
     activations =
     {
-        { "BEH_ROE_Automate_TirLibre", { "onHalt" } },
-        { "BEH_Ordre_Automate_Poursuivre_", { "onHalt" } },
+        { "BEH_ROE_Automate_TirLibre", {} },
+        { "BEH_Ordre_Automate_Poursuivre_", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_ALAT_Escorter" } },
 
     create = function( self )
         self._namedParams = {}
@@ -41,8 +37,7 @@ includedFiles["sources/appui/alat/automates/common/missions/escorter/Escorter - 
                     do
                         DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
                                                 self.params.__returnValue = eActionImpossible
-                        Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_ALAT_Escorter" } )
-Halt( self )
+                        Halt( self )
                         do return end
 
                     end
@@ -56,8 +51,7 @@ Halt( self )
 do
                 DEC_MRT_Valide()
                                 self.params.__returnValue = eActionEffectuee
-                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_ALAT_Escorter" } )
-Halt( self )
+                Halt( self )
                 do return end
 
             end

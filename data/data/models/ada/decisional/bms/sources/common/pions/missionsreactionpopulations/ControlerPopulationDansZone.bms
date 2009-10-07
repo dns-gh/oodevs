@@ -11,16 +11,12 @@ includedFiles["sources/common/pions/missionsreactionpopulations/ControlerPopulat
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Dep_Virtuel_ProgressionVers", { "onHalt" } },
-        { "BEH_Pop_Pion_SecuriserPopulationDans", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_Virtuel_ProgressionVers", {} },
+        { "BEH_Pop_Pion_SecuriserPopulationDans", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_ControlerPopulationsDansZone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -90,8 +86,7 @@ elseif switch_1 == eSecuriser then
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                                        Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ControlerPopulationsDansZone" } )
-Halt( self )
+                                        Halt( self )
                     do return end
 
                                 end

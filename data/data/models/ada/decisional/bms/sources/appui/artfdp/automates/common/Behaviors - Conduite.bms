@@ -20,12 +20,8 @@ includedFiles["sources/appui/artfdp/automates/common/Behaviors - Conduite.bms"] 
 {
     activations =
     {
-        { "BEH_Situation_Automate_ASS_FinMission", { "onHalt" } },
+        { "BEH_Situation_Automate_ASS_FinMission", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_ASS_Defaut" } },
 
     create = function( self )
     end,
@@ -46,8 +42,7 @@ includedFiles["sources/appui/artfdp/automates/common/Behaviors - Conduite.bms"] 
                     DEC_RC( eRC_FinMission )
                     DEC_FinMission()
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Conduite_Automate_ASS_Defaut" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end
@@ -66,8 +61,6 @@ Halt( self )
 
 node "BEH_Situation_Automate_ASS_FinMission"
 {
-    feedbacks = { { { "onHalt" }, "BEH_Situation_Automate_ASS_FinMission" } },
-
     create = function( self )
     end,
 

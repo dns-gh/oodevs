@@ -16,24 +16,18 @@ node "MIS_Automate_CDT_INF_AppuyerUnFreinage"
 {
     activations =
     {
-        { "BEH_Conduite_Automate_GererFuseau", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_Defaut", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_AppuyerFreinage", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_CadreRetrograde", { "onHalt" } },
+        { "BEH_Conduite_Automate_GererFuseau", {} },
+        { "BEH_Conduite_Automate_INF_Defaut", {} },
+        { "BEH_Conduite_Automate_INF_AppuyerFreinage", {} },
+        { "BEH_Conduite_Automate_INF_CadreRetrograde", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_INF_AppuyerUnFreinage" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
                 self.eActionMission = self.eActionMission or eActionEnCours
         self.eActionHorsFuseau = self.eActionHorsFuseau or eActionEnCours
         --[[//-----------------------------------------------------------------------------
@@ -42,7 +36,7 @@ node "MIS_Automate_CDT_INF_AppuyerUnFreinage"
 ]]if( ModuleBegins() ) then
             do
                 DEC_SetMission( myself, self._namedParams.mission )
-                StartInstance( self, self.activations.BEH_Conduite_Automate_GererFuseau, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionHorsFuseau = v else rawset( t, k, v ) end end } ) )
+                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_GererFuseau, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionHorsFuseau = v else rawset( t, k, v ) end end } ) )
             end
 --[[// Conduite des pions au niveau section
 ]]--[[//-----------------------------------------------------------------------------				
@@ -53,8 +47,7 @@ node "MIS_Automate_CDT_INF_AppuyerUnFreinage"
                 self.eActionMission = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_CDT_INF_AppuyerUnFreinage" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end
@@ -81,12 +74,8 @@ node "BEH_Conduite_Automate_INF_AppuyerFreinage"
 {
     activations =
     {
-        { "ACT_Conduite_Automate_HOT_AppuiFreinage", { "onHalt" } },
+        { "ACT_Conduite_Automate_HOT_AppuiFreinage", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_AppuyerFreinage" } },
 
     create = function( self )
     end,

@@ -10,8 +10,6 @@ includedFiles["sources/appui/trans/pions/actions/Actions - Misc.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Misc_Delai"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Misc_Delai" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.id = self.params[1]
@@ -33,8 +31,7 @@ includedFiles["sources/appui/trans/pions/actions/Actions - Misc.bms"] = true
                 if( self._namedParams.rDelai * 60 <= DEC_TempsSim() - self.rTempsDebut ) then
                     do
                                                 self.params.__returnValue = eActionEffectuee
-                        Feedback( self.feedbacks["onHalt"], { "ACT_Misc_Delai" } )
-Halt( self )
+                        Halt( self )
                         do return end
 
                     end
@@ -61,8 +58,6 @@ Halt( self )
         installation = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Pions_SInstaller" } },
-
     create = function( self )
     end,
 
@@ -78,8 +73,6 @@ node "ACT_Pions_SeDesinstaller"
     {
         installation = 1,
     },
-
-    feedbacks = { { { "onHalt" }, "ACT_Pions_SeDesinstaller" } },
 
     create = function( self )
     end,

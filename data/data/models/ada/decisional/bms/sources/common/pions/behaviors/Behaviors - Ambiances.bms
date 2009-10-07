@@ -13,14 +13,10 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Ambiances.bms"] = true
 {
     activations =
     {
-        { "ACT_Ordre_Suppression", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
+        { "ACT_Ordre_Suppression", {} },
+        { "ACT_Info_Trace", {} },
+        { "ACT_Dep_ModulationVitesse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Ambiance" } },
 
     create = function( self )
     end,

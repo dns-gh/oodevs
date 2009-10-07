@@ -11,13 +11,9 @@ includedFiles["sources/appui/rens/pions/rohum/rbrr/pat recherche motorisee/missi
 {
     activations =
     {
-        { "BEH_Dep_Pion_GererFurtivite", { "onHalt" } },
-        { "BEH_Mission_Pion_RENS_SExfiltrer", { "onHalt" } },
+        { "BEH_Dep_Pion_GererFurtivite", {} },
+        { "BEH_Mission_Pion_RENS_SExfiltrer", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_RENS_ROHUM_SExfiltrer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -31,15 +27,13 @@ includedFiles["sources/appui/rens/pions/rohum/rbrr/pat recherche motorisee/missi
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible ) then
             self.params.__returnValue = eActionImpossible
-            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_RENS_ROHUM_SExfiltrer" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
         if( self.eEtat == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_RENS_ROHUM_SExfiltrer" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 

@@ -47,27 +47,23 @@ include "Appui/Alat/Pions/Common/Behaviors/Behaviors - Ordre.bms"
 {
     activations =
     {
-        { "BEH_MAJ_EtatDefaut", { "onHalt" } },
-        { "BEH_Mot_Pion_ALAT_AffecterVariablesDEtat", { "onHalt" } },
-        { "BEH_ALAT_Ambiance", { "onHalt" } },
-        { "BEH_Nbc", { "onHalt" } },
-        { "BEH_ROE", { "onHalt" } },
-        { "BEH_Rens", { "onHalt" } },
-        { "BEH_Ordre_Pion_ALAT_ChangerParametresRecompletement", { "onHalt" } },
-        { "BEH_Info_Pion_RendreCompte", { "onHalt" } },
-        { "BEH_Dep_Pion_ALAT_SePoser", { "onHalt" } },
-        { "BEH_Log_Pion_ALAT_Recompletement", { "onHalt" } },
-        { "BEH_Lima_GererLimas", { "onHalt" } },
-        { "BEH_Manoeuvre_Pion_SeCoordonner", { "onHalt" } },
-        { "BEH_Manoeuvre_Pion_GestionDestruction", { "onHalt" } },
-        { "BEH_Log_Pion_ALAT_AjoutNouveauPlotsDansFuseau", { "onHalt" } },
-        { "BEH_Log_Pion_ALAT_GererPlotsRavitaillement", { "onHalt" } },
-        { "BEH_Eni_Pion_ALAT_EviterContactsAvecEnnemisConnus", { "onHalt" } },
+        { "BEH_MAJ_EtatDefaut", {} },
+        { "BEH_Mot_Pion_ALAT_AffecterVariablesDEtat", {} },
+        { "BEH_ALAT_Ambiance", {} },
+        { "BEH_Nbc", {} },
+        { "BEH_ROE", {} },
+        { "BEH_Rens", {} },
+        { "BEH_Ordre_Pion_ALAT_ChangerParametresRecompletement", {} },
+        { "BEH_Info_Pion_RendreCompte", {} },
+        { "BEH_Dep_Pion_ALAT_SePoser", {} },
+        { "BEH_Log_Pion_ALAT_Recompletement", {} },
+        { "BEH_Lima_GererLimas", {} },
+        { "BEH_Manoeuvre_Pion_SeCoordonner", {} },
+        { "BEH_Manoeuvre_Pion_GestionDestruction", {} },
+        { "BEH_Log_Pion_ALAT_AjoutNouveauPlotsDansFuseau", {} },
+        { "BEH_Log_Pion_ALAT_GererPlotsRavitaillement", {} },
+        { "BEH_Eni_Pion_ALAT_EviterContactsAvecEnnemisConnus", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Defaut" } },
 
     create = function( self )
         self._namedParams = {}
@@ -155,12 +151,8 @@ node "BEH_Dep_Virtuel_ProgressionVers"
 {
     activations =
     {
-        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "onHalt" } },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_Virtuel_ProgressionVers" } },
 
     create = function( self )
         self._namedParams = {}
@@ -182,12 +174,8 @@ node "BEH_Dep_Virtuel_PreparationAction"
 {
     activations =
     {
-        { "BEH_Dep_Pion_ALAT_Voler", { "onHalt" } },
+        { "BEH_Dep_Pion_ALAT_Voler", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_Virtuel_PreparationAction" } },
 
     create = function( self )
     end,

@@ -11,12 +11,8 @@ includedFiles["sources/appui/rens/pions/roim/son mise en oeuvre sdti/missions/Me
 {
     activations =
     {
-        { "BEH_Mission_Pion_RENS_MettreEnOeuvre", { "onHalt" } },
+        { "BEH_Mission_Pion_RENS_MettreEnOeuvre", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_RENS_ROIM_MettreEnOeuvre" } },
 
     create = function( self )
         self._namedParams = {}
@@ -30,15 +26,13 @@ includedFiles["sources/appui/rens/pions/roim/son mise en oeuvre sdti/missions/Me
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible ) then
             self.params.__returnValue = eActionImpossible
-            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_RENS_ROIM_MettreEnOeuvre" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
         if( self.eEtat == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_RENS_ROIM_MettreEnOeuvre" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 

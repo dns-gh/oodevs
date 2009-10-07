@@ -13,16 +13,12 @@ includedFiles["sources/appui/log/pions/missions/SeDeployer.bms"] = true
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "BEH_Pion_Log_InstallerDispositif", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Pion_Log_InstallerDispositif", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_LOG_SeDeployer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -113,13 +109,9 @@ node "BEH_Pion_Log_InstallerDispositif"
 {
     activations =
     {
-        { "ACT_Pions_SInstaller", { "onHalt" } },
-        { "ACT_Pion_Log_DispositifInstalle", { "onHalt" } },
+        { "ACT_Pions_SInstaller", {} },
+        { "ACT_Pion_Log_DispositifInstalle", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pion_Log_InstallerDispositif" } },
 
     create = function( self )
     end,
@@ -142,8 +134,6 @@ node "BEH_Pion_Log_InstallerDispositif"
 
 node "ACT_Pion_Log_DispositifInstalle"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Pion_Log_DispositifInstalle" } },
-
     create = function( self )
     end,
 

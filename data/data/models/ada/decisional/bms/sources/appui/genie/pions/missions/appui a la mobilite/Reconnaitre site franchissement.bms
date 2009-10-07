@@ -11,16 +11,12 @@ includedFiles["sources/appui/genie/pions/missions/appui a la mobilite/Reconnaitr
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "ACT_Obs_ReconnaitreSiteFranchissement", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Obs_ReconnaitreSiteFranchissement", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_GEN_ReconnaitreSiteFranchissement" } },
 
     create = function( self )
         self._namedParams = {}
@@ -35,8 +31,7 @@ includedFiles["sources/appui/genie/pions/missions/appui a la mobilite/Reconnaitr
 ]]if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.mission.siteFranchissement_ ) ) then
             do
                 DEC_Warning( eRC_MissionImpossible )
-                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_GEN_ReconnaitreSiteFranchissement" } )
-Halt( self )
+                                Halt( self )
                 do return end
 
             end
@@ -52,8 +47,7 @@ Halt( self )
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                                                 self.params.__returnValue = eActionImpossible
-                        Feedback( self.feedbacks["onHalt"], { "MIS_Pion_GEN_ReconnaitreSiteFranchissement" } )
-Halt( self )
+                        Halt( self )
                         do return end
 
                     end
@@ -145,8 +139,6 @@ node "ACT_Obs_ReconnaitreSiteFranchissement"
         deplacement = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Obs_ReconnaitreSiteFranchissement" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.obj = self.params[1]
@@ -182,8 +174,7 @@ node "ACT_Obs_ReconnaitreSiteFranchissement"
                     do
                         DEC_ConnaissanceObjet_Reconnaitre( self._namedParams.obj )
                                                 self.params.__returnValue = eActionEffectuee
-                        Feedback( self.feedbacks["onHalt"], { "ACT_Obs_ReconnaitreSiteFranchissement" } )
-Halt( self )
+                        Halt( self )
                         do return end
 
                     end

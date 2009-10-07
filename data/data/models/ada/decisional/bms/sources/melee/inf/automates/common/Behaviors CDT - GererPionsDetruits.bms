@@ -27,13 +27,9 @@ include "bit.lua"
 {
     activations =
     {
-        { "ACT_Conduite_Automate_INF_AffecterEchelonPion", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_SuivreCompromis", { "onHalt" } },
+        { "ACT_Conduite_Automate_INF_AffecterEchelonPion", {} },
+        { "BEH_Conduite_Automate_INF_SuivreCompromis", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dispositif_Automate_INF_GererLesPionsDetruits" } },
 
     create = function( self )
         self._namedParams = {}
@@ -97,12 +93,8 @@ node "BEH_Conduite_Automate_INF_SuivreCompromis"
 
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSuivreA", { "onHalt" } },
+        { "BEH_Mission_Automate_AssignerSuivreA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_SuivreCompromis" } },
 
     create = function( self )
         self._namedParams = {}

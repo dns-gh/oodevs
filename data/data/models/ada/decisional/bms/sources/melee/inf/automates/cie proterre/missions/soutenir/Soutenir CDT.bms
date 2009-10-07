@@ -16,23 +16,17 @@ node "MIS_Automate_CDT_INF_Soutenir"
 {
     activations =
     {
-        { "BEH_Conduite_Automate_GererFuseau", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_Defaut", { "onHalt" } },
-        { "BEH_Conduite_Automate_HOT_Defaut", { "onHalt" } },
+        { "BEH_Conduite_Automate_GererFuseau", {} },
+        { "BEH_Conduite_Automate_INF_Defaut", {} },
+        { "BEH_Conduite_Automate_HOT_Defaut", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_INF_Soutenir" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
                 self.eActionMission = self.eActionMission or eActionEnCours
         self.eActionHorsFuseau = self.eActionHorsFuseau or eActionEnCours
         --[[//-----------------------------------------------------------------------------
@@ -41,7 +35,7 @@ node "MIS_Automate_CDT_INF_Soutenir"
 ]]if( ModuleBegins() ) then
             do
                 DEC_SetMission( myself, self._namedParams.mission )
-                StartInstance( self, self.activations.BEH_Conduite_Automate_GererFuseau, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionHorsFuseau = v else rawset( t, k, v ) end end } ) )
+                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_GererFuseau, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionHorsFuseau = v else rawset( t, k, v ) end end } ) )
             end
 --[[// Conduite des pions au niveau section
 ]]--[[//-----------------------------------------------------------------------------				
@@ -52,8 +46,7 @@ node "MIS_Automate_CDT_INF_Soutenir"
                 self.eActionMission = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_CDT_INF_Soutenir" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end

@@ -48,17 +48,13 @@ include "Common/Automates/Missions/Behaviors.bms"
 {
     activations =
     {
-        { "BEH_MAJ_Automate_EtatDefaut", { "onHalt" } },
-        { "BEH_MAJ_Automate_RecevoirOrdreGE", { "onHalt" } },
-        { "BEH_RC_Automate_Situation", { "onHalt" } },
-        { "BEH_Default_Automate_ReactionPopulations", { "onHalt" } },
-        { "ACT_AFFICHE_EtatDecisionnel", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
+        { "BEH_MAJ_Automate_EtatDefaut", {} },
+        { "BEH_MAJ_Automate_RecevoirOrdreGE", {} },
+        { "BEH_RC_Automate_Situation", {} },
+        { "BEH_Default_Automate_ReactionPopulations", {} },
+        { "ACT_AFFICHE_EtatDecisionnel", {} },
+        { "ACT_Info_Trace", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "DefaultBehavior" } },
 
     create = function( self )
     end,
@@ -98,15 +94,11 @@ node "BEH_MAJ_Automate_EtatDefaut"
 {
     activations =
     {
-        { "BEH_MAJ_Automate_EtatOperationnel", { "onHalt" } },
-        { "BEH_MAJ_Automate_EtatMission", { "onHalt" } },
-        { "BEH_MAJ_Automate_EtatLima", { "onHalt" } },
-        { "BEH_MAJ_Automate_EtatRapFor", { "onHalt" } },
+        { "BEH_MAJ_Automate_EtatOperationnel", {} },
+        { "BEH_MAJ_Automate_EtatMission", {} },
+        { "BEH_MAJ_Automate_EtatLima", {} },
+        { "BEH_MAJ_Automate_EtatRapFor", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MAJ_Automate_EtatDefaut" } },
 
     create = function( self )
     end,
@@ -133,25 +125,19 @@ node "BEH_MAJ_Automate_EtatRapFor"
 {
     activations =
     {
-        { "ACT_MAJ_Automate_EtatRapFor", { "onHalt" } },
+        { "ACT_MAJ_Automate_EtatRapFor", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MAJ_Automate_EtatRapFor" } },
 
     create = function( self )
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         if( S_Automate_EstEnDifficulte() ) then
-            StartInstance( self, self.activations.ACT_MAJ_Automate_EtatRapFor, 1, { eEtatDec_Sauvegarde, } )
+            StartActivateOverride( self, self.activations.ACT_MAJ_Automate_EtatRapFor, 1, { eEtatDec_Sauvegarde, } )
         end
 
         if( S_Automate_EstPasEnDifficulte() ) then
-            StopInstance( self, self.activations.ACT_MAJ_Automate_EtatRapFor, { eEtatDec_Sauvegarde, } )
+            StopActivateOverride( self, self.activations.ACT_MAJ_Automate_EtatRapFor, { eEtatDec_Sauvegarde, } )
         end
 
     end,
@@ -166,8 +152,6 @@ node "BEH_MAJ_Automate_EtatRapFor"
 
 node "ACT_MAJ_Automate_EtatRapFor"
 {
-    feedbacks = { { { "onHalt" }, "ACT_MAJ_Automate_EtatRapFor" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.eEtatDec = self.params[1]
@@ -196,13 +180,9 @@ node "ACT_MAJ_Automate_EtatRapFor"
 {
     activations =
     {
-        { "ACT_MAJ_Automate_EtatDestruction", { "onHalt" } },
-        { "ACT_AFFICHE_EtatDecisionnel", { "onHalt" } },
+        { "ACT_MAJ_Automate_EtatDestruction", {} },
+        { "ACT_AFFICHE_EtatDecisionnel", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MAJ_Automate_EtatOperationnel" } },
 
     create = function( self )
     end,
@@ -231,8 +211,6 @@ node "ACT_MAJ_Automate_EtatRapFor"
 
 node "ACT_MAJ_Automate_EtatDestruction"
 {
-    feedbacks = { { { "onHalt" }, "ACT_MAJ_Automate_EtatDestruction" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.rDestruction = self.params[1]
@@ -254,12 +232,8 @@ node "ACT_MAJ_Automate_EtatDestruction"
 {
     activations =
     {
-        { "ACT_MAJ_Automate_EtatMission", { "onHalt" } },
+        { "ACT_MAJ_Automate_EtatMission", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MAJ_Automate_EtatMission" } },
 
     create = function( self )
     end,
@@ -324,8 +298,6 @@ do
 
 node "ACT_MAJ_Automate_EtatMission"
 {
-    feedbacks = { { { "onHalt" }, "ACT_MAJ_Automate_EtatMission" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhaseMission = self.params[1]
@@ -354,13 +326,9 @@ node "ACT_MAJ_Automate_EtatMission"
 {
     activations =
     {
-        { "ACT_MAJ_Automate_EtatLima", { "onHalt" } },
-        { "BEH_MAJ_Automate_SurLima", { "onHalt" } },
+        { "ACT_MAJ_Automate_EtatLima", {} },
+        { "BEH_MAJ_Automate_SurLima", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MAJ_Automate_EtatLima" } },
 
     create = function( self )
     end,
@@ -398,12 +366,8 @@ node "BEH_MAJ_Automate_SurLima"
 {
     activations =
     {
-        { "ACT_MAJ_Automate_EtatLima", { "onHalt" } },
+        { "ACT_MAJ_Automate_EtatLima", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MAJ_Automate_SurLima" } },
 
     create = function( self )
         self._namedParams = {}
@@ -430,8 +394,6 @@ node "BEH_MAJ_Automate_SurLima"
 
 node "ACT_MAJ_Automate_EtatLima"
 {
-    feedbacks = { { { "onHalt" }, "ACT_MAJ_Automate_EtatLima" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.eEtatLima = self.params[1]

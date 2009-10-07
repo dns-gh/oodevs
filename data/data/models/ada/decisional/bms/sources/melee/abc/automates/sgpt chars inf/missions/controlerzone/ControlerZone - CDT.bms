@@ -22,12 +22,8 @@ includedFiles["sources/melee/abc/automates/sgpt chars inf/missions/controlerzone
 {
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_ControlerZone", { "onHalt" } },
+        { "BEH_Conduite_Automate_ABC_ControlerZone", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_Controler" } },
 
     create = function( self )
         self._namedParams = {}

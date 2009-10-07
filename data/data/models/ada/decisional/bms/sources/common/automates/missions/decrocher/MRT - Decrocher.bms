@@ -11,13 +11,9 @@ includedFiles["sources/common/automates/missions/decrocher/MRT - Decrocher.bms"]
 {
     activations =
     {
-        { "BEH_Medo_Automate_ControleCreationMission", { "onHalt" } },
-        { "BEH_Medo_Automate_AssignerDecrocherA", { "onHalt" } },
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Medo_Automate_AssignerDecrocherA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_Decrocher" } },
 
     create = function( self )
         self._namedParams = {}
@@ -47,8 +43,7 @@ includedFiles["sources/common/automates/missions/decrocher/MRT - Decrocher.bms"]
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_Decrocher" } )
-Halt( self )
+                Halt( self )
                 do return end
 
             end
@@ -60,8 +55,7 @@ Halt( self )
                                 do
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_Decrocher" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end
@@ -85,13 +79,9 @@ node "BEH_Medo_Automate_AssignerDecrocherA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "BEH_Mission_Automate_AssignerDecrocherA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "BEH_Mission_Automate_AssignerDecrocherA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_AssignerDecrocherA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -99,9 +89,7 @@ node "BEH_Medo_Automate_AssignerDecrocherA"
         self._namedParams.zoneRegroupement = self.params[2]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         self.ptRegroupement = self.ptRegroupement or S_Geometrie_BarycentreZone( self._namedParams.zoneRegroupement )
         if( ( self.ptRegroupement == 0 or self.ptRegroupement == nil ) ) then
             do
@@ -120,7 +108,7 @@ node "BEH_Medo_Automate_AssignerDecrocherA"
             do
                 for _,pion in pairs( DEC_Automate_PionsAvecPC() ) do
                 local _continue = true
-                    StartInstance( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_MRT, pion, self.ptRegroupement, eEtatEchelon_Premier, } )
+                    StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_MRT, pion, self.ptRegroupement, eEtatEchelon_Premier, } )
 
                 end
 

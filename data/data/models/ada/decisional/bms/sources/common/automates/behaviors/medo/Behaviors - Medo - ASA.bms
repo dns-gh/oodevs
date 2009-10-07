@@ -19,12 +19,8 @@ node "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsDefendreZoneAListe"
 {
     activations =
     {
-        { "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionDefendreZoneAPartirPositionA", { "onHalt" } },
+        { "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionDefendreZoneAPartirPositionA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsDefendreZoneAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -35,9 +31,7 @@ node "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsDefendreZoneAListe"
         self._namedParams.typeDeploiement = self.params[5]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         assert( ( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= 0 and DEC_ListePoints_Size( self._namedParams.listePoints ) ~= nil ), "La liste de positions ne doit pas etre vide" )
         if( ModuleBegins() ) then
             do
@@ -50,7 +44,7 @@ node "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsDefendreZoneAListe"
                             iterateur = 0
                         end
 
-                        StartInstance( self, self.activations.BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionDefendreZoneAPartirPositionA, 1, { self._namedParams.ePhase, x, DEC_ListePoints_GetAt( self._namedParams.listePoints, iterateur ), self._namedParams.zone, self._namedParams.typeDeploiement, } )
+                        StartActivateOverride( self, self.activations.BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionDefendreZoneAPartirPositionA, 1, { self._namedParams.ePhase, x, DEC_ListePoints_GetAt( self._namedParams.listePoints, iterateur ), self._namedParams.zone, self._namedParams.typeDeploiement, } )
                                                 iterateur = iterateur + 1
                     end
 
@@ -67,12 +61,8 @@ node "BEH_Medo_Automate_ASA_AssignerMissionsDefendreZoneAListe"
 {
     activations =
     {
-        { "BEH_Medo_Automate_ASA_AssignerMissionDefendreZoneAPartirPositionA", { "onHalt" } },
+        { "BEH_Medo_Automate_ASA_AssignerMissionDefendreZoneAPartirPositionA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ASA_AssignerMissionsDefendreZoneAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -82,9 +72,7 @@ node "BEH_Medo_Automate_ASA_AssignerMissionsDefendreZoneAListe"
         self._namedParams.zone = self.params[4]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         assert( ( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= 0 and DEC_ListePoints_Size( self._namedParams.listePoints ) ~= nil ), "La liste de positions ne doit pas etre vide" )
         if( ModuleBegins() ) then
             do
@@ -97,7 +85,7 @@ node "BEH_Medo_Automate_ASA_AssignerMissionsDefendreZoneAListe"
                             iterateur = 0
                         end
 
-                        StartInstance( self, self.activations.BEH_Medo_Automate_ASA_AssignerMissionDefendreZoneAPartirPositionA, 1, { self._namedParams.ePhase, x, DEC_ListePoints_GetAt( self._namedParams.listePoints, iterateur ), self._namedParams.zone, } )
+                        StartActivateOverride( self, self.activations.BEH_Medo_Automate_ASA_AssignerMissionDefendreZoneAPartirPositionA, 1, { self._namedParams.ePhase, x, DEC_ListePoints_GetAt( self._namedParams.listePoints, iterateur ), self._namedParams.zone, } )
                                                 iterateur = iterateur + 1
                     end
 
@@ -114,15 +102,11 @@ node "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionDefendreZoneAPartirPositionA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_ASA_MISTRAL_AssignerDefendreZoneAPartirPositionA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_ASA_MISTRAL_AssignerDefendreZoneAPartirPositionA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionDefendreZoneAPartirPositionA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -165,15 +149,11 @@ node "BEH_Medo_Automate_ASA_AssignerMissionDefendreZoneAPartirPositionA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_ASA_AssignerDefendreZoneAPartirPositionA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_ASA_AssignerDefendreZoneAPartirPositionA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ASA_AssignerMissionDefendreZoneAPartirPositionA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -215,12 +195,8 @@ node "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsDefendreSiteAListe"
 {
     activations =
     {
-        { "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionDefendreSiteAPartirPositionA", { "onHalt" } },
+        { "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionDefendreSiteAPartirPositionA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsDefendreSiteAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -231,9 +207,7 @@ node "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsDefendreSiteAListe"
         self._namedParams.typeDeploiement = self.params[5]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         assert( ( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= 0 and DEC_ListePoints_Size( self._namedParams.listePoints ) ~= nil ), "La liste de positions ne doit pas etre vide" )
         if( ModuleBegins() ) then
             do
@@ -246,7 +220,7 @@ node "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsDefendreSiteAListe"
                             iterateur = 0
                         end
 
-                        StartInstance( self, self.activations.BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionDefendreSiteAPartirPositionA, 1, { self._namedParams.ePhase, x, DEC_ListePoints_GetAt( self._namedParams.listePoints, iterateur ), self._namedParams.zone, self._namedParams.typeDeploiement, } )
+                        StartActivateOverride( self, self.activations.BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionDefendreSiteAPartirPositionA, 1, { self._namedParams.ePhase, x, DEC_ListePoints_GetAt( self._namedParams.listePoints, iterateur ), self._namedParams.zone, self._namedParams.typeDeploiement, } )
                                                 iterateur = iterateur + 1
                     end
 
@@ -263,12 +237,8 @@ node "BEH_Medo_Automate_ASA_AssignerMissionsDefendreSiteAListe"
 {
     activations =
     {
-        { "BEH_Medo_Automate_ASA_AssignerMissionDefendreSiteAPartirPositionA", { "onHalt" } },
+        { "BEH_Medo_Automate_ASA_AssignerMissionDefendreSiteAPartirPositionA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ASA_AssignerMissionsDefendreSiteAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -278,9 +248,7 @@ node "BEH_Medo_Automate_ASA_AssignerMissionsDefendreSiteAListe"
         self._namedParams.site = self.params[4]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         assert( ( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= 0 and DEC_ListePoints_Size( self._namedParams.listePoints ) ~= nil ), "La liste de positions ne doit pas etre vide" )
         if( ModuleBegins() ) then
             do
@@ -293,7 +261,7 @@ node "BEH_Medo_Automate_ASA_AssignerMissionsDefendreSiteAListe"
                             iterateur = 0
                         end
 
-                        StartInstance( self, self.activations.BEH_Medo_Automate_ASA_AssignerMissionDefendreSiteAPartirPositionA, 1, { self._namedParams.ePhase, x, DEC_ListePoints_GetAt( self._namedParams.listePoints, iterateur ), self._namedParams.site, } )
+                        StartActivateOverride( self, self.activations.BEH_Medo_Automate_ASA_AssignerMissionDefendreSiteAPartirPositionA, 1, { self._namedParams.ePhase, x, DEC_ListePoints_GetAt( self._namedParams.listePoints, iterateur ), self._namedParams.site, } )
                                                 iterateur = iterateur + 1
                     end
 
@@ -310,15 +278,11 @@ node "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionDefendreSiteAPartirPositionA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_ASA_MISTRAL_AssignerDefendreSiteAPartirPositionA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_ASA_MISTRAL_AssignerDefendreSiteAPartirPositionA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionDefendreSiteAPartirPositionA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -361,15 +325,11 @@ node "BEH_Medo_Automate_ASA_AssignerMissionDefendreSiteAPartirPositionA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_ASA_AssignerDefendreSiteAPartirPositionA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_ASA_AssignerDefendreSiteAPartirPositionA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ASA_AssignerMissionDefendreSiteAPartirPositionA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -411,12 +371,8 @@ node "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsSurveillerAListe"
 {
     activations =
     {
-        { "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionSurveillerA", { "onHalt" } },
+        { "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionSurveillerA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsSurveillerAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -426,9 +382,7 @@ node "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsSurveillerAListe"
         self._namedParams.typeDeploiement = self.params[4]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         assert( ( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= 0 and DEC_ListePoints_Size( self._namedParams.listePoints ) ~= nil ), "La liste de positions ne doit pas etre vide" )
         if( ModuleBegins() ) then
             do
@@ -441,7 +395,7 @@ node "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsSurveillerAListe"
                             iterateur = 0
                         end
 
-                        StartInstance( self, self.activations.BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionSurveillerA, 1, { self._namedParams.ePhase, x, DEC_ListePoints_GetAt( self._namedParams.listePoints, iterateur ), self._namedParams.typeDeploiement, } )
+                        StartActivateOverride( self, self.activations.BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionSurveillerA, 1, { self._namedParams.ePhase, x, DEC_ListePoints_GetAt( self._namedParams.listePoints, iterateur ), self._namedParams.typeDeploiement, } )
                                                 iterateur = iterateur + 1
                     end
 
@@ -458,12 +412,8 @@ node "BEH_Medo_Automate_ASA_AssignerMissionsSurveillerAListe"
 {
     activations =
     {
-        { "BEH_Medo_Automate_ASA_AssignerMissionSurveillerA", { "onHalt" } },
+        { "BEH_Medo_Automate_ASA_AssignerMissionSurveillerA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ASA_AssignerMissionsSurveillerAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -472,9 +422,7 @@ node "BEH_Medo_Automate_ASA_AssignerMissionsSurveillerAListe"
         self._namedParams.listePoints = self.params[3]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         assert( ( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= 0 and DEC_ListePoints_Size( self._namedParams.listePoints ) ~= nil ), "La liste de positions ne doit pas etre vide" )
         if( ModuleBegins() ) then
             do
@@ -487,7 +435,7 @@ node "BEH_Medo_Automate_ASA_AssignerMissionsSurveillerAListe"
                             iterateur = 0
                         end
 
-                        StartInstance( self, self.activations.BEH_Medo_Automate_ASA_AssignerMissionSurveillerA, 1, { self._namedParams.ePhase, x, DEC_ListePoints_GetAt( self._namedParams.listePoints, iterateur ), } )
+                        StartActivateOverride( self, self.activations.BEH_Medo_Automate_ASA_AssignerMissionSurveillerA, 1, { self._namedParams.ePhase, x, DEC_ListePoints_GetAt( self._namedParams.listePoints, iterateur ), } )
                                                 iterateur = iterateur + 1
                     end
 
@@ -504,15 +452,11 @@ node "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionSurveillerA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_ASA_MISTRAL_AssignerSurveillerA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_ASA_MISTRAL_AssignerSurveillerA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionSurveillerA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -554,15 +498,11 @@ node "BEH_Medo_Automate_ASA_AssignerMissionSurveillerA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_ASA_AssignerSurveillerA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_ASA_AssignerSurveillerA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ASA_AssignerMissionSurveillerA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -603,12 +543,8 @@ node "BEH_Medo_Automate_ASA_AssignerMissionsDefendreUnitesAListe"
 {
     activations =
     {
-        { "BEH_Medo_Automate_ASA_AssignerMissionDefendreUnites", { "onHalt" } },
+        { "BEH_Medo_Automate_ASA_AssignerMissionDefendreUnites", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ASA_AssignerMissionsDefendreUnitesAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -617,9 +553,7 @@ node "BEH_Medo_Automate_ASA_AssignerMissionsDefendreUnitesAListe"
         self._namedParams.unitesADefendre = self.params[3]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         if( ModuleBegins() ) then
             do
                 local listePionsPC = S_Liste_Automate_PionsPC( self._namedParams.unitesADefendre )
@@ -639,7 +573,7 @@ node "BEH_Medo_Automate_ASA_AssignerMissionsDefendreUnitesAListe"
                         local listeUnitesADefendre = {}
                         local pionPCBuffer = DIA_GetAt( listePionsPC, iterateur )
                         DIA_PushBack( listeUnitesADefendre, pionPCBuffer )
-                        StartInstance( self, self.activations.BEH_Medo_Automate_ASA_AssignerMissionDefendreUnites, 1, { self._namedParams.ePhase, x, listeUnitesADefendre, } )
+                        StartActivateOverride( self, self.activations.BEH_Medo_Automate_ASA_AssignerMissionDefendreUnites, 1, { self._namedParams.ePhase, x, listeUnitesADefendre, } )
                                                 iterateur = iterateur + 1
                     end
 
@@ -656,15 +590,11 @@ node "BEH_Medo_Automate_ASA_AssignerMissionDefendreUnites"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_ASA_AssignerDefendreUnitesA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_ASA_AssignerDefendreUnitesA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ASA_AssignerMissionDefendreUnites" } },
 
     create = function( self )
         self._namedParams = {}

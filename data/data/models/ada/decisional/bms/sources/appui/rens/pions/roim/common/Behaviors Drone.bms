@@ -10,8 +10,6 @@ includedFiles["sources/appui/rens/pions/roim/common/Behaviors Drone.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "BEH_Dep_Pion_Rens_GererRetour"
 {
-    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_Rens_GererRetour" } },
-
     create = function( self )
     end,
 
@@ -30,8 +28,6 @@ includedFiles["sources/appui/rens/pions/roim/common/Behaviors Drone.bms"] = true
 
 node "ACT_Dep_Pion_RENS_VolerA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Dep_Pion_RENS_VolerA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.hauteur = self.params[1]
@@ -61,8 +57,6 @@ node "ACT_Dep_Pion_RENS_VolerA"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Obs_Pion_RENS_ActiverCamera"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Obs_Pion_RENS_ActiverCamera" } },
-
     create = function( self )
     end,
 
@@ -92,12 +86,8 @@ node "ACT_Dep_Pion_RENS_VolerA"
 {
     activations =
     {
-        { "ACT_RC", { "onHalt" } },
+        { "ACT_RC", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Info_Pion_Rens_Disponibilite" } },
 
     create = function( self )
     end,

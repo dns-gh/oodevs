@@ -20,16 +20,12 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_ROE_Automate_TirRestreint", { "onHalt" } },
-        { "BEH_Ordre_Automate_Poursuivre_", { "onHalt" } },
-        { "BEH_Medo_Automate_ControleCreationMission", { "onHalt" } },
-        { "BEH_Medo_Automate_ALAT_AssignerMissionsJalonnerAListe", { "onHalt" } },
-        { "BEH_Mission_Automate_AssignerSuivreAListe", { "onHalt" } },
+        { "BEH_ROE_Automate_TirRestreint", {} },
+        { "BEH_Ordre_Automate_Poursuivre_", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionsJalonnerAListe", {} },
+        { "BEH_Mission_Automate_AssignerSuivreAListe", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_ALAT_Jalonner" } },
 
     create = function( self )
         self._namedParams = {}
@@ -81,8 +77,7 @@ include "bit.lua"
                     do
                         DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
                                                 self.params.__returnValue = eActionImpossible
-                        Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_ALAT_Jalonner" } )
-Halt( self )
+                        Halt( self )
                         do return end
 
                     end
@@ -142,16 +137,14 @@ Halt( self )
 elseif switch_1 == eMRT_MissionImpossible then
                     DEC_RC( eRC_MissionImpossible )
                                         self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_ALAT_Jalonner" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_ALAT_Jalonner" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                                 end

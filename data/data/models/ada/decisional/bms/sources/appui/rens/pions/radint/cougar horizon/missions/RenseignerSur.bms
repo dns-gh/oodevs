@@ -11,26 +11,20 @@ includedFiles["sources/appui/rens/pions/radint/cougar horizon/missions/Renseigne
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_Dep_Pion_RENS_VolerA", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Dep_Pion_RENS_MonterA", { "onHalt" } },
-        { "BEH_Obs_Pion_Rens_Radint_RenseignerDans", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_Dep_Pion_RENS_VolerA", {} },
+        { "ACT_Info_Trace", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_Pion_RENS_MonterA", {} },
+        { "BEH_Obs_Pion_Rens_Radint_RenseignerDans", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_RENS_RADINT_RenseignerSur" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.positionInitiale = self.positionInitiale or DEC_Geometrie_CreerPoint()
@@ -40,8 +34,7 @@ includedFiles["sources/appui/rens/pions/radint/cougar horizon/missions/Renseigne
         else
 do
                 DEC_RC( eRC_MissionImpossible )
-                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_RENS_RADINT_RenseignerSur" } )
-Halt( self )
+                                Halt( self )
                 do return end
 
             end
@@ -59,7 +52,7 @@ Halt( self )
 
         if( ModuleBegins() ) then
             do
-                StartInstance( self, self.activations.ACT_Dep_Pion_RENS_VolerA, 1, { 100, } )
+                StartActivateOverride( self, self.activations.ACT_Dep_Pion_RENS_VolerA, 1, { 100, } )
                 --[[// données doctrine
 ]]DEC_Copie_Point( DEC_Agent_Position(), self.positionInitiale )
                 Activate( self.activations.ACT_Info_Trace, 1, { "Intelligence gathering mission begining", } )
@@ -87,7 +80,7 @@ elseif switch_1 == eSurveiller then
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     --[[// données doctrine
-]]StopInstance( self, self.activations.ACT_Dep_Pion_RENS_VolerA, { 100, } )
+]]StopActivateOverride( self, self.activations.ACT_Dep_Pion_RENS_VolerA, { 100, } )
                     
                                 cases_switch_1[3] = true
 
@@ -109,12 +102,8 @@ node "BEH_Obs_Pion_Rens_Radint_RenseignerDans"
 {
     activations =
     {
-        { "ACT_Obs_Pion_RENS_ActiverRadarDans", { "onHalt" } },
+        { "ACT_Obs_Pion_RENS_ActiverRadarDans", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Obs_Pion_Rens_Radint_RenseignerDans" } },
 
     create = function( self )
         self._namedParams = {}

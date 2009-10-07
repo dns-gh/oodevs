@@ -29,15 +29,11 @@ node "BEH_Dispositif_Pion_VAB_InstallationDefensive"
 {
     activations =
     {
-        { "BEH_MOT_Pion_INF_Debarquer", { "onHalt" } },
-        { "BEH_Obj_RejoindreEmbossements", { "onHalt" } },
-        { "ACT_Misc_Pion_Ambiance", { "onHalt" } },
-        { "ACT_Obs_EtablirVisionFaceADir", { "onHalt" } },
+        { "BEH_MOT_Pion_INF_Debarquer", {} },
+        { "BEH_Obj_RejoindreEmbossements", {} },
+        { "ACT_Misc_Pion_Ambiance", {} },
+        { "ACT_Obs_EtablirVisionFaceADir", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dispositif_Pion_VAB_InstallationDefensive" } },
 
     create = function( self )
         self._namedParams = {}

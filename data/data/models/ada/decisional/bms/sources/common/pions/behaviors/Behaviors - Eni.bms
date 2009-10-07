@@ -17,14 +17,10 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Eni.bms"] = true
 
     activations =
     {
-        { "ACT_Tir_FumigeneVersEni", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
+        { "ACT_Tir_FumigeneVersEni", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Dep_ModulationVitesse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Eni_DecrocherFaceA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -42,8 +38,7 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Eni.bms"] = true
 ]]--[[//----------------------------------------------------------------------
 ]]if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.repUnite ) ) then
             self.params.__returnValue = eActionImpossible
-            Feedback( self.feedbacks["onHalt"], { "BEH_Eni_DecrocherFaceA" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -51,8 +46,7 @@ Halt( self )
 ]]--[[//la peine de decrocher
 ]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( self._namedParams.repUnite ) ) >= self.rDistanceEffective ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "BEH_Eni_DecrocherFaceA" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -75,8 +69,7 @@ if( ( myself.ptRegroupement_ ~= 0 and myself.ptRegroupement_ ~= nil ) ) then
 
                 --[[// Vérification
 ]]if( ( self.positionSurete == 0 or self.positionSurete == nil ) ) then
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Eni_DecrocherFaceA" } )
-Halt( self )
+                    Halt( self )
                     do return end
                 end
 
@@ -91,8 +84,7 @@ Halt( self )
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Eni_DecrocherFaceA" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end
@@ -116,13 +108,9 @@ node "BEH_Eni_SePosterFaceA"
 {
     activations =
     {
-        { "ACT_Dep_SePosterFaceA", { "onHalt" } },
-        { "ACT_Obs_EtablirVisionVersPt", { "onHalt" } },
+        { "ACT_Dep_SePosterFaceA", {} },
+        { "ACT_Obs_EtablirVisionVersPt", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Eni_SePosterFaceA" } },
 
     create = function( self )
         self._namedParams = {}

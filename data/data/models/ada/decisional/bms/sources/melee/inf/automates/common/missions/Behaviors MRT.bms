@@ -24,12 +24,8 @@ include "Melee/Inf/Automates/Common/Missions/Behaviors MRT - Retrograde.bms"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSuivreA", { "onHalt" } },
+        { "BEH_Mission_Automate_AssignerSuivreA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_INF_AssignerMission_PC" } },
 
     create = function( self )
         self._namedParams = {}
@@ -37,9 +33,7 @@ include "Melee/Inf/Automates/Common/Missions/Behaviors MRT - Retrograde.bms"
         self._namedParams.selPion_SE = self.params[2]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         if( ModuleBegins() ) then
             do
                 --[[//-----------------------------------------------------------------------------
@@ -52,7 +46,7 @@ include "Melee/Inf/Automates/Common/Missions/Behaviors MRT - Retrograde.bms"
                     pAppui = DIA_GetAt( self._namedParams.selPion_PE, 0 )
                 end
 
-                StartInstance( self, self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_MRT, DEC_Automate_PionPC(), pAppui, } )
+                StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_MRT, DEC_Automate_PionPC(), pAppui, } )
             end
         end
 
@@ -70,12 +64,8 @@ node "BEH_Medo_Automate_INF_AssignerMissionRetrogradeVers_PC"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerDecrocherA", { "onHalt" } },
+        { "BEH_Mission_Automate_AssignerDecrocherA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_INF_AssignerMissionRetrogradeVers_PC" } },
 
     create = function( self )
         self._namedParams = {}
@@ -84,13 +74,11 @@ node "BEH_Medo_Automate_INF_AssignerMissionRetrogradeVers_PC"
         self._namedParams.locRgpt = self.params[3]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         self.ptFin = self.ptFin or S_Geometrie_BarycentreZone( self._namedParams.locRgpt )
         --[[// Donner la mission freiner au pion PC			
 ]]if( ModuleBegins() ) then
-            StartInstance( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_MRT, DEC_Automate_PionPC(), self.ptFin, eEtatEchelon_Second, } )
+            StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_MRT, DEC_Automate_PionPC(), self.ptFin, eEtatEchelon_Second, } )
         end
 
     end,
@@ -106,12 +94,8 @@ node "BEH_Medo_Automate_INF_AssignerMissionRetrograde_PC"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerDecrocherA", { "onHalt" } },
+        { "BEH_Mission_Automate_AssignerDecrocherA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_INF_AssignerMissionRetrograde_PC" } },
 
     create = function( self )
         self._namedParams = {}
@@ -119,13 +103,11 @@ node "BEH_Medo_Automate_INF_AssignerMissionRetrograde_PC"
         self._namedParams.lstPionsAppui = self.params[2]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         self.ptFin = self.ptFin or DEC_Geometrie_CalculerPointArriveePourPion( DEC_Automate_PionPC() )
         --[[// Donner la mission freiner au pion PC
 ]]if( ModuleBegins() ) then
-            StartInstance( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_MRT, DEC_Automate_PionPC(), self.ptFin, eEtatEchelon_Second, } )
+            StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_MRT, DEC_Automate_PionPC(), self.ptFin, eEtatEchelon_Second, } )
         end
 
     end,
@@ -134,8 +116,6 @@ node "BEH_Medo_Automate_INF_AssignerMissionRetrograde_PC"
 
 node "BEH_Medo_Automate_INF_InitialiseSE"
 {
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_INF_InitialiseSE" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.lstPionsAppui = self.params[1]

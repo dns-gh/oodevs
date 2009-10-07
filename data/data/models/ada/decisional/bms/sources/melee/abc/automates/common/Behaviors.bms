@@ -49,18 +49,14 @@ include "Melee/Abc/Automates/Common/Gestion pions detruits.bms"
 {
     activations =
     {
-        { "BEH_RC_Automate_Situation", { "onHalt" } },
-        { "BEH_Nbc_Automate_GererAlerteNiv4", { "onHalt" } },
-        { "BEH_ROE_Automate_GererOrdre", { "onHalt" } },
-        { "BEH_Misc_Automate_GererLesMoyens", { "onHalt" } },
-        { "BEH_Rens_Automate_GererSilenceRadio", { "onHalt" } },
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "onHalt" } },
-        { "BEH_Conduite_Automate_ABC_GererAppui_Mortier", { "onHalt" } },
+        { "BEH_RC_Automate_Situation", {} },
+        { "BEH_Nbc_Automate_GererAlerteNiv4", {} },
+        { "BEH_ROE_Automate_GererOrdre", {} },
+        { "BEH_Misc_Automate_GererLesMoyens", {} },
+        { "BEH_Rens_Automate_GererSilenceRadio", {} },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "BEH_Conduite_Automate_ABC_GererAppui_Mortier", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Defaut" } },
 
     create = function( self )
         self._namedParams = {}
@@ -117,12 +113,8 @@ node "BEH_RC_Automate_GererConditionOperationnelle"
 {
     activations =
     {
-        { "ACT_Warning", { "onHalt" } },
+        { "ACT_Warning", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_RC_Automate_GererConditionOperationnelle" } },
 
     create = function( self )
         self._namedParams = {}
@@ -169,12 +161,8 @@ node "BEH_Conduite_Automate_ABC_GererAppui_Mortier"
 {
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_GererOrdre_Mortier", { "onHalt" } },
+        { "BEH_Conduite_Automate_ABC_GererOrdre_Mortier", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_ABC_GererAppui_Mortier" } },
 
     create = function( self )
     end,
@@ -199,12 +187,8 @@ node "BEH_Conduite_Automate_ABC_GererOrdre_Mortier"
 {
     activations =
     {
-        { "ACT_MOT_Automate_ABC_DemandeAppliqerFeux", { "onHalt" } },
+        { "ACT_MOT_Automate_ABC_DemandeAppliqerFeux", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_ABC_GererOrdre_Mortier" } },
 
     create = function( self )
         self._namedParams = {}
@@ -237,8 +221,6 @@ if( rIterateur < #( self._namedParams.selAppuis_Mortier ) ) then
 
 node "ACT_MOT_Automate_ABC_DemandeAppliqerFeux"
 {
-    feedbacks = { { { "onHalt" }, "ACT_MOT_Automate_ABC_DemandeAppliqerFeux" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pMortier = self.params[1]

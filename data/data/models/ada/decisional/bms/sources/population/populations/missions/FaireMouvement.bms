@@ -11,12 +11,8 @@ includedFiles["sources/population/populations/missions/FaireMouvement.bms"] = tr
 {
     activations =
     {
-        { "BEH_Pop_RejoindrePoint", { "onHalt" } },
+        { "BEH_Pop_RejoindrePoint", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Population_FaireMouvement" } },
 
     create = function( self )
         self._namedParams = {}

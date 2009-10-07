@@ -18,13 +18,9 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Conduite_Automate_GererFuseau_Init", { "onHalt" } },
-        { "BEH_Conduite_Automate_GererFuseau_Valide", { "onHalt" } },
+        { "BEH_Conduite_Automate_GererFuseau_Init", {} },
+        { "BEH_Conduite_Automate_GererFuseau_Valide", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_GererFuseau" } },
 
     create = function( self )
     end,
@@ -45,20 +41,14 @@ node "BEH_Conduite_Automate_GererFuseau_Init"
 {
     activations =
     {
-        { "ACT_Ordre_Automate_Pause", { "onHalt" } },
-        { "ACT_Ordre_Automate_Continue", { "onHalt" } },
+        { "ACT_Ordre_Automate_Pause", {} },
+        { "ACT_Ordre_Automate_Continue", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_GererFuseau_Init" } },
 
     create = function( self )
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         self.rN_PE_Init = self.rN_PE_Init or 0
         self.selPions = self.selPions or DEC_Automate_PionsSansPC()
         self.bOrdre_Donne = self.bOrdre_Donne or false
@@ -79,7 +69,7 @@ node "BEH_Conduite_Automate_GererFuseau_Init"
                         if( DEC_Automate_EstPointDansFuseauPion( DEC_Automate_PionPosition( x ), x ) ) then
                             do
                                                                 rPions_DansFuseau = rPions_DansFuseau + 1
-                                StartInstance( self, self.activations.ACT_Ordre_Automate_Pause, 1, { x, } )
+                                StartActivateOverride( self, self.activations.ACT_Ordre_Automate_Pause, 1, { x, } )
                             end
                         end
 
@@ -89,8 +79,7 @@ node "BEH_Conduite_Automate_GererFuseau_Init"
 
                 if( rPions_DansFuseau == #( sUnites_PE ) ) then
                     self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Conduite_Automate_GererFuseau_Init" } )
-Halt( self )
+                    Halt( self )
                     do return end
                 end
 
@@ -108,8 +97,7 @@ Halt( self )
         local rPion_SurFuseau = S_Conduite_Pions_EtatLima( sUnites_PE, eEtatLima_Fuseau )
         if( self.bOrdre_Donne or ( #( sUnites_PE ) < self.rN_PE_Init ) ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "BEH_Conduite_Automate_GererFuseau_Init" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -133,12 +121,8 @@ node "BEH_Conduite_Automate_GererFuseau_Valide"
 {
     activations =
     {
-        { "ACT_Ordre_Automate_Continue", { "onHalt" } },
+        { "ACT_Ordre_Automate_Continue", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_GererFuseau_Valide" } },
 
     create = function( self )
     end,
@@ -165,12 +149,8 @@ node "BEH_Conduite_Automate_GererFinMission"
 {
     activations =
     {
-        { "BEH_Situation_Automate_FinDeMission", { "onHalt" } },
+        { "BEH_Situation_Automate_FinDeMission", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_GererFinMission" } },
 
     create = function( self )
     end,
@@ -195,8 +175,7 @@ node "BEH_Conduite_Automate_GererFinMission"
 ]]--[[// DEC_RC( eRC_MissionTerminee );
 ]]DEC_Trace( "$$ Mission terminee $$" )
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Conduite_Automate_GererFinMission" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end
@@ -216,12 +195,8 @@ node "BEH_Situation_Automate_FinDeMission_Sur"
 {
     activations =
     {
-        { "BEH_Situation_Automate_FinDeMission", { "onHalt" } },
+        { "BEH_Situation_Automate_FinDeMission", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Situation_Automate_FinDeMission_Sur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -240,8 +215,6 @@ node "BEH_Situation_Automate_FinDeMission_Sur"
 
 node "BEH_Situation_Automate_FinDeMission"
 {
-    feedbacks = { { { "onHalt" }, "BEH_Situation_Automate_FinDeMission" } },
-
     create = function( self )
     end,
 

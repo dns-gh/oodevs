@@ -9,8 +9,6 @@ includedFiles["sources/common/automates/actions/Actions - Conduite.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Conduite_Automate_PointRegroupement_Pion"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Conduite_Automate_PointRegroupement_Pion" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -40,8 +38,6 @@ includedFiles["sources/common/automates/actions/Actions - Conduite.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Conduite_Automate_ReleverUnite"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Conduite_Automate_ReleverUnite" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionReleve = self.params[1]

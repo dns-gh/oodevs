@@ -23,12 +23,8 @@ includedFiles["sources/melee/abc/pions/grp rasit/missions/Surveiller.bms"] = tru
 {
     activations =
     {
-        { "BEH_Mission_Pion_ABC_RASIT_SurveillerSecteur", { "onHalt" } },
+        { "BEH_Mission_Pion_ABC_RASIT_SurveillerSecteur", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_ABC_Surveiller" } },
 
     create = function( self )
         self._namedParams = {}
@@ -42,15 +38,13 @@ includedFiles["sources/melee/abc/pions/grp rasit/missions/Surveiller.bms"] = tru
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible ) then
             self.params.__returnValue = eActionImpossible
-            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ABC_Surveiller" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
         if( self.eEtat == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ABC_Surveiller" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -72,16 +66,12 @@ node "BEH_Mission_Pion_ABC_RASIT_SurveillerSecteur"
 {
     activations =
     {
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "BEH_Pion_ABC_InstallerDispositif", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Pion_ABC_InstallerDispositif", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_ABC_RASIT_SurveillerSecteur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -109,8 +99,7 @@ node "BEH_Mission_Pion_ABC_RASIT_SurveillerSecteur"
 
         if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_ABC_RASIT_SurveillerSecteur" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 

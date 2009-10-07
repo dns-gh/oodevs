@@ -14,17 +14,13 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Misc_Automate_GEN_CDT_GererFinMission", { "onHalt" } },
-        { "BEH_Conduite_Automate_GEN_FaireFranchir_OrdresDeConduite", { "onHalt" } },
-        { "BEH_Misc_Automate_GEN_CDT_GererReconnaissanceDesSites", { "onHalt" } },
-        { "BEH_Misc_Automate_GEN_CDT_GererExploitation", { "onHalt" } },
-        { "BEH_Misc_Automate_GEN_CDT_GererRenforcements", { "onHalt" } },
-        { "BEH_Misc_Automate_GEN_CDT_GererVariantement", { "onHalt" } },
+        { "BEH_Misc_Automate_GEN_CDT_GererFinMission", {} },
+        { "BEH_Conduite_Automate_GEN_FaireFranchir_OrdresDeConduite", {} },
+        { "BEH_Misc_Automate_GEN_CDT_GererReconnaissanceDesSites", {} },
+        { "BEH_Misc_Automate_GEN_CDT_GererExploitation", {} },
+        { "BEH_Misc_Automate_GEN_CDT_GererRenforcements", {} },
+        { "BEH_Misc_Automate_GEN_CDT_GererVariantement", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_GEN_FaireFranchir" } },
 
     create = function( self )
         self._namedParams = {}
@@ -50,8 +46,7 @@ include "bit.lua"
                         if( ( localisationObjet == 0 or localisationObjet == nil ) ) then
                             do
                                 DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
-                                                                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_CDT_GEN_FaireFranchir" } )
-Halt( self )
+                                                                Halt( self )
                                 do return end
 
                             end
@@ -62,8 +57,7 @@ Halt( self )
                         if( ( ptObjet == 0 or ptObjet == nil ) ) then
                             do
                                 DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
-                                                                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_CDT_GEN_FaireFranchir" } )
-Halt( self )
+                                                                Halt( self )
                                 do return end
 
                             end
@@ -80,8 +74,7 @@ Halt( self )
                 if( ( self.positionRegroupement == 0 or self.positionRegroupement == nil ) ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
-                                                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_CDT_GEN_FaireFranchir" } )
-Halt( self )
+                                                Halt( self )
                         do return end
 
                     end
@@ -133,12 +126,8 @@ node "BEH_Misc_Automate_GEN_CDT_GererReconnaissanceDesSites"
 {
     activations =
     {
-        { "BEH_Misc_Automate_GEN_CDT_FaireReconnaitreSiteA", { "onHalt" } },
+        { "BEH_Misc_Automate_GEN_CDT_FaireReconnaitreSiteA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Misc_Automate_GEN_CDT_GererReconnaissanceDesSites" } },
 
     create = function( self )
         self._namedParams = {}
@@ -189,12 +178,8 @@ node "BEH_Misc_Automate_GEN_CDT_FaireReconnaitreSiteA"
 {
     activations =
     {
-        { "BEH_Mission_Automate_GEN_AssignerReconnaitreSiteA", { "onHalt" } },
+        { "BEH_Mission_Automate_GEN_AssignerReconnaitreSiteA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Misc_Automate_GEN_CDT_FaireReconnaitreSiteA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -234,12 +219,8 @@ node "BEH_Misc_Automate_GEN_CDT_GererExploitation"
 {
     activations =
     {
-        { "BEH_Mission_Automate_GEN_AssignerEquiperExploiterA", { "onHalt" } },
+        { "BEH_Mission_Automate_GEN_AssignerEquiperExploiterA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Misc_Automate_GEN_CDT_GererExploitation" } },
 
     create = function( self )
         self._namedParams = {}
@@ -289,13 +270,9 @@ node "BEH_Misc_Automate_GEN_CDT_GererRenforcements"
 {
     activations =
     {
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "BEH_Misc_Automate_GEN_CDT_GererRenforcementsPour", { "onHalt" } },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Misc_Automate_GEN_CDT_GererRenforcementsPour", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Misc_Automate_GEN_CDT_GererRenforcements" } },
 
     create = function( self )
     end,
@@ -363,13 +340,9 @@ node "BEH_Misc_Automate_GEN_CDT_GererRenforcementsPour"
 {
     activations =
     {
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "BEH_Mission_Automate_GEN_AssignerRenforcer", { "onHalt" } },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Mission_Automate_GEN_AssignerRenforcer", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Misc_Automate_GEN_CDT_GererRenforcementsPour" } },
 
     create = function( self )
         self._namedParams = {}
@@ -493,12 +466,8 @@ node "BEH_Mission_Automate_GEN_AssignerRenforcer"
 {
     activations =
     {
-        { "BEH_Mission_Automate_GEN_AssignerRenforcerA", { "onHalt" } },
+        { "BEH_Mission_Automate_GEN_AssignerRenforcerA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_GEN_AssignerRenforcer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -525,12 +494,8 @@ node "BEH_Misc_Automate_GEN_CDT_GererUnitesDeuxiemeEchelon"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSuivreA", { "onHalt" } },
+        { "BEH_Mission_Automate_AssignerSuivreA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Misc_Automate_GEN_CDT_GererUnitesDeuxiemeEchelon" } },
 
     create = function( self )
     end,
@@ -579,22 +544,16 @@ node "BEH_Misc_Automate_GEN_CDT_GererFinMission"
 {
     activations =
     {
-        { "ACT_Ordre_Automate_Interrompre", { "onHalt" } },
-        { "BEH_Mission_Automate_AssignerFaireMouvementA", { "onHalt" } },
+        { "ACT_Ordre_Automate_Interrompre", {} },
+        { "BEH_Mission_Automate_AssignerFaireMouvementA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Misc_Automate_GEN_CDT_GererFinMission" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.positionRegroupement = self.params[1]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         --[[//-----------------------------------------------------------------
 ]]--[[// Init
 ]]--[[// Donner l'ordre d'interrompre aux section du génie:
@@ -619,7 +578,7 @@ node "BEH_Misc_Automate_GEN_CDT_GererFinMission"
                 local _continue = true
                     do
                         local pion = x
-                        StartInstance( self, self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, 1, { ePhase_CDT, pion, self._namedParams.positionRegroupement, eEtatEchelon_Second, } )
+                        StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, 1, { ePhase_CDT, pion, self._namedParams.positionRegroupement, eEtatEchelon_Second, } )
                     end
 
                 end
@@ -641,21 +600,15 @@ node "BEH_Conduite_Automate_GEN_FaireFranchir_OrdresDeConduite"
 {
     activations =
     {
-        { "BEH_Ordre_Automate_Attendre_", { "onHalt" } },
-        { "BEH_Ordre_Automate_Poursuivre_", { "onHalt" } },
-        { "ACT_Ordre_Suppression", { "onHalt" } },
+        { "BEH_Ordre_Automate_Attendre_", {} },
+        { "BEH_Ordre_Automate_Poursuivre_", {} },
+        { "ACT_Ordre_Suppression", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_GEN_FaireFranchir_OrdresDeConduite" } },
 
     create = function( self )
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
         self.obs = self.obs or nil
         local bOrdreConduiteInterrompre = false
@@ -673,14 +626,14 @@ do
 elseif switch_1 == "Rep_OrderConduite_AttendreSePoster" then
                             --[[// Mise en attente de la progression
 ]]DEC_Trace( "$ --- Wait fragmentary order ---$" )
-                            StartInstance( self, self.activations.BEH_Ordre_Automate_Attendre_, 1, {} )
+                            StartActivateOverride( self, self.activations.BEH_Ordre_Automate_Attendre_, 1, {} )
                             
                                                 cases_switch_1[2] = true
 elseif switch_1 == "Rep_OrderConduite_Poursuivre" then
                             --[[// ordre de poursuivre -> on reprend la progression
 ]]--[[// la section n est plus en attente d'ordre
 ]]DEC_Trace( "$ --- Resume fragmentary order ---$" )
-                            StopInstance( self, self.activations.BEH_Ordre_Automate_Attendre_, {} )
+                            StopActivateOverride( self, self.activations.BEH_Ordre_Automate_Attendre_, {} )
                             Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )--[[// Cas des LC
 ]]
                             
@@ -712,13 +665,9 @@ node "BEH_Misc_Automate_GEN_CDT_GererVariantement"
 {
     activations =
     {
-        { "BEH_Ordre_Automate_GEN_CDT_Varianter", { "onHalt" } },
-        { "ACT_Ordre_Suppression", { "onHalt" } },
+        { "BEH_Ordre_Automate_GEN_CDT_Varianter", {} },
+        { "ACT_Ordre_Suppression", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Misc_Automate_GEN_CDT_GererVariantement" } },
 
     create = function( self )
     end,
@@ -761,12 +710,8 @@ node "BEH_Ordre_Automate_GEN_CDT_Varianter"
 {
     activations =
     {
-        { "BEH_Misc_Automate_GEN_CDT_FaireReconnaitreSiteA", { "onHalt" } },
+        { "BEH_Misc_Automate_GEN_CDT_FaireReconnaitreSiteA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Ordre_Automate_GEN_CDT_Varianter" } },
 
     create = function( self )
         self._namedParams = {}
@@ -779,8 +724,7 @@ node "BEH_Ordre_Automate_GEN_CDT_Varianter"
 ]]--[[// Validité
 ]]--[[//-----------------------------------------------------------------
 ]]if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.siteFranchissementOriginal ) or not DEC_ConnaissanceObjet_EstValide( self._namedParams.siteFranchissementVariante ) ) then
-            Feedback( self.feedbacks["onHalt"], { "BEH_Ordre_Automate_GEN_CDT_Varianter" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 

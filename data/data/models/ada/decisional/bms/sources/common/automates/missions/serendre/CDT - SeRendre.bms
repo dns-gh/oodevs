@@ -10,8 +10,6 @@ includedFiles["sources/common/automates/missions/serendre/CDT - SeRendre.bms"] =
 ]]--[[// *****************************************************************************
 ]]node "MIS_Automate_CDT_SeRendre"
 {
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_SeRendre" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission

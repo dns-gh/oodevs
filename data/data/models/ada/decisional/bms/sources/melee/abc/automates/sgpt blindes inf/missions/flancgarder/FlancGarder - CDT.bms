@@ -13,12 +13,8 @@ includedFiles["sources/melee/abc/automates/sgpt blindes inf/missions/flancgarder
 {
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_FlancGarder", { "onHalt" } },
+        { "BEH_Conduite_Automate_ABC_FlancGarder", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_FlancGarder" } },
 
     create = function( self )
         self._namedParams = {}

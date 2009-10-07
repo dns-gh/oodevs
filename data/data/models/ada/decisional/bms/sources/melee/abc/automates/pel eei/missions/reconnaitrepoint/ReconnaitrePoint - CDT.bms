@@ -24,12 +24,8 @@ includedFiles["sources/melee/abc/automates/pel eei/missions/reconnaitrepoint/Rec
 {
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_ReconnaitrePointSurete", { "onHalt" } },
+        { "BEH_Conduite_Automate_ABC_ReconnaitrePointSurete", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_ReconnaitrePoint" } },
 
     create = function( self )
         self._namedParams = {}

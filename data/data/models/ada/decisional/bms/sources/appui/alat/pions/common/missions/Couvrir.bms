@@ -13,24 +13,20 @@ include "bit.lua"
 {
     activations =
     {
-        { "ACT_Maj_Pion_PasserEnTirLibre", { "onHalt" } },
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "Act_AbonnerPionAAppui", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_Pion_Rens_PartageConnaissancesDansZoneAvec", { "onHalt" } },
-        { "ACT_Obs_EtablirVisionFaceADir", { "onHalt" } },
-        { "ACT_Maj_Pions_ObjectifEsquive", { "onHalt" } },
-        { "BEH_Dep_Pion_ALAT_SePoser", { "onHalt" } },
-        { "BEH_Dep_Pion_ALAT_SuivreSurFlanc", { "onHalt" } },
-        { "BEH_Eni_Pion_ALAT_GererEniCouvrir", { "onHalt" } },
-        { "ACT_Maj_Pion_PasserEnTirSurRiposte", { "onHalt" } },
-        { "ACT_Obs_EtablirVisionCur", { "onHalt" } },
-        { "BEH_Manoeuvre_Pion_AllerStationner", { "onHalt" } },
+        { "ACT_Maj_Pion_PasserEnTirLibre", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "Act_AbonnerPionAAppui", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Pion_Rens_PartageConnaissancesDansZoneAvec", {} },
+        { "ACT_Obs_EtablirVisionFaceADir", {} },
+        { "ACT_Maj_Pions_ObjectifEsquive", {} },
+        { "BEH_Dep_Pion_ALAT_SePoser", {} },
+        { "BEH_Dep_Pion_ALAT_SuivreSurFlanc", {} },
+        { "BEH_Eni_Pion_ALAT_GererEniCouvrir", {} },
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
+        { "ACT_Obs_EtablirVisionCur", {} },
+        { "BEH_Manoeuvre_Pion_AllerStationner", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_ALAT_Couvrir" } },
 
     create = function( self )
         self._namedParams = {}
@@ -171,15 +167,13 @@ elseif switch_1 == eSExfiltrer then
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self.params.__returnValue = eActionImpossible
-                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_Couvrir" } )
-Halt( self )
+                                Halt( self )
                                 do return end
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_Couvrir" } )
-Halt( self )
+                            Halt( self )
                             do return end
 
                         end
@@ -199,8 +193,7 @@ elseif switch_1 == eFinMission then
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
-                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_Couvrir" } )
-Halt( self )
+                                Halt( self )
                                 do return end
 
                             end
@@ -230,12 +223,8 @@ node "BEH_Eni_Pion_ALAT_GererEniCouvrir"
 {
     activations =
     {
-        { "BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire", { "onHalt" } },
+        { "BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_ALAT_GererEniCouvrir" } },
 
     create = function( self )
         self._namedParams = {}

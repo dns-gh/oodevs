@@ -25,24 +25,18 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Dispositif_Automate_ABC_GererLesAppuis_", { "onHalt" } },
-        { "BEH_Dispositif_Automate_ABC_GererLeDispositifStatiqueSurLima_", { "onHalt" } },
-        { "BEH_Conduite_Automate_ABC_DonnerCoupArret_FaireDecrocherLesPions", { "onHalt" } },
-        { "BEH_RC_Automate_GererConditionOperationnelle", { "onHalt" } },
+        { "BEH_Dispositif_Automate_ABC_GererLesAppuis_", {} },
+        { "BEH_Dispositif_Automate_ABC_GererLeDispositifStatiqueSurLima_", {} },
+        { "BEH_Conduite_Automate_ABC_DonnerCoupArret_FaireDecrocherLesPions", {} },
+        { "BEH_RC_Automate_GererConditionOperationnelle", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_ABC_DonnerUnCoupDArret" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.zoneRegroupement = self.params[1]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         self.bPriseDeContact = self.bPriseDeContact or false
         self.LCAR = self.LCAR or DEC_GetLima( eTypeLima_LCAR )
         --[[//---------------------------------------------------------------------
@@ -50,8 +44,8 @@ include "bit.lua"
 ]]--[[//---------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
             do
-                StartInstance( self, self.activations.BEH_Dispositif_Automate_ABC_GererLesAppuis_, 1, {} )
-                StartInstance( self, self.activations.BEH_Dispositif_Automate_ABC_GererLeDispositifStatiqueSurLima_, 1, { true, self.LCAR, } )
+                StartActivateOverride( self, self.activations.BEH_Dispositif_Automate_ABC_GererLesAppuis_, 1, {} )
+                StartActivateOverride( self, self.activations.BEH_Dispositif_Automate_ABC_GererLeDispositifStatiqueSurLima_, 1, { true, self.LCAR, } )
             end
 --[[//-----------------------------------------------------------------------------
 ]]--[[// Decrocher qd on a ouvert le feu
@@ -64,8 +58,8 @@ include "bit.lua"
 
         if( self.bPriseDeContact and S_Automate_EstEnDifficulte() ) then
             do
-                StopInstance( self, self.activations.BEH_Dispositif_Automate_ABC_GererLesAppuis_, {} )
-                StopInstance( self, self.activations.BEH_Dispositif_Automate_ABC_GererLeDispositifStatiqueSurLima_, { true, self.LCAR, } )
+                StopActivateOverride( self, self.activations.BEH_Dispositif_Automate_ABC_GererLesAppuis_, {} )
+                StopActivateOverride( self, self.activations.BEH_Dispositif_Automate_ABC_GererLeDispositifStatiqueSurLima_, { true, self.LCAR, } )
                 Activate( self.activations.BEH_Conduite_Automate_ABC_DonnerCoupArret_FaireDecrocherLesPions, 1, {} )--[[// Decrocher
 ]]
             end
@@ -91,20 +85,14 @@ node "BEH_Conduite_Automate_ABC_DonnerCoupArret_FaireDecrocherLesPions"
 {
     activations =
     {
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "BEH_Mission_Automate_AssignerDecrocherA", { "onHalt" } },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Mission_Automate_AssignerDecrocherA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_ABC_DonnerCoupArret_FaireDecrocherLesPions" } },
 
     create = function( self )
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         self.mission = self.mission or DEC_GetMission( myself )
         self.pointArrivee = self.pointArrivee or S_Geometrie_BarycentreZone( self.mission.zoneRegroupement_ )
         Activate( self.activations.ACT_Info_Trace, 1, { "----- FIRE OPENED -----", } )
@@ -114,7 +102,7 @@ node "BEH_Conduite_Automate_ABC_DonnerCoupArret_FaireDecrocherLesPions"
         local _continue = true
 do
                 local pionDEC = pion
-                StartInstance( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, pion, self.pointArrivee, F_Pion_GeteEtatEchelon( pionDEC ), } )
+                StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, pion, self.pointArrivee, F_Pion_GeteEtatEchelon( pionDEC ), } )
             end
 
         end

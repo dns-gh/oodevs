@@ -24,12 +24,8 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Mission_Automate_INF_AssignerAppuyerA", { "onHalt" } },
+        { "BEH_Mission_Automate_INF_AssignerAppuyerA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_GererAppuis_INF" } },
 
     create = function( self )
     end,
@@ -89,12 +85,8 @@ node "BEH_Conduite_Automate_INF_GererAppuis_ABC"
 {
     activations =
     {
-        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", { "onHalt" } },
+        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_GererAppuis_ABC" } },
 
     create = function( self )
     end,
@@ -153,13 +145,9 @@ node "BEH_Conduite_Automate_INF_GererAppui_Mortier"
 {
     activations =
     {
-        { "BEH_Conduite_Automate_INF_GererOrdre_Mortier", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_GererMission_Mortier", { "onHalt" } },
+        { "BEH_Conduite_Automate_INF_GererOrdre_Mortier", {} },
+        { "BEH_Conduite_Automate_INF_GererMission_Mortier", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_GererAppui_Mortier" } },
 
     create = function( self )
     end,
@@ -182,12 +170,8 @@ node "BEH_Conduite_Automate_INF_GererMission_Mortier"
 {
     activations =
     {
-        { "BEH_Mission_Automate_INF_AssignerAppuyerA", { "onHalt" } },
+        { "BEH_Mission_Automate_INF_AssignerAppuyerA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_GererMission_Mortier" } },
 
     create = function( self )
         self._namedParams = {}
@@ -236,12 +220,8 @@ node "BEH_Conduite_Automate_INF_GererOrdre_Mortier"
 {
     activations =
     {
-        { "ACT_MOT_Automate_INF_DemandeAppliqerFeux", { "onHalt" } },
+        { "ACT_MOT_Automate_INF_DemandeAppliqerFeux", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_GererOrdre_Mortier" } },
 
     create = function( self )
         self._namedParams = {}
@@ -280,12 +260,8 @@ node "BEH_Conduite_Automate_INF_GererMission_PC"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSuivreA", { "onHalt" } },
+        { "BEH_Mission_Automate_AssignerSuivreA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_GererMission_PC" } },
 
     create = function( self )
     end,
@@ -341,12 +317,8 @@ node "BEH_Conduite_Automate_INF_Gerer_UniteInconnues"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSuivreA", { "onHalt" } },
+        { "BEH_Mission_Automate_AssignerSuivreA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_Gerer_UniteInconnues" } },
 
     create = function( self )
     end,

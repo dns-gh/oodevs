@@ -11,17 +11,13 @@ includedFiles["sources/appui/alat/pions/common/missions/Stationner.bms"] = true
 {
     activations =
     {
-        { "ACT_Maj_Pion_PasserEnTirSurRiposte", { "onHalt" } },
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_Obs_EtablirVisionCur", { "onHalt" } },
-        { "BEH_Manoeuvre_Pion_AllerStationner", { "onHalt" } },
-        { "BEH_Dep_Pion_ALAT_SePoser", { "onHalt" } },
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Obs_EtablirVisionCur", {} },
+        { "BEH_Manoeuvre_Pion_AllerStationner", {} },
+        { "BEH_Dep_Pion_ALAT_SePoser", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_Stationner" } },
 
     create = function( self )
         self._namedParams = {}

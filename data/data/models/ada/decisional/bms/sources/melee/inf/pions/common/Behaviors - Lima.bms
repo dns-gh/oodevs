@@ -23,14 +23,10 @@ include "bit.lua"
 {
     activations =
     {
-        { "ACT_Dep_PasserSurLima", { "onHalt" } },
-        { "BEH_Poste_Pion_INF_ArretCourt", { "onHalt" } },
-        { "BEH_Misc_Pion_INF_MAJ_Repli", { "onHalt" } },
+        { "ACT_Dep_PasserSurLima", {} },
+        { "BEH_Poste_Pion_INF_ArretCourt", {} },
+        { "BEH_Misc_Pion_INF_MAJ_Repli", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Lima_Pion_INF_SurLCA" } },
 
     create = function( self )
     end,
@@ -53,8 +49,7 @@ include "bit.lua"
         Activate( self.activations.ACT_Dep_PasserSurLima, 1, { eEtatLima_LCA, } )
         if( self.eAction ~= eActionEnCours ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "BEH_Lima_Pion_INF_SurLCA" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -73,13 +68,9 @@ node "BEH_Lima_Pion_INF_SurLD"
 {
     activations =
     {
-        { "BEH_Ordre_SePoster_EnAttente", { "onHalt" } },
-        { "ACT_Dep_PasserSurLima", { "onHalt" } },
+        { "BEH_Ordre_SePoster_EnAttente", {} },
+        { "ACT_Dep_PasserSurLima", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Lima_Pion_INF_SurLD" } },
 
     create = function( self )
         self._namedParams = {}
@@ -93,8 +84,7 @@ node "BEH_Lima_Pion_INF_SurLD"
                 --[[// Cas embrayé --> on flague la lima pour tout le monde
 ]]DEC_SetMissionLimaFlag( self._namedParams.lima, true )
                                 self.params.__returnValue = eActionEffectuee
-                Feedback( self.feedbacks["onHalt"], { "BEH_Lima_Pion_INF_SurLD" } )
-Halt( self )
+                Halt( self )
                 do return end
 
             end
@@ -116,14 +106,10 @@ node "BEH_Lima_Pion_INF_SurLCAR"
 {
     activations =
     {
-        { "ACT_Dep_PasserSurLima", { "onHalt" } },
-        { "BEH_Poste_Pion_INF_TomberEnGarde", { "onHalt" } },
-        { "BEH_Ordre_SePoster_EnAttente", { "onHalt" } },
+        { "ACT_Dep_PasserSurLima", {} },
+        { "BEH_Poste_Pion_INF_TomberEnGarde", {} },
+        { "BEH_Ordre_SePoster_EnAttente", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Lima_Pion_INF_SurLCAR" } },
 
     create = function( self )
     end,
@@ -145,8 +131,7 @@ node "BEH_Lima_Pion_INF_SurLCAR"
                                 do
                     StartEvent( "BEH_Mot_Delai_Pion_INF_AugmenterAgression", 5 )
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Lima_Pion_INF_SurLCAR" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end
@@ -162,8 +147,6 @@ Halt( self )
 
 node "BEH_Lima_Pion_INF_SurLR"
 {
-    feedbacks = { { { "onHalt" }, "BEH_Lima_Pion_INF_SurLR" } },
-
     create = function( self )
     end,
 
@@ -184,14 +167,10 @@ node "BEH_Lima_Pion_INF_GererLIA"
 {
     activations =
     {
-        { "ACT_RC", { "onHalt" } },
-        { "ACT_Dep_PasserSurLima", { "onHalt" } },
-        { "ACT_Limas_Suppression", { "onHalt" } },
+        { "ACT_RC", {} },
+        { "ACT_Dep_PasserSurLima", {} },
+        { "ACT_Limas_Suppression", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Lima_Pion_INF_GererLIA" } },
 
     create = function( self )
     end,

@@ -19,12 +19,8 @@ includedFiles["sources/appui/artfdp/automates/bat reco trf1/missions/reconnaitre
 {
     activations =
     {
-        { "BEH_Conduite_Automate_ASS_ReconnaitreZonesDeploiement", { "onHalt" } },
+        { "BEH_Conduite_Automate_ASS_ReconnaitreZonesDeploiement", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ASS_ReconnaitreZonesDeploiement" } },
 
     create = function( self )
         self._namedParams = {}

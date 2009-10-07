@@ -12,12 +12,8 @@ includedFiles["sources/melee/abc/automates/sgpt ecl blindes/missions/escorter/Es
 {
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_Escorter", { "onHalt" } },
+        { "BEH_Conduite_Automate_ABC_Escorter", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_EscorterUnite" } },
 
     create = function( self )
         self._namedParams = {}
@@ -50,12 +46,8 @@ node "MIS_Automate_CDT_ABC_EscorterUnites"
 {
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_Escorter", { "onHalt" } },
+        { "BEH_Conduite_Automate_ABC_Escorter", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_EscorterUnites" } },
 
     create = function( self )
         self._namedParams = {}

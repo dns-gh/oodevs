@@ -22,12 +22,8 @@ includedFiles["sources/melee/abc/automates/pel eei/missions/attaquer/Attaquer - 
 {
     activations =
     {
-        { "BEH_Auto_CDT_ABC_Attaquer", { "onHalt" } },
+        { "BEH_Auto_CDT_ABC_Attaquer", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_Attaquer" } },
 
     create = function( self )
         self._namedParams = {}

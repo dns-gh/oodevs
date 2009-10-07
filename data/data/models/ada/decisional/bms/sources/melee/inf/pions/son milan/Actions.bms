@@ -25,8 +25,6 @@ includedFiles["sources/melee/inf/pions/son milan/Actions.bms"] = true
         debarquement = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Transport_Pion_INF_Debarquer" } },
-
     create = function( self )
     end,
 
@@ -54,8 +52,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     DEC_Trace( "Debarquement : ignore transporteur" )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Transport_Pion_INF_Debarquer" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                                 end
@@ -63,8 +60,7 @@ Halt( self )
                     DEC_Trace( "Debarquement : fin" )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Transport_Pion_INF_Debarquer" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                                 end
@@ -110,8 +106,6 @@ Halt( self )
         tir_debarque = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Tir_Pion_INF_TirDebarque" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.repEni = self.params[1]
@@ -151,8 +145,7 @@ Halt( self )
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Tir_Pion_INF_TirDebarque" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                                 end
@@ -163,8 +156,7 @@ Halt( self )
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Tir_Pion_INF_TirDebarque" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                                 end
@@ -175,8 +167,7 @@ Halt( self )
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Tir_Pion_INF_TirDebarque" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                                 end
@@ -188,8 +179,7 @@ Halt( self )
 ]]
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Tir_Pion_INF_TirDebarque" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                                 end
@@ -200,8 +190,7 @@ Halt( self )
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Tir_Pion_INF_TirDebarque" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                                 end
@@ -252,8 +241,6 @@ Halt( self )
         tir_couverture = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Tir_Pion_INF_TirCouverture" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.repEni = self.params[1]
@@ -293,8 +280,7 @@ Halt( self )
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Tir_Pion_INF_TirCouverture" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                                 end
@@ -305,8 +291,7 @@ Halt( self )
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Tir_Pion_INF_TirCouverture" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                                 end
@@ -317,8 +302,7 @@ Halt( self )
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Tir_Pion_INF_TirCouverture" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                                 end
@@ -330,8 +314,7 @@ Halt( self )
 ]]
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Tir_Pion_INF_TirCouverture" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                                 end
@@ -342,8 +325,7 @@ Halt( self )
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Tir_Pion_INF_TirCouverture" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                                 end

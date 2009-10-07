@@ -19,12 +19,8 @@ includedFiles["sources/common/automates/missions/sefairedecontaminer/CDT - SeFai
 {
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "onHalt" } },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_SeFaireDecontaminer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -43,8 +39,7 @@ includedFiles["sources/common/automates/missions/sefairedecontaminer/CDT - SeFai
         if( self.eEtatODC == eActionHalt ) then
             do
                                 self.params.__returnValue = eActionEffectuee
-                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_CDT_SeFaireDecontaminer" } )
-Halt( self )
+                Halt( self )
                 do return end
 
                 self.eEtatODC = eActionEnCours

@@ -29,8 +29,6 @@ includedFiles["sources/melee/inf/pions/common/Actions - Transport.bms"] = true
         debarquement = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Transport_Pion_INF_Embarquer" } },
-
     create = function( self )
     end,
 
@@ -58,8 +56,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     DEC_Trace( "Embarquement : ignore transporteur" )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Transport_Pion_INF_Embarquer" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                                 end
@@ -67,8 +64,7 @@ Halt( self )
                     DEC_Trace( "Embarquement : fin" )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Transport_Pion_INF_Embarquer" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                                 end
@@ -108,8 +104,6 @@ Halt( self )
     {
         debarquement = 1,
     },
-
-    feedbacks = { { { "onHalt" }, "ACT_Transport_MaintenirEtat" } },
 
     create = function( self )
         self._namedParams = {}

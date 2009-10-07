@@ -14,25 +14,19 @@ includedFiles["sources/appui/rens/pions/radint/common/missions/Decrocher.bms"] =
 {
     activations =
     {
-        { "BEH_MOT_DesactiveSauvegarde", { "onHalt" } },
-        { "ACT_Dep_Pion_RENS_VolerA", { "onHalt" } },
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "BEH_MOT_DesactiveSauvegarde", {} },
+        { "ACT_Dep_Pion_RENS_VolerA", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionVers", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_Decrocher" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         if( ModuleBegins() ) then
@@ -40,8 +34,8 @@ includedFiles["sources/appui/rens/pions/radint/common/missions/Decrocher.bms"] =
                 DEC_SetMission( myself, self._namedParams.mission )
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
                 DEC_Trace( "** MIS DECROCHER **" )
-                StartInstance( self, self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )
-                StartInstance( self, self.activations.ACT_Dep_Pion_RENS_VolerA, 1, { 30, } )
+                StartActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )
+                StartActivateOverride( self, self.activations.ACT_Dep_Pion_RENS_VolerA, 1, { 30, } )
             end
         end
 
@@ -85,8 +79,8 @@ elseif switch_1 == eDecrocher then
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    StopInstance( self, self.activations.ACT_Dep_Pion_RENS_VolerA, { 30, } )
-                    StopInstance( self, self.activations.BEH_MOT_DesactiveSauvegarde, {} )
+                    StopActivateOverride( self, self.activations.ACT_Dep_Pion_RENS_VolerA, { 30, } )
+                    StopActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, {} )
                     
                                 cases_switch_1[3] = true
 

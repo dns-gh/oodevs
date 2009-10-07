@@ -11,12 +11,8 @@ includedFiles["sources/appui/nbc/automates/son reco/missions/reconnaitreaxe/Reco
 {
     activations =
     {
-        { "BEH_Conduite_Automate_NBC_ReconnaitreUnAxe", { "onHalt" } },
+        { "BEH_Conduite_Automate_NBC_ReconnaitreUnAxe", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_NBC_ReconnaitreUnAxe" } },
 
     create = function( self )
         self._namedParams = {}

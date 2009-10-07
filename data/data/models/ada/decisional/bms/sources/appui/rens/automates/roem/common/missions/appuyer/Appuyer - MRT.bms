@@ -11,12 +11,8 @@ includedFiles["sources/appui/rens/automates/roem/common/missions/appuyer/Appuyer
 {
     activations =
     {
-        { "BEH_Mission_Automate_RENS_ROEM_AssignerAppuyerA", { "onHalt" } },
+        { "BEH_Mission_Automate_RENS_ROEM_AssignerAppuyerA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_RENS_ROEM_AssignerAppuyerA" } },
 
     create = function( self )
         self._namedParams = {}

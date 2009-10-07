@@ -28,12 +28,8 @@ include "bit.lua"
 {
     activations =
     {
-        { "ACT_Dep_SePosterFaceA", { "onHalt" } },
+        { "ACT_Dep_SePosterFaceA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MOT_TenirFaceAuxEnis" } },
 
     create = function( self )
     end,
@@ -60,13 +56,9 @@ node "BEH_MOT_GarderSesDistances"
 {
     activations =
     {
-        { "ACT_MAJ_EtatDec", { "onHalt" } },
-        { "BEH_MOT_GarderSesDistancesFaceA", { "onHalt" } },
+        { "ACT_MAJ_EtatDec", {} },
+        { "BEH_MOT_GarderSesDistancesFaceA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MOT_GarderSesDistances" } },
 
     create = function( self )
     end,
@@ -99,19 +91,13 @@ node "BEH_MOT_GarderSesDistancesFaceATirsIndirects"
 {
     activations =
     {
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "BEH_Dep_ProgressionVers", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MOT_GarderSesDistancesFaceATirsIndirects" } },
 
     create = function( self )
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init: calcule de la position de surete
 ]]--[[//-----------------------------------------------------------------------------
@@ -125,7 +111,7 @@ node "BEH_MOT_GarderSesDistancesFaceATirsIndirects"
                     positionSurete = DEC_Geometrie_PositionTranslateDir( DEC_Agent_Position(), DEC_Agent_Direction(), -1500 )
                 end
 
-                StartInstance( self, self.activations.BEH_Dep_ProgressionVers, 1.1, { positionSurete, eProgressionDirect, eTypeItiRepli, } )
+                StartActivateOverride( self, self.activations.BEH_Dep_ProgressionVers, 1.1, { positionSurete, eProgressionDirect, eTypeItiRepli, } )
             end
         end
 
@@ -161,13 +147,9 @@ node "BEH_MOT_GarderSesDistancesFaceA"
 
     activations =
     {
-        { "BEH_SePosterFaceAEni", { "onHalt" } },
-        { "BEH_Eni_DecrocherFaceA", { "onHalt" } },
+        { "BEH_SePosterFaceAEni", {} },
+        { "BEH_Eni_DecrocherFaceA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MOT_GarderSesDistancesFaceA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -216,12 +198,8 @@ node "BEH_MOT_TirerSurEnis"
 {
     activations =
     {
-        { "BEH_MOT_GererLesFeuxSur", { "onHalt" } },
+        { "BEH_MOT_GererLesFeuxSur", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MOT_TirerSurEnis" } },
 
     create = function( self )
     end,
@@ -253,16 +231,12 @@ node "BEH_MOT_GererLesFeuxSur"
 
     activations =
     {
-        { "BEH_Feu_Pion_ABC_ConduireLesFeuxSur", { "onHalt" } },
-        { "ACT_Obs_EtablirVisionVersPt", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "BEH_Eni_Pion_INF_GererContactEni", { "onHalt" } },
-        { "BEH_Eni_Pion_Milice_GererContactEni", { "onHalt" } },
+        { "BEH_Feu_Pion_ABC_ConduireLesFeuxSur", {} },
+        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Eni_Pion_INF_GererContactEni", {} },
+        { "BEH_Eni_Pion_Milice_GererContactEni", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MOT_GererLesFeuxSur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -351,14 +325,10 @@ node "BEH_MOT_RiposterSurEnis"
 {
     activations =
     {
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "ACT_Tir_DirectSur", { "onHalt" } },
-        { "ACT_Obs_EtablirVisionVersPt", { "onHalt" } },
+        { "ACT_Info_Trace", {} },
+        { "ACT_Tir_DirectSur", {} },
+        { "ACT_Obs_EtablirVisionVersPt", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MOT_RiposterSurEnis" } },
 
     create = function( self )
     end,
@@ -404,13 +374,9 @@ node "BEH_MOT_SePoster"
 {
     activations =
     {
-        { "ACT_MAJ_EtatOrdreCoordination", { "onHalt" } },
-        { "ACT_Dep_SePoster", { "onHalt" } },
+        { "ACT_MAJ_EtatOrdreCoordination", {} },
+        { "ACT_Dep_SePoster", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MOT_SePoster" } },
 
     create = function( self )
     end,
@@ -429,13 +395,9 @@ node "BEH_MOT_EtrePrudent"
 {
     activations =
     {
-        { "ACT_MAJ_EtatPrudence", { "onHalt" } },
-        { "BEH_MOT_Ralentir", { "onHalt" } },
+        { "ACT_MAJ_EtatPrudence", {} },
+        { "BEH_MOT_Ralentir", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MOT_EtrePrudent" } },
 
     create = function( self )
     end,
@@ -457,12 +419,8 @@ node "BEH_MOT_Ralentir"
 {
     activations =
     {
-        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
+        { "ACT_Dep_ModulationVitesse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MOT_Ralentir" } },
 
     create = function( self )
     end,
@@ -484,12 +442,8 @@ node "BEH_MOT_PasserEnAlerteDeNiveau4"
 {
     activations =
     {
-        { "BEH_Nbc_GererAlerteNiv4", { "onHalt" } },
+        { "BEH_Nbc_GererAlerteNiv4", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MOT_PasserEnAlerteDeNiveau4" } },
 
     create = function( self )
     end,
@@ -510,12 +464,8 @@ node "BEH_MOT_PasserEnSilenceRadio"
 {
     activations =
     {
-        { "BEH_Rens_PasserEnSilenceRadio", { "onHalt" } },
+        { "BEH_Rens_PasserEnSilenceRadio", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MOT_PasserEnSilenceRadio" } },
 
     create = function( self )
     end,
@@ -536,12 +486,8 @@ node "BEH_MOT_SilenceRadars"
 {
     activations =
     {
-        { "BEH_Rens_PasserEnSilenceRadar", { "onHalt" } },
+        { "BEH_Rens_PasserEnSilenceRadar", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MOT_SilenceRadars" } },
 
     create = function( self )
     end,
@@ -564,12 +510,8 @@ node "BEH_MOT_PasserEnTirRestreint"
 {
     activations =
     {
-        { "BEH_ROE_GererTirRestreint", { "onHalt" } },
+        { "BEH_ROE_GererTirRestreint", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MOT_PasserEnTirRestreint" } },
 
     create = function( self )
     end,
@@ -590,12 +532,8 @@ node "BEH_MOT_PasserEnTirInterdit"
 {
     activations =
     {
-        { "BEH_ROE_GererTirInterdit", { "onHalt" } },
+        { "BEH_ROE_GererTirInterdit", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MOT_PasserEnTirInterdit" } },
 
     create = function( self )
     end,
@@ -616,12 +554,8 @@ node "BEH_MOT_PasserEnTirLibre"
 {
     activations =
     {
-        { "BEH_ROE_GererTirLibre", { "onHalt" } },
+        { "BEH_ROE_GererTirLibre", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MOT_PasserEnTirLibre" } },
 
     create = function( self )
     end,
@@ -640,8 +574,6 @@ node "BEH_MOT_PasserEnTirLibre"
 
 node "BEH_MOT_DesactiveSauvegarde"
 {
-    feedbacks = { { { "onHalt" }, "BEH_MOT_DesactiveSauvegarde" } },
-
     create = function( self )
     end,
 

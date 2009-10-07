@@ -11,18 +11,14 @@ includedFiles["sources/appui/circulation/pions/missions/aide a mobilite sur itin
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "BEH_Dep_Suivre", { "onHalt" } },
-        { "ACT_Misc_Pion_AppuyerMvtDe", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_Dep_ModulationVitesse", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_Suivre", {} },
+        { "ACT_Misc_Pion_AppuyerMvtDe", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_LOG_AppuyerMouvement" } },
 
     create = function( self )
         self._namedParams = {}
@@ -106,8 +102,6 @@ node "ACT_Misc_Pion_AppuyerMvtDe"
     {
         deplacement = 1,
     },
-
-    feedbacks = { { { "onHalt" }, "ACT_Misc_Pion_AppuyerMvtDe" } },
 
     create = function( self )
         self._namedParams = {}

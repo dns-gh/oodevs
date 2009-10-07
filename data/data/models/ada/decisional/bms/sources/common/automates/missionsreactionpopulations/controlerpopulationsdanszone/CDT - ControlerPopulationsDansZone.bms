@@ -11,13 +11,9 @@ includedFiles["sources/common/automates/missionsreactionpopulations/controlerpop
 {
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "onHalt" } },
-        { "BEH_Mission_Automate_AssignerSuivreAListe", { "onHalt" } },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "BEH_Mission_Automate_AssignerSuivreAListe", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ControlerPopulationsDansZone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -31,8 +27,7 @@ includedFiles["sources/common/automates/missionsreactionpopulations/controlerpop
         if( self.eEtatODC == eActionHalt ) then
             do
                                 self.params.__returnValue = eActionEffectuee
-                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_CDT_ControlerPopulationsDansZone" } )
-Halt( self )
+                Halt( self )
                 do return end
 
                 self.eEtatODC = eActionEnCours

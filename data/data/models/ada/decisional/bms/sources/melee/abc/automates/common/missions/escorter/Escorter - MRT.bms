@@ -22,13 +22,9 @@ includedFiles["sources/melee/abc/automates/common/missions/escorter/Escorter - M
 {
     activations =
     {
-        { "BEH_Mission_Automate_ABC_AssignerEscorterA", { "onHalt" } },
-        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", { "onHalt" } },
+        { "BEH_Mission_Automate_ABC_AssignerEscorterA", {} },
+        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ABC_AssignerMissionEscorterA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -37,9 +33,7 @@ includedFiles["sources/melee/abc/automates/common/missions/escorter/Escorter - M
         self._namedParams.eEtatEchelon = self.params[3]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Affectation des missions à l'echelon
 ]]--[[//-----------------------------------------------------------------------------
@@ -50,10 +44,10 @@ includedFiles["sources/melee/abc/automates/common/missions/escorter/Escorter - M
                 local _continue = true
                     do
                         if( ( rIterateurPion == 0 or rIterateurPion == nil ) ) then
-                            StartInstance( self, self.activations.BEH_Mission_Automate_ABC_AssignerEscorterA, 1, { ePhase_MRT, pion, self._namedParams.convoiAEscorter, self._namedParams.eEtatEchelon, } )
+                            StartActivateOverride( self, self.activations.BEH_Mission_Automate_ABC_AssignerEscorterA, 1, { ePhase_MRT, pion, self._namedParams.convoiAEscorter, self._namedParams.eEtatEchelon, } )
                         else
 if( rIterateurPion == 1 ) then
-                                StartInstance( self, self.activations.BEH_Mission_Automate_ABC_AssignerSoutenirA, 1, { ePhase_MRT, pion, self._namedParams.convoiAEscorter, self._namedParams.eEtatEchelon, } )
+                                StartActivateOverride( self, self.activations.BEH_Mission_Automate_ABC_AssignerSoutenirA, 1, { ePhase_MRT, pion, self._namedParams.convoiAEscorter, self._namedParams.eEtatEchelon, } )
                             end
                         end
 
@@ -83,12 +77,8 @@ node "BEH_Medo_Automate_ABC_AssignerMissionEscorterEclA"
 {
     activations =
     {
-        { "BEH_Mission_Automate_ABC_AssignerEscorterA", { "onHalt" } },
+        { "BEH_Mission_Automate_ABC_AssignerEscorterA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ABC_AssignerMissionEscorterEclA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -97,9 +87,7 @@ node "BEH_Medo_Automate_ABC_AssignerMissionEscorterEclA"
         self._namedParams.eEtatEchelon = self.params[3]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Affectation des missions à l'echelon
 ]]--[[//-----------------------------------------------------------------------------
@@ -110,7 +98,7 @@ node "BEH_Medo_Automate_ABC_AssignerMissionEscorterEclA"
                 local _continue = true
                     do
                         if( ( rIterateurPion == 0 or rIterateurPion == nil ) ) then
-                            StartInstance( self, self.activations.BEH_Mission_Automate_ABC_AssignerEscorterA, 1, { ePhase_MRT, pion, self._namedParams.convoiAEscorter, self._namedParams.eEtatEchelon, } )
+                            StartActivateOverride( self, self.activations.BEH_Mission_Automate_ABC_AssignerEscorterA, 1, { ePhase_MRT, pion, self._namedParams.convoiAEscorter, self._namedParams.eEtatEchelon, } )
                         end
 
                                                 rIterateurPion = rIterateurPion + 1
@@ -139,13 +127,9 @@ node "BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateA"
 {
     activations =
     {
-        { "BEH_Mission_Automate_ABC_AssignerEscorterAutomateA", { "onHalt" } },
-        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", { "onHalt" } },
+        { "BEH_Mission_Automate_ABC_AssignerEscorterAutomateA", {} },
+        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -154,9 +138,7 @@ node "BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateA"
         self._namedParams.eEtatEchelon = self.params[3]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Affectation des missions à l'echelon
 ]]--[[//-----------------------------------------------------------------------------
@@ -168,10 +150,10 @@ node "BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateA"
                     do
                         --[[// un seul pion suffit
 ]]if( ( rIterateurPion == 0 or rIterateurPion == nil ) ) then
-                            StartInstance( self, self.activations.BEH_Mission_Automate_ABC_AssignerEscorterAutomateA, 1, { ePhase_MRT, pion, self._namedParams.automateAEscorter, self._namedParams.eEtatEchelon, } )
+                            StartActivateOverride( self, self.activations.BEH_Mission_Automate_ABC_AssignerEscorterAutomateA, 1, { ePhase_MRT, pion, self._namedParams.automateAEscorter, self._namedParams.eEtatEchelon, } )
                         else
 if( rIterateurPion == 1 ) then
-                                StartInstance( self, self.activations.BEH_Mission_Automate_ABC_AssignerSoutenirA, 1, { ePhase_MRT, pion, DEC_Automate_PionPCDeAutomate( self._namedParams.automateAEscorter ), self._namedParams.eEtatEchelon, } )
+                                StartActivateOverride( self, self.activations.BEH_Mission_Automate_ABC_AssignerSoutenirA, 1, { ePhase_MRT, pion, DEC_Automate_PionPCDeAutomate( self._namedParams.automateAEscorter ), self._namedParams.eEtatEchelon, } )
                             end
                         end
 
@@ -201,12 +183,8 @@ node "BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateEclA"
 {
     activations =
     {
-        { "BEH_Mission_Automate_ABC_AssignerEscorterAutomateA", { "onHalt" } },
+        { "BEH_Mission_Automate_ABC_AssignerEscorterAutomateA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateEclA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -215,9 +193,7 @@ node "BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateEclA"
         self._namedParams.eEtatEchelon = self.params[3]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Affectation des missions à l'echelon
 ]]--[[//-----------------------------------------------------------------------------
@@ -229,7 +205,7 @@ node "BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateEclA"
                     do
                         --[[// un seul pion suffit
 ]]if( ( rIterateurPion == 0 or rIterateurPion == nil ) ) then
-                            StartInstance( self, self.activations.BEH_Mission_Automate_ABC_AssignerEscorterAutomateA, 1, { ePhase_MRT, pion, self._namedParams.automateAEscorter, self._namedParams.eEtatEchelon, } )
+                            StartActivateOverride( self, self.activations.BEH_Mission_Automate_ABC_AssignerEscorterAutomateA, 1, { ePhase_MRT, pion, self._namedParams.automateAEscorter, self._namedParams.eEtatEchelon, } )
                         end
 
                                                 rIterateurPion = rIterateurPion + 1

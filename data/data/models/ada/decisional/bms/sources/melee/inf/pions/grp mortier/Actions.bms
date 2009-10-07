@@ -32,8 +32,6 @@ includedFiles["sources/melee/inf/pions/grp mortier/Actions.bms"] = true
         debarquement = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Transport_Pion_INF_Debarquer" } },
-
     create = function( self )
     end,
 
@@ -61,8 +59,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     DEC_Trace( "Debarquement : ignore transporteur" )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Transport_Pion_INF_Debarquer" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                                 end
@@ -70,8 +67,7 @@ Halt( self )
                     DEC_Trace( "Debarquement : fin" )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Transport_Pion_INF_Debarquer" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                                 end
@@ -104,8 +100,6 @@ Halt( self )
 
 node "ACT_Tir_Pion_INF_TirCouverture"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Tir_Pion_INF_TirCouverture" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.repEni = self.params[1]
@@ -113,8 +107,7 @@ node "ACT_Tir_Pion_INF_TirCouverture"
 
     select = function( self )
                 self.params.__returnValue = eActionEffectuee
-        Feedback( self.feedbacks["onHalt"], { "ACT_Tir_Pion_INF_TirCouverture" } )
-Halt( self )
+        Halt( self )
         do return end
 
     end,
@@ -132,8 +125,6 @@ Halt( self )
         tir = 1,
         deplacement = 1,
     },
-
-    feedbacks = { { { "onHalt" }, "ACT_Tir_Pion_Mortier_SurPosition" } },
 
     create = function( self )
         self._namedParams = {}
@@ -174,8 +165,7 @@ Halt( self )
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Tir_Pion_Mortier_SurPosition" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                                 end
@@ -194,8 +184,7 @@ Halt( self )
                     end
 
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Tir_Pion_Mortier_SurPosition" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                                 end
@@ -223,8 +212,7 @@ Halt( self )
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Tir_Pion_Mortier_SurPosition" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                                 end
@@ -243,8 +231,7 @@ Halt( self )
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Tir_Pion_Mortier_SurPosition" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                                 end
@@ -299,8 +286,6 @@ Halt( self )
         deplacement = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Tir_Pion_Mortier_SurConnaissance" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ksTir = self.params[1]
@@ -342,8 +327,7 @@ Halt( self )
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Tir_Pion_Mortier_SurConnaissance" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                                 end
@@ -362,8 +346,7 @@ Halt( self )
                     end
 
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Tir_Pion_Mortier_SurConnaissance" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                                 end
@@ -383,8 +366,7 @@ Halt( self )
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Tir_Pion_Mortier_SurConnaissance" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                                 end
@@ -403,8 +385,7 @@ Halt( self )
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionImpossible
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Tir_Pion_Mortier_SurConnaissance" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                                 end
@@ -461,8 +442,6 @@ Halt( self )
         tir = 1,
         deplacement = 1,
     },
-
-    feedbacks = { { { "onHalt" }, "ACT_Tir_Pion_Mortier_PreparerTirSur" } },
 
     create = function( self )
         self._namedParams = {}

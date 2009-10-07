@@ -8,14 +8,10 @@ node "MIS_Automate_CDT_Transporter"
 {
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "onHalt" } },
-        { "ACT_Ordre_Suppression", { "onHalt" } },
-        { "BEH_Medo_Automate_AssignerMissionsTransporterAListe", { "onHalt" } },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "ACT_Ordre_Suppression", {} },
+        { "BEH_Medo_Automate_AssignerMissionsTransporterAListe", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_Transporter" } },
 
     create = function( self )
         self._namedParams = {}
@@ -120,8 +116,7 @@ do
 
                     if( plusDeMissions ) then
                         self.params.__returnValue = eActionEffectuee
-                        Feedback( self.feedbacks["onHalt"], { "MIS_Automate_CDT_Transporter" } )
-Halt( self )
+                        Halt( self )
                         do return end
                     end
 

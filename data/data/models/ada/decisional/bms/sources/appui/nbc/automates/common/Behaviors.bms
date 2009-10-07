@@ -47,17 +47,13 @@ include "Appui/Nbc/Automates/Common/Gestion pions detruits.bms"
 {
     activations =
     {
-        { "BEH_RC_Automate_Situation", { "onHalt" } },
-        { "BEH_Nbc_Automate_GererAlerteNiv4", { "onHalt" } },
-        { "BEH_ROE_Automate_GererOrdre", { "onHalt" } },
-        { "BEH_Rens_Automate_GererSilenceRadio", { "onHalt" } },
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "onHalt" } },
-        { "BEH_Misc_Automate_GererLesMoyens", { "onHalt" } },
+        { "BEH_RC_Automate_Situation", {} },
+        { "BEH_Nbc_Automate_GererAlerteNiv4", {} },
+        { "BEH_ROE_Automate_GererOrdre", {} },
+        { "BEH_Rens_Automate_GererSilenceRadio", {} },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "BEH_Misc_Automate_GererLesMoyens", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Defaut" } },
 
     create = function( self )
         self._namedParams = {}
@@ -112,12 +108,8 @@ node "BEH_Ordre_Automate_NBC_FairePosterLePremierEchelon_"
 {
     activations =
     {
-        { "ACT_Ordre_Automate_Pause", { "onHalt" } },
+        { "ACT_Ordre_Automate_Pause", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Ordre_Automate_NBC_FairePosterLePremierEchelon_" } },
 
     create = function( self )
     end,

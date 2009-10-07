@@ -23,12 +23,8 @@ includedFiles["sources/melee/abc/automates/sgpt chars ecl/missions/soutenir/Sout
 {
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_Soutenir", { "onHalt" } },
+        { "BEH_Conduite_Automate_ABC_Soutenir", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_Soutenir" } },
 
     create = function( self )
         self._namedParams = {}

@@ -11,12 +11,8 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Ordre.bms"] = true
 {
     activations =
     {
-        { "ACT_Ordre_Suppression", { "onHalt" } },
+        { "ACT_Ordre_Suppression", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Ordre_Inopine" } },
 
     create = function( self )
     end,
@@ -33,8 +29,7 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Ordre.bms"] = true
 ]]SetStateVariable( "VE_SePoster", 0 )
                 DEC_Trace( " --------- Stop mission frag order ---------" )
                                 self.params.__returnValue = eActionHalt
-                Feedback( self.feedbacks["onHalt"], { "BEH_Ordre_Inopine" } )
-Halt( self )
+                Halt( self )
                 do return end
 
             end
@@ -96,12 +91,8 @@ node "BEH_Ordre_SePoster_EnAttente"
 {
     activations =
     {
-        { "ACT_Dep_SePoster", { "onHalt" } },
+        { "ACT_Dep_SePoster", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Ordre_SePoster_EnAttente" } },
 
     create = function( self )
     end,

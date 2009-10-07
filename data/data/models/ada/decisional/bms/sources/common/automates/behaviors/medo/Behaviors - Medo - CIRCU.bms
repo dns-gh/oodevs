@@ -15,12 +15,8 @@ include "Common/Automates/Actions/Medo/Actions - Medo - CIRCU.bms"
 {
     activations =
     {
-        { "BEH_Mission_Automate_CIRCU_AssignerReconnaitreItineraireA", { "onHalt" } },
+        { "BEH_Mission_Automate_CIRCU_AssignerReconnaitreItineraireA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_CIRCU_AssignerReconnaitreItineraireAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -29,16 +25,14 @@ include "Common/Automates/Actions/Medo/Actions - Medo - CIRCU.bms"
         self._namedParams.itineraireLog = self.params[3]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 for _,x in pairs( self._namedParams.listePions ) do
                 local _continue = true
                     do
-                        StartInstance( self, self.activations.BEH_Mission_Automate_CIRCU_AssignerReconnaitreItineraireA, 1, { self._namedParams.ePhase, x, self._namedParams.itineraireLog, } )
+                        StartActivateOverride( self, self.activations.BEH_Mission_Automate_CIRCU_AssignerReconnaitreItineraireA, 1, { self._namedParams.ePhase, x, self._namedParams.itineraireLog, } )
                     end
 
                 end
@@ -60,15 +54,11 @@ node "BEH_Mission_Automate_CIRCU_AssignerReconnaitreItineraireA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_LOG_AssignerReconnaitreItineraireA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_LOG_AssignerReconnaitreItineraireA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_CIRCU_AssignerReconnaitreItineraireA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -109,12 +99,8 @@ node "BEH_Medo_Automate_CIRCU_AssignerMissionsRenforcerAListe"
 {
     activations =
     {
-        { "BEH_Medo_Automate_CIRCU_AssignerMissionRenforcerA", { "onHalt" } },
+        { "BEH_Medo_Automate_CIRCU_AssignerMissionRenforcerA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_CIRCU_AssignerMissionsRenforcerAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -123,16 +109,14 @@ node "BEH_Medo_Automate_CIRCU_AssignerMissionsRenforcerAListe"
         self._namedParams.uniteARenforcer = self.params[3]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         if( ModuleBegins() ) then
             do
                 for _,x in pairs( self._namedParams.listePions ) do
                 local _continue = true
                     do
-                        StartInstance( self, self.activations.BEH_Medo_Automate_CIRCU_AssignerMissionRenforcerA, 1, { self._namedParams.ePhase, x, self._namedParams.uniteARenforcer, } )
+                        StartActivateOverride( self, self.activations.BEH_Medo_Automate_CIRCU_AssignerMissionRenforcerA, 1, { self._namedParams.ePhase, x, self._namedParams.uniteARenforcer, } )
                     end
 
                 end
@@ -148,15 +132,11 @@ node "BEH_Medo_Automate_CIRCU_AssignerMissionRenforcerA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_CIRCU_AssignerRenforcerA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_CIRCU_AssignerRenforcerA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_CIRCU_AssignerMissionRenforcerA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -197,12 +177,8 @@ node "BEH_Medo_Automate_CIRCU_AssignerMissionsAppuyerFranchissementSurUnPointALi
 {
     activations =
     {
-        { "BEH_Mission_Automate_CIRCU_AssignerAppuyerFranchissementSurUnPointA", { "onHalt" } },
+        { "BEH_Mission_Automate_CIRCU_AssignerAppuyerFranchissementSurUnPointA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_CIRCU_AssignerMissionsAppuyerFranchissementSurUnPointAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -211,9 +187,7 @@ node "BEH_Medo_Automate_CIRCU_AssignerMissionsAppuyerFranchissementSurUnPointALi
         self._namedParams.listeObjets = self.params[3]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         if( ModuleBegins() ) then
             do
@@ -226,7 +200,7 @@ node "BEH_Medo_Automate_CIRCU_AssignerMissionsAppuyerFranchissementSurUnPointALi
                             iterateur = 0
                         end
 
-                        StartInstance( self, self.activations.BEH_Mission_Automate_CIRCU_AssignerAppuyerFranchissementSurUnPointA, 1, { self._namedParams.ePhase, x, DEC_UserTypeList_GetAt( self._namedParams.listeObjets, iterateur ), } )
+                        StartActivateOverride( self, self.activations.BEH_Mission_Automate_CIRCU_AssignerAppuyerFranchissementSurUnPointA, 1, { self._namedParams.ePhase, x, DEC_UserTypeList_GetAt( self._namedParams.listeObjets, iterateur ), } )
                                                 iterateur = iterateur + 1
                     end
 
@@ -249,15 +223,11 @@ node "BEH_Mission_Automate_CIRCU_AssignerAppuyerFranchissementSurUnPointA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_LOG_AssignerAppuyerFranchissementSurUnPointA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_LOG_AssignerAppuyerFranchissementSurUnPointA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_CIRCU_AssignerAppuyerFranchissementSurUnPointA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -298,12 +268,8 @@ node "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementDansZoneAListe"
 {
     activations =
     {
-        { "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementDansZoneA", { "onHalt" } },
+        { "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementDansZoneA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementDansZoneAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -312,9 +278,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementDansZoneAListe"
         self._namedParams.listeLocalisations = self.params[3]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         if( ModuleBegins() ) then
             do
@@ -327,7 +291,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementDansZoneAListe"
                             iterateur = 0
                         end
 
-                        StartInstance( self, self.activations.BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementDansZoneA, 1, { self._namedParams.ePhase, x, DEC_UserTypeList_GetAt( self._namedParams.listeLocalisations, iterateur ), } )
+                        StartActivateOverride( self, self.activations.BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementDansZoneA, 1, { self._namedParams.ePhase, x, DEC_UserTypeList_GetAt( self._namedParams.listeLocalisations, iterateur ), } )
                                                 iterateur = iterateur + 1
                     end
 
@@ -350,15 +314,11 @@ node "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementDansZoneA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_LOG_AssignerAppuyerMouvementDansZoneA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_LOG_AssignerAppuyerMouvementDansZoneA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementDansZoneA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -405,12 +365,8 @@ node "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementAListe"
 {
     activations =
     {
-        { "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementA", { "onHalt" } },
+        { "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -419,9 +375,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementAListe"
         self._namedParams.listePC = self.params[3]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         if( ModuleBegins() ) then
             do
@@ -434,7 +388,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementAListe"
                             iterateur = 0
                         end
 
-                        StartInstance( self, self.activations.BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementA, 1, { self._namedParams.ePhase, x, DIA_GetAt( self._namedParams.listePC, iterateur ), } )
+                        StartActivateOverride( self, self.activations.BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementA, 1, { self._namedParams.ePhase, x, DIA_GetAt( self._namedParams.listePC, iterateur ), } )
                                                 iterateur = iterateur + 1
                     end
 
@@ -457,15 +411,11 @@ node "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_LOG_AssignerAppuyerMouvementA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_LOG_AssignerAppuyerMouvementA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -506,12 +456,8 @@ node "BEH_Mission_Automate_CIRCU_AssignerArmerPIAAListe"
 {
     activations =
     {
-        { "BEH_Mission_Automate_CIRCU_AssignerArmerPIAA", { "onHalt" } },
+        { "BEH_Mission_Automate_CIRCU_AssignerArmerPIAA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_CIRCU_AssignerArmerPIAAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -520,9 +466,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerArmerPIAAListe"
         self._namedParams.listePIA = self.params[3]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         if( ModuleBegins() ) then
             do
@@ -535,7 +479,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerArmerPIAAListe"
                             iterateur = 0
                         end
 
-                        StartInstance( self, self.activations.BEH_Mission_Automate_CIRCU_AssignerArmerPIAA, 1, { self._namedParams.ePhase, x, DEC_ListePoints_GetAt( self._namedParams.listePIA, iterateur ), } )
+                        StartActivateOverride( self, self.activations.BEH_Mission_Automate_CIRCU_AssignerArmerPIAA, 1, { self._namedParams.ePhase, x, DEC_ListePoints_GetAt( self._namedParams.listePIA, iterateur ), } )
                                                 iterateur = iterateur + 1
                     end
 
@@ -558,15 +502,11 @@ node "BEH_Mission_Automate_CIRCU_AssignerArmerPIAA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_LOG_AssignerArmerPIAA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_LOG_AssignerArmerPIAA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_CIRCU_AssignerArmerPIAA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -607,12 +547,8 @@ node "BEH_Mission_Automate_CIRCU_AssignerBloquerZoneAListe"
 {
     activations =
     {
-        { "BEH_Mission_Automate_CIRCU_AssignerBloquerZoneA", { "onHalt" } },
+        { "BEH_Mission_Automate_CIRCU_AssignerBloquerZoneA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_CIRCU_AssignerBloquerZoneAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -621,9 +557,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerBloquerZoneAListe"
         self._namedParams.listeSousSecteurs = self.params[3]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         if( ModuleBegins() ) then
             do
@@ -636,7 +570,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerBloquerZoneAListe"
                             iterateur = 0
                         end
 
-                        StartInstance( self, self.activations.BEH_Mission_Automate_CIRCU_AssignerBloquerZoneA, 1, { self._namedParams.ePhase, x, DEC_UserTypeList_GetAt( self._namedParams.listeSousSecteurs, iterateur ), } )
+                        StartActivateOverride( self, self.activations.BEH_Mission_Automate_CIRCU_AssignerBloquerZoneA, 1, { self._namedParams.ePhase, x, DEC_UserTypeList_GetAt( self._namedParams.listeSousSecteurs, iterateur ), } )
                                                 iterateur = iterateur + 1
                     end
 
@@ -659,15 +593,11 @@ node "BEH_Mission_Automate_CIRCU_AssignerBloquerZoneA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_LOG_AssignerBloquerZoneA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_LOG_AssignerBloquerZoneA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_CIRCU_AssignerBloquerZoneA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -708,12 +638,8 @@ node "BEH_Mission_Automate_CIRCU_AssignerMettreEnOeuvreStationnementAListe"
 {
     activations =
     {
-        { "BEH_Mission_Automate_CIRCU_AssignerMettreEnOeuvreZoneStationnementA", { "onHalt" } },
+        { "BEH_Mission_Automate_CIRCU_AssignerMettreEnOeuvreZoneStationnementA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_CIRCU_AssignerMettreEnOeuvreStationnementAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -722,9 +648,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerMettreEnOeuvreStationnementAListe"
         self._namedParams.listeLocalisations = self.params[3]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         if( ModuleBegins() ) then
             do
@@ -737,7 +661,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerMettreEnOeuvreStationnementAListe"
                             iterateur = 0
                         end
 
-                        StartInstance( self, self.activations.BEH_Mission_Automate_CIRCU_AssignerMettreEnOeuvreZoneStationnementA, 1, { self._namedParams.ePhase, x, DEC_UserTypeList_GetAt( self._namedParams.listeLocalisations, iterateur ), } )
+                        StartActivateOverride( self, self.activations.BEH_Mission_Automate_CIRCU_AssignerMettreEnOeuvreZoneStationnementA, 1, { self._namedParams.ePhase, x, DEC_UserTypeList_GetAt( self._namedParams.listeLocalisations, iterateur ), } )
                                                 iterateur = iterateur + 1
                     end
 
@@ -760,15 +684,11 @@ node "BEH_Mission_Automate_CIRCU_AssignerMettreEnOeuvreZoneStationnementA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_LOG_AssignerMettreEnOeuvreZoneStationnementA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_LOG_AssignerMettreEnOeuvreZoneStationnementA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_CIRCU_AssignerMettreEnOeuvreZoneStationnementA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -809,12 +729,8 @@ node "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneContamineeAListe"
 {
     activations =
     {
-        { "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneContamineeA", { "onHalt" } },
+        { "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneContamineeA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneContamineeAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -823,9 +739,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneContamineeAListe"
         self._namedParams.listeLocalisations = self.params[3]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         if( ModuleBegins() ) then
             do
@@ -838,7 +752,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneContamineeAListe"
                             iterateur = 0
                         end
 
-                        StartInstance( self, self.activations.BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneContamineeA, 1, { self._namedParams.ePhase, x, DEC_UserTypeList_GetAt( self._namedParams.listeLocalisations, iterateur ), } )
+                        StartActivateOverride( self, self.activations.BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneContamineeA, 1, { self._namedParams.ePhase, x, DEC_UserTypeList_GetAt( self._namedParams.listeLocalisations, iterateur ), } )
                                                 iterateur = iterateur + 1
                     end
 
@@ -861,15 +775,11 @@ node "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneContamineeA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_LOG_AssignerReconnaitreZoneContamineeA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_LOG_AssignerReconnaitreZoneContamineeA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneContamineeA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -910,12 +820,8 @@ node "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneDeDeploiementAListe"
 {
     activations =
     {
-        { "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneDeDeploiementA", { "onHalt" } },
+        { "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneDeDeploiementA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneDeDeploiementAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -924,9 +830,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneDeDeploiementAListe"
         self._namedParams.listeLocalisations = self.params[3]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         if( ModuleBegins() ) then
             do
@@ -939,7 +843,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneDeDeploiementAListe"
                             iterateur = 0
                         end
 
-                        StartInstance( self, self.activations.BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneDeDeploiementA, 1, { self._namedParams.ePhase, x, DEC_UserTypeList_GetAt( self._namedParams.listeLocalisations, iterateur ), } )
+                        StartActivateOverride( self, self.activations.BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneDeDeploiementA, 1, { self._namedParams.ePhase, x, DEC_UserTypeList_GetAt( self._namedParams.listeLocalisations, iterateur ), } )
                                                 iterateur = iterateur + 1
                     end
 
@@ -962,15 +866,11 @@ node "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneDeDeploiementA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_LOG_AssignerReconnaitreZoneDeDeploiementA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_LOG_AssignerReconnaitreZoneDeDeploiementA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneDeDeploiementA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -1011,12 +911,8 @@ node "BEH_Mission_Automate_CIRCU_AssignerSurveillerAListe"
 {
     activations =
     {
-        { "BEH_Mission_Automate_CIRCU_AssignerSurveillerA", { "onHalt" } },
+        { "BEH_Mission_Automate_CIRCU_AssignerSurveillerA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_CIRCU_AssignerSurveillerAListe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -1025,9 +921,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerSurveillerAListe"
         self._namedParams.listeLocalisations = self.params[3]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         if( ModuleBegins() ) then
             do
@@ -1040,7 +934,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerSurveillerAListe"
                             iterateur = 0
                         end
 
-                        StartInstance( self, self.activations.BEH_Mission_Automate_CIRCU_AssignerSurveillerA, 1, { self._namedParams.ePhase, x, DEC_UserTypeList_GetAt( self._namedParams.listeLocalisations, iterateur ), } )
+                        StartActivateOverride( self, self.activations.BEH_Mission_Automate_CIRCU_AssignerSurveillerA, 1, { self._namedParams.ePhase, x, DEC_UserTypeList_GetAt( self._namedParams.listeLocalisations, iterateur ), } )
                                                 iterateur = iterateur + 1
                     end
 
@@ -1063,15 +957,11 @@ node "BEH_Mission_Automate_CIRCU_AssignerSurveillerA"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_EnCours", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "ACT_Mission_Automate_ControleCreation_OK", { "onHalt" } },
-        { "ACT_Mission_Automate_LOG_AssignerSurveillerA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_LOG_AssignerSurveillerA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_CIRCU_AssignerSurveillerA" } },
 
     create = function( self )
         self._namedParams = {}

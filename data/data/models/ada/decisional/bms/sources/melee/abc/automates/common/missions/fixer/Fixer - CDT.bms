@@ -22,15 +22,11 @@ includedFiles["sources/melee/abc/automates/common/missions/fixer/Fixer - CDT.bms
 {
     activations =
     {
-        { "BEH_CoordDep_Automate_ABC_AssurerLaCoordinationInterne_", { "onHalt" } },
-        { "BEH_Dispositif_Automate_ABC_GererLesAppuis_", { "onHalt" } },
-        { "BEH_Dispositif_Automate_ABC_GererLeDispositif_", { "onHalt" } },
-        { "BEH_RC_Automate_GererConditionOperationnelle", { "onHalt" } },
+        { "BEH_CoordDep_Automate_ABC_AssurerLaCoordinationInterne_", {} },
+        { "BEH_Dispositif_Automate_ABC_GererLesAppuis_", {} },
+        { "BEH_Dispositif_Automate_ABC_GererLeDispositif_", {} },
+        { "BEH_RC_Automate_GererConditionOperationnelle", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_ABC_Fixer" } },
 
     create = function( self )
     end,

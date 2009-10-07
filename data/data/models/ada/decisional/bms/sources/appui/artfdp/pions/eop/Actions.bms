@@ -20,8 +20,6 @@ node "ACT_Dep_Pion_EOP_ActiverFurtivite"
         furtivite = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Dep_Pion_EOP_ActiverFurtivite" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.rFurtivite = self.params[1]
@@ -54,8 +52,6 @@ node "ACT_Transport_Pion_EOP_Debarquer"
         deplacement = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Transport_Pion_EOP_Debarquer" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.bLaisserTransporteur = self.params[1]
@@ -85,8 +81,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     DEC_Trace( "Landing: carrier ignored" )
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Transport_Pion_EOP_Debarquer" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                                 end
@@ -98,8 +93,7 @@ Halt( self )
 
                     self.actionID = DEC_StopAction( self.actionID )
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Transport_Pion_EOP_Debarquer" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                                 end

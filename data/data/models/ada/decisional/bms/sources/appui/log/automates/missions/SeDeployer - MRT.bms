@@ -11,19 +11,15 @@ includedFiles["sources/appui/log/automates/missions/SeDeployer - MRT.bms"] = tru
 {
     activations =
     {
-        { "BEH_Mission_Automate_LOG_AssignerSeDeployerAListe", { "onHalt" } },
-        { "BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesAListe", { "onHalt" } },
-        { "BEH_Mission_Automate_LOG_AssignerTraiterBlessesAListe", { "onHalt" } },
-        { "BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesAListe", { "onHalt" } },
-        { "BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalAListe", { "onHalt" } },
-        { "BEH_Mission_Automate_LOG_AssignerReparerAListe", { "onHalt" } },
-        { "BEH_Mission_Automate_AssignerFaireMouvementAListe", { "onHalt" } },
-        { "ACT_Warning", { "onHalt" } },
+        { "BEH_Mission_Automate_LOG_AssignerSeDeployerAListe", {} },
+        { "BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesAListe", {} },
+        { "BEH_Mission_Automate_LOG_AssignerTraiterBlessesAListe", {} },
+        { "BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesAListe", {} },
+        { "BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalAListe", {} },
+        { "BEH_Mission_Automate_LOG_AssignerReparerAListe", {} },
+        { "BEH_Mission_Automate_AssignerFaireMouvementAListe", {} },
+        { "ACT_Warning", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_LOG_SeDeployer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -172,8 +168,7 @@ elseif switch_1 == eMRT_MissionImpossible then
 elseif switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_LOG_SeDeployer" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end

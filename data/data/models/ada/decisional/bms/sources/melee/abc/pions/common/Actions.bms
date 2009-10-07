@@ -17,8 +17,6 @@ include "bit.lua"
         tir = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Tir_Pion_ABC_FaireFeuSur" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.repEni = self.params[1]
@@ -55,8 +53,7 @@ include "bit.lua"
 
         DEC_Trace( "Fin ouverture du feu" )
                 self.params.__returnValue = eActionHalt
-        Feedback( self.feedbacks["onHalt"], { "ACT_Tir_Pion_ABC_FaireFeuSur" } )
-Halt( self )
+        Halt( self )
         do return end
 
     end,

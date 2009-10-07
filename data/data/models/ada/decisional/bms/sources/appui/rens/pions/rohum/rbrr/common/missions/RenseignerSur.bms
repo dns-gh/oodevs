@@ -11,19 +11,15 @@ includedFiles["sources/appui/rens/pions/rohum/rbrr/common/missions/RenseignerSur
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_RC", { "onHalt" } },
-        { "BEH_Dep_SePoster", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "BEH_Rens_EnSurveillanceDe", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_Info_Trace", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_RC", {} },
+        { "BEH_Dep_SePoster", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Rens_EnSurveillanceDe", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_RENS_RenseignerSur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -49,8 +45,7 @@ includedFiles["sources/appui/rens/pions/rohum/rbrr/common/missions/RenseignerSur
 
         if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_RENS_RenseignerSur" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 

@@ -8,13 +8,9 @@ includedFiles["sources/appui/alat/pions/common/behaviors/Behaviors - Mot.bms"] =
 {
     activations =
     {
-        { "ACT_MAJ_EtatOrdreCoordination", { "onHalt" } },
-        { "BEH_Dep_Pion_ALAT_SePoser", { "onHalt" } },
+        { "ACT_MAJ_EtatOrdreCoordination", {} },
+        { "BEH_Dep_Pion_ALAT_SePoser", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MOT_Pion_ALAT_SePoster" } },
 
     create = function( self )
     end,
@@ -36,13 +32,9 @@ node "BEH_MOT_Pion_ALAT_GarderSesDistances"
 {
     activations =
     {
-        { "ACT_MAJ_EtatDec", { "onHalt" } },
-        { "BEH_MOT_Pion_ALAT_GarderSesDistancesFaceA", { "onHalt" } },
+        { "ACT_MAJ_EtatDec", {} },
+        { "BEH_MOT_Pion_ALAT_GarderSesDistancesFaceA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MOT_Pion_ALAT_GarderSesDistances" } },
 
     create = function( self )
     end,
@@ -89,12 +81,8 @@ node "BEH_MOT_Pion_ALAT_GarderSesDistancesFaceA"
 
     activations =
     {
-        { "BEH_Eni_Pion_ALAT_DecrocherFaceA", { "onHalt" } },
+        { "BEH_Eni_Pion_ALAT_DecrocherFaceA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MOT_Pion_ALAT_GarderSesDistancesFaceA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -104,15 +92,13 @@ node "BEH_MOT_Pion_ALAT_GarderSesDistancesFaceA"
     activate = function( self )
         if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.repEni ) ) then
             self.params.__returnValue = eActionImpossible
-            Feedback( self.feedbacks["onHalt"], { "BEH_MOT_Pion_ALAT_GarderSesDistancesFaceA" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
         if( DEC_ConnaissanceAgent_EstMort( self._namedParams.repEni ) ) then
             self.params.__returnValue = eActionImpossible
-            Feedback( self.feedbacks["onHalt"], { "BEH_MOT_Pion_ALAT_GarderSesDistancesFaceA" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -135,8 +121,6 @@ Halt( self )
 
 node "BEH_Mot_Pion_ALAT_AffecterVariablesDEtat"
 {
-    feedbacks = { { { "onHalt" }, "BEH_Mot_Pion_ALAT_AffecterVariablesDEtat" } },
-
     create = function( self )
     end,
 

@@ -11,15 +11,11 @@ includedFiles["sources/appui/genie/pions/missions/participation a la protection/
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Dep_GEN_AllerFaireTravauxSur", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_GEN_AllerFaireTravauxSur", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_GEN_RealiserTravauxProtection" } },
 
     create = function( self )
         self._namedParams = {}
@@ -100,12 +96,8 @@ node "BEH_Dep_GEN_AllerFaireTravauxSur"
 {
     activations =
     {
-        { "BEH_Obj_GEN_AllerContruireObjetSur", { "onHalt" } },
+        { "BEH_Obj_GEN_AllerContruireObjetSur", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_GEN_AllerFaireTravauxSur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -147,13 +139,9 @@ node "BEH_Obj_GEN_AllerContruireObjetSur"
 
     activations =
     {
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "BEH_Objet_Pion_GEN_RealiserObjet", { "onHalt" } },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Objet_Pion_GEN_RealiserObjet", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Obj_GEN_AllerContruireObjetSur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -166,8 +154,7 @@ node "BEH_Obj_GEN_AllerContruireObjetSur"
         --[[// Fin construction
 ]]if( self.eEtat == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "BEH_Obj_GEN_AllerContruireObjetSur" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -181,8 +168,7 @@ Halt( self )
                     do
                         DEC_Trace( "Objet planifie en dehors du fuseau..." )
                                                 self.params.__returnValue = eActionEffectuee
-                        Feedback( self.feedbacks["onHalt"], { "BEH_Obj_GEN_AllerContruireObjetSur" } )
-Halt( self )
+                        Halt( self )
                         do return end
 
                     end
@@ -219,14 +205,10 @@ node "BEH_Objet_Pion_GEN_RealiserObjet"
 
     activations =
     {
-        { "ACT_RC", { "onHalt" } },
-        { "ACT_Obj_Pion_GEN_PreparerObstacle", { "onHalt" } },
-        { "BEH_Objet_Pion_GEN_RealiserTravaux", { "onHalt" } },
+        { "ACT_RC", {} },
+        { "ACT_Obj_Pion_GEN_PreparerObstacle", {} },
+        { "BEH_Objet_Pion_GEN_RealiserTravaux", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Objet_Pion_GEN_RealiserObjet" } },
 
     create = function( self )
         self._namedParams = {}
@@ -240,8 +222,7 @@ node "BEH_Objet_Pion_GEN_RealiserObjet"
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Objet_Pion_GEN_RealiserObjet" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end
@@ -286,13 +267,9 @@ node "BEH_Objet_Pion_GEN_RealiserTravaux"
 {
     activations =
     {
-        { "ACT_Obj_Pion_GEN_RealiserTravaux", { "onHalt" } },
-        { "ACT_Obj_Pion_GEN_ValoriserObstacle", { "onHalt" } },
+        { "ACT_Obj_Pion_GEN_RealiserTravaux", {} },
+        { "ACT_Obj_Pion_GEN_ValoriserObstacle", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Objet_Pion_GEN_RealiserTravaux" } },
 
     create = function( self )
         self._namedParams = {}
@@ -333,8 +310,7 @@ node "BEH_Objet_Pion_GEN_RealiserTravaux"
 elseif switch_1 == eValoriserObstacle then
                     if( not DEC_Agent_PeutValoriserObjet( myself.objMisEnCours_ ) ) then
                         self.params.__returnValue = eActionEffectuee
-                        Feedback( self.feedbacks["onHalt"], { "BEH_Objet_Pion_GEN_RealiserTravaux" } )
-Halt( self )
+                        Halt( self )
                         do return end
                     end
 
@@ -344,8 +320,7 @@ Halt( self )
                             self.eEtat = eActionEnCours
                                                         do
                                                                 self.params.__returnValue = eActionEffectuee
-                                Feedback( self.feedbacks["onHalt"], { "BEH_Objet_Pion_GEN_RealiserTravaux" } )
-Halt( self )
+                                Halt( self )
                                 do return end
 
                             end

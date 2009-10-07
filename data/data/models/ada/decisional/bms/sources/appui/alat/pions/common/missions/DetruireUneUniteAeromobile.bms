@@ -21,22 +21,18 @@ include "bit.lua"
 {
     activations =
     {
-        { "ACT_Maj_Pion_PasserEnTirLibre", { "onHalt" } },
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "ACT_RC", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Dep_Pion_ALAT_IntercepterConnaissances", { "onHalt" } },
-        { "BEH_Eni_Pion_ALAT_GererEniDetruireAeromobile", { "onHalt" } },
-        { "ACT_Maj_Pion_PasserEnTirSurRiposte", { "onHalt" } },
-        { "ACT_Obs_EtablirVisionCur", { "onHalt" } },
-        { "BEH_Manoeuvre_Pion_AllerStationner", { "onHalt" } },
-        { "BEH_Dep_Pion_ALAT_SePoser", { "onHalt" } },
+        { "ACT_Maj_Pion_PasserEnTirLibre", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_Info_Trace", {} },
+        { "ACT_RC", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_Pion_ALAT_IntercepterConnaissances", {} },
+        { "BEH_Eni_Pion_ALAT_GererEniDetruireAeromobile", {} },
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
+        { "ACT_Obs_EtablirVisionCur", {} },
+        { "BEH_Manoeuvre_Pion_AllerStationner", {} },
+        { "BEH_Dep_Pion_ALAT_SePoser", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_ALAT_DetruireAeromobile" } },
 
     create = function( self )
         self._namedParams = {}
@@ -143,8 +139,7 @@ elseif switch_1 == eFinMission then
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
-                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_DetruireAeromobile" } )
-Halt( self )
+                                Halt( self )
                                 do return end
 
                             end
@@ -177,12 +172,8 @@ node "BEH_Eni_Pion_ALAT_GererEniDetruireAeromobile"
 {
     activations =
     {
-        { "BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire", { "onHalt" } },
+        { "BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_ALAT_GererEniDetruireAeromobile" } },
 
     create = function( self )
         self._namedParams = {}
@@ -192,8 +183,7 @@ node "BEH_Eni_Pion_ALAT_GererEniDetruireAeromobile"
     activate = function( self )
         if( F_Pion_GeteEtatFeu( myself ) == eEtatFeu_Executer ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "BEH_Eni_Pion_ALAT_GererEniDetruireAeromobile" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 

@@ -56,12 +56,8 @@ node "BEH_ASA_Defaut"
 {
     activations =
     {
-        { "ACT_Misc_Delai", { "onHalt" } },
+        { "ACT_Misc_Delai", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_ASA_Defaut" } },
 
     create = function( self )
     end,

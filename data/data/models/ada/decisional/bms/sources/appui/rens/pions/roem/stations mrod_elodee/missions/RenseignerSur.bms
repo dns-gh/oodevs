@@ -11,12 +11,8 @@ includedFiles["sources/appui/rens/pions/roem/stations mrod_elodee/missions/Rense
 {
     activations =
     {
-        { "BEH_Mission_Pion_RENS_ROEM_RenseignerSur", { "onHalt" } },
+        { "BEH_Mission_Pion_RENS_ROEM_RenseignerSur", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_RENS_ROEM_RenseignerSur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -30,15 +26,13 @@ includedFiles["sources/appui/rens/pions/roem/stations mrod_elodee/missions/Rense
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible ) then
             self.params.__returnValue = eActionImpossible
-            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_RENS_ROEM_RenseignerSur" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
         if( self.eEtat == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_RENS_ROEM_RenseignerSur" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 

@@ -16,15 +16,11 @@ node "MIS_Automate_CDT_INF_Reduire"
 {
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Defaut", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_CadreOffensif", { "onHalt" } },
-        { "BEH_Situation_Automate_INF_Assaut", { "onHalt" } },
-        { "BEH_Situation_Automate_INF_ReduireDetruire", { "onHalt" } },
+        { "BEH_Conduite_Automate_INF_Defaut", {} },
+        { "BEH_Conduite_Automate_INF_CadreOffensif", {} },
+        { "BEH_Situation_Automate_INF_Assaut", {} },
+        { "BEH_Situation_Automate_INF_ReduireDetruire", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_INF_Reduire" } },
 
     create = function( self )
         self._namedParams = {}
@@ -50,8 +46,7 @@ node "MIS_Automate_CDT_INF_Reduire"
                 self.eActionMission = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_CDT_INF_Reduire" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end
@@ -77,19 +72,13 @@ node "BEH_Situation_Automate_INF_ReduireDetruire"
 {
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Reduire_Manoeuvre", { "onHalt" } },
+        { "BEH_Conduite_Automate_INF_Reduire_Manoeuvre", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Situation_Automate_INF_ReduireDetruire" } },
 
     create = function( self )
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         self.mission = self.mission or DEC_GetMission( myself )
         if( ModuleBegins() ) then
             do
@@ -101,7 +90,7 @@ node "BEH_Situation_Automate_INF_ReduireDetruire"
                     local _continue = true
                     do
                         local ptEni = DEC_ListePoints_GetAt( self.mission.pointsResistance_, rIt )
-                        StartInstance( self, self.activations.BEH_Conduite_Automate_INF_Reduire_Manoeuvre, 1, { ptEni, } )
+                        StartActivateOverride( self, self.activations.BEH_Conduite_Automate_INF_Reduire_Manoeuvre, 1, { ptEni, } )
                     end
                 rIt = rIt + 1
                 end

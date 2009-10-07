@@ -26,12 +26,8 @@ includedFiles["sources/melee/inf/automates/common/Behaviors CDT - GererReleve.bm
 {
     activations =
     {
-        { "BEH_Conduite_Automate_INF_AssignerReleve", { "onHalt" } },
+        { "BEH_Conduite_Automate_INF_AssignerReleve", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dispositif_Automate_INF_GererReleve" } },
 
     create = function( self )
     end,
@@ -84,8 +80,6 @@ do
 
 node "BEH_Dispositif_Automate_INF_GererReleve_EnDepassant"
 {
-    feedbacks = { { { "onHalt" }, "BEH_Dispositif_Automate_INF_GererReleve_EnDepassant" } },
-
     create = function( self )
     end,
 
@@ -96,8 +90,6 @@ node "BEH_Dispositif_Automate_INF_GererReleve_EnDepassant"
 
 node "BEH_Dispositif_Automate_INF_GererReleve_SurPlace"
 {
-    feedbacks = { { { "onHalt" }, "BEH_Dispositif_Automate_INF_GererReleve_SurPlace" } },
-
     create = function( self )
     end,
 
@@ -123,12 +115,8 @@ node "BEH_Conduite_Automate_INF_AssignerReleve"
 
     activations =
     {
-        { "ACT_Conduite_Automate_ReleverUnite", { "onHalt" } },
+        { "ACT_Conduite_Automate_ReleverUnite", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_AssignerReleve" } },
 
     create = function( self )
         self._namedParams = {}
@@ -136,9 +124,7 @@ node "BEH_Conduite_Automate_INF_AssignerReleve"
         self._namedParams.pionEnDifficulte = self.params[2]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         --[[//-------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-------------------------------------------------------------------------
@@ -147,7 +133,7 @@ node "BEH_Conduite_Automate_INF_AssignerReleve"
                                 do
                 end
 
-                StartInstance( self, self.activations.ACT_Conduite_Automate_ReleverUnite, 1, { self._namedParams.pionEnSoutien, self._namedParams.pionEnDifficulte, } )
+                StartActivateOverride( self, self.activations.ACT_Conduite_Automate_ReleverUnite, 1, { self._namedParams.pionEnSoutien, self._namedParams.pionEnDifficulte, } )
             end
         end
 

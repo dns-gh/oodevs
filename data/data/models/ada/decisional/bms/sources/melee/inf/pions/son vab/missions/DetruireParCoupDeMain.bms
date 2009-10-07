@@ -16,19 +16,15 @@ node "MIS_Pion_INF_DetruireParCoupDeMain"
 {
     activations =
     {
-        { "BEH_Misc_Pion_DefinirTypeMission", { "onHalt" } },
-        { "BEH_Misc_Defini_AppuisMobile", { "onHalt" } },
-        { "BEH_MAJ_AgressiviteMission", { "onHalt" } },
-        { "ACT_Misc_Pion_INF_MAJ_PositionRegroupement", { "onHalt" } },
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "BEH_Mission_Pion_INF_DetruireParCoupDeMain", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Poste_Pion_INF_TomberEnGarde", { "onHalt" } },
+        { "BEH_Misc_Pion_DefinirTypeMission", {} },
+        { "BEH_Misc_Defini_AppuisMobile", {} },
+        { "BEH_MAJ_AgressiviteMission", {} },
+        { "ACT_Misc_Pion_INF_MAJ_PositionRegroupement", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_Mission_Pion_INF_DetruireParCoupDeMain", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Poste_Pion_INF_TomberEnGarde", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_INF_DetruireParCoupDeMain" } },
 
     create = function( self )
         self._namedParams = {}
@@ -85,8 +81,7 @@ elseif switch_1 == eFinMission then
                                                         do
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
-                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_INF_DetruireParCoupDeMain" } )
-Halt( self )
+                                Halt( self )
                                 do return end
 
                             end

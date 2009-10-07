@@ -8,19 +8,15 @@ includedFiles["sources/appui/alat/automates/common/missions/attaquer/Attaquer - 
 {
     activations =
     {
-        { "BEH_ROE_Automate_TirLibre", { "onHalt" } },
-        { "BEH_Ordre_Automate_Poursuivre_", { "onHalt" } },
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "onHalt" } },
-        { "BEH_Medo_Automate_ALAT_AssignerMissionsAttaquerAListe", { "onHalt" } },
-        { "BEH_Automate_ALAT_CoordonnerFeux", { "onHalt" } },
-        { "BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX", { "onHalt" } },
-        { "BEH_ROE_Automate_TirRestreint", { "onHalt" } },
-        { "BEH_Mission_Automate_AssignerStationnerAListe", { "onHalt" } },
+        { "BEH_ROE_Automate_TirLibre", {} },
+        { "BEH_Ordre_Automate_Poursuivre_", {} },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionsAttaquerAListe", {} },
+        { "BEH_Automate_ALAT_CoordonnerFeux", {} },
+        { "BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX", {} },
+        { "BEH_ROE_Automate_TirRestreint", {} },
+        { "BEH_Mission_Automate_AssignerStationnerAListe", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ALAT_Attaquer" } },
 
     create = function( self )
         self._namedParams = {}

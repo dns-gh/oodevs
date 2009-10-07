@@ -19,13 +19,9 @@ node "BEH_Eni_Pion_Milice_GererContactEni"
 {
     activations =
     {
-        { "ACT_MAJ_EnnemiEnCours", { "onHalt" } },
-        { "BEH_Feu_Pion_Milice_ConduireLesFeux_Sur", { "onHalt" } },
+        { "ACT_MAJ_EnnemiEnCours", {} },
+        { "BEH_Feu_Pion_Milice_ConduireLesFeux_Sur", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_Milice_GererContactEni" } },
 
     create = function( self )
         self._namedParams = {}
@@ -49,14 +45,10 @@ node "BEH_Feu_Pion_Milice_ConduireLesFeux_Sur"
 {
     activations =
     {
-        { "ACT_MAJ_EnnemiEnCours", { "onHalt" } },
-        { "ACT_RC_SurEni", { "onHalt" } },
-        { "BEH_Tir_Pion_Milice_FaireFeu", { "onHalt" } },
+        { "ACT_MAJ_EnnemiEnCours", {} },
+        { "ACT_RC_SurEni", {} },
+        { "BEH_Tir_Pion_Milice_FaireFeu", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Feu_Pion_Milice_ConduireLesFeux_Sur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -74,8 +66,7 @@ node "BEH_Feu_Pion_Milice_ConduireLesFeux_Sur"
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eAction_Tir == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "BEH_Feu_Pion_Milice_ConduireLesFeux_Sur" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -85,8 +76,7 @@ Halt( self )
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Feedback( self.feedbacks["onHalt"], { "BEH_Feu_Pion_Milice_ConduireLesFeux_Sur" } )
-Halt( self )
+                Halt( self )
                 do return end
 
             end
@@ -137,13 +127,9 @@ node "BEH_Tir_Pion_Milice_FaireFeu"
 {
     activations =
     {
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "ACT_Tir_DirectSur", { "onHalt" } },
+        { "ACT_Info_Trace", {} },
+        { "ACT_Tir_DirectSur", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Tir_Pion_Milice_FaireFeu" } },
 
     create = function( self )
         self._namedParams = {}
@@ -161,8 +147,7 @@ node "BEH_Tir_Pion_Milice_FaireFeu"
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Feedback( self.feedbacks["onHalt"], { "BEH_Tir_Pion_Milice_FaireFeu" } )
-Halt( self )
+                Halt( self )
                 do return end
 
             end
@@ -172,8 +157,7 @@ Halt( self )
             do
                 self.eAction = eActionEnCours
                                 self.params.__returnValue = eActionEffectuee
-                Feedback( self.feedbacks["onHalt"], { "BEH_Tir_Pion_Milice_FaireFeu" } )
-Halt( self )
+                Halt( self )
                 do return end
 
             end
@@ -200,8 +184,6 @@ Halt( self )
 
 node "BEH_Eni_Pion_VAB_Offensif_Manoeuvre"
 {
-    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_VAB_Offensif_Manoeuvre" } },
-
     create = function( self )
     end,
 

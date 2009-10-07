@@ -8,12 +8,8 @@ includedFiles["sources/appui/artdsa/automates/sgpt satcp mistral/missions/survei
 {
     activations =
     {
-        { "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsSurveillerAListe", { "onHalt" } },
+        { "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsSurveillerAListe", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ASA_MISTRAL_Surveiller" } },
 
     create = function( self )
         self._namedParams = {}

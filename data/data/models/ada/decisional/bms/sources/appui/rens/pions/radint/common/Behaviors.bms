@@ -25,17 +25,13 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Mot_Pion_Rens_AffecterVariablesDEtat", { "onHalt" } },
-        { "BEH_MAJ_EtatDefaut", { "onHalt" } },
-        { "BEH_ROE", { "onHalt" } },
-        { "BEH_Ambiance", { "onHalt" } },
-        { "BEH_Nbc", { "onHalt" } },
-        { "BEH_Rens", { "onHalt" } },
+        { "BEH_Mot_Pion_Rens_AffecterVariablesDEtat", {} },
+        { "BEH_MAJ_EtatDefaut", {} },
+        { "BEH_ROE", {} },
+        { "BEH_Ambiance", {} },
+        { "BEH_Nbc", {} },
+        { "BEH_Rens", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Defaut" } },
 
     create = function( self )
         self._namedParams = {}
@@ -76,8 +72,6 @@ include "bit.lua"
 
 node "BEH_Mot_Pion_Rens_AffecterVariablesDEtat"
 {
-    feedbacks = { { { "onHalt" }, "BEH_Mot_Pion_Rens_AffecterVariablesDEtat" } },
-
     create = function( self )
     end,
 
@@ -154,13 +148,9 @@ node "BEH_Dep_Pion_RENS_MonterA"
 {
     activations =
     {
-        { "ACT_Dep_Pion_RENS_VolerA", { "onHalt" } },
-        { "ACT_Misc_Delai", { "onHalt" } },
+        { "ACT_Dep_Pion_RENS_VolerA", {} },
+        { "ACT_Misc_Delai", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_RENS_MonterA" } },
 
     create = function( self )
         self._namedParams = {}

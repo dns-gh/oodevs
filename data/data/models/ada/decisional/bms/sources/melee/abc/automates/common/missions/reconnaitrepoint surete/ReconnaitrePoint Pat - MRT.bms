@@ -22,13 +22,9 @@ includedFiles["sources/melee/abc/automates/common/missions/reconnaitrepoint sure
 {
     activations =
     {
-        { "ACT_Warning", { "onHalt" } },
-        { "BEH_Mission_Automate_ABC_AssignerReconnaitrePointA", { "onHalt" } },
+        { "ACT_Warning", {} },
+        { "BEH_Mission_Automate_ABC_AssignerReconnaitrePointA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ABC_AssignerMissionReconnaitrePointA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -37,9 +33,7 @@ includedFiles["sources/melee/abc/automates/common/missions/reconnaitrepoint sure
         self._namedParams.eEtatEchelon = self.params[3]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         self.listeSousSecteurs = self.listeSousSecteurs or {}
         self.rIterateurSecteur = self.rIterateurSecteur or 0
         if( ( #( self._namedParams.selPions ) == 0 or #( self._namedParams.selPions ) == nil ) ) then
@@ -77,7 +71,7 @@ do
 
                         local secteur = DEC_UserTypeList_GetAt( self.listeSousSecteurs, self.rIterateurSecteur )
                         local pointAReconnaitre = S_Geometrie_BarycentreZone( secteur )
-                        StartInstance( self, self.activations.BEH_Mission_Automate_ABC_AssignerReconnaitrePointA, 1, { ePhase_MRT, pion, pointAReconnaitre, self._namedParams.eEtatEchelon, } )
+                        StartActivateOverride( self, self.activations.BEH_Mission_Automate_ABC_AssignerReconnaitrePointA, 1, { ePhase_MRT, pion, pointAReconnaitre, self._namedParams.eEtatEchelon, } )
                                                 self.rIterateurSecteur = self.rIterateurSecteur + 1
                     end
 

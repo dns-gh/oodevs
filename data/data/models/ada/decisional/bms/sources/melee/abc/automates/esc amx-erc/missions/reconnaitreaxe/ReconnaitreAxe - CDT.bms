@@ -22,12 +22,8 @@ includedFiles["sources/melee/abc/automates/esc amx-erc/missions/reconnaitreaxe/R
 {
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_ReconnaitreUnAxe", { "onHalt" } },
+        { "BEH_Conduite_Automate_ABC_ReconnaitreUnAxe", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_Reconnaitre" } },
 
     create = function( self )
         self._namedParams = {}

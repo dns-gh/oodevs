@@ -29,8 +29,6 @@ includedFiles["sources/appui/rens/automates/common/Gestion pions detruits.bms"] 
 ]]--[[// *****************************************************************************
 ]]node "BEH_Dispositif_Automate_RENS_GererPionsDetruits_"
 {
-    feedbacks = { { { "onHalt" }, "BEH_Dispositif_Automate_RENS_GererPionsDetruits_" } },
-
     create = function( self )
     end,
 

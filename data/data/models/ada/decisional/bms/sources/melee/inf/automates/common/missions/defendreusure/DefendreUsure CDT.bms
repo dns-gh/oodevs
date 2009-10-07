@@ -19,20 +19,14 @@ node "BEH_Conduite_Automate_INF_MenerDefenseUsure"
 {
     activations =
     {
-        { "BEH_CoordDep_Automate_INF_Retrograde", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_MenerDefenseUsure_AffecterAppuis", { "onHalt" } },
+        { "BEH_CoordDep_Automate_INF_Retrograde", {} },
+        { "BEH_Conduite_Automate_INF_MenerDefenseUsure_AffecterAppuis", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_MenerDefenseUsure" } },
 
     create = function( self )
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         Activate( self.activations.BEH_CoordDep_Automate_INF_Retrograde, 1, {} )--[[//-----------------------------------------------------------------------------
 ]]--[[// Coordination du front
 ]]--[[//-----------------------------------------------------------------------------
@@ -44,7 +38,7 @@ do
                 local pionPE = x_pe
                 local mission = DEC_GetMission( pionPE )
                 if( ( mission ~= nil and mission:GetType() == "T_Mission_Pion_INF_Interdire" ) and F_Pion_GeteEtatSituationEnnemi( pionPE ) == "eEtatSituationEnnemi_PriseContact" ) then
-                    StartInstance( self, self.activations.BEH_Conduite_Automate_INF_MenerDefenseUsure_AffecterAppuis, 1, { pionPE, } )
+                    StartActivateOverride( self, self.activations.BEH_Conduite_Automate_INF_MenerDefenseUsure_AffecterAppuis, 1, { pionPE, } )
                 end
 
             end
@@ -59,13 +53,9 @@ node "BEH_Conduite_Automate_INF_MenerDefenseUsure_AffecterAppuis"
 {
     activations =
     {
-        { "BEH_Conduite_Automate_INF_AppuyerCompromis", { "onHalt" } },
-        { "ACT_Misc_Automate_INF_Defini_PionAppuiMobile", { "onHalt" } },
+        { "BEH_Conduite_Automate_INF_AppuyerCompromis", {} },
+        { "ACT_Misc_Automate_INF_Defini_PionAppuiMobile", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_MenerDefenseUsure_AffecterAppuis" } },
 
     create = function( self )
         self._namedParams = {}

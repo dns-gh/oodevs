@@ -25,21 +25,17 @@ include "bit.lua"
 {
     activations =
     {
-        { "ACT_Misc_Pion_ABC_Escorter", { "onHalt" } },
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "BEH_MAJ_Pion_ABC_AgressiviteTir", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
-        { "BEH_Dep_Suivre", { "onHalt" } },
-        { "BEH_Dep_Progresser", { "onHalt" } },
-        { "BEH_Dep_ReagirFaceAObstacle", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "ACT_Misc_Pion_ABC_Escorter", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_MAJ_Pion_ABC_AgressiviteTir", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "ACT_Dep_ModulationVitesse", {} },
+        { "BEH_Dep_Suivre", {} },
+        { "BEH_Dep_Progresser", {} },
+        { "BEH_Dep_ReagirFaceAObstacle", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_ABC_Escorter" } },
 
     create = function( self )
         self._namedParams = {}
@@ -48,15 +44,13 @@ include "bit.lua"
         self._namedParams.eNiveauIdentificationEni = self.params[3]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         if( ModuleBegins() ) then
             do
                 --[[// Escorter (dire à l'unite qu'on l'escorte
-]]StartInstance( self, self.activations.ACT_Misc_Pion_ABC_Escorter, 1, { self._namedParams.pionAmi, } )
+]]StartActivateOverride( self, self.activations.ACT_Misc_Pion_ABC_Escorter, 1, { self._namedParams.pionAmi, } )
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
             end
         end
@@ -80,8 +74,7 @@ include "bit.lua"
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_ABC_Escorter" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -152,7 +145,7 @@ elseif switch_1 == eProgresser then
                 --[[// Fin de la mission
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
-                    StopInstance( self, self.activations.ACT_Misc_Pion_ABC_Escorter, { self._namedParams.pionAmi, } )
+                    StopActivateOverride( self, self.activations.ACT_Misc_Pion_ABC_Escorter, { self._namedParams.pionAmi, } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
                     
@@ -176,21 +169,17 @@ node "BEH_Mission_Pion_ABC_EscorterAutomate"
 {
     activations =
     {
-        { "ACT_Misc_Pion_ABC_Escorter", { "onHalt" } },
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "BEH_MAJ_Pion_ABC_AgressiviteTir", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
-        { "BEH_Dep_Suivre", { "onHalt" } },
-        { "BEH_Dep_Progresser", { "onHalt" } },
-        { "BEH_Dep_ReagirFaceAObstacle", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "ACT_Misc_Pion_ABC_Escorter", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_MAJ_Pion_ABC_AgressiviteTir", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "ACT_Dep_ModulationVitesse", {} },
+        { "BEH_Dep_Suivre", {} },
+        { "BEH_Dep_Progresser", {} },
+        { "BEH_Dep_ReagirFaceAObstacle", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_ABC_EscorterAutomate" } },
 
     create = function( self )
         self._namedParams = {}
@@ -199,9 +188,7 @@ node "BEH_Mission_Pion_ABC_EscorterAutomate"
         self._namedParams.eNiveauIdentificationEni = self.params[3]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
                 self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         --[[//-------------------------------------------------------------------------
@@ -243,12 +230,12 @@ do
                 for _,pion in pairs( --[[// Escorter (dire à l'unite qu'on l'escorte
 ]]listePionsAmis ) do
                 local _continue = true
-                    StartInstance( self, self.activations.ACT_Misc_Pion_ABC_Escorter, 1, { pion, } )
+                    StartActivateOverride( self, self.activations.ACT_Misc_Pion_ABC_Escorter, 1, { pion, } )
 
                 end
 
                 --[[// PC
-]]StartInstance( self, self.activations.ACT_Misc_Pion_ABC_Escorter, 1, { DEC_Pion_PionPCDeAutomate( self._namedParams.automateAmi ), } )
+]]StartActivateOverride( self, self.activations.ACT_Misc_Pion_ABC_Escorter, 1, { DEC_Pion_PionPCDeAutomate( self._namedParams.automateAmi ), } )
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
             end
         end
@@ -272,8 +259,7 @@ do
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_ABC_EscorterAutomate" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -345,12 +331,12 @@ elseif switch_1 == eProgresser then
 elseif switch_1 == eFinMission then
                     for _,pion in pairs( listePionsAmis ) do
                     local _continue = true
-                        StopInstance( self, self.activations.ACT_Misc_Pion_ABC_Escorter, { pion, } )
+                        StopActivateOverride( self, self.activations.ACT_Misc_Pion_ABC_Escorter, { pion, } )
 
                     end
 
                     --[[// PC
-]]StopInstance( self, self.activations.ACT_Misc_Pion_ABC_Escorter, { DEC_Pion_PionPCDeAutomate( self._namedParams.automateAmi ), } )
+]]StopActivateOverride( self, self.activations.ACT_Misc_Pion_ABC_Escorter, { DEC_Pion_PionPCDeAutomate( self._namedParams.automateAmi ), } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
                     
@@ -373,8 +359,6 @@ elseif switch_1 == eFinMission then
 
 node "ACT_Misc_Pion_ABC_Escorter"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Misc_Pion_ABC_Escorter" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionAmi = self.params[1]

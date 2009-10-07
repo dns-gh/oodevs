@@ -22,12 +22,8 @@ includedFiles["sources/melee/abc/automates/pel eei/missions/appuyer/Appuyer - CD
 {
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_Appuyer", { "onHalt" } },
+        { "BEH_Conduite_Automate_ABC_Appuyer", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_Appuyer" } },
 
     create = function( self )
         self._namedParams = {}

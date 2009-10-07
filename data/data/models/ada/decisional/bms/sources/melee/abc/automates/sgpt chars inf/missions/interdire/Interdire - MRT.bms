@@ -22,12 +22,8 @@ includedFiles["sources/melee/abc/automates/sgpt chars inf/missions/interdire/Int
 {
     activations =
     {
-        { "BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionStatique", { "onHalt" } },
+        { "BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionStatique", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_ABC_Interdire" } },
 
     create = function( self )
         self._namedParams = {}

@@ -7,8 +7,6 @@ includedFiles["sources/appui/alat/automates/common/behaviors/Behaviors - Tir.bms
 ]]--[[// -----------------------------------------------------------------------------
 ]]node "BEH_Automate_ALAT_CoordonnerFeux"
 {
-    feedbacks = { { { "onHalt" }, "BEH_Automate_ALAT_CoordonnerFeux" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.listePionsACoordonner = self.params[1]
@@ -19,8 +17,7 @@ includedFiles["sources/appui/alat/automates/common/behaviors/Behaviors - Tir.bms
         local pourcentageEffectif = 0
         local compteur = 0
         if( DIA_IsListEmpty( self._namedParams.listePionsACoordonner ) ) then
-            Feedback( self.feedbacks["onHalt"], { "BEH_Automate_ALAT_CoordonnerFeux" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 

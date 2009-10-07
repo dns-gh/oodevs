@@ -26,20 +26,14 @@ include "bit.lua"
 {
     activations =
     {
-        { "ACT_Misc_Delai", { "onHalt" } },
-        { "BEH_Mission_Automate_AssignerDecrocherA", { "onHalt" } },
+        { "ACT_Misc_Delai", {} },
+        { "BEH_Mission_Automate_AssignerDecrocherA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_CoordDep_Automate_INF_RompreContact" } },
 
     create = function( self )
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
                 self.eAction = self.eAction or eActionEnCours
         self.bStop = self.bStop or false
         self.ePhase = self.ePhase or ePhase_Decroche
@@ -65,8 +59,7 @@ include "bit.lua"
             do
                 DEC_Trace( "Processus de rupture de contact : termine" )
                                 self.params.__returnValue = eActionEffectuee
-                Feedback( self.feedbacks["onHalt"], { "BEH_CoordDep_Automate_INF_RompreContact" } )
-Halt( self )
+                Halt( self )
                 do return end
 
             end
@@ -93,8 +86,7 @@ Halt( self )
 
                     if( ( eNoError ~= self.eCodeLoc and self.ptRgpt_Bary == 0 or eNoError ~= self.eCodeLoc and self.ptRgpt_Bary == nil ) ) then
                         self.params.__returnValue = eActionImpossible
-                        Feedback( self.feedbacks["onHalt"], { "BEH_CoordDep_Automate_INF_RompreContact" } )
-Halt( self )
+                        Halt( self )
                         do return end
                     end
 
@@ -136,7 +128,7 @@ elseif switch_1 == ePhase_RompreContact then
                     end
 
                     --[[// Demande aux pions qui interdisent de rompre le contact									
-]]StartInstance( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, pionPE, ptRgrpt, eEtatEchelon_Premier, } )
+]]StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, pionPE, ptRgrpt, eEtatEchelon_Premier, } )
                     self.ePhase = ePhase_Attente
                     
                                 cases_switch_1[3] = true
@@ -159,21 +151,15 @@ node "BEH_Conduite_Automate_INF_CoupArret"
 {
     activations =
     {
-        { "BEH_Situation_Automate_INF_RuptureDeContact_Manoeuvre", { "onHalt" } },
-        { "ACT_Ordre_Suppression", { "onHalt" } },
-        { "BEH_CoordTir_Automate_INF_Intervention_LCAR", { "onHalt" } },
+        { "BEH_Situation_Automate_INF_RuptureDeContact_Manoeuvre", {} },
+        { "ACT_Ordre_Suppression", {} },
+        { "BEH_CoordTir_Automate_INF_Intervention_LCAR", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_CoupArret" } },
 
     create = function( self )
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         self.mission = self.mission or DEC_GetMission( myself )
         self.eActionDelai = self.eActionDelai or eActionEnCours
         self.eAction = self.eAction or eActionEnCours
@@ -184,7 +170,7 @@ node "BEH_Conduite_Automate_INF_CoupArret"
 do
                 local repOrdre = x
                 if( repOrdre:GetType() == "Rep_OrderConduite_Decrocher" ) then
-                    StartInstance( self, self.activations.BEH_Situation_Automate_INF_RuptureDeContact_Manoeuvre, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    StartActivateOverride( self, self.activations.BEH_Situation_Automate_INF_RuptureDeContact_Manoeuvre, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
                 end
 
                 Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
@@ -195,7 +181,7 @@ do
         if( S_CompagnieAbimee() or self.eAction_CoupArret == eActionEffectuee ) then
             do
                 if( self.eAction == eActionEnCours ) then
-                    StartInstance( self, self.activations.BEH_Situation_Automate_INF_RuptureDeContact_Manoeuvre, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    StartActivateOverride( self, self.activations.BEH_Situation_Automate_INF_RuptureDeContact_Manoeuvre, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
                 end
 
             end
@@ -226,12 +212,8 @@ node "BEH_Situation_Automate_INF_RuptureDeContact_Manoeuvre"
 {
     activations =
     {
-        { "BEH_CoordDep_Automate_INF_RompreContact_SurDelai", { "onHalt" } },
+        { "BEH_CoordDep_Automate_INF_RompreContact_SurDelai", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Situation_Automate_INF_RuptureDeContact_Manoeuvre" } },
 
     create = function( self )
     end,
@@ -242,8 +224,7 @@ node "BEH_Situation_Automate_INF_RuptureDeContact_Manoeuvre"
             do
                 self.eActionDelai = eActionEnCours
                                 self.params.__returnValue = eActionEffectuee
-                Feedback( self.feedbacks["onHalt"], { "BEH_Situation_Automate_INF_RuptureDeContact_Manoeuvre" } )
-Halt( self )
+                Halt( self )
                 do return end
 
             end
@@ -263,13 +244,9 @@ node "BEH_CoordDep_Automate_INF_RompreContact_SurDelai"
 {
     activations =
     {
-        { "ACT_Misc_Delai", { "onHalt" } },
-        { "BEH_CoordDep_Automate_INF_RompreContact", { "onHalt" } },
+        { "ACT_Misc_Delai", {} },
+        { "BEH_CoordDep_Automate_INF_RompreContact", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_CoordDep_Automate_INF_RompreContact_SurDelai" } },
 
     create = function( self )
         self._namedParams = {}
@@ -292,8 +269,7 @@ node "BEH_CoordDep_Automate_INF_RompreContact_SurDelai"
                                 do
                     DEC_Trace( "Declenchement rupture de contact : termine" )
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "BEH_CoordDep_Automate_INF_RompreContact_SurDelai" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end
@@ -326,33 +302,26 @@ node "BEH_Conduite_Automate_INF_DesactiveSauvegarde"
 {
     activations =
     {
-        { "BEH_Ordre_Automate_ArretSauvegardeSur", { "onHalt" } },
+        { "BEH_Ordre_Automate_ArretSauvegardeSur", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_DesactiveSauvegarde" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.rDelai = self.params[1]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         self.selPions = self.selPions or S_ObtenirPionsOperationnels()
         self.eAction = self.eAction or eActionEnCours
         if( self.eAction ~= eActionEnCours ) then
-            Feedback( self.feedbacks["onHalt"], { "BEH_Conduite_Automate_INF_DesactiveSauvegarde" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
         if( ModuleBegins() ) then
 for _,x in pairs( self.selPions ) do
             local _continue = true
-                StartInstance( self, self.activations.BEH_Ordre_Automate_ArretSauvegardeSur, 1, setmetatable( { x, self._namedParams.rDelai, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                StartActivateOverride( self, self.activations.BEH_Ordre_Automate_ArretSauvegardeSur, 1, setmetatable( { x, self._namedParams.rDelai, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
 
             end
         end
@@ -372,12 +341,8 @@ node "BEH_Ordre_Automate_ArretSauvegardeSur"
 {
     activations =
     {
-        { "ACT_Misc_Delai", { "onHalt" } },
+        { "ACT_Misc_Delai", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Ordre_Automate_ArretSauvegardeSur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -389,8 +354,7 @@ node "BEH_Ordre_Automate_ArretSauvegardeSur"
                 self.eEtat = self.eEtat or eActionEnCours
         if( ( self._namedParams.rTime == 0 or self._namedParams.rTime == nil ) ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "BEH_Ordre_Automate_ArretSauvegardeSur" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -409,8 +373,7 @@ Halt( self )
                 self.eEtat = eActionEnCours
                 self._namedParams.pion:S_Mot_EtatDesactiveSauvegarde( false )
                                 self.params.__returnValue = eActionEffectuee
-                Feedback( self.feedbacks["onHalt"], { "BEH_Ordre_Automate_ArretSauvegardeSur" } )
-Halt( self )
+                Halt( self )
                 do return end
 
             end

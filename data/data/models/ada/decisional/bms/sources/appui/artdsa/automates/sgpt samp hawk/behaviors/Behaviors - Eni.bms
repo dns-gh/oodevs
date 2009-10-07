@@ -9,12 +9,8 @@ includedFiles["sources/appui/artdsa/automates/sgpt samp hawk/behaviors/Behaviors
 {
     activations =
     {
-        { "BEH_Eni_Automate_ASA_HAWK_AffecterPistesASectionsDeTir", { "onHalt" } },
+        { "BEH_Eni_Automate_ASA_HAWK_AffecterPistesASectionsDeTir", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Eni_ASA_HAWK_GererTirsDefendreZone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -56,12 +52,8 @@ node "BEH_Eni_ASA_HAWK_GererTirsDefendreSite"
 {
     activations =
     {
-        { "BEH_Eni_Automate_ASA_HAWK_AffecterPistesASectionsDeTir", { "onHalt" } },
+        { "BEH_Eni_Automate_ASA_HAWK_AffecterPistesASectionsDeTir", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Eni_ASA_HAWK_GererTirsDefendreSite" } },
 
     create = function( self )
         self._namedParams = {}
@@ -101,12 +93,8 @@ node "BEH_Eni_ASA_HAWK_GererTirsSurveiller"
 {
     activations =
     {
-        { "BEH_Eni_Automate_ASA_HAWK_AffecterPistesASectionsDeTir", { "onHalt" } },
+        { "BEH_Eni_Automate_ASA_HAWK_AffecterPistesASectionsDeTir", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Eni_ASA_HAWK_GererTirsSurveiller" } },
 
     create = function( self )
         self._namedParams = {}
@@ -142,8 +130,6 @@ do
 
 node "BEH_Eni_Automate_ASA_HAWK_AffecterPistesASectionsDeTir"
 {
-    feedbacks = { { { "onHalt" }, "BEH_Eni_Automate_ASA_HAWK_AffecterPistesASectionsDeTir" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.sListeEnisADetruire = self.params[1]

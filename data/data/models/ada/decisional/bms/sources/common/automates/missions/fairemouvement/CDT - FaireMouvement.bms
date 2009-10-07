@@ -11,13 +11,9 @@ includedFiles["sources/common/automates/missions/fairemouvement/CDT - FaireMouve
 {
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "onHalt" } },
-        { "BEH_CoordDep_Automate_ActiverCoordinationSur", { "onHalt" } },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "BEH_CoordDep_Automate_ActiverCoordinationSur", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_FaireMouvement" } },
 
     create = function( self )
         self._namedParams = {}
@@ -36,8 +32,7 @@ includedFiles["sources/common/automates/missions/fairemouvement/CDT - FaireMouve
         if( self.eEtatODC == eActionHalt ) then
             do
                                 self.params.__returnValue = eActionEffectuee
-                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_CDT_FaireMouvement" } )
-Halt( self )
+                Halt( self )
                 do return end
 
                 self.eEtatODC = eActionEnCours

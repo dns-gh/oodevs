@@ -11,12 +11,8 @@ includedFiles["sources/melee/abc/automates/sgpt blindes ecl/missions/contreattaq
 {
     activations =
     {
-        { "BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionDynamique", { "onHalt" } },
+        { "BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionDynamique", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_ABC_ContreAttaquer" } },
 
     create = function( self )
         self._namedParams = {}

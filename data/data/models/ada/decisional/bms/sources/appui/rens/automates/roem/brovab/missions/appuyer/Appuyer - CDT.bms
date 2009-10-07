@@ -11,12 +11,8 @@ includedFiles["sources/appui/rens/automates/roem/brovab/missions/appuyer/Appuyer
 {
     activations =
     {
-        { "BEH_Automate_CDT_RENS_ROEM_Appuyer", { "onHalt" } },
+        { "BEH_Automate_CDT_RENS_ROEM_Appuyer", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_RENS_ROEM_Appuyer" } },
 
     create = function( self )
         self._namedParams = {}

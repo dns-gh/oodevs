@@ -60,20 +60,16 @@ include "Appui/Circulation/Pions/Missions/Missions.bms"
 {
     activations =
     {
-        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
-        { "BEH_MAJ_EtatDefaut", { "onHalt" } },
-        { "BEH_Mot_AffecterVariablesDEtat", { "onHalt" } },
-        { "BEH_Mot_Pion_Embarquer", { "onHalt" } },
-        { "BEH_ROE", { "onHalt" } },
-        { "BEH_Ambiance", { "onHalt" } },
-        { "BEH_Nbc", { "onHalt" } },
-        { "BEH_Rens", { "onHalt" } },
-        { "BEH_Ordre_Pion_CIRCU_OrdresInopines", { "onHalt" } },
+        { "ACT_Dep_ModulationVitesse", {} },
+        { "BEH_MAJ_EtatDefaut", {} },
+        { "BEH_Mot_AffecterVariablesDEtat", {} },
+        { "BEH_Mot_Pion_Embarquer", {} },
+        { "BEH_ROE", {} },
+        { "BEH_Ambiance", {} },
+        { "BEH_Nbc", {} },
+        { "BEH_Rens", {} },
+        { "BEH_Ordre_Pion_CIRCU_OrdresInopines", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Defaut" } },
 
     create = function( self )
         self._namedParams = {}
@@ -129,8 +125,6 @@ include "Appui/Circulation/Pions/Missions/Missions.bms"
 
 node "BEH_Mot_AffecterVariablesDEtat"
 {
-    feedbacks = { { { "onHalt" }, "BEH_Mot_AffecterVariablesDEtat" } },
-
     create = function( self )
     end,
 
@@ -150,12 +144,8 @@ node "BEH_LOG_Pion_FaireDesMesures"
 {
     activations =
     {
-        { "BEH_LOG_Pion_FaireUneMesureDans", { "onHalt" } },
+        { "BEH_LOG_Pion_FaireUneMesureDans", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_LOG_Pion_FaireDesMesures" } },
 
     create = function( self )
     end,
@@ -188,13 +178,9 @@ node "BEH_LOG_Pion_FaireUneMesureDans"
 {
     activations =
     {
-        { "ACT_LOG_FaireMesure", { "onHalt" } },
-        { "ACT_Dep_SePoster", { "onHalt" } },
+        { "ACT_LOG_FaireMesure", {} },
+        { "ACT_Dep_SePoster", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_LOG_Pion_FaireUneMesureDans" } },
 
     create = function( self )
         self._namedParams = {}
@@ -242,21 +228,15 @@ node "BEH_Ordre_Pion_CIRCU_OrdresInopines"
 {
     activations =
     {
-        { "ACT_Misc_Pion_Circu_PreterRemorqueurs", { "onHalt" } },
-        { "ACT_Misc_Pion_Circu_RecupererRemorqueurs", { "onHalt" } },
-        { "ACT_Ordre_Suppression", { "onHalt" } },
+        { "ACT_Misc_Pion_Circu_PreterRemorqueurs", {} },
+        { "ACT_Misc_Pion_Circu_RecupererRemorqueurs", {} },
+        { "ACT_Ordre_Suppression", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Ordre_Pion_CIRCU_OrdresInopines" } },
 
     create = function( self )
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
         for _,x in pairs( ordres_recus ) do
         local _continue = true
@@ -267,17 +247,17 @@ do
                     local cases_switch_1 = {}
                         if switch_1 == "Rep_OrderConduite_Pion_RenforcerEnRemorqueurs" then
                             local repOrdreRenforcer = repOrdre
-                            StartInstance( self, self.activations.ACT_Misc_Pion_Circu_PreterRemorqueurs, 1, { repOrdreRenforcer:GetpionARenforcer_(), repOrdreRenforcer:GetnbrRemorqueurs_(), } )
+                            StartActivateOverride( self, self.activations.ACT_Misc_Pion_Circu_PreterRemorqueurs, 1, { repOrdreRenforcer:GetpionARenforcer_(), repOrdreRenforcer:GetnbrRemorqueurs_(), } )
                             
                                                 cases_switch_1[1] = true
 elseif switch_1 == "Rep_OrderConduite_Pion_TransfererRemorqueurs" then
                             local repOrdreTransferer = repOrdre
-                            StartInstance( self, self.activations.ACT_Misc_Pion_Circu_PreterRemorqueurs, 1, { repOrdreTransferer:GetpionARenforcer_(), repOrdreTransferer:GetnbrRemorqueurs_(), } )
+                            StartActivateOverride( self, self.activations.ACT_Misc_Pion_Circu_PreterRemorqueurs, 1, { repOrdreTransferer:GetpionARenforcer_(), repOrdreTransferer:GetnbrRemorqueurs_(), } )
                             
                                                 cases_switch_1[2] = true
 elseif switch_1 == "Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs" then
                             local repOrdreReprendre = repOrdre
-                            StartInstance( self, self.activations.ACT_Misc_Pion_Circu_RecupererRemorqueurs, 1, { repOrdreReprendre:GetpionRenforce_(), repOrdreReprendre:GetnbrRemorqueurs_(), } )
+                            StartActivateOverride( self, self.activations.ACT_Misc_Pion_Circu_RecupererRemorqueurs, 1, { repOrdreReprendre:GetpionRenforce_(), repOrdreReprendre:GetnbrRemorqueurs_(), } )
                             
                                                 cases_switch_1[3] = true
                         end
@@ -303,12 +283,8 @@ node "BEH_Dep_Virtuel_ProgressionVers"
 {
     activations =
     {
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "BEH_Dep_ProgressionVers", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_Virtuel_ProgressionVers" } },
 
     create = function( self )
         self._namedParams = {}
@@ -331,8 +307,6 @@ node "BEH_Dep_Virtuel_ProgressionVers"
 
 node "BEH_Dep_Virtuel_PreparationAction"
 {
-    feedbacks = { { { "onHalt" }, "BEH_Dep_Virtuel_PreparationAction" } },
-
     create = function( self )
     end,
 
@@ -354,12 +328,8 @@ node "BEH_Pion_Circu_InstallerDispositif"
 {
     activations =
     {
-        { "ACT_Pion_Circu_InstallerDisposifif", { "onHalt" } },
+        { "ACT_Pion_Circu_InstallerDisposifif", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pion_Circu_InstallerDispositif" } },
 
     create = function( self )
     end,
@@ -381,8 +351,6 @@ node "BEH_Pion_Circu_InstallerDispositif"
 
 node "ACT_Pion_Circu_InstallerDisposifif"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Pion_Circu_InstallerDisposifif" } },
-
     create = function( self )
     end,
 

@@ -11,12 +11,8 @@ includedFiles["sources/appui/genie/pions/missions/appui a la mobilite/Executer v
 {
     activations =
     {
-        { "BEH_Objet_Pion_GEN_EquiperExploiterPointFranchissement", { "onHalt" } },
+        { "BEH_Objet_Pion_GEN_EquiperExploiterPointFranchissement", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_GEN_ExecuterVariantement" } },
 
     create = function( self )
         self._namedParams = {}
@@ -39,8 +35,7 @@ includedFiles["sources/appui/genie/pions/missions/appui a la mobilite/Executer v
 ]]        end
 
         if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.mission.siteFranchissement_ ) ) then
-            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_GEN_ExecuterVariantement" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 

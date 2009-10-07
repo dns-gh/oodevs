@@ -65,8 +65,6 @@ include "Melee/Abc/Pions/Pel PIR/Missions/Missions.bms"
 ]]--[[// *****************************************************************************
 ]]node "BEH_Pion_ABC_Default"
 {
-    feedbacks = { { { "onHalt" }, "BEH_Pion_ABC_Default" } },
-
     create = function( self )
     end,
 

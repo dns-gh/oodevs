@@ -11,18 +11,14 @@ includedFiles["sources/appui/rens/pions/roim/common/missions/MettreEnOeuvre.bms"
 {
     activations =
     {
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "ACT_RC", { "onHalt" } },
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "BEH_Dispositif_Pion_Rens_MettreEnOeuvreDrone", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "ACT_Info_Trace", {} },
+        { "ACT_RC", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dispositif_Pion_Rens_MettreEnOeuvreDrone", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_RENS_MettreEnOeuvre" } },
 
     create = function( self )
         self._namedParams = {}
@@ -64,8 +60,7 @@ do
 ]]        end
 
         if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
-            Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_RENS_MettreEnOeuvre" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -139,14 +134,10 @@ node "BEH_Dispositif_Pion_Rens_MettreEnOeuvreDrone"
 {
     activations =
     {
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "ACT_Transport_Pion_Rens_DebarquerDrone", { "onHalt" } },
-        { "ACT_Misc_ProgrammerDrone", { "onHalt" } },
+        { "ACT_Info_Trace", {} },
+        { "ACT_Transport_Pion_Rens_DebarquerDrone", {} },
+        { "ACT_Misc_ProgrammerDrone", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dispositif_Pion_Rens_MettreEnOeuvreDrone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -181,8 +172,6 @@ node "BEH_Dispositif_Pion_Rens_MettreEnOeuvreDrone"
 
 node "ACT_Misc_ProgrammerDrone"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Misc_ProgrammerDrone" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionDrone = self.params[1]
@@ -230,8 +219,7 @@ node "ACT_Misc_ProgrammerDrone"
                         end
 
                                                 self.params.__returnValue = eActionEffectuee
-                        Feedback( self.feedbacks["onHalt"], { "ACT_Misc_ProgrammerDrone" } )
-Halt( self )
+                        Halt( self )
                         do return end
 
                     end
@@ -253,8 +241,6 @@ Halt( self )
 ]]--[[// *****************************************************************************
 ]]node "ACT_Transport_Pion_Rens_DebarquerDrone"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Transport_Pion_Rens_DebarquerDrone" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionDrone = self.params[1]

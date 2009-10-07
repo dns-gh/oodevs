@@ -11,13 +11,9 @@ includedFiles["sources/common/automates/missions/soutenirenmesurede/CDT - Souten
 {
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "onHalt" } },
-        { "BEH_CoordDep_Automate_ActiverCoordinationSur", { "onHalt" } },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "BEH_CoordDep_Automate_ActiverCoordinationSur", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_SoutenirEnMesureDe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -36,8 +32,7 @@ includedFiles["sources/common/automates/missions/soutenirenmesurede/CDT - Souten
         if( self.eEtatODC == eActionHalt ) then
             do
                                 self.params.__returnValue = eActionEffectuee
-                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_CDT_SoutenirEnMesureDe" } )
-Halt( self )
+                Halt( self )
                 do return end
 
                 self.eEtatODC = eActionEnCours
@@ -60,13 +55,9 @@ node "MIS_Automate_CDT_SoutenirSurPositionEnMesureDe"
 {
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "onHalt" } },
-        { "BEH_CoordDep_Automate_ActiverCoordinationSur", { "onHalt" } },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "BEH_CoordDep_Automate_ActiverCoordinationSur", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_SoutenirSurPositionEnMesureDe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -85,8 +76,7 @@ node "MIS_Automate_CDT_SoutenirSurPositionEnMesureDe"
         if( self.eEtatODC == eActionHalt ) then
             do
                                 self.params.__returnValue = eActionEffectuee
-                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_CDT_SoutenirSurPositionEnMesureDe" } )
-Halt( self )
+                Halt( self )
                 do return end
 
                 self.eEtatODC = eActionEnCours

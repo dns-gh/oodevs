@@ -12,15 +12,11 @@ includedFiles["sources/appui/genie/pions/missions/Construire camps.bms"] = true
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Dep_GEN_AllerFaireTravauxSur", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_GEN_AllerFaireTravauxSur", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_GEN_RealiserCamps" } },
 
     create = function( self )
         self._namedParams = {}
@@ -42,8 +38,7 @@ includedFiles["sources/appui/genie/pions/missions/Construire camps.bms"] = true
                     do
                         DEC_Trace( "One of the camps does not have any command trains" )
                         DEC_Warning( eRC_MissionImpossible )
-                                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_GEN_RealiserCamps" } )
-Halt( self )
+                                                Halt( self )
                         do return end
 
                     end

@@ -13,12 +13,8 @@ includedFiles["sources/appui/artdsa/pions/samp hawk/behaviors/Behaviors - Eni.bm
 
     activations =
     {
-        { "BEH_Eni_Pion_ASA_InterceptionBalistique_Direct", { "onHalt" } },
+        { "BEH_Eni_Pion_ASA_InterceptionBalistique_Direct", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_ASA_HAWK_InterceptionBalistique" } },
 
     create = function( self )
         self._namedParams = {}
@@ -33,8 +29,7 @@ includedFiles["sources/appui/artdsa/pions/samp hawk/behaviors/Behaviors - Eni.bm
     activate = function( self )
         if( DEC_ConnaissanceAgent_EstMort( self._namedParams.ennemi ) ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "BEH_Eni_Pion_ASA_HAWK_InterceptionBalistique" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -52,12 +47,8 @@ node "BEH_Eni_GererDemandesDeTirsCentralisees"
 {
     activations =
     {
-        { "BEH_Eni_Pion_ASA_HAWK_InterceptionBalistique", { "onHalt" } },
+        { "BEH_Eni_Pion_ASA_HAWK_InterceptionBalistique", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Eni_GererDemandesDeTirsCentralisees" } },
 
     create = function( self )
     end,

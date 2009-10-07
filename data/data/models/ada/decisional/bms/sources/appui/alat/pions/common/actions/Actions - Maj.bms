@@ -13,8 +13,6 @@ includedFiles["sources/appui/alat/pions/common/actions/Actions - Maj.bms"] = tru
         objectifCourant = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Maj_Pions_ObjectifCourant" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.objectif = self.params[1]
@@ -35,8 +33,6 @@ includedFiles["sources/appui/alat/pions/common/actions/Actions - Maj.bms"] = tru
 
 node "Act_AbonnerPionAAppui"
 {
-    feedbacks = { { { "onHalt" }, "Act_AbonnerPionAAppui" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]

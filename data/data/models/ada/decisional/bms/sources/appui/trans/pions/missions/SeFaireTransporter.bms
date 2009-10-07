@@ -11,16 +11,12 @@ includedFiles["sources/appui/trans/pions/missions/SeFaireTransporter.bms"] = tru
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "BEH_Dep_Trans_SeFaireTransporter", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_Dep_Trans_SeFaireTransporter", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_SeFaireTransporter" } },
 
     create = function( self )
         self._namedParams = {}
@@ -118,12 +114,8 @@ node "BEH_Dep_Trans_SeFaireTransporter"
 {
     activations =
     {
-        { "ACT_Dep_Trans_TransportEnCours", { "onHalt" } },
+        { "ACT_Dep_Trans_TransportEnCours", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_Trans_SeFaireTransporter" } },
 
     create = function( self )
     end,
@@ -145,8 +137,6 @@ node "BEH_Dep_Trans_SeFaireTransporter"
 
 node "ACT_Dep_Trans_TransportEnCours"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Dep_Trans_TransportEnCours" } },
-
     create = function( self )
     end,
 

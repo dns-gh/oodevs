@@ -10,12 +10,8 @@ includedFiles["sources/appui/alat/pions/common/behaviors/Behaviors - Manoeuvre.b
 {
     activations =
     {
-        { "BEH_Dep_Pion_ALAT_Suivre", { "onHalt" } },
+        { "BEH_Dep_Pion_ALAT_Suivre", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Manoeuvre_Pion_SeCoordonner" } },
 
     create = function( self )
     end,
@@ -47,13 +43,9 @@ node "BEH_Manoeuvre_Pion_GestionDestruction"
 {
     activations =
     {
-        { "BEH_Dep_Pion_ALAT_SePoser", { "onHalt" } },
-        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "onHalt" } },
+        { "BEH_Dep_Pion_ALAT_SePoser", {} },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Manoeuvre_Pion_GestionDestruction" } },
 
     create = function( self )
     end,
@@ -82,13 +74,9 @@ node "BEH_Manoeuvre_Pion_AllerStationner"
 {
     activations =
     {
-        { "ACT_Maj_Pions_ObjectifEsquive", { "onHalt" } },
-        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "onHalt" } },
+        { "ACT_Maj_Pions_ObjectifEsquive", {} },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Manoeuvre_Pion_AllerStationner" } },
 
     create = function( self )
         self._namedParams = {}
@@ -101,8 +89,7 @@ node "BEH_Manoeuvre_Pion_AllerStationner"
         Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { self._namedParams.objectif, eProgressionDefaut, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
         if( self.eEtat == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "BEH_Manoeuvre_Pion_AllerStationner" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -120,13 +107,9 @@ node "BEH_Manoeuvre_Pion_GererRecueil"
 {
     activations =
     {
-        { "BEH_Lima_GererLIA", { "onHalt" } },
-        { "BEH_Lima_GererLR", { "onHalt" } },
+        { "BEH_Lima_GererLIA", {} },
+        { "BEH_Lima_GererLR", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Manoeuvre_Pion_GererRecueil" } },
 
     create = function( self )
     end,

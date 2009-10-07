@@ -30,20 +30,16 @@ include "Appui/Alat/Automates/Common/Behaviors/Behaviors - Ordre.bms"
 {
     activations =
     {
-        { "BEH_RC_Automate_Situation", { "onHalt" } },
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "onHalt" } },
-        { "BEH_Nbc_Automate_GererAlerteNiv4", { "onHalt" } },
-        { "BEH_ROE_Automate_GererOrdre", { "onHalt" } },
-        { "BEH_RC_Automate_ALAT_Situation", { "onHalt" } },
-        { "BEH_Rens_Automate_GererSilenceRadio", { "onHalt" } },
-        { "BEH_Log_Automate_ALAT_AjoutNouveauxPlotsDansFuseau", { "onHalt" } },
-        { "BEH_Log_Automate_ALAT_GererPlotsRavitaillement", { "onHalt" } },
-        { "BEH_Ordre_Automate_ALAT_ChangerParametresRecompletement", { "onHalt" } },
+        { "BEH_RC_Automate_Situation", {} },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "BEH_Nbc_Automate_GererAlerteNiv4", {} },
+        { "BEH_ROE_Automate_GererOrdre", {} },
+        { "BEH_RC_Automate_ALAT_Situation", {} },
+        { "BEH_Rens_Automate_GererSilenceRadio", {} },
+        { "BEH_Log_Automate_ALAT_AjoutNouveauxPlotsDansFuseau", {} },
+        { "BEH_Log_Automate_ALAT_GererPlotsRavitaillement", {} },
+        { "BEH_Ordre_Automate_ALAT_ChangerParametresRecompletement", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Defaut" } },
 
     create = function( self )
         self._namedParams = {}

@@ -19,12 +19,8 @@ node "MIS_Automate_MRT_INF_ReleverEnRecueillant"
 {
     activations =
     {
-        { "BEH_Medo_Automate_INF_ReleverEnRecueillant", { "onHalt" } },
+        { "BEH_Medo_Automate_INF_ReleverEnRecueillant", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_INF_ReleverEnRecueillant" } },
 
     create = function( self )
         self._namedParams = {}
@@ -54,8 +50,7 @@ node "MIS_Automate_MRT_INF_ReleverEnRecueillant"
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_INF_ReleverEnRecueillant" } )
-Halt( self )
+                Halt( self )
                 do return end
 
             end
@@ -68,8 +63,7 @@ Halt( self )
                     DEC_Trace( "T_Mission_Automate_INF_ReleverEnRecueillant : fin MRT" )
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_INF_ReleverEnRecueillant" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end
@@ -92,14 +86,10 @@ node "BEH_Medo_Automate_INF_ReleverEnRecueillant"
 {
     activations =
     {
-        { "ACT_Medo_Automate_AffecterFuseaux", { "onHalt" } },
-        { "BEH_Medo_Automate_ControleCreationMission", { "onHalt" } },
-        { "BEH_Medo_Automate_INF_OrganiserMissions_ReleverEnRecueillant", { "onHalt" } },
+        { "ACT_Medo_Automate_AffecterFuseaux", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Medo_Automate_INF_OrganiserMissions_ReleverEnRecueillant", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_INF_ReleverEnRecueillant" } },
 
     create = function( self )
     end,
@@ -180,8 +170,7 @@ elseif switch_2 == "SectionInfanterie_MILAN"
                         do
                             DEC_Trace( "Pas de 1er echelon" )
                                                         self.params.__returnValue = eActionImpossible
-                            Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_INF_ReleverEnRecueillant" } )
-Halt( self )
+                            Halt( self )
                             do return end
 
                         end
@@ -220,8 +209,7 @@ elseif switch_1 == eMRT_AssignerMissions then
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_INF_ReleverEnRecueillant" } )
-Halt( self )
+                            Halt( self )
                             do return end
 
                         end
@@ -234,8 +222,7 @@ Halt( self )
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_INF_ReleverEnRecueillant" } )
-Halt( self )
+                            Halt( self )
                             do return end
 
                         end
@@ -246,8 +233,7 @@ Halt( self )
                             self.eValidationMRT = eActionEnCours
                                                         do
                                                                 self.params.__returnValue = eActionEffectuee
-                                Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_INF_ReleverEnRecueillant" } )
-Halt( self )
+                                Halt( self )
                                 do return end
 
                             end

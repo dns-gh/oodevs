@@ -21,12 +21,8 @@ includedFiles["sources/melee/abc/pions/pel xl/missions/Relever.bms"] = true
 {
     activations =
     {
-        { "BEH_Mission_Pion_ABC_ReleverUnite", { "onHalt" } },
+        { "BEH_Mission_Pion_ABC_ReleverUnite", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_ABC_ReleverUnite" } },
 
     create = function( self )
         self._namedParams = {}
@@ -40,15 +36,13 @@ includedFiles["sources/melee/abc/pions/pel xl/missions/Relever.bms"] = true
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible ) then
             self.params.__returnValue = eActionImpossible
-            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ABC_ReleverUnite" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
         if( self.eEtat == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ABC_ReleverUnite" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 

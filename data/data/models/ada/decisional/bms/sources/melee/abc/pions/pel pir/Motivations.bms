@@ -32,8 +32,6 @@ motivation_plugin.motivations = motivation_plugin.motivations or {}
 motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_TirEffectue"
 node "ActivationForSTIM_TirEffectue"
 {
-    feedbacks = { { { "onHalt" }, "ActivationForSTIM_TirEffectue" } },
-
     activate = function( self )
         --[[//Defaut
 ]]SetStimulus( "STIM_TirEffectue", 0 )
@@ -71,12 +69,8 @@ node "ActivatedByMOT_AcquerirEnis"
 {
     activations =
     {
-        { "BEH_MOT_TirerSurEnis", { "onHalt" } },
+        { "BEH_MOT_TirerSurEnis", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "ActivatedByMOT_AcquerirEnis" } },
 
     create = function( self )
     end,

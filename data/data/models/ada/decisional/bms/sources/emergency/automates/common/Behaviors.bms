@@ -19,15 +19,11 @@ node "BEH_Defaut"
 {
     activations =
     {
-        { "BEH_Nbc_Automate_GererAlerteNiv4", { "onHalt" } },
-        { "BEH_ROE_Automate_GererOrdre", { "onHalt" } },
-        { "BEH_Misc_Automate_GererLesMoyens", { "onHalt" } },
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "onHalt" } },
+        { "BEH_Nbc_Automate_GererAlerteNiv4", {} },
+        { "BEH_ROE_Automate_GererOrdre", {} },
+        { "BEH_Misc_Automate_GererLesMoyens", {} },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Defaut" } },
 
     create = function( self )
         self._namedParams = {}

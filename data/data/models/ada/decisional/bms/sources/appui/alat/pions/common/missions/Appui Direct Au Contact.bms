@@ -13,24 +13,20 @@ include "bit.lua"
 {
     activations =
     {
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "ACT_Maj_Pion_PasserEnTirLibre", { "onHalt" } },
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Dep_Pion_ALAT_SuivreSurFlanc", { "onHalt" } },
-        { "ACT_Obs_EtablirVisionFaceADir", { "onHalt" } },
-        { "ACT_Maj_Pions_ObjectifEsquive", { "onHalt" } },
-        { "BEH_Eni_Pion_ALAT_GererEniAppuyer", { "onHalt" } },
-        { "ACT_Pion_Rens_PartageConnaissancesDansZoneAvec", { "onHalt" } },
-        { "ACT_Maj_Pion_PasserEnTirSurRiposte", { "onHalt" } },
-        { "ACT_Obs_EtablirVisionCur", { "onHalt" } },
-        { "BEH_Manoeuvre_Pion_AllerStationner", { "onHalt" } },
-        { "BEH_Dep_Pion_ALAT_SePoser", { "onHalt" } },
+        { "ACT_Info_Trace", {} },
+        { "ACT_Maj_Pion_PasserEnTirLibre", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_Pion_ALAT_SuivreSurFlanc", {} },
+        { "ACT_Obs_EtablirVisionFaceADir", {} },
+        { "ACT_Maj_Pions_ObjectifEsquive", {} },
+        { "BEH_Eni_Pion_ALAT_GererEniAppuyer", {} },
+        { "ACT_Pion_Rens_PartageConnaissancesDansZoneAvec", {} },
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
+        { "ACT_Obs_EtablirVisionCur", {} },
+        { "BEH_Manoeuvre_Pion_AllerStationner", {} },
+        { "BEH_Dep_Pion_ALAT_SePoser", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_ALAT_AppuyerDirectAuContact" } },
 
     create = function( self )
         self._namedParams = {}
@@ -47,8 +43,7 @@ include "bit.lua"
         if( DIA_IsListEmpty( self.listeCourantePionsAAppuyer ) ) then
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "direct support impossible : no valid units to support", } )
-                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_AppuyerDirectAuContact" } )
-Halt( self )
+                                Halt( self )
                 do return end
 
             end
@@ -130,15 +125,13 @@ elseif switch_1 == eSExfiltrer then
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self.params.__returnValue = eActionImpossible
-                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_AppuyerDirectAuContact" } )
-Halt( self )
+                                Halt( self )
                                 do return end
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_AppuyerDirectAuContact" } )
-Halt( self )
+                            Halt( self )
                             do return end
 
                         end
@@ -158,8 +151,7 @@ elseif switch_1 == eFinMission then
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
-                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_AppuyerDirectAuContact" } )
-Halt( self )
+                                Halt( self )
                                 do return end
 
                             end
@@ -191,12 +183,8 @@ node "BEH_Eni_Pion_ALAT_GererEniAppuyer"
 {
     activations =
     {
-        { "BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire", { "onHalt" } },
+        { "BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_ALAT_GererEniAppuyer" } },
 
     create = function( self )
         self._namedParams = {}

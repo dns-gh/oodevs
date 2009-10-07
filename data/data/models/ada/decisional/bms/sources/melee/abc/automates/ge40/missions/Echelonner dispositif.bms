@@ -11,18 +11,14 @@ includedFiles["sources/melee/abc/automates/ge40/missions/Echelonner dispositif.b
 {
     activations =
     {
-        { "BEH_GTIA_EchelonnerLesAppuis", { "onHalt" } },
-        { "BEH_GTIA_EchelonnerDispositifSuivantEtatOperationnel", { "onHalt" } },
-        { "BEH_GTIA_EchelonnerDispositifSuivantEnisDebarques", { "onHalt" } },
-        { "BEH_GTIA_EchelonnerDispositifSuivantEnisEmbarques", { "onHalt" } },
-        { "BEH_GTIA_EchelonnerDispositifSuivantTerrainFerme", { "onHalt" } },
-        { "BEH_GTIA_EchelonnerDispositifSuivantTerrainOuvert", { "onHalt" } },
-        { "BEH_GTIA_EchelonnerDispositifSuivantDelais", { "onHalt" } },
+        { "BEH_GTIA_EchelonnerLesAppuis", {} },
+        { "BEH_GTIA_EchelonnerDispositifSuivantEtatOperationnel", {} },
+        { "BEH_GTIA_EchelonnerDispositifSuivantEnisDebarques", {} },
+        { "BEH_GTIA_EchelonnerDispositifSuivantEnisEmbarques", {} },
+        { "BEH_GTIA_EchelonnerDispositifSuivantTerrainFerme", {} },
+        { "BEH_GTIA_EchelonnerDispositifSuivantTerrainOuvert", {} },
+        { "BEH_GTIA_EchelonnerDispositifSuivantDelais", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_EchelonnerDispositif" } },
 
     create = function( self )
     end,
@@ -49,12 +45,8 @@ node "BEH_GTIA_EchelonnerLesAppuis"
 {
     activations =
     {
-        { "ACT_GTIA_AssignerEchelonA", { "onHalt" } },
+        { "ACT_GTIA_AssignerEchelonA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_EchelonnerLesAppuis" } },
 
     create = function( self )
     end,
@@ -99,12 +91,8 @@ node "BEH_GTIA_EchelonnerDispositifSuivantDelais"
 {
     activations =
     {
-        { "ACT_GTIA_AssignerEchelonA", { "onHalt" } },
+        { "ACT_GTIA_AssignerEchelonA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_EchelonnerDispositifSuivantDelais" } },
 
     create = function( self )
     end,
@@ -163,12 +151,8 @@ node "BEH_GTIA_EchelonnerDispositifSuivantTerrainFerme"
 {
     activations =
     {
-        { "ACT_GTIA_AssignerEchelonA", { "onHalt" } },
+        { "ACT_GTIA_AssignerEchelonA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_EchelonnerDispositifSuivantTerrainFerme" } },
 
     create = function( self )
     end,
@@ -227,12 +211,8 @@ node "BEH_GTIA_EchelonnerDispositifSuivantTerrainOuvert"
 {
     activations =
     {
-        { "ACT_GTIA_AssignerEchelonA", { "onHalt" } },
+        { "ACT_GTIA_AssignerEchelonA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_EchelonnerDispositifSuivantTerrainOuvert" } },
 
     create = function( self )
     end,
@@ -288,12 +268,8 @@ node "BEH_GTIA_EchelonnerDispositifSuivantEnisDebarques"
 {
     activations =
     {
-        { "ACT_GTIA_AssignerEchelonA", { "onHalt" } },
+        { "ACT_GTIA_AssignerEchelonA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_EchelonnerDispositifSuivantEnisDebarques" } },
 
     create = function( self )
     end,
@@ -349,12 +325,8 @@ node "BEH_GTIA_EchelonnerDispositifSuivantEnisEmbarques"
 {
     activations =
     {
-        { "ACT_GTIA_AssignerEchelonA", { "onHalt" } },
+        { "ACT_GTIA_AssignerEchelonA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_EchelonnerDispositifSuivantEnisEmbarques" } },
 
     create = function( self )
     end,
@@ -410,12 +382,8 @@ node "BEH_GTIA_EchelonnerDispositifSuivantEtatOperationnel"
 {
     activations =
     {
-        { "ACT_GTIA_AssignerEchelonA", { "onHalt" } },
+        { "ACT_GTIA_AssignerEchelonA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_EchelonnerDispositifSuivantEtatOperationnel" } },
 
     create = function( self )
     end,
@@ -440,8 +408,6 @@ node "BEH_GTIA_EchelonnerDispositifSuivantEtatOperationnel"
 
 node "ACT_GTIA_AssignerEchelonA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_GTIA_AssignerEchelonA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.automat = self.params[1]

@@ -50,16 +50,12 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Obj_Pion_VAB_InstallerPlanObstacle", { "onHalt" } },
-        { "BEH_MOT_Pion_INF_Debarquer", { "onHalt" } },
-        { "BEH_Obj_RejoindreEmbossements", { "onHalt" } },
-        { "ACT_Misc_Pion_Ambiance", { "onHalt" } },
-        { "ACT_Obs_EtablirVisionFaceADir", { "onHalt" } },
+        { "BEH_Obj_Pion_VAB_InstallerPlanObstacle", {} },
+        { "BEH_MOT_Pion_INF_Debarquer", {} },
+        { "BEH_Obj_RejoindreEmbossements", {} },
+        { "ACT_Misc_Pion_Ambiance", {} },
+        { "ACT_Obs_EtablirVisionFaceADir", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dispositif_Pion_VAB_InstallationDefensive" } },
 
     create = function( self )
         self._namedParams = {}
@@ -67,9 +63,7 @@ include "bit.lua"
         self._namedParams.bPlanObstacle = self.params[2]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         --[[// On se met en formation pour recevoir du monde :)
 ]]--[[//-----------------------------------------------------------------------------
 ]]self.locInstallation = self.locInstallation or DEC_Geometrie_ConvertirPointEnLocalisation( self._namedParams.ptInstallation )
@@ -79,7 +73,7 @@ include "bit.lua"
 ]]DEC_Trace( "Mise en place des troupes .." )
                 --[[// Si l'on trouve un embossement a proximite, on le rejoint
 ]]if( self.locInstallation ~= nil and self._namedParams.bPlanObstacle ) then
-                    StartInstance( self, self.activations.BEH_Obj_Pion_VAB_InstallerPlanObstacle, 1, { self.locInstallation, } )
+                    StartActivateOverride( self, self.activations.BEH_Obj_Pion_VAB_InstallerPlanObstacle, 1, { self.locInstallation, } )
                 end
 
             end
@@ -92,7 +86,7 @@ include "bit.lua"
         local mission = DEC_GetMission( myself )
         Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( mission ), } )
         if( S_EstDetecteParEnis() or F_Pion_GeteniEnCours( myself ) ~= nil ) then
-            StopInstance( self, self.activations.BEH_Obj_Pion_VAB_InstallerPlanObstacle, { self.locInstallation, } )
+            StopActivateOverride( self, self.activations.BEH_Obj_Pion_VAB_InstallerPlanObstacle, { self.locInstallation, } )
         end
 
     end,

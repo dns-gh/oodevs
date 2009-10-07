@@ -18,19 +18,15 @@ node "BEH_Medo_Automate_INF_PreparerMission_Zone"
 {
     activations =
     {
-        { "ACT_Medo_Automate_AffecterFuseaux", { "onHalt" } },
-        { "BEH_Medo_Automate_ControleCreationMission", { "onHalt" } },
-        { "BEH_Medo_Automate_INF_AssignerControler", { "onHalt" } },
-        { "BEH_Medo_Automate_INF_Controler_AssignerMission_PC", { "onHalt" } },
-        { "BEH_Medo_Automate_INF_AssignerHarceler", { "onHalt" } },
-        { "BEH_Medo_Automate_INF_Harceler_AssignerMission_PC", { "onHalt" } },
-        { "BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier", { "onHalt" } },
-        { "BEH_Medo_Automate_INF_InitialiseSE", { "onHalt" } },
+        { "ACT_Medo_Automate_AffecterFuseaux", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Medo_Automate_INF_AssignerControler", {} },
+        { "BEH_Medo_Automate_INF_Controler_AssignerMission_PC", {} },
+        { "BEH_Medo_Automate_INF_AssignerHarceler", {} },
+        { "BEH_Medo_Automate_INF_Harceler_AssignerMission_PC", {} },
+        { "BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier", {} },
+        { "BEH_Medo_Automate_INF_InitialiseSE", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_INF_PreparerMission_Zone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -98,8 +94,7 @@ node "BEH_Medo_Automate_INF_PreparerMission_Zone"
                             DEC_Trace( "Pas de 1er echelon" )
                             DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
                                                         self.params.__returnValue = eActionImpossible
-                            Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_INF_PreparerMission_Zone" } )
-Halt( self )
+                            Halt( self )
                             do return end
 
                         end
@@ -137,8 +132,7 @@ elseif switch_1 == eMRT_AssignerMissions then
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_INF_PreparerMission_Zone" } )
-Halt( self )
+                            Halt( self )
                             do return end
 
                         end
@@ -151,8 +145,7 @@ Halt( self )
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_INF_PreparerMission_Zone" } )
-Halt( self )
+                            Halt( self )
                             do return end
 
                         end
@@ -163,8 +156,7 @@ Halt( self )
                             self.eValidationMRT = eActionEnCours
                                                         do
                                                                 self.params.__returnValue = eActionEffectuee
-                                Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_INF_PreparerMission_Zone" } )
-Halt( self )
+                                Halt( self )
                                 do return end
 
                             end
@@ -190,8 +182,7 @@ elseif switch_2 == "T_Mission_Automate_INF_Harceler" then
                             else
                                 DEC_Trace( "Mission Inconnue" )
                                                                 self.params.__returnValue = eActionImpossible
-                                Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_INF_PreparerMission_Zone" } )
-Halt( self )
+                                Halt( self )
                                 do return end
 
                                                         end
@@ -215,22 +206,16 @@ node "BEH_Medo_Automate_INF_AssignerControler"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "BEH_Mission_Automate_INF_AssignerA_Controler", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "BEH_Mission_Automate_INF_AssignerA_Controler", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_INF_AssignerControler" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.lstPions_PE = self.params[1]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
                 self.mission = self.mission or DEC_GetMission( myself )
         self.lstLocalisations = self.lstLocalisations or {}
         self.eCodeLoc = self.eCodeLoc or eNoError
@@ -280,7 +265,7 @@ elseif switch_1 == eNoError then
                         if( rIt < #( self.lstLocalisations ) ) then
                             do
                                 local locZone = DEC_UserTypeList_GetAt( self.lstLocalisations, rIt )
-                                StartInstance( self, self.activations.BEH_Mission_Automate_INF_AssignerA_Controler, 1, { ePhase_MRT, x_pion, locZone, self.mission.preparerTerrain_, } )
+                                StartActivateOverride( self, self.activations.BEH_Mission_Automate_INF_AssignerA_Controler, 1, { ePhase_MRT, x_pion, locZone, self.mission.preparerTerrain_, } )
                             end
                         end
 
@@ -306,22 +291,16 @@ node "BEH_Medo_Automate_INF_AssignerHarceler"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "BEH_Mission_Automate_INF_AssignerA_Harceler", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "BEH_Mission_Automate_INF_AssignerA_Harceler", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_INF_AssignerHarceler" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.lstPions_PE = self.params[1]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
                 self.mission = self.mission or DEC_GetMission( myself )
         self.lstLocalisations = self.lstLocalisations or {}
         self.eCodeLoc = self.eCodeLoc or eNoError
@@ -382,7 +361,7 @@ elseif switch_1 == eNoError then
                                     locZoneRgpt = DEC_UserTypeList_GetAt( self.lstLocRgpt, rIt )
                                 end
 
-                                StartInstance( self, self.activations.BEH_Mission_Automate_INF_AssignerA_Harceler, 1, { ePhase_MRT, x_pion, locZone, locZoneRgpt, natureObjectif, } )
+                                StartActivateOverride( self, self.activations.BEH_Mission_Automate_INF_AssignerA_Harceler, 1, { ePhase_MRT, x_pion, locZone, locZoneRgpt, natureObjectif, } )
                                 natureObjectif = eNatureObjectif_ElementMobile
                             end
                         end
@@ -412,12 +391,8 @@ node "BEH_Medo_Automate_INF_Harceler_AssignerMission_PC"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSuivreA", { "onHalt" } },
+        { "BEH_Mission_Automate_AssignerSuivreA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_INF_Harceler_AssignerMission_PC" } },
 
     create = function( self )
         self._namedParams = {}
@@ -425,9 +400,7 @@ node "BEH_Medo_Automate_INF_Harceler_AssignerMission_PC"
         self._namedParams.lstPionsAppui = self.params[2]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         if( ModuleBegins() ) then
             do
                 --[[//-----------------------------------------------------------------------------
@@ -442,10 +415,10 @@ if( ( #( self._namedParams.lstPionsAppui ) ~= 0 and #( self._namedParams.lstPion
                     end
                 end
 
-                StartInstance( self, self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_MRT, DEC_Automate_PionPC(), pAppui, } )
+                StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_MRT, DEC_Automate_PionPC(), pAppui, } )
                 for _,x_appui in pairs( self._namedParams.lstPionsAppui ) do
                 local _continue = true
-                    StartInstance( self, self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_MRT, x_appui, pAppui, } )
+                    StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_MRT, x_appui, pAppui, } )
 
                 end
 
@@ -466,12 +439,8 @@ node "BEH_Medo_Automate_INF_Controler_AssignerMission_PC"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSuivreA", { "onHalt" } },
+        { "BEH_Mission_Automate_AssignerSuivreA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_INF_Controler_AssignerMission_PC" } },
 
     create = function( self )
         self._namedParams = {}
@@ -479,9 +448,7 @@ node "BEH_Medo_Automate_INF_Controler_AssignerMission_PC"
         self._namedParams.lstPionsAppui = self.params[2]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         if( ModuleBegins() ) then
             do
                 --[[//-----------------------------------------------------------------------------
@@ -496,7 +463,7 @@ if( ( #( self._namedParams.lstPionsAppui ) ~= 0 and #( self._namedParams.lstPion
                     end
                 end
 
-                StartInstance( self, self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_MRT, DEC_Automate_PionPC(), pAppui, } )
+                StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_MRT, DEC_Automate_PionPC(), pAppui, } )
             end
         end
 

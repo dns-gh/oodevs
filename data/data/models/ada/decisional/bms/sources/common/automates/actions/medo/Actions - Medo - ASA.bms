@@ -3,8 +3,6 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ASA.bms"] 
 
 node "ACT_Mission_Automate_ASA_MISTRAL_AssignerDefendreZoneAPartirPositionA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_ASA_MISTRAL_AssignerDefendreZoneAPartirPositionA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -94,8 +92,6 @@ elseif switch_1 == ePhase_CDT then
 
 node "ACT_Mission_Automate_ASA_AssignerDefendreZoneAPartirPositionA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_ASA_AssignerDefendreZoneAPartirPositionA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -183,8 +179,6 @@ elseif switch_1 == ePhase_CDT then
 
 node "ACT_Mission_Automate_ASA_AssignerDefendreSiteAPartirPositionA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_ASA_AssignerDefendreSiteAPartirPositionA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -272,8 +266,6 @@ elseif switch_1 == ePhase_CDT then
 
 node "ACT_Mission_Automate_ASA_MISTRAL_AssignerDefendreSiteAPartirPositionA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_ASA_MISTRAL_AssignerDefendreSiteAPartirPositionA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -360,8 +352,6 @@ elseif switch_1 == ePhase_CDT then
 
 node "ACT_Mission_Automate_ASA_AssignerSurveillerA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_ASA_AssignerSurveillerA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -429,8 +419,6 @@ elseif switch_1 == ePhase_CDT then
 
 node "ACT_Mission_Automate_ASA_MISTRAL_AssignerSurveillerA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_ASA_MISTRAL_AssignerSurveillerA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -500,8 +488,6 @@ elseif switch_1 == ePhase_CDT then
 
 node "ACT_Mission_Automate_ASA_AssignerDefendreUnitesA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_ASA_AssignerDefendreUnitesA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]

@@ -14,12 +14,8 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Nbc_Recevoir_OrdreInopine", { "onHalt" } },
+        { "BEH_Nbc_Recevoir_OrdreInopine", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Nbc" } },
 
     create = function( self )
     end,
@@ -51,12 +47,8 @@ node "BEH_Nbc_Recevoir_OrdreInopine"
 {
     activations =
     {
-        { "ACT_Ordre_Suppression", { "onHalt" } },
+        { "ACT_Ordre_Suppression", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Nbc_Recevoir_OrdreInopine" } },
 
     create = function( self )
     end,
@@ -101,13 +93,9 @@ node "BEH_Nbc_GererAlerteNiv4"
 {
     activations =
     {
-        { "ACT_Nbc_MettreTenueProtection", { "onHalt" } },
-        { "ACT_Nbc_PasserEnNiveauNBC", { "onHalt" } },
+        { "ACT_Nbc_MettreTenueProtection", {} },
+        { "ACT_Nbc_PasserEnNiveauNBC", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Nbc_GererAlerteNiv4" } },
 
     create = function( self )
     end,
@@ -133,8 +121,6 @@ node "BEH_Nbc_GererAlerteNiv4"
 
 node "ACT_Nbc_MettreTenueProtection"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Nbc_MettreTenueProtection" } },
-
     create = function( self )
     end,
 

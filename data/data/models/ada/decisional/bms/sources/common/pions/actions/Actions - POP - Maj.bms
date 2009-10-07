@@ -10,8 +10,6 @@ includedFiles["sources/common/pions/actions/Actions - POP - Maj.bms"] = true
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_Maj_Pion_PasserEnEmploiForceInterdit"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Maj_Pion_PasserEnEmploiForceInterdit" } },
-
     create = function( self )
     end,
 
@@ -33,8 +31,6 @@ includedFiles["sources/common/pions/actions/Actions - POP - Maj.bms"] = true
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_Maj_Pion_PasserEnMaintienADistanceParMoyensNonLetaux"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Maj_Pion_PasserEnMaintienADistanceParMoyensNonLetaux" } },
-
     create = function( self )
     end,
 
@@ -56,8 +52,6 @@ includedFiles["sources/common/pions/actions/Actions - POP - Maj.bms"] = true
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_Maj_Pion_PasserEnDispersionParMoyensDeDefenseActifs"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Maj_Pion_PasserEnDispersionParMoyensDeDefenseActifs" } },
-
     create = function( self )
     end,
 
@@ -79,8 +73,6 @@ includedFiles["sources/common/pions/actions/Actions - POP - Maj.bms"] = true
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_Maj_Pion_PasserEnArmesLetalesAutorisees"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Maj_Pion_PasserEnArmesLetalesAutorisees" } },
-
     create = function( self )
     end,
 

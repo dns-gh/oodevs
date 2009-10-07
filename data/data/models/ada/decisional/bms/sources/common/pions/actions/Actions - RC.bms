@@ -11,8 +11,6 @@ includedFiles["sources/common/pions/actions/Actions - RC.bms"] = true
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_RC"
 {
-    feedbacks = { { { "onHalt" }, "ACT_RC" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.eTypeRC = self.params[1]
@@ -42,8 +40,6 @@ includedFiles["sources/common/pions/actions/Actions - RC.bms"] = true
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_RC_SurObjet"
 {
-    feedbacks = { { { "onHalt" }, "ACT_RC_SurObjet" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.eTypeRC = self.params[1]
@@ -67,8 +63,6 @@ includedFiles["sources/common/pions/actions/Actions - RC.bms"] = true
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_RC_SurEni"
 {
-    feedbacks = { { { "onHalt" }, "ACT_RC_SurEni" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.eTypeRC = self.params[1]
@@ -99,8 +93,6 @@ includedFiles["sources/common/pions/actions/Actions - RC.bms"] = true
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_RC_SurPion"
 {
-    feedbacks = { { { "onHalt" }, "ACT_RC_SurPion" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.eTypeRC = self.params[1]
@@ -124,8 +116,6 @@ includedFiles["sources/common/pions/actions/Actions - RC.bms"] = true
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_RC_SurLima"
 {
-    feedbacks = { { { "onHalt" }, "ACT_RC_SurLima" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.eTypeLima = self.params[1]
@@ -155,8 +145,6 @@ includedFiles["sources/common/pions/actions/Actions - RC.bms"] = true
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_RC_PreparationMission"
 {
-    feedbacks = { { { "onHalt" }, "ACT_RC_PreparationMission" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.temps = self.params[1]

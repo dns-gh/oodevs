@@ -16,17 +16,13 @@ node "BEH_Situation_Automate_INF_Controler"
 {
     activations =
     {
-        { "BEH_Dispositif_Automate_INF_GererLesPionsDetruits", { "onHalt" } },
-        { "BEH_Dispositif_Automate_INF_GererReleve", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_GererAppuis_INF", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_GererAppui_Mortier", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_GererAppuis_ABC", { "onHalt" } },
-        { "BEH_Situation_Automate_INF_Controler_Reduire", { "onHalt" } },
+        { "BEH_Dispositif_Automate_INF_GererLesPionsDetruits", {} },
+        { "BEH_Dispositif_Automate_INF_GererReleve", {} },
+        { "BEH_Conduite_Automate_INF_GererAppuis_INF", {} },
+        { "BEH_Conduite_Automate_INF_GererAppui_Mortier", {} },
+        { "BEH_Conduite_Automate_INF_GererAppuis_ABC", {} },
+        { "BEH_Situation_Automate_INF_Controler_Reduire", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Situation_Automate_INF_Controler" } },
 
     create = function( self )
     end,
@@ -58,12 +54,8 @@ node "BEH_Situation_Automate_INF_Controler_Reduire"
 {
     activations =
     {
-        { "BEH_Conduite_Automate_INF_GererReductionSur", { "onHalt" } },
+        { "BEH_Conduite_Automate_INF_GererReductionSur", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Situation_Automate_INF_Controler_Reduire" } },
 
     create = function( self )
         self._namedParams = {}
@@ -127,12 +119,8 @@ node "BEH_Conduite_Automate_INF_GererReductionSur"
 
     activations =
     {
-        { "BEH_Mission_Automate_INF_AssignerA_Reduire", { "onHalt" } },
+        { "BEH_Mission_Automate_INF_AssignerA_Reduire", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_GererReductionSur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -140,9 +128,7 @@ node "BEH_Conduite_Automate_INF_GererReductionSur"
         self._namedParams.ksEni_Zone = self.params[2]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
                 if( ModuleBegins() ) then
             do
                                 do
@@ -151,7 +137,7 @@ node "BEH_Conduite_Automate_INF_GererReductionSur"
 ]]
                 DEC_Trace( "Assigne mission Reduire a: " .. DEC_GetSzName( self._namedParams.pionAppui ) )
                 --[[// On reassigne la mission Appuye
-]]StartInstance( self, self.activations.BEH_Mission_Automate_INF_AssignerA_Reduire, 1, { ePhase_CDT, self._namedParams.pionAppui, self._namedParams.ksEni_Zone, eEtatEchelon_Second, } )
+]]StartActivateOverride( self, self.activations.BEH_Mission_Automate_INF_AssignerA_Reduire, 1, { ePhase_CDT, self._namedParams.pionAppui, self._namedParams.ksEni_Zone, eEtatEchelon_Second, } )
             end
         end
 

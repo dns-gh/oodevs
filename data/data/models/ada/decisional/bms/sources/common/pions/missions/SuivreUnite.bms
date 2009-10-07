@@ -20,13 +20,9 @@ includedFiles["sources/common/pions/missions/SuivreUnite.bms"] = true
 {
     activations =
     {
-        { "ACT_Obs_EtablirVisionVersPt", { "onHalt" } },
-        { "BEH_Dep_Suivre", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "BEH_Dep_Suivre", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_Suivre" } },
 
     create = function( self )
         self._namedParams = {}

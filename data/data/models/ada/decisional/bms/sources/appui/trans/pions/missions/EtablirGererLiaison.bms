@@ -12,17 +12,13 @@ includedFiles["sources/appui/trans/pions/missions/EtablirGererLiaison.bms"] = tr
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_Misc_Delai", { "onHalt" } },
-        { "ACT_RC_PreparationMission", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "BEH_Pion_Trans_InstallerDispositif", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Misc_Delai", {} },
+        { "ACT_RC_PreparationMission", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Pion_Trans_InstallerDispositif", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_TRANS_EtablirGererLiaison" } },
 
     create = function( self )
         self._namedParams = {}
@@ -125,12 +121,8 @@ node "BEH_Pion_Trans_InstallerDispositif"
 {
     activations =
     {
-        { "ACT_Pion_trans_InstallerDisposifif", { "onHalt" } },
+        { "ACT_Pion_trans_InstallerDisposifif", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pion_Trans_InstallerDispositif" } },
 
     create = function( self )
     end,
@@ -152,8 +144,6 @@ node "BEH_Pion_Trans_InstallerDispositif"
 
 node "ACT_Pion_trans_InstallerDisposifif"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Pion_trans_InstallerDisposifif" } },
-
     create = function( self )
     end,
 

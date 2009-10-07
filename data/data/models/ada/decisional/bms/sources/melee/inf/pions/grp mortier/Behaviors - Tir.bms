@@ -19,14 +19,10 @@ node "BEH_Ordre_Pion_Mortier_AppliquerLesFeux"
 {
     activations =
     {
-        { "ACT_RC", { "onHalt" } },
-        { "BEH_MOT_Pion_INF_Debarquer", { "onHalt" } },
-        { "BEH_Tir_Pion_Mortier_AppliquerFeux", { "onHalt" } },
+        { "ACT_RC", {} },
+        { "BEH_MOT_Pion_INF_Debarquer", {} },
+        { "BEH_Tir_Pion_Mortier_AppliquerFeux", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Ordre_Pion_Mortier_AppliquerLesFeux" } },
 
     create = function( self )
         self._namedParams = {}
@@ -43,8 +39,7 @@ node "BEH_Ordre_Pion_Mortier_AppliquerLesFeux"
 
         if( self.eAction ~= eActionEnCours ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "BEH_Ordre_Pion_Mortier_AppliquerLesFeux" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -65,14 +60,10 @@ node "BEH_Tir_Pion_Mortier_AppliquerFeux"
 {
     activations =
     {
-        { "ACT_Dep_SePosterFaceADir", { "onHalt" } },
-        { "BEH_Tir_Pion_Mortier_PreparerTirSur", { "onHalt" } },
-        { "ACT_Tir_Pion_Mortier_SurPosition", { "onHalt" } },
+        { "ACT_Dep_SePosterFaceADir", {} },
+        { "BEH_Tir_Pion_Mortier_PreparerTirSur", {} },
+        { "ACT_Tir_Pion_Mortier_SurPosition", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Tir_Pion_Mortier_AppliquerFeux" } },
 
     create = function( self )
         self._namedParams = {}
@@ -99,8 +90,7 @@ node "BEH_Tir_Pion_Mortier_AppliquerFeux"
                         end
 
                                                 self.params.__returnValue = eActionImpossible
-                        Feedback( self.feedbacks["onHalt"], { "BEH_Tir_Pion_Mortier_AppliquerFeux" } )
-Halt( self )
+                        Halt( self )
                         do return end
 
                     end
@@ -119,8 +109,7 @@ Halt( self )
                         end
 
                                                 self.params.__returnValue = eActionImpossible
-                        Feedback( self.feedbacks["onHalt"], { "BEH_Tir_Pion_Mortier_AppliquerFeux" } )
-Halt( self )
+                        Halt( self )
                         do return end
 
                     end
@@ -153,13 +142,9 @@ node "BEH_Tir_Pion_Mortier_PreparerTirSur"
 {
     activations =
     {
-        { "ACT_Tir_Pion_Mortier_PreparerTirSur", { "onHalt" } },
-        { "ACT_Misc_Delai", { "onHalt" } },
+        { "ACT_Tir_Pion_Mortier_PreparerTirSur", {} },
+        { "ACT_Misc_Delai", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Tir_Pion_Mortier_PreparerTirSur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -188,12 +173,8 @@ node "BEH_Tir_Pion_INF_TirDebarque"
 {
     activations =
     {
-        { "ACT_Tir_DirectSur", { "onHalt" } },
+        { "ACT_Tir_DirectSur", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Tir_Pion_INF_TirDebarque" } },
 
     create = function( self )
         self._namedParams = {}
@@ -220,14 +201,10 @@ node "BEH_MOT_Pion_Mortier_AppliquerLesFeux"
 {
     activations =
     {
-        { "ACT_RC", { "onHalt" } },
-        { "BEH_MOT_Pion_INF_Debarquer", { "onHalt" } },
-        { "BEH_Tir_Pion_Mortier_AppliquerFeux", { "onHalt" } },
+        { "ACT_RC", {} },
+        { "BEH_MOT_Pion_INF_Debarquer", {} },
+        { "BEH_Tir_Pion_Mortier_AppliquerFeux", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MOT_Pion_Mortier_AppliquerLesFeux" } },
 
     create = function( self )
     end,

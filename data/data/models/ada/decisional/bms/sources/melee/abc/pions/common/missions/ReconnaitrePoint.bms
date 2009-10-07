@@ -27,18 +27,14 @@ includedFiles["sources/melee/abc/pions/common/missions/ReconnaitrePoint.bms"] = 
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "BEH_MAJ_Pion_ABC_AgressiviteTir", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "BEH_Obs_Pion_ABC_ReconnaitrePointMission", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_MAJ_Pion_ABC_AgressiviteTir", {} },
+        { "ACT_Info_Trace", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Obs_Pion_ABC_ReconnaitrePointMission", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_ABC_ReconnaitreUnPoint" } },
 
     create = function( self )
         self._namedParams = {}
@@ -65,8 +61,7 @@ includedFiles["sources/melee/abc/pions/common/missions/ReconnaitrePoint.bms"] = 
 
         if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_ABC_ReconnaitreUnPoint" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -171,13 +166,9 @@ node "BEH_Obs_Pion_ABC_ReconnaitrePointMission"
 {
     activations =
     {
-        { "ACT_Obs_ReconnaitrePoint", { "onHalt" } },
-        { "ACT_Obs_EtablirVisionVersPt", { "onHalt" } },
+        { "ACT_Obs_ReconnaitrePoint", {} },
+        { "ACT_Obs_EtablirVisionVersPt", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Obs_Pion_ABC_ReconnaitrePointMission" } },
 
     create = function( self )
         self._namedParams = {}
@@ -199,8 +190,7 @@ node "BEH_Obs_Pion_ABC_ReconnaitrePointMission"
                                 do
                     DEC_Trace( "Fin reconnaissance point" )
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Obs_Pion_ABC_ReconnaitrePointMission" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end

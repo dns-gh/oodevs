@@ -19,24 +19,18 @@ node "BEH_Pion_ASS_GererOrdre_AppliquerFeux"
 {
     activations =
     {
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "ACT_RC", { "onHalt" } },
-        { "BEH_Tir_Pion_ASS_AppliquerFeux", { "onHalt" } },
-        { "ACT_Ordre_Suppression", { "onHalt" } },
+        { "ACT_Info_Trace", {} },
+        { "ACT_RC", {} },
+        { "BEH_Tir_Pion_ASS_AppliquerFeux", {} },
+        { "ACT_Ordre_Suppression", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pion_ASS_GererOrdre_AppliquerFeux" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.bAutorise_Inopine = self.params[1]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         --[[// Prise en charge de l'ordre d'application des feux
 ]]--[[//---------------------------------------------------------------------	
 ]]local selOrder = DEC_GetCategory( "ordres_recus" )
@@ -51,7 +45,7 @@ do
                                 local repOrdre_Tir = repOrdreCond
                                 Activate( self.activations.ACT_Info_Trace, 1, { "Ordre : AppliquerFeux", } )
                                 Activate( self.activations.ACT_RC, 1, { eRC_ReceptionOrdreDeFeu, } )
-                                StartInstance( self, self.activations.BEH_Tir_Pion_ASS_AppliquerFeux, 10, { repOrdre_Tir:Getmunitions_(), repOrdre_Tir:GetnbIT_(), repOrdre_Tir:GetpointCible_(), } )
+                                StartActivateOverride( self, self.activations.BEH_Tir_Pion_ASS_AppliquerFeux, 10, { repOrdre_Tir:Getmunitions_(), repOrdre_Tir:GetnbIT_(), repOrdre_Tir:GetpointCible_(), } )
                             end
                         end
 
@@ -71,21 +65,17 @@ node "BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission"
 {
     activations =
     {
-        { "ACT_RC", { "onHalt" } },
-        { "ACT_RC_PreparationMission", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_Misc_Delai", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "BEH_Pion_ASS_InstallationSurZone", { "onHalt" } },
-        { "BEH_Pion_ASS_InstallationSurPosition", { "onHalt" } },
-        { "BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir", { "onHalt" } },
-        { "BEH_Dep_Pion_ASS_ChangerDePosition_Sauvegarde", { "onHalt" } },
+        { "ACT_RC", {} },
+        { "ACT_RC_PreparationMission", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Misc_Delai", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Pion_ASS_InstallationSurZone", {} },
+        { "BEH_Pion_ASS_InstallationSurPosition", {} },
+        { "BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir", {} },
+        { "BEH_Dep_Pion_ASS_ChangerDePosition_Sauvegarde", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission" } },
 
     create = function( self )
         self._namedParams = {}
@@ -204,8 +194,7 @@ elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
                         self.params.__returnValue = eActionEffectuee
-                        Feedback( self.feedbacks["onHalt"], { "BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission" } )
-Halt( self )
+                        Halt( self )
                         do return end
                     end
 
@@ -229,14 +218,10 @@ node "BEH_Pion_ASS_InstallationSurZone"
 {
     activations =
     {
-        { "ACT_Obs_EtablirVisionFaceADir", { "onHalt" } },
-        { "ACT_Obj_Pion_AnimerSite", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionFaceADir", {} },
+        { "ACT_Obj_Pion_AnimerSite", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pion_ASS_InstallationSurZone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -277,13 +262,9 @@ node "BEH_Pion_ASS_InstallationSurPosition"
 {
     activations =
     {
-        { "ACT_Obs_EtablirVisionFaceADir", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionFaceADir", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pion_ASS_InstallationSurPosition" } },
 
     create = function( self )
         self._namedParams = {}
@@ -323,30 +304,24 @@ node "BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir"
 {
     activations =
     {
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "ACT_Misc_Delai", { "onHalt" } },
-        { "ACT_RC", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "ACT_Info_Trace", {} },
+        { "ACT_Misc_Delai", {} },
+        { "ACT_RC", {} },
+        { "BEH_Dep_ProgressionVers", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.ptCentre = self.params[1]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         self.ptTir = self.ptTir or nil
         self.eAction = self.eAction or eActionDebut
         if( myself.eEtatTir_Indirect_ == eActionTirIndirect_EnCours ) then
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "Declenchement tir indirect : sauvegarde", } )
-                StartInstance( self, self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, M_DELAI_SAUVEGARDE_TIR(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                StartActivateOverride( self, self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, M_DELAI_SAUVEGARDE_TIR(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
             end
         end
 
@@ -355,7 +330,7 @@ node "BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir"
                 self.ptTir = DEC_Geometrie_PositionAleatoireSurCercle( self._namedParams.ptCentre, 500 )
                 Activate( self.activations.ACT_RC, 1, { eRC_ChangementDePosition, } )
                 Activate( self.activations.ACT_Info_Trace, 1, { "Changement position : contre batterie", } )
-                StartInstance( self, self.activations.BEH_Dep_ProgressionVers, 1, { self.ptTir, eProgressionDirect, eTypeItiMouvement, } )
+                StartActivateOverride( self, self.activations.BEH_Dep_ProgressionVers, 1, { self.ptTir, eProgressionDirect, eTypeItiMouvement, } )
                 self.eAction = eActionEnCours
             end
         end
@@ -372,12 +347,8 @@ node "BEH_Dep_Pion_ASS_SePosterPourTirer"
 {
     activations =
     {
-        { "ACT_Dep_SePoster", { "onHalt" } },
+        { "ACT_Dep_SePoster", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_ASS_SePosterPourTirer" } },
 
     create = function( self )
     end,
@@ -387,8 +358,7 @@ node "BEH_Dep_Pion_ASS_SePosterPourTirer"
 ]]--[[// Il faut avoir la meme condition d'arret que 
 ]]--[[// ACT_Tir_Pion_ASS_SurPosition s'arrete sur 
 ]]if( ( myself.eEtatTir_Indirect_ ~= eActionTirIndirect_EnCours ) and ( myself.eEtatTir_Indirect_ ~= eActionTirIndirect_None ) ) then
-            Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_ASS_SePosterPourTirer" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -401,12 +371,8 @@ node "BEH_Info_Pion_ASS_GererDisponibiliteAuTir"
 {
     activations =
     {
-        { "ACT_Info_Pion_ASS_DisponibiliteAuTir", { "onHalt" } },
+        { "ACT_Info_Pion_ASS_DisponibiliteAuTir", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Info_Pion_ASS_GererDisponibiliteAuTir" } },
 
     create = function( self )
         self._namedParams = {}
@@ -435,14 +401,10 @@ node "BEH_Tir_Pion_ASS_AppliquerFeux"
 
     activations =
     {
-        { "BEH_Tir_Pion_ASS_PreparerTirSur", { "onHalt" } },
-        { "ACT_Dep_SePoster", { "onHalt" } },
-        { "ACT_Tir_Pion_ASS_SurPosition", { "onHalt" } },
+        { "BEH_Tir_Pion_ASS_PreparerTirSur", {} },
+        { "ACT_Dep_SePoster", {} },
+        { "ACT_Tir_Pion_ASS_SurPosition", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Tir_Pion_ASS_AppliquerFeux" } },
 
     create = function( self )
         self._namedParams = {}
@@ -467,8 +429,7 @@ node "BEH_Tir_Pion_ASS_AppliquerFeux"
 
                         end
 
-                                                Feedback( self.feedbacks["onHalt"], { "BEH_Tir_Pion_ASS_AppliquerFeux" } )
-Halt( self )
+                                                Halt( self )
                         do return end
 
                     end
@@ -486,8 +447,7 @@ Halt( self )
 
                         end
 
-                                                Feedback( self.feedbacks["onHalt"], { "BEH_Tir_Pion_ASS_AppliquerFeux" } )
-Halt( self )
+                                                Halt( self )
                         do return end
 
                     end
@@ -501,8 +461,7 @@ Halt( self )
         Activate( self.activations.BEH_Tir_Pion_ASS_PreparerTirSur, 1.1, { self._namedParams.ptCible, M_DELAI_PREPARATION_TIR(), } )
         Activate( self.activations.ACT_Dep_SePoster, 0.5, {} )
         if( self.eAction ~= eActionEnCours ) then
-            Feedback( self.feedbacks["onHalt"], { "BEH_Tir_Pion_ASS_AppliquerFeux" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -525,13 +484,9 @@ node "BEH_Tir_Pion_ASS_PreparerTirSur"
 {
     activations =
     {
-        { "ACT_Tir_Pion_ASS_PreparerTirSur", { "onHalt" } },
-        { "ACT_Misc_Delai", { "onHalt" } },
+        { "ACT_Tir_Pion_ASS_PreparerTirSur", {} },
+        { "ACT_Misc_Delai", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Tir_Pion_ASS_PreparerTirSur" } },
 
     create = function( self )
         self._namedParams = {}

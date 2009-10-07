@@ -14,17 +14,13 @@ includedFiles["sources/appui/alat/pions/common/missions/SeFaireDecontaminer.bms"
 {
     activations =
     {
-        { "ACT_Maj_Pion_PasserEnTirSurRiposte", { "onHalt" } },
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "onHalt" } },
-        { "ACT_Pion_Nbc_DemanderDecontaminationSur", { "onHalt" } },
-        { "BEH_Dep_Pion_ALAT_SePoser", { "onHalt" } },
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
+        { "ACT_Pion_Nbc_DemanderDecontaminationSur", {} },
+        { "BEH_Dep_Pion_ALAT_SePoser", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_SeFaireDecontaminer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -111,8 +107,7 @@ elseif switch_1 == eFinMission then
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
-                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_SeFaireDecontaminer" } )
-Halt( self )
+                                Halt( self )
                                 do return end
 
                             end

@@ -16,13 +16,9 @@ node "MIS_Automate_CDT_INF_DefendreFerme"
 {
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Defaut", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_CadreStatique", { "onHalt" } },
+        { "BEH_Conduite_Automate_INF_Defaut", {} },
+        { "BEH_Conduite_Automate_INF_CadreStatique", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_INF_DefendreFerme" } },
 
     create = function( self )
         self._namedParams = {}
@@ -48,8 +44,7 @@ node "MIS_Automate_CDT_INF_DefendreFerme"
                 self.eActionMission = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_CDT_INF_DefendreFerme" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end

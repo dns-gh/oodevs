@@ -21,32 +21,26 @@ include "bit.lua"
 {
     activations =
     {
-        { "ACT_Maj_Pion_PasserEnTirSurRiposte", { "onHalt" } },
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "BEH_Dep_Pion_ALAT_PremiereAllure", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_Maj_Pions_ObjectifEsquive", { "onHalt" } },
-        { "ACT_Maj_Pions_ObjectifCourant", { "onHalt" } },
-        { "ACT_Obs_EtablirVisionCur", { "onHalt" } },
-        { "BEH_Dep_Pion_ALAT_RejoindrePoint", { "onHalt" } },
-        { "BEH_Obs_Pion_ALAT_ReconnaitreZone", { "onHalt" } },
-        { "BEH_Eni_Pion_ALAT_GererEniRecoContourEni", { "onHalt" } },
-        { "BEH_Manoeuvre_Pion_AllerStationner", { "onHalt" } },
-        { "BEH_Dep_Pion_ALAT_SePoser", { "onHalt" } },
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_Dep_Pion_ALAT_PremiereAllure", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Maj_Pions_ObjectifEsquive", {} },
+        { "ACT_Maj_Pions_ObjectifCourant", {} },
+        { "ACT_Obs_EtablirVisionCur", {} },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
+        { "BEH_Obs_Pion_ALAT_ReconnaitreZone", {} },
+        { "BEH_Eni_Pion_ALAT_GererEniRecoContourEni", {} },
+        { "BEH_Manoeuvre_Pion_AllerStationner", {} },
+        { "BEH_Dep_Pion_ALAT_SePoser", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_ALAT_ReconnaitreContourEnnemi" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
                 self.eEtat = self.eEtat or eActionEnCours
         self.ePhase = self.ePhase or eReconnaitre
         self.pointFinFuseau = self.pointFinFuseau or DEC_Geometrie_CalculerPointArrivee()
@@ -79,7 +73,7 @@ include "bit.lua"
             do
                 if( self.ePhase ~= eFinMission and self.ePhase ~= eSExfiltrer ) then
                     do
-                        StopInstance( self, self.activations.BEH_Dep_Pion_ALAT_PremiereAllure, {} )
+                        StopActivateOverride( self, self.activations.BEH_Dep_Pion_ALAT_PremiereAllure, {} )
                         self.ePhase = eSExfiltrer
                         self.eEtat = eActionEnCours
                     end
@@ -122,15 +116,13 @@ if( DEC_UserTypeList_Contient( self.listeLocalisationsATraiter, self.localisatio
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self.params.__returnValue = eActionImpossible
-                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_ReconnaitreContourEnnemi" } )
-Halt( self )
+                                Halt( self )
                                 do return end
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_ReconnaitreContourEnnemi" } )
-Halt( self )
+                            Halt( self )
                             do return end
 
                         end
@@ -181,7 +173,7 @@ do
 
                     --[[//si on a percu un ennemi dans le fuseau, passage en première allure
 ]]if( not DIA_IsListEmpty( DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansFuseau() ) ) then
-                        StartInstance( self, self.activations.BEH_Dep_Pion_ALAT_PremiereAllure, GetMotivation( "MOT_Manoeuvrer" ) * 4, {} )
+                        StartActivateOverride( self, self.activations.BEH_Dep_Pion_ALAT_PremiereAllure, GetMotivation( "MOT_Manoeuvrer" ) * 4, {} )
                     end
 
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self.pointFinFuseau, } )
@@ -231,15 +223,13 @@ elseif switch_1 == eSExfiltrer then
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self.params.__returnValue = eActionImpossible
-                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_ReconnaitreContourEnnemi" } )
-Halt( self )
+                                Halt( self )
                                 do return end
 
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_ReconnaitreContourEnnemi" } )
-Halt( self )
+                            Halt( self )
                             do return end
 
                         end
@@ -260,8 +250,7 @@ elseif switch_1 == eFinMission then
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
-                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ALAT_ReconnaitreContourEnnemi" } )
-Halt( self )
+                                Halt( self )
                                 do return end
 
                             end
@@ -297,12 +286,8 @@ node "BEH_Eni_Pion_ALAT_GererEniRecoContourEni"
 {
     activations =
     {
-        { "BEH_Obs_Pion_ALAT_ReconnaitreUnite", { "onHalt" } },
+        { "BEH_Obs_Pion_ALAT_ReconnaitreUnite", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_ALAT_GererEniRecoContourEni" } },
 
     create = function( self )
         self._namedParams = {}

@@ -44,12 +44,8 @@ node "ActivatedByMOT_TenirFaceAuxEnnemis"
 {
     activations =
     {
-        { "BEH_MOT_TenirFaceAuxEnnemis", { "onHalt" } },
+        { "BEH_MOT_TenirFaceAuxEnnemis", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "ActivatedByMOT_TenirFaceAuxEnnemis" } },
 
     create = function( self )
     end,

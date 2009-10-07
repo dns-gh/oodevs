@@ -22,12 +22,8 @@ includedFiles["sources/melee/abc/automates/sgpt chars inf/missions/semparerzone/
 {
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_SemparerDUneZone", { "onHalt" } },
+        { "BEH_Conduite_Automate_ABC_SemparerDUneZone", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_Semparer" } },
 
     create = function( self )
         self._namedParams = {}

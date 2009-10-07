@@ -14,14 +14,10 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "BEH_Pion_ASS_AcquerirLanceursEni_Mission", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_Pion_ASS_AcquerirLanceursEni_Mission", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_ASS_AcquerirLanceursEni" } },
 
     create = function( self )
         self._namedParams = {}
@@ -61,8 +57,7 @@ elseif switch_1 == eFinMission then
                         do
                             DEC_FinMission()
                                                         self.params.__returnValue = eActionEffectuee
-                            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ASS_AcquerirLanceursEni" } )
-Halt( self )
+                            Halt( self )
                             do return end
 
                         end
@@ -87,17 +82,13 @@ node "BEH_Pion_ASS_AcquerirLanceursEni_Mission"
 {
     activations =
     {
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_RC", { "onHalt" } },
-        { "BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "BEH_Dep_Pion_ASS_ChangerDePosition_Sauvegarde", { "onHalt" } },
-        { "BEH_Obs_Pion_ASS_TirIndirect_DansZones", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_RC", {} },
+        { "BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_Pion_ASS_ChangerDePosition_Sauvegarde", {} },
+        { "BEH_Obs_Pion_ASS_TirIndirect_DansZones", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pion_ASS_AcquerirLanceursEni_Mission" } },
 
     create = function( self )
     end,
@@ -153,8 +144,7 @@ elseif switch_1 == eFinMission then
                         do
                             DEC_FinMission()
                                                         self.params.__returnValue = eActionEffectuee
-                            Feedback( self.feedbacks["onHalt"], { "BEH_Pion_ASS_AcquerirLanceursEni_Mission" } )
-Halt( self )
+                            Halt( self )
                             do return end
 
                         end
@@ -178,14 +168,10 @@ node "BEH_Obs_Pion_ASS_TirIndirect_DansZones"
 {
     activations =
     {
-        { "ACT_Obs_Pion_ASS_DelaiAllumageRadar", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_Obs_Pion_ASS_ActiverPerceptionTirIndirect_DansZone", { "onHalt" } },
+        { "ACT_Obs_Pion_ASS_DelaiAllumageRadar", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Obs_Pion_ASS_ActiverPerceptionTirIndirect_DansZone", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Obs_Pion_ASS_TirIndirect_DansZones" } },
 
     create = function( self )
         self._namedParams = {}
@@ -193,13 +179,11 @@ node "BEH_Obs_Pion_ASS_TirIndirect_DansZones"
         self._namedParams.bMenaceRoem = self.params[2]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
                 self.bAllumageRadar = self.bAllumageRadar or true
         local eNiveauInstallation = DEC_Agent_NiveauInstallation()
         if( ModuleBegins() ) then
-            StartInstance( self, self.activations.ACT_Obs_Pion_ASS_DelaiAllumageRadar, 1, { 2, } )
+            StartActivateOverride( self, self.activations.ACT_Obs_Pion_ASS_DelaiAllumageRadar, 1, { 2, } )
         end
 
         if( eNiveauInstallation_Poste == eNiveauInstallation or eNiveauInstallation_PosteAmenage == eNiveauInstallation ) then

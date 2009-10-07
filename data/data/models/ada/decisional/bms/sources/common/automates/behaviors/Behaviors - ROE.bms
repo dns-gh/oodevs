@@ -22,12 +22,8 @@ includedFiles["sources/common/automates/behaviors/Behaviors - ROE.bms"] = true
 {
     activations =
     {
-        { "BEH_ROE_Automate_RecevoirOrdreInopine", { "onHalt" } },
+        { "BEH_ROE_Automate_RecevoirOrdreInopine", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_ROE_Automate_GererOrdre" } },
 
     create = function( self )
     end,
@@ -51,22 +47,16 @@ node "BEH_ROE_Automate_RecevoirOrdreInopine"
 {
     activations =
     {
-        { "BEH_ROE_Automate_TirLibre", { "onHalt" } },
-        { "BEH_ROE_Automate_TirRestreint", { "onHalt" } },
-        { "BEH_ROE_Automate_TirInterdit", { "onHalt" } },
-        { "ACT_Ordre_Suppression", { "onHalt" } },
+        { "BEH_ROE_Automate_TirLibre", {} },
+        { "BEH_ROE_Automate_TirRestreint", {} },
+        { "BEH_ROE_Automate_TirInterdit", {} },
+        { "ACT_Ordre_Suppression", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_ROE_Automate_RecevoirOrdreInopine" } },
 
     create = function( self )
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Reception d'un ordre du superieur
 ]]--[[//-----------------------------------------------------------------------------
@@ -86,25 +76,25 @@ do
                                     if switch_2 == eEtatROE_TirLibre then
                                         --[[// TIR LIBRE
 ]]DEC_Trace( " === ORDRE --> ROE TIR LIBRE" )
-                                        StartInstance( self, self.activations.BEH_ROE_Automate_TirLibre, 1, {} )
-                                        StopInstance( self, self.activations.BEH_ROE_Automate_TirRestreint, {} )
-                                        StopInstance( self, self.activations.BEH_ROE_Automate_TirInterdit, {} )
+                                        StartActivateOverride( self, self.activations.BEH_ROE_Automate_TirLibre, 1, {} )
+                                        StopActivateOverride( self, self.activations.BEH_ROE_Automate_TirRestreint, {} )
+                                        StopActivateOverride( self, self.activations.BEH_ROE_Automate_TirInterdit, {} )
                                         
                                     --[[// TIR SUR RIPOSTE
 ]]                                    cases_switch_2[1] = true
 elseif switch_2 == eEtatROE_TirSurRiposte then
                                         DEC_Trace( " === ORDRE --> ROE TIR SUR RIPOSTE" )
-                                        StartInstance( self, self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )
-                                        StopInstance( self, self.activations.BEH_ROE_Automate_TirLibre, {} )
-                                        StopInstance( self, self.activations.BEH_ROE_Automate_TirInterdit, {} )
+                                        StartActivateOverride( self, self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )
+                                        StopActivateOverride( self, self.activations.BEH_ROE_Automate_TirLibre, {} )
+                                        StopActivateOverride( self, self.activations.BEH_ROE_Automate_TirInterdit, {} )
                                         
                                     --[[// TIR INTERDIT
 ]]                                    cases_switch_2[2] = true
 elseif switch_2 == eEtatROE_TirInterdit then
                                         DEC_Trace( " === ORDRE --> ROE TIR INTERDIT" )
-                                        StartInstance( self, self.activations.BEH_ROE_Automate_TirInterdit, 1, {} )
-                                        StopInstance( self, self.activations.BEH_ROE_Automate_TirLibre, {} )
-                                        StopInstance( self, self.activations.BEH_ROE_Automate_TirRestreint, {} )
+                                        StartActivateOverride( self, self.activations.BEH_ROE_Automate_TirInterdit, 1, {} )
+                                        StopActivateOverride( self, self.activations.BEH_ROE_Automate_TirLibre, {} )
+                                        StopActivateOverride( self, self.activations.BEH_ROE_Automate_TirRestreint, {} )
                                         
                                                                         cases_switch_2[3] = true
                                     end
@@ -134,12 +124,8 @@ node "BEH_ROE_Automate_TirLibre"
 {
     activations =
     {
-        { "ACT_ROE_Automate_DonnerOrdreTirLibre", { "onHalt" } },
+        { "ACT_ROE_Automate_DonnerOrdreTirLibre", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_ROE_Automate_TirLibre" } },
 
     create = function( self )
     end,
@@ -165,12 +151,8 @@ node "BEH_ROE_Automate_TirRestreint"
 {
     activations =
     {
-        { "ACT_ROE_Automate_DonnerOrdreTirRestreint", { "onHalt" } },
+        { "ACT_ROE_Automate_DonnerOrdreTirRestreint", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_ROE_Automate_TirRestreint" } },
 
     create = function( self )
     end,
@@ -196,12 +178,8 @@ node "BEH_ROE_Automate_TirInterdit"
 {
     activations =
     {
-        { "ACT_ROE_Automate_DonnerOrdreTirInterdit", { "onHalt" } },
+        { "ACT_ROE_Automate_DonnerOrdreTirInterdit", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_ROE_Automate_TirInterdit" } },
 
     create = function( self )
     end,
@@ -225,8 +203,6 @@ node "BEH_ROE_Automate_TirInterdit"
 
 node "ACT_ROE_Automate_DonnerOrdreTirLibre"
 {
-    feedbacks = { { { "onHalt" }, "ACT_ROE_Automate_DonnerOrdreTirLibre" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -253,8 +229,6 @@ node "ACT_ROE_Automate_DonnerOrdreTirLibre"
 ]]--[[// *****************************************************************************
 ]]node "ACT_ROE_Automate_DonnerOrdreTirRestreint"
 {
-    feedbacks = { { { "onHalt" }, "ACT_ROE_Automate_DonnerOrdreTirRestreint" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -281,8 +255,6 @@ node "ACT_ROE_Automate_DonnerOrdreTirLibre"
 ]]--[[// *****************************************************************************
 ]]node "ACT_ROE_Automate_DonnerOrdreTirInterdit"
 {
-    feedbacks = { { { "onHalt" }, "ACT_ROE_Automate_DonnerOrdreTirInterdit" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]

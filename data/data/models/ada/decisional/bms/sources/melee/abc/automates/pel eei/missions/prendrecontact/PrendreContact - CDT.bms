@@ -21,12 +21,8 @@ includedFiles["sources/melee/abc/automates/pel eei/missions/prendrecontact/Prend
 {
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_ReconnaitreUnAxe", { "onHalt" } },
+        { "BEH_Conduite_Automate_ABC_ReconnaitreUnAxe", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_PrendrePreciserContact" } },
 
     create = function( self )
         self._namedParams = {}

@@ -11,16 +11,12 @@ includedFiles["sources/melee/abc/automates/ge40/missions/defensives/freiner/Coor
 {
     activations =
     {
-        { "BEH_GTIA_AssurerLaCoordinationRetrogradeIntraEchelon", { "onHalt" } },
-        { "BEH_GTIA_AssurerLaCoordinationRetrogradeInterEchelon", { "onHalt" } },
-        { "BEH_GTIA_AssurerLaCoordinationRetrogradeSurRetard", { "onHalt" } },
-        { "BEH_GTIA_AssurerLaCoordinationSurLR", { "onHalt" } },
-        { "BEH_GTIA_AssurerLaCoordinationAuContact", { "onHalt" } },
+        { "BEH_GTIA_AssurerLaCoordinationRetrogradeIntraEchelon", {} },
+        { "BEH_GTIA_AssurerLaCoordinationRetrogradeInterEchelon", {} },
+        { "BEH_GTIA_AssurerLaCoordinationRetrogradeSurRetard", {} },
+        { "BEH_GTIA_AssurerLaCoordinationSurLR", {} },
+        { "BEH_GTIA_AssurerLaCoordinationAuContact", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssurerLaCoordinationRetrograde" } },
 
     create = function( self )
     end,
@@ -59,12 +55,8 @@ node "BEH_GTIA_AssurerLaCoordinationSurLR"
 {
     activations =
     {
-        { "ACT_GTIA_Automate_DonnerOrdreTenirSurLR", { "onHalt" } },
+        { "ACT_GTIA_Automate_DonnerOrdreTenirSurLR", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssurerLaCoordinationSurLR" } },
 
     create = function( self )
     end,
@@ -90,12 +82,8 @@ node "BEH_GTIA_AssurerLaCoordinationAuContact"
 {
     activations =
     {
-        { "ACT_GTIA_Automate_DonnerOrdreTenir", { "onHalt" } },
+        { "ACT_GTIA_Automate_DonnerOrdreTenir", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssurerLaCoordinationAuContact" } },
 
     create = function( self )
     end,
@@ -127,12 +115,8 @@ node "BEH_GTIA_AssurerLaCoordinationRetrogradeSurRetard"
 {
     activations =
     {
-        { "ACT_GTIA_Automate_DonnerOrdreDecrocher", { "onHalt" } },
+        { "ACT_GTIA_Automate_DonnerOrdreDecrocher", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssurerLaCoordinationRetrogradeSurRetard" } },
 
     create = function( self )
     end,
@@ -169,12 +153,8 @@ node "BEH_GTIA_AssurerLaCoordinationRetrogradeInterEchelon"
 {
     activations =
     {
-        { "ACT_GTIA_Automate_DonnerOrdreDecrocher", { "onHalt" } },
+        { "ACT_GTIA_Automate_DonnerOrdreDecrocher", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssurerLaCoordinationRetrogradeInterEchelon" } },
 
     create = function( self )
         self._namedParams = {}
@@ -215,12 +195,8 @@ node "BEH_GTIA_AssurerLaCoordinationRetrogradeIntraEchelon"
 {
     activations =
     {
-        { "ACT_GTIA_Automate_DonnerOrdreDecrocher", { "onHalt" } },
+        { "ACT_GTIA_Automate_DonnerOrdreDecrocher", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssurerLaCoordinationRetrogradeIntraEchelon" } },
 
     create = function( self )
         self._namedParams = {}
@@ -261,8 +237,6 @@ if( DEC_Geometrie_CalculerAutomateDistanceLigneAvant( self.resultatCalcul, pion 
 
 node "ACT_GTIA_Automate_DonnerOrdreDecrocher"
 {
-    feedbacks = { { { "onHalt" }, "ACT_GTIA_Automate_DonnerOrdreDecrocher" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -290,8 +264,6 @@ node "ACT_GTIA_Automate_DonnerOrdreDecrocher"
 ]]--[[// *****************************************************************************
 ]]node "ACT_GTIA_Automate_DonnerOrdreTenirSurLR"
 {
-    feedbacks = { { { "onHalt" }, "ACT_GTIA_Automate_DonnerOrdreTenirSurLR" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -319,8 +291,6 @@ node "ACT_GTIA_Automate_DonnerOrdreDecrocher"
 ]]--[[// *****************************************************************************
 ]]node "ACT_GTIA_Automate_DonnerOrdreTenir"
 {
-    feedbacks = { { { "onHalt" }, "ACT_GTIA_Automate_DonnerOrdreTenir" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]

@@ -11,18 +11,14 @@ includedFiles["sources/population/asymetriques/common/pion/missions/CommettreAtt
 {
     activations =
     {
-        { "ACT_Maj_Pion_PasserEnTirInterdit", { "onHalt" } },
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur", { "onHalt" } },
-        { "BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers", { "onHalt" } },
-        { "ACT_Eni_Pion_ASY_CommettreAttentatContreInstallation", { "onHalt" } },
+        { "ACT_Maj_Pion_PasserEnTirInterdit", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur", {} },
+        { "BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers", {} },
+        { "ACT_Eni_Pion_ASY_CommettreAttentatContreInstallation", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_ASY_CommettreAttentatContreInstallation" } },
 
     create = function( self )
         self._namedParams = {}
@@ -41,8 +37,7 @@ includedFiles["sources/population/asymetriques/common/pion/missions/CommettreAtt
                 if( ( self.objectif == 0 or self.objectif == nil ) ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
-                                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ASY_CommettreAttentatContreInstallation" } )
-Halt( self )
+                                                Halt( self )
                         do return end
 
                     end
@@ -134,8 +129,7 @@ elseif switch_1 == eSExfiltrer then
 ]]                cases_switch_1[4] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                                        Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ASY_CommettreAttentatContreInstallation" } )
-Halt( self )
+                                        Halt( self )
                     do return end
 
                                 end

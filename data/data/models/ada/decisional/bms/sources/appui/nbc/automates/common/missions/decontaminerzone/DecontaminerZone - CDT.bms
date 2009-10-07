@@ -11,13 +11,9 @@ includedFiles["sources/appui/nbc/automates/common/missions/decontaminerzone/Deco
 {
     activations =
     {
-        { "BEH_Dispositif_Automate_NBC_FaireSuivreLeSE_", { "onHalt" } },
-        { "BEH_CoordDep_Automate_NBC_AssurerLaCoordinationInterne_", { "onHalt" } },
+        { "BEH_Dispositif_Automate_NBC_FaireSuivreLeSE_", {} },
+        { "BEH_CoordDep_Automate_NBC_AssurerLaCoordinationInterne_", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_NBC_DecontaminerUneZone" } },
 
     create = function( self )
     end,

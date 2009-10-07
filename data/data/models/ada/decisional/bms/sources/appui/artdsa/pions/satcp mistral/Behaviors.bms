@@ -51,8 +51,6 @@ etat_ROE = 1,
 
 node "BEH_ASA_Defaut"
 {
-    feedbacks = { { { "onHalt" }, "BEH_ASA_Defaut" } },
-
     create = function( self )
     end,
 

@@ -43,12 +43,8 @@ include "Population/Populations/Missions/Manifester.bms"
 {
     activations =
     {
-        { "BEH_Default", { "onHalt" } },
+        { "BEH_Default", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "DefaultBehavior" } },
 
     create = function( self )
     end,
@@ -71,12 +67,8 @@ node "BEH_Default"
 {
     activations =
     {
-        { "ACT_Ordre_Suppression", { "onHalt" } },
+        { "ACT_Ordre_Suppression", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Default" } },
 
     create = function( self )
     end,
@@ -164,12 +156,8 @@ node "BEH_Pop_RejoindrePoint"
 {
     activations =
     {
-        { "ACT_Pop_RejoindrePoint", { "onHalt" } },
+        { "ACT_Pop_RejoindrePoint", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pop_RejoindrePoint" } },
 
     create = function( self )
         self._namedParams = {}
@@ -192,12 +180,8 @@ node "BEH_Pop_Stationner"
 {
     activations =
     {
-        { "ACT_Pop_Stationner", { "onHalt" } },
+        { "ACT_Pop_Stationner", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pop_Stationner" } },
 
     create = function( self )
     end,
@@ -227,12 +211,8 @@ node "BEH_Pop_RejoindreInstallation"
 
     activations =
     {
-        { "BEH_Pop_RejoindrePoint", { "onHalt" } },
+        { "BEH_Pop_RejoindrePoint", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pop_RejoindreInstallation" } },
 
     create = function( self )
         self._namedParams = {}
@@ -263,13 +243,9 @@ node "BEH_Pop_DegraderInstallations"
 {
     activations =
     {
-        { "ACT_Misc_Delai", { "onHalt" } },
-        { "ACT_Pop_DegraderInstallations", { "onHalt" } },
+        { "ACT_Misc_Delai", {} },
+        { "ACT_Pop_DegraderInstallations", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pop_DegraderInstallations" } },
 
     create = function( self )
         self._namedParams = {}
@@ -308,12 +284,8 @@ node "BEH_Pop_RalentissementPions"
 {
     activations =
     {
-        { "ACT_Pop_RalentissementPions", { "onHalt" } },
+        { "ACT_Pop_RalentissementPions", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pop_RalentissementPions" } },
 
     create = function( self )
     end,
@@ -334,13 +306,9 @@ node "BEH_Pop_PAPPions"
 {
     activations =
     {
-        { "ACT_Misc_Delai", { "onHalt" } },
-        { "ACT_Pop_PAPPions", { "onHalt" } },
+        { "ACT_Misc_Delai", {} },
+        { "ACT_Pop_PAPPions", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pop_PAPPions" } },
 
     create = function( self )
     end,
@@ -377,13 +345,9 @@ node "BEH_Pop_PAPPion"
 {
     activations =
     {
-        { "ACT_Misc_Delai", { "onHalt" } },
-        { "ACT_Pop_PAPPion", { "onHalt" } },
+        { "ACT_Misc_Delai", {} },
+        { "ACT_Pop_PAPPion", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pop_PAPPion" } },
 
     create = function( self )
         self._namedParams = {}
@@ -422,12 +386,8 @@ node "BEH_Pop_RepondreALaPriseAPartie"
 {
     activations =
     {
-        { "BEH_Pop_PAPPion", { "onHalt" } },
+        { "BEH_Pop_PAPPion", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pop_RepondreALaPriseAPartie" } },
 
     create = function( self )
     end,

@@ -18,12 +18,8 @@ include "bit.lua"
 {
     activations =
     {
-        { "ACT_RC_Automate_SurPion", { "onHalt" } },
+        { "ACT_RC_Automate_SurPion", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Rc_Automate_INF_PIA_Sur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -33,8 +29,7 @@ include "bit.lua"
 
     activate = function( self )
         if( ( ( self._namedParams.pionRecueil == 0 or self._namedParams.pionRecueil == nil ) or self._namedParams.ptPIA == 0 or ( self._namedParams.pionRecueil == 0 or self._namedParams.pionRecueil == nil ) or self._namedParams.ptPIA == nil ) ) then
-            Feedback( self.feedbacks["onHalt"], { "BEH_Rc_Automate_INF_PIA_Sur" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 

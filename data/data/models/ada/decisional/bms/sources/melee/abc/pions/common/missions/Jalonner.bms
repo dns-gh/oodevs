@@ -18,20 +18,16 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "BEH_MAJ_Pion_ABC_AgressiviteTir", { "onHalt" } },
-        { "BEH_MOT_DesactiveSauvegarde", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "BEH_Dep_Pion_ABC_RejoindreFuseau", { "onHalt" } },
-        { "BEH_Lima_Pion_ABC_Jalonner_GererLimas", { "onHalt" } },
-        { "BEH_Dep_ProgressionSur", { "onHalt" } },
-        { "BEH_Eni_Pion_ABC_JalonnerLesGros", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_MAJ_Pion_ABC_AgressiviteTir", {} },
+        { "BEH_MOT_DesactiveSauvegarde", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_Pion_ABC_RejoindreFuseau", {} },
+        { "BEH_Lima_Pion_ABC_Jalonner_GererLimas", {} },
+        { "BEH_Dep_ProgressionSur", {} },
+        { "BEH_Eni_Pion_ABC_JalonnerLesGros", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_ABC_Jalonner" } },
 
     create = function( self )
         self._namedParams = {}
@@ -41,9 +37,7 @@ include "bit.lua"
         self._namedParams.eNiveauIdentificationEni = self.params[4]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         self.eEtat = self.eEtat or eActionEnCours
         self.eEtatRecueil = self.eEtatRecueil or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
@@ -68,7 +62,7 @@ include "bit.lua"
 ]]if( ModuleBegins() ) then
             do
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
-                StartInstance( self, self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )
+                StartActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )
             end
         end
 
@@ -132,7 +126,7 @@ elseif switch_1 == eJalonner then
                 --[[// 4) Fin de la mission
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
-                    StopInstance( self, self.activations.BEH_MOT_DesactiveSauvegarde, {} )--[[// reprendre sauvegarde
+                    StopActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, {} )--[[// reprendre sauvegarde
 ]]
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     
@@ -156,13 +150,9 @@ node "BEH_Eni_Pion_ABC_JalonnerLesGros"
 {
     activations =
     {
-        { "BEH_Eni_Pion_ABC_JalonnementSur", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "BEH_Eni_Pion_ABC_JalonnementSur", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_ABC_JalonnerLesGros" } },
 
     create = function( self )
     end,
@@ -209,14 +199,10 @@ node "BEH_Eni_Pion_ABC_JalonnementSur"
 
     activations =
     {
-        { "ACT_Obs_EtablirVisionVersPt", { "onHalt" } },
-        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
-        { "BEH_Eni_SePosterFaceA", { "onHalt" } },
+        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "ACT_Dep_ModulationVitesse", {} },
+        { "BEH_Eni_SePosterFaceA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_ABC_JalonnementSur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -254,15 +240,11 @@ node "BEH_Lima_Pion_ABC_Jalonner_GererLimas"
 {
     activations =
     {
-        { "BEH_Lima_Pion_ABC_Jalonner_PasserSurLC", { "onHalt" } },
-        { "BEH_Lima_Pion_ABC_Jalonner_PasserSurLR", { "onHalt" } },
-        { "BEH_Lima_Pion_ABC_Jalonner_PasserSurLIA", { "onHalt" } },
-        { "ACT_Limas_Suppression", { "onHalt" } },
+        { "BEH_Lima_Pion_ABC_Jalonner_PasserSurLC", {} },
+        { "BEH_Lima_Pion_ABC_Jalonner_PasserSurLR", {} },
+        { "BEH_Lima_Pion_ABC_Jalonner_PasserSurLIA", {} },
+        { "ACT_Limas_Suppression", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Lima_Pion_ABC_Jalonner_GererLimas" } },
 
     create = function( self )
     end,
@@ -324,12 +306,8 @@ node "BEH_Dep_Pion_ABC_RejoindreFuseau"
 {
     activations =
     {
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "BEH_Dep_ProgressionVers", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_ABC_RejoindreFuseau" } },
 
     create = function( self )
         self._namedParams = {}
@@ -348,8 +326,7 @@ node "BEH_Dep_Pion_ABC_RejoindreFuseau"
             do
                 if( DEC_Geometrie_EstPointDansFuseau( DEC_Agent_Position() ) ) then
                     self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_ABC_RejoindreFuseau" } )
-Halt( self )
+                    Halt( self )
                     do return end
                 end
 
@@ -364,8 +341,7 @@ Halt( self )
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_ABC_RejoindreFuseau" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end
@@ -388,12 +364,8 @@ node "BEH_Lima_Pion_ABC_Jalonner_PasserSurLC"
 {
     activations =
     {
-        { "ACT_Dep_PasserSurLima", { "onHalt" } },
+        { "ACT_Dep_PasserSurLima", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Lima_Pion_ABC_Jalonner_PasserSurLC" } },
 
     create = function( self )
         self._namedParams = {}
@@ -425,12 +397,8 @@ node "BEH_Lima_Pion_ABC_Jalonner_PasserSurLR"
 {
     activations =
     {
-        { "ACT_Dep_PasserSurLima", { "onHalt" } },
+        { "ACT_Dep_PasserSurLima", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Lima_Pion_ABC_Jalonner_PasserSurLR" } },
 
     create = function( self )
         self._namedParams = {}
@@ -462,12 +430,8 @@ node "BEH_Lima_Pion_ABC_Jalonner_PasserSurLIA"
 {
     activations =
     {
-        { "ACT_Dep_PasserSurLima", { "onHalt" } },
+        { "ACT_Dep_PasserSurLima", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Lima_Pion_ABC_Jalonner_PasserSurLIA" } },
 
     create = function( self )
         self._namedParams = {}

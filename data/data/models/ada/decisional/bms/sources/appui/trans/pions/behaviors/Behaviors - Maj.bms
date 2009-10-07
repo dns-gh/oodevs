@@ -11,14 +11,10 @@ includedFiles["sources/appui/trans/pions/behaviors/Behaviors - Maj.bms"] = true
 {
     activations =
     {
-        { "BEH_MAJ_EtatOperationnel", { "onHalt" } },
-        { "ACT_MAJ_EtatDec", { "onHalt" } },
-        { "ACT_MAJ_EtatOrdreCoordination", { "onHalt" } },
+        { "BEH_MAJ_EtatOperationnel", {} },
+        { "ACT_MAJ_EtatDec", {} },
+        { "ACT_MAJ_EtatOrdreCoordination", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MAJ_EtatDefaut" } },
 
     create = function( self )
     end,
@@ -44,12 +40,8 @@ node "BEH_MAJ_EtatOperationnel"
 {
     activations =
     {
-        { "ACT_MAJ_EtatDestruction", { "onHalt" } },
+        { "ACT_MAJ_EtatDestruction", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_MAJ_EtatOperationnel" } },
 
     create = function( self )
     end,

@@ -13,17 +13,13 @@ includedFiles["sources/appui/nbc/pions/common/missions/ReconnaitreZone.bms"] = t
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "BEH_Nbc_Pion_FaireDesMesures", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Nbc_Pion_FaireDesMesures", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_NBC_ReconnaitreZone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -49,8 +45,7 @@ includedFiles["sources/appui/nbc/pions/common/missions/ReconnaitreZone.bms"] = t
 
         if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_NBC_ReconnaitreZone" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 

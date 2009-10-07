@@ -22,17 +22,13 @@ node "MIS_Pion_ASS_EOP_AcquerirObjectifs"
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_Dep_Pion_EOP_ActiverFurtivite", { "onHalt" } },
-        { "BEH_Pion_EOP_AcquerirObjectifs_Mission", { "onHalt" } },
-        { "BEH_Transport_Pion_EOP_RecupererTransporteur", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_Dep_Pion_EOP_ActiverFurtivite", {} },
+        { "BEH_Pion_EOP_AcquerirObjectifs_Mission", {} },
+        { "BEH_Transport_Pion_EOP_RecupererTransporteur", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_ASS_EOP_AcquerirObjectifs" } },
 
     create = function( self )
         self._namedParams = {}
@@ -97,8 +93,7 @@ elseif switch_1 == eFinMission then
                         do
                             DEC_FinMission()
                                                         self.params.__returnValue = eActionEffectuee
-                            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ASS_EOP_AcquerirObjectifs" } )
-Halt( self )
+                            Halt( self )
                             do return end
 
                         end
@@ -118,34 +113,28 @@ node "BEH_Pion_EOP_AcquerirObjectifs_Mission"
 {
     activations =
     {
-        { "ACT_Dep_PasserEnModeFurtif", { "onHalt" } },
-        { "BEH_Mot_Pion_EOP_Debarquer", { "onHalt" } },
-        { "BEH_Dep_Pion_EOP_PreparerDebarquement", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_RC", { "onHalt" } },
-        { "BEH_Dep_Pion_EOP_AcquerirObjectifs_Mission", { "onHalt" } },
-        { "ACT_Dep_Pion_EOP_ActiverFurtivite", { "onHalt" } },
-        { "BEH_Obs_Pion_ASS_ReconnaissanceZone", { "onHalt" } },
+        { "ACT_Dep_PasserEnModeFurtif", {} },
+        { "BEH_Mot_Pion_EOP_Debarquer", {} },
+        { "BEH_Dep_Pion_EOP_PreparerDebarquement", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_RC", {} },
+        { "BEH_Dep_Pion_EOP_AcquerirObjectifs_Mission", {} },
+        { "ACT_Dep_Pion_EOP_ActiverFurtivite", {} },
+        { "BEH_Obs_Pion_ASS_ReconnaissanceZone", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pion_EOP_AcquerirObjectifs_Mission" } },
 
     create = function( self )
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         self.mission = self.mission or DEC_GetMission( myself )
         self.eAction = self.eAction or eActionEnCours
         self.ePhase = self.ePhase or ePreparerMission
         if( self.ePhase == eRejoindre and S_Geometrie_EstProchePosition( DEC_Agent_Position(), self.mission.positionDebarquement_, 300 ) ) then
             do
-                StartInstance( self, self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )
-                StartInstance( self, self.activations.BEH_Mot_Pion_EOP_Debarquer, 1.1, { true, } )
-                StartInstance( self, self.activations.BEH_Dep_Pion_EOP_PreparerDebarquement, 1.1, {} )
+                StartActivateOverride( self, self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )
+                StartActivateOverride( self, self.activations.BEH_Mot_Pion_EOP_Debarquer, 1.1, { true, } )
+                StartActivateOverride( self, self.activations.BEH_Dep_Pion_EOP_PreparerDebarquement, 1.1, {} )
                 self.ePhase = eDeployer
             end
         end
@@ -194,14 +183,10 @@ node "BEH_Dep_Pion_EOP_PreparerDebarquement"
 {
     activations =
     {
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_Dep_SePoster", { "onHalt" } },
-        { "ACT_Misc_Pion_DelaiInstallation", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Dep_SePoster", {} },
+        { "ACT_Misc_Pion_DelaiInstallation", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_EOP_PreparerDebarquement" } },
 
     create = function( self )
     end,
@@ -214,8 +199,7 @@ node "BEH_Dep_Pion_EOP_PreparerDebarquement"
             do
                 self.eActionDelai = eActionEnCours
                                 self.params.__returnValue = eActionEffectuee
-                Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_EOP_PreparerDebarquement" } )
-Halt( self )
+                Halt( self )
                 do return end
 
             end
@@ -231,12 +215,8 @@ node "BEH_Dep_Pion_EOP_AcquerirObjectifs_Mission"
 {
     activations =
     {
-        { "BEH_Dep_Progresser", { "onHalt" } },
+        { "BEH_Dep_Progresser", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_EOP_AcquerirObjectifs_Mission" } },
 
     create = function( self )
         self._namedParams = {}
@@ -257,8 +237,7 @@ node "BEH_Dep_Pion_EOP_AcquerirObjectifs_Mission"
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_EOP_AcquerirObjectifs_Mission" } )
-Halt( self )
+                Halt( self )
                 do return end
 
             end
@@ -270,8 +249,7 @@ Halt( self )
                                 do
                     self.it = S_Misc_DetruireItineraire( self.it, "BEH_Pion_INF_ApprocherObjectifMission" )
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_EOP_AcquerirObjectifs_Mission" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end

@@ -20,15 +20,11 @@ includedFiles["sources/common/pions/missions/Franchir.bms"] = true
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_Franchir" } },
 
     create = function( self )
         self._namedParams = {}
@@ -48,8 +44,7 @@ includedFiles["sources/common/pions/missions/Franchir.bms"] = true
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                                                 self.params.__returnValue = eActionImpossible
-                        Feedback( self.feedbacks["onHalt"], { "MIS_Pion_Franchir" } )
-Halt( self )
+                        Halt( self )
                         do return end
 
                     end
@@ -60,8 +55,7 @@ Halt( self )
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                                                 self.params.__returnValue = eActionImpossible
-                        Feedback( self.feedbacks["onHalt"], { "MIS_Pion_Franchir" } )
-Halt( self )
+                        Halt( self )
                         do return end
 
                     end

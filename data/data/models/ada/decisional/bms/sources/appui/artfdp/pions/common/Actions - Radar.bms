@@ -23,8 +23,6 @@ includedFiles["sources/appui/artfdp/pions/common/Actions - Radar.bms"] = true
         radar = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Obs_Pion_ASS_ActiverRadar_DansZone" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.eRadar = self.params[1]
@@ -85,8 +83,6 @@ node "ACT_Obs_Pion_ASS_ActiverPerceptionTirIndirect_DansZone"
         radar = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Obs_Pion_ASS_ActiverPerceptionTirIndirect_DansZone" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.locZone = self.params[1]
@@ -146,8 +142,6 @@ node "ACT_Obs_Pion_ASS_DelaiAllumageRadar"
     actuators = F_CAPTEURS_RADAR_ACTUATEURS()
 ,
 
-    feedbacks = { { { "onHalt" }, "ACT_Obs_Pion_ASS_DelaiAllumageRadar" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.rDelai = self.params[1]
@@ -169,8 +163,7 @@ node "ACT_Obs_Pion_ASS_DelaiAllumageRadar"
                 end
 
                                 self.params.__returnValue = eActionEffectuee
-                Feedback( self.feedbacks["onHalt"], { "ACT_Obs_Pion_ASS_DelaiAllumageRadar" } )
-Halt( self )
+                Halt( self )
                 do return end
 
             end

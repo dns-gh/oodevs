@@ -24,14 +24,10 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", { "onHalt" } },
-        { "BEH_Mission_Automate_INF_AssignerAppuyerA", { "onHalt" } },
-        { "BEH_Mission_Automate_INF_AssignerA_ReconnaitrePt", { "onHalt" } },
+        { "BEH_Mission_Automate_ABC_AssignerSoutenirA", {} },
+        { "BEH_Mission_Automate_INF_AssignerAppuyerA", {} },
+        { "BEH_Mission_Automate_INF_AssignerA_ReconnaitrePt", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_Reconnaitre_AssignerReco" } },
 
     create = function( self )
         self._namedParams = {}
@@ -43,8 +39,7 @@ include "bit.lua"
         self.ptDest = self.ptDest or DEC_Geometrie_CalculerPointArrivee()
         if( not ModuleBegins() ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "BEH_Conduite_Automate_INF_Reconnaitre_AssignerReco" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -90,12 +85,8 @@ node "BEH_Conduite_Automate_INF_Reduire_Manoeuvre"
 {
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Assaut_Manoeuvre", { "onHalt" } },
+        { "BEH_Conduite_Automate_INF_Assaut_Manoeuvre", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_Reduire_Manoeuvre" } },
 
     create = function( self )
         self._namedParams = {}
@@ -109,8 +100,7 @@ node "BEH_Conduite_Automate_INF_Reduire_Manoeuvre"
             do
                 self.eAction = eActionEnCours
                                 self.params.__returnValue = eActionEffectuee
-                Feedback( self.feedbacks["onHalt"], { "BEH_Conduite_Automate_INF_Reduire_Manoeuvre" } )
-Halt( self )
+                Halt( self )
                 do return end
 
             end
@@ -139,23 +129,17 @@ node "BEH_Situation_Automate_INF_Assaut"
 {
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Assaut_Manoeuvre", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_Assaut_Reduction", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_Assaut_Reduction_SurPriseContact", { "onHalt" } },
+        { "BEH_Conduite_Automate_INF_Assaut_Manoeuvre", {} },
+        { "BEH_Conduite_Automate_INF_Assaut_Reduction", {} },
+        { "BEH_Conduite_Automate_INF_Assaut_Reduction_SurPriseContact", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Situation_Automate_INF_Assaut" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.bReduire = self.params[1]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         for _,x in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion des RC recus 
 ]]--[[//-----------------------------------------------------------------------------		
@@ -175,11 +159,11 @@ do
                                     if( DEC_ConnaissanceAgent_EstValide( ksEniEnCours ) and not DEC_ConnaissanceAgent_EstDetruitTactique( ksEniEnCours ) ) then
                                         do
                                             local fakeK = nil
-                                            StartInstance( self, self.activations.BEH_Conduite_Automate_INF_Assaut_Manoeuvre, 1, { x_pion, fakeK, } )
+                                            StartActivateOverride( self, self.activations.BEH_Conduite_Automate_INF_Assaut_Manoeuvre, 1, { x_pion, fakeK, } )
                                         end
                                     else
 if( self._namedParams.bReduire ) then
-                                            StartInstance( self, self.activations.BEH_Conduite_Automate_INF_Assaut_Reduction, 1, { x_pion, } )
+                                            StartActivateOverride( self, self.activations.BEH_Conduite_Automate_INF_Assaut_Reduction, 1, { x_pion, } )
                                         end
                                     end
 
@@ -190,14 +174,14 @@ if( self._namedParams.bReduire ) then
                                                 cases_switch_1[1] = true
 elseif switch_1 == eEtatSituationEnnemi_PriseContact then
                             if( self._namedParams.bReduire ) then
-                                StartInstance( self, self.activations.BEH_Conduite_Automate_INF_Assaut_Reduction_SurPriseContact, 1, { x_pion, } )
+                                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_INF_Assaut_Reduction_SurPriseContact, 1, { x_pion, } )
                             end
 
                             
                                                 cases_switch_1[2] = true
 elseif switch_1 == eEtatSituationEnnemi_PretPourConduiteTir then
                             if( self._namedParams.bReduire and S_Misc_EstMissionAffectee_Pion( x_pion, "T_Mission_Pion_INF_Fixer" ) ) then
-                                StartInstance( self, self.activations.BEH_Conduite_Automate_INF_Assaut_Reduction, 1, { x_pion, } )
+                                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_INF_Assaut_Reduction, 1, { x_pion, } )
                             end
 
                             
@@ -223,13 +207,9 @@ node "BEH_Conduite_Automate_INF_Assaut_Manoeuvre"
 {
     activations =
     {
-        { "BEH_Mission_Automate_INF_AssignerA_Fixer", { "onHalt" } },
-        { "BEH_Mission_Automate_INF_AssignerA_Couvrir", { "onHalt" } },
+        { "BEH_Mission_Automate_INF_AssignerA_Fixer", {} },
+        { "BEH_Mission_Automate_INF_AssignerA_Couvrir", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_Assaut_Manoeuvre" } },
 
     create = function( self )
         self._namedParams = {}
@@ -247,8 +227,7 @@ node "BEH_Conduite_Automate_INF_Assaut_Manoeuvre"
 ]]--[[// --------------------------------------------------------------------------------
 ]]if( ( #( selAppui ) == 0 or #( selAppui ) == nil ) or ( not DEC_ConnaissanceAgent_EstValide( self.ksEni ) and not DEC_ConnaissanceAgent_EstValide( self._namedParams.ksEniManoeuvre ) ) ) then
             self.params.__returnValue = eActionImpossible
-            Feedback( self.feedbacks["onHalt"], { "BEH_Conduite_Automate_INF_Assaut_Manoeuvre" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -260,8 +239,7 @@ Halt( self )
 --[[// L'appui (MILAN ou HOT) devrait l'avoir detruit
 ]]--[[// On reste dans la meme configuration
 ]]            self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "BEH_Conduite_Automate_INF_Assaut_Manoeuvre" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -281,8 +259,7 @@ if( DEC_ConnaissanceAgent_EstValide( self._namedParams.ksEniManoeuvre ) ) then
 ]]local pionCouv = S_Cherche_Automate_TypePion( selAppui, "SectionInfanterie" )
         if( ( pionCouv == 0 or pionCouv == nil ) ) then
             self.params.__returnValue = eActionImpossible
-            Feedback( self.feedbacks["onHalt"], { "BEH_Conduite_Automate_INF_Assaut_Manoeuvre" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -307,28 +284,22 @@ node "BEH_Conduite_Automate_INF_Assaut_Reduction_SurPriseContact"
 {
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Assaut_Reduction", { "onHalt" } },
+        { "BEH_Conduite_Automate_INF_Assaut_Reduction", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_Assaut_Reduction_SurPriseContact" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.pPion = self.params[1]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         if( ModuleBegins() ) then
             do
                 local pionAppui = S_Automate_INF_UniteMission_Appuyer( self._namedParams.pPion )
                 if( ( pionAppui ~= 0 and pionAppui ~= nil ) ) then
-                    StartInstance( self, self.activations.BEH_Conduite_Automate_INF_Assaut_Reduction, 1, { pionAppui, } )
+                    StartActivateOverride( self, self.activations.BEH_Conduite_Automate_INF_Assaut_Reduction, 1, { pionAppui, } )
                 else
-                    StartInstance( self, self.activations.BEH_Conduite_Automate_INF_Assaut_Reduction, 1, { self._namedParams.pPion, } )
+                    StartActivateOverride( self, self.activations.BEH_Conduite_Automate_INF_Assaut_Reduction, 1, { self._namedParams.pPion, } )
                 end
 
             end
@@ -348,12 +319,8 @@ node "BEH_Conduite_Automate_INF_Assaut_Reduction"
 {
     activations =
     {
-        { "BEH_Mission_Automate_INF_AssignerA_Reduire", { "onHalt" } },
+        { "BEH_Mission_Automate_INF_AssignerA_Reduire", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_Assaut_Reduction" } },
 
     create = function( self )
         self._namedParams = {}
@@ -368,8 +335,7 @@ node "BEH_Conduite_Automate_INF_Assaut_Reduction"
 ]]--[[// --------------------------------------------------------------------------------
 ]]if( ( #( selAppui ) == 0 or #( selAppui ) == nil ) ) then
             self.params.__returnValue = eActionImpossible
-            Feedback( self.feedbacks["onHalt"], { "BEH_Conduite_Automate_INF_Assaut_Reduction" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -380,8 +346,7 @@ Halt( self )
         --[[// Pas d'ennemi trouve a proximite
 ]]if( not DEC_ConnaissanceAgent_EstValide( self.ksEni ) ) then
             self.params.__returnValue = eActionImpossible
-            Feedback( self.feedbacks["onHalt"], { "BEH_Conduite_Automate_INF_Assaut_Reduction" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -394,8 +359,7 @@ do
                 --[[// L'appui (MILAN ou HOT) devrait l'avoir detruit
 ]]--[[// On reste dans la meme configuration
 ]]                self.params.__returnValue = eActionEffectuee
-                Feedback( self.feedbacks["onHalt"], { "BEH_Conduite_Automate_INF_Assaut_Reduction" } )
-Halt( self )
+                Halt( self )
                 do return end
 
             end

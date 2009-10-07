@@ -9,8 +9,6 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ASS.bms"] 
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -90,8 +88,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_ASS_AcquerirObjectifsA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_ASS_AcquerirObjectifsA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -174,8 +170,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// *****************************************************************************
 ]]node "ACT_Mission_Automate_ASS_DLOAcquerirObjectifsA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_ASS_DLOAcquerirObjectifsA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]

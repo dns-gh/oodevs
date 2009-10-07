@@ -14,16 +14,12 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "BEH_Objet_Pion_GEN_RealiserZoneMobilite", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Objet_Pion_GEN_RealiserZoneMobilite", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_GEN_AmeliorerMobilite" } },
 
     create = function( self )
         self._namedParams = {}
@@ -49,8 +45,7 @@ include "bit.lua"
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                                                 self.params.__returnValue = eActionImpossible
-                        Feedback( self.feedbacks["onHalt"], { "MIS_Pion_GEN_AmeliorerMobilite" } )
-Halt( self )
+                        Halt( self )
                         do return end
 
                     end
@@ -149,13 +144,9 @@ node "BEH_Objet_Pion_GEN_RealiserZoneMobilite"
 
     activations =
     {
-        { "ACT_RC", { "onHalt" } },
-        { "ACT_Obj_Pion_GEN_RealiserZoneMobilite", { "onHalt" } },
+        { "ACT_RC", {} },
+        { "ACT_Obj_Pion_GEN_RealiserZoneMobilite", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Objet_Pion_GEN_RealiserZoneMobilite" } },
 
     create = function( self )
         self._namedParams = {}
@@ -169,8 +160,7 @@ node "BEH_Objet_Pion_GEN_RealiserZoneMobilite"
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Objet_Pion_GEN_RealiserZoneMobilite" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end
@@ -212,8 +202,6 @@ node "ACT_Obj_Pion_GEN_RealiserZoneMobilite"
         obstacle = 1,
         deplacement = 1,
     },
-
-    feedbacks = { { { "onHalt" }, "ACT_Obj_Pion_GEN_RealiserZoneMobilite" } },
 
     create = function( self )
         self._namedParams = {}

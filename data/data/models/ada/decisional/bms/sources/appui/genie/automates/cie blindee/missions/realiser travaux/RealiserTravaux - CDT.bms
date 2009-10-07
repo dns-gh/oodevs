@@ -14,14 +14,10 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "onHalt" } },
-        { "ACT_Warning", { "onHalt" } },
-        { "BEH_Mission_Automate_GEN_CDT_RealiserPlanObjets", { "onHalt" } },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "ACT_Warning", {} },
+        { "BEH_Mission_Automate_GEN_CDT_RealiserPlanObjets", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_GEN_RealiserTravaux" } },
 
     create = function( self )
         self._namedParams = {}
@@ -80,14 +76,10 @@ node "BEH_Mission_Automate_GEN_CDT_RealiserPlanObjets"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerFaireMouvementA", { "onHalt" } },
-        { "BEH_Misc_Automate_GEN_GererTravaux", { "onHalt" } },
-        { "BEH_Misc_Automate_GEN_GererRenforcementsPourTravaux", { "onHalt" } },
+        { "BEH_Mission_Automate_AssignerFaireMouvementA", {} },
+        { "BEH_Misc_Automate_GEN_GererTravaux", {} },
+        { "BEH_Misc_Automate_GEN_GererRenforcementsPourTravaux", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_GEN_CDT_RealiserPlanObjets" } },
 
     create = function( self )
         self._namedParams = {}
@@ -132,13 +124,9 @@ node "BEH_Misc_Automate_GEN_GererTravaux"
 {
     activations =
     {
-        { "BEH_Mission_Automate_Gen_AssignerConstruireObjetA", { "onHalt" } },
-        { "BEH_Mission_Automate_AssignerDecrocherA", { "onHalt" } },
+        { "BEH_Mission_Automate_Gen_AssignerConstruireObjetA", {} },
+        { "BEH_Mission_Automate_AssignerDecrocherA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Misc_Automate_GEN_GererTravaux" } },
 
     create = function( self )
         self._namedParams = {}
@@ -146,9 +134,7 @@ node "BEH_Misc_Automate_GEN_GererTravaux"
         self._namedParams.zoneRegroupement = self.params[2]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         --[[// Copie? --> oui
 ]]self.listeGenObjetAConstruire = self.listeGenObjetAConstruire or self._namedParams.travaux
         self.positionRegroupement = self.positionRegroupement or S_Geometrie_BarycentreZone( self._namedParams.zoneRegroupement )
@@ -170,7 +156,7 @@ do
 ]]DEC_UserTypeList_Remove( self.listeGenObjetAConstruire, objetAConstruire )
                     end
                 else
-                    StartInstance( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, pion, self.positionRegroupement, eEtatEchelon_Second, } )
+                    StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, pion, self.positionRegroupement, eEtatEchelon_Second, } )
                 end
 
             end
@@ -191,12 +177,8 @@ node "BEH_Mission_Automate_Gen_AssignerConstruireObjetA"
 {
     activations =
     {
-        { "BEH_Mission_Automate_GEN_AssignerMissionConstruireA", { "onHalt" } },
+        { "BEH_Mission_Automate_GEN_AssignerMissionConstruireA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_Gen_AssignerConstruireObjetA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -220,15 +202,11 @@ node "BEH_Misc_Automate_GEN_GererRenforcementsPourTravaux"
 {
     activations =
     {
-        { "BEH_Objet_Automate_GEN_VerifierRenfortPourConstruireObjets", { "onHalt" } },
-        { "BEH_Misc_Automate_GEN_GererRenforcement", { "onHalt" } },
-        { "BEH_Misc_Automate_GEN_GererFinRenforcementTravaux", { "onHalt" } },
-        { "BEH_Mission_Automate_AssignerDecrocherA", { "onHalt" } },
+        { "BEH_Objet_Automate_GEN_VerifierRenfortPourConstruireObjets", {} },
+        { "BEH_Misc_Automate_GEN_GererRenforcement", {} },
+        { "BEH_Misc_Automate_GEN_GererFinRenforcementTravaux", {} },
+        { "BEH_Mission_Automate_AssignerDecrocherA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Misc_Automate_GEN_GererRenforcementsPourTravaux" } },
 
     create = function( self )
         self._namedParams = {}
@@ -236,9 +214,7 @@ node "BEH_Misc_Automate_GEN_GererRenforcementsPourTravaux"
         self._namedParams.zoneRegroupement = self.params[2]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         self.positionRegroupement = self.positionRegroupement or S_Geometrie_BarycentreZone( self._namedParams.zoneRegroupement )
         --[[//-------------------------------------------------------------------------
 ]]--[[// CR sur renforcement 
@@ -285,7 +261,7 @@ do
                         --[[// cast
 ]]local groupe = pion
                         if( F_Pion_GeteEtatPhaseMission( groupe ) == eEtatPhaseMission_FinMission ) then
-                            StartInstance( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, groupe, self.positionRegroupement, eEtatEchelon_Second, } )
+                            StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, groupe, self.positionRegroupement, eEtatEchelon_Second, } )
                         end
 
                     end
@@ -309,12 +285,8 @@ node "BEH_Misc_Automate_GEN_GererFinRenforcementTravaux"
 {
     activations =
     {
-        { "BEH_Misc_Automate_GEN_GererFinRenforcementPour", { "onHalt" } },
+        { "BEH_Misc_Automate_GEN_GererFinRenforcementPour", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Misc_Automate_GEN_GererFinRenforcementTravaux" } },
 
     create = function( self )
         self._namedParams = {}
@@ -348,12 +320,8 @@ node "BEH_Misc_Automate_GEN_GererFinRenforcementPour"
 {
     activations =
     {
-        { "ACT_Ordre_Automate_Interrompre", { "onHalt" } },
+        { "ACT_Ordre_Automate_Interrompre", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Misc_Automate_GEN_GererFinRenforcementPour" } },
 
     create = function( self )
         self._namedParams = {}
@@ -386,12 +354,8 @@ node "BEH_Misc_Automate_GEN_GererRenforcement"
 {
     activations =
     {
-        { "BEH_Misc_Automate_GEN_GererRenforcementDe", { "onHalt" } },
+        { "BEH_Misc_Automate_GEN_GererRenforcementDe", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Misc_Automate_GEN_GererRenforcement" } },
 
     create = function( self )
         self._namedParams = {}
@@ -466,12 +430,8 @@ node "BEH_Misc_Automate_GEN_GererRenforcementDe"
 {
     activations =
     {
-        { "BEH_Mission_Automate_GEN_RenforcerGenObjet", { "onHalt" } },
+        { "BEH_Mission_Automate_GEN_RenforcerGenObjet", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Misc_Automate_GEN_GererRenforcementDe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -517,12 +477,8 @@ node "BEH_Mission_Automate_GEN_RenforcerGenObjet"
 
     activations =
     {
-        { "BEH_Mission_Automate_GEN_AssignerRenforcerA", { "onHalt" } },
+        { "BEH_Mission_Automate_GEN_AssignerRenforcerA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Automate_GEN_RenforcerGenObjet" } },
 
     create = function( self )
         self._namedParams = {}

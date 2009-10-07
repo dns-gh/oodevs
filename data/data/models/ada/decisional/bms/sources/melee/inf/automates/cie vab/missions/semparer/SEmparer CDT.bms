@@ -15,14 +15,10 @@ includedFiles["sources/melee/inf/automates/cie vab/missions/semparer/SEmparer CD
 {
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Defaut", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_CadreOffensif", { "onHalt" } },
-        { "BEH_Situation_Automate_INF_Assaut", { "onHalt" } },
+        { "BEH_Conduite_Automate_INF_Defaut", {} },
+        { "BEH_Conduite_Automate_INF_CadreOffensif", {} },
+        { "BEH_Situation_Automate_INF_Assaut", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_INF_Semparer" } },
 
     create = function( self )
         self._namedParams = {}

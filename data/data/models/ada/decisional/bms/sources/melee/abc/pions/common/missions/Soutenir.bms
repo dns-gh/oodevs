@@ -26,20 +26,16 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "BEH_MAJ_Pion_ABC_AgressiviteTir", { "onHalt" } },
-        { "BEH_MOT_DesactiveSauvegarde", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
-        { "BEH_Dep_Pion_ABC_Appuyer", { "onHalt" } },
-        { "BEH_Dep_Suivre", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_MAJ_Pion_ABC_AgressiviteTir", {} },
+        { "BEH_MOT_DesactiveSauvegarde", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "ACT_Dep_ModulationVitesse", {} },
+        { "BEH_Dep_Pion_ABC_Appuyer", {} },
+        { "BEH_Dep_Suivre", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_ABC_SoutenirUneUnite" } },
 
     create = function( self )
         self._namedParams = {}
@@ -143,14 +139,10 @@ node "BEH_Dep_Pion_ABC_Appuyer"
 {
     activations =
     {
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "BEH_Dep_Pion_ABC_RejoindrePositionAppuiPour", { "onHalt" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_Pion_ABC_RejoindrePositionAppuiPour", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_ABC_Appuyer" } },
 
     create = function( self )
         self._namedParams = {}

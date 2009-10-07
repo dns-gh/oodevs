@@ -30,12 +30,8 @@ include "bit.lua"
 {
     activations =
     {
-        { "ACT_Ordre_Automate_ABC_DonnerAppliqerFeuxA", { "onHalt" } },
+        { "ACT_Ordre_Automate_ABC_DonnerAppliqerFeuxA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_ABC_GererAppuiMortier_" } },
 
     create = function( self )
     end,
@@ -73,8 +69,6 @@ do
 
 node "ACT_Ordre_Automate_ABC_DonnerAppliqerFeuxA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Ordre_Automate_ABC_DonnerAppliqerFeuxA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pMortier = self.params[1]

@@ -103,26 +103,22 @@ node "BEH_Defaut"
 {
     activations =
     {
-        { "ACT_Maj_Pion_PasserEnTirLibre", { "onHalt" } },
-        { "BEH_MAJ_EtatDefaut", { "onHalt" } },
-        { "BEH_Mot_Pion_INF_AffecterVariablesDEtat", { "onHalt" } },
-        { "BEH_Ambiance", { "onHalt" } },
-        { "BEH_Misc_Pion_INF_ModulationVitesse", { "onHalt" } },
-        { "BEH_ROE", { "onHalt" } },
-        { "BEH_Nbc", { "onHalt" } },
-        { "BEH_Rens", { "onHalt" } },
-        { "BEH_MOT_Pion_INF_GarderSesDistances", { "onHalt" } },
-        { "BEH_Misc_Pion_INF_Default", { "onHalt" } },
-        { "BEH_MOT_Pion_InitialisePreparationMission", { "onHalt" } },
-        { "BEH_MOT_Pion_INF_InitialisePoste", { "onHalt" } },
-        { "ACT_MAJ_EnnemiEnCours", { "onHalt" } },
-        { "BEH_Misc_Pion_INF_MAJ_Mission", { "onHalt" } },
-        { "BEH_Misc_Pion_INF_MAJ_Repli", { "onHalt" } },
+        { "ACT_Maj_Pion_PasserEnTirLibre", {} },
+        { "BEH_MAJ_EtatDefaut", {} },
+        { "BEH_Mot_Pion_INF_AffecterVariablesDEtat", {} },
+        { "BEH_Ambiance", {} },
+        { "BEH_Misc_Pion_INF_ModulationVitesse", {} },
+        { "BEH_ROE", {} },
+        { "BEH_Nbc", {} },
+        { "BEH_Rens", {} },
+        { "BEH_MOT_Pion_INF_GarderSesDistances", {} },
+        { "BEH_Misc_Pion_INF_Default", {} },
+        { "BEH_MOT_Pion_InitialisePreparationMission", {} },
+        { "BEH_MOT_Pion_INF_InitialisePoste", {} },
+        { "ACT_MAJ_EnnemiEnCours", {} },
+        { "BEH_Misc_Pion_INF_MAJ_Mission", {} },
+        { "BEH_Misc_Pion_INF_MAJ_Repli", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Defaut" } },
 
     create = function( self )
         self._namedParams = {}
@@ -210,15 +206,11 @@ node "BEH_Poste_Pion_INF_TomberEnGarde"
 {
     activations =
     {
-        { "BEH_MOT_Pion_INF_Debarquer", { "onHalt" } },
-        { "ACT_RC", { "onHalt" } },
-        { "ACT_Obs_EtablirVisionFaceADir", { "onHalt" } },
-        { "ACT_Dep_Pion_INF_Arret", { "onHalt" } },
+        { "BEH_MOT_Pion_INF_Debarquer", {} },
+        { "ACT_RC", {} },
+        { "ACT_Obs_EtablirVisionFaceADir", {} },
+        { "ACT_Dep_Pion_INF_Arret", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Poste_Pion_INF_TomberEnGarde" } },
 
     create = function( self )
         self._namedParams = {}
@@ -266,8 +258,6 @@ if( not ( self.bDebarquement and DEC_Agent_EstEmbarque() ) ) then
 
 node "BEH_Misc_Pion_INF_MAJ_Mission"
 {
-    feedbacks = { { { "onHalt" }, "BEH_Misc_Pion_INF_MAJ_Mission" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.typeMission = self.params[1]
@@ -290,14 +280,10 @@ node "BEH_Misc_Pion_INF_ModulationVitesse"
 {
     activations =
     {
-        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
-        { "ACT_RC", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
+        { "ACT_Dep_ModulationVitesse", {} },
+        { "ACT_RC", {} },
+        { "ACT_Info_Trace", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Misc_Pion_INF_ModulationVitesse" } },
 
     create = function( self )
     end,
@@ -334,8 +320,6 @@ node "BEH_Eni_Pion_INF_Tenir"
         max = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_INF_Tenir" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.rTenir = self.params[1]
@@ -364,8 +348,6 @@ node "BEH_Eni_Pion_INF_Tenir"
 
 node "BEH_Mot_Pion_INF_AffecterVariablesDEtat"
 {
-    feedbacks = { { { "onHalt" }, "BEH_Mot_Pion_INF_AffecterVariablesDEtat" } },
-
     create = function( self )
     end,
 
@@ -465,13 +447,9 @@ node "BEH_Dep_Virtuel_ProgressionVers"
 {
     activations =
     {
-        { "BEH_Mot_Pion_Embarquer", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "BEH_Mot_Pion_Embarquer", {} },
+        { "BEH_Dep_ProgressionVers", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_Virtuel_ProgressionVers" } },
 
     create = function( self )
         self._namedParams = {}
@@ -496,12 +474,8 @@ node "BEH_Dep_Virtuel_PreparationAction"
 {
     activations =
     {
-        { "BEH_MOT_Pion_INF_Debarquer", { "onHalt" } },
+        { "BEH_MOT_Pion_INF_Debarquer", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_Virtuel_PreparationAction" } },
 
     create = function( self )
     end,
@@ -527,8 +501,6 @@ node "BEH_Dep_Virtuel_PreparationAction"
 
 node "BEH_MAJ_Pion_INF_AgressiviteTir"
 {
-    feedbacks = { { { "onHalt" }, "BEH_MAJ_Pion_INF_AgressiviteTir" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.rPH = self.params[1]
@@ -557,12 +529,8 @@ node "BEH_Dep_Pion_INF_RejoindrePositionAppui"
 {
     activations =
     {
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "BEH_Dep_ProgressionVers", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_INF_RejoindrePositionAppui" } },
 
     create = function( self )
         self._namedParams = {}
@@ -585,8 +553,7 @@ node "BEH_Dep_Pion_INF_RejoindrePositionAppui"
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_INF_RejoindrePositionAppui" } )
-Halt( self )
+                Halt( self )
                 do return end
 
             end
@@ -597,8 +564,7 @@ Halt( self )
                 self.eAction = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_INF_RejoindrePositionAppui" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end
@@ -622,13 +588,9 @@ node "BEH_Dep_Pion_INF_RejoindrePositionAppuiPour"
 {
     activations =
     {
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_ProgressionVers", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_INF_RejoindrePositionAppuiPour" } },
 
     create = function( self )
         self._namedParams = {}
@@ -646,8 +608,7 @@ node "BEH_Dep_Pion_INF_RejoindrePositionAppuiPour"
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_INF_RejoindrePositionAppuiPour" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end
@@ -675,14 +636,10 @@ node "BEH_Feu_Pion_INF_TirAppui"
 
     activations =
     {
-        { "ACT_MAJ_EnnemiEnCours", { "onHalt" } },
-        { "BEH_Feu_Pion_INF_TirCouverture_Fixe", { "onHalt" } },
-        { "BEH_Feu_Pion_INF_ConduireLesFeux_Sur", { "onHalt" } },
+        { "ACT_MAJ_EnnemiEnCours", {} },
+        { "BEH_Feu_Pion_INF_TirCouverture_Fixe", {} },
+        { "BEH_Feu_Pion_INF_ConduireLesFeux_Sur", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Feu_Pion_INF_TirAppui" } },
 
     create = function( self )
         self._namedParams = {}
@@ -697,15 +654,13 @@ node "BEH_Feu_Pion_INF_TirAppui"
         Activate( self.activations.ACT_MAJ_EnnemiEnCours, 1, { self._namedParams.ksEni, } )
         if( self.eAction == eActionImpossible and not self.bSpontanee ) then
             self.params.__returnValue = eActionImpossible
-            Feedback( self.feedbacks["onHalt"], { "BEH_Feu_Pion_INF_TirAppui" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
         if( DEC_ConnaissanceAgent_EstDetruitTactique( self._namedParams.ksEni ) or self.eAction == eActionEffectuee ) then
             self.params.__returnValue = self.eAction
-            Feedback( self.feedbacks["onHalt"], { "BEH_Feu_Pion_INF_TirAppui" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 

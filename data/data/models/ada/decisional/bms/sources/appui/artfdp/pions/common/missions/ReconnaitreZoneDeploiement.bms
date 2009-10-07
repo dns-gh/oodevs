@@ -20,21 +20,17 @@ node "BEH_Pion_ASS_ReconnaitreZoneDeploiement_Mission"
 {
     activations =
     {
-        { "ACT_RC", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_Misc_Delai", { "onHalt" } },
-        { "ACT_RC_PreparationMission", { "onHalt" } },
-        { "BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "ACT_Obs_EtablirVisionFaceADir", { "onHalt" } },
-        { "BEH_Pion_ASS_Installer_ZoneImplantationCanon", { "onHalt" } },
-        { "BEH_Pion_ASS_Installer_ZoneImplantationLRM", { "onHalt" } },
-        { "BEH_Pion_ASS_Installer_ZoneImplantationSimple", { "onHalt" } },
+        { "ACT_RC", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Misc_Delai", {} },
+        { "ACT_RC_PreparationMission", {} },
+        { "BEH_Obs_Pion_ASS_Reconnaissance_PositionDeploiement", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Obs_EtablirVisionFaceADir", {} },
+        { "BEH_Pion_ASS_Installer_ZoneImplantationCanon", {} },
+        { "BEH_Pion_ASS_Installer_ZoneImplantationLRM", {} },
+        { "BEH_Pion_ASS_Installer_ZoneImplantationSimple", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pion_ASS_ReconnaitreZoneDeploiement_Mission" } },
 
     create = function( self )
         self._namedParams = {}
@@ -146,8 +142,7 @@ elseif switch_1 == eFinMission then
                         do
                             DEC_FinMission()
                                                         self.params.__returnValue = eActionEffectuee
-                            Feedback( self.feedbacks["onHalt"], { "BEH_Pion_ASS_ReconnaitreZoneDeploiement_Mission" } )
-Halt( self )
+                            Halt( self )
                             do return end
 
                         end
@@ -173,14 +168,10 @@ node "BEH_Pion_ASS_Installer_ZoneImplantationSimple"
 {
     activations =
     {
-        { "ACT_RC", { "onHalt" } },
-        { "ACT_Obj_Pion_ASS_RealiserObjet", { "onHalt" } },
-        { "ACT_Dep_SePoster", { "onHalt" } },
+        { "ACT_RC", {} },
+        { "ACT_Obj_Pion_ASS_RealiserObjet", {} },
+        { "ACT_Dep_SePoster", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pion_ASS_Installer_ZoneImplantationSimple" } },
 
     create = function( self )
         self._namedParams = {}
@@ -227,13 +218,9 @@ node "BEH_Pion_ASS_Installer_ZoneImplantationCanon"
 {
     activations =
     {
-        { "ACT_Obj_Pion_ASS_RealiserObjet", { "onHalt" } },
-        { "ACT_Dep_SePoster", { "onHalt" } },
+        { "ACT_Obj_Pion_ASS_RealiserObjet", {} },
+        { "ACT_Dep_SePoster", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pion_ASS_Installer_ZoneImplantationCanon" } },
 
     create = function( self )
         self._namedParams = {}
@@ -293,12 +280,8 @@ node "BEH_Pion_ASS_Installer_ZoneImplantationLRM"
 {
     activations =
     {
-        { "ACT_Obj_Pion_ASS_RealiserObjet", { "onHalt" } },
+        { "ACT_Obj_Pion_ASS_RealiserObjet", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pion_ASS_Installer_ZoneImplantationLRM" } },
 
     create = function( self )
         self._namedParams = {}

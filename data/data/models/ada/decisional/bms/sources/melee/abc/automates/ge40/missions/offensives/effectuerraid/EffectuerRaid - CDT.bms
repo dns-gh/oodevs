@@ -16,18 +16,14 @@ includedFiles["sources/melee/abc/automates/ge40/missions/offensives/effectuerrai
 {
     activations =
     {
-        { "ACT_GTIA_AnalyserSituationPourAttaquer", { "onHalt" } },
-        { "BEH_GTIA_OrganiserLesMoyensPourAttaquer", { "onHalt" } },
-        { "BEH_GTIA_RendreCompte", { "onHalt" } },
-        { "BEH_GTIA_EchelonnerDispositif", { "onHalt" } },
-        { "BEH_GTIA_RepartirDansFuseaux", { "onHalt" } },
-        { "BEH_GTIA_GererAppuisInternes", { "onHalt" } },
-        { "BEH_GTIA_AssignerLesOrdresPourAttaquer", { "onHalt" } },
+        { "ACT_GTIA_AnalyserSituationPourAttaquer", {} },
+        { "BEH_GTIA_OrganiserLesMoyensPourAttaquer", {} },
+        { "BEH_GTIA_RendreCompte", {} },
+        { "BEH_GTIA_EchelonnerDispositif", {} },
+        { "BEH_GTIA_RepartirDansFuseaux", {} },
+        { "BEH_GTIA_GererAppuisInternes", {} },
+        { "BEH_GTIA_AssignerLesOrdresPourAttaquer", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_GTIA_EffectuerRaid" } },
 
     create = function( self )
         self._namedParams = {}

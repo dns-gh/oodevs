@@ -11,19 +11,15 @@ includedFiles["sources/appui/nbc/pions/common/missions/ArmerPlotDecontamination.
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "ACT_Pion_Nbc_CreerSiteSur", { "onHalt" } },
-        { "ACT_Warning", { "onHalt" } },
-        { "BEH_Pion_NBC_AnimerSite", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Pion_Nbc_CreerSiteSur", {} },
+        { "ACT_Warning", {} },
+        { "BEH_Pion_NBC_AnimerSite", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_NBC_AnimerPlotDecontamination" } },
 
     create = function( self )
         self._namedParams = {}
@@ -49,8 +45,7 @@ includedFiles["sources/appui/nbc/pions/common/missions/ArmerPlotDecontamination.
 
         if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_NBC_AnimerPlotDecontamination" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -146,12 +141,8 @@ node "BEH_Pion_NBC_AnimerSite"
 {
     activations =
     {
-        { "ACT_Pion_Nbc_AnimerSite", { "onHalt" } },
+        { "ACT_Pion_Nbc_AnimerSite", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pion_NBC_AnimerSite" } },
 
     create = function( self )
         self._namedParams = {}

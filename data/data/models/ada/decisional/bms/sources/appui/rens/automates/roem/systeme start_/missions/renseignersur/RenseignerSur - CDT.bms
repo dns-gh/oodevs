@@ -11,12 +11,8 @@ includedFiles["sources/appui/rens/automates/roem/systeme start_/missions/renseig
 {
     activations =
     {
-        { "BEH_Automate_CDT_RENS_ROEM_RenseignerSur", { "onHalt" } },
+        { "BEH_Automate_CDT_RENS_ROEM_RenseignerSur", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_RENS_ROEM_RenseignerSur" } },
 
     create = function( self )
         self._namedParams = {}

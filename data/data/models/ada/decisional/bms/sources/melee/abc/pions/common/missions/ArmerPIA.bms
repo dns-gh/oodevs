@@ -22,19 +22,15 @@ includedFiles["sources/melee/abc/pions/common/missions/ArmerPIA.bms"] = true
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "BEH_MAJ_Pion_ABC_AgressiviteTir", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "BEH_MOT_DesactiveSauvegarde", { "onHalt" } },
-        { "BEH_Pion_ABC_InstallerDispositif", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_MAJ_Pion_ABC_AgressiviteTir", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_MOT_DesactiveSauvegarde", {} },
+        { "BEH_Pion_ABC_InstallerDispositif", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_ABC_ArmerUnPIA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -61,8 +57,7 @@ includedFiles["sources/melee/abc/pions/common/missions/ArmerPIA.bms"] = true
 
         if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_ABC_ArmerUnPIA" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 

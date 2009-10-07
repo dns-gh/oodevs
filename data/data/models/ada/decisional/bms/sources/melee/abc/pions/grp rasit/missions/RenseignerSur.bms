@@ -12,12 +12,8 @@ includedFiles["sources/melee/abc/pions/grp rasit/missions/RenseignerSur.bms"] = 
 {
     activations =
     {
-        { "BEH_Mission_Pion_ABC_RASIT_RenseignerSur", { "onHalt" } },
+        { "BEH_Mission_Pion_ABC_RASIT_RenseignerSur", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_ABC_RASIT_RenseignerSur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -31,15 +27,13 @@ includedFiles["sources/melee/abc/pions/grp rasit/missions/RenseignerSur.bms"] = 
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible ) then
             self.params.__returnValue = eActionImpossible
-            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ABC_RASIT_RenseignerSur" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
         if( self.eEtat == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_ABC_RASIT_RenseignerSur" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -61,17 +55,13 @@ node "BEH_Mission_Pion_ABC_RASIT_RenseignerSur"
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "BEH_Pion_ABC_RASIT_EnSurveillanceRadarDe", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Pion_ABC_RASIT_EnSurveillanceRadarDe", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_ABC_RASIT_RenseignerSur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -99,8 +89,7 @@ node "BEH_Mission_Pion_ABC_RASIT_RenseignerSur"
 
         if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_ABC_RASIT_RenseignerSur" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -163,12 +152,8 @@ node "BEH_Pion_ABC_RASIT_EnSurveillanceRadarDe"
 {
     activations =
     {
-        { "ACT_Obs_Pion_ABC_ActiverRadarDans", { "onHalt" } },
+        { "ACT_Obs_Pion_ABC_ActiverRadarDans", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pion_ABC_RASIT_EnSurveillanceRadarDe" } },
 
     create = function( self )
         self._namedParams = {}
@@ -196,8 +181,6 @@ node "ACT_Obs_Pion_ABC_ActiverRadarDans"
     {
         deplacement = 1,
     },
-
-    feedbacks = { { { "onHalt" }, "ACT_Obs_Pion_ABC_ActiverRadarDans" } },
 
     create = function( self )
         self._namedParams = {}

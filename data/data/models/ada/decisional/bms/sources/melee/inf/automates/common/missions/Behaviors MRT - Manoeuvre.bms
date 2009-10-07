@@ -17,24 +17,20 @@ node "BEH_Medo_Automate_INF_PreparerMission_Manoeuvre"
 {
     activations =
     {
-        { "ACT_Medo_Automate_AffecterFuseaux", { "onHalt" } },
-        { "BEH_Medo_Automate_ControleCreationMission", { "onHalt" } },
-        { "BEH_Medo_Automate_INF_AssignerAppuyerAttaque", { "onHalt" } },
-        { "BEH_Medo_Automate_ABC_AssignerReconnaitre", { "onHalt" } },
-        { "BEH_Medo_Automate_INF_AssignerReconnaitre", { "onHalt" } },
-        { "BEH_Medo_Automate_Melee_AssignerReconnaitrePtA", { "onHalt" } },
-        { "BEH_Medo_Automate_INF_AssignerFixerA", { "onHalt" } },
-        { "BEH_Medo_Automate_INF_AssignerSemparer_Objectifs", { "onHalt" } },
-        { "BEH_Medo_Automate_INF_AssignerSemparer_Zone", { "onHalt" } },
-        { "BEH_Medo_Automate_INF_AssignerRelever", { "onHalt" } },
-        { "BEH_Medo_Automate_INF_AssignerMission_PC", { "onHalt" } },
-        { "BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier", { "onHalt" } },
-        { "BEH_Medo_Automate_INF_InitialiseSE", { "onHalt" } },
+        { "ACT_Medo_Automate_AffecterFuseaux", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Medo_Automate_INF_AssignerAppuyerAttaque", {} },
+        { "BEH_Medo_Automate_ABC_AssignerReconnaitre", {} },
+        { "BEH_Medo_Automate_INF_AssignerReconnaitre", {} },
+        { "BEH_Medo_Automate_Melee_AssignerReconnaitrePtA", {} },
+        { "BEH_Medo_Automate_INF_AssignerFixerA", {} },
+        { "BEH_Medo_Automate_INF_AssignerSemparer_Objectifs", {} },
+        { "BEH_Medo_Automate_INF_AssignerSemparer_Zone", {} },
+        { "BEH_Medo_Automate_INF_AssignerRelever", {} },
+        { "BEH_Medo_Automate_INF_AssignerMission_PC", {} },
+        { "BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier", {} },
+        { "BEH_Medo_Automate_INF_InitialiseSE", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_INF_PreparerMission_Manoeuvre" } },
 
     create = function( self )
         self._namedParams = {}
@@ -157,8 +153,7 @@ elseif switch_2 == "T_Mission_Automate_INF_Soutenir"
                             DEC_Trace( "Pas de 1er echelon" )
                             DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
                                                         self.params.__returnValue = eActionImpossible
-                            Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_INF_PreparerMission_Manoeuvre" } )
-Halt( self )
+                            Halt( self )
                             do return end
 
                         end
@@ -196,8 +191,7 @@ elseif switch_1 == eMRT_AssignerMissions then
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_INF_PreparerMission_Manoeuvre" } )
-Halt( self )
+                            Halt( self )
                             do return end
 
                         end
@@ -210,8 +204,7 @@ Halt( self )
                             end
 
                                                         self.params.__returnValue = eActionImpossible
-                            Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_INF_PreparerMission_Manoeuvre" } )
-Halt( self )
+                            Halt( self )
                             do return end
 
                         end
@@ -222,8 +215,7 @@ Halt( self )
                             self.eValidationMRT = eActionEnCours
                                                         do
                                                                 self.params.__returnValue = eActionEffectuee
-                                Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_INF_PreparerMission_Manoeuvre" } )
-Halt( self )
+                                Halt( self )
                                 do return end
 
                             end
@@ -292,8 +284,7 @@ elseif switch_2 == "T_Mission_Automate_INF_Relever" then
                             else
                                 DEC_Trace( "Mission Inconnue" )
                                                                 self.params.__returnValue = eActionImpossible
-                                Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_INF_PreparerMission_Manoeuvre" } )
-Halt( self )
+                                Halt( self )
                                 do return end
 
                                                         end
@@ -315,25 +306,19 @@ node "BEH_Medo_Automate_ABC_AssignerReconnaitre"
 {
     activations =
     {
-        { "BEH_Mission_Automate_ABC_AssignerReconnaitreA", { "onHalt" } },
+        { "BEH_Mission_Automate_ABC_AssignerReconnaitreA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ABC_AssignerReconnaitre" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.selPion_ABC = self.params[1]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         if( ModuleBegins() ) then
 for _,x_abc in pairs( self._namedParams.selPion_ABC ) do
             local _continue = true
-                StartInstance( self, self.activations.BEH_Mission_Automate_ABC_AssignerReconnaitreA, 1, { ePhase_MRT, x_abc, eEtatEchelon_Premier, } )
+                StartActivateOverride( self, self.activations.BEH_Mission_Automate_ABC_AssignerReconnaitreA, 1, { ePhase_MRT, x_abc, eEtatEchelon_Premier, } )
 
             end
         end
@@ -346,25 +331,19 @@ node "BEH_Medo_Automate_INF_AssignerReconnaitre"
 {
     activations =
     {
-        { "BEH_Mission_Automate_INF_AssignerReconnaitreA", { "onHalt" } },
+        { "BEH_Mission_Automate_INF_AssignerReconnaitreA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_INF_AssignerReconnaitre" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.selPion_INF = self.params[1]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         if( ModuleBegins() ) then
 for _,x_inf in pairs( self._namedParams.selPion_INF ) do
             local _continue = true
-                StartInstance( self, self.activations.BEH_Mission_Automate_INF_AssignerReconnaitreA, 1, { ePhase_MRT, x_inf, } )
+                StartActivateOverride( self, self.activations.BEH_Mission_Automate_INF_AssignerReconnaitreA, 1, { ePhase_MRT, x_inf, } )
 
             end
         end
@@ -377,13 +356,9 @@ node "BEH_Medo_Automate_Melee_AssignerReconnaitrePtA"
 {
     activations =
     {
-        { "BEH_Mission_Automate_INF_AssignerA_ReconnaitrePt", { "onHalt" } },
-        { "BEH_Mission_Automate_INF_AssignerReconnaitreA", { "onHalt" } },
+        { "BEH_Mission_Automate_INF_AssignerA_ReconnaitrePt", {} },
+        { "BEH_Mission_Automate_INF_AssignerReconnaitreA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_Melee_AssignerReconnaitrePtA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -391,9 +366,7 @@ node "BEH_Medo_Automate_Melee_AssignerReconnaitrePtA"
         self._namedParams.lstPoints = self.params[2]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
                 self.lstObjectifs = self.lstObjectifs or DEC_Geometrie_CreerListePoints()
         if( ModuleBegins() ) then
             do
@@ -411,10 +384,10 @@ node "BEH_Medo_Automate_Melee_AssignerReconnaitrePtA"
                                 local ptProche = DEC_Geometrie_CreerPoint()
                                 DEC_Copie_Point( DEC_ListePoints_GetAt( self.lstObjectifs, rIdProche ), ptProche )
                                 DEC_ListePoints_Remove( self.lstObjectifs, rIdProche )
-                                StartInstance( self, self.activations.BEH_Mission_Automate_INF_AssignerA_ReconnaitrePt, 1, { ePhase_MRT, x_pion, ptProche, } )
+                                StartActivateOverride( self, self.activations.BEH_Mission_Automate_INF_AssignerA_ReconnaitrePt, 1, { ePhase_MRT, x_pion, ptProche, } )
                             end
                         else
-                            StartInstance( self, self.activations.BEH_Mission_Automate_INF_AssignerReconnaitreA, 1, { ePhase_MRT, x_pion, } )
+                            StartActivateOverride( self, self.activations.BEH_Mission_Automate_INF_AssignerReconnaitreA, 1, { ePhase_MRT, x_pion, } )
                         end
 
                     end
@@ -435,26 +408,20 @@ node "BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier"
 {
     activations =
     {
-        { "BEH_Mission_Automate_INF_AssignerAppuyerA", { "onHalt" } },
+        { "BEH_Mission_Automate_INF_AssignerAppuyerA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.selPions_Mortier = self.params[1]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         self.pionPC = self.pionPC or DEC_Automate_PionPC()
         if( ModuleBegins() ) then
 for _,x_inf in pairs( self._namedParams.selPions_Mortier ) do
             local _continue = true
-                StartInstance( self, self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_MRT, x_inf, self.pionPC, eEtatEchelon_Second, } )
+                StartActivateOverride( self, self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_MRT, x_inf, self.pionPC, eEtatEchelon_Second, } )
 
             end
         end
@@ -467,12 +434,8 @@ node "BEH_Medo_Automate_INF_AssignerFixerA"
 {
     activations =
     {
-        { "BEH_Mission_Automate_INF_AssignerA_Fixer", { "onHalt" } },
+        { "BEH_Mission_Automate_INF_AssignerA_Fixer", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_INF_AssignerFixerA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -480,9 +443,7 @@ node "BEH_Medo_Automate_INF_AssignerFixerA"
         self._namedParams.ksEnis = self.params[2]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         if( ModuleBegins() ) then
             do
                 --[[//-------------------------------------------------------------------------
@@ -497,7 +458,7 @@ node "BEH_Medo_Automate_INF_AssignerFixerA"
                                                         rIt_Pion = rIt_Pion + 1
                         end
 
-                        StartInstance( self, self.activations.BEH_Mission_Automate_INF_AssignerA_Fixer, 1, { ePhase_MRT, x_pion, ksEni, } )
+                        StartActivateOverride( self, self.activations.BEH_Mission_Automate_INF_AssignerA_Fixer, 1, { ePhase_MRT, x_pion, ksEni, } )
                     end
 
                 end
@@ -513,13 +474,9 @@ node "BEH_Medo_Automate_INF_AssignerSemparer_Zone"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "BEH_Mission_Automate_INF_AssignerA_Semparer", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "BEH_Mission_Automate_INF_AssignerA_Semparer", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_INF_AssignerSemparer_Zone" } },
 
     create = function( self )
         self._namedParams = {}
@@ -527,9 +484,7 @@ node "BEH_Medo_Automate_INF_AssignerSemparer_Zone"
         self._namedParams.locZone = self.params[2]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         self.ptZone = self.ptZone or S_Geometrie_BarycentreZone( self._namedParams.locZone )
         if( ( self.ptZone == 0 or self.ptZone == nil ) ) then
             do
@@ -553,7 +508,7 @@ node "BEH_Medo_Automate_INF_AssignerSemparer_Zone"
         if( ModuleBegins() ) then
 for _,x_pion in pairs( self._namedParams.selPions_PE ) do
             local _continue = true
-                StartInstance( self, self.activations.BEH_Mission_Automate_INF_AssignerA_Semparer, 1, { ePhase_MRT, x_pion, self.ptZone, } )
+                StartActivateOverride( self, self.activations.BEH_Mission_Automate_INF_AssignerA_Semparer, 1, { ePhase_MRT, x_pion, self.ptZone, } )
 
             end
         end
@@ -566,12 +521,8 @@ node "BEH_Medo_Automate_INF_AssignerSemparer_Objectifs"
 {
     activations =
     {
-        { "BEH_Mission_Automate_INF_AssignerA_Semparer", { "onHalt" } },
+        { "BEH_Mission_Automate_INF_AssignerA_Semparer", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_INF_AssignerSemparer_Objectifs" } },
 
     create = function( self )
         self._namedParams = {}
@@ -579,9 +530,7 @@ node "BEH_Medo_Automate_INF_AssignerSemparer_Objectifs"
         self._namedParams.lstPoints = self.params[2]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         --[[//-------------------------------------------------------------------------
 ]]--[[// Assignement des missions aux differents pions
 ]]--[[//-------------------------------------------------------------------------
@@ -600,7 +549,7 @@ node "BEH_Medo_Automate_INF_AssignerSemparer_Objectifs"
                                                         rIt_Pion = rIt_Pion + 1
                         end
 
-                        StartInstance( self, self.activations.BEH_Mission_Automate_INF_AssignerA_Semparer, 1, { ePhase_MRT, x_pion, ptProche, } )
+                        StartActivateOverride( self, self.activations.BEH_Mission_Automate_INF_AssignerA_Semparer, 1, { ePhase_MRT, x_pion, ptProche, } )
                     end
 
                 end
@@ -616,13 +565,9 @@ node "BEH_Medo_Automate_INF_AssignerAppuyerAttaque"
 {
     activations =
     {
-        { "ACT_Mission_Automate_ControleCreation_NOK", { "onHalt" } },
-        { "BEH_Mission_Automate_INF_AssignerAppuyerA", { "onHalt" } },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "BEH_Mission_Automate_INF_AssignerAppuyerA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_INF_AssignerAppuyerAttaque" } },
 
     create = function( self )
         self._namedParams = {}
@@ -630,9 +575,7 @@ node "BEH_Medo_Automate_INF_AssignerAppuyerAttaque"
         self._namedParams.compagnie = self.params[2]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         self.selPionsAppui_PE = self.selPionsAppui_PE or S_ObtenirTousPionsPour( self._namedParams.compagnie, eEtatEchelon_Premier )
         if( ( #( self._namedParams.selPions_PE ) == 0 or #( self._namedParams.selPions_PE ) == nil ) ) then
             do
@@ -697,7 +640,7 @@ node "BEH_Medo_Automate_INF_AssignerAppuyerAttaque"
                         if( rIt_Pion < #( self.selPionsAppui_PE ) ) then
                             do
                                 local pionAppui = DIA_GetAt( self.selPionsAppui_PE, rIt_Pion )
-                                StartInstance( self, self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_MRT, x_pion, pionAppui, eEtatEchelon_Premier, } )
+                                StartActivateOverride( self, self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_MRT, x_pion, pionAppui, eEtatEchelon_Premier, } )
                             end
                         end
 
@@ -728,12 +671,8 @@ node "BEH_Medo_Automate_INF_AssignerRelever"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerFaireMouvementA", { "onHalt" } },
+        { "BEH_Mission_Automate_AssignerFaireMouvementA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_INF_AssignerRelever" } },
 
     create = function( self )
         self._namedParams = {}
@@ -741,9 +680,7 @@ node "BEH_Medo_Automate_INF_AssignerRelever"
         self._namedParams.compagnie = self.params[2]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         if( ModuleBegins() ) then
             do
                 local selPionARelever = S_ObtenirTousPionsPour( self._namedParams.compagnie, eEtatEchelon_Premier )
@@ -756,7 +693,7 @@ node "BEH_Medo_Automate_INF_AssignerRelever"
                             do
                                 local ptReleve = DEC_Automate_PionPosition( DIA_GetAt( selPionARelever, rIt_Pion ) )
                                 --[[// start behavior BEH_Mission_Automate_INF_AssignerReconnaitreA()
-]]StartInstance( self, self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, 1, { ePhase_MRT, x_pion, ptReleve, eEtatEchelon_Premier, } )
+]]StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, 1, { ePhase_MRT, x_pion, ptReleve, eEtatEchelon_Premier, } )
                             end
                         end
 

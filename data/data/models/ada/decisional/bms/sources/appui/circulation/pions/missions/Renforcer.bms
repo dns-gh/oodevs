@@ -16,17 +16,13 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Dep_Suivre", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "BEH_Dep_Pion_GEN_RenforcerSurPosition", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_Suivre", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_Pion_GEN_RenforcerSurPosition", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_GEN_Renforcer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -118,12 +114,8 @@ node "BEH_Dep_Pion_GEN_RenforcerSurPosition"
 {
     activations =
     {
-        { "ACT_Misc_Pion_GEN_Renforcer", { "onHalt" } },
+        { "ACT_Misc_Pion_GEN_Renforcer", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_GEN_RenforcerSurPosition" } },
 
     create = function( self )
         self._namedParams = {}
@@ -150,8 +142,6 @@ node "BEH_Dep_Pion_GEN_RenforcerSurPosition"
 
 node "ACT_Misc_Pion_GEN_Renforcer"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Misc_Pion_GEN_Renforcer" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.unite = self.params[1]

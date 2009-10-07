@@ -11,17 +11,13 @@ includedFiles["sources/appui/circulation/pions/missions/aide a mobilite sur itin
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "BEH_Circu_Obs_SurveillerItineraire", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Circu_Obs_SurveillerItineraire", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_LOG_Surveiller" } },
 
     create = function( self )
         self._namedParams = {}
@@ -105,13 +101,9 @@ node "BEH_Circu_Obs_SurveillerItineraire"
 {
     activations =
     {
-        { "ACT_RC", { "onHalt" } },
-        { "ACT_Obs_SurveillerZone", { "onHalt" } },
+        { "ACT_RC", {} },
+        { "ACT_Obs_SurveillerZone", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Circu_Obs_SurveillerItineraire" } },
 
     create = function( self )
         self._namedParams = {}

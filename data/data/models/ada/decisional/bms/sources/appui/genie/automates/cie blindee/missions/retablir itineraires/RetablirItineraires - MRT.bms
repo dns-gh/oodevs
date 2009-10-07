@@ -11,22 +11,16 @@ includedFiles["sources/appui/genie/automates/cie blindee/missions/retablir itine
 {
     activations =
     {
-        { "ACT_Warning", { "onHalt" } },
-        { "BEH_Medo_Automate_GEN_MRT_AssignerRetablirItineraire", { "onHalt" } },
+        { "ACT_Warning", {} },
+        { "BEH_Medo_Automate_GEN_MRT_AssignerRetablirItineraire", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_MRT_GEN_RetablirItineraires" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         local listeSectionGenie = S_Cherche_Automate_Filtre_TypePion( DEC_Automate_PionsSansPC(), "SectionGenie" )
         --[[//---------------------------------------------------------------------
 ]]--[[// Init
@@ -37,8 +31,7 @@ includedFiles["sources/appui/genie/automates/cie blindee/missions/retablir itine
 ]]if( ( #( listeSectionGenie ) == 0 or #( listeSectionGenie ) == nil ) ) then
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
-                                                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_MRT_GEN_RetablirItineraires" } )
-Halt( self )
+                                                Halt( self )
                         do return end
 
                     end
@@ -47,7 +40,7 @@ Halt( self )
                 S_Dispositif_Automate_Init()
                 DEC_SetMission( myself, self._namedParams.mission )
                 DEC_Trace( "------------------ To enable paths ------------------" )
-                StartInstance( self, self.activations.BEH_Medo_Automate_GEN_MRT_AssignerRetablirItineraire, 1, { listeSectionGenie, self._namedParams.mission.itineraires_, } )
+                StartActivateOverride( self, self.activations.BEH_Medo_Automate_GEN_MRT_AssignerRetablirItineraire, 1, { listeSectionGenie, self._namedParams.mission.itineraires_, } )
             end
         end
 
@@ -65,13 +58,9 @@ node "BEH_Medo_Automate_GEN_MRT_AssignerRetablirItineraire"
 {
     activations =
     {
-        { "BEH_Medo_Automate_ControleCreationMission", { "onHalt" } },
-        { "BEH_Medo_Automate_GEN_MRT_FaireRetablir", { "onHalt" } },
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Medo_Automate_GEN_MRT_FaireRetablir", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_GEN_MRT_AssignerRetablirItineraire" } },
 
     create = function( self )
         self._namedParams = {}
@@ -92,8 +81,7 @@ node "BEH_Medo_Automate_GEN_MRT_AssignerRetablirItineraire"
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_GEN_MRT_AssignerRetablirItineraire" } )
-Halt( self )
+                Halt( self )
                 do return end
 
             end
@@ -104,8 +92,7 @@ Halt( self )
                 self.eValidationMRT = eActionEnCours
                                 do
                     DEC_MRT_Valide()
-                                        Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_GEN_MRT_AssignerRetablirItineraire" } )
-Halt( self )
+                                        Halt( self )
                     do return end
 
                 end
@@ -129,12 +116,8 @@ node "BEH_Medo_Automate_GEN_MRT_FaireRetablir"
 {
     activations =
     {
-        { "BEH_Mission_Automate_GEN_AssignerRetablirItineraireA", { "onHalt" } },
+        { "BEH_Mission_Automate_GEN_AssignerRetablirItineraireA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_GEN_MRT_FaireRetablir" } },
 
     create = function( self )
         self._namedParams = {}
@@ -142,9 +125,7 @@ node "BEH_Medo_Automate_GEN_MRT_FaireRetablir"
         self._namedParams.itineraires = self.params[2]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         self.listePoints = self.listePoints or {}--[[// Détermination du secteur
 ]]
         self.rIterateurItineraire = self.rIterateurItineraire or 0
@@ -172,7 +153,7 @@ node "BEH_Medo_Automate_GEN_MRT_FaireRetablir"
                         --[[// Récuperation du secteur courant
 ]]local iti = DEC_UserTypeList_GetAt( self._namedParams.itineraires, self.rIterateurItineraire )
                         --[[// Assignation de la mission
-]]StartInstance( self, self.activations.BEH_Mission_Automate_GEN_AssignerRetablirItineraireA, 1, { ePhase_MRT, pion, iti, eEtatEchelon_Premier, } )
+]]StartActivateOverride( self, self.activations.BEH_Mission_Automate_GEN_AssignerRetablirItineraireA, 1, { ePhase_MRT, pion, iti, eEtatEchelon_Premier, } )
                                                 self.rIterateurItineraire = self.rIterateurItineraire + 1--[[// itineraire suivant
 ]]
                     end

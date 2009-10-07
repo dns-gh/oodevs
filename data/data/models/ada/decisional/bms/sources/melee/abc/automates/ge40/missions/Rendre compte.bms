@@ -14,15 +14,11 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_GTIA_RendreCompteDebutFinMission", { "onHalt" } },
-        { "BEH_GTIA_RendreCompteSurOrdreDeConduite", { "onHalt" } },
-        { "BEH_GTIA_RendreCompteSurLima", { "onHalt" } },
-        { "BEH_GTIA_AFFICHE_temp", { "onHalt" } },
+        { "BEH_GTIA_RendreCompteDebutFinMission", {} },
+        { "BEH_GTIA_RendreCompteSurOrdreDeConduite", {} },
+        { "BEH_GTIA_RendreCompteSurLima", {} },
+        { "BEH_GTIA_AFFICHE_temp", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_RendreCompte" } },
 
     create = function( self )
     end,
@@ -47,19 +43,13 @@ node "BEH_GTIA_RendreCompteDebutFinMission"
 {
     activations =
     {
-        { "ACT_RC_Automate", { "onHalt" } },
+        { "ACT_RC_Automate", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_RendreCompteDebutFinMission" } },
 
     create = function( self )
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         if( ModuleBegins() ) then
             do
                 Activate( self.activations.ACT_RC_Automate, 1, { eRC_DebutMission, } )
@@ -70,7 +60,7 @@ node "BEH_GTIA_RendreCompteDebutFinMission"
 
         local listePionsPE = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Premier ) )
         if( DIA_IsListEmpty( listePionsPE ) ) then
-            StartInstance( self, self.activations.ACT_RC_Automate, 1, { eRC_FinMission, } )
+            StartActivateOverride( self, self.activations.ACT_RC_Automate, 1, { eRC_FinMission, } )
         end
 
     end,
@@ -87,35 +77,29 @@ node "BEH_GTIA_RendreCompteSurOrdreDeConduite"
 {
     activations =
     {
-        { "ACT_RC_Automate", { "onHalt" } },
-        { "ACT_Ordre_Suppression", { "onHalt" } },
+        { "ACT_RC_Automate", {} },
+        { "ACT_Ordre_Suppression", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_RendreCompteSurOrdreDeConduite" } },
 
     create = function( self )
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
         for _,ordre in pairs( ordres_recus ) do
         local _continue = true
 do
                 local repOrdre = ordre
                 if( repOrdre:GetType() == "Rep_OrderConduite_AttendreSePoster" ) then
-                    StartInstance( self, self.activations.ACT_RC_Automate, 1, { eRC_AttenteOrdrePoursuivre, } )
+                    StartActivateOverride( self, self.activations.ACT_RC_Automate, 1, { eRC_AttenteOrdrePoursuivre, } )
                 end
 
                 if( repOrdre:GetType() == "Rep_OrderConduite_Deboucher" or repOrdre:GetType() == "Rep_OrderConduite_Poursuivre" ) then
-                    StopInstance( self, self.activations.ACT_RC_Automate, { eRC_AttenteOrdrePoursuivre, } )
+                    StopActivateOverride( self, self.activations.ACT_RC_Automate, { eRC_AttenteOrdrePoursuivre, } )
                 end
 
                 if( repOrdre:GetType() == "Rep_OrderConduite_Decrocher" or g_bPhaseReceuil ) then
-                    StartInstance( self, self.activations.ACT_RC_Automate, 1, { eRC_Decroche, } )
+                    StartActivateOverride( self, self.activations.ACT_RC_Automate, 1, { eRC_Decroche, } )
                 end
 
                 Activate( self.activations.ACT_Ordre_Suppression, 1, { ordre, } )
@@ -137,12 +121,8 @@ node "BEH_GTIA_RendreCompteSurLima"
 {
     activations =
     {
-        { "ACT_RC_Automate", { "onHalt" } },
+        { "ACT_RC_Automate", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_RendreCompteSurLima" } },
 
     create = function( self )
     end,

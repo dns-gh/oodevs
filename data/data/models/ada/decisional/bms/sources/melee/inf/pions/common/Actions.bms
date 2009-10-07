@@ -21,8 +21,6 @@ includedFiles["sources/melee/inf/pions/common/Actions.bms"] = true
 ]]--[[// ******************************************************************************
 ]]node "ACT_MAJ_EtatSituationEni"
 {
-    feedbacks = { { { "onHalt" }, "ACT_MAJ_EtatSituationEni" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.eEtatSituationEnnemi = self.params[1]
@@ -59,8 +57,6 @@ includedFiles["sources/melee/inf/pions/common/Actions.bms"] = true
         deplacement = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Dep_Pion_INF_Arret" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.rDelai = self.params[1]
@@ -84,8 +80,7 @@ includedFiles["sources/melee/inf/pions/common/Actions.bms"] = true
                         --[[// bloc fin
 ]]DEC_Trace( "fin " )
                                                 self.params.__returnValue = eActionEffectuee
-                        Feedback( self.feedbacks["onHalt"], { "ACT_Dep_Pion_INF_Arret" } )
-Halt( self )
+                        Halt( self )
                         do return end
 
                     end
@@ -113,8 +108,6 @@ Halt( self )
         max = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Tir_Pion_INF_Neutraliser" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ppEni = self.params[1]
@@ -131,8 +124,6 @@ Halt( self )
 ]]--[[// ============================================================================
 ]]node "ACT_Ordre_Pion_INF_AC_FaireRalentir"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Ordre_Pion_INF_AC_FaireRalentir" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.tAmi = self.params[1]
@@ -170,8 +161,6 @@ Halt( self )
         tir = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Tir_INF_FumigeneVersEni" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ksEni = self.params[1]
@@ -200,8 +189,6 @@ Halt( self )
 ]]--[[// ============================================================================
 ]]node "ACT_Misc_Pion_INF_MAJ_PositionRegroupement"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Misc_Pion_INF_MAJ_PositionRegroupement" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ptRegroupement = self.params[1]
@@ -240,8 +227,6 @@ Halt( self )
         etat_Ambiance = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Misc_Pion_Ambiance" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.eEtatAmbiance = self.params[1]
@@ -263,8 +248,6 @@ Halt( self )
     {
         furtivite = 1,
     },
-
-    feedbacks = { { { "onHalt" }, "ACT_Dep_Pion_INF_ActiverFurtivite" } },
 
     create = function( self )
         self._namedParams = {}

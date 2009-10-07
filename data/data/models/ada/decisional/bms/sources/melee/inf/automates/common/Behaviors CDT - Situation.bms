@@ -21,21 +21,15 @@ node "BEH_Situation_Automate_INF_Defaut"
 {
     activations =
     {
-        { "BEH_Situation_Automate_INF_FinDeMission_Sur", { "onHalt" } },
+        { "BEH_Situation_Automate_INF_FinDeMission_Sur", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Situation_Automate_INF_Defaut" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.bFinMission = self.params[1]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         local sComposants = DEC_Automate_PionsSansPC()
         for _,x in pairs( sComposants ) do
         local _continue = true
@@ -59,7 +53,7 @@ do
                                                                                         cases_switch_2[1] = true
 
                                             else
-                                                StartInstance( self, self.activations.BEH_Situation_Automate_INF_FinDeMission_Sur, 1 / GetActivity(), { x_pion, } )
+                                                StartActivateOverride( self, self.activations.BEH_Situation_Automate_INF_FinDeMission_Sur, 1 / GetActivity(), { x_pion, } )
                                             end
                                         end
 
@@ -83,21 +77,15 @@ node "BEH_Situation_Automate_INF_CadreOffensif"
 {
     activations =
     {
-        { "BEH_Situation_Automate_INF_FinDeMission_Sur", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_AssignerSemparerA", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_Reconnaitre_AssignerReco", { "onHalt" } },
+        { "BEH_Situation_Automate_INF_FinDeMission_Sur", {} },
+        { "BEH_Conduite_Automate_INF_AssignerSemparerA", {} },
+        { "BEH_Conduite_Automate_INF_Reconnaitre_AssignerReco", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Situation_Automate_INF_CadreOffensif" } },
 
     create = function( self )
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         local sComposants = DEC_Automate_PionsSansPC()
         for _,x in pairs( sComposants ) do
         local _continue = true
@@ -114,7 +102,7 @@ do
                                 local cases_switch_2 = {}
                                     if switch_2 == "T_Mission_Pion_INF_Reduire"
                                     or switch_2 == "T_Mission_Pion_INF_ReconnaitreAxe" then
-                                        StartInstance( self, self.activations.BEH_Situation_Automate_INF_FinDeMission_Sur, 1 / GetActivity(), { x_pion, } )
+                                        StartActivateOverride( self, self.activations.BEH_Situation_Automate_INF_FinDeMission_Sur, 1 / GetActivity(), { x_pion, } )
                                         
                                                                         cases_switch_2[1] = true
 elseif switch_2 == "T_Mission_Pion_INF_Fixer" then
@@ -122,7 +110,7 @@ elseif switch_2 == "T_Mission_Pion_INF_Fixer" then
                                         if( S_Misc_EstMissionAffectee( "T_Mission_Automate_INF_Semparer" ) ) then
                                             do
                                                 local mission = DEC_GetMission( myself )
-                                                StartInstance( self, self.activations.BEH_Conduite_Automate_INF_AssignerSemparerA, 1, { x_pion, mission.objectif_, } )
+                                                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_INF_AssignerSemparerA, 1, { x_pion, mission.objectif_, } )
                                             end
                                         end
 
@@ -133,7 +121,7 @@ elseif switch_2 == "T_Mission_Pion_INF_PrendrePreciserContact" then
 ]]--[[// 
 ]]DEC_Trace( "Fin mission : Reduire | PPContact." )
                                         if( not S_Misc_EstMissionAffectee( "T_Mission_Automate_INF_Semparer" ) ) then
-                                            StartInstance( self, self.activations.BEH_Conduite_Automate_INF_Reconnaitre_AssignerReco, 1, { x_pion, } )
+                                            StartActivateOverride( self, self.activations.BEH_Conduite_Automate_INF_Reconnaitre_AssignerReco, 1, { x_pion, } )
                                         end
 
                                                                         cases_switch_2[3] = true
@@ -164,12 +152,8 @@ node "BEH_Conduite_Automate_INF_AssignerSemparerA"
 {
     activations =
     {
-        { "BEH_Mission_Automate_INF_AssignerA_Semparer", { "onHalt" } },
+        { "BEH_Mission_Automate_INF_AssignerA_Semparer", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_AssignerSemparerA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -181,14 +165,12 @@ node "BEH_Conduite_Automate_INF_AssignerSemparerA"
                 self.ptZone = self.ptZone or S_Geometrie_BarycentreZone( self._namedParams.locZone )
         if( ( self.ptZone == 0 or self.ptZone == nil ) ) then
             self.params.__returnValue = eActionImpossible
-            Feedback( self.feedbacks["onHalt"], { "BEH_Conduite_Automate_INF_AssignerSemparerA" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
         if( not ModuleBegins() ) then
-            Feedback( self.feedbacks["onHalt"], { "BEH_Conduite_Automate_INF_AssignerSemparerA" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 

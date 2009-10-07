@@ -14,16 +14,12 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Dep_Pion_AllerRecupererRefugies", { "onHalt" } },
-        { "BEH_Dep_Pion_AllerDebarquerRefugies", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_Pion_AllerRecupererRefugies", {} },
+        { "BEH_Dep_Pion_AllerDebarquerRefugies", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_OrienterRefugies" } },
 
     create = function( self )
         self._namedParams = {}
@@ -126,12 +122,8 @@ node "BEH_Dep_Pion_AllerRecupererRefugies"
 {
     activations =
     {
-        { "BEH_Dep_Pion_GererEmbarquementRefugie", { "onHalt" } },
+        { "BEH_Dep_Pion_GererEmbarquementRefugie", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_AllerRecupererRefugies" } },
 
     create = function( self )
         self._namedParams = {}
@@ -164,13 +156,9 @@ node "BEH_Dep_Pion_GererEmbarquementRefugie"
 {
     activations =
     {
-        { "ACT_Transport_Pion_EmbarquerRefugie", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "ACT_Transport_Pion_EmbarquerRefugie", {} },
+        { "BEH_Dep_ProgressionVers", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_GererEmbarquementRefugie" } },
 
     create = function( self )
         self._namedParams = {}
@@ -198,13 +186,9 @@ node "BEH_Dep_Pion_AllerDebarquerRefugies"
 {
     activations =
     {
-        { "ACT_Transport_Pion_DebarquerRefugieDansCamp", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "ACT_Transport_Pion_DebarquerRefugieDansCamp", {} },
+        { "BEH_Dep_ProgressionVers", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_AllerDebarquerRefugies" } },
 
     create = function( self )
         self._namedParams = {}
@@ -218,8 +202,7 @@ node "BEH_Dep_Pion_AllerDebarquerRefugies"
         --[[// Gestion erreur
 ]]if( ( self.localisation == 0 or self.localisation == nil ) ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_AllerDebarquerRefugies" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -229,8 +212,7 @@ Halt( self )
                 self.point = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( self.localisation )
                 if( ( self.point == 0 or self.point == nil ) ) then
                     self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_AllerDebarquerRefugies" } )
-Halt( self )
+                    Halt( self )
                     do return end
                 end
 
@@ -260,8 +242,6 @@ for _,refugie in pairs( self._namedParams.refugies ) do
 
 node "ACT_Transport_Pion_EmbarquerRefugie"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Transport_Pion_EmbarquerRefugie" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.refugie = self.params[1]
@@ -284,8 +264,6 @@ node "ACT_Transport_Pion_EmbarquerRefugie"
 ]]--[[// *****************************************************************************
 ]]node "ACT_Transport_Pion_DebarquerRefugieDansCamp"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Transport_Pion_DebarquerRefugieDansCamp" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.refugie = self.params[1]

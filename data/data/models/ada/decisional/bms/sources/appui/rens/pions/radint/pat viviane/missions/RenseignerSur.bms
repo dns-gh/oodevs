@@ -11,31 +11,25 @@ includedFiles["sources/appui/rens/pions/radint/pat viviane/missions/RenseignerSu
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_Dep_Pion_RENS_VolerA", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "ACT_Connaissance_Rens_EnregistrerDonnees", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Obs_Pion_Rens_Radint_RenseignerDans", { "onHalt" } },
-        { "ACT_Dep_SePoster", { "onHalt" } },
-        { "BEH_Dep_Pion_RENS_MonterA", { "onHalt" } },
-        { "ACT_Misc_Delai", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "BEH_Connaissance_Rens_ExploiterRens", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_Dep_Pion_RENS_VolerA", {} },
+        { "ACT_Info_Trace", {} },
+        { "ACT_Connaissance_Rens_EnregistrerDonnees", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Obs_Pion_Rens_Radint_RenseignerDans", {} },
+        { "ACT_Dep_SePoster", {} },
+        { "BEH_Dep_Pion_RENS_MonterA", {} },
+        { "ACT_Misc_Delai", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Connaissance_Rens_ExploiterRens", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_RENS_RADINT_RenseignerSur" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.positionInitiale = self.positionInitiale or DEC_Geometrie_CreerPoint()
@@ -45,8 +39,7 @@ includedFiles["sources/appui/rens/pions/radint/pat viviane/missions/RenseignerSu
         else
 do
                 DEC_RC( eRC_MissionImpossible )
-                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_RENS_RADINT_RenseignerSur" } )
-Halt( self )
+                                Halt( self )
                 do return end
 
             end
@@ -64,7 +57,7 @@ Halt( self )
 
         if( ModuleBegins() ) then
             do
-                StartInstance( self, self.activations.ACT_Dep_Pion_RENS_VolerA, 1, { 100, } )
+                StartActivateOverride( self, self.activations.ACT_Dep_Pion_RENS_VolerA, 1, { 100, } )
                 --[[// données doctrine
 ]]DEC_Copie_Point( DEC_Agent_Position(), self.positionInitiale )
                 Activate( self.activations.ACT_Info_Trace, 1, { "Intelligence gathering mission begining", } )
@@ -143,7 +136,7 @@ elseif switch_1 == eFinMission then
                     Activate( self.activations.BEH_Connaissance_Rens_ExploiterRens, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )--[[// Developpement photos
 ]]
                     --[[// données doctrine
-]]StopInstance( self, self.activations.ACT_Dep_Pion_RENS_VolerA, { 100, } )
+]]StopActivateOverride( self, self.activations.ACT_Dep_Pion_RENS_VolerA, { 100, } )
                     
                                 cases_switch_1[4] = true
 
@@ -165,14 +158,10 @@ node "BEH_Connaissance_Rens_ExploiterRens"
 {
     activations =
     {
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "ACT_Connaissance_Rens_ExtraireDonnees", { "onHalt" } },
-        { "ACT_Connaissance_Rens_ExploiterDonnees", { "onHalt" } },
+        { "ACT_Info_Trace", {} },
+        { "ACT_Connaissance_Rens_ExtraireDonnees", {} },
+        { "ACT_Connaissance_Rens_ExploiterDonnees", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Connaissance_Rens_ExploiterRens" } },
 
     create = function( self )
     end,
@@ -206,12 +195,8 @@ node "BEH_Obs_Pion_Rens_Radint_RenseignerDans"
 {
     activations =
     {
-        { "ACT_Obs_SurveillerZone", { "onHalt" } },
+        { "ACT_Obs_SurveillerZone", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Obs_Pion_Rens_Radint_RenseignerDans" } },
 
     create = function( self )
         self._namedParams = {}

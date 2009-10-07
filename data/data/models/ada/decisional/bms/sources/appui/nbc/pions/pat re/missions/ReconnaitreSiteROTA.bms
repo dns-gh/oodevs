@@ -11,12 +11,8 @@ includedFiles["sources/appui/nbc/pions/pat re/missions/ReconnaitreSiteROTA.bms"]
 {
     activations =
     {
-        { "BEH_Mission_Pion_NBC_ReconnaitreUnSiteROTA", { "onHalt" } },
+        { "BEH_Mission_Pion_NBC_ReconnaitreUnSiteROTA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_NBC_ReconnaitreUnSiteROTA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -30,15 +26,13 @@ includedFiles["sources/appui/nbc/pions/pat re/missions/ReconnaitreSiteROTA.bms"]
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionImpossible ) then
             self.params.__returnValue = eActionImpossible
-            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_NBC_ReconnaitreUnSiteROTA" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
         if( self.eEtat == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_NBC_ReconnaitreUnSiteROTA" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 

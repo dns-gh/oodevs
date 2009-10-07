@@ -19,8 +19,6 @@ includedFiles["sources/common/pions/actions/Actions - Maj.bms"] = true
         etat_Mission = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_MAJ_EtatPhaseMission" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.eEtatPhaseMission = self.params[1]
@@ -51,8 +49,6 @@ includedFiles["sources/common/pions/actions/Actions - Maj.bms"] = true
     {
         etat_Dec = 1,
     },
-
-    feedbacks = { { { "onHalt" }, "ACT_MAJ_EtatDec" } },
 
     create = function( self )
         self._namedParams = {}
@@ -86,8 +82,6 @@ includedFiles["sources/common/pions/actions/Actions - Maj.bms"] = true
         etat_Destruction = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_MAJ_EtatDestruction" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.eEtatDestruction = self.params[1]
@@ -119,8 +113,6 @@ includedFiles["sources/common/pions/actions/Actions - Maj.bms"] = true
     {
         etat_OrdreCoordination = 1,
     },
-
-    feedbacks = { { { "onHalt" }, "ACT_MAJ_EtatOrdreCoordination" } },
 
     create = function( self )
         self._namedParams = {}
@@ -157,8 +149,6 @@ includedFiles["sources/common/pions/actions/Actions - Maj.bms"] = true
         objectifEsquive = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Maj_Pions_ObjectifEsquive" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.objectif = self.params[1]
@@ -190,8 +180,6 @@ includedFiles["sources/common/pions/actions/Actions - Maj.bms"] = true
         ennemi = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_MAJ_EnnemiEnCours" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.repEni = self.params[1]
@@ -219,8 +207,6 @@ includedFiles["sources/common/pions/actions/Actions - Maj.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_MAJ_EnAppuiPionMobile"
 {
-    feedbacks = { { { "onHalt" }, "ACT_MAJ_EnAppuiPionMobile" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionAppui = self.params[1]
@@ -247,8 +233,6 @@ includedFiles["sources/common/pions/actions/Actions - Maj.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_MAJ_EtatPrudence"
 {
-    feedbacks = { { { "onHalt" }, "ACT_MAJ_EtatPrudence" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.eEtatDecPrudence = self.params[1]
@@ -277,8 +261,6 @@ includedFiles["sources/common/pions/actions/Actions - Maj.bms"] = true
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_Maj_Pion_PasserEnTirLibre"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Maj_Pion_PasserEnTirLibre" } },
-
     create = function( self )
     end,
 
@@ -299,8 +281,6 @@ includedFiles["sources/common/pions/actions/Actions - Maj.bms"] = true
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_Maj_Pion_PasserEnTirSurRiposte"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Maj_Pion_PasserEnTirSurRiposte" } },
-
     create = function( self )
     end,
 
@@ -321,8 +301,6 @@ includedFiles["sources/common/pions/actions/Actions - Maj.bms"] = true
 ]]--[[// ****************************************************************************** 
 ]]node "ACT_Maj_Pion_PasserEnTirInterdit"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Maj_Pion_PasserEnTirInterdit" } },
-
     create = function( self )
     end,
 

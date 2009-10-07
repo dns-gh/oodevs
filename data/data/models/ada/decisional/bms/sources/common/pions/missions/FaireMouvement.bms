@@ -14,15 +14,11 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Dep_ProgressionAvecEscortePossibleSur", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionAvecEscortePossibleSur", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_FaireMouvement" } },
 
     create = function( self )
         self._namedParams = {}
@@ -103,16 +99,12 @@ node "BEH_Dep_ProgressionAvecEscortePossibleSur"
 {
     activations =
     {
-        { "BEH_Dep_GererProgression", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "BEH_Dep_Suivre", { "onHalt" } },
-        { "BEH_Dep_SeDeplacer", { "onHalt" } },
-        { "ACT_Obs_EtablirVisionCur", { "onHalt" } },
+        { "BEH_Dep_GererProgression", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Dep_Suivre", {} },
+        { "BEH_Dep_SeDeplacer", {} },
+        { "ACT_Obs_EtablirVisionCur", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_ProgressionAvecEscortePossibleSur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -187,8 +179,7 @@ elseif switch_1 == eProgresser then
                                 F_Pion_SetitMvt( myself, nil )
                                 self.it = S_Misc_DetruireItineraire( self.it, "BEH_Dep_ProgressionAvecEscortePossibleSur" )
                                                                 self.params.__returnValue = eActionEffectuee
-                                Feedback( self.feedbacks["onHalt"], { "BEH_Dep_ProgressionAvecEscortePossibleSur" } )
-Halt( self )
+                                Halt( self )
                                 do return end
 
                             end

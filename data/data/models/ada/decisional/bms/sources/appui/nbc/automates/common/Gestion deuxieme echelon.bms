@@ -35,12 +35,8 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSuivreA", { "onHalt" } },
+        { "BEH_Mission_Automate_AssignerSuivreA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dispositif_Automate_NBC_FaireSuivreLeSE_" } },
 
     create = function( self )
     end,
@@ -89,12 +85,8 @@ node "BEH_Dispositif_Automate_NBC_FaireSuivreLePC_"
 {
     activations =
     {
-        { "BEH_Mission_Automate_AssignerSuivreA", { "onHalt" } },
+        { "BEH_Mission_Automate_AssignerSuivreA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dispositif_Automate_NBC_FaireSuivreLePC_" } },
 
     create = function( self )
     end,

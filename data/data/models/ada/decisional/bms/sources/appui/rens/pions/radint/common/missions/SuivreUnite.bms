@@ -12,13 +12,9 @@ includedFiles["sources/appui/rens/pions/radint/common/missions/SuivreUnite.bms"]
 {
     activations =
     {
-        { "ACT_Dep_Pion_RENS_VolerA", { "onHalt" } },
-        { "BEH_Dep_Suivre", { "onHalt" } },
+        { "ACT_Dep_Pion_RENS_VolerA", {} },
+        { "BEH_Dep_Suivre", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_Suivre" } },
 
     create = function( self )
         self._namedParams = {}

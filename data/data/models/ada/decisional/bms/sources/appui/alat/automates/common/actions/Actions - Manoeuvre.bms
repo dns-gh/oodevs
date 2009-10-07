@@ -14,8 +14,6 @@ includedFiles["sources/appui/alat/automates/common/actions/Actions - Manoeuvre.b
         boost = 1.1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Conduite_Automate_ALAT_ReleverUnite" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionReleve = self.params[1]

@@ -11,14 +11,10 @@ includedFiles["sources/common/automates/missionsreactionpopulations/securiserzon
 {
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "onHalt" } },
-        { "BEH_Mission_Automate_AssignerSuivreAListe", { "onHalt" } },
-        { "BEH_Automate_CreerZoneSecurisee", { "onHalt" } },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "BEH_Mission_Automate_AssignerSuivreAListe", {} },
+        { "BEH_Automate_CreerZoneSecurisee", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_SecuriserZoneContrePopulations" } },
 
     create = function( self )
         self._namedParams = {}
@@ -47,8 +43,7 @@ if( DEC_Geometrie_EstPointDansFuseau( DEC_ListePoints_GetAt( self._namedParams.m
         if( self.eEtatODC == eActionHalt ) then
             do
                                 self.params.__returnValue = eActionEffectuee
-                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_CDT_SecuriserZoneContrePopulations" } )
-Halt( self )
+                Halt( self )
                 do return end
 
                 self.eEtatODC = eActionEnCours

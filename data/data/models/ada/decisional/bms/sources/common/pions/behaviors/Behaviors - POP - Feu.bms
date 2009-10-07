@@ -16,13 +16,9 @@ includedFiles["sources/common/pions/behaviors/Behaviors - POP - Feu.bms"] = true
 
     activations =
     {
-        { "ACT_Misc_Delai", { "onHalt" } },
-        { "ACT_RiposteSurPopulation", { "onHalt" } },
+        { "ACT_Misc_Delai", {} },
+        { "ACT_RiposteSurPopulation", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_AttaqueDePopulation" } },
 
     create = function( self )
         self._namedParams = {}
@@ -74,13 +70,9 @@ node "BEH_RiposteSurPopulation"
 
     activations =
     {
-        { "ACT_Misc_Delai", { "onHalt" } },
-        { "ACT_RiposteSurPopulation", { "onHalt" } },
+        { "ACT_Misc_Delai", {} },
+        { "ACT_RiposteSurPopulation", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_RiposteSurPopulation" } },
 
     create = function( self )
         self._namedParams = {}

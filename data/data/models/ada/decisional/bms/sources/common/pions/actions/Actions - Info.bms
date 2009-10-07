@@ -17,8 +17,6 @@ includedFiles["sources/common/pions/actions/Actions - Info.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Info_EtatRapFor"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Info_EtatRapFor" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.eEtatRapFor = self.params[1]
@@ -48,8 +46,6 @@ includedFiles["sources/common/pions/actions/Actions - Info.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Info_EtatROE"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Info_EtatROE" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.eEtatROE = self.params[1]
@@ -72,8 +68,6 @@ includedFiles["sources/common/pions/actions/Actions - Info.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Info_EtatROEPopulation"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Info_EtatROEPopulation" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.eEtatROE = self.params[1]
@@ -103,8 +97,6 @@ includedFiles["sources/common/pions/actions/Actions - Info.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Info_EtatDec"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Info_EtatDec" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.eEtatDec = self.params[1]
@@ -133,8 +125,6 @@ includedFiles["sources/common/pions/actions/Actions - Info.bms"] = true
 ]]--[[// *****************************************************************************
 ]]node "ACT_Info_EtatOperationnel"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Info_EtatOperationnel" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.eEtatOperationnel = self.params[1]

@@ -43,18 +43,14 @@ include "Melee/Inf/Automates/Common/Missions/Behaviors.bms"
 {
     activations =
     {
-        { "BEH_RC_Automate_Situation", { "onHalt" } },
-        { "BEH_Nbc_Automate_GererAlerteNiv4", { "onHalt" } },
-        { "BEH_ROE_Automate_GererOrdre", { "onHalt" } },
-        { "BEH_Misc_Automate_GererLesMoyens", { "onHalt" } },
-        { "BEH_Rens_Automate_GererSilenceRadio", { "onHalt" } },
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "onHalt" } },
-        { "BEH_Ordre_Automate_INF_GererTransporteur", { "onHalt" } },
+        { "BEH_RC_Automate_Situation", {} },
+        { "BEH_Nbc_Automate_GererAlerteNiv4", {} },
+        { "BEH_ROE_Automate_GererOrdre", {} },
+        { "BEH_Misc_Automate_GererLesMoyens", {} },
+        { "BEH_Rens_Automate_GererSilenceRadio", {} },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
+        { "BEH_Ordre_Automate_INF_GererTransporteur", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Defaut" } },
 
     create = function( self )
         self._namedParams = {}
@@ -110,12 +106,8 @@ node "BEH_Situation_Automate_INF_FinDeMission_Sur"
 {
     activations =
     {
-        { "BEH_Situation_Automate_INF_FinDeMission", { "onHalt" } },
+        { "BEH_Situation_Automate_INF_FinDeMission", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Situation_Automate_INF_FinDeMission_Sur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -134,8 +126,6 @@ node "BEH_Situation_Automate_INF_FinDeMission_Sur"
 
 node "BEH_Situation_Automate_INF_FinDeMission"
 {
-    feedbacks = { { { "onHalt" }, "BEH_Situation_Automate_INF_FinDeMission" } },
-
     create = function( self )
     end,
 
@@ -178,12 +168,8 @@ node "BEH_Ordre_Automate_INF_GererTransporteur"
 {
     activations =
     {
-        { "ACT_Ordre_Suppression", { "onHalt" } },
+        { "ACT_Ordre_Suppression", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Ordre_Automate_INF_GererTransporteur" } },
 
     create = function( self )
     end,
@@ -219,15 +205,11 @@ node "BEH_Conduite_Automate_HOT_Defaut"
 {
     activations =
     {
-        { "BEH_Dispositif_Automate_INF_GererLesPionsDetruits", { "onHalt" } },
-        { "BEH_Dispositif_Automate_INF_GererReleve", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_GererAppuis_INF", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_GererAppuis_ABC", { "onHalt" } },
+        { "BEH_Dispositif_Automate_INF_GererLesPionsDetruits", {} },
+        { "BEH_Dispositif_Automate_INF_GererReleve", {} },
+        { "BEH_Conduite_Automate_INF_GererAppuis_INF", {} },
+        { "BEH_Conduite_Automate_INF_GererAppuis_ABC", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_HOT_Defaut" } },
 
     create = function( self )
     end,
@@ -256,12 +238,8 @@ node "BEH_RC_Automate_GererConditionOperationnelle"
 {
     activations =
     {
-        { "ACT_Warning", { "onHalt" } },
+        { "ACT_Warning", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_RC_Automate_GererConditionOperationnelle" } },
 
     create = function( self )
         self._namedParams = {}

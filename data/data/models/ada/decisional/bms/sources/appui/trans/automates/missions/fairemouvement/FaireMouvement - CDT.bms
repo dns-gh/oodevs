@@ -20,12 +20,8 @@ includedFiles["sources/appui/trans/automates/missions/fairemouvement/FaireMouvem
 {
     activations =
     {
-        { "BEH_Ordre_Automate_RecevoirOrdreInopine", { "onHalt" } },
+        { "BEH_Ordre_Automate_RecevoirOrdreInopine", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_FaireMouvement" } },
 
     create = function( self )
         self._namedParams = {}
@@ -41,8 +37,7 @@ includedFiles["sources/appui/trans/automates/missions/fairemouvement/FaireMouvem
         if( self.eEtatODC == eActionHalt ) then
             do
                                 self.params.__returnValue = eActionEffectuee
-                Feedback( self.feedbacks["onHalt"], { "MIS_Automate_CDT_FaireMouvement" } )
-Halt( self )
+                Halt( self )
                 do return end
 
                 self.eEtatODC = eActionEnCours

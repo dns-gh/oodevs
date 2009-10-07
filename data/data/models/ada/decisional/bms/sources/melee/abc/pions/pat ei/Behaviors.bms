@@ -113,12 +113,8 @@ include "Melee/Abc/Pions/Common/Missions/Jalonner.bms"
 {
     activations =
     {
-        { "BEH_Mot_Pion_Embarquer", { "onHalt" } },
+        { "BEH_Mot_Pion_Embarquer", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pion_ABC_Default" } },
 
     create = function( self )
     end,
@@ -141,8 +137,6 @@ include "Melee/Abc/Pions/Common/Missions/Jalonner.bms"
 
 node "BEH_MAJ_Pion_ABC_EnvieDeSInfiltrer"
 {
-    feedbacks = { { { "onHalt" }, "BEH_MAJ_Pion_ABC_EnvieDeSInfiltrer" } },
-
     create = function( self )
     end,
 
@@ -169,12 +163,8 @@ node "BEH_Pion_ABC_GarderSesDistancesPourSInfiltrer"
 {
     activations =
     {
-        { "BEH_Pion_ABC_GarderSesDistancesPourSInfiltrerFaceA", { "onHalt" } },
+        { "BEH_Pion_ABC_GarderSesDistancesPourSInfiltrerFaceA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pion_ABC_GarderSesDistancesPourSInfiltrer" } },
 
     create = function( self )
     end,
@@ -208,12 +198,8 @@ node "BEH_Pion_ABC_GarderSesDistancesPourSInfiltrerFaceA"
 --[[//, max_instances( 1 )
 ]]    activations =
     {
-        { "BEH_Pion_ABC_Eni_SInfiltrerFaceA", { "onHalt" } },
+        { "BEH_Pion_ABC_Eni_SInfiltrerFaceA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pion_ABC_GarderSesDistancesPourSInfiltrerFaceA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -249,12 +235,8 @@ node "BEH_Pion_ABC_Eni_SInfiltrerFaceA"
 
     activations =
     {
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "BEH_Dep_ProgressionVers", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pion_ABC_Eni_SInfiltrerFaceA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -272,8 +254,7 @@ node "BEH_Pion_ABC_Eni_SInfiltrerFaceA"
 ]]--[[//----------------------------------------------------------------------
 ]]if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.repUnite ) ) then
             self.params.__returnValue = eActionImpossible
-            Feedback( self.feedbacks["onHalt"], { "BEH_Pion_ABC_Eni_SInfiltrerFaceA" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -283,8 +264,7 @@ Halt( self )
 ]]--[[//----------------------------------------------------------------------
 ]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( self._namedParams.repUnite ) ) >= self.rDistanceEffective ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "BEH_Pion_ABC_Eni_SInfiltrerFaceA" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -297,15 +277,13 @@ Halt( self )
 ]]if( F_Pion_GetobjectifEsquive( myself ) ~= nil ) then
                     self.positionSurete = DEC_Geometrie_CalculerPositionSureteAvecObjectif( self._namedParams.repUnite, self.rDistanceEffective, F_Pion_GetobjectifEsquive( myself ) )
                 else
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Pion_ABC_Eni_SInfiltrerFaceA" } )
-Halt( self )
+                    Halt( self )
                     do return end
                 end
 
                 --[[// Vérification
 ]]if( ( self.positionSurete == 0 or self.positionSurete == nil ) ) then
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Pion_ABC_Eni_SInfiltrerFaceA" } )
-Halt( self )
+                    Halt( self )
                     do return end
                 end
 
@@ -320,8 +298,7 @@ Halt( self )
                 self.eEtat = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Pion_ABC_Eni_SInfiltrerFaceA" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end

@@ -17,26 +17,20 @@ includedFiles["sources/emergency/pions/common/missions/Riot.bms"] = true
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "BEH_Pion_Emergency_GartherPeople", { "onHalt" } },
-        { "ACT_Pion_Emergency_Influence", { "onHalt" } },
-        { "ACT_RC", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_Pion_Emergency_GartherPeople", {} },
+        { "ACT_Pion_Emergency_Influence", {} },
+        { "ACT_RC", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionVers", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_Emergency_Riot" } },
 
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
                 self.eAction = self.eAction or eActionEnCours
         self.ePhase = self.ePhase or eReconnaitre
         if( ModuleBegins() ) then
@@ -63,7 +57,7 @@ includedFiles["sources/emergency/pions/common/missions/Riot.bms"] = true
                 if switch_1 == ePreparerMission then
                     if( self.eAction == eActionEnCours ) then
                         do
-                            StartInstance( self, self.activations.BEH_Pion_Emergency_GartherPeople, 5, setmetatable( { 3, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                            StartActivateOverride( self, self.activations.BEH_Pion_Emergency_GartherPeople, 5, setmetatable( { 3, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
                                                         return
 
                         end
@@ -94,8 +88,7 @@ elseif switch_1 == eFinMission then
                         do
                             DEC_FinMission()
                                                         self.params.__returnValue = eActionEffectuee
-                            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_Emergency_Riot" } )
-Halt( self )
+                            Halt( self )
                             do return end
 
                         end
@@ -114,13 +107,9 @@ node "BEH_Pion_Emergency_GartherPeople"
 {
     activations =
     {
-        { "ACT_Pion_Emergency_TriggerActivity", { "onHalt" } },
-        { "ACT_Misc_Delai", { "onHalt" } },
+        { "ACT_Pion_Emergency_TriggerActivity", {} },
+        { "ACT_Misc_Delai", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Pion_Emergency_GartherPeople" } },
 
     create = function( self )
         self._namedParams = {}
@@ -134,8 +123,7 @@ node "BEH_Pion_Emergency_GartherPeople"
             Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 0, self._namedParams.delay, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
         else
             self.params.__returnValue = self.eAction
-            Feedback( self.feedbacks["onHalt"], { "BEH_Pion_Emergency_GartherPeople" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 

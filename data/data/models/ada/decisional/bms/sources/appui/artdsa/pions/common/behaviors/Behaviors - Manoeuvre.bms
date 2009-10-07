@@ -5,13 +5,9 @@ node "BEH_Manoeuvre_Pion_ASA_SeDeployer"
 {
     activations =
     {
-        { "ACT_Misc_Delai", { "onHalt" } },
-        { "ACT_Pions_SInstaller", { "onHalt" } },
+        { "ACT_Misc_Delai", {} },
+        { "ACT_Pions_SInstaller", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Manoeuvre_Pion_ASA_SeDeployer" } },
 
     create = function( self )
         self._namedParams = {}

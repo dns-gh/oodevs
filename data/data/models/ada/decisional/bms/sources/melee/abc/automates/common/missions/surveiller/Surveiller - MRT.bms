@@ -22,13 +22,9 @@ includedFiles["sources/melee/abc/automates/common/missions/surveiller/Surveiller
 {
     activations =
     {
-        { "BEH_Mission_Automate_ABC_AssignerSurveillerA", { "onHalt" } },
-        { "ACT_Warning", { "onHalt" } },
+        { "BEH_Mission_Automate_ABC_AssignerSurveillerA", {} },
+        { "ACT_Warning", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ABC_AssignerMissionSurveillerA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -37,9 +33,7 @@ includedFiles["sources/melee/abc/automates/common/missions/surveiller/Surveiller
         self._namedParams.eEtatEchelon = self.params[3]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         self.listePoint = self.listePoint or {}
         self.rIterateurPosition = self.rIterateurPosition or 0
         if( ( #( self._namedParams.selPions ) == 0 or #( self._namedParams.selPions ) == nil ) ) then
@@ -69,7 +63,7 @@ includedFiles["sources/melee/abc/automates/common/missions/surveiller/Surveiller
                                 end
 
                                 local positionSurveiller = DEC_ListePoints_GetAt( self.listePoint, self.rIterateurPosition )
-                                StartInstance( self, self.activations.BEH_Mission_Automate_ABC_AssignerSurveillerA, 1, { ePhase_MRT, pion, positionSurveiller, self._namedParams.eEtatEchelon, } )
+                                StartActivateOverride( self, self.activations.BEH_Mission_Automate_ABC_AssignerSurveillerA, 1, { ePhase_MRT, pion, positionSurveiller, self._namedParams.eEtatEchelon, } )
                                                                 self.rIterateurPosition = self.rIterateurPosition + 1
                             end
 

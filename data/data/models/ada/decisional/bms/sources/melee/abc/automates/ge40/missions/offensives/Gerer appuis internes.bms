@@ -12,12 +12,8 @@ includedFiles["sources/melee/abc/automates/ge40/missions/offensives/Gerer appuis
 {
     activations =
     {
-        { "BEH_GTIA_GererAppuiPour", { "onHalt" } },
+        { "BEH_GTIA_GererAppuiPour", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_GererAppuisInternes" } },
 
     create = function( self )
     end,
@@ -45,12 +41,8 @@ node "BEH_GTIA_GererAppuiPour"
 {
     activations =
     {
-        { "BEH_GTIA_AssignerMissionsPourAppuyer", { "onHalt" } },
+        { "BEH_GTIA_AssignerMissionsPourAppuyer", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_GererAppuiPour" } },
 
     create = function( self )
         self._namedParams = {}
@@ -78,12 +70,8 @@ node "BEH_GTIA_AssignerMissionsPourAppuyer"
 {
     activations =
     {
-        { "BEH_GTIA_AssignerMissionMeleeA", { "onHalt" } },
+        { "BEH_GTIA_AssignerMissionMeleeA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssignerMissionsPourAppuyer" } },
 
     create = function( self )
         self._namedParams = {}

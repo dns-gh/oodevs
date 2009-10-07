@@ -19,17 +19,13 @@ includedFiles["sources/melee/inf/pions/son appui/missions/Interdire.bms"] = true
 {
     activations =
     {
-        { "BEH_Misc_Pion_DefinirTypeMission", { "onHalt" } },
-        { "BEH_MAJ_AgressiviteMission", { "onHalt" } },
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "BEH_Mission_Pion_INF_Interdire", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_Poste_Pion_INF_TomberEnGarde", { "onHalt" } },
+        { "BEH_Misc_Pion_DefinirTypeMission", {} },
+        { "BEH_MAJ_AgressiviteMission", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_Mission_Pion_INF_Interdire", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Poste_Pion_INF_TomberEnGarde", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_INF_Interdire" } },
 
     create = function( self )
         self._namedParams = {}
@@ -91,8 +87,7 @@ elseif switch_1 == eFinMission then
 ]]DEC_Trace( "mission MIS_Pion_INF_Interdire: fin" )
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
-                                Feedback( self.feedbacks["onHalt"], { "MIS_Pion_INF_Interdire" } )
-Halt( self )
+                                Halt( self )
                                 do return end
 
                             end

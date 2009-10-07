@@ -14,8 +14,6 @@ includedFiles["sources/appui/trans/pions/actions/Actions - Obs.bms"] = true
         observation = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Obs_EtablirVisionCur" } },
-
     create = function( self )
     end,
 
@@ -48,8 +46,6 @@ includedFiles["sources/appui/trans/pions/actions/Actions - Obs.bms"] = true
     {
         observation = 1,
     },
-
-    feedbacks = { { { "onHalt" }, "ACT_Obs_EtablirVisionFaceADir" } },
 
     create = function( self )
         self._namedParams = {}

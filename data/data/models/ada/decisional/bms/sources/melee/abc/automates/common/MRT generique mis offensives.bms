@@ -26,21 +26,17 @@ include "bit.lua"
 {
     activations =
     {
-        { "ACT_Info_Automate_Trace", { "onHalt" } },
-        { "BEH_Medo_Automate_ControleCreationMission", { "onHalt" } },
-        { "BEH_Medo_Automate_ABC_AssignerMissionAttaquerA", { "onHalt" } },
-        { "BEH_Medo_Automate_ABC_AssignerMissionEclairerA", { "onHalt" } },
-        { "BEH_Medo_Automate_ABC_AssignerMissionReconnaitreAxeA", { "onHalt" } },
-        { "BEH_Medo_Automate_ABC_AssignerMissionEscorterA", { "onHalt" } },
-        { "BEH_Medo_Automate_ABC_AssignerMissionEscorterEclA", { "onHalt" } },
-        { "BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateA", { "onHalt" } },
-        { "BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateEclA", { "onHalt" } },
-        { "ACT_Warning", { "onHalt" } },
+        { "ACT_Info_Automate_Trace", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Medo_Automate_ABC_AssignerMissionAttaquerA", {} },
+        { "BEH_Medo_Automate_ABC_AssignerMissionEclairerA", {} },
+        { "BEH_Medo_Automate_ABC_AssignerMissionReconnaitreAxeA", {} },
+        { "BEH_Medo_Automate_ABC_AssignerMissionEscorterA", {} },
+        { "BEH_Medo_Automate_ABC_AssignerMissionEscorterEclA", {} },
+        { "BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateA", {} },
+        { "BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateEclA", {} },
+        { "ACT_Warning", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionDynamique" } },
 
     create = function( self )
         self._namedParams = {}
@@ -304,8 +300,7 @@ elseif switch_1 == eMRT_MissionImpossible then
 elseif switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Medo_Automate_ABC_DonnerLesOrdresPourMissionDynamique" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end

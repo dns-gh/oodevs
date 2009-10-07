@@ -20,12 +20,8 @@ includedFiles["sources/melee/abc/automates/pel eei/missions/reduire/Reduire - CD
 {
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_Reduire", { "onHalt" } },
+        { "BEH_Conduite_Automate_ABC_Reduire", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_Reduire" } },
 
     create = function( self )
         self._namedParams = {}

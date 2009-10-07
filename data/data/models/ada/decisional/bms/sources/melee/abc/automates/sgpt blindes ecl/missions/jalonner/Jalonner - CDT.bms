@@ -22,12 +22,8 @@ includedFiles["sources/melee/abc/automates/sgpt blindes ecl/missions/jalonner/Ja
 {
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_Jalonner", { "onHalt" } },
+        { "BEH_Conduite_Automate_ABC_Jalonner", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_Jalonner" } },
 
     create = function( self )
         self._namedParams = {}

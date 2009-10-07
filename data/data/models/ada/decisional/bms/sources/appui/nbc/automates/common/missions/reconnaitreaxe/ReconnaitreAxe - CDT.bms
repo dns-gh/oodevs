@@ -11,14 +11,10 @@ includedFiles["sources/appui/nbc/automates/common/missions/reconnaitreaxe/Reconn
 {
     activations =
     {
-        { "BEH_Dispositif_Automate_NBC_FaireSuivreLeSE_", { "onHalt" } },
-        { "BEH_CoordDep_Automate_NBC_AssurerLaCoordinationInterne_", { "onHalt" } },
-        { "BEH_Dispositif_Automate_NBC_GererPionsDetruits_", { "onHalt" } },
+        { "BEH_Dispositif_Automate_NBC_FaireSuivreLeSE_", {} },
+        { "BEH_CoordDep_Automate_NBC_AssurerLaCoordinationInterne_", {} },
+        { "BEH_Dispositif_Automate_NBC_GererPionsDetruits_", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_NBC_ReconnaitreUnAxe" } },
 
     create = function( self )
     end,

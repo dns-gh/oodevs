@@ -9,8 +9,6 @@ includedFiles["sources/appui/trans/automates/actions/Actions - Ordre.bms"] = tru
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_Automate_Interrompre"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Ordre_Automate_Interrompre" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -42,8 +40,6 @@ includedFiles["sources/appui/trans/automates/actions/Actions - Ordre.bms"] = tru
 ]]--[[// *****************************************************************************
 ]]node "ACT_Ordre_Suppression"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Ordre_Suppression" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ordre = self.params[1]

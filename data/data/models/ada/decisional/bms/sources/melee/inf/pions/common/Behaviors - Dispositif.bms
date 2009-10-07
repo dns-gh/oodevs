@@ -38,14 +38,10 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_MOT_Pion_INF_Debarquer", { "onHalt" } },
-        { "ACT_Obs_EtablirVisionVersPt", { "onHalt" } },
-        { "ACT_Dep_Pion_INF_Arret", { "onHalt" } },
+        { "BEH_MOT_Pion_INF_Debarquer", {} },
+        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "ACT_Dep_Pion_INF_Arret", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Poste_Pion_INF_ArretCourt" } },
 
     create = function( self )
         self._namedParams = {}
@@ -53,9 +49,7 @@ include "bit.lua"
         self._namedParams.rDelaiPoste = self.params[2]
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
                 self.eAction = self.eAction or eActionEnCours
         if( ModuleBegins() ) then
             do
@@ -74,8 +68,7 @@ include "bit.lua"
                     do
                         DEC_Trace( "assert: rDelaiPoste == 0, arret court." )
                                                 self.params.__returnValue = eActionEffectuee
-                        Feedback( self.feedbacks["onHalt"], { "BEH_Poste_Pion_INF_ArretCourt" } )
-Halt( self )
+                        Halt( self )
                         do return end
 
                     end
@@ -83,7 +76,7 @@ Halt( self )
 ]]                end
 
                 if( bDebarquement ) then
-                    StartInstance( self, self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
+                    StartActivateOverride( self, self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
                 end
 
             end
@@ -97,8 +90,7 @@ Halt( self )
                                 do
                     DEC_Trace( "fin arret court" )
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Poste_Pion_INF_ArretCourt" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end
@@ -124,12 +116,8 @@ node "BEH_Obs_Pion_INF_RecoPoint_Copie"
 {
     activations =
     {
-        { "BEH_Obs_Pion_INF_RecoPoint", { "onHalt" } },
+        { "BEH_Obs_Pion_INF_RecoPoint", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Obs_Pion_INF_RecoPoint_Copie" } },
 
     create = function( self )
         self._namedParams = {}
@@ -146,8 +134,7 @@ node "BEH_Obs_Pion_INF_RecoPoint_Copie"
 
         if( self.eAction ~= eActionEnCours ) then
             self.params.__returnValue = self.eAction
-            Feedback( self.feedbacks["onHalt"], { "BEH_Obs_Pion_INF_RecoPoint_Copie" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -171,15 +158,11 @@ node "BEH_Obs_Pion_INF_RecoPoint"
 
     activations =
     {
-        { "BEH_Poste_Pion_INF_ArretCourt", { "onHalt" } },
-        { "ACT_RC", { "onHalt" } },
-        { "ACT_Obs_EtablirVisionVersPt", { "onHalt" } },
-        { "ACT_Obs_ReconnaitrePoint", { "onHalt" } },
+        { "BEH_Poste_Pion_INF_ArretCourt", {} },
+        { "ACT_RC", {} },
+        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "ACT_Obs_ReconnaitrePoint", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Obs_Pion_INF_RecoPoint" } },
 
     create = function( self )
         self._namedParams = {}
@@ -206,8 +189,7 @@ node "BEH_Obs_Pion_INF_RecoPoint"
 
         if( self.eActionArret == eActionEffectuee or self.eAction == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "BEH_Obs_Pion_INF_RecoPoint" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -239,14 +221,10 @@ node "BEH_Obs_Pion_INF_ReconnaitrePoint_Maintenu"
 --[[// pour eviter les oscilations
 ]]    activations =
     {
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "ACT_RC", { "onHalt" } },
-        { "ACT_Obs_ReconnaitrePoint", { "onHalt" } },
+        { "ACT_Info_Trace", {} },
+        { "ACT_RC", {} },
+        { "ACT_Obs_ReconnaitrePoint", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Obs_Pion_INF_ReconnaitrePoint_Maintenu" } },
 
     create = function( self )
         self._namedParams = {}
@@ -306,13 +284,9 @@ node "BEH_Obs_Pion_INF_EnReconnaissance"
 {
     activations =
     {
-        { "ACT_Misc_Pion_Ambiance", { "onHalt" } },
-        { "BEH_Obs_Pion_INF_RecoPoint", { "onHalt" } },
+        { "ACT_Misc_Pion_Ambiance", {} },
+        { "BEH_Obs_Pion_INF_RecoPoint", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Obs_Pion_INF_EnReconnaissance" } },
 
     create = function( self )
         self._namedParams = {}
@@ -341,8 +315,7 @@ node "BEH_Obs_Pion_INF_EnReconnaissance"
                 self.eActionReco = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Obs_Pion_INF_EnReconnaissance" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end
@@ -363,14 +336,10 @@ node "BEH_Obs_Pion_INF_SurveillerSecteur"
 {
     activations =
     {
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "ACT_Obs_SurveillerZone", { "onHalt" } },
-        { "ACT_Obs_ObserverZone", { "onHalt" } },
+        { "ACT_Info_Trace", {} },
+        { "ACT_Obs_SurveillerZone", {} },
+        { "ACT_Obs_ObserverZone", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Obs_Pion_INF_SurveillerSecteur" } },
 
     create = function( self )
         self._namedParams = {}
@@ -396,13 +365,9 @@ node "BEH_Delai_Pion_INF_PreparerMission"
 {
     activations =
     {
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_Misc_Delai", { "onHalt" } },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Misc_Delai", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Delai_Pion_INF_PreparerMission" } },
 
     create = function( self )
         self._namedParams = {}
@@ -421,8 +386,7 @@ node "BEH_Delai_Pion_INF_PreparerMission"
                                 do
                     SetStateVariable( "VE_PreparationMission", 0 )
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Delai_Pion_INF_PreparerMission" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end

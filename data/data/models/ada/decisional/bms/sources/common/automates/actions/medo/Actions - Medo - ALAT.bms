@@ -9,8 +9,6 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
 ]]--[[// -----------------------------------
 ]]node "ACT_Mission_Automate_ALAT_AssignerAllerAllerSeRecompleterA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_ALAT_AssignerAllerAllerSeRecompleterA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -75,8 +73,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// -------------------
 ]]node "ACT_Mission_Automate_ALAT_AssignerIMEXA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_ALAT_AssignerIMEXA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -145,8 +141,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// ----------------------------------------------------------------
 ]]node "ACT_Mission_Automate_ALAT_AssignerHeliporterPlotsRavitaillementA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_ALAT_AssignerHeliporterPlotsRavitaillementA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -215,8 +209,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// -------------------------
 ]]node "ACT_Mission_Automate_ALAT_AssignerHeliporterA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_ALAT_AssignerHeliporterA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -291,8 +283,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// -----------------------------
 ]]node "ACT_Mission_Automate_ALAT_AssignerHelitransporterA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_ALAT_AssignerHelitransporterA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -367,8 +357,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// --------------------------------------------
 ]]node "ACT_Mission_Automate_ALAT_AssignerReconnaitreContourEniA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_ALAT_AssignerReconnaitreContourEniA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -435,8 +423,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// ---------------------------------------------
 ]]node "ACT_Mission_Automate_ALAT_AssignerReconnaitreDansLaProfondeurA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_ALAT_AssignerReconnaitreDansLaProfondeurA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -507,8 +493,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// -----------------------
 ]]node "ACT_Mission_Automate_ALAT_AssignerJalonnerA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_ALAT_AssignerJalonnerA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -577,8 +561,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// -----------------------
 ]]node "ACT_Mission_Automate_ALAT_AssignerEclairerA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_ALAT_AssignerEclairerA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -645,8 +627,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// ----------------------
 ]]node "ACT_Mission_Automate_ALAT_AssignerFreinerA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_ALAT_AssignerFreinerA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -715,8 +695,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// -----------------------
 ]]node "ACT_Mission_Automate_ALAT_AssignerAttaquerA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_ALAT_AssignerAttaquerA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -785,8 +763,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// ---------------------------------------------
 ]]node "ACT_Mission_Automate_ALAT_AssignerAttaquerUneFormationAeromobileA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_ALAT_AssignerAttaquerUneFormationAeromobileA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -855,8 +831,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// ---------------------------------------------
 ]]node "ACT_Mission_Automate_ALAT_AssignerDetruireNeutraliserDansZoneA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_ALAT_AssignerDetruireNeutraliserDansZoneA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -931,8 +905,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// ----------------------------------------
 ]]node "ACT_Mission_Automate_ALAT_AssignerAppuyerDirectAuContactA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_ALAT_AssignerAppuyerDirectAuContactA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -1003,8 +975,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// -----------------------
 ]]node "ACT_Mission_Automate_ALAT_AssignerEscorterA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_ALAT_AssignerEscorterA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -1075,8 +1045,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// ----------------------
 ]]node "ACT_Mission_Automate_ALAT_AssignerCouvrirA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_ALAT_AssignerCouvrirA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]
@@ -1151,8 +1119,6 @@ elseif switch_1 == ePhase_CDT then
 ]]--[[// -------------------------
 ]]node "ACT_Mission_Automate_ALAT_AssignerSurveillerA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Mission_Automate_ALAT_AssignerSurveillerA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.ePhase = self.params[1]

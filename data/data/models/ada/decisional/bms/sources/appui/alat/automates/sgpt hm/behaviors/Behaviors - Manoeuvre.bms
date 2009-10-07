@@ -17,13 +17,9 @@ includedFiles["sources/appui/alat/automates/sgpt hm/behaviors/Behaviors - Manoeu
 {
     activations =
     {
-        { "ACT_Ordre_Automate_Pause", { "onHalt" } },
-        { "ACT_Ordre_Automate_Continue", { "onHalt" } },
+        { "ACT_Ordre_Automate_Pause", {} },
+        { "ACT_Ordre_Automate_Continue", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_ALAT_HM_SynchroniserTransport" } },
 
     create = function( self )
         self._namedParams = {}

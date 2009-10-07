@@ -30,13 +30,9 @@ includedFiles["sources/appui/nbc/automates/common/Coordination.bms"] = true
 {
     activations =
     {
-        { "ACT_Info_Automate_Trace", { "onHalt" } },
-        { "BEH_CoordDep_Automate_NBC_CoordonnerPEAvecSE_", { "onHalt" } },
+        { "ACT_Info_Automate_Trace", {} },
+        { "BEH_CoordDep_Automate_NBC_CoordonnerPEAvecSE_", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_CoordDep_Automate_NBC_AssurerLaCoordinationInterne_" } },
 
     create = function( self )
     end,
@@ -61,12 +57,8 @@ node "BEH_CoordDep_Automate_NBC_CoordonnerPEAvecSE_"
 {
     activations =
     {
-        { "BEH_CoordDep_Automate_NBC_ActiverCoordinnationSur", { "onHalt" } },
+        { "BEH_CoordDep_Automate_NBC_ActiverCoordinnationSur", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_CoordDep_Automate_NBC_CoordonnerPEAvecSE_" } },
 
     create = function( self )
     end,
@@ -103,13 +95,9 @@ node "BEH_CoordDep_Automate_NBC_ActiverCoordinnationSur"
 {
     activations =
     {
-        { "ACT_Info_Automate_Trace", { "onHalt" } },
-        { "ACT_Ordre_Automate_Ralentir", { "onHalt" } },
+        { "ACT_Info_Automate_Trace", {} },
+        { "ACT_Ordre_Automate_Ralentir", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_CoordDep_Automate_NBC_ActiverCoordinnationSur" } },
 
     create = function( self )
         self._namedParams = {}

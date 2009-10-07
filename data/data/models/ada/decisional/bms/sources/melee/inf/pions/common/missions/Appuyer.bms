@@ -39,16 +39,12 @@ node "BEH_Dep_Pion_INF_Appuyer"
 {
     activations =
     {
-        { "ACT_Misc_Pion_Ambiance", { "onHalt" } },
-        { "ACT_Dep_ModulationVitesse", { "onHalt" } },
-        { "BEH_Mot_Pion_Embarquer", { "onHalt" } },
-        { "BEH_Dep_Suivre_Elastique", { "onHalt" } },
-        { "BEH_Dep_Pion_INF_GererPhaseAppuyer", { "onHalt" } },
+        { "ACT_Misc_Pion_Ambiance", {} },
+        { "ACT_Dep_ModulationVitesse", {} },
+        { "BEH_Mot_Pion_Embarquer", {} },
+        { "BEH_Dep_Suivre_Elastique", {} },
+        { "BEH_Dep_Pion_INF_GererPhaseAppuyer", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_INF_Appuyer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -91,19 +87,15 @@ node "BEH_Dep_Pion_INF_GererPhaseAppuyer"
 {
     activations =
     {
-        { "ACT_Ordre_Pion_INF_AC_FaireRalentir", { "onHalt" } },
-        { "ACT_RC", { "onHalt" } },
-        { "ACT_Obs_EtablirVisionFaceADir", { "onHalt" } },
-        { "ACT_Dep_Pion_INF_Arret", { "onHalt" } },
-        { "ACT_Dep_PasserEnModeFurtif", { "onHalt" } },
-        { "BEH_Dep_Pion_INF_RejoindrePositionAppui", { "onHalt" } },
-        { "BEH_MOT_Pion_INF_Debarquer", { "onHalt" } },
-        { "ACT_Misc_UnitesEnAppui_EnPosition", { "onHalt" } },
+        { "ACT_Ordre_Pion_INF_AC_FaireRalentir", {} },
+        { "ACT_RC", {} },
+        { "ACT_Obs_EtablirVisionFaceADir", {} },
+        { "ACT_Dep_Pion_INF_Arret", {} },
+        { "ACT_Dep_PasserEnModeFurtif", {} },
+        { "BEH_Dep_Pion_INF_RejoindrePositionAppui", {} },
+        { "BEH_MOT_Pion_INF_Debarquer", {} },
+        { "ACT_Misc_UnitesEnAppui_EnPosition", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_INF_GererPhaseAppuyer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -127,8 +119,7 @@ node "BEH_Dep_Pion_INF_GererPhaseAppuyer"
                 end
 
                                 self.params.__returnValue = eActionImpossible
-                Feedback( self.feedbacks["onHalt"], { "BEH_Dep_Pion_INF_GererPhaseAppuyer" } )
-Halt( self )
+                Halt( self )
                 do return end
 
             end

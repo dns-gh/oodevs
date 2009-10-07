@@ -12,12 +12,8 @@ includedFiles["sources/appui/nbc/automates/common/missions/reconnaitreaxe/Reconn
 {
     activations =
     {
-        { "BEH_Mission_Automate_NBC_AssignerReconnaitreA", { "onHalt" } },
+        { "BEH_Mission_Automate_NBC_AssignerReconnaitreA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Medo_Automate_NBC_AssignerReconnaitreA" } },
 
     create = function( self )
         self._namedParams = {}

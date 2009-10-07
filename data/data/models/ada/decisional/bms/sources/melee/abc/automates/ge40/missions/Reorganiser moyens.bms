@@ -13,12 +13,8 @@ includedFiles["sources/melee/abc/automates/ge40/missions/Reorganiser moyens.bms"
 {
     activations =
     {
-        { "BEH_GTIA_TransfererMoyensOp", { "onHalt" } },
+        { "BEH_GTIA_TransfererMoyensOp", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_OrganiserMoyensVersPionsOp" } },
 
     create = function( self )
         self._namedParams = {}
@@ -55,12 +51,8 @@ node "BEH_GTIA_TransfererMoyensOp"
 {
     activations =
     {
-        { "ACT_GTIA_TransfererMoyensVers", { "onHalt" } },
+        { "ACT_GTIA_TransfererMoyensVers", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_TransfererMoyensOp" } },
 
     create = function( self )
         self._namedParams = {}
@@ -100,8 +92,6 @@ do
 
 node "ACT_GTIA_TransfererMoyensVers"
 {
-    feedbacks = { { { "onHalt" }, "ACT_GTIA_TransfererMoyensVers" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionSub = self.params[1]

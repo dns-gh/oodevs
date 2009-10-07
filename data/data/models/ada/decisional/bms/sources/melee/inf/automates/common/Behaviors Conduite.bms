@@ -41,14 +41,10 @@ include "Melee/Inf/Automates/Common/Behaviors CDT - Retrograde.bms"
 {
     activations =
     {
-        { "BEH_Situation_Automate_INF_FinDeMission", { "onHalt" } },
-        { "BEH_Situation_Automate_INF_Defaut", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_Gerer_UniteInconnues", { "onHalt" } },
+        { "BEH_Situation_Automate_INF_FinDeMission", {} },
+        { "BEH_Situation_Automate_INF_Defaut", {} },
+        { "BEH_Conduite_Automate_INF_Gerer_UniteInconnues", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_Defaut" } },
 
     create = function( self )
         self._namedParams = {}
@@ -60,8 +56,7 @@ include "Melee/Inf/Automates/Common/Behaviors CDT - Retrograde.bms"
         self.bMissionTerminee = self.bMissionTerminee or false
         if( self.bMissionTerminee ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "BEH_Conduite_Automate_INF_Defaut" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -84,8 +79,7 @@ Halt( self )
 ]]--[[// DEC_FinMission();
 ]]if( self._namedParams.bFinMission ) then
                     self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "BEH_Conduite_Automate_INF_Defaut" } )
-Halt( self )
+                    Halt( self )
                     do return end
                 end
 
@@ -110,12 +104,8 @@ node "BEH_Conduite_Automate_INF_Appuyer"
 {
     activations =
     {
-        { "BEH_CoordDep_Automate_INF_AvecAutomate", { "onHalt" } },
+        { "BEH_CoordDep_Automate_INF_AvecAutomate", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_Appuyer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -144,18 +134,14 @@ node "BEH_Conduite_Automate_INF_CadreOffensif"
 {
     activations =
     {
-        { "BEH_Dispositif_Automate_INF_GererLesPionsDetruits", { "onHalt" } },
-        { "BEH_Dispositif_Automate_INF_GererReleve", { "onHalt" } },
-        { "BEH_CoordDep_Automate_AvecPions", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_GererAppuis_INF", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_GererAppui_Mortier", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_GererAppuis_ABC", { "onHalt" } },
-        { "BEH_Situation_Automate_INF_CadreOffensif", { "onHalt" } },
+        { "BEH_Dispositif_Automate_INF_GererLesPionsDetruits", {} },
+        { "BEH_Dispositif_Automate_INF_GererReleve", {} },
+        { "BEH_CoordDep_Automate_AvecPions", {} },
+        { "BEH_Conduite_Automate_INF_GererAppuis_INF", {} },
+        { "BEH_Conduite_Automate_INF_GererAppui_Mortier", {} },
+        { "BEH_Conduite_Automate_INF_GererAppuis_ABC", {} },
+        { "BEH_Situation_Automate_INF_CadreOffensif", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_CadreOffensif" } },
 
     create = function( self )
     end,
@@ -202,17 +188,13 @@ node "BEH_Conduite_Automate_INF_CadreRetrograde"
 {
     activations =
     {
-        { "BEH_Dispositif_Automate_INF_GererLesPionsDetruits", { "onHalt" } },
-        { "BEH_Dispositif_Automate_INF_GererReleve", { "onHalt" } },
-        { "BEH_CoordDep_Automate_INF_Retrograde", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_GererAppuis_INF", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_GererAppui_Mortier", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_GererAppuis_ABC", { "onHalt" } },
+        { "BEH_Dispositif_Automate_INF_GererLesPionsDetruits", {} },
+        { "BEH_Dispositif_Automate_INF_GererReleve", {} },
+        { "BEH_CoordDep_Automate_INF_Retrograde", {} },
+        { "BEH_Conduite_Automate_INF_GererAppuis_INF", {} },
+        { "BEH_Conduite_Automate_INF_GererAppui_Mortier", {} },
+        { "BEH_Conduite_Automate_INF_GererAppuis_ABC", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_CadreRetrograde" } },
 
     create = function( self )
     end,
@@ -245,17 +227,13 @@ node "BEH_Conduite_Automate_INF_CadreStatique"
 {
     activations =
     {
-        { "BEH_Dispositif_Automate_INF_GererLesPionsDetruits", { "onHalt" } },
-        { "BEH_Dispositif_Automate_INF_GererReleve", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_GererAppuis_INF", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_GererAppui_Mortier", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_GererAppuis_ABC", { "onHalt" } },
-        { "BEH_Situation_Automate_INF_CadreDefensif_InstallerPC", { "onHalt" } },
+        { "BEH_Dispositif_Automate_INF_GererLesPionsDetruits", {} },
+        { "BEH_Dispositif_Automate_INF_GererReleve", {} },
+        { "BEH_Conduite_Automate_INF_GererAppuis_INF", {} },
+        { "BEH_Conduite_Automate_INF_GererAppui_Mortier", {} },
+        { "BEH_Conduite_Automate_INF_GererAppuis_ABC", {} },
+        { "BEH_Situation_Automate_INF_CadreDefensif_InstallerPC", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_CadreStatique" } },
 
     create = function( self )
     end,
@@ -287,12 +265,8 @@ node "BEH_CoordTir_Automate_INF_Intervention_LCAR"
 {
     activations =
     {
-        { "BEH_CoordTir_Automate_INF_EvalueActivite_Eni", { "onHalt" } },
+        { "BEH_CoordTir_Automate_INF_EvalueActivite_Eni", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_CoordTir_Automate_INF_Intervention_LCAR" } },
 
     create = function( self )
         self._namedParams = {}
@@ -363,8 +337,6 @@ do
 
 node "BEH_CoordTir_Automate_INF_EvalueActivite_Eni"
 {
-    feedbacks = { { { "onHalt" }, "BEH_CoordTir_Automate_INF_EvalueActivite_Eni" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pPion_Echelon = self.params[1]
@@ -391,12 +363,8 @@ node "BEH_Conduite_Automate_INF_Freiner_RompreContact"
 {
     activations =
     {
-        { "ACT_Ordre_Automate_Continue", { "onHalt" } },
+        { "ACT_Ordre_Automate_Continue", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Conduite_Automate_INF_Freiner_RompreContact" } },
 
     create = function( self )
     end,

@@ -14,20 +14,16 @@ include "bit.lua"
 {
     activations =
     {
-        { "BEH_Ordre_Inopine", { "onHalt" } },
-        { "BEH_Misc_Pion_DefinirTypeMission", { "onHalt" } },
-        { "BEH_MAJ_AgressiviteMission", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "ACT_Info_Trace", { "onHalt" } },
-        { "BEH_Mot_Pion_Embarquer", { "onHalt" } },
-        { "BEH_Dep_Pion_INF_GererDeboucher", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "onHalt" } },
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_Misc_Pion_DefinirTypeMission", {} },
+        { "BEH_MAJ_AgressiviteMission", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Info_Trace", {} },
+        { "BEH_Mot_Pion_Embarquer", {} },
+        { "BEH_Dep_Pion_INF_GererDeboucher", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Pion_INF_Semparer" } },
 
     create = function( self )
         self._namedParams = {}
@@ -58,8 +54,7 @@ include "bit.lua"
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "MIS_Pion_INF_Semparer" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -178,20 +173,14 @@ node "BEH_Dep_Pion_INF_GererDeboucher"
 {
     activations =
     {
-        { "BEH_Ordre_SePosterPourDeboucher", { "onHalt" } },
-        { "ACT_Points_Suppression", { "onHalt" } },
+        { "BEH_Ordre_SePosterPourDeboucher", {} },
+        { "ACT_Points_Suppression", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Dep_Pion_INF_GererDeboucher" } },
 
     create = function( self )
     end,
 
-    activate = ActivateWithStart,
-
-    internalactivate = function( self )
+    activate = function( self )
         --[[// Init
 ]]--[[//-----------------------------------------------------------------------------		
 ]]local listePointInterressant = DEC_GetCategory( "points_interressants" )
@@ -211,7 +200,7 @@ do
                                         local lima = DEC_GetLimaPoint( pointLima )
                                         if( not DEC_GetMissionLimaFlag( lima ) ) then
                                             --[[//=============================================================================
-]]StartInstance( self, self.activations.BEH_Ordre_SePosterPourDeboucher, 1, { lima, } )
+]]StartActivateOverride( self, self.activations.BEH_Ordre_SePosterPourDeboucher, 1, { lima, } )
                                         end
 
                                     end
@@ -242,13 +231,9 @@ node "BEH_Ordre_SePosterPourDeboucher"
 {
     activations =
     {
-        { "ACT_Dep_SePoster", { "onHalt" } },
-        { "ACT_Dep_PasserSurLima", { "onHalt" } },
+        { "ACT_Dep_SePoster", {} },
+        { "ACT_Dep_PasserSurLima", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Ordre_SePosterPourDeboucher" } },
 
     create = function( self )
         self._namedParams = {}
@@ -272,8 +257,7 @@ node "BEH_Ordre_SePosterPourDeboucher"
             do
                 DEC_SetMissionLimaFlagHoraire( self._namedParams.LimaLD, true )
                 DEC_SetMissionLimaFlag( self._namedParams.LimaLD, true )
-                                Feedback( self.feedbacks["onHalt"], { "BEH_Ordre_SePosterPourDeboucher" } )
-Halt( self )
+                                Halt( self )
                 do return end
 
             end
@@ -287,20 +271,16 @@ node "BEH_Mission_Pion_VAB_Semparer"
 {
     activations =
     {
-        { "BEH_Mot_Pion_Embarquer", { "onHalt" } },
-        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", { "onHalt" } },
-        { "BEH_Ordre_Pion_VAB_Semparer_Demande", { "onHalt" } },
-        { "ACT_MAJ_EtatPhaseMission", { "onHalt" } },
-        { "BEH_MOT_Pion_INF_Debarquer", { "onHalt" } },
-        { "BEH_Obs_Pion_INF_EnReconnaissance", { "onHalt" } },
-        { "ACT_Misc_Pion_Ambiance", { "onHalt" } },
-        { "BEH_Dep_ProgressionVers", { "onHalt" } },
-        { "ACT_Dep_Pion_INF_Arret", { "onHalt" } },
+        { "BEH_Mot_Pion_Embarquer", {} },
+        { "BEH_Dep_Pion_INF_MiseEnPlace_Mission", {} },
+        { "BEH_Ordre_Pion_VAB_Semparer_Demande", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_MOT_Pion_INF_Debarquer", {} },
+        { "BEH_Obs_Pion_INF_EnReconnaissance", {} },
+        { "ACT_Misc_Pion_Ambiance", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Dep_Pion_INF_Arret", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Mission_Pion_VAB_Semparer" } },
 
     create = function( self )
     end,
@@ -360,8 +340,7 @@ elseif switch_1 == eObserver then
                             --[[// Normalement, on est sur la position
 ]]DEC_Trace( "Patrouille accrochee" )
                                                         self.params.__returnValue = eActionHalt
-                            Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_VAB_Semparer" } )
-Halt( self )
+                            Halt( self )
                             do return end
 
                         end
@@ -454,8 +433,7 @@ elseif switch_1 == eFouiller then
                             self.eAction = eActionEnCours
                                                         do
                                                                 self.params.__returnValue = eFinMission
-                                Feedback( self.feedbacks["onHalt"], { "BEH_Mission_Pion_VAB_Semparer" } )
-Halt( self )
+                                Halt( self )
                                 do return end
 
                             end
@@ -483,16 +461,12 @@ node "BEH_Eni_Pion_VAB_Semparer"
 {
     activations =
     {
-        { "ACT_RC_SurEni", { "onHalt" } },
-        { "ACT_MAJ_EtatSituationEni", { "onHalt" } },
-        { "BEH_Eni_Pion_VAB_PreparerEngagement", { "onHalt" } },
-        { "BEH_Eni_Pion_VAB_ManoeuvreDetruire", { "onHalt" } },
-        { "BEH_Dep_Pion_INF_GererDispositif_Offensif", { "onHalt" } },
+        { "ACT_RC_SurEni", {} },
+        { "ACT_MAJ_EtatSituationEni", {} },
+        { "BEH_Eni_Pion_VAB_PreparerEngagement", {} },
+        { "BEH_Eni_Pion_VAB_ManoeuvreDetruire", {} },
+        { "BEH_Dep_Pion_INF_GererDispositif_Offensif", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_VAB_Semparer" } },
 
     create = function( self )
     end,
@@ -556,13 +530,9 @@ node "BEH_Ordre_Pion_VAB_Semparer_Demande"
 {
     activations =
     {
-        { "ACT_RC", { "onHalt" } },
-        { "BEH_Ordre_SePoster_EnAttente", { "onHalt" } },
+        { "ACT_RC", {} },
+        { "BEH_Ordre_SePoster_EnAttente", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Ordre_Pion_VAB_Semparer_Demande" } },
 
     create = function( self )
     end,
@@ -571,8 +541,7 @@ node "BEH_Ordre_Pion_VAB_Semparer_Demande"
                 self.eOrdre = self.eOrdre or eActionEnCours
         if( self.eOrdre == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
-            Feedback( self.feedbacks["onHalt"], { "BEH_Ordre_Pion_VAB_Semparer_Demande" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -586,15 +555,11 @@ node "BEH_Eni_Pion_VAB_PreparerEngagement"
 {
     activations =
     {
-        { "ACT_MAJ_EnnemiEnCours", { "onHalt" } },
-        { "ACT_Obs_EtablirVisionVersPt", { "onHalt" } },
-        { "ACT_Misc_Pion_Ambiance", { "onHalt" } },
-        { "ACT_Dep_SePosterFaceA", { "onHalt" } },
+        { "ACT_MAJ_EnnemiEnCours", {} },
+        { "ACT_Obs_EtablirVisionVersPt", {} },
+        { "ACT_Misc_Pion_Ambiance", {} },
+        { "ACT_Dep_SePosterFaceA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_Eni_Pion_VAB_PreparerEngagement" } },
 
     create = function( self )
         self._namedParams = {}

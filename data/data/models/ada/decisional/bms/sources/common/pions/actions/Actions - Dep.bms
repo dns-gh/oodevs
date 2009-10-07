@@ -15,8 +15,6 @@ include "bit.lua"
     actuators = F_DEPLACEMENT_ACTUATEURS()
 ,
 
-    feedbacks = { { { "onHalt" }, "ACT_Dep_SeDeplacer" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.it = self.params[1]
@@ -67,8 +65,7 @@ elseif switch_1 == eEtatActionDeplacement_ManqueCarburant then
 elseif switch_1 == eEtatActionDeplacement_Termine then
                     self.actionDeplacement = DEC_StopAction( self.actionDeplacement )
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "ACT_Dep_SeDeplacer" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                     
@@ -130,8 +127,6 @@ elseif switch_1 == eEtatActionDeplacement_DejaEnDeplacement then
         vitesse = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Dep_ModulationVitesse" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.rModulation = self.params[1]
@@ -159,8 +154,6 @@ elseif switch_1 == eEtatActionDeplacement_DejaEnDeplacement then
     {
         vitesse = 1,
     },
-
-    feedbacks = { { { "onHalt" }, "ACT_Dep_ModulationVitesseCourante" } },
 
     create = function( self )
         self._namedParams = {}
@@ -190,8 +183,6 @@ elseif switch_1 == eEtatActionDeplacement_DejaEnDeplacement then
         deplacement = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Dep_SePoster" } },
-
     create = function( self )
     end,
 
@@ -212,8 +203,6 @@ elseif switch_1 == eEtatActionDeplacement_DejaEnDeplacement then
     {
         deplacement = 1,
     },
-
-    feedbacks = { { { "onHalt" }, "ACT_Dep_SePosterFaceADir" } },
 
     create = function( self )
         self._namedParams = {}
@@ -250,8 +239,6 @@ elseif switch_1 == eEtatActionDeplacement_DejaEnDeplacement then
         deplacement = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Dep_SePosterFaceA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.repEni = self.params[1]
@@ -260,8 +247,7 @@ elseif switch_1 == eEtatActionDeplacement_DejaEnDeplacement then
     select = function( self )
                 self.bInit = self.bInit or false
         if( not DEC_ConnaissanceAgent_EstValide( self._namedParams.repEni ) ) then
-            Feedback( self.feedbacks["onHalt"], { "ACT_Dep_SePosterFaceA" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 
@@ -289,8 +275,6 @@ Halt( self )
 ]]--[[// *****************************************************************************
 ]]node "ACT_Dep_PasserEnModeFurtif"
 {
-    feedbacks = { { { "onHalt" }, "ACT_Dep_PasserEnModeFurtif" } },
-
     create = function( self )
     end,
 
@@ -328,8 +312,6 @@ Halt( self )
         etat_Lima = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Dep_PasserSurLima" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.eEtatLima = self.params[1]
@@ -362,8 +344,6 @@ Halt( self )
         deplacement = 1,
     },
 
-    feedbacks = { { { "onHalt" }, "ACT_Dep_SePosterFaceAObstacle" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.repObj = self.params[1]
@@ -374,8 +354,7 @@ Halt( self )
 ]]--[[// Conditions de terminaison
 ]]--[[//-----------------------------------------------------------------------------
 ]]        if( DEC_ConnaissanceObjet_EstContourne( self._namedParams.repObj ) == eTristate_True ) then
-            Feedback( self.feedbacks["onHalt"], { "ACT_Dep_SePosterFaceAObstacle" } )
-Halt( self )
+            Halt( self )
             do return end
         end
 

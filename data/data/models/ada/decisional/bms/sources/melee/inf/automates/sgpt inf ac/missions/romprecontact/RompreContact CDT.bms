@@ -16,13 +16,9 @@ node "MIS_Automate_CDT_INF_RompreContact"
 {
     activations =
     {
-        { "BEH_Conduite_Automate_INF_Defaut", { "onHalt" } },
-        { "BEH_Conduite_Automate_INF_RompreContact", { "onHalt" } },
+        { "BEH_Conduite_Automate_INF_Defaut", {} },
+        { "BEH_Conduite_Automate_INF_RompreContact", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_INF_RompreContact" } },
 
     create = function( self )
         self._namedParams = {}
@@ -49,8 +45,7 @@ node "MIS_Automate_CDT_INF_RompreContact"
                 self.eActionMission = eActionEnCours
                                 do
                                         self.params.__returnValue = eActionEffectuee
-                    Feedback( self.feedbacks["onHalt"], { "MIS_Automate_CDT_INF_RompreContact" } )
-Halt( self )
+                    Halt( self )
                     do return end
 
                 end

@@ -24,12 +24,8 @@ includedFiles["sources/melee/abc/automates/esc amx-erc/missions/flancgarder/Flan
 {
     activations =
     {
-        { "BEH_Conduite_Automate_ABC_FlancGarder", { "onHalt" } },
+        { "BEH_Conduite_Automate_ABC_FlancGarder", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_FlancGarder" } },
 
     create = function( self )
         self._namedParams = {}

@@ -15,19 +15,15 @@ include "bit.lua"
 {
     activations =
     {
-        { "ACT_GTIA_AnalyserSituationPourControler", { "onHalt" } },
-        { "BEH_GTIA_OrganiserLesMoyensPourControler", { "onHalt" } },
-        { "BEH_GTIA_RendreCompte", { "onHalt" } },
-        { "BEH_GTIA_EchelonnerDispositif", { "onHalt" } },
-        { "BEH_GTIA_RepartirDansZone", { "onHalt" } },
-        { "BEH_GTIA_RepartirPionsDansFuseauPourControler", { "onHalt" } },
-        { "BEH_GTIA_GererAppuisInternesPourSurete", { "onHalt" } },
-        { "BEH_GTIA_AssignerLesOrdresPourSurete", { "onHalt" } },
+        { "ACT_GTIA_AnalyserSituationPourControler", {} },
+        { "BEH_GTIA_OrganiserLesMoyensPourControler", {} },
+        { "BEH_GTIA_RendreCompte", {} },
+        { "BEH_GTIA_EchelonnerDispositif", {} },
+        { "BEH_GTIA_RepartirDansZone", {} },
+        { "BEH_GTIA_RepartirPionsDansFuseauPourControler", {} },
+        { "BEH_GTIA_GererAppuisInternesPourSurete", {} },
+        { "BEH_GTIA_AssignerLesOrdresPourSurete", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "MIS_Automate_CDT_ABC_GTIA_Controler" } },
 
     create = function( self )
         self._namedParams = {}
@@ -90,12 +86,8 @@ node "BEH_GTIA_RepartirPionsDansFuseauPourControler"
 {
     activations =
     {
-        { "ACT_GTIA_AssignerFuseau", { "onHalt" } },
+        { "ACT_GTIA_AssignerFuseau", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_RepartirPionsDansFuseauPourControler" } },
 
     create = function( self )
         self._namedParams = {}
@@ -133,12 +125,8 @@ node "BEH_GTIA_OrganiserLesMoyensPourControler"
 {
     activations =
     {
-        { "BEH_GTIA_OrganiserMoyensVersPionsOp", { "onHalt" } },
+        { "BEH_GTIA_OrganiserMoyensVersPionsOp", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_OrganiserLesMoyensPourControler" } },
 
     create = function( self )
     end,
@@ -158,8 +146,6 @@ node "BEH_GTIA_OrganiserLesMoyensPourControler"
 
 node "ACT_GTIA_AnalyserSituationPourControler"
 {
-    feedbacks = { { { "onHalt" }, "ACT_GTIA_AnalyserSituationPourControler" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.zone = self.params[1]
@@ -191,12 +177,8 @@ node "ACT_GTIA_AnalyserSituationPourControler"
 {
     activations =
     {
-        { "BEH_GTIA_AssignerLesMissionsSurete", { "onHalt" } },
+        { "BEH_GTIA_AssignerLesMissionsSurete", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssignerLesOrdresPourSurete" } },
 
     create = function( self )
         self._namedParams = {}
@@ -220,15 +202,11 @@ node "BEH_GTIA_AssignerLesMissionsSurete"
 {
     activations =
     {
-        { "BEH_GTIA_AssignerMissionsSuretePEcl", { "onHalt" } },
-        { "BEH_GTIA_AssignerMissionsSuretePE", { "onHalt" } },
-        { "BEH_GTIA_AssignerMissionsSureteSE", { "onHalt" } },
-        { "BEH_GTIA_AssignerMissionsSureteSEAppui", { "onHalt" } },
+        { "BEH_GTIA_AssignerMissionsSuretePEcl", {} },
+        { "BEH_GTIA_AssignerMissionsSuretePE", {} },
+        { "BEH_GTIA_AssignerMissionsSureteSE", {} },
+        { "BEH_GTIA_AssignerMissionsSureteSEAppui", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssignerLesMissionsSurete" } },
 
     create = function( self )
         self._namedParams = {}
@@ -256,12 +234,8 @@ node "BEH_GTIA_AssignerMissionsSuretePEcl"
 {
     activations =
     {
-        { "BEH_GTIA_AssignerMissionSureteMeleeA", { "onHalt" } },
+        { "BEH_GTIA_AssignerMissionSureteMeleeA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssignerMissionsSuretePEcl" } },
 
     create = function( self )
         self._namedParams = {}
@@ -289,12 +263,8 @@ node "BEH_GTIA_AssignerMissionsSuretePE"
 {
     activations =
     {
-        { "BEH_GTIA_AssignerMissionSureteMeleeA", { "onHalt" } },
+        { "BEH_GTIA_AssignerMissionSureteMeleeA", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssignerMissionsSuretePE" } },
 
     create = function( self )
         self._namedParams = {}
@@ -330,13 +300,9 @@ node "BEH_GTIA_AssignerMissionsSureteSE"
 {
     activations =
     {
-        { "BEH_GTIA_AssignerMissionSureteMeleeA", { "onHalt" } },
-        { "BEH_GTIA_AssignerMissionsFaireMouvementPC", { "onHalt" } },
+        { "BEH_GTIA_AssignerMissionSureteMeleeA", {} },
+        { "BEH_GTIA_AssignerMissionsFaireMouvementPC", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssignerMissionsSureteSE" } },
 
     create = function( self )
         self._namedParams = {}
@@ -375,12 +341,8 @@ node "BEH_GTIA_AssignerMissionSureteMeleeA"
 {
     activations =
     {
-        { "ACT_GTIA_AssignerMissionSurete", { "onHalt" } },
+        { "ACT_GTIA_AssignerMissionSurete", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssignerMissionSureteMeleeA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -404,14 +366,10 @@ node "BEH_GTIA_AssignerMissionsSureteSEAppui"
 {
     activations =
     {
-        { "BEH_GTIA_AssignerMissionSureteLogA", { "onHalt" } },
-        { "BEH_GTIA_AssignerMissionSureteGenieA", { "onHalt" } },
-        { "BEH_GTIA_AssignerMissionART", { "onHalt" } },
+        { "BEH_GTIA_AssignerMissionSureteLogA", {} },
+        { "BEH_GTIA_AssignerMissionSureteGenieA", {} },
+        { "BEH_GTIA_AssignerMissionART", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssignerMissionsSureteSEAppui" } },
 
     create = function( self )
         self._namedParams = {}
@@ -456,12 +414,8 @@ node "BEH_GTIA_AssignerMissionSureteLogA"
 {
     activations =
     {
-        { "ACT_GTIA_AssignerMissionSureteDeployerTC2", { "onHalt" } },
+        { "ACT_GTIA_AssignerMissionSureteDeployerTC2", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssignerMissionSureteLogA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -487,13 +441,9 @@ node "BEH_GTIA_AssignerMissionSureteGenieA"
 {
     activations =
     {
-        { "ACT_GTIA_AssignerMissionSureteRealiserTravauxA", { "onHalt" } },
-        { "ACT_GTIA_AssignerMissionSurete", { "onHalt" } },
+        { "ACT_GTIA_AssignerMissionSureteRealiserTravauxA", {} },
+        { "ACT_GTIA_AssignerMissionSurete", {} },
     },
-
-    onHalt = OnHalt,
-
-    feedbacks = { { { "onHalt" }, "BEH_GTIA_AssignerMissionSureteGenieA" } },
 
     create = function( self )
         self._namedParams = {}
@@ -521,8 +471,6 @@ node "BEH_GTIA_AssignerMissionSureteGenieA"
 
 node "ACT_GTIA_AssignerMissionSurete"
 {
-    feedbacks = { { { "onHalt" }, "ACT_GTIA_AssignerMissionSurete" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
@@ -603,8 +551,6 @@ elseif switch_1 == "T_Mission_Automate_INF_Controler" then
 ]]--[[// *****************************************************************************
 ]]node "ACT_GTIA_AssignerMissionSureteRealiserTravauxA"
 {
-    feedbacks = { { { "onHalt" }, "ACT_GTIA_AssignerMissionSureteRealiserTravauxA" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pionGenie = self.params[1]
@@ -638,8 +584,6 @@ elseif switch_1 == "T_Mission_Automate_INF_Controler" then
 ]]--[[// *****************************************************************************
 ]]node "ACT_GTIA_AssignerMissionSureteDeployerTC2"
 {
-    feedbacks = { { { "onHalt" }, "ACT_GTIA_AssignerMissionSureteDeployerTC2" } },
-
     create = function( self )
         self._namedParams = {}
         self._namedParams.pion = self.params[1]
