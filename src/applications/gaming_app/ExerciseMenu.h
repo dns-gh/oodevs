@@ -43,7 +43,7 @@ namespace tools
 // Created: SBO 2008-08-27
 // =============================================================================
 class ExerciseMenu : public QPopupMenu
-                   , public kernel::Observer_ABC
+                   , public tools::Observer_ABC
                    , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
                    , public kernel::ElementObserver_ABC< kernel::ModelUnLoaded >
 {

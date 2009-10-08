@@ -36,7 +36,7 @@ class RcEntityResolver : public QObject
                        , public tools::Resolver< kernel::ObjectKnowledge_ABC >
                        , public tools::Resolver< kernel::AgentKnowledge_ABC >
                        , public tools::Resolver< kernel::PopulationKnowledge_ABC >
-                       , public kernel::Observer_ABC
+                       , public tools::Observer_ABC
                        , public kernel::ElementObserver_ABC< kernel::Agent_ABC >
                        , public kernel::ElementObserver_ABC< kernel::ObjectKnowledge_ABC >
                        , public kernel::ElementObserver_ABC< kernel::AgentKnowledge_ABC >

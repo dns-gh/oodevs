@@ -33,7 +33,7 @@ namespace gui
 // Created: SBO 2007-01-03
 // =============================================================================
 class LightingPanel : public PreferencePanel_ABC
-                    , public kernel::Observer_ABC
+                    , public tools::Observer_ABC
                     , public kernel::OptionsObserver_ABC
 {
     Q_OBJECT

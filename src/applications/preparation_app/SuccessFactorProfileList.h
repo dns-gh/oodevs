@@ -27,7 +27,7 @@ class UserProfile;
 // Created: SBO 2009-06-15
 // =============================================================================
 class SuccessFactorProfileList : public QListBox
-                               , public kernel::Observer_ABC
+                               , public tools::Observer_ABC
                                , public kernel::ElementObserver_ABC< UserProfile >
 {
 

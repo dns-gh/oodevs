@@ -39,7 +39,7 @@ class Publisher_ABC;
 // Created: SBO 2007-05-04
 // =============================================================================
 class PopulationMagicOrdersInterface : public QObject
-                                     , public kernel::Observer_ABC
+                                     , public tools::Observer_ABC
                                      , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
                                      , public gui::ShapeHandler_ABC
                                      , private kernel::LocationVisitor_ABC

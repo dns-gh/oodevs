@@ -30,7 +30,7 @@ namespace gui
 // Created: APE 2004-07-09
 // =============================================================================
 class OptionsPanel : public PreferencePanel_ABC
-                   , public kernel::Observer_ABC
+                   , public tools::Observer_ABC
                    , public kernel::OptionsObserver_ABC
 {
     Q_OBJECT;

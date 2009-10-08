@@ -30,7 +30,7 @@ namespace actions {
 // =============================================================================
 template< typename ConcreteEntity >
 class Entity : public Parameter< const ConcreteEntity* >
-             , public kernel::Observer_ABC
+             , public tools::Observer_ABC
              , public kernel::ElementObserver_ABC< ConcreteEntity >
 {
 

@@ -36,7 +36,7 @@ class PopulationTypesListView;
 // Created: SBO 2006-11-09
 // =============================================================================
 class PopulationsPanel : public gui::InfoPanel_ABC
-                       , public kernel::Observer_ABC
+                       , public tools::Observer_ABC
                        , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
 {
 

@@ -43,7 +43,7 @@ namespace gui
 // Created: AGE 2007-03-09
 // =============================================================================
 class GlSelector : public QObject
-                 , public kernel::Observer_ABC
+                 , public tools::Observer_ABC
                  , public kernel::OptionsObserver_ABC
 {
     Q_OBJECT;

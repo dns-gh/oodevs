@@ -32,7 +32,7 @@ namespace gui
 // Created: AGE 2007-01-04
 // =============================================================================
 class RasterLayer : public Layer2d_ABC
-                  , public kernel::Observer_ABC
+                  , public tools::Observer_ABC
                   , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
                   , private kernel::WorldParameters
 {

@@ -26,7 +26,7 @@ namespace gui
 // =============================================================================
 template< typename Entity >
 class EntitySearchBox : public EntitySearchBox_ABC
-                      , public kernel::Observer_ABC
+                      , public tools::Observer_ABC
                       , public kernel::ElementObserver_ABC< Entity >
 {
 public:

@@ -33,7 +33,7 @@ namespace gui
 // =============================================================================
 class PropertiesWidget : public QWidget
                        , public kernel::Displayer_ABC
-                       , public kernel::Observer_ABC
+                       , public tools::Observer_ABC
                        , public kernel::ElementObserver_ABC< kernel::DictionaryUpdated >
 {
     Q_OBJECT;

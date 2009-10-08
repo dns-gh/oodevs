@@ -31,7 +31,7 @@ class Simulation;
 // Created: SBO 2007-07-13
 // =============================================================================
 class ActionsScheduler : public QObject // $$$$ AGE 2008-05-19: why ?
-                       , public kernel::Observer_ABC
+                       , public tools::Observer_ABC
                        , public kernel::ElementObserver_ABC< Simulation::sStartTick >
 {
 

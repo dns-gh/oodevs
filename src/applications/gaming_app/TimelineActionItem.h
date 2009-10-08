@@ -41,7 +41,7 @@ class TimelineRuler;
 // =============================================================================
 class TimelineActionItem : public QObject
                          , public TimelineItem_ABC
-                         , public kernel::Observer_ABC
+                         , public tools::Observer_ABC
                          , public kernel::ElementObserver_ABC< ActionTiming >
 {
     Q_OBJECT;

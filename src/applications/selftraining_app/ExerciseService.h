@@ -42,7 +42,7 @@ class Config;
 */
 // Created: LDC 2008-10-23
 // =============================================================================
-class ExerciseService : public kernel::Observer_ABC
+class ExerciseService : public tools::Observer_ABC
                       , public kernel::ElementObserver_ABC< boost::shared_ptr< frontend::Process_ABC > >
 {
 

@@ -44,7 +44,7 @@ namespace gui
 // Created: APE 2004-06-11
 // =============================================================================
 class ObjectPanel : public InfoPanel_ABC
-                  , public kernel::Observer_ABC
+                  , public tools::Observer_ABC
                   , public kernel::ElementObserver_ABC< kernel::Object_ABC >
                   , public kernel::ElementObserver_ABC< kernel::ConstructionAttribute_ABC >
                   , public kernel::ElementObserver_ABC< kernel::MineAttribute_ABC >

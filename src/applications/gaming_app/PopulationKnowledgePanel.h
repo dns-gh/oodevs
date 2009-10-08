@@ -42,7 +42,7 @@ class PopulationConcentrationKnowledge;
 // Created: SBO 2005-10-19
 // =============================================================================
 class PopulationKnowledgePanel : public gui::InfoPanel_ABC
-                               , public kernel::Observer_ABC
+                               , public tools::Observer_ABC
                                , public KnowledgeGroupSelectionObserver
                                , public kernel::ElementObserver_ABC< PopulationKnowledges >
                                , public kernel::ElementObserver_ABC< kernel::PopulationKnowledge_ABC >

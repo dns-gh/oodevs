@@ -64,7 +64,7 @@ class MapLayer_ABC;
 // Created: APE 2004-03-01
 // =============================================================================
 class MainWindow : public QMainWindow
-                 , public kernel::Observer_ABC
+                 , public tools::Observer_ABC
                  , public kernel::ControllerObserver_ABC
 {
     Q_OBJECT;

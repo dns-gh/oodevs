@@ -35,7 +35,7 @@ namespace gui
 // =============================================================================
 class LocationEditorToolbar : public QToolBar
                             , public LocationEditor_ABC
-                            , public kernel::Observer_ABC
+                            , public tools::Observer_ABC
                             , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
 {
     Q_OBJECT;

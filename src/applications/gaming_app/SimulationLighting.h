@@ -29,7 +29,7 @@ class Simulation;
 // =============================================================================
 class SimulationLighting : public gui::LightingProxy
                          , private kernel::WorldParameters
-                         , public kernel::Observer_ABC
+                         , public tools::Observer_ABC
                          , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
                          , public kernel::ElementObserver_ABC< Simulation >
 {

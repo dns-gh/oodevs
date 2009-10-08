@@ -35,7 +35,7 @@ namespace gui
 // Created: SBO 2008-04-14
 // =============================================================================
 class CompositionPass : public GlRenderPass_ABC
-                      , public kernel::Observer_ABC
+                      , public tools::Observer_ABC
                       , public kernel::OptionsObserver_ABC
 {
 

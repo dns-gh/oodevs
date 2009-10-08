@@ -32,7 +32,7 @@ namespace gui
 // Created: SBO 2007-02-22
 // =============================================================================
 class InfoSubordinateItem : public QIconViewItem
-                          , public kernel::Observer_ABC
+                          , public tools::Observer_ABC
                           , public kernel::ElementObserver_ABC< kernel::Attributes_ABC >
 {
 

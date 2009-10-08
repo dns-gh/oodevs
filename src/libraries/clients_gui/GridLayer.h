@@ -11,7 +11,7 @@
 #define __GridLayer_h_
 
 #include "Layer_ABC.h"
-#include "clients_kernel/Observer_ABC.h"
+#include "tools/Observer_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 
 namespace kernel
@@ -30,7 +30,7 @@ namespace gui
 // Created: AGE 2006-08-22
 // =============================================================================
 class GridLayer : public gui::Layer2d_ABC
-                , public kernel::Observer_ABC
+                , public tools::Observer_ABC
                 , public kernel::OptionsObserver_ABC
 {
 

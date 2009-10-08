@@ -36,7 +36,7 @@ namespace gui
 // Created: HME 2005-10-03
 // =============================================================================
 class PopulationPanel : public InfoPanel_ABC
-                      , public kernel::Observer_ABC
+                      , public tools::Observer_ABC
                       , public kernel::SelectionObserver< kernel::Population_ABC >
                       , public kernel::ElementObserver_ABC< kernel::Population_ABC >
 {

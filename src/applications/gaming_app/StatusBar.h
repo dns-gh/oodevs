@@ -26,7 +26,7 @@ namespace kernel
 // Created: SBO 2006-08-22
 // =============================================================================
 class StatusBar : public gui::StatusBar
-                , public kernel::Observer_ABC
+                , public tools::Observer_ABC
                 , public kernel::ElementObserver_ABC< Simulation >
                 , public kernel::ElementObserver_ABC< Simulation::sStartTick >
                 , public kernel::ElementObserver_ABC< Simulation::sEndTick >

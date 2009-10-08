@@ -23,7 +23,7 @@ namespace kernel
 // Created: AGE 2006-04-20
 // =============================================================================
 template< typename T >
-class SafePointer : public Observer_ABC
+class SafePointer : public tools::Observer_ABC
                   , public ElementObserver_ABC< T >
 {
 

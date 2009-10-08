@@ -10,7 +10,7 @@
 #ifndef __AlarmsWidget_h_
 #define __AlarmsWidget_h_
 
-#include "clients_kernel/Observer_ABC.h"
+#include "tools/Observer_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 
 namespace kernel
@@ -27,7 +27,7 @@ class Simulation;
 // Created: AGE 2007-05-07
 // =============================================================================
 class AlarmsWidget : public QDialog
-                   , public kernel::Observer_ABC
+                   , public tools::Observer_ABC
                    , public kernel::ElementObserver_ABC< Simulation >
 {
     Q_OBJECT;

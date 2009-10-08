@@ -11,7 +11,7 @@
 #define __ActionController_h_
 
 #include "tools/SortedInterfaceContainer.h"
-#include "Observer_ABC.h"
+#include "tools/Observer_ABC.h"
 #include "SelectionObserver_ABC.h"
 #include "ActivationObserver_ABC.h"
 #include "ContextMenu.h"
@@ -26,7 +26,7 @@ namespace kernel
 */
 // Created: AGE 2006-02-16
 // =============================================================================
-class ActionController : private tools::SortedInterfaceContainer< Observer_ABC >
+class ActionController : private tools::SortedInterfaceContainer< tools::Observer_ABC >
 {
 
 public:
@@ -38,8 +38,8 @@ public:
 
     //! @name Operations
     //@{
-    void Register  ( Observer_ABC& observer );
-    void Unregister( Observer_ABC& observer );
+    void Register  ( tools::Observer_ABC& observer );
+    void Unregister( tools::Observer_ABC& observer );
     //@}
 
     //! @name Operations

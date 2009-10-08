@@ -13,7 +13,7 @@
 #include "Layer_ABC.h"
 #include "graphics/ElevationColor_ABC.h"
 #include "graphics/ViewFrustum.h"
-#include "clients_kernel/Observer_ABC.h"
+#include "tools/Observer_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/WorldParameters.h"
 
@@ -45,7 +45,7 @@ namespace gui
 // =============================================================================
 class Elevation3dLayer : private kernel::WorldParameters
                        , public Layer3d_ABC
-                       , public kernel::Observer_ABC
+                       , public tools::Observer_ABC
                        , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
 
 {

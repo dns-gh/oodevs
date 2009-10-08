@@ -28,7 +28,7 @@ class IndicatorPlotFactory;
 // Created: AGE 2007-09-25
 // =============================================================================
 class AfterActionRequestList : public QVBox
-                             , public kernel::Observer_ABC
+                             , public tools::Observer_ABC
                              , public kernel::ElementObserver_ABC< IndicatorRequest > 
 {
     Q_OBJECT;

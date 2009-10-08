@@ -32,7 +32,7 @@ namespace gui
 // Created: AGE 2006-03-17
 // =============================================================================
 class ColorStrategy : public ColorStrategy_ABC
-                    , public kernel::Observer_ABC
+                    , public tools::Observer_ABC
                     , public kernel::ElementObserver_ABC< kernel::Team_ABC >
 {
 

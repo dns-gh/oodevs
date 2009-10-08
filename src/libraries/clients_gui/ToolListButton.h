@@ -12,7 +12,7 @@
 
 #include <qtoolbutton.h>
 #include "clients_kernel/Options.h"
-#include "clients_kernel/Observer_ABC.h"
+#include "tools/Observer_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "OptionMenu.h"
 
@@ -83,7 +83,7 @@ private:
 // Created: AGE 2006-03-27
 // =============================================================================
 template< typename T >
-class ToolListButton : public ToolListButtonBase, public kernel::Observer_ABC, public kernel::OptionsObserver_ABC
+class ToolListButton : public ToolListButtonBase, public tools::Observer_ABC, public kernel::OptionsObserver_ABC
 {
 
 public:

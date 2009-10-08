@@ -29,7 +29,7 @@ class StatisticsWidget;
 // Created: SBO 2007-01-04
 // =============================================================================
 class ProfilingPanel : public QTabWidget
-                     , public kernel::Observer_ABC
+                     , public tools::Observer_ABC
                      , public kernel::ElementObserver_ABC< Simulation::sEndTick >
 {
 

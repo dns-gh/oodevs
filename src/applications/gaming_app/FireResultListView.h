@@ -11,7 +11,7 @@
 #define __FireResultListView_h_
 
 #include "clients_gui/ListDisplayer.h"
-#include "clients_kernel/Observer_ABC.h"
+#include "tools/Observer_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 
@@ -38,7 +38,7 @@ class Casualties;
 // Created: AGE 2006-03-10
 // =============================================================================
 class FireResultListView : public gui::ListDisplayer< FireResultListView >
-                         , public kernel::Observer_ABC
+                         , public tools::Observer_ABC
                          , public kernel::SelectionObserver< kernel::Entity_ABC >
                          , public kernel::ElementObserver_ABC< Explosions >
 {

@@ -34,16 +34,16 @@ Controller::~Controller()
 // Name: Controller::Register
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Controller::Register( Observer_ABC& observer )
+void Controller::Register( tools::Observer_ABC& observer )
 {
-    tools::SortedInterfaceContainer< Observer_ABC >::Register( observer );
+    tools::SortedInterfaceContainer< tools::Observer_ABC >::Register( observer );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::Unregister
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Controller::Unregister( Observer_ABC& observer )
+void Controller::Unregister( tools::Observer_ABC& observer )
 {
-    tools::SortedInterfaceContainer< Observer_ABC >::Unregister( observer );
+    tools::SortedInterfaceContainer< tools::Observer_ABC >::Unregister( observer );
 }

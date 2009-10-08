@@ -41,7 +41,7 @@ class Network;
 // Created: SBO 2006-04-28
 // =============================================================================
 class Menu : public QMenuBar
-           , public kernel::Observer_ABC
+           , public tools::Observer_ABC
            , public kernel::ElementObserver_ABC< Profile >
 {
 

@@ -35,7 +35,7 @@ namespace gui
 // Created: AGE 2007-01-17
 // =============================================================================
 class ElevationPanel : public PreferencePanel_ABC
-                     , public kernel::Observer_ABC
+                     , public tools::Observer_ABC
                      , public kernel::OptionsObserver_ABC
 {
     Q_OBJECT;

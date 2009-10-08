@@ -38,7 +38,7 @@ class Model;
 // Created: SBO 2006-09-19
 // =============================================================================
 class FormationModel : public tools::Resolver< kernel::Formation_ABC >
-                     , public kernel::Observer_ABC
+                     , public tools::Observer_ABC
                      , public kernel::ElementObserver_ABC< kernel::Formation_ABC >
 {
 

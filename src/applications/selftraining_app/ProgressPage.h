@@ -33,7 +33,7 @@ class QTimer;
 // Created: SBO 2008-10-14
 // =============================================================================
 class ProgressPage : public ContentPage
-                   , public kernel::Observer_ABC
+                   , public tools::Observer_ABC
                    , public kernel::ElementObserver_ABC< boost::shared_ptr< frontend::Process_ABC > >
 {
     Q_OBJECT;

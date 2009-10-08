@@ -43,7 +43,7 @@ class DrawingsModel;
 // Created: SBO 2006-08-28
 // =============================================================================
 class CreationPanels : public gui::Panels
-                     , public kernel::Observer_ABC
+                     , public tools::Observer_ABC
                      , public kernel::ElementObserver_ABC< Services >
 {
 public:

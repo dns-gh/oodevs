@@ -13,7 +13,7 @@
 #include "tools/SortedInterfaceContainer.h"
 #include "ElementObserver_ABC.h"
 #include "ControllerObserver_ABC.h"
-#include "Observer_ABC.h"
+#include "tools/Observer_ABC.h"
 
 namespace kernel
 {
@@ -25,7 +25,7 @@ namespace kernel
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class Controller : private tools::SortedInterfaceContainer< Observer_ABC >
+class Controller : private tools::SortedInterfaceContainer< tools::Observer_ABC >
 {
 
 public:
@@ -37,8 +37,8 @@ public:
 
     //! @name Operations
     //@{
-    void Register  ( Observer_ABC& observer );
-    void Unregister( Observer_ABC& observer );
+    void Register  ( tools::Observer_ABC& observer );
+    void Unregister( tools::Observer_ABC& observer );
 
     template< typename T >
     void Create( const T& extension ) {

@@ -38,7 +38,7 @@ class TimelineMarker;
 // Created: SBO 2007-07-04
 // =============================================================================
 class TimelineView : public QCanvasView
-                   , public kernel::Observer_ABC
+                   , public tools::Observer_ABC
                    , public kernel::ElementObserver_ABC< actions::Action_ABC >
                    , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
 {

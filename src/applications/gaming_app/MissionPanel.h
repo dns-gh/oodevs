@@ -11,7 +11,7 @@
 #define __MissionPanel_h_
 
 #include "clients_kernel/ContextMenuObserver_ABC.h"
-#include "clients_kernel/Observer_ABC.h"
+#include "tools/Observer_ABC.h"
 #include "tools/Iterator.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/ElementObserver_ABC.h"
@@ -64,7 +64,7 @@ class CommandPublisher;
 // Created: APE 2004-03-19
 // =============================================================================
 class MissionPanel : public QDockWindow
-                   , public kernel::Observer_ABC
+                   , public tools::Observer_ABC
                    , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
                    , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                    , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >

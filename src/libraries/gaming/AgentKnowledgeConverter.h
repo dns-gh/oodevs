@@ -26,7 +26,7 @@ namespace kernel
 // Created: AGE 2006-05-18
 // =============================================================================
 class AgentKnowledgeConverter : public kernel::AgentKnowledgeConverter_ABC
-                              , public kernel::Observer_ABC
+                              , public tools::Observer_ABC
                               , public kernel::ElementObserver_ABC< kernel::AgentKnowledge_ABC >
                               , public kernel::ElementObserver_ABC< kernel::PopulationKnowledge_ABC >
 {

@@ -36,7 +36,7 @@ class Model;
 // Created: SBO 2006-08-30
 // =============================================================================
 class ModelBuilder : public QObject
-                   , public kernel::Observer_ABC
+                   , public tools::Observer_ABC
                    , public kernel::SelectionObserver_ABC
                    , public kernel::SelectionObserver_Base< kernel::Team_ABC >
                    , public kernel::SelectionObserver_Base< kernel::KnowledgeGroup_ABC >

@@ -29,7 +29,7 @@ class Services;
 */
 // Created: SBO 2009-04-30
 // =============================================================================
-class IndicatorPlotFactory : public kernel::Observer_ABC
+class IndicatorPlotFactory : public tools::Observer_ABC
                            , public kernel::ElementObserver_ABC< Services >
 {
 

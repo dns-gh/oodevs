@@ -36,7 +36,7 @@ class ProfileFilter;
 // Created: SBO 2007-03-05
 // =============================================================================
 class OrbatToolbar : public QHBox
-                   , public kernel::Observer_ABC
+                   , public tools::Observer_ABC
                    , public kernel::ElementObserver_ABC< kernel::Automat_ABC >
                    , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
                    , public kernel::ElementObserver_ABC< Simulation >

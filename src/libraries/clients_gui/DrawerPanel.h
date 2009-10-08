@@ -43,7 +43,7 @@ namespace gui
 // Created: AGE 2006-09-01
 // =============================================================================
 class DrawerPanel : public InfoPanel_ABC
-                  , public kernel::Observer_ABC
+                  , public tools::Observer_ABC
                   , public kernel::ElementObserver_ABC< DrawingCategory >
                   , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
                   , public kernel::SelectionObserver< Drawing_ABC >

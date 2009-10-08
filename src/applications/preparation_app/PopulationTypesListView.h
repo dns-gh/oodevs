@@ -34,7 +34,7 @@ namespace gui
 // Created: SBO 2006-11-09
 // =============================================================================
 class PopulationTypesListView : public gui::ListView< PopulationTypesListView >
-                              , public kernel::Observer_ABC
+                              , public tools::Observer_ABC
                               , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
                               , public kernel::ElementObserver_ABC< kernel::ModelUnLoaded >
 {

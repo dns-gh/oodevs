@@ -36,7 +36,7 @@ class Publisher_ABC;
 // Created: AGE 2005-09-22
 // =============================================================================
 class ChangeHumanFactorsDialog : public QDialog
-                               , public kernel::Observer_ABC
+                               , public tools::Observer_ABC
                                , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
                                , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                                , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >

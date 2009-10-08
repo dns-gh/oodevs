@@ -27,7 +27,7 @@ class CommandPublisher;
 // Created: SBO 2008-07-07
 // =============================================================================
 class SelectionCommand : public QObject
-                       , public kernel::Observer_ABC
+                       , public tools::Observer_ABC
                        , public kernel::SelectionObserver< kernel::Entity_ABC >
 {
 

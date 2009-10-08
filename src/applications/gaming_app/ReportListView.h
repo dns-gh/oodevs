@@ -11,7 +11,7 @@
 #define __ReportListView_h_
 
 #include "clients_gui/ListDisplayer.h"
-#include "clients_kernel/Observer_ABC.h"
+#include "tools/Observer_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "gaming/AgentSelectionObserver.h"
@@ -32,7 +32,7 @@ class Reports;
 // Created: APE 2004-03-10
 // =============================================================================
 class ReportListView : public gui::ListDisplayer< ReportListView >
-                     , public kernel::Observer_ABC
+                     , public tools::Observer_ABC
                      , public AgentSelectionObserver
                      , public kernel::ElementObserver_ABC< Reports > 
                      , public kernel::ElementObserver_ABC< Report >

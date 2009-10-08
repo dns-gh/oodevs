@@ -28,7 +28,7 @@ class AmmoEffect;
 // Created: AGE 2006-04-04
 // =============================================================================
 class MeteoLayer : public gui::Layer_ABC
-                 , public kernel::Observer_ABC
+                 , public tools::Observer_ABC
                  , public kernel::ElementObserver_ABC< AmmoEffect >
 {
 

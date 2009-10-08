@@ -33,7 +33,7 @@ namespace gui
 // Created: HME 2005-10-03
 // =============================================================================
 class PopulationListView : public ListView< PopulationListView >
-                         , public kernel::Observer_ABC
+                         , public tools::Observer_ABC
                          , public kernel::ElementObserver_ABC< kernel::Population_ABC >
                          , public kernel::ElementObserver_ABC< kernel::Profile_ABC >
                          , public kernel::ElementObserver_ABC< kernel::Entity_ABC >

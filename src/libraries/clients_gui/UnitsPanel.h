@@ -37,7 +37,7 @@ namespace gui
 // Created: SBO 2006-08-28
 // =============================================================================
 class UnitsPanel : public InfoPanel_ABC
-                 , public kernel::Observer_ABC
+                 , public tools::Observer_ABC
                  , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
 {
     Q_OBJECT;

@@ -11,7 +11,7 @@
 #define __EventToolbar_h_
 
 #include "clients_kernel/ElementObserver_ABC.h"
-#include "clients_kernel/Observer_ABC.h"
+#include "tools/Observer_ABC.h"
 
 #include <deque>
 
@@ -32,7 +32,7 @@ class Simulation;
 // Created: SBO 2006-06-20
 // =============================================================================
 class EventToolbar : public QToolBar
-                   , public kernel::Observer_ABC
+                   , public tools::Observer_ABC
                    , public kernel::ElementObserver_ABC< Report >
                    , public kernel::ElementObserver_ABC< kernel::Profile_ABC >
                    , public kernel::ElementObserver_ABC< Simulation >

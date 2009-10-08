@@ -25,7 +25,7 @@ class Fires;
 */
 // Created: AGE 2006-11-13
 // =============================================================================
-class XPSPlayer : public QObject, public kernel::Observer_ABC
+class XPSPlayer : public QObject, public tools::Observer_ABC
                 , public kernel::ElementObserver_ABC< Fires >
                 , public kernel::ElementObserver_ABC< Simulation >
                 , public kernel::ElementObserver_ABC< Simulation::sStartTick >

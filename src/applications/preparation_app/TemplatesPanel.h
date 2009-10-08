@@ -34,7 +34,7 @@ class FormationModel;
 // Created: AGE 2007-05-30
 // =============================================================================
 class TemplatesPanel : public gui::InfoPanel_ABC
-                     , public kernel::Observer_ABC
+                     , public tools::Observer_ABC
                      , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
                      , public kernel::ElementObserver_ABC< kernel::ModelUnLoaded >
                      , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >

@@ -35,7 +35,7 @@ class Publisher_ABC;
 // Created: AGE 2007-04-11
 // =============================================================================
 class SIMControlToolbar : public QToolBar
-                        , public kernel::Observer_ABC
+                        , public tools::Observer_ABC
                         , public kernel::ElementObserver_ABC< Simulation >
                         , public kernel::ElementObserver_ABC< Services >
                         , public kernel::ElementObserver_ABC< kernel::Profile_ABC >

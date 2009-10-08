@@ -30,7 +30,7 @@ class Simulation;
 // Created: SBO 2008-09-18
 // =============================================================================
 class ConnectionMenu : public QObject
-                     , public kernel::Observer_ABC
+                     , public tools::Observer_ABC
                      , public kernel::ElementObserver_ABC< Simulation >
 {
     Q_OBJECT;

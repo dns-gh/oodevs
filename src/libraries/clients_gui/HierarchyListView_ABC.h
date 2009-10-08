@@ -39,7 +39,7 @@ namespace gui
 // Created: APE 2004-03-15
 // =============================================================================
 class HierarchyListView_ABC : public ListView< HierarchyListView_ABC >
-                            , public kernel::Observer_ABC
+                            , public tools::Observer_ABC
                             , public kernel::SelectionObserver< kernel::Entity_ABC >
                             , public kernel::ActivationObserver_ABC< kernel::Entity_ABC >
                             , public kernel::ElementObserver_ABC< kernel::Profile_ABC >

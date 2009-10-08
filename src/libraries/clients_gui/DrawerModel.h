@@ -35,7 +35,7 @@ namespace gui
 */
 // Created: SBO 2007-03-22
 // =============================================================================
-class DrawerModel : public kernel::Observer_ABC
+class DrawerModel : public tools::Observer_ABC
                   , public kernel::ElementObserver_ABC< Drawing_ABC >
                   , public tools::Resolver< Drawing_ABC >
 {

@@ -40,7 +40,7 @@ class Reinforcements;
 // Created: SBO 2007-02-02
 // =============================================================================
 class InfoStatusWidget : public QVBox
-                       , public kernel::Observer_ABC
+                       , public tools::Observer_ABC
                        , public kernel::SelectionObserver< kernel::Entity_ABC >
                        , public kernel::ElementObserver_ABC< kernel::Attributes_ABC >
                        , public kernel::ElementObserver_ABC< kernel::HumanFactors_ABC >

@@ -10,7 +10,7 @@
 #ifndef __EntityLayer_h_
 #define __EntityLayer_h_
 
-#include "clients_kernel/Observer_ABC.h"
+#include "tools/Observer_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/ActivationObserver_ABC.h"
 #include "clients_kernel/SelectionObserver_ABC.h"
@@ -41,7 +41,7 @@ namespace gui
 // Created: AGE 2006-03-23
 // =============================================================================
 class EntityLayerBase : public Layer_ABC
-                      , public kernel::Observer_ABC
+                      , public tools::Observer_ABC
 {
 public:
     //! @name Constructors/Destructor

@@ -26,7 +26,7 @@ class Simulation;
 // Created: AGE 2007-04-11
 // =============================================================================
 class ReplayerToolbar : public QToolBar
-                      , public kernel::Observer_ABC
+                      , public tools::Observer_ABC
                       , public kernel::ElementObserver_ABC< Simulation >
 {
     Q_OBJECT;

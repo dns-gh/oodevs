@@ -25,7 +25,7 @@
 template< typename Superior >
 class LogisticSuperiorEditor : public gui::ValuedComboBox< const kernel::Automat_ABC* >
                              , public kernel::ValueEditor< Superior >
-                             , public kernel::Observer_ABC
+                             , public tools::Observer_ABC
                              , public kernel::ElementObserver_ABC< kernel::Automat_ABC >
 {
 

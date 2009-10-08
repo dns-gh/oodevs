@@ -10,7 +10,7 @@
 #ifndef __Param_ABC_h_
 #define __Param_ABC_h_
 
-#include "clients_kernel/Observer_ABC.h"
+#include "tools/Observer_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 
 namespace kernel
@@ -33,7 +33,7 @@ namespace actions
 */
 // Created: APE 2004-04-20
 // =============================================================================
-class Param_ABC : public kernel::Observer_ABC
+class Param_ABC : public tools::Observer_ABC
                 , public kernel::Drawable_ABC
 {
 public:

@@ -26,7 +26,7 @@ class Simulation;
 // Created: SBO 2007-07-04
 // =============================================================================
 class TimelineRuler : public QWidget
-                    , public kernel::Observer_ABC
+                    , public tools::Observer_ABC
                     , public kernel::ElementObserver_ABC< Simulation >
 {
     Q_OBJECT;

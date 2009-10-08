@@ -27,7 +27,7 @@ class Services;
 */
 // Created: SBO 2008-06-11
 // =============================================================================
-class CommandPublisher : public kernel::Observer_ABC
+class CommandPublisher : public tools::Observer_ABC
                        , public kernel::ElementObserver_ABC< kernel::Profile_ABC >
                        , public kernel::ElementObserver_ABC< Services >
 {

@@ -32,7 +32,7 @@ namespace indicators
 // Created: SBO 2009-05-07
 // =============================================================================
 class ScoreSyntaxHighlighter : public QSyntaxHighlighter
-                             , public kernel::Observer_ABC
+                             , public tools::Observer_ABC
                              , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
                              , public kernel::ElementObserver_ABC< kernel::ModelUnLoaded >
 {

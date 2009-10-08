@@ -30,7 +30,7 @@ namespace gui
 // Created: AGE 2008-05-29
 // =============================================================================
 class UtmParser : public LocationParser_ABC
-                , public kernel::Observer_ABC
+                , public tools::Observer_ABC
                 , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
 {
 

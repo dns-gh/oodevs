@@ -10,12 +10,16 @@
 #ifndef __Controllers_h_
 #define __Controllers_h_
 
+namespace tools
+{
+    class Observer_ABC;
+}
+
 namespace kernel
 {
     class Options;
     class Controller;
     class ActionController;
-    class Observer_ABC;
 
 // =============================================================================
 /** @class  Controllers
@@ -35,9 +39,9 @@ public:
 
     //! @name Operations
     //@{
-    void Register  ( Observer_ABC& observer );
-    void Unregister( Observer_ABC& observer );
-    void Update  ( Observer_ABC& observer );
+    void Register  ( tools::Observer_ABC& observer );
+    void Unregister( tools::Observer_ABC& observer );
+    void Update  ( tools::Observer_ABC& observer );
     //@}
 
 private:

@@ -32,7 +32,7 @@ class Publisher_ABC;
 // Created: SBO 2006-06-30
 // =============================================================================
 class ChangeLogisticLinksDialog : public QDialog
-                                , public kernel::Observer_ABC
+                                , public tools::Observer_ABC
                                 , public kernel::ElementObserver_ABC< kernel::Automat_ABC >
                                 , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
 {

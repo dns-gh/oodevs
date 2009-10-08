@@ -34,7 +34,7 @@ class Publisher_ABC;
 // Created: SBO 2006-07-03
 // =============================================================================
 class LogisticSupplyChangeQuotasDialog : public QDialog
-                                       , public kernel::Observer_ABC
+                                       , public tools::Observer_ABC
                                        , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
 {
     Q_OBJECT;

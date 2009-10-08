@@ -37,7 +37,7 @@ typedef gui::ListView< ActionsListView > ActionsListViewBase;
 // Created: SBO 2007-03-12
 // =============================================================================
 class ActionsListView : public ActionsListViewBase
-                      , public kernel::Observer_ABC
+                      , public tools::Observer_ABC
                       , public kernel::ElementObserver_ABC< actions::Action_ABC >
                       , public kernel::ElementObserver_ABC< ActionTiming >
 {

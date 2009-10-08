@@ -36,7 +36,7 @@ class StaticModel;
 // Created: AGE 2007-09-17
 // =============================================================================
 class AfterAction : public QObject
-                  , public kernel::Observer_ABC
+                  , public tools::Observer_ABC
                   , public kernel::ElementObserver_ABC< Services >
                   , public kernel::ElementObserver_ABC< AfterActionRequest >
 {

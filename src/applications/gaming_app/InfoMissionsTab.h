@@ -34,7 +34,7 @@ class MissionParameters;
 // Created: SBO 2007-04-18
 // =============================================================================
 class InfoMissionsTab : public gui::ListDisplayer< InfoMissionsTab >
-                      , public kernel::Observer_ABC
+                      , public tools::Observer_ABC
                       , public kernel::SelectionObserver< kernel::Entity_ABC >
                       , public kernel::ElementObserver_ABC< MissionParameters >
 {

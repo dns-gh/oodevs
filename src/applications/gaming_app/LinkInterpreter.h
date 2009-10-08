@@ -28,7 +28,7 @@ class ProfileFilter;
 // Created: AGE 2006-08-11
 // =============================================================================
 class LinkInterpreter : public gui::LinkInterpreter_ABC
-                      , public kernel::Observer_ABC
+                      , public tools::Observer_ABC
                       , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
 {
 

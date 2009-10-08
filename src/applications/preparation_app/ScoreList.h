@@ -41,7 +41,7 @@ class StaticModel;
 // Created: SBO 2009-04-16
 // =============================================================================
 class ScoreList : public QVBox
-                , public kernel::Observer_ABC
+                , public tools::Observer_ABC
                 , public kernel::ElementObserver_ABC< Score_ABC > 
 {
     Q_OBJECT;

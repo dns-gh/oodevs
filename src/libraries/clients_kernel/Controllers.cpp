@@ -42,7 +42,7 @@ Controllers::~Controllers()
 // Name: Controllers::Register
 // Created: AGE 2006-03-22
 // -----------------------------------------------------------------------------
-void Controllers::Register( Observer_ABC& observer )
+void Controllers::Register( tools::Observer_ABC& observer )
 {
     options_.Register( observer );
     controller_.Register( observer );
@@ -53,7 +53,7 @@ void Controllers::Register( Observer_ABC& observer )
 // Name: Controllers::Unregister
 // Created: AGE 2006-03-22
 // -----------------------------------------------------------------------------
-void Controllers::Unregister( Observer_ABC& observer )
+void Controllers::Unregister( tools::Observer_ABC& observer )
 {
     options_.Unregister( observer );
     controller_.Unregister( observer );
@@ -64,7 +64,7 @@ void Controllers::Unregister( Observer_ABC& observer )
 // Name: Controllers::Update
 // Created: AGE 2006-11-23
 // -----------------------------------------------------------------------------
-void Controllers::Update( Observer_ABC& observer )
+void Controllers::Update( tools::Observer_ABC& observer )
 {
     Unregister( observer );
     Register  ( observer );

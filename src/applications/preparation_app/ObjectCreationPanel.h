@@ -38,7 +38,7 @@ class TeamsModel;
 // Created: SBO 2006-04-18
 // =============================================================================
 class ObjectCreationPanel : public gui::InfoPanel_ABC
-                          , public kernel::Observer_ABC
+                          , public tools::Observer_ABC
                           , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
 {
 

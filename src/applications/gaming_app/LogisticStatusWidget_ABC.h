@@ -36,7 +36,7 @@ namespace gui
 // =============================================================================
 template< typename Extension >
 class LogisticStatusWidget_ABC : public QVBox
-                               , public kernel::Observer_ABC
+                               , public tools::Observer_ABC
                                , public kernel::ElementObserver_ABC< Extension >
                                , public kernel::SelectionObserver< kernel::Entity_ABC >
 {

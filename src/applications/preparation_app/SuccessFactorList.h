@@ -30,7 +30,7 @@ class SuccessFactorEditor;
 // Created: SBO 2009-06-15
 // =============================================================================
 class SuccessFactorList : public QVBox
-                        , public kernel::Observer_ABC
+                        , public tools::Observer_ABC
                         , public kernel::ElementObserver_ABC< SuccessFactor >
 {
     Q_OBJECT;

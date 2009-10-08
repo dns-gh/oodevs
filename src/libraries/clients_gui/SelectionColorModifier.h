@@ -29,7 +29,7 @@ namespace gui
 // Created: AGE 2008-05-14
 // =============================================================================
 class SelectionColorModifier : public ColorModifier_ABC
-                             , public kernel::Observer_ABC
+                             , public tools::Observer_ABC
                              , public kernel::SelectionObserver< kernel::Entity_ABC >
 {
 

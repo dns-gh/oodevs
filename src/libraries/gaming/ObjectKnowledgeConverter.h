@@ -25,7 +25,7 @@ namespace kernel
 // Created: AGE 2006-09-15
 // =============================================================================
 class ObjectKnowledgeConverter : public kernel::ObjectKnowledgeConverter_ABC
-                               , public kernel::Observer_ABC
+                               , public tools::Observer_ABC
                                , public kernel::ElementObserver_ABC< kernel::ObjectKnowledge_ABC >
 {
 

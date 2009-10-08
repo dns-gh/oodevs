@@ -42,7 +42,7 @@ struct Enum_ObstacleType;
 // Created: SBO 2006-08-30
 // =============================================================================
 class TeamsModel : public tools::Resolver< kernel::Team_ABC >
-                 , public kernel::Observer_ABC
+                 , public tools::Observer_ABC
                  , public kernel::ElementObserver_ABC< kernel::Team_ABC >
 {
 

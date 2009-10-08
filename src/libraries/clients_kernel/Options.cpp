@@ -10,7 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "Options.h"
 #include "OptionsObserver_ABC.h"
-#include "Observer_ABC.h"
+#include "tools/Observer_ABC.h"
 #include "OptionVariant.h"
 #include "TristateOption.h"
 #include "FourStateOption.h"
@@ -42,7 +42,7 @@ Options::~Options()
 // Name: Options::Register
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Options::Register( Observer_ABC& o )
+void Options::Register( tools::Observer_ABC& o )
 {
     OptionsObserver_ABC* observer = dynamic_cast< OptionsObserver_ABC* >( &o );
     if( observer )
@@ -57,7 +57,7 @@ void Options::Register( Observer_ABC& o )
 // Name: Options::Unregister
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Options::Unregister( Observer_ABC& o )
+void Options::Unregister( tools::Observer_ABC& o )
 {
     OptionsObserver_ABC* observer = dynamic_cast< OptionsObserver_ABC* >( &o );
     T_Observers::iterator it = std::find( observers_.begin(), observers_.end(), observer );

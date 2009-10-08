@@ -34,7 +34,7 @@ namespace indicators
 // Created: SBO 2009-04-20
 // =============================================================================
 class ScorePrimitivesPage : public QVBox
-                          , public kernel::Observer_ABC
+                          , public tools::Observer_ABC
                           , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
                           , public kernel::ElementObserver_ABC< kernel::ModelUnLoaded >
 {

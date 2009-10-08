@@ -32,7 +32,7 @@ namespace gui
 // =============================================================================
 class HighlightColorModifier : public QObject
                              , public ColorModifier_ABC
-                             , public kernel::Observer_ABC
+                             , public tools::Observer_ABC
                              , public kernel::ElementObserver_ABC    < kernel::Entity_ABC >
                              , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
 {

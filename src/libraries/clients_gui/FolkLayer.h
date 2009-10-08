@@ -31,7 +31,7 @@ namespace gui
 // Created: AGE 2007-09-04
 // =============================================================================
 class FolkLayer : public Layer2d_ABC
-                , public kernel::Observer_ABC
+                , public tools::Observer_ABC
                 , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
 {
 

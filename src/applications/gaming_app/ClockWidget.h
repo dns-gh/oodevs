@@ -28,7 +28,7 @@ class Profile;
 // Created: SBO 2007-04-17
 // =============================================================================
 class ClockWidget : public QHBox
-                  , public kernel::Observer_ABC
+                  , public tools::Observer_ABC
                   , public kernel::ElementObserver_ABC< Simulation >
 {
 

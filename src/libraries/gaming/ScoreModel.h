@@ -33,7 +33,7 @@ class Services;
 // Created: SBO 2009-03-12
 // =============================================================================
 class ScoreModel : public tools::Resolver< Score, QString >
-                 , public kernel::Observer_ABC
+                 , public tools::Observer_ABC
                  , public kernel::ElementObserver_ABC< Services >
 {
 

@@ -46,7 +46,7 @@ class ModelChecker_ABC;
 class AgentsModel : public tools::Resolver< kernel::Agent_ABC >
                   , public tools::Resolver< kernel::Automat_ABC >
                   , public tools::Resolver< kernel::Population_ABC >
-                  , public kernel::Observer_ABC
+                  , public tools::Observer_ABC
                   , public kernel::ElementObserver_ABC< kernel::Agent_ABC >
                   , public kernel::ElementObserver_ABC< kernel::Automat_ABC >
                   , public kernel::ElementObserver_ABC< kernel::Population_ABC >

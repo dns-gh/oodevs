@@ -35,7 +35,7 @@ namespace gui
 // Created: APE 2004-08-05
 // =============================================================================
 class ObjectListView : public ListView< ObjectListView >
-                     , public kernel::Observer_ABC
+                     , public tools::Observer_ABC
                      , public kernel::ElementObserver_ABC< kernel::Object_ABC >
                      , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
                      , public kernel::SelectionObserver< kernel::Entity_ABC >

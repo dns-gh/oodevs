@@ -36,7 +36,7 @@ class Explosions;
 // Created: SBO 2005-09-08
 // =============================================================================
 class ObjectReportPanel : public gui::InfoPanel_ABC
-                        , public kernel::Observer_ABC
+                        , public tools::Observer_ABC
                         , public kernel::ElementObserver_ABC< Explosions >
                         , public kernel::SelectionObserver< kernel::Object_ABC >
 {

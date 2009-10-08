@@ -30,7 +30,7 @@ struct ASN1T_MagicActionPartialRecovery;
 // Created:  SBO 2005-07-27 
 //=============================================================================
 class LogisticSupplyRecompletionDialog : public QDialog
-                                       , public kernel::Observer_ABC
+                                       , public tools::Observer_ABC
                                        , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
 {
     Q_OBJECT;

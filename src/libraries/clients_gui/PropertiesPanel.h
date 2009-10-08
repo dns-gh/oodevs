@@ -34,7 +34,7 @@ namespace gui
 // Created: SBO 2008-04-08
 // =============================================================================
 class PropertiesPanel : public QScrollView
-                      , public kernel::Observer_ABC
+                      , public tools::Observer_ABC
                       , public kernel::SelectionObserver< kernel::Entity_ABC >
                       , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
 {

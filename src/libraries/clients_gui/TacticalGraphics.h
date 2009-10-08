@@ -32,7 +32,7 @@ namespace gui
 */
 // Created: SBO 2009-05-29
 // =============================================================================
-class TacticalGraphics : public kernel::Observer_ABC
+class TacticalGraphics : public tools::Observer_ABC
                        , public kernel::ElementObserver_ABC< DrawingCategory >
 {
 

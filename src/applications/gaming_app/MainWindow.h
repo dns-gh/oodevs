@@ -61,7 +61,7 @@ class LoggerProxy;
 // Created: APE 2004-03-01
 // =============================================================================
 class MainWindow : public QMainWindow
-                 , public kernel::Observer_ABC
+                 , public tools::Observer_ABC
                  , public kernel::ElementObserver_ABC< Simulation >
                  , public kernel::ElementObserver_ABC< Services >
                  , public kernel::ElementObserver_ABC< Profile >

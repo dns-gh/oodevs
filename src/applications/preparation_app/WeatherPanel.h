@@ -39,7 +39,7 @@ class WeatherLayer;
 // Created: SBO 2006-12-19
 // =============================================================================
 class WeatherPanel : public gui::InfoPanel_ABC
-                   , public kernel::Observer_ABC
+                   , public tools::Observer_ABC
                    , public kernel::ElementObserver_ABC< WeatherModel >
 {
     Q_OBJECT;

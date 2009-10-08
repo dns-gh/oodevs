@@ -34,7 +34,7 @@ class UserProfile;
 // Created: SBO 2009-06-15
 // =============================================================================
 class SuccessFactorProfiles : public tools::Resolver< const UserProfile, QString >
-                            , public kernel::Observer_ABC
+                            , public tools::Observer_ABC
                             , public kernel::ElementObserver_ABC< UserProfile >
 {
 

@@ -32,7 +32,7 @@ namespace gui
 // Created: SBO 2007-02-02
 // =============================================================================
 class InfoDock : public QDockWindow
-               , public kernel::Observer_ABC
+               , public tools::Observer_ABC
                , public kernel::SelectionObserver< kernel::Entity_ABC >
 {
 

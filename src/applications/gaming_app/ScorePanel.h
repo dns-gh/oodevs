@@ -44,7 +44,7 @@ class ScoreModel;
 // Created: SBO 2009-03-12
 // =============================================================================
 class ScorePanel : public QDockWindow
-                 , public kernel::Observer_ABC
+                 , public tools::Observer_ABC
                  , public kernel::ElementObserver_ABC< Score >
                  , public kernel::ElementObserver_ABC< kernel::ModelUnLoaded >
                  , public kernel::ElementObserver_ABC< IndicatorRequest >

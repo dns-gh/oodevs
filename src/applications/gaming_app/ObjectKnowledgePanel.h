@@ -52,7 +52,7 @@ class ObjectPerceptions;
 // Created: APE 2004-05-04
 // =============================================================================
 class ObjectKnowledgePanel : public gui::InfoPanel_ABC
-                           , public kernel::Observer_ABC
+                           , public tools::Observer_ABC
                            , public kernel::ElementObserver_ABC< ObjectKnowledges >                           
                            , public kernel::ElementObserver_ABC< ObjectPerceptions >
                            , public kernel::ElementObserver_ABC< kernel::ObjectKnowledge_ABC >

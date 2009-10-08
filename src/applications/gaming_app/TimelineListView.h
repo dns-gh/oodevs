@@ -31,7 +31,7 @@ namespace actions
 // Created: SBO 2008-04-22
 // =============================================================================
 class TimelineListView : public QListView
-                       , public kernel::Observer_ABC
+                       , public tools::Observer_ABC
                        , public kernel::ElementObserver_ABC< actions::Action_ABC >
                        , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
 {

@@ -28,7 +28,7 @@ class UserProfileFactory_ABC;
 // Created: SBO 2007-01-16
 // =============================================================================
 class UserProfileList : public QVBox
-                      , public kernel::Observer_ABC
+                      , public tools::Observer_ABC
                       , public kernel::ElementObserver_ABC< UserProfile >
 {
     Q_OBJECT;

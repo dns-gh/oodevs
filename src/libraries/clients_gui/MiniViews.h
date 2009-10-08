@@ -36,7 +36,7 @@ namespace gui
 // Created: AGE 2006-06-23
 // =============================================================================
 class MiniViews : public QDockWindow
-                , public kernel::Observer_ABC
+                , public tools::Observer_ABC
                 , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
 {
     Q_OBJECT;

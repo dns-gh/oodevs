@@ -28,7 +28,7 @@ namespace gui
 // Created: AGE 2006-04-07
 // =============================================================================
 class GlToolsBase : public kernel::GlTools_ABC
-                  , public kernel::Observer_ABC
+                  , public tools::Observer_ABC
                   , public kernel::OptionsObserver_ABC
 {
 

@@ -31,7 +31,7 @@ namespace gui
 // Created: SBO 2008-12-09
 // =============================================================================
 class DiplomacyDialog_ABC : public QDialog
-                          , public kernel::Observer_ABC
+                          , public tools::Observer_ABC
                           , public kernel::ElementObserver_ABC< kernel::Team_ABC >
                           , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
 {

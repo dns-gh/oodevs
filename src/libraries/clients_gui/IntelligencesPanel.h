@@ -42,7 +42,7 @@ namespace gui
 // Created: SBO 2007-10-12
 // =============================================================================
 class IntelligencesPanel : public InfoPanel_ABC
-                         , public kernel::Observer_ABC
+                         , public tools::Observer_ABC
                          , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
                          , public kernel::SelectionObserver_ABC
                          , public kernel::SelectionObserver_Base< kernel::Formation_ABC >

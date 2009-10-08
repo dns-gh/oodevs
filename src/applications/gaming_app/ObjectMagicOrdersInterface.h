@@ -31,7 +31,7 @@ class Publisher_ABC;
 // Created: SBO 2007-05-04
 // =============================================================================
 class ObjectMagicOrdersInterface : public QObject
-                                 , public kernel::Observer_ABC
+                                 , public tools::Observer_ABC
                                  , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC >
 {
     Q_OBJECT;

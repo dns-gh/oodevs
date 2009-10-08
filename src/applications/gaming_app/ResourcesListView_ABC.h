@@ -38,7 +38,7 @@ namespace gui
 // =============================================================================
 template< typename ConcreteDisplayer, typename Extension >
 class ResourcesListView_ABC : public gui::ListDisplayer< ConcreteDisplayer >
-                            , public kernel::Observer_ABC
+                            , public tools::Observer_ABC
                             , public kernel::ElementObserver_ABC< Extension >
                             , public kernel::SelectionObserver< kernel::Entity_ABC >
 {

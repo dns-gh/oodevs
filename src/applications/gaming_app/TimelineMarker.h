@@ -29,7 +29,7 @@ class TimelineRuler;
 // Created: SBO 2007-07-16
 // =============================================================================
 class TimelineMarker : public TimelineItem_ABC
-                     , public kernel::Observer_ABC
+                     , public tools::Observer_ABC
                      , public kernel::ElementObserver_ABC< Simulation >
 {
 

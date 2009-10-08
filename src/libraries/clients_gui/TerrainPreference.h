@@ -36,7 +36,7 @@ namespace gui
 // =============================================================================
 class TerrainPreference : public QWidget
                         , public GraphicPreference_ABC
-                        , public kernel::Observer_ABC
+                        , public tools::Observer_ABC
                         , public kernel::OptionsObserver_ABC
 {
 public:

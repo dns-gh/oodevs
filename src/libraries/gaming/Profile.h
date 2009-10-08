@@ -38,7 +38,7 @@ class Model;
 // Created: AGE 2006-10-11
 // =============================================================================
 class Profile : public kernel::Profile_ABC
-              , public kernel::Observer_ABC
+              , public tools::Observer_ABC
               , public kernel::ElementObserver_ABC< kernel::Automat_ABC >
               , public kernel::ElementObserver_ABC< kernel::Population_ABC >
               , public kernel::ElementObserver_ABC< kernel::Team_ABC >

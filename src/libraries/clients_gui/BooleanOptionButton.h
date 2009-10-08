@@ -26,7 +26,7 @@ namespace gui
 */
 // Created: AGE 2006-03-30
 // =============================================================================
-class BooleanOptionButton : public QToolButton, public kernel::Observer_ABC, public kernel::OptionsObserver_ABC
+class BooleanOptionButton : public QToolButton, public tools::Observer_ABC, public kernel::OptionsObserver_ABC
 {
     Q_OBJECT;
 public:

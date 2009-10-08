@@ -28,7 +28,7 @@ namespace gui
 */
 // Created: AGE 2008-05-29
 // =============================================================================
-class TerrainFeatureSearcher : public kernel::Observer_ABC
+class TerrainFeatureSearcher : public tools::Observer_ABC
                              , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
 {
 

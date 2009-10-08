@@ -30,7 +30,7 @@ namespace gui
 // Created: SBO 2007-02-15
 // =============================================================================
 class InfoConflictsTab : public QVBox
-                       , public kernel::Observer_ABC
+                       , public tools::Observer_ABC
                        , public kernel::SelectionObserver< kernel::Entity_ABC >
 {
 

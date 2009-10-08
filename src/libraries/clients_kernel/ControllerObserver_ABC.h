@@ -10,7 +10,7 @@
 #ifndef __ControllerObserver_ABC_h_
 #define __ControllerObserver_ABC_h_
 
-#include "Observer_ABC.h"
+#include "tools/Observer_ABC.h"
 
 namespace kernel
 {

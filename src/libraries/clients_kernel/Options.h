@@ -15,9 +15,12 @@
 #include <map>
 #include "OptionVariant.h"
 
-namespace kernel
+namespace tools
 {
     class Observer_ABC;
+}
+namespace kernel
+{
     class OptionsObserver_ABC;
     class Settings_ABC;
 
@@ -39,8 +42,8 @@ public:
 
     //! @name Operations
     //@{
-    void Register  ( Observer_ABC& observer );
-    void Unregister( Observer_ABC& observer );
+    void Register  ( tools::Observer_ABC& observer );
+    void Unregister( tools::Observer_ABC& observer );
 
     void Change( const std::string& name, const OptionVariant& value );
     const OptionVariant& GetOption( const std::string& name, const OptionVariant& defaultValue );

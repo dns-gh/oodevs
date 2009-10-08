@@ -29,7 +29,7 @@ class Services;
 // Created: AGE 2007-07-11
 // =============================================================================
 class VisionConesToggler : public QObject
-                         , public kernel::Observer_ABC
+                         , public tools::Observer_ABC
                          , public kernel::OptionsObserver_ABC
                          , public kernel::ElementObserver_ABC< kernel::Profile_ABC >
                          , public kernel::ElementObserver_ABC< Services >

@@ -32,7 +32,7 @@ namespace gui
 // =============================================================================
 template< typename ConcreteDisplayer, typename Consign, typename Extension >
 class LogisticConsignsWidget_ABC : public QVBox
-                                 , public kernel::Observer_ABC
+                                 , public tools::Observer_ABC
                                  , public kernel::ElementObserver_ABC< Extension >
                                  , public kernel::ElementObserver_ABC< Consign >
                                  , public kernel::SelectionObserver< kernel::Entity_ABC >

@@ -43,7 +43,7 @@ class Publisher_ABC;
 // Created: SBO 2007-05-04
 // =============================================================================
 class UnitMagicOrdersInterface : public QObject
-                               , public kernel::Observer_ABC
+                               , public tools::Observer_ABC
                                , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
                                , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                                , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >

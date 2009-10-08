@@ -30,7 +30,7 @@ class Simulation;
 // Created: AGE 2007-09-26
 // =============================================================================
 class IndicatorPlot : public GQ_Plot
-                    , public kernel::Observer_ABC
+                    , public tools::Observer_ABC
                     , public kernel::ElementObserver_ABC< Simulation >
                     , public kernel::ElementObserver_ABC< IndicatorRequest >
 {

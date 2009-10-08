@@ -32,7 +32,7 @@ namespace gui
 // Created: APE 2004-05-06
 // =============================================================================
 class LocationCreator : public QObject
-                      , public kernel::Observer_ABC
+                      , public tools::Observer_ABC
                       , public kernel::ContextMenuObserver_ABC< kernel::Nothing >
                       , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
                       , public kernel::ContextMenuObserver_ABC< Drawing_ABC >

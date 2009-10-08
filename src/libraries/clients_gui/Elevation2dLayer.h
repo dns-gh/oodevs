@@ -35,7 +35,7 @@ namespace gui
 // Created: AGE 2006-03-29
 // =============================================================================
 class Elevation2dLayer : public Layer2d_ABC
-                       , public kernel::Observer_ABC
+                       , public tools::Observer_ABC
                        , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
 {
 

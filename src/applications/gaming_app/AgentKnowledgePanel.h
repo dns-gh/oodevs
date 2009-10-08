@@ -43,7 +43,7 @@ class Perception;
 // Created: APE 2004-05-03
 // =============================================================================
 class AgentKnowledgePanel : public gui::InfoPanel_ABC
-                          , public kernel::Observer_ABC
+                          , public tools::Observer_ABC
                           , public kernel::ElementObserver_ABC< AgentKnowledges >
                           , public kernel::ElementObserver_ABC< kernel::AgentKnowledge_ABC >
                           , public kernel::ElementObserver_ABC< PerceptionMap >

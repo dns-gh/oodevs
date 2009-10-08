@@ -11,7 +11,7 @@
 #define __OptionMenu_h_
 
 #include "clients_kernel/Options.h"
-#include "clients_kernel/Observer_ABC.h"
+#include "tools/Observer_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 
 namespace gui
@@ -68,7 +68,7 @@ public:
 // Created: SBO 2006-04-28
 // =============================================================================
 template< typename T >
-class OptionMenu : public OptionMenuBase, public kernel::Observer_ABC, public kernel::OptionsObserver_ABC
+class OptionMenu : public OptionMenuBase, public tools::Observer_ABC, public kernel::OptionsObserver_ABC
 {
 public:
     //! @name Constructors/Destructor

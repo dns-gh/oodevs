@@ -41,18 +41,18 @@ ActionController::~ActionController()
 // Name: ActionController::Register
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void ActionController::Register( Observer_ABC& observer )
+void ActionController::Register( tools::Observer_ABC& observer )
 {
-    tools::SortedInterfaceContainer< Observer_ABC >::Register( observer );
+    tools::SortedInterfaceContainer< tools::Observer_ABC >::Register( observer );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionController::Unregister
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void ActionController::Unregister( Observer_ABC& observer )
+void ActionController::Unregister( tools::Observer_ABC& observer )
 {
-    tools::SortedInterfaceContainer< Observer_ABC >::Unregister( observer );
+    tools::SortedInterfaceContainer< tools::Observer_ABC >::Unregister( observer );
 }
 
 // -----------------------------------------------------------------------------
