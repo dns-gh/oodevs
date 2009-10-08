@@ -12,7 +12,7 @@
 
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/Observer_ABC.h"
-#include "clients_kernel/Iterator.h"
+#include "tools/Iterator.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 
@@ -112,10 +112,10 @@ private:
     virtual void NotifyContextMenu( const kernel::Population_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
 
-    int AddMissions( kernel::Iterator< const kernel::Mission& > it, kernel::ContextMenu& menu, const QString& name, const char* slot );
+    int AddMissions( tools::Iterator< const kernel::Mission& > it, kernel::ContextMenu& menu, const QString& name, const char* slot );
     void AddMissions( const Decisions_ABC& decisions, kernel::ContextMenu& menu, const QString& name, const char* slot, const QPixmap& pixmap = QPixmap() );
     int AddFragOrders( const Decisions_ABC& decisions, kernel::ContextMenu& menu, const QString& name, const char* slot );
-    void AddFragOrders( kernel::Iterator< const kernel::FragOrder& > it, QPopupMenu& menu, const char* slot );
+    void AddFragOrders( tools::Iterator< const kernel::FragOrder& > it, QPopupMenu& menu, const char* slot );
     void SetInterface( actions::gui::MissionInterface_ABC* missionInterface );
     void NotifyMission();
 

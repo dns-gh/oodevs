@@ -20,7 +20,7 @@ using namespace kernel;
 // Name: MedicalTreatmentPrototype constructor
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-MedicalTreatmentPrototype::MedicalTreatmentPrototype( QWidget* parent, const Resolver_ABC< MedicalTreatmentType >& resolver, Object_ABC*& creation )
+MedicalTreatmentPrototype::MedicalTreatmentPrototype( QWidget* parent, const tools::Resolver_ABC< MedicalTreatmentType >& resolver, Object_ABC*& creation )
     : MedicalTreatmentPrototype_ABC( parent, resolver )
     , creation_( creation )
 {

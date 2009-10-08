@@ -9,7 +9,7 @@
 
 #include "clients_kernel_pch.h"
 #include "AutomatComposition.h"
-#include "Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include <xeumeuleu/xml.h>
 
 using namespace kernel;
@@ -18,7 +18,7 @@ using namespace kernel;
 // Name: AutomatComposition constructor
 // Created: AGE 2006-09-05
 // -----------------------------------------------------------------------------
-AutomatComposition::AutomatComposition( xml::xistream& input, const Resolver_ABC< AgentType, std::string >& agentResolver )
+AutomatComposition::AutomatComposition( xml::xistream& input, const tools::Resolver_ABC< AgentType, std::string >& agentResolver )
     : type_( agentResolver.Get( xml::attribute< std::string >( input, "type" ) ) )
     , min_( 0 )
     , max_( std::numeric_limits< unsigned >::max() )

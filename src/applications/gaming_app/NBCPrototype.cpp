@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "NBCPrototype.h"
 #include "clients_kernel/NBCAgent.h"
-#include "clients_kernel/Iterator.h"
+#include "tools/Iterator.h"
 #include "clients_gui/ValuedListItem.h"
 #include "game_asn/SimulationSenders.h"
 
@@ -22,7 +22,7 @@ using namespace gui;
 // Name: NBCPrototype constructor
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-NBCPrototype::NBCPrototype( QWidget* parent, const Resolver_ABC< NBCAgent >& resolver, int maxToxic, ASN1T_MagicActionCreateObject& msg )
+NBCPrototype::NBCPrototype( QWidget* parent, const tools::Resolver_ABC< NBCAgent >& resolver, int maxToxic, ASN1T_MagicActionCreateObject& msg )
     : NBCPrototype_ABC( parent, resolver, maxToxic )
     , msg_      ( msg ) 
 {

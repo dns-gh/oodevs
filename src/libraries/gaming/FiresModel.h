@@ -10,7 +10,7 @@
 #ifndef __FiresModel_h_
 #define __FiresModel_h_
 
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 #include "game_asn/Simulation.h"
 
 namespace kernel
@@ -26,13 +26,13 @@ namespace kernel
 */
 // Created: AGE 2006-03-13
 // =============================================================================
-class FiresModel : public kernel::Resolver< kernel::Entity_ABC >
+class FiresModel : public tools::Resolver< kernel::Entity_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             FiresModel( const kernel::Resolver_ABC< kernel::Agent_ABC >& agents, const kernel::Resolver_ABC< kernel::Population_ABC >& populations );
+             FiresModel( const tools::Resolver_ABC< kernel::Agent_ABC >& agents, const tools::Resolver_ABC< kernel::Population_ABC >& populations );
     virtual ~FiresModel();
     //@}
 
@@ -58,8 +58,8 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::Resolver_ABC< kernel::Agent_ABC >& agents_;
-    const kernel::Resolver_ABC< kernel::Population_ABC >& populations_;
+    const tools::Resolver_ABC< kernel::Agent_ABC >& agents_;
+    const tools::Resolver_ABC< kernel::Population_ABC >& populations_;
     //@}
 };
 

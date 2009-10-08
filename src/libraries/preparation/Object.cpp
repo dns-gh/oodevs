@@ -45,7 +45,7 @@ Object::Object( kernel::Controller& controller, const kernel::CoordinateConverte
 // Name: Object constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-Object::Object( xml::xistream& xis, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType, std::string >& types, IdManager& idManager )
+Object::Object( xml::xistream& xis, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& types, IdManager& idManager )
     : EntityImplementation< Object_ABC >( controller, xml::attribute< unsigned long >( xis, "id" ), xml::attribute< std::string >( xis, "name" ).c_str() )
     , converter_( converter )
     , type_( types.Get( xml::attribute< std::string >( xis, "type" ) ) )

@@ -11,7 +11,7 @@
 #define __LogisticsModel_h_
 
 #include "game_asn/Simulation.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 class LogMaintenanceConsign;
 class LogSupplyConsign;
@@ -24,9 +24,9 @@ class LogisticConsignFactory_ABC;
 */
 // Created: AGE 2006-02-10
 // =============================================================================
-class LogisticsModel : public kernel::Resolver< LogMaintenanceConsign >
-                     , public kernel::Resolver< LogMedicalConsign >
-                     , public kernel::Resolver< LogSupplyConsign >
+class LogisticsModel : public tools::Resolver< LogMaintenanceConsign >
+                     , public tools::Resolver< LogMedicalConsign >
+                     , public tools::Resolver< LogSupplyConsign >
 {
 
 public:

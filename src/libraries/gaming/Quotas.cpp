@@ -17,7 +17,7 @@ using namespace kernel;
 // Name: Quotas constructor
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
-Quotas::Quotas( Controller& controller, const Resolver_ABC< DotationType >& dotationResolver )
+Quotas::Quotas( Controller& controller, const tools::Resolver_ABC< DotationType >& dotationResolver )
     : controller_( controller )
     , dotationResolver_( dotationResolver )
 {

@@ -11,7 +11,7 @@
 #define __AgentTemplateElement_h_
 
 #include "TemplateElement_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 class AgentsModel;
 
 namespace kernel
@@ -33,7 +33,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AgentTemplateElement( AgentsModel& agents, const kernel::Agent_ABC& agent );
-             AgentTemplateElement( AgentsModel& agents, const kernel::Resolver_ABC< kernel::AgentType, std::string >& types, xml::xistream& input );
+             AgentTemplateElement( AgentsModel& agents, const tools::Resolver_ABC< kernel::AgentType, std::string >& types, xml::xistream& input );
     virtual ~AgentTemplateElement();
     //@}
 

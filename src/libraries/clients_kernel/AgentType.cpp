@@ -22,7 +22,7 @@ using namespace xml;
 // Name: AgentType constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-AgentType::AgentType( xml::xistream& xis, const Resolver_ABC< ComponentType, std::string >& componentResolver, const Resolver_ABC< DecisionalModel, std::string >& modelResolver, const SymbolFactory& symbolFactory )
+AgentType::AgentType( xml::xistream& xis, const tools::Resolver_ABC< ComponentType, std::string >& componentResolver, const tools::Resolver_ABC< DecisionalModel, std::string >& modelResolver, const SymbolFactory& symbolFactory )
     : nature_( 0 )
 {
     std::string modelName;
@@ -55,7 +55,7 @@ AgentType::~AgentType()
 // Name: AgentType::ReadEquipment
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void AgentType::ReadEquipment( xml::xistream& xis, const Resolver_ABC< ComponentType, std::string >& resolver )
+void AgentType::ReadEquipment( xml::xistream& xis, const tools::Resolver_ABC< ComponentType, std::string >& resolver )
 {
     equipments_[ & resolver.Get( xml::attribute< std::string >( xis, "type" ) ) ]
               += xml::attribute< unsigned int >( xis, "count" );
@@ -98,12 +98,12 @@ const AgentNature& AgentType::GetNature() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Iterator< const ComponentType& > AgentType::CreateIterator
+// Name: tools::Iterator< const ComponentType& > AgentType::CreateIterator
 // Created: SBO 2007-11-09
 // -----------------------------------------------------------------------------
-Iterator< const ComponentType& > AgentType::CreateIterator() const
+tools::Iterator< const ComponentType& > AgentType::CreateIterator() const
 {
-    return new KeyIterator< const ComponentType&, T_Components >( equipments_ );
+    return new tools::KeyIterator< const ComponentType&, T_Components >( equipments_ );
 }
 
 // -----------------------------------------------------------------------------

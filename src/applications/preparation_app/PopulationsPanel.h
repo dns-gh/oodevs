@@ -11,7 +11,7 @@
 #define __PopulationsPanel_h_
 
 #include "clients_kernel/ElementObserver_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "clients_gui/InfoPanel_ABC.h"
 
 namespace kernel
@@ -43,7 +43,7 @@ class PopulationsPanel : public gui::InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationsPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::Resolver_ABC< kernel::PopulationType >& types, gui::ItemFactory_ABC& factory );
+             PopulationsPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::PopulationType >& types, gui::ItemFactory_ABC& factory );
     virtual ~PopulationsPanel();
     //@}
 

@@ -46,7 +46,7 @@ namespace
 // Name: Intelligence constructor
 // Created: SBO 2007-10-17
 // -----------------------------------------------------------------------------
-Intelligence::Intelligence( const ASN1T_MsgIntelligenceCreation& message, Controller& controller, const Resolver_ABC< Formation_ABC >& formations, const Resolver_ABC< HierarchyLevel_ABC >& levels, Publisher_ABC& publisher )
+Intelligence::Intelligence( const ASN1T_MsgIntelligenceCreation& message, Controller& controller, const tools::Resolver_ABC< Formation_ABC >& formations, const tools::Resolver_ABC< HierarchyLevel_ABC >& levels, Publisher_ABC& publisher )
     : EntityImplementation< Intelligence_ABC >( controller, message.oid, message.intelligence.name )
     , levels_   ( levels )
     , formation_( formations.Get( message.intelligence.formation ) )

@@ -13,7 +13,7 @@
 
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/Iterator.h"
+#include "tools/Iterator.h"
 
 #include <xeumeuleu/xml.h>
 #include <boost/bind.hpp>
@@ -25,7 +25,7 @@ using namespace gui;
 // Name: ObjectAttributePrototypeContainer constructor
 // Created: JCR 2008-06-11
 // -----------------------------------------------------------------------------
-ObjectAttributePrototypeContainer::ObjectAttributePrototypeContainer( const Resolver_ABC< ObjectType, std::string >& resolver, const ObjectAttributePrototypeFactory_ABC& factory, QWidget* parent )
+ObjectAttributePrototypeContainer::ObjectAttributePrototypeContainer( const tools::Resolver_ABC< ObjectType, std::string >& resolver, const ObjectAttributePrototypeFactory_ABC& factory, QWidget* parent )
     : factory_ ( factory )
     , resolver_ ( resolver )
     , current_ ()
@@ -49,7 +49,7 @@ ObjectAttributePrototypeContainer::~ObjectAttributePrototypeContainer()
 // -----------------------------------------------------------------------------
 void ObjectAttributePrototypeContainer::NotifyUpdated()
 {
-    Iterator< const ObjectType& > it = resolver_.CreateIterator();
+    tools::Iterator< const ObjectType& > it = resolver_.CreateIterator();
     while ( it.HasMoreElements() )
         Load( it.NextElement() );
 }

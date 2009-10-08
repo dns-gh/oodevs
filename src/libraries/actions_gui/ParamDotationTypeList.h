@@ -12,7 +12,7 @@
 
 #include "Param_ABC.h"
 #include "clients_kernel/OrderParameter.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -38,7 +38,7 @@ class ParamDotationTypeList : public QObject, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamDotationTypeList( QObject* parent, const kernel::OrderParameter& parameter, const kernel::Resolver_ABC< kernel::DotationType >& resolver );
+             ParamDotationTypeList( QObject* parent, const kernel::OrderParameter& parameter, const tools::Resolver_ABC< kernel::DotationType >& resolver );
     virtual ~ParamDotationTypeList();
     //@}
 
@@ -71,7 +71,7 @@ private:
     //! @name Member data
     //@{
     kernel::OrderParameter parameter_;
-    const kernel::Resolver_ABC< kernel::DotationType >& resolver_;
+    const tools::Resolver_ABC< kernel::DotationType >& resolver_;
     QListView* list_;
     //@}
 };

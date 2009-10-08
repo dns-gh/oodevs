@@ -37,7 +37,7 @@ Population::Population( const kernel::PopulationType& type, kernel::Controller& 
 // Name: Population constructor
 // Created: SBO 2006-11-08
 // -----------------------------------------------------------------------------
-Population::Population( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, const kernel::Resolver_ABC< kernel::PopulationType, std::string >& types )
+Population::Population( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, const tools::Resolver_ABC< kernel::PopulationType, std::string >& types )
     : kernel::EntityImplementation< kernel::Population_ABC >( controller, xml::attribute< int >( xis, "id" ), xml::attribute< std::string >( xis, "name" ).c_str() )
     , type_( types.Get( xml::attribute< std::string >( xis, "type" ) ) )
     , livingHumans_( xml::attribute< int >( xis, "humans" ) )

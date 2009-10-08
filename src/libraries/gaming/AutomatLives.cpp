@@ -55,7 +55,7 @@ float AutomatLives::GetLife() const
 {
     float result = 0;
     unsigned count = 0;
-    Iterator< const Entity_ABC& > children = automat_.Get< CommunicationHierarchies >().CreateSubordinateIterator();
+    tools::Iterator< const Entity_ABC& > children = automat_.Get< CommunicationHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
         result += children.NextElement().Get< Lives >().GetLife();

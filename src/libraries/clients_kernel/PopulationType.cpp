@@ -18,7 +18,7 @@ using namespace xml;
 // Name: PopulationType constructor
 // Created: AGE 2006-02-20
 // -----------------------------------------------------------------------------
-PopulationType::PopulationType( xml::xistream& xis, const Resolver_ABC< DecisionalModel, std::string >& modelResolver )
+PopulationType::PopulationType( xml::xistream& xis, const tools::Resolver_ABC< DecisionalModel, std::string >& modelResolver )
 {
     std::string model;
     xis >> attribute( "name", name_ )

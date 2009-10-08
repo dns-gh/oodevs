@@ -15,7 +15,7 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "clients_kernel/OptionalValue.h"
 #include "Types.h"
 
@@ -45,7 +45,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Object( const ASN1T_MsgObjectCreation& asnMsg, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
-                     const kernel::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver );
+                     const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver );
     virtual ~Object();
     //@}
 

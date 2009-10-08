@@ -45,7 +45,7 @@ ProfilesGenerator::~ProfilesGenerator()
 // -----------------------------------------------------------------------------
 void ProfilesGenerator::GenerateTeams( bool readonly )
 {
-    Iterator< const Team_ABC& > it = static_cast< Resolver_ABC< Team_ABC >& >( model_.teams_ ).CreateIterator();
+    tools::Iterator< const Team_ABC& > it = static_cast< tools::Resolver_ABC< Team_ABC >& >( model_.teams_ ).CreateIterator();
     while( it.HasMoreElements() )
     {
         const Entity_ABC& entity = it.NextElement();
@@ -59,12 +59,12 @@ void ProfilesGenerator::GenerateTeams( bool readonly )
 // -----------------------------------------------------------------------------
 void ProfilesGenerator::GenerateTopLevelFormations( bool readonly )
 {
-    Iterator< const Team_ABC& > it = static_cast< Resolver_ABC< Team_ABC >& >( model_.teams_ ).CreateIterator();
+    tools::Iterator< const Team_ABC& > it = static_cast< tools::Resolver_ABC< Team_ABC >& >( model_.teams_ ).CreateIterator();
     while( it.HasMoreElements() )
     {
         const Entity_ABC& entity = it.NextElement();
         const TacticalHierarchies& hierarchies = entity.Get< TacticalHierarchies >();
-        Iterator< const Entity_ABC& > subIt = hierarchies.CreateSubordinateIterator();
+        tools::Iterator< const Entity_ABC& > subIt = hierarchies.CreateSubordinateIterator();
         while( subIt.HasMoreElements() )
         {
             const Entity_ABC& subEntity = subIt.NextElement();
@@ -79,7 +79,7 @@ void ProfilesGenerator::GenerateTopLevelFormations( bool readonly )
 // -----------------------------------------------------------------------------
 void ProfilesGenerator::GenerateFormations( bool readonly )
 {
-    Iterator< const Formation_ABC& > it = static_cast< Resolver_ABC< Formation_ABC >& >( model_.formations_ ).CreateIterator();
+    tools::Iterator< const Formation_ABC& > it = static_cast< tools::Resolver_ABC< Formation_ABC >& >( model_.formations_ ).CreateIterator();
     while( it.HasMoreElements() )
     {
         const Entity_ABC& entity = it.NextElement();

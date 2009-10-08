@@ -11,7 +11,7 @@
 #define __AgentsModel_h_
 
 #include "game_asn/Simulation.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -35,9 +35,9 @@ namespace DIN
 */
 // Created: AGE 2006-02-10
 // =============================================================================
-class AgentsModel : public kernel::Resolver< kernel::Agent_ABC >
-                  , public kernel::Resolver< kernel::Automat_ABC >
-                  , public kernel::Resolver< kernel::Population_ABC >
+class AgentsModel : public tools::Resolver< kernel::Agent_ABC >
+                  , public tools::Resolver< kernel::Automat_ABC >
+                  , public tools::Resolver< kernel::Population_ABC >
 {
 
 public:

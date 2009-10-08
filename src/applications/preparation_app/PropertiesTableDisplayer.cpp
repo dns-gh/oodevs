@@ -59,7 +59,7 @@ void PropertiesTableDisplayer::Call( const Enum_DemolitionTargetType& value )
 void PropertiesTableDisplayer::Call( const DotationsItem& value )
 {
     AddToDisplay( tools::translate( "PropertiesTableDisplayer", "<Edit Property Group...>" ) );
-//    kernel::Iterator< const Dotation& > it = value.CreateIterator();
+//    tools::Iterator< const Dotation& > it = value.CreateIterator();
 //    QString result;
 //    while( it.HasMoreElements() )
 //    {

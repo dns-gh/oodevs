@@ -25,7 +25,7 @@ using namespace kernel;
 // Name: Diplomacies constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-Diplomacies::Diplomacies( Controller& controller, const Resolver_ABC< Team_ABC >& resolver, const Team_ABC& team, PropertiesDictionary& dico, TeamKarmas& karmas )
+Diplomacies::Diplomacies( Controller& controller, const tools::Resolver_ABC< Team_ABC >& resolver, const Team_ABC& team, PropertiesDictionary& dico, TeamKarmas& karmas )
     : controller_( controller )
     , resolver_( resolver )
     , team_( team )
@@ -38,7 +38,7 @@ Diplomacies::Diplomacies( Controller& controller, const Resolver_ABC< Team_ABC >
 // Name: Diplomacies constructor
 // Created: SBO 2008-12-10
 // -----------------------------------------------------------------------------
-Diplomacies::Diplomacies( xml::xistream& xis, kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Team_ABC >& resolver, const kernel::Team_ABC& team, kernel::PropertiesDictionary& dico, TeamKarmas& karmas )
+Diplomacies::Diplomacies( xml::xistream& xis, kernel::Controller& controller, const tools::Resolver_ABC< kernel::Team_ABC >& resolver, const kernel::Team_ABC& team, kernel::PropertiesDictionary& dico, TeamKarmas& karmas )
     : controller_( controller )
     , resolver_( resolver )
     , team_( team )
@@ -95,7 +95,7 @@ void Diplomacies::SetDiplomacy( const Team_ABC& team, const kernel::Karma& diplo
 void Diplomacies::Serialize( xml::xostream& xos ) const
 {
     xos << xml::attribute( "id", int( team_.GetId() ) );
-    Iterator< const Team_ABC& > it = resolver_.CreateIterator();
+    tools::Iterator< const Team_ABC& > it = resolver_.CreateIterator();
     while( it.HasMoreElements() )
     {
         const Team_ABC& team = it.NextElement();

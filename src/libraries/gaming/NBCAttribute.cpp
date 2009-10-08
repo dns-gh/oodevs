@@ -19,7 +19,7 @@ using namespace kernel;
 // Name: NBCAttribute constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-NBCAttribute::NBCAttribute( Controller& controller, const Resolver_ABC< NBCAgent >& resolver )
+NBCAttribute::NBCAttribute( Controller& controller, const tools::Resolver_ABC< NBCAgent >& resolver )
     : controller_( controller )
     , resolver_  ( resolver )
     , danger_    ( 0 )

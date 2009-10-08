@@ -41,7 +41,7 @@ EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, con
 // Name: EngineerConstruction constructor
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType, std::string >& types, const Resolver_ABC< Automat_ABC >& automats, const ASN1T_PlannedWork& asn, kernel::Controller& controller )
+EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& types, const tools::Resolver_ABC< Automat_ABC >& automats, const ASN1T_PlannedWork& asn, kernel::Controller& controller )
     : Parameter< std::string >( parameter )
     , type_( types.Get( asn.type ) )
 {
@@ -54,7 +54,7 @@ EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, con
 // Name: EngineerConstruction::SetParameters
 // Created: LDC 2009-04-01
 // -----------------------------------------------------------------------------
-void EngineerConstruction::SetParameters( const ASN1T_PlannedWork& asn, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, kernel::Controller& controller )
+void EngineerConstruction::SetParameters( const ASN1T_PlannedWork& asn, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, kernel::Controller& controller )
 {
     if( asn.tc2 != 0 )
     {
@@ -72,7 +72,7 @@ void EngineerConstruction::SetParameters( const ASN1T_PlannedWork& asn, const ke
 // Name: EngineerConstruction constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType, std::string >& types, const Resolver_ABC< Automat_ABC >& automats, xml::xistream& xis, kernel::Controller& controller )
+EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& types, const tools::Resolver_ABC< Automat_ABC >& automats, xml::xistream& xis, kernel::Controller& controller )
     : Parameter< std::string >( parameter )
     , type_( types.Get( xml::attribute< std::string >( xis, "value" ) ) )
 {
@@ -84,7 +84,7 @@ EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, con
 // Name: EngineerConstruction constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-EngineerConstruction::EngineerConstruction( const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType, std::string >& types, const Resolver_ABC< Automat_ABC >& automats, xml::xistream& xis, kernel::Controller& controller )
+EngineerConstruction::EngineerConstruction( const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& types, const tools::Resolver_ABC< Automat_ABC >& automats, xml::xistream& xis, kernel::Controller& controller )
     : Parameter< std::string >( OrderParameter( xml::attribute< std::string >( xis, "name" ).c_str(), "obstacle", false ) )
     , type_ ( types.Get( xml::attribute< std::string >( xis, "value" ) ) )
 {
@@ -105,7 +105,7 @@ EngineerConstruction::~EngineerConstruction()
 // Name: EngineerConstruction::ReadParameter
 // Created: SBO 2007-05-25
 // -----------------------------------------------------------------------------
-void EngineerConstruction::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC& converter, const Resolver_ABC< Automat_ABC >& automats, Controller& controller )
+void EngineerConstruction::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< Automat_ABC >& automats, Controller& controller )
 {
     std::string type;
     xis >> attribute( "type", type );

@@ -32,7 +32,7 @@ EngineerConstructionList::EngineerConstructionList( const OrderParameter& parame
 // Name: EngineerConstructionList constructor
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-EngineerConstructionList::EngineerConstructionList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType, std::string >& resolver, const Resolver_ABC< Automat_ABC >& automats, const ASN1T_PlannedWorkList& asn, kernel::Controller& controller )
+EngineerConstructionList::EngineerConstructionList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& resolver, const tools::Resolver_ABC< Automat_ABC >& automats, const ASN1T_PlannedWorkList& asn, kernel::Controller& controller )
     : Parameter< std::string >( parameter )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
@@ -43,7 +43,7 @@ EngineerConstructionList::EngineerConstructionList( const OrderParameter& parame
 // Name: EngineerConstructionList constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-EngineerConstructionList::EngineerConstructionList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType, std::string >& resolver, const Resolver_ABC< Automat_ABC >& automats, xml::xistream& xis, kernel::Controller& controller )
+EngineerConstructionList::EngineerConstructionList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& resolver, const tools::Resolver_ABC< Automat_ABC >& automats, xml::xistream& xis, kernel::Controller& controller )
     : Parameter< std::string >( parameter )
 {
     xis >> list( "parameter", *this, &EngineerConstructionList::ReadEngineerConstruction, converter, resolver, automats, controller );
@@ -62,7 +62,7 @@ EngineerConstructionList::~EngineerConstructionList()
 // Name: EngineerConstruction::ReadObstacle
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void EngineerConstructionList::ReadEngineerConstruction( xml::xistream& xis, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType, std::string >& resolver, const Resolver_ABC< Automat_ABC >& automats, kernel::Controller& controller )
+void EngineerConstructionList::ReadEngineerConstruction( xml::xistream& xis, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& resolver, const tools::Resolver_ABC< Automat_ABC >& automats, kernel::Controller& controller )
 {
     AddParameter( *new EngineerConstruction( converter, resolver, automats, xis, controller ) );
 }

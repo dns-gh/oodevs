@@ -25,8 +25,8 @@ using namespace kernel;
 // Name: Dotations constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Dotations::Dotations( Controller& controller, const Resolver_ABC< DotationType >& resolver, PropertiesDictionary& dico
-                    , const kernel::Resolver_ABC< kernel::Automat_ABC >& automatResolver, const kernel::Resolver_ABC< kernel::Formation_ABC >& formationResolver, const kernel::Resolver_ABC< kernel::Team_ABC >& teamResolver )
+Dotations::Dotations( Controller& controller, const tools::Resolver_ABC< DotationType >& resolver, PropertiesDictionary& dico
+                    , const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver, const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver, const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver )
     : HierarchicExtension_ABC( automatResolver, formationResolver, teamResolver )
     , controller_( controller )
     , resolver_( resolver )

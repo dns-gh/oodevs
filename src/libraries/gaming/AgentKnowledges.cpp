@@ -36,7 +36,7 @@ AgentKnowledges::AgentKnowledges( Controller& controller, const KnowledgeGroup_A
 // -----------------------------------------------------------------------------
 AgentKnowledges::~AgentKnowledges()
 {
-    Resolver< AgentKnowledge_ABC >::DeleteAll();
+    tools::Resolver< AgentKnowledge_ABC >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------

@@ -25,7 +25,7 @@ using namespace kernel;
 // Name: LogMaintenanceConsign constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogMaintenanceConsign::LogMaintenanceConsign( Controller& controller, const ASN1T_MsgLogMaintenanceHandlingCreation& message, const Resolver_ABC< Agent_ABC >& resolver, const Resolver_ABC< ComponentType >& componentResolver, const Resolver_ABC< BreakdownType >& breakdownResolver )
+LogMaintenanceConsign::LogMaintenanceConsign( Controller& controller, const ASN1T_MsgLogMaintenanceHandlingCreation& message, const tools::Resolver_ABC< Agent_ABC >& resolver, const tools::Resolver_ABC< ComponentType >& componentResolver, const tools::Resolver_ABC< BreakdownType >& breakdownResolver )
     : controller_      ( controller )
     , resolver_        ( resolver )
     , nID_             ( message.oid_consigne )

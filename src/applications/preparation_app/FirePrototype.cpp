@@ -21,7 +21,7 @@ using namespace kernel;
 // Name: FirePrototype constructor
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-FirePrototype::FirePrototype( QWidget* parent, const Resolver_ABC< FireClass >& resolver, Object_ABC*& creation )
+FirePrototype::FirePrototype( QWidget* parent, const tools::Resolver_ABC< FireClass >& resolver, Object_ABC*& creation )
     : FirePrototype_ABC( parent, resolver )
     , creation_( creation )
 {

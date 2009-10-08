@@ -26,7 +26,7 @@ using namespace kernel;
 // Name: Attributes constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Attributes::Attributes( Controller& controller, const CoordinateConverter_ABC& converter, PropertiesDictionary& dictionary, const kernel::Resolver_ABC< kernel::Team_ABC >& teamResolver )
+Attributes::Attributes( Controller& controller, const CoordinateConverter_ABC& converter, PropertiesDictionary& dictionary, const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver )
     : controller_( controller )
     , converter_ ( converter )
     , teamResolver_( teamResolver )

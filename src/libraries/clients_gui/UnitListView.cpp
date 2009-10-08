@@ -126,7 +126,7 @@ void UnitListView::DisplayList()
         DisplayByNature();
     else
     {
-        Iterator< const AutomatType& > it( types_.Resolver< AutomatType >::CreateIterator() );
+        tools::Iterator< const AutomatType& > it( types_.Resolver< AutomatType >::CreateIterator() );
         DeleteTail( ListView< UnitListView >::Display( it, this ) );
     }
 }
@@ -137,7 +137,7 @@ void UnitListView::DisplayList()
 // -----------------------------------------------------------------------------
 void UnitListView::DisplayBy( const std::string& (kernel::AgentNature::*function)() const )
 {
-    Iterator< const AgentType& > it( types_.Resolver< AgentType >::CreateIterator() );
+    tools::Iterator< const AgentType& > it( types_.Resolver< AgentType >::CreateIterator() );
     while( it.HasMoreElements() )
     {
         const AgentType& type = it.NextElement();
@@ -152,7 +152,7 @@ void UnitListView::DisplayBy( const std::string& (kernel::AgentNature::*function
         ValuedListItem* item = new ValuedListItem( parentItem );
         item->SetNamed( type );
         item->setDragEnabled( true );
-        Iterator< const ComponentType& > it( type.CreateIterator() );
+        tools::Iterator< const ComponentType& > it( type.CreateIterator() );
         DeleteTail( ListView< UnitListView >::Display( it, item ) );
     }
 }
@@ -210,7 +210,7 @@ QListViewItem* UnitListView::CreateNaturePath( const std::string& path )
 // -----------------------------------------------------------------------------
 void UnitListView::DisplayByNature()
 {
-    Iterator< const AgentType& > it( types_.Resolver< AgentType >::CreateIterator() );
+    tools::Iterator< const AgentType& > it( types_.Resolver< AgentType >::CreateIterator() );
     while( it.HasMoreElements() )
     {
         const AgentType& type = it.NextElement();
@@ -219,7 +219,7 @@ void UnitListView::DisplayByNature()
         ValuedListItem* item = new ValuedListItem( parentItem );
         item->SetNamed( type );
         item->setDragEnabled( true );
-        Iterator< const ComponentType& > it( type.CreateIterator() );
+        tools::Iterator< const ComponentType& > it( type.CreateIterator() );
         DeleteTail( ListView< UnitListView >::Display( it, item ) );
     }
     Sort( firstChild() );
@@ -276,7 +276,7 @@ void UnitListView::Display( const AutomatComposition& type, ValuedListItem* item
     else
         cnt = QString::number( type.GetMin() );
 
-    Iterator< const ComponentType& > it( type.GetType().CreateIterator() );
+    tools::Iterator< const ComponentType& > it( type.GetType().CreateIterator() );
     DeleteTail( ListView< UnitListView >::Display( it, item ) );
 
     item->Set( &type.GetType(), type.GetType().GetName().c_str(), cnt );
@@ -291,7 +291,7 @@ void UnitListView::Display( const AutomatType& type, ValuedListItem* item )
 {
     item->SetNamed( type );
     item->setDragEnabled( true );
-    Iterator< const AutomatComposition& > it( type.CreateIterator() );
+    tools::Iterator< const AutomatComposition& > it( type.CreateIterator() );
     DeleteTail( ListView< UnitListView >::Display( it, item ) );
 
     if( ValuedListItem* pcItem = FindChild( type.GetTypePC(), item ) )

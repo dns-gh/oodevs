@@ -15,9 +15,13 @@ namespace xml
     class xistream;
 }
 
-namespace kernel
+namespace tools
 {
     template< typename T, typename K > class Resolver_ABC;
+}
+
+namespace kernel
+{
     class AgentType;
 
 // =============================================================================
@@ -32,7 +36,7 @@ class AutomatComposition
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomatComposition( xml::xistream& input, const Resolver_ABC< AgentType, std::string >& agentResolver );
+             AutomatComposition( xml::xistream& input, const  tools::Resolver_ABC< AgentType, std::string >& agentResolver );
     virtual ~AutomatComposition();
     //@}
 

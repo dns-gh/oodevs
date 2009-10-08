@@ -12,7 +12,7 @@
 
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -45,7 +45,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit NBCAttribute( kernel::PropertiesDictionary& dico );
-             NBCAttribute( xml::xistream& xis, const kernel::Resolver_ABC< kernel::NBCAgent, std::string >& nbcAgents, kernel::PropertiesDictionary& dico );
+             NBCAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::NBCAgent, std::string >& nbcAgents, kernel::PropertiesDictionary& dico );
     virtual ~NBCAttribute();
     //@}
 
@@ -72,7 +72,7 @@ private:
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::PropertiesDictionary& dico );
-    void ReadNbcAgent( xml::xistream& xis, const kernel::Resolver_ABC< kernel::NBCAgent, std::string >& nbcAgents );
+    void ReadNbcAgent( xml::xistream& xis, const tools::Resolver_ABC< kernel::NBCAgent, std::string >& nbcAgents );
     //@}
 
 public:

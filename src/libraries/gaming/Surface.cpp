@@ -27,7 +27,7 @@ using namespace kernel;
 // Name: Surface constructor
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
-Surface::Surface( const Agent_ABC& agent, const ASN1T_VisionCone& message, const kernel::CoordinateConverter_ABC& converter, const DetectionMap& map, const Resolver_ABC< SensorType, std::string >& resolver, float elongation )
+Surface::Surface( const Agent_ABC& agent, const ASN1T_VisionCone& message, const kernel::CoordinateConverter_ABC& converter, const DetectionMap& map, const tools::Resolver_ABC< SensorType, std::string >& resolver, float elongation )
     : map_( map )
     , origin_( converter.ConvertToXY( message.origin ) )
     , height_( message.height + agent.Get< Positions >().GetHeight() )

@@ -22,7 +22,7 @@ using namespace actions::gui;
 // Name: ParamEquipmentList constructor
 // Created: SBO 2005-09-27
 // -----------------------------------------------------------------------------
-ParamEquipmentList::ParamEquipmentList( QObject* parent, const kernel::OrderParameter& parameter, const kernel::Resolver< kernel::EquipmentType >& resolver )
+ParamEquipmentList::ParamEquipmentList( QObject* parent, const kernel::OrderParameter& parameter, const tools::Resolver< kernel::EquipmentType >& resolver )
     : QObject( parent )
     , Param_ABC( parameter.GetName().c_str() )
     , parameter_( parameter )
@@ -64,7 +64,7 @@ void ParamEquipmentList::BuildInterface( QWidget* parent )
     {
         baseList_ = CreateList( hBox );
         baseList_->setSorting( 0, true );
-        kernel::Iterator< const kernel::EquipmentType& > it( resolver_.CreateIterator() );
+        tools::Iterator< const kernel::EquipmentType& > it( resolver_.CreateIterator() );
         while( it.HasMoreElements() )
         {
             const kernel::EquipmentType& type = it.NextElement();

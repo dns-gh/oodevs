@@ -11,7 +11,7 @@
 #define __WeatherModel_h_
 
 #include "clients_kernel/Types.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 #include <qdatetime.h>
 
 namespace kernel
@@ -34,7 +34,7 @@ class LocalWeather;
 */
 // Created: SBO 2006-12-19
 // =============================================================================
-class WeatherModel : public kernel::Resolver< LocalWeather >
+class WeatherModel : public tools::Resolver< LocalWeather >
 {
 
 public:

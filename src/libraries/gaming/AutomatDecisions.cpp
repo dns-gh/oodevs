@@ -62,7 +62,7 @@ void AutomatDecisions::DoUpdate( const ASN1T_MsgAutomatAttributes& message )
 // -----------------------------------------------------------------------------
 void AutomatDecisions::DoUpdate( const ASN1T_MsgAutomatOrder& message )
 {
-    const Resolver_ABC< Mission >& resolver = model_;
+    const tools::Resolver_ABC< Mission >& resolver = model_;
     current_ = resolver.Find( message.mission );
     controller_.Update( *this );
 }
@@ -88,22 +88,22 @@ bool AutomatDecisions::HasEngagedSuperior() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Iterator< const Mission& > AutomatDecisions::GetMissions
+// Name: tools::Iterator< const Mission& > AutomatDecisions::GetMissions
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-Iterator< const Mission& > AutomatDecisions::GetMissions() const
+tools::Iterator< const Mission& > AutomatDecisions::GetMissions() const
 {
-    const Resolver_ABC< Mission >& resolver = model_;
+    const tools::Resolver_ABC< Mission >& resolver = model_;
     return resolver.CreateIterator();
 }
 
 // -----------------------------------------------------------------------------
-// Name: Iterator< const FragOrder& > AutomatDecisions::GetFragOrders
+// Name: tools::Iterator< const FragOrder& > AutomatDecisions::GetFragOrders
 // Created: AGE 2006-04-05
 // -----------------------------------------------------------------------------
-Iterator< const FragOrder& > AutomatDecisions::GetFragOrders() const
+tools::Iterator< const FragOrder& > AutomatDecisions::GetFragOrders() const
 {
-    const Resolver_ABC< FragOrder >& resolver = model_;
+    const tools::Resolver_ABC< FragOrder >& resolver = model_;
     return resolver.CreateIterator();
 }
 

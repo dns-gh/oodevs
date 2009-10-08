@@ -16,7 +16,7 @@ using namespace kernel;
 // Name: ObjectPerceptions constructor
 // Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------
-ObjectPerceptions::ObjectPerceptions( Controller& controller, const Resolver_ABC< Automat_ABC >& agentResolver )
+ObjectPerceptions::ObjectPerceptions( Controller& controller, const tools::Resolver_ABC< Automat_ABC >& agentResolver )
     : controller_( controller )
     , agentResolver_( agentResolver )
 {

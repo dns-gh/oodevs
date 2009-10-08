@@ -19,7 +19,7 @@ using namespace kernel;
 // Name: AutomatHierarchies constructor
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-AutomatHierarchies::AutomatHierarchies( Controller& controller, Entity_ABC& holder, const Resolver_ABC< KnowledgeGroup_ABC >& groupResolver, PropertiesDictionary& dictionary )
+AutomatHierarchies::AutomatHierarchies( Controller& controller, Entity_ABC& holder, const tools::Resolver_ABC< KnowledgeGroup_ABC >& groupResolver, PropertiesDictionary& dictionary )
     : EntityHierarchies< CommunicationHierarchies >( controller, holder, 0 )
     , controller_   ( controller )
     , groupResolver_( groupResolver ) 

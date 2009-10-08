@@ -10,7 +10,7 @@
 #ifndef __AgentsModel_h_
 #define __AgentsModel_h_
 
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/WorldParameters.h"
 #include "clients_kernel/ModelLoaded.h"
@@ -43,9 +43,9 @@ class ModelChecker_ABC;
 */
 // Created: AGE 2006-02-10
 // =============================================================================
-class AgentsModel : public kernel::Resolver< kernel::Agent_ABC >
-                  , public kernel::Resolver< kernel::Automat_ABC >
-                  , public kernel::Resolver< kernel::Population_ABC >
+class AgentsModel : public tools::Resolver< kernel::Agent_ABC >
+                  , public tools::Resolver< kernel::Automat_ABC >
+                  , public tools::Resolver< kernel::Population_ABC >
                   , public kernel::Observer_ABC
                   , public kernel::ElementObserver_ABC< kernel::Agent_ABC >
                   , public kernel::ElementObserver_ABC< kernel::Automat_ABC >

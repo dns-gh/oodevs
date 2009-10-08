@@ -44,7 +44,7 @@ ObjectKnowledgeList::ObjectKnowledgeList( const OrderParameter& parameter, const
 // Name: ObjectKnowledgeList constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-ObjectKnowledgeList::ObjectKnowledgeList( const OrderParameter& parameter, xml::xistream& xis, const Resolver_ABC< Object_ABC >& resolver, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
+ObjectKnowledgeList::ObjectKnowledgeList( const OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< Object_ABC >& resolver, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
     : Parameter< QString >( parameter )
 {
     xis >> list( "parameter", *this, &ObjectKnowledgeList::ReadObjectKnowledge, resolver, converter, owner, controller );
@@ -63,7 +63,7 @@ ObjectKnowledgeList::~ObjectKnowledgeList()
 // Name: ObjectKnowledgeList::ReadObjectKnowledge
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void ObjectKnowledgeList::ReadObjectKnowledge( xml::xistream& xis, const Resolver_ABC< Object_ABC >& resolver, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
+void ObjectKnowledgeList::ReadObjectKnowledge( xml::xistream& xis, const tools::Resolver_ABC< Object_ABC >& resolver, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
 {
     AddParameter( *new ObjectKnowledge( xis, resolver, converter, owner, controller ) );
 }

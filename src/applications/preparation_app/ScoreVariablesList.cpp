@@ -62,7 +62,7 @@ ScoreVariablesList::~ScoreVariablesList()
 void ScoreVariablesList::StartEdit( const indicators::Variables& variables )
 {
     list_->clear();
-    kernel::Iterator< const indicators::Element_ABC& > it = variables.CreateIterator();
+    tools::Iterator< const indicators::Element_ABC& > it = variables.CreateIterator();
     while( it.HasMoreElements() )
         AddVariable( it.NextElement() );
 }

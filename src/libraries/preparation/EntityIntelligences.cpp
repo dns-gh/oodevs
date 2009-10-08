@@ -108,7 +108,7 @@ void EntityIntelligences::UpdateSymbol( bool up /*= true*/ )
     controller_.Update( *(Symbol_ABC*)this );
     if( ! up )
     {
-        kernel::Iterator< const kernel::Entity_ABC& > it = CreateSubordinateIterator();
+        tools::Iterator< const kernel::Entity_ABC& > it = CreateSubordinateIterator();
         while( it.HasMoreElements() )
         {
             const kernel::IntelligenceHierarchies* child = it.NextElement().Retrieve< kernel::IntelligenceHierarchies >();

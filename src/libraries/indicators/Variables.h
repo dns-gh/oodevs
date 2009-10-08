@@ -10,7 +10,7 @@
 #ifndef __Variables_h_
 #define __Variables_h_
 
-#include "clients_kernel/Iterator.h"
+#include "tools/Iterator.h"
 #include <boost/shared_ptr.hpp>
 
 namespace xml
@@ -46,7 +46,7 @@ public:
     //@{
     void Register( const std::string& name, boost::shared_ptr< Element_ABC > element );
     boost::shared_ptr< Element_ABC > Find( const std::string& name ) const;
-    kernel::Iterator< const Element_ABC& > CreateIterator() const;
+    tools::Iterator< const Element_ABC& > CreateIterator() const;
     void Serialize( xml::xostream& xos ) const;
     Variables& operator=( const Variables& );
     //@}

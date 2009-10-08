@@ -12,7 +12,7 @@
 #include "DataTypeFactory.h"
 #include "ElementTypeResolver.h"
 #include "Variable.h"
-#include "clients_kernel/Iterator.h"
+#include "tools/Iterator.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/foreach.hpp>
 #include <xeumeuleu/xml.h>
@@ -118,9 +118,9 @@ void Variables::Serialize( xml::xostream& xos ) const
 // Name: Variables::CreateIterator
 // Created: SBO 2009-05-12
 // -----------------------------------------------------------------------------
-kernel::Iterator< const Element_ABC& > Variables::CreateIterator() const
+tools::Iterator< const Element_ABC& > Variables::CreateIterator() const
 {
-    return new kernel::AssociativeIterator< const Element_ABC&, T_Elements >( elements_ ); 
+    return new tools::AssociativeIterator< const Element_ABC&, T_Elements >( elements_ ); 
 }
 
 // -----------------------------------------------------------------------------

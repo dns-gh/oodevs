@@ -11,7 +11,7 @@
 #define __kernel_EntityHierarchies_h_
 
 #include "Hierarchies.h"
-#include "Resolver.h"
+#include "tools/Resolver.h"
 #include "Updatable_ABC.h"
 #include "Creatable.h"
 
@@ -27,7 +27,7 @@ namespace kernel
 // Created: AGE 2006-09-19
 // =============================================================================
 template< typename Interface >
-class EntityHierarchies : public Interface, public Resolver< Entity_ABC >
+class EntityHierarchies : public Interface, public  tools::Resolver< Entity_ABC >
                         , public Creatable< Interface >
 {
 
@@ -42,7 +42,7 @@ public:
     //@{
     virtual const Entity_ABC* GetSuperior() const;
     virtual const Entity_ABC& GetEntity() const;
-    virtual Iterator< const Entity_ABC& > CreateSubordinateIterator() const; 
+    virtual tools::Iterator< const Entity_ABC& > CreateSubordinateIterator() const; 
     //@}
 
     //! @name Modifiers

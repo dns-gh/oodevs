@@ -20,7 +20,7 @@ using namespace kernel;
 // Name: Reinforcements constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Reinforcements::Reinforcements( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, PropertiesDictionary& dico )
+Reinforcements::Reinforcements( Controller& controller, const tools::Resolver_ABC< Agent_ABC >& resolver, PropertiesDictionary& dico )
     : controller_( controller )
     , resolver_( resolver )
     , reinforced_( 0 )

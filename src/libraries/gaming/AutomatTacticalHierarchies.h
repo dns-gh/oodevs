@@ -12,7 +12,7 @@
 
 #include "game_asn/Simulation.h"
 #include "clients_kernel/MergingTacticalHierarchies.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -36,7 +36,7 @@ public:
     //@{
              AutomatTacticalHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder,
                                          kernel::Entity_ABC& superior,
-                                         const kernel::Resolver_ABC< kernel::Automat_ABC >& automatResolver, const kernel::Resolver_ABC< kernel::Formation_ABC >& formationResolver );
+                                         const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver, const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver );
     virtual ~AutomatTacticalHierarchies();
     //@}
 
@@ -69,8 +69,8 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Resolver_ABC< kernel::Automat_ABC >& automatResolver_;
-    const kernel::Resolver_ABC< kernel::Formation_ABC >& formationResolver_;
+    const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver_;
+    const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver_;
     kernel::Entity_ABC& superior_;
     std::string level_;
     //@}

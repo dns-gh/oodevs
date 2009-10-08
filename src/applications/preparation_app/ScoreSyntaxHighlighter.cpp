@@ -84,7 +84,7 @@ void ScoreSyntaxHighlighter::Highlight( const QStringList& elements, const QStri
 // -----------------------------------------------------------------------------
 void ScoreSyntaxHighlighter::NotifyUpdated( const kernel::ModelLoaded& )
 {
-    kernel::Iterator< const indicators::Primitive& > it( primitives_.CreateIterator() );
+    tools::Iterator< const indicators::Primitive& > it( primitives_.CreateIterator() );
     while( it.HasMoreElements() )
     {
         const indicators::Primitive& primitive = it.NextElement();

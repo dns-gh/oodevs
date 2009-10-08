@@ -12,7 +12,7 @@
 
 #include "Param_ABC.h"
 #include "clients_kernel/OrderParameter.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -37,7 +37,7 @@ class ParamEquipmentList : public QObject, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamEquipmentList( QObject* parent, const kernel::OrderParameter& parameter, const kernel::Resolver< kernel::EquipmentType >& resolver );
+             ParamEquipmentList( QObject* parent, const kernel::OrderParameter& parameter, const tools::Resolver< kernel::EquipmentType >& resolver );
     virtual ~ParamEquipmentList();
     //@}
 
@@ -67,7 +67,7 @@ private:
     //! @name Member data
     //@{
     kernel::OrderParameter parameter_;
-    const kernel::Resolver< kernel::EquipmentType >& resolver_;
+    const tools::Resolver< kernel::EquipmentType >& resolver_;
     QListView* baseList_;
     QListView* list_;
     //@}

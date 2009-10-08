@@ -16,7 +16,7 @@
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Aggregatable_ABC.h"
 #include "clients_kernel/Types.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -43,7 +43,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Attributes( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter
-                       , kernel::PropertiesDictionary& dictionary, const kernel::Resolver_ABC< kernel::Team_ABC >& teamResolver );
+                       , kernel::PropertiesDictionary& dictionary, const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver );
     virtual ~Attributes();
     //@}
 
@@ -76,7 +76,7 @@ public:
     //@{
     kernel::Controller& controller_;
     const kernel::CoordinateConverter_ABC& converter_;
-    const kernel::Resolver_ABC< kernel::Team_ABC >& teamResolver_;
+    const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver_;
 
     geometry::Point2f vPos_;
     unsigned int nSpeed_;

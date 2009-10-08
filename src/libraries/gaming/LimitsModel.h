@@ -11,7 +11,7 @@
 #define __LimitsModel_h_
 
 #include "game_asn/Simulation.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 class TacticalLine_ABC;
 class TacticalLineFactory;
@@ -22,7 +22,7 @@ class TacticalLineFactory;
 */
 // Created: AGE 2006-02-10
 // =============================================================================
-class LimitsModel : public kernel::Resolver< TacticalLine_ABC >
+class LimitsModel : public tools::Resolver< TacticalLine_ABC >
 {
 
 public:

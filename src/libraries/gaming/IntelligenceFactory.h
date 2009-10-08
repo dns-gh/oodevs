@@ -12,7 +12,7 @@
 
 #include "game_asn/Simulation.h"
 #include "clients_kernel/IntelligenceFactory_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -36,7 +36,7 @@ class IntelligenceFactory : public kernel::IntelligenceFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             IntelligenceFactory( kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, const Model& model, const kernel::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels, Publisher_ABC& publisher );
+             IntelligenceFactory( kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, const Model& model, const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels, Publisher_ABC& publisher );
     virtual ~IntelligenceFactory();
     //@}
 
@@ -63,7 +63,7 @@ private:
     kernel::Controllers& controllers_;
     const kernel::CoordinateConverter_ABC& converter_;
     const Model& model_;
-    const kernel::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels_;
+    const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels_;
     Publisher_ABC& publisher_;
     //@}
 };

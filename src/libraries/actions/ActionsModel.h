@@ -10,7 +10,7 @@
 #ifndef __ActionsModel_h_
 #define __ActionsModel_h_
 
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -37,7 +37,7 @@ class ActionFactory_ABC;
 */
 // Created: SBO 2007-03-12
 // =============================================================================
-class ActionsModel : public kernel::Resolver< Action_ABC >
+class ActionsModel : public tools::Resolver< Action_ABC >
 {
 
 public:

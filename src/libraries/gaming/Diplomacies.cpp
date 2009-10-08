@@ -20,7 +20,7 @@ using namespace kernel;
 // Name: Diplomacies constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-Diplomacies::Diplomacies( Controller& controller, const Resolver_ABC< Team_ABC >& resolver )
+Diplomacies::Diplomacies( Controller& controller, const tools::Resolver_ABC< Team_ABC >& resolver )
     : controller_( controller )
     , resolver_( resolver )
 {

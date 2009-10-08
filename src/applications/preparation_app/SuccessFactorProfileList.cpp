@@ -41,7 +41,7 @@ SuccessFactorProfileList::~SuccessFactorProfileList()
 void SuccessFactorProfileList::StartEdit( const SuccessFactorProfiles& profiles )
 {
     clearSelection();
-    kernel::Iterator< const UserProfile& > it( profiles.CreateIterator() );
+    tools::Iterator< const UserProfile& > it( profiles.CreateIterator() );
     while( it.HasMoreElements() )
         Select( it.NextElement() );
 }

@@ -12,7 +12,7 @@
 
 #include "game_asn/Simulation.h"
 #include "Parameter.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -38,8 +38,8 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit EngineerConstructionList( const kernel::OrderParameter& parameter );
-             EngineerConstructionList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType, std::string >& resolver, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, const ASN1T_PlannedWorkList& asn, kernel::Controller& controller );
-             EngineerConstructionList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType, std::string >& resolver, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, xml::xistream& xis, kernel::Controller& controller );
+             EngineerConstructionList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& resolver, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, const ASN1T_PlannedWorkList& asn, kernel::Controller& controller );
+             EngineerConstructionList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& resolver, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, xml::xistream& xis, kernel::Controller& controller );
     virtual ~EngineerConstructionList();
     //@}
 
@@ -65,7 +65,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadEngineerConstruction( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType, std::string >& resolver, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, kernel::Controller& controller );
+    void ReadEngineerConstruction( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& resolver, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, kernel::Controller& controller );
     //@}
 };
 

@@ -105,7 +105,7 @@ void AfterActionFunctionList::OnSelectionChange( QListViewItem* i )
     if( ValuedListItem* item = static_cast< ValuedListItem* >( i ) )
     {
         const AfterActionFunction* function = item->GetValue< const AfterActionFunction >();
-        Iterator< const AfterActionParameter& > it = function->CreateIterator();
+        tools::Iterator< const AfterActionParameter& > it = function->CreateIterator();
         while( it.HasMoreElements() )
         {
             const AfterActionParameter& parameter = it.NextElement();

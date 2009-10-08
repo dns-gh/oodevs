@@ -25,7 +25,7 @@ using namespace kernel;
 // Name: LogisticLinks constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-LogisticLinks::LogisticLinks( Controller& controller, const Resolver_ABC< Automat_ABC >& resolver, const AutomatType& type, PropertiesDictionary& dictionary )
+LogisticLinks::LogisticLinks( Controller& controller, const tools::Resolver_ABC< Automat_ABC >& resolver, const AutomatType& type, PropertiesDictionary& dictionary )
     : controller_( controller )
     , resolver_( resolver )
     , type_( type )

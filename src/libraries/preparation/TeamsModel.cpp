@@ -104,11 +104,11 @@ Team_ABC* TeamsModel::FindTeam( const QString& name ) const
 // -----------------------------------------------------------------------------
 KnowledgeGroup_ABC* TeamsModel::FindKnowledgeGroup( const unsigned long& id ) const
 {
-    for( Resolver< Team_ABC >::CIT_Elements it = Resolver< Team_ABC >::elements_.begin(); it != Resolver< Team_ABC >::elements_.end(); ++it )
+    for( tools::Resolver< Team_ABC >::CIT_Elements it = tools::Resolver< Team_ABC >::elements_.begin(); it != tools::Resolver< Team_ABC >::elements_.end(); ++it )
     {
         Team_ABC& team = *it->second;
         const CommunicationHierarchies& hierarchies = team.Get< CommunicationHierarchies >();
-        Iterator< const Entity_ABC& > subIt = hierarchies.CreateSubordinateIterator();
+        tools::Iterator< const Entity_ABC& > subIt = hierarchies.CreateSubordinateIterator();
         while( subIt.HasMoreElements() )
         {
             const Entity_ABC& kg = subIt.NextElement();
@@ -156,12 +156,12 @@ void TeamsModel::Serialize( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Iterator< const kernel::Entity_ABC& > TeamsModel::CreateEntityIterator
+// Name: tools::Iterator< const kernel::Entity_ABC& > TeamsModel::CreateEntityIterator
 // Created: SBO 2006-09-20
 // -----------------------------------------------------------------------------
-Iterator< const Entity_ABC& > TeamsModel::CreateEntityIterator() const
+tools::Iterator< const Entity_ABC& > TeamsModel::CreateEntityIterator() const
 {
-    return new AssociativeIterator< const Entity_ABC&,Resolver< Team_ABC >::T_Elements >( elements_ );
+    return new tools::AssociativeIterator< const Entity_ABC&, tools::Resolver< Team_ABC >::T_Elements >( elements_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -227,7 +227,7 @@ bool TeamsModel::CheckValidity( ModelChecker_ABC& checker ) const
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
         const CommunicationHierarchies& hierarchies = it->second->Get< CommunicationHierarchies >();
-        Iterator< const Entity_ABC& > itSub = hierarchies.CreateSubordinateIterator();
+        tools::Iterator< const Entity_ABC& > itSub = hierarchies.CreateSubordinateIterator();
         if( !itSub.HasMoreElements() )
             return checker.Reject( QString( "%1:\n%2" )
                                   .arg( tools::translate( "Preparation", "Communication model" ) )

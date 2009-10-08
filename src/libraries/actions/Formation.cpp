@@ -31,7 +31,7 @@ Formation::Formation( const OrderParameter& parameter, const Formation_ABC& form
 // Name: Formation constructor
 // Created: SBO 2007-10-29
 // -----------------------------------------------------------------------------
-Formation::Formation( const OrderParameter& parameter, const ASN1T_OID& asn, const Resolver_ABC< Formation_ABC >& resolver, kernel::Controller& controller )
+Formation::Formation( const OrderParameter& parameter, const ASN1T_OID& asn, const tools::Resolver_ABC< Formation_ABC >& resolver, kernel::Controller& controller )
     : Entity< Formation_ABC >( parameter, &resolver.Get( asn ), controller )
 {
     // NOTHING
@@ -41,7 +41,7 @@ Formation::Formation( const OrderParameter& parameter, const ASN1T_OID& asn, con
 // Name: Formation constructor
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-Formation::Formation( const OrderParameter& parameter, xml::xistream& xis, const Resolver_ABC< Formation_ABC >& resolver, kernel::Controller& controller )
+Formation::Formation( const OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< Formation_ABC >& resolver, kernel::Controller& controller )
     : Entity< Formation_ABC >( parameter, &resolver.Get( attribute< unsigned long >( xis, "value" ) ), controller )
 {
     // NOTHING

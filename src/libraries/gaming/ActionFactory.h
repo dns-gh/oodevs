@@ -11,7 +11,7 @@
 #define __ActionFactory_h_
 
 #include "ActionFactory_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "game_asn/simulation.h"
 
 namespace kernel
@@ -38,8 +38,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              ActionFactory( kernel::Controllers& controllers, const ParameterFactory_ABC& factory, const Model& model
-                          , const kernel::Resolver_ABC< kernel::MissionType >& missions
-                          , const kernel::Resolver_ABC< kernel::FragOrderType >& fragOrders, const Simulation& simulation );
+                          , const tools::Resolver_ABC< kernel::MissionType >& missions
+                          , const tools::Resolver_ABC< kernel::FragOrderType >& fragOrders, const Simulation& simulation );
     virtual ~ActionFactory();
     //@}
 
@@ -69,7 +69,7 @@ private:
     actions::Action_ABC* CreateFragOrder( xml::xistream& xis ) const;
 
     void AddParameters( actions::Action_ABC& action, const kernel::OrderType& order, const ASN1T_MissionParameters& asn ) const;
-    void ReadParameter( xml::xistream& xis, actions::Action_ABC& action, kernel::Iterator< const kernel::OrderParameter& >& it, const kernel::Entity_ABC& entity ) const;
+    void ReadParameter( xml::xistream& xis, actions::Action_ABC& action, tools::Iterator< const kernel::OrderParameter& >& it, const kernel::Entity_ABC& entity ) const;
     //@}
 
 private:
@@ -78,8 +78,8 @@ private:
     kernel::Controllers& controllers_;
     const ParameterFactory_ABC& factory_;
     const Model& model_;
-    const kernel::Resolver_ABC< kernel::MissionType >& missions_;
-    const kernel::Resolver_ABC< kernel::FragOrderType >& fragOrders_;
+    const tools::Resolver_ABC< kernel::MissionType >& missions_;
+    const tools::Resolver_ABC< kernel::FragOrderType >& fragOrders_;
     const Simulation& simulation_;
     //@}
 };

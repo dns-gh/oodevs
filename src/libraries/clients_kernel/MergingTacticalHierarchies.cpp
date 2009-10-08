@@ -50,7 +50,7 @@ void MergingTacticalHierarchies::UpdateSymbol( bool up /*= true*/ )
 {
     if( ! up )
     {
-        Iterator< const Entity_ABC& > it = CreateSubordinateIterator();
+        tools::Iterator< const Entity_ABC& > it = CreateSubordinateIterator();
         while( it.HasMoreElements() )
         {
             const TacticalHierarchies* child = it.NextElement().Retrieve< TacticalHierarchies >();
@@ -61,7 +61,7 @@ void MergingTacticalHierarchies::UpdateSymbol( bool up /*= true*/ )
     const std::string oldSymbol = symbol_;
     const std::string oldLevel = GetLevel();
     symbol_.clear();
-    Iterator< const Entity_ABC& > it = CreateSubordinateIterator();
+    tools::Iterator< const Entity_ABC& > it = CreateSubordinateIterator();
     while( it.HasMoreElements() )
         MergeSymbol( it.NextElement() );
     if( symbol_ != oldSymbol || GetLevel() != oldLevel )

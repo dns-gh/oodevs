@@ -37,7 +37,7 @@ MedicalTreatmentAttribute::MedicalTreatmentAttribute( kernel::PropertiesDictiona
 // Name: MedicalTreatmentAttribute constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-MedicalTreatmentAttribute::MedicalTreatmentAttribute( xml::xistream& xis, const kernel::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& MedicalTreatmentTypes, kernel::PropertiesDictionary& dico )
+MedicalTreatmentAttribute::MedicalTreatmentAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& MedicalTreatmentTypes, kernel::PropertiesDictionary& dico )
     : typeList_             ( 0 )
     , nMedicalTreatmentType_( 0 )
     , beds_                 ( 0 )

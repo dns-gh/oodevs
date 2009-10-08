@@ -270,7 +270,7 @@ namespace
 {
     Entity_ABC& GetFirstCommunicationChild( const Entity_ABC& entity )
     {
-        Iterator< const Entity_ABC& > it = entity.Get< kernel::CommunicationHierarchies >().CreateSubordinateIterator();
+        tools::Iterator< const Entity_ABC& > it = entity.Get< kernel::CommunicationHierarchies >().CreateSubordinateIterator();
         if( it.HasMoreElements() )
             return const_cast< Entity_ABC& >( it.NextElement() );
         throw std::runtime_error( "No communication child found" );
@@ -284,7 +284,7 @@ namespace
         if( com && &com->GetTop() != &tacticalTop )
             static_cast< ::EntityCommunications* >( com )->ChangeSuperior( GetFirstCommunicationChild( tacticalTop ) );
 
-        Iterator< const Entity_ABC& > it = entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
+        tools::Iterator< const Entity_ABC& > it = entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
         while( it.HasMoreElements() )
             UpdateCommunicationHierarchies( const_cast< Entity_ABC& >( it.NextElement() ), superior );
     }

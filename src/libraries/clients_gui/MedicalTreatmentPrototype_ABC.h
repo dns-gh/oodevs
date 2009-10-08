@@ -11,7 +11,7 @@
 #define __MedicalTreatmentPrototype_ABC_h_
 
 #include "ObjectAttributePrototype_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "ValuedComboBox.h"
 
 namespace kernel
@@ -34,7 +34,7 @@ class MedicalTreatmentPrototype_ABC : public ObjectAttributePrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MedicalTreatmentPrototype_ABC( QWidget* parent, const kernel::Resolver_ABC< kernel::MedicalTreatmentType >& resolver );
+             MedicalTreatmentPrototype_ABC( QWidget* parent, const tools::Resolver_ABC< kernel::MedicalTreatmentType >& resolver );
     virtual ~MedicalTreatmentPrototype_ABC();
     //@}
 
@@ -59,7 +59,7 @@ private:
 protected:
     //! @name Member data
     //@{
-    const kernel::Resolver_ABC< kernel::MedicalTreatmentType >& resolver_;
+    const tools::Resolver_ABC< kernel::MedicalTreatmentType >& resolver_;
     ValuedComboBox< const kernel::MedicalTreatmentType* >* type_;    
     QSpinBox*    beds_;
     QSpinBox*    availableBeds_;

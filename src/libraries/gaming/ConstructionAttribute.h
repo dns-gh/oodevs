@@ -13,7 +13,7 @@
 #include "game_asn/Simulation.h"
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "clients_kernel/OptionalValue.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "Types.h"
@@ -41,7 +41,7 @@ class ConstructionAttribute : public kernel::ConstructionAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-            ConstructionAttribute( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::DotationType >& resolver );
+            ConstructionAttribute( kernel::Controller& controller, const tools::Resolver_ABC< kernel::DotationType >& resolver );
     virtual ~ConstructionAttribute();
     //@}
 
@@ -73,7 +73,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Resolver_ABC< kernel::DotationType >& resolver_;
+    const tools::Resolver_ABC< kernel::DotationType >& resolver_;
     kernel::DotationType*                   construction_;
     kernel::OptionalValue< float >          rConstructionPercentage_;
     kernel::OptionalValue< unsigned int >   nDotationConstruction_;

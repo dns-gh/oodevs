@@ -13,7 +13,7 @@
 #include "game_asn/Simulation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 
 namespace kernel
@@ -40,7 +40,7 @@ class PopulationDetections : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationDetections( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::Population_ABC >& resolver, const kernel::Entity_ABC& entity );
+             PopulationDetections( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::Population_ABC >& resolver, const kernel::Entity_ABC& entity );
     virtual ~PopulationDetections();
     //@}
 
@@ -73,7 +73,7 @@ private:
     //@{
     kernel::Controller& controller_;
     const kernel::CoordinateConverter_ABC& converter_;
-    const kernel::Resolver_ABC< kernel::Population_ABC >& resolver_;
+    const tools::Resolver_ABC< kernel::Population_ABC >& resolver_;
     const kernel::Entity_ABC& entity_;
     T_Parts perceived_;
     //@}

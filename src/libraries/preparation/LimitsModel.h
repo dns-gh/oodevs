@@ -10,7 +10,7 @@
 #ifndef __LimitsModel_h_
 #define __LimitsModel_h_
 
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -33,7 +33,7 @@ class IdManager;
 */
 // Created: AGE 2006-02-10
 // =============================================================================
-class LimitsModel : public kernel::Resolver< TacticalLine_ABC >
+class LimitsModel : public tools::Resolver< TacticalLine_ABC >
 {
 
 public:

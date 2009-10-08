@@ -48,7 +48,7 @@ ParamAtlasNature::~ParamAtlasNature()
 void ParamAtlasNature::BuildInterface( QWidget* parent )
 {
     QButtonGroup* group = new QButtonGroup( 2, Qt::Horizontal, GetName(), parent );
-    kernel::Iterator< const kernel::AtlasNature& > it( natures_.CreateIterator() );
+    tools::Iterator< const kernel::AtlasNature& > it( natures_.CreateIterator() );
     while( it.HasMoreElements() )
     {
         const kernel::AtlasNature& nature = it.NextElement();

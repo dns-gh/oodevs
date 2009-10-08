@@ -10,7 +10,7 @@
 #ifndef __ReportFactory_h_
 #define __ReportFactory_h_
 
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 #include "game_asn/Simulation.h"
 
 namespace tools
@@ -41,15 +41,15 @@ class ReportTemplate;
 */
 // Created: SBO 2006-12-07
 // =============================================================================
-class ReportFactory : public kernel::Resolver< ReportTemplate >
+class ReportFactory : public tools::Resolver< ReportTemplate >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
              ReportFactory( const RcEntityResolver_ABC& rcResolver
-                          , const kernel::Resolver_ABC< kernel::DotationType >& dotationResolver
-                          , const kernel::Resolver_ABC< kernel::EquipmentType >& equipmentResolver
+                          , const tools::Resolver_ABC< kernel::DotationType >& dotationResolver
+                          , const tools::Resolver_ABC< kernel::EquipmentType >& equipmentResolver
                           , const Simulation& simulation );
     virtual ~ReportFactory();
     //@}
@@ -81,8 +81,8 @@ private:
     //! @name Member data
     //@{
     const RcEntityResolver_ABC&                          rcResolver_;
-    const kernel::Resolver_ABC< kernel::DotationType >&  dotationResolver_;
-    const kernel::Resolver_ABC< kernel::EquipmentType >& equipmentResolver_;
+    const tools::Resolver_ABC< kernel::DotationType >&  dotationResolver_;
+    const tools::Resolver_ABC< kernel::EquipmentType >& equipmentResolver_;
     const Simulation& simulation_;
     //@}
 };

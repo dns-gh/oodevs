@@ -10,7 +10,7 @@
 #ifndef __MissionFactory_h_
 #define __MissionFactory_h_
 
-#include "Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -31,8 +31,8 @@ class MissionFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionFactory( const Resolver_ABC< MissionType, std::string >& unitMissions, const Resolver_ABC< MissionType, std::string >& automatMissions
-                           , const Resolver_ABC< MissionType, std::string >& populationMissions, const Resolver_ABC< FragOrderType, std::string >& fragOrders );
+             MissionFactory( const  tools::Resolver_ABC< MissionType, std::string >& unitMissions, const  tools::Resolver_ABC< MissionType, std::string >& automatMissions
+                           , const  tools::Resolver_ABC< MissionType, std::string >& populationMissions, const  tools::Resolver_ABC< FragOrderType, std::string >& fragOrders );
     virtual ~MissionFactory();
     //@}
 
@@ -59,10 +59,10 @@ private:
 private:
     //! @name Member data
     //@{
-    const Resolver_ABC< MissionType, std::string >& unitMissions_;
-    const Resolver_ABC< MissionType, std::string >& automatMissions_;
-    const Resolver_ABC< MissionType, std::string >& populationMissions_;
-    const Resolver_ABC< FragOrderType, std::string >& fragOrders_;
+    const  tools::Resolver_ABC< MissionType, std::string >& unitMissions_;
+    const  tools::Resolver_ABC< MissionType, std::string >& automatMissions_;
+    const  tools::Resolver_ABC< MissionType, std::string >& populationMissions_;
+    const  tools::Resolver_ABC< FragOrderType, std::string >& fragOrders_;
     //@}
 };
 

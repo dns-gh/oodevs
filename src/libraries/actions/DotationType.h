@@ -11,7 +11,7 @@
 #define __ActionParameterDotationType_h_
 
 #include "Parameter.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -33,8 +33,8 @@ class DotationType : public Parameter< std::string >
 public:
     //! @name Constructors/Destructor
     //@{
-             DotationType( const kernel::OrderParameter& parameter, unsigned int id, const kernel::Resolver_ABC< kernel::DotationType >& resolver );
-             DotationType( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Resolver_ABC< kernel::DotationType >& resolver );
+             DotationType( const kernel::OrderParameter& parameter, unsigned int id, const tools::Resolver_ABC< kernel::DotationType >& resolver );
+             DotationType( const kernel::OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< kernel::DotationType >& resolver );
     virtual ~DotationType();
     //@}
 

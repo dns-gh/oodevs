@@ -11,7 +11,7 @@
 #define __Stocks_h_
 
 #include "clients_kernel/Extension_ABC.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 #include "clients_kernel/Serializable_ABC.h"
 
 namespace kernel
@@ -37,7 +37,7 @@ class DotationsItem;
 // Created: SBO 2006-11-27
 // =============================================================================
 class Stocks : public kernel::Extension_ABC
-             , public kernel::Resolver< Dotation >
+             , public tools::Resolver< Dotation >
              , public kernel::Serializable_ABC
 {
 
@@ -45,7 +45,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Stocks( kernel::Controller& controller, kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dico );
-             Stocks( xml::xistream& xis, kernel::Controller& controller, kernel::Entity_ABC& entity, const kernel::Resolver_ABC< kernel::DotationType, std::string >& resolver, kernel::PropertiesDictionary& dico );
+             Stocks( xml::xistream& xis, kernel::Controller& controller, kernel::Entity_ABC& entity, const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, kernel::PropertiesDictionary& dico );
     virtual ~Stocks();
     //@}
 
@@ -60,7 +60,7 @@ private:
     //@{
     void CreateDictionary( kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dico );
     virtual void SerializeAttributes( xml::xostream& xos ) const;
-    void ReadDotation( xml::xistream& xis, const kernel::Resolver_ABC< kernel::DotationType, std::string >& resolver );
+    void ReadDotation( xml::xistream& xis, const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver );
     //@}
 
 private:

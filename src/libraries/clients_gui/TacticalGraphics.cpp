@@ -44,7 +44,7 @@ TacticalGraphics::~TacticalGraphics()
 // -----------------------------------------------------------------------------
 void TacticalGraphics::NotifyCreated( const DrawingCategory& category )
 {
-    kernel::Iterator< const DrawingTemplate& > it( category.CreateIterator() );
+    tools::Iterator< const DrawingTemplate& > it( category.CreateIterator() );
     while( it.HasMoreElements() )
     {
         const DrawingTemplate& drawing = it.NextElement();
@@ -58,7 +58,7 @@ void TacticalGraphics::NotifyCreated( const DrawingCategory& category )
 // -----------------------------------------------------------------------------
 void TacticalGraphics::NotifyDeleted( const DrawingCategory& category )
 {
-    kernel::Iterator< const DrawingTemplate& > it( category.CreateIterator() );
+    tools::Iterator< const DrawingTemplate& > it( category.CreateIterator() );
     while( it.HasMoreElements() )
     {
         const DrawingTemplate& drawing = it.NextElement();

@@ -191,7 +191,7 @@ void GradientWidget::Commit()
 void GradientWidget::Reset()
 {
     Clear();
-    kernel::Iterator< const Gradient& > it = preferences_.CreateIterator();
+    tools::Iterator< const Gradient& > it = preferences_.CreateIterator();
     while( it.HasMoreElements() )
     {
         const Gradient& item = it.NextElement();

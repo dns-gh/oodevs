@@ -40,7 +40,7 @@ geometry::Point2f FormationPositions::GetPosition() const
 {
     geometry::Point2f aggregatedPosition;
     unsigned count = 0;
-    kernel::Iterator< const kernel::Entity_ABC& > children = formation_.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
+    tools::Iterator< const kernel::Entity_ABC& > children = formation_.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
         const geometry::Point2f& childPosition = children.NextElement().Get< kernel::Positions >().GetPosition();
@@ -58,7 +58,7 @@ float FormationPositions::GetHeight() const
 {
     float height = 0;
     unsigned count = 0;
-    kernel::Iterator< const kernel::Entity_ABC& > children = formation_.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
+    tools::Iterator< const kernel::Entity_ABC& > children = formation_.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
         height += children.NextElement().Get< kernel::Positions >().GetHeight();
@@ -117,7 +117,7 @@ void FormationPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 void FormationPositions::Move( const geometry::Point2f& point )
 {
     const geometry::Vector2f vect( GetPosition(), point );
-    kernel::Iterator< const kernel::Entity_ABC& > children = formation_.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
+    tools::Iterator< const kernel::Entity_ABC& > children = formation_.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
         const kernel::Positions* positions = children.NextElement().Retrieve< kernel::Positions >();

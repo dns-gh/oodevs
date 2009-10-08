@@ -21,7 +21,7 @@ using namespace actions;
 
 namespace
 {
-    const OrderType& ResolveType( xml::xistream& xis, const Resolver_ABC< FragOrderType >& missions, const Entity_ABC& entity )
+    const OrderType& ResolveType( xml::xistream& xis, const tools::Resolver_ABC< FragOrderType >& missions, const Entity_ABC& entity )
     {
         const unsigned int id = xml::attribute< unsigned int >( xis, "id", 0 );
         const std::string name = xml::attribute< std::string >( xis, "name", "" );
@@ -49,7 +49,7 @@ FragOrder::FragOrder( const Entity_ABC& entity, const FragOrderType& fragOrder, 
 // Name: FragOrder constructor
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-FragOrder::FragOrder( xml::xistream& xis, Controller& controller, const Resolver_ABC< FragOrderType >& fragOrders, const Entity_ABC& entity )
+FragOrder::FragOrder( xml::xistream& xis, Controller& controller, const tools::Resolver_ABC< FragOrderType >& fragOrders, const Entity_ABC& entity )
     : Action_ABC ( xis, controller, ResolveType( xis, fragOrders, entity ), entity )
     , controller_( controller )
     , registered_( true )

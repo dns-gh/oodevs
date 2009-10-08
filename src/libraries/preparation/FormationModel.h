@@ -10,7 +10,7 @@
 #ifndef __FormationModel_h_
 #define __FormationModel_h_
 
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 
 namespace kernel
@@ -37,7 +37,7 @@ class Model;
 */
 // Created: SBO 2006-09-19
 // =============================================================================
-class FormationModel : public kernel::Resolver< kernel::Formation_ABC >
+class FormationModel : public tools::Resolver< kernel::Formation_ABC >
                      , public kernel::Observer_ABC
                      , public kernel::ElementObserver_ABC< kernel::Formation_ABC >
 {

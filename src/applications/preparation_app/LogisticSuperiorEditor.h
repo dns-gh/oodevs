@@ -13,7 +13,7 @@
 #include "clients_gui/ValuedComboBox.h"
 #include "clients_kernel/ValueEditor.h"
 #include "clients_kernel/ElementObserver_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "preparation/LogisticSuperior.h"
 
 // =============================================================================
@@ -32,7 +32,7 @@ class LogisticSuperiorEditor : public gui::ValuedComboBox< const kernel::Automat
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticSuperiorEditor( QWidget* parent, kernel::Controllers& controllers, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver, const kernel::Entity_ABC& selected );
+             LogisticSuperiorEditor( QWidget* parent, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver, const kernel::Entity_ABC& selected );
     virtual ~LogisticSuperiorEditor();
     //@}
 

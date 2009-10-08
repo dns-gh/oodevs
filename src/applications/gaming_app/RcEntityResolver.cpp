@@ -46,7 +46,7 @@ RcEntityResolver::~RcEntityResolver()
 // -----------------------------------------------------------------------------
 void RcEntityResolver::NotifyCreated( const Agent_ABC& element )
 {
-    Resolver< Agent_ABC >::Register( element.GetId(), const_cast< Agent_ABC& >( element ) );
+    tools::Resolver< Agent_ABC >::Register( element.GetId(), const_cast< Agent_ABC& >( element ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +55,7 @@ void RcEntityResolver::NotifyCreated( const Agent_ABC& element )
 // -----------------------------------------------------------------------------
 void RcEntityResolver::NotifyDeleted( const Agent_ABC& element )
 {
-    Resolver< Agent_ABC >::Remove( element.GetId() );
+    tools::Resolver< Agent_ABC >::Remove( element.GetId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,7 +64,7 @@ void RcEntityResolver::NotifyDeleted( const Agent_ABC& element )
 // -----------------------------------------------------------------------------
 void RcEntityResolver::NotifyCreated( const ObjectKnowledge_ABC& element )
 {
-    Resolver< ObjectKnowledge_ABC >::Register( element.GetId(), const_cast< ObjectKnowledge_ABC& >( element ) );
+    tools::Resolver< ObjectKnowledge_ABC >::Register( element.GetId(), const_cast< ObjectKnowledge_ABC& >( element ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +73,7 @@ void RcEntityResolver::NotifyCreated( const ObjectKnowledge_ABC& element )
 // -----------------------------------------------------------------------------
 void RcEntityResolver::NotifyDeleted( const ObjectKnowledge_ABC& element )
 {
-    Resolver< ObjectKnowledge_ABC >::Remove( element.GetId() );
+    tools::Resolver< ObjectKnowledge_ABC >::Remove( element.GetId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,7 +82,7 @@ void RcEntityResolver::NotifyDeleted( const ObjectKnowledge_ABC& element )
 // -----------------------------------------------------------------------------
 void RcEntityResolver::NotifyCreated( const AgentKnowledge_ABC& element )
 {
-    Resolver< AgentKnowledge_ABC >::Register( element.GetId(), const_cast< AgentKnowledge_ABC& >( element ) );
+    tools::Resolver< AgentKnowledge_ABC >::Register( element.GetId(), const_cast< AgentKnowledge_ABC& >( element ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,7 +91,7 @@ void RcEntityResolver::NotifyCreated( const AgentKnowledge_ABC& element )
 // -----------------------------------------------------------------------------
 void RcEntityResolver::NotifyDeleted( const AgentKnowledge_ABC& element )
 {
-    Resolver< AgentKnowledge_ABC >::Remove( element.GetId() );
+    tools::Resolver< AgentKnowledge_ABC >::Remove( element.GetId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -100,7 +100,7 @@ void RcEntityResolver::NotifyDeleted( const AgentKnowledge_ABC& element )
 // -----------------------------------------------------------------------------
 void RcEntityResolver::NotifyCreated( const PopulationKnowledge_ABC& element )
 {
-    Resolver< PopulationKnowledge_ABC >::Register( element.GetId(), const_cast< PopulationKnowledge_ABC& >( element ) );
+    tools::Resolver< PopulationKnowledge_ABC >::Register( element.GetId(), const_cast< PopulationKnowledge_ABC& >( element ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -109,7 +109,7 @@ void RcEntityResolver::NotifyCreated( const PopulationKnowledge_ABC& element )
 // -----------------------------------------------------------------------------
 void RcEntityResolver::NotifyDeleted( const PopulationKnowledge_ABC& element )
 {
-    Resolver< PopulationKnowledge_ABC >::Remove( element.GetId() );
+    tools::Resolver< PopulationKnowledge_ABC >::Remove( element.GetId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,7 +136,7 @@ QString RcEntityResolver::CreateLink( const QString& type, unsigned long id ) co
 template< typename T >
 QString RcEntityResolver::CreateLink( unsigned long id ) const
 {
-    const T* element = Resolver< T >::Find( id );
+    const T* element = tools::Resolver< T >::Find( id );
     if( element )
         return InternalLinks::CreateLink( *element, element->GetName() );
     return tools::translate( "RcEntityResolver", "[Unknown]" ); // can now happen with the replayer

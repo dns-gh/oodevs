@@ -12,7 +12,7 @@
 
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Population_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "EnumTypes.h"
 
@@ -45,7 +45,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Population( const kernel::PopulationType& type, kernel::Controller& controller, IdManager& idManager );
-             Population( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, const kernel::Resolver_ABC< kernel::PopulationType, std::string >& types );
+             Population( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, const tools::Resolver_ABC< kernel::PopulationType, std::string >& types );
     virtual ~Population();
     //@}
 

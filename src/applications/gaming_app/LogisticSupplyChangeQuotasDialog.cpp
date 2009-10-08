@@ -20,7 +20,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/DotationType.h"
-#include "clients_kernel/Iterator.h"
+#include "tools/Iterator.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_gui/ExclusiveComboTableItem.h"
@@ -112,7 +112,7 @@ void LogisticSupplyChangeQuotasDialog::Show()
         return;
 
     targetCombo_->Clear();
-    Iterator< const Automat_ABC& > it = model_.agents_.Resolver< Automat_ABC >::CreateIterator();
+    tools::Iterator< const Automat_ABC& > it = model_.agents_.Resolver< Automat_ABC >::CreateIterator();
     while( it.HasMoreElements() )
     {
         const Automat_ABC& agent = it.NextElement();
@@ -191,7 +191,7 @@ void LogisticSupplyChangeQuotasDialog::OnSelectionChanged()
     {
         // $$$$ AGE 2006-10-06: use LogisticHierarchies ?
         const CommunicationHierarchies& hierarchies = agent->Get< CommunicationHierarchies >();
-        Iterator< const Entity_ABC& > children = hierarchies.CreateSubordinateIterator();
+        tools::Iterator< const Entity_ABC& > children = hierarchies.CreateSubordinateIterator();
         
         while( children.HasMoreElements() )
             AddDotation( children.NextElement() );
@@ -207,7 +207,7 @@ void LogisticSupplyChangeQuotasDialog::AddDotation( const kernel::Entity_ABC& en
     const SupplyStates* states = entity.Retrieve< SupplyStates >();
     if( states )
     {
-        Iterator< const Dotation& > it = states->CreateIterator();
+        tools::Iterator< const Dotation& > it = states->CreateIterator();
         while( it.HasMoreElements() )
         {
             const Dotation& dotation = it.NextElement();

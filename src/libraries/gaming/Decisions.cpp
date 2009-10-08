@@ -51,7 +51,7 @@ Decisions::~Decisions()
 // -----------------------------------------------------------------------------
 void Decisions::DoUpdate( const ASN1T_MsgUnitOrder& message )
 {
-    const Resolver_ABC< Mission >& resolver = GetDecisionalModel();
+    const tools::Resolver_ABC< Mission >& resolver = GetDecisionalModel();
     current_ = resolver.Find( message.mission );
     controller_.Update( *this );
 }
@@ -67,22 +67,22 @@ bool Decisions::CanBeOrdered() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Iterator< Mission > Decisions::GetMissions
+// Name: tools::Iterator< Mission > Decisions::GetMissions
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-Iterator< const Mission& > Decisions::GetMissions() const
+tools::Iterator< const Mission& > Decisions::GetMissions() const
 {
-    const Resolver_ABC< Mission >& resolver = GetDecisionalModel();
+    const tools::Resolver_ABC< Mission >& resolver = GetDecisionalModel();
     return resolver.CreateIterator();
 }
 
 // -----------------------------------------------------------------------------
-// Name: Iterator< const FragOrder& > Decisions::GetFragOrders
+// Name: tools::Iterator< const FragOrder& > Decisions::GetFragOrders
 // Created: AGE 2006-04-05
 // -----------------------------------------------------------------------------
-Iterator< const FragOrder& > Decisions::GetFragOrders() const
+tools::Iterator< const FragOrder& > Decisions::GetFragOrders() const
 {
-    const Resolver_ABC< FragOrder >& resolver = GetDecisionalModel();
+    const tools::Resolver_ABC< FragOrder >& resolver = GetDecisionalModel();
     return resolver.CreateIterator();
 }
 

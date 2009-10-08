@@ -171,7 +171,7 @@ namespace
                 h = entity.Retrieve< TacticalHierarchies >();
             if( h )
             {
-                Iterator< const Entity_ABC& > it = h->CreateSubordinateIterator();
+                tools::Iterator< const Entity_ABC& > it = h->CreateSubordinateIterator();
                 while( it.HasMoreElements() )
                 {
                     const Entity_ABC& entity = it.NextElement();
@@ -323,7 +323,7 @@ namespace
                 return true;
         if( const kernel::TacticalHierarchies* hierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
         {
-            kernel::Iterator< const kernel::Entity_ABC& > it = hierarchies->CreateSubordinateIterator();
+            tools::Iterator< const kernel::Entity_ABC& > it = hierarchies->CreateSubordinateIterator();
             while( it.HasMoreElements() )
                 if( IsSurrendered( it.NextElement() ) )
                     return true;

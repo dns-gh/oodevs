@@ -66,12 +66,12 @@ void ObjectTypes::Load( const tools::ExerciseConfig& config )
 // -----------------------------------------------------------------------------
 void ObjectTypes::Purge()
 {
-    Resolver< BreakdownType >::DeleteAll();
+    tools::Resolver< BreakdownType >::DeleteAll();
     Resolver2< NBCAgent >::DeleteAll();
-    Resolver< EquipmentType >::DeleteAll();
-    Resolver< WeaponSystemType, std::string >::DeleteAll();
+    tools::Resolver< EquipmentType >::DeleteAll();
+    tools::Resolver< WeaponSystemType, std::string >::DeleteAll();
     Resolver2< DotationType >::DeleteAll();
-    StringResolver< ObjectType >::DeleteAll();
+     tools::StringResolver< ObjectType >::DeleteAll();
     Resolver2< FireClass >::DeleteAll();
     Resolver2< MedicalTreatmentType >::DeleteAll();
 }
@@ -101,7 +101,7 @@ void ObjectTypes::ReadObjectTypes( xml::xistream& xis )
 void ObjectTypes::ReadObjectType( xml::xistream& xis )
 {
     ObjectType* type = new ObjectType( xis );
-    StringResolver< ObjectType >::Register( type->GetType(), *type );
+     tools::StringResolver< ObjectType >::Register( type->GetType(), *type );
 }
 
 // -----------------------------------------------------------------------------
@@ -139,7 +139,7 @@ void ObjectTypes::ReadWeaponSystems( xml::xistream& xis )
 void ObjectTypes::ReadWeaponSystem( xml::xistream& xis )
 {
     WeaponSystemType* type = new WeaponSystemType( xis );
-    Resolver< WeaponSystemType, std::string >::Register( type->GetId(), *type );
+    tools::Resolver< WeaponSystemType, std::string >::Register( type->GetId(), *type );
 }
 
 // -----------------------------------------------------------------------------
@@ -158,7 +158,7 @@ void ObjectTypes::ReadEquipments( xml::xistream& xis )
 void ObjectTypes::ReadEquipment( xml::xistream& xis )
 {
     EquipmentType* equipment = new EquipmentType( xis, *this );
-    Resolver< EquipmentType >::Register( equipment->GetId(), *equipment );
+    tools::Resolver< EquipmentType >::Register( equipment->GetId(), *equipment );
 }
 
 // -----------------------------------------------------------------------------
@@ -242,5 +242,5 @@ void ObjectTypes::ReadBreakdownCategory( xml::xistream& xis )
 void ObjectTypes::ReadBreakdown( xml::xistream& xis )
 {
     BreakdownType* breakdown = new BreakdownType( xis );
-    Resolver< BreakdownType >::Register( breakdown->GetId(), *breakdown );
+    tools::Resolver< BreakdownType >::Register( breakdown->GetId(), *breakdown );
 }

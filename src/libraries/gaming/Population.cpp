@@ -30,7 +30,7 @@ unsigned long Population::nMaxId_ = 200;
 // Name: Population constructor
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-Population::Population( const ASN1T_MsgPopulationCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< PopulationType >& typeResolver )
+Population::Population( const ASN1T_MsgPopulationCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< PopulationType >& typeResolver )
     : EntityImplementation< Population_ABC >( controller, message.oid, message.nom )
     , controller_   ( controller )
     , converter_    ( converter )
@@ -48,8 +48,8 @@ Population::Population( const ASN1T_MsgPopulationCreation& message, Controller& 
 // -----------------------------------------------------------------------------
 Population::~Population()
 {
-    Resolver< PopulationFlow_ABC >::DeleteAll();
-    Resolver< PopulationConcentration_ABC >::DeleteAll();
+    tools::Resolver< PopulationFlow_ABC >::DeleteAll();
+    tools::Resolver< PopulationConcentration_ABC >::DeleteAll();
     Destroy();
 }
 
@@ -61,12 +61,12 @@ unsigned int Population::GetDeadHumans() const
 {
     unsigned int dead = 0;
     {
-        Iterator< const PopulationFlow_ABC& > it = Resolver< PopulationFlow_ABC >::CreateIterator();
+        tools::Iterator< const PopulationFlow_ABC& > it = tools::Resolver< PopulationFlow_ABC >::CreateIterator();
         while( it.HasMoreElements() )
             dead += it.NextElement().GetDeadHumans();
     }
     {
-        Iterator< const PopulationConcentration_ABC& > it = Resolver< PopulationConcentration_ABC >::CreateIterator();
+        tools::Iterator< const PopulationConcentration_ABC& > it = tools::Resolver< PopulationConcentration_ABC >::CreateIterator();
         while( it.HasMoreElements() )
             dead += it.NextElement().GetDeadHumans();
     }
@@ -81,12 +81,12 @@ unsigned int Population::GetLivingHumans() const
 {
     unsigned int living = 0;
     {
-        Iterator< const PopulationFlow_ABC& > it = Resolver< PopulationFlow_ABC >::CreateIterator();
+        tools::Iterator< const PopulationFlow_ABC& > it = tools::Resolver< PopulationFlow_ABC >::CreateIterator();
         while( it.HasMoreElements() )
             living += it.NextElement().GetLivingHumans();
     }
     {
-        Iterator< const PopulationConcentration_ABC& > it = Resolver< PopulationConcentration_ABC >::CreateIterator();
+        tools::Iterator< const PopulationConcentration_ABC& > it = tools::Resolver< PopulationConcentration_ABC >::CreateIterator();
         while( it.HasMoreElements() )
             living += it.NextElement().GetLivingHumans();
     }
@@ -99,7 +99,7 @@ unsigned int Population::GetLivingHumans() const
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const ASN1T_MsgPopulationFlowUpdate& asnMsg )
 {
-    static_cast< PopulationFlow& >( Resolver< PopulationFlow_ABC >::Get( asnMsg.oid ) ).Update( asnMsg );
+    static_cast< PopulationFlow& >( tools::Resolver< PopulationFlow_ABC >::Get( asnMsg.oid ) ).Update( asnMsg );
     ComputeCenter();
     Touch();
 }
@@ -110,7 +110,7 @@ void Population::DoUpdate( const ASN1T_MsgPopulationFlowUpdate& asnMsg )
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg )
 {
-    static_cast< PopulationConcentration& >( Resolver< PopulationConcentration_ABC >::Get( asnMsg.oid ) ).Update( asnMsg );
+    static_cast< PopulationConcentration& >( tools::Resolver< PopulationConcentration_ABC >::Get( asnMsg.oid ) ).Update( asnMsg );
     ComputeCenter();
     Touch();
 }
@@ -121,11 +121,11 @@ void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg 
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const ASN1T_MsgPopulationFlowCreation& asnMsg )
 {
-    if( ! Resolver< PopulationFlow_ABC >::Find( asnMsg.oid ) )
+    if( ! tools::Resolver< PopulationFlow_ABC >::Find( asnMsg.oid ) )
     {
         PopulationFlow* entity = new PopulationFlow( asnMsg, converter_ );
         entity->Attach< kernel::Positions >( *new PopulationPartPositionsProxy( *entity ) );
-        Resolver< PopulationFlow_ABC >::Register( asnMsg.oid , *entity );
+        tools::Resolver< PopulationFlow_ABC >::Register( asnMsg.oid , *entity );
         ComputeCenter();
         Touch();
     }
@@ -137,11 +137,11 @@ void Population::DoUpdate( const ASN1T_MsgPopulationFlowCreation& asnMsg )
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationCreation& asnMsg )
 {
-    if( ! Resolver< PopulationConcentration_ABC >::Find( asnMsg.oid ) )
+    if( ! tools::Resolver< PopulationConcentration_ABC >::Find( asnMsg.oid ) )
     {
         PopulationConcentration* entity = new PopulationConcentration( asnMsg, converter_, type_.GetDensity() );
         entity->Attach< kernel::Positions >( *new PopulationPartPositionsProxy( *entity ) );
-        Resolver< PopulationConcentration_ABC >::Register( asnMsg.oid, *entity );
+        tools::Resolver< PopulationConcentration_ABC >::Register( asnMsg.oid, *entity );
         ComputeCenter();
         Touch();
     }
@@ -153,8 +153,8 @@ void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationCreation& asnMs
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const ASN1T_MsgPopulationFlowDestruction& asnMsg )
 {
-    delete Resolver< PopulationFlow_ABC >::Find( asnMsg.oid );
-    Resolver< PopulationFlow_ABC >::Remove( asnMsg.oid );
+    delete tools::Resolver< PopulationFlow_ABC >::Find( asnMsg.oid );
+    tools::Resolver< PopulationFlow_ABC >::Remove( asnMsg.oid );
     ComputeCenter();
     Touch();
 }
@@ -165,8 +165,8 @@ void Population::DoUpdate( const ASN1T_MsgPopulationFlowDestruction& asnMsg )
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg )
 {
-    delete Resolver< PopulationConcentration_ABC >::Find( asnMsg.oid );
-    Resolver< PopulationConcentration_ABC >::Remove( asnMsg.oid );
+    delete tools::Resolver< PopulationConcentration_ABC >::Find( asnMsg.oid );
+    tools::Resolver< PopulationConcentration_ABC >::Remove( asnMsg.oid );
     ComputeCenter();
     Touch();
 }
@@ -190,12 +190,12 @@ void Population::Draw( const geometry::Point2f& where, const kernel::Viewport_AB
     if( viewport.IsVisible( boundingBox_ ) )
     {
         {
-            Iterator< const PopulationFlow_ABC& > it = Resolver< PopulationFlow_ABC >::CreateIterator();
+            tools::Iterator< const PopulationFlow_ABC& > it = tools::Resolver< PopulationFlow_ABC >::CreateIterator();
             while( it.HasMoreElements() )
                 it.NextElement().Draw( where, viewport, tools );
         }
         {
-            Iterator< const PopulationConcentration_ABC& > it = Resolver< PopulationConcentration_ABC >::CreateIterator();
+            tools::Iterator< const PopulationConcentration_ABC& > it = tools::Resolver< PopulationConcentration_ABC >::CreateIterator();
             while( it.HasMoreElements() )
                 it.NextElement().Draw( where, viewport, tools );
         }
@@ -205,9 +205,9 @@ void Population::Draw( const geometry::Point2f& where, const kernel::Viewport_AB
 namespace
 {
     template< typename Entity, typename ConcreteEntity >
-    void IncorporateBoundingBox( const Resolver< Entity >& resolver, Rectangle2f& boundingBox, Point2f& center )
+    void IncorporateBoundingBox( const tools::Resolver< Entity >& resolver, Rectangle2f& boundingBox, Point2f& center )
     {
-        Iterator< const Entity& > it = resolver.CreateIterator();
+        tools::Iterator< const Entity& > it = resolver.CreateIterator();
         while( it.HasMoreElements() )
         {
             const ConcreteEntity& concreteEntity = static_cast< const ConcreteEntity& >( it.NextElement() );
@@ -257,7 +257,7 @@ float Population::GetHeight() const
 bool Population::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/ ) const
 {
     {
-        Iterator< const PopulationConcentration_ABC& > it = Resolver< PopulationConcentration_ABC >::CreateIterator();
+        tools::Iterator< const PopulationConcentration_ABC& > it = tools::Resolver< PopulationConcentration_ABC >::CreateIterator();
         while( it.HasMoreElements() )
         {
             const PopulationConcentration& concreteEntity = static_cast< const PopulationConcentration& >( it.NextElement() );
@@ -266,7 +266,7 @@ bool Population::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/
         }
     }
     {
-        Iterator< const PopulationFlow_ABC& > it = Resolver< PopulationFlow_ABC >::CreateIterator();
+        tools::Iterator< const PopulationFlow_ABC& > it = tools::Resolver< PopulationFlow_ABC >::CreateIterator();
         while( it.HasMoreElements() )
         {
             const PopulationFlow& concreteEntity = static_cast< const PopulationFlow& >( it.NextElement() );
@@ -284,7 +284,7 @@ bool Population::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/
 bool Population::IsIn( const geometry::Rectangle2f& rectangle ) const
 {
     {
-        Iterator< const PopulationConcentration_ABC& > it = Resolver< PopulationConcentration_ABC >::CreateIterator();
+        tools::Iterator< const PopulationConcentration_ABC& > it = tools::Resolver< PopulationConcentration_ABC >::CreateIterator();
         while( it.HasMoreElements() )
         {
             const PopulationConcentration& concreteEntity = static_cast< const PopulationConcentration& >( it.NextElement() );
@@ -293,7 +293,7 @@ bool Population::IsIn( const geometry::Rectangle2f& rectangle ) const
         }
     }
     {
-        Iterator< const PopulationFlow_ABC& > it = Resolver< PopulationFlow_ABC >::CreateIterator();
+        tools::Iterator< const PopulationFlow_ABC& > it = tools::Resolver< PopulationFlow_ABC >::CreateIterator();
         while( it.HasMoreElements() )
         {
             const PopulationFlow& concreteEntity = static_cast< const PopulationFlow& >( it.NextElement() );

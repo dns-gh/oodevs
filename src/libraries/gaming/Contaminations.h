@@ -13,7 +13,7 @@
 #include "game_asn/Simulation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 
 namespace kernel
@@ -38,7 +38,7 @@ class Contaminations : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Contaminations( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::NBCAgent >& resolver, kernel::PropertiesDictionary& dico );
+             Contaminations( kernel::Controller& controller, const tools::Resolver_ABC< kernel::NBCAgent >& resolver, kernel::PropertiesDictionary& dico );
     virtual ~Contaminations();
     //@}
 
@@ -70,7 +70,7 @@ public:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Resolver_ABC< kernel::NBCAgent >& resolver_;
+    const tools::Resolver_ABC< kernel::NBCAgent >& resolver_;
     bool        bNbcProtectionSuitWorn_;
     T_NbcAgents contaminatingNbcAgents_;
     int         nContamination_;

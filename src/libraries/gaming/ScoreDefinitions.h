@@ -10,7 +10,7 @@
 #ifndef __ScoreDefinitions_h_
 #define __ScoreDefinitions_h_
 
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace indicators
 {
@@ -31,7 +31,7 @@ class ScoreDefinition;
 */
 // Created: SBO 2009-04-29
 // =============================================================================
-class ScoreDefinitions : public kernel::Resolver< ScoreDefinition, QString >
+class ScoreDefinitions : public tools::Resolver< ScoreDefinition, QString >
 {
 
 public:

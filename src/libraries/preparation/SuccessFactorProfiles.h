@@ -11,7 +11,7 @@
 #define __SuccessFactorProfiles_h_
 
 #include "clients_kernel/ElementObserver_ABC.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -33,7 +33,7 @@ class UserProfile;
 */
 // Created: SBO 2009-06-15
 // =============================================================================
-class SuccessFactorProfiles : public kernel::Resolver< const UserProfile, QString >
+class SuccessFactorProfiles : public tools::Resolver< const UserProfile, QString >
                             , public kernel::Observer_ABC
                             , public kernel::ElementObserver_ABC< UserProfile >
 {

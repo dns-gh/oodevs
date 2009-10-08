@@ -12,7 +12,7 @@
 
 #include "clients_kernel/EntityHierarchies.h"
 #include "clients_kernel/IntelligenceHierarchies.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "game_asn/Simulation.h"
 
@@ -37,8 +37,8 @@ class EntityIntelligences : public kernel::EntityHierarchies< kernel::Intelligen
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityIntelligences( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior, const kernel::Resolver_ABC< kernel::Formation_ABC >& resolver );
-             EntityIntelligences( kernel::Controller& controller, kernel::Intelligence_ABC& holder, const kernel::Resolver_ABC< kernel::Formation_ABC >& resolver );
+             EntityIntelligences( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior, const tools::Resolver_ABC< kernel::Formation_ABC >& resolver );
+             EntityIntelligences( kernel::Controller& controller, kernel::Intelligence_ABC& holder, const tools::Resolver_ABC< kernel::Formation_ABC >& resolver );
     virtual ~EntityIntelligences();
     //@}
 
@@ -67,7 +67,7 @@ private:
     //@{
     kernel::Controller& controller_;
     const kernel::Intelligence_ABC* holder_;
-    const kernel::Resolver_ABC< kernel::Formation_ABC >& resolver_;
+    const tools::Resolver_ABC< kernel::Formation_ABC >& resolver_;
     //@}
 };
 

@@ -13,7 +13,7 @@
 #include "game_asn/Simulation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "Dotation.h"
 
 namespace kernel
@@ -37,7 +37,7 @@ class Quotas  : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Quotas(  kernel::Controller& controller, const kernel::Resolver_ABC< kernel::DotationType >& dotationResolver );
+             Quotas(  kernel::Controller& controller, const tools::Resolver_ABC< kernel::DotationType >& dotationResolver );
     virtual ~Quotas();
     //@}
 
@@ -63,7 +63,7 @@ public: // $$$$ AGE 2006-10-11:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Resolver_ABC< kernel::DotationType >& dotationResolver_; 
+    const tools::Resolver_ABC< kernel::DotationType >& dotationResolver_; 
     T_Dotations      quotas_;
     //@}
 };

@@ -14,7 +14,7 @@
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
 
 namespace kernel
@@ -40,7 +40,7 @@ public:
     //@{
              Agent( const ASN1T_MsgUnitCreation& message,
                     kernel::Controller& controller, 
-                    const kernel::Resolver_ABC< kernel::AgentType >& resolver );
+                    const tools::Resolver_ABC< kernel::AgentType >& resolver );
     virtual ~Agent();
     //@}
 

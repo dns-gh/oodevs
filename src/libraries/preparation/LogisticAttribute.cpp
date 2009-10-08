@@ -32,7 +32,7 @@ LogisticAttribute::LogisticAttribute( kernel::PropertiesDictionary& dico )
 // Name: LogisticAttribute constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-LogisticAttribute::LogisticAttribute( xml::xistream& xis, const Resolver_ABC< Automat_ABC >& automats, kernel::PropertiesDictionary& dico )
+LogisticAttribute::LogisticAttribute( xml::xistream& xis, const tools::Resolver_ABC< Automat_ABC >& automats, kernel::PropertiesDictionary& dico )
     : tc2_( 0 )
 {
     int id;

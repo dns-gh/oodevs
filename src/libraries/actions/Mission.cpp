@@ -23,7 +23,7 @@ using namespace actions;
 
 namespace
 {
-    const OrderType& ResolveType( xml::xistream& xis, const Resolver_ABC< MissionType >& missions, const Entity_ABC& entity )
+    const OrderType& ResolveType( xml::xistream& xis, const tools::Resolver_ABC< MissionType >& missions, const Entity_ABC& entity )
     {
         const unsigned int id = xml::attribute< unsigned int >( xis, "id", 0 );
         const std::string name = xml::attribute< std::string >( xis, "name", "" );
@@ -51,7 +51,7 @@ Mission::Mission( const Entity_ABC& entity, const MissionType& mission, Controll
 // Name: Mission constructor
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-Mission::Mission( xml::xistream& xis, Controller& controller, const Resolver_ABC< MissionType >& missions, const Entity_ABC& entity )
+Mission::Mission( xml::xistream& xis, Controller& controller, const tools::Resolver_ABC< MissionType >& missions, const Entity_ABC& entity )
     : Action_ABC( xis, controller, ResolveType( xis, missions, entity ), entity )
     , controller_( controller )
     , registered_( true )

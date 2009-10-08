@@ -13,7 +13,7 @@
 #include "TacticalLine_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 // =============================================================================
 /** @class  TacticalLines
@@ -23,7 +23,7 @@
 // =============================================================================
 class TacticalLines : public kernel::Extension_ABC
                     , public kernel::Serializable_ABC
-                    , public kernel::Resolver< TacticalLine_ABC >
+                    , public tools::Resolver< TacticalLine_ABC >
 {
 
 public:

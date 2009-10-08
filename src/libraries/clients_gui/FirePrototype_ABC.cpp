@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "FirePrototype_ABC.h"
 #include "clients_kernel/FireClass.h"
-#include "clients_kernel/Iterator.h"
+#include "tools/Iterator.h"
 #include "Tools.h"
 
 using namespace gui;
@@ -19,7 +19,7 @@ using namespace gui;
 // Name: FirePrototype_ABC constructor
 // Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
-FirePrototype_ABC::FirePrototype_ABC( QWidget* parent, const kernel::Resolver_ABC< kernel::FireClass >& resolver )
+FirePrototype_ABC::FirePrototype_ABC( QWidget* parent, const tools::Resolver_ABC< kernel::FireClass >& resolver )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "FirePrototype_ABC", "Fire parameters" ) )
     , resolver_( resolver )
 {
@@ -44,7 +44,7 @@ FirePrototype_ABC::~FirePrototype_ABC()
 void FirePrototype_ABC::FillTypes()
 {
     fireClass_->Clear();
-    kernel::Iterator< const kernel::FireClass& > it( resolver_.CreateIterator() );
+    tools::Iterator< const kernel::FireClass& > it( resolver_.CreateIterator() );
     while( it.HasMoreElements() )
     {
         const kernel::FireClass& element = it.NextElement();

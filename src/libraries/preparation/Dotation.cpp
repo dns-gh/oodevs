@@ -30,7 +30,7 @@ Dotation::Dotation( const DotationType& type, unsigned int quantity )
 // Name: Dotation constructor
 // Created: SBO 2006-10-11
 // -----------------------------------------------------------------------------
-Dotation::Dotation( xml::xistream& xis, const Resolver_ABC< DotationType, std::string >& resolver )
+Dotation::Dotation( xml::xistream& xis, const tools::Resolver_ABC< DotationType, std::string >& resolver )
 {
     std::string name;
     xis >> attribute( "name", name )

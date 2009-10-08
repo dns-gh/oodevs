@@ -11,7 +11,7 @@
 #define __ParamDotationDType_h_
 
 #include "ParamComboBox.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -38,7 +38,7 @@ class ParamDotationDType : public ParamComboBox< ASN1T_DotationType >
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamDotationDType( const kernel::OrderParameter& parameter, const kernel::Resolver_ABC< kernel::DotationType >& resolver );
+             ParamDotationDType( const kernel::OrderParameter& parameter, const tools::Resolver_ABC< kernel::DotationType >& resolver );
     virtual ~ParamDotationDType();
     //@}
 
@@ -64,7 +64,7 @@ private:
     //! @name Member data
     //@{
     const kernel::OrderParameter& parameter_;
-    const kernel::Resolver_ABC< kernel::DotationType >& resolver_;
+    const tools::Resolver_ABC< kernel::DotationType >& resolver_;
     //@}
 };
 

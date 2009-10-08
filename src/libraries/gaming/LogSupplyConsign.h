@@ -12,7 +12,7 @@
 
 #include "clients_kernel/Types.h"
 #include "game_asn/Simulation.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 #include "clients_kernel/Drawable_ABC.h"
 
 class DotationRequest;
@@ -30,16 +30,16 @@ namespace kernel
 // =============================================================================
 // Created: NLD 2004-03-18
 // =============================================================================
-class LogSupplyConsign : public kernel::Resolver< DotationRequest >
+class LogSupplyConsign : public tools::Resolver< DotationRequest >
                        , public kernel::Drawable_ABC
 {
 
 public:
     //! @name Constructor / Destructor
     //@{
-             LogSupplyConsign( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver, 
-                               const kernel::Resolver_ABC< kernel::Agent_ABC >&   agentResolver,
-                               const kernel::Resolver_ABC< kernel::DotationType >& dotationResolver, const ASN1T_MsgLogSupplyHandlingCreation& asn );
+             LogSupplyConsign( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver, 
+                               const tools::Resolver_ABC< kernel::Agent_ABC >&   agentResolver,
+                               const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, const ASN1T_MsgLogSupplyHandlingCreation& asn );
     virtual ~LogSupplyConsign();
     //@}
 
@@ -65,9 +65,9 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver_;
-    const kernel::Resolver_ABC< kernel::Agent_ABC >&   agentResolver_;
-    const kernel::Resolver_ABC< kernel::DotationType >& dotationResolver_;
+    const tools::Resolver_ABC< kernel::Automat_ABC >& resolver_;
+    const tools::Resolver_ABC< kernel::Agent_ABC >&   agentResolver_;
+    const tools::Resolver_ABC< kernel::DotationType >& dotationResolver_;
 
     uint   nID_;
     kernel::Automat_ABC& pion_;

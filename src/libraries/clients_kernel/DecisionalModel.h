@@ -10,7 +10,7 @@
 #ifndef __DecisionalModel_h_
 #define __DecisionalModel_h_
 
-#include "Resolver.h"
+#include "tools/Resolver.h"
 
 namespace xml { class xistream; };
 
@@ -27,8 +27,8 @@ namespace kernel
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class DecisionalModel : public Resolver< Mission >
-                      , public Resolver< FragOrder >
+class DecisionalModel : public  tools::Resolver< Mission >
+                      , public  tools::Resolver< FragOrder >
 {
 public:
     //! @name Types
@@ -38,7 +38,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             DecisionalModel( xml::xistream& xis, MissionFactory& factory, const T_Resolver& missionResolver, const Resolver_ABC< FragOrderType >& fragOrders );
+             DecisionalModel( xml::xistream& xis, MissionFactory& factory, const T_Resolver& missionResolver, const  tools::Resolver_ABC< FragOrderType >& fragOrders );
     virtual ~DecisionalModel();
     //@}
 
@@ -58,7 +58,7 @@ private:
     //@{
     void ReadMission( xml::xistream& xis, MissionFactory& factory, const T_Resolver& missionResolver );
     void ReadFragOrder( xml::xistream& xis, Mission& mission, MissionFactory& factory );
-    void RegisterDefaultFragOrders( MissionFactory& factory, const Resolver_ABC< FragOrderType >& fragOrders );
+    void RegisterDefaultFragOrders( MissionFactory& factory, const  tools::Resolver_ABC< FragOrderType >& fragOrders );
     void RegisterFragOrder( MissionFactory& factory, const FragOrderType& type );
     //@}
 

@@ -29,7 +29,7 @@ AutomatCommunications::AutomatCommunications( Controller& controller, Entity_ABC
 // Name: AutomatCommunications constructor
 // Created: SBO 2006-10-09
 // -----------------------------------------------------------------------------
-AutomatCommunications::AutomatCommunications( xml::xistream& xis, kernel::Controller& controller, kernel::Entity_ABC& holder, const kernel::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groups )
+AutomatCommunications::AutomatCommunications( xml::xistream& xis, kernel::Controller& controller, kernel::Entity_ABC& holder, const tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groups )
     : EntityCommunications( controller, holder, ReadKnowledgeGroup( xis, groups ) )
 {
     // NOTHING
@@ -48,7 +48,7 @@ AutomatCommunications::~AutomatCommunications()
 // Name: AutomatCommunications::ReadKnowledgeGroup
 // Created: AGE 2006-10-10
 // -----------------------------------------------------------------------------
-kernel::KnowledgeGroup_ABC* AutomatCommunications::ReadKnowledgeGroup( xml::xistream& xis, const kernel::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groups )
+kernel::KnowledgeGroup_ABC* AutomatCommunications::ReadKnowledgeGroup( xml::xistream& xis, const tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groups )
 {
     int group;
     xis >> attribute( "knowledge-group", group );

@@ -11,7 +11,7 @@
 #define __DrawerModel_h_
 
 #include "clients_kernel/ElementObserver_ABC.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace xml
 {
@@ -37,7 +37,7 @@ namespace gui
 // =============================================================================
 class DrawerModel : public kernel::Observer_ABC
                   , public kernel::ElementObserver_ABC< Drawing_ABC >
-                  , public kernel::Resolver< Drawing_ABC >
+                  , public tools::Resolver< Drawing_ABC >
 {
 
 public:

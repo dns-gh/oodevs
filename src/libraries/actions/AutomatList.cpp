@@ -33,7 +33,7 @@ AutomatList::AutomatList( const kernel::OrderParameter& parameter )
 // Name: AutomatList constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-AutomatList::AutomatList( const OrderParameter& parameter, const ASN1T_AutomatList& asn, const Resolver_ABC< Automat_ABC >& resolver, kernel::Controller& controller )
+AutomatList::AutomatList( const OrderParameter& parameter, const ASN1T_AutomatList& asn, const tools::Resolver_ABC< Automat_ABC >& resolver, kernel::Controller& controller )
     : Parameter< QString >( parameter )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
@@ -44,7 +44,7 @@ AutomatList::AutomatList( const OrderParameter& parameter, const ASN1T_AutomatLi
 // Name: AutomatList constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-AutomatList::AutomatList( const OrderParameter& parameter, xml::xistream& xis, const Resolver_ABC< Automat_ABC >& resolver, kernel::Controller& controller )
+AutomatList::AutomatList( const OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< Automat_ABC >& resolver, kernel::Controller& controller )
     : Parameter< QString >( parameter )
 {
     xis >> list( "parameter", *this, &AutomatList::ReadAutomat, resolver, controller );
@@ -63,7 +63,7 @@ AutomatList::~AutomatList()
 // Name: AutomatList::ReadAutomat
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-void AutomatList::ReadAutomat( xml::xistream& xis, const Resolver_ABC< Automat_ABC >& resolver, kernel::Controller& controller )
+void AutomatList::ReadAutomat( xml::xistream& xis, const tools::Resolver_ABC< Automat_ABC >& resolver, kernel::Controller& controller )
 {
     AddParameter( *new Automat( xis, resolver, controller ) );
 }

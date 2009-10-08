@@ -14,7 +14,7 @@
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/OptionalValue.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -38,7 +38,7 @@ class FireAttribute : public kernel::FireAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             FireAttribute( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::FireClass >& resolver );
+             FireAttribute( kernel::Controller& controller, const tools::Resolver_ABC< kernel::FireClass >& resolver );
     virtual ~FireAttribute();
     //@}
 
@@ -68,7 +68,7 @@ public:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Resolver_ABC< kernel::FireClass >& resolver_;
+    const tools::Resolver_ABC< kernel::FireClass >& resolver_;
     const kernel::FireClass* fireClass_;
     int heat_;
     //@}

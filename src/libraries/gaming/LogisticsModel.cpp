@@ -41,9 +41,9 @@ LogisticsModel::~LogisticsModel()
 // -----------------------------------------------------------------------------
 void LogisticsModel::Purge()
 {
-    Resolver< LogMaintenanceConsign >::DeleteAll();
-    Resolver< LogMedicalConsign >::DeleteAll();
-    Resolver< LogSupplyConsign >::DeleteAll();
+    tools::Resolver< LogMaintenanceConsign >::DeleteAll();
+    tools::Resolver< LogMedicalConsign >::DeleteAll();
+    tools::Resolver< LogSupplyConsign >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -53,8 +53,8 @@ void LogisticsModel::Purge()
 template< typename Type >
 void LogisticsModel::Delete( unsigned long id )
 {
-    delete Resolver< Type >::Find( id );
-    Resolver< Type >::Remove( id );
+    delete tools::Resolver< Type >::Find( id );
+    tools::Resolver< Type >::Remove( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,7 +63,7 @@ void LogisticsModel::Delete( unsigned long id )
 // -----------------------------------------------------------------------------
 void LogisticsModel::CreateMaintenanceConsign( const ASN1T_MsgLogMaintenanceHandlingCreation& asnMsg )
 {
-    Resolver< LogMaintenanceConsign >::Register( asnMsg.oid_consigne, *factory_.CreateMaintenanceConsign( asnMsg ) );
+    tools::Resolver< LogMaintenanceConsign >::Register( asnMsg.oid_consigne, *factory_.CreateMaintenanceConsign( asnMsg ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,7 +72,7 @@ void LogisticsModel::CreateMaintenanceConsign( const ASN1T_MsgLogMaintenanceHand
 // -----------------------------------------------------------------------------
 LogMaintenanceConsign& LogisticsModel::GetMaintenanceConsign( unsigned long id )
 {
-    return Resolver< LogMaintenanceConsign >::Get( id );
+    return tools::Resolver< LogMaintenanceConsign >::Get( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,7 +90,7 @@ void LogisticsModel::DeleteMaintenanceConsign( unsigned long id )
 // -----------------------------------------------------------------------------
 void LogisticsModel::CreateMedicalConsign( const ASN1T_MsgLogMedicalHandlingCreation& asnMsg )
 {
-    Resolver< LogMedicalConsign >::Register( asnMsg.oid_consigne, *factory_.CreateMedicalConsign( asnMsg ) );
+    tools::Resolver< LogMedicalConsign >::Register( asnMsg.oid_consigne, *factory_.CreateMedicalConsign( asnMsg ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,7 +99,7 @@ void LogisticsModel::CreateMedicalConsign( const ASN1T_MsgLogMedicalHandlingCrea
 // -----------------------------------------------------------------------------
 LogMedicalConsign& LogisticsModel::GetMedicalConsign( unsigned long id )
 {
-    return Resolver< LogMedicalConsign >::Get( id );
+    return tools::Resolver< LogMedicalConsign >::Get( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -117,7 +117,7 @@ void LogisticsModel::DeleteMedicalConsign( unsigned long id )
 // -----------------------------------------------------------------------------
 void LogisticsModel::CreateSupplyConsign( const ASN1T_MsgLogSupplyHandlingCreation& asnMsg )
 {
-    Resolver< LogSupplyConsign >::Register( asnMsg.oid_consigne, *factory_.CreateSupplyConsign( asnMsg ) );
+    tools::Resolver< LogSupplyConsign >::Register( asnMsg.oid_consigne, *factory_.CreateSupplyConsign( asnMsg ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -126,7 +126,7 @@ void LogisticsModel::CreateSupplyConsign( const ASN1T_MsgLogSupplyHandlingCreati
 // -----------------------------------------------------------------------------
 LogSupplyConsign& LogisticsModel::GetSupplyConsign( unsigned long id )
 {
-    return Resolver< LogSupplyConsign >::Get( id );
+    return tools::Resolver< LogSupplyConsign >::Get( id );
 }
 
 // -----------------------------------------------------------------------------

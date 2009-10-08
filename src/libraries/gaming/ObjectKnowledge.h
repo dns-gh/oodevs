@@ -12,7 +12,7 @@
 
 #include "game_asn/Simulation.h"
 #include "clients_kernel/ObjectKnowledge_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "clients_kernel/OptionalValue.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
@@ -44,8 +44,8 @@ public:
     //@{
              ObjectKnowledge( const kernel::Team_ABC& owner, const ASN1T_MsgObjectKnowledgeCreation& message,
                               kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
-                              const kernel::Resolver_ABC< kernel::Object_ABC >& objectResolver,
-                              const kernel::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver );
+                              const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver,
+                              const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver );
     virtual ~ObjectKnowledge();
     //@}
 
@@ -79,7 +79,7 @@ private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
-    const kernel::Resolver_ABC< kernel::Object_ABC >& objectResolver_;
+    const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver_;
     const kernel::Team_ABC& owner_;
 
     const kernel::ObjectType* type_;

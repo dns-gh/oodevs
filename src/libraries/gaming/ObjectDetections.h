@@ -13,7 +13,7 @@
 #include "game_asn/Simulation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 
 namespace kernel
@@ -36,7 +36,7 @@ class ObjectDetections : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectDetections( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Object_ABC >& resolver );
+             ObjectDetections( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Object_ABC >& resolver );
     virtual ~ObjectDetections();
     //@}
 
@@ -67,7 +67,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Resolver_ABC< kernel::Object_ABC >& resolver_;
+    const tools::Resolver_ABC< kernel::Object_ABC >& resolver_;
 
     T_Objects perceivedObjects_;
     //@}

@@ -8,7 +8,7 @@
 
 #include "clients_kernel_pch.h"
 #include "AutomatType.h"
-#include "Iterator.h"
+#include "tools/Iterator.h"
 #include "AutomatComposition.h"
 #include "AgentType.h"
 #include <xeumeuleu/xml.h>
@@ -20,8 +20,8 @@ using namespace xml;
 // Name: AutomatType constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-AutomatType::AutomatType( xistream& xis, const Resolver_ABC< AgentType, std::string >& agentResolver
-                                            , const Resolver_ABC< DecisionalModel, std::string >& modelResolver )
+AutomatType::AutomatType( xistream& xis, const tools::Resolver_ABC< AgentType, std::string >& agentResolver
+                                            , const tools::Resolver_ABC< DecisionalModel, std::string >& modelResolver )
     : pcType_( 0 )
 {
     std::string modelName, name;
@@ -49,7 +49,7 @@ AutomatType::~AutomatType()
 // Name: AutomatType::ReadAgent
 // Created: SBO 2006-08-28
 // -----------------------------------------------------------------------------
-void AutomatType::ReadAgent( xistream& xis, const Resolver_ABC< AgentType, std::string >& agentResolver )
+void AutomatType::ReadAgent( xistream& xis, const tools::Resolver_ABC< AgentType, std::string >& agentResolver )
 {
     units_.push_back( new AutomatComposition( xis, agentResolver ) );
     bool commandPost = false;
@@ -62,9 +62,9 @@ void AutomatType::ReadAgent( xistream& xis, const Resolver_ABC< AgentType, std::
 // Name: AutomatType::CreateIterator
 // Created: SBO 2006-08-28
 // -----------------------------------------------------------------------------
-Iterator< const AutomatComposition& > AutomatType::CreateIterator() const
+tools::Iterator< const AutomatComposition& > AutomatType::CreateIterator() const
 {
-    return new SimpleIterator< const AutomatComposition&, T_UnitConstitution >( units_ );
+    return new tools::SimpleIterator< const AutomatComposition&, T_UnitConstitution >( units_ );
 }
 
 // -----------------------------------------------------------------------------

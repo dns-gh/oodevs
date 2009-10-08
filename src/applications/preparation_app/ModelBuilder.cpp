@@ -148,13 +148,13 @@ void ModelBuilder::DeleteEntity( const Entity_ABC& entity )
 {
     if( const kernel::TacticalHierarchies* hierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
     {
-        Iterator< const Entity_ABC& > it = hierarchies->CreateSubordinateIterator();
+        tools::Iterator< const Entity_ABC& > it = hierarchies->CreateSubordinateIterator();
         while( it.HasMoreElements() )
             DeleteEntity( it.NextElement() );
     }
     if( const kernel::CommunicationHierarchies* hierarchies = entity.Retrieve< kernel::CommunicationHierarchies >() )
     {
-        Iterator< const Entity_ABC& > it = hierarchies->CreateSubordinateIterator();
+        tools::Iterator< const Entity_ABC& > it = hierarchies->CreateSubordinateIterator();
         while( it.HasMoreElements() )
             DeleteEntity( it.NextElement() );
     }

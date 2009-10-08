@@ -31,7 +31,7 @@ NBCAttribute::NBCAttribute( kernel::PropertiesDictionary& dico )
 // Name: NBCAttribute constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-NBCAttribute::NBCAttribute( xml::xistream& xis, const kernel::Resolver_ABC< kernel::NBCAgent, std::string >& nbcAgents, kernel::PropertiesDictionary& dico )
+NBCAttribute::NBCAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::NBCAgent, std::string >& nbcAgents, kernel::PropertiesDictionary& dico )
     : state_ ( "gaseous" )
 {
     xis >> xml::optional() >> xml::attribute( "state", state_ );
@@ -52,7 +52,7 @@ NBCAttribute::~NBCAttribute()
 // Name: NBCAttribute::ReadNbcAgent
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-void NBCAttribute::ReadNbcAgent( xml::xistream& xis, const kernel::Resolver_ABC< kernel::NBCAgent, std::string >& nbcAgents )
+void NBCAttribute::ReadNbcAgent( xml::xistream& xis, const tools::Resolver_ABC< kernel::NBCAgent, std::string >& nbcAgents )
 {
     std::string type;
     xis >> attribute( "type", type );

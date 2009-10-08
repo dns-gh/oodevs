@@ -52,18 +52,18 @@ bool PopulationDecisions::CanBeOrdered() const
 // -----------------------------------------------------------------------------
 void PopulationDecisions::DoUpdate( const ASN1T_MsgPopulationOrder& message )
 {
-    const Resolver_ABC< Mission >& resolver = GetDecisionalModel();
+    const tools::Resolver_ABC< Mission >& resolver = GetDecisionalModel();
     current_ = resolver.Find( message.mission );
     controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Iterator< const Mission& > PopulationDecisions::GetMissions
+// Name: tools::Iterator< const Mission& > PopulationDecisions::GetMissions
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-Iterator< const Mission& > PopulationDecisions::GetMissions() const
+tools::Iterator< const Mission& > PopulationDecisions::GetMissions() const
 {
-    const Resolver_ABC< Mission >& resolver = GetDecisionalModel();
+    const tools::Resolver_ABC< Mission >& resolver = GetDecisionalModel();
     return resolver.CreateIterator();
 }
 
@@ -71,9 +71,9 @@ Iterator< const Mission& > PopulationDecisions::GetMissions() const
 // Name: PopulationDecisions::GetFragOrders
 // Created: SBO 2006-12-18
 // -----------------------------------------------------------------------------
-kernel::Iterator< const kernel::FragOrder& > PopulationDecisions::GetFragOrders() const
+tools::Iterator< const kernel::FragOrder& > PopulationDecisions::GetFragOrders() const
 {
-    const Resolver_ABC< FragOrder >& resolver = GetDecisionalModel();
+    const tools::Resolver_ABC< FragOrder >& resolver = GetDecisionalModel();
     return resolver.CreateIterator();
 }
 

@@ -12,7 +12,7 @@
 
 #include "game_asn/Simulation.h"
 #include "Fire_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -32,7 +32,7 @@ class IndirectFire : public Fire_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             IndirectFire( const ASN1T_MsgStartUnitFire& message, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, const kernel::CoordinateConverter_ABC& converter );
+             IndirectFire( const ASN1T_MsgStartUnitFire& message, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, const kernel::CoordinateConverter_ABC& converter );
     virtual ~IndirectFire();
     //@}
 

@@ -13,7 +13,7 @@
 #include "game_asn/Simulation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -34,7 +34,7 @@ class ObjectPerceptions : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPerceptions( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Automat_ABC >& agentResolver );
+             ObjectPerceptions( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Automat_ABC >& agentResolver );
     virtual ~ObjectPerceptions();
     //@}
 
@@ -58,7 +58,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Resolver_ABC< kernel::Automat_ABC >& agentResolver_;
+    const tools::Resolver_ABC< kernel::Automat_ABC >& agentResolver_;
 public: // $$$$ AGE 2006-10-16: 
     T_Agents detectingAutomats_;
     //@}

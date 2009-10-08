@@ -12,7 +12,7 @@
 
 #include "game_asn/Simulation.h"
 #include "clients_kernel/Types.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 #include "Casualties.h"
 
 namespace kernel
@@ -29,15 +29,15 @@ class Equipment;
 */
 // Created: AGE 2006-03-10
 // =============================================================================
-class AgentFireResult : public kernel::Resolver< Equipment >
+class AgentFireResult : public tools::Resolver< Equipment >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
              AgentFireResult( const ASN1T_UnitFireDamages& message, 
-                              const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver,
-                              const kernel::Resolver_ABC< kernel::EquipmentType >& equipmentResolver,
+                              const tools::Resolver_ABC< kernel::Agent_ABC >& resolver,
+                              const tools::Resolver_ABC< kernel::EquipmentType >& equipmentResolver,
                               const QDateTime& time );
     virtual ~AgentFireResult();
     //@}

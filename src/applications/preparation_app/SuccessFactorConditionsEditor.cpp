@@ -91,7 +91,7 @@ void SuccessFactorConditionsEditor::StartEdit( const SuccessFactorConditions& co
     items_.clear();
     delete scrollView_;
     scrollView_ = new ScrollView( this );
-    kernel::Iterator< const SuccessFactorCondition& > it( conditions.CreateIterator() );
+    tools::Iterator< const SuccessFactorCondition& > it( conditions.CreateIterator() );
     while( it.HasMoreElements() )
         CreateItem()->StartEdit( it.NextElement() );
     if( items_.empty() )

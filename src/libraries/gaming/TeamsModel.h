@@ -11,7 +11,7 @@
 #define __TeamsModel_h_
 
 #include "game_asn/Simulation.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -29,8 +29,8 @@ class TeamFactory_ABC;
 */
 // Created: AGE 2006-02-10
 // =============================================================================
-class TeamsModel : public kernel::Resolver< kernel::Team_ABC >
-                 , public kernel::Resolver< kernel::Formation_ABC >
+class TeamsModel : public tools::Resolver< kernel::Team_ABC >
+                 , public tools::Resolver< kernel::Formation_ABC >
 {
 
 public:

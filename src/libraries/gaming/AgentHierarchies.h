@@ -42,7 +42,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AgentHierarchies( kernel::Controller& controller, kernel::Agent_ABC& holder,
-                               const kernel::Resolver_ABC< kernel::Automat_ABC >& automatResolver );
+                               const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver );
     virtual ~AgentHierarchies();
     //@}
 
@@ -71,7 +71,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Resolver_ABC< kernel::Automat_ABC >& automatResolver_;
+    const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver_;
     std::string symbol_;
     std::string level_;
     //@}
@@ -82,7 +82,7 @@ private:
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
 template< typename I >
-AgentHierarchies< I >::AgentHierarchies( kernel::Controller& controller, kernel::Agent_ABC& holder, const kernel::Resolver_ABC< kernel::Automat_ABC >& automatResolver )
+AgentHierarchies< I >::AgentHierarchies( kernel::Controller& controller, kernel::Agent_ABC& holder, const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver )
     : kernel::EntityHierarchies< I  >( controller, holder, 0 )
     , controller_                    ( controller )
     , symbol_                        ( holder.GetType().GetSymbol() )

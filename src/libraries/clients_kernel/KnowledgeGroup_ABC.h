@@ -11,7 +11,7 @@
 #define __KnowledgeGroup_ABC_h_
 
 #include "Entity_ABC.h"
-#include "Resolver.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {

@@ -13,7 +13,7 @@
 #include "game_asn/Simulation.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 #include "clients_kernel/Creatable.h"
 
 namespace kernel
@@ -41,7 +41,7 @@ class PopulationKnowledges : public kernel::Extension_ABC
                            , public kernel::Updatable_ABC< ASN1T_MsgPopulationFlowKnowledgeCreation >
                            , public kernel::Updatable_ABC< ASN1T_MsgPopulationFlowKnowledgeUpdate >
                            , public kernel::Updatable_ABC< ASN1T_MsgPopulationFlowKnowledgeDestruction >
-                           , public kernel::Resolver< kernel::PopulationKnowledge_ABC >
+                           , public tools::Resolver< kernel::PopulationKnowledge_ABC >
                            , public kernel::Creatable< PopulationKnowledges >
 {
 

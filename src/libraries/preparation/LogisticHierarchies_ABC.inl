@@ -41,7 +41,7 @@ LogisticHierarchies_ABC< I >::~LogisticHierarchies_ABC()
 template< typename I >
 void LogisticHierarchies_ABC< I >::SerializeLogistics( xml::xostream& xos ) const
 {
-    kernel::Iterator< const kernel::Entity_ABC& > it = CreateSubordinateIterator();
+    tools::Iterator< const kernel::Entity_ABC& > it = CreateSubordinateIterator();
     while( it.HasMoreElements() )
     {
         const kernel::Entity_ABC& entity = it.NextElement();

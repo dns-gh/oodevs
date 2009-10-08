@@ -112,7 +112,7 @@ void ParamAgentList::AddHierarchy( const kernel::Entity_ABC& superior )
         Add( *agent );
     else if( const kernel::Hierarchies* h = superior.Retrieve< kernel::TacticalHierarchies >() )
     {
-        kernel::Iterator< const kernel::Entity_ABC& > children = h->CreateSubordinateIterator();
+        tools::Iterator< const kernel::Entity_ABC& > children = h->CreateSubordinateIterator();
         while( children.HasMoreElements() )
             AddHierarchy( children.NextElement() );
     }

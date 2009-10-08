@@ -20,7 +20,7 @@ using namespace kernel;
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
 AutomatTacticalHierarchies::AutomatTacticalHierarchies( Controller& controller, Entity_ABC& holder, Entity_ABC& superior
-                                                       , const kernel::Resolver_ABC< kernel::Automat_ABC >& automatResolver, const kernel::Resolver_ABC< kernel::Formation_ABC >& formationResolver )
+                                                       , const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver, const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver )
     : MergingTacticalHierarchies( controller, holder, 0 )
     , controller_( controller )
     , automatResolver_( automatResolver )

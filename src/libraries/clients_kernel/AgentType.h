@@ -10,9 +10,14 @@
 #ifndef __AgentType_h_
 #define __AgentType_h_
 
-#include "Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace xml { class xistream; };
+
+namespace tools
+{
+    template< typename Container > class Iterator;
+}
 
 namespace kernel
 {
@@ -20,7 +25,6 @@ namespace kernel
     class AgentNature;
     class DecisionalModel;
     class SymbolFactory;
-    template< typename Container > class Iterator;
 
 // =============================================================================
 /** @class  AgentType
@@ -34,8 +38,8 @@ class AgentType
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentType( xml::xistream& xis, const Resolver_ABC< ComponentType, std::string >& componentResolver
-                                          , const Resolver_ABC< DecisionalModel, std::string >& modelResolver
+             AgentType( xml::xistream& xis, const  tools::Resolver_ABC< ComponentType, std::string >& componentResolver
+                                          , const  tools::Resolver_ABC< DecisionalModel, std::string >& modelResolver
                                           , const SymbolFactory& symbolFactory );
     virtual ~AgentType();
     //@}
@@ -46,7 +50,7 @@ public:
     std::string GetName() const;
     const DecisionalModel& GetDecisionalModel() const;
     const AgentNature& GetNature() const;
-    Iterator< const ComponentType& > CreateIterator() const;
+    tools::Iterator< const ComponentType& > CreateIterator() const;
     unsigned int GetComponentCount( const ComponentType& ) const;
 
     const std::string& GetSymbol() const;
@@ -73,7 +77,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadEquipment( xml::xistream& xis, const Resolver_ABC< ComponentType, std::string >& resolver  );
+    void ReadEquipment( xml::xistream& xis, const  tools::Resolver_ABC< ComponentType, std::string >& resolver  );
     //@}
 
 private:

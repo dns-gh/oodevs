@@ -28,7 +28,7 @@ AutomatTemplateElement::AutomatTemplateElement( AgentsModel& agents, const kerne
 
 namespace
 {
-    const kernel::AutomatType& ReadType( const kernel::Resolver_ABC< kernel::AutomatType, std::string >& types, xml::xistream& input )
+    const kernel::AutomatType& ReadType( const tools::Resolver_ABC< kernel::AutomatType, std::string >& types, xml::xistream& input )
     {
         return types.Get( xml::attribute< std::string >( input, "automatType" ) );
     }
@@ -38,7 +38,7 @@ namespace
 // Name: AutomatTemplateElement constructor
 // Created: AGE 2007-05-29
 // -----------------------------------------------------------------------------
-AutomatTemplateElement::AutomatTemplateElement( AgentsModel& agents, const kernel::Resolver_ABC< kernel::AutomatType, std::string >& types, xml::xistream& input )
+AutomatTemplateElement::AutomatTemplateElement( AgentsModel& agents, const tools::Resolver_ABC< kernel::AutomatType, std::string >& types, xml::xistream& input )
     : agents_( agents )
     , type_  ( ReadType( types, input ) )
 {

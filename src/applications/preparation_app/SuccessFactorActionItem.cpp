@@ -34,7 +34,7 @@ SuccessFactorActionItem::SuccessFactorActionItem( QWidget* parent, const Success
     box->setSpacing( 5 );
     {
         type_ = new gui::ValuedComboBox< const SuccessFactorActionType* >( box );
-        kernel::Iterator< const SuccessFactorActionType& > it( actions.CreateIterator() );
+        tools::Iterator< const SuccessFactorActionType& > it( actions.CreateIterator() );
         while( it.HasMoreElements() )
         {
             const SuccessFactorActionType& type = it.NextElement();
@@ -70,7 +70,7 @@ void SuccessFactorActionItem::StartEdit( const SuccessFactorAction& action )
 {
     type_->SetCurrentItem( &action.GetType() );
     OnTypeChanged();
-    kernel::Iterator< const SuccessFactorActionParameter& > it( action.CreateIterator() );
+    tools::Iterator< const SuccessFactorActionParameter& > it( action.CreateIterator() );
     while( it.HasMoreElements() )
     {
         const SuccessFactorActionParameter& parameter = it.NextElement();
@@ -115,7 +115,7 @@ void SuccessFactorActionItem::OnTypeChanged()
     parameters_->setFlat( true );
     if( const SuccessFactorActionType* type = type_->GetValue() )
     {
-        kernel::Iterator< const SuccessFactorActionTypeParameter& > it( type->CreateIterator() );
+        tools::Iterator< const SuccessFactorActionTypeParameter& > it( type->CreateIterator() );
         while( it.HasMoreElements() )
         {
             const SuccessFactorActionTypeParameter& parameter = it.NextElement();

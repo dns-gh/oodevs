@@ -43,7 +43,7 @@ Intelligence::Intelligence( const OrderParameter& parameter, const CoordinateCon
 // Name: Intelligence constructor
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-Intelligence::Intelligence( const CoordinateConverter_ABC& converter, xml::xistream& xis, const Resolver_ABC< Formation_ABC >& resolver, const FormationLevels& levels, kernel::Controller& controller )
+Intelligence::Intelligence( const CoordinateConverter_ABC& converter, xml::xistream& xis, const tools::Resolver_ABC< Formation_ABC >& resolver, const FormationLevels& levels, kernel::Controller& controller )
     : Entity< Intelligence_ABC >( OrderParameter( attribute< std::string >( xis, "name" ).c_str(), "intelligence", false ), 0, controller )
     , converter_( converter )
 {
@@ -64,7 +64,7 @@ namespace
 // Name: Intelligence constructor
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-Intelligence::Intelligence( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Resolver_ABC< Formation_ABC >& resolver, const FormationLevels& levels, const ASN1T_Intelligence& asn, kernel::Controller& controller )
+Intelligence::Intelligence( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< Formation_ABC >& resolver, const FormationLevels& levels, const ASN1T_Intelligence& asn, kernel::Controller& controller )
     : Entity< Intelligence_ABC >( parameter, 0, controller )
     , converter_( converter )
 {
@@ -90,7 +90,7 @@ Intelligence::~Intelligence()
 // Name: Intelligence::ReadParameter
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-void Intelligence::ReadParameter( xml::xistream& xis, const Resolver_ABC< Formation_ABC >& resolver, const FormationLevels& levels )
+void Intelligence::ReadParameter( xml::xistream& xis, const tools::Resolver_ABC< Formation_ABC >& resolver, const FormationLevels& levels )
 {
     const QString name = attribute< std::string >( xis, "name" ).c_str();
     const std::string type = attribute< std::string >( xis, "type" );

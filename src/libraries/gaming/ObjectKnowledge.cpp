@@ -31,7 +31,7 @@ using namespace kernel;
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
 ObjectKnowledge::ObjectKnowledge( const Team_ABC& owner, const ASN1T_MsgObjectKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, 
-                                  const Resolver_ABC< Object_ABC >& objectResolver, const Resolver_ABC< ObjectType, std::string >& typeResolver )
+                                  const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::Resolver_ABC< ObjectType, std::string >& typeResolver )
     : EntityImplementation< ObjectKnowledge_ABC >( controller, message.oid, "" )
     , converter_     ( converter )
     , owner_         ( owner )

@@ -11,7 +11,7 @@
 #define __ActionParameterLevel_h_
 
 #include "Parameter.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {

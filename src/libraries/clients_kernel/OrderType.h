@@ -10,7 +10,7 @@
 #ifndef __OrderType_h_
 #define __OrderType_h_
 
-#include "Resolver.h"
+#include "tools/Resolver.h"
 
 namespace xml
 {
@@ -27,7 +27,7 @@ namespace kernel
 */
 // Created: SBO 2007-04-23
 // =============================================================================
-class OrderType : public Resolver< OrderParameter >
+class OrderType : public  tools::Resolver< OrderParameter >
 {
 
 public:

@@ -18,7 +18,7 @@ using namespace kernel;
 // Name: EquipmentType constructor
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-EquipmentType::EquipmentType( xml::xistream& xis, const Resolver_ABC< WeaponSystemType, std::string >& weapons )
+EquipmentType::EquipmentType( xml::xistream& xis, const tools::Resolver_ABC< WeaponSystemType, std::string >& weapons )
 {
     xis >> xml::attribute( "name", name_ )
         >> xml::attribute( "id", id_ )
@@ -58,7 +58,7 @@ unsigned long EquipmentType::GetId() const
 // Name: EquipmentType::ReadWeaponSystem
 // Created: SBO 2008-08-07
 // -----------------------------------------------------------------------------
-void EquipmentType::ReadWeaponSystem( xml::xistream& xis, const Resolver_ABC< WeaponSystemType, std::string >& weapons )
+void EquipmentType::ReadWeaponSystem( xml::xistream& xis, const tools::Resolver_ABC< WeaponSystemType, std::string >& weapons )
 {
     std::string launcher, munition;
     xis >> xml::attribute( "launcher", launcher )

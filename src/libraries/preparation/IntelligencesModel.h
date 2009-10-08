@@ -10,7 +10,7 @@
 #ifndef __IntelligencesModel_h_
 #define __IntelligencesModel_h_
 
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/IntelligenceFactory_ABC.h"
 
@@ -34,7 +34,7 @@ class IdManager;
 */
 // Created: SBO 2007-10-15
 // =============================================================================
-class IntelligencesModel : public kernel::Resolver< kernel::Intelligence_ABC >
+class IntelligencesModel : public tools::Resolver< kernel::Intelligence_ABC >
                          , public kernel::IntelligenceFactory_ABC
                          , public kernel::ElementObserver_ABC< kernel::Intelligence_ABC >
 {

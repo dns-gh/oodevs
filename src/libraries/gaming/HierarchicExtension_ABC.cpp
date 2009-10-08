@@ -17,9 +17,9 @@
 // Name: HierarchicExtension_ABC constructor
 // Created: SBO 2007-04-12
 // -----------------------------------------------------------------------------
-HierarchicExtension_ABC::HierarchicExtension_ABC( const kernel::Resolver_ABC< kernel::Automat_ABC >& automatResolver
-                                                , const kernel::Resolver_ABC< kernel::Formation_ABC >& formationResolver
-                                                , const kernel::Resolver_ABC< kernel::Team_ABC >& teamResolver )
+HierarchicExtension_ABC::HierarchicExtension_ABC( const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver
+                                                , const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver
+                                                , const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver )
     : automatResolver_( automatResolver )
     , formationResolver_( formationResolver )
     , teamResolver_( teamResolver )

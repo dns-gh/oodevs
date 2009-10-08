@@ -11,7 +11,7 @@
 #define __AfterActionFunction_h_
 
 #include "IndicatorDefinition_ABC.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace xml
 {
@@ -27,7 +27,7 @@ class AfterActionParameter;
 // Created: AGE 2007-09-20
 // =============================================================================
 class AfterActionFunction : public IndicatorDefinition_ABC
-                          , public kernel::Resolver< AfterActionParameter, std::string >
+                          , public tools::Resolver< AfterActionParameter, std::string >
 {
 
 public:

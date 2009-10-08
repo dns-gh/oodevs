@@ -35,7 +35,7 @@ MaintenancePriorities::MaintenancePriorities( const OrderParameter& parameter )
 // Name: MaintenancePriorities constructor
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-MaintenancePriorities::MaintenancePriorities( const OrderParameter& parameter, const Resolver_ABC< EquipmentType >& resolver, const ASN1T_LogMaintenancePriorities& asn )
+MaintenancePriorities::MaintenancePriorities( const OrderParameter& parameter, const tools::Resolver_ABC< EquipmentType >& resolver, const ASN1T_LogMaintenancePriorities& asn )
     : Parameter< std::string >( parameter )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
@@ -46,7 +46,7 @@ MaintenancePriorities::MaintenancePriorities( const OrderParameter& parameter, c
 // Name: MaintenancePriorities constructor
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-MaintenancePriorities::MaintenancePriorities( const OrderParameter& parameter, const Resolver_ABC< EquipmentType >& resolver, xml::xistream& xis )
+MaintenancePriorities::MaintenancePriorities( const OrderParameter& parameter, const tools::Resolver_ABC< EquipmentType >& resolver, xml::xistream& xis )
     : Parameter< std::string >( parameter )
 {
     std::string value;

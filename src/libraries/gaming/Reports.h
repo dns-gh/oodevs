@@ -14,7 +14,7 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -34,7 +34,7 @@ class ReportFactory;
 // Created: AGE 2006-02-13
 // =============================================================================
 class Reports : public kernel::Extension_ABC
-              , public kernel::Resolver< Report >
+              , public tools::Resolver< Report >
               , public kernel::Updatable_ABC< ASN1T_MsgReport >
               , public kernel::Updatable_ABC< ASN1T_MsgInvalidateReport >
               , public kernel::Updatable_ABC< ASN1T_MsgTrace >

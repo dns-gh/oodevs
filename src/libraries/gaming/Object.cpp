@@ -26,7 +26,7 @@ const QString Object::typeName_ = "object";
 // Name: Object::Object
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-Object::Object( const ASN1T_MsgObjectCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType, std::string >& typeResolver )
+Object::Object( const ASN1T_MsgObjectCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& typeResolver )
     : EntityImplementation< Object_ABC >( controller, message.oid, message.name )
     , converter_        ( converter )
     , type_             ( typeResolver.Get( message.type ) )

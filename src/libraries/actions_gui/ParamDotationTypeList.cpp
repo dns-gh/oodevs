@@ -13,7 +13,7 @@
 #include "actions/DotationType.h"
 #include "actions/DotationTypeList.h"
 #include "clients_kernel/DotationType.h"
-#include "clients_kernel/Iterator.h"
+#include "tools/Iterator.h"
 
 using namespace actions::gui;
 
@@ -21,7 +21,7 @@ using namespace actions::gui;
 // Name: ParamDotationTypeList constructor
 // Created: SBO 2006-08-09
 // -----------------------------------------------------------------------------
-ParamDotationTypeList::ParamDotationTypeList( QObject* parent, const kernel::OrderParameter& parameter, const kernel::Resolver_ABC< kernel::DotationType >& resolver )
+ParamDotationTypeList::ParamDotationTypeList( QObject* parent, const kernel::OrderParameter& parameter, const tools::Resolver_ABC< kernel::DotationType >& resolver )
     : QObject( parent )
     , Param_ABC( parameter.GetName().c_str() )
     , resolver_( resolver )
@@ -56,7 +56,7 @@ void ParamDotationTypeList::BuildInterface( QWidget* parent )
     
     list_->setSelectionMode( QListView::Multi );
 
-    kernel::Iterator< const kernel::DotationType& > it = resolver_.CreateIterator();
+    tools::Iterator< const kernel::DotationType& > it = resolver_.CreateIterator();
     while( it.HasMoreElements() )
     {
         const kernel::DotationType& type = it.NextElement();

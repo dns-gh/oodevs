@@ -11,7 +11,7 @@
 #define __ScoreGaugeConfiguration_h_
 
 #include "clients_kernel/ElementObserver_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "clients_gui/ValuedComboBox.h"
 #include <qvgroupbox.h>
 

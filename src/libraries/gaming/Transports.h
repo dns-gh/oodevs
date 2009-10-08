@@ -13,7 +13,7 @@
 #include "game_asn/Simulation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -36,7 +36,7 @@ class Transports : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Transports( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::PropertiesDictionary& dico );
+             Transports( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::PropertiesDictionary& dico );
     virtual ~Transports();
     //@}
 
@@ -67,7 +67,7 @@ public:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver_;
+    const tools::Resolver_ABC< kernel::Agent_ABC >& resolver_;
     const kernel::Agent_ABC* transporter_; 
     T_Agents transported_;
     //@}

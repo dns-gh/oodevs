@@ -21,7 +21,7 @@ using namespace kernel;
 // Name: AgentDetections constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-AgentDetections::AgentDetections( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, const Entity_ABC& holder )
+AgentDetections::AgentDetections( Controller& controller, const tools::Resolver_ABC< Agent_ABC >& resolver, const Entity_ABC& holder )
     : controller_( controller )
     , resolver_  ( resolver )
     , holder_    ( holder )

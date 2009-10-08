@@ -22,7 +22,7 @@ using namespace xml;
 // Name: DecisionalModel constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-DecisionalModel::DecisionalModel( xml::xistream& xis, MissionFactory& factory, const T_Resolver& missionResolver, const Resolver_ABC< FragOrderType >& fragOrders )
+DecisionalModel::DecisionalModel( xml::xistream& xis, MissionFactory& factory, const T_Resolver& missionResolver, const tools::Resolver_ABC< FragOrderType >& fragOrders )
 {
     xis >> attribute( "name", name_ )
         >> optional() 
@@ -38,8 +38,8 @@ DecisionalModel::DecisionalModel( xml::xistream& xis, MissionFactory& factory, c
 // -----------------------------------------------------------------------------
 DecisionalModel::~DecisionalModel()
 {
-    Resolver< Mission >::DeleteAll();
-    Resolver< FragOrder >::DeleteAll();
+    tools::Resolver< Mission >::DeleteAll();
+    tools::Resolver< FragOrder >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -51,7 +51,7 @@ void DecisionalModel::ReadMission( xml::xistream& xis, MissionFactory& factory, 
     std::string name;
     xis >> attribute( "name", name );
     Mission* mission = (factory.*missionResolver)( name );
-    Resolver< Mission >::Register( mission->GetId(), *mission );
+    tools::Resolver< Mission >::Register( mission->GetId(), *mission );
     xis >> list( "fragorder", *this, &DecisionalModel::ReadFragOrder, *mission, factory );
 }
 
@@ -64,8 +64,8 @@ void DecisionalModel::ReadFragOrder( xml::xistream& xis, Mission& mission, Missi
     std::string name;
     xis >> attribute( "name", name );
     FragOrder* order = factory.CreateFragOrder( name );
-    if( ! static_cast< Resolver< FragOrder >& >( mission ).Find( order->GetId() ) )
-        static_cast< Resolver< FragOrder >& >( mission ).Register( order->GetId(), *order );
+    if( ! static_cast< tools::Resolver< FragOrder >& >( mission ).Find( order->GetId() ) )
+        static_cast< tools::Resolver< FragOrder >& >( mission ).Register( order->GetId(), *order );
     else 
         delete order;
 }
@@ -83,9 +83,9 @@ std::string DecisionalModel::GetName() const
 // Name: DecisionalModel::RegisterDefaultFragOrders
 // Created: AGE 2006-04-05
 // -----------------------------------------------------------------------------
-void DecisionalModel::RegisterDefaultFragOrders( MissionFactory& factory, const Resolver_ABC< FragOrderType >& fragOrders )
+void DecisionalModel::RegisterDefaultFragOrders( MissionFactory& factory, const tools::Resolver_ABC< FragOrderType >& fragOrders )
 {
-    Iterator< const FragOrderType& > it = fragOrders.CreateIterator();
+    tools::Iterator< const FragOrderType& > it = fragOrders.CreateIterator();
     while( it.HasMoreElements() )
     {
         const FragOrderType& type = it.NextElement();
@@ -101,6 +101,6 @@ void DecisionalModel::RegisterDefaultFragOrders( MissionFactory& factory, const 
 void DecisionalModel::RegisterFragOrder( MissionFactory& factory, const FragOrderType& type )
 {
     FragOrder* order = factory.CreateFragOrder( type.GetName() );
-    Resolver< FragOrder >::Register( order->GetId(), *order );
+    tools::Resolver< FragOrder >::Register( order->GetId(), *order );
 }
 

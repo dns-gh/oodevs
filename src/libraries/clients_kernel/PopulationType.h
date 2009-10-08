@@ -10,7 +10,7 @@
 #ifndef __PopulationType_h_
 #define __PopulationType_h_
 
-#include "Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace xml { class xistream; };
 
@@ -30,7 +30,7 @@ class PopulationType
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationType( xml::xistream& xis, const Resolver_ABC< DecisionalModel, std::string >& modelResolver );
+             PopulationType( xml::xistream& xis, const  tools::Resolver_ABC< DecisionalModel, std::string >& modelResolver );
     virtual ~PopulationType();
     //@}
 

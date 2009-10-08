@@ -10,7 +10,7 @@
 #ifndef __GradientPreferences_h_
 #define __GradientPreferences_h_
 
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 
 namespace xml
@@ -33,7 +33,7 @@ namespace gui
 */
 // Created: SBO 2007-07-03
 // =============================================================================
-class GradientPreferences : public kernel::Resolver< Gradient, QString >
+class GradientPreferences : public tools::Resolver< Gradient, QString >
 {
 
 public:

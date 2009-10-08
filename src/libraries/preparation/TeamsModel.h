@@ -10,7 +10,7 @@
 #ifndef __TeamsModel_h_
 #define __TeamsModel_h_
 
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 
 namespace xml
@@ -41,7 +41,7 @@ struct Enum_ObstacleType;
 */
 // Created: SBO 2006-08-30
 // =============================================================================
-class TeamsModel : public kernel::Resolver< kernel::Team_ABC >
+class TeamsModel : public tools::Resolver< kernel::Team_ABC >
                  , public kernel::Observer_ABC
                  , public kernel::ElementObserver_ABC< kernel::Team_ABC >
 {
@@ -66,7 +66,7 @@ public:
 
     void Serialize( xml::xostream& xos ) const;
 
-    kernel::Iterator< const kernel::Entity_ABC& > CreateEntityIterator() const;
+    tools::Iterator< const kernel::Entity_ABC& > CreateEntityIterator() const;
     bool CheckValidity( ModelChecker_ABC& checker ) const;
     //@}
 

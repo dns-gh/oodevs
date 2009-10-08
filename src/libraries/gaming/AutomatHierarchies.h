@@ -36,7 +36,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AutomatHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder,
-                                 const kernel::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groupResolver,
+                                 const tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groupResolver,
                                  kernel::PropertiesDictionary& dictionary );
     virtual ~AutomatHierarchies();
     //@}
@@ -59,7 +59,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groupResolver_; 
+    const tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groupResolver_; 
     QString level_;
     QString symbol_;
     //@}

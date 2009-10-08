@@ -14,7 +14,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -44,7 +44,7 @@ struct Enum_ObstacleType;
 class Team : public kernel::EntityImplementation< kernel::Team_ABC >
            , public kernel::Extension_ABC
            , public kernel::Serializable_ABC
-           , public kernel::Resolver< kernel::Object_ABC >
+           , public tools::Resolver< kernel::Object_ABC >
 {
 
 public:

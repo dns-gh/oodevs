@@ -10,7 +10,7 @@
 #ifndef __ListView_h_
 #define __ListView_h_
 
-#include "clients_kernel/Iterator.h"
+#include "tools/Iterator.h"
 #include "ValuedListItem.h"
 #include "ItemFactory_ABC.h"
 
@@ -40,7 +40,7 @@ public:
     //! @name Operations
     //@{
     template< typename Element, typename Parent >
-    ValuedListItem* Display( kernel::Iterator< const Element& > it, Parent* parent, ValuedListItem* currentItem = 0 )
+    ValuedListItem* Display( tools::Iterator< const Element& > it, Parent* parent, ValuedListItem* currentItem = 0 )
     {
         if( ! parent )
             throw std::runtime_error( "Missing parent !" );

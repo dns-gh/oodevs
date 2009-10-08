@@ -72,7 +72,7 @@ namespace
         container.push_back( new NBCPrototype( parent, resolver, toxic, object ) );
     }
 
-    void MedicalTreatmentAttribute( T_AttributeContainer& container, QWidget* parent, const Resolver_ABC< MedicalTreatmentType >& resolver, Object_ABC*& object )
+    void MedicalTreatmentAttribute( T_AttributeContainer& container, QWidget* parent, const tools::Resolver_ABC< MedicalTreatmentType >& resolver, Object_ABC*& object )
     {
         container.push_back( new MedicalTreatmentPrototype( parent, resolver, object ) );
     }

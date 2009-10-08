@@ -709,7 +709,8 @@
     ============================================================================
     -->
     <target name="configure" description="initialize local project structure with libraries">
-        <update name="terrain" modules="terrain,geometry,geocoord,graphics,pathfind,vmap,geodata,gdal_ogr" version="2.0"/>
+        <update name="terrain" modules="terrain,geometry,geocoord,graphics,pathfind,vmap,geodata,gdal_ogr"  version="2.0"/>
+        <!--<update name="terrain" modules="urban"/>-->
         <update name="terrain" package="generation_app_${platform}" version="2.0"/>
         <update name="terrain" package="SWORD Terrain Generation_${platform}.exe" version="2.0"/>
         <update name="MT" modules="MT_Tools,MT_Memory,MT_IO,MT_Archive,MT_Patterns,MT_Profiler,MT_Time,MT_Thread,MT_Logger,MT_XmlTools,MT_Qt"/>

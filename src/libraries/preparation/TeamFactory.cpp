@@ -112,10 +112,10 @@ namespace
     boost::bind( &AttributeBuilder< ##CLASS##_ABC >::Attach< CLASS >, P1, P2, P3 )
 
 #define BIND_ATTACH_ATTRIBUTE_HELPER( CLASS, HELPER, P1, P2, P3, P4 ) \
-    boost::bind( &AttributeBuilder< ##CLASS##_ABC >::Attach2< CLASS, kernel::Resolver_ABC< HELPER > >, P1, P2, P3, P4 )
+    boost::bind( &AttributeBuilder< ##CLASS##_ABC >::Attach2< CLASS, tools::Resolver_ABC< HELPER > >, P1, P2, P3, P4 )
 
 #define BIND_ATTACH_ATTRIBUTE_STRING_HELPER( CLASS, HELPER, P1, P2, P3, P4 ) \
-    boost::bind( &AttributeBuilder< ##CLASS##_ABC >::Attach2< CLASS, kernel::Resolver_ABC< HELPER, std::string > >, P1, P2, P3, P4 )
+    boost::bind( &AttributeBuilder< ##CLASS##_ABC >::Attach2< CLASS, tools::Resolver_ABC< HELPER, std::string > >, P1, P2, P3, P4 )
 
 // -----------------------------------------------------------------------------
 // Name: TeamFactory constructor

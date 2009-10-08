@@ -12,7 +12,7 @@
 
 #include "game_asn/Simulation.h"
 #include "Parameter.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -36,8 +36,8 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit AgentList( const kernel::OrderParameter& parameter );
-             AgentList( const kernel::OrderParameter& parameter, const ASN1T_UnitList& asn, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::Controller& controller );
-             AgentList( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::Controller& controller );
+             AgentList( const kernel::OrderParameter& parameter, const ASN1T_UnitList& asn, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::Controller& controller );
+             AgentList( const kernel::OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::Controller& controller );
     virtual ~AgentList();
     //@}
 
@@ -64,7 +64,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadAgent( xml::xistream& xis, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::Controller& controller );
+    void ReadAgent( xml::xistream& xis, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::Controller& controller );
     //@}
 };
 

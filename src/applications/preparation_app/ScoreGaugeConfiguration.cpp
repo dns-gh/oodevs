@@ -342,7 +342,7 @@ double ScoreGaugeConfiguration::GetValue( int row, int col ) const
 void ScoreGaugeConfiguration::NotifyUpdated( const kernel::ModelLoaded& /*model*/ )
 {
     type_->Clear();
-    kernel::Iterator< const indicators::GaugeType& > it( gaugeTypes_.CreateIterator() );
+    tools::Iterator< const indicators::GaugeType& > it( gaugeTypes_.CreateIterator() );
     while( it.HasMoreElements() )
     {
         const indicators::GaugeType& type = it.NextElement();

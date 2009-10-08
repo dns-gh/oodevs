@@ -10,7 +10,7 @@
 #ifndef __SuccessFactorAction_h_
 #define __SuccessFactorAction_h_
 
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace xml
 {
@@ -28,7 +28,7 @@ class SuccessFactorActionTypes;
 */
 // Created: SBO 2009-06-15
 // =============================================================================
-class SuccessFactorAction : public kernel::Resolver< SuccessFactorActionParameter >
+class SuccessFactorAction : public tools::Resolver< SuccessFactorActionParameter >
 {
 
 public:

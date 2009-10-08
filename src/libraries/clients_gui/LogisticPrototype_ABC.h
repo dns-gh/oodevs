@@ -11,7 +11,7 @@
 #define __LogisticPrototype_ABC_h_
 
 #include "ObjectAttributePrototype_ABC.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 #include "clients_kernel/Observer_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"

@@ -13,7 +13,7 @@
 #include "game_asn/Simulation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 #include "clients_kernel/Creatable.h"
 
 namespace kernel
@@ -35,7 +35,7 @@ class ObjectKnowledges : public kernel::Extension_ABC
                        , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeCreation >
                        , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
                        , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeDestruction >
-                       , public kernel::Resolver< kernel::ObjectKnowledge_ABC >
+                       , public tools::Resolver< kernel::ObjectKnowledge_ABC >
                        , public kernel::Creatable< ObjectKnowledges >
 {
 

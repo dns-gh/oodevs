@@ -12,7 +12,7 @@
 
 #include "game_asn/Simulation.h"
 #include "Parameter.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -37,9 +37,9 @@ class EngineerConstruction : public Parameter< std::string >
     //! @name Constructors/Destructor
     //@{
              EngineerConstruction( const kernel::OrderParameter& parameter, const kernel::ObjectType& type );
-             EngineerConstruction( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType, std::string >& types, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, const ASN1T_PlannedWork& asn, kernel::Controller& controller );
-             EngineerConstruction( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType, std::string >& types, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, xml::xistream& xis, kernel::Controller& controller );
-             EngineerConstruction( const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::ObjectType, std::string >& types, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, xml::xistream& xis, kernel::Controller& controller );
+             EngineerConstruction( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& types, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, const ASN1T_PlannedWork& asn, kernel::Controller& controller );
+             EngineerConstruction( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& types, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, xml::xistream& xis, kernel::Controller& controller );
+             EngineerConstruction( const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& types, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, xml::xistream& xis, kernel::Controller& controller );
     virtual ~EngineerConstruction();
     //@}
 
@@ -68,9 +68,9 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadParameter( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, kernel::Controller& controller );
+    void ReadParameter( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, kernel::Controller& controller );
     virtual void Serialize( xml::xostream& xos ) const;
-    void SetParameters( const ASN1T_PlannedWork& asn, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, kernel::Controller& controller );
+    void SetParameters( const ASN1T_PlannedWork& asn, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, kernel::Controller& controller );
     //@}
 
 private:

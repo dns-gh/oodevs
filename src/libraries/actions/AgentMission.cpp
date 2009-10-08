@@ -31,7 +31,7 @@ AgentMission::AgentMission( const Entity_ABC& entity, const MissionType& mission
 // Name: AgentMission constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-AgentMission::AgentMission( xml::xistream& xis, Controller& controller, const Resolver_ABC< MissionType >& missions, const kernel::Entity_ABC& entity )
+AgentMission::AgentMission( xml::xistream& xis, Controller& controller, const tools::Resolver_ABC< MissionType >& missions, const kernel::Entity_ABC& entity )
     : Mission( xis, controller, missions, entity )
 {
     // NOTHING

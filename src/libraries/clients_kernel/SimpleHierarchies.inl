@@ -52,13 +52,13 @@ const Entity_ABC& SimpleHierarchies< I >::GetEntity() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Iterator< const Entity_ABC& > SimpleHierarchies::CreateSubordinateIterator
+// Name: tools::Iterator< const Entity_ABC& > SimpleHierarchies::CreateSubordinateIterator
 // Created: AGE 2006-11-24
 // -----------------------------------------------------------------------------
 template< typename I >
-Iterator< const Entity_ABC& > SimpleHierarchies< I >::CreateSubordinateIterator() const
+tools::Iterator< const Entity_ABC& > SimpleHierarchies< I >::CreateSubordinateIterator() const
 {
-    return new NullIterator< const Entity_ABC& >();
+    return new tools::NullIterator< const Entity_ABC& >();
 }
     
 // -----------------------------------------------------------------------------

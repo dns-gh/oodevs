@@ -70,7 +70,7 @@ void TeamHierarchies::UpdateSymbol( bool up /*= true*/ )
 {
     if( ! up )
     {
-        kernel::Iterator< const kernel::Entity_ABC& > it = CreateSubordinateIterator();
+        tools::Iterator< const kernel::Entity_ABC& > it = CreateSubordinateIterator();
         while( it.HasMoreElements() )
         {
             const kernel::TacticalHierarchies* child = it.NextElement().Retrieve< kernel::TacticalHierarchies >();

@@ -13,7 +13,7 @@
 #include "clients_gui/EditorFactory.h"
 #include "clients_kernel/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 #include "preparation/Types.h"
 #include "preparation/EnumTypes.h"
 

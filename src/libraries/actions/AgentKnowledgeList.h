@@ -11,7 +11,7 @@
 #define __ActionParameterAgentKnowledgeList_h_
 
 #include "Parameter.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -38,7 +38,7 @@ public:
     //@{
     explicit AgentKnowledgeList( const kernel::OrderParameter& parameter );
              AgentKnowledgeList( const kernel::OrderParameter& parameter, const ASN1T_UnitKnowledgeList& asn, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
-             AgentKnowledgeList( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
+             AgentKnowledgeList( const kernel::OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
     virtual ~AgentKnowledgeList();
     //@}
 
@@ -64,7 +64,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadAgentKnowledge( xml::xistream& xis, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
+    void ReadAgentKnowledge( xml::xistream& xis, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
     //@}
 };
 

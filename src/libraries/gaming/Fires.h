@@ -13,7 +13,7 @@
 #include "game_asn/Simulation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 #include "clients_kernel/Drawable_ABC.h"
 
 namespace kernel
@@ -36,7 +36,7 @@ class Fires : public kernel::Extension_ABC
             , public kernel::Updatable_ABC< ASN1T_MsgStopUnitFire >
             , public kernel::Updatable_ABC< ASN1T_MsgStartPopulationFire >
             , public kernel::Updatable_ABC< ASN1T_MsgStopPopulationFire >
-            , public kernel::Resolver< Fire_ABC >
+            , public tools::Resolver< Fire_ABC >
             , public kernel::Drawable_ABC
 {
 

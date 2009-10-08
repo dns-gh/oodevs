@@ -14,7 +14,7 @@
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/OptionalValue.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include <list>
 
 namespace kernel
@@ -44,7 +44,7 @@ private:
 public:
     //! @name Constructors/Destructor
     //@{
-             MedicalTreatmentAttribute( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::MedicalTreatmentType >& resolver );
+             MedicalTreatmentAttribute( kernel::Controller& controller, const tools::Resolver_ABC< kernel::MedicalTreatmentType >& resolver );
     virtual ~MedicalTreatmentAttribute();
     //@}
 
@@ -74,7 +74,7 @@ public:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Resolver_ABC< kernel::MedicalTreatmentType >& resolver_;
+    const tools::Resolver_ABC< kernel::MedicalTreatmentType >& resolver_;
     T_MedicalTreatmentTypeList typeList_;
     int nMedicalTreatmentType_;
     int beds_;

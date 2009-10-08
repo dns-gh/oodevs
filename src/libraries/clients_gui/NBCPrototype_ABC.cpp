@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "NBCPrototype_ABC.h"
 #include "clients_kernel/NBCAgent.h"
-#include "clients_kernel/Iterator.h"
+#include "tools/Iterator.h"
 #include "RichLabel.h"
 #include "ValuedListItem.h"
 #include "Tools.h"
@@ -22,7 +22,7 @@ using namespace gui;
 // Name: NBCPrototype_ABC constructor
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-NBCPrototype_ABC::NBCPrototype_ABC( QWidget* parent, const Resolver_ABC< NBCAgent >& resolver, int maxToxic )
+NBCPrototype_ABC::NBCPrototype_ABC( QWidget* parent, const tools::Resolver_ABC< NBCAgent >& resolver, int maxToxic )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "NBCPrototype_ABC", "NBC parameters" ) )
     , resolver_( resolver )
     , maxToxic_ ( maxToxic )
@@ -65,7 +65,7 @@ NBCPrototype_ABC::~NBCPrototype_ABC()
 void NBCPrototype_ABC::FillTypes()
 {
     nbcAgents_->clear();
-    Iterator< const NBCAgent& > it( resolver_.CreateIterator() );
+    tools::Iterator< const NBCAgent& > it( resolver_.CreateIterator() );
     while( it.HasMoreElements() )
     {
         const NBCAgent& element = it.NextElement();

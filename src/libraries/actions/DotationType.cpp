@@ -25,7 +25,7 @@ using namespace parameters;
 // Name: DotationType constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-DotationType::DotationType( const kernel::OrderParameter& parameter, unsigned int id, const kernel::Resolver_ABC< kernel::DotationType >& resolver )
+DotationType::DotationType( const kernel::OrderParameter& parameter, unsigned int id, const tools::Resolver_ABC< kernel::DotationType >& resolver )
     : Parameter< std::string >( parameter )
     , type_( resolver.Get( id ) )
 {
@@ -36,7 +36,7 @@ DotationType::DotationType( const kernel::OrderParameter& parameter, unsigned in
 // Name: DotationType constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-DotationType::DotationType( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Resolver_ABC< kernel::DotationType >& resolver )
+DotationType::DotationType( const kernel::OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< kernel::DotationType >& resolver )
     : Parameter< std::string >( parameter )
     , type_( resolver.Get( xml::attribute< unsigned int >( xis, "value" ) ) )
 {

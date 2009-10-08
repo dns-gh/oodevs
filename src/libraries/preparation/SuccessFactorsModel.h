@@ -10,7 +10,7 @@
 #ifndef __SuccessFactorsModel_h_
 #define __SuccessFactorsModel_h_
 
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace tools
 {
@@ -33,7 +33,7 @@ class SuccessFactorFactory_ABC;
 */
 // Created: SBO 2009-06-15
 // =============================================================================
-class SuccessFactorsModel : public kernel::Resolver< SuccessFactor, QString >
+class SuccessFactorsModel : public tools::Resolver< SuccessFactor, QString >
 {
 
 public:

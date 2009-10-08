@@ -13,7 +13,7 @@
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace xml
 {
@@ -40,8 +40,8 @@ class KnowledgeGroup : public kernel::EntityImplementation< kernel::KnowledgeGro
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroup( kernel::Controller& controller, IdManager& idManager, kernel::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types );
-             KnowledgeGroup( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, kernel::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types );
+             KnowledgeGroup( kernel::Controller& controller, IdManager& idManager, tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types );
+             KnowledgeGroup( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types );
     virtual ~KnowledgeGroup();
     //@}
 

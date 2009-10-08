@@ -12,7 +12,7 @@
 
 #include "Types.h"
 #include "LogisticHierarchies.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -29,13 +29,13 @@ class DotationsItem;
 // Created: SBO 2006-10-24
 // =============================================================================
 class SupplyStates : public LogisticHierarchies< SupplySuperior, kernel::SupplyHierarchies >
-                   , public kernel::Resolver< Dotation >
+                   , public tools::Resolver< Dotation >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             SupplyStates( kernel::Controller& controller, kernel::Entity_ABC& entity, const kernel::Resolver_ABC< kernel::DotationType, std::string >& resolver, kernel::PropertiesDictionary& dico );
+             SupplyStates( kernel::Controller& controller, kernel::Entity_ABC& entity, const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, kernel::PropertiesDictionary& dico );
     virtual ~SupplyStates();
     //@}
 
@@ -64,7 +64,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Resolver_ABC< kernel::DotationType, std::string >& resolver_;
+    const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver_;
     DotationsItem* item_;
     //@}
 };

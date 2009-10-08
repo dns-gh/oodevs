@@ -30,7 +30,7 @@ AutomatMission::AutomatMission( const Entity_ABC& entity, const MissionType& mis
 // Name: AutomatMission constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-AutomatMission::AutomatMission( xml::xistream& xis, Controller& controller, const Resolver_ABC< MissionType >& missions, const Entity_ABC& entity )
+AutomatMission::AutomatMission( xml::xistream& xis, Controller& controller, const tools::Resolver_ABC< MissionType >& missions, const Entity_ABC& entity )
     : Mission( xis, controller, missions, entity )
 {
     // NOTHING

@@ -34,8 +34,8 @@ class PopulationFlowKnowledge;
 // Created: APE 2004-03-10
 // =============================================================================
 class PopulationKnowledge : public kernel::EntityImplementation< kernel::PopulationKnowledge_ABC >
-                          , public kernel::Resolver< PopulationFlowKnowledge >
-                          , public kernel::Resolver< PopulationConcentrationKnowledge >
+                          , public tools::Resolver< PopulationFlowKnowledge >
+                          , public tools::Resolver< PopulationConcentrationKnowledge >
                           , public kernel::Extension_ABC
                           , public kernel::Drawable_ABC
                           , public kernel::Updatable_ABC< ASN1T_MsgPopulationKnowledgeUpdate >
@@ -51,7 +51,7 @@ class PopulationKnowledge : public kernel::EntityImplementation< kernel::Populat
 public:
     //! @name Constructor/Destructor
     //@{
-             PopulationKnowledge( const kernel::KnowledgeGroup_ABC& group, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::Population_ABC >& resolver, const ASN1T_MsgPopulationKnowledgeCreation& message );
+             PopulationKnowledge( const kernel::KnowledgeGroup_ABC& group, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::Population_ABC >& resolver, const ASN1T_MsgPopulationKnowledgeCreation& message );
     virtual ~PopulationKnowledge();
     //@}
 

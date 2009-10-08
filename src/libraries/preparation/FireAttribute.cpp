@@ -32,7 +32,7 @@ FireAttribute::FireAttribute( kernel::PropertiesDictionary& dico )
 // Name: FireAttribute constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-FireAttribute::FireAttribute( xml::xistream& xis, const kernel::Resolver_ABC< kernel::FireClass, std::string >& FireClasses, kernel::PropertiesDictionary& dico )
+FireAttribute::FireAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::FireClass, std::string >& FireClasses, kernel::PropertiesDictionary& dico )
 {
     std::string type;
     xis >> attribute( "type", type );

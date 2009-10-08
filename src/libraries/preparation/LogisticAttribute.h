@@ -13,7 +13,7 @@
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/StrongType.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "Types.h"
 
 namespace kernel
@@ -42,7 +42,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit LogisticAttribute( kernel::PropertiesDictionary& dico );
-             LogisticAttribute( xml::xistream& xis, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, kernel::PropertiesDictionary& dico );
+             LogisticAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, kernel::PropertiesDictionary& dico );
     virtual ~LogisticAttribute();
     //@}
 

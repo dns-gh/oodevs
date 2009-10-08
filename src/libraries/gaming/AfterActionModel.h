@@ -11,7 +11,7 @@
 #define __AfterActionModel_h_
 
 #include "game_asn/Aar.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -33,7 +33,7 @@ class Publisher_ABC;
 */
 // Created: AGE 2007-09-17
 // =============================================================================
-class AfterActionModel : public kernel::Resolver< AfterActionFunction, QString >
+class AfterActionModel : public tools::Resolver< AfterActionFunction, QString >
 {
 
 public:

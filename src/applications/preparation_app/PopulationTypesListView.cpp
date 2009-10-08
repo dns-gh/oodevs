@@ -22,7 +22,7 @@ using namespace kernel;
 // Name: PopulationTypesListView constructor
 // Created: SBO 2006-11-09
 // -----------------------------------------------------------------------------
-PopulationTypesListView::PopulationTypesListView( QWidget* parent, kernel::Controllers& controllers, const kernel::Resolver_ABC< kernel::PopulationType >& types, gui::ItemFactory_ABC& factory )
+PopulationTypesListView::PopulationTypesListView( QWidget* parent, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::PopulationType >& types, gui::ItemFactory_ABC& factory )
     : gui::ListView< PopulationTypesListView >( parent, *this, factory )
     , controllers_( controllers )
     , types_( types )
@@ -61,7 +61,7 @@ void PopulationTypesListView::Display( const kernel::PopulationType& type, gui::
 // -----------------------------------------------------------------------------
 void PopulationTypesListView::NotifyUpdated( const kernel::ModelLoaded& )
 {
-    Iterator< const PopulationType& > it( types_.CreateIterator() );
+    tools::Iterator< const PopulationType& > it( types_.CreateIterator() );
     DeleteTail( gui::ListView< PopulationTypesListView >::Display( it, this ) );
 }
 

@@ -11,7 +11,7 @@
 #define __ObstaclePrototype_ABC_h_
 
 #include "ObjectAttributePrototype_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "clients_kernel/tools.h"
 #include "ValuedComboBox.h"
 

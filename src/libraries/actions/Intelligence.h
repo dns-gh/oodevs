@@ -12,7 +12,7 @@
 
 #include "game_asn/Simulation.h"
 #include "Entity.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "clients_kernel/Intelligence_ABC.h"
 
 namespace kernel
@@ -40,10 +40,10 @@ public:
     //@{
              Intelligence( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, kernel::Controller& controller );
              Intelligence( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis
-                                        , const kernel::Resolver_ABC< kernel::Formation_ABC >& resolver
+                                        , const tools::Resolver_ABC< kernel::Formation_ABC >& resolver
                                         , const kernel::FormationLevels& levels, kernel::Controller& controller );
              Intelligence( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter
-                                        , const kernel::Resolver_ABC< kernel::Formation_ABC >& resolver
+                                        , const tools::Resolver_ABC< kernel::Formation_ABC >& resolver
                                         , const kernel::FormationLevels& levels
                                         , const ASN1T_Intelligence& asn, kernel::Controller& controller );
     virtual ~Intelligence();
@@ -66,7 +66,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadParameter( xml::xistream& xis, const kernel::Resolver_ABC< kernel::Formation_ABC >& resolver, const kernel::FormationLevels& levels );
+    void ReadParameter( xml::xistream& xis, const tools::Resolver_ABC< kernel::Formation_ABC >& resolver, const kernel::FormationLevels& levels );
     virtual void Serialize( xml::xostream& xos ) const;
     //@}
 

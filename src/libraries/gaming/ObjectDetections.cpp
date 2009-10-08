@@ -21,7 +21,7 @@ using namespace kernel;
 // Name: ObjectDetections constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-ObjectDetections::ObjectDetections( Controller& controller, const Resolver_ABC< Object_ABC >& resolver )
+ObjectDetections::ObjectDetections( Controller& controller, const tools::Resolver_ABC< Object_ABC >& resolver )
     : controller_( controller )
     , resolver_( resolver )
 {

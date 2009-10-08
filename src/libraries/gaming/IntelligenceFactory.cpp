@@ -28,7 +28,7 @@ using namespace kernel;
 // Name: IntelligenceFactory constructor
 // Created: SBO 2007-10-18
 // -----------------------------------------------------------------------------
-IntelligenceFactory::IntelligenceFactory( Controllers& controllers, const CoordinateConverter_ABC& converter, const Model& model, const Resolver_ABC< HierarchyLevel_ABC >& levels, Publisher_ABC& publisher )
+IntelligenceFactory::IntelligenceFactory( Controllers& controllers, const CoordinateConverter_ABC& converter, const Model& model, const tools::Resolver_ABC< HierarchyLevel_ABC >& levels, Publisher_ABC& publisher )
     : controllers_( controllers )
     , converter_  ( converter )
     , model_      ( model )

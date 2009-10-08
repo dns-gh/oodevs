@@ -10,7 +10,7 @@
 #ifndef __IndicatorRequests_h_
 #define __IndicatorRequests_h_
 
-#include "clients_kernel/Iterator.h"
+#include "tools/Iterator.h"
 #include "game_asn/Aar.h"
 
 namespace kernel
@@ -45,7 +45,7 @@ public:
     void Update( const ASN1T_MsgPlotResult& asnMsg );
 
     IndicatorRequest& CreateRequest( const IndicatorDefinition_ABC& definition );
-    kernel::Iterator< const IndicatorRequest& > CreateIterator();
+    tools::Iterator< const IndicatorRequest& > CreateIterator();
     //@}
 
 private:

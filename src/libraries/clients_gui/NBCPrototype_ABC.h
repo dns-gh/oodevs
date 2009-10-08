@@ -11,7 +11,7 @@
 #define __NBCPrototype_ABC_h_
 
 #include "ObjectAttributePrototype_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "ValuedComboBox.h"
 
 namespace kernel
@@ -35,7 +35,7 @@ class NBCPrototype_ABC : public ObjectAttributePrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             NBCPrototype_ABC( QWidget* parent, const kernel::Resolver_ABC< kernel::NBCAgent >& resolver, int maxToxic );
+             NBCPrototype_ABC( QWidget* parent, const tools::Resolver_ABC< kernel::NBCAgent >& resolver, int maxToxic );
     virtual ~NBCPrototype_ABC();
     //@}
 
@@ -65,7 +65,7 @@ protected:
 
     //! @name Member data
     //@{
-    const kernel::Resolver_ABC< kernel::NBCAgent >& resolver_;
+    const tools::Resolver_ABC< kernel::NBCAgent >& resolver_;
     int maxToxic_;
     
     RichLabel* nbcAgentsLabel_;

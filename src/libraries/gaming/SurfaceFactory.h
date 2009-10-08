@@ -10,7 +10,7 @@
 #ifndef __SurfaceFactory_h_
 #define __SurfaceFactory_h_
 
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "game_asn/Simulation.h"
 
 namespace kernel
@@ -37,7 +37,7 @@ class SurfaceFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             SurfaceFactory( const kernel::CoordinateConverter_ABC& converter, const kernel::DetectionMap& map, const kernel::Resolver_ABC< kernel::SensorType, std::string >& resolver );
+             SurfaceFactory( const kernel::CoordinateConverter_ABC& converter, const kernel::DetectionMap& map, const tools::Resolver_ABC< kernel::SensorType, std::string >& resolver );
     virtual ~SurfaceFactory();
     //@}
 
@@ -59,7 +59,7 @@ private:
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
     const kernel::DetectionMap& map_;
-    const kernel::Resolver_ABC< kernel::SensorType, std::string >& resolver_;
+    const tools::Resolver_ABC< kernel::SensorType, std::string >& resolver_;
     //@}
 };
 

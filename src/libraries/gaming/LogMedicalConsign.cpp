@@ -27,7 +27,7 @@ using namespace kernel;
 // Name: LogMedicalConsign constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogMedicalConsign::LogMedicalConsign( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, const ASN1T_MsgLogMedicalHandlingCreation& message )
+LogMedicalConsign::LogMedicalConsign( Controller& controller, const tools::Resolver_ABC< Agent_ABC >& resolver, const ASN1T_MsgLogMedicalHandlingCreation& message )
     : controller_      ( controller )
     , resolver_        ( resolver )
     , nID_             ( message.oid_consigne )

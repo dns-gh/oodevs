@@ -12,7 +12,7 @@
 #include "moc_DrawingCategoryItem.cpp"
 #include "DrawingTemplate.h"
 #include "DrawingCategory.h"
-#include "clients_kernel/Iterator.h"
+#include "tools/Iterator.h"
 
 using namespace gui;
 
@@ -47,7 +47,7 @@ DrawingCategoryItem::~DrawingCategoryItem()
 // -----------------------------------------------------------------------------
 void DrawingCategoryItem::FillStyles( const DrawingCategory& category )
 {
-    kernel::Iterator< const DrawingTemplate& > it( category.CreateIterator() );
+    tools::Iterator< const DrawingTemplate& > it( category.CreateIterator() );
     while( it.HasMoreElements() )
         AddStyle( it.NextElement() );
 }

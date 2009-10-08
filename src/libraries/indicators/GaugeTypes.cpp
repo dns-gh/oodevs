@@ -72,7 +72,7 @@ void GaugeTypes::Purge()
 // -----------------------------------------------------------------------------
 Gauge* GaugeTypes::Create() const
 {
-    kernel::Iterator< const GaugeType& > it( CreateIterator() );
+    tools::Iterator< const GaugeType& > it( CreateIterator() );
     if( !it.HasMoreElements() )
         throw std::runtime_error( __FUNCTION__ " no indicator gauge template." );
     Gauge* gauge = new Gauge( it.NextElement() );

@@ -11,7 +11,7 @@
 #define __ScoreModel_h_
 
 #include "clients_kernel/ElementObserver_ABC.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 #include "game_asn/Aar.h"
 
 namespace kernel
@@ -32,7 +32,7 @@ class Services;
 */
 // Created: SBO 2009-03-12
 // =============================================================================
-class ScoreModel : public kernel::Resolver< Score, QString >
+class ScoreModel : public tools::Resolver< Score, QString >
                  , public kernel::Observer_ABC
                  , public kernel::ElementObserver_ABC< Services >
 {

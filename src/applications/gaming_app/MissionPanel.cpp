@@ -227,7 +227,7 @@ void MissionPanel::AddMissionGroup( QPopupMenu& menu, const QString& prefix, con
 // Name: MissionPanel::AddMissions
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-int MissionPanel::AddMissions( Iterator< const Mission& > it, ContextMenu& menu, const QString& name, const char* slot )
+int MissionPanel::AddMissions( tools::Iterator< const Mission& > it, ContextMenu& menu, const QString& name, const char* slot )
 {
     QPopupMenu& missions = *new QPopupMenu( menu );
     QString lastPrefix;
@@ -251,12 +251,12 @@ int MissionPanel::AddMissions( Iterator< const Mission& > it, ContextMenu& menu,
 int MissionPanel::AddFragOrders( const Decisions_ABC& decisions, ContextMenu& menu, const QString& name, const char* slot )
 {
     QPopupMenu& orders = *new QPopupMenu( menu );
-    Iterator< const FragOrder& > it = decisions.GetFragOrders();
+    tools::Iterator< const FragOrder& > it = decisions.GetFragOrders();
     AddFragOrders( it, orders, slot );
 
     if( const Mission* mission = decisions.GetCurrentMission() )
     {
-        it = static_cast< const Resolver< FragOrder >& >( *mission ).CreateIterator();
+        it = static_cast< const tools::Resolver< FragOrder >& >( *mission ).CreateIterator();
         AddFragOrders( it, orders, slot );
     }
     return menu.InsertItem( "Order", name, &orders );
@@ -277,7 +277,7 @@ namespace
 // Name: MissionPanel::AddFragOrders
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-void MissionPanel::AddFragOrders( Iterator< const FragOrder& > it, QPopupMenu& menu, const char* slot )
+void MissionPanel::AddFragOrders( tools::Iterator< const FragOrder& > it, QPopupMenu& menu, const char* slot )
 {
     while( it.HasMoreElements() )
     {
@@ -313,7 +313,7 @@ void MissionPanel::AddMissions( const Decisions_ABC& decisions, kernel::ContextM
 void MissionPanel::ActivateAgentMission( int id )
 {
     SetInterface( 0 );
-    const MissionType& mission = static_cast< Resolver_ABC< MissionType >& >( static_.types_).Get( id );
+    const MissionType& mission = static_cast< tools::Resolver_ABC< MissionType >& >( static_.types_).Get( id );
     SetInterface( new UnitMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_.actions_, publisher_, *interfaceBuilder_, actionsModel_ ) );
 }
 
@@ -324,7 +324,7 @@ void MissionPanel::ActivateAgentMission( int id )
 void MissionPanel::ActivateAutomatMission( int id )
 {
     SetInterface( 0 );
-    const MissionType& mission = static_cast< Resolver_ABC< MissionType >& >( static_.types_).Get( id );
+    const MissionType& mission = static_cast< tools::Resolver_ABC< MissionType >& >( static_.types_).Get( id );
     Entity_ABC* entity = selectedEntity_.ConstCast();
     if( !entity->Retrieve< AutomatDecisions >() )
         entity = const_cast< kernel::Entity_ABC* >( entity->Get< kernel::TacticalHierarchies >().GetSuperior() );
@@ -338,7 +338,7 @@ void MissionPanel::ActivateAutomatMission( int id )
 void MissionPanel::ActivatePopulationMission( int id )
 {
     SetInterface( 0 );
-    const MissionType& mission = static_cast< Resolver_ABC< MissionType >& >( static_.types_).Get( id );
+    const MissionType& mission = static_cast< tools::Resolver_ABC< MissionType >& >( static_.types_).Get( id );
     SetInterface( new PopulationMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_.actions_, publisher_, *interfaceBuilder_, actionsModel_ ) );
 }
 
@@ -349,7 +349,7 @@ void MissionPanel::ActivatePopulationMission( int id )
 void MissionPanel::ActivateFragOrder( int id )
 {
     SetInterface( 0 );
-    const FragOrderType& order = static_cast< Resolver_ABC< FragOrderType >& >( static_.types_).Get( id );
+    const FragOrderType& order = static_cast< tools::Resolver_ABC< FragOrderType >& >( static_.types_).Get( id );
     SetInterface( new FragmentaryOrderInterface( this, *selectedEntity_.ConstCast(), order, controllers_.actions_, publisher_, *interfaceBuilder_, actionsModel_ ) );
 }
 

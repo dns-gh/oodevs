@@ -217,7 +217,7 @@ void LogisticSupplyRecompletionDialog::InitializeEquipments()
     equipmentsMax_.clear();
     if( const Equipments* equipments = selected_->Retrieve< Equipments >() )
     {
-        Iterator< const Equipment& > it = equipments->CreateIterator();
+        tools::Iterator< const Equipment& > it = equipments->CreateIterator();
         QStringList equipmentList;
         while( it.HasMoreElements() )
         {
@@ -270,8 +270,8 @@ void LogisticSupplyRecompletionDialog::AddPersonal( unsigned nPos, const QString
 void LogisticSupplyRecompletionDialog::InitializeDotations()
 {
     dotationsTable_->setNumRows( 0 );
-    const Resolver_ABC< DotationType >& dotations = static_.objectTypes_;
-    Iterator< const DotationType& > it = dotations.CreateIterator();
+    const tools::Resolver_ABC< DotationType >& dotations = static_.objectTypes_;
+    tools::Iterator< const DotationType& > it = dotations.CreateIterator();
     std::set< unsigned long > inserted;
     while( it.HasMoreElements() )
     {
@@ -328,7 +328,7 @@ void LogisticSupplyRecompletionDialog::InitializeSupplies()
         stockTable_->setNumRows( 0 );
         stockTable_->setMinimumHeight( stockTable_->rowHeight( 0 ) * 5 );
         
-        Iterator< const Dotation& > it = supplies->CreateIterator();
+        tools::Iterator< const Dotation& > it = supplies->CreateIterator();
         while( it.HasMoreElements() )
         {
             const Dotation& stock = it.NextElement();

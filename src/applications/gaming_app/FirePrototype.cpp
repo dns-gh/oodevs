@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "FirePrototype.h"
 #include "clients_kernel/FireClass.h"
-#include "clients_kernel/Iterator.h"
+#include "tools/Iterator.h"
 #include "game_asn/SimulationSenders.h"
 
 using namespace kernel;
@@ -20,7 +20,7 @@ using namespace gui;
 // Name: FirePrototype constructor
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-FirePrototype::FirePrototype( QWidget* parent, const Resolver_ABC< FireClass >& resolver, ASN1T_MagicActionCreateObject& msg )
+FirePrototype::FirePrototype( QWidget* parent, const tools::Resolver_ABC< FireClass >& resolver, ASN1T_MagicActionCreateObject& msg )
     : FirePrototype_ABC( parent, resolver )
     , msg_( msg )     
 {

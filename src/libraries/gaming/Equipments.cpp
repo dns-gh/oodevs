@@ -23,10 +23,10 @@ using namespace kernel;
 // Name: Equipments constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Equipments::Equipments( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, PropertiesDictionary& dico
-                       , const kernel::Resolver_ABC< kernel::Automat_ABC >& automatResolver
-                       , const kernel::Resolver_ABC< kernel::Formation_ABC >& formationResolver
-                       , const kernel::Resolver_ABC< kernel::Team_ABC >& teamResolver )
+Equipments::Equipments( Controller& controller, const tools::Resolver_ABC< EquipmentType >& resolver, PropertiesDictionary& dico
+                       , const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver
+                       , const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver
+                       , const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver )
     : HierarchicExtension_ABC( automatResolver, formationResolver, teamResolver )
     , controller_( controller )
     , resolver_( resolver )

@@ -22,7 +22,7 @@ using namespace kernel;
 // Name: DotationsItem constructor
 // Created: SBO 2006-11-10
 // -----------------------------------------------------------------------------
-DotationsItem::DotationsItem( kernel::Controller& controller, kernel::Entity_ABC& owner, kernel::PropertiesDictionary& dico, const QString& propertyName, kernel::Resolver< Dotation >& dotations )
+DotationsItem::DotationsItem( kernel::Controller& controller, kernel::Entity_ABC& owner, kernel::PropertiesDictionary& dico, const QString& propertyName, tools::Resolver< Dotation >& dotations )
     : controller_( controller )
     , owner_( owner )
     , dico_( dico )
@@ -68,7 +68,7 @@ void DotationsItem::AddDotation( const DotationType& type, unsigned long quantit
 // -----------------------------------------------------------------------------
 void DotationsItem::Clear()
 {
-    Iterator< const Dotation& > it = dotations_.CreateIterator();
+    tools::Iterator< const Dotation& > it = dotations_.CreateIterator();
     while( it.HasMoreElements() )
     {
         const Dotation& dotation = it.NextElement();
@@ -91,7 +91,7 @@ void DotationsItem::Update()
 // Name: DotationsItem::CreateIterator
 // Created: SBO 2006-11-10
 // -----------------------------------------------------------------------------
-kernel::Iterator< const Dotation& > DotationsItem::CreateIterator() const
+tools::Iterator< const Dotation& > DotationsItem::CreateIterator() const
 {
     return dotations_.CreateIterator();
 }

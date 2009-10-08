@@ -13,7 +13,7 @@
 #include "game_asn/Simulation.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -98,7 +98,7 @@ private:
     void Clean();
     void ResolveEntities( const Model& model );
     template< typename Entity >
-    void ResolveEntities( const kernel::Resolver_ABC< Entity >& resolver, const T_Ids& readIds, const T_Ids& readWriteIds );
+    void ResolveEntities( const tools::Resolver_ABC< Entity >& resolver, const T_Ids& readIds, const T_Ids& readWriteIds );
 
     template< typename T >
     void ReadList( const T& idList, T_Ids& ids );

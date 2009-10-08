@@ -11,7 +11,7 @@
 #define __Diplomacies_h_
 
 #include "clients_kernel/Diplomacies_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "Types.h"
 
@@ -43,8 +43,8 @@ class Diplomacies : public kernel::Diplomacies_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Diplomacies( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Team_ABC >& resolver, const kernel::Team_ABC& team, kernel::PropertiesDictionary& dico, TeamKarmas& karmas );
-             Diplomacies( xml::xistream& xis, kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Team_ABC >& resolver, const kernel::Team_ABC& team, kernel::PropertiesDictionary& dico, TeamKarmas& karmas );
+             Diplomacies( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Team_ABC >& resolver, const kernel::Team_ABC& team, kernel::PropertiesDictionary& dico, TeamKarmas& karmas );
+             Diplomacies( xml::xistream& xis, kernel::Controller& controller, const tools::Resolver_ABC< kernel::Team_ABC >& resolver, const kernel::Team_ABC& team, kernel::PropertiesDictionary& dico, TeamKarmas& karmas );
     virtual ~Diplomacies();
     //@}
 
@@ -82,7 +82,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Resolver_ABC< kernel::Team_ABC >& resolver_;
+    const tools::Resolver_ABC< kernel::Team_ABC >& resolver_;
     T_Diplomacies diplomacies_;
     const kernel::Team_ABC& team_;
     TeamKarma karma_;

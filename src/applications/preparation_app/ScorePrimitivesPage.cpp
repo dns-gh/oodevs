@@ -73,8 +73,8 @@ void ScorePrimitivesPage::OnInsert()
 // -----------------------------------------------------------------------------
 void ScorePrimitivesPage::NotifyUpdated( const kernel::ModelLoaded& )
 {
-    kernel::Resolver< const indicators::Primitive, QString > subset;
-    kernel::Iterator< const indicators::Primitive& > it( primitives_.CreateIterator() );
+    tools::Resolver< const indicators::Primitive, QString > subset;
+    tools::Iterator< const indicators::Primitive& > it( primitives_.CreateIterator() );
     while( it.HasMoreElements() )
     {
         const indicators::Primitive& element = it.NextElement();

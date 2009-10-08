@@ -29,7 +29,7 @@ class NBCPrototype : public gui::NBCPrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             NBCPrototype( QWidget* parent, const kernel::Resolver_ABC< kernel::NBCAgent >& resolver, int maxToxic, kernel::Object_ABC*& creation );
+             NBCPrototype( QWidget* parent, const tools::Resolver_ABC< kernel::NBCAgent >& resolver, int maxToxic, kernel::Object_ABC*& creation );
     virtual ~NBCPrototype();
     //@}
 

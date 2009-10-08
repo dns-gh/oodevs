@@ -11,7 +11,7 @@
 #define __GaugeTypes_h_
 
 #include "GaugeFactory_ABC.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace xml
 {
@@ -29,7 +29,7 @@ namespace indicators
 */
 // Created: SBO 2009-05-05
 // =============================================================================
-class GaugeTypes : public kernel::Resolver< GaugeType, QString >
+class GaugeTypes : public tools::Resolver< GaugeType, QString >
                  , public GaugeFactory_ABC
 {
 

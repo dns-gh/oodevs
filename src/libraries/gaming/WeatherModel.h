@@ -11,7 +11,7 @@
 #define __WeatherModel_h_
 
 #include "game_asn/Simulation.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -27,7 +27,7 @@ class Model;
 */
 // Created: AGE 2006-04-04
 // =============================================================================
-class WeatherModel : public kernel::Resolver< AmmoEffect >
+class WeatherModel : public tools::Resolver< AmmoEffect >
 {
 
 public:

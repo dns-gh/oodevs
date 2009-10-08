@@ -148,7 +148,7 @@ Entity_ABC* AgentFactory::FindKnowledgeGroup( const kernel::Entity_ABC& parent )
 {
     const Entity_ABC& team = parent.Get< kernel::TacticalHierarchies >().GetTop();
     const CommunicationHierarchies& teamHierarchy = team.Get< CommunicationHierarchies >();
-    Iterator< const Entity_ABC& > it = teamHierarchy.CreateSubordinateIterator();
+    tools::Iterator< const Entity_ABC& > it = teamHierarchy.CreateSubordinateIterator();
     while( it.HasMoreElements() )
     {
         const Entity_ABC* entity = &it.NextElement();

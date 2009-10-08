@@ -12,7 +12,7 @@
 
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -40,7 +40,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit FireAttribute( kernel::PropertiesDictionary& dico );
-             FireAttribute( xml::xistream& xis, const kernel::Resolver_ABC< kernel::FireClass, std::string >& FireClasses, kernel::PropertiesDictionary& dico );
+             FireAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::FireClass, std::string >& FireClasses, kernel::PropertiesDictionary& dico );
     virtual ~FireAttribute();
     //@}
 

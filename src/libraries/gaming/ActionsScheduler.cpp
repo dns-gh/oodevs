@@ -49,7 +49,7 @@ ActionsScheduler::~ActionsScheduler()
 void ActionsScheduler::NotifyUpdated( const Simulation::sStartTick& )
 {
     currentTime_ = simulation_.GetDateTime();
-    Iterator< const actions::Action_ABC& > it( actions_.CreateIterator() );
+    tools::Iterator< const actions::Action_ABC& > it( actions_.CreateIterator() );
     while( it.HasMoreElements() )
     {
         const actions::Action_ABC& action = it.NextElement();

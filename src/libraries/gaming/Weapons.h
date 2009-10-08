@@ -14,7 +14,7 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -33,14 +33,14 @@ class Equipment;
 class Weapons : public kernel::Extension_ABC
               , public kernel::Drawable_ABC
               , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
-              , public kernel::Resolver< Equipment >
+              , public tools::Resolver< Equipment >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Weapons( const kernel::Resolver_ABC< kernel::EquipmentType >& equipments
-                    , const kernel::Resolver_ABC< kernel::WeaponSystemType, std::string >& weapons );
+             Weapons( const tools::Resolver_ABC< kernel::EquipmentType >& equipments
+                    , const tools::Resolver_ABC< kernel::WeaponSystemType, std::string >& weapons );
     virtual ~Weapons();
     //@}
 
@@ -66,8 +66,8 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::Resolver_ABC< kernel::EquipmentType >& equipments_;
-    const kernel::Resolver_ABC< kernel::WeaponSystemType, std::string >& weapons_;
+    const tools::Resolver_ABC< kernel::EquipmentType >& equipments_;
+    const tools::Resolver_ABC< kernel::WeaponSystemType, std::string >& weapons_;
     unsigned int minRange_;
     unsigned int maxRange_;
     //@}

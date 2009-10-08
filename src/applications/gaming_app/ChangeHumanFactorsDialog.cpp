@@ -138,7 +138,7 @@ void ChangeHumanFactorsDialog::Validate()
     const ASN1T_EnumUnitTiredness tiredness = (ASN1T_EnumUnitTiredness)pTirednessCombo_->GetValue();
     const ASN1T_EnumUnitMorale moral = (ASN1T_EnumUnitMorale)pMoralCombo_->GetValue();
     const ASN1T_EnumUnitExperience experience = (ASN1T_EnumUnitExperience)pExperienceCombo_->GetValue();
-    Iterator< const Entity_ABC& > it = selected_->Get< CommunicationHierarchies >().CreateSubordinateIterator();
+    tools::Iterator< const Entity_ABC& > it = selected_->Get< CommunicationHierarchies >().CreateSubordinateIterator();
     SendMessage( *selected_, tiredness, moral, experience );
     hide();
 }
@@ -156,7 +156,7 @@ void ChangeHumanFactorsDialog::SendMessage( const kernel::Entity_ABC& entity, AS
         h = entity.Retrieve< TacticalHierarchies >();
     if( h )
     {
-        Iterator< const Entity_ABC& > it = h->CreateSubordinateIterator();
+        tools::Iterator< const Entity_ABC& > it = h->CreateSubordinateIterator();
         while( it.HasMoreElements() )
             SendMessage( it.NextElement(), tiredness, moral, experience );
     }

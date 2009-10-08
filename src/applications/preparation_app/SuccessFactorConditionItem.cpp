@@ -27,7 +27,7 @@ SuccessFactorConditionItem::SuccessFactorConditionItem( QWidget* parent, const S
     setFrameStyle( QFrame::Panel | QFrame::Raised );
     {
         score_ = new gui::ValuedComboBox< const Score_ABC* >( this );
-        kernel::Iterator< const Score_ABC& > it( scores.CreateIterator() );
+        tools::Iterator< const Score_ABC& > it( scores.CreateIterator() );
         while( it.HasMoreElements() )
         {
             const Score_ABC& score = it.NextElement();

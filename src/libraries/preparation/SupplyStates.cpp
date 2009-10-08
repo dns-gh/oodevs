@@ -19,7 +19,7 @@ using namespace kernel;
 // Name: SupplyStates constructor
 // Created: SBO 2006-10-24
 // -----------------------------------------------------------------------------
-SupplyStates::SupplyStates( Controller& controller, Entity_ABC& entity, const Resolver_ABC< DotationType, std::string >& resolver, PropertiesDictionary& dico )
+SupplyStates::SupplyStates( Controller& controller, Entity_ABC& entity, const tools::Resolver_ABC< DotationType, std::string >& resolver, PropertiesDictionary& dico )
     : ::LogisticHierarchies< SupplySuperior, kernel::SupplyHierarchies >( controller, entity )
     , controller_( controller )
     , resolver_( resolver )
@@ -34,7 +34,7 @@ SupplyStates::SupplyStates( Controller& controller, Entity_ABC& entity, const Re
 // -----------------------------------------------------------------------------
 SupplyStates::~SupplyStates()
 {
-    Resolver< Dotation >::DeleteAll();
+    tools::Resolver< Dotation >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -98,7 +98,7 @@ void SupplyStates::ReadDotation( xml::xistream& xis )
 {
     Dotation* dotation = new Dotation( xis, resolver_ );
     item_->AddDotation( *dotation );
-    kernel::Resolver< Dotation >::Register( dotation->type_->GetId(), *dotation );
+    tools::Resolver< Dotation >::Register( dotation->type_->GetId(), *dotation );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,7 +107,7 @@ void SupplyStates::ReadDotation( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void SupplyStates::SerializeQuotas( xml::xostream& xos ) const
 {
-    kernel::Iterator< const Dotation& > it = Resolver< Dotation >::CreateIterator();
+    tools::Iterator< const Dotation& > it = tools::Resolver< Dotation >::CreateIterator();
     xos << xml::start( "quotas" );
     while( it.HasMoreElements() )
     {

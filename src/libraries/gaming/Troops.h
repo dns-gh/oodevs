@@ -13,7 +13,7 @@
 #include "game_asn/Simulation.h"
 #include "HierarchicExtension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "Humans.h"
 
 namespace kernel
@@ -36,7 +36,7 @@ class Troops : public HierarchicExtension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Troops( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Automat_ABC >& automatResolver, const kernel::Resolver_ABC< kernel::Formation_ABC >& formationResolver, const kernel::Resolver_ABC< kernel::Team_ABC >& teamResolver );
+             Troops( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver, const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver, const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver );
     virtual ~Troops();
     //@}
 

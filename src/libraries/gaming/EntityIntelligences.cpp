@@ -20,7 +20,7 @@ using namespace kernel;
 // Name: EntityIntelligences constructor
 // Created: SBO 2007-10-18
 // -----------------------------------------------------------------------------
-EntityIntelligences::EntityIntelligences( Controller& controller, Entity_ABC& holder, kernel::Entity_ABC* superior, const kernel::Resolver_ABC< kernel::Formation_ABC >& resolver )
+EntityIntelligences::EntityIntelligences( Controller& controller, Entity_ABC& holder, kernel::Entity_ABC* superior, const tools::Resolver_ABC< kernel::Formation_ABC >& resolver )
     : EntityHierarchies< IntelligenceHierarchies >( controller, holder, superior )
     , controller_( controller )
     , holder_( 0 )
@@ -33,7 +33,7 @@ EntityIntelligences::EntityIntelligences( Controller& controller, Entity_ABC& ho
 // Name: EntityIntelligences constructor
 // Created: SBO 2007-10-18
 // -----------------------------------------------------------------------------
-EntityIntelligences::EntityIntelligences( Controller& controller, Intelligence_ABC& holder, const kernel::Resolver_ABC< kernel::Formation_ABC >& resolver )
+EntityIntelligences::EntityIntelligences( Controller& controller, Intelligence_ABC& holder, const tools::Resolver_ABC< kernel::Formation_ABC >& resolver )
     : EntityHierarchies< IntelligenceHierarchies >( controller, holder, 0 )
     , controller_( controller )
     , holder_( &holder )

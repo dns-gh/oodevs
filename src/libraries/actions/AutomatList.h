@@ -12,7 +12,7 @@
 
 #include "game_asn/Simulation.h"
 #include "Parameter.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -36,8 +36,8 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit AutomatList( const kernel::OrderParameter& parameter );
-             AutomatList( const kernel::OrderParameter& parameter, const ASN1T_AutomatList& asn, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver, kernel::Controller& controller );
-             AutomatList( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver, kernel::Controller& controller );
+             AutomatList( const kernel::OrderParameter& parameter, const ASN1T_AutomatList& asn, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver, kernel::Controller& controller );
+             AutomatList( const kernel::OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver, kernel::Controller& controller );
     virtual ~AutomatList();
     //@}
 
@@ -63,7 +63,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadAutomat( xml::xistream& xis, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver, kernel::Controller& controller );
+    void ReadAutomat( xml::xistream& xis, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver, kernel::Controller& controller );
     //@}
 };
     }

@@ -119,7 +119,7 @@ namespace
         SimpleResolverEditor( QWidget* parent, const Resolver& resolver ) 
             : gui::ValuedComboBox< const Entity* >( parent )
         {
-            kernel::Iterator< const Entity& > it = resolver.CreateIterator();
+            tools::Iterator< const Entity& > it = resolver.CreateIterator();
             while( it.HasMoreElements() )
             {
                 const Entity& entity = it.NextElement();
@@ -142,7 +142,7 @@ namespace
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( kernel::KnowledgeGroupType** const& value )
 {
-    typedef kernel::Resolver_ABC< kernel::KnowledgeGroupType, std::string > T_Resolver;
+    typedef tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string > T_Resolver;
     SimpleResolverEditor< kernel::KnowledgeGroupType, T_Resolver >* editor = new SimpleResolverEditor< kernel::KnowledgeGroupType, T_Resolver >( parent_, (T_Resolver&)( staticModel_.types_ ) );
     editor->SetCurrentItem( *value );
     result_ = editor;
@@ -176,7 +176,7 @@ void EditorFactory::Call( IntelligenceKarma* const& value )
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( kernel::NBCAgent** const& value )
 {
-    typedef kernel::Resolver_ABC< kernel::NBCAgent, unsigned long > T_Resolver;
+    typedef tools::Resolver_ABC< kernel::NBCAgent, unsigned long > T_Resolver;
     SimpleResolverEditor< kernel::NBCAgent, T_Resolver >* editor = new SimpleResolverEditor< kernel::NBCAgent, T_Resolver >( parent_, (T_Resolver&)( staticModel_.objectTypes_ ) );
     editor->SetCurrentItem( *value );
     result_ = editor;
@@ -192,7 +192,7 @@ namespace
         MultipleResolverEditor( QWidget* parent, const Resolver& resolver )
             : QListBox( parent )
         {
-            kernel::Iterator< const Entity& > it = resolver.CreateIterator();
+            tools::Iterator< const Entity& > it = resolver.CreateIterator();
             while( it.HasMoreElements() )
             {
                 const Entity& entity = it.NextElement();
@@ -235,7 +235,7 @@ namespace
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( std::vector< kernel::NBCAgent* >* const& value )
 {
-    typedef kernel::Resolver_ABC< kernel::NBCAgent, unsigned long > T_Resolver;
+    typedef tools::Resolver_ABC< kernel::NBCAgent, unsigned long > T_Resolver;
     MultipleResolverEditor< kernel::NBCAgent, T_Resolver >* editor = new MultipleResolverEditor< kernel::NBCAgent, T_Resolver >( parent_, (T_Resolver&)( staticModel_.objectTypes_ ));
     editor->SetCurrentItem( *value );
     result_ = editor;

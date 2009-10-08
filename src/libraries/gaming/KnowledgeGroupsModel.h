@@ -10,7 +10,7 @@
 #ifndef __KnowledgeGroupsModel_h_
 #define __KnowledgeGroupsModel_h_
 
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -25,7 +25,7 @@ class TeamsModel;
 */
 // Created: AGE 2006-02-15
 // =============================================================================
-class KnowledgeGroupsModel : public kernel::Resolver< kernel::KnowledgeGroup_ABC >
+class KnowledgeGroupsModel : public tools::Resolver< kernel::KnowledgeGroup_ABC >
 {
 
 public:

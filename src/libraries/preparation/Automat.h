@@ -12,7 +12,7 @@
 
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"

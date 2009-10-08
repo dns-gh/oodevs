@@ -10,7 +10,7 @@
 #ifndef __AgentTypes_h_
 #define __AgentTypes_h_
 
-#include "Resolver.h"
+#include "tools/Resolver.h"
 
 namespace xml { class xistream; };
 namespace tools
@@ -40,19 +40,19 @@ namespace kernel
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class AgentTypes : public Resolver< AgentType >
-                 , public Resolver< AgentType, std::string >
-                 , public Resolver< PopulationType >
-                 , public Resolver< PopulationType, std::string >
-                 , public Resolver< AutomatType >
-                 , public Resolver< AutomatType, std::string >
-                 , public Resolver< ComponentType >
-                 , public Resolver< ComponentType, std::string >
-                 , public Resolver< SensorType, std::string >
-                 , public Resolver< KnowledgeGroupType, std::string >
-                 , public Resolver< MissionType >
-                 , public Resolver< FragOrderType >
-                 , public Resolver< FragOrderType, std::string >
+class AgentTypes : public  tools::Resolver< AgentType >
+                 , public  tools::Resolver< AgentType, std::string >
+                 , public  tools::Resolver< PopulationType >
+                 , public  tools::Resolver< PopulationType, std::string >
+                 , public  tools::Resolver< AutomatType >
+                 , public  tools::Resolver< AutomatType, std::string >
+                 , public  tools::Resolver< ComponentType >
+                 , public  tools::Resolver< ComponentType, std::string >
+                 , public  tools::Resolver< SensorType, std::string >
+                 , public  tools::Resolver< KnowledgeGroupType, std::string >
+                 , public  tools::Resolver< MissionType >
+                 , public  tools::Resolver< FragOrderType >
+                 , public  tools::Resolver< FragOrderType, std::string >
 {
 
 public:
@@ -79,7 +79,7 @@ private:
     //! @name Types
     //@{
     typedef Mission* (MissionFactory::*T_Resolver)( const std::string& );
-    typedef Resolver< MissionType, std::string > T_MissionResolver;
+    typedef  tools::Resolver< MissionType, std::string > T_MissionResolver;
     //@}
 
     //! @name Helpers
@@ -100,7 +100,7 @@ private:
     void ReadComponent( xml::xistream& xis );
     void ReallyReadSensor( xml::xistream& xis, const std::string& sensor );
     void ReadSensor( xml::xistream& xis );
-    void ReadModel( xml::xistream& xis, const T_Resolver& missionResolver, Resolver< DecisionalModel, std::string >& models );
+    void ReadModel( xml::xistream& xis, const T_Resolver& missionResolver,  tools::Resolver< DecisionalModel, std::string >& models );
     void ReadMissions( xml::xistream& xis, const std::string& name, T_MissionResolver& missions );
     void ReadMissionType( xml::xistream& xis, T_MissionResolver& missions, const OrderContext& context );
     void ReadFragOrderType( xml::xistream& xis );
@@ -118,9 +118,9 @@ private:
 public:
     //! @name Member data
     //@{
-    Resolver< DecisionalModel, std::string > unitModels_;
-    Resolver< DecisionalModel, std::string > automatModels_;
-    Resolver< DecisionalModel, std::string > populationModels_;
+     tools::Resolver< DecisionalModel, std::string > unitModels_;
+     tools::Resolver< DecisionalModel, std::string > automatModels_;
+     tools::Resolver< DecisionalModel, std::string > populationModels_;
     //@}
 };
 

@@ -11,7 +11,7 @@
 #define __FirePrototype_ABC_h_
 
 #include "ObjectAttributePrototype_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "ValuedComboBox.h"
 
 namespace kernel
@@ -34,7 +34,7 @@ class FirePrototype_ABC : public ObjectAttributePrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             FirePrototype_ABC( QWidget* parent, const kernel::Resolver_ABC< kernel::FireClass >& resolver );
+             FirePrototype_ABC( QWidget* parent, const tools::Resolver_ABC< kernel::FireClass >& resolver );
     virtual ~FirePrototype_ABC();
     //@}
 
@@ -59,7 +59,7 @@ private:
 protected:
     //! @name Member data
     //@{
-    const kernel::Resolver_ABC< kernel::FireClass >& resolver_;
+    const tools::Resolver_ABC< kernel::FireClass >& resolver_;
     ValuedComboBox< const kernel::FireClass* >* fireClass_;
     //@}
 };

@@ -39,7 +39,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              FragOrder( const kernel::Entity_ABC& entity, const kernel::FragOrderType& fragOrder, kernel::Controller& controller, bool registered );
-             FragOrder( xml::xistream& xis, kernel::Controller& controller, const kernel::Resolver_ABC< kernel::FragOrderType >& fragOrders, const kernel::Entity_ABC& entity );
+             FragOrder( xml::xistream& xis, kernel::Controller& controller, const tools::Resolver_ABC< kernel::FragOrderType >& fragOrders, const kernel::Entity_ABC& entity );
     virtual ~FragOrder();
     //@}
 

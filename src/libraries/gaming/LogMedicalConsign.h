@@ -12,7 +12,7 @@
 
 #include "clients_kernel/Types.h"
 #include "game_asn/Simulation.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 
 namespace kernel
@@ -30,7 +30,7 @@ class LogMedicalConsign : public kernel::Drawable_ABC
 public:
     //! @name Operations
     //@{
-             LogMedicalConsign( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, const ASN1T_MsgLogMedicalHandlingCreation& asn );
+             LogMedicalConsign( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, const ASN1T_MsgLogMedicalHandlingCreation& asn );
     virtual ~LogMedicalConsign();
     //@}
 
@@ -56,7 +56,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver_;
+    const tools::Resolver_ABC< kernel::Agent_ABC >& resolver_;
 
     uint    nID_;
     kernel::Agent_ABC&  pion_;

@@ -10,7 +10,7 @@
 #ifndef __IntelligenceKarmas_h_
 #define __IntelligenceKarmas_h_
 
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -23,7 +23,7 @@ namespace kernel
 */
 // Created: SBO 2006-10-27
 // =============================================================================
-class IntelligenceKarmas : public kernel::Resolver< kernel::Karma, QString >
+class IntelligenceKarmas : public tools::Resolver< kernel::Karma, QString >
 {
 
 public:

@@ -36,7 +36,7 @@ Reports::Reports( const Entity_ABC& agent, Controller& controller, const ReportF
 // -----------------------------------------------------------------------------
 Reports::~Reports()
 {
-    Resolver< Report >::Clear();
+    tools::Resolver< Report >::Clear();
     for( CIT_Reports it = traces_.begin(); it != traces_.end(); ++it )
         delete *it;
     traces_.clear();
@@ -83,7 +83,7 @@ void Reports::DoUpdate( const ASN1T_MsgTrace& message )
 // -----------------------------------------------------------------------------
 void Reports::Clear()
 {
-    Resolver< Report >::Clear();
+    tools::Resolver< Report >::Clear();
     ClearTraces();
 }
 

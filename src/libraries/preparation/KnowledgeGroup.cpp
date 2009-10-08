@@ -26,7 +26,7 @@ using namespace xml;
 // Name: KnowledgeGroup constructor
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( Controller& controller, IdManager& idManager, Resolver_ABC< KnowledgeGroupType, std::string >& types )
+KnowledgeGroup::KnowledgeGroup( Controller& controller, IdManager& idManager, tools::Resolver_ABC< KnowledgeGroupType, std::string >& types )
     : EntityImplementation< KnowledgeGroup_ABC >( controller, idManager.GetNextId(), "" )
     , type_( types.Find( "Standard" ) ) // $$$$ SBO 2006-11-17: Hard coded default
 {
@@ -39,7 +39,7 @@ KnowledgeGroup::KnowledgeGroup( Controller& controller, IdManager& idManager, Re
 // Name: KnowledgeGroup constructor
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, Resolver_ABC< KnowledgeGroupType, std::string >& types )
+KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, tools::Resolver_ABC< KnowledgeGroupType, std::string >& types )
     : EntityImplementation< KnowledgeGroup_ABC >( controller, xml::attribute< unsigned int >( xis, "id" ), "" )
 {
     std::string type, name;

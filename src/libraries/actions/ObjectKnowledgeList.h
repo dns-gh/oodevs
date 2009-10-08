@@ -11,7 +11,7 @@
 #define __ActionParameterObjectKnowledgeList_h_
 
 #include "Parameter.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -38,7 +38,7 @@ public:
     //@{
     explicit ObjectKnowledgeList( const kernel::OrderParameter& parameter );
              ObjectKnowledgeList( const kernel::OrderParameter& parameter, const ASN1T_ObjectKnowledgeList& asn, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
-             ObjectKnowledgeList( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Resolver_ABC< kernel::Object_ABC >& resolver, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
+             ObjectKnowledgeList( const kernel::OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< kernel::Object_ABC >& resolver, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
     virtual ~ObjectKnowledgeList();
     //@}
 
@@ -64,7 +64,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadObjectKnowledge( xml::xistream& xis, const kernel::Resolver_ABC< kernel::Object_ABC >& resolver, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
+    void ReadObjectKnowledge( xml::xistream& xis, const tools::Resolver_ABC< kernel::Object_ABC >& resolver, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
     //@}
 };
 

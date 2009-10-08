@@ -13,7 +13,7 @@
 #include "game_asn/Simulation.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "clients_kernel/Karma.h"
 
 namespace kernel
@@ -38,7 +38,7 @@ class Diplomacies : public kernel::Diplomacies_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Diplomacies( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Team_ABC >& resolver );
+             Diplomacies( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Team_ABC >& resolver );
     virtual ~Diplomacies();
     //@}
 
@@ -74,7 +74,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Resolver_ABC< kernel::Team_ABC >& resolver_;
+    const tools::Resolver_ABC< kernel::Team_ABC >& resolver_;
     T_Diplomacies diplomacies_;
     kernel::Karma karma_;
     //@}

@@ -10,7 +10,7 @@
 #ifndef __ObjectTypes_h_
 #define __ObjectTypes_h_
 
-#include "Resolver.h"
+#include "tools/Resolver.h"
 #include "Resolver2.h"
 
 namespace xml { class xistream; };
@@ -37,14 +37,14 @@ namespace kernel
 // Created: AGE 2006-02-16
 // =============================================================================
 class ObjectTypes
-    : public StringResolver< ObjectType >
+    : public tools::StringResolver< ObjectType >
     , public Resolver2< DotationType > // $$$$ AGE 2006-04-05: pas du tout des objets...
-    , public Resolver< WeaponSystemType, std::string >
-    , public Resolver< EquipmentType >
+    , public  tools::Resolver< WeaponSystemType, std::string >
+    , public  tools::Resolver< EquipmentType >
     , public Resolver2< NBCAgent >
     , public Resolver2< FireClass >
     , public Resolver2< MedicalTreatmentType >
-    , public Resolver< BreakdownType >
+    , public  tools::Resolver< BreakdownType >
 {
 
 public:

@@ -59,7 +59,7 @@ public:
     //! @name Constructor/Destructor
     //@{
              Population( const ASN1T_MsgPopulationCreation& asnMsg, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
-                         const kernel::Resolver_ABC< kernel::PopulationType >& typeResolver );
+                         const tools::Resolver_ABC< kernel::PopulationType >& typeResolver );
     virtual ~Population();
     //@}
 

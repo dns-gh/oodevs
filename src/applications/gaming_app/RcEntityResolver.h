@@ -10,7 +10,7 @@
 #ifndef __RcEntityResolver_h_
 #define __RcEntityResolver_h_
 
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "gaming/RcEntityResolver_ABC.h"
 
@@ -32,10 +32,10 @@ namespace kernel
 // =============================================================================
 class RcEntityResolver : public QObject
                        , public RcEntityResolver_ABC
-                       , public kernel::Resolver< kernel::Agent_ABC >
-                       , public kernel::Resolver< kernel::ObjectKnowledge_ABC >
-                       , public kernel::Resolver< kernel::AgentKnowledge_ABC >
-                       , public kernel::Resolver< kernel::PopulationKnowledge_ABC >
+                       , public tools::Resolver< kernel::Agent_ABC >
+                       , public tools::Resolver< kernel::ObjectKnowledge_ABC >
+                       , public tools::Resolver< kernel::AgentKnowledge_ABC >
+                       , public tools::Resolver< kernel::PopulationKnowledge_ABC >
                        , public kernel::Observer_ABC
                        , public kernel::ElementObserver_ABC< kernel::Agent_ABC >
                        , public kernel::ElementObserver_ABC< kernel::ObjectKnowledge_ABC >

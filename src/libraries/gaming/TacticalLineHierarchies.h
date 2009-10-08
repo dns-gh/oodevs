@@ -12,7 +12,7 @@
 
 #include "clients_kernel/SimpleHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "game_asn/Simulation.h"
 
 namespace kernel
@@ -37,9 +37,9 @@ public:
     //! @name Constructors/Destructor
     //@{
              TacticalLineHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, const ASN1T_TacticalLinesDiffusion& asnMsg
-                                    , const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, const kernel::Resolver_ABC< kernel::Formation_ABC >& formations );
+                                    , const tools::Resolver_ABC< kernel::Automat_ABC >& automats, const tools::Resolver_ABC< kernel::Formation_ABC >& formations );
              TacticalLineHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, const kernel::Entity_ABC& superior
-                                    , const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, const kernel::Resolver_ABC< kernel::Formation_ABC >& formations );
+                                    , const tools::Resolver_ABC< kernel::Automat_ABC >& automats, const tools::Resolver_ABC< kernel::Formation_ABC >& formations );
     virtual ~TacticalLineHierarchies();
     //@}
 
@@ -66,8 +66,8 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Resolver_ABC< kernel::Automat_ABC >& automats_;
-    const kernel::Resolver_ABC< kernel::Formation_ABC >& formations_;
+    const tools::Resolver_ABC< kernel::Automat_ABC >& automats_;
+    const tools::Resolver_ABC< kernel::Formation_ABC >& formations_;
     bool superiorIsAutomat_;
     //@}
 };

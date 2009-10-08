@@ -38,7 +38,7 @@ using namespace xml;
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
 ActionFactory::ActionFactory( Controllers& controllers, const ParameterFactory_ABC& factory, const Model& model
-                            , const Resolver_ABC< MissionType >& missions, const Resolver_ABC< FragOrderType >& fragOrders, const Simulation& simulation )
+                            , const tools::Resolver_ABC< MissionType >& missions, const tools::Resolver_ABC< FragOrderType >& fragOrders, const Simulation& simulation )
     : controllers_( controllers )
     , factory_( factory )
     , model_( model )
@@ -162,7 +162,7 @@ actions::Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgFragOrder& mess
 // -----------------------------------------------------------------------------
 void ActionFactory::AddParameters( actions::Action_ABC& action, const OrderType& order, const ASN1T_MissionParameters& asn ) const
 {
-    Iterator< const OrderParameter& > it = order.CreateIterator();
+    tools::Iterator< const OrderParameter& > it = order.CreateIterator();
     unsigned int i = 0;
     while( it.HasMoreElements() )
     {
@@ -224,7 +224,7 @@ actions::Action_ABC* ActionFactory::CreateMission( xml::xistream& xis ) const
     action->Attach( *new ActionTiming( xis, controllers_.controller_, simulation_, *action ) );
     action->Polish();
 
-    Iterator< const OrderParameter& > it = action->GetType().CreateIterator();
+    tools::Iterator< const OrderParameter& > it = action->GetType().CreateIterator();
     xis >> list( "parameter", *this, &ActionFactory::ReadParameter, *action, it, *target );
     if( it.HasMoreElements() )
         ThrowMissingParameter( *action, it.NextElement() );
@@ -250,7 +250,7 @@ actions::Action_ABC* ActionFactory::CreateFragOrder( xml::xistream& xis ) const
     action->Attach( *new ActionTiming( xis, controllers_.controller_, simulation_, *action ) );
     action->Polish();
 
-    Iterator< const OrderParameter& > it = action->GetType().CreateIterator();
+    tools::Iterator< const OrderParameter& > it = action->GetType().CreateIterator();
     xis >> list( "parameter", *this, &ActionFactory::ReadParameter, *action, it, *target );
     if( it.HasMoreElements() )
         ThrowMissingParameter( *action, it.NextElement() );
@@ -261,7 +261,7 @@ actions::Action_ABC* ActionFactory::CreateFragOrder( xml::xistream& xis ) const
 // Name: ActionFactory::ReadParameter
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-void ActionFactory::ReadParameter( xml::xistream& xis, actions::Action_ABC& action, Iterator< const OrderParameter& >& it, const Entity_ABC& entity ) const
+void ActionFactory::ReadParameter( xml::xistream& xis, actions::Action_ABC& action, tools::Iterator< const OrderParameter& >& it, const Entity_ABC& entity ) const
 {
     try
     {

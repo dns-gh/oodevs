@@ -27,7 +27,7 @@ class FirePrototype : public gui::FirePrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             FirePrototype( QWidget* parent, const kernel::Resolver_ABC< kernel::FireClass >& resolver, ASN1T_MagicActionCreateObject& msg );
+             FirePrototype( QWidget* parent, const tools::Resolver_ABC< kernel::FireClass >& resolver, ASN1T_MagicActionCreateObject& msg );
     virtual ~FirePrototype();
     //@}
 

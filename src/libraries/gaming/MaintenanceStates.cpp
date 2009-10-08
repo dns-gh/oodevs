@@ -21,7 +21,7 @@ using namespace kernel;
 // Name: MaintenanceStates constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-MaintenanceStates::MaintenanceStates( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, const Resolver_ABC< Automat_ABC >& automatResolver, PropertiesDictionary& dico )
+MaintenanceStates::MaintenanceStates( Controller& controller, const tools::Resolver_ABC< EquipmentType >& resolver, const tools::Resolver_ABC< Automat_ABC >& automatResolver, PropertiesDictionary& dico )
     : controller_( controller )
     , resolver_( resolver )
     , automatResolver_( automatResolver )

@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "MedicalTreatmentPrototype_ABC.h"
 #include "clients_kernel/MedicalTreatmentType.h"
-#include "clients_kernel/Iterator.h"
+#include "tools/Iterator.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -20,7 +20,7 @@ using namespace gui;
 // Name: MedicalTreatmentPrototype_ABC constructor
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-MedicalTreatmentPrototype_ABC::MedicalTreatmentPrototype_ABC( QWidget* parent, const Resolver_ABC< MedicalTreatmentType >& resolver )
+MedicalTreatmentPrototype_ABC::MedicalTreatmentPrototype_ABC( QWidget* parent, const tools::Resolver_ABC< MedicalTreatmentType >& resolver )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "MedicalTreatmentPrototype_ABC", "MedicalTreatment parameters" ) )
     , resolver_( resolver )
 {
@@ -61,7 +61,7 @@ MedicalTreatmentPrototype_ABC::~MedicalTreatmentPrototype_ABC()
 void MedicalTreatmentPrototype_ABC::FillTypes()
 {
     type_->Clear();
-    Iterator< const MedicalTreatmentType& > it( resolver_.CreateIterator() );
+    tools::Iterator< const MedicalTreatmentType& > it( resolver_.CreateIterator() );
     while( it.HasMoreElements() )
     {
         const MedicalTreatmentType& element = it.NextElement();

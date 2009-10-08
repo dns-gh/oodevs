@@ -17,7 +17,7 @@ using namespace kernel;
 // Name: PerceptionMap constructor
 // Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-PerceptionMap::PerceptionMap( Controller& controller, const Resolver_ABC< Automat_ABC >& resolver )
+PerceptionMap::PerceptionMap( Controller& controller, const tools::Resolver_ABC< Automat_ABC >& resolver )
     : controller_( controller )
     , resolver_( resolver )
 {

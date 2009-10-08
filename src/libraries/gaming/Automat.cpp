@@ -28,7 +28,7 @@ using namespace kernel;
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
 Automat::Automat( const ASN1T_MsgAutomatCreation& message, Controller& controller, 
-                  const Resolver_ABC< AutomatType >& resolver )
+                  const tools::Resolver_ABC< AutomatType >& resolver )
     : EntityImplementation< Automat_ABC >( controller, message.oid, message.nom )
     , type_( resolver.Get( message.type_automate ) )
 {

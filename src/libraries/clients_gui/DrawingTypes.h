@@ -10,7 +10,7 @@
 #ifndef __DrawingTypes_h_
 #define __DrawingTypes_h_
 
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -37,7 +37,7 @@ namespace gui
 */
 // Created: SBO 2008-06-04
 // =============================================================================
-class DrawingTypes : public kernel::Resolver< DrawingCategory, QString >
+class DrawingTypes : public tools::Resolver< DrawingCategory, QString >
 {
 
 public:

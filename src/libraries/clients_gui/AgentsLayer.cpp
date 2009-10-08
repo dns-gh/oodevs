@@ -60,7 +60,7 @@ void AgentsLayer::Disaggregate( const Automat_ABC& automat )
 // -----------------------------------------------------------------------------
 void AgentsLayer::Toggle( const Automat_ABC& automat, bool aggregate )
 {
-    Iterator< const Entity_ABC& > children = automat.Get< CommunicationHierarchies >().CreateSubordinateIterator();
+    tools::Iterator< const Entity_ABC& > children = automat.Get< CommunicationHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
         const Entity_ABC& child = children.NextElement();

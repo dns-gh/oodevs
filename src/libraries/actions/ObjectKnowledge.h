@@ -12,7 +12,7 @@
 
 #include "Entity.h"
 #include "clients_kernel/ObjectKnowledge_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -38,8 +38,8 @@ public:
     //@{
              ObjectKnowledge( const kernel::OrderParameter& parameter, kernel::Controller& controller );
              ObjectKnowledge( const kernel::OrderParameter& parameter, unsigned long id, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
-             ObjectKnowledge( xml::xistream& xis, const kernel::Resolver_ABC< kernel::Object_ABC >& resolver, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
-             ObjectKnowledge( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Resolver_ABC< kernel::Object_ABC >& resolver, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
+             ObjectKnowledge( xml::xistream& xis, const tools::Resolver_ABC< kernel::Object_ABC >& resolver, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
+             ObjectKnowledge( const kernel::OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< kernel::Object_ABC >& resolver, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
     virtual ~ObjectKnowledge();
     //@}
 

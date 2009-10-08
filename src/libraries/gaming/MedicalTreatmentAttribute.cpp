@@ -21,7 +21,7 @@ using namespace kernel;
 // Name: MedicalTreatmentAttribute constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-MedicalTreatmentAttribute::MedicalTreatmentAttribute( Controller& controller, const Resolver_ABC< MedicalTreatmentType >& resolver )
+MedicalTreatmentAttribute::MedicalTreatmentAttribute( Controller& controller, const tools::Resolver_ABC< MedicalTreatmentType >& resolver )
     : controller_           ( controller )
     , resolver_             ( resolver )
     , typeList_             ( 0 )

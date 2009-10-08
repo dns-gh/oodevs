@@ -13,7 +13,7 @@
 #include "game_asn/Simulation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "Loan.h"
 
 namespace kernel
@@ -36,7 +36,7 @@ class Borrowings : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Borrowings( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, const kernel::Resolver_ABC< kernel::EquipmentType >& equipmentResolver );
+             Borrowings( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, const tools::Resolver_ABC< kernel::EquipmentType >& equipmentResolver );
     virtual ~Borrowings();
     //@}
 
@@ -59,8 +59,8 @@ public:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver_;
-    const kernel::Resolver_ABC< kernel::EquipmentType >& equipmentResolver_;
+    const tools::Resolver_ABC< kernel::Agent_ABC >& resolver_;
+    const tools::Resolver_ABC< kernel::EquipmentType >& equipmentResolver_;
     T_Borrowings borrowings_;
     //@}
 };

@@ -19,7 +19,7 @@
 
 #include <boost/shared_ptr.hpp>
 
-#include "clients_kernel/Resolver_ABC.h" 
+#include "tools/Resolver_ABC.h" 
 
 #pragma warning( push, 0 )
 #include <qapplication.h>

@@ -28,7 +28,7 @@ using namespace gui;
 // Name: LogisticSupplyPushFlowDialog constructor
 // Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
-LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const Resolver_ABC< Automat_ABC >& automats, const Profile_ABC& profile )
+LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const tools::Resolver_ABC< Automat_ABC >& automats, const Profile_ABC& profile )
     : QDialog( parent, tr( "Push supply flow" ) )
     , controllers_( controllers )
     , publisher_( publisher )
@@ -109,7 +109,7 @@ void LogisticSupplyPushFlowDialog::Show()
         return;
 
     targetCombo_->Clear();
-    Iterator< const Automat_ABC& > it = automats_.CreateIterator();
+    tools::Iterator< const Automat_ABC& > it = automats_.CreateIterator();
     const kernel::Entity_ABC& team = selected_->Get< kernel::TacticalHierarchies >().GetTop();
     while( it.HasMoreElements() )
     {
@@ -197,7 +197,7 @@ void LogisticSupplyPushFlowDialog::AddDotation( const kernel::Entity_ABC& entity
     const SupplyStates* states = entity.Retrieve< SupplyStates >();
     if( states )
     {
-        Iterator< const Dotation& > it = states->CreateIterator();
+        tools::Iterator< const Dotation& > it = states->CreateIterator();
         while( it.HasMoreElements() )
         {
             const Dotation& dotation = it.NextElement();
@@ -213,7 +213,7 @@ void LogisticSupplyPushFlowDialog::AddDotation( const kernel::Entity_ABC& entity
         table_->setNumRows( 0 );
         AddItem();
     }
-    Iterator< const Entity_ABC& > it( entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator() );
+    tools::Iterator< const Entity_ABC& > it( entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator() );
     while( it.HasMoreElements() )
         AddDotation( it.NextElement() );
 }

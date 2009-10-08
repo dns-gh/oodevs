@@ -12,7 +12,7 @@
 
 #include "Parameter.h"
 #include "game_asn/Simulation.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -35,8 +35,8 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MaintenancePriorities( const kernel::OrderParameter& parameter );
-             MaintenancePriorities( const kernel::OrderParameter& parameter, const kernel::Resolver_ABC< kernel::EquipmentType >& resolver, const ASN1T_LogMaintenancePriorities& asn );
-             MaintenancePriorities( const kernel::OrderParameter& parameter, const kernel::Resolver_ABC< kernel::EquipmentType >& resolver, xml::xistream& xis );
+             MaintenancePriorities( const kernel::OrderParameter& parameter, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const ASN1T_LogMaintenancePriorities& asn );
+             MaintenancePriorities( const kernel::OrderParameter& parameter, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, xml::xistream& xis );
     virtual ~MaintenancePriorities();
     //@}
 

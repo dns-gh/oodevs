@@ -64,7 +64,7 @@ void InfoSubordinatesWidget::NotifySelected( const kernel::Entity_ABC* entity )
             return;
         if( const kernel::TacticalHierarchies* hierarchies = selected_->Retrieve< kernel::TacticalHierarchies >() )
         {
-            kernel::Iterator< const kernel::Entity_ABC& > it = hierarchies->CreateSubordinateIterator();
+            tools::Iterator< const kernel::Entity_ABC& > it = hierarchies->CreateSubordinateIterator();
             while( it.HasMoreElements() )
             {
                 if( !isShown() )

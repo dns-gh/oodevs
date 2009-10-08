@@ -12,7 +12,7 @@
 
 #include "clients_kernel/Types.h"
 #include "game_asn/Simulation.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 
 namespace kernel
@@ -33,8 +33,8 @@ public:
     //! @name Constructor / Destructor
     //@{
              LogMaintenanceConsign( kernel::Controller& controller, const ASN1T_MsgLogMaintenanceHandlingCreation& asn,
-                                    const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, const kernel::Resolver_ABC< kernel::ComponentType >& componentResolver,
-                                    const kernel::Resolver_ABC< kernel::BreakdownType >& breakdownResolver );
+                                    const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, const tools::Resolver_ABC< kernel::ComponentType >& componentResolver,
+                                    const tools::Resolver_ABC< kernel::BreakdownType >& breakdownResolver );
     virtual ~LogMaintenanceConsign();
     //@}
 
@@ -58,7 +58,7 @@ private:
 
 private:
     kernel::Controller& controller_;
-    const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver_;
+    const tools::Resolver_ABC< kernel::Agent_ABC >& resolver_;
     uint    nID_;
     kernel::Agent_ABC&  pion_;
     kernel::Agent_ABC*  pPionLogHandling_;

@@ -43,7 +43,7 @@ PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter, unsig
 // Name: PopulationKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter, xml::xistream& xis, const Resolver_ABC< Population_ABC >& resolver, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
+PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< Population_ABC >& resolver, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
     : Entity< PopulationKnowledge_ABC >( parameter, converter.Find( resolver.Get( attribute< unsigned long >( xis, "value" ) ), owner ), controller )
 {
     if( ! GetValue() )

@@ -20,8 +20,8 @@ using namespace kernel;
 // Name: MissionFactory constructor
 // Created: SBO 2006-11-29
 // -----------------------------------------------------------------------------
-MissionFactory::MissionFactory( const Resolver_ABC< MissionType, std::string >& unitMissions, const Resolver_ABC< MissionType, std::string >& automatMissions
-                              , const Resolver_ABC< MissionType, std::string >& populationMissions, const Resolver_ABC< FragOrderType, std::string >& fragOrders )
+MissionFactory::MissionFactory( const tools::Resolver_ABC< MissionType, std::string >& unitMissions, const tools::Resolver_ABC< MissionType, std::string >& automatMissions
+                              , const tools::Resolver_ABC< MissionType, std::string >& populationMissions, const tools::Resolver_ABC< FragOrderType, std::string >& fragOrders )
     : unitMissions_( unitMissions )
     , automatMissions_( automatMissions )
     , populationMissions_( populationMissions )
@@ -93,14 +93,14 @@ FragOrder* MissionFactory::CreateFragOrder( const std::string& name )
 // -----------------------------------------------------------------------------
 Mission* MissionFactory::AddFragOrders( Mission* mission )
 {
-    Iterator< const FragOrderType& > it = fragOrders_.CreateIterator();
+    tools::Iterator< const FragOrderType& > it = fragOrders_.CreateIterator();
     while( it.HasMoreElements() )
     {
         const FragOrderType& type = it.NextElement();
         if( !type.IsMissionRequired() )
         {
             FragOrder* newOrder = CreateFragOrder( type.GetName() );
-            static_cast< Resolver< FragOrder >* >( mission )->Register( newOrder->GetId(), *newOrder );
+            static_cast< tools::Resolver< FragOrder >* >( mission )->Register( newOrder->GetId(), *newOrder );
         }
     }
     return mission;

@@ -62,9 +62,9 @@ IndicatorRequest& IndicatorRequests::CreateRequest( const IndicatorDefinition_AB
 // Name: IndicatorRequests::CreateIterator
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-Iterator< const IndicatorRequest& > IndicatorRequests::CreateIterator()
+tools::Iterator< const IndicatorRequest& > IndicatorRequests::CreateIterator()
 {
-    return new SimpleIterator< const IndicatorRequest&, T_Requests >( requests_ );
+    return new tools::SimpleIterator< const IndicatorRequest&, T_Requests >( requests_ );
 }
 
 // -----------------------------------------------------------------------------

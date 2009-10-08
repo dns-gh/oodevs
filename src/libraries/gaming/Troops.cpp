@@ -19,7 +19,7 @@ using namespace kernel;
 // Name: Troops constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Troops::Troops( Controller& controller, const kernel::Resolver_ABC< kernel::Automat_ABC >& automatResolver, const kernel::Resolver_ABC< kernel::Formation_ABC >& formationResolver, const kernel::Resolver_ABC< kernel::Team_ABC >& teamResolver )
+Troops::Troops( Controller& controller, const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver, const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver, const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver )
     : HierarchicExtension_ABC( automatResolver, formationResolver, teamResolver )
     , controller_( controller )
 {

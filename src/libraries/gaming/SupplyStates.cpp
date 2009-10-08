@@ -20,7 +20,7 @@ using namespace kernel;
 // Name: SupplyStates constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-SupplyStates::SupplyStates( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, const Resolver_ABC< DotationType >& dotationResolver, PropertiesDictionary& dico )
+SupplyStates::SupplyStates( Controller& controller, const tools::Resolver_ABC< EquipmentType >& resolver, const tools::Resolver_ABC< DotationType >& dotationResolver, PropertiesDictionary& dico )
     : controller_( controller )
     , resolver_( resolver )
     , dotationResolver_( dotationResolver )

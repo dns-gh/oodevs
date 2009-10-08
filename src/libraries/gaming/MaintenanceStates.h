@@ -14,7 +14,7 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "Availability.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -37,7 +37,7 @@ class MaintenanceStates : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MaintenanceStates( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::EquipmentType >& resolver, const kernel::Resolver_ABC< kernel::Automat_ABC >& automatResolver, kernel::PropertiesDictionary& dico );
+             MaintenanceStates( kernel::Controller& controller, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver, kernel::PropertiesDictionary& dico );
     virtual ~MaintenanceStates();
     //@}
 
@@ -70,8 +70,8 @@ public:
     //! @name Member data
     //@{
     kernel::Controller&      controller_;
-    const kernel::Resolver_ABC< kernel::EquipmentType >& resolver_;
-    const kernel::Resolver_ABC< kernel::Automat_ABC >&   automatResolver_;
+    const tools::Resolver_ABC< kernel::EquipmentType >& resolver_;
+    const tools::Resolver_ABC< kernel::Automat_ABC >&   automatResolver_;
 
     bool             bChainEnabled_;
     unsigned         nWorkRate_;

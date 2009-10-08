@@ -19,7 +19,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 using namespace actions::gui;
 
@@ -68,7 +68,7 @@ void ParamObstacle::BuildInterface( QWidget* parent )
     new QLabel( tr( "Type:" ), box );
     typeCombo_ = new ::gui::ValuedComboBox< const kernel::ObjectType* >( box );
     typeCombo_->setSorting( true );
-    kernel::Iterator< const kernel::ObjectType& > it = objectTypes_.StringResolver< kernel::ObjectType >::CreateIterator();
+    tools::Iterator< const kernel::ObjectType& > it = objectTypes_.StringResolver< kernel::ObjectType >::CreateIterator();
     while( it.HasMoreElements() )
     {
         const kernel::ObjectType& type = it.NextElement();

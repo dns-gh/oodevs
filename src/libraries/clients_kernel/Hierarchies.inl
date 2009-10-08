@@ -90,7 +90,7 @@ template< typename T >
 inline
 void Hierarchies::Accept( ExtensionVisitor_ABC< T >& visitor ) const
 {
-    Iterator< const Entity_ABC& > it = CreateSubordinateIterator();
+    tools::Iterator< const Entity_ABC& > it = CreateSubordinateIterator();
     while( it.HasMoreElements() )
     {
         const Entity_ABC& subordinate = it.NextElement();

@@ -13,7 +13,7 @@
 #include "game_asn/Simulation.h"
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "clients_kernel/OptionalValue.h"
 
 namespace kernel
@@ -38,7 +38,7 @@ class MineAttribute : public kernel::MineAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-            MineAttribute( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::DotationType >& resolver, bool minefield = false );
+            MineAttribute( kernel::Controller& controller, const tools::Resolver_ABC< kernel::DotationType >& resolver, bool minefield = false );
     virtual ~MineAttribute();
     //@}
 
@@ -69,7 +69,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Resolver_ABC< kernel::DotationType >& resolver_;
+    const tools::Resolver_ABC< kernel::DotationType >& resolver_;
 
     kernel::OptionalValue< unsigned int > nDotationValorization_;
     kernel::DotationType*                 valorization_;

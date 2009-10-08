@@ -11,7 +11,7 @@
 #define __IntelligencesModel_h_
 
 #include "IntelligenceFactory.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 #include "clients_kernel/Intelligence_ABC.h"
 
 class IntelligenceFactory;
@@ -22,7 +22,7 @@ class IntelligenceFactory;
 */
 // Created: SBO 2007-10-17
 // =============================================================================
-class IntelligencesModel : public kernel::Resolver< kernel::Intelligence_ABC >
+class IntelligencesModel : public tools::Resolver< kernel::Intelligence_ABC >
 {
 
 public:

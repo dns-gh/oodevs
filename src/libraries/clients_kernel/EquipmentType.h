@@ -10,7 +10,7 @@
 #ifndef __EquipmentType_h_
 #define __EquipmentType_h_
 
-#include "Resolver.h"
+#include "tools/Resolver.h"
 
 namespace xml { class xistream; };
 
@@ -24,13 +24,13 @@ namespace kernel
 */
 // Created: AGE 2006-02-21
 // =============================================================================
-class EquipmentType : public Resolver< WeaponSystemType, std::string >
+class EquipmentType : public  tools::Resolver< WeaponSystemType, std::string >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             EquipmentType( xml::xistream& xis, const Resolver_ABC< WeaponSystemType, std::string >& weapons );
+             EquipmentType( xml::xistream& xis, const  tools::Resolver_ABC< WeaponSystemType, std::string >& weapons );
     virtual ~EquipmentType();
     //@}
 
@@ -49,7 +49,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadWeaponSystem( xml::xistream& xis, const Resolver_ABC< WeaponSystemType, std::string >& weapons );
+    void ReadWeaponSystem( xml::xistream& xis, const  tools::Resolver_ABC< WeaponSystemType, std::string >& weapons );
     //@}
 
 private:

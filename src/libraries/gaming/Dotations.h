@@ -13,7 +13,7 @@
 #include "game_asn/Simulation.h"
 #include "HierarchicExtension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 #include "clients_kernel/Drawable_ABC.h"
 
 namespace kernel
@@ -34,15 +34,15 @@ class Dotation;
 // =============================================================================
 class Dotations : public HierarchicExtension_ABC
                 , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
-                , public kernel::Resolver< Dotation >
+                , public tools::Resolver< Dotation >
                 , public kernel::Drawable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Dotations( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::DotationType >& resolver, kernel::PropertiesDictionary& dico
-                      , const kernel::Resolver_ABC< kernel::Automat_ABC >& automatResolver, const kernel::Resolver_ABC< kernel::Formation_ABC >& formationResolver, const kernel::Resolver_ABC< kernel::Team_ABC >& teamResolver );
+             Dotations( kernel::Controller& controller, const tools::Resolver_ABC< kernel::DotationType >& resolver, kernel::PropertiesDictionary& dico
+                      , const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver, const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver, const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver );
     virtual ~Dotations();
     //@}
 
@@ -70,7 +70,7 @@ public:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Resolver_ABC< kernel::DotationType >& resolver_;
+    const tools::Resolver_ABC< kernel::DotationType >& resolver_;
     kernel::PropertiesDictionary& dictionary_;
     bool bEmptyGasTank_;
     //@}

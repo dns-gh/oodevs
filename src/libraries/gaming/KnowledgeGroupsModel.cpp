@@ -38,5 +38,5 @@ KnowledgeGroupsModel::~KnowledgeGroupsModel()
 // -----------------------------------------------------------------------------
 void KnowledgeGroupsModel::Purge()
 {
-    Resolver< KnowledgeGroup_ABC >::DeleteAll();
+    tools::Resolver< KnowledgeGroup_ABC >::DeleteAll();
 }

@@ -14,7 +14,7 @@
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/OptionalValue.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -38,7 +38,7 @@ class LogisticAttribute : public kernel::LogisticAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticAttribute( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver );
+             LogisticAttribute( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver );
     virtual ~LogisticAttribute();
     //@}
 
@@ -73,7 +73,7 @@ public:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver_;
+    const tools::Resolver_ABC< kernel::Automat_ABC >& resolver_;
     kernel::Automat_ABC* tc2_;
     //@}
 };

@@ -30,7 +30,7 @@ PopulationMission::PopulationMission( const kernel::Entity_ABC& entity, const ke
 // Name: PopulationMission constructor
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------
-PopulationMission::PopulationMission( xml::xistream& xis, kernel::Controller& controller, const kernel::Resolver_ABC< kernel::MissionType >& missions, const kernel::Entity_ABC& entity )
+PopulationMission::PopulationMission( xml::xistream& xis, kernel::Controller& controller, const tools::Resolver_ABC< kernel::MissionType >& missions, const kernel::Entity_ABC& entity )
     : Mission( xis, controller, missions, entity )
 {
     // NOTHING

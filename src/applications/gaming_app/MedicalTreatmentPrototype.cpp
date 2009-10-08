@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "MedicalTreatmentPrototype.h"
 #include "clients_kernel/MedicalTreatmentType.h"
-#include "clients_kernel/Iterator.h"
+#include "tools/Iterator.h"
 #include "game_asn/SimulationSenders.h"
 
 using namespace kernel;
@@ -20,7 +20,7 @@ using namespace gui;
 // Name: MedicalTreatmentPrototype constructor
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-MedicalTreatmentPrototype::MedicalTreatmentPrototype( QWidget* parent, const Resolver_ABC< MedicalTreatmentType >& resolver, ASN1T_MagicActionCreateObject& msg )
+MedicalTreatmentPrototype::MedicalTreatmentPrototype( QWidget* parent, const tools::Resolver_ABC< MedicalTreatmentType >& resolver, ASN1T_MagicActionCreateObject& msg )
     : MedicalTreatmentPrototype_ABC( parent, resolver )
     , msg_( msg )     
 {

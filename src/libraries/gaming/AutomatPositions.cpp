@@ -47,7 +47,7 @@ Point2f AutomatPositions::GetPosition() const
     Point2f aggregatedPosition;
     unsigned count = 0;
     geometry::Point2f fallback;
-    Iterator< const Entity_ABC& > children = automat_.Get< CommunicationHierarchies >().CreateSubordinateIterator();
+    tools::Iterator< const Entity_ABC& > children = automat_.Get< CommunicationHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
         const Positions& childPositions          = children.NextElement().Get< Positions >();
@@ -71,7 +71,7 @@ float AutomatPositions::GetHeight() const
 {
     float height = 0;
     unsigned count = 0;
-    Iterator< const Entity_ABC& > children = automat_.Get< CommunicationHierarchies >().CreateSubordinateIterator();
+    tools::Iterator< const Entity_ABC& > children = automat_.Get< CommunicationHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
         const Positions& childPositions = children.NextElement().Get< Positions >();
@@ -113,7 +113,7 @@ bool AutomatPositions::IsIn( const Rectangle2f& rectangle ) const
 Rectangle2f AutomatPositions::GetBoundingBox() const
 {
     Rectangle2f result;
-    Iterator< const Entity_ABC& > children = automat_.Get< CommunicationHierarchies >().CreateSubordinateIterator();
+    tools::Iterator< const Entity_ABC& > children = automat_.Get< CommunicationHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
         const Positions& childPositions = children.NextElement().Get< Positions >();

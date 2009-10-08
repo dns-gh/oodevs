@@ -28,7 +28,7 @@ using namespace kernel;
 // Name: LogSupplyConsign constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogSupplyConsign::LogSupplyConsign( Controller& controller, const Resolver_ABC< Automat_ABC >& resolver, const Resolver_ABC< Agent_ABC >& agentResolver, const Resolver_ABC< DotationType >& dotationResolver, const ASN1T_MsgLogSupplyHandlingCreation& message )
+LogSupplyConsign::LogSupplyConsign( Controller& controller, const tools::Resolver_ABC< Automat_ABC >& resolver, const tools::Resolver_ABC< Agent_ABC >& agentResolver, const tools::Resolver_ABC< DotationType >& dotationResolver, const ASN1T_MsgLogSupplyHandlingCreation& message )
     : controller_           ( controller )
     , resolver_             ( resolver )
     , agentResolver_        ( agentResolver )

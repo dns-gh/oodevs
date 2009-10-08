@@ -13,7 +13,7 @@
 #include "game_asn/Simulation.h"
 #include "clients_kernel/AgentExtensions.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 
 namespace kernel
@@ -39,7 +39,7 @@ class LogisticLinks : public kernel::LogisticLinks_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticLinks( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver, const kernel::AutomatType& type, kernel::PropertiesDictionary& dictionary );
+             LogisticLinks( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver, const kernel::AutomatType& type, kernel::PropertiesDictionary& dictionary );
     virtual ~LogisticLinks();
     //@}
 
@@ -73,7 +73,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver_;
+    const tools::Resolver_ABC< kernel::Automat_ABC >& resolver_;
     const kernel::AutomatType& type_;
 
     kernel::Automat_ABC* tc2_;

@@ -11,7 +11,7 @@
 #define __ObjectsModel_h_
 
 #include "game_asn/Simulation.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 class ObjectFactory_ABC;
 
@@ -26,7 +26,7 @@ namespace kernel
 */
 // Created: AGE 2006-02-10
 // =============================================================================
-class ObjectsModel : public kernel::Resolver< kernel::Object_ABC >
+class ObjectsModel : public tools::Resolver< kernel::Object_ABC >
 {
 
 public:

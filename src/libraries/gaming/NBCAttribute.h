@@ -14,7 +14,7 @@
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/OptionalValue.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -43,7 +43,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             NBCAttribute( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::NBCAgent >& resolver );
+             NBCAttribute( kernel::Controller& controller, const tools::Resolver_ABC< kernel::NBCAgent >& resolver );
     virtual ~NBCAttribute();
     //@}
 
@@ -73,7 +73,7 @@ public:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Resolver_ABC< kernel::NBCAgent >& resolver_;    
+    const tools::Resolver_ABC< kernel::NBCAgent >& resolver_;    
     T_NBCAgents agents_;
     int danger_;
     //@}

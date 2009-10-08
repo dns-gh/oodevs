@@ -23,7 +23,7 @@ using namespace gui;
 // Name: DotationsEditor constructor
 // Created: SBO 2006-11-10
 // -----------------------------------------------------------------------------
-DotationsEditor::DotationsEditor( QWidget* parent, const Resolver_ABC< DotationType, std::string >& dotationTypes, DotationsItem*& value )
+DotationsEditor::DotationsEditor( QWidget* parent, const tools::Resolver_ABC< DotationType, std::string >& dotationTypes, DotationsItem*& value )
     : QDialog( parent, "DotationsEditor", true )
     , dotationTypes_( dotationTypes )
     , value_ ( value )
@@ -43,7 +43,7 @@ DotationsEditor::DotationsEditor( QWidget* parent, const Resolver_ABC< DotationT
     QButton* cancel = new QPushButton( tr( "Cancel" ), box );
     pMainLayout->addWidget( vBox );
 
-    Iterator< const DotationType& > it = dotationTypes_.CreateIterator();
+    tools::Iterator< const DotationType& > it = dotationTypes_.CreateIterator();
     types_.append( "" );
     while( it.HasMoreElements() )
         types_.append( it.NextElement().GetCategory().c_str() );
@@ -92,7 +92,7 @@ void DotationsEditor::OnReject()
 void DotationsEditor::SetCurrentItem( DotationsItem*& dotations )
 {
     table_->setNumRows( 0 );
-    Iterator< const Dotation& > it = dotations->CreateIterator();
+    tools::Iterator< const Dotation& > it = dotations->CreateIterator();
     while( it.HasMoreElements() )
     {
         const Dotation& dotation = it.NextElement();
@@ -102,7 +102,7 @@ void DotationsEditor::SetCurrentItem( DotationsItem*& dotations )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Resolver< Dotation >* DotationsEditor::GetValue
+// Name: tools::Resolver< Dotation >* DotationsEditor::GetValue
 // Created: SBO 2006-11-10
 // -----------------------------------------------------------------------------
 DotationsItem* DotationsEditor::GetValue()

@@ -100,7 +100,7 @@ void WeatherModel::Serialize( const std::string& filename ) const
     globalWeather_->Serialize( xos );
     xos     << end()
             << start( "local-weather" );
-    Iterator< const LocalWeather& > it( CreateIterator() );
+    tools::Iterator< const LocalWeather& > it( CreateIterator() );
     while( it.HasMoreElements() )
     {
         xos << start( "local" );

@@ -44,7 +44,7 @@ AgentKnowledgeList::AgentKnowledgeList( const OrderParameter& parameter, const A
 // Name: AgentKnowledgeList constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-AgentKnowledgeList::AgentKnowledgeList( const OrderParameter& parameter, xml::xistream& xis, const Resolver_ABC< Agent_ABC >& resolver, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
+AgentKnowledgeList::AgentKnowledgeList( const OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< Agent_ABC >& resolver, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
     : Parameter< QString >( parameter )
 {
     xis >> list( "parameter", *this, &AgentKnowledgeList::ReadAgentKnowledge, resolver, converter, owner, controller );
@@ -63,7 +63,7 @@ AgentKnowledgeList::~AgentKnowledgeList()
 // Name: AgentKnowledgeList::ReadAgentKnowledge
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void AgentKnowledgeList::ReadAgentKnowledge( xml::xistream& xis, const Resolver_ABC< Agent_ABC >& resolver, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
+void AgentKnowledgeList::ReadAgentKnowledge( xml::xistream& xis, const tools::Resolver_ABC< Agent_ABC >& resolver, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
 {
     AddParameter( *new AgentKnowledge( xis, resolver, converter, owner, controller ) );
 }

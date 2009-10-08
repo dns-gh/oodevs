@@ -19,7 +19,7 @@
 // Name: Weapons constructor
 // Created: SBO 2008-08-06
 // -----------------------------------------------------------------------------
-Weapons::Weapons( const kernel::Resolver_ABC< kernel::EquipmentType >& equipments, const kernel::Resolver_ABC< kernel::WeaponSystemType, std::string >& weapons )
+Weapons::Weapons( const tools::Resolver_ABC< kernel::EquipmentType >& equipments, const tools::Resolver_ABC< kernel::WeaponSystemType, std::string >& weapons )
     : equipments_( equipments )
     , weapons_( weapons )
     , minRange_( 0 )
@@ -89,7 +89,7 @@ void Weapons::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 // -----------------------------------------------------------------------------
 void Weapons::UpdateRange()
 {
-    kernel::Iterator< const Equipment& > it = CreateIterator();
+    tools::Iterator< const Equipment& > it = CreateIterator();
     while( it.HasMoreElements() )
     {
         const Equipment& equipment = it.NextElement();
@@ -104,7 +104,7 @@ void Weapons::UpdateRange()
 // -----------------------------------------------------------------------------
 void Weapons::AddEquipmentRange( const kernel::EquipmentType& type )
 {
-    kernel::Iterator< const kernel::WeaponSystemType& > it = type.CreateIterator();
+    tools::Iterator< const kernel::WeaponSystemType& > it = type.CreateIterator();
     while( it.HasMoreElements() )
     {
         const kernel::WeaponSystemType& weapon = it.NextElement();

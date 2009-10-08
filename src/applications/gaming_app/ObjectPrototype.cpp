@@ -97,7 +97,7 @@ namespace
         container.push_back( new NBCPrototype( parent, resolver, toxic, asn ) );
     }
 
-    void MedicalTreatmentAttribute( T_AttributeContainer& container, QWidget* parent, const Resolver_ABC< MedicalTreatmentType >& resolver, ASN1T_MagicActionCreateObject& asn )
+    void MedicalTreatmentAttribute( T_AttributeContainer& container, QWidget* parent, const tools::Resolver_ABC< MedicalTreatmentType >& resolver, ASN1T_MagicActionCreateObject& asn )
     {
         container.push_back( new MedicalTreatmentPrototype( parent, resolver, asn ) );
     }

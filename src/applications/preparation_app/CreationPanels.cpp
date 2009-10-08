@@ -25,7 +25,7 @@ CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const
     : Panels( parent )
 {
     AddPanel( new gui::UnitsPanel ( this, *this, controllers, staticModel.types_, factory, icons, colorStrategy ) );
-    AddPanel( new PopulationsPanel( this, *this, controllers, (Resolver< PopulationType >&)( staticModel.types_ ), factory ) );
+    AddPanel( new PopulationsPanel( this, *this, controllers, ( tools::Resolver< PopulationType >&)( staticModel.types_ ), factory ) );
     AddPanel( new gui::IntelligencesPanel( this, *this, controllers, staticModel.levels_, icons ) );
 }
 

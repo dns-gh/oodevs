@@ -103,7 +103,7 @@ void FormationHierarchies::SerializeLogistics( xml::xostream& xos ) const
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         if( SerializeAutomatLogistics( xos, *it->second ) )
         {
-            kernel::Iterator< const kernel::Entity_ABC& > subIt 
+            tools::Iterator< const kernel::Entity_ABC& > subIt 
                 = it->second->Get< TacticalHierarchies >().CreateSubordinateIterator();
             while( subIt.HasMoreElements() )
                 SerializeAutomatLogistics( xos, subIt.NextElement() );

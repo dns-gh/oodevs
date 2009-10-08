@@ -161,7 +161,7 @@ bool ProfileFilter::IsInHierarchy( const kernel::Entity_ABC& entity ) const
 template< typename D, typename U >
 bool ProfileFilter::IsChildSubordinateOf( const D& down, const U& /*up*/ ) const
 {
-    kernel::Iterator< const kernel::Entity_ABC& > children = down.CreateSubordinateIterator();
+    tools::Iterator< const kernel::Entity_ABC& > children = down.CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
         const kernel::Entity_ABC& child = children.NextElement();

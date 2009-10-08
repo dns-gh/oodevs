@@ -15,13 +15,13 @@
 // Created: SBO 2006-10-25
 // -----------------------------------------------------------------------------
 template< typename Superior >
-LogisticSuperiorEditor< Superior >::LogisticSuperiorEditor( QWidget* parent, kernel::Controllers& controllers, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver, const kernel::Entity_ABC& selected )
+LogisticSuperiorEditor< Superior >::LogisticSuperiorEditor( QWidget* parent, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver, const kernel::Entity_ABC& selected )
     : gui::ValuedComboBox< const kernel::Automat_ABC* >( parent )
     , controllers_( controllers )
     , filter_( selected )
 {
     AddItem( tools::translate( "None", "LogisticSuperiorEditor" ), 0 );
-    kernel::Iterator< const kernel::Automat_ABC& > it = resolver.CreateIterator();
+    tools::Iterator< const kernel::Automat_ABC& > it = resolver.CreateIterator();
     while( it.HasMoreElements() )
     {
         const kernel::Automat_ABC& automat = it.NextElement();

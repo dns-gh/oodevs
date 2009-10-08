@@ -57,9 +57,9 @@ AgentsModel::~AgentsModel()
 // -----------------------------------------------------------------------------
 void AgentsModel::Purge()
 {
-    Resolver< Agent_ABC >::DeleteAll();
-    Resolver< Automat_ABC >::DeleteAll();
-    Resolver< Population_ABC >::DeleteAll();
+    tools::Resolver< Agent_ABC >::DeleteAll();
+    tools::Resolver< Automat_ABC >::DeleteAll();
+    tools::Resolver< Population_ABC >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -69,7 +69,7 @@ void AgentsModel::Purge()
 kernel::Automat_ABC& AgentsModel::CreateAutomat( kernel::Entity_ABC& parent, const kernel::AutomatType& type )
 {
     Automat_ABC* agent = agentFactory_.Create( parent, type );
-    Resolver< Automat_ABC >::Register( agent->GetId(), *agent );
+    tools::Resolver< Automat_ABC >::Register( agent->GetId(), *agent );
     return *agent;
 }
 
@@ -82,7 +82,7 @@ void AgentsModel::CreateAutomat( kernel::Entity_ABC& parent, const kernel::Autom
     kernel::Automat_ABC& automat = CreateAutomat( parent, type );
     DiamondFormation formation( position );
     bool pcSet = false;
-    Iterator< const AutomatComposition& > it = type.CreateIterator();
+    tools::Iterator< const AutomatComposition& > it = type.CreateIterator();
     while( it.HasMoreElements() )
     {
         const AutomatComposition& composition = it.NextElement();
@@ -103,7 +103,7 @@ void AgentsModel::CreateAutomat( kernel::Entity_ABC& parent, const kernel::Autom
 void AgentsModel::CreateAutomat( xml::xistream& xis, kernel::Entity_ABC& parent, LimitsModel& limits )
 {
     Automat_ABC* agent = agentFactory_.Create( xis, parent );
-    Resolver< Automat_ABC >::Register( agent->GetId(), *agent );
+    tools::Resolver< Automat_ABC >::Register( agent->GetId(), *agent );
     xis >> list( "automat", *this , &AgentsModel::CreateAutomat, *agent, limits )
         >> list( "unit"   , *this , &AgentsModel::CreateAgent, *agent )
         >> list( "lima"   , limits, &LimitsModel::CreateLima , *(Entity_ABC*)agent )
@@ -116,7 +116,7 @@ void AgentsModel::CreateAutomat( xml::xistream& xis, kernel::Entity_ABC& parent,
 // -----------------------------------------------------------------------------
 kernel::Automat_ABC& AgentsModel::GetAutomat( unsigned long id )
 {
-    return Resolver< Automat_ABC >::Get( id );
+    return tools::Resolver< Automat_ABC >::Get( id );
 }
     
 // -----------------------------------------------------------------------------
@@ -125,7 +125,7 @@ kernel::Automat_ABC& AgentsModel::GetAutomat( unsigned long id )
 // -----------------------------------------------------------------------------
 kernel::Automat_ABC* AgentsModel::FindAutomat( unsigned long id )
 {
-    return Resolver< Automat_ABC >::Find( id );
+    return tools::Resolver< Automat_ABC >::Find( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,7 +135,7 @@ kernel::Automat_ABC* AgentsModel::FindAutomat( unsigned long id )
 kernel::Agent_ABC& AgentsModel::CreateAgent( Automat_ABC& parent, const AgentType& type, const geometry::Point2f& position, bool commandPost )
 {
     Agent_ABC* agent = agentFactory_.Create( parent, type, parameters_.Clip( position ), commandPost );
-    Resolver< Agent_ABC >::Register( agent->GetId(), *agent );
+    tools::Resolver< Agent_ABC >::Register( agent->GetId(), *agent );
     return *agent;
 }
 
@@ -146,7 +146,7 @@ kernel::Agent_ABC& AgentsModel::CreateAgent( Automat_ABC& parent, const AgentTyp
 void AgentsModel::CreateAgent( xml::xistream& xis, Automat_ABC& parent )
 {
     Agent_ABC* agent = agentFactory_.Create( xis, parent );
-    Resolver< Agent_ABC >::Register( agent->GetId(), *agent );
+    tools::Resolver< Agent_ABC >::Register( agent->GetId(), *agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -155,7 +155,7 @@ void AgentsModel::CreateAgent( xml::xistream& xis, Automat_ABC& parent )
 // -----------------------------------------------------------------------------
 Agent_ABC& AgentsModel::GetAgent( unsigned long id ) const
 {
-    return Resolver< Agent_ABC >::Get( id );
+    return tools::Resolver< Agent_ABC >::Get( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -164,7 +164,7 @@ Agent_ABC& AgentsModel::GetAgent( unsigned long id ) const
 // -----------------------------------------------------------------------------
 Agent_ABC* AgentsModel::FindAgent( unsigned long id ) const
 {
-    return Resolver< Agent_ABC >::Find( id );
+    return tools::Resolver< Agent_ABC >::Find( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -173,13 +173,13 @@ Agent_ABC* AgentsModel::FindAgent( unsigned long id ) const
 // -----------------------------------------------------------------------------
 Entity_ABC* AgentsModel::FindAllAgent( unsigned long id ) const
 {
-    Entity_ABC* agent = Resolver< Automat_ABC >::Find( id );
+    Entity_ABC* agent = tools::Resolver< Automat_ABC >::Find( id );
     if( agent )
         return agent;
-    agent = Resolver< Agent_ABC >::Find( id );
+    agent = tools::Resolver< Agent_ABC >::Find( id );
     if( agent )
         return agent;
-    return Resolver< Population_ABC >::Find( id );
+    return tools::Resolver< Population_ABC >::Find( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -189,7 +189,7 @@ Entity_ABC* AgentsModel::FindAllAgent( unsigned long id ) const
 void AgentsModel::CreatePopulation( Entity_ABC& parent, const PopulationType& type, const geometry::Point2f& position )
 {
     Population_ABC* popu = agentFactory_.Create( parent, type, parameters_.Clip( position ) );
-    Resolver< Population_ABC >::Register( popu->GetId(), *popu );
+    tools::Resolver< Population_ABC >::Register( popu->GetId(), *popu );
 }
 
 // -----------------------------------------------------------------------------
@@ -199,7 +199,7 @@ void AgentsModel::CreatePopulation( Entity_ABC& parent, const PopulationType& ty
 void AgentsModel::CreatePopulation( xml::xistream& xis, kernel::Team_ABC& parent )
 {
     Population_ABC* popu = agentFactory_.Create( xis, parent );
-    Resolver< Population_ABC >::Register( popu->GetId(), *popu );
+    tools::Resolver< Population_ABC >::Register( popu->GetId(), *popu );
 }
 
 // -----------------------------------------------------------------------------
@@ -208,7 +208,7 @@ void AgentsModel::CreatePopulation( xml::xistream& xis, kernel::Team_ABC& parent
 // -----------------------------------------------------------------------------
 Population_ABC& AgentsModel::GetPopulation( unsigned long id )
 {
-    return Resolver< Population_ABC >::Get( id );
+    return tools::Resolver< Population_ABC >::Get( id );
 }
 //
 // -----------------------------------------------------------------------------
@@ -217,7 +217,7 @@ Population_ABC& AgentsModel::GetPopulation( unsigned long id )
 // -----------------------------------------------------------------------------
 Population_ABC* AgentsModel::FindPopulation( unsigned long id )
 {
-    return Resolver< Population_ABC>::Find( id );
+    return tools::Resolver< Population_ABC>::Find( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -226,7 +226,7 @@ Population_ABC* AgentsModel::FindPopulation( unsigned long id )
 // -----------------------------------------------------------------------------
 void AgentsModel::NotifyDeleted( const Agent_ABC& agent )
 {
-    Resolver< Agent_ABC >::Remove( agent.GetId() );
+    tools::Resolver< Agent_ABC >::Remove( agent.GetId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -235,7 +235,7 @@ void AgentsModel::NotifyDeleted( const Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void AgentsModel::NotifyDeleted( const kernel::Automat_ABC& agent )
 {
-    Resolver< Automat_ABC >::Remove( agent.GetId() );
+    tools::Resolver< Automat_ABC >::Remove( agent.GetId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -244,7 +244,7 @@ void AgentsModel::NotifyDeleted( const kernel::Automat_ABC& agent )
 // -----------------------------------------------------------------------------
 void AgentsModel::NotifyDeleted( const kernel::Population_ABC& agent )
 {
-    Resolver< Population_ABC >::Remove( agent.GetId() );
+    tools::Resolver< Population_ABC >::Remove( agent.GetId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -255,7 +255,7 @@ void AgentsModel::ReadLogistic( xml::xistream& xis )
 {
     int id;
     xis >> attribute( "id", id );
-    if( Automat_ABC* entity = Resolver< Automat_ABC >::Find( id ) )
+    if( Automat_ABC* entity = tools::Resolver< Automat_ABC >::Find( id ) )
         xis >> list( "subordinate", *this, &AgentsModel::ReadLogisticLink, *entity );
 }
 
@@ -269,7 +269,7 @@ void AgentsModel::ReadLogisticLink( xml::xistream& xis, kernel::Automat_ABC& aut
     std::string linkType;
     xis >> attribute( "id", id )
         >> attribute( "link", linkType );
-    if( Entity_ABC* entity = Resolver< Automat_ABC >::Find( id ) )
+    if( Entity_ABC* entity = tools::Resolver< Automat_ABC >::Find( id ) )
     {
         ReadLogisticLink< TC2Hierarchies >        ( xis, linkType, automat, *entity );
         ReadLogisticLink< MedicalHierarchies >    ( xis, linkType, automat, *entity );

@@ -30,8 +30,8 @@ using namespace kernel;
 // Created: SBO 2006-12-07
 // -----------------------------------------------------------------------------
 ReportFactory::ReportFactory( const RcEntityResolver_ABC& rcResolver
-                            , const Resolver_ABC< DotationType >&  dotationResolver
-                            , const Resolver_ABC< EquipmentType >& equipmentResolver
+                            , const tools::Resolver_ABC< DotationType >&  dotationResolver
+                            , const tools::Resolver_ABC< EquipmentType >& equipmentResolver
                             , const Simulation& simulation )
     : rcResolver_       ( rcResolver )
     , dotationResolver_ ( dotationResolver )

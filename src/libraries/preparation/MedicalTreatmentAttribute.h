@@ -12,7 +12,7 @@
 
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include <list>
 
 namespace kernel
@@ -45,7 +45,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MedicalTreatmentAttribute( kernel::PropertiesDictionary& dico );
-             MedicalTreatmentAttribute( xml::xistream& xis, const kernel::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& MedicalTreatmentTypes, kernel::PropertiesDictionary& dico );
+             MedicalTreatmentAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& MedicalTreatmentTypes, kernel::PropertiesDictionary& dico );
     virtual ~MedicalTreatmentAttribute();
     //@}
 

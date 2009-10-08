@@ -10,7 +10,7 @@
 #ifndef __Hierarchies_h_
 #define __Hierarchies_h_
 
-#include "Iterator.h"
+#include "tools/Iterator.h"
 #include "Extension_ABC.h"
 
 namespace kernel
@@ -38,7 +38,7 @@ public:
     //@{
     virtual const Entity_ABC* GetSuperior() const = 0;
     virtual const Entity_ABC& GetEntity() const = 0;
-    virtual Iterator< const Entity_ABC& > CreateSubordinateIterator() const = 0; 
+    virtual tools::Iterator< const Entity_ABC& > CreateSubordinateIterator() const = 0; 
     //@}
     
     //! @name Modifiers

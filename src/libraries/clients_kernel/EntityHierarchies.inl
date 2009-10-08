@@ -41,7 +41,7 @@ EntityHierarchies< Interface >::~EntityHierarchies()
 {
     if( Interface* superiorHierarchy = SuperiorHierarchy() )
         superiorHierarchy->UnregisterSubordinate( entity_ );
-    Iterator< const Entity_ABC& > it = CreateSubordinateIterator();
+    tools::Iterator< const Entity_ABC& > it = CreateSubordinateIterator();
     while( it.HasMoreElements() )
     {
         Interface* child = const_cast< Entity_ABC& >( it.NextElement() ).Retrieve< Interface >();
@@ -75,7 +75,7 @@ const Entity_ABC& EntityHierarchies< Interface >::GetEntity() const
 // Created: AGE 2006-09-19
 // -----------------------------------------------------------------------------
 template< typename Interface >
-Iterator< const Entity_ABC& > EntityHierarchies< Interface >::CreateSubordinateIterator() const
+tools::Iterator< const Entity_ABC& > EntityHierarchies< Interface >::CreateSubordinateIterator() const
 {
     return CreateIterator();
 }

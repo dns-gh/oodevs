@@ -10,7 +10,7 @@
 #ifndef __KnowledgeGroupsModel_h_
 #define __KnowledgeGroupsModel_h_
 
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -25,7 +25,7 @@ class TeamsModel;
 */
 // Created: AGE 2006-02-15
 // =============================================================================
-class KnowledgeGroupsModel : public kernel::Resolver_ABC< kernel::KnowledgeGroup_ABC >
+class KnowledgeGroupsModel : public tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >
 {
 
 public:
@@ -40,7 +40,7 @@ public:
     void Purge();
     virtual kernel::KnowledgeGroup_ABC* Find( const unsigned long& identifier ) const;
     virtual kernel::KnowledgeGroup_ABC& Get( const unsigned long& identifier ) const;
-    virtual kernel::Iterator< const kernel::KnowledgeGroup_ABC& > CreateIterator() const;
+    virtual tools::Iterator< const kernel::KnowledgeGroup_ABC& > CreateIterator() const;
     //@}
 
 private:

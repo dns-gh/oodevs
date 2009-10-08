@@ -10,7 +10,7 @@
 #ifndef __Decisions_ABC_h_
 #define __Decisions_ABC_h_
 
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -39,8 +39,8 @@ public:
     //@{
     virtual bool CanBeOrdered() const = 0;
 
-    virtual kernel::Iterator< const kernel::Mission& > GetMissions() const = 0;
-    virtual kernel::Iterator< const kernel::FragOrder& > GetFragOrders() const = 0;
+    virtual tools::Iterator< const kernel::Mission& > GetMissions() const = 0;
+    virtual tools::Iterator< const kernel::FragOrder& > GetFragOrders() const = 0;
     virtual const kernel::Mission* GetCurrentMission() const = 0;
     virtual const kernel::Entity_ABC& GetAgent() const = 0;
     //@}

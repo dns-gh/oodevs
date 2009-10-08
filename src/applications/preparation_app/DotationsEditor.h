@@ -10,7 +10,7 @@
 #ifndef __DotationsEditor_h_
 #define __DotationsEditor_h_
 
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 #include "clients_kernel/ValueEditor.h"
 
 namespace kernel
@@ -35,7 +35,7 @@ class DotationsEditor : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             DotationsEditor( QWidget* parent, const kernel::Resolver_ABC< kernel::DotationType, std::string >& dotationTypes, DotationsItem*& value );
+             DotationsEditor( QWidget* parent, const tools::Resolver_ABC< kernel::DotationType, std::string >& dotationTypes, DotationsItem*& value );
     virtual ~DotationsEditor();
     //@}
 
@@ -69,7 +69,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::Resolver_ABC< kernel::DotationType, std::string >& dotationTypes_;
+    const tools::Resolver_ABC< kernel::DotationType, std::string >& dotationTypes_;
     DotationsItem*& value_;
     QTable* table_;
     QStringList types_;

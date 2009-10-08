@@ -39,7 +39,7 @@ ObjectsModel::~ObjectsModel()
 // -----------------------------------------------------------------------------
 void ObjectsModel::Purge()
 {
-    Resolver< Object_ABC >::DeleteAll();
+    tools::Resolver< Object_ABC >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -48,10 +48,10 @@ void ObjectsModel::Purge()
 // -----------------------------------------------------------------------------
 void ObjectsModel::CreateObject( const ASN1T_MsgObjectCreation& asnMsg )
 {
-    if( ! Resolver< Object_ABC >::Find( asnMsg.oid ) )
+    if( ! tools::Resolver< Object_ABC >::Find( asnMsg.oid ) )
     {
         Object_ABC* pObject = objectFactory_.Create( asnMsg );
-        Resolver< Object_ABC >::Register( asnMsg.oid, *pObject );
+        tools::Resolver< Object_ABC >::Register( asnMsg.oid, *pObject );
     }
 }
  
@@ -61,7 +61,7 @@ void ObjectsModel::CreateObject( const ASN1T_MsgObjectCreation& asnMsg )
 // -----------------------------------------------------------------------------
 Object_ABC& ObjectsModel::GetObject( unsigned long id )
 {
-    return Resolver< Object_ABC >::Get( id );
+    return tools::Resolver< Object_ABC >::Get( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,7 +70,7 @@ Object_ABC& ObjectsModel::GetObject( unsigned long id )
 // -----------------------------------------------------------------------------
 void ObjectsModel::DeleteObject( unsigned long id )
 {
-    delete Resolver< Object_ABC >::Find( id );
-    Resolver< Object_ABC >::Remove( id );
+    delete tools::Resolver< Object_ABC >::Find( id );
+    tools::Resolver< Object_ABC >::Remove( id );
 }
 

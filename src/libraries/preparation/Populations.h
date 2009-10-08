@@ -12,7 +12,7 @@
 
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 class Population;
 
@@ -24,7 +24,7 @@ class Population;
 // =============================================================================
 class Populations : public kernel::Extension_ABC
                   , public kernel::Serializable_ABC
-                  , public kernel::Resolver< Population >
+                  , public tools::Resolver< Population >
 {
 
 public:

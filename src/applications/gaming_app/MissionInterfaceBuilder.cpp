@@ -134,7 +134,7 @@ void MissionInterfaceBuilder::Build( actions::gui::MissionInterface_ABC& mission
 {
     missionInterface_ = &missionInterface;
     entity_ = &entity;
-    Iterator< const OrderParameter& > it = order.CreateIterator();
+    tools::Iterator< const OrderParameter& > it = order.CreateIterator();
     while( it.HasMoreElements() )
         Build( it.NextElement() );
 }

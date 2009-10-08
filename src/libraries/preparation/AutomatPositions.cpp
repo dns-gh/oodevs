@@ -46,7 +46,7 @@ Point2f AutomatPositions::GetPosition() const
 {
     Point2f aggregatedPosition;
     unsigned count = 0;
-    Iterator< const Entity_ABC& > children = automat_.Get< CommunicationHierarchies >().CreateSubordinateIterator();
+    tools::Iterator< const Entity_ABC& > children = automat_.Get< CommunicationHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
         const Positions& childPositions = children.NextElement().Get< Positions >();
@@ -65,7 +65,7 @@ float AutomatPositions::GetHeight() const
 {
     float height = 0;
     unsigned count = 0;
-    Iterator< const Entity_ABC& > children = automat_.Get< CommunicationHierarchies >().CreateSubordinateIterator();
+    tools::Iterator< const Entity_ABC& > children = automat_.Get< CommunicationHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
         const Positions& childPositions = children.NextElement().Get< Positions >();
@@ -136,7 +136,7 @@ void AutomatPositions::Draw( const Point2f& where, const kernel::Viewport_ABC& v
 void AutomatPositions::Move( const geometry::Point2f& point )
 {
     const geometry::Vector2f vect( GetPosition(), point );
-    Iterator< const Entity_ABC& > children = automat_.Get< CommunicationHierarchies >().CreateSubordinateIterator();
+    tools::Iterator< const Entity_ABC& > children = automat_.Get< CommunicationHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
         const Positions* positions = children.NextElement().Retrieve< Positions >();

@@ -10,7 +10,7 @@
 #ifndef __ScoresModel_h_
 #define __ScoresModel_h_
 
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace xml
 {
@@ -28,7 +28,7 @@ class ScoreFactory_ABC;
 */
 // Created: SBO 2009-04-16
 // =============================================================================
-class ScoresModel : public kernel::Resolver< Score_ABC, QString >
+class ScoresModel : public tools::Resolver< Score_ABC, QString >
 {
 
 public:

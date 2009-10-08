@@ -14,7 +14,7 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Creatable.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -35,7 +35,7 @@ class AgentKnowledges : public kernel::Extension_ABC
                       , public kernel::Updatable_ABC< ASN1T_MsgUnitKnowledgeCreation >
                       , public kernel::Updatable_ABC< ASN1T_MsgUnitKnowledgeUpdate >
                       , public kernel::Updatable_ABC< ASN1T_MsgUnitKnowledgeDestruction >
-                      , public kernel::Resolver< kernel::AgentKnowledge_ABC >
+                      , public tools::Resolver< kernel::AgentKnowledge_ABC >
                       , public kernel::Creatable< AgentKnowledges >
 {
 

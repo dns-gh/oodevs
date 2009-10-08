@@ -12,7 +12,7 @@
 
 #include "game_asn/Simulation.h"
 #include "Fire_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -35,8 +35,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              DirectFire( const ASN1T_MsgStartUnitFire& message, 
-                 const kernel::Resolver_ABC< kernel::Agent_ABC >& agentResolver, 
-                 const kernel::Resolver_ABC< kernel::Population_ABC >& populationResolver );
+                 const tools::Resolver_ABC< kernel::Agent_ABC >& agentResolver, 
+                 const tools::Resolver_ABC< kernel::Population_ABC >& populationResolver );
     virtual ~DirectFire();
     //@}
 

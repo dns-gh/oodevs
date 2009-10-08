@@ -11,7 +11,7 @@
 #include "ParamDotationDType.h"
 #include "actions/DotationType.h"
 #include "clients_kernel/DotationType.h"
-#include "clients_kernel/Iterator.h"
+#include "tools/Iterator.h"
 
 using namespace actions::gui;
 
@@ -19,7 +19,7 @@ using namespace actions::gui;
 // Name: ParamDotationDType constructor
 // Created: SBO 2006-08-09
 // -----------------------------------------------------------------------------
-ParamDotationDType::ParamDotationDType( const kernel::OrderParameter& parameter, const kernel::Resolver_ABC< kernel::DotationType >& resolver )
+ParamDotationDType::ParamDotationDType( const kernel::OrderParameter& parameter, const tools::Resolver_ABC< kernel::DotationType >& resolver )
     : ParamComboBox< ASN1T_DotationType >( parameter )
     , resolver_( resolver )
     , parameter_( parameter )
@@ -42,7 +42,7 @@ ParamDotationDType::~ParamDotationDType()
 // -----------------------------------------------------------------------------
 void ParamDotationDType::BuildInterface( QWidget* parent )
 {
-    kernel::Iterator< const kernel::DotationType& > it = resolver_.CreateIterator();
+    tools::Iterator< const kernel::DotationType& > it = resolver_.CreateIterator();
     while( it.HasMoreElements() )
     {
         const kernel::DotationType& type = it.NextElement();

@@ -24,7 +24,7 @@ using namespace kernel;
 // Name: PopulationDetections constructor
 // Created: AGE 2006-02-27
 // -----------------------------------------------------------------------------
-PopulationDetections::PopulationDetections( Controller& controller, const kernel::CoordinateConverter_ABC& converter, const Resolver_ABC< Population_ABC >& resolver, const kernel::Entity_ABC& entity )
+PopulationDetections::PopulationDetections( Controller& controller, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< Population_ABC >& resolver, const kernel::Entity_ABC& entity )
     : controller_( controller )
     , converter_( converter )
     , resolver_( resolver )

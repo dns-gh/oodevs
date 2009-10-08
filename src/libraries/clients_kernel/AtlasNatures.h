@@ -10,7 +10,7 @@
 #ifndef __AtlasNatures_h_
 #define __AtlasNatures_h_
 
-#include "Resolver.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -23,7 +23,7 @@ class AtlasNature;
 */
 // Created: SBO 2007-05-24
 // =============================================================================
-class AtlasNatures : public Resolver< AtlasNature >
+class AtlasNatures : public  tools::Resolver< AtlasNature >
 {
 
 public:

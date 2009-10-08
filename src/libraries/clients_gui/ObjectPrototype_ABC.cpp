@@ -21,7 +21,7 @@
 #include "ObjectAttributePrototypeFactory_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Iterator.h"
+#include "tools/Iterator.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/ObjectTypes.h"
@@ -34,7 +34,7 @@ using namespace gui;
 // Name: ObjectPrototype_ABC constructor
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controllers, const Resolver_ABC< ObjectType, std::string >& resolver, 
+ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controllers, const tools::Resolver_ABC< ObjectType, std::string >& resolver, 
                                          ParametersLayer& layer, const ObjectAttributePrototypeFactory_ABC& factory )
     : QGroupBox( 2, Qt::Horizontal, tr( "Information" ), parent )
     , controllers_( controllers )
@@ -118,7 +118,7 @@ void ObjectPrototype_ABC::hideEvent( QHideEvent* )
 void ObjectPrototype_ABC::FillObjectTypes()
 {
     objectTypes_->Clear();
-    Iterator< const ObjectType& > it( resolver_.CreateIterator() );
+    tools::Iterator< const ObjectType& > it( resolver_.CreateIterator() );
     while( it.HasMoreElements() )
     {
         const ObjectType& element = it.NextElement();

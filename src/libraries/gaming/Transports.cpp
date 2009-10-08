@@ -20,7 +20,7 @@ using namespace kernel;
 // Name: Transports constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Transports::Transports( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, PropertiesDictionary& dico )
+Transports::Transports( Controller& controller, const tools::Resolver_ABC< Agent_ABC >& resolver, PropertiesDictionary& dico )
     : controller_( controller )
     , resolver_( resolver )
     , transporter_( 0 )

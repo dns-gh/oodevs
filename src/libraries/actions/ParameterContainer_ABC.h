@@ -10,7 +10,7 @@
 #ifndef __ActionParameterContainer_ABC_h_
 #define __ActionParameterContainer_ABC_h_
 
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace actions
 {
@@ -23,7 +23,7 @@ class Parameter_ABC;
 */
 // Created: AGE 2007-07-11
 // =============================================================================
-class ParameterContainer_ABC : public kernel::Resolver< Parameter_ABC >
+class ParameterContainer_ABC : public tools::Resolver< Parameter_ABC >
 {
 
 public:

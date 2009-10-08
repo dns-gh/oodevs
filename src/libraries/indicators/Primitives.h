@@ -10,7 +10,7 @@
 #ifndef __Primitives_h_
 #define __Primitives_h_
 
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 #include <qstring.h>
 
 namespace xml
@@ -29,7 +29,7 @@ namespace indicators
 */
 // Created: SBO 2009-04-06
 // =============================================================================
-class Primitives : public kernel::Resolver< Primitive, QString >
+class Primitives : public tools::Resolver< Primitive, QString >
 {
 
 public:

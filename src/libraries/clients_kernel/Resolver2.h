@@ -10,8 +10,8 @@
 #ifndef __Resolver2_h_
 #define __Resolver2_h_
 
-#include "Resolver_ABC.h"
-#include "Iterator.h"
+#include "tools/Resolver_ABC.h"
+#include "tools/Iterator.h"
 #include <stdexcept>
 #include <sstream>
 
@@ -25,8 +25,8 @@ namespace kernel
 // Created: AGE 2006-02-10
 // =============================================================================
 template< typename T, typename Identifier1 = unsigned long, typename Identifier2 = std::string >
-class Resolver2 : public Resolver_ABC< T, Identifier1 >
-                , public Resolver_ABC< T, Identifier2 >
+class Resolver2 : public  tools::Resolver_ABC< T, Identifier1 >
+                , public  tools::Resolver_ABC< T, Identifier2 >
 {
 
 public:
@@ -55,9 +55,9 @@ public:
         }
     };
 
-    virtual Iterator< const T& > CreateIterator() const
+    virtual tools::Iterator< const T& > CreateIterator() const
     {
-        return new AssociativeIterator< const T&, T_Elements1 >( elements1_ );
+        return new tools::AssociativeIterator< const T&, T_Elements1 >( elements1_ );
     };
 
     void Register( const Identifier1& identifier1, const Identifier2& identifier2, T& element )

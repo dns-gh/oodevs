@@ -10,7 +10,7 @@
 #ifndef __ResolverAdapter_h_
 #define __ResolverAdapter_h_
 
-#include "Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -22,13 +22,13 @@ namespace kernel
 // Created: AGE 2008-07-16
 // =============================================================================
 template< typename BaseType, typename NewType, typename Identifier = unsigned long >
-class ResolverAdapter : public Resolver_ABC< NewType, Identifier >
+class ResolverAdapter : public  tools::Resolver_ABC< NewType, Identifier >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ResolverAdapter( const kernel::Resolver_ABC< BaseType, Identifier >& base )
+    explicit ResolverAdapter( const tools::Resolver_ABC< BaseType, Identifier >& base )
         : base_( base ) {}
     virtual ~ResolverAdapter() {}
     //@}
@@ -43,7 +43,7 @@ public:
     {
         return *&base_.Get( id );
     }
-    virtual Iterator< const NewType& > CreateIterator() const
+    virtual tools::Iterator< const NewType& > CreateIterator() const
     {
         return new Adapter( base_.CreateIterator() );
     }
@@ -60,7 +60,7 @@ private:
     //@{
     struct Adapter : public Iterator_ABC< const NewType& >
     {
-        Adapter( Iterator< const BaseType& > base ) : base_( base ) {}
+        Adapter( tools::Iterator< const BaseType& > base ) : base_( base ) {}
         virtual bool HasMoreElements() const
         {
             return base_.HasMoreElements();
@@ -69,14 +69,14 @@ private:
         {
             return *&base_.NextElement();
         }
-        Iterator< const BaseType& > base_;
+        tools::Iterator< const BaseType& > base_;
     };
     //@}
 
 private:
     //! @name Member data
     //@{
-    const kernel::Resolver_ABC< BaseType, Identifier >& base_;
+    const tools::Resolver_ABC< BaseType, Identifier >& base_;
     //@}
 };
 

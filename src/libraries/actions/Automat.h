@@ -29,9 +29,9 @@ public:
     //! @name Constructors/Destructor
     //@{
              Automat( const kernel::OrderParameter& parameter, kernel::Controller& controller );
-             Automat( const kernel::OrderParameter& parameter, unsigned int id, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver, kernel::Controller& controller );
-             Automat( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver, kernel::Controller& controller );
-             Automat( xml::xistream& xis, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver, kernel::Controller& controller );
+             Automat( const kernel::OrderParameter& parameter, unsigned int id, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver, kernel::Controller& controller );
+             Automat( const kernel::OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver, kernel::Controller& controller );
+             Automat( xml::xistream& xis, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver, kernel::Controller& controller );
     virtual ~Automat();
     //@}
 

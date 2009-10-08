@@ -17,7 +17,7 @@
 #include "SymbolIcons.h"
 #include "ValuedDragObject.h"
 #include "clients_kernel/IntelligencePrototype.h"
-#include "clients_kernel/Iterator.h"
+#include "tools/Iterator.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/Controllers.h"
@@ -50,7 +50,7 @@ IntelligencesPanel::IntelligencesPanel( QWidget* parent, PanelStack_ABC& panel, 
     {
         new QLabel( tr( "Level: " ), group );
         levelCombo_ = new ValuedComboBox< const HierarchyLevel_ABC* >( group );
-        Iterator< const HierarchyLevel_ABC& > it( levels.CreateIterator() );
+        tools::Iterator< const HierarchyLevel_ABC& > it( levels.CreateIterator() );
         while( it.HasMoreElements() )
         {
             const HierarchyLevel_ABC& level = it.NextElement();

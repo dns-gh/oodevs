@@ -21,7 +21,7 @@ using namespace kernel;
 // Name: DirectFire constructor
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-DirectFire::DirectFire( const ASN1T_MsgStartUnitFire& message, const Resolver_ABC< Agent_ABC >& agentResolver, const Resolver_ABC< Population_ABC >& populationResolver )
+DirectFire::DirectFire( const ASN1T_MsgStartUnitFire& message, const tools::Resolver_ABC< Agent_ABC >& agentResolver, const tools::Resolver_ABC< Population_ABC >& populationResolver )
     : Fire_ABC( agentResolver.Get( message.firer_oid ) )
     , id_( message.fire_oid )
 {

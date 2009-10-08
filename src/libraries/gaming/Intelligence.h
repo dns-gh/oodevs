@@ -14,7 +14,7 @@
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Intelligence_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
 
 namespace kernel
@@ -42,8 +42,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              Intelligence( const ASN1T_MsgIntelligenceCreation& message, kernel::Controller& controller
-                         , const kernel::Resolver_ABC< kernel::Formation_ABC >& formations
-                         , const kernel::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels
+                         , const tools::Resolver_ABC< kernel::Formation_ABC >& formations
+                         , const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels
                          , Publisher_ABC& publisher);
     virtual ~Intelligence();
     //@}
@@ -77,7 +77,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels_;
+    const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels_;
     const kernel::Formation_ABC& formation_;
     std::string symbol_;
     const kernel::HierarchyLevel_ABC* level_;

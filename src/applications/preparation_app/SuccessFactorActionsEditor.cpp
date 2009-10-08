@@ -47,7 +47,7 @@ void SuccessFactorActionsEditor::StartEdit( const SuccessFactorActions& actions 
     delete mainWidget_;
     mainWidget_ = new QVBox( viewport() );
     addChild( mainWidget_ );
-    kernel::Iterator< const SuccessFactorAction& > it( actions.CreateIterator() );
+    tools::Iterator< const SuccessFactorAction& > it( actions.CreateIterator() );
     while( it.HasMoreElements() )
         CreateItem()->StartEdit( it.NextElement() );
     if( items_.empty() )

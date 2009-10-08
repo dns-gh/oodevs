@@ -10,16 +10,20 @@
 #ifndef __AutomatType_h_
 #define __AutomatType_h_
 
-#include "Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace xml { class xistream; };
+
+namespace tools
+{
+        template< typename Container > class Iterator;
+}
 
 namespace kernel
 {
     class DecisionalModel;
     class AgentType;
     class AutomatComposition;
-    template< typename Container > class Iterator;
 
 // =============================================================================
 /** @class  AutomatType
@@ -33,8 +37,8 @@ class AutomatType
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomatType( xml::xistream& xis, const Resolver_ABC< AgentType, std::string >& agentResolver
-                                            , const Resolver_ABC< DecisionalModel, std::string >& modelResolver );
+             AutomatType( xml::xistream& xis, const  tools::Resolver_ABC< AgentType, std::string >& agentResolver
+                                            , const  tools::Resolver_ABC< DecisionalModel, std::string >& modelResolver );
     virtual ~AutomatType();
     //@}
 
@@ -45,7 +49,7 @@ public:
     const AgentType* GetTypePC() const;
     std::string GetSymbol() const;
     const DecisionalModel& GetDecisionalModel() const;
-    Iterator< const AutomatComposition& > CreateIterator() const;
+    tools::Iterator< const AutomatComposition& > CreateIterator() const;
     
     bool HasLogistics() const;
     bool IsTC2() const;
@@ -63,7 +67,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadAgent( xml::xistream& xis, const Resolver_ABC< AgentType, std::string >& agentResolver );
+    void ReadAgent( xml::xistream& xis, const  tools::Resolver_ABC< AgentType, std::string >& agentResolver );
     //@}
 
     //! @name Types

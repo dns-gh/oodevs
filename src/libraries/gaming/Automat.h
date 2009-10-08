@@ -12,7 +12,7 @@
 
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
@@ -39,7 +39,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Automat( const ASN1T_MsgAutomatCreation& message, kernel::Controller& controller, 
-                      const kernel::Resolver_ABC< kernel::AutomatType >& resolver );
+                      const tools::Resolver_ABC< kernel::AutomatType >& resolver );
     virtual ~Automat();
     //@}
 

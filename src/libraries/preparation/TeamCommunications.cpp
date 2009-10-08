@@ -40,7 +40,7 @@ TeamCommunications::~TeamCommunications()
 void TeamCommunications::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << start( "communication" );
-    Iterator< const Entity_ABC& > it = CreateSubordinateIterator();
+    tools::Iterator< const Entity_ABC& > it = CreateSubordinateIterator();
     while( it.HasMoreElements() )
     {
         xos << start( "knowledge-group" );

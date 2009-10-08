@@ -10,7 +10,7 @@
 #ifndef __Mission_h_
 #define __Mission_h_
 
-#include "Resolver.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -23,7 +23,7 @@ namespace kernel
 */
 // Created: AGE 2006-03-14
 // =============================================================================
-class Mission : public Resolver< FragOrder >
+class Mission : public  tools::Resolver< FragOrder >
 {
 
 public:

@@ -12,7 +12,7 @@
 
 #include "EntityCommunications.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -39,7 +39,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AutomatCommunications( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior );
-             AutomatCommunications( xml::xistream& xis, kernel::Controller& controller, kernel::Entity_ABC& holder, const kernel::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groups );
+             AutomatCommunications( xml::xistream& xis, kernel::Controller& controller, kernel::Entity_ABC& holder, const tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groups );
     virtual ~AutomatCommunications();
     //@}
 
@@ -53,7 +53,7 @@ private:
     //! @name Helpers
     //@{
     virtual void SerializeAttributes( xml::xostream& xos ) const;
-    static kernel::KnowledgeGroup_ABC* ReadKnowledgeGroup( xml::xistream& xis, const kernel::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groups );
+    static kernel::KnowledgeGroup_ABC* ReadKnowledgeGroup( xml::xistream& xis, const tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groups );
     //@}
 };
 

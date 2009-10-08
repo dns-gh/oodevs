@@ -34,7 +34,7 @@ HierarchyTemplate::HierarchyTemplate( AgentsModel& agents, FormationModel& forma
         name_ = element_->GetName();
     if( const TacticalHierarchies* hierarchies = base.Retrieve< TacticalHierarchies >() )
     {
-        Iterator< const Entity_ABC& > children = hierarchies->CreateSubordinateIterator();
+        tools::Iterator< const Entity_ABC& > children = hierarchies->CreateSubordinateIterator();
         while( children.HasMoreElements() )
         {
             subTemplates_.push_back( new HierarchyTemplate( agents, formations, children.NextElement(), false ) );

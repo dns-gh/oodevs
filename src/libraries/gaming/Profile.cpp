@@ -160,12 +160,12 @@ void Profile::Update( const ASN1T_Profile& profile )
 // Created: SBO 2008-07-25
 // -----------------------------------------------------------------------------
 template< typename Entity >
-void Profile::ResolveEntities( const kernel::Resolver_ABC< Entity >& resolver, const T_Ids& readIds, const T_Ids& readWriteIds )
+void Profile::ResolveEntities( const tools::Resolver_ABC< Entity >& resolver, const T_Ids& readIds, const T_Ids& readWriteIds )
 {
     std::for_each( readIds.begin(), readIds.end()
-                 , boost::bind( &Profile::Add, this, boost::bind( &kernel::Resolver_ABC< Entity >::Get, boost::ref( resolver ), _1 ), readIds, readWriteIds ) );
+                 , boost::bind( &Profile::Add, this, boost::bind( &tools::Resolver_ABC< Entity >::Get, boost::ref( resolver ), _1 ), readIds, readWriteIds ) );
     std::for_each( readWriteIds.begin(), readWriteIds.end()
-                 , boost::bind( &Profile::Add, this, boost::bind( &kernel::Resolver_ABC< Entity >::Get, boost::ref( resolver ), _1 ), readIds, readWriteIds ) );
+                 , boost::bind( &Profile::Add, this, boost::bind( &tools::Resolver_ABC< Entity >::Get, boost::ref( resolver ), _1 ), readIds, readWriteIds ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -65,7 +65,7 @@ Team::Team( xml::xistream& xis, kernel::Controller& controller, KnowledgeGroupFa
 // -----------------------------------------------------------------------------
 Team::~Team()
 {
-    Resolver< Object_ABC >::DeleteAll();
+    tools::Resolver< Object_ABC >::DeleteAll();
     Destroy();
 }
 
@@ -94,7 +94,7 @@ void Team::CreateKnowledgeGroup( xml::xistream& xis )
 Object_ABC* Team::CreateObject( const kernel::ObjectType& type, const QString& name, const kernel::Location_ABC& location )
 {
     Object_ABC* object = objectFactory_.CreateObject( type, *this, name, location );
-    Resolver< Object_ABC >::Register( object->GetId(), *object );
+    tools::Resolver< Object_ABC >::Register( object->GetId(), *object );
     return object;
 }
 
@@ -105,7 +105,7 @@ Object_ABC* Team::CreateObject( const kernel::ObjectType& type, const QString& n
 void Team::CreateObject( xml::xistream& xis )
 {
     Object_ABC* object = objectFactory_.CreateObject( xis, *this );
-    Resolver< Object_ABC >::Register( object->GetId(), *object );
+    tools::Resolver< Object_ABC >::Register( object->GetId(), *object );
 }
 
 // -----------------------------------------------------------------------------

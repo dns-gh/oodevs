@@ -20,7 +20,7 @@ using namespace kernel;
 // Name: MineAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-MineAttribute::MineAttribute( kernel::Controller& controller, const Resolver_ABC< DotationType >& resolver, bool minefield /* = false */ )
+MineAttribute::MineAttribute( kernel::Controller& controller, const tools::Resolver_ABC< DotationType >& resolver, bool minefield /* = false */ )
     : controller_( controller )
     , resolver_ ( resolver )
     , valorization_ ( 0 )

@@ -13,7 +13,7 @@
 #include "game_asn/Simulation.h"
 #include "clients_kernel/Types.h"
 #include "clients_kernel/OptionalValue.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
@@ -44,7 +44,7 @@ public:
     //! @name Constructor / Destructor
     //@{
              AgentKnowledge( const kernel::KnowledgeGroup_ABC& group, const ASN1T_MsgUnitKnowledgeCreation& message, kernel::Controller& controller, 
-                             const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, const kernel::Resolver_ABC< kernel::Team_ABC >& teamResolver );
+                             const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver );
     virtual ~AgentKnowledge();
     //@}
 
@@ -77,8 +77,8 @@ private:
 
 public:
     const kernel::CoordinateConverter_ABC& converter_;
-    const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver_;
-    const kernel::Resolver_ABC< kernel::Team_ABC >& teamResolver_;
+    const tools::Resolver_ABC< kernel::Agent_ABC >& resolver_;
+    const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver_;
     const kernel::KnowledgeGroup_ABC& group_;
 
     kernel::Agent_ABC&      realAgent_;

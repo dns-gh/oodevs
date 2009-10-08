@@ -13,7 +13,7 @@
 #include "game_asn/Simulation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 #include "Availability.h"
 #include "Dotation.h"
 
@@ -34,12 +34,12 @@ namespace kernel
 // =============================================================================
 class SupplyStates : public kernel::Extension_ABC
                    , public kernel::Updatable_ABC< ASN1T_MsgLogSupplyState >
-                   , public kernel::Resolver< Dotation >
+                   , public tools::Resolver< Dotation >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             SupplyStates( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::EquipmentType >& resolver, const kernel::Resolver_ABC< kernel::DotationType >& dotationResolver, kernel::PropertiesDictionary& dico );
+             SupplyStates( kernel::Controller& controller, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, kernel::PropertiesDictionary& dico );
     virtual ~SupplyStates();
     //@}
 
@@ -70,8 +70,8 @@ public:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Resolver_ABC< kernel::EquipmentType >& resolver_;
-    const kernel::Resolver_ABC< kernel::DotationType >& dotationResolver_;
+    const tools::Resolver_ABC< kernel::EquipmentType >& resolver_;
+    const tools::Resolver_ABC< kernel::DotationType >& dotationResolver_;
 
     bool             bChainEnabled_;
     T_Availabilities dispoTransporters_;

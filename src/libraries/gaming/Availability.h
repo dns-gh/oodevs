@@ -11,7 +11,7 @@
 #define __Availability_h_
 
 #include "game_asn/Simulation.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -33,7 +33,7 @@ public:
     //@{
              Availability();
              template< typename Message >
-                 Availability( const kernel::Resolver_ABC< kernel::EquipmentType >& resolver, const Message& message )
+                 Availability( const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const Message& message )
                 : type_     ( & resolver.Get( message.type_equipement ) )
                 , total_    ( message.nbr_total )
                 , available_( message.nbr_disponibles ) 

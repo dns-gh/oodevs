@@ -19,7 +19,7 @@ using namespace kernel;
 // Name: PopulationsPanel constructor
 // Created: SBO 2006-11-09
 // -----------------------------------------------------------------------------
-PopulationsPanel::PopulationsPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::Resolver_ABC< kernel::PopulationType >& types, gui::ItemFactory_ABC& factory )
+PopulationsPanel::PopulationsPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::PopulationType >& types, gui::ItemFactory_ABC& factory )
     : InfoPanel_ABC( parent, panel, tools::translate( "PopulationsPanel", "Populations" ), "PopulationsPanel" )
     , controllers_( controllers )
 {

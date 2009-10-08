@@ -19,7 +19,7 @@ using namespace kernel;
 // Name: FireAttribute constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-FireAttribute::FireAttribute( Controller& controller, const Resolver_ABC< FireClass >& resolver )
+FireAttribute::FireAttribute( Controller& controller, const tools::Resolver_ABC< FireClass >& resolver )
     : controller_( controller )
     , resolver_  ( resolver )
     , fireClass_ ( 0 )

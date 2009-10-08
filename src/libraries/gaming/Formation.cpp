@@ -19,7 +19,7 @@ using namespace kernel;
 // Name: Formation constructor
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-Formation::Formation( const ASN1T_MsgFormationCreation& message, Controller& controller, const Resolver_ABC< HierarchyLevel_ABC >& resolver  )
+Formation::Formation( const ASN1T_MsgFormationCreation& message, Controller& controller, const tools::Resolver_ABC< HierarchyLevel_ABC >& resolver  )
     : EntityImplementation< Formation_ABC >( controller, message.oid, message.nom )
     , level_( resolver.Get( message.niveau ) )
 {

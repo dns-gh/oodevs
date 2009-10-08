@@ -10,7 +10,7 @@
 #ifndef __ObjectAttributePrototypeContainer_h_
 #define __ObjectAttributePrototypeContainer_h_
 
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 #include "ObjectAttributePrototypeFactory_ABC.h"
 
 namespace boost
@@ -47,7 +47,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectAttributePrototypeContainer( const kernel::Resolver_ABC< kernel::ObjectType, std::string >& resolver, const ObjectAttributePrototypeFactory_ABC& factory, QWidget* parent );
+             ObjectAttributePrototypeContainer( const tools::Resolver_ABC< kernel::ObjectType, std::string >& resolver, const ObjectAttributePrototypeFactory_ABC& factory, QWidget* parent );
     virtual ~ObjectAttributePrototypeContainer();
     //@}
 
@@ -87,7 +87,7 @@ private:
     //! @name Data members
     //@{
     const ObjectAttributePrototypeFactory_ABC& factory_;
-    const kernel::Resolver_ABC< kernel::ObjectType, std::string >& resolver_;
+    const tools::Resolver_ABC< kernel::ObjectType, std::string >& resolver_;
     T_AttributesPrototypes attributes_;
     boost::shared_ptr< T_AttributeContainer > current_;
     QWidget* parent_;

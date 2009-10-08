@@ -45,7 +45,7 @@ Intelligence::Intelligence( Controller& controller, IdManager& idManager, const 
 // Name: Intelligence constructor
 // Created: SBO 2007-10-15
 // -----------------------------------------------------------------------------
-Intelligence::Intelligence( kernel::Controller& controller, IdManager& idManager, xml::xistream& xis, const Resolver_ABC< HierarchyLevel_ABC, QString >& levels )
+Intelligence::Intelligence( kernel::Controller& controller, IdManager& idManager, xml::xistream& xis, const tools::Resolver_ABC< HierarchyLevel_ABC, QString >& levels )
     : EntityImplementation< Intelligence_ABC >( controller, idManager.GetNextId(), attribute< std::string >( xis, "name" ).c_str() )
     , controller_( controller )
     , symbol_    ( attribute< std::string >( xis, "nature" ) )

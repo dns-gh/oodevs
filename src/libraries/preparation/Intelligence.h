@@ -15,7 +15,7 @@
 #include "clients_kernel/Intelligence_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace xml
 {
@@ -45,7 +45,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Intelligence( kernel::Controller& controller, IdManager& idManager, const std::string& symbol, const kernel::HierarchyLevel_ABC& level, bool mounted, const kernel::Karma& karma );
-             Intelligence( kernel::Controller& controller, IdManager& idManager, xml::xistream& xis, const kernel::Resolver_ABC< kernel::HierarchyLevel_ABC, QString >& levels );
+             Intelligence( kernel::Controller& controller, IdManager& idManager, xml::xistream& xis, const tools::Resolver_ABC< kernel::HierarchyLevel_ABC, QString >& levels );
     virtual ~Intelligence();
     //@}
 

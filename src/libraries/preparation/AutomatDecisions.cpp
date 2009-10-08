@@ -117,7 +117,7 @@ void AutomatDecisions::Disengage()
 // -----------------------------------------------------------------------------
 void AutomatDecisions::ForwardEngageStatus()
 {
-    Iterator< const Entity_ABC& > children = agent_.Get< TacticalHierarchies >().CreateSubordinateIterator();
+    tools::Iterator< const Entity_ABC& > children = agent_.Get< TacticalHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
         if( const AutomatDecisions* cd = children.NextElement().Retrieve< AutomatDecisions >() )
         {

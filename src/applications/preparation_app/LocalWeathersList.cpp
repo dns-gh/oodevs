@@ -112,7 +112,7 @@ void LocalWeathersList::CommitTo( WeatherModel& model )
 void LocalWeathersList::Update( const WeatherModel& model )
 {
     Clear();
-    kernel::Iterator< const LocalWeather& > it( model.CreateIterator() );
+    tools::Iterator< const LocalWeather& > it( model.CreateIterator() );
     while( it.HasMoreElements() )
     {
         LocalWeather* weather = new LocalWeather( it.NextElement() );

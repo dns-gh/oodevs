@@ -18,7 +18,7 @@ using namespace kernel;
 // Name: Borrowings constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Borrowings::Borrowings( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, const Resolver_ABC< EquipmentType >& equipmentResolver )
+Borrowings::Borrowings( Controller& controller, const tools::Resolver_ABC< Agent_ABC >& resolver, const tools::Resolver_ABC< EquipmentType >& equipmentResolver )
     : controller_( controller )
     , resolver_( resolver )
     , equipmentResolver_( equipmentResolver )

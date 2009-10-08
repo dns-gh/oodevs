@@ -23,7 +23,7 @@ using namespace kernel;
 // Name: Contaminations constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Contaminations::Contaminations( Controller& controller, const Resolver_ABC< NBCAgent >& resolver, PropertiesDictionary& dico )
+Contaminations::Contaminations( Controller& controller, const tools::Resolver_ABC< NBCAgent >& resolver, PropertiesDictionary& dico )
     : controller_( controller )
     , resolver_( resolver )
     , bNbcProtectionSuitWorn_( false )

@@ -44,8 +44,8 @@ TeamsModel::~TeamsModel()
 // -----------------------------------------------------------------------------
 void TeamsModel::Purge()
 {
-    Resolver< Formation_ABC >::DeleteAll();
-    Resolver< Team_ABC >::DeleteAll();
+    tools::Resolver< Formation_ABC >::DeleteAll();
+    tools::Resolver< Team_ABC >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -54,10 +54,10 @@ void TeamsModel::Purge()
 // -----------------------------------------------------------------------------
 void TeamsModel::CreateTeam( const ASN1T_MsgTeamCreation& asnMsg )
 {
-    if( ! Resolver< Team_ABC >::Find( asnMsg.oid ) )
+    if( ! tools::Resolver< Team_ABC >::Find( asnMsg.oid ) )
     {
         Team_ABC* team = factory_.CreateTeam( asnMsg );
-        Resolver< Team_ABC >::Register( asnMsg.oid, *team );
+        tools::Resolver< Team_ABC >::Register( asnMsg.oid, *team );
     }
 }
 
@@ -67,10 +67,10 @@ void TeamsModel::CreateTeam( const ASN1T_MsgTeamCreation& asnMsg )
 // -----------------------------------------------------------------------------
 void TeamsModel::CreateFormation( const ASN1T_MsgFormationCreation& asnMsg )
 {
-    if( ! Resolver< Formation_ABC >::Find( asnMsg.oid ) )
+    if( ! tools::Resolver< Formation_ABC >::Find( asnMsg.oid ) )
     {
         Formation_ABC* formation = factory_.CreateFormation( asnMsg );
-        Resolver< Formation_ABC >::Register( asnMsg.oid, *formation );
+        tools::Resolver< Formation_ABC >::Register( asnMsg.oid, *formation );
     }
 }
  
@@ -80,7 +80,7 @@ void TeamsModel::CreateFormation( const ASN1T_MsgFormationCreation& asnMsg )
 // -----------------------------------------------------------------------------
 Team_ABC& TeamsModel::GetTeam( unsigned long id )
 {
-    return Resolver< Team_ABC >::Get( id );
+    return tools::Resolver< Team_ABC >::Get( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,7 +89,7 @@ Team_ABC& TeamsModel::GetTeam( unsigned long id )
 // -----------------------------------------------------------------------------
 Team_ABC* TeamsModel::FindTeam( const QString& team )
 {
-    for( Resolver< Team_ABC >::CIT_Elements it = Resolver< Team_ABC >::elements_.begin(); it != Resolver< Team_ABC >::elements_.end(); ++it )
+    for( tools::Resolver< Team_ABC >::CIT_Elements it = tools::Resolver< Team_ABC >::elements_.begin(); it != tools::Resolver< Team_ABC >::elements_.end(); ++it )
         if( it->second->GetName() == team )
             return it->second;
     return 0;

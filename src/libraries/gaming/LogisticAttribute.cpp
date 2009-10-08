@@ -19,7 +19,7 @@ using namespace kernel;
 // Name: LogisticAttribute constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-LogisticAttribute::LogisticAttribute( Controller& controller, const Resolver_ABC< Automat_ABC >& resolver )
+LogisticAttribute::LogisticAttribute( Controller& controller, const tools::Resolver_ABC< Automat_ABC >& resolver )
     : controller_( controller )
     , resolver_( resolver )
     , tc2_( 0 )

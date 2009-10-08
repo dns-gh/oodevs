@@ -13,7 +13,7 @@
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 
 namespace kernel
@@ -49,7 +49,7 @@ public:
              Object( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
                      const kernel::ObjectType& type, const QString& name, IdManager& idManager );
              Object( xml::xistream& xis, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, 
-                     const kernel::Resolver_ABC< kernel::ObjectType, std::string >& types, IdManager& idManager );
+                     const tools::Resolver_ABC< kernel::ObjectType, std::string >& types, IdManager& idManager );
     virtual ~Object();
     //@}
 

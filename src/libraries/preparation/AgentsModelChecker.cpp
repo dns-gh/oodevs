@@ -51,12 +51,12 @@ bool AgentsModelChecker::Check( const AgentsModel& model, ModelChecker_ABC& chec
 // -----------------------------------------------------------------------------
 bool AgentsModelChecker::CheckCommandPosts( const AgentsModel& model, ModelChecker_ABC& checker ) const
 {
-    Iterator< const Automat_ABC& > it = static_cast< const Resolver< Automat_ABC >& >( model ).CreateIterator();
+    tools::Iterator< const Automat_ABC& > it = static_cast< const tools::Resolver< Automat_ABC >& >( model ).CreateIterator();
     while( it.HasMoreElements() )
     {
         const Automat_ABC& automat = it.NextElement();
         const kernel::TacticalHierarchies& hierarchies = automat.Get< kernel::TacticalHierarchies >();
-        Iterator< const Entity_ABC& > itChild = hierarchies.CreateSubordinateIterator();
+        tools::Iterator< const Entity_ABC& > itChild = hierarchies.CreateSubordinateIterator();
         unsigned int commandPostCount = 0;
         while( itChild.HasMoreElements() )
         {

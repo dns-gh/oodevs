@@ -28,7 +28,7 @@ using namespace kernel;
 // Name: PopulationKnowledge::PopulationKnowledge
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-PopulationKnowledge::PopulationKnowledge( const KnowledgeGroup_ABC& group, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< Population_ABC >& resolver, const ASN1T_MsgPopulationKnowledgeCreation& message )
+PopulationKnowledge::PopulationKnowledge( const KnowledgeGroup_ABC& group, Controller& controller, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< Population_ABC >& resolver, const ASN1T_MsgPopulationKnowledgeCreation& message )
     : EntityImplementation< PopulationKnowledge_ABC >( controller, message.oid_connaissance, "" )
     , group_     ( group )
     , controller_( controller )
@@ -45,8 +45,8 @@ PopulationKnowledge::PopulationKnowledge( const KnowledgeGroup_ABC& group, Contr
 // -----------------------------------------------------------------------------
 PopulationKnowledge::~PopulationKnowledge()
 {
-    Resolver< PopulationFlowKnowledge >::DeleteAll();
-    Resolver< PopulationConcentrationKnowledge >::DeleteAll();
+    tools::Resolver< PopulationFlowKnowledge >::DeleteAll();
+    tools::Resolver< PopulationConcentrationKnowledge >::DeleteAll();
     Destroy();
 }
 
@@ -82,10 +82,10 @@ void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationKnowledgeUpdate& me
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationConcentrationKnowledgeCreation& message )
 {
-    if( ! Resolver< PopulationConcentrationKnowledge >::Find( message.oid_connaissance_concentration ) )
+    if( ! tools::Resolver< PopulationConcentrationKnowledge >::Find( message.oid_connaissance_concentration ) )
     {
         PopulationConcentrationKnowledge* pKnowledge = new PopulationConcentrationKnowledge( controller_, converter_, popu_, message );
-        Resolver< PopulationConcentrationKnowledge >::Register( message.oid_connaissance_concentration, *pKnowledge );
+        tools::Resolver< PopulationConcentrationKnowledge >::Register( message.oid_connaissance_concentration, *pKnowledge );
         Touch();
     }
 }
@@ -96,7 +96,7 @@ void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationConcentrationKnowle
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate& message )
 {
-    Resolver< PopulationConcentrationKnowledge >::Get( message.oid_connaissance_concentration )
+    tools::Resolver< PopulationConcentrationKnowledge >::Get( message.oid_connaissance_concentration )
         .DoUpdate( message );
 }
     
@@ -106,8 +106,8 @@ void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationConcentrationKnowle
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationConcentrationKnowledgeDestruction& message )
 {
-    delete Resolver< PopulationConcentrationKnowledge >::Find( message.oid_connaissance_concentration );
-    Resolver< PopulationConcentrationKnowledge >::Remove( message.oid_connaissance_concentration );
+    delete tools::Resolver< PopulationConcentrationKnowledge >::Find( message.oid_connaissance_concentration );
+    tools::Resolver< PopulationConcentrationKnowledge >::Remove( message.oid_connaissance_concentration );
     Touch();
 }
 
@@ -117,10 +117,10 @@ void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationConcentrationKnowle
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationFlowKnowledgeCreation& message )
 {
-    if( ! Resolver< PopulationFlowKnowledge >::Find( message.oid_connaissance_flux ) )
+    if( ! tools::Resolver< PopulationFlowKnowledge >::Find( message.oid_connaissance_flux ) )
     {
         PopulationFlowKnowledge* pKnowledge = new PopulationFlowKnowledge( controller_, converter_, popu_, message );
-        Resolver< PopulationFlowKnowledge >::Register( message.oid_connaissance_flux, *pKnowledge );
+        tools::Resolver< PopulationFlowKnowledge >::Register( message.oid_connaissance_flux, *pKnowledge );
         Touch();
     };
 }
@@ -131,7 +131,7 @@ void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationFlowKnowledgeCreati
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationFlowKnowledgeUpdate& message )
 {
-    Resolver< PopulationFlowKnowledge >::Get( message.oid_connaissance_flux )
+    tools::Resolver< PopulationFlowKnowledge >::Get( message.oid_connaissance_flux )
         .DoUpdate( message );
 }
     
@@ -141,8 +141,8 @@ void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationFlowKnowledgeUpdate
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationFlowKnowledgeDestruction& message )
 {
-    delete Resolver< PopulationFlowKnowledge >::Find( message.oid_connaissance_flux );
-    Resolver< PopulationFlowKnowledge >::Remove( message.oid_connaissance_flux );
+    delete tools::Resolver< PopulationFlowKnowledge >::Find( message.oid_connaissance_flux );
+    tools::Resolver< PopulationFlowKnowledge >::Remove( message.oid_connaissance_flux );
     Touch();
 }
 
@@ -213,12 +213,12 @@ void PopulationKnowledge::Draw( const geometry::Point2f& where, const kernel::Vi
     if( viewport.IsVisible( positions.GetBoundingBox() ) )
     {
         {
-            Iterator< const PopulationFlowKnowledge& > it = Resolver< PopulationFlowKnowledge >::CreateIterator();
+            tools::Iterator< const PopulationFlowKnowledge& > it = tools::Resolver< PopulationFlowKnowledge >::CreateIterator();
             while( it.HasMoreElements() )
                 it.NextElement().Draw( where, viewport, tools );
         }
         {
-            Iterator< const PopulationConcentrationKnowledge& > it = Resolver< PopulationConcentrationKnowledge >::CreateIterator();
+            tools::Iterator< const PopulationConcentrationKnowledge& > it = tools::Resolver< PopulationConcentrationKnowledge >::CreateIterator();
             while( it.HasMoreElements() )
                 it.NextElement().Draw( where, viewport, tools );
         }

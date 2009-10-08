@@ -10,7 +10,7 @@
 #ifndef __DotationsItem_h_
 #define __DotationsItem_h_
 
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -34,13 +34,13 @@ class DotationsItem
 public:
     //! @name Constructors/Destructor
     //@{
-             DotationsItem( kernel::Controller& controller, kernel::Entity_ABC& owner, kernel::PropertiesDictionary& dico, const QString& propertyName, kernel::Resolver< Dotation >& dotations );
+             DotationsItem( kernel::Controller& controller, kernel::Entity_ABC& owner, kernel::PropertiesDictionary& dico, const QString& propertyName, tools::Resolver< Dotation >& dotations );
     virtual ~DotationsItem();
     //@}
 
     //! @name Operations
     //@{
-    kernel::Iterator< const Dotation& > CreateIterator() const;
+    tools::Iterator< const Dotation& > CreateIterator() const;
     void AddDotation( const kernel::DotationType& dotation, unsigned long quantity );
     void AddDotation( const Dotation& dotation );
     void Clear();
@@ -61,7 +61,7 @@ private:
     kernel::Entity_ABC& owner_;
     kernel::PropertiesDictionary& dico_;
     QString propertyName_;
-    kernel::Resolver< Dotation >& dotations_;
+    tools::Resolver< Dotation >& dotations_;
     //@}
 };
 

@@ -11,7 +11,7 @@
 #define __Population_ABC_h_
 
 #include "Entity_ABC.h"
-#include "Resolver.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -27,8 +27,8 @@ namespace kernel
 // Created: AGE 2006-08-07
 // =============================================================================
 class Population_ABC : public Entity_ABC
-                     , public Resolver< PopulationFlow_ABC >
-                     , public Resolver< PopulationConcentration_ABC >
+                     , public  tools::Resolver< PopulationFlow_ABC >
+                     , public  tools::Resolver< PopulationConcentration_ABC >
 {
 public:
     //! @name Static
@@ -54,16 +54,16 @@ public:
     //! @name Helpers
     //@{
     const PopulationFlow_ABC* FindFlow( unsigned long id ) const {
-        return Resolver< PopulationFlow_ABC >::Find( id );
+        return  tools::Resolver< PopulationFlow_ABC >::Find( id );
     }
     const PopulationFlow_ABC& GetFlow( unsigned long id ) const {
-        return Resolver< PopulationFlow_ABC >::Get( id );
+        return  tools::Resolver< PopulationFlow_ABC >::Get( id );
     }
     const PopulationConcentration_ABC* FindConcentration( unsigned long id ) const {
-        return Resolver< PopulationConcentration_ABC >::Find( id );
+        return  tools::Resolver< PopulationConcentration_ABC >::Find( id );
     }
     const PopulationConcentration_ABC& GetConcentration( unsigned long id ) const {
-        return Resolver< PopulationConcentration_ABC >::Get( id );
+        return  tools::Resolver< PopulationConcentration_ABC >::Get( id );
     }
     //@}
 

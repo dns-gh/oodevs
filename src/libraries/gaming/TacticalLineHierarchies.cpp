@@ -21,8 +21,8 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 TacticalLineHierarchies::TacticalLineHierarchies( Controller& controller, Entity_ABC& holder
                                                 , const ASN1T_TacticalLinesDiffusion& asnMsg
-                                                , const Resolver_ABC< Automat_ABC >& automats
-                                                , const Resolver_ABC< Formation_ABC >& formations )
+                                                , const tools::Resolver_ABC< Automat_ABC >& automats
+                                                , const tools::Resolver_ABC< Formation_ABC >& formations )
     : SimpleHierarchies< TacticalHierarchies >( holder, 0 )
     , controller_( controller )
     , automats_  ( automats )
@@ -36,8 +36,8 @@ TacticalLineHierarchies::TacticalLineHierarchies( Controller& controller, Entity
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
 TacticalLineHierarchies::TacticalLineHierarchies( Controller& controller, Entity_ABC& holder, const Entity_ABC& superior
-                                                , const Resolver_ABC< Automat_ABC >& automats
-                                                , const Resolver_ABC< Formation_ABC >& formations )
+                                                , const tools::Resolver_ABC< Automat_ABC >& automats
+                                                , const tools::Resolver_ABC< Formation_ABC >& formations )
     : SimpleHierarchies< TacticalHierarchies >( holder, 0 )
     , controller_( controller )
     , automats_  ( automats )

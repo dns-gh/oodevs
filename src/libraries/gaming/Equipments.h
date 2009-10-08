@@ -13,7 +13,7 @@
 #include "game_asn/Simulation.h"
 #include "HierarchicExtension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -34,14 +34,14 @@ class Equipment;
 // =============================================================================
 class Equipments : public HierarchicExtension_ABC
                  , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
-                 , public kernel::Resolver< Equipment >
+                 , public tools::Resolver< Equipment >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Equipments( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::EquipmentType >& resolver, kernel::PropertiesDictionary& dico
-                       , const kernel::Resolver_ABC< kernel::Automat_ABC >& automatResolver, const kernel::Resolver_ABC< kernel::Formation_ABC >& formationResolver, const kernel::Resolver_ABC< kernel::Team_ABC >& teamResolver );
+             Equipments( kernel::Controller& controller, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, kernel::PropertiesDictionary& dico
+                       , const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver, const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver, const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver );
     virtual ~Equipments();
     //@}
 
@@ -64,7 +64,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Resolver_ABC< kernel::EquipmentType >& resolver_;
+    const tools::Resolver_ABC< kernel::EquipmentType >& resolver_;
     kernel::PropertiesDictionary& dico_;
     //@}
 };

@@ -16,7 +16,7 @@
 #include "Tools.h"
 #include "AgentsModel.h"
 #include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/Iterator.h"
+#include "tools/Iterator.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include <boost/foreach.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -147,7 +147,7 @@ bool ProfilesModel::CheckValidity( const Model& model, ModelChecker_ABC& checker
     bool unWriteableUnits = false;
 
     // check that every unit is at least readable
-    kernel::Iterator< const kernel::Agent_ABC& > agents = static_cast< kernel::Resolver< kernel::Agent_ABC >& >( model.agents_ ).CreateIterator();
+    tools::Iterator< const kernel::Agent_ABC& > agents = static_cast< tools::Resolver< kernel::Agent_ABC >& >( model.agents_ ).CreateIterator();
     while( agents.HasMoreElements() )
     {
         const kernel::Entity_ABC& entity = agents.NextElement();

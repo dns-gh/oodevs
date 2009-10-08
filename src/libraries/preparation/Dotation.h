@@ -10,7 +10,7 @@
 #ifndef __Dotation_h_
 #define __Dotation_h_
 
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -36,7 +36,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Dotation( const kernel::DotationType& type, unsigned int quantity );
-             Dotation( xml::xistream& xis, const kernel::Resolver_ABC< kernel::DotationType, std::string >& resolver );
+             Dotation( xml::xistream& xis, const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver );
     virtual ~Dotation();
     //@}
 

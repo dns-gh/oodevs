@@ -13,7 +13,7 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 #include "game_asn/Simulation.h"
 
 namespace kernel
@@ -38,7 +38,7 @@ class MissionParameters : public kernel::Extension_ABC
                         , public kernel::Updatable_ABC< ASN1T_MsgUnitOrder >
                         , public kernel::Updatable_ABC< ASN1T_MsgAutomatOrder >
                         , public kernel::Updatable_ABC< ASN1T_MsgPopulationOrder >
-                        , public kernel::Resolver< actions::Action_ABC >
+                        , public tools::Resolver< actions::Action_ABC >
                         , public kernel::Drawable_ABC
 {
 

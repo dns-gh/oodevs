@@ -12,7 +12,7 @@
 
 #include "clients_gui/ListView.h"
 #include "clients_kernel/ElementObserver_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -42,7 +42,7 @@ class PopulationTypesListView : public gui::ListView< PopulationTypesListView >
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationTypesListView( QWidget* parent, kernel::Controllers& controllers, const kernel::Resolver_ABC< kernel::PopulationType >& types, gui::ItemFactory_ABC& factory );
+             PopulationTypesListView( QWidget* parent, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::PopulationType >& types, gui::ItemFactory_ABC& factory );
     virtual ~PopulationTypesListView();
     //@}
 
@@ -69,7 +69,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const kernel::Resolver_ABC< kernel::PopulationType >& types_;
+    const tools::Resolver_ABC< kernel::PopulationType >& types_;
     //@}
 };
 

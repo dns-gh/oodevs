@@ -11,7 +11,7 @@
 #define __SuccessFactorConditions_h_
 
 #include "clients_kernel/ElementObserver_ABC.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -34,7 +34,7 @@ class SuccessFactorCondition;
 */
 // Created: SBO 2009-06-15
 // =============================================================================
-class SuccessFactorConditions : public kernel::Resolver< SuccessFactorCondition >
+class SuccessFactorConditions : public tools::Resolver< SuccessFactorCondition >
                               , public kernel::Observer_ABC
                               , public kernel::ElementObserver_ABC< Score_ABC >
 {

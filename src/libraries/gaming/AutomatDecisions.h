@@ -51,8 +51,8 @@ public:
     virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
 
     virtual bool CanBeOrdered() const;
-    virtual kernel::Iterator< const kernel::Mission& > GetMissions() const;
-    virtual kernel::Iterator< const kernel::FragOrder& > GetFragOrders() const;
+    virtual tools::Iterator< const kernel::Mission& > GetMissions() const;
+    virtual tools::Iterator< const kernel::FragOrder& > GetFragOrders() const;
     virtual const kernel::Mission* GetCurrentMission() const;
     virtual const kernel::Entity_ABC& GetAgent() const;
 
