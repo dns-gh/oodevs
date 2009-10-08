@@ -37,7 +37,7 @@ include "bit.lua"
                 self.bTir = true
                 DEC_Trace( ">> Ouverture du feu" )
                 F_Pion_SeteEtatFeu( myself, eEtatFeu_Executer )
-                self.actionTir = DEC_StartTirDirect( self._namedParams.repEni, self._namedParams.pourcentageComposantes, eTirDirectNormal, 0 )
+                self.actionTir = DEC_StartTirDirect( self._namedParams.repEni, self._namedParams.pourcentageComposantes, eTirDirectNormal, -1 )
                 actionCallbacks[ self.actionTir ] = function( arg ) self.eTir = arg end
 
             end

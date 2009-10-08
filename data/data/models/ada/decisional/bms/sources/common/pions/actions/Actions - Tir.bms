@@ -29,7 +29,7 @@ node "ACT_Tir_DirectSur"
 ]]if( ModuleBegins() ) then
             do
                 DEC_Trace( ">> start fire" )
-                self.actionTir = DEC_StartTirDirect( self._namedParams.repEni, self._namedParams.pourcentageComposantes, eTirDirectNormal, 0 )
+                self.actionTir = DEC_StartTirDirect( self._namedParams.repEni, self._namedParams.pourcentageComposantes, eTirDirectNormal, -1 )
                 actionCallbacks[ self.actionTir ] = function( arg ) self.eTir = arg end
 
             end
