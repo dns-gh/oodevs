@@ -14,7 +14,7 @@
 #include "MessageHandler_ABC.h"
 #include "CompositeFactory.h"
 #include "EntityPublisher.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -110,9 +110,9 @@ public:
     //! @name Accessors
     //@{
     void Accept( ModelVisitor_ABC& visitor ) const;
-    const kernel::Resolver_ABC< kernel::AgentType >& GetAgentTypes() const;
-    const kernel::Resolver_ABC< kernel::MissionType >& GetMissionTypes() const;
-    const kernel::Resolver_ABC< kernel::FragOrderType >& GetFragOrderTypes() const;
+    const tools::Resolver_ABC< kernel::AgentType >& GetAgentTypes() const;
+    const tools::Resolver_ABC< kernel::MissionType >& GetMissionTypes() const;
+    const tools::Resolver_ABC< kernel::FragOrderType >& GetFragOrderTypes() const;
     //@}
 
 private:
@@ -125,13 +125,13 @@ private:
     //! @name Helpers
     //@{
     template< typename T, typename P >
-    void CreateUpdate( kernel::Resolver< T >& resolver, const P& parameter );
+    void CreateUpdate( tools::Resolver< T >& resolver, const P& parameter );
     template< typename T, typename P >
-    void CreateUpdate( kernel::Resolver< T >& resolver, unsigned id, const P& parameter );
+    void CreateUpdate( tools::Resolver< T >& resolver, unsigned id, const P& parameter );
     template< typename T >
     void UpdateAnyAgent( unsigned id, const T& message );
     template< typename T >
-    void Destroy( kernel::Resolver< T >& resolver, unsigned id );
+    void Destroy( tools::Resolver< T >& resolver, unsigned id );
     //@}
 
 private:
@@ -147,23 +147,23 @@ private:
 public:
     //! @name Dynamic model
     //@{
-    kernel::Resolver< Side >                   sides_;
-    kernel::Resolver< KnowledgeGroup >         knowledgeGroups_;
-    kernel::Resolver< Formation >              formations_;
-    kernel::Resolver< Automat >                automats_;
-    kernel::Resolver< Agent >                  agents_;
-    kernel::Resolver< Object >                 objects_;
-    kernel::Resolver< Population >             populations_;
-    kernel::Resolver< AgentKnowledge >         agentKnowledges_;
-    kernel::Resolver< ObjectKnowledge >        objectKnowledges_;
-    kernel::Resolver< PopulationKnowledge >    populationKnowledges_;
-    kernel::Resolver< LogConsignMaintenance >  logConsignsMaintenance_;
-    kernel::Resolver< LogConsignSupply >       logConsignsSupply_;
-    kernel::Resolver< LogConsignMedical >      logConsignsMedical_;
-    kernel::Resolver< Fire >                   fires_;
-    kernel::Resolver< PopulationFire >         populationFires_;
-    kernel::Resolver< FireEffect >             fireEffects_;
-    kernel::Resolver< Report >                 reports_;
+    tools::Resolver< Side >                   sides_;
+    tools::Resolver< KnowledgeGroup >         knowledgeGroups_;
+    tools::Resolver< Formation >              formations_;
+    tools::Resolver< Automat >                automats_;
+    tools::Resolver< Agent >                  agents_;
+    tools::Resolver< Object >                 objects_;
+    tools::Resolver< Population >             populations_;
+    tools::Resolver< AgentKnowledge >         agentKnowledges_;
+    tools::Resolver< ObjectKnowledge >        objectKnowledges_;
+    tools::Resolver< PopulationKnowledge >    populationKnowledges_;
+    tools::Resolver< LogConsignMaintenance >  logConsignsMaintenance_;
+    tools::Resolver< LogConsignSupply >       logConsignsSupply_;
+    tools::Resolver< LogConsignMedical >      logConsignsMedical_;
+    tools::Resolver< Fire >                   fires_;
+    tools::Resolver< PopulationFire >         populationFires_;
+    tools::Resolver< FireEffect >             fireEffects_;
+    tools::Resolver< Report >                 reports_;
     //@}
 };
 

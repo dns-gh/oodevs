@@ -11,7 +11,7 @@
 #define __OrderReport_h_
 
 #include "game_asn/Simulation.h"
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -44,8 +44,8 @@ class OrderReport
 public:
     //! @name Constructors/Destructor
     //@{
-             OrderReport( const dispatcher::Agent& agent, const kernel::Resolver_ABC< kernel::MissionType >& missions, const ASN1T_MsgUnitOrder& asn );
-             OrderReport( const dispatcher::Automat& automat, const kernel::Resolver_ABC< kernel::MissionType >& missions, const ASN1T_MsgAutomatOrder& asn );
+             OrderReport( const dispatcher::Agent& agent, const tools::Resolver_ABC< kernel::MissionType >& missions, const ASN1T_MsgUnitOrder& asn );
+             OrderReport( const dispatcher::Automat& automat, const tools::Resolver_ABC< kernel::MissionType >& missions, const ASN1T_MsgAutomatOrder& asn );
     virtual ~OrderReport();
     //@}
 

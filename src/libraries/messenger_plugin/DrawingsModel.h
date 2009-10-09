@@ -10,7 +10,7 @@
 #ifndef __DrawingsModel_h_
 #define __DrawingsModel_h_
 
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 #include "game_asn/Messenger.h"
 #include "dispatcher/Registrable_ABC.h"
 #include "dispatcher/Position.h"
@@ -45,7 +45,7 @@ namespace messenger
 */
 // Created: SBO 2008-06-06
 // =============================================================================
-class DrawingsModel : public kernel::Resolver< Drawing >
+class DrawingsModel : public tools::Resolver< Drawing >
                     , public dispatcher::Registrable_ABC
 {
 

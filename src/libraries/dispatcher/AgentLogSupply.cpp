@@ -92,7 +92,7 @@ void AgentLogSupply::Send( ClientPublisher_ABC& publisher ) const
         asn().stocks.n = stocks_.Count();
         asn().stocks.elem = asn().stocks.n > 0 ? new ASN1T_DotationStock[ asn().stocks.n ] : 0;
         unsigned int i = 0;
-        for( kernel::Iterator< const Dotation& > it = stocks_.CreateIterator(); it.HasMoreElements(); )
+        for( tools::Iterator< const Dotation& > it = stocks_.CreateIterator(); it.HasMoreElements(); )
             it.NextElement().Send( asn().stocks.elem[i++] );
     }
     asn.Send( publisher );

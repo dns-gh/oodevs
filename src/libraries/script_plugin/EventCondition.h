@@ -11,7 +11,7 @@
 #define __EventCondition_h_
 
 #include "BaseCondition.h"
-#include "clients_kernel/Observer_ABC.h"
+#include "tools/Observer_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 
 namespace kernel
@@ -31,7 +31,7 @@ namespace script
 // Created: AGE 2008-06-17
 // =============================================================================
 class EventCondition : public BaseCondition
-                     , public kernel::Observer_ABC
+                     , public tools::Observer_ABC
 {
 
 public:

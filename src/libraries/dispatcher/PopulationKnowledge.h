@@ -11,7 +11,7 @@
 #define __PopulationKnowledge_h_
 
 #include "game_asn/Simulation.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 #include "clients_kernel/PopulationKnowledge_ABC.h"
 #include "SimpleEntity.h"
 
@@ -83,8 +83,8 @@ public:
     const kernel::Population_ABC&     population_;
     const kernel::Team_ABC&           team_;
     unsigned int                      nDominationState_;
-    kernel::Resolver< PopulationConcentrationKnowledge > concentrations_;
-    kernel::Resolver< PopulationFlowKnowledge          > flows_;
+    tools::Resolver< PopulationConcentrationKnowledge > concentrations_;
+    tools::Resolver< PopulationFlowKnowledge          > flows_;
     //@}
 };
 

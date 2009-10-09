@@ -43,7 +43,7 @@ PlatformAdapter::~PlatformAdapter()
 // -----------------------------------------------------------------------------
 const ComponentType& PlatformAdapter::GetType() const
 {
-    Iterator< const ComponentType& > it = agent_.type_.CreateIterator();
+    tools::Iterator< const ComponentType& > it = agent_.type_.CreateIterator();
     if( it.HasMoreElements() )
         return it.NextElement();
     throw std::runtime_error( __FUNCTION__ );

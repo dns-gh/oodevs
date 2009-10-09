@@ -17,7 +17,7 @@ using namespace plugins::bml;
 // Name: ReportFactory constructor
 // Created: SBO 2008-05-23
 // -----------------------------------------------------------------------------
-ReportFactory::ReportFactory( const kernel::Resolver_ABC< kernel::MissionType >& missions )
+ReportFactory::ReportFactory( const tools::Resolver_ABC< kernel::MissionType >& missions )
     : missions_( missions )
 {
     // NOTHING

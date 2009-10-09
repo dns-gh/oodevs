@@ -16,7 +16,7 @@ namespace xml { class xistream; };
 
 namespace tools
 {
-        template< typename Container > class Iterator;
+        template< typename Container > class tools::Iterator;
 }
 
 namespace kernel

@@ -93,7 +93,7 @@ actions::Action_ABC* ActionFactory::CreateAction( xml::xistream& xis ) const
     else 
         throw std::runtime_error( __FUNCTION__ );
 
-    Iterator< const OrderParameter& > it = result->GetType().CreateIterator();
+    tools::Iterator< const OrderParameter& > it = result->GetType().CreateIterator();
     xis >> list( "parameter", *this, &ActionFactory::ReadParameter, *result, it, target );
     if( it.HasMoreElements() )
         throw std::runtime_error( __FUNCTION__ );
@@ -104,7 +104,7 @@ actions::Action_ABC* ActionFactory::CreateAction( xml::xistream& xis ) const
 // Name: ActionFactory::ReadParameter
 // Created: AGE 2008-07-16
 // -----------------------------------------------------------------------------
-void ActionFactory::ReadParameter( xml::xistream& xis, actions::Action_ABC& action, kernel::Iterator< const kernel::OrderParameter& >& it, const kernel::Entity_ABC& entity ) const
+void ActionFactory::ReadParameter( xml::xistream& xis, actions::Action_ABC& action, tools::Iterator< const kernel::OrderParameter& >& it, const kernel::Entity_ABC& entity ) const
 {
     if( !it.HasMoreElements() )
         throw std::exception( __FUNCTION__ );

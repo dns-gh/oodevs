@@ -150,7 +150,7 @@ void Profile::ReadPopulationRights( xml::xistream& xis, T_PopulationSet& contain
 namespace
 {
     template< typename B, typename C >
-    void SetRights( const ASN1T_ListOID& asn, std::set< const B* >& list, const kernel::Resolver_ABC< C >& model )
+    void SetRights( const ASN1T_ListOID& asn, std::set< const B* >& list, const tools::Resolver_ABC< C >& model )
     {
         list.clear();
         for( unsigned int i = 0; i < asn.n; ++i )

@@ -11,7 +11,7 @@
 #define __IntelligencesModel_h_
 
 #include "game_asn/Messenger.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace dispatcher
 {
@@ -43,7 +43,7 @@ namespace messenger
 */
 // Created: RDS 2008-04-07
 // =============================================================================
-class IntelligencesModel : public kernel::Resolver< Intelligence >
+class IntelligencesModel : public tools::Resolver< Intelligence >
 {
 
 public:

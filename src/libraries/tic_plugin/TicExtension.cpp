@@ -107,7 +107,7 @@ void TicExtension::DoUpdate( const ASN1T_MsgUnitEnvironmentType& message )
 void TicExtension::CreatePlatforms( float timeStep )
 {
     const AgentType& type = holder_.type_;
-    Iterator< const ComponentType& > it = type.CreateIterator();
+    tools::Iterator< const ComponentType& > it = type.CreateIterator();
     while( it.HasMoreElements() )
     {
         const ComponentType& component = it.NextElement();

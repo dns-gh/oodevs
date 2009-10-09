@@ -209,7 +209,7 @@ namespace
 {
     const kernel::OrderParameter* GetParameterByName( const kernel::OrderType& type, const std::string& name )
     {
-        kernel::Iterator< const kernel::OrderParameter& > it( type.CreateIterator() );
+        tools::Iterator< const kernel::OrderParameter& > it( type.CreateIterator() );
         while( it.HasMoreElements() )
         {
             const kernel::OrderParameter& parameter = it.NextElement();

@@ -10,7 +10,7 @@
 #ifndef __MissionMapping_h_
 #define __MissionMapping_h_
 
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -21,8 +21,8 @@ namespace plugins
 {
 namespace bml
 {
-    unsigned long GetMissionIdFromCode( const kernel::Resolver_ABC< kernel::MissionType >& missions, const std::string& code );
-    std::string GetCodeFromMissionId( const kernel::Resolver_ABC< kernel::MissionType >& missions, unsigned int id );
+    unsigned long GetMissionIdFromCode( const tools::Resolver_ABC< kernel::MissionType >& missions, const std::string& code );
+    std::string GetCodeFromMissionId( const tools::Resolver_ABC< kernel::MissionType >& missions, unsigned int id );
     std::string GetParameterTypeFromCode( const std::string& code );
 }
 }

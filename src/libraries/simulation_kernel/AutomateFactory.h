@@ -11,7 +11,7 @@
 #define __AutomateFactory_h_
 
 #include "AutomateFactory_ABC.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 class MIL_IDManager;
 

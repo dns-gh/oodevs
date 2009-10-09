@@ -17,9 +17,9 @@ namespace
     // Name: GetMissionId
     // Created: SBO 2008-05-23
     // -----------------------------------------------------------------------------
-    unsigned long GetMissionId( const kernel::Resolver_ABC< kernel::MissionType >& missions, const std::string& name1, const std::string& name2 )
+    unsigned long GetMissionId( const tools::Resolver_ABC< kernel::MissionType >& missions, const std::string& name1, const std::string& name2 )
     {
-        kernel::Iterator< const kernel::MissionType& > it( missions.CreateIterator() );
+        tools::Iterator< const kernel::MissionType& > it( missions.CreateIterator() );
         while( it.HasMoreElements() )
         {
             const kernel::MissionType& type = it.NextElement();
@@ -38,7 +38,7 @@ namespace bml
     // Name: GetMissionIdFromCode
     // Created: SBO 2008-05-23
     // -----------------------------------------------------------------------------
-    unsigned long GetMissionIdFromCode( const kernel::Resolver_ABC< kernel::MissionType >& missions, const std::string& code )
+    unsigned long GetMissionIdFromCode( const tools::Resolver_ABC< kernel::MissionType >& missions, const std::string& code )
     {
         if( code == "ATTACK" )
             return GetMissionId( missions, "ABC GTIA Attaquer", "Battalion - Attack" );
@@ -71,7 +71,7 @@ namespace bml
     // Name: GetCodeFromMissionId
     // Created: SBO 2008-05-23
     // -----------------------------------------------------------------------------
-    std::string GetCodeFromMissionId( const kernel::Resolver_ABC< kernel::MissionType >& missions, unsigned int id )
+    std::string GetCodeFromMissionId( const tools::Resolver_ABC< kernel::MissionType >& missions, unsigned int id )
     {
         if( id == GetMissionId( missions, "ABC GTIA Freiner", "Battalion - Attack" ) )
             return "ATTACK";

@@ -13,7 +13,7 @@
 #include "game_asn/Simulation.h"
 #include "SimpleEntity.h"
 #include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace dispatcher
 {
@@ -66,8 +66,8 @@ public:
     Side&           team_;
     const ASN1T_EnumNatureLevel level_;
     Formation*      parent_;
-    kernel::Resolver< Formation > formations_;
-    kernel::Resolver< Automat > automats_;
+    tools::Resolver< Formation > formations_;
+    tools::Resolver< Automat > automats_;
     //@}
 };
 

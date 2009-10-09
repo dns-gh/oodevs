@@ -10,7 +10,7 @@
 #ifndef __ReportFactory_h_
 #define __ReportFactory_h_
 
-#include "clients_kernel/Resolver_ABC.h"
+#include "tools/Resolver_ABC.h"
 #include "game_asn/Simulation.h"
 
 namespace kernel
@@ -42,7 +42,7 @@ class ReportFactory
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ReportFactory( const kernel::Resolver_ABC< kernel::MissionType >& missions );
+    explicit ReportFactory( const tools::Resolver_ABC< kernel::MissionType >& missions );
     virtual ~ReportFactory();
     //@}
 
@@ -62,7 +62,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::Resolver_ABC< kernel::MissionType >& missions_;
+    const tools::Resolver_ABC< kernel::MissionType >& missions_;
     //@}
 };
 

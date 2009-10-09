@@ -321,8 +321,8 @@ void MIL_EntityManager::InitializeWeapons( xml::xistream& xis, MIL_Config& confi
 MIL_EntityManager::~MIL_EntityManager()
 {
     // ODB - $$$ Virer ça ... utiliser des factories
-    Resolver< MIL_AgentPion >::DeleteAll();
-    Resolver< MIL_Automate >::DeleteAll();
+    tools::Resolver< MIL_AgentPion >::DeleteAll();
+    tools::Resolver< MIL_Automate >::DeleteAll();
 
     for( CIT_PopulationMap itPopulation = populations_.begin(); itPopulation != populations_.end(); ++itPopulation )
         delete itPopulation->second;
@@ -399,8 +399,8 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     InitializeArmies   ( xis );
     InitializeDiplomacy( xis );
 
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , Resolver< MIL_Automate >::Count() ) );
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , Resolver< MIL_AgentPion >::Count() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , tools::Resolver< MIL_Automate >::Count() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , tools::Resolver< MIL_AgentPion >::Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populations_.size() ) );
     
     xis >> xml::end();
@@ -408,7 +408,7 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     // Check automate composition
     if( config.CheckAutomateComposition() )
     {
-        for( kernel::Iterator< const MIL_Automate& > it = Resolver< MIL_Automate >::CreateIterator(); it.HasMoreElements(); )
+        for( tools::Iterator< const MIL_Automate& > it = tools::Resolver< MIL_Automate >::CreateIterator(); it.HasMoreElements(); )
         {
             const MIL_Automate& automate = it.NextElement();
             if( !automate.CheckComposition() )
@@ -419,7 +419,7 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     // Disengage automata for frozen mode
     if( config.IsFrozenMode() )
     {
-        Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::Disengage, _1 ) );
+        tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::Disengage, _1 ) );
     }
     UpdateStates();
 }
@@ -513,7 +513,7 @@ void MIL_EntityManager::CreateAutomat( xml::xistream& xis, MIL_Formation& format
         xis.error( "Unknown automat type" );
 
     MIL_Automate* pAutomate = automateFactory_->Create( *pType, formation, xis );
-    Resolver< MIL_Automate >::Register( pAutomate->GetID(), *pAutomate );
+    tools::Resolver< MIL_Automate >::Register( pAutomate->GetID(), *pAutomate );
     // $$$ Network
 }
 
@@ -534,7 +534,7 @@ void MIL_EntityManager::CreateAutomat( xml::xistream& xis, MIL_Automate& parent 
         xis.error( "Unknown automat type" );
             
     MIL_Automate* pAutomate = automateFactory_->Create( *pType, parent, xis );
-    Resolver< MIL_Automate >::Register( pAutomate->GetID(), *pAutomate );
+    tools::Resolver< MIL_Automate >::Register( pAutomate->GetID(), *pAutomate );
     // $$$ Network
 }
 
@@ -545,7 +545,7 @@ void MIL_EntityManager::CreateAutomat( xml::xistream& xis, MIL_Automate& parent 
 MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis )
 {
     MIL_AgentPion* pPion = agentFactory_->Create( type, automate, xis );
-    Resolver< MIL_AgentPion >::Register( pPion->GetID(), *pPion );
+    tools::Resolver< MIL_AgentPion >::Register( pPion->GetID(), *pPion );
 
     if( hla_ )
         hla_->Register( *pPion );
@@ -561,7 +561,7 @@ MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL
 MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition )
 {
     MIL_AgentPion* pPion = agentFactory_->Create( type, automate, vPosition );
-    Resolver< MIL_AgentPion >::Register( pPion->GetID(), *pPion );
+    tools::Resolver< MIL_AgentPion >::Register( pPion->GetID(), *pPion );
 
     if( hla_ )
         hla_->Register( *pPion );
@@ -732,12 +732,12 @@ void MIL_EntityManager::UpdateDecisions()
         MT_Profiler decisionUpdateProfiler;
 
         profiler_.Start();
-        Resolver< MIL_Automate >::Apply( boost::bind( &UpdateAutomate, boost::ref(decisionUpdateProfiler), duration, _1 ) );
+        tools::Resolver< MIL_Automate >::Apply( boost::bind( &UpdateAutomate, boost::ref(decisionUpdateProfiler), duration, _1 ) );
 
         rAutomatesDecisionTime_ = profiler_.Stop();
 
         profiler_.Start();
-        Resolver< MIL_AgentPion >::Apply( boost::bind( &UpdatePion, boost::ref(decisionUpdateProfiler), duration, _1 ) );
+        tools::Resolver< MIL_AgentPion >::Apply( boost::bind( &UpdatePion, boost::ref(decisionUpdateProfiler), duration, _1 ) );
         rPionsDecisionTime_ = profiler_.Stop();
 
         profiler_.Start();
@@ -752,11 +752,11 @@ void MIL_EntityManager::UpdateDecisions()
     else
     {
         profiler_.Start();
-        Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::UpdateDecision, _1, duration ) );
+        tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::UpdateDecision, _1, duration ) );
         rAutomatesDecisionTime_ = profiler_.Stop();
 
         profiler_.Start();
-        Resolver< MIL_AgentPion >::Apply( boost::bind( &MIL_AgentPion::UpdateDecision, _1, duration ) );
+        tools::Resolver< MIL_AgentPion >::Apply( boost::bind( &MIL_AgentPion::UpdateDecision, _1, duration ) );
         rPionsDecisionTime_ = profiler_.Stop();
 
         profiler_.Start();
@@ -774,8 +774,8 @@ void MIL_EntityManager::UpdateActions()
 {
     profiler_.Start();
 
-    Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::UpdateActions, _1 ) );
-    Resolver< MIL_AgentPion >::Apply( boost::bind( &MIL_AgentPion::UpdateActions, _1 ) );
+    tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::UpdateActions, _1 ) );
+    tools::Resolver< MIL_AgentPion >::Apply( boost::bind( &MIL_AgentPion::UpdateActions, _1 ) );
 
     for( CIT_PopulationMap it = populations_.begin(); it != populations_.end(); ++it )
         it->second->UpdateActions();
@@ -806,13 +806,13 @@ void MIL_EntityManager::UpdateStates()
     profiler_.Start();
 
     // !! Automate avant Pions (?? => LOG ??)
-    Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::UpdateState, _1 ) );
-    Resolver< MIL_AgentPion >::Apply( boost::bind( &MIL_AgentPion::UpdateState, _1 ) );
+    tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::UpdateState, _1 ) );
+    tools::Resolver< MIL_AgentPion >::Apply( boost::bind( &MIL_AgentPion::UpdateState, _1 ) );
     for( CIT_PopulationMap itPopulation = populations_.begin(); itPopulation != populations_.end(); ++itPopulation )
         itPopulation->second->UpdateState();
 
-    Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::UpdateNetwork, _1 ) );
-    Resolver< MIL_AgentPion >::Apply( boost::bind( &MIL_AgentPion::UpdateNetwork, _1 ) );
+    tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::UpdateNetwork, _1 ) );
+    tools::Resolver< MIL_AgentPion >::Apply( boost::bind( &MIL_AgentPion::UpdateNetwork, _1 ) );
     for( CIT_PopulationMap itPopulation = populations_.begin(); itPopulation != populations_.end(); ++itPopulation )
         itPopulation->second->UpdateNetwork();
 
@@ -835,7 +835,7 @@ void MIL_EntityManager::PreprocessRandomBreakdowns()
     while( nRandomBreakdownsNextTimeStep_ <= nCurrentTimeStep )
         nRandomBreakdownsNextTimeStep_ += ( 3600 * 24 / time_.GetTickDuration() );
 
-    Resolver< MIL_AgentPion >::Apply( boost::bind( &MIL_AgentPion::PreprocessRandomBreakdowns, _1, nRandomBreakdownsNextTimeStep_ ) );
+    tools::Resolver< MIL_AgentPion >::Apply( boost::bind( &MIL_AgentPion::PreprocessRandomBreakdowns, _1, nRandomBreakdownsNextTimeStep_ ) );
     MT_LOG_INFO_MSG( "Breakdowns preprocessed" );
 }
 
@@ -862,8 +862,8 @@ void MIL_EntityManager::Update()
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::Clean()
 {
-    Resolver< MIL_AgentPion >::Apply( boost::bind( &MIL_AgentPion::Clean, _1 ) );
-    Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::Clean, _1 ) );
+    tools::Resolver< MIL_AgentPion >::Apply( boost::bind( &MIL_AgentPion::Clean, _1 ) );
+    tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::Clean, _1 ) );
 
     for( CIT_PopulationMap itPopulation = populations_.begin(); itPopulation != populations_.end(); ++itPopulation )
         itPopulation->second->Clean();
@@ -1323,8 +1323,8 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const uint )
     file //>> effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
          >> armies_
          >> formations_
-         //>> pions_ //TODO ADD Resolver serialization
-         //>> automates_ //TODO ADD Resolver serialization
+         //>> pions_ //TODO ADD tools::Resolver serialization
+         //>> automates_ //TODO ADD tools::Resolver serialization
          >> populations_
          >> pObjectManager_
          >> rKnowledgesTime_
@@ -1336,8 +1336,8 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const uint )
          >> rStatesTime_
          >> nRandomBreakdownsNextTimeStep_;
 
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , Resolver< MIL_Automate >::Count() ) );
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , Resolver< MIL_AgentPion >::Count() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , tools::Resolver< MIL_Automate >::Count() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , tools::Resolver< MIL_AgentPion >::Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populations_.size() ) );
 }
 
@@ -1350,8 +1350,8 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const uint ) const
     file //<< effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
          << armies_
          << formations_
-         //<< pions_ //TODO ADD Resolver serialization
-         //<< automates_ //TODO ADD Resolver serialization
+         //<< pions_ //TODO ADD tools::Resolver serialization
+         //<< automates_ //TODO ADD tools::Resolver serialization
          << populations_
          << pObjectManager_
          << rKnowledgesTime_
@@ -1414,7 +1414,7 @@ MIL_Army* MIL_EntityManager::FindArmy( uint nID ) const
 // -----------------------------------------------------------------------------
 MIL_Automate* MIL_EntityManager::FindAutomate( uint nID ) const
 {
-    return Resolver< MIL_Automate >::Find( nID );
+    return tools::Resolver< MIL_Automate >::Find( nID );
 }
 
 // -----------------------------------------------------------------------------
@@ -1423,7 +1423,7 @@ MIL_Automate* MIL_EntityManager::FindAutomate( uint nID ) const
 // -----------------------------------------------------------------------------
 MIL_AgentPion* MIL_EntityManager::FindAgentPion( uint nID ) const
 {
-    return Resolver< MIL_AgentPion >::Find( nID );
+    return tools::Resolver< MIL_AgentPion >::Find( nID );
 }
 
 // -----------------------------------------------------------------------------

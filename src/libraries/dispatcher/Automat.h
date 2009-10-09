@@ -11,7 +11,7 @@
 #define __Automat_h_
 
 #include "game_asn/Simulation.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "SimpleEntity.h"
 #include "DecisionalState.h"
@@ -90,7 +90,7 @@ public:
     Formation*          parentFormation_;
     Automat*            parentAutomat_;
     KnowledgeGroup*     knowledgeGroup_;
-    kernel::Resolver< DotationQuota > quotas_;
+    tools::Resolver< DotationQuota > quotas_;
 
     ASN1T_EnumAutomatMode             nAutomatState_;
     ASN1T_EnumForceRatioStatus        nForceRatioState_;
@@ -107,8 +107,8 @@ public:
 
     DecisionalState decisionalInfos_;
 
-    kernel::Resolver< Agent >   agents_;
-    kernel::Resolver< Automat > automats_;
+    tools::Resolver< Agent >   agents_;
+    tools::Resolver< Automat > automats_;
     //@}
 };
 

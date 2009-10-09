@@ -12,7 +12,7 @@
 
 #include "game_asn/Simulation.h"
 #include "SimpleEntity.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -70,7 +70,7 @@ private:
     const kernel::Automat_ABC*        pConvoyingAutomat_;
     const kernel::Agent_ABC*          pConvoy_;
     ASN1T_EnumLogSupplyHandlingStatus nState_;
-    kernel::Resolver< LogSupplyDotation > dotations_;
+    tools::Resolver< LogSupplyDotation > dotations_;
 };
 
 }

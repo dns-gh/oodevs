@@ -109,7 +109,7 @@ struct ActionParameterFactory::AgentConverter : public kernel::AgentKnowledgeCon
     virtual const kernel::AgentKnowledge_ABC* Find( const kernel::Agent_ABC& base, const kernel::Entity_ABC& owner )
     {
         const kernel::Entity_ABC& group = FindGroup( owner );
-        kernel::Iterator< const dispatcher::AgentKnowledge& > it = model_.agentKnowledges_.CreateIterator();
+        tools::Iterator< const dispatcher::AgentKnowledge& > it = model_.agentKnowledges_.CreateIterator();
         while( it.HasMoreElements() )
         {
             const dispatcher::AgentKnowledge& k = it.NextElement();
@@ -122,7 +122,7 @@ struct ActionParameterFactory::AgentConverter : public kernel::AgentKnowledgeCon
     virtual const kernel::PopulationKnowledge_ABC* Find( const kernel::Population_ABC& base, const kernel::Entity_ABC& owner )
     {
         const kernel::Entity_ABC& group = FindGroup( owner );
-        kernel::Iterator< const dispatcher::PopulationKnowledge& > it = model_.populationKnowledges_.CreateIterator();
+        tools::Iterator< const dispatcher::PopulationKnowledge& > it = model_.populationKnowledges_.CreateIterator();
         while( it.HasMoreElements() )
         {
             const dispatcher::PopulationKnowledge& k = it.NextElement();
@@ -173,7 +173,7 @@ struct ActionParameterFactory::ObjectConverter : public kernel::ObjectKnowledgeC
     //@{
     virtual const kernel::ObjectKnowledge_ABC* Find( const kernel::Object_ABC& base,  const kernel::Team_ABC& owner ) const
     {
-        kernel::Iterator< const dispatcher::ObjectKnowledge& > it = model_.objectKnowledges_.CreateIterator();
+        tools::Iterator< const dispatcher::ObjectKnowledge& > it = model_.objectKnowledges_.CreateIterator();
         while( it.HasMoreElements() )
         {
             const dispatcher::ObjectKnowledge& k = it.NextElement();

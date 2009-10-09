@@ -12,7 +12,7 @@
 
 namespace tools
 {
-    class Observer_ABC;
+    class  Observer_ABC;
 }
 
 namespace kernel

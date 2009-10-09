@@ -71,7 +71,7 @@ namespace
     const kernel::OrderParameter* GetParameterByType( const kernel::MissionType& type, const Mission& mission, const std::string& code )
     {
         const std::string parameterType = GetParameterTypeFromCode( code );
-        kernel::Iterator< const kernel::OrderParameter& > it( type.CreateIterator() );
+        tools::Iterator< const kernel::OrderParameter& > it( type.CreateIterator() );
         while( it.HasMoreElements() )
         {
             const kernel::OrderParameter& parameter = it.NextElement();

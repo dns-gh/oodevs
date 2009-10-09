@@ -226,7 +226,7 @@ namespace
 {
     int GetParameterIndex( const kernel::MissionType& mission, const kernel::OrderParameter& param )
     {
-        kernel::Iterator< const kernel::OrderParameter& > it( mission.CreateIterator() );
+        tools::Iterator< const kernel::OrderParameter& > it( mission.CreateIterator() );
         for( unsigned int i = 0; it.HasMoreElements(); ++i )
         {
             const kernel::OrderParameter& parameter = it.NextElement();
@@ -272,7 +272,7 @@ void Mission::Serialize( ASN1T_MissionParameters& asn ) const
 // -----------------------------------------------------------------------------
 void Mission::FillEmptyParameters( ASN1T_MissionParameters& asn ) const
 {
-    kernel::Iterator< const kernel::OrderParameter& > it( type_.CreateIterator() );
+    tools::Iterator< const kernel::OrderParameter& > it( type_.CreateIterator() );
     for( unsigned int i = 0; it.HasMoreElements(); ++i )
     {
         const kernel::OrderParameter& parameter = it.NextElement();
@@ -301,7 +301,7 @@ void Mission::FillEmptyParameters( ASN1T_MissionParameters& asn ) const
 // -----------------------------------------------------------------------------
 void Mission::SerializeDummyParameters( ASN1T_MissionParameters& asn ) const
 {
-    kernel::Iterator< const kernel::OrderParameter& > it( type_.CreateIterator() );
+    tools::Iterator< const kernel::OrderParameter& > it( type_.CreateIterator() );
     for( unsigned int i = 0; it.HasMoreElements(); ++i )
     {
         const kernel::OrderParameter& parameter = it.NextElement();

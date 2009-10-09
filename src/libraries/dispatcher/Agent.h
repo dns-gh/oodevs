@@ -14,7 +14,7 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "SimpleEntity.h"
 #include "DecisionalState.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -100,7 +100,7 @@ public:
     unsigned int                  nAltitude_;
     unsigned int                  nSpeed_;
     unsigned int                  nOperationalStateValue_;
-    kernel::Resolver< const kernel::Agent_ABC > reinforcements_;
+    tools::Resolver< const kernel::Agent_ABC > reinforcements_;
     kernel::Agent_ABC*            pReinforced_;
     bool                          bDead_;
     bool                          bNeutralized_;
@@ -117,7 +117,7 @@ public:
     bool                          bCommunicationJammed_;
     bool                          bBlackoutEnabled_;
     bool                          bRadarEnabled_;
-    kernel::Resolver< const kernel::Agent_ABC >   transportedAgents_;
+    tools::Resolver< const kernel::Agent_ABC >   transportedAgents_;
     kernel::Agent_ABC*                pTransporter_;
     ASN1T_EnumForceRatioStatus    nForceRatioState_;
     ASN1T_EnumMeetingEngagementStatus nCloseCombatState_;
@@ -133,11 +133,11 @@ public:
     bool                          bRefugeeManaged_;
     DecisionalState               decisionalInfos_;
 
-    kernel::Resolver< Equipment > equipments_;
-    kernel::Resolver< Humans >    troops_;
-    kernel::Resolver< Dotation >  dotations_;
-    kernel::Resolver< Loan >      borrowings_;
-    kernel::Resolver< Loan >      lendings_;
+    tools::Resolver< Equipment > equipments_;
+    tools::Resolver< Humans >    troops_;
+    tools::Resolver< Dotation >  dotations_;
+    tools::Resolver< Loan >      borrowings_;
+    tools::Resolver< Loan >      lendings_;
 
     AgentLogMedical*              pLogMedical_;
     AgentLogMaintenance*          pLogMaintenance_;

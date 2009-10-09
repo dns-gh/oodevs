@@ -84,8 +84,8 @@ private:
     //@}
 
 public:
-    kernel::Resolver< PopulationConcentration > concentrations_;
-    kernel::Resolver< PopulationFlow          > flows_;
+    tools::Resolver< PopulationConcentration > concentrations_;
+    tools::Resolver< PopulationFlow          > flows_;
 
 };
 

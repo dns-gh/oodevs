@@ -422,7 +422,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
             asn().pions_renforcant.n = reinforcements_.Count();
             asn().pions_renforcant.elem = asn().pions_renforcant.n > 0 ? new ASN1T_Unit[ asn().pions_renforcant.n ] : 0;
             unsigned int i = 0;
-            for( kernel::Iterator< const kernel::Agent_ABC& > it = reinforcements_.CreateIterator(); it.HasMoreElements(); )
+            for( tools::Iterator< const kernel::Agent_ABC& > it = reinforcements_.CreateIterator(); it.HasMoreElements(); )
                 asn().pions_renforcant.elem[i++] = it.NextElement().GetId();
         }
 
@@ -455,7 +455,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
             asn().pions_transportes.n = transportedAgents_.Count();
             asn().pions_transportes.elem = asn().pions_transportes.n > 0 ? new ASN1T_Unit[ asn().pions_transportes.n ] : 0;
             unsigned int i = 0;
-            for( kernel::Iterator< const kernel::Agent_ABC& > it = transportedAgents_.CreateIterator(); it.HasMoreElements(); )
+            for( tools::Iterator< const kernel::Agent_ABC& > it = transportedAgents_.CreateIterator(); it.HasMoreElements(); )
                 asn().pions_transportes.elem[i++] = it.NextElement().GetId();
         }
 
@@ -478,35 +478,35 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
             asn().dotation_eff_materiel.n = equipments_.Count();
             asn().dotation_eff_materiel.elem = asn().dotation_eff_materiel.n > 0 ? new ASN1T_EquipmentDotations[ asn().dotation_eff_materiel.n ] : 0;
             unsigned int i = 0;
-            for( kernel::Iterator< const Equipment& > it = equipments_.CreateIterator(); it.HasMoreElements(); )
+            for( tools::Iterator< const Equipment& > it = equipments_.CreateIterator(); it.HasMoreElements(); )
                 it.NextElement().Send( asn().dotation_eff_materiel.elem[i++] );
         }
         {
             asn().dotation_eff_personnel.n = troops_.Count();
             asn().dotation_eff_personnel.elem = asn().dotation_eff_personnel.n > 0 ? new ASN1T_HumanDotations[ asn().dotation_eff_personnel.n ] : 0;
             unsigned int i = 0;
-            for( kernel::Iterator< const Humans& > it = troops_.CreateIterator(); it.HasMoreElements(); )
+            for( tools::Iterator< const Humans& > it = troops_.CreateIterator(); it.HasMoreElements(); )
                 it.NextElement().Send( asn().dotation_eff_personnel.elem[i++] );
         }
         {
             asn().dotation_eff_ressource.n = dotations_.Count();
             asn().dotation_eff_ressource.elem = asn().dotation_eff_ressource.n > 0 ? new ASN1T_ResourceDotations[ asn().dotation_eff_ressource.n ] : 0;
             unsigned int i = 0;
-            for( kernel::Iterator< const Dotation& > it = dotations_.CreateIterator(); it.HasMoreElements(); )
+            for( tools::Iterator< const Dotation& > it = dotations_.CreateIterator(); it.HasMoreElements(); )
                 it.NextElement().Send( asn().dotation_eff_ressource.elem[i++] );
         }
         {
             asn().equipements_empruntes.n = borrowings_.Count();
             asn().equipements_empruntes.elem = asn().equipements_empruntes.n > 0 ? new ASN1T_BorrowedEquipment[ asn().equipements_empruntes.n ] : 0;
             unsigned int i = 0;
-            for( kernel::Iterator< const Loan& > it = borrowings_.CreateIterator(); it.HasMoreElements(); )
+            for( tools::Iterator< const Loan& > it = borrowings_.CreateIterator(); it.HasMoreElements(); )
                 it.NextElement().Send( asn().equipements_empruntes.elem[i++] );
         }
         {
             asn().equipements_pretes.n = lendings_.Count();
             asn().equipements_pretes.elem = asn().equipements_pretes.n > 0 ? new ASN1T_LentEquipment[ asn().equipements_pretes.n ] : 0;
             unsigned int i = 0;
-            for( kernel::Iterator< const Loan& > it = lendings_.CreateIterator(); it.HasMoreElements(); )
+            for( tools::Iterator< const Loan& > it = lendings_.CreateIterator(); it.HasMoreElements(); )
                 it.NextElement().Send( asn().equipements_pretes.elem[i++] );
         }
 

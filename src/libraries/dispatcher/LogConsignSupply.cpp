@@ -91,7 +91,7 @@ void LogConsignSupply::SendCreation( ClientPublisher_ABC& publisher ) const
         asn().dotations.n = dotations_.Count();
         asn().dotations.elem = asn().dotations.n > 0 ? new ASN1T_DotationQuery[ asn().dotations.n ] : 0;
         unsigned int i = 0;
-        for( kernel::Iterator< const LogSupplyDotation& > it = dotations_.CreateIterator(); it.HasMoreElements(); )
+        for( tools::Iterator< const LogSupplyDotation& > it = dotations_.CreateIterator(); it.HasMoreElements(); )
             it.NextElement().Send( asn().dotations.elem[i++] );
     }
     asn.Send( publisher );
@@ -125,7 +125,7 @@ void LogConsignSupply::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         asn().dotations.n = dotations_.Count();
         asn().dotations.elem = asn().dotations.n > 0 ? new ASN1T_DotationQuery[ asn().dotations.n ] : 0;
         unsigned int i = 0;
-        for( kernel::Iterator< const LogSupplyDotation& > it = dotations_.CreateIterator(); it.HasMoreElements(); )
+        for( tools::Iterator< const LogSupplyDotation& > it = dotations_.CreateIterator(); it.HasMoreElements(); )
             it.NextElement().Send( asn().dotations.elem[i++] );
     }
     asn.Send( publisher );

@@ -55,7 +55,7 @@ public:
     virtual void SendChangedState() const;
     //@}
 
-    //! @name Resolver
+    //! @name tools::Resolver
     //@{
     virtual DEC_Knowledge_Agent*      ResolveKnowledgeAgent ( const ASN1T_UnitKnowledge&  asn ) const;
     virtual DEC_Knowledge_Agent*      ResolveKnowledgeAgent ( const DIA_Variable_ABC&      dia ) const;

@@ -11,7 +11,7 @@
 #define __TacticalLinesModel_h_
 
 #include "game_asn/Messenger.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace dispatcher
 {
@@ -99,8 +99,8 @@ private:
     dispatcher::ClientPublisher_ABC& clients_;
     IdManager& idManager_;
     const kernel::CoordinateConverter_ABC& converter_;
-    kernel::Resolver< Limit > limits_;
-    kernel::Resolver< Lima  > limas_;
+    tools::Resolver< Limit > limits_;
+    tools::Resolver< Lima  > limas_;
     //@}
 
 };

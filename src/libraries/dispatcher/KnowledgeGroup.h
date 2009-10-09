@@ -13,7 +13,7 @@
 #include "game_asn/Simulation.h"
 #include "SimpleEntity.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -61,7 +61,7 @@ public:
     //! @name Member data
     //@{
     Side& team_;
-    kernel::Resolver< kernel::Automat_ABC > automats_;
+    tools::Resolver< kernel::Automat_ABC > automats_;
     //@}
 };
 

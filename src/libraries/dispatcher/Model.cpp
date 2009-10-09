@@ -237,7 +237,7 @@ void Model::Update( const ASN1T_MsgsSimToClient& asn )
 // Created: SBO 2008-07-09
 // -----------------------------------------------------------------------------
 template< typename T, typename P >
-void Model::CreateUpdate( kernel::Resolver< T >& resolver, const P& parameter )
+void Model::CreateUpdate( tools::Resolver< T >& resolver, const P& parameter )
 {
     CreateUpdate( resolver, parameter.oid, parameter );
 }
@@ -247,7 +247,7 @@ void Model::CreateUpdate( kernel::Resolver< T >& resolver, const P& parameter )
 // Created: SBO 2008-07-09
 // -----------------------------------------------------------------------------
 template< typename T, typename P >
-void Model::CreateUpdate( kernel::Resolver< T >& resolver, unsigned id, const P& parameter )
+void Model::CreateUpdate( tools::Resolver< T >& resolver, unsigned id, const P& parameter )
 {
     T* pElement = resolver.Find( id );
     if( !pElement )
@@ -280,7 +280,7 @@ void Model::UpdateAnyAgent( unsigned id, const T& message )
 // Created: SBO 2008-07-09
 // -----------------------------------------------------------------------------
 template< typename T >
-void Model::Destroy( kernel::Resolver< T >& resolver, unsigned id )
+void Model::Destroy( tools::Resolver< T >& resolver, unsigned id )
 {
     if( T* entity = resolver.Find( id ) )
     {
@@ -349,28 +349,28 @@ void Model::Accept( ModelVisitor_ABC& visitor ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: kernel::Resolver_ABC< kernel::AgentType >& Model::GetAgentTypes
+// Name: tools::Resolver_ABC< kernel::AgentType >& Model::GetAgentTypes
 // Created: AGE 2008-03-14
 // -----------------------------------------------------------------------------
-const kernel::Resolver_ABC< kernel::AgentType >& Model::GetAgentTypes() const
+const tools::Resolver_ABC< kernel::AgentType >& Model::GetAgentTypes() const
 {
     return *agentTypes_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: kernel::Resolver_ABC< kernel::MissionType >& Model::GetMissionTypes
+// Name: tools::Resolver_ABC< kernel::MissionType >& Model::GetMissionTypes
 // Created: SBO 2008-05-21
 // -----------------------------------------------------------------------------
-const kernel::Resolver_ABC< kernel::MissionType >& Model::GetMissionTypes() const
+const tools::Resolver_ABC< kernel::MissionType >& Model::GetMissionTypes() const
 {
     return *agentTypes_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: kernel::Resolver_ABC< kernel::FragOrderType >& Model::GetFragOrderTypes
+// Name: tools::Resolver_ABC< kernel::FragOrderType >& Model::GetFragOrderTypes
 // Created: AGE 2008-07-16
 // -----------------------------------------------------------------------------
-const kernel::Resolver_ABC< kernel::FragOrderType >& Model::GetFragOrderTypes() const
+const tools::Resolver_ABC< kernel::FragOrderType >& Model::GetFragOrderTypes() const
 {
     return *agentTypes_;
 }

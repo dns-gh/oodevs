@@ -58,7 +58,7 @@ private:
 
     //! @name Helpers
     //@{
-    struct Adapter : public Iterator_ABC< const NewType& >
+    struct Adapter : public tools::Iterator_ABC< const NewType& >
     {
         Adapter( tools::Iterator< const BaseType& > base ) : base_( base ) {}
         virtual bool HasMoreElements() const

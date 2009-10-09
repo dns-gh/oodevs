@@ -11,7 +11,7 @@
 #define __AgentFactory_h_
 
 #include "AgentFactory_ABC.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 class MIL_IDManager;
 class AlgorithmsFactories;

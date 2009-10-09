@@ -16,7 +16,7 @@
 #include "MT_Tools/MT_Profiler.h"
 #include "MIL_EntityManager_ABC.h"
 
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace xml
 {
@@ -77,8 +77,8 @@ class DIA_Parameters;
 // Created: JVT 2004-08-03
 // =============================================================================
 class MIL_EntityManager : public MIL_EntityManager_ABC,
-                          public kernel::Resolver< MIL_AgentPion >,
-                          public kernel::Resolver< MIL_Automate >,
+                          public tools::Resolver< MIL_AgentPion >,
+                          public tools::Resolver< MIL_Automate >,
                           private boost::noncopyable
 {
 

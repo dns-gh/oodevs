@@ -13,7 +13,7 @@
 #include "game_asn/Simulation.h"
 #include "SimpleEntity.h"
 #include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace dispatcher
 {
@@ -73,10 +73,10 @@ public:
     const std::string   name_;
     ASN1T_EnumDiplomacy nType_;
     T_Diplomacies       diplomacies_;
-    kernel::Resolver< KnowledgeGroup > knowledgeGroups_;
-    kernel::Resolver< Formation >      formations_;
-    kernel::Resolver< Object >         objects_;
-    kernel::Resolver< Population >     populations_;
+    tools::Resolver< KnowledgeGroup > knowledgeGroups_;
+    tools::Resolver< Formation >      formations_;
+    tools::Resolver< Object >         objects_;
+    tools::Resolver< Population >     populations_;
     //@}
 };
 

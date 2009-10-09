@@ -16,7 +16,7 @@
 #include "Lima.h"
 #include "IdManager.h"
 #include "dispatcher/ClientPublisher_ABC.h"
-#include "clients_kernel/Iterator.h"
+#include "tools/Iterator.h"
 #include <xeumeuleu/xml.h>
 
 using namespace plugins::messenger;
@@ -73,12 +73,12 @@ void TacticalLinesModel::Write( xml::xostream& xos ) const
 {
     xos << xml::start( "tacticalLines" );
     {
-        kernel::Iterator< const Limit& > it( limits_.CreateIterator() );
+        tools::Iterator< const Limit& > it( limits_.CreateIterator() );
         while( it.HasMoreElements() )
             it.NextElement().Write( xos, converter_ );
     }
     {
-        kernel::Iterator< const Lima& > it( limas_.CreateIterator() );
+        tools::Iterator< const Lima& > it( limas_.CreateIterator() );
         while( it.HasMoreElements() )
             it.NextElement().Write( xos, converter_ );
     }
@@ -204,12 +204,12 @@ void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& pub
 void TacticalLinesModel::SendStateToNewClient( dispatcher::ClientPublisher_ABC& client ) const
 {
     {
-        kernel::Iterator< const Limit& > it( limits_.CreateIterator() );
+        tools::Iterator< const Limit& > it( limits_.CreateIterator() );
         while( it.HasMoreElements() )
             it.NextElement().SendFullState( client );
     }
     {
-        kernel::Iterator< const Lima& > it( limas_.CreateIterator() );
+        tools::Iterator< const Lima& > it( limas_.CreateIterator() );
         while( it.HasMoreElements() )
             it.NextElement().SendFullState( client );
     }
@@ -222,7 +222,7 @@ void TacticalLinesModel::SendStateToNewClient( dispatcher::ClientPublisher_ABC& 
 void TacticalLinesModel::CollectFormations( T_FormationMap& formations )
 {
     {
-        kernel::Iterator< const Limit& > it( limits_.CreateIterator() );
+        tools::Iterator< const Limit& > it( limits_.CreateIterator() );
         while( it.HasMoreElements() )
         {
             const Limit& limit = it.NextElement();
@@ -231,7 +231,7 @@ void TacticalLinesModel::CollectFormations( T_FormationMap& formations )
         }
     }
     {
-        kernel::Iterator< const Lima& > it( limas_.CreateIterator() );
+        tools::Iterator< const Lima& > it( limas_.CreateIterator() );
         while( it.HasMoreElements() )
         {
             const Lima& lima = it.NextElement();
@@ -248,7 +248,7 @@ void TacticalLinesModel::CollectFormations( T_FormationMap& formations )
 void TacticalLinesModel::CollectAutomats( T_AutomatMap& automats )
 {
     {
-        kernel::Iterator< const Limit& > it( limits_.CreateIterator() );
+        tools::Iterator< const Limit& > it( limits_.CreateIterator() );
         while( it.HasMoreElements() )
         {
             const Limit& limit = it.NextElement();
@@ -257,7 +257,7 @@ void TacticalLinesModel::CollectAutomats( T_AutomatMap& automats )
         }
     }
     {
-        kernel::Iterator< const Lima& > it( limas_.CreateIterator() );
+        tools::Iterator< const Lima& > it( limas_.CreateIterator() );
         while( it.HasMoreElements() )
         {
             const Lima& lima = it.NextElement();

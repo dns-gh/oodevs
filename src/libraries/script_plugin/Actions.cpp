@@ -86,7 +86,7 @@ void Actions::IssueOrder( const std::string& name )
     {
         actions::ActionsModel model( *factory_ );
         model.Load( file_ );
-        kernel::Iterator< const actions::Action_ABC& > it = model.CreateIterator();
+        tools::Iterator< const actions::Action_ABC& > it = model.CreateIterator();
         while( it.HasMoreElements() )
         {
             const actions::Action_ABC& action = it.NextElement();

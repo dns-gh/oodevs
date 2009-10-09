@@ -12,7 +12,7 @@
 
 #include "game_asn/Simulation.h"
 #include "EquipmentAvailability.h"
-#include "clients_kernel/Resolver.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -60,7 +60,7 @@ private:
 private:
     const kernel::Agent_ABC&      agent_;
     bool                          bSystemEnabled_;
-    kernel::Resolver< Dotation >  stocks_;
+    tools::Resolver< Dotation >  stocks_;
     std::vector< T_Availability > convoyersAvailability_;
 };
 
