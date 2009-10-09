@@ -12,7 +12,7 @@
 
 #include "Layer_ABC.h"
 #include "Gradient.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -32,7 +32,7 @@ namespace gui
 // =============================================================================
 class FolkLayer : public Layer2d_ABC
                 , public tools::Observer_ABC
-                , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
+                , public tools::ElementObserver_ABC< kernel::ModelLoaded >
 {
 
 public:

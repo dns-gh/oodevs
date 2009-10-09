@@ -10,7 +10,7 @@
 #ifndef __ProfilingPanel_h_
 #define __ProfilingPanel_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "gaming/Simulation.h"
 
 namespace kernel
@@ -30,7 +30,7 @@ class StatisticsWidget;
 // =============================================================================
 class ProfilingPanel : public QTabWidget
                      , public tools::Observer_ABC
-                     , public kernel::ElementObserver_ABC< Simulation::sEndTick >
+                     , public tools::ElementObserver_ABC< Simulation::sEndTick >
 {
 
 public:

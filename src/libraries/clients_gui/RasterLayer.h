@@ -11,7 +11,7 @@
 #define __RasterLayer_h_
 
 #include "Layer_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/WorldParameters.h"
 
 namespace kernel
@@ -33,7 +33,7 @@ namespace gui
 // =============================================================================
 class RasterLayer : public Layer2d_ABC
                   , public tools::Observer_ABC
-                  , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
+                  , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                   , private kernel::WorldParameters
 {
 

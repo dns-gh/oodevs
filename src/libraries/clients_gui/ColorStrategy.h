@@ -11,7 +11,7 @@
 #define __ColorStrategy_h_
 
 #include "ColorStrategy_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include <boost/ptr_container/ptr_vector.hpp>
 
 namespace kernel
@@ -33,7 +33,7 @@ namespace gui
 // =============================================================================
 class ColorStrategy : public ColorStrategy_ABC
                     , public tools::Observer_ABC
-                    , public kernel::ElementObserver_ABC< kernel::Team_ABC >
+                    , public tools::ElementObserver_ABC< kernel::Team_ABC >
 {
 
 public:

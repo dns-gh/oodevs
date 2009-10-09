@@ -11,7 +11,7 @@
 #define __ChangeLogisticLinksDialog_h_
 
 #include "clients_kernel/SafePointer.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_gui/ValuedComboBox.h"
 
@@ -33,7 +33,7 @@ class Publisher_ABC;
 // =============================================================================
 class ChangeLogisticLinksDialog : public QDialog
                                 , public tools::Observer_ABC
-                                , public kernel::ElementObserver_ABC< kernel::Automat_ABC >
+                                , public tools::ElementObserver_ABC< kernel::Automat_ABC >
                                 , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
 {
     Q_OBJECT;

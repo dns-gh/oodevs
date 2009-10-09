@@ -11,7 +11,7 @@
 #define __VisionConesToggler_h_
 
 #include "clients_kernel/OptionsObserver_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -31,8 +31,8 @@ class Services;
 class VisionConesToggler : public QObject
                          , public tools::Observer_ABC
                          , public kernel::OptionsObserver_ABC
-                         , public kernel::ElementObserver_ABC< kernel::Profile_ABC >
-                         , public kernel::ElementObserver_ABC< Services >
+                         , public tools::ElementObserver_ABC< kernel::Profile_ABC >
+                         , public tools::ElementObserver_ABC< Services >
 {
 
 public:

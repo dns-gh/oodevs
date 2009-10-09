@@ -11,7 +11,7 @@
 #define __InfoMissionsTab_h_
 
 #include "clients_gui/ListDisplayer.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
 
 namespace kernel
@@ -36,7 +36,7 @@ class MissionParameters;
 class InfoMissionsTab : public gui::ListDisplayer< InfoMissionsTab >
                       , public tools::Observer_ABC
                       , public tools::SelectionObserver< kernel::Entity_ABC >
-                      , public kernel::ElementObserver_ABC< MissionParameters >
+                      , public tools::ElementObserver_ABC< MissionParameters >
 {
 
 public:

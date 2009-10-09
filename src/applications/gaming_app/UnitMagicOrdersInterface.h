@@ -14,7 +14,7 @@
 #include "clients_kernel/SafePointer.h"
 #include "clients_gui/ShapeHandler_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -48,7 +48,7 @@ class UnitMagicOrdersInterface : public QObject
                                , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                                , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
                                , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
-                               , public kernel::ElementObserver_ABC< kernel::Team_ABC >
+                               , public tools::ElementObserver_ABC< kernel::Team_ABC >
                                , public gui::ShapeHandler_ABC
                                , private kernel::LocationVisitor_ABC
 {

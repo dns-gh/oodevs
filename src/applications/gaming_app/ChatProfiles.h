@@ -10,7 +10,7 @@
 #ifndef __ChatProfiles_h_
 #define __ChatProfiles_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -27,7 +27,7 @@ class UserProfile;
 // =============================================================================
 class ChatProfiles : public QListBox
                    , public tools::Observer_ABC
-                   , public kernel::ElementObserver_ABC< UserProfile >
+                   , public tools::ElementObserver_ABC< UserProfile >
 {
     Q_OBJECT;
 

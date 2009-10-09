@@ -10,7 +10,7 @@
 #ifndef __ConnectionMenu_h_
 #define __ConnectionMenu_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -31,7 +31,7 @@ class Simulation;
 // =============================================================================
 class ConnectionMenu : public QObject
                      , public tools::Observer_ABC
-                     , public kernel::ElementObserver_ABC< Simulation >
+                     , public tools::ElementObserver_ABC< Simulation >
 {
     Q_OBJECT;
 

@@ -14,7 +14,7 @@
 #include "graphics/ElevationColor_ABC.h"
 #include "graphics/ViewFrustum.h"
 #include "tools/Observer_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/WorldParameters.h"
 
 class MultiTextureLayer;
@@ -46,7 +46,7 @@ namespace gui
 class Elevation3dLayer : private kernel::WorldParameters
                        , public Layer3d_ABC
                        , public tools::Observer_ABC
-                       , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
+                       , public tools::ElementObserver_ABC< kernel::ModelLoaded >
 
 {
 

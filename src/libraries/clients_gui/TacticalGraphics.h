@@ -10,7 +10,7 @@
 #ifndef __TacticalGraphics_h_
 #define __TacticalGraphics_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include <boost/shared_ptr.hpp>
 
 namespace kernel
@@ -33,7 +33,7 @@ namespace gui
 // Created: SBO 2009-05-29
 // =============================================================================
 class TacticalGraphics : public tools::Observer_ABC
-                       , public kernel::ElementObserver_ABC< DrawingCategory >
+                       , public tools::ElementObserver_ABC< DrawingCategory >
 {
 
 public:

@@ -10,7 +10,7 @@
 #ifndef __IndicatorPlotFactory_h_
 #define __IndicatorPlotFactory_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -30,7 +30,7 @@ class Services;
 // Created: SBO 2009-04-30
 // =============================================================================
 class IndicatorPlotFactory : public tools::Observer_ABC
-                           , public kernel::ElementObserver_ABC< Services >
+                           , public tools::ElementObserver_ABC< Services >
 {
 
 public:

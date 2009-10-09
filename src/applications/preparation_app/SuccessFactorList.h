@@ -10,7 +10,7 @@
 #ifndef __SuccessFactorList_h_
 #define __SuccessFactorList_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "clients_gui/ListDisplayer.h"
 
 namespace kernel
@@ -31,7 +31,7 @@ class SuccessFactorEditor;
 // =============================================================================
 class SuccessFactorList : public QVBox
                         , public tools::Observer_ABC
-                        , public kernel::ElementObserver_ABC< SuccessFactor >
+                        , public tools::ElementObserver_ABC< SuccessFactor >
 {
     Q_OBJECT;
 

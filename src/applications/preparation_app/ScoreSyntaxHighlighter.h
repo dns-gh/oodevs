@@ -11,7 +11,7 @@
 #define __ScoreSyntaxHighlighter_h_
 
 #include <qsyntaxhighlighter.h>
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -33,8 +33,8 @@ namespace indicators
 // =============================================================================
 class ScoreSyntaxHighlighter : public QSyntaxHighlighter
                              , public tools::Observer_ABC
-                             , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
-                             , public kernel::ElementObserver_ABC< kernel::ModelUnLoaded >
+                             , public tools::ElementObserver_ABC< kernel::ModelLoaded >
+                             , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
 {
 
 public:

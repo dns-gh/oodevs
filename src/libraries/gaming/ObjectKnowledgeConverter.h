@@ -11,7 +11,7 @@
 #define __ObjectKnowledgeConverter_h_
 
 #include "clients_kernel/ObjectKnowledgeConverter_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -26,7 +26,7 @@ namespace kernel
 // =============================================================================
 class ObjectKnowledgeConverter : public kernel::ObjectKnowledgeConverter_ABC
                                , public tools::Observer_ABC
-                               , public kernel::ElementObserver_ABC< kernel::ObjectKnowledge_ABC >
+                               , public tools::ElementObserver_ABC< kernel::ObjectKnowledge_ABC >
 {
 
 public:

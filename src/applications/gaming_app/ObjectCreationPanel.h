@@ -11,7 +11,7 @@
 #define __ObjectCreationPanel_h_
 
 #include "clients_gui/InfoPanel_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -39,7 +39,7 @@ class Publisher_ABC;
 // =============================================================================
 class ObjectCreationPanel : public gui::InfoPanel_ABC
                           , public tools::Observer_ABC
-                          , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
+                          , public tools::ElementObserver_ABC< kernel::ModelLoaded >
 {
     Q_OBJECT;
 

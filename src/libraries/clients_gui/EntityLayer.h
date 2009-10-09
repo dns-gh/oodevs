@@ -11,7 +11,7 @@
 #define __EntityLayer_h_
 
 #include "tools/Observer_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/ActivationObserver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
@@ -130,7 +130,7 @@ protected: // $$$$ AGE 2006-05-17:
 template< typename ConcreteEntity >
 class EntityLayer : public EntityLayerBase
                   , public tools::SelectionObserver< ConcreteEntity >
-                  , public kernel::ElementObserver_ABC< ConcreteEntity >
+                  , public tools::ElementObserver_ABC< ConcreteEntity >
                   , public kernel::ActivationObserver_ABC< ConcreteEntity >
 {
 

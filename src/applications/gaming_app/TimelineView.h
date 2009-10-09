@@ -10,7 +10,7 @@
 #ifndef __TimelineView_h_
 #define __TimelineView_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include <qcanvas.h>
 
 namespace kernel
@@ -39,8 +39,8 @@ class TimelineMarker;
 // =============================================================================
 class TimelineView : public QCanvasView
                    , public tools::Observer_ABC
-                   , public kernel::ElementObserver_ABC< actions::Action_ABC >
-                   , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
+                   , public tools::ElementObserver_ABC< actions::Action_ABC >
+                   , public tools::ElementObserver_ABC< kernel::Entity_ABC >
 {
 
 public:

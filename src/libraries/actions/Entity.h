@@ -11,7 +11,7 @@
 #define __ActionParameterEntity_h_
 
 #include "Parameter.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/Controller.h"
 #pragma warning( push )
 #pragma warning( disable : 4702 )
@@ -31,7 +31,7 @@ namespace actions {
 template< typename ConcreteEntity >
 class Entity : public Parameter< const ConcreteEntity* >
              , public tools::Observer_ABC
-             , public kernel::ElementObserver_ABC< ConcreteEntity >
+             , public tools::ElementObserver_ABC< ConcreteEntity >
 {
 
 public:

@@ -12,7 +12,7 @@
 
 #include "clients_gui/InfoPanel_ABC.h"
 #include "clients_kernel/TeamSelectionObserver.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
 namespace kernel
@@ -53,18 +53,18 @@ class ObjectPerceptions;
 // =============================================================================
 class ObjectKnowledgePanel : public gui::InfoPanel_ABC
                            , public tools::Observer_ABC
-                           , public kernel::ElementObserver_ABC< ObjectKnowledges >                           
-                           , public kernel::ElementObserver_ABC< ObjectPerceptions >
-                           , public kernel::ElementObserver_ABC< kernel::ObjectKnowledge_ABC >
-                           , public kernel::ElementObserver_ABC< kernel::ConstructionAttribute_ABC >
-                           , public kernel::ElementObserver_ABC< kernel::MineAttribute_ABC >
-                           , public kernel::ElementObserver_ABC< kernel::ObstacleAttribute_ABC >    
-                           , public kernel::ElementObserver_ABC< kernel::BypassAttribute_ABC >
-                           , public kernel::ElementObserver_ABC< kernel::LogisticAttribute_ABC >
-                           , public kernel::ElementObserver_ABC< kernel::CrossingSiteAttribute_ABC >
-                           , public kernel::ElementObserver_ABC< kernel::SupplyRouteAttribute_ABC >
-                           , public kernel::ElementObserver_ABC< kernel::NBCAttribute_ABC >
-                           , public kernel::ElementObserver_ABC< kernel::ActivityTimeAttribute_ABC >                           
+                           , public tools::ElementObserver_ABC< ObjectKnowledges >                           
+                           , public tools::ElementObserver_ABC< ObjectPerceptions >
+                           , public tools::ElementObserver_ABC< kernel::ObjectKnowledge_ABC >
+                           , public tools::ElementObserver_ABC< kernel::ConstructionAttribute_ABC >
+                           , public tools::ElementObserver_ABC< kernel::MineAttribute_ABC >
+                           , public tools::ElementObserver_ABC< kernel::ObstacleAttribute_ABC >    
+                           , public tools::ElementObserver_ABC< kernel::BypassAttribute_ABC >
+                           , public tools::ElementObserver_ABC< kernel::LogisticAttribute_ABC >
+                           , public tools::ElementObserver_ABC< kernel::CrossingSiteAttribute_ABC >
+                           , public tools::ElementObserver_ABC< kernel::SupplyRouteAttribute_ABC >
+                           , public tools::ElementObserver_ABC< kernel::NBCAttribute_ABC >
+                           , public tools::ElementObserver_ABC< kernel::ActivityTimeAttribute_ABC >                           
                            , public kernel::TeamSelectionObserver
 {
     Q_OBJECT;

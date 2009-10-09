@@ -10,7 +10,7 @@
 #ifndef __ScorePanel_h_
 #define __ScorePanel_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "clients_gui/ListDisplayer.h"
 #include <QDockWindow.h>
 
@@ -45,9 +45,9 @@ class ScoreModel;
 // =============================================================================
 class ScorePanel : public QDockWindow
                  , public tools::Observer_ABC
-                 , public kernel::ElementObserver_ABC< Score >
-                 , public kernel::ElementObserver_ABC< kernel::ModelUnLoaded >
-                 , public kernel::ElementObserver_ABC< IndicatorRequest >
+                 , public tools::ElementObserver_ABC< Score >
+                 , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
+                 , public tools::ElementObserver_ABC< IndicatorRequest >
 {
     Q_OBJECT;
 

@@ -10,7 +10,7 @@
 #ifndef __TimelineRuler_h_
 #define __TimelineRuler_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -27,7 +27,7 @@ class Simulation;
 // =============================================================================
 class TimelineRuler : public QWidget
                     , public tools::Observer_ABC
-                    , public kernel::ElementObserver_ABC< Simulation >
+                    , public tools::ElementObserver_ABC< Simulation >
 {
     Q_OBJECT;
 

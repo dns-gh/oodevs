@@ -12,7 +12,7 @@
 
 #include "clients_kernel/Entity_ABC.h"
 #include "tools/Observer_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include "clients_kernel/tools.h"
 #include "ShapeHandler_ABC.h"
@@ -46,8 +46,8 @@ namespace gui
 // =============================================================================
 class ObjectPrototype_ABC : public QGroupBox
                           , public tools::Observer_ABC
-                          , public kernel::ElementObserver_ABC< kernel::Team_ABC >
-                          , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
+                          , public tools::ElementObserver_ABC< kernel::Team_ABC >
+                          , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                           , public ShapeHandler_ABC
 {
     Q_OBJECT;

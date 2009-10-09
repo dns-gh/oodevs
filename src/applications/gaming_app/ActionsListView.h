@@ -11,7 +11,7 @@
 #define __ActionsListView_h_
 
 #include "clients_gui/ListDisplayer.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -38,8 +38,8 @@ typedef gui::ListView< ActionsListView > ActionsListViewBase;
 // =============================================================================
 class ActionsListView : public ActionsListViewBase
                       , public tools::Observer_ABC
-                      , public kernel::ElementObserver_ABC< actions::Action_ABC >
-                      , public kernel::ElementObserver_ABC< ActionTiming >
+                      , public tools::ElementObserver_ABC< actions::Action_ABC >
+                      , public tools::ElementObserver_ABC< ActionTiming >
 {
     Q_OBJECT;
 

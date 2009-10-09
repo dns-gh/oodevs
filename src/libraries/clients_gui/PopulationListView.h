@@ -10,7 +10,7 @@
 #ifndef __gui_PopulationListView_h_
 #define __gui_PopulationListView_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
 #include "ListView.h"
 
@@ -34,10 +34,10 @@ namespace gui
 // =============================================================================
 class PopulationListView : public ListView< PopulationListView >
                          , public tools::Observer_ABC
-                         , public kernel::ElementObserver_ABC< kernel::Population_ABC >
-                         , public kernel::ElementObserver_ABC< kernel::Profile_ABC >
-                         , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
-                         , public kernel::ElementObserver_ABC< kernel::Team_ABC >
+                         , public tools::ElementObserver_ABC< kernel::Population_ABC >
+                         , public tools::ElementObserver_ABC< kernel::Profile_ABC >
+                         , public tools::ElementObserver_ABC< kernel::Entity_ABC >
+                         , public tools::ElementObserver_ABC< kernel::Team_ABC >
                          , public tools::SelectionObserver< kernel::Entity_ABC >
 {
     Q_OBJECT;

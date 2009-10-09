@@ -10,7 +10,7 @@
 #ifndef __FolkToolbar_h_
 #define __FolkToolbar_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 class FolkModel;
 
@@ -27,7 +27,7 @@ namespace kernel
 // =============================================================================
 class FolkToolbar : public QToolBar
                   , public tools::Observer_ABC
-                  , public kernel::ElementObserver_ABC< FolkModel >
+                  , public tools::ElementObserver_ABC< FolkModel >
 {
     Q_OBJECT;
 

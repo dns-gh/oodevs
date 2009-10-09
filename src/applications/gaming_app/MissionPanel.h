@@ -14,7 +14,7 @@
 #include "tools/Observer_ABC.h"
 #include "tools/Iterator.h"
 #include "clients_kernel/SafePointer.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -68,7 +68,7 @@ class MissionPanel : public QDockWindow
                    , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
                    , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                    , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
-                   , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
+                   , public tools::ElementObserver_ABC< kernel::Entity_ABC >
 {
     Q_OBJECT;
 

@@ -11,7 +11,7 @@
 #define __ProgressPage_h_
 
 #include "ContentPage.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -34,7 +34,7 @@ class QTimer;
 // =============================================================================
 class ProgressPage : public ContentPage
                    , public tools::Observer_ABC
-                   , public kernel::ElementObserver_ABC< boost::shared_ptr< frontend::Process_ABC > >
+                   , public tools::ElementObserver_ABC< boost::shared_ptr< frontend::Process_ABC > >
 {
     Q_OBJECT;
 

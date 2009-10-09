@@ -10,7 +10,7 @@
 #ifndef __TimelineActionItem_h_
 #define __TimelineActionItem_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "TimelineItem_ABC.h"
 
 namespace kernel
@@ -42,7 +42,7 @@ class TimelineRuler;
 class TimelineActionItem : public QObject
                          , public TimelineItem_ABC
                          , public tools::Observer_ABC
-                         , public kernel::ElementObserver_ABC< ActionTiming >
+                         , public tools::ElementObserver_ABC< ActionTiming >
 {
     Q_OBJECT;
 

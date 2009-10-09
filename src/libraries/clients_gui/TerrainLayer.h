@@ -13,7 +13,7 @@
 #include "Layer_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "clients_kernel/TristateOption.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/WorldParameters.h"
 
 class RawShapeLayer;
@@ -38,7 +38,7 @@ namespace gui
 class TerrainLayer : public Layer2d_ABC
                    , public tools::Observer_ABC
                    , public kernel::OptionsObserver_ABC
-                   , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
+                   , public tools::ElementObserver_ABC< kernel::ModelLoaded >
 {
 
 public:

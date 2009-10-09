@@ -10,7 +10,7 @@
 #ifndef __XmliaWidget_h_
 #define __XmliaWidget_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "gaming/CommandHandler_ABC.h"
 
 namespace kernel
@@ -31,7 +31,7 @@ class CommandHandler;
 // =============================================================================
 class XmliaWidget : public QListView
                  , public tools::Observer_ABC
-                 , public kernel::ElementObserver_ABC< UserProfile >
+                 , public tools::ElementObserver_ABC< UserProfile >
                  , public CommandHandler_ABC
 {
     Q_OBJECT;

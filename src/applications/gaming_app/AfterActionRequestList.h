@@ -10,7 +10,7 @@
 #ifndef __AfterActionRequestList_h_
 #define __AfterActionRequestList_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "clients_gui/ListDisplayer.h"
 
 namespace kernel
@@ -29,7 +29,7 @@ class IndicatorPlotFactory;
 // =============================================================================
 class AfterActionRequestList : public QVBox
                              , public tools::Observer_ABC
-                             , public kernel::ElementObserver_ABC< IndicatorRequest > 
+                             , public tools::ElementObserver_ABC< IndicatorRequest > 
 {
     Q_OBJECT;
 

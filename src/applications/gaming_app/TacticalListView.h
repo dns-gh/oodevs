@@ -31,7 +31,7 @@ class Publisher_ABC;
 // Created: AGE 2006-11-23
 // =============================================================================
 class TacticalListView : public gui::HierarchyListView< kernel::TacticalHierarchies >
-                       , public kernel::ElementObserver_ABC< AutomatDecisions >
+                       , public tools::ElementObserver_ABC< AutomatDecisions >
 {
 
 public:

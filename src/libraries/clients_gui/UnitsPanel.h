@@ -12,7 +12,7 @@
 
 #include "InfoPanel_ABC.h"
 #include "ValuedComboBox.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -38,7 +38,7 @@ namespace gui
 // =============================================================================
 class UnitsPanel : public InfoPanel_ABC
                  , public tools::Observer_ABC
-                 , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
+                 , public tools::ElementObserver_ABC< kernel::ModelLoaded >
 {
     Q_OBJECT;
 

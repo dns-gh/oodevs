@@ -11,7 +11,7 @@
 #define __PropertiesWidget_h_
 
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -34,7 +34,7 @@ namespace gui
 class PropertiesWidget : public QWidget
                        , public kernel::Displayer_ABC
                        , public tools::Observer_ABC
-                       , public kernel::ElementObserver_ABC< kernel::DictionaryUpdated >
+                       , public tools::ElementObserver_ABC< kernel::DictionaryUpdated >
 {
     Q_OBJECT;
 

@@ -10,7 +10,7 @@
 #ifndef __InfoSubordinateItem_h_
 #define __InfoSubordinateItem_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include <qiconview.h>
 
 namespace kernel
@@ -33,7 +33,7 @@ namespace gui
 // =============================================================================
 class InfoSubordinateItem : public QIconViewItem
                           , public tools::Observer_ABC
-                          , public kernel::ElementObserver_ABC< kernel::Attributes_ABC >
+                          , public tools::ElementObserver_ABC< kernel::Attributes_ABC >
 {
 
 public:

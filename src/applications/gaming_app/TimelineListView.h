@@ -11,7 +11,7 @@
 #define __TimelineListView_h_
 
 #include <qlistview.h>
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -32,8 +32,8 @@ namespace actions
 // =============================================================================
 class TimelineListView : public QListView
                        , public tools::Observer_ABC
-                       , public kernel::ElementObserver_ABC< actions::Action_ABC >
-                       , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
+                       , public tools::ElementObserver_ABC< actions::Action_ABC >
+                       , public tools::ElementObserver_ABC< kernel::Entity_ABC >
 {
     Q_OBJECT;
 

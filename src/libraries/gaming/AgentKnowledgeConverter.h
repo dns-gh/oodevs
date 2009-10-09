@@ -11,7 +11,7 @@
 #define __AgentKnowledgeConverter_h_
 
 #include "clients_kernel/AgentKnowledgeConverter_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -27,8 +27,8 @@ namespace kernel
 // =============================================================================
 class AgentKnowledgeConverter : public kernel::AgentKnowledgeConverter_ABC
                               , public tools::Observer_ABC
-                              , public kernel::ElementObserver_ABC< kernel::AgentKnowledge_ABC >
-                              , public kernel::ElementObserver_ABC< kernel::PopulationKnowledge_ABC >
+                              , public tools::ElementObserver_ABC< kernel::AgentKnowledge_ABC >
+                              , public tools::ElementObserver_ABC< kernel::PopulationKnowledge_ABC >
 {
 
 public:

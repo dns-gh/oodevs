@@ -11,7 +11,7 @@
 #define __CreationPanels_h_
 
 #include "clients_gui/Panels.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -44,7 +44,7 @@ class DrawingsModel;
 // =============================================================================
 class CreationPanels : public gui::Panels
                      , public tools::Observer_ABC
-                     , public kernel::ElementObserver_ABC< Services >
+                     , public tools::ElementObserver_ABC< Services >
 {
 public:
     //! @name Constructors/Destructor

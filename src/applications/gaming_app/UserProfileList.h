@@ -10,7 +10,7 @@
 #ifndef __UserProfileList_h_
 #define __UserProfileList_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -29,7 +29,7 @@ class UserProfileFactory_ABC;
 // =============================================================================
 class UserProfileList : public QVBox
                       , public tools::Observer_ABC
-                      , public kernel::ElementObserver_ABC< UserProfile >
+                      , public tools::ElementObserver_ABC< UserProfile >
 {
     Q_OBJECT;
 

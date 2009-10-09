@@ -19,7 +19,7 @@
 // Created: SBO 2008-04-14
 // =============================================================================
 class FogLayer : public gui::EntityLayerBase
-               , public kernel::ElementObserver_ABC< kernel::Agent_ABC >
+               , public tools::ElementObserver_ABC< kernel::Agent_ABC >
 {
 
 public:

@@ -32,7 +32,7 @@ class AutomatDecisions;
 // Created: SBO 2006-08-18
 // =============================================================================
 class AgentListView : public gui::HierarchyListView< kernel::CommunicationHierarchies >
-                    , public kernel::ElementObserver_ABC< AutomatDecisions >
+                    , public tools::ElementObserver_ABC< AutomatDecisions >
 {
 
 public:

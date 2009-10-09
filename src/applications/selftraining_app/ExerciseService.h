@@ -10,7 +10,7 @@
 #ifndef __ExerciseService_h_
 #define __ExerciseService_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #pragma warning( push )
 #pragma warning( disable: 4512 )
 #ifndef _WIN32_WINNT
@@ -43,7 +43,7 @@ class Config;
 // Created: LDC 2008-10-23
 // =============================================================================
 class ExerciseService : public tools::Observer_ABC
-                      , public kernel::ElementObserver_ABC< boost::shared_ptr< frontend::Process_ABC > >
+                      , public tools::ElementObserver_ABC< boost::shared_ptr< frontend::Process_ABC > >
 {
 
 public:

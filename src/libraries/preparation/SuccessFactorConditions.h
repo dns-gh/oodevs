@@ -10,7 +10,7 @@
 #ifndef __SuccessFactorConditions_h_
 #define __SuccessFactorConditions_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver.h"
 
 namespace kernel
@@ -36,7 +36,7 @@ class SuccessFactorCondition;
 // =============================================================================
 class SuccessFactorConditions : public tools::Resolver< SuccessFactorCondition >
                               , public tools::Observer_ABC
-                              , public kernel::ElementObserver_ABC< Score_ABC >
+                              , public tools::ElementObserver_ABC< Score_ABC >
 {
 
 public:

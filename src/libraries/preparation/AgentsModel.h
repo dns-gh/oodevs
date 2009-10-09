@@ -11,7 +11,7 @@
 #define __AgentsModel_h_
 
 #include "tools/Resolver.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/WorldParameters.h"
 #include "clients_kernel/ModelLoaded.h"
 
@@ -47,10 +47,10 @@ class AgentsModel : public tools::Resolver< kernel::Agent_ABC >
                   , public tools::Resolver< kernel::Automat_ABC >
                   , public tools::Resolver< kernel::Population_ABC >
                   , public tools::Observer_ABC
-                  , public kernel::ElementObserver_ABC< kernel::Agent_ABC >
-                  , public kernel::ElementObserver_ABC< kernel::Automat_ABC >
-                  , public kernel::ElementObserver_ABC< kernel::Population_ABC >
-                  , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
+                  , public tools::ElementObserver_ABC< kernel::Agent_ABC >
+                  , public tools::ElementObserver_ABC< kernel::Automat_ABC >
+                  , public tools::ElementObserver_ABC< kernel::Population_ABC >
+                  , public tools::ElementObserver_ABC< kernel::ModelLoaded >
 {
 
 public:

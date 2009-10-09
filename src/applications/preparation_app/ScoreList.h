@@ -10,7 +10,7 @@
 #ifndef __ScoreList_h_
 #define __ScoreList_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "clients_gui/ListDisplayer.h"
 
 namespace gui
@@ -42,7 +42,7 @@ class StaticModel;
 // =============================================================================
 class ScoreList : public QVBox
                 , public tools::Observer_ABC
-                , public kernel::ElementObserver_ABC< Score_ABC > 
+                , public tools::ElementObserver_ABC< Score_ABC > 
 {
     Q_OBJECT;
 

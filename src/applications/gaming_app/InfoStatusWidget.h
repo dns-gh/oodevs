@@ -11,7 +11,7 @@
 #define __InfoStatusWidget_h_
 
 #include "tools/SelectionObserver_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
 namespace kernel
@@ -42,9 +42,9 @@ class Reinforcements;
 class InfoStatusWidget : public QVBox
                        , public tools::Observer_ABC
                        , public tools::SelectionObserver< kernel::Entity_ABC >
-                       , public kernel::ElementObserver_ABC< kernel::Attributes_ABC >
-                       , public kernel::ElementObserver_ABC< kernel::HumanFactors_ABC >
-                       , public kernel::ElementObserver_ABC< Reinforcements >
+                       , public tools::ElementObserver_ABC< kernel::Attributes_ABC >
+                       , public tools::ElementObserver_ABC< kernel::HumanFactors_ABC >
+                       , public tools::ElementObserver_ABC< Reinforcements >
 {
     Q_OBJECT;
 

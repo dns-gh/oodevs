@@ -10,7 +10,7 @@
 #ifndef __SafePointer_h_
 #define __SafePointer_h_
 
-#include "ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -24,7 +24,7 @@ namespace kernel
 // =============================================================================
 template< typename T >
 class SafePointer : public tools::Observer_ABC
-                  , public ElementObserver_ABC< T >
+                  , public tools::ElementObserver_ABC< T >
 {
 
 public:

@@ -10,7 +10,7 @@
 #ifndef __LogisticConsignsWidget_ABC_h_
 #define __LogisticConsignsWidget_ABC_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Controllers.h"
@@ -33,8 +33,8 @@ namespace gui
 template< typename ConcreteDisplayer, typename Consign, typename Extension >
 class LogisticConsignsWidget_ABC : public QVBox
                                  , public tools::Observer_ABC
-                                 , public kernel::ElementObserver_ABC< Extension >
-                                 , public kernel::ElementObserver_ABC< Consign >
+                                 , public tools::ElementObserver_ABC< Extension >
+                                 , public tools::ElementObserver_ABC< Consign >
                                  , public tools::SelectionObserver< kernel::Entity_ABC >
 {
 

@@ -11,7 +11,7 @@
 #define __Elevation2dLayer_h_
 
 #include "Layer_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "Gradient.h"
 
 class TextureSet;
@@ -36,7 +36,7 @@ namespace gui
 // =============================================================================
 class Elevation2dLayer : public Layer2d_ABC
                        , public tools::Observer_ABC
-                       , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
+                       , public tools::ElementObserver_ABC< kernel::ModelLoaded >
 {
 
 public:

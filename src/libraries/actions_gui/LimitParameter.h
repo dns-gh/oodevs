@@ -12,7 +12,7 @@
 
 #include "Param_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -46,7 +46,7 @@ namespace actions
 class LimitParameter : public QObject
                      , public Param_ABC
                      , public kernel::ContextMenuObserver_ABC< kernel::TacticalLine_ABC >
-                     , public kernel::ElementObserver_ABC< kernel::TacticalLine_ABC >
+                     , public tools::ElementObserver_ABC< kernel::TacticalLine_ABC >
 
 {
     Q_OBJECT;

@@ -11,7 +11,7 @@
 #define __DrawerPanel_h_
 
 #include "InfoPanel_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
@@ -44,8 +44,8 @@ namespace gui
 // =============================================================================
 class DrawerPanel : public InfoPanel_ABC
                   , public tools::Observer_ABC
-                  , public kernel::ElementObserver_ABC< DrawingCategory >
-                  , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
+                  , public tools::ElementObserver_ABC< DrawingCategory >
+                  , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                   , public tools::SelectionObserver< Drawing_ABC >
 {
     Q_OBJECT;

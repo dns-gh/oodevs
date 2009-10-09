@@ -11,7 +11,7 @@
 #define __TimelineMarker_h_
 
 #include "TimelineItem_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -30,7 +30,7 @@ class TimelineRuler;
 // =============================================================================
 class TimelineMarker : public TimelineItem_ABC
                      , public tools::Observer_ABC
-                     , public kernel::ElementObserver_ABC< Simulation >
+                     , public tools::ElementObserver_ABC< Simulation >
 {
 
 public:

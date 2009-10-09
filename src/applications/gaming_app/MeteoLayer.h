@@ -11,7 +11,7 @@
 #define __MeteoLayer_h_
 
 #include "clients_gui/Layer_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -29,7 +29,7 @@ class AmmoEffect;
 // =============================================================================
 class MeteoLayer : public gui::Layer_ABC
                  , public tools::Observer_ABC
-                 , public kernel::ElementObserver_ABC< AmmoEffect >
+                 , public tools::ElementObserver_ABC< AmmoEffect >
 {
 
 public:

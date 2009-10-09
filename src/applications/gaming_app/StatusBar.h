@@ -11,7 +11,7 @@
 #define __StatusBar_h_
 
 #include "clients_gui/StatusBar.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "gaming/Simulation.h"
 
 namespace kernel
@@ -27,10 +27,10 @@ namespace kernel
 // =============================================================================
 class StatusBar : public gui::StatusBar
                 , public tools::Observer_ABC
-                , public kernel::ElementObserver_ABC< Simulation >
-                , public kernel::ElementObserver_ABC< Simulation::sStartTick >
-                , public kernel::ElementObserver_ABC< Simulation::sEndTick >
-                , public kernel::ElementObserver_ABC< Simulation::sCheckPoint >
+                , public tools::ElementObserver_ABC< Simulation >
+                , public tools::ElementObserver_ABC< Simulation::sStartTick >
+                , public tools::ElementObserver_ABC< Simulation::sEndTick >
+                , public tools::ElementObserver_ABC< Simulation::sCheckPoint >
 {
     Q_OBJECT;
 

@@ -27,7 +27,7 @@ namespace
 // =============================================================================
 class UserProfileUnitRights : public ::T_Parent
                             , public UserProfileRights_ABC
-                            , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
+                            , public tools::ElementObserver_ABC< kernel::Entity_ABC >
 {
     Q_OBJECT;
 

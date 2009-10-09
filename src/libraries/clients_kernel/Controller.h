@@ -11,7 +11,7 @@
 #define __Controller_h_
 
 #include "tools/SortedInterfaceContainer.h"
-#include "ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "ControllerObserver_ABC.h"
 #include "tools/Observer_ABC.h"
 
@@ -42,19 +42,19 @@ public:
 
     template< typename T >
     void Create( const T& extension ) {
-        Apply( & ElementObserver_ABC< T >::NotifyCreated, extension );
+        Apply( & tools::ElementObserver_ABC< T >::NotifyCreated, extension );
         Apply( & ControllerObserver_ABC::NotifyCreated );
     };
 
     template< typename T >
     void Update( const T& extension ) {
-        Apply( & ElementObserver_ABC< T >::NotifyUpdated, extension );
+        Apply( & tools::ElementObserver_ABC< T >::NotifyUpdated, extension );
         Apply( & ControllerObserver_ABC::NotifyUpdated );
     };
 
     template< typename T >
     void Delete( const T& extension ) {
-        Apply( & ElementObserver_ABC< T >::NotifyDeleted, extension );
+        Apply( & tools::ElementObserver_ABC< T >::NotifyDeleted, extension );
         Apply( & ControllerObserver_ABC::NotifyDeleted );
     };
     //@}

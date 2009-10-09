@@ -12,7 +12,7 @@
 
 #include "game_asn/Simulation.h"
 #include "clients_kernel/Profile_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver_ABC.h"
 
 namespace kernel
@@ -39,12 +39,12 @@ class Model;
 // =============================================================================
 class Profile : public kernel::Profile_ABC
               , public tools::Observer_ABC
-              , public kernel::ElementObserver_ABC< kernel::Automat_ABC >
-              , public kernel::ElementObserver_ABC< kernel::Population_ABC >
-              , public kernel::ElementObserver_ABC< kernel::Team_ABC >
-              , public kernel::ElementObserver_ABC< kernel::Formation_ABC >
-              , public kernel::ElementObserver_ABC< Simulation >
-              , public kernel::ElementObserver_ABC< Services >
+              , public tools::ElementObserver_ABC< kernel::Automat_ABC >
+              , public tools::ElementObserver_ABC< kernel::Population_ABC >
+              , public tools::ElementObserver_ABC< kernel::Team_ABC >
+              , public tools::ElementObserver_ABC< kernel::Formation_ABC >
+              , public tools::ElementObserver_ABC< Simulation >
+              , public tools::ElementObserver_ABC< Services >
 {
 
 public:

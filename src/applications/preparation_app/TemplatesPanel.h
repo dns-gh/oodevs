@@ -10,7 +10,7 @@
 #ifndef __TemplatesPanel_h_
 #define __TemplatesPanel_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/ModelLoaded.h"
@@ -35,8 +35,8 @@ class FormationModel;
 // =============================================================================
 class TemplatesPanel : public gui::InfoPanel_ABC
                      , public tools::Observer_ABC
-                     , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
-                     , public kernel::ElementObserver_ABC< kernel::ModelUnLoaded >
+                     , public tools::ElementObserver_ABC< kernel::ModelLoaded >
+                     , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
                      , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
 {
     Q_OBJECT;

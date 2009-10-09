@@ -11,7 +11,7 @@
 #define __PopulationTypesListView_h_
 
 #include "clients_gui/ListView.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver_ABC.h"
 
 namespace kernel
@@ -35,8 +35,8 @@ namespace gui
 // =============================================================================
 class PopulationTypesListView : public gui::ListView< PopulationTypesListView >
                               , public tools::Observer_ABC
-                              , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
-                              , public kernel::ElementObserver_ABC< kernel::ModelUnLoaded >
+                              , public tools::ElementObserver_ABC< kernel::ModelLoaded >
+                              , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
 {
 
 public:

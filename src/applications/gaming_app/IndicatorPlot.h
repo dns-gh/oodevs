@@ -11,7 +11,7 @@
 #define __IndicatorPlot_h_
 
 #include "GQ_Plot.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -31,8 +31,8 @@ class Simulation;
 // =============================================================================
 class IndicatorPlot : public GQ_Plot
                     , public tools::Observer_ABC
-                    , public kernel::ElementObserver_ABC< Simulation >
-                    , public kernel::ElementObserver_ABC< IndicatorRequest >
+                    , public tools::ElementObserver_ABC< Simulation >
+                    , public tools::ElementObserver_ABC< IndicatorRequest >
 {
     Q_OBJECT;
 

@@ -13,7 +13,7 @@
 #include "game_asn/Simulation.h"
 #include "Param_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/Controller.h"
 #include "actions/Entity.h"
@@ -85,7 +85,7 @@ private:
 template< typename ConcreteEntity >
 class EntityParameter : public EntityParameterBase
                       , public kernel::ContextMenuObserver_ABC< ConcreteEntity >
-                      , public kernel::ElementObserver_ABC< ConcreteEntity >
+                      , public tools::ElementObserver_ABC< ConcreteEntity >
 {
 public:
     //! @name Constructors/Destructor

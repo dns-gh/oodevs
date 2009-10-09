@@ -10,7 +10,7 @@
 #ifndef __LogisticStatusWidget_ABC_h_
 #define __LogisticStatusWidget_ABC_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_gui/DisplayBuilder.h"
@@ -37,7 +37,7 @@ namespace gui
 template< typename Extension >
 class LogisticStatusWidget_ABC : public QVBox
                                , public tools::Observer_ABC
-                               , public kernel::ElementObserver_ABC< Extension >
+                               , public tools::ElementObserver_ABC< Extension >
                                , public tools::SelectionObserver< kernel::Entity_ABC >
 {
 

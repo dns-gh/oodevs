@@ -10,7 +10,7 @@
 #ifndef __SuccessFactorProfiles_h_
 #define __SuccessFactorProfiles_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver.h"
 
 namespace kernel
@@ -35,7 +35,7 @@ class UserProfile;
 // =============================================================================
 class SuccessFactorProfiles : public tools::Resolver< const UserProfile, QString >
                             , public tools::Observer_ABC
-                            , public kernel::ElementObserver_ABC< UserProfile >
+                            , public tools::ElementObserver_ABC< UserProfile >
 {
 
 public:

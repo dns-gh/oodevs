@@ -10,7 +10,7 @@
 #ifndef __DrawerModel_h_
 #define __DrawerModel_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver.h"
 
 namespace xml
@@ -36,7 +36,7 @@ namespace gui
 // Created: SBO 2007-03-22
 // =============================================================================
 class DrawerModel : public tools::Observer_ABC
-                  , public kernel::ElementObserver_ABC< Drawing_ABC >
+                  , public tools::ElementObserver_ABC< Drawing_ABC >
                   , public tools::Resolver< Drawing_ABC >
 {
 

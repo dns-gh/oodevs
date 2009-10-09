@@ -10,7 +10,7 @@
 #ifndef __ScoreModel_h_
 #define __ScoreModel_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver.h"
 #include "game_asn/Aar.h"
 
@@ -34,7 +34,7 @@ class Services;
 // =============================================================================
 class ScoreModel : public tools::Resolver< Score, QString >
                  , public tools::Observer_ABC
-                 , public kernel::ElementObserver_ABC< Services >
+                 , public tools::ElementObserver_ABC< Services >
 {
 
 public:

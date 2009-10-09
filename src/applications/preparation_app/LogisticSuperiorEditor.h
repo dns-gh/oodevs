@@ -12,7 +12,7 @@
 
 #include "clients_gui/ValuedComboBox.h"
 #include "clients_kernel/ValueEditor.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include "preparation/LogisticSuperior.h"
 
@@ -26,7 +26,7 @@ template< typename Superior >
 class LogisticSuperiorEditor : public gui::ValuedComboBox< const kernel::Automat_ABC* >
                              , public kernel::ValueEditor< Superior >
                              , public tools::Observer_ABC
-                             , public kernel::ElementObserver_ABC< kernel::Automat_ABC >
+                             , public tools::ElementObserver_ABC< kernel::Automat_ABC >
 {
 
 public:

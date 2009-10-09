@@ -11,7 +11,7 @@
 #define __IntelligencesModel_h_
 
 #include "tools/Resolver.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/IntelligenceFactory_ABC.h"
 
 namespace xml
@@ -36,7 +36,7 @@ class IdManager;
 // =============================================================================
 class IntelligencesModel : public tools::Resolver< kernel::Intelligence_ABC >
                          , public kernel::IntelligenceFactory_ABC
-                         , public kernel::ElementObserver_ABC< kernel::Intelligence_ABC >
+                         , public tools::ElementObserver_ABC< kernel::Intelligence_ABC >
 {
 
 public:

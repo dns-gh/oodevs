@@ -10,7 +10,7 @@
 #ifndef __ActionsScheduler_h_
 #define __ActionsScheduler_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "Simulation.h"
 
 namespace kernel
@@ -32,7 +32,7 @@ class Simulation;
 // =============================================================================
 class ActionsScheduler : public QObject // $$$$ AGE 2008-05-19: why ?
                        , public tools::Observer_ABC
-                       , public kernel::ElementObserver_ABC< Simulation::sStartTick >
+                       , public tools::ElementObserver_ABC< Simulation::sStartTick >
 {
 
 public:

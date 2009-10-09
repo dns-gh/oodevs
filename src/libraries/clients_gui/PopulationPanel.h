@@ -12,7 +12,7 @@
 
 #include "InfoPanel_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
 class QListViewItem;
@@ -38,7 +38,7 @@ namespace gui
 class PopulationPanel : public InfoPanel_ABC
                       , public tools::Observer_ABC
                       , public tools::SelectionObserver< kernel::Population_ABC >
-                      , public kernel::ElementObserver_ABC< kernel::Population_ABC >
+                      , public tools::ElementObserver_ABC< kernel::Population_ABC >
 {
 
 public:

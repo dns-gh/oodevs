@@ -10,7 +10,7 @@
 #ifndef __EventToolbar_h_
 #define __EventToolbar_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "tools/Observer_ABC.h"
 
 #include <deque>
@@ -33,10 +33,10 @@ class Simulation;
 // =============================================================================
 class EventToolbar : public QToolBar
                    , public tools::Observer_ABC
-                   , public kernel::ElementObserver_ABC< Report >
-                   , public kernel::ElementObserver_ABC< kernel::Profile_ABC >
-                   , public kernel::ElementObserver_ABC< Simulation >
-                   , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
+                   , public tools::ElementObserver_ABC< Report >
+                   , public tools::ElementObserver_ABC< kernel::Profile_ABC >
+                   , public tools::ElementObserver_ABC< Simulation >
+                   , public tools::ElementObserver_ABC< kernel::Entity_ABC >
 {
     Q_OBJECT;
 

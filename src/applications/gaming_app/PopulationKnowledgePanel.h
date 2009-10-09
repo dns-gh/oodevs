@@ -11,7 +11,7 @@
 #define __PopulationKnowledgePanel_h_
 
 #include "clients_gui/InfoPanel_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "gaming/KnowledgeGroupSelectionObserver.h"
 #include "clients_kernel/SafePointer.h"
 
@@ -44,10 +44,10 @@ class PopulationConcentrationKnowledge;
 class PopulationKnowledgePanel : public gui::InfoPanel_ABC
                                , public tools::Observer_ABC
                                , public KnowledgeGroupSelectionObserver
-                               , public kernel::ElementObserver_ABC< PopulationKnowledges >
-                               , public kernel::ElementObserver_ABC< kernel::PopulationKnowledge_ABC >
-                               , public kernel::ElementObserver_ABC< PopulationFlowKnowledge >
-                               , public kernel::ElementObserver_ABC< PopulationConcentrationKnowledge >
+                               , public tools::ElementObserver_ABC< PopulationKnowledges >
+                               , public tools::ElementObserver_ABC< kernel::PopulationKnowledge_ABC >
+                               , public tools::ElementObserver_ABC< PopulationFlowKnowledge >
+                               , public tools::ElementObserver_ABC< PopulationConcentrationKnowledge >
 {
     Q_OBJECT;
 public:

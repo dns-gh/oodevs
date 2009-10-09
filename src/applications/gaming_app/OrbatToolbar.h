@@ -10,7 +10,7 @@
 #ifndef __OrbatToolbar_h_
 #define __OrbatToolbar_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
@@ -37,10 +37,10 @@ class ProfileFilter;
 // =============================================================================
 class OrbatToolbar : public QHBox
                    , public tools::Observer_ABC
-                   , public kernel::ElementObserver_ABC< kernel::Automat_ABC >
+                   , public tools::ElementObserver_ABC< kernel::Automat_ABC >
                    , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
-                   , public kernel::ElementObserver_ABC< Simulation >
-                   , public kernel::ElementObserver_ABC< ProfileFilter >
+                   , public tools::ElementObserver_ABC< Simulation >
+                   , public tools::ElementObserver_ABC< ProfileFilter >
 {
     Q_OBJECT;
 

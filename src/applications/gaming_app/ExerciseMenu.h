@@ -10,7 +10,7 @@
 #ifndef __ExerciseMenu_h_
 #define __ExerciseMenu_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include <qpopupmenu.h>
 
 namespace kernel
@@ -44,8 +44,8 @@ namespace tools
 // =============================================================================
 class ExerciseMenu : public QPopupMenu
                    , public tools::Observer_ABC
-                   , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
-                   , public kernel::ElementObserver_ABC< kernel::ModelUnLoaded >
+                   , public tools::ElementObserver_ABC< kernel::ModelLoaded >
+                   , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
 {
     Q_OBJECT;
 

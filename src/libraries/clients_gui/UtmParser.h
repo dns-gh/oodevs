@@ -11,7 +11,7 @@
 #define __UtmParser_h_
 
 #include "LocationParser_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/ModelLoaded.h"
 
 namespace kernel
@@ -31,7 +31,7 @@ namespace gui
 // =============================================================================
 class UtmParser : public LocationParser_ABC
                 , public tools::Observer_ABC
-                , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
+                , public tools::ElementObserver_ABC< kernel::ModelLoaded >
 {
 
 public:

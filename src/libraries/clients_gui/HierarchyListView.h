@@ -23,7 +23,7 @@ namespace gui
 // =============================================================================
 template< typename H >
 class HierarchyListView : public HierarchyListView_ABC
-                        , public kernel::ElementObserver_ABC< H >
+                        , public tools::ElementObserver_ABC< H >
 {
 
 public:

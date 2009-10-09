@@ -28,7 +28,7 @@ namespace gui
 // Created: SBO 2007-10-18
 // =============================================================================
 class IntelligenceListView : public HierarchyListView< kernel::IntelligenceHierarchies >
-                           , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
+                           , public tools::ElementObserver_ABC< kernel::ModelLoaded >
 {
     Q_OBJECT;
 

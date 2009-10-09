@@ -10,7 +10,7 @@
 #ifndef __AfterAction_h_
 #define __AfterAction_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -37,8 +37,8 @@ class StaticModel;
 // =============================================================================
 class AfterAction : public QObject
                   , public tools::Observer_ABC
-                  , public kernel::ElementObserver_ABC< Services >
-                  , public kernel::ElementObserver_ABC< AfterActionRequest >
+                  , public tools::ElementObserver_ABC< Services >
+                  , public tools::ElementObserver_ABC< AfterActionRequest >
 {
 
 public:

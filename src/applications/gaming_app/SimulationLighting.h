@@ -13,7 +13,7 @@
 #include "clients_gui/LightingProxy.h"
 #include "clients_kernel/ModelLoaded.h"
 #include "clients_kernel/WorldParameters.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -30,8 +30,8 @@ class Simulation;
 class SimulationLighting : public gui::LightingProxy
                          , private kernel::WorldParameters
                          , public tools::Observer_ABC
-                         , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
-                         , public kernel::ElementObserver_ABC< Simulation >
+                         , public tools::ElementObserver_ABC< kernel::ModelLoaded >
+                         , public tools::ElementObserver_ABC< Simulation >
 {
 
 public:

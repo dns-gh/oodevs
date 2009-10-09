@@ -12,7 +12,7 @@
 
 #include "clients_gui/InfoPanel_ABC.h"
 #include "clients_gui/ValuedComboBox.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/Types.h"
 
 namespace kernel
@@ -40,7 +40,7 @@ class WeatherLayer;
 // =============================================================================
 class WeatherPanel : public gui::InfoPanel_ABC
                    , public tools::Observer_ABC
-                   , public kernel::ElementObserver_ABC< WeatherModel >
+                   , public tools::ElementObserver_ABC< WeatherModel >
 {
     Q_OBJECT;
 

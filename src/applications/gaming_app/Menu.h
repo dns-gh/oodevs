@@ -10,7 +10,7 @@
 #ifndef __Menu_h_
 #define __Menu_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include <qmenubar.h>
 
 class QMainWindow;
@@ -42,7 +42,7 @@ class Network;
 // =============================================================================
 class Menu : public QMenuBar
            , public tools::Observer_ABC
-           , public kernel::ElementObserver_ABC< Profile >
+           , public tools::ElementObserver_ABC< Profile >
 {
 
 public:

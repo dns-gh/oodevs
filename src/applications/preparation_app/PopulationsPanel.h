@@ -10,7 +10,7 @@
 #ifndef __PopulationsPanel_h_
 #define __PopulationsPanel_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include "clients_gui/InfoPanel_ABC.h"
 
@@ -37,7 +37,7 @@ class PopulationTypesListView;
 // =============================================================================
 class PopulationsPanel : public gui::InfoPanel_ABC
                        , public tools::Observer_ABC
-                       , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
+                       , public tools::ElementObserver_ABC< kernel::ModelLoaded >
 {
 
 public:

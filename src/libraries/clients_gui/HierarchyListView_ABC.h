@@ -11,7 +11,7 @@
 #define __Gui_HierarchyListView_ABC_h_
 
 #include "ListView.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/ActivationObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
@@ -42,8 +42,8 @@ class HierarchyListView_ABC : public ListView< HierarchyListView_ABC >
                             , public tools::Observer_ABC
                             , public tools::SelectionObserver< kernel::Entity_ABC >
                             , public kernel::ActivationObserver_ABC< kernel::Entity_ABC >
-                            , public kernel::ElementObserver_ABC< kernel::Profile_ABC >
-                            , public kernel::ElementObserver_ABC< kernel::Symbol_ABC >
+                            , public tools::ElementObserver_ABC< kernel::Profile_ABC >
+                            , public tools::ElementObserver_ABC< kernel::Symbol_ABC >
 {
    Q_OBJECT;
 

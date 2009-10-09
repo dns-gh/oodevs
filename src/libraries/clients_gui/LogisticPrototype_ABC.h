@@ -13,7 +13,7 @@
 #include "ObjectAttributePrototype_ABC.h"
 #include "tools/Resolver.h"
 #include "tools/Observer_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "ValuedComboBox.h"
@@ -35,7 +35,7 @@ namespace gui
 // =============================================================================
 class LogisticPrototype_ABC : public ObjectAttributePrototype_ABC
                             , public tools::Observer_ABC
-                            , public kernel::ElementObserver_ABC< kernel::Automat_ABC >
+                            , public tools::ElementObserver_ABC< kernel::Automat_ABC >
                             , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
 {
     Q_OBJECT;

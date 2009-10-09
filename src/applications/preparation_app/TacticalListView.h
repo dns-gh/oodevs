@@ -33,9 +33,9 @@ class ModelBuilder;
 // Created: SBO 2006-08-29
 // =============================================================================
 class TacticalListView : public gui::HierarchyListView< kernel::TacticalHierarchies >
-                       , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
-                       , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
-                       , public kernel::ElementObserver_ABC< AutomatDecisions >
+                       , public tools::ElementObserver_ABC< kernel::ModelLoaded >
+                       , public tools::ElementObserver_ABC< kernel::Entity_ABC >
+                       , public tools::ElementObserver_ABC< AutomatDecisions >
                        , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >

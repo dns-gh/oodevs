@@ -11,7 +11,7 @@
 #define __EntitySearchBox_h_
 
 #include "EntitySearchBox_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ActionController.h"
 
@@ -27,7 +27,7 @@ namespace gui
 template< typename Entity >
 class EntitySearchBox : public EntitySearchBox_ABC
                       , public tools::Observer_ABC
-                      , public kernel::ElementObserver_ABC< Entity >
+                      , public tools::ElementObserver_ABC< Entity >
 {
 public:
     //! @name Constructors/Destructor

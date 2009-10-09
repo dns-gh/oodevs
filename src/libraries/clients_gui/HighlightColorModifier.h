@@ -11,7 +11,7 @@
 #define __HighlightColorModifier_h_
 
 #include "clients_kernel/ContextMenuObserver_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "ColorModifier_ABC.h"
 
@@ -33,7 +33,7 @@ namespace gui
 class HighlightColorModifier : public QObject
                              , public ColorModifier_ABC
                              , public tools::Observer_ABC
-                             , public kernel::ElementObserver_ABC    < kernel::Entity_ABC >
+                             , public tools::ElementObserver_ABC    < kernel::Entity_ABC >
                              , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
 {
     Q_OBJECT;

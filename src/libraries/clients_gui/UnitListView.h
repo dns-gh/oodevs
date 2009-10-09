@@ -11,7 +11,7 @@
 #define __UnitListView_h_
 
 #include "ListView.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -37,8 +37,8 @@ namespace gui
 // =============================================================================
 class UnitListView : public ListView< UnitListView >
                    , public tools::Observer_ABC
-                   , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
-                   , public kernel::ElementObserver_ABC< kernel::ModelUnLoaded >
+                   , public tools::ElementObserver_ABC< kernel::ModelLoaded >
+                   , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
 {
 
 public:

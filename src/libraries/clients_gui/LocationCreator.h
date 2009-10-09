@@ -11,7 +11,7 @@
 #define __LocationCreator_h_
 
 #include "clients_kernel/ContextMenuObserver_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -36,7 +36,7 @@ class LocationCreator : public QObject
                       , public kernel::ContextMenuObserver_ABC< kernel::Nothing >
                       , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
                       , public kernel::ContextMenuObserver_ABC< Drawing_ABC >
-                      , public kernel::ElementObserver_ABC    < Drawing_ABC >
+                      , public tools::ElementObserver_ABC    < Drawing_ABC >
 {
     Q_OBJECT;
 

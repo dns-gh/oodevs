@@ -10,7 +10,7 @@
 #ifndef __ScorePrimitivesPage_h_
 #define __ScorePrimitivesPage_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "clients_gui/ListDisplayer.h"
 #include <boost/function.hpp>
 
@@ -35,8 +35,8 @@ namespace indicators
 // =============================================================================
 class ScorePrimitivesPage : public QVBox
                           , public tools::Observer_ABC
-                          , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
-                          , public kernel::ElementObserver_ABC< kernel::ModelUnLoaded >
+                          , public tools::ElementObserver_ABC< kernel::ModelLoaded >
+                          , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
 {
     Q_OBJECT;
 

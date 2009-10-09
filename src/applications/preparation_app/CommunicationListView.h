@@ -27,8 +27,8 @@ class ModelBuilder;
 // Created: SBO 2006-09-25
 // =============================================================================
 class CommunicationListView : public gui::HierarchyListView< kernel::CommunicationHierarchies >
-                            , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
-                            , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
+                            , public tools::ElementObserver_ABC< kernel::ModelLoaded >
+                            , public tools::ElementObserver_ABC< kernel::Entity_ABC >
                             , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
 {
 

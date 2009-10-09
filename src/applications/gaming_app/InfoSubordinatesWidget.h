@@ -11,7 +11,7 @@
 #define __InfoSubordinatesWidget_h_
 
 #include "tools/SelectionObserver_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include <qiconview.h>
 
@@ -36,7 +36,7 @@ namespace gui
 class InfoSubordinatesWidget : public QIconView
                              , public tools::Observer_ABC
                              , public tools::SelectionObserver< kernel::Entity_ABC >
-                             , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
+                             , public tools::ElementObserver_ABC< kernel::Entity_ABC >
 {
     Q_OBJECT;
 

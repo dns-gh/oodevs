@@ -13,7 +13,7 @@
 #include "clients_gui/ListDisplayer.h"
 #include "tools/Observer_ABC.h"
 #include "clients_kernel/SafePointer.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -40,7 +40,7 @@ class Casualties;
 class FireResultListView : public gui::ListDisplayer< FireResultListView >
                          , public tools::Observer_ABC
                          , public tools::SelectionObserver< kernel::Entity_ABC >
-                         , public kernel::ElementObserver_ABC< Explosions >
+                         , public tools::ElementObserver_ABC< Explosions >
 {
 
 public:

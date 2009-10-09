@@ -10,7 +10,7 @@
 #ifndef __CommandPublisher_h_
 #define __CommandPublisher_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
 namespace kernel
@@ -28,8 +28,8 @@ class Services;
 // Created: SBO 2008-06-11
 // =============================================================================
 class CommandPublisher : public tools::Observer_ABC
-                       , public kernel::ElementObserver_ABC< kernel::Profile_ABC >
-                       , public kernel::ElementObserver_ABC< Services >
+                       , public tools::ElementObserver_ABC< kernel::Profile_ABC >
+                       , public tools::ElementObserver_ABC< Services >
 {
 
 public:

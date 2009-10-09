@@ -11,7 +11,7 @@
 #define __gui_ObjectListView_h_
 
 #include "ListView.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
@@ -36,11 +36,11 @@ namespace gui
 // =============================================================================
 class ObjectListView : public ListView< ObjectListView >
                      , public tools::Observer_ABC
-                     , public kernel::ElementObserver_ABC< kernel::Object_ABC >
-                     , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
+                     , public tools::ElementObserver_ABC< kernel::Object_ABC >
+                     , public tools::ElementObserver_ABC< kernel::Entity_ABC >
                      , public tools::SelectionObserver< kernel::Entity_ABC >
                      , public kernel::ActivationObserver_ABC< kernel::Entity_ABC >
-                     , public kernel::ElementObserver_ABC< kernel::Profile_ABC >
+                     , public tools::ElementObserver_ABC< kernel::Profile_ABC >
 {
     Q_OBJECT;
 public:

@@ -11,7 +11,7 @@
 #define __AgentKnowledgePanel_h_
 
 #include "clients_gui/InfoPanel_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "gaming/KnowledgeGroupSelectionObserver.h"
 #include "clients_kernel/SafePointer.h"
 
@@ -44,9 +44,9 @@ class Perception;
 // =============================================================================
 class AgentKnowledgePanel : public gui::InfoPanel_ABC
                           , public tools::Observer_ABC
-                          , public kernel::ElementObserver_ABC< AgentKnowledges >
-                          , public kernel::ElementObserver_ABC< kernel::AgentKnowledge_ABC >
-                          , public kernel::ElementObserver_ABC< PerceptionMap >
+                          , public tools::ElementObserver_ABC< AgentKnowledges >
+                          , public tools::ElementObserver_ABC< kernel::AgentKnowledge_ABC >
+                          , public tools::ElementObserver_ABC< PerceptionMap >
                           , public tools::SelectionObserver_Base< kernel::AgentKnowledge_ABC >
                           , public KnowledgeGroupSelectionObserver
 {

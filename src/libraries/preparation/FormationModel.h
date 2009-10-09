@@ -11,7 +11,7 @@
 #define __FormationModel_h_
 
 #include "tools/Resolver.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -39,7 +39,7 @@ class Model;
 // =============================================================================
 class FormationModel : public tools::Resolver< kernel::Formation_ABC >
                      , public tools::Observer_ABC
-                     , public kernel::ElementObserver_ABC< kernel::Formation_ABC >
+                     , public tools::ElementObserver_ABC< kernel::Formation_ABC >
 {
 
 public:

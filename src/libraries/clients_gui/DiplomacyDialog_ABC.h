@@ -10,7 +10,7 @@
 #ifndef __DiplomacyDialog_ABC_h_
 #define __DiplomacyDialog_ABC_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 
 namespace kernel
@@ -32,7 +32,7 @@ namespace gui
 // =============================================================================
 class DiplomacyDialog_ABC : public QDialog
                           , public tools::Observer_ABC
-                          , public kernel::ElementObserver_ABC< kernel::Team_ABC >
+                          , public tools::ElementObserver_ABC< kernel::Team_ABC >
                           , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
 {
     Q_OBJECT

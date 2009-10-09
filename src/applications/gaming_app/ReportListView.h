@@ -13,7 +13,7 @@
 #include "clients_gui/ListDisplayer.h"
 #include "tools/Observer_ABC.h"
 #include "clients_kernel/SafePointer.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "gaming/AgentSelectionObserver.h"
 
 namespace kernel
@@ -34,8 +34,8 @@ class Reports;
 class ReportListView : public gui::ListDisplayer< ReportListView >
                      , public tools::Observer_ABC
                      , public AgentSelectionObserver
-                     , public kernel::ElementObserver_ABC< Reports > 
-                     , public kernel::ElementObserver_ABC< Report >
+                     , public tools::ElementObserver_ABC< Reports > 
+                     , public tools::ElementObserver_ABC< Report >
 {
     Q_OBJECT
 public:

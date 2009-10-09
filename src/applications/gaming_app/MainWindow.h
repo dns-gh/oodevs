@@ -11,7 +11,7 @@
 #define __MainWindow_h_
 
 #include "clients_kernel/OptionsObserver_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "gaming/Simulation.h"
 #include <qmainwindow.h>
 
@@ -62,9 +62,9 @@ class LoggerProxy;
 // =============================================================================
 class MainWindow : public QMainWindow
                  , public tools::Observer_ABC
-                 , public kernel::ElementObserver_ABC< Simulation >
-                 , public kernel::ElementObserver_ABC< Services >
-                 , public kernel::ElementObserver_ABC< Profile >
+                 , public tools::ElementObserver_ABC< Simulation >
+                 , public tools::ElementObserver_ABC< Services >
+                 , public tools::ElementObserver_ABC< Profile >
 {
     Q_OBJECT;
 

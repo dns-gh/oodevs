@@ -10,7 +10,7 @@
 #ifndef __XPSPlayer_h_
 #define __XPSPlayer_h_
 
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "gaming/Simulation.h"
 
 namespace kernel {
@@ -26,9 +26,9 @@ class Fires;
 // Created: AGE 2006-11-13
 // =============================================================================
 class XPSPlayer : public QObject, public tools::Observer_ABC
-                , public kernel::ElementObserver_ABC< Fires >
-                , public kernel::ElementObserver_ABC< Simulation >
-                , public kernel::ElementObserver_ABC< Simulation::sStartTick >
+                , public tools::ElementObserver_ABC< Fires >
+                , public tools::ElementObserver_ABC< Simulation >
+                , public tools::ElementObserver_ABC< Simulation::sStartTick >
 {
 
 public:
