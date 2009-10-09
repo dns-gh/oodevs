@@ -10,7 +10,7 @@
 #ifndef __KnowledgeGroupSelectionObserver_h_
 #define __KnowledgeGroupSelectionObserver_h_
 
-#include "clients_kernel/SelectionObserver_ABC.h"
+#include "tools/SelectionObserver_ABC.h"
 
 namespace kernel
 {
@@ -27,10 +27,10 @@ namespace kernel
 */
 // Created: AGE 2006-02-24
 // =============================================================================
-class KnowledgeGroupSelectionObserver : public kernel::SelectionObserver_ABC
-                                      , public kernel::SelectionObserver_Base< kernel::KnowledgeGroup_ABC >
-                                      , public kernel::SelectionObserver_Base< kernel::Agent_ABC >
-                                      , public kernel::SelectionObserver_Base< kernel::Automat_ABC >
+class KnowledgeGroupSelectionObserver : public tools::SelectionObserver_ABC
+                                      , public tools::SelectionObserver_Base< kernel::KnowledgeGroup_ABC >
+                                      , public tools::SelectionObserver_Base< kernel::Agent_ABC >
+                                      , public tools::SelectionObserver_Base< kernel::Automat_ABC >
 {
 
 public:

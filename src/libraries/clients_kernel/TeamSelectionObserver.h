@@ -10,7 +10,7 @@
 #ifndef __TeamSelectionObserver_h_
 #define __TeamSelectionObserver_h_
 
-#include "SelectionObserver_ABC.h"
+#include "tools/SelectionObserver_ABC.h"
 
 namespace kernel
 {
@@ -23,8 +23,8 @@ namespace kernel
 */
 // Created: AGE 2006-02-24
 // =============================================================================
-class TeamSelectionObserver : public SelectionObserver_ABC
-                            , public SelectionObserver_Base< Entity_ABC >
+class TeamSelectionObserver : public tools::SelectionObserver_ABC
+                            , public tools::SelectionObserver_Base< Entity_ABC >
 {
 
 public:

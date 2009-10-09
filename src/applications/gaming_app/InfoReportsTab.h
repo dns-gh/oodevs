@@ -10,7 +10,7 @@
 #ifndef __InfoReportsTab_h_
 #define __InfoReportsTab_h_
 
-#include "clients_kernel/SelectionObserver_ABC.h"
+#include "tools/SelectionObserver_ABC.h"
 
 namespace kernel
 {
@@ -31,7 +31,7 @@ namespace gui
 // =============================================================================
 class InfoReportsTab : public QVBox
                      , public tools::Observer_ABC
-                     , public kernel::SelectionObserver< kernel::Entity_ABC >
+                     , public tools::SelectionObserver< kernel::Entity_ABC >
 {
 
 public:

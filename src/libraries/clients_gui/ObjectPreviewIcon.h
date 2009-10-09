@@ -10,7 +10,7 @@
 #ifndef __ObjectPreviewIcon_h_
 #define __ObjectPreviewIcon_h_
 
-#include "clients_kernel/SelectionObserver_ABC.h"
+#include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
 namespace kernel

@@ -11,7 +11,7 @@
 #define __ObjectReportPanel_h_
 
 #include "clients_gui/InfoPanel_ABC.h"
-#include "clients_kernel/SelectionObserver_ABC.h"
+#include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
@@ -38,7 +38,7 @@ class Explosions;
 class ObjectReportPanel : public gui::InfoPanel_ABC
                         , public tools::Observer_ABC
                         , public kernel::ElementObserver_ABC< Explosions >
-                        , public kernel::SelectionObserver< kernel::Object_ABC >
+                        , public tools::SelectionObserver< kernel::Object_ABC >
 {
 public:
     //! @name Constructors/Destructor

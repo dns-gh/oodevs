@@ -12,7 +12,7 @@
 
 #include "ListView.h"
 #include "clients_kernel/ElementObserver_ABC.h"
-#include "clients_kernel/SelectionObserver_ABC.h"
+#include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/ActivationObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
@@ -40,7 +40,7 @@ namespace gui
 // =============================================================================
 class HierarchyListView_ABC : public ListView< HierarchyListView_ABC >
                             , public tools::Observer_ABC
-                            , public kernel::SelectionObserver< kernel::Entity_ABC >
+                            , public tools::SelectionObserver< kernel::Entity_ABC >
                             , public kernel::ActivationObserver_ABC< kernel::Entity_ABC >
                             , public kernel::ElementObserver_ABC< kernel::Profile_ABC >
                             , public kernel::ElementObserver_ABC< kernel::Symbol_ABC >

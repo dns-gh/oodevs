@@ -12,7 +12,7 @@
 
 #include "clients_gui/ListDisplayer.h"
 #include "clients_kernel/ElementObserver_ABC.h"
-#include "clients_kernel/SelectionObserver_ABC.h"
+#include "tools/SelectionObserver_ABC.h"
 
 namespace kernel
 {
@@ -35,7 +35,7 @@ class MissionParameters;
 // =============================================================================
 class InfoMissionsTab : public gui::ListDisplayer< InfoMissionsTab >
                       , public tools::Observer_ABC
-                      , public kernel::SelectionObserver< kernel::Entity_ABC >
+                      , public tools::SelectionObserver< kernel::Entity_ABC >
                       , public kernel::ElementObserver_ABC< MissionParameters >
 {
 

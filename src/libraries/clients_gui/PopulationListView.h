@@ -11,7 +11,7 @@
 #define __gui_PopulationListView_h_
 
 #include "clients_kernel/ElementObserver_ABC.h"
-#include "clients_kernel/SelectionObserver_ABC.h"
+#include "tools/SelectionObserver_ABC.h"
 #include "ListView.h"
 
 namespace kernel
@@ -38,7 +38,7 @@ class PopulationListView : public ListView< PopulationListView >
                          , public kernel::ElementObserver_ABC< kernel::Profile_ABC >
                          , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
                          , public kernel::ElementObserver_ABC< kernel::Team_ABC >
-                         , public kernel::SelectionObserver< kernel::Entity_ABC >
+                         , public tools::SelectionObserver< kernel::Entity_ABC >
 {
     Q_OBJECT;
 

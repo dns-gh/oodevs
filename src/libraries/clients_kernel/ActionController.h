@@ -12,7 +12,7 @@
 
 #include "tools/SortedInterfaceContainer.h"
 #include "tools/Observer_ABC.h"
-#include "SelectionObserver_ABC.h"
+#include "tools/SelectionObserver_ABC.h"
 #include "ActivationObserver_ABC.h"
 #include "ContextMenu.h"
 #include "ContextMenuObserver_ABC.h"
@@ -51,9 +51,9 @@ public:
         if( ! selecting_ )
         {
             selecting_ = true;
-            Apply( & SelectionObserver_ABC::BeforeSelection );
-            Apply( & SelectionObserver_Base< T >::Select, element );
-            Apply( & SelectionObserver_ABC::AfterSelection );
+            Apply( & tools::SelectionObserver_ABC::BeforeSelection );
+            Apply( & tools::SelectionObserver_Base< T >::Select, element );
+            Apply( & tools::SelectionObserver_ABC::AfterSelection );
         }
         selecting_ = false;
     }
@@ -65,10 +65,10 @@ public:
         if( ! selecting_ )
         {
             selecting_ = true;
-            Apply( & SelectionObserver_ABC::BeforeSelection );
-            Apply( & SelectionObserver_Base< T1 >::Select, firstElement );
-            Apply( & SelectionObserver_Base< T2 >::Select, secondElement );
-            Apply( & SelectionObserver_ABC::AfterSelection );
+            Apply( & tools::SelectionObserver_ABC::BeforeSelection );
+            Apply( & tools::SelectionObserver_Base< T1 >::Select, firstElement );
+            Apply( & tools::SelectionObserver_Base< T2 >::Select, secondElement );
+            Apply( & tools::SelectionObserver_ABC::AfterSelection );
         }
         selecting_ = false;
     }
@@ -80,11 +80,11 @@ public:
         if( ! selecting_ )
         {
             selecting_ = true;
-            Apply( & SelectionObserver_ABC::BeforeSelection );
-            Apply( & SelectionObserver_Base< T1 >::Select, firstElement );
-            Apply( & SelectionObserver_Base< T2 >::Select, secondElement );
-            Apply( & SelectionObserver_Base< T3 >::Select, thirdElement );
-            Apply( & SelectionObserver_ABC::AfterSelection );
+            Apply( & tools::SelectionObserver_ABC::BeforeSelection );
+            Apply( & tools::SelectionObserver_Base< T1 >::Select, firstElement );
+            Apply( & tools::SelectionObserver_Base< T2 >::Select, secondElement );
+            Apply( & tools::SelectionObserver_Base< T3 >::Select, thirdElement );
+            Apply( & tools::SelectionObserver_ABC::AfterSelection );
         }
         selecting_ = false;
     }

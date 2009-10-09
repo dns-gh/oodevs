@@ -12,7 +12,7 @@
 
 #include "InfoPanel_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
-#include "clients_kernel/SelectionObserver_ABC.h"
+#include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
 class QToolBox;
@@ -46,7 +46,7 @@ class DrawerPanel : public InfoPanel_ABC
                   , public tools::Observer_ABC
                   , public kernel::ElementObserver_ABC< DrawingCategory >
                   , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
-                  , public kernel::SelectionObserver< Drawing_ABC >
+                  , public tools::SelectionObserver< Drawing_ABC >
 {
     Q_OBJECT;
 

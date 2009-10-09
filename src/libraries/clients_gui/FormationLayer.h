@@ -11,7 +11,7 @@
 #define __FormationLayer_h_
 
 #include "EntityLayer.h"
-#include "clients_kernel/SelectionObserver_ABC.h"
+#include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/Formation_ABC.h"
 

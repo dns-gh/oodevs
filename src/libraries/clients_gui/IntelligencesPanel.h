@@ -13,7 +13,7 @@
 #include "InfoPanel_ABC.h"
 #include "ValuedComboBox.h"
 #include "clients_kernel/ElementObserver_ABC.h"
-#include "clients_kernel/SelectionObserver_ABC.h"
+#include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
 namespace kernel
@@ -44,8 +44,8 @@ namespace gui
 class IntelligencesPanel : public InfoPanel_ABC
                          , public tools::Observer_ABC
                          , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
-                         , public kernel::SelectionObserver_ABC
-                         , public kernel::SelectionObserver_Base< kernel::Formation_ABC >
+                         , public tools::SelectionObserver_ABC
+                         , public tools::SelectionObserver_Base< kernel::Formation_ABC >
 {
     Q_OBJECT;
 

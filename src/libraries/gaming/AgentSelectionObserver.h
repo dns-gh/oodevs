@@ -10,7 +10,7 @@
 #ifndef __AgentSelectionObserver_h_
 #define __AgentSelectionObserver_h_
 
-#include "clients_kernel/SelectionObserver_ABC.h"
+#include "tools/SelectionObserver_ABC.h"
 
 namespace kernel
 {
@@ -26,10 +26,10 @@ namespace kernel
 */
 // Created: AGE 2006-03-09
 // =============================================================================
-class AgentSelectionObserver : public kernel::SelectionObserver_ABC
-                             , public kernel::SelectionObserver_Base< kernel::Population_ABC >
-                             , public kernel::SelectionObserver_Base< kernel::Agent_ABC >
-                             , public kernel::SelectionObserver_Base< kernel::Automat_ABC >
+class AgentSelectionObserver : public tools::SelectionObserver_ABC
+                             , public tools::SelectionObserver_Base< kernel::Population_ABC >
+                             , public tools::SelectionObserver_Base< kernel::Agent_ABC >
+                             , public tools::SelectionObserver_Base< kernel::Automat_ABC >
 {
 
 public:

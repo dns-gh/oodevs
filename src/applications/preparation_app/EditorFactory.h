@@ -11,7 +11,7 @@
 #define __EditorFactory_h_
 
 #include "clients_gui/EditorFactory.h"
-#include "clients_kernel/SelectionObserver_ABC.h"
+#include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "tools/Resolver.h"
 #include "preparation/Types.h"
@@ -38,7 +38,7 @@ class DotationsItem;
 // =============================================================================
 class EditorFactory : public gui::EditorFactory
                     , public tools::Observer_ABC
-                    , public kernel::SelectionObserver< kernel::Entity_ABC >
+                    , public tools::SelectionObserver< kernel::Entity_ABC >
                     , public tools::Caller< TC2* >
                     , public tools::Caller< MaintenanceSuperior* >
                     , public tools::Caller< MedicalSuperior* >

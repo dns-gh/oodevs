@@ -11,7 +11,7 @@
 #define __LogisticConsignsWidget_ABC_h_
 
 #include "clients_kernel/ElementObserver_ABC.h"
-#include "clients_kernel/SelectionObserver_ABC.h"
+#include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/ListDisplayer.h"
@@ -35,7 +35,7 @@ class LogisticConsignsWidget_ABC : public QVBox
                                  , public tools::Observer_ABC
                                  , public kernel::ElementObserver_ABC< Extension >
                                  , public kernel::ElementObserver_ABC< Consign >
-                                 , public kernel::SelectionObserver< kernel::Entity_ABC >
+                                 , public tools::SelectionObserver< kernel::Entity_ABC >
 {
 
 public:

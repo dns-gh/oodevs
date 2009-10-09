@@ -11,7 +11,7 @@
 #define __ModelBuilder_h_
 
 #include <qobject.h>
-#include "clients_kernel/SelectionObserver_ABC.h"
+#include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
@@ -37,12 +37,12 @@ class Model;
 // =============================================================================
 class ModelBuilder : public QObject
                    , public tools::Observer_ABC
-                   , public kernel::SelectionObserver_ABC
-                   , public kernel::SelectionObserver_Base< kernel::Team_ABC >
-                   , public kernel::SelectionObserver_Base< kernel::KnowledgeGroup_ABC >
-                   , public kernel::SelectionObserver_Base< kernel::Agent_ABC >
-                   , public kernel::SelectionObserver_Base< kernel::Automat_ABC >
-                   , public kernel::SelectionObserver_Base< kernel::Formation_ABC >
+                   , public tools::SelectionObserver_ABC
+                   , public tools::SelectionObserver_Base< kernel::Team_ABC >
+                   , public tools::SelectionObserver_Base< kernel::KnowledgeGroup_ABC >
+                   , public tools::SelectionObserver_Base< kernel::Agent_ABC >
+                   , public tools::SelectionObserver_Base< kernel::Automat_ABC >
+                   , public tools::SelectionObserver_Base< kernel::Formation_ABC >
                    , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
 {
     Q_OBJECT;

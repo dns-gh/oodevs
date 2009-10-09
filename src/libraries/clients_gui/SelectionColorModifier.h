@@ -11,7 +11,7 @@
 #define __SelectionColorModifier_h_
 
 #include "ColorModifier_ABC.h"
-#include "clients_kernel/SelectionObserver_ABC.h"
+#include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
 namespace kernel
@@ -30,7 +30,7 @@ namespace gui
 // =============================================================================
 class SelectionColorModifier : public ColorModifier_ABC
                              , public tools::Observer_ABC
-                             , public kernel::SelectionObserver< kernel::Entity_ABC >
+                             , public tools::SelectionObserver< kernel::Entity_ABC >
 {
 
 public:

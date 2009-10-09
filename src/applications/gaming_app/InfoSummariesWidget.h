@@ -10,7 +10,7 @@
 #ifndef __InfoSummariesWidget_h_
 #define __InfoSummariesWidget_h_
 
-#include "clients_kernel/SelectionObserver_ABC.h"
+#include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
@@ -30,7 +30,7 @@ namespace kernel
 // =============================================================================
 class InfoSummariesWidget : public QVBox
                           , public tools::Observer_ABC
-                          , public kernel::SelectionObserver< kernel::Entity_ABC >
+                          , public tools::SelectionObserver< kernel::Entity_ABC >
                           , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
                           , public kernel::ElementObserver_ABC< kernel::Attributes_ABC >
 {

@@ -11,7 +11,7 @@
 #define __AgentsLayer_h_
 
 #include "clients_gui/AgentsLayer.h"
-#include "clients_kernel/SelectionObserver_ABC.h"
+#include "tools/SelectionObserver_ABC.h"
 
 namespace kernel
 {
@@ -30,9 +30,9 @@ class ModelBuilder;
 // Created: SBO 2006-08-31
 // =============================================================================
 class AgentsLayer : public gui::AgentsLayer
-                  , public kernel::SelectionObserver_Base< kernel::Automat_ABC >
-                  , public kernel::SelectionObserver_Base< kernel::Formation_ABC >
-                  , public kernel::SelectionObserver_Base< kernel::Team_ABC >
+                  , public tools::SelectionObserver_Base< kernel::Automat_ABC >
+                  , public tools::SelectionObserver_Base< kernel::Formation_ABC >
+                  , public tools::SelectionObserver_Base< kernel::Team_ABC >
 {
 
 public:

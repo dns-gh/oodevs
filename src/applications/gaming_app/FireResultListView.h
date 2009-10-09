@@ -39,7 +39,7 @@ class Casualties;
 // =============================================================================
 class FireResultListView : public gui::ListDisplayer< FireResultListView >
                          , public tools::Observer_ABC
-                         , public kernel::SelectionObserver< kernel::Entity_ABC >
+                         , public tools::SelectionObserver< kernel::Entity_ABC >
                          , public kernel::ElementObserver_ABC< Explosions >
 {
 

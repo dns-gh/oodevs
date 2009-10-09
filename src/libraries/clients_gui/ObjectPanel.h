@@ -12,7 +12,7 @@
 
 #include "InfoPanel_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
-#include "clients_kernel/SelectionObserver_ABC.h"
+#include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
 namespace kernel
@@ -57,7 +57,7 @@ class ObjectPanel : public InfoPanel_ABC
                   , public kernel::ElementObserver_ABC< kernel::NBCAttribute_ABC >
                   , public kernel::ElementObserver_ABC< kernel::FireAttribute_ABC >
                   , public kernel::ElementObserver_ABC< kernel::MedicalTreatmentAttribute_ABC >
-                  , public kernel::SelectionObserver< kernel::Object_ABC >
+                  , public tools::SelectionObserver< kernel::Object_ABC >
 
 {
 

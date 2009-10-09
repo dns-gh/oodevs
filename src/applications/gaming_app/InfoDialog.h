@@ -12,7 +12,7 @@
 
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/SelectionObserver_ABC.h"
+#include "tools/SelectionObserver_ABC.h"
 
 // =============================================================================
 /** @class  InfoDialog_Base
@@ -82,7 +82,7 @@ private:
 template< typename Extension >
 class InfoDialog : public InfoDialog_Base
                  , public tools::Observer_ABC
-                 , public kernel::SelectionObserver< kernel::Entity_ABC >
+                 , public tools::SelectionObserver< kernel::Entity_ABC >
 {
 
 public:

@@ -21,8 +21,8 @@ class TacticalLineFactory;
 // Created: AGE 2006-03-24
 // =============================================================================
 class LimitsLayer : public gui::TacticalLinesLayer
-                  , public kernel::SelectionObserver_Base< kernel::Automat_ABC >
-                  , public kernel::SelectionObserver_Base< kernel::Formation_ABC >
+                  , public tools::SelectionObserver_Base< kernel::Automat_ABC >
+                  , public tools::SelectionObserver_Base< kernel::Formation_ABC >
 {
 
 public:

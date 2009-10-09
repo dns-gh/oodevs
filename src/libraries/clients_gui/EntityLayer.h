@@ -13,7 +13,7 @@
 #include "tools/Observer_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/ActivationObserver_ABC.h"
-#include "clients_kernel/SelectionObserver_ABC.h"
+#include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "Layer_ABC.h"
@@ -129,7 +129,7 @@ protected: // $$$$ AGE 2006-05-17:
 // =============================================================================
 template< typename ConcreteEntity >
 class EntityLayer : public EntityLayerBase
-                  , public kernel::SelectionObserver< ConcreteEntity >
+                  , public tools::SelectionObserver< ConcreteEntity >
                   , public kernel::ElementObserver_ABC< ConcreteEntity >
                   , public kernel::ActivationObserver_ABC< ConcreteEntity >
 {

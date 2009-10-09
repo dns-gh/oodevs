@@ -47,7 +47,7 @@ class AgentKnowledgePanel : public gui::InfoPanel_ABC
                           , public kernel::ElementObserver_ABC< AgentKnowledges >
                           , public kernel::ElementObserver_ABC< kernel::AgentKnowledge_ABC >
                           , public kernel::ElementObserver_ABC< PerceptionMap >
-                          , public kernel::SelectionObserver_Base< kernel::AgentKnowledge_ABC >
+                          , public tools::SelectionObserver_Base< kernel::AgentKnowledge_ABC >
                           , public KnowledgeGroupSelectionObserver
 {
     Q_OBJECT;
