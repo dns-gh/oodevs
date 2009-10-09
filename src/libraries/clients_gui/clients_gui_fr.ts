@@ -1630,15 +1630,15 @@ Voulez-vous le supprimer?</translation>
     <name>gui::UserControlPanel</name>
     <message>
         <source>Map dragging control</source>
-        <translation>Contrôle du déplacement de la carte</translation>
+        <translation type="obsolete">Contrôle du déplacement de la carte</translation>
     </message>
     <message>
         <source>Use left click</source>
-        <translation>Utiliser le clic gauche</translation>
+        <translation type="obsolete">Utiliser le clic gauche</translation>
     </message>
     <message>
         <source>Use wheel click</source>
-        <translation>Utiliser le clic du milieu (molette)</translation>
+        <translation type="obsolete">Utiliser le clic du milieu (molette)</translation>
     </message>
 </context>
 </TS>

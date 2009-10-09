@@ -952,17 +952,5 @@ Do you want to remove it?</source>
 </context>
 <context>
     <name>gui::UserControlPanel</name>
-    <message>
-        <source>Use left click</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Use wheel click</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Map dragging control</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 </TS>
