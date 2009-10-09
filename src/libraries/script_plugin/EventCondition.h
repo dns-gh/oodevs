@@ -12,7 +12,7 @@
 
 #include "BaseCondition.h"
 #include "tools/Observer_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -69,7 +69,7 @@ private:
 // =============================================================================
 template< typename E >
 class SimpleEventCondition : public EventCondition
-                           , public kernel::ElementObserver_ABC< E >
+                           , public tools::ElementObserver_ABC< E >
 {
 public:
     //! @name Constructors/Destructor

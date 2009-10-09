@@ -18,7 +18,7 @@
 #include "directia/Brain.h"
 #include "game_asn/Messenger.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 using namespace plugins::script;
 

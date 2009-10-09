@@ -11,7 +11,7 @@
 #define __SimpleEntityCondition_h_
 
 #include "EventCondition.h"
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace dispatcher
 {
@@ -49,7 +49,7 @@ public:
 template< typename E >
 class SimpleEntityCondition : public EventCondition
                             , public EntityConditionBase
-                            , public kernel::ElementObserver_ABC< E >
+                            , public tools::ElementObserver_ABC< E >
 {
 
 public:

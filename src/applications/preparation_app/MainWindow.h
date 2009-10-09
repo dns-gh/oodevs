@@ -11,7 +11,7 @@
 #define __MainWindow_h_
 
 #include <qmainwindow.h>
-#include "clients_kernel/ControllerObserver_ABC.h"
+#include "tools/ControllerObserver_ABC.h"
 
 namespace kernel
 {
@@ -65,7 +65,7 @@ class MapLayer_ABC;
 // =============================================================================
 class MainWindow : public QMainWindow
                  , public tools::Observer_ABC
-                 , public kernel::ControllerObserver_ABC
+                 , public tools::ControllerObserver_ABC
 {
     Q_OBJECT;
 

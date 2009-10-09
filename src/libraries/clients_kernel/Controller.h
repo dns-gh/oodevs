@@ -12,7 +12,7 @@
 
 #include "tools/SortedInterfaceContainer.h"
 #include "tools/ElementObserver_ABC.h"
-#include "ControllerObserver_ABC.h"
+#include "tools/ControllerObserver_ABC.h"
 #include "tools/Observer_ABC.h"
 
 namespace kernel
@@ -43,19 +43,19 @@ public:
     template< typename T >
     void Create( const T& extension ) {
         Apply( & tools::ElementObserver_ABC< T >::NotifyCreated, extension );
-        Apply( & ControllerObserver_ABC::NotifyCreated );
+        Apply( & tools::ControllerObserver_ABC::NotifyCreated );
     };
 
     template< typename T >
     void Update( const T& extension ) {
         Apply( & tools::ElementObserver_ABC< T >::NotifyUpdated, extension );
-        Apply( & ControllerObserver_ABC::NotifyUpdated );
+        Apply( & tools::ControllerObserver_ABC::NotifyUpdated );
     };
 
     template< typename T >
     void Delete( const T& extension ) {
         Apply( & tools::ElementObserver_ABC< T >::NotifyDeleted, extension );
-        Apply( & ControllerObserver_ABC::NotifyDeleted );
+        Apply( & tools::ControllerObserver_ABC::NotifyDeleted );
     };
     //@}
 
