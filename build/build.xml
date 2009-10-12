@@ -709,7 +709,7 @@
     ============================================================================
     -->
     <target name="configure" description="initialize local project structure with libraries">
-        <update name="terrain" modules="terrain,geometry,geocoord,graphics,pathfind,vmap,geodata,gdal_ogr"  version="2.0"/>
+        <update name="terrain" modules="terrain,geometry,geocoord,graphics,pathfind,vmap,geodata,gdal_ogr" version="2.0"/>
         <!--<update name="terrain" modules="urban"/>-->
         <update name="terrain" package="generation_app_${platform}" version="2.0"/>
         <update name="terrain" package="SWORD Terrain Generation_${platform}.exe" version="2.0"/>
@@ -737,7 +737,7 @@
         <update name="esri" version="9.2"/>
         <update name="folk"/>
         <update name="mockpp"/>
-        <update name="system"/>
+        <update name="vcredist" package="vcredist"/>
     </target>
 
     <!--

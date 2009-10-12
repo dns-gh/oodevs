@@ -97,7 +97,6 @@ Section "!${APP_NAME}"
     File "${RUNDIR}\libFedTime.dll"
     File "${RUNDIR}\libRTI-NG.dll"
     File "${RUNDIR}\librtiInternalIntercept.dll"
-    File /x "msvc*d.dll" "${RUNDIR}\msvc*.dll"
     File "${RUNDIR}\qt-mt338.dll"
     File "${RUNDIR}\userDdm.dll"
     File "${RUNDIR}\xerces-c_2_7.dll"
@@ -110,7 +109,6 @@ Section "!${APP_NAME}"
     File "${RUNDIR}\directia-${PLATFORM}-mt-4_5.dll"
     File "${RUNDIR}\shapelib.dll"
     File /r /x ".svn" "${RUNDIR}\resources"
-    File /nonfatal "${RUNDIR}\*.manifest"
     File "*.ico"
     
     ; scalped licence
@@ -125,7 +123,12 @@ Section "!${APP_NAME}"
     !insertmacro OT.AddUninstallEntry    
     !insertmacro OT.AddFileAssoc
     !insertmacro OT.AddCommonConfig
-    
+
+    SetOutPath $TEMP
+    File "${OUTDIR}\vcredist_${PLATFORM}.exe"
+    ExecWait '"vcredist_${PLATFORM}.exe" /S /NCRC'
+    Delete "vcredist_${PLATFORM}.exe"
+
 SectionEnd
 
 ;--------------------------------

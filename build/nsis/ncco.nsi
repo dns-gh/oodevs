@@ -99,7 +99,6 @@ Section "!${APP_NAME}"
     File "${RUNDIR}\libFedTime.dll"
     File "${RUNDIR}\libRTI-NG.dll"
     File "${RUNDIR}\librtiInternalIntercept.dll"
-    File /x "msvc*d.dll" "${RUNDIR}\msvc*.dll"
     File /x "qt-*d.dll" "${RUNDIR}\qt-*.dll"
     File "${RUNDIR}\userDdm.dll"
     File "${RUNDIR}\xerces-c_2_7.dll"
@@ -112,7 +111,6 @@ Section "!${APP_NAME}"
     File "${RUNDIR}\dispatcher-${PLATFORM}-mt.dll"
     File "${RUNDIR}\directia-${PLATFORM}-mt-4_5.dll"
     File /r /x ".svn" /x "*.qm" "${RUNDIR}\resources"
-    File /nonfatal "${RUNDIR}\*.manifest"
     File "*.ico"
     
     ; terrain dependencies
@@ -144,6 +142,11 @@ Section "!${APP_NAME}"
     !insertmacro OT.AddUninstallEntry
     !insertmacro OT.AddFileAssoc
     !insertmacro OT.AddCommonConfig
+
+    SetOutPath $TEMP
+    File "${OUTDIR}\vcredist_${PLATFORM}.exe"
+    ExecWait '"vcredist_${PLATFORM}.exe" /S /NCRC'
+    Delete "vcredist_${PLATFORM}.exe"
 
 SectionEnd
 
