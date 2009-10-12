@@ -148,19 +148,19 @@
             <fileset dir="${libraries.dir}/clients_gui/svg" includes="**/*"/>
         </zip>
     </target>
-    
+
     <target name="library.actions" description="build actions static library" depends="library.game_asn,library.clients_kernel">
         <build-lib name="actions" depends="qt" pattern="lib${ant.project.name}_actions-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/masasn"/>
         </build-lib>
     </target>
-    
+
     <target name="library.actions_gui" description="build actions_gui static library" depends="library.clients_gui,library.actions">
         <build-lib name="actions_gui" depends="boost,qt,xerces" pattern="lib${ant.project.name}_actions_gui-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/masasn"/>
         </build-lib>
     </target>
-    
+
     <target name="library.indicators" description="build indicators static library" depends="library.clients_kernel">
         <build-lib name="indicators" depends="boost,qt,xerces" pattern="lib${ant.project.name}_indicators-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/masasn"/>
@@ -194,7 +194,7 @@
             <includepath path="${include.dir}/masasn"/>
         </build-lib>
     </target>
-    
+
     <target name="library.xmlia_plugin" description="build XMLIA dispatcher plugin static library" depends="library.dispatcher">
         <build-lib name="xmlia_plugin" pattern="lib${ant.project.name}_xmlia_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt">
             <includepath path="${include.dir}/masasn"/>
@@ -240,7 +240,7 @@
             <includepath path="${include.dir}/masasn"/>
         </build-lib>
     </target>
-    
+
     <target name="library.script_plugin" description="build script_plugin static library" depends="library.dispatcher">
         <build-lib name="script_plugin" pattern="lib${ant.project.name}_script_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt">
             <includepath path="${include.dir}/masasn"/>
@@ -250,7 +250,7 @@
             <fileset dir="${libraries.dir}/script_plugin" includes="**/*.lua"/>
         </copy>
     </target>
-    
+
     <target name="library.score_plugin" description="build score_plugin static library" depends="library.dispatcher,library.3a,library.indicators">
         <build-lib name="score_plugin" depends="boost,qt" pattern="lib${ant.project.name}_score_plugin-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/masasn"/>
@@ -637,7 +637,7 @@
     ============================================================================
     -->
     <target name="package" description="package the installers" depends="package.standard,package.eval,package.france,package.stress"/>
-    
+
     <target name="package.standard" description="package the standard installer: worlwide, no license">
         <nsis todir="${dist.dir}/current/${platform}" name="sword-ot" script="sword-ot.nsi">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
@@ -646,7 +646,7 @@
             <arg value="/X!include sword-ot.nsh"/>
         </nsis>
     </target>
-    
+
     <target name="package.eval" description="package the standard installer: worlwide, 3 months license">
         <nsis todir="${dist.dir}/current/${platform}" name="sword-ot" script="sword-ot.nsi">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
@@ -667,7 +667,7 @@
             <arg value="/X!include sword-ot.nsh"/>
         </nsis>
     </target>
-    
+
     <target name="package.france" description="package the french version of installer: france, no license">
         <nsis todir="${dist.dir}/current/${platform}/france" name="sword-ot" script="sword-ot.nsi">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
@@ -676,7 +676,7 @@
             <arg value="/X!include sword-ot.nsh"/>
         </nsis>
     </target>
-    
+
     <target name="package.ncco" description="package the NCCO installer">
         <nsis todir="${dist.dir}/current/${platform}/ncco" name="ncco" script="ncco.nsi">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
