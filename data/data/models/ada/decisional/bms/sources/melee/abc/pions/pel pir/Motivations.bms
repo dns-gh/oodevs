@@ -29,10 +29,7 @@ motivation_plugin.statevariables = motivation_plugin.statevariables or {}
 motivation_plugin.emotions = motivation_plugin.emotions or {}
 motivation_plugin.motivations = motivation_plugin.motivations or {}
 
-motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_TirEffectue"
-node "ActivationForSTIM_TirEffectue"
-{
-    activate = function( self )
+motivation_plugin.stimuli["STIM_TirEffectue"] = function()
         --[[//Defaut
 ]]SetStimulus( "STIM_TirEffectue", 0 )
         --[[// vrai un tick ou plus
@@ -49,7 +46,6 @@ node "ActivationForSTIM_TirEffectue"
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]    end
-}
 
 motivation_plugin.motivations[ "MOT_AcquerirEnis" ] =
 {
@@ -106,6 +102,5 @@ node "ActivatedByMOT_AcquerirEnis"
 }
 
 connections = connections or {}
-connections[ #connections + 1 ] = { motivation( "MOT_AcquerirEnis" ), nodes.ActivatedByMOT_AcquerirEnis }
-connections[ #connections + 1 ] = { nodes.Default, "Default", nodes.ActivationForSTIM_TirEffectue }
+connections[ #connections + 1 ] = { motivation( "MOT_AcquerirEnis", 1 ), nodes.ActivatedByMOT_AcquerirEnis }
 connections[ #connections + 1 ] = { nodes.ActivatedByMOT_AcquerirEnis, "BEH_MOT_TirerSurEnis", nodes.BEH_MOT_TirerSurEnis }

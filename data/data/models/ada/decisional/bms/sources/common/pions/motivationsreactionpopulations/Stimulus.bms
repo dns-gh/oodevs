@@ -16,10 +16,7 @@ motivation_plugin.statevariables = motivation_plugin.statevariables or {}
 motivation_plugin.emotions = motivation_plugin.emotions or {}
 motivation_plugin.motivations = motivation_plugin.motivations or {}
 
-motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_PopulationDangereuse"
-node "ActivationForSTIM_PopulationDangereuse"
-{
-    activate = function( self )
+motivation_plugin.stimuli["STIM_PopulationDangereuse"] = function()
         local lstPops = DEC_Connaissances_Populations()
         local eValidite = nil
         for _,pop in pairs( lstPops ) do
@@ -46,12 +43,8 @@ do
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]    end
-}
 
-motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_PriseAPartiParPopulation"
-node "ActivationForSTIM_PriseAPartiParPopulation"
-{
-    activate = function( self )
+motivation_plugin.stimuli["STIM_PriseAPartiParPopulation"] = function()
         if( not DIA_IsListEmpty( DEC_Connaissances_PopulationsPrenantAPartie() ) ) then
             SetStimulus( "STIM_PriseAPartiParPopulation", 1 )
         else
@@ -65,12 +58,8 @@ node "ActivationForSTIM_PriseAPartiParPopulation"
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]    end
-}
 
-motivation_plugin.stimuli[#motivation_plugin.stimuli + 1] = "STIM_TenirFaceAPopulation"
-node "ActivationForSTIM_TenirFaceAPopulation"
-{
-    activate = function( self )
+motivation_plugin.stimuli["STIM_TenirFaceAPopulation"] = function()
         --[[//tenir tant que l'on est en état
 ]]if( ( DEC_Agent_EtatOps() < 0.2 ) or ( DEC_FacteurHumain_Fatigue() == eFatigue_Epuise ) ) then
             SetStimulus( "STIM_TenirFaceAPopulation", 0 )
@@ -79,9 +68,4 @@ node "ActivationForSTIM_TenirFaceAPopulation"
         end
 
         end
-}
 
-connections = connections or {}
-connections[ #connections + 1 ] = { nodes.Default, "Default", nodes.ActivationForSTIM_PopulationDangereuse }
-connections[ #connections + 1 ] = { nodes.Default, "Default", nodes.ActivationForSTIM_PriseAPartiParPopulation }
-connections[ #connections + 1 ] = { nodes.Default, "Default", nodes.ActivationForSTIM_TenirFaceAPopulation }

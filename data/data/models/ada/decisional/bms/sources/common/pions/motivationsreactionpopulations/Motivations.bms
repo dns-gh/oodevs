@@ -369,12 +369,12 @@ node "ActivatedByMOT_PasserEnArmesLetalesAutorisees"
 }
 
 connections = connections or {}
-connections[ #connections + 1 ] = { motivation( "MOT_RiposteSurPopulations" ), nodes.ActivatedByMOT_RiposteSurPopulations }
-connections[ #connections + 1 ] = { motivation( "MOT_EsquivePopulations" ), nodes.ActivatedByMOT_EsquivePopulations }
-connections[ #connections + 1 ] = { motivation( "MOT_PasserEnEmploiForceInterdit" ), nodes.ActivatedByMOT_PasserEnEmploiForceInterdit }
-connections[ #connections + 1 ] = { motivation( "MOT_PasserEnMaintienADistanceParMoyensNonLetaux" ), nodes.ActivatedByMOT_PasserEnMaintienADistanceParMoyensNonLetaux }
-connections[ #connections + 1 ] = { motivation( "MOT_PasserEnDispersionParMoyensDeDefenseActifs" ), nodes.ActivatedByMOT_PasserEnDispersionParMoyensDeDefenseActifs }
-connections[ #connections + 1 ] = { motivation( "MOT_PasserEnArmesLetalesAutorisees" ), nodes.ActivatedByMOT_PasserEnArmesLetalesAutorisees }
+connections[ #connections + 1 ] = { motivation( "MOT_RiposteSurPopulations", 1 ), nodes.ActivatedByMOT_RiposteSurPopulations }
+connections[ #connections + 1 ] = { motivation( "MOT_EsquivePopulations", 1 ), nodes.ActivatedByMOT_EsquivePopulations }
+connections[ #connections + 1 ] = { motivation( "MOT_PasserEnEmploiForceInterdit", 1 ), nodes.ActivatedByMOT_PasserEnEmploiForceInterdit }
+connections[ #connections + 1 ] = { motivation( "MOT_PasserEnMaintienADistanceParMoyensNonLetaux", 1 ), nodes.ActivatedByMOT_PasserEnMaintienADistanceParMoyensNonLetaux }
+connections[ #connections + 1 ] = { motivation( "MOT_PasserEnDispersionParMoyensDeDefenseActifs", 1 ), nodes.ActivatedByMOT_PasserEnDispersionParMoyensDeDefenseActifs }
+connections[ #connections + 1 ] = { motivation( "MOT_PasserEnArmesLetalesAutorisees", 1 ), nodes.ActivatedByMOT_PasserEnArmesLetalesAutorisees }
 connections[ #connections + 1 ] = { nodes.ActivatedByMOT_EsquivePopulations, "BEH_MOT_DecrochageFaceAPopulations", nodes.BEH_MOT_DecrochageFaceAPopulations }
 connections[ #connections + 1 ] = { nodes.ActivatedByMOT_PasserEnArmesLetalesAutorisees, "BEH_MOT_PasserEnArmesLetalesAutorisees", nodes.BEH_MOT_PasserEnArmesLetalesAutorisees }
 connections[ #connections + 1 ] = { nodes.ActivatedByMOT_PasserEnDispersionParMoyensDeDefenseActifs, "BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs", nodes.BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs }

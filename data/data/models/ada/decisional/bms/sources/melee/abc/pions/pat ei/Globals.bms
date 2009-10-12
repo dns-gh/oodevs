@@ -18,9 +18,7 @@ include "Melee/Abc/Pions/Pat Milan/Parameters.bms"
 --[[//-----------------------------------------------------------------------------
 ]]--[[// Actuateurs
 ]]--[[//-----------------------------------------------------------------------------
-]]function M_DEPLACEMENT_ACTUATEURS()
-    return deplacement
-end
+]]
 
 
 
@@ -59,4 +57,5 @@ end
 function M_POLY_MODELE_PION_CAPACITE_RECO_POINT()
     return 600
 end
+
 

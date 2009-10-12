@@ -613,16 +613,16 @@ node "ActivatedByMOT_PasserEnTirLibre"
 }
 
 connections = connections or {}
-connections[ #connections + 1 ] = { motivation( "MOT_ManoeuvrerSurEnis" ), nodes.ActivatedByMOT_ManoeuvrerSurEnis }
-connections[ #connections + 1 ] = { motivation( "MOT_Manoeuvrer" ), nodes.ActivatedByMOT_Manoeuvrer }
-connections[ #connections + 1 ] = { motivation( "MOT_TirerSurEnis" ), nodes.ActivatedByMOT_TirerSurEnis }
-connections[ #connections + 1 ] = { motivation( "MOT_RiposterSurEnis" ), nodes.ActivatedByMOT_RiposterSurEnis }
-connections[ #connections + 1 ] = { motivation( "MOT_SePoster" ), nodes.ActivatedByMOT_SePoster }
-connections[ #connections + 1 ] = { motivation( "MOT_PasserEnSilenceRadio" ), nodes.ActivatedByMOT_PasserEnSilenceRadio }
-connections[ #connections + 1 ] = { motivation( "MOT_PasserEnAlerteDeNiveau4" ), nodes.ActivatedByMOT_PasserEnAlerteDeNiveau4 }
-connections[ #connections + 1 ] = { motivation( "MOT_PasserEnTirRestreint" ), nodes.ActivatedByMOT_PasserEnTirRestreint }
-connections[ #connections + 1 ] = { motivation( "MOT_PasserEnTirInterdit" ), nodes.ActivatedByMOT_PasserEnTirInterdit }
-connections[ #connections + 1 ] = { motivation( "MOT_PasserEnTirLibre" ), nodes.ActivatedByMOT_PasserEnTirLibre }
+connections[ #connections + 1 ] = { motivation( "MOT_ManoeuvrerSurEnis", 1 ), nodes.ActivatedByMOT_ManoeuvrerSurEnis }
+connections[ #connections + 1 ] = { motivation( "MOT_Manoeuvrer", 1 ), nodes.ActivatedByMOT_Manoeuvrer }
+connections[ #connections + 1 ] = { motivation( "MOT_TirerSurEnis", 1 ), nodes.ActivatedByMOT_TirerSurEnis }
+connections[ #connections + 1 ] = { motivation( "MOT_RiposterSurEnis", 1 ), nodes.ActivatedByMOT_RiposterSurEnis }
+connections[ #connections + 1 ] = { motivation( "MOT_SePoster", 1 ), nodes.ActivatedByMOT_SePoster }
+connections[ #connections + 1 ] = { motivation( "MOT_PasserEnSilenceRadio", 1 ), nodes.ActivatedByMOT_PasserEnSilenceRadio }
+connections[ #connections + 1 ] = { motivation( "MOT_PasserEnAlerteDeNiveau4", 1 ), nodes.ActivatedByMOT_PasserEnAlerteDeNiveau4 }
+connections[ #connections + 1 ] = { motivation( "MOT_PasserEnTirRestreint", 1 ), nodes.ActivatedByMOT_PasserEnTirRestreint }
+connections[ #connections + 1 ] = { motivation( "MOT_PasserEnTirInterdit", 1 ), nodes.ActivatedByMOT_PasserEnTirInterdit }
+connections[ #connections + 1 ] = { motivation( "MOT_PasserEnTirLibre", 1 ), nodes.ActivatedByMOT_PasserEnTirLibre }
 connections[ #connections + 1 ] = { nodes.ActivatedByMOT_PasserEnAlerteDeNiveau4, "BEH_MOT_PasserEnAlerteDeNiveau4", nodes.BEH_MOT_PasserEnAlerteDeNiveau4 }
 connections[ #connections + 1 ] = { nodes.ActivatedByMOT_PasserEnSilenceRadio, "BEH_MOT_PasserEnSilenceRadio", nodes.BEH_MOT_PasserEnSilenceRadio }
 connections[ #connections + 1 ] = { nodes.ActivatedByMOT_PasserEnTirInterdit, "BEH_MOT_PasserEnTirInterdit", nodes.BEH_MOT_PasserEnTirInterdit }

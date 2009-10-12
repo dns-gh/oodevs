@@ -9,9 +9,7 @@ include "Melee/Abc/Pions/Pel AMX-ERC/Parameters.bms"
 --[[//-----------------------------------------------------------------------------
 ]]--[[// Actuateurs
 ]]--[[//-----------------------------------------------------------------------------
-]]function M_DEPLACEMENT_ACTUATEURS()
-    return deplacement
-end
+]]
 
 
 

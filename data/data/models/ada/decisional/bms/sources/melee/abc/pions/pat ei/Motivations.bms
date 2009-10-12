@@ -155,7 +155,7 @@ node "ActivatedByMOT_PoursuivreFaceAEni"
 }
 
 connections = connections or {}
-connections[ #connections + 1 ] = { motivation( "MOT_SInfiltrer" ), nodes.ActivatedByMOT_SInfiltrer }
-connections[ #connections + 1 ] = { motivation( "MOT_PoursuivreFaceAEni" ), nodes.ActivatedByMOT_PoursuivreFaceAEni }
+connections[ #connections + 1 ] = { motivation( "MOT_SInfiltrer", 1 ), nodes.ActivatedByMOT_SInfiltrer }
+connections[ #connections + 1 ] = { motivation( "MOT_PoursuivreFaceAEni", 1 ), nodes.ActivatedByMOT_PoursuivreFaceAEni }
 connections[ #connections + 1 ] = { nodes.ActivatedByMOT_PoursuivreFaceAEni, "BEH_MOT_DesactiveSauvegarde", nodes.BEH_MOT_DesactiveSauvegarde }
 connections[ #connections + 1 ] = { nodes.ActivatedByMOT_SInfiltrer, "BEH_Pion_ABC_GarderSesDistancesPourSInfiltrer", nodes.BEH_Pion_ABC_GarderSesDistancesPourSInfiltrer }

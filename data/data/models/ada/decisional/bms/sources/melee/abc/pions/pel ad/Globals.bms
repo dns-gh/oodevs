@@ -8,9 +8,7 @@ include "Melee/Abc/Pions/Common/Globals.bms"
 --[[//-----------------------------------------------------------------------------
 ]]--[[// Actuateurs
 ]]--[[//-----------------------------------------------------------------------------
-]]function M_DEPLACEMENT_ACTUATEURS()
-    return deplacement
-end
+]]
 
 
 

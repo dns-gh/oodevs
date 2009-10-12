@@ -82,5 +82,5 @@ node "ActivatedByMOT_TenirFaceAuxEnnemis"
 }
 
 connections = connections or {}
-connections[ #connections + 1 ] = { motivation( "MOT_TenirFaceAuxEnnemis" ), nodes.ActivatedByMOT_TenirFaceAuxEnnemis }
+connections[ #connections + 1 ] = { motivation( "MOT_TenirFaceAuxEnnemis", 1 ), nodes.ActivatedByMOT_TenirFaceAuxEnnemis }
 connections[ #connections + 1 ] = { nodes.ActivatedByMOT_TenirFaceAuxEnnemis, "BEH_MOT_TenirFaceAuxEnnemis", nodes.BEH_MOT_TenirFaceAuxEnnemis }

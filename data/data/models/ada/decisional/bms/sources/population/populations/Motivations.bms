@@ -175,8 +175,8 @@ node "ActivatedByMOT_Stationner"
 }
 
 connections = connections or {}
-connections[ #connections + 1 ] = { motivation( "MOT_Mission" ), nodes.ActivatedByMOT_Mission }
-connections[ #connections + 1 ] = { motivation( "MOT_Riposte" ), nodes.ActivatedByMOT_Riposte }
-connections[ #connections + 1 ] = { motivation( "MOT_Stationner" ), nodes.ActivatedByMOT_Stationner }
+connections[ #connections + 1 ] = { motivation( "MOT_Mission", 1 ), nodes.ActivatedByMOT_Mission }
+connections[ #connections + 1 ] = { motivation( "MOT_Riposte", 1 ), nodes.ActivatedByMOT_Riposte }
+connections[ #connections + 1 ] = { motivation( "MOT_Stationner", 1 ), nodes.ActivatedByMOT_Stationner }
 connections[ #connections + 1 ] = { nodes.ActivatedByMOT_Riposte, "BEH_Pop_RepondreALaPriseAPartie", nodes.BEH_Pop_RepondreALaPriseAPartie }
 connections[ #connections + 1 ] = { nodes.ActivatedByMOT_Stationner, "BEH_Pop_Stationner", nodes.BEH_Pop_Stationner }

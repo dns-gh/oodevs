@@ -80,5 +80,5 @@ node "ActivatedByMOT_AppliquerLesFeux"
 }
 
 connections = connections or {}
-connections[ #connections + 1 ] = { motivation( "MOT_AppliquerLesFeux" ), nodes.ActivatedByMOT_AppliquerLesFeux }
+connections[ #connections + 1 ] = { motivation( "MOT_AppliquerLesFeux", 1 ), nodes.ActivatedByMOT_AppliquerLesFeux }
 connections[ #connections + 1 ] = { nodes.ActivatedByMOT_AppliquerLesFeux, "BEH_MOT_Pion_Mortier_AppliquerLesFeux", nodes.BEH_MOT_Pion_Mortier_AppliquerLesFeux }

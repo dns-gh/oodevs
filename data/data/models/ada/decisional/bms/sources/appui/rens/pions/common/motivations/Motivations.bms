@@ -67,5 +67,5 @@ node "ActivatedByMOT_Furtivite"
 }
 
 connections = connections or {}
-connections[ #connections + 1 ] = { motivation( "MOT_Furtivite" ), nodes.ActivatedByMOT_Furtivite }
+connections[ #connections + 1 ] = { motivation( "MOT_Furtivite", 1 ), nodes.ActivatedByMOT_Furtivite }
 connections[ #connections + 1 ] = { nodes.ActivatedByMOT_Furtivite, "BEH_MOT_Rens_ActiverFurtivite", nodes.BEH_MOT_Rens_ActiverFurtivite }
