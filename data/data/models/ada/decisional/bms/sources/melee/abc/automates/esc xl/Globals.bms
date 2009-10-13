@@ -64,7 +64,7 @@ do
     end
 
     _returnValue = listePionsAttaquant
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Pions_AppuiSoutien( )
@@ -85,6 +85,6 @@ do
     end
 
     _returnValue = listePionsEnSoutien
-    return _returnValue
+    do return _returnValue end
 end
 

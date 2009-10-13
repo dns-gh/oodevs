@@ -45,6 +45,7 @@ includedFiles["sources/common/automates/missions/fairemouvementrmm/MRT - FaireMo
 ]]        end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eDonnerMission then
@@ -56,14 +57,16 @@ includedFiles["sources/common/automates/missions/fairemouvementrmm/MRT - FaireMo
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhase = eTerminerMission
-                                
+                                _continue = false
                             end
 
                         end
                     end
 
-                    Activate( self.activations.BEH_Automate_MRT_SeDeplacer, 1, setmetatable( { myself:DEC_Automate_PionsSansPC(), self._namedParams.mission.itineraire_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                        if _continue then
+                        Activate( self.activations.BEH_Automate_MRT_SeDeplacer, 1, setmetatable( { myself:DEC_Automate_PionsSansPC(), self._namedParams.mission.itineraire_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                        _continue = false
+                    end
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Validation 
 ]]--[[//-----------------------------------------------------------------------------

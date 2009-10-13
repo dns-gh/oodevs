@@ -81,7 +81,7 @@ do
             if( pion:GetType() == type ) then
                 do
                     _returnValue = pion
-                                        return _returnValue
+                                        do return _returnValue end
 
                 end
             end
@@ -90,7 +90,7 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Cherche_Automate_Filtre_TypePion( sPions, type )
@@ -109,7 +109,7 @@ do
     end
 
     _returnValue = sFiltre
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Cherche_Automate_Filtre_TypePionEchelon( sPions, type, eEtatEchelon )
@@ -128,7 +128,7 @@ do
     end
 
     _returnValue = sFiltre
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Cherche_Automate_Filtre_PionEchelon( sPions, eEtatEchelon )
@@ -147,7 +147,7 @@ do
     end
 
     _returnValue = sFiltre
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Cherche_Automate_Filtre_PionLima( sPions, eEtatLima )
@@ -166,7 +166,7 @@ do
     end
 
     _returnValue = sFiltre
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Cherche_Automate_PionsOperationnels( sPions )
@@ -187,7 +187,7 @@ do
     end
 
     _returnValue = sFiltre
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Cherche_Automate_PionsNonOperationnels( sPions )
@@ -205,7 +205,7 @@ do
     end
 
     _returnValue = sFiltre
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Cherche_Automate_Filtre_TypePionOperationnels( sPions, type )
@@ -230,7 +230,7 @@ do
     end
 
     _returnValue = sFiltre
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Cherche_Automate_Filtre_PionNonDansListe( listePionReference, listePion )
@@ -245,7 +245,7 @@ if( not DIA_Contains( listePion, x ) ) then
     end
 
     _returnValue = listeOutput
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Cherche_Automate_Filtre_NotTypePion( sPions, type )
@@ -264,7 +264,7 @@ do
     end
 
     _returnValue = sFiltre
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Cherche_Automate_Filtre_TypePion_ABC( sPions )
@@ -275,12 +275,13 @@ function S_Cherche_Automate_Filtre_TypePion_ABC( sPions )
 do
             local pion = x
              do
+                local _continue = true
                 local switch_1 = pion:GetType()
                 local cases_switch_1 = {}
                     if switch_1 == "Peloton_XL"
                     or switch_1 == "Peloton_AMX" then
                         DIA_PushBack( sFiltre, pion )
-                        
+                        _continue = false
                                         cases_switch_1[1] = true
                     end
                 end
@@ -290,7 +291,7 @@ do
     end
 
     _returnValue = sFiltre
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Cherche_Automate_Filtre_TypePion_INF( sPions )
@@ -301,6 +302,7 @@ function S_Cherche_Automate_Filtre_TypePion_INF( sPions )
 do
             local pion = x
              do
+                local _continue = true
                 local switch_1 = pion:GetType()
                 local cases_switch_1 = {}
                     if switch_1 == "SectionInfanterie"
@@ -308,7 +310,7 @@ do
                     or switch_1 == "SectionInfanterie_HOT"
                     or switch_1 == "SectionInfanterie_Appui" then
                         DIA_PushBack( sFiltre, pion )
-                        
+                        _continue = false
                                         cases_switch_1[1] = true
                     end
                 end
@@ -318,7 +320,7 @@ do
     end
 
     _returnValue = sFiltre
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Cherche_Automate_Filtre_TypePion_Melee( sPions )
@@ -329,6 +331,7 @@ function S_Cherche_Automate_Filtre_TypePion_Melee( sPions )
 do
             local pion = x
              do
+                local _continue = true
                 local switch_1 = pion:GetType()
                 local cases_switch_1 = {}
                     if switch_1 == "SectionInfanterie"
@@ -338,7 +341,7 @@ do
                     or switch_1 == "Peloton_XL"
                     or switch_1 == "Peloton_AMX" then
                         DIA_PushBack( sFiltre, pion )
-                        
+                        _continue = false
                                         cases_switch_1[1] = true
                     end
                 end
@@ -348,7 +351,7 @@ do
     end
 
     _returnValue = sFiltre
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Cherche_Automate_Filtre_TypeMission( sPions, type )
@@ -368,7 +371,7 @@ do
     end
 
     _returnValue = sFiltre
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Automate_ValideEchelonPion( sUnites_XL, selPion_PE, rMax_PE, selPion_SE )
@@ -391,7 +394,7 @@ do
     end
 
     _returnValue = selTemp
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Automate_ValideTroisEchelons_Pion( sUnites_Distribuees, selPion_PE, rMax_PE, selPion_DE, rMax_DE, selPion_TE )
@@ -418,51 +421,52 @@ if( not S_Pion_EstDetruitTactique( x_inf ) and #( selPion_DE ) < rMax_DE ) then
     end
 
     _returnValue = selTemp
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Convertir_TypeLima_EtatLima( eTypeLima )
     local _returnValue = nil
     _returnValue = eEtatLima_aucune
      do
+        local _continue = true
         local switch_1 = eTypeLima
         local cases_switch_1 = {}
             if switch_1 == eTypeLima_LD then
                 _returnValue = eEtatLima_LD
-                
+                _continue = false
                         cases_switch_1[1] = true
 elseif switch_1 == eTypeLima_LC then
                 _returnValue = eEtatLima_LC
-                
+                _continue = false
                         cases_switch_1[2] = true
 elseif switch_1 == eTypeLima_LI then
                 _returnValue = eEtatLima_LI
-                
+                _continue = false
                         cases_switch_1[3] = true
 elseif switch_1 == eTypeLima_LO then
                 _returnValue = eEtatLima_LO
-                
+                _continue = false
                         cases_switch_1[4] = true
 elseif switch_1 == eTypeLima_LCAR then
                 _returnValue = eEtatLima_LCAR
-                
+                _continue = false
                         cases_switch_1[5] = true
 elseif switch_1 == eTypeLima_LR then
                 _returnValue = eEtatLima_LR
-                
+                _continue = false
                         cases_switch_1[6] = true
 elseif switch_1 == eTypeLima_LIA then
                 _returnValue = eEtatLima_LIA
-                
+                _continue = false
                         cases_switch_1[7] = true
 elseif switch_1 == eTypeLima_LCA then
                 _returnValue = eEtatLima_LCA
-                
+                _continue = false
                         cases_switch_1[8] = true
             end
         end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_ObtenirPionsSurLima( eTypeLima )
@@ -483,6 +487,6 @@ do
     end
 
     _returnValue = selTemp
-    return _returnValue
+    do return _returnValue end
 end
 

@@ -113,6 +113,7 @@ node "BEH_Medo_Automate_INF_ReleverEnRecueillant"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eMRT_SelectionnerPions then
@@ -130,6 +131,7 @@ node "BEH_Medo_Automate_INF_ReleverEnRecueillant"
 do
                             local pion = x
                              do
+                                local _continue = true
                                 local switch_2 = pion:GetType()
                                 local cases_switch_2 = {}
                                     if switch_2 == "SectionInfanterie" then
@@ -141,7 +143,7 @@ if( #( self.lstPionsAppui ) < rN_SE ) then
                                             end
                                         end
 
-                                        
+                                        _continue = false
                                                                         cases_switch_2[1] = true
 elseif switch_2 == "SectionInfanterie_MILAN"
                                     or switch_2 == "SectionInfanterie_HOT"
@@ -151,15 +153,17 @@ elseif switch_2 == "SectionInfanterie_MILAN"
                                             DIA_PushBack( self.lstPionsAppui, pion )
                                         end
 
-                                        
+                                        _continue = false
                                                                         cases_switch_2[2] = true
                                     end
                                 end
 
-                            if( #( self.lstPionsAttaque ) >= rN_PE and #( self.lstPionsAppui ) >= rN_SE ) then
-                                break
-                            end
+                                if _continue then
+                                if( #( self.lstPionsAttaque ) >= rN_PE and #( self.lstPionsAppui ) >= rN_SE ) then
+                                    break
+                                end
 
+                            end
                         end
 --[[// 
 ]]--[[// L'execution de la mission necessite la presence d'un 1er ech
@@ -177,7 +181,7 @@ elseif switch_2 == "SectionInfanterie_MILAN"
                     end
 
                     self.ePhase = eMRT_AffecterFuseaux
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eMRT_AffecterFuseaux then
                     --[[//-----------------------------------------------------------------------------
@@ -189,7 +193,7 @@ elseif switch_1 == eMRT_AffecterFuseaux then
                             self.eActionMRT = eActionEnCours
                                                         do
                                 self.ePhase = eMRT_AssignerMissions
-                                                                return
+                                                                do return end
 
                             end
 
@@ -197,7 +201,7 @@ elseif switch_1 == eMRT_AffecterFuseaux then
                     end
 
                     Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux, 1, setmetatable( { self.lstPionsAttaque, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eMRT_AssignerMissions then
                     --[[//-----------------------------------------------------------------------------
@@ -243,7 +247,7 @@ elseif switch_1 == eMRT_AssignerMissions then
 
                     Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.lstPionsAttaque ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
                     Activate( self.activations.BEH_Medo_Automate_INF_OrganiserMissions_ReleverEnRecueillant, 1, setmetatable( { self.lstPionsAttaque, self.lstPionsAppui, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
                 end
             end

@@ -44,13 +44,14 @@ includedFiles["sources/appui/circulation/pions/missions/aide a mobilite dans zon
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhaseMission
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
                     --[[// 1) Preparation de la mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhaseMission = eRejoindrePosition
-                    
+                    _continue = false
                 --[[// 2) Progression jusqu'au point à reconnaitre
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eRejoindrePosition then
@@ -60,7 +61,7 @@ elseif switch_1 == eRejoindrePosition then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhaseMission = eSePoster
-                                                                return
+                                                                do return end
 
                             end
 
@@ -68,7 +69,7 @@ elseif switch_1 == eRejoindrePosition then
                     end
 
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.pt, eProgressionReco, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// Se poster => Changement uniquement sur ordres !
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eSePoster then
@@ -78,20 +79,22 @@ elseif switch_1 == eSePoster then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhaseMission = eFinMission
-                                
+                                _continue = false
                             end
 
                         end
                     end
 
-                    Activate( self.activations.ACT_Obs_ObserverZone, 1, setmetatable( { self.pt, M_LOG_RECO_CAPACITE(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                        if _continue then
+                        Activate( self.activations.ACT_Obs_ObserverZone, 1, setmetatable( { self.pt, M_LOG_RECO_CAPACITE(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                        _continue = false
+                    end
                 --[[// Fin de la mission
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                    
+                    _continue = false
                                 cases_switch_1[4] = true
 
                 else

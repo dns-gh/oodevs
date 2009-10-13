@@ -54,7 +54,7 @@ include "bit.lua"
 
                 end
 
-                                return
+                                do return end
 
             end
 --[[/* **************TEST *******************/]]        end
@@ -521,7 +521,7 @@ node "BEH_GTIA_AssignerMissionsDefensesSE"
 
     activate = function( self )
         if( DIA_IsListEmpty( self._namedParams.listePions ) ) then
-            return
+            do return end
         end
 
         self.resultatCalcul = self.resultatCalcul or nil
@@ -579,7 +579,7 @@ do
                 local pion = x
                 --[[// securité
 ]]if( ( F_Automat_Getfuseau( pion ) == 0 or F_Automat_Getfuseau( pion ) == nil ) ) then
-                    return
+                    do return end
                 end
 
                 --[[// Pas d'ami = eni ou ??
@@ -675,12 +675,13 @@ node "ACT_GTIA_AssignerMissionDefense"
                 self.bMissionAssignee = self.bMissionAssignee or false
                 --[[// fuseau pas encore assigné
 ]]if( ( self._namedParams.fuseau == 0 or self._namedParams.fuseau == nil ) or self.bMissionAssignee ) then
-                    return
+                    do return end
                 end
 
                 --[[// Assignation de la mission
 ]]self.bMissionAssignee = true
                  do
+                    local _continue = true
                     local switch_1 = self._namedParams.typeMission
                     local cases_switch_1 = {}
                         if switch_1 == "T_Mission_Automate_Decrocher" then
@@ -688,7 +689,7 @@ node "ACT_GTIA_AssignerMissionDefense"
                             DEC_Copie_Localisation_Mission( self._namedParams.zoneRegroupement, missionPion, "pointRegroupement_" )
                             DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
                             DEC_DonnerMissionAutomate_Mission( missionPion )
-                            
+                            _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == "T_Mission_Automate_ABC_Tenir" then
                             local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
@@ -697,15 +698,17 @@ elseif switch_1 == "T_Mission_Automate_ABC_Tenir" then
                             if( ( point == 0 or point == nil ) ) then
                                 do
                                     DEC_Trace( "position impossible ABC" )
-                                    
+                                    _continue = false
                                 end
                             end
 
-                            local positionATenir = DEC_Geometrie_CalculerZoneAutourPointDansFuseau( self._namedParams.fuseau, point )
-                            DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
-                            DEC_Copie_Localisation_Mission( positionATenir, missionPion, "positionInstallation_" )
-                            DEC_DonnerMissionAutomate_Mission( missionPion )
-                            
+                                if _continue then
+                                local positionATenir = DEC_Geometrie_CalculerZoneAutourPointDansFuseau( self._namedParams.fuseau, point )
+                                DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
+                                DEC_Copie_Localisation_Mission( positionATenir, missionPion, "positionInstallation_" )
+                                DEC_DonnerMissionAutomate_Mission( missionPion )
+                                _continue = false
+                            end
                                                 cases_switch_1[2] = true
 elseif switch_1 == "T_Mission_Automate_INF_DefendreFerme" then
                             local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
@@ -714,15 +717,17 @@ elseif switch_1 == "T_Mission_Automate_INF_DefendreFerme" then
                             if( ( point == 0 or point == nil ) ) then
                                 do
                                     DEC_Trace( "position impossible ABC" )
-                                    
+                                    _continue = false
                                 end
                             end
 
-                            local positionATenir = DEC_Geometrie_CalculerZoneAutourPointDansFuseau( self._namedParams.fuseau, point )
-                            DEC_Copie_Localisation_Mission( positionATenir, missionPion, "position_" )
-                            DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
-                            DEC_DonnerMissionAutomate_Mission( missionPion )
-                            
+                                if _continue then
+                                local positionATenir = DEC_Geometrie_CalculerZoneAutourPointDansFuseau( self._namedParams.fuseau, point )
+                                DEC_Copie_Localisation_Mission( positionATenir, missionPion, "position_" )
+                                DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
+                                DEC_DonnerMissionAutomate_Mission( missionPion )
+                                _continue = false
+                            end
                                                 cases_switch_1[3] = true
 elseif switch_1 == "T_Mission_Automate_ABC_Surveiller" then
                             local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
@@ -731,15 +736,17 @@ elseif switch_1 == "T_Mission_Automate_ABC_Surveiller" then
                             if( ( point == 0 or point == nil ) ) then
                                 do
                                     DEC_Trace( "position impossible ABC" )
-                                    
+                                    _continue = false
                                 end
                             end
 
-                            local position = DEC_Geometrie_CalculerZoneAutourPointDansFuseau( self._namedParams.fuseau, point )
-                            DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
-                            DEC_Copie_Localisation_Mission( position, missionPion, "zoneInstallation_" )
-                            DEC_DonnerMissionAutomate_Mission( missionPion )
-                            
+                                if _continue then
+                                local position = DEC_Geometrie_CalculerZoneAutourPointDansFuseau( self._namedParams.fuseau, point )
+                                DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
+                                DEC_Copie_Localisation_Mission( position, missionPion, "zoneInstallation_" )
+                                DEC_DonnerMissionAutomate_Mission( missionPion )
+                                _continue = false
+                            end
                                                 cases_switch_1[4] = true
 elseif switch_1 == "T_Mission_Automate_ABC_Couvrir" then
                             --[[// Couvrir ici: Tenir face à la direction de couverture
@@ -752,18 +759,20 @@ elseif switch_1 == "T_Mission_Automate_ABC_Couvrir" then
                             if( ( point == 0 or point == nil ) ) then
                                 do
                                     DEC_Trace( "position impossible ABC" )
-                                    
+                                    _continue = false
                                 end
 --[[// Direction
 ]]                            end
 
-                            local dirCouverture = DEC_Rens_CalculerDirectionCouverture( point, self._namedParams.fuseau )
-                            DEC_AssignerDirectionAMissionAutomate_Mission( dirCouverture, missionPion )
-                            local positionATenir = DEC_Geometrie_CalculerZoneAutourPointDansFuseau( self._namedParams.fuseau, point )
-                            DEC_Copie_Localisation_Mission( positionATenir, missionPion, "positionInstallation_" )
-                            DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
-                            DEC_DonnerMissionAutomate_Mission( missionPion )
-                            
+                                if _continue then
+                                local dirCouverture = DEC_Rens_CalculerDirectionCouverture( point, self._namedParams.fuseau )
+                                DEC_AssignerDirectionAMissionAutomate_Mission( dirCouverture, missionPion )
+                                local positionATenir = DEC_Geometrie_CalculerZoneAutourPointDansFuseau( self._namedParams.fuseau, point )
+                                DEC_Copie_Localisation_Mission( positionATenir, missionPion, "positionInstallation_" )
+                                DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
+                                DEC_DonnerMissionAutomate_Mission( missionPion )
+                                _continue = false
+                            end
                         --[[// Couvrir de l'INF
 ]]                        cases_switch_1[5] = true
 elseif switch_1 == "T_Mission_Automate_INF_BarrerDirection" then
@@ -773,19 +782,21 @@ elseif switch_1 == "T_Mission_Automate_INF_BarrerDirection" then
                             if( ( point == 0 or point == nil ) ) then
                                 do
                                     DEC_Trace( "position impossible INF" )
-                                    
+                                    _continue = false
                                 end
 --[[// Direction
 ]]                            end
 
-                            local dirCouverture = DEC_Rens_CalculerDirectionCouverture( point, self._namedParams.fuseau )
-                            DEC_AssignerDirectionAMissionAutomate_Mission( dirCouverture, missionPion )
-                            --[[//Position
+                                if _continue then
+                                local dirCouverture = DEC_Rens_CalculerDirectionCouverture( point, self._namedParams.fuseau )
+                                DEC_AssignerDirectionAMissionAutomate_Mission( dirCouverture, missionPion )
+                                --[[//Position
 ]]local positionATenir = DEC_Geometrie_CalculerZoneAutourPointDansFuseau( self._namedParams.fuseau, point )
-                            DEC_Copie_Localisation_Mission( positionATenir, missionPion, "position_" )
-                            DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
-                            DEC_DonnerMissionAutomate_Mission( missionPion )
-                            
+                                DEC_Copie_Localisation_Mission( positionATenir, missionPion, "position_" )
+                                DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
+                                DEC_DonnerMissionAutomate_Mission( missionPion )
+                                _continue = false
+                            end
                                                 cases_switch_1[6] = true
 elseif switch_1 == "T_Mission_Automate_SoutenirSurPositionEnMesureDe" then
                             local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
@@ -794,15 +805,17 @@ elseif switch_1 == "T_Mission_Automate_SoutenirSurPositionEnMesureDe" then
                             if( ( point == 0 or point == nil ) ) then
                                 do
                                     DEC_Trace( "position impossible" )
-                                    
+                                    _continue = false
                                 end
                             end
 
-                            local position = DEC_Geometrie_CalculerZoneAutourPointDansFuseau( self._namedParams.fuseau, point )
-                            DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
-                            DEC_Copie_Localisation_Mission( position, missionPion, "position_" )
-                            DEC_DonnerMissionAutomate_Mission( missionPion )
-                            
+                                if _continue then
+                                local position = DEC_Geometrie_CalculerZoneAutourPointDansFuseau( self._namedParams.fuseau, point )
+                                DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
+                                DEC_Copie_Localisation_Mission( position, missionPion, "position_" )
+                                DEC_DonnerMissionAutomate_Mission( missionPion )
+                                _continue = false
+                            end
                                                 cases_switch_1[7] = true
                         end
                     end
@@ -833,7 +846,7 @@ elseif switch_1 == "T_Mission_Automate_SoutenirSurPositionEnMesureDe" then
     select = function( self )
         self.bMissionAssignee = self.bMissionAssignee or false
         if( ( self._namedParams.fuseau == 0 or self._namedParams.fuseau == nil ) or self.bMissionAssignee ) then
-            return
+            do return end
         end
 
         self.bMissionAssignee = true

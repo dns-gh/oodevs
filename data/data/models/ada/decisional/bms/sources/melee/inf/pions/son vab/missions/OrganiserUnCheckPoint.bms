@@ -72,19 +72,20 @@ do
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eSeMettreEnPlace then
                     if( self.eCurrentPhase == eFinMission ) then
                         do
                             self.ePhase = eFinMission
-                                                        return
+                                                        do return end
 
                         end
                     end
 
                     Activate( self.activations.BEH_Mission_Pion_VAB_OrganiserUnCheckPoint, GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eRompreContact then
                     if( self.eAction == eActionEffectuee ) then
@@ -92,7 +93,7 @@ elseif switch_1 == eRompreContact then
                             self.eAction = eActionEnCours
                                                         do
                                 self.ePhase = eFinMission
-                                                                return
+                                                                do return end
 
                             end
 
@@ -100,7 +101,7 @@ elseif switch_1 == eRompreContact then
                     end
 
                     Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     if( self.eAction == eActionEffectuee ) then
@@ -123,7 +124,7 @@ elseif switch_1 == eFinMission then
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
 
                 else
@@ -155,6 +156,7 @@ node "BEH_Mission_Pion_VAB_OrganiserUnCheckPoint"
         self.ePhase = self.ePhase or eSeMettreEnPlace
         self.eAction = self.eAction or eActionEnCours
          do
+            local _continue = true
             local switch_1 = --[[// BEH_Lima_Pion_RejoindreFuseau_EnAttente // virer ADA
 ]]self.ePhase
             local cases_switch_1 = {}
@@ -166,7 +168,7 @@ node "BEH_Mission_Pion_VAB_OrganiserUnCheckPoint"
                                                         do
                                 self.ePhase = eInstallerDispositif
                                                                 self.params.__returnValue = self.ePhase
-                                return
+                                do return end
 
                             end
 
@@ -175,7 +177,7 @@ node "BEH_Mission_Pion_VAB_OrganiserUnCheckPoint"
 
                     Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
                     Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, setmetatable( { M_TEMPS_PREPARATION_MISSION(), self.mission.pointInstallation_, true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eInstallerDispositif then
                     Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
@@ -192,7 +194,7 @@ elseif switch_1 == eInstallerDispositif then
                                                         do
                                 self.ePhase = eSurveiller
                                                                 self.params.__returnValue = self.ePhase
-                                return
+                                do return end
 
                             end
 
@@ -200,12 +202,12 @@ elseif switch_1 == eInstallerDispositif then
                     end
 
                     Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, setmetatable( { eNiveauInstallation_PosteAmenage, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// On surveille jusqu'a la fin...
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eSurveiller then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
 
                 else
@@ -213,7 +215,7 @@ elseif switch_1 == eSurveiller then
             end
 
                 self.params.__returnValue = self.ePhase
-        return
+        do return end
 
     end,
 

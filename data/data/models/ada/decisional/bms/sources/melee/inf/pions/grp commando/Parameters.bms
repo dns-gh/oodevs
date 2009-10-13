@@ -135,15 +135,16 @@ end
     _returnValue = 0
     local mission = DEC_GetMission( myself )
     if( ( mission == 0 or mission == nil ) ) then
-        return _returnValue
+        do return _returnValue end
     end
 
      do
+        local _continue = true
         local switch_1 = mission:GetType()
         local cases_switch_1 = {}
             if switch_1 == "T_Mission_Pion_INF_ControlerSecteur" then
                 _returnValue = 1500
-                
+                _continue = false
                         cases_switch_1[1] = true
 
             else
@@ -151,7 +152,7 @@ end
                         end
         end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function M_DISTANCE_TIR_FIXE()
@@ -170,6 +171,6 @@ end
 function S_EstADistanceTir_Pt( ptTir )
     local _returnValue = false
     _returnValue = DEC_Geometrie_Distance( DEC_Agent_Position(), ptTir ) < M_DISTANCE_TIR_FIXE()
-    return _returnValue
+    do return _returnValue end
 end
 

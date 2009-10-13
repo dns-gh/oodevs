@@ -42,7 +42,7 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Misc_Automate_ALAT_PionAlerteLaMoinsIminente( listePions )
@@ -66,7 +66,7 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Misc_Automate_ALAT_ListeDirectionsPourCouverturesPourSgpt( rNbDirections, direction )
@@ -83,7 +83,7 @@ function S_Misc_Automate_ALAT_ListeDirectionsPourCouverturesPourSgpt( rNbDirecti
     i = i + 1
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Misc_Automate_ALAT_DistancePionPlusLoinAPlotRavitaillement( listePions, direction )
@@ -97,7 +97,7 @@ function S_Misc_Automate_ALAT_DistancePionPlusLoinAPlotRavitaillement( listePion
     if( TC2 ~= nil ) then
         pionTC2 = DEC_Automate_PionPCDeAutomate( TC2 )
     else
-        return _returnValue
+        do return _returnValue end
     end
 
     for _,x in pairs( listePions ) do
@@ -125,7 +125,7 @@ do
     end
 
     _returnValue = distanceMax
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Misc_Automate_ALAT_TempsPionPourAllerRecompleter( pion )
@@ -136,7 +136,7 @@ function S_Misc_Automate_ALAT_TempsPionPourAllerRecompleter( pion )
     local pionTC2 = nil
     local patrouilleAlat = pion
     if( not S_EstPatrouilleALAT( pion ) ) then
-        return _returnValue
+        do return _returnValue end
     end
 
     if( TC2 ~= nil ) then
@@ -153,13 +153,13 @@ do
             if( pionTC2 ~= nil ) then
                 DEC_Copie_Point( DEC_Automate_PionPosition( pionTC2 ), pointDeRecompletement )
             else
-                return _returnValue
+                do return _returnValue end
             end
 
         end
     end
 
     _returnValue = DEC_Automate_PionTempsPourParcourirDistanceEnLigneDroite( pion, DEC_Geometrie_Distance( DEC_Automate_PionPosition( pion ), pointDeRecompletement ) )
-    return _returnValue
+    do return _returnValue end
 end
 

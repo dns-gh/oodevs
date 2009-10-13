@@ -43,7 +43,7 @@ include "bit.lua"
                 self.resultatCalcul = self.resultatCalcul or nil
         self.bEnAttente = self.bEnAttente or false
         if( #( self._namedParams.selPions ) == 1 ) then
-            return
+            do return end
         end
 
         --[[//-------------------------------------------------------------------------
@@ -54,7 +54,7 @@ include "bit.lua"
         end
 
         if( ( self.resultatCalcul == 0 or self.resultatCalcul == nil ) ) then
-            return
+            do return end
         end
 
         Activate( self.activations.ACT_Info_Automate_Trace, 1, { "$$ Coordinnation du premier Echelon : activation $$", } )
@@ -66,7 +66,7 @@ include "bit.lua"
 ]]--[[// Pas de pion en queue
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( ( pionEnQueue == 0 or pionEnQueue == nil ) ) then
-            return
+            do return end
         end
 
         --[[//=============================================================================
@@ -169,7 +169,7 @@ node "BEH_CoordDep_Automate_INF_AvecAutomate"
         --[[// Si un pion se trouve sur une ligne de debouche ou sur une ligne de 
 ]]--[[// coordination, on arrete la coordination sur l'etalement de la compagnie
 ]]if( S_Conduite_PionEnAttente_OrdreCoordination( selPionsPE ) ) then
-            return
+            do return end
         end
 
         for _,x_pion in pairs( selPionsPE ) do
@@ -206,7 +206,7 @@ node "BEH_CoordDep_Automate_INF_AvecAutomate_Pion"
             do
                 Activate( self.activations.ACT_Ordre_Automate_Pause, 1, { self._namedParams.pion, } )
                 Activate( self.activations.ACT_Info_Automate_Trace, 1, { " ==> Coordinnation avec AMI --> ORDRE attendre à " .. DEC_GetSzName( self._namedParams.pion ), } )
-                                return
+                                do return end
 
             end
         end
@@ -217,7 +217,7 @@ node "BEH_CoordDep_Automate_INF_AvecAutomate_Pion"
         end
 
         if( ( self.resultatCalcul_Ami == 0 or self.resultatCalcul_Ami == nil ) ) then
-            return
+            do return end
         end
 
         Activate( self.activations.ACT_Info_Automate_Trace, 1, { "$$ Coordinnation avec " .. DEC_GetSzName( self._namedParams.pion ) .. " $$", } )
@@ -226,7 +226,7 @@ node "BEH_CoordDep_Automate_INF_AvecAutomate_Pion"
 ]]--[[//-----------------------------------------------------------------------------
 ]]local pionEnQueue_Ami = S_Coordination_PionEnQueue( self.resultatCalcul_Ami, selPionsCompagnie_Amie, true )
         if( ( pionEnQueue_Ami == 0 or pionEnQueue_Ami == nil ) ) then
-            return
+            do return end
         end
 
         --[[// Calcule distance LAV (si on veut être à hauteur) ou LAR     
@@ -316,7 +316,7 @@ node "BEH_CoordDep_Automate_INF_Retrograde"
         end
 
         if( ( self.resultatCalcul == 0 or self.resultatCalcul == nil ) ) then
-            return
+            do return end
         end
 
         Activate( self.activations.ACT_Info_Automate_Trace, 1, { "$$ Coordinnation Retrograde : activation $$", } )
@@ -331,7 +331,7 @@ node "BEH_CoordDep_Automate_INF_Retrograde"
 
         local pionEnQueue = S_Coordination_PionEnQueue( self.resultatCalcul, sPionsOperationnels, true )
         if( ( pionEnQueue == 0 or pionEnQueue == nil ) ) then
-            return
+            do return end
         end
 
         local rEtalementCompagnie = DEC_Geometrie_CalculerDistanceLigneAvant( self.resultatCalcul, pionEnQueue )
@@ -340,7 +340,7 @@ node "BEH_CoordDep_Automate_INF_Retrograde"
         --[[// Est ce que l'on se trouve du bon cote de la compagnie
 ]]--[[// Si non, on poursuit        
 ]]if( rDistance_PC_LAR > 0 ) then
-            return
+            do return end
         end
 
         do
@@ -421,7 +421,7 @@ node "BEH_Conduite_Automate_INF_FlancGarder_Regroupement"
 ]]local selPions_PE = S_ObtenirTousPionsDe( eEtatEchelon_Premier )
         local selPionsCompagnie_PE = S_ObtenirTousPionsPour( self._namedParams.compagnie, eEtatEchelon_Premier )
         if( ( #( selPionsCompagnie_PE ) == 0 or #( selPionsCompagnie_PE ) == nil ) ) then
-            return
+            do return end
         end
 
         local ptRegroupement_PE = DEC_Automate_PionPosition( DIA_GetAt( selPionsCompagnie_PE, 0 ) )

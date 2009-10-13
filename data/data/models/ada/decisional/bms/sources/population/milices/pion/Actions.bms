@@ -53,10 +53,11 @@ node "ACT_Obj_Pion_INF_RealiserBouchonMines"
         end
 
          do
+            local _continue = true
             local switch_1 = self.eEtatObjet
             local cases_switch_1 = {}
                 if switch_1 == eActionObjetEnCours then
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionObjetTerminee then
                     DEC_Trace( "fin realisation" )
@@ -67,7 +68,7 @@ elseif switch_1 == eActionObjetTerminee then
                     Halt( self )
                     do return end
 
-                    
+                    _continue = false
                 elseif switch_1 == eActionObjetManqueDotation then
                                 cases_switch_1[3] = true
                 end
@@ -77,7 +78,7 @@ elseif switch_1 == eActionObjetTerminee then
                     Halt( self )
                     do return end
 
-                    
+                    _continue = false
                 --[[// Pas de delais de reorganisation du chantier
 ]]                end
             end
@@ -155,10 +156,11 @@ elseif switch_1 == eActionObjetTerminee then
         end
 
          do
+            local _continue = true
             local switch_1 = self.eEtatObjet
             local cases_switch_1 = {}
                 if switch_1 == eActionObjetEnCours then
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionObjetTerminee then
                     DEC_Trace( "realisation objet : fin realisation" )
@@ -168,7 +170,7 @@ elseif switch_1 == eActionObjetTerminee then
                     Halt( self )
                     do return end
 
-                    
+                    _continue = false
                 elseif switch_1 == eActionObjetPasDeCapacite then
                     DEC_Trace( "realisation objet : pas de capacites" )
                     self.actionID = DEC_StopAction( self.actionID )
@@ -177,7 +179,7 @@ elseif switch_1 == eActionObjetTerminee then
                     Halt( self )
                     do return end
 
-                    
+                    _continue = false
                 elseif switch_1 == eActionObjetManqueDotation then
                     DEC_Trace( "realisation objet : manque dotation" )
                                 cases_switch_1[4] = true
@@ -188,7 +190,7 @@ elseif switch_1 == eActionObjetTerminee then
                     Halt( self )
                     do return end
 
-                    
+                    _continue = false
                 --[[// Pas de delais de reorganisation du chantier
 ]]                end
             end
@@ -264,10 +266,11 @@ elseif switch_1 == eActionObjetTerminee then
         end
 
          do
+            local _continue = true
             local switch_1 = self.eEtatObjet
             local cases_switch_1 = {}
                 if switch_1 == eActionObjetEnCours then
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionObjetTerminee then
                     DEC_Trace( "preparation : fin" )
@@ -277,7 +280,7 @@ elseif switch_1 == eActionObjetTerminee then
                     Halt( self )
                     do return end
 
-                    
+                    _continue = false
                 elseif switch_1 == eActionObjetImpossible
                 or switch_1 == eActionObjetManqueDotation then
                     self.actionID = DEC_StopAction( self.actionID )
@@ -285,7 +288,7 @@ elseif switch_1 == eActionObjetTerminee then
                     Halt( self )
                     do return end
 
-                    
+                    _continue = false
                 --[[// Pas de delais de reorganisation du chantier
 ]]                end
             end
@@ -392,10 +395,11 @@ do
         end
 
          do
+            local _continue = true
             local switch_1 = self.eEtatObjet
             local cases_switch_1 = {}
                 if switch_1 == eActionObjetEnCours then
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionObjetTerminee then
                     DEC_Trace( "destruction : fin" )
@@ -404,7 +408,7 @@ elseif switch_1 == eActionObjetTerminee then
                     Halt( self )
                     do return end
 
-                    
+                    _continue = false
                 elseif switch_1 == eActionObjetImpossible
                 or switch_1 == eActionObjetManqueDotation then
                     self.actionID = DEC_StopAction( self.actionID )
@@ -412,7 +416,7 @@ elseif switch_1 == eActionObjetTerminee then
                     Halt( self )
                     do return end
 
-                    
+                    _continue = false
                 --[[// Pas de delais de reorganisation du chantier
 ]]                end
             end

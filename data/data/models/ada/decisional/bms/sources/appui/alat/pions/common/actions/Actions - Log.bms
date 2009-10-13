@@ -36,6 +36,7 @@ includedFiles["sources/appui/alat/pions/common/actions/Actions - Log.bms"] = tru
         end
 
          do
+            local _continue = true
             local switch_1 = self.eEtatConstruction
             local cases_switch_1 = {}
                 if switch_1 == eActionObjetTerminee then

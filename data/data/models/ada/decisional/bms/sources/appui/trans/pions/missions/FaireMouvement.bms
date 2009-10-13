@@ -51,12 +51,13 @@ includedFiles["sources/appui/trans/pions/missions/FaireMouvement.bms"] = true
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eCreerItineraire then
                     self.it = DEC_CreerItineraireListe( self._namedParams.mission.itineraire_, eTypeItiMouvement )
                     self.ePhase = eProgresser
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
@@ -65,7 +66,7 @@ elseif switch_1 == eProgresser then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhase = eFinMission
-                                                                return
+                                                                do return end
 
                             end
 
@@ -73,11 +74,11 @@ elseif switch_1 == eProgresser then
                     end
 
                     Activate( self.activations.BEH_Dep_SeDeplacer, 1, setmetatable( { self.it, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
                 end
             end

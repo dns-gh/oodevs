@@ -62,6 +62,7 @@ includedFiles["sources/common/pions/missions/SeFaireDecontaminer.bms"] = true
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhaseMission
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
@@ -69,7 +70,7 @@ includedFiles["sources/common/pions/missions/SeFaireDecontaminer.bms"] = true
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     DEC_Trace( "** MIS_Pion_SeFaireDecontaminer **" )
                     self.ePhaseMission = eProgresser
-                    
+                    _continue = false
                 --[[// Fin contamination
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eProgresser then
@@ -82,7 +83,7 @@ elseif switch_1 == eProgresser then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhaseMission = eAttendre
-                                                                return
+                                                                do return end
 
                             end
 
@@ -90,7 +91,7 @@ elseif switch_1 == eProgresser then
                     end
 
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.positionSite, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// Décontamination
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eAttendre then
@@ -100,7 +101,7 @@ elseif switch_1 == eAttendre then
                         do
                             DEC_Trace( "---- Unite decontaminee ----" )
                             self.ePhaseMission = eRejoindre
-                                                        return
+                                                        do return end
 
                         end
 --[[// Si sauvegarde (pour toujours être à coté du site de décontamination)
@@ -114,7 +115,7 @@ elseif switch_1 == eAttendre then
 ]]--[[// Demander à se faire decontaminer (se mettre en liste d'attente)
 ]]--[[//---------------------------------------------------------------------
 ]]Activate( self.activations.ACT_Pion_Nbc_DemanderDecontaminationSur, 1, { self._namedParams.mission.siteDecontamination_, } )
-                    
+                    _continue = false
                 --[[// Fin decontamination
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eRejoindre then
@@ -124,7 +125,7 @@ elseif switch_1 == eRejoindre then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhaseMission = eFinMission
-                                                                return
+                                                                do return end
 
                             end
 
@@ -132,13 +133,13 @@ elseif switch_1 == eRejoindre then
                     end
 
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.pointArrivee_, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// Fin mission
 ]]                cases_switch_1[4] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                    
+                    _continue = false
                                 cases_switch_1[5] = true
                 end
             end

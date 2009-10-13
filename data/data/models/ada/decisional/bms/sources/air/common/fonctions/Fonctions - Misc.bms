@@ -11,6 +11,6 @@ include "bit.lua"
 ]]function S_EstPatrouilleAIR( agent )
     local _returnValue = false
     _returnValue = agent:GetType() == "StrategicBomberPatrol" or agent:GetType() == "AirCP"
-    return _returnValue
+    do return _returnValue end
 end
 

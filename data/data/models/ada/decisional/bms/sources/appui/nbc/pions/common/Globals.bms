@@ -77,6 +77,6 @@ end
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 

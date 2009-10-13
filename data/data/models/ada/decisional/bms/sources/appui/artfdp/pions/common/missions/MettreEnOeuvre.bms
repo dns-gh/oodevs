@@ -95,20 +95,21 @@ node "BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission"
 ]]--[[// les zones d'implantation
 ]]local missionPion = DEC_GetMission( myself )
                  do
+                    local _continue = true
                     local switch_1 = missionPion:GetType()
                     local cases_switch_1 = {}
                         if switch_1 == "T_Mission_Pion_ASS_AssurerMiseEnOeuvreSurPosition" then
                                                     local mission = DEC_GetMission( myself )
                             DEC_Copie_Point( mission.positionImplantation_, self.ptObjImplantation )
                             self.bPresenceContreBatterie = mission.presenceContreBatterie_
-                            
+                            _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == "T_Mission_Pion_ASS_AssurerMiseEnOeuvre" then
                                                     local mission = DEC_GetMission( myself )
                             self.repObjImplantation = mission.zoneImplantation_
                             self.ptObjImplantation = S_Obj_Position( self.repObjImplantation )
                             self.bPresenceContreBatterie = mission.presenceContreBatterie_
-                            
+                            _continue = false
                                                 cases_switch_1[2] = true
                         end
                     end
@@ -118,6 +119,7 @@ elseif switch_1 == "T_Mission_Pion_ASS_AssurerMiseEnOeuvre" then
 ]]        end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
@@ -130,7 +132,7 @@ elseif switch_1 == "T_Mission_Pion_ASS_AssurerMiseEnOeuvre" then
                                                         do
                                 Activate( self.activations.ACT_RC, 1, { eRC_DebutMission, } )
                                 self.ePhase = eRejoindre
-                                                                return
+                                                                do return end
 
                             end
 
@@ -140,7 +142,7 @@ elseif switch_1 == "T_Mission_Pion_ASS_AssurerMiseEnOeuvre" then
                     Activate( self.activations.ACT_RC_PreparationMission, 1, { self._namedParams.rDelaiPreparation, } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1.2, { eEtatPhaseMission_PreparationMission, } )
                     Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, self._namedParams.rDelaiPreparation, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// -----------------------------------------------------------------------------
 ]]--[[// Rejoindre la position du site
 ]]--[[// -----------------------------------------------------------------------------
@@ -151,7 +153,7 @@ elseif switch_1 == eRejoindre then
                             Activate( self.activations.ACT_Info_Trace, 1, { "Rejoins position d'installation", } )
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                             Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptObjImplantation, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -167,7 +169,7 @@ elseif switch_1 == eRejoindre then
                                 do
                                     Activate( self.activations.ACT_RC, 1, { eRC_ZoneImplantationOccupee, } )
                                     Activate( self.activations.ACT_Info_Trace, 1, { "Zone d'implantation occupee : en attente.", } )
-                                                                        return
+                                                                        do return end
 
                                 end
                             end
@@ -185,7 +187,7 @@ elseif switch_1 == eRejoindre then
                     end
 
                     Activate( self.activations.BEH_Dep_Pion_ASS_ChangerDePosition_Sauvegarde, 2, { self.ptObjImplantation, } )
-                    
+                    _continue = false
                 --[[// -----------------------------------------------------------------------------
 ]]--[[//  Fin de mission --> rejoindre plot munition
 ]]--[[// -----------------------------------------------------------------------------
@@ -198,7 +200,7 @@ elseif switch_1 == eFinMission then
                         do return end
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[4] = true
 
                 else

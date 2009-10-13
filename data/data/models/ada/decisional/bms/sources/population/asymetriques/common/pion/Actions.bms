@@ -121,7 +121,7 @@ includedFiles["sources/population/asymetriques/common/pion/Actions.bms"] = true
         end
 
                 self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 
@@ -170,7 +170,7 @@ do
         end
 
                 self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 

@@ -54,6 +54,7 @@ include "bit.lua"
         self.selINF = self.selINF or {}--[[// Liste des pions INF en renforcement
 ]]
          do
+            local _continue = true
             local switch_1 = --[[// =============================================================================
 ]]--[[// PHASE DU COMPORTEMENT
 ]]--[[// 1) Vérifier les moyens, des renforts éventuels
@@ -85,29 +86,30 @@ do
 
                                 if _continue then
                                  do
+                                    local _continue = true
                                     local switch_2 = pion:GetType()
                                     local cases_switch_2 = {}
                                         if switch_2 == "Patrouille_EI"
                                         or switch_2 == "Patrouille_EI_Milan" then
                                             DIA_PushFront( self.selABC_Ecl, pion )
-                                            
+                                            _continue = false
                                                                                 cases_switch_2[1] = true
 elseif switch_2 == "Peloton_XL"
                                         or switch_2 == "Peloton_AMX" then
                                             DIA_PushFront( self.selABC_Blinde, pion )
-                                            
+                                            _continue = false
                                                                                 cases_switch_2[2] = true
 elseif switch_2 == "SectionInfanterie"
                                         or switch_2 == "SectionInfanterie_HOT"
                                         or switch_2 == "SectionInfanterie_MILAN" then
                                             Activate( self.activations.ACT_Info_Automate_Trace, 1, { "-------$$$ Renforcements INF $$$------", } )
                                             DIA_PushFront( self.selINF, pion )
-                                            
+                                            _continue = false
                                                                                 cases_switch_2[3] = true
 
                                         else
                                             DIA_PushFront( self.selABC_NonPrevu, pion )
-                                            
+                                            _continue = false
                                                                                 end
                                     end
 
@@ -116,8 +118,10 @@ elseif switch_2 == "SectionInfanterie"
 
                     end
 
-                    self.ePhase = eMRT_DeterminerEchelonsLocals
-                    
+                        if _continue then
+                        self.ePhase = eMRT_DeterminerEchelonsLocals
+                        _continue = false
+                    end
                 --[[//---------------------------------------------------------------------
 ]]--[[// Assignation premier echelon et second echelon utile
 ]]--[[//---------------------------------------------------------------------
@@ -143,6 +147,7 @@ elseif switch_1 == eMRT_DeterminerEchelonsLocals then
 do
                             local pion = x
                              do
+                                local _continue = true
                                 local switch_2 = pion:GetType()
                                 local cases_switch_2 = {}
                                     if switch_2 == "Peloton_AMX"
@@ -158,7 +163,7 @@ do
                                             DIA_PushFront( self.selABC_SE, pion )
                                         end
 
-                                        
+                                        _continue = false
                                                                         cases_switch_2[1] = true
                                     end
                                 end
@@ -174,13 +179,13 @@ do
                         do
                             DEC_Trace( "No adapted units to perform the mission" )
                             self.ePhase = eMRT_MissionImpossible
-                                                        return
+                                                        do return end
 
                         end
                     end
 
                     self.ePhase = eMRT_AssignerMissions
-                    
+                    _continue = false
                 --[[//---------------------------------------------------------------------
 ]]--[[// Assignation des missions
 ]]--[[//---------------------------------------------------------------------
@@ -191,7 +196,7 @@ elseif switch_1 == eMRT_AssignerMissions then
                             --[[// ePhase = eMRT_MissionImpossible;
 ]]DEC_Trace( "Warning: some front units did not received mission " )
                             self.ePhase = eMRT_Valider
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -199,13 +204,14 @@ elseif switch_1 == eMRT_AssignerMissions then
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.ePhase = eMRT_Valider
-                                                        return
+                                                        do return end
 
                         end
 --[[/* ------------------------------------------------------------- */]]--[[/* ------- Fin Gestion erreur/ bon deroulement ------- */]]--[[/* ------------------------------------------------------------- */]]--[[// Suivant le type de mission...
 ]]                    end
 
                      do
+                        local _continue = true
                         local switch_2 = self._namedParams.eType
                         local cases_switch_2 = {}
                             if switch_2 == "T_Mission_Automate_ABC_Freiner" then
@@ -216,7 +222,7 @@ elseif switch_1 == eMRT_AssignerMissions then
                                 Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionFreinerA, 1, { self.selABC_SE, eEtatEchelon_Second, } )
                                 Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionFreinerA, 1, { self.selABC_PE, eEtatEchelon_Premier, } )
                                 Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionJalonerA, 1, { self.selABC_Ecl, eEtatEchelon_Eclairage, } )
-                                
+                                _continue = false
                             --[[//-----------------------------------------------------------------------------
 ]]--[[// Jalonner
 ]]--[[//-----------------------------------------------------------------------------
@@ -225,19 +231,21 @@ elseif switch_2 == "T_Mission_Automate_ABC_Jalonner" then
                                 Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selABC_Blinde ) + #( self.selABC_Ecl ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                                 Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionJalonerA, 1, { self.selABC_Ecl, eEtatEchelon_Eclairage, } )
                                 Activate( self.activations.BEH_Medo_Automate_ABC_AssignerMissionJalonerA, 1, { self.selABC_Blinde, eEtatEchelon_Premier, } )
-                                
+                                _continue = false
                                                         cases_switch_2[2] = true
                             end
                         end
 
-                    
+                        if _continue then
+                        _continue = false
+                    end
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Mission impossible
 ]]--[[//-----------------------------------------------------------------------------
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eMRT_MissionImpossible then
                     Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
-                    
+                    _continue = false
                 --[[//---------------------------------------------------------------------
 ]]--[[// Validation
 ]]--[[//---------------------------------------------------------------------

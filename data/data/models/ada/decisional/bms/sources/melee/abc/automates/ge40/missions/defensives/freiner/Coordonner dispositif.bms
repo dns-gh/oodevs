@@ -210,7 +210,7 @@ node "BEH_GTIA_AssurerLaCoordinationRetrogradeIntraEchelon"
         end
 
         if( #( self._namedParams.listePions ) == 1 ) then
-            return
+            do return end
         end
 
         for _,pion in pairs( self._namedParams.listePions ) do

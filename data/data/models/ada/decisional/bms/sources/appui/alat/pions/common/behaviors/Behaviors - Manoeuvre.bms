@@ -94,7 +94,7 @@ node "BEH_Manoeuvre_Pion_AllerStationner"
         end
 
                 self.params.__returnValue = self.eEtat
-        return
+        do return end
 
     end,
 

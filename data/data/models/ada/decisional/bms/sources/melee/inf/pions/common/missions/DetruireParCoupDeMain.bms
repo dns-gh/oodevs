@@ -68,6 +68,7 @@ include "bit.lua"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eSeMettreEnPlace then
@@ -79,7 +80,7 @@ include "bit.lua"
                                                         do
                                 self.ePhase = eAborderObjectif
                                                                 self.params.__returnValue = self.ePhase
-                                return
+                                do return end
 
                             end
 
@@ -87,7 +88,7 @@ include "bit.lua"
                     end
 
                     Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, setmetatable( { M_TEMPS_PREPARATION_MISSION(), self.mission.pointRegroupement_, false, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eAborderObjectif then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
@@ -103,7 +104,7 @@ elseif switch_1 == eAborderObjectif then
                     else
 do
                             Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.mission.pointRegroupement_, eProgressionDirect, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -121,7 +122,7 @@ do
                                                         do
                                 self.ePhase = eSurveiller
                                                                 self.params.__returnValue = self.ePhase
-                                return
+                                do return end
 
                             end
 
@@ -131,7 +132,7 @@ do
 
                     Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, setmetatable( { eNiveauInstallation_PosteAmenage, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
                                         self.params.__returnValue = self.ePhase
-                    return
+                    do return end
 
                                 end
                 if cases_switch_1[3] or switch_1 == eSurveiller then
@@ -156,7 +157,7 @@ do
                     end
 
                     Activate( self.activations.BEH_Pion_INF_Detruire_DetruireParCoupDeMain, 2, { self.mission.pointObjectif_, self.mission.natureDestruction_, self.mission.heureDestruction_, } )
-                    
+                    _continue = false
                                 cases_switch_1[4] = true
 
                 else
@@ -164,7 +165,7 @@ do
             end
 
                 self.params.__returnValue = self.ePhase
-        return
+        do return end
 
     end,
 
@@ -207,7 +208,7 @@ node "BEH_Pion_INF_Detruire_DetruireParCoupDeMain"
                 --[[// On attend 1h apres le couche du soleil si la date n'est pas depassee
 ]]Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, 60, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
                 Activate( self.activations.ACT_Dep_SePoster, 1, {} )
-                                return
+                                do return end
 
             end
         end
@@ -303,7 +304,7 @@ node "BEH_Obj_Pion_INF_DestructionTerrain_DansZone"
         --[[// Rejoins la position d'installation
 ]]self.bReturnHalt = ( self.eActionDeplacement == eActionImpossible )
         if( self.bReturnHalt ) then
-            return
+            do return end
         end
 
         --[[// Organise le chantier : detruit l'element terrain
@@ -311,7 +312,7 @@ node "BEH_Obj_Pion_INF_DestructionTerrain_DansZone"
             do
                 self.bReturnHalt = ( self.eActionDeplacement ~= eActionEnCours )
                 if( self.bReturnHalt ) then
-                    return
+                    do return end
                 end
 
                 Activate( self.activations.ACT_Obj_Pion_INF_RealiserObjet, 1, setmetatable( { self.eTypeObjet, self.locObjet, 0, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
@@ -348,18 +349,19 @@ node "BEH_Pion_INF_Detruire_CoupDeMain"
 
     activate = function( self )
          do
+            local _continue = true
             local switch_1 = self._namedParams.eNatureObjectif
             local cases_switch_1 = {}
                 if switch_1 == eNatureObjectif_ElementTerrain then
                     Activate( self.activations.BEH_Obj_Pion_INF_Detruire_ElementsTerrain, 2, { self._namedParams.zone, } )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eNatureObjectif_Objets then
                     Activate( self.activations.BEH_Obj_Pion_INF_Detruire_Objets, 2, { self._namedParams.zone, } )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eNatureObjectif_ElementMobile then
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
                 end
             end
@@ -405,7 +407,7 @@ node "BEH_Obj_Pion_INF_Detruire_Objets"
                         --[[// On ne fait qu'une seule manoeuvre par nuit
 ]]StartActivateOverride( self, self.activations.BEH_Dep_Pion_INF_IntervenirSurObjectif, rForceObj, { DEC_ConnaissanceObjet_Localisation( x_obj ), } )
                         StartActivateOverride( self, self.activations.BEH_Obj_Pion_INF_DetruireObjet, 1.5 * rForceObj, { x_obj, } )
-                                                return
+                                                do return end
 
                     end
 --[[//=============================================================================
@@ -470,6 +472,7 @@ node "BEH_Dep_Pion_INF_IntervenirSurObjectif"
         self.eAction = self.eAction or eActionEnCours
         self.ptObj = self.ptObj or S_Geometrie_BarycentreZone( self._namedParams.zoneObj )
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eRejoindrePointChantier then
@@ -487,7 +490,7 @@ node "BEH_Dep_Pion_INF_IntervenirSurObjectif"
                     end
 
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptObj, eProgressionDirect, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// ============================================================================
 ]]                cases_switch_1[1] = true
                 end

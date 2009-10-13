@@ -65,7 +65,7 @@ include "Appui/Nbc/Automates/Common/Gestion pions detruits.bms"
 ]]
         --[[// ========================== En embrayé SEULEMENT ============================
 ]]if( not DEC_Automate_EstEmbraye() ) then
-            return
+            do return end
         end
 
         Activate( self.activations.BEH_Nbc_Automate_GererAlerteNiv4, 1, {} )--[[//-----------------------------------------------------------------------------

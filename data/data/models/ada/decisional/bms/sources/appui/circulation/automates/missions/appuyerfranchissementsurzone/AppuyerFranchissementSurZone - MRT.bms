@@ -67,6 +67,7 @@ includedFiles["sources/appui/circulation/automates/missions/appuyerfranchissemen
 ]]        end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eMRT_AssignerMissions then
@@ -77,7 +78,7 @@ includedFiles["sources/appui/circulation/automates/missions/appuyerfranchissemen
 ]]if( self.eEtatMissionAppuyer == eActionImpossible ) then
                         do
                             self.ePhase = eMRT_MissionImpossible
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -85,7 +86,7 @@ includedFiles["sources/appui/circulation/automates/missions/appuyerfranchissemen
                     if( self.eEtatMissionAppuyer == eActionEffectuee ) then
                         do
                             self.ePhase = eMRT_Valider
-                                                        return
+                                                        do return end
 
                         end
 --[[//liste des pions qui ne sont pas dans la liste "listePionsPourMission"
@@ -104,7 +105,7 @@ includedFiles["sources/appui/circulation/automates/missions/appuyerfranchissemen
                         Activate( self.activations.BEH_Medo_Automate_CIRCU_AssignerMissionsRenforcerAListe, 1, { ePhase_MRT, listePourRenforcement, self.pion, } )
                     end
 
-                    
+                    _continue = false
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Mission impossible
 ]]--[[//-----------------------------------------------------------------------------
@@ -115,7 +116,7 @@ elseif switch_1 == eMRT_MissionImpossible then
                     Halt( self )
                     do return end
 
-                    
+                    _continue = false
                 --[[//---------------------------------------------------------------------
 ]]--[[// Validation
 ]]--[[//---------------------------------------------------------------------
@@ -125,7 +126,7 @@ elseif switch_1 == eMRT_MissionImpossible then
                     Halt( self )
                     do return end
 
-                    
+                    _continue = false
                 
                 else
                                 end

@@ -93,13 +93,13 @@ do
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "Tir couverture : attente", } )
                                 self.params.__returnValue = eActionEnPause
-                return
+                do return end
 
             end
         end
 
                 self.params.__returnValue = eActionEnCours
-        return
+        do return end
 
     end,
 
@@ -146,11 +146,11 @@ node "BEH_Feu_Pion_INF_FixerNeutraliser"
 do
                 if( self.eAction ~= eActionEffectuee ) then
                     self.params.__returnValue = self.eAction
-                    return
+                    do return end
                 end
 
                                 self.params.__returnValue = eActionEffectuee
-                return
+                do return end
 
             end
         end
@@ -222,7 +222,7 @@ node "BEH_Feu_Pion_INF_TirFixer"
                 Activate( self.activations.ACT_Info_Trace, 1, { "Ennemi en deplacement", } )
                 self.eAction = eActionEnCours
                                 self.params.__returnValue = eActionEnCours
-                return
+                do return end
 
             end
 --[[// Si l'ennemi est fixe, on n'intervient pas dessus
@@ -232,7 +232,7 @@ node "BEH_Feu_Pion_INF_TirFixer"
             do
                 self.eAction = eActionEnPause
                                 self.params.__returnValue = eActionEnPause
-                return
+                do return end
 
             end
         end
@@ -314,7 +314,7 @@ node "BEH_Feu_Pion_INF_TirCouverture_Fixe"
             do
                 self.eAction = eActionEnCours
                                 self.params.__returnValue = eActionEnPause
-                return
+                do return end
 
             end
         end
@@ -402,7 +402,7 @@ node "BEH_Feu_Pion_INF_ConduireLesFeux_Sur"
                         --[[// MAJ Stimulus tir inefficace
 ]]g_bTirInefficace = true
                                                 self.params.__returnValue = eActionEnPause
-                        return
+                        do return end
 
                     end
 --[[// init avec nouvel etat de l'eni
@@ -414,15 +414,16 @@ node "BEH_Feu_Pion_INF_ConduireLesFeux_Sur"
 ]]        end
 
          do
+            local _continue = true
             local switch_1 = self._namedParams.eFormationTir
             local cases_switch_1 = {}
                 if switch_1 == eFormationTir_Debarque then
                     Activate( self.activations.BEH_Tir_Pion_INF_FaireFeu_Debarque, 1, setmetatable( { self._namedParams.ksEni, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction_Tir = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eFormationTir_Embarque then
                     Activate( self.activations.BEH_Tir_Pion_INF_FaireFeu_Embarque, 1, setmetatable( { self._namedParams.ksEni, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction_Tir = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 
                 else
@@ -487,7 +488,7 @@ node "BEH_Tir_Pion_INF_FaireFeu_Embarque"
         end
 
                 self.params.__returnValue = eActionReturn
-        return
+        do return end
 
     end,
 
@@ -546,7 +547,7 @@ node "BEH_Tir_Pion_INF_FaireFeu_Debarque"
         end
 
                 self.params.__returnValue = eActionReturn
-        return
+        do return end
 
     end,
 
@@ -605,7 +606,7 @@ node "BEH_Tir_Pion_INF_FaireFeu"
         end
 
                 self.params.__returnValue = eActionReturn
-        return
+        do return end
 
     end,
 

@@ -65,7 +65,7 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Info.bms"] = true
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Valable un tic
 ]]if( DEC_NouvelleMission() ) then
-            return
+            do return end
         end
 
         Activate( self.activations.BEH_Info_Pion_RendreCompteSurPriseAPartiParEnis, 1, {} )
@@ -92,6 +92,7 @@ node "BEH_Info_Pion_RendreCompteSurNBC"
 
     activate = function( self )
          do
+            local _continue = true
             local switch_1 = --[[//-----------------------------------------------------------------------------
 ]]--[[// CR SUR ETAT NBC
 ]]--[[//-----------------------------------------------------------------------------
@@ -99,11 +100,11 @@ node "BEH_Info_Pion_RendreCompteSurNBC"
             local cases_switch_1 = {}
                 if switch_1 == eEtatNbc_Niv0 then
                     Activate( self.activations.ACT_RC, 1, { eRC_FinAlerteNBCNiveau4, } )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eEtatNbc_Niv4 then
                     Activate( self.activations.ACT_RC, 1, { eRC_AlerteNBCNiveau4, } )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end
@@ -139,6 +140,7 @@ node "BEH_Info_Pion_RendreCompteSurROE"
 
     activate = function( self )
          do
+            local _continue = true
             local switch_1 = --[[//-----------------------------------------------------------------------------
 ]]--[[// CR SUR ETAT NBC
 ]]--[[//-----------------------------------------------------------------------------
@@ -147,15 +149,15 @@ node "BEH_Info_Pion_RendreCompteSurROE"
                 if switch_1 == eEtatROE_TirInterdit then
                     --[[// Sur ordre
 ]]Activate( self.activations.ACT_RC, 1, { eRC_TirInterdit, } )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eEtatROE_TirSurRiposte then
                     Activate( self.activations.ACT_RC, 1, { eRC_TirRestreint, } )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eEtatROE_TirLibre then
                     Activate( self.activations.ACT_RC, 1, { eRC_TirLibre, } )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
                 end
             end
@@ -182,6 +184,7 @@ node "BEH_Info_Pion_RendreCompteSurLima"
 
     activate = function( self )
          do
+            local _continue = true
             local switch_1 = --[[//-----------------------------------------------------------------------------
 ]]--[[// CR SUR ETAT Lima
 ]]--[[//-----------------------------------------------------------------------------
@@ -189,42 +192,42 @@ node "BEH_Info_Pion_RendreCompteSurLima"
             local cases_switch_1 = {}
                 if switch_1 == eEtatLima_LD then
                     Activate( self.activations.ACT_RC_SurLima, 1, { eTypeLima_LD, } )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eEtatLima_LCA then
                     Activate( self.activations.ACT_RC_SurLima, 1, { eTypeLima_LCA, } )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eEtatLima_LC then
                     Activate( self.activations.ACT_RC_SurLima, 1, { eTypeLima_LC, } )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
 elseif switch_1 == eEtatLima_LI then
                     Activate( self.activations.ACT_RC_SurLima, 1, { eTypeLima_LI, } )
-                    
+                    _continue = false
                                 cases_switch_1[4] = true
 elseif switch_1 == eEtatLima_LIA then
                     Activate( self.activations.ACT_RC_SurLima, 1, { eTypeLima_LIA, } )
-                    
+                    _continue = false
                                 cases_switch_1[5] = true
 elseif switch_1 == eEtatLima_LO then
                     Activate( self.activations.ACT_RC_SurLima, 1, { eTypeLima_LO, } )
-                    
+                    _continue = false
                                 cases_switch_1[6] = true
 elseif switch_1 == eEtatLima_LCAR then
                     Activate( self.activations.ACT_RC_SurLima, 1, { eTypeLima_LCAR, } )
-                    
+                    _continue = false
                                 cases_switch_1[7] = true
 elseif switch_1 == eEtatLima_LR then
                     Activate( self.activations.ACT_RC_SurLima, 1, { eTypeLima_LR, } )
-                    
+                    _continue = false
                                 cases_switch_1[8] = true
 elseif switch_1 == eEtatLima_Fuseau then
-                    --[[//rien
+                    _continue = false--[[//rien
 ]]
                                 cases_switch_1[9] = true
 elseif switch_1 == eEtatLima_aucune then
-                    --[[// rien
+                    _continue = false--[[// rien
 ]]
                                 cases_switch_1[10] = true
                 end
@@ -253,17 +256,18 @@ node "BEH_Info_Pion_RendreCompteSurSituationCoordination"
     activate = function( self )
         --[[// Evite des faire des CR sur la coordination de l'automate!
 ]]if( DEC_Agent_AutomateEstEmbraye() ) then
-            return
+            do return end
         end
 
          do
+            local _continue = true
             local switch_1 = --[[//-----------------------------------------------------------------------------
 ]]--[[// CR SUR ETAT coordination
 ]]--[[//-----------------------------------------------------------------------------
 ]]F_Pion_GeteEtatOrdreCoordination( myself )
             local cases_switch_1 = {}
                 if switch_1 == eEtatOrdreCoordination_aucun then
-                    --[[// rien
+                    _continue = false--[[// rien
 ]]
                                 cases_switch_1[1] = true
 elseif switch_1 == eEtatOrdreCoordination_Attendre then
@@ -274,7 +278,7 @@ elseif switch_1 == eEtatOrdreCoordination_Attendre then
 ]]Activate( self.activations.ACT_RC, 1, { eRC_AttenteOrdrePoursuivre, } )
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end
@@ -301,6 +305,7 @@ node "BEH_Info_Pion_RendreCompteSurSilenceRadio"
 
     activate = function( self )
          do
+            local _continue = true
             local switch_1 = --[[//-----------------------------------------------------------------------------
 ]]--[[// CR SUR ETAT 
 ]]--[[//-----------------------------------------------------------------------------
@@ -308,11 +313,11 @@ node "BEH_Info_Pion_RendreCompteSurSilenceRadio"
             local cases_switch_1 = {}
                 if switch_1 == eEtatRadio_Silence then
                     Activate( self.activations.ACT_RC, 1, { eRC_DebutSilenceRadio, } )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eEtatRadio_Ouverte then
                     Activate( self.activations.ACT_RC, 1, { eRC_FinSilenceRadio, } )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end
@@ -339,6 +344,7 @@ node "BEH_Info_Pion_RendreCompteSurSilenceRadar"
 
     activate = function( self )
          do
+            local _continue = true
             local switch_1 = --[[//-----------------------------------------------------------------------------
 ]]--[[// CR SUR ETAT 
 ]]--[[//-----------------------------------------------------------------------------
@@ -346,11 +352,11 @@ node "BEH_Info_Pion_RendreCompteSurSilenceRadar"
             local cases_switch_1 = {}
                 if switch_1 == eEtatRadar_Silence then
                     Activate( self.activations.ACT_RC, 1, { eRC_DebutSilenceRadar, } )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eEtatRadar_Ouvert then
                     Activate( self.activations.ACT_RC, 1, { eRC_FinSilenceRadar, } )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end
@@ -377,20 +383,21 @@ node "BEH_Info_Pion_RendreCompteSurEtatOperationnel"
 
     activate = function( self )
          do
+            local _continue = true
             local switch_1 = F_Pion_GeteEtatDestruction( myself )
             local cases_switch_1 = {}
                 if switch_1 == eEtatDestruction_Tactique then
                     Activate( self.activations.ACT_RC, 1, { eRC_NonOperationnel, } )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eEtatDestruction_Total then
                     Activate( self.activations.ACT_RC, 1, { eRC_NonOperationnel, } )
-                    
+                    _continue = false
                 --[[// Pion opérationnel
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eEtatDestruction_None then
                     Activate( self.activations.ACT_RC, 1, { eRC_Operationnel, } )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
                 end
             end
@@ -417,15 +424,16 @@ node "BEH_Info_Pion_RendreCompteSurAmbiance"
 
     activate = function( self )
          do
+            local _continue = true
             local switch_1 = F_Pion_GeteEtatAmbiance( myself )
             local cases_switch_1 = {}
                 if switch_1 == eEtatAmbiance_Surete then
                     Activate( self.activations.ACT_RC, 1, { eRC_AmbianceSurete, } )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eEtatAmbiance_Vitesse then
                     Activate( self.activations.ACT_RC, 1, { eRC_AmbianceVitesse, } )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end
@@ -645,19 +653,20 @@ node "BEH_Info_Pion_RendreCompteSurSituationDeplacement"
         self.repObjet = self.repObjet or 0
         self.bObjetProcheSurItineraire = self.bObjetProcheSurItineraire or false
          do
+            local _continue = true
             local switch_1 = --[[//-----------------------------------------------------------------------------
 ]]--[[// Suivant l'état du deplcement
 ]]--[[//-----------------------------------------------------------------------------
 ]]myself.eEtatDeplacement_
             local cases_switch_1 = {}
                 if switch_1 == eEtatDeplacement_aucun then
-                    --[[// Pas d'instance de deplacement
+                    _continue = false--[[// Pas d'instance de deplacement
 ]]--[[// rien
 ]]
                 --[[// Pas d'instance de deplacement
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eEtatDeplacement_EnCours then
-                    --[[// rien
+                    _continue = false--[[// rien
 ]]
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Si en poste devant obstacle (CR detection d'un obstacle qd inconnu fait 
@@ -672,14 +681,14 @@ elseif switch_1 == eEtatDeplacement_PosteFaceAObstacle then
                     self.rDist = tmp.second.second
                     tmp = tmp.first
                     Activate( self.activations.ACT_RC_SurObjet, 1, { eRC_EnPosteFaceAObstacle, self.repObjet, } )
-                    
+                    _continue = false
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Cas de la reco d'un point 
 ]]--[[//-----------------------------------------------------------------------------
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eEtatDeplacement_EnReco then
                     Activate( self.activations.ACT_RC, 1, { eRC_ReconnaissancePoint, } )
-                    
+                    _continue = false
                                 cases_switch_1[4] = true
                 end
             end
@@ -777,7 +786,7 @@ node "BEH_Info_RenseignerSurRapFor"
                 end
 
                 Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, 1, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                                return
+                                do return end
 
             end
         end
@@ -792,7 +801,7 @@ node "BEH_Info_RenseignerSurRapFor"
                 end
 
                 Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, 2, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                                return
+                                do return end
 
             end
         end
@@ -807,29 +816,30 @@ node "BEH_Info_RenseignerSurRapFor"
                 end
 
                 Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, 3, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                                return
+                                do return end
 
             end
 --[[// S_RapForLocal() renvoie l'enum moteur --> l'interpretation se fait dans cette fonction
 ]]        end
 
          do
+            local _continue = true
             local switch_1 = S_RapForLocal()
             local cases_switch_1 = {}
                 if switch_1 == eEtatRapportDeForce_Favorable then
                     bOptimFav = true
                     Activate( self.activations.ACT_Info_EtatRapFor, 1, { eEtatRapportDeForce_Favorable, } )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eEtatRapportDeForce_Neutre then
                     bOptimNeutre = true
                     Activate( self.activations.ACT_Info_EtatRapFor, 1, { eEtatRapportDeForce_Neutre, } )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eEtatRapportDeForce_Defavorable then
                     bOptimDef = true
                     Activate( self.activations.ACT_Info_EtatRapFor, 1, { eEtatRapportDeForce_Defavorable, } )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
                 end
             end
@@ -857,6 +867,7 @@ node "BEH_Info_RenseignerSurROE"
 
     activate = function( self )
          do
+            local _continue = true
             local switch_1 = --[[//-----------------------------------------------------------------------------
 ]]--[[// Regarder en permanance les ROE 
 ]]--[[//-----------------------------------------------------------------------------
@@ -865,15 +876,15 @@ node "BEH_Info_RenseignerSurROE"
                 if switch_1 == eEtatROE_TirInterdit then
                     --[[// Sur ordre
 ]]Activate( self.activations.ACT_Info_EtatROE, 1, { eEtatROE_TirInterdit, } )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eEtatROE_TirSurRiposte then
                     Activate( self.activations.ACT_Info_EtatROE, 1, { eEtatROE_TirSurRiposte, } )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eEtatROE_TirLibre then
                     Activate( self.activations.ACT_Info_EtatROE, 1, { eEtatROE_TirLibre, } )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
                 end
             end
@@ -882,24 +893,25 @@ elseif switch_1 == eEtatROE_TirLibre then
 ]]--[[//-----------------------------------------------------------------------------
 ]]
          do
+            local _continue = true
             local switch_1 = F_Pion_GeteConsigneTirPopulation( myself )
             local cases_switch_1 = {}
                 if switch_1 == eEtatROEPopulation_EmploiForceInterdit then
                     --[[// Sur ordre
 ]]Activate( self.activations.ACT_Info_EtatROEPopulation, 1, { eEtatROEPopulation_EmploiForceInterdit, } )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
                     Activate( self.activations.ACT_Info_EtatROEPopulation, 1, { eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux, } )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eEtatROEPopulation_DispersionParMoyensDeDefenseActifs then
                     Activate( self.activations.ACT_Info_EtatROEPopulation, 1, { eEtatROEPopulation_DispersionParMoyensDeDefenseActifs, } )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
 elseif switch_1 == eEtatROEPopulation_ArmesLetalesAutorisees then
                     Activate( self.activations.ACT_Info_EtatROEPopulation, 1, { eEtatROEPopulation_ArmesLetalesAutorisees, } )
-                    
+                    _continue = false
                                 cases_switch_1[4] = true
                 end
             end
@@ -933,6 +945,7 @@ node "BEH_Info_RenseignerSurEtatDec"
 
     activate = function( self )
          do
+            local _continue = true
             local switch_1 = --[[//-----------------------------------------------------------------------------
 ]]--[[// Interpretation de l'envie du pion: sauvegarde ou poursuite mission
 ]]--[[//-----------------------------------------------------------------------------
@@ -941,12 +954,12 @@ node "BEH_Info_RenseignerSurEtatDec"
                 if switch_1 == eEtatDec_Sauvegarde then
                     --[[// fixe / esquive
 ]]Activate( self.activations.ACT_Info_EtatDec, 1, { eEtatCombatDeRencontre_Esquive, } )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eEtatDec_RAS
                 or switch_1 == eEtatDec_Continu then
                     Activate( self.activations.ACT_Info_EtatDec, 1, { eEtatCombatDeRencontre_PoursuiteMission, } )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end
@@ -973,20 +986,21 @@ node "BEH_Info_RenseignerSurEtatOperationnel"
 
     activate = function( self )
          do
+            local _continue = true
             local switch_1 = F_Pion_GeteEtatDestruction( myself )
             local cases_switch_1 = {}
                 if switch_1 == eEtatDestruction_Tactique then
                     Activate( self.activations.ACT_Info_EtatOperationnel, 1, { eEtatOp_DetruitTactiquement, } )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eEtatDestruction_Total then
                     Activate( self.activations.ACT_Info_EtatOperationnel, 1, { eEtatOp_DetruitTotalement, } )
-                    
+                    _continue = false
                 --[[// Pion opérationnel
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eEtatDestruction_None then
                     Activate( self.activations.ACT_Info_EtatOperationnel, 1, { eEtatOp_Operationnel, } )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
                 end
             end

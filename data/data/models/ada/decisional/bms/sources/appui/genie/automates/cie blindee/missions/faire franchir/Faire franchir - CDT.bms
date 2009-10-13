@@ -92,7 +92,7 @@ include "bit.lua"
         if( self.eEtatOrdreConduite == eActionHalt ) then
             do
                 Activate( self.activations.BEH_Misc_Automate_GEN_CDT_GererFinMission, 1, { self.positionRegroupement, } )
-                                return
+                                do return end
 
             end
         end
@@ -142,7 +142,7 @@ node "BEH_Misc_Automate_GEN_CDT_GererReconnaissanceDesSites"
             do
                 local selSectionGen = S_Cherche_Automate_Filtre_TypePion( DEC_Automate_PionsSansPC(), "SectionGenie" )
                 if( DIA_IsListEmpty( selSectionGen ) ) then
-                    return
+                    do return end
                 end
 
                 --[[// Assignation 1 site <==> 1 pion
@@ -154,7 +154,7 @@ do
                         Activate( self.activations.BEH_Misc_Automate_GEN_CDT_FaireReconnaitreSiteA, 1, { site, section, } )
                                                 rIterateurSections = rIterateurSections + 1
                         if( rIterateurSections >= #( selSectionGen ) ) then
-                            return
+                            do return end
                         end
 
                     end
@@ -237,7 +237,7 @@ do
                 local conSite = site
                 --[[// Si taille connue alors site reconnu
 ]]if( not DEC_ConnaissanceObjet_EstReconnu( conSite:Getobstacle_() ) ) then
-                    return
+                    do return end
                 end
 
                 --[[//////// début hack /////////
@@ -288,10 +288,11 @@ node "BEH_Misc_Automate_GEN_CDT_GererRenforcements"
 ]]--[[// Aucun sites encore reconnus
 ]]--[[//-------------------------------------------------------------------------
 ]]if( ( #( g_selConnaissanceObs ) == 0 or #( g_selConnaissanceObs ) == nil ) ) then
-            return
+            do return end
         end
 
          do
+            local _continue = true
             local switch_1 = --[[//-------------------------------------------------------------------------
 ]]--[[// Renforcement des sites un par un
 ]]--[[//-------------------------------------------------------------------------
@@ -310,7 +311,7 @@ node "BEH_Misc_Automate_GEN_CDT_GererRenforcements"
 
                                         self.rIterateur = self.rIterateur + 1
                     self.ePhase = eAttendre
-                    
+                    _continue = false
                 --[[//-------------------------------------------------------------------------
 ]]--[[// Vérification iteration
 ]]--[[//-------------------------------------------------------------------------
@@ -321,7 +322,7 @@ elseif switch_1 == eAttendre then
                     end
 
                     self.ePhase = eDeterminerSite
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end
@@ -370,7 +371,7 @@ node "BEH_Misc_Automate_GEN_CDT_GererRenforcementsPour"
                         Activate( self.activations.BEH_Mission_Automate_GEN_AssignerRenforcer, 1, { pionPAA, self._namedParams.conSite, } )
                                                 rCompteur = rCompteur + 1
                         if( rCompteur * M_DOCTRINE_Pion_GEN_TAILLE_SITEFRANCHISSEMENT_PAA() >= self._namedParams.rTailleSite ) then
-                            return
+                            do return end
                         end
 
                     end
@@ -394,7 +395,7 @@ node "BEH_Misc_Automate_GEN_CDT_GererRenforcementsPour"
                         Activate( self.activations.BEH_Mission_Automate_GEN_AssignerRenforcer, 1, { pionMLF, self._namedParams.conSite, } )
                                                 rCompteur = rCompteur + 1
                         if( rCompteur * M_DOCTRINE_Pion_GEN_TAILLE_SITEFRANCHISSEMENT_MLF() >= self._namedParams.rTailleSite ) then
-                            return
+                            do return end
                         end
 
                     end
@@ -418,7 +419,7 @@ node "BEH_Misc_Automate_GEN_CDT_GererRenforcementsPour"
                         Activate( self.activations.BEH_Mission_Automate_GEN_AssignerRenforcer, 1, { pionEFA, self._namedParams.conSite, } )
                                                 rCompteur = rCompteur + 1
                         if( rCompteur * M_DOCTRINE_Pion_GEN_TAILLE_SITEFRANCHISSEMENT_EFA() >= self._namedParams.rTailleSite ) then
-                            return
+                            do return end
                         end
 
                     end
@@ -442,7 +443,7 @@ node "BEH_Misc_Automate_GEN_CDT_GererRenforcementsPour"
                         Activate( self.activations.BEH_Mission_Automate_GEN_AssignerRenforcer, 1, { pionPFM, self._namedParams.conSite, } )
                                                 rCompteur = rCompteur + 1
                         if( rCompteur * M_DOCTRINE_Pion_GEN_TAILLE_SITEFRANCHISSEMENT_PFM() >= self._namedParams.rTailleSite ) then
-                            return
+                            do return end
                         end
 
                     end
@@ -505,7 +506,7 @@ node "BEH_Misc_Automate_GEN_CDT_GererUnitesDeuxiemeEchelon"
         local listePionsPE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
         local listePionsSE = S_ObtenirTousPionsDe( eEtatEchelon_Second )
         if( DIA_IsListEmpty( listePionsPE ) ) then
-            return
+            do return end
         end
 
         for _,x in pairs( --[[//-----------------------------------------------------------------------------
@@ -617,17 +618,18 @@ node "BEH_Conduite_Automate_GEN_FaireFranchir_OrdresDeConduite"
 do
                 local repOrdre = x
                  do
+                    local _continue = true
                     local switch_1 = repOrdre:GetType()
                     local cases_switch_1 = {}
                         if switch_1 == "Rep_OrderConduite_Interrompre" then
                             bOrdreConduiteInterrompre = true
-                            
+                            _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == "Rep_OrderConduite_AttendreSePoster" then
                             --[[// Mise en attente de la progression
 ]]DEC_Trace( "$ --- Wait fragmentary order ---$" )
                             StartActivateOverride( self, self.activations.BEH_Ordre_Automate_Attendre_, 1, {} )
-                            
+                            _continue = false
                                                 cases_switch_1[2] = true
 elseif switch_1 == "Rep_OrderConduite_Poursuivre" then
                             --[[// ordre de poursuivre -> on reprend la progression
@@ -636,19 +638,21 @@ elseif switch_1 == "Rep_OrderConduite_Poursuivre" then
                             StopActivateOverride( self, self.activations.BEH_Ordre_Automate_Attendre_, {} )
                             Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )--[[// Cas des LC
 ]]
-                            
+                            _continue = false
                                                 cases_switch_1[3] = true
                         end
                     end
 
-                Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
+                    if _continue then
+                    Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
+                end
             end
 
         end
 
         if( bOrdreConduiteInterrompre ) then
             self.params.__returnValue = eActionHalt
-            return
+            do return end
         end
 
     end,

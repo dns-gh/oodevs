@@ -69,7 +69,7 @@ node "BEH_CoordDep_Automate_NBC_CoordonnerPEAvecSE_"
 ]]--[[// Inutile si plus de pions
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( DIA_IsListEmpty( listePions ) ) then
-            return
+            do return end
         end
 
         --[[//-----------------------------------------------------------------------------
@@ -134,7 +134,7 @@ do
         end
 
         if( ( self.pionEnQueue == 0 or self.pionEnQueue == nil ) ) then
-            return
+            do return end
         end
 
         --[[//=============================================================================

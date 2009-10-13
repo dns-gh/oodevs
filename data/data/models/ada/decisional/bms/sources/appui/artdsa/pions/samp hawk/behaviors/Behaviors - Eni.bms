@@ -74,7 +74,7 @@ do
                                                 nbComposanteesRestantes = nbComposanteesRestantes - 1
                         --[[//critere d'arret sur nb de prises a partie
 ]]if( ( nbComposanteesRestantes == 0 or nbComposanteesRestantes == nil ) ) then
-                            return
+                            do return end
                         end
 
                         --[[// comportement d'interception balistique du hawk

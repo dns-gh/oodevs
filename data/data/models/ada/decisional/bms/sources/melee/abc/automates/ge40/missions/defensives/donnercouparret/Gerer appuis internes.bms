@@ -25,7 +25,7 @@ include "bit.lua"
         --[[// On récupère les pions de premier échelons en difficultés 
 ]]local listePEEnDifficultes = S_Cherche_GE_Filtre_EtatSauvegarde( S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Premier ) ) )
         if( DIA_IsListEmpty( listePEEnDifficultes ) ) then
-            return
+            do return end
         end
 
         --[[// Assignation appuis
@@ -132,12 +132,13 @@ node "ACT_GTIA_AssignerMissionAppuyerPourDefense"
                 self.bMissionAssignee = self.bMissionAssignee or false
                 --[[// fuseau pas encore assigné
 ]]if( ( self._namedParams.fuseau == 0 or self._namedParams.fuseau == nil ) or self.bMissionAssignee ) then
-                    return
+                    do return end
                 end
 
                 --[[// Assignation de la mission
 ]]self.bMissionAssignee = true
                  do
+                    local _continue = true
                     local switch_1 = self._namedParams.typeMission
                     local cases_switch_1 = {}
                         if switch_1 == "T_Mission_Automate_ABC_Tenir" then
@@ -147,15 +148,17 @@ node "ACT_GTIA_AssignerMissionAppuyerPourDefense"
                             if( ( listePositions == 0 or listePositions == nil ) ) then
                                 do
                                     DEC_Trace( "Mission impossible, position impossible" )
-                                    
+                                    _continue = false
                                 end
                             end
 
-                            local positionATenir = DEC_Geometrie_CreerLocalisationCercle( DEC_ListePoints_GetAt( listePositions, 0 ), 4000 )
-                            DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
-                            DEC_Copie_Localisation_Mission( positionATenir, missionPion, "positionInstallation_" )
-                            DEC_DonnerMissionAutomate_Mission( missionPion )
-                            
+                                if _continue then
+                                local positionATenir = DEC_Geometrie_CreerLocalisationCercle( DEC_ListePoints_GetAt( listePositions, 0 ), 4000 )
+                                DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
+                                DEC_Copie_Localisation_Mission( positionATenir, missionPion, "positionInstallation_" )
+                                DEC_DonnerMissionAutomate_Mission( missionPion )
+                                _continue = false
+                            end
                                                 cases_switch_1[1] = true
 elseif switch_1 == "T_Mission_Automate_INF_DefendreFerme" then
                             local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, self._namedParams.typeMission )
@@ -164,16 +167,18 @@ elseif switch_1 == "T_Mission_Automate_INF_DefendreFerme" then
                             if( ( listePositions == 0 or listePositions == nil ) ) then
                                 do
                                     DEC_Trace( "Mission impossible, position impossible INF" )
-                                    
+                                    _continue = false
                                 end
 --[[//Position
 ]]                            end
 
-                            local positionATenir = DEC_Geometrie_CreerLocalisationCercle( DEC_ListePoints_GetAt( listePositions, 0 ), 4000 )
-                            DEC_Copie_Localisation_Mission( positionATenir, missionPion, "position_" )
-                            DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
-                            DEC_DonnerMissionAutomate_Mission( missionPion )
-                            
+                                if _continue then
+                                local positionATenir = DEC_Geometrie_CreerLocalisationCercle( DEC_ListePoints_GetAt( listePositions, 0 ), 4000 )
+                                DEC_Copie_Localisation_Mission( positionATenir, missionPion, "position_" )
+                                DEC_AssignerFuseauAMissionAutomate_Mission( self._namedParams.fuseau, missionPion )
+                                DEC_DonnerMissionAutomate_Mission( missionPion )
+                                _continue = false
+                            end
                                                 cases_switch_1[2] = true
                         end
                     end

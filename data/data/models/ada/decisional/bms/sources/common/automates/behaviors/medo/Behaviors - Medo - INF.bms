@@ -110,21 +110,22 @@ node "BEH_Mission_Automate_INF_AssignerAppuyerA"
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
+            local _continue = true
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
-                                        return
+                                        do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
-                                        return
+                                        do return end
 
                                 end
             end
@@ -164,21 +165,22 @@ node "BEH_Mission_Automate_INF_AssignerA_Semparer"
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
+            local _continue = true
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
-                                        return
+                                        do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
-                                        return
+                                        do return end
 
                                 end
             end
@@ -212,32 +214,34 @@ node "BEH_Mission_Automate_INF_AssignerReconnaitreA"
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
+            local _continue = true
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
-                                        return
+                                        do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
-                                        return
+                                        do return end
 
                                 end
             end
 
          do
+            local _continue = true
             local switch_1 = self._namedParams.pPion:GetType()
             local cases_switch_1 = {}
                 if switch_1 == "Peloton_AMX"
                 or switch_1 == "Peloton_XL" then
                     Activate( self.activations.ACT_Mission_Automate_ABC_AssignerReconnaitreA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, eEtatEchelon_Premier, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == "SectionInfanterie"
                 or switch_1 == "SectionInfanterie_MILAN"
@@ -245,7 +249,7 @@ elseif switch_1 == "SectionInfanterie"
                 or switch_1 == "SectionInfanterie_Appui"
                 or switch_1 == "GroupeInfanterie_Mortier" then
                     Activate( self.activations.ACT_Mission_Automate_INF_AssignerA_Reconnaitre, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end
@@ -279,32 +283,34 @@ node "BEH_Mission_Automate_INF_AssignerA_ReconnaitrePt"
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
+            local _continue = true
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
-                                        return
+                                        do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
-                                        return
+                                        do return end
 
                                 end
             end
 
          do
+            local _continue = true
             local switch_1 = self._namedParams.pPion:GetType()
             local cases_switch_1 = {}
                 if switch_1 == "Peloton_AMX"
                 or switch_1 == "Peloton_XL" then
                     Activate( self.activations.ACT_Mission_Automate_ABC_AssignerReconnaitrePtA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.ptDest, eEtatEchelon_Premier, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == "SectionInfanterie"
                 or switch_1 == "SectionInfanterie_MILAN"
@@ -312,7 +318,7 @@ elseif switch_1 == "SectionInfanterie"
                 or switch_1 == "SectionInfanterie_Appui"
                 or switch_1 == "GroupeInfanterie_Mortier" then
                     Activate( self.activations.ACT_Mission_Automate_INF_AssignerA_ReconnaitrePt, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.ptDest, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end
@@ -348,32 +354,34 @@ node "BEH_Mission_Automate_INF_AssignerA_Reduire"
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
+            local _continue = true
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
-                                        return
+                                        do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
-                                        return
+                                        do return end
 
                                 end
             end
 
          do
+            local _continue = true
             local switch_1 = self._namedParams.pPion:GetType()
             local cases_switch_1 = {}
                 if switch_1 == "Peloton_AMX"
                 or switch_1 == "Peloton_XL" then
                     Activate( self.activations.ACT_Mission_Automate_ABC_AssignerReduireA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.pionReduire, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == "SectionInfanterie"
                 or switch_1 == "SectionInfanterie_MILAN"
@@ -381,7 +389,7 @@ elseif switch_1 == "SectionInfanterie"
                 or switch_1 == "SectionInfanterie_Appui"
                 or switch_1 == "GroupeInfanterie_Mortier" then
                     Activate( self.activations.ACT_Mission_Automate_INF_AssignerA_Reduire, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.pionReduire, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end
@@ -415,21 +423,22 @@ node "BEH_Mission_Automate_INF_AssignerA_PrendrePreciserContact"
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
+            local _continue = true
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
-                                        return
+                                        do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
-                                        return
+                                        do return end
 
                                 end
             end
@@ -465,32 +474,34 @@ node "BEH_Mission_Automate_INF_AssignerA_Fixer"
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
+            local _continue = true
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
-                                        return
+                                        do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
-                                        return
+                                        do return end
 
                                 end
             end
 
          do
+            local _continue = true
             local switch_1 = self._namedParams.pPion:GetType()
             local cases_switch_1 = {}
                 if switch_1 == "Peloton_AMX"
                 or switch_1 == "Peloton_XL" then
                     Activate( self.activations.ACT_Mission_Automate_ABC_AssignerFixerA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.shFixer, eEtatEchelon_Premier, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == "SectionInfanterie"
                 or switch_1 == "SectionInfanterie_MILAN"
@@ -498,7 +509,7 @@ elseif switch_1 == "SectionInfanterie"
                 or switch_1 == "SectionInfanterie_Appui"
                 or switch_1 == "GroupeInfanterie_Mortier" then
                     Activate( self.activations.ACT_Mission_Automate_INF_AssignerA_Fixer, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.shFixer, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end
@@ -535,21 +546,22 @@ node "BEH_Mission_Automate_INF_AssignerA_Interdire"
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
+            local _continue = true
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
-                                        return
+                                        do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
-                                        return
+                                        do return end
 
                                 end
             end
@@ -584,21 +596,22 @@ node "BEH_Mission_Automate_INF_AssignerA_Defendre"
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
+            local _continue = true
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
-                                        return
+                                        do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
-                                        return
+                                        do return end
 
                                 end
             end
@@ -632,21 +645,22 @@ node "BEH_Mission_Automate_INF_AssignerA_Freiner"
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
+            local _continue = true
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
-                                        return
+                                        do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
-                                        return
+                                        do return end
 
                                 end
             end
@@ -685,21 +699,22 @@ node "BEH_Mission_Automate_INF_AssignerA_Couvrir"
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
+            local _continue = true
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
-                                        return
+                                        do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
-                                        return
+                                        do return end
 
                                 end
             end
@@ -734,21 +749,22 @@ node "BEH_Mission_Automate_INF_AssignerA_SurveillerZone"
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
+            local _continue = true
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
-                                        return
+                                        do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
-                                        return
+                                        do return end
 
                                 end
             end
@@ -783,21 +799,22 @@ node "BEH_Mission_Automate_INF_AssignerA_SurveillerSurPosition"
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
+            local _continue = true
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
-                                        return
+                                        do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
-                                        return
+                                        do return end
 
                                 end
             end
@@ -833,21 +850,22 @@ node "BEH_Mission_Automate_INF_AssignerA_Controler"
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
+            local _continue = true
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
-                                        return
+                                        do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
-                                        return
+                                        do return end
 
                                 end
             end
@@ -884,21 +902,22 @@ node "BEH_Mission_Automate_INF_AssignerA_Harceler"
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
+            local _continue = true
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
-                                        return
+                                        do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
-                                        return
+                                        do return end
 
                                 end
             end
@@ -933,21 +952,22 @@ node "BEH_Mission_Automate_INF_AssignerA_Barrer"
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
+            local _continue = true
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
-                                        return
+                                        do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
-                                        return
+                                        do return end
 
                                 end
             end
@@ -978,21 +998,22 @@ node "BEH_Mission_Automate_INF_AssignerA_BarrerDansZone"
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
+            local _continue = true
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
-                                        return
+                                        do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
-                                        return
+                                        do return end
 
                                 end
             end
@@ -1027,21 +1048,22 @@ node "BEH_Mission_Automate_INF_AssignerA_SeDeplacer"
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
+            local _continue = true
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
-                                        return
+                                        do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
-                                        return
+                                        do return end
 
                                 end
             end
@@ -1080,21 +1102,22 @@ node "BEH_Mission_Automate_INF_AssignerEscorterA"
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
+            local _continue = true
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
-                                        return
+                                        do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
-                                        return
+                                        do return end
 
                                 end
             end
@@ -1132,21 +1155,22 @@ node "BEH_Mission_Automate_INF_AssignerEscorterAutomateA"
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
+            local _continue = true
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
-                                        return
+                                        do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
-                                        return
+                                        do return end
 
                                 end
             end
@@ -1184,21 +1208,22 @@ node "BEH_Mission_Automate_INF_AssignerSoutenirA"
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
+            local _continue = true
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
-                                        return
+                                        do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
-                                        return
+                                        do return end
 
                                 end
             end

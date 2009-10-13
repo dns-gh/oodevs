@@ -50,13 +50,14 @@ includedFiles["sources/appui/genie/pions/missions/appui aide au deploiement/Real
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhaseMission
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
                     --[[// Preparation de la mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhaseMission = eProgresser
-                    
+                    _continue = false
                 --[[// Progression tactique
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eProgresser then
@@ -65,19 +66,19 @@ elseif switch_1 == eProgresser then
                         do
                             self.eEtat = eActionEnCours
                             self.ePhaseMission = eFinMission
-                                                        return
+                                                        do return end
 
                         end
                     end
 
                     Activate( self.activations.BEH_Dep_GEN_AllerFaireTravauxSur, 1, setmetatable( { self._namedParams.mission.travaux_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// Fin de la mission
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
                 end
             end

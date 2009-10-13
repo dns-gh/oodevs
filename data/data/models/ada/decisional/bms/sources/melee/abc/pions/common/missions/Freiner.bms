@@ -62,6 +62,7 @@ include "bit.lua"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhaseMission
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
@@ -72,7 +73,7 @@ include "bit.lua"
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhaseMission = eJalonner
-                                                                return
+                                                                do return end
 
                             end
 
@@ -80,7 +81,7 @@ include "bit.lua"
                     end
 
                     Activate( self.activations.BEH_Dep_Pion_ABC_RejoindreFuseau, 1, setmetatable( { eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eJalonner then
                     --[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_EnJalonnement );
@@ -94,7 +95,7 @@ elseif switch_1 == eJalonner then
                     if( self.bLRPassee ) then
                         do
                             Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                                                        return
+                                                        do return end
 
                         end
 --[[//-----------------------------------------------------------------------------
@@ -109,7 +110,7 @@ elseif switch_1 == eJalonner then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhaseMission = eFinMission
-                                                                return
+                                                                do return end
 
                             end
 
@@ -120,7 +121,7 @@ elseif switch_1 == eJalonner then
                     Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self._namedParams.mission.itineraire_, eProgressionDirect, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     --[[// Si ordre automate
 ]]if( F_Pion_GetbOrdreDecrocher( myself ) or self.eEtatRecueil == eActionEffectuee ) then
-                        return
+                        do return end
                     end
 
                     --[[// Si ordre automate
@@ -133,14 +134,14 @@ elseif switch_1 == eJalonner then
 ]]--[[// Jalonner les enis
 ]]--[[//-----------------------------------------------------------------------------
 ]]Activate( self.activations.BEH_Eni_Pion_ABC_Freiner, 1.1, {} )
-                    
+                    _continue = false
                 --[[// 4) Fin de la mission
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     StopActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, {} )--[[// reprendre sauvegarde
 ]]
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
                 end
             end

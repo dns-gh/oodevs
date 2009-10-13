@@ -64,18 +64,18 @@ end
 ]]function S_Misc_Pion_Rens_ObtenirDistanceTirEfficaceSur( repEni )
     local _returnValue = 0
     _returnValue = DEC_Tir_PorteeMaxPourTirerSurUnite( repEni, M_DOCTRINE_PION_RENS_PH_TIR_EFFICACE() )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Misc_Pion_Rens_ObtenirDistanceDangerSur( repEni )
     local _returnValue = 0
     _returnValue = DEC_Tir_PorteeMaxPourEtreTireParUnite( repEni, M_MODELE_PION_RENS_PH_SECURITE() )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Misc_Pion_Rens_ObtenirDistanceTirEfficaceEni( repEni )
     local _returnValue = 0
     _returnValue = DEC_Tir_PorteeMaxPourEtreTireParUnite( repEni, M_DOCTRINE_PION_RENS_PH_TIR_EFFICACE() )
-    return _returnValue
+    do return _returnValue end
 end
 

@@ -69,7 +69,7 @@ node "BEH_GTIA_AssurerLaCoordinationInterne"
         Activate( self.activations.BEH_GTIA_AssurerLaCoordinationInterEchelonDistanceMin, 1, { listePE, listeSEAppui, 3000, } )
         --[[// si retard on lache la coordination
 ]]if( S_AnalyseDelai_GE_EstEnRetard() ) then
-            return
+            do return end
         end
 
         Activate( self.activations.BEH_GTIA_AssurerLaCoordinationInterEchelonDistanceMax, 1, { listePE, listeSEMelee, 4000, } )
@@ -246,7 +246,7 @@ node "BEH_GTIA_AssurerLaCoordinationInterEchelonDistanceMax"
 
     activate = function( self )
                 if( DIA_IsListEmpty( self._namedParams.listePions2 ) ) then
-            return
+            do return end
         end
 
         self.resultatCalcul = self.resultatCalcul or nil
@@ -293,7 +293,7 @@ node "BEH_GTIA_AssurerLaCoordinationInterEchelonDistanceMin"
 
     activate = function( self )
                 if( DIA_IsListEmpty( self._namedParams.listePions1 ) ) then
-            return
+            do return end
         end
 
         self.resultatCalcul = self.resultatCalcul or nil

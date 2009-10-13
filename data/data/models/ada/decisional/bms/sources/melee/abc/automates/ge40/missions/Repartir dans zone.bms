@@ -77,7 +77,7 @@ node "BEH_GTIA_RepartirPionsDansZones"
 
     activate = function( self )
         if( DIA_IsListEmpty( self._namedParams.listePions ) ) then
-            return
+            do return end
         end
 
         self.zones = self.zones or S_Geometrie_DecoupeLocalisation( self._namedParams.zone, #( self._namedParams.listePions ) )
@@ -118,7 +118,7 @@ node "BEH_GTIA_RepartirPionsMeleeDansZones"
 
     activate = function( self )
         if( DIA_IsListEmpty( self._namedParams.listePionsMelee ) ) then
-            return
+            do return end
         end
 
         self.zones = self.zones or S_Geometrie_DecoupeLocalisation( self._namedParams.zone, #( self._namedParams.listePionsMelee ) )
@@ -204,7 +204,7 @@ node "BEH_GTIA_AssignerZoneMeleeSuivantEnisDebarques"
         local listePionsINF = S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePionsMelee )
         --[[// A VIRER 
 ]]if( DIA_IsListEmpty( listePionsABC ) or DIA_IsListEmpty( listePionsINF ) ) then
-            return
+            do return end
         end
 
         local itZone = 0
@@ -257,7 +257,7 @@ node "BEH_GTIA_AssignerZoneMeleeSuivantEnisEmbarques"
         local listePionsINF = S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePionsMelee )
         --[[// A VIRER 
 ]]if( DIA_IsListEmpty( listePionsABC ) or DIA_IsListEmpty( listePionsINF ) ) then
-            return
+            do return end
         end
 
         local itZone = 0

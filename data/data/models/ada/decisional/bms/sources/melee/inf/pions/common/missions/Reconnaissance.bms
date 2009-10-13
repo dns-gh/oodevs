@@ -27,6 +27,7 @@ includedFiles["sources/melee/inf/pions/common/missions/Reconnaissance.bms"] = tr
         self.eAction = self.eAction or eActionEnCours
         Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
@@ -51,16 +52,16 @@ includedFiles["sources/melee/inf/pions/common/missions/Reconnaissance.bms"] = tr
                     --[[// Progression sur l'itineraire
 ]]Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self.mission.itineraire_, eProgressionReco, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
                     Activate( self.activations.BEH_Lima_GererLimas, 1.5, {} )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
                 end
             end
 
                 self.params.__returnValue = self.ePhase
-        return
+        do return end
 
     end,
 

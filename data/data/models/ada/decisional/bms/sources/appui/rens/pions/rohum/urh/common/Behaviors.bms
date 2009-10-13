@@ -39,7 +39,7 @@ includedFiles["sources/appui/rens/pions/rohum/urh/common/Behaviors.bms"] = true
 ]]
         --[[// Si totalement detruit...
 ]]if( S_Misc_EstDetruitPhysique() ) then
-            return
+            do return end
         end
 
         Activate( self.activations.BEH_ROE, 1, {} )--[[//-----------------------------------------------------------------------------
@@ -71,10 +71,11 @@ node "BEH_Mot_Pion_Rens_AffecterVariablesDEtat"
     activate = function( self )
         --[[//////////////// BMS OPTIM  ///////////////////
 ]]        if( F_Pion_GeteEtatDec( myself ) == eEtatDec_Sauvegarde ) then
-            return
+            do return end
         end
 
          do
+            local _continue = true
             local switch_1 = --[[////////////// FIN OPTIM  /////////////////////
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// En fonction du moral...
@@ -88,7 +89,7 @@ node "BEH_Mot_Pion_Rens_AffecterVariablesDEtat"
 ]]--[[// Rien
 ]]SetStateVariable( "VE_RapForPrudence", 0 )
                     SetStateVariable( "VE_RapFor", 0 )
-                    
+                    _continue = false
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Moral bon --> esquive sur PAP et effet rapFor défavorable --> ralentissement
 ]]--[[//-----------------------------------------------------------------------------
@@ -102,14 +103,16 @@ elseif switch_1 == eMoral_Moyen
                         do
                             SetStateVariable( "VE_RapFor", ( 5 - DEC_RapportDeForceLocal() ) )
                             SetStateVariable( "VE_RapForPrudence", 0 )
-                            
+                            _continue = false
                         end
 --[[// sinon
 ]]                    end
 
-                    SetStateVariable( "VE_RapForPrudence", ( 5 - DEC_RapportDeForceLocal() ) )
-                    SetStateVariable( "VE_RapFor", 0 )
-                    
+                        if _continue then
+                        SetStateVariable( "VE_RapForPrudence", ( 5 - DEC_RapportDeForceLocal() ) )
+                        SetStateVariable( "VE_RapFor", 0 )
+                        _continue = false
+                    end
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Moral mauvais: --> esquive sur PAP et sur rapFor défavorable
 ]]--[[//-----------------------------------------------------------------------------
@@ -117,7 +120,7 @@ elseif switch_1 == eMoral_Moyen
 elseif switch_1 == eMoral_Mauvais then
                     SetStateVariable( "VE_RapFor", ( 5 - DEC_RapportDeForceLocal() ) )
                     SetStateVariable( "VE_RapForPrudence", 0 )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
                 end
             end

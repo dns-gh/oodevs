@@ -27,7 +27,7 @@ includedFiles["sources/melee/abc/automates/common/missions/tenir/Tenir - MRT.bms
         self.listePoint = self.listePoint or {}
         self.rIterateurPoint = self.rIterateurPoint or 0
         if( ( #( self._namedParams.selPions ) == 0 or #( self._namedParams.selPions ) == nil ) ) then
-            return
+            do return end
         end
 
         --[[//-------------------------------------------------------------------------
@@ -64,7 +64,7 @@ includedFiles["sources/melee/abc/automates/common/missions/tenir/Tenir - MRT.bms
 do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleZoneHorsFuseau, } )
                                                 self.params.__returnValue = eActionImpossible
-                        return
+                        do return end
 
                     end
                 end

@@ -58,11 +58,12 @@ if( DEC_Geometrie_EstPointDansFuseau( DEC_Agent_Position() ) ) then
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eRejoindre then
                     if( not DEC_Geometrie_EstPointDansFuseau( DEC_Agent_Position() ) ) then
-                        return
+                        do return end
                     end
 
                     self.ePhase = eAttendre
@@ -70,7 +71,7 @@ if( DEC_Geometrie_EstPointDansFuseau( DEC_Agent_Position() ) ) then
                 end
                 if cases_switch_1[1] or switch_1 == eAttendre then
                     Activate( self.activations.BEH_Ordre_SePoster_EnAttente, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eOrdre = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end
@@ -273,7 +274,7 @@ node "BEH_Dep_Pion_INF_PreciserContact"
                                 do
                     DEC_Copie_Point( DEC_ConnaissanceAgent_Position( self._namedParams.ksEni ), self.ptDest )
                                         self.params.__returnValue = eActionHalt
-                    return
+                    do return end
 
                 end
 
@@ -349,13 +350,14 @@ node "BEH_Dep_Pion_INF_PreciserMaintenirContact"
         Activate( self.activations.ACT_MAJ_EtatSituationEni, 1, { eEtatSituationEnnemi_PrecisionContact, } )
         Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eRejoindre then
                     --[[// Precise Le contact
 ]]assert( DEC_ConnaissanceAgent_EstValide( self._namedParams.ksEni ), "BEH_Dep_Pion_INF_PreciserMaintenirContact" )
                     Activate( self.activations.BEH_Dep_Pion_INF_PreciserContact, 1, { self._namedParams.ksEni, F_Pion_GeteNiveauAction( myself ), self._namedParams.bDistTir, } )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eRetrouver then
                     if( ( self.ptDest == 0 or self.ptDest == nil ) or self.eAction == eActionImpossible ) then
@@ -388,7 +390,7 @@ elseif switch_1 == eRetrouver then
                     --[[// On a perdu le contact sur l'unite ennemi !
 ]]--[[// On retourne vers la derniere position ennemi connue				
 ]]Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptDest, eProgressionDirect, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 
                 else
@@ -474,13 +476,14 @@ node "BEH_Dep_Pion_INF_MiseEnPlace_Mission"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
                     if( GetStateVariable( "VE_PreparationMission" ) > 0 ) then
                         do
                             Activate( self.activations.BEH_Delai_Pion_INF_PreparerMission, 1.2, { self._namedParams.rTempsPreparation, } )
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -520,7 +523,7 @@ node "BEH_Dep_Pion_INF_MiseEnPlace_Mission"
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     StartActivateOverride( self, self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.ptObjectif, eProgressionDefaut, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionRejoindre = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eSurveiller then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ReconnaissanceLocalisation, } )
@@ -538,10 +541,10 @@ elseif switch_1 == eSurveiller then
                     end
 
                     Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, setmetatable( { eNiveauInstallation_Poste, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
 elseif switch_1 == eRejoindre then
-                    
+                    _continue = false
                                 cases_switch_1[4] = true
 
                 else
@@ -589,6 +592,7 @@ node "BEH_Progression_Pion_INF_AborderObjectif"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eReconnaitre then
@@ -604,7 +608,7 @@ node "BEH_Progression_Pion_INF_AborderObjectif"
                     else
 do
                             Activate( self.activations.BEH_Obs_Pion_INF_RecoPoint, 1, setmetatable( { self._namedParams.ptMission, M_TEMPS_RECO_POINT(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                                                        return
+                                                        do return end
 
                         end
                     end

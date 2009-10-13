@@ -43,7 +43,7 @@ include "bit.lua"
         end
 
         if( ( #( selPions_PE ) == 0 or #( selPions_PE ) == nil ) ) then
-            return
+            do return end
         end
 
         for _,x_inf in pairs( --[[//-------------------------------------------------------------------------
@@ -62,7 +62,7 @@ do
                         if( ( pionPE ~= 0 and pionPE ~= nil ) ) then
                             do
                                 Activate( self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_CDT, x_inf, pionPE, eEtatEchelon_Second, } )
-                                                                return
+                                                                do return end
 
                             end
                         end
@@ -102,7 +102,7 @@ node "BEH_Conduite_Automate_INF_GererAppuis_ABC"
         end
 
         if( ( #( selPions_PE ) == 0 or #( selPions_PE ) == nil ) ) then
-            return
+            do return end
         end
 
         for _,x_abc in pairs( --[[//-------------------------------------------------------------------------
@@ -121,7 +121,7 @@ do
                         if( ( pionPE ~= 0 and pionPE ~= nil ) ) then
                             do
                                 Activate( self.activations.BEH_Mission_Automate_ABC_AssignerSoutenirA, 1, { ePhase_CDT, pionAppui_ABC, pionPE, eEtatEchelon_Second, } )
-                                                                return
+                                                                do return end
 
                             end
                         end
@@ -196,7 +196,7 @@ do
                         if( pion ~= nil ) then
                             do
                                 Activate( self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_CDT, pionAppui_Mortier, pion, eEtatEchelon_Second, } )
-                                                                return
+                                                                do return end
 
                             end
                         end
@@ -273,12 +273,13 @@ do
                 local pion = x
                 local bInconnue = true
                  do
+                    local _continue = true
                     local switch_1 = pion:GetType()
                     local cases_switch_1 = {}
                         if switch_1 == "Peloton_AMX"
                         or switch_1 == "Peloton_XL" then
                             bInconnue = false
-                            
+                            _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == "SectionInfanterie"
                         or switch_1 == "SectionInfanterie_MILAN"
@@ -286,7 +287,7 @@ elseif switch_1 == "SectionInfanterie"
                         or switch_1 == "SectionInfanterie_Appui"
                         or switch_1 == "GroupeInfanterie_Mortier" then
                             bInconnue = false
-                            
+                            _continue = false
                                                 cases_switch_1[2] = true
                         end
                     end
@@ -295,12 +296,14 @@ elseif switch_1 == "SectionInfanterie"
 ]]--[[//		si le pion n'a pas de mission en cours
 ]]--[[// 		si le pion a la mission suivre						
 ]]
-                if( ( bInconnue and DEC_GetMission( pion ) == 0 or bInconnue and DEC_GetMission( pion ) == nil ) and F_Pion_GeteEtatEchelon( pion ) == eEtatEchelon_Second ) then
-                    do
-                        Activate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_CDT, pion, DEC_Automate_PionPC(), } )
+                    if _continue then
+                    if( ( bInconnue and DEC_GetMission( pion ) == 0 or bInconnue and DEC_GetMission( pion ) == nil ) and F_Pion_GeteEtatEchelon( pion ) == eEtatEchelon_Second ) then
+                        do
+                            Activate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_CDT, pion, DEC_Automate_PionPC(), } )
+                        end
                     end
-                end
 
+                end
             end
 
         end
@@ -330,12 +333,13 @@ do
                 local pion = x
                 local bInconnue = true
                  do
+                    local _continue = true
                     local switch_1 = pion:GetType()
                     local cases_switch_1 = {}
                         if switch_1 == "Peloton_AMX"
                         or switch_1 == "Peloton_XL" then
                             bInconnue = false
-                            
+                            _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == "SectionInfanterie"
                         or switch_1 == "SectionInfanterie_MILAN"
@@ -343,7 +347,7 @@ elseif switch_1 == "SectionInfanterie"
                         or switch_1 == "SectionInfanterie_Appui"
                         or switch_1 == "GroupeInfanterie_Mortier" then
                             bInconnue = false
-                            
+                            _continue = false
                                                 cases_switch_1[2] = true
                         end
                     end
@@ -352,12 +356,14 @@ elseif switch_1 == "SectionInfanterie"
 ]]--[[//		si le pion n'a pas de mission en cours
 ]]--[[// 		si le pion a la mission suivre						
 ]]
-                if( ( bInconnue and DEC_GetMission( pion ) == 0 or bInconnue and DEC_GetMission( pion ) == nil ) and F_Pion_GeteEtatEchelon( pion ) == eEtatEchelon_Second ) then
-                    do
-                        Activate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_CDT, pion, DEC_Automate_PionPC(), } )
+                    if _continue then
+                    if( ( bInconnue and DEC_GetMission( pion ) == 0 or bInconnue and DEC_GetMission( pion ) == nil ) and F_Pion_GeteEtatEchelon( pion ) == eEtatEchelon_Second ) then
+                        do
+                            Activate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_CDT, pion, DEC_Automate_PionPC(), } )
+                        end
                     end
-                end
 
+                end
             end
 
         end

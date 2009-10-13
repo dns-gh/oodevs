@@ -33,7 +33,7 @@ node "BEH_Defaut"
     activate = function( self )
         --[[// ========================== En embrayé SEULEMENT =========================
 ]]if( not DEC_Automate_EstEmbraye() ) then
-            return
+            do return end
         end
 
         Activate( self.activations.BEH_Nbc_Automate_GererAlerteNiv4, 1, {} )--[[//--------------------------------------------------------------------------
@@ -51,7 +51,7 @@ node "BEH_Defaut"
         --[[// Lorsque l'automate a une mission	
 ]]--[[// =========================================================================
 ]]if( ( DEC_GetMission( myself ) == 0 or DEC_GetMission( myself ) == nil ) ) then
-            return
+            do return end
         end
 
         Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )--[[// Gestion des Ordres venant du GTIA

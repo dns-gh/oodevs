@@ -27,7 +27,7 @@ includedFiles["sources/appui/nbc/automates/common/missions/reconnaitrezone/Recon
         self.listeZone = self.listeZone or {}
         self.nErrorCode = self.nErrorCode or nil
         if( ( #( self._namedParams.selPions ) == 0 or #( self._namedParams.selPions ) == nil ) ) then
-            return
+            do return end
         end
 
         --[[//-------------------------------------------------------------------------
@@ -45,7 +45,7 @@ includedFiles["sources/appui/nbc/automates/common/missions/reconnaitrezone/Recon
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleZoneHorsFuseau, } )
                         Activate( self.activations.ACT_Info_Trace, 1, { "Can't compute position in this localisation, mission canceled", } )
-                                                return
+                                                do return end
 
                     end
 --[[//-----------------------------------------------------------------------------

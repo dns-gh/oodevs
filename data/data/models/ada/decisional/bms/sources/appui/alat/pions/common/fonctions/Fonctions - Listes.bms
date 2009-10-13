@@ -49,7 +49,7 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Liste_Pion_ALAT_UnitesAAppuyer( listeUnites )
@@ -82,7 +82,7 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Liste_Pion_ALAT_UnitesADetruire( listInput )
@@ -108,6 +108,6 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 

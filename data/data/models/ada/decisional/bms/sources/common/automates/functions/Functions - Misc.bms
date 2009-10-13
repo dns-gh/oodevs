@@ -66,7 +66,7 @@ do
     end
 
     _returnValue = pionLePlusProcheBuffer
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Geometrie_Automate_PointPlusProchePion_DansFuseau( pion, lstPoints )
@@ -97,7 +97,7 @@ do
     it = it + 1
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_SelectionnePCEtSubordonnes( unites_ )
@@ -135,21 +135,21 @@ do
     end
 
     _returnValue = bufferPionCont
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Misc_EstMissionAffectee( typeMission )
     local _returnValue = false
     local mission = DEC_GetMission( myself )
     _returnValue = ( mission ~= nil ) and ( mission:GetType() == typeMission )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Misc_EstMissionAffectee_Pion( pion, typeMission )
     local _returnValue = false
     local mission = DEC_GetMission( pion )
     _returnValue = ( mission ~= nil ) and ( mission:GetType() == typeMission )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Misc_Copie_MissionPion( misSrc, misDst )
@@ -175,6 +175,6 @@ do
     end
 
     _returnValue = listeBuffer
-    return _returnValue
+    do return _returnValue end
 end
 

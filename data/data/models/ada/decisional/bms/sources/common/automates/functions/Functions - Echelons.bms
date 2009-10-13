@@ -85,7 +85,7 @@ do
     end
 
     _returnValue = selTemp
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_ObtenirPionsDe_SansPC( eEtatEchelon, eEtatDestruction )
@@ -105,7 +105,7 @@ do
     end
 
     _returnValue = selTemp
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_ObtenirTousPionsDe( eEtatEchelon )
@@ -125,7 +125,7 @@ do
     end
 
     _returnValue = selTemp
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_ObtenirTousPionsDe_SansPC( eEtatEchelon )
@@ -145,13 +145,13 @@ do
     end
 
     _returnValue = selTemp
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_EstPionEclairant( pion )
     local _returnValue = false
     _returnValue = ( F_Pion_GeteEtatEchelon( pion ) == eEtatEchelon_Eclairage )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction )
@@ -171,7 +171,7 @@ do
     end
 
     _returnValue = selTemp
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_ObtenirPionsEchelonPremierEtSecond( eEtatDestruction )
@@ -191,7 +191,7 @@ do
     end
 
     _returnValue = listePionsNonDetruits
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_ObtenirPionsDetruitsEchelonPremierEtEclairage( )
@@ -211,7 +211,7 @@ do
     end
 
     _returnValue = listePionsDetruits
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_ObtenirPionsFreinant( eEtatEchelon, eEtatDestruction )
@@ -232,7 +232,7 @@ do
     end
 
     _returnValue = selTemp
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_ObtenirPionsOperationnels( )
@@ -252,7 +252,7 @@ do
     end
 
     _returnValue = lstPionsOperationnels
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_ObtenirPionsDetruits( )
@@ -272,7 +272,7 @@ do
     end
 
     _returnValue = lstPionsDetruits
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_ObtenirPionsDetruits_SansPC( )
@@ -292,7 +292,7 @@ do
     end
 
     _returnValue = lstPionsDetruits
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_ObtenirPionsOperationnels_SansPC( )
@@ -312,7 +312,7 @@ do
     end
 
     _returnValue = lstPionsOperationnels
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_ObtenirPionsOperationnelsFiltre( typePion )
@@ -332,7 +332,7 @@ do
     end
 
     _returnValue = lstPionsOperationnels
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_EstAuContact( )
@@ -351,7 +351,7 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_PionsAuContact( eEtatEchelon )
@@ -369,7 +369,7 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_ObtenirTousPionsPour( unite, eEtatEchelon )
@@ -389,7 +389,7 @@ do
     end
 
     _returnValue = listePionsTemp
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_ObtenirPionsOperationnelsPour( unite )
@@ -409,7 +409,7 @@ do
     end
 
     _returnValue = listePionsTemp
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Coordination_PionEnQueue( tache, lstPions, bEnQueue )
@@ -448,6 +448,6 @@ do
     end
 
     _returnValue = pionEnQueue
-    return _returnValue
+    do return _returnValue end
 end
 

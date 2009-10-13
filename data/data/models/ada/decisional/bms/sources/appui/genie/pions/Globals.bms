@@ -80,7 +80,7 @@ end
     if( DEC_ConnaissanceObjet_Type( site ) ~= S_TypeObject_ToString( eTypeObjectSiteFranchissement ) ) then
         do
             _returnValue = true
-                        return _returnValue
+                        do return _returnValue end
 
         end
     end
@@ -88,7 +88,7 @@ end
     _returnValue = false
     local fTailleSite = DEC_ConnaissanceObjet_LargeurSiteFranchissement( site )
     if( ( fTailleSite == 0 or fTailleSite == nil ) ) then
-        return _returnValue
+        do return _returnValue end
     end
 
     local selPions = DEC_Renforts()
@@ -97,6 +97,7 @@ end
     local selEFA = S_Filtre_ChercheTypePion( selPions, GroupeEFA )
     local selPFM = S_Filtre_ChercheTypePion( selPions, SectionPFM )
      do
+        local _continue = true
         local switch_1 = type
         local cases_switch_1 = {}
             if switch_1 == eFranchissement_Continu then
@@ -116,14 +117,14 @@ end
                     _returnValue = true
                 end
 
-                
+                _continue = false
                         cases_switch_1[1] = true
 elseif switch_1 == eFranchissement_Discontinu then
                 if( ( #( selMLF ) + #( selEFA ) + #( selPFM ) == 0 or #( selMLF ) + #( selEFA ) + #( selPFM ) == nil ) ) then
                     _returnValue = false
                 end
 
-                
+                _continue = false
                         cases_switch_1[2] = true
 
             else
@@ -132,10 +133,10 @@ elseif switch_1 == eFranchissement_Discontinu then
         end
 
     if( not _returnValue ) then
-        return _returnValue
+        do return _returnValue end
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Pion_GEN_EstRenforceParMATS( )
@@ -149,7 +150,7 @@ do
             if( pion:GetType() == "GroupeMATS" ) then
                 do
                     _returnValue = true
-                                        return _returnValue
+                                        do return _returnValue end
 
                 end
             end
@@ -158,7 +159,7 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_ObjetsPlanifiesAvecTC2( travaux )
@@ -173,7 +174,7 @@ do
                     if( ( DEC_GenObject_TC2( camp ) == 0 or DEC_GenObject_TC2( camp ) == nil ) ) then
                         do
                             _returnValue = false
-                                                        return _returnValue
+                                                        do return _returnValue end
 
                         end
                     end
@@ -185,6 +186,6 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 

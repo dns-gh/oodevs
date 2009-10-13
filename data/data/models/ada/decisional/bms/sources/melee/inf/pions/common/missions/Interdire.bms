@@ -47,6 +47,7 @@ includedFiles["sources/melee/inf/pions/common/missions/Interdire.bms"] = true
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eSeMettreEnPlace then
@@ -61,7 +62,7 @@ includedFiles["sources/melee/inf/pions/common/missions/Interdire.bms"] = true
                                                         do
                                 self.ePhase = eInstallerDispositif
                                                                 self.params.__returnValue = self.ePhase
-                                return
+                                do return end
 
                             end
 
@@ -71,7 +72,7 @@ includedFiles["sources/melee/inf/pions/common/missions/Interdire.bms"] = true
                     Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
                     --[[// Rejoins une position d'observation de la position a Barrer
 ]]Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, setmetatable( { M_TEMPS_PREPARATION_MISSION(), self.mission.pointAInterdire_, false, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[//  On verifie les alentours, et on attend de debusquer un ennemi
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eInstallerDispositif then
@@ -90,7 +91,7 @@ elseif switch_1 == eInstallerDispositif then
                                                         do
                                 self.ePhase = eSurveiller
                                                                 self.params.__returnValue = self.ePhase
-                                return
+                                do return end
 
                             end
 
@@ -98,13 +99,13 @@ elseif switch_1 == eInstallerDispositif then
                     end
 
                     Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, setmetatable( { eNiveauInstallation_PosteAmenage, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[//  On se met en position de tir
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eSurveiller then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
                     Activate( self.activations.BEH_Eni_Pion_INF_Tenir, 1, { 1.5, } )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
 
                 else
@@ -112,7 +113,7 @@ elseif switch_1 == eSurveiller then
             end
 
                 self.params.__returnValue = self.ePhase
-        return
+        do return end
 
     end,
 

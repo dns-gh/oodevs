@@ -23,7 +23,7 @@ do
     end
 
     _returnValue = selTemp
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Misc_Pion_Rens_ObtenirDronesDisponibles( )
@@ -49,6 +49,6 @@ do
     end
 
     _returnValue = selTemp
-    return _returnValue
+    do return _returnValue end
 end
 

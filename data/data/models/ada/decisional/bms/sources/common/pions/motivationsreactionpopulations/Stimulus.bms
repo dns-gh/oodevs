@@ -25,7 +25,7 @@ do
                 if( ( DEC_ConnaissancePopulation_Dangerosite( pop ) > 1 ) and ( DEC_ConnaissancePopulation_Domination( pop, eValidite ) > 0 ) ) then
                     do
                         SetStimulus( "STIM_PopulationDangereuse", 1 )
-                                                return
+                                                do return end
 
                     end
                 end

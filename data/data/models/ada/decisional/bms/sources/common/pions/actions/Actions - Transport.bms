@@ -43,13 +43,14 @@ includedFiles["sources/common/pions/actions/Actions - Transport.bms"] = true
 ]]        end
 
          do
+            local _continue = true
             local switch_1 = self.eEtatTransport
             local cases_switch_1 = {}
                 if switch_1 == eActionTransport_Running then
                     do
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionTransport_Finished then
                     do
@@ -60,7 +61,7 @@ elseif switch_1 == eActionTransport_Finished then
                     Halt( self )
                     do return end
 
-                    
+                    _continue = false
                 elseif switch_1 == eActionTransport_Impossible then
                     do
                     end
@@ -70,7 +71,7 @@ elseif switch_1 == eActionTransport_Finished then
                     Halt( self )
                     do return end
 
-                    
+                    _continue = false
                                 end
             end
 
@@ -127,13 +128,14 @@ elseif switch_1 == eActionTransport_Finished then
 ]]        end
 
          do
+            local _continue = true
             local switch_1 = self.eEtatTransport
             local cases_switch_1 = {}
                 if switch_1 == eActionTransport_Running then
                     do
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionTransport_Finished then
                     do
@@ -144,7 +146,7 @@ elseif switch_1 == eActionTransport_Finished then
                     Halt( self )
                     do return end
 
-                    
+                    _continue = false
                 elseif switch_1 == eActionTransport_Impossible then
                     do
                     end
@@ -154,7 +156,7 @@ elseif switch_1 == eActionTransport_Finished then
                     Halt( self )
                     do return end
 
-                    
+                    _continue = false
                                 end
             end
 

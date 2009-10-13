@@ -44,6 +44,7 @@ includedFiles["sources/appui/circulation/pions/missions/aide a mobilite sur itin
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhaseMission
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
@@ -51,7 +52,7 @@ includedFiles["sources/appui/circulation/pions/missions/aide a mobilite sur itin
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "MIS_Pion_LOG_SurveillerItineraire: debut", } )
                     self.ePhaseMission = eProgresser
-                    
+                    _continue = false
                 --[[// Progression vers l'itinéraire à équiper
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eProgresser then
@@ -61,26 +62,28 @@ elseif switch_1 == eProgresser then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhaseMission = eSurveiller
-                                
+                                _continue = false
                             end
 
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.pointInstallation, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                        if _continue then
+                        Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.pointInstallation, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                        _continue = false
+                    end
                 --[[// On parcourt l'itinéraire
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eSurveiller then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
                     Activate( self.activations.BEH_Circu_Obs_SurveillerItineraire, 1, { self.loc, } )
-                    
+                    _continue = false
                 --[[// Fin de la mission
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                    
+                    _continue = false
                                 cases_switch_1[4] = true
 
                 else

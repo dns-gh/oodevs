@@ -89,7 +89,7 @@ node "BEH_MAJ_EtatOperationnel"
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { " ++++ UNIT IS COMPLETLY DESTROYED  ++++", } )
                 Activate( self.activations.ACT_MAJ_EtatDestruction, 1, { eEtatDestruction_Total, } )
-                                return
+                                do return end
 
             end
 --[[// Destruction tactique --> plus de composantes majeurs
@@ -99,7 +99,7 @@ node "BEH_MAJ_EtatOperationnel"
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "+++++++  UNIT IS NON OPERATIONNAL +++++++", } )
                 Activate( self.activations.ACT_MAJ_EtatDestruction, 1, { eEtatDestruction_Tactique, } )
-                                return
+                                do return end
 
             end
 --[[// Par defaut

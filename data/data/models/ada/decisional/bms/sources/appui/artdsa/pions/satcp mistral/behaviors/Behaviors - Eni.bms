@@ -30,6 +30,7 @@ includedFiles["sources/appui/artdsa/pions/satcp mistral/behaviors/Behaviors - En
         --[[// variables locales
 ]]local distance = DEC_Geometrie_Distance( myself:DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( self._namedParams.ennemi ) )
          do
+            local _continue = true
             local switch_1 = self._namedParams.typeDeploiement
             local cases_switch_1 = {}
                 if switch_1 == eEtatDeploiement_directionnel then
@@ -44,7 +45,7 @@ do
                         end
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eEtatDeploiement_omnidirectionnel then
                     if( distance >= 3000 ) then
@@ -57,7 +58,7 @@ do
                         end
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end

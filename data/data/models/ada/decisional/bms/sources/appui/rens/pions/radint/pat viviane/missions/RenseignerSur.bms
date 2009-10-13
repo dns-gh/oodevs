@@ -67,13 +67,14 @@ do
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhaseMission
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
                     --[[// Preparation mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhaseMission = eProgresser
-                    
+                    _continue = false
                 --[[// Se diriger vers les ZR 
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eProgresser then
@@ -84,7 +85,7 @@ elseif switch_1 == eProgresser then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhaseMission = eRejoindre
-                                                                return
+                                                                do return end
 
                             end
 
@@ -107,7 +108,7 @@ elseif switch_1 == eProgresser then
 ]]                    end
 
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionObservation, eProgressionDirect, eTypeItiMouvement, } )
-                    
+                    _continue = false
                 --[[// Decrocher
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eRejoindre then
@@ -117,7 +118,7 @@ elseif switch_1 == eRejoindre then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhaseMission = eFinMission
-                                                                return
+                                                                do return end
 
                             end
 
@@ -125,7 +126,7 @@ elseif switch_1 == eRejoindre then
                     end
 
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.positionInitiale, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// Fin de la mission Sur ordre ou si plus d'autonomie
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
@@ -137,7 +138,7 @@ elseif switch_1 == eFinMission then
 ]]
                     --[[// données doctrine
 ]]StopActivateOverride( self, self.activations.ACT_Dep_Pion_RENS_VolerA, { 100, } )
-                    
+                    _continue = false
                                 cases_switch_1[4] = true
 
                 else
@@ -173,7 +174,7 @@ node "BEH_Connaissance_Rens_ExploiterRens"
                 Activate( self.activations.ACT_Info_Trace, 1, { "End of data processing", } )
                 Activate( self.activations.ACT_Connaissance_Rens_ExtraireDonnees, 1, {} )
                                 self.params.__returnValue = eActionEffectuee
-                return
+                do return end
 
             end
 --[[// Exploitation des donnees

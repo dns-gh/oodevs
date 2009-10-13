@@ -68,7 +68,7 @@ node "BEH_Conduite_Automate_RENS_ROIM_CL289_GererMiseEnOeuvre"
 ]]if( ( pionDrone == 0 or pionDrone == nil ) ) then
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "Waiting for drone to be operated", } )
-                                return
+                                do return end
 
             end
 --[[//-----------------------------------------------------------------------------

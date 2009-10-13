@@ -242,7 +242,7 @@ node "BEH_Obs_Pion_INF_ReconnaitrePoint_Maintenu"
 ]]if( self.bHalt ) then
             do
                 DEC_Trace( "BEH_Obs_Pion_INF_ReconnaitrePoint_Maintenu : destruction pt." )
-                                return
+                                do return end
 
             end
 --[[// Si on s'eloigne du point, on arrete simplement la reco
@@ -254,7 +254,7 @@ node "BEH_Obs_Pion_INF_ReconnaitrePoint_Maintenu"
 ]]DEC_Trace( "BEH_Obs_Pion_INF_ReconnaitrePoint_Maintenu : halt" )
                 StopEvents( "BEH_Obs_Pion_INF_ReconnaitrePoint_Maintenu" )
                 self.bHalt = true
-                                return
+                                do return end
 
             end
         end

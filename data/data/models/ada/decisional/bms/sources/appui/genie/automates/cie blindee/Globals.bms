@@ -93,21 +93,21 @@ end
     local _returnValue = false
     _returnValue = DEC_Automate_PionPeutConstruireObjet( pion, DEC_GenObject_Type( obstacle ) )
     _returnValue = false
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Obj_Automate_GEN_PeutDegagerObstacle( obstacle, pion )
     local _returnValue = false
     local eValidite = nil
     _returnValue = DEC_Automate_PionPeutDetruireObjet( pion, obstacle )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Obj_Automate_GEN_PeutContournerObstacle( obstacle, pion )
     local _returnValue = false
     local eValidite = nil
     _returnValue = DEC_Automate_PionPeutConstruireContournementObjet( pion, obstacle )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Obj_Automate_GEN_ObjetPlusProche( listeObjets, point )
@@ -138,7 +138,7 @@ do
     end
 
     _returnValue = objetProche
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Gen_ObtenirSectionsGenieDisponibles( )
@@ -158,7 +158,7 @@ do
     end
 
     _returnValue = listeTemp
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Gen_AssocierGenObjetAPion( pion, objet )
@@ -184,7 +184,7 @@ do
     end
 
     _returnValue = selTemp
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Gen_ObtenirGroupeGenie( )
@@ -203,7 +203,7 @@ do
     end
 
     _returnValue = selTemp
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Obj_ListeObjetsNonContournes( objets )
@@ -221,7 +221,7 @@ do
     end
 
     _returnValue = listeObjets
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Obj_TrierListePourDetruireObjets( objets )
@@ -273,7 +273,7 @@ do
     end
 
     _returnValue = listeObjetsTries
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Obj_TrierListePourContournerObjets( objets )
@@ -325,7 +325,7 @@ do
     end
 
     _returnValue = listeObjetsTries
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Obj_TrierListePourContruireObjetsPlanifies( objets )
@@ -373,6 +373,6 @@ do
     end
 
     _returnValue = listeObjetsTries
-    return _returnValue
+    do return _returnValue end
 end
 

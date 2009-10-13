@@ -42,6 +42,7 @@ node "BEH_Medo_Automate_PreparerMission_ReconnaitreZonesDeploiement"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eMRT_SelectionnerPions then
@@ -61,7 +62,7 @@ node "BEH_Medo_Automate_PreparerMission_ReconnaitreZonesDeploiement"
                     end
 
                     self.ePhase = eMRT_AffecterFuseaux
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eMRT_AffecterFuseaux then
                     local sVide = {}--[[//-----------------------------------------------------------------------------
@@ -80,7 +81,7 @@ elseif switch_1 == eMRT_AffecterFuseaux then
                             self.eActionMRT = eActionEnCours
                                                         do
                                 self.ePhase = eMRT_AssignerMissions
-                                                                return
+                                                                do return end
 
                             end
 
@@ -108,7 +109,7 @@ do
                         Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux, 1, setmetatable( { sFuseau, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
                     end
 
-                    --[[// action ACT_Medo_Automate_AffecterFuseaux( lstPionsAttaque ) return in eActionMRT;				
+                    _continue = false--[[// action ACT_Medo_Automate_AffecterFuseaux( lstPionsAttaque ) return in eActionMRT;				
 ]]
                                 cases_switch_1[2] = true
 elseif switch_1 == eMRT_AssignerMissions then
@@ -151,7 +152,7 @@ elseif switch_1 == eMRT_AssignerMissions then
                     --[[// behavior BEH_Medo_Automate_ASS_ReconnaitreZonesDeploiement( selPions_ASS_Reco, mission.positionsAReconnaitre_ ) return in eActionMRT;
 ]]--[[// Assigne la mission au pc
 ]]Activate( self.activations.BEH_Medo_Automate_ASS_AssignerMission_PC, 1, { self.selPions_ASS_Reco, } )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
                 end
             end

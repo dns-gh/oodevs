@@ -66,6 +66,7 @@ include "bit.lua"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhaseMission
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
@@ -74,7 +75,7 @@ include "bit.lua"
                     Activate( self.activations.ACT_Info_Trace, 1, { "Seize aera mission begining", } )
                     Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
                     self.ePhaseMission = eRejoindrePosition
-                    
+                    _continue = false
                 --[[// 2) Progression jusqu'au point à reconnaitre
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eRejoindrePosition then
@@ -86,7 +87,7 @@ elseif switch_1 == eRejoindrePosition then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhaseMission = eFinMission
-                                                                return
+                                                                do return end
 
                             end
 
@@ -94,13 +95,13 @@ elseif switch_1 == eRejoindrePosition then
                     end
 
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.pointObjectif_, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// Fin de la mission --> SUR ORDRE DU SUPERIEUR
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
 
                 else
@@ -247,7 +248,7 @@ node "BEH_Ordre_SePosterPourDeboucher"
 ]]--[[// a parti
 ]]SetStateVariable( "VE_SePoster", 2 )
                 Activate( self.activations.ACT_Dep_SePoster, 1, {} )
-                                return
+                                do return end
 
             end
         end
@@ -292,6 +293,7 @@ node "BEH_Mission_Pion_VAB_Semparer"
 ]]self.ePhase = self.ePhase or eRejoindrePosition
         self.eAction = self.eAction or eActionEnCours
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eRejoindrePosition then
@@ -308,7 +310,7 @@ node "BEH_Mission_Pion_VAB_Semparer"
                                                         do
                                 self.ePhase = eObserver
                                                                 self.params.__returnValue = self.ePhase
-                                return
+                                do return end
 
                             end
 
@@ -320,7 +322,7 @@ node "BEH_Mission_Pion_VAB_Semparer"
                         Activate( self.activations.BEH_Ordre_Pion_VAB_Semparer_Demande, 1, {} )
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eObserver then
                     --[[// L'objectif est libre, on peut le rejoindre ..
@@ -330,7 +332,7 @@ elseif switch_1 == eObserver then
                         do
                             self.ePhase = eRejoindreAssaut
                                                         self.params.__returnValue = self.ePhase
-                            return
+                            do return end
 
                         end
                     end
@@ -352,7 +354,7 @@ elseif switch_1 == eObserver then
                                                         do
                                 self.ePhase = eRejoindre
                                                                 self.params.__returnValue = self.ePhase
-                                return
+                                do return end
 
                             end
 
@@ -361,7 +363,7 @@ elseif switch_1 == eObserver then
 ]]                    end
 
                     Activate( self.activations.BEH_Obs_Pion_INF_EnReconnaissance, 1, setmetatable( { self.mission.pointObjectif_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eRejoindreAssaut then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
@@ -377,7 +379,7 @@ elseif switch_1 == eRejoindreAssaut then
                         end
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
 elseif switch_1 == eRejoindre then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
@@ -393,7 +395,7 @@ elseif switch_1 == eRejoindre then
 ]]if( F_Pion_GeteniEnCours( myself ) ~= nil ) then
                         do
                             self.ePhase = eRejoindreAssaut
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -403,7 +405,7 @@ elseif switch_1 == eRejoindre then
                             self.eAction = eActionEnCours
                                                         do
                                 self.ePhase = eFouiller
-                                                                return
+                                                                do return end
 
                             end
 
@@ -412,7 +414,7 @@ elseif switch_1 == eRejoindre then
 
                     Activate( self.activations.ACT_Misc_Pion_Ambiance, 1, { eEtatAmbiance_Surete, } )
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.mission.pointObjectif_, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[//-----------------------------------------------------------------------------
 ]]--[[//  Rencontre d'un eni lorsque l'on est pas dans la phase d'assaut
 ]]                cases_switch_1[4] = true
@@ -423,7 +425,7 @@ elseif switch_1 == eFouiller then
                         do
                             --[[// L'ennemi est trop loin de la position
 ]]self.ePhase = eRejoindreAssaut
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -442,7 +444,7 @@ elseif switch_1 == eFouiller then
                     end
 
                     Activate( self.activations.ACT_Dep_Pion_INF_Arret, 1, setmetatable( { M_TEMPS_FOUILLE(), "fouille des lieux ... ", }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[5] = true
 
                 else
@@ -450,7 +452,7 @@ elseif switch_1 == eFouiller then
             end
 
                 self.params.__returnValue = self.ePhase
-        return
+        do return end
 
     end,
 
@@ -479,7 +481,7 @@ node "BEH_Eni_Pion_VAB_Semparer"
         --[[//  situation particuliere.
 ]]--[[//=============================================================================
 ]]if( not DEC_Connaissances_PresenceEnnemieDansCercle( self.mission.pointObjectif_, 1500 ) ) then
-            return
+            do return end
         end
 
         local lstEnisDansFuseau = DEC_Connaissances_UnitesEnnemiesVivantesDansFuseau()
@@ -586,7 +588,7 @@ node "BEH_Eni_Pion_VAB_PreparerEngagement"
             do
                 DEC_Trace( "Renforts en position" )
                                 self.params.__returnValue = eActionEffectuee
-                return
+                do return end
 
             end
         end

@@ -32,6 +32,7 @@ includedFiles["sources/appui/alat/pions/common/behaviors/Behaviors - Obs.bms"] =
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhase = self.ePhase or eRejoindre
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eRejoindre then
@@ -42,7 +43,7 @@ includedFiles["sources/appui/alat/pions/common/behaviors/Behaviors - Obs.bms"] =
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhase = eSePoster
-                                                                return
+                                                                do return end
 
                             end
 
@@ -64,7 +65,7 @@ if( x == y ) then
                     end
 
                     Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { self.positionARejoindre, eProgressionDefaut, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eSePoster then
                     if( DEC_ALAT_ReconnaissanceNonVuTerminee() ) then
@@ -73,7 +74,7 @@ elseif switch_1 == eSePoster then
                         do return end
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end
@@ -236,7 +237,7 @@ node "BEH_Obs_Pion_ALAT_ReconnaitreUnite"
         end
 
                 self.params.__returnValue = self.eEtat
-        return
+        do return end
 
     end,
 

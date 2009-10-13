@@ -76,13 +76,14 @@ do
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eSurveiller then
                     if( self.ePhaseMission == eFinMission ) then
                         do
                             self.ePhase = eFinMission
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -91,7 +92,7 @@ do
                         do
                             self.ePhase = eSeReplier
                             self.eAction = eActionEnCours
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -101,7 +102,7 @@ do
                             self.eAction = eActionEnCours
                                                         do
                                 self.ePhase = eSeReplier
-                                                                return
+                                                                do return end
 
                             end
 
@@ -109,7 +110,7 @@ do
                     end
 
                     Activate( self.activations.BEH_Mission_Pion_INF_DetruireParCoupDeMain, GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.ePhaseMission = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// Rejoins la position de replis
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eSeReplier then
@@ -118,7 +119,7 @@ elseif switch_1 == eSeReplier then
     }
 		*/]]--[[// Fin de mission
 ]]self.ePhase = eFinMission
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
@@ -132,7 +133,7 @@ elseif switch_1 == eFinMission then
                         end
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
 
                 else

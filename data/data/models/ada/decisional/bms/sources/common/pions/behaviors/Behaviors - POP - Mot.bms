@@ -54,7 +54,7 @@ node "BEH_MOT_DecrochageFaceAPopulations"
     activate = function( self )
         --[[// Pour certaines missions
 ]]if( g_bDesactiveSauvegarde ) then
-            return
+            do return end
         end
 
         local lstPops = DEC_Connaissances_Populations()

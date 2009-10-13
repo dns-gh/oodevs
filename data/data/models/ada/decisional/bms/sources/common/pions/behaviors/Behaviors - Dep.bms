@@ -185,7 +185,7 @@ node "BEH_Dep_SeDeplacer"
 
         Activate( self.activations.ACT_Pions_SeDesinstaller, 1, {} )
         if( not DEC_Agent_EstDesinstalle() ) then
-            return
+            do return end
         end
 
         Activate( self.activations.ACT_Dep_SeDeplacer, 1, setmetatable( { self._namedParams.it, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
@@ -232,6 +232,7 @@ do
 ]]if( ( bit.band( self._namedParams.typeProgression, DEC_GetTypePoint( DEC_GetDestPoint( repAvantPt ) ) ) ) ~= eProgressionDirect ) then
                             do
                                  do
+                                    local _continue = true
                                     local switch_1 = DEC_GetTypePoint( DEC_GetDestPoint( repAvantPt ) )
                                     local cases_switch_1 = {}
                                         if switch_1 == eTypePointCCT
@@ -248,7 +249,7 @@ do
                                                 end
                                             end
 
-                                            
+                                            _continue = false
                                                                                 cases_switch_1[1] = true
 elseif switch_1 == eTypePointParticulier then
                                             do
@@ -285,7 +286,7 @@ if( F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Vitesse ) then
 
                                             end
 
-                                            
+                                            _continue = false
                                                                                 cases_switch_1[2] = true
                                         end
                                     end
@@ -293,7 +294,9 @@ if( F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Vitesse ) then
                             end
                         end
 
-                        Activate( self.activations.ACT_Points_Suppression, 1, { repAvantPt, } )
+                            if _continue then
+                            Activate( self.activations.ACT_Points_Suppression, 1, { repAvantPt, } )
+                        end
                     end
                 end
 
@@ -482,7 +485,7 @@ node "BEH_Dep_Progresser"
         Activate( self.activations.BEH_Dep_GererProgression, 1, { self._namedParams.typeProgression, } )
         Activate( self.activations.ACT_Pions_SeDesinstaller, 1, {} )
         if( not DEC_Agent_EstDesinstalle() ) then
-            return
+            do return end
         end
 
         Activate( self.activations.ACT_Dep_SeDeplacer, 1, setmetatable( { self._namedParams.it, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
@@ -523,12 +526,12 @@ node "BEH_Dep_ReagirFaceAObstacle"
             do
                 --[[// {    if ( F_POLY_OBJET_REAGIR_FACE_A_OBSTACLE() )    {        action ACT_RC_SurObjet( eRC_EnPosteFaceAObstacle,  repObjet  );        action ACT_Dep_SePosterFaceAObstacle(  repObjet  );    }    else if ( appuiGeniePions() )    {        if( myself.mission_ != 0 && myself.mission_.__type_ == T_Mission_Pion_GEN_ReconnaitreItineraire )            action ACT_Dep_SePosterFaceAObstacle(  repObjet  );    }    else if ( meleeAbcPionsCommon() )    {        action ACT_Dep_SePosterFaceAObstacle(  repObjet  );    }    else if ( meleeInfPionsCommon() )    {        action ACT_RC_SurObjet( eRC_EnPosteFaceAObstacle,  repObjet  );	    start behavior BEH_Objet_Pion_INF_ReagirFaceAObstacle(  repObjet  );    }}
 ]]                self.params.__returnValue = eActionEffectuee
-                return
+                do return end
 
             end
         else
             self.params.__returnValue = eActionEnCours
-            return
+            do return end
         end
 
     end,
@@ -612,7 +615,7 @@ node "BEH_Dep_SePosterFaceADirectionDangereuse"
 
     activate = function( self )
         if( ( DEC_GetMission( myself ) == 0 or DEC_GetMission( myself ) == nil ) ) then
-            return
+            do return end
         end
 
         --[[//-----------------------------------------------------------------------------
@@ -661,6 +664,7 @@ node "BEH_Dep_Suivre"
         self.eEtatObstacle = self.eEtatObstacle or eActionEnCours
         self.recalculerItineraire = self.recalculerItineraire or false
          do
+            local _continue = true
             local switch_1 = self.eComportement
             local cases_switch_1 = {}
                 if switch_1 == eCreerItineraire then
@@ -668,14 +672,14 @@ node "BEH_Dep_Suivre"
                     self.itVersAmi = DEC_CreerItineraire( self._namedParams.ami:DEC_Agent_Position(), eTypeItiMouvement )
                     self.eComportement = eRejoindre
                     self.recalculerItineraire = false
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eRejoindre then
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
                             self.eComportement = eCreerItineraire
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -694,7 +698,7 @@ do
                             if( self.recalculerItineraire ) then
                                 do
                                     self.eComportement = eCreerItineraire
-                                                                        return
+                                                                        do return end
 
                                 end
                             end
@@ -702,7 +706,7 @@ do
                         end
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 
                 else
@@ -825,11 +829,12 @@ node "BEH_Dep_Suivre_Elastique"
         end
 
          do
+            local _continue = true
             local switch_1 = self.eComportement
             local cases_switch_1 = {}
                 if switch_1 == eCreerItineraire then
                     if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position(), self._namedParams.rDistanceMin ) ) then
-                        return
+                        do return end
                     end
 
                     self.itVersAmi = S_Misc_DetruireItineraire( self.itVersAmi, "BEH_Dep_Suivre: " )
@@ -842,7 +847,7 @@ node "BEH_Dep_Suivre_Elastique"
                         do
                             self.eEtat = eActionEnCours
                             self.eComportement = eCreerItineraire
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -874,7 +879,7 @@ node "BEH_Dep_Suivre_Elastique"
                     end
 
                     StartActivateOverride( self, self.activations.BEH_Dep_ReagirFaceAObstacle, 1.1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatObstacle = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 
                 else

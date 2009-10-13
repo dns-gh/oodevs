@@ -104,7 +104,7 @@ node "BEH_Dep_Virtuel_PreparationAction"
 
     activate = function( self )
                 self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 

@@ -70,13 +70,14 @@ node "MIS_Pion_INF_ContreAttaquer"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eDonnerAssaut then
                     if( self.eCurrentPhase ~= eFinMission ) then
                         do
                             Activate( self.activations.BEH_Mission_Pion_VAB_ContreAttaquer, GetMotivation( "MOT_Mission" ), setmetatable( { self._namedParams.mission.ennemi_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -102,7 +103,7 @@ node "MIS_Pion_INF_ContreAttaquer"
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 
                 else
@@ -158,7 +159,7 @@ node "BEH_Mission_Pion_VAB_ContreAttaquer"
                 self.eActionEni = eActionEnCours
                                 do
                                         self.params.__returnValue = eFinMission
-                    return
+                    do return end
 
                 end
 

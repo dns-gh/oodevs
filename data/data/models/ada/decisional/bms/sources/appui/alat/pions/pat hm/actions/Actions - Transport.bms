@@ -34,10 +34,11 @@ includedFiles["sources/appui/alat/pions/pat hm/actions/Actions - Transport.bms"]
         end
 
          do
+            local _continue = true
             local switch_1 = self.eEtatTransport
             local cases_switch_1 = {}
                 if switch_1 == eActionTransport_Running then
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionTransport_Finished then
                     self.actionEmbarquer = DEC_StopAction( self.actionEmbarquer )
@@ -102,10 +103,11 @@ elseif switch_1 == eActionTransport_Finished then
         end
 
          do
+            local _continue = true
             local switch_1 = self.eEtatTransport
             local cases_switch_1 = {}
                 if switch_1 == eActionTransport_Running then
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionTransport_Finished then
                     DEC_StopAction( self.actionDebarquer )

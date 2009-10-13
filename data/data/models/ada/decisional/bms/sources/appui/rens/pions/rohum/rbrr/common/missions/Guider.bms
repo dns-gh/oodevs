@@ -46,6 +46,7 @@ includedFiles["sources/appui/rens/pions/rohum/rbrr/common/missions/Guider.bms"] 
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhaseMission
             local cases_switch_1 = {}
                 if switch_1 == eAttendre then
@@ -59,13 +60,13 @@ includedFiles["sources/appui/rens/pions/rohum/rbrr/common/missions/Guider.bms"] 
                         end
                     end
 
-                    
+                    _continue = false
                 --[[// Fin de la mission --> SUR ORDRE
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 
                 else

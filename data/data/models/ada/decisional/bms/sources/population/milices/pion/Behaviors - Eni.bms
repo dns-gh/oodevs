@@ -105,7 +105,7 @@ node "BEH_Feu_Pion_Milice_ConduireLesFeux_Sur"
                         --[[// MAJ Stimulus tir inefficace
 ]]g_bTirInefficace = true
                                                 self.params.__returnValue = eActionEnPause
-                        return
+                        do return end
 
                     end
 --[[// init avec nouvel etat de l'eni
@@ -173,7 +173,7 @@ node "BEH_Tir_Pion_Milice_FaireFeu"
         end
 
                 self.params.__returnValue = eActionReturn
-        return
+        do return end
 
     end,
 
@@ -190,7 +190,7 @@ node "BEH_Eni_Pion_VAB_Offensif_Manoeuvre"
     activate = function( self )
         --[[// Si le pion n'est pas dans son fuseau, on n'agit pas sur les ennemis
 ]]if( not DEC_Geometrie_EstPointDansFuseau( DEC_Agent_Position() ) ) then
-            return
+            do return end
         end
 
         local listeUnitesEnnemiesDangereuses = DEC_Connaissances_UnitesEnnemiesDangereuses()

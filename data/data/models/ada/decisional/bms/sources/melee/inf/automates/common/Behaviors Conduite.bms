@@ -278,7 +278,7 @@ node "BEH_CoordTir_Automate_INF_Intervention_LCAR"
         local ksEni = S_Pion_EniEnCours( self._namedParams.pPion )
         if( F_Pion_GeteEtatDec( self._namedParams.pPion ) == eEtatDec_Sauvegarde or self.eAction == eActionHalt ) then
             self.params.__returnValue = eActionEffectuee
-            return
+            do return end
         end
 
         Activate( self.activations.BEH_CoordTir_Automate_INF_EvalueActivite_Eni, 1, setmetatable( { self._namedParams.pPion, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
@@ -294,7 +294,7 @@ do
                     do
                         if( F_Pion_GeteEtatFeu( self._namedParams.pPion ) == eEtatFeu_Executer ) then
                             self.params.__returnValue = eActionEffectuee
-                            return
+                            do return end
                         end
 
                     end
@@ -313,7 +313,7 @@ do
                     do
                         if( F_Pion_GeteEtatFeu( self._namedParams.pPion ) == eEtatFeu_Executer ) then
                             self.params.__returnValue = eActionEffectuee
-                            return
+                            do return end
                         end
 
                     end
@@ -326,7 +326,7 @@ do
 
     destroy = function( self )
                         self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 
@@ -345,11 +345,11 @@ node "BEH_CoordTir_Automate_INF_EvalueActivite_Eni"
     activate = function( self )
         if( GetActivity() > 1 ) then
             self.params.__returnValue = eActionHalt
-            return
+            do return end
         end
 
                 self.params.__returnValue = eActionEnCours
-        return
+        do return end
 
     end,
 
@@ -379,7 +379,7 @@ node "BEH_Conduite_Automate_INF_Freiner_RompreContact"
         end
 
         if( ( self.resultatCalcul == 0 or self.resultatCalcul == nil ) ) then
-            return
+            do return end
         end
 
         --[[//-----------------------------------------------------------------------------
@@ -387,7 +387,7 @@ node "BEH_Conduite_Automate_INF_Freiner_RompreContact"
 ]]--[[//-----------------------------------------------------------------------------    
 ]]local pionEnQueue = S_Coordination_PionEnQueue( self.resultatCalcul, selPions, true )
         if( ( pionEnQueue == 0 or pionEnQueue == nil ) ) then
-            return
+            do return end
         end
 
         Activate( self.activations.ACT_Ordre_Automate_Continue, 1, { pionEnQueue, } )

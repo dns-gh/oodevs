@@ -122,7 +122,7 @@ do
     end
 
     _returnValue = sFiltre
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Cherche_GE_Filtre_TypeAutomate_INF( sPions )
@@ -141,7 +141,7 @@ do
     end
 
     _returnValue = sFiltre
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Cherche_GE_Filtre_TypeAutomate_Melee( sPions )
@@ -152,6 +152,7 @@ function S_Cherche_GE_Filtre_TypeAutomate_Melee( sPions )
 do
             local pion = x
              do
+                local _continue = true
                 local switch_1 = pion:GetType()
                 local cases_switch_1 = {}
                     if switch_1 == "Escadron_AMX"
@@ -159,7 +160,7 @@ do
                     or switch_1 == "CompagnieInfanterie_HOT"
                     or switch_1 == "CompagnieInfanterie" then
                         DIA_PushBack( sFiltre, pion )
-                        
+                        _continue = false
                                         cases_switch_1[1] = true
                     end
                 end
@@ -169,7 +170,7 @@ do
     end
 
     _returnValue = sFiltre
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Cherche_GE_Filtre_TypeAutomate_Log( sPions )
@@ -188,7 +189,7 @@ do
     end
 
     _returnValue = sFiltre
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Cherche_GE_Filtre_TypeAutomate_Eclairage( sPions )
@@ -207,7 +208,7 @@ do
     end
 
     _returnValue = sFiltre
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Cherche_GE_Filtre_TypeAutomate_Genie( sPions )
@@ -226,7 +227,7 @@ do
     end
 
     _returnValue = sFiltre
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Cherche_GE_Filtre_TypeAutomate_ART( sPions )
@@ -245,7 +246,7 @@ do
     end
 
     _returnValue = sFiltre
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Cherche_GE_Filtre_TypeAutomate_Appui( sPions )
@@ -256,6 +257,7 @@ function S_Cherche_GE_Filtre_TypeAutomate_Appui( sPions )
 do
             local pion = x
              do
+                local _continue = true
                 local switch_1 = pion:GetType()
                 local cases_switch_1 = {}
                     if switch_1 == "BatterieASS"
@@ -272,13 +274,13 @@ do
     end
 
     _returnValue = sFiltre
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Cherche_GE_EstDetruitTactique( automat )
     local _returnValue = false
     _returnValue = ( F_Automat_GetrDestruction( automat ) <= 0.5 )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Cherche_GE_AutomateOperationnels( sPions )
@@ -297,7 +299,7 @@ do
     end
 
     _returnValue = sFiltre
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Cherche_GE_AutomateNonOperationnels( sPions )
@@ -312,7 +314,7 @@ if( S_Cherche_GE_EstDetruitTactique( pion ) ) then
     end
 
     _returnValue = sFiltre
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Cherche_GE_ObtenirPionsDe( eEtatEchelon )
@@ -332,7 +334,7 @@ do
     end
 
     _returnValue = selTemp
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Cherche_GE_Filtre_EnMesureDe( listePions )
@@ -352,7 +354,7 @@ do
     end
 
     _returnValue = sFiltre
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Cherche_GE_Filtre_PasFinMission( listePions )
@@ -379,7 +381,7 @@ do
     end
 
     _returnValue = sFiltre
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Cherche_GE_Filtre_EtatLima( eEtatLima, listePions )
@@ -398,7 +400,7 @@ do
     end
 
     _returnValue = selTemp
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Cherche_GE_Filtre_EtatSauvegarde( listePions )
@@ -417,7 +419,7 @@ do
     end
 
     _returnValue = selTemp
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Cherche_GE_Filtre_APasserLima( pionAuto, eEtatLima )
@@ -436,7 +438,7 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_AnalyseDelai_GE_EstEnRetard( )
@@ -446,7 +448,7 @@ function S_AnalyseDelai_GE_EstEnRetard( )
         _returnValue = true
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Dispositif_GE_NombreDePionsPE( rNombrePionsTotal )
@@ -465,7 +467,7 @@ do
         end
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Analyse_GE_TousPionsDansFuseau( listePions, fuseau )
@@ -480,7 +482,7 @@ if( not DEC_Geometrie_EstPointDansLocalisation( DEC_Geometrie_CalculerBarycentre
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Cherche_GE_Filtre_PionsDansFuseau( listePions, fuseau )
@@ -496,7 +498,7 @@ if( DEC_Geometrie_EstPointDansLocalisation( DEC_Geometrie_CalculerBarycentreAgen
     end
 
     _returnValue = sel
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Automate_EchelonEnDifficulte( echelon )
@@ -520,19 +522,19 @@ do
         _returnValue = true
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Analyse_GE_PositionAgent( automat )
     local _returnValue = nil
     _returnValue = DEC_Geometrie_CalculerBarycentreAgents( DEC_Automate_PionsDeAutomateSansPC( automat ) )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Force_GE_DistanceAgent( pion1, pion2 )
     local _returnValue = 0
     local rDist = DEC_Geometrie_Distance( S_Analyse_GE_PositionAgent( pion1 ), S_Analyse_GE_PositionAgent( pion2 ) )
     _returnValue = 1 + 1 / ( 1 + rDist / 1000 )
-    return _returnValue
+    do return _returnValue end
 end
 

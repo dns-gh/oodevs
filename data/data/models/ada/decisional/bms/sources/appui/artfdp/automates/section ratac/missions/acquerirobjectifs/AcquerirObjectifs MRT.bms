@@ -108,6 +108,7 @@ node "BEH_Medo_Automate_PreparerMission_AcquerirObjectifs"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eMRT_SelectionnerPions then
@@ -127,7 +128,7 @@ node "BEH_Medo_Automate_PreparerMission_AcquerirObjectifs"
                     end
 
                     self.ePhase = eMRT_AssignerMissions
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eMRT_AssignerMissions then
                     --[[//-----------------------------------------------------------------------------
@@ -165,7 +166,7 @@ elseif switch_1 == eMRT_AssignerMissions then
                     Activate( self.activations.BEH_Medo_Automate_ASS_AcquerirObjectifs, 1, setmetatable( { self.selPions_ASS_RATAC, self.mission.zonesAObserver_, self.mission.positionsDeploiement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
                     --[[// Assigne la mission au pc
 ]]Activate( self.activations.BEH_Medo_Automate_ASS_AssignerMission_PC, 1, { self.selPions_ASS_RATAC, } )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end

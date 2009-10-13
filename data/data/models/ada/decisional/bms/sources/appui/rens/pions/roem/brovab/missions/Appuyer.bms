@@ -54,13 +54,14 @@ includedFiles["sources/appui/rens/pions/roem/brovab/missions/Appuyer.bms"] = tru
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhaseMission
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
                     --[[// Preparation mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhaseMission = eProgresser
-                    
+                    _continue = false
                 --[[// Progresser jusqu'à zone de débarquement
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eProgresser then
@@ -70,7 +71,7 @@ elseif switch_1 == eProgresser then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhaseMission = eAppuyer
-                                                                return
+                                                                do return end
 
                             end
 
@@ -78,7 +79,7 @@ elseif switch_1 == eProgresser then
                     end
 
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.positionDeploiement_, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// eAppuyer
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eAppuyer then
@@ -87,7 +88,7 @@ elseif switch_1 == eAppuyer then
 ]]if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self._namedParams.mission.positionDeploiement_ ) > 200 ) then
                         do
                             Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mission.positionDeploiement_, eProgressionReco, eTypeItiMouvement, } )
-                                                        return
+                                                        do return end
 
                         end
 --[[//Brouiller pendant 15 mins
@@ -99,7 +100,7 @@ elseif switch_1 == eAppuyer then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhaseMission = eFinMission
-                                                                return
+                                                                do return end
 
                             end
 
@@ -107,17 +108,17 @@ elseif switch_1 == eAppuyer then
                     end
 
                     Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, 15, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// Fin de la mission --> SUR ORDRE
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( self.eEtat == eActionEffectuee ) then
-                        return
+                        do return end
                     end
 
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.pointRegroupement_, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[4] = true
 
                 else

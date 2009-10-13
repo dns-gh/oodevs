@@ -61,13 +61,14 @@ include "bit.lua"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_PreparationMission, } )
                     Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
                     self.ePhase = eAppuyer
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eAppuyer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnAppui, } )
@@ -75,7 +76,7 @@ elseif switch_1 == eAppuyer then
                     if( DIA_IsListEmpty( self.listePionsADefendreCourante ) ) then
                         do
                             Activate( self.activations.ACT_Info_Trace, 1, { "direct support impossible : no valid units to support", } )
-                                                        return
+                                                        do return end
 
                         end
 --[[//determination de l'unité la plus proche du barycentre des 
@@ -93,7 +94,7 @@ elseif switch_1 == eAppuyer then
                         end
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
@@ -108,7 +109,7 @@ elseif switch_1 == eFinMission then
                         end
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
                 end
             end

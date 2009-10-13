@@ -31,13 +31,13 @@ includedFiles["sources/air/pions/common/fonctions/Fonctions - Forces.bms"] = tru
     if( distanceAuPoint - distanceArretAvantPoint <= 0 ) then
         do
             _returnValue = 0
-                        return _returnValue
+                        do return _returnValue end
 
         end
     end
 
     _returnValue = 1 - ( 1 / ( 1 + ( distanceAuPoint - distanceArretAvantPoint ) ) )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Eni_Pion_AIR_ForceType( agent, typePrioritaire )
@@ -62,7 +62,7 @@ do
         _returnValue = -1
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Eni_Pion_AIR_ForceDetruire( agent, typePrioritaire )
@@ -71,18 +71,18 @@ function S_Eni_Pion_AIR_ForceDetruire( agent, typePrioritaire )
     local forceDistance = 2 - S_ForceRejoindre( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( agent ) ), 0 )
     _returnValue = forceTypeEtatOp * forceDistance
     _returnValue = ( ( _returnValue ) / 4 ) + 1
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Eni_Pion_AIR_ForceDistanceDeuxPoint( a, b, distMin )
     local _returnValue = 0
     _returnValue = 2 - S_ForceRejoindre( DEC_Geometrie_Distance( a, b ), distMin )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Eni_Pion_AIR_ForceDistanceLePlusProche( eni, distMin )
     local _returnValue = 0
     _returnValue = S_Eni_Pion_AIR_ForceDistanceDeuxPoint( myself:DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( eni ), distMin )
-    return _returnValue
+    do return _returnValue end
 end
 

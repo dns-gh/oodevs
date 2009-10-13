@@ -51,6 +51,7 @@ includedFiles["sources/appui/log/pions/missions/TrierEtTraiterBlesses.bms"] = tr
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhaseMission
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
@@ -63,7 +64,7 @@ includedFiles["sources/appui/log/pions/missions/TrierEtTraiterBlesses.bms"] = tr
                         self.ePhaseMission = eProgresser
                     end
 
-                    
+                    _continue = false
                 --[[// Progression
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eProgresser then
@@ -73,7 +74,7 @@ elseif switch_1 == eProgresser then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhaseMission = eDeployer
-                                                                return
+                                                                do return end
 
                             end
 
@@ -81,20 +82,20 @@ elseif switch_1 == eProgresser then
                     end
 
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.positionDeploiement_, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// Deploiement
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eDeployer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
                     Activate( self.activations.BEH_Pion_Log_Traiter, 1, {} )
                     Activate( self.activations.BEH_Pion_Log_Trier, 1, {} )
-                    
+                    _continue = false
                 --[[// Fin de la mission (sur ordre)
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                    
+                    _continue = false
                                 cases_switch_1[4] = true
 
                 else

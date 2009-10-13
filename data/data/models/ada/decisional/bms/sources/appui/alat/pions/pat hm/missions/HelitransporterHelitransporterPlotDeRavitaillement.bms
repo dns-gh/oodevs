@@ -74,6 +74,7 @@ do
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eRejoindre then
@@ -81,7 +82,7 @@ do
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.ePhase = eAttendre
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -107,14 +108,14 @@ do
                     Activate( self.activations.ACT_Info_Trace, 1, { "unit moves to Combat Train...", } )
                     Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
                     Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePion, 1, setmetatable( { pionTC2, eProgressionDefaut, eTypeItiInfiltration, 6000, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eAttendre then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_TransportEmbarquement, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.ePhase = eHelitransporter
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -138,14 +139,14 @@ elseif switch_1 == eAttendre then
 
                     Activate( self.activations.ACT_Info_Trace, 1, { "unit refuels and emplane FARP", } )
                     Activate( self.activations.BEH_Log_Pion_ALAT_SeRecompleterSurTC2, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eHelitransporter then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_TransportEnCours, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.ePhase = eDebarquer
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -171,14 +172,14 @@ elseif switch_1 == eHelitransporter then
                     Activate( self.activations.ACT_Info_Trace, 1, { "unit moves to landing point", } )
                     Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
                     Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { self._namedParams.mission.pointDebarquement_, eProgressionDefaut, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
 elseif switch_1 == eDebarquer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_TransportDebarquement, } )
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.ePhase = eSExfiltrer
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -186,14 +187,14 @@ elseif switch_1 == eDebarquer then
                     if( self.eEtat == eActionImpossible ) then
                         do
                             self.ePhase = eSExfiltrer
-                                                        return
+                                                        do return end
 
                         end
                     end
 
                     Activate( self.activations.ACT_Info_Trace, 1, { "unit lands FARP", } )
                     Activate( self.activations.ACT_Log_Pion_ALAT_RealiserPlotLogistique, 1, setmetatable( { myself:DEC_Agent_Position(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[4] = true
 elseif switch_1 == eSExfiltrer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnExfiltration, } )
@@ -204,7 +205,7 @@ elseif switch_1 == eSExfiltrer then
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.ePhase = eFinMission
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -228,7 +229,7 @@ elseif switch_1 == eSExfiltrer then
 
                     Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
                     Activate( self.activations.BEH_Manoeuvre_Pion_AllerStationner, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self._namedParams.mission.positionRegroupement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[5] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
@@ -250,7 +251,7 @@ elseif switch_1 == eFinMission then
 
                     Activate( self.activations.ACT_Info_Trace, 1, { "mission completed", } )
                     Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[6] = true
                 end
             end

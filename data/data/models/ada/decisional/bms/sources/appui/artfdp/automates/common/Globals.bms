@@ -88,7 +88,7 @@ do
     end
 
     _returnValue = ptCopie
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Misc_Automate_ASS_ExtraitPoint_ProchePosition( lstPos_Reco, ptPion )
@@ -124,6 +124,6 @@ do
     end
 
     _returnValue = ptCopie
-    return _returnValue
+    do return _returnValue end
 end
 

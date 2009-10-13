@@ -45,7 +45,7 @@ includedFiles["sources/melee/inf/pions/common/Fonctions - Misc.bms"] = true
 ]]function S_Dep_PointItineraireDest( it )
     local _returnValue = nil
     _returnValue = DEC_ListePoints_GetAt( it, DEC_ListePoints_Size( it ) - 1 )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_UnitesAppuis_EnPosition( )
@@ -59,7 +59,7 @@ do
             if( F_Pion_GeteEtatPhaseMission( tAppui ) ~= eEtatPhaseMission_EnAppui ) then
                 do
                     _returnValue = false
-                                        return _returnValue
+                                        do return _returnValue end
 
                 end
             end
@@ -68,7 +68,7 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_EstDetecteParEnis( )
@@ -81,7 +81,7 @@ do
             if( DEC_ConnaissanceAgent_PercoitUnite( ksEni ) ) then
                 do
                     _returnValue = true
-                                        return _returnValue
+                                        do return _returnValue end
 
                 end
             end
@@ -90,7 +90,7 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Cherche_Pion_INF_EniPercu( )
@@ -119,13 +119,13 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Eni_Pion_INF_ChercheAppui( )
     local _returnValue = nil
     _returnValue = S_Cherche_Pion_INF_EniPercu()
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_CreerItineraire_PIA( itBase, ptPIA )
@@ -134,7 +134,7 @@ function S_CreerItineraire_PIA( itBase, ptPIA )
     local ptDernier = S_Dep_PointItineraireDest( itBase )
     local rDist_Dest = DEC_Geometrie_Distance( DEC_Agent_Position(), ptDernier )
     if( ptPIA == nil ) then
-        return _returnValue
+        do return _returnValue end
     end
 
     _returnValue = DEC_Geometrie_CreerListePoints()
@@ -151,13 +151,13 @@ do
     end
 
     local rIti_Size = DEC_ListePoints_Size( _returnValue )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_CreerItineraire_Pt( ptDest )
     local _returnValue = {}
     _returnValue = DEC_Geometrie_CreerListePoints()
     DEC_Copie_PointDansListePoints( ptDest, _returnValue )
-    return _returnValue
+    do return _returnValue end
 end
 

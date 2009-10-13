@@ -67,7 +67,7 @@ motivation_plugin.stimuli["STIM_PresenceEnisRendus"] = function()
 ]]SetStimulus( "STIM_PresenceEnisRendus", 0 )
         --[[// Transport circu
 ]]if( DEC_Transport_EnCoursDeTransport() ) then
-            return
+            do return end
         end
 
         --[[//-----------------------------------------------------------------------------
@@ -98,7 +98,7 @@ motivation_plugin.stimuli["STIM_PresenceRefugies"] = function()
 ]]SetStimulus( "STIM_PresenceRefugies", 0 )
         --[[// Transport circu
 ]]if( DEC_Transport_EnCoursDeTransport() ) then
-            return
+            do return end
         end
 
         --[[//-----------------------------------------------------------------------------

@@ -58,7 +58,7 @@ do
     end
 
     _returnValue = ( rNbrePionsPrets == #( listePions ) )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_NBC_ObtenirSitesNonReconnus( listeSite )
@@ -76,7 +76,7 @@ do
     end
 
     _returnValue = listeTemp
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_NBC_ObtenirPionsROTADisposnibles( )
@@ -95,7 +95,7 @@ do
     end
 
     _returnValue = listeTemp
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Misc_ObtenirSiteProche( listeObjets, positionPion )
@@ -125,6 +125,6 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 

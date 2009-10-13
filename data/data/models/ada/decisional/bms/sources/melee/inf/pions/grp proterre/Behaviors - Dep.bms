@@ -59,7 +59,7 @@ node "BEH_Dep_Pion_INF_AborderEnnemi"
                                 do
                     if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), ptEni_Courant, 100 ) ) then
                         self.params.__returnValue = eActionEffectuee
-                        return
+                        do return end
                     end
 
                     DEC_Copie_Point( ptEni_Courant, self.ptPosition_Ennemie )
@@ -72,7 +72,7 @@ node "BEH_Dep_Pion_INF_AborderEnnemi"
             do
                 DEC_Copie_Point( ptEni_Courant, self.ptPosition_Ennemie )
                                 self.params.__returnValue = eActionEnPause
-                return
+                do return end
 
             end
         end

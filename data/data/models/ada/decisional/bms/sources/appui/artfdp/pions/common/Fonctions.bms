@@ -43,7 +43,7 @@ includedFiles["sources/appui/artfdp/pions/common/Fonctions.bms"] = true
     local rMin = 1105199104
     local ptZone = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( zone )
     if( ( ptZone == 0 or ptZone == nil ) ) then
-        return _returnValue
+        do return _returnValue end
     end
 
     local selPions = DEC_Pion_PionsDeAutomateSansPC( pAutomate )
@@ -74,7 +74,7 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Geometrie_CreerPositionTir_Canon( ptInstallation, rFloat, locInstallation_1, locInstallation_2 )
@@ -148,7 +148,7 @@ function S_Geometrie_CreerPositionTir_LRM( ptInstallation, rFloat )
     end
 
     _returnValue = lstPositionsLRM
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Misc_CreerItineraire_Points( ptDest, ptDebarquement )
@@ -158,6 +158,6 @@ function S_Misc_CreerItineraire_Points( ptDest, ptDebarquement )
     assert( ptDest ~= nil, "ptDest != nil" )
     DEC_Copie_PointDansListePoints( ptDebarquement, _returnValue )
     DEC_ListePoints_PushBack( _returnValue, ptDest )
-    return _returnValue
+    do return _returnValue end
 end
 

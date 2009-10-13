@@ -93,6 +93,7 @@ if( type == S_TypeObject_ToString( eTypeObjectBouchonMines ) ) then
 ]]        end
 
          do
+            local _continue = true
             local switch_1 = self.eActionObjet
             local cases_switch_1 = {}
                 if switch_1 == eActionObjetTerminee then
@@ -107,18 +108,18 @@ if( type == S_TypeObject_ToString( eTypeObjectBouchonMines ) ) then
                     end
 
                                         self.params.__returnValue = eActionEffectuee
-                    return
+                    do return end
 
-                    
+                    _continue = false
                 elseif switch_1 == eActionObjetManqueDotation
                 or switch_1 == eActionObjetPasDeCapacite
                 or switch_1 == eActionObjetImpossible then
                     DEC_Trace( "  impossible works " )
                     DEC_Trace( EnumToString( self.eActionObjet, E_EtatActionObjet ) )
                                         self.params.__returnValue = eActionEffectuee
-                    return
+                    do return end
 
-                    
+                    _continue = false
                                 end
             end
 --[[//-----------------------------------------------------------------
@@ -211,6 +212,7 @@ if( type == S_TypeObject_ToString( eTypeObjectBouchonMines ) ) then
 ]]        end
 
          do
+            local _continue = true
             local switch_1 = self.eActionObjet
             local cases_switch_1 = {}
                 if switch_1 == eActionObjetTerminee then
@@ -224,7 +226,7 @@ if( type == S_TypeObject_ToString( eTypeObjectBouchonMines ) ) then
                     end
 
                                         self.params.__returnValue = eActionEffectuee
-                    return
+                    do return end
 
                                 end
                 if cases_switch_1[1] or switch_1 == eActionObjetPasDeCapacite
@@ -232,9 +234,9 @@ if( type == S_TypeObject_ToString( eTypeObjectBouchonMines ) ) then
                 or switch_1 == eActionObjetManqueDotation then
                     DEC_Trace( "Impossible to build the object" )
                                         self.params.__returnValue = eActionEffectuee
-                    return
+                    do return end
 
-                    
+                    _continue = false
                                 end
             end
 --[[//-----------------------------------------------------------------
@@ -292,12 +294,12 @@ if( type == S_TypeObject_ToString( eTypeObjectBouchonMines ) ) then
             do
                 DEC_Trace( "  end of activation " )
                                 self.params.__returnValue = eActionEffectuee
-                return
+                do return end
 
             end
         else
             self.params.__returnValue = eActionImpossible
-            return
+            do return end
         end
 
     end,
@@ -370,6 +372,7 @@ if( type == S_TypeObject_ToString( eTypeObjectBouchonMines ) ) then
 ]]        end
 
          do
+            local _continue = true
             local switch_1 = self.eActionObjet
             local cases_switch_1 = {}
                 if switch_1 == eActionObjetTerminee then
@@ -383,7 +386,7 @@ if( type == S_TypeObject_ToString( eTypeObjectBouchonMines ) ) then
                     end
 
                                         self.params.__returnValue = eActionEffectuee
-                    return
+                    do return end
 
                                 end
                 if cases_switch_1[1] or switch_1 == eActionObjetPasDeCapacite
@@ -391,9 +394,9 @@ if( type == S_TypeObject_ToString( eTypeObjectBouchonMines ) ) then
                 or switch_1 == eActionObjetManqueDotation then
                     DEC_Trace( "Impossible to improve the object" )
                                         self.params.__returnValue = eActionEffectuee
-                    return
+                    do return end
 
-                    
+                    _continue = false
                                 end
             end
 --[[//-----------------------------------------------------------------
@@ -485,6 +488,7 @@ if( type == S_TypeObject_ToString( eTypeObjectBouchonMines ) ) then
 ]]        end
 
          do
+            local _continue = true
             local switch_1 = self.eActionObjet
             local cases_switch_1 = {}
                 if switch_1 == eActionObjetTerminee then
@@ -498,14 +502,14 @@ if( type == S_TypeObject_ToString( eTypeObjectBouchonMines ) ) then
                     end
 
                                         self.params.__returnValue = eActionEffectuee
-                    return
+                    do return end
 
                                 end
                 if cases_switch_1[1] or switch_1 == eActionObjetPasDeCapacite
                 or switch_1 == eActionObjetImpossible
                 or switch_1 == eActionObjetManqueDotation then
                     DEC_Trace( "Impossible to remove the object" )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end
@@ -597,6 +601,7 @@ if( type == S_TypeObject_ToString( eTypeObjectBouchonMines ) ) then
 ]]        end
 
          do
+            local _continue = true
             local switch_1 = self.eActionObjet
             local cases_switch_1 = {}
                 if switch_1 == eActionObjetTerminee then
@@ -610,14 +615,14 @@ if( type == S_TypeObject_ToString( eTypeObjectBouchonMines ) ) then
                     end
 
                                         self.params.__returnValue = eActionEffectuee
-                    return
+                    do return end
 
                                 end
                 if cases_switch_1[1] or switch_1 == eActionObjetManqueDotation
                 or switch_1 == eActionObjetPasDeCapacite
                 or switch_1 == eActionObjetImpossible then
                     DEC_Trace( "Impossible to bypass" )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end
@@ -710,6 +715,7 @@ if( type == S_TypeObject_ToString( eTypeObjectBouchonMines ) ) then
 ]]        end
 
          do
+            local _continue = true
             local switch_1 = self.eActionObjet
             local cases_switch_1 = {}
                 if switch_1 == eActionObjetTerminee then
@@ -723,14 +729,14 @@ if( type == S_TypeObject_ToString( eTypeObjectBouchonMines ) ) then
                     end
 
                                         self.params.__returnValue = eActionEffectuee
-                    return
+                    do return end
 
                                 end
                 if cases_switch_1[1] or switch_1 == eActionObjetManqueDotation
                 or switch_1 == eActionObjetPasDeCapacite
                 or switch_1 == eActionObjetImpossible then
                     DEC_Trace( "impossible obstacle creation" )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end

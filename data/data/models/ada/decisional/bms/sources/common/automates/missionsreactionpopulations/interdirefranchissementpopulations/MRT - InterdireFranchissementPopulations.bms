@@ -58,6 +58,7 @@ if( DEC_Geometrie_EstPointDansFuseau( DEC_ListePoints_GetAt( self._namedParams.m
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eMRT_AssignerMissions then
@@ -66,7 +67,7 @@ if( DEC_Geometrie_EstPointDansFuseau( DEC_ListePoints_GetAt( self._namedParams.m
                         do
                             DEC_Trace( "!!!!Mind out some first line units didn't receive mission!!!!" )
                             self.ePhase = eMRT_Valider
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -74,7 +75,7 @@ if( DEC_Geometrie_EstPointDansFuseau( DEC_ListePoints_GetAt( self._namedParams.m
                     if( self.eValidationMRT == eActionEffectuee ) then
                         do
                             self.ePhase = eMRT_Valider
-                                                        return
+                                                        do return end
 
                         end
 --[[// Assigner interdire franchissement
@@ -82,7 +83,7 @@ if( DEC_Geometrie_EstPointDansFuseau( DEC_ListePoints_GetAt( self._namedParams.m
 
                     Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.listePions ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
                     Activate( self.activations.BEH_Mission_Automate_AssignerInterdireFranchissementPopulationsAListe, 1, { ePhase_MRT, self.listePions, self.points, } )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eMRT_MissionImpossible then
                     DEC_RC( eRC_MissionImpossible )

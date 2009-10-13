@@ -82,6 +82,7 @@ include "bit.lua"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eRejoindre then
@@ -90,7 +91,7 @@ include "bit.lua"
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhase = eReconnaitre
-                                                                return
+                                                                do return end
 
                             end
 
@@ -120,14 +121,14 @@ include "bit.lua"
                     Activate( self.activations.ACT_Maj_Pions_ObjectifCourant, 1, { self._namedParams.mission.pointDislocation_, } )
                     Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
                     Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self._namedParams.mission.pointDislocation_, eProgressionDefaut, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eReconnaitre then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_Reconnaissance, } )
                     if( #( self.listeLocalisations ) <= self.positionZoneDansListe + 1 ) then
                         do
                             self.ePhase = eSExfiltrer
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -159,7 +160,7 @@ elseif switch_1 == eReconnaitre then
                                     end
                                 end
 
-                                                                return
+                                                                do return end
 
                             end
 
@@ -187,13 +188,13 @@ elseif switch_1 == eReconnaitre then
                         do
                             Activate( self.activations.ACT_Info_Trace, 1, { "localization is recced", } )
                             Activate( self.activations.ACT_Info_Trace, 1, { "waiting for order", } )
-                                                        return
+                                                        do return end
 
                         end
                     end
 
                     if( ( self.localisationCourante == 0 or self.localisationCourante == nil ) ) then
-                        return
+                        do return end
                     end
 
                     local barycentreZone = S_Geometrie_BarycentreZone( self.localisationCourante )
@@ -202,7 +203,7 @@ elseif switch_1 == eReconnaitre then
                     Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
                     Activate( self.activations.BEH_Obs_Pion_ALAT_ReconnaitreZone, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self.localisationCourante, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     Activate( self.activations.BEH_Eni_Pion_ALAT_GererEniRecoDansLaProfondeur, GetMotivation( "MOT_ManoeuvrerSurEnis" ) * 2, { self._namedParams.mission.zone_, } )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eSExfiltrer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnExfiltration, } )
@@ -215,7 +216,7 @@ elseif switch_1 == eSExfiltrer then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhase = eFinMission
-                                                                return
+                                                                do return end
 
                             end
 
@@ -243,7 +244,7 @@ elseif switch_1 == eSExfiltrer then
 
                     Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
                     Activate( self.activations.BEH_Manoeuvre_Pion_AllerStationner, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self._namedParams.mission.pointRegroupement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
@@ -264,7 +265,7 @@ elseif switch_1 == eFinMission then
                     end
 
                     Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[4] = true
                 end
             end

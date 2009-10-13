@@ -93,6 +93,7 @@ node "MIS_Pion_INF_Fixer"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eFixer then
@@ -103,7 +104,7 @@ node "MIS_Pion_INF_Fixer"
                     if( self.eCurrentPhase ~= eFinMission ) then
                         do
                             Activate( self.activations.BEH_Mission_Pion_VAB_Fixer, GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
-                                                        return
+                                                        do return end
 
                         end
                     else
@@ -129,7 +130,7 @@ node "MIS_Pion_INF_Fixer"
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 
                 else
@@ -170,7 +171,7 @@ node "BEH_Mission_Pion_VAB_Fixer"
             do
                 DEC_Trace( "Action impossible sur Eni" )
                 if( F_Pion_GeteniEnCours( myself ) ~= nil ) then
-                    return
+                    do return end
                 end
 
                                 self.params.__returnValue = eFinMission
@@ -199,13 +200,14 @@ node "BEH_Mission_Pion_VAB_Fixer"
 
         Activate( self.activations.BEH_Dep_Pion_INF_PreciserMaintenirContact, 1, setmetatable( { self.ksMission, false, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionPreciser = v else rawset( t, k, v ) end end } ) )
          do
+            local _continue = true
             local switch_1 = DEC_ConnaissanceAgent_NiveauPerceptionMax( self.ksMission )
             local cases_switch_1 = {}
                 if switch_1 == eReconnu
                 or switch_1 == eIdentifie then
                     Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { DEC_ConnaissanceAgent_Position( self.ksMission ), } )
                     Activate( self.activations.BEH_Eni_Pion_VAB_Fixer, 2 * S_Force_DangerSur( self.ksMission ), setmetatable( { self.ksMission, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 
                 else

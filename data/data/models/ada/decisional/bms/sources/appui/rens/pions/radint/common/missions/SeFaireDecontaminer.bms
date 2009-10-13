@@ -51,6 +51,7 @@ includedFiles["sources/appui/rens/pions/radint/common/missions/SeFaireDecontamin
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhaseMission
             local cases_switch_1 = {}
                 if switch_1 == eSeFaireDecontaminer then
@@ -63,7 +64,7 @@ includedFiles["sources/appui/rens/pions/radint/common/missions/SeFaireDecontamin
                         do
                             DEC_Trace( "---- Unite decontaminee ----" )
                             self.ePhaseMission = eFinDecontamination
-                                                        return
+                                                        do return end
 
                         end
 --[[//---------------------------------------------------------------------
@@ -79,7 +80,7 @@ includedFiles["sources/appui/rens/pions/radint/common/missions/SeFaireDecontamin
 ]]--[[// Demander à se faire decontaminer (se mettre en liste d'attente)
 ]]--[[//---------------------------------------------------------------------
 ]]Activate( self.activations.ACT_Pion_Nbc_DemanderDecontaminationSur, 1, { self._namedParams.mission.siteDecontamination_, } )
-                    
+                    _continue = false
                 --[[// Fin decontamination
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eFinDecontamination then
@@ -89,7 +90,7 @@ elseif switch_1 == eFinDecontamination then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhaseMission = eFinMission
-                                                                return
+                                                                do return end
 
                             end
 
@@ -97,7 +98,7 @@ elseif switch_1 == eFinDecontamination then
                     end
 
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.pointArrivee_, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// Fin mission
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then

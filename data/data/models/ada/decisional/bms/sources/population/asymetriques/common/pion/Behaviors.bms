@@ -267,7 +267,7 @@ node "BEH_Dep_Virtuel_PreparationAction"
 
     activate = function( self )
                 self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 
@@ -298,26 +298,29 @@ node "BEH_Eni_Pion_ASY_CommettreAttentatContreForcesArmees"
         if( DEC_ConnaissanceAgent_EstValide( self._namedParams.repEni ) ) then
             do
                  do
+                    local _continue = true
                     local switch_1 = self._namedParams.typeAttentat
                     local cases_switch_1 = {}
                         if switch_1 == etypeAttentat_assasinatOfficier then
                                                     Activate( self.activations.ACT_Eni_Pion_ASY_AssassinerOfficier, 1, setmetatable( { self._namedParams.repEni, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                            
+                            _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == etypeAttentat_destructionComposanteMajeure then
                                                     Activate( self.activations.ACT_Eni_Pion_ASY_DetruireComposanteMajeure, 1, setmetatable( { self._namedParams.repEni, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                            
+                            _continue = false
                                                 cases_switch_1[2] = true
                         end
                     end
 
-                                self.params.__returnValue = self.eAction
-                return
+                    if _continue then
+                                        self.params.__returnValue = self.eAction
+                    do return end
 
+                end
             end
         else
             self.params.__returnValue = eActionImpossible
-            return
+            do return end
         end
 
     end,

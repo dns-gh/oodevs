@@ -59,11 +59,12 @@ node "MIS_Pion_ASS_EOP_AcquerirObjectifs"
 
         Activate( self.activations.ACT_Dep_Pion_EOP_ActiverFurtivite, 1, { 0.5, } )
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eReconnaitre then
                     Activate( self.activations.BEH_Pion_EOP_AcquerirObjectifs_Mission, GetMotivation( "MOT_Mission" ), {} )
-                    
+                    _continue = false
                 --[[// Sur fin de mission, on se replie
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eSeReplier then
@@ -75,18 +76,18 @@ elseif switch_1 == eSeReplier then
                         do
                             self.eAction = eActionEnCours
                             self.ePhase = eFinMission
-                                                        return
+                                                        do return end
 
                         end
                     end
 
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.positionDebarquement_, eProgressionDirect, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( self.eActionEmbarquer == eActionEnCours ) then
-                        return
+                        do return end
                     end
 
                     if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
@@ -99,7 +100,7 @@ elseif switch_1 == eFinMission then
                         end
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
                 end
             end
@@ -150,6 +151,7 @@ node "BEH_Pion_EOP_AcquerirObjectifs_Mission"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
@@ -162,13 +164,13 @@ node "BEH_Pion_EOP_AcquerirObjectifs_Mission"
                 or switch_1 == eRejoindre then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     Activate( self.activations.BEH_Dep_Pion_EOP_AcquerirObjectifs_Mission, 1, setmetatable( { self.mission.positionInstallation_, self.mission.positionDebarquement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eSurveiller then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
                     Activate( self.activations.ACT_Dep_Pion_EOP_ActiverFurtivite, 1.1, { 0.1, } )
                     Activate( self.activations.BEH_Obs_Pion_ASS_ReconnaissanceZone, 1, { self.mission.zoneAObserver_, } )
-                    
+                    _continue = false
                 --[[// persistent E_EtatAction		eActionDebarquement = eActionEnCours;
 ]]                cases_switch_1[3] = true
                 end

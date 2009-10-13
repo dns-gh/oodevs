@@ -86,6 +86,7 @@ do
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eSeMettreEnPlace then
@@ -93,7 +94,7 @@ do
                         do
                             self.eAction = eActionEnCours
                             self.ePhase = eRompreContact
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -102,7 +103,7 @@ do
                         do
                             self.eAction = eActionEnCours
                             self.ePhase = eRompreContact
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -112,7 +113,7 @@ do
                             self.eAction = eActionEnCours
                                                         do
                                 self.ePhase = eRompreContact
-                                                                return
+                                                                do return end
 
                             end
 
@@ -121,7 +122,7 @@ do
 
                     Activate( self.activations.BEH_Eni_Pion_VAB_DetruireEmbuscade, GetMotivation( "MOT_ManoeuvrerSurEnis" ), setmetatable( { self.eCurrentPhase, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
                     Activate( self.activations.BEH_Mission_Pion_VAB_DetruireEmbuscade, GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// Decrocher sur ordre ou non
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eRompreContact then
@@ -130,7 +131,7 @@ elseif switch_1 == eRompreContact then
                             self.eAction = eActionEnCours
                                                         do
                                 self.ePhase = eFinMission
-                                                                return
+                                                                do return end
 
                             end
 
@@ -140,7 +141,7 @@ elseif switch_1 == eRompreContact then
 
                     Activate( self.activations.ACT_Misc_Pion_Ambiance, 1, { eEtatAmbiance_Vitesse, } )
                     Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     if( self.eAction == eActionEffectuee ) then
@@ -160,7 +161,7 @@ elseif switch_1 == eFinMission then
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
 
                 else
@@ -230,6 +231,7 @@ node "BEH_Mission_Pion_VAB_DetruireEmbuscade"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eRejoindre then
@@ -240,7 +242,7 @@ node "BEH_Mission_Pion_VAB_DetruireEmbuscade"
                                                         do
                                 self.ePhase = eInstallerDispositif
                                                                 self.params.__returnValue = self.ePhase
-                                return
+                                do return end
 
                             end
 
@@ -250,7 +252,7 @@ node "BEH_Mission_Pion_VAB_DetruireEmbuscade"
                     Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
                     --[[// Rejoins une position d'observation de la position a Barrer
 ]]Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, setmetatable( { M_TEMPS_PREPARATION_MISSION(), self.mission.positionEmbuscade_, true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// Rejoins la position d'enbuscade et prepare le terrain
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eInstallerDispositif then
@@ -266,7 +268,7 @@ elseif switch_1 == eInstallerDispositif then
                                 StartActivateOverride( self, self.activations.BEH_Obj_Pion_INF_GererInstallationObstacle, 1.5, { self.ptEmbuscade, self.mission.natureObstacle_, } )
                                 self.ePhase = eSurveiller
                                                                 self.params.__returnValue = self.ePhase
-                                return
+                                do return end
 
                             end
 
@@ -274,7 +276,7 @@ elseif switch_1 == eInstallerDispositif then
                     end
 
                     Activate( self.activations.BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc, 1, setmetatable( { self.ptEmbuscade, self.mission.positionRegroupement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// Surveille la position
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eSurveiller then
@@ -284,7 +286,7 @@ elseif switch_1 == eSurveiller then
 ]]Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { self.ptEmbuscade, } )
                     --[[// Formation
 ]]Activate( self.activations.ACT_Obs_ObserverZone, 1, { self.ptEmbuscade, 1000, } )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
 
                 else
@@ -292,7 +294,7 @@ elseif switch_1 == eSurveiller then
             end
 
                 self.params.__returnValue = self.ePhase
-        return
+        do return end
 
     end,
 
@@ -335,14 +337,14 @@ node "BEH_Eni_Pion_VAB_DetruireEmbuscade"
                     end
                 end
 
-                                return
+                                do return end
 
             end
         end
 
         if( self.eAction ~= eActionEnCours ) then
             self.params.__returnValue = eActionHalt
-            return
+            do return end
         end
 
         --[[// Gestion des unites percues

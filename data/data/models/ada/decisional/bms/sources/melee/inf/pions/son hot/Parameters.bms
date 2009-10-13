@@ -77,7 +77,7 @@ end
 ]]function S_EstADistanceTir_Pt( ptTir )
     local _returnValue = false
     _returnValue = DEC_Geometrie_Distance( DEC_Agent_Position(), ptTir ) < M_DISTANCE_TIR_FIXE()
-    return _returnValue
+    do return _returnValue end
 end
 
 function M_DIAMETRE_ZONE()

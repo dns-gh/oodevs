@@ -25,7 +25,7 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_ConnaissancesEnnemiesVivantesPercuesVolantesPourSgpt( listePions )
@@ -56,6 +56,6 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 

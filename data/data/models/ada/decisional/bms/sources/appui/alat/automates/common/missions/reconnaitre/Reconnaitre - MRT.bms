@@ -85,6 +85,7 @@ includedFiles["sources/appui/alat/automates/common/missions/reconnaitre/Reconnai
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eMRT_AssignerMissions then
@@ -92,7 +93,7 @@ includedFiles["sources/appui/alat/automates/common/missions/reconnaitre/Reconnai
 ]]if( self.eEtatMissionsReconnaitre == eActionImpossible ) then
                         do
                             self.ePhase = eMRT_MissionImpossible
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -100,7 +101,7 @@ includedFiles["sources/appui/alat/automates/common/missions/reconnaitre/Reconnai
                     if( self.eEtatMissionsReconnaitre == eActionEffectuee ) then
                         do
                             self.ePhase = eMRT_Valider
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -119,7 +120,7 @@ includedFiles["sources/appui/alat/automates/common/missions/reconnaitre/Reconnai
                         Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsReconnaitreContourEniAListe, 1, { ePhase_MRT, self.listeReconnaitreLeContourEni, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.plotsRavitaillement_, } )
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eMRT_MissionImpossible then
                     DEC_RC( eRC_MissionImpossible )

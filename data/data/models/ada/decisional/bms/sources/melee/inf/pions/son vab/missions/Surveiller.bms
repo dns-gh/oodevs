@@ -89,6 +89,7 @@ do
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eSurveiller then
@@ -97,7 +98,7 @@ do
                             self.eAction = eActionEnCours
                                                         do
                                 self.ePhase = eFinMission
-                                                                return
+                                                                do return end
 
                             end
 
@@ -109,7 +110,7 @@ do
                             self.eActionEnnemi = eActionEnCours
                                                         do
                                 self.ePhase = eSeReplier
-                                                                return
+                                                                do return end
 
                             end
 
@@ -118,7 +119,7 @@ do
 
                     Activate( self.activations.BEH_Eni_Pion_INF_SurveillerSecteur, GetMotivation( "MOT_ManoeuvrerSurEnis" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionEnnemi = v else rawset( t, k, v ) end end } ) )
                     Activate( self.activations.BEH_Mission_Pion_INF_SurveillerSecteur, GetMotivation( "MOT_Mission" ), {} )
-                    
+                    _continue = false
                 --[[// Rejoins une position de replis
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eSeReplier then
@@ -133,7 +134,7 @@ elseif switch_1 == eSeReplier then
                     else
 do
                             Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -161,7 +162,7 @@ do
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
 
                 else

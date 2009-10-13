@@ -43,12 +43,13 @@ includedFiles["sources/air/pions/common/missions/Suivre.bms"] = true
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eSuivreUnite then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_SuitUnite, } )
                     Activate( self.activations.BEH_Dep_Pion_AIR_Suivre, GetMotivation( "MOT_Manoeuvrer" ), { self._namedParams.mission.uniteASuivre_, 3000, eProgressionDefaut, eTypeItiMouvement, } )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eFinMission then
                     if( self.eEtat == eActionEffectuee ) then
@@ -68,7 +69,7 @@ elseif switch_1 == eFinMission then
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_Pion_AIR_SePoser, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end

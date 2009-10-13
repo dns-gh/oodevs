@@ -37,7 +37,7 @@ includedFiles["sources/common/pions/missionsreactionpopulations/ControlerPopulat
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                         self.ePhase = eFinMission
-                                                return
+                                                do return end
 
                     end
                 end
@@ -56,6 +56,7 @@ includedFiles["sources/common/pions/missionsreactionpopulations/ControlerPopulat
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
@@ -63,7 +64,7 @@ includedFiles["sources/common/pions/missionsreactionpopulations/ControlerPopulat
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     DEC_Trace( "** MIS_Pion_SecuriserZone **" )
                     self.ePhase = eProgresser
-                    
+                    _continue = false
                 --[[// Déplacement initial
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eProgresser then
@@ -74,13 +75,13 @@ elseif switch_1 == eProgresser then
                         self.ePhase = eSecuriser
                     end
 
-                    
+                    _continue = false
                 --[[// Sécurisation
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eSecuriser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
                     Activate( self.activations.BEH_Pop_Pion_SecuriserPopulationDans, 1, { self._namedParams.mission.zone_, } )
-                    
+                    _continue = false
                 --[[// Fin mission
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then

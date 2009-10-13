@@ -49,7 +49,7 @@ include "bit.lua"
         end
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Force_Pion_INF_DistanceAppuisEnnemis( tAmi, rAppuiMax )
@@ -57,12 +57,12 @@ function S_Force_Pion_INF_DistanceAppuisEnnemis( tAmi, rAppuiMax )
     local rDist_Ami = DEC_Geometrie_Distance( DEC_Agent_Position(), tAmi:DEC_Agent_Position() )
     _returnValue = 1
     if( rAppuiMax > rDist_Ami ) then
-        return _returnValue
+        do return _returnValue end
     end
 
     local rDist_Force = rDist_Ami - rAppuiMax
     _returnValue = ( -0.0003 * rDist_Force ) + 1.5
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Force_DistanceReco( ptEni, rDistMax )
@@ -70,14 +70,14 @@ function S_Force_DistanceReco( ptEni, rDistMax )
     _returnValue = 0
     local mission = DEC_GetMission( myself )
     if( ( ( ptEni == 0 or ptEni == nil ) or mission == 0 or ( ptEni == 0 or ptEni == nil ) or mission == nil ) ) then
-        return _returnValue
+        do return _returnValue end
     end
 
     local ptTranslate = DEC_Geometrie_PositionTranslateDir( DEC_Agent_Position(), DEC_GetDirectionDanger( mission ), 600 )
     local rKsTr = DEC_Geometrie_Distance( ptTranslate, ptEni )
     local rKs = DEC_Geometrie_Distance( DEC_Agent_Position(), ptEni )
     if( rKs > rDistMax ) then
-        return _returnValue
+        do return _returnValue end
     end
 
     _returnValue = 1
@@ -92,6 +92,6 @@ do
         end
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 

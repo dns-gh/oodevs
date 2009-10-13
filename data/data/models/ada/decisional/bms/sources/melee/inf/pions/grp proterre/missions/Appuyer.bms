@@ -84,13 +84,14 @@ include "bit.lua"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
                     if( GetStateVariable( "VE_PreparationMission" ) > 0 ) then
                         do
                             Activate( self.activations.BEH_Delai_Pion_INF_PreparerMission, 1, { M_TEMPS_PREPARATION_APPUYER(), } )
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -106,7 +107,7 @@ include "bit.lua"
 ]]local rMotivation = GetMotivation( "MOT_ManoeuvrerSurEnis" ) * S_Force_Pion_INF_DistanceAppuisEnnemis( self.repAmi, M_DISTANCE_SUIVI_MAX() )
                     --[[// Ennemi propre a la section
 ]]Activate( self.activations.BEH_Eni_Pion_VAB_Appuyer, rMotivation, { self.repAmi, } )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     if( self.eAction == eActionEffectuee ) then
@@ -126,7 +127,7 @@ elseif switch_1 == eFinMission then
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
 
                 else
@@ -158,7 +159,7 @@ node "BEH_Eni_Pion_VAB_Appuyer"
 
     activate = function( self )
                 if( not ( F_Pion_GetbDefenseStatique_Mobile( myself ) or F_Pion_GeteTypeContact( self._namedParams.tAmi ) == eTypeContact_Offensif ) ) then
-            return
+            do return end
         end
 
         local lstEnisDansFuseau = DEC_Connaissances_UnitesEnnemiesVivantesDansFuseau()

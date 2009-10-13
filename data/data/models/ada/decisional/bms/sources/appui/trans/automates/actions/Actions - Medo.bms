@@ -20,11 +20,11 @@ include "bit.lua"
         self.bActivite = self.bActivite or GetActivity() ~= 1
         if( GetActivity() == 1 and self.bActivite ) then
             self.params.__returnValue = eActionEffectuee
-            return
+            do return end
         end
 
                 self.params.__returnValue = eActionEnCours
-        return
+        do return end
 
     end,
 
@@ -44,20 +44,20 @@ include "bit.lua"
     select = function( self )
                 if( GetActivity() >= 1 ) then
             self.params.__returnValue = eActionEnCours
-            return
+            do return end
         end
 
     end,
 
     deselect = function( self )
                         self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 
     destroy = function( self )
                         self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 
@@ -77,11 +77,11 @@ include "bit.lua"
     select = function( self )
         if( GetActivity() ~= 1 ) then
             self.params.__returnValue = eActionHalt
-            return
+            do return end
         end
 
                 self.params.__returnValue = eActionEnCours
-        return
+        do return end
 
     end,
 
@@ -110,17 +110,18 @@ include "bit.lua"
         if( ModuleBegins() ) then
             do
                  do
+                    local _continue = true
                     local switch_1 = self._namedParams.ePhase
                     local cases_switch_1 = {}
                         if switch_1 == ePhase_MRT then
                                                     local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_TRANS_EtablirGererLiaison" )
                             self.missionPion = misMRT
-                            
+                            _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == ePhase_CDT then
                                                     local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_TRANS_EtablirGererLiaison" )
                             self.missionPion = misCDT
-                            
+                            _continue = false
                                                 cases_switch_1[2] = true
 
                         else
@@ -133,7 +134,7 @@ elseif switch_1 == ePhase_CDT then
 
         if( self.missionPion == nil ) then
             self.params.__returnValue = eActionImpossible
-            return
+            do return end
         end
 
         --[[//-------------------------------------------------------------------------
@@ -150,7 +151,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
                 self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 
@@ -177,17 +178,18 @@ elseif switch_1 == ePhase_CDT then
         if( ModuleBegins() ) then
             do
                  do
+                    local _continue = true
                     local switch_1 = self._namedParams.ePhase
                     local cases_switch_1 = {}
                         if switch_1 == ePhase_MRT then
                                                     local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_FaireMouvement" )
                             self.missionPion = misMRT
-                            
+                            _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == ePhase_CDT then
                                                     local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_FaireMouvement" )
                             self.missionPion = misCDT
-                            
+                            _continue = false
                                                 cases_switch_1[2] = true
 
                         else
@@ -200,7 +202,7 @@ elseif switch_1 == ePhase_CDT then
 
         if( self.missionPion == nil ) then
             self.params.__returnValue = eActionImpossible
-            return
+            do return end
         end
 
         if( ModuleBegins() ) then
@@ -208,7 +210,7 @@ elseif switch_1 == ePhase_CDT then
             end
         else
             self.params.__returnValue = eActionEffectuee
-            return
+            do return end
         end
 
         S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
@@ -219,7 +221,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
                 self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 
@@ -249,17 +251,18 @@ elseif switch_1 == ePhase_CDT then
         if( ModuleBegins() ) then
             do
                  do
+                    local _continue = true
                     local switch_1 = self._namedParams.ePhase
                     local cases_switch_1 = {}
                         if switch_1 == ePhase_MRT then
                                                     local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_FaireMouvement" )
                             self.missionPion = misMRT
-                            
+                            _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == ePhase_CDT then
                                                     local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_FaireMouvement" )
                             self.missionPion = misCDT
-                            
+                            _continue = false
                                                 cases_switch_1[2] = true
 
                         else
@@ -272,7 +275,7 @@ elseif switch_1 == ePhase_CDT then
 
         if( self.missionPion == nil ) then
             self.params.__returnValue = eActionImpossible
-            return
+            do return end
         end
 
         --[[//-----------------------------------------------------------------------------		
@@ -290,7 +293,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
                 self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 
@@ -320,17 +323,18 @@ elseif switch_1 == ePhase_CDT then
         if( ModuleBegins() ) then
             do
                  do
+                    local _continue = true
                     local switch_1 = self._namedParams.ePhase
                     local cases_switch_1 = {}
                         if switch_1 == ePhase_MRT then
                                                     local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_SeFaireTransporter" )
                             self.missionPion = misMRT
-                            
+                            _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == ePhase_CDT then
                                                     local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_SeFaireTransporter" )
                             self.missionPion = misCDT
-                            
+                            _continue = false
                                                 cases_switch_1[2] = true
 
                         else
@@ -343,7 +347,7 @@ elseif switch_1 == ePhase_CDT then
 
         if( self.missionPion == nil ) then
             self.params.__returnValue = eActionImpossible
-            return
+            do return end
         end
 
         --[[//-----------------------------------------------------------------------------		
@@ -361,7 +365,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
                 self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 

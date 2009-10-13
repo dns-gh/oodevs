@@ -69,6 +69,7 @@ include "bit.lua"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == ePhase_Decroche then
@@ -93,20 +94,20 @@ include "bit.lua"
                     --[[// Fait rompre les pions par etape
 ]]--[[// ------------------------------------------------------------
 ]]self.ePhase = ePhase_RompreContact
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == ePhase_Attente then
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
                             self.ePhase = ePhase_RompreContact
-                                                        return
+                                                        do return end
 
                         end
                     end
 
                     Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, M_DELAI_ROMPRE_CONTACT(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == ePhase_RompreContact then
                     --[[// Recupere le point de regroupement
@@ -124,13 +125,13 @@ elseif switch_1 == ePhase_RompreContact then
 ]]local pionPE = DIA_GetAt( self.sPion_PE, self.rItLoc )
                                         self.rItLoc = self.rItLoc + 1
                     if( F_Pion_GeteEtatDestruction( pionPE ) == eEtatDestruction_Total ) then
-                        return
+                        do return end
                     end
 
                     --[[// Demande aux pions qui interdisent de rompre le contact									
 ]]StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, pionPE, ptRgrpt, eEtatEchelon_Premier, } )
                     self.ePhase = ePhase_Attente
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
                 end
             end
@@ -281,7 +282,7 @@ node "BEH_CoordDep_Automate_INF_RompreContact_SurDelai"
         if( self.eActionDelai == eActionEnCours ) then
             do
                 Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, self._namedParams.rDelai, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionDelai = v else rawset( t, k, v ) end end } ) )
-                                return
+                                do return end
 
             end
         end

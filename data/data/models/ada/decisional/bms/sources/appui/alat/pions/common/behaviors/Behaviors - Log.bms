@@ -43,10 +43,11 @@ include "bit.lua"
 
         --[[// Si on n'a pas de TC2 ni de plot de ravitaillement attribué
 ]]if( not ( DEC_ConnaissanceObjet_EstValide( myself.plotRavitaillementAssigne_ ) and TC2 == 0 or DEC_ConnaissanceObjet_EstValide( myself.plotRavitaillementAssigne_ ) and TC2 == nil ) ) then
-            return
+            do return end
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eRejoindre then
@@ -55,7 +56,7 @@ include "bit.lua"
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhase = eRecompleter
-                                                                return
+                                                                do return end
 
                             end
 
@@ -82,7 +83,7 @@ include "bit.lua"
                     if( DEC_GetMission( myself ) ~= self.missionPrec ) then
                         do
                             self.missionPrec = DEC_GetMission( myself )
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -95,7 +96,7 @@ include "bit.lua"
 ]]if( DEC_Geometrie_Distance( self.positionPlotRavitaillement, myself:DEC_Agent_Position() ) <= 1000 ) then
                                 do
                                     self.eEtat = eActionEffectuee
-                                                                        return
+                                                                        do return end
 
                                 end
 --[[//rejoindre le plot de ravitaillement selectionné
@@ -107,14 +108,14 @@ include "bit.lua"
 ]]                    else
 do
                             if( ( pionTC2 == 0 or pionTC2 == nil ) ) then
-                                return
+                                do return end
                             end
 
                             --[[// si l'agent est à moins de 1000m du TC2, ne pas se déplacer
 ]]if( DEC_Geometrie_Distance( pionTC2:DEC_Agent_Position(), myself:DEC_Agent_Position() ) <= 1000 ) then
                                 do
                                     self.eEtat = eActionEffectuee
-                                                                        return
+                                                                        do return end
 
                                 end
                             end
@@ -123,7 +124,7 @@ do
                         end
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eRecompleter then
                     if( self.eEtat == eActionEffectuee ) then
@@ -161,7 +162,7 @@ elseif switch_1 == eRecompleter then
 
                     Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, {} )--[[//empeche le pion de se déplacer pendant son ravitaillement
 ]]
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end

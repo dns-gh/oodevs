@@ -36,6 +36,7 @@ node "BEH_Situation_Automate_INF_Defaut"
 do
                 local x_pion = x
                  do
+                    local _continue = true
                     local switch_1 = --[[// Situation Mission
 ]]--[[// --------------------------------------------------------------------
 ]]F_Pion_GeteEtatPhaseMission( x_pion )
@@ -44,12 +45,13 @@ do
                             if( self._namedParams.bFinMission ) then
                                 do
                                      do
+                                        local _continue = true
                                         local switch_2 = F_Pion_GetmissionPrecedente( x_pion )
                                         local cases_switch_2 = {}
                                             if switch_2 == "T_Mission_Pion_INF_Appuyer"
                                             or switch_2 == "T_Mission_Pion_ABC_Appuyer"
                                             or switch_2 == "T_Mission_Pion_ABC_Soutenir" then
-                                                                                            
+                                                                                            _continue = false
                                                                                         cases_switch_2[1] = true
 
                                             else
@@ -60,7 +62,9 @@ do
                                 end
                             end
 
-                            
+                                if _continue then
+                                _continue = false
+                            end
                                                 cases_switch_1[1] = true
                         end
                     end
@@ -92,18 +96,20 @@ node "BEH_Situation_Automate_INF_CadreOffensif"
 do
                 local x_pion = x
                  do
+                    local _continue = true
                     local switch_1 = --[[// Situation Mission
 ]]--[[// --------------------------------------------------------------------
 ]]F_Pion_GeteEtatPhaseMission( x_pion )
                     local cases_switch_1 = {}
                         if switch_1 == eEtatPhaseMission_FinMission then
                              do
+                                local _continue = true
                                 local switch_2 = F_Pion_GetmissionPrecedente( x_pion )
                                 local cases_switch_2 = {}
                                     if switch_2 == "T_Mission_Pion_INF_Reduire"
                                     or switch_2 == "T_Mission_Pion_INF_ReconnaitreAxe" then
                                         StartActivateOverride( self, self.activations.BEH_Situation_Automate_INF_FinDeMission_Sur, 1 / GetActivity(), { x_pion, } )
-                                        
+                                        _continue = false
                                                                         cases_switch_2[1] = true
 elseif switch_2 == "T_Mission_Pion_INF_Fixer" then
                                         DEC_Trace( "Fin mission : Fixer." )
@@ -114,7 +120,7 @@ elseif switch_2 == "T_Mission_Pion_INF_Fixer" then
                                             end
                                         end
 
-                                        
+                                        _continue = false
                                                                         cases_switch_2[2] = true
 elseif switch_2 == "T_Mission_Pion_INF_PrendrePreciserContact" then
                                         --[[// case T_Mission_Pion_INF_Reduire:				
@@ -135,7 +141,9 @@ end
                                     end
                                 end
 
-                            
+                                if _continue then
+                                _continue = false
+                            end
                                                 cases_switch_1[1] = true
                         end
                     end

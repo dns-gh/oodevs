@@ -53,6 +53,7 @@ includedFiles["sources/population/asymetriques/common/pion/missions/CommettreExa
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhaseMission
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
@@ -60,7 +61,7 @@ includedFiles["sources/population/asymetriques/common/pion/missions/CommettreExa
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "** MIS_Pion_ASY_CommettreExactionsSurPopulationDansZone: debut **", } )
                     self.ePhaseMission = eAborderObjectif
-                    
+                    _continue = false
                 --[[// Rejoindre la zone
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eAborderObjectif then
@@ -71,14 +72,14 @@ elseif switch_1 == eAborderObjectif then
                         self.ePhaseMission = eNettoyer
                     end
 
-                    
+                    _continue = false
                 --[[// Commettre les exactions
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eNettoyer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnPosition, } )
                     --[[//choisir une population et la rejoindre, en même temps agresser toute population ennemie à portée
 ]]Activate( self.activations.BEH_Eni_Pion_ASY_CommettreExactionDans, 1, { self._namedParams.mission.zone_, } )
-                    
+                    _continue = false
                 --[[// Fin --> sur ordre
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then

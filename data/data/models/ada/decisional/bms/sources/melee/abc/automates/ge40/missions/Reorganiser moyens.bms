@@ -23,7 +23,7 @@ includedFiles["sources/melee/abc/automates/ge40/missions/Reorganiser moyens.bms"
 
     activate = function( self )
         if( DIA_IsListEmpty( self._namedParams.listePions ) ) then
-            return
+            do return end
         end
 
         local listePionsMeleeOperationnels = S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_Filtre_TypeAutomate_Melee( DEC_Automate_AutomatesSubordonnes() ) ) )
@@ -62,7 +62,7 @@ node "BEH_GTIA_TransfererMoyensOp"
 
     activate = function( self )
         if( DIA_IsListEmpty( self._namedParams.listePions ) ) then
-            return
+            do return end
         end
 
         local listePionsSubNonDetruit = S_Cherche_Automate_PionsOperationnels( DEC_Automate_PionsDeAutomateSansPC( self._namedParams.pion ) )

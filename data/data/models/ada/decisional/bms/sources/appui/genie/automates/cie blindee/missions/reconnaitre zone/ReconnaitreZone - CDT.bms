@@ -43,7 +43,7 @@ include "bit.lua"
         if( ( #( listePionsGenie ) == 0 or #( listePionsGenie ) == nil ) ) then
             do
                 Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
-                                return
+                                do return end
 
             end
 --[[//---------------------------------------------------------------------
@@ -98,7 +98,7 @@ do
         local sel_PE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
         local sel_SE = S_ObtenirTousPionsDe( eEtatEchelon_Second )
         if( DIA_IsListEmpty( sel_PE ) or DIA_IsListEmpty( sel_SE ) ) then
-            return
+            do return end
         end
 
         --[[//-----------------------------------------------------------------------------

@@ -29,7 +29,7 @@ includedFiles["sources/common/Fonctions - Obj.bms"] = true
     local locObjet = DEC_ConnaissanceObjet_Localisation( repObjet )
     assert( ( locObjet ~= 0 and locObjet ~= nil ), "localisation objet invalide" )
     _returnValue = S_Geometrie_BarycentreZone( locObjet )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Obj_EstDansLocalisation( obj, loc )
@@ -37,11 +37,11 @@ function S_Obj_EstDansLocalisation( obj, loc )
     _returnValue = false
     local ptObj = S_Obj_Position( obj )
     if( ( ptObj == 0 or ptObj == nil ) ) then
-        return _returnValue
+        do return _returnValue end
     end
 
     _returnValue = DEC_Geometrie_EstPointDansLocalisation( ptObj, loc )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Geometrie_PositionObjetPlusProche( listeObjets, point )
@@ -65,7 +65,7 @@ do
     end
 
     _returnValue = ptBuffer
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Geometrie_ObjetPlusProche( listeObjets, point )
@@ -90,7 +90,7 @@ do
     end
 
     _returnValue = objetProche
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Obj_ListeObjetsValides( liste )
@@ -105,6 +105,6 @@ if( DEC_ConnaissanceObjet_EstValide( x ) ) then
     end
 
     _returnValue = listeBuffer
-    return _returnValue
+    do return _returnValue end
 end
 

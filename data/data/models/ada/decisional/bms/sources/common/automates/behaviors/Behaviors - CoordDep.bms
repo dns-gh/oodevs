@@ -41,12 +41,12 @@ includedFiles["sources/common/automates/behaviors/Behaviors - CoordDep.bms"] = t
 
         local pionEnQueue = S_Coordination_PionEnQueue( self.resultatCalcul, self._namedParams.listePions, true )
         if( ( pionEnQueue == 0 or pionEnQueue == nil ) ) then
-            return
+            do return end
         end
 
         --[[// Si la compagnie n'est pas trop étalée
 ]]if( DEC_Geometrie_CalculerDistanceLigneAvant( self.resultatCalcul, pionEnQueue ) < self._namedParams.rDistanceEtalementMax ) then
-            return
+            do return end
         end
 
         --[[//-----------------------------------------------------------------------------

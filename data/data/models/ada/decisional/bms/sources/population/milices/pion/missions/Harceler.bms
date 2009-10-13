@@ -79,13 +79,14 @@ do
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eSurveiller then
                     if( self.ePhaseMission == eFinMission ) then
                         do
                             self.ePhase = eFinMission
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -94,7 +95,7 @@ do
                         do
                             self.ePhase = eSeReplier
                             self.eAction = eActionEnCours
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -104,7 +105,7 @@ do
                             self.eAction = eActionEnCours
                                                         do
                                 self.ePhase = eSeReplier
-                                                                return
+                                                                do return end
 
                             end
 
@@ -112,12 +113,12 @@ do
                     end
 
                     Activate( self.activations.BEH_Mission_Pion_INF_Harceler, GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.ePhaseMission = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// Rejoins la position de replis
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eSeReplier then
                     self.ePhase = eSeReplier
-                    
+                    _continue = false
                 --[[// Fin de mission
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
@@ -132,7 +133,7 @@ elseif switch_1 == eFinMission then
                         end
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
 
                 else

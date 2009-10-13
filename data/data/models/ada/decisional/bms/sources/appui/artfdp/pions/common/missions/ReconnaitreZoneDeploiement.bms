@@ -51,6 +51,7 @@ node "BEH_Pion_ASS_ReconnaitreZoneDeploiement_Mission"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
@@ -63,7 +64,7 @@ node "BEH_Pion_ASS_ReconnaitreZoneDeploiement_Mission"
                                                         do
                                 Activate( self.activations.ACT_RC, 1, { eRC_DebutMission, } )
                                 self.ePhase = eRejoindre
-                                                                return
+                                                                do return end
 
                             end
 
@@ -73,7 +74,7 @@ node "BEH_Pion_ASS_ReconnaitreZoneDeploiement_Mission"
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1.2, { eEtatPhaseMission_PreparationMission, } )
                     Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, self._namedParams.rDelaiPreparation, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
                     Activate( self.activations.ACT_RC_PreparationMission, 1, { self._namedParams.rDelaiPreparation, } )
-                    
+                    _continue = false
                 --[[// ------------------------------------------------------------------------
 ]]--[[// Rejoindre la position du site
 ]]--[[// ------------------------------------------------------------------------
@@ -84,7 +85,7 @@ elseif switch_1 == eRejoindre then
                             self.eAction = eActionEnCours
                             Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
                             self.ePhase = eDeployer
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -97,14 +98,14 @@ elseif switch_1 == eRejoindre then
                     end
 
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.mission.positionDeploiement_, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eDeployer then
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
                             self.ePhase = eFinMission
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -113,16 +114,17 @@ elseif switch_1 == eDeployer then
                     --[[// On s'oriente vers la direction dangereuse
 ]]Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( self.mission ), } )
                      do
+                        local _continue = true
                         local switch_2 = self._namedParams.eType_ZoneImplantation
                         local cases_switch_2 = {}
                             if switch_2 == eTypeObjectZoneImplantationCanon then
                                 Activate( self.activations.BEH_Pion_ASS_Installer_ZoneImplantationCanon, 1.1, { self.mission.positionDeploiement_, self._namedParams.eType_ZoneImplantation, } )
                                 Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptRepli, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                                
+                                _continue = false
                                                         cases_switch_2[1] = true
 elseif switch_2 == eTypeObjectZoneImplantationLRM then
                                 Activate( self.activations.BEH_Pion_ASS_Installer_ZoneImplantationLRM, 1, setmetatable( { self.mission.positionDeploiement_, self._namedParams.eType_ZoneImplantation, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                                
+                                _continue = false
                                                         cases_switch_2[2] = true
 
                             else
@@ -131,7 +133,9 @@ elseif switch_2 == eTypeObjectZoneImplantationLRM then
                                                         end
                         end
 
-                    
+                        if _continue then
+                        _continue = false
+                    end
                 --[[// ------------------------------------------------------------------------
 ]]--[[//  Fin de mission --> rejoindre plot munition
 ]]--[[// ------------------------------------------------------------------------
@@ -149,7 +153,7 @@ elseif switch_1 == eFinMission then
                     end
 
                                         self.params.__returnValue = eActionEffectuee
-                    return
+                    do return end
 
                                 end
             end
@@ -188,7 +192,7 @@ node "BEH_Pion_ASS_Installer_ZoneImplantationSimple"
 
         if( self.eActionObj ~= eActionEnCours ) then
             self.params.__returnValue = eActionEffectuee
-            return
+            do return end
         end
 
         local eNiveauInstallation = DEC_Agent_NiveauInstallation()
@@ -241,7 +245,7 @@ node "BEH_Pion_ASS_Installer_ZoneImplantationCanon"
 
         if( self.eActionObj1 ~= eActionEnCours and self.eActionObj2 ~= eActionEnCours ) then
             self.params.__returnValue = eActionEffectuee
-            return
+            do return end
         end
 
         if( ( self.locInstallation_1 == 0 or self.locInstallation_1 == nil ) ) then
@@ -300,7 +304,7 @@ node "BEH_Pion_ASS_Installer_ZoneImplantationLRM"
                 --[[// Recupere la premiere position d'installation
 ]]if( ( DEC_ListePoints_Size( self.lstPositions ) == 0 or DEC_ListePoints_Size( self.lstPositions ) == nil ) ) then
                     self.params.__returnValue = eActionEffectuee
-                    return
+                    do return end
                 end
 
                 local ptExtrait = DEC_ListePoints_GetAt( self.lstPositions, self.rIt )
@@ -319,7 +323,7 @@ node "BEH_Pion_ASS_Installer_ZoneImplantationLRM"
                     end
                 else
                     self.params.__returnValue = eActionEffectuee
-                    return
+                    do return end
                 end
 
             end

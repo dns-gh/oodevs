@@ -81,6 +81,7 @@ includedFiles["sources/melee/abc/pions/common/missions/Reduire.bms"] = true
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhaseMission
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
@@ -88,7 +89,7 @@ includedFiles["sources/melee/abc/pions/common/missions/Reduire.bms"] = true
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "Render ineffective eni unit mission  begining", } )
                     self.ePhaseMission = eProgresser
-                    
+                    _continue = false
                 --[[// Progression tactique
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eProgresser then
@@ -100,7 +101,7 @@ elseif switch_1 == eProgresser then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhaseMission = eFinMission
-                                                                return
+                                                                do return end
 
                             end
 
@@ -109,13 +110,13 @@ elseif switch_1 == eProgresser then
 
                     Activate( self.activations.ACT_Dep_ModulationVitesse, 1.5, { 1, } )
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.pPoint, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// Fin de la mission
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
 
                 else
@@ -156,7 +157,7 @@ node "BEH_Eni_Pion_ABC_ReduireEni"
 ]]if( DEC_ConnaissanceAgent_EstMort( self._namedParams.repEniAReduire ) ) then
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "Eni ineffective", } )
-                                return
+                                do return end
 
             end
 --[[//-----------------------------------------------------------------------------
@@ -175,7 +176,7 @@ node "BEH_Eni_Pion_ABC_ReduireEni"
 ]]        end
 
         if( self.eEtat == eActionEffectuee ) then
-            return
+            do return end
         end
 
         if( DEC_ConnaissanceAgent_EstPercuParUnite( self._namedParams.repEniAReduire ) ) then

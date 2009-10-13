@@ -72,7 +72,7 @@ node "BEH_Dispositif_Automate_NBC_FaireArmerSite_"
 ]]if( ( self.positionSite == 0 or self.positionSite == nil ) ) then
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "**** Invalide localisation ****", } )
-                                return
+                                do return end
 
             end
 --[[//-----------------------------------------------------------------------------

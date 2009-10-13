@@ -17,7 +17,7 @@ includedFiles["sources/common/automates/actions/Actions - Conduite.bms"] = true
 
     select = function( self )
         if( ( self._namedParams.ptRegroupement == 0 or self._namedParams.ptRegroupement == nil ) ) then
-            return
+            do return end
         end
 
         if( ( F_Pion_GetobjectifEsquive( self._namedParams.pion ) == 0 or F_Pion_GetobjectifEsquive( self._namedParams.pion ) == nil ) ) then
@@ -62,13 +62,13 @@ includedFiles["sources/common/automates/actions/Actions - Conduite.bms"] = true
 
         if( not self.bRelevePossible ) then
             self.params.__returnValue = eActionImpossible
-            return
+            do return end
         end
 
         --[[// On met a jour l'echelon
 ]]F_Pion_SeteEtatEchelon( self._namedParams.pionReleve, F_Pion_GeteEtatEchelon( self._namedParams.pionARelever ) )
                 self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 

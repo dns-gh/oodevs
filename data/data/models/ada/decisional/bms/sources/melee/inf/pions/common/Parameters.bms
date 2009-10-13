@@ -153,13 +153,13 @@ end
 ]]function M_VITESSE_INF_MIN( )
     local _returnValue = 0
     _returnValue = 50
-    return _returnValue
+    do return _returnValue end
 end
 
 function M_TEMPS_RECO_MIN( )
     local _returnValue = 0
     _returnValue = 1
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_TempsObservationPoint_Ambiance( )
@@ -169,7 +169,7 @@ function S_TempsObservationPoint_Ambiance( )
         _returnValue = M_TEMPS_ARRET_POINT_OBSERVATION_SURETE()
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_TempsRecoPoint_Ambiance( )
@@ -179,7 +179,7 @@ function S_TempsRecoPoint_Ambiance( )
         _returnValue = M_TEMPS_ARRET_POINT_RECO_SURETE()
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_VitesseRecoPoint_Ambiance( )
@@ -189,6 +189,6 @@ function S_VitesseRecoPoint_Ambiance( )
         _returnValue = 2
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 

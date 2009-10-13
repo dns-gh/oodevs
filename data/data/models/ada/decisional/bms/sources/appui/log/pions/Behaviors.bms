@@ -110,7 +110,7 @@ include "Appui/Log/Pions/Missions/Missions.bms"
                 Activate( self.activations.ACT_Misc_Pion_LOG_ActiverSante, 1, {} )
                 Activate( self.activations.ACT_Misc_Pion_LOG_ActiverMaintenance, 1, {} )
                 Activate( self.activations.ACT_Misc_Pion_LOG_ActiverRavitaillement, 1, {} )
-                                return
+                                do return end
 
             end
 --[[//---------------------------------------------------------------------
@@ -125,7 +125,7 @@ include "Appui/Log/Pions/Missions/Missions.bms"
                     DEC_Ravitaillement_Convoi_FinMission()
                 end
 
-                                return
+                                do return end
 
             end
 --[[//---------------------------------------------------------------------
@@ -183,67 +183,70 @@ node "BEH_Ordre_Pion_LOG_OrdresInopines"
 do
                 local repOrdre = x
                  do
+                    local _continue = true
                     local switch_1 = repOrdre:GetType()
                     local cases_switch_1 = {}
                         if switch_1 == "Rep_OrderConduite_Pion_RenforcerEnRemorqueurs" then
                             local repOrdreRenforcer = repOrdre
                             StartActivateOverride( self, self.activations.ACT_Misc_Pion_LOG_PreterRemorqueurs, 1, { repOrdreRenforcer:GetpionARenforcer_(), repOrdreRenforcer:GetnbrRemorqueurs_(), } )
-                            
+                            _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == "Rep_OrderConduite_Pion_TransfererRemorqueurs" then
                             local repOrdreTransferer = repOrdre
                             StartActivateOverride( self, self.activations.ACT_Misc_Pion_LOG_PreterRemorqueurs, 1, { repOrdreTransferer:GetpionARenforcer_(), repOrdreTransferer:GetnbrRemorqueurs_(), } )
-                            
+                            _continue = false
                                                 cases_switch_1[2] = true
 elseif switch_1 == "Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs" then
                             local repOrdreReprendre = repOrdre
                             StartActivateOverride( self, self.activations.ACT_Misc_Pion_LOG_RecupererRemorqueurs, 1, { repOrdreReprendre:GetpionRenforce_(), repOrdreReprendre:GetnbrRemorqueurs_(), } )
-                            
+                            _continue = false
                                                 cases_switch_1[3] = true
 elseif switch_1 == "Rep_OrderConduite_Pion_RenforcerEnVSRAM" then
                             local repOrdreRenforcer = repOrdre
                             StartActivateOverride( self, self.activations.ACT_Misc_Pion_LOG_PreterVSRAM, 1, { repOrdreRenforcer:GetpionARenforcer_(), repOrdreRenforcer:GetnbrAmbulances_(), } )
-                            
+                            _continue = false
                                                 cases_switch_1[4] = true
 elseif switch_1 == "Rep_OrderConduite_Pion_TransfererVSRAM" then
                             local repOrdreTransferer = repOrdre
                             StartActivateOverride( self, self.activations.ACT_Misc_Pion_LOG_PreterVSRAM, 1, { repOrdreTransferer:GetpionARenforcer_(), repOrdreTransferer:GetnbrAmbulances_(), } )
-                            
+                            _continue = false
                                                 cases_switch_1[5] = true
 elseif switch_1 == "Rep_OrderConduite_Pion_ReprendreAuxOrdresVSRAM" then
                             local repOrdreReprendre = repOrdre
                             StartActivateOverride( self, self.activations.ACT_Misc_Pion_LOG_RecupererVSRAM, 1, { repOrdreReprendre:GetpionRenforce_(), repOrdreReprendre:GetnbrAmbulances_(), } )
-                            
+                            _continue = false
                                                 cases_switch_1[6] = true
 elseif switch_1 == "Rep_OrderConduite_ModifierRegimeTravailMaintenance" then
                             local repOrderRegimeMaint = repOrdre
                             DEC_Maintenance_ChangerRegimeTravail( repOrderRegimeMaint:GetorderConduiteModifierRegimeTravailMaintenance_() )
-                            
+                            _continue = false
                                                 cases_switch_1[7] = true
 elseif switch_1 == "Rep_OrderConduite_ModifierPrioritesReparations" then
                             local repOrdrePrioriteMain = repOrdre
                             DEC_Maintenance_ChangerPriorites( repOrdrePrioriteMain:GetorderConduiteModifierPrioritesReparations_() )
-                            
+                            _continue = false
                                                 cases_switch_1[8] = true
 elseif switch_1 == "Rep_OrderConduite_ModifierPrioritesBlesses" then
                             local repOrdrePrioriteSan = repOrdre
                             DEC_Sante_ChangerPriorites( repOrdrePrioriteSan:GetorderConduiteModifierPrioritesBlesses_() )
-                            
+                            _continue = false
                                                 cases_switch_1[9] = true
 elseif switch_1 == "Rep_OrderConduite_ModifierPrioritesTactiquesReparations" then
                             local tmp = repOrdre
                             DEC_Maintenance_ChangerPrioritesTactiques( tmp:GetorderConduiteModifierPrioritesTactiquesReparations_() )
-                            
+                            _continue = false
                                                 cases_switch_1[10] = true
 elseif switch_1 == "Rep_OrderConduite_ModifierPrioritesTactiquesBlesses" then
                             local tmp = repOrdre
                             DEC_Sante_ChangerPrioritesTactiques( tmp:GetorderConduiteModifierPrioritesTactiquesBlesses_() )
-                            
+                            _continue = false
                                                 cases_switch_1[11] = true
                         end
                     end
 
-                Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
+                    if _continue then
+                    Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
+                end
             end
 
         end
@@ -319,7 +322,7 @@ node "BEH_Dep_Virtuel_PreparationAction"
 
     activate = function( self )
                 self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 

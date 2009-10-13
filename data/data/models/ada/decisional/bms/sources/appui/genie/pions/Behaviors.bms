@@ -88,7 +88,7 @@ include "Appui/Genie/Pions/Missions/Missions.bms"
 ]]
         --[[// Si totalement detruit...
 ]]if( S_Misc_EstDetruitPhysique() ) then
-            return
+            do return end
         end
 
         Activate( self.activations.BEH_ROE, 1, {} )--[[//-----------------------------------------------------------------------------
@@ -147,7 +147,7 @@ node "BEH_Dep_Virtuel_PreparationAction"
 
     activate = function( self )
                 self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 

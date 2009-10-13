@@ -62,6 +62,7 @@ includedFiles["sources/appui/circulation/automates/missions/armerpias/ArmerPIAs 
 ]]        end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eMRT_AssignerMissions then
@@ -72,7 +73,7 @@ includedFiles["sources/appui/circulation/automates/missions/armerpias/ArmerPIAs 
 ]]if( self.eEtatMissionAppuyer == eActionImpossible ) then
                         do
                             self.ePhase = eMRT_Valider
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -80,7 +81,7 @@ includedFiles["sources/appui/circulation/automates/missions/armerpias/ArmerPIAs 
                     if( self.eEtatMissionAppuyer == eActionEffectuee ) then
                         do
                             self.ePhase = eMRT_Valider
-                                                        return
+                                                        do return end
 
                         end
 --[[// Controle création mission
@@ -92,7 +93,7 @@ includedFiles["sources/appui/circulation/automates/missions/armerpias/ArmerPIAs 
                         Activate( self.activations.BEH_Mission_Automate_CIRCU_AssignerArmerPIAAListe, 1, { ePhase_MRT, listePions, self.listePIA, } )
                     end
 
-                    
+                    _continue = false
                 --[[//---------------------------------------------------------------------
 ]]--[[// Mission impossible
 ]]--[[//---------------------------------------------------------------------
@@ -102,7 +103,7 @@ elseif switch_1 == eMRT_MissionImpossible then
                     Halt( self )
                     do return end
 
-                    
+                    _continue = false
                 --[[//---------------------------------------------------------------------
 ]]--[[// Validation
 ]]--[[//---------------------------------------------------------------------
@@ -112,7 +113,7 @@ elseif switch_1 == eMRT_MissionImpossible then
                     Halt( self )
                     do return end
 
-                    
+                    _continue = false
                 
                 else
                                 end

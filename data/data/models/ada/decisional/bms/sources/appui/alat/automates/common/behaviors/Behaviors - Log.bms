@@ -246,7 +246,7 @@ do
 ]]pointDebarquementBuffer = DEC_Geometrie_PositionTranslate( DEC_Automate_PionPosition( pionTC2 ), barycentreAgents, self._namedParams.distance / 2 )
                             end
                         else
-                            return
+                            do return end
 --[[//on ne peut pas creer de plot
 ]]                        end
 
@@ -258,7 +258,7 @@ do
                 if( pointBufferDansZone ~= nil ) then
                     DEC_Copie_Point( pointBufferDansZone, self.pointDebarquement )
                 else
-                    return
+                    do return end
 --[[//position invalide ($$$$GGR : ne devrait jamais arriver normalement)
 ]]                end
 

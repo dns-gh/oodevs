@@ -94,7 +94,7 @@ node "BEH_Dep_SeDeplacer"
 
         Activate( self.activations.ACT_Pions_SeDesinstaller, 1, {} )
         if( not DEC_Agent_EstDesinstalle() ) then
-            return
+            do return end
         end
 
         Activate( self.activations.ACT_Dep_SeDeplacer, 1, setmetatable( { self._namedParams.it, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
@@ -122,7 +122,7 @@ node "BEH_Dep_SePosterFaceADirectionDangereuse"
     activate = function( self )
         local mission = DEC_GetMission( myself )
         if( ( mission == 0 or mission == nil ) ) then
-            return
+            do return end
         end
 
         Activate( self.activations.ACT_Dep_SePosterFaceADir, 1, { DEC_GetDirectionDanger( mission ), } )
@@ -166,7 +166,7 @@ node "BEH_Dep_Virtuel_PreparationAction"
 
     activate = function( self )
                 self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 

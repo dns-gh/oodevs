@@ -68,13 +68,14 @@ include "bit.lua"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhaseMission
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
                     --[[// Preparation de la mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhaseMission = eProgresser
-                    
+                    _continue = false
                 --[[// Rejoindre la zone
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eProgresser then
@@ -84,7 +85,7 @@ elseif switch_1 == eProgresser then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhaseMission = eDeminerObstacle
-                                                                return
+                                                                do return end
 
                             end
 
@@ -92,7 +93,7 @@ elseif switch_1 == eProgresser then
                     end
 
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptObst, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// Depolluer
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eDeminerObstacle then
@@ -102,7 +103,7 @@ elseif switch_1 == eDeminerObstacle then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhaseMission = eFinMission
-                                                                return
+                                                                do return end
 
                             end
 
@@ -110,13 +111,13 @@ elseif switch_1 == eDeminerObstacle then
                     end
 
                     Activate( self.activations.BEH_Objet_Pion_GEN_RealiserZoneMobilite, 1, setmetatable( { self.genObs, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// Fin de la mission
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                    
+                    _continue = false
                                 cases_switch_1[4] = true
                 end
             end
@@ -175,7 +176,7 @@ node "BEH_Objet_Pion_GEN_RealiserZoneMobilite"
         if( not DEC_Agent_PeutConstruireObjet( S_TypeObject_ToString( self._namedParams.genObs:Gettype_obstacle_() ) ) ) then
             do
                 Activate( self.activations.ACT_RC, 1, { eRC_AttenteRenforcement, } )
-                                return
+                                do return end
 
             end
 --[[// SINON OK pour construire l'objet
@@ -255,6 +256,7 @@ node "ACT_Obj_Pion_GEN_RealiserZoneMobilite"
 ]]        end
 
          do
+            local _continue = true
             local switch_1 = self.eActionObjet
             local cases_switch_1 = {}
                 if switch_1 == eActionObjetTerminee then
@@ -269,17 +271,17 @@ node "ACT_Obj_Pion_GEN_RealiserZoneMobilite"
                     end
 
                                         self.params.__returnValue = eActionEffectuee
-                    return
+                    do return end
 
-                    
+                    _continue = false
                 elseif switch_1 == eActionObjetManqueDotation
                 or switch_1 == eActionObjetPasDeCapacite
                 or switch_1 == eActionObjetImpossible then
                     DEC_Trace( "  impossible works " )
                                         self.params.__returnValue = eActionEffectuee
-                    return
+                    do return end
 
-                    
+                    _continue = false
                                 end
             end
 --[[//-----------------------------------------------------------------

@@ -39,6 +39,7 @@ includedFiles["sources/appui/trans/pions/actions/Actions - Dep.bms"] = true
 ]]        end
 
          do
+            local _continue = true
             local switch_1 = self.eEtatDeplacement
             local cases_switch_1 = {}
                 if switch_1 == eEtatActionDeplacement_EnCours then
@@ -46,14 +47,14 @@ includedFiles["sources/appui/trans/pions/actions/Actions - Dep.bms"] = true
 ]]--[[// Deplacement en cours
 ]]--[[//-----------------------------------------------------------------------------
 ]]myself.eEtatDeplacement_ = eEtatDeplacement_EnCours
-                    
+                    _continue = false
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Plus de carburant
 ]]--[[//-----------------------------------------------------------------------------
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eEtatActionDeplacement_ManqueCarburant then
                     DEC_PauseAction( self.actionDeplacement )
-                    
+                    _continue = false
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Fin déplacement
 ]]--[[//-----------------------------------------------------------------------------
@@ -64,22 +65,22 @@ elseif switch_1 == eEtatActionDeplacement_Termine then
                     Halt( self )
                     do return end
 
-                    
+                    _continue = false
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// REPRISE QD PERTE DE FOCUS
 ]]--[[//-----------------------------------------------------------------------------
 ]]elseif switch_1 == eEtatActionDeplacement_Pause then
                     DEC_ReprendAction( self.actionDeplacement )
-                    
+                    _continue = false
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Autres cas
 ]]--[[//-----------------------------------------------------------------------------
 ]]                cases_switch_1[4] = true
 elseif switch_1 == eEtatActionDeplacement_NonAutorise then
-                    
+                    _continue = false
                                 cases_switch_1[5] = true
 elseif switch_1 == eEtatActionDeplacement_DejaEnDeplacement then
-                    
+                    _continue = false
                                 cases_switch_1[6] = true
                 end
             end

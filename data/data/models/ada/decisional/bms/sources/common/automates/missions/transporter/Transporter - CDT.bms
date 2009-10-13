@@ -89,6 +89,7 @@ do
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eTransporter then
@@ -97,7 +98,7 @@ do
                         Activate( self.activations.BEH_Medo_Automate_AssignerMissionsTransporterAListe, 1, { ePhase_CDT, self.listePourTransport, self._namedParams.mission.pointEmbarquement_, self.pointDeDebarquement, self.listePionsATransporter, self._namedParams.mission.avecMateriel_, } )
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eFinMission then
                     --[[//quand plus aucun pion n'a de mission
@@ -120,7 +121,7 @@ do
                         do return end
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end

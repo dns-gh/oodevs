@@ -40,7 +40,7 @@ do
     end
 
     _returnValue = sFiltre
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Filtre_ChercheTypePion( sPions, type )
@@ -59,6 +59,6 @@ do
     end
 
     _returnValue = sFiltre
-    return _returnValue
+    do return _returnValue end
 end
 

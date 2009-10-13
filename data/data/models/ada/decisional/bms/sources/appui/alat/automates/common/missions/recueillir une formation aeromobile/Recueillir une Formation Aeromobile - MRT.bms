@@ -173,6 +173,7 @@ do
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eMRT_AssignerMissions then
@@ -180,7 +181,7 @@ do
 ]]if( self.eEtatMissionsDonnerCoupArret == eActionImpossible ) then
                         do
                             self.ePhase = eMRT_MissionImpossible
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -188,7 +189,7 @@ do
                     if( self.eEtatMissionsDonnerCoupArret == eActionEffectuee ) then
                         do
                             self.ePhase = eMRT_Valider
-                                                        return
+                                                        do return end
 
                         end
 --[[// DonnerCoupArret : controle de creation mission
@@ -216,7 +217,7 @@ do
                         Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsSurveillerAListe, 1, { ePhase_MRT, self.listeSurveiller, self.listeZonesDeRecueil, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.plotsRavitaillement_, } )
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eMRT_MissionImpossible then
                     DEC_RC( eRC_MissionImpossible )

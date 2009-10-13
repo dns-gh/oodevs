@@ -98,6 +98,7 @@ node "BEH_Medo_Automate_PreparerMission_SeFaireTransporter"
         self.eActionMRT = self.eActionMRT or eActionEnCours
         self.eValidationMRT = self.eValidationMRT or eActionEnCours
          do
+            local _continue = true
             local switch_1 = --[[//-----------------------------------------------------------------------------
 ]]--[[// Vérif et assignation des missions
 ]]--[[//-----------------------------------------------------------------------------
@@ -117,7 +118,7 @@ node "BEH_Medo_Automate_PreparerMission_SeFaireTransporter"
                     end
 
                     self.ePhase = eMRT_AssignerMissions
-                    
+                    _continue = false
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Assigner les missions au pions subordonnéss
 ]]--[[//-----------------------------------------------------------------------------
@@ -150,7 +151,7 @@ elseif switch_1 == eMRT_AssignerMissions then
 
                     Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.selPions ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
                     Activate( self.activations.BEH_Medo_Automate_FaireTransporter_DansZone, 1, setmetatable( { self.selPions, self._namedParams.Zone, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
-                    --[[// Assigne les missions
+                    _continue = false--[[// Assigne les missions
 ]]
                                 cases_switch_1[2] = true
                 end

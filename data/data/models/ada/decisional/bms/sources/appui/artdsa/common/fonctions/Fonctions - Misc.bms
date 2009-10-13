@@ -11,7 +11,7 @@ include "bit.lua"
 ]]function S_EstSectionASA( agent )
     local _returnValue = false
     _returnValue = ( agent:GetType() == "VeryShortRangeSurfaceToAirBatteryCP" ) or ( agent:GetType() == "ShortRangeSurfaceToAirDefenseBatteryCP" ) or ( agent:GetType() == "TheaterHighAltitudeAeraDefenseCP" ) or ( agent:GetType() == "VeryShortRangeSurfaceToAirDefenseTroop" ) or ( agent:GetType() == "TheaterHighAltitudeDefenseTroop" ) or ( agent:GetType() == "ShortRangeSurfaceToAirDefenseTroop" )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Liste_UnitesReconnues( listeConnaissances )
@@ -28,6 +28,6 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 

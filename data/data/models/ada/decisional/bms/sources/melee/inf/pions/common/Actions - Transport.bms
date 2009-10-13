@@ -46,10 +46,11 @@ includedFiles["sources/melee/inf/pions/common/Actions - Transport.bms"] = true
         end
 
          do
+            local _continue = true
             local switch_1 = self.eEtat_EmbDeb
             local cases_switch_1 = {}
                 if switch_1 == eActionEmbDeb_EnCours then
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                 or switch_1 == eActionEmbDeb_PasDeTransporteurs then

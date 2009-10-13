@@ -223,7 +223,7 @@ node "BEH_Eni_Pion_ASA_AttendreDetruireDirect"
 
                 Activate( self.activations.ACT_Obs_ObserverPoint, 1, { myself:DEC_Agent_Position(), } )
                 Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, self._namedParams.delai, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                                return
+                                do return end
 
             end
         end

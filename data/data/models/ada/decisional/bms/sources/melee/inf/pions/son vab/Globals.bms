@@ -37,18 +37,18 @@ include "Melee/Inf/Pions/Son Vab/Globals Poly.bms"
 ]]function S_CalculerPositionAppui( pion, rDist )
     local _returnValue = nil
     _returnValue = DEC_Geometrie_CalculerPositionAppui( pion, rDist )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Tir_EstAPortee_Debarque( pPion, rPH )
     local _returnValue = false
     _returnValue = DEC_Geometrie_Distance( DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( pPion ) ) < DEC_Tir_PorteeMaxPourTirerDebarqueSurUnite( pPion, rPH )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Force_INF_DistancePt_PourPion( pion, pt )
     local _returnValue = 0
     _returnValue = 1 + 1 / ( 1 + DEC_Geometrie_Distance( pion:DEC_Agent_Position(), pt ) / 1000 )
-    return _returnValue
+    do return _returnValue end
 end
 

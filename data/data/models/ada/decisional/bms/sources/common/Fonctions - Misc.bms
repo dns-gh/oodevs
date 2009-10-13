@@ -37,7 +37,7 @@ includedFiles["sources/common/Fonctions - Misc.bms"] = true
         _returnValue = true
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_ConnaissanceAgent_EstEnVol( connaissance )
@@ -46,26 +46,26 @@ function S_ConnaissanceAgent_EstEnVol( connaissance )
     if( not DEC_ConnaissanceAgent_EstValide( connaissance ) ) then
         do
             _returnValue = false
-                        return _returnValue
+                        do return _returnValue end
 
         end
     end
 
     bBuffer = DEC_ConnaissanceAgent_EstEnVol( connaissance )
     _returnValue = bBuffer
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_ForceDangerSurConnaissance( repEnie, repAmie )
     local _returnValue = 0
     _returnValue = DEC_ConnaissanceAgent_DangerositeSurConnaissance( repEnie, repAmie )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_ForceDangerSurPion( repEni, pion )
     local _returnValue = 0
     _returnValue = DEC_ConnaissanceAgent_DangerositeSurPion( repEni, pion )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Liste_Concatene( listeA, listeB )
@@ -84,7 +84,7 @@ function S_Liste_Concatene( listeA, listeB )
     end
 
     _returnValue = bufferSelection
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_ListeLocalisations_Copie( listeSrc, listeDest )

@@ -67,21 +67,24 @@ node "MIS_Pion_INF_SurveillerSecteur"
 do
                 local repOrdre = x
                  do
+                    local _continue = true
                     local switch_1 = repOrdre:GetType()
                     local cases_switch_1 = {}
                         if switch_1 == "Rep_OrderConduite_Pion_ExecuterTir" then
                             Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, {} )
-                            
+                            _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == "Rep_OrderConduite_Decrocher" then
                             self.ePhase = eSeReplier
                             self.eAction = eActionEnCours
-                            
+                            _continue = false
                                                 cases_switch_1[2] = true
                         end
                     end
 
-                Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
+                    if _continue then
+                    Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
+                end
             end
 
         end
@@ -100,6 +103,7 @@ elseif switch_1 == "Rep_OrderConduite_Decrocher" then
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eSurveiller then
@@ -108,7 +112,7 @@ elseif switch_1 == "Rep_OrderConduite_Decrocher" then
                             self.eAction = eActionEnCours
                                                         do
                                 self.ePhase = eFinMission
-                                                                return
+                                                                do return end
 
                             end
 
@@ -120,7 +124,7 @@ elseif switch_1 == "Rep_OrderConduite_Decrocher" then
                             self.eActionEnnemi = eActionEnCours
                                                         do
                                 self.ePhase = eSeReplier
-                                                                return
+                                                                do return end
 
                             end
 
@@ -130,7 +134,7 @@ elseif switch_1 == "Rep_OrderConduite_Decrocher" then
 
                     Activate( self.activations.BEH_Eni_Pion_INF_SurveillerSecteur, GetMotivation( "MOT_ManoeuvrerSurEnis" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionEnnemi = v else rawset( t, k, v ) end end } ) )
                     Activate( self.activations.BEH_Mission_Pion_INF_SurveillerSecteur, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// Rejoins une position de replis
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eSeReplier then
@@ -147,7 +151,7 @@ elseif switch_1 == eSeReplier then
                     else
 do
                             Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -175,7 +179,7 @@ do
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
 
                 else

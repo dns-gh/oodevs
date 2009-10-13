@@ -48,7 +48,7 @@ include "bit.lua"
         if( ( #( listePionsGenie ) == 0 or #( listePionsGenie ) == nil ) ) then
             do
                 Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
-                                return
+                                do return end
 
             end
 --[[//-------------------------------------------------------------------------
@@ -97,7 +97,7 @@ node "BEH_Mission_Automate_GEN_CDT_RealiserPlanObjets"
 
                 end
 
-                                return
+                                do return end
 
             end
 --[[//-------------------------------------------------------------------------
@@ -296,7 +296,7 @@ node "BEH_Misc_Automate_GEN_GererFinRenforcementTravaux"
     activate = function( self )
         --[[// Sécurité
 ]]if( ( ( self._namedParams.objetARealiser:GetpionRenforcement_() == 0 or self._namedParams.objetARealiser:GetpionRenforcement_() == nil ) or self._namedParams.objetARealiser:Getpion_() == 0 or ( self._namedParams.objetARealiser:GetpionRenforcement_() == 0 or self._namedParams.objetARealiser:GetpionRenforcement_() == nil ) or self._namedParams.objetARealiser:Getpion_() == nil ) ) then
-            return
+            do return end
         end
 
         --[[//-------------------------------------------------------------------------
@@ -365,7 +365,7 @@ node "BEH_Misc_Automate_GEN_GererRenforcement"
     activate = function( self )
         --[[// Renforcement déjà assigné
 ]]if( self._namedParams.objetARealiser:GetpionRenforcement_() ~= nil ) then
-            return
+            do return end
         end
 
         --[[//-------------------------------------------------------------------------

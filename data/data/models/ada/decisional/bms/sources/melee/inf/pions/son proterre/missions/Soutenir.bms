@@ -124,6 +124,7 @@ node "BEH_Mission_Pion_INF_SoutenirUneUnite"
         end
 
          do
+            local _continue = true
             local switch_1 = --[[//=========================================================================
 ]]--[[// SQUELETTE DE LA MISSION
 ]]--[[//
@@ -140,7 +141,7 @@ node "BEH_Mission_Pion_INF_SoutenirUneUnite"
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "** Mission soutenir --> " .. DEC_GetSzName( self._namedParams.pionAmi ) .. " **", } )
                     self.ePhaseMission = eSuivreUnite
-                    
+                    _continue = false
                 --[[//---------------------------------------------------------------------
 ]]--[[// 2) Suivre l'unité, être prêt à passer en appui 
 ]]--[[//---------------------------------------------------------------------
@@ -167,7 +168,7 @@ elseif switch_1 == eSuivreUnite then
                             --[[//behavior BEH_Dep_Pion_INF_Appuyer( pionAmi );
 ]]Activate( self.activations.BEH_Dep_Pion_MILAN_Appuyer, 1, { self._namedParams.pionAmi, } )
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnAppui, } )
-                                                        return
+                                                        do return end
 
                         end
 --[[//-----------------------------------------------------------------------------
@@ -177,7 +178,7 @@ elseif switch_1 == eSuivreUnite then
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_SuitUnite, } )
                     Activate( self.activations.BEH_Dep_Suivre, 1, { self._namedParams.pionAmi, M_MODELE_PION_INF_DISTANCE_MIN_SUIVRE(), } )
-                    
+                    _continue = false
                 --[[//---------------------------------------------------------------------
 ]]--[[// 3) Fin mission sur ordre
 ]]--[[//---------------------------------------------------------------------
@@ -185,7 +186,7 @@ elseif switch_1 == eSuivreUnite then
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                    
+                    _continue = false
                 --[[//M_CheckInvalidPhase( "BEH_Mission_Pion_INF_SoutenirUneUnite", ePhaseMission )
 ]]--[[//Modifié par LLS le 28/02/2007
 ]]                cases_switch_1[3] = true
@@ -235,7 +236,7 @@ node "BEH_Dep_Pion_MILAN_Appuyer"
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "* En appui... *", } )
                 Activate( self.activations.ACT_Info_Trace, 1, { "* Pret a intervenir *", } )
-                                return
+                                do return end
 
             end
         end

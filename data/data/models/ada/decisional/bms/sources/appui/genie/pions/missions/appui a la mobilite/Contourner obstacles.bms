@@ -50,13 +50,14 @@ include "bit.lua"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhaseMission
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
                     --[[// Preparation de la mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhaseMission = eProgresser
-                    
+                    _continue = false
                 --[[// Progression tactique
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eProgresser then
@@ -67,20 +68,20 @@ elseif switch_1 == eProgresser then
                     local _continue = true
 do
                             Activate( self.activations.BEH_Dep_GEN_AllerContournerObstacle, S_Obj_ForceDistance( obstacle ), { obstacle, } )
-                                                        return
+                                                        do return end
 
                         end
 
                     end
 
                     self.ePhaseMission = eFinMission
-                    
+                    _continue = false
                 --[[// Fin de la mission
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
                 end
             end

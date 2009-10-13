@@ -261,7 +261,7 @@ do
         if( #( listePionsPecl ) == rIt and not DIA_IsListEmpty( listePionsPecl ) ) then
             do
                 Activate( self.activations.ACT_MAJ_Automate_EtatMission, 1, { eEtatPhaseMission_FinMission, } )
-                                return
+                                do return end
 
             end
 --[[//-------------------------------------------------------------------------
@@ -344,7 +344,7 @@ node "ACT_MAJ_Automate_EtatMission"
         end
 
         if( DIA_IsListEmpty( listePions ) ) then
-            return
+            do return end
         end
 
         Activate( self.activations.BEH_MAJ_Automate_SurLima, 1, { eEtatLima_LC, listePions, } )

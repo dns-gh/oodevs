@@ -60,20 +60,23 @@ node "BEH_Nbc_Recevoir_OrdreInopine"
 do
                 local repOrdre = x
                  do
+                    local _continue = true
                     local switch_1 = repOrdre:GetType()
                     local cases_switch_1 = {}
                         if switch_1 == "Rep_OrderConduite_MettreTenueNBC" then
                             SetStateVariable( "VE_NiveauNBC", 4 )
-                            
+                            _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == "Rep_OrderConduite_EnleverTenueNBC" then
                             SetStateVariable( "VE_NiveauNBC", 0 )
-                            
+                            _continue = false
                                                 cases_switch_1[2] = true
                         end
                     end
 
-                Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
+                    if _continue then
+                    Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
+                end
             end
 
         end

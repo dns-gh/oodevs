@@ -105,7 +105,7 @@ include "Appui/Alat/Pions/Common/Behaviors/Behaviors - Ordre.bms"
         Activate( self.activations.BEH_Info_Pion_RendreCompte, 1, {} )
         myself.plotsRavitaillement_ = S_Obj_ListeObjetsValides( myself.plotsRavitaillement_ )
         if( S_Misc_EstDetruitPhysique() ) then
-            return
+            do return end
         end
 
         Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 0.5, {} )
@@ -184,7 +184,7 @@ node "BEH_Dep_Virtuel_PreparationAction"
         Activate( self.activations.BEH_Dep_Pion_ALAT_Voler, 1, {} )--[[//Gestion du vol pour les hélicopteres
 ]]
                 self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 

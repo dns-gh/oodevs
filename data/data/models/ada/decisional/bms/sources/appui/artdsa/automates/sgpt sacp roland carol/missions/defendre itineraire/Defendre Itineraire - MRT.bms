@@ -68,13 +68,14 @@ do
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eMRT_AssignerMissions then
                     if( self.eEtatMissionsDefendreItineraire == eActionImpossible ) then
                         do
                             self.ePhase = eMRT_MissionImpossible
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -82,7 +83,7 @@ do
                     if( self.eEtatMissionsDefendreItineraire == eActionEffectuee ) then
                         do
                             self.ePhase = eMRT_Valider
-                                                        return
+                                                        do return end
 
                         end
 --[[//controle des creations de missions
@@ -96,7 +97,7 @@ do
 
                     --[[//Le pc va toujours stationner au milieu de l'itineraire
 ]]Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_MRT, self.listePC, DEC_ListePoints_GetAt( self.listePointsPourPC, 0 ), } )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eMRT_MissionImpossible then
                     DEC_RC( eRC_MissionImpossible )

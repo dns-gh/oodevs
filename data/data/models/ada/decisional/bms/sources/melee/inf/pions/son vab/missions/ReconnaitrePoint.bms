@@ -83,6 +83,7 @@ include "bit.lua"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eReconnaitre then
@@ -94,7 +95,7 @@ include "bit.lua"
                             --[[// -> Gestion l'ennemi
 ]]Activate( self.activations.BEH_Eni_Pion_VAB_RecoPoint, GetMotivation( "MOT_ManoeuvrerSurEnis" ), {} )
                             Activate( self.activations.BEH_Mission_Pion_VAB_RecoPoint, GetMotivation( "MOT_Mission" ), setmetatable( { self.pt, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
-                                                        return
+                                                        do return end
 
                         end
                     else
@@ -121,7 +122,7 @@ include "bit.lua"
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 
                 else
@@ -182,6 +183,7 @@ node "BEH_Mission_Pion_VAB_RecoPoint"
         Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, setmetatable( { M_TEMPS_PREPARATION_MISSION_RECO(), self._namedParams.pt, true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionRejoindre = v else rawset( t, k, v ) end end } ) )
         Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { self._namedParams.pt, } )
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eRejoindre then
@@ -190,7 +192,7 @@ node "BEH_Mission_Pion_VAB_RecoPoint"
                         self.ePhase = eObserver
                     end
 
-                    
+                    _continue = false
                 --[[//Observation de l'objectif
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eObserver then
@@ -204,7 +206,7 @@ elseif switch_1 == eObserver then
                     end
 
                     Activate( self.activations.BEH_Obs_Pion_INF_RecoPoint, 1.1, setmetatable( { self._namedParams.pt, S_Delai_INF_RecoDebarque( self._namedParams.pt ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[//Rejoinds l'objectif a pied
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eRejoindreAssaut then
@@ -212,7 +214,7 @@ elseif switch_1 == eRejoindreAssaut then
                         Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1.2, {} )
                     end
 
-                    
+                    _continue = false
                 --[[// Nettoyage de la position
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eFouiller then
@@ -227,13 +229,13 @@ elseif switch_1 == eFouiller then
                     end
 
                     Activate( self.activations.ACT_Dep_Pion_INF_Arret, 1, setmetatable( { M_DELAI_NETTOYAGE_RECO(), "fouille de la position", }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[4] = true
                 end
             end
 
                 self.params.__returnValue = self.ePhase
-        return
+        do return end
 
     end,
 

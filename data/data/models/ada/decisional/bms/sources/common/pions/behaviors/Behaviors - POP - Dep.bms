@@ -395,6 +395,7 @@ node "BEH_Pop_Pion_BloquerPopulation"
 
         self.posteControle = S_Obj_ObtenirObjetProcheDe( self.localisation, eTypeObjectPosteControle, self._namedParams.rMax )
          do
+            local _continue = true
             local switch_1 = self.ePhaseMission
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
@@ -404,7 +405,7 @@ node "BEH_Pop_Pion_BloquerPopulation"
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { self._namedParams.missionName .. " begining", } )
                     self.ePhaseMission = eProgresser
-                    
+                    _continue = false
                 --[[// 2) Rejoindre le site
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eProgresser then
@@ -416,7 +417,7 @@ elseif switch_1 == eProgresser then
                         self.ePhaseMission = eAnimer
                     end
 
-                    
+                    _continue = false
                 --[[// 3) Animer
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eAnimer then
@@ -428,7 +429,7 @@ elseif switch_1 == eAnimer then
 ]]if( ( self.posteControle == 0 or self.posteControle == nil ) ) then
                                 do
                                     Activate( self.activations.ACT_Pion_CreerObjetSur, 1, { self.localisation, eTypeObjectPosteControle, } )
-                                                                        return
+                                                                        do return end
 
                                 end
 --[[//---------------------------------------------------------------------
@@ -442,13 +443,13 @@ elseif switch_1 == eAnimer then
                         end
                     end
 
-                    
+                    _continue = false
                 --[[// 3) Fin de la mission de reconnaissance SUR ORDRE
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                                         self.params.__returnValue = eActionHalt
-                    return
+                    do return end
 
                 end
                 if not cases_switch_1[1] and not cases_switch_1[2] and not cases_switch_1[3] then

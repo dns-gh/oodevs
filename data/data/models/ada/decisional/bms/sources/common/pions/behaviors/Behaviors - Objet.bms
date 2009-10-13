@@ -100,7 +100,7 @@ node "BEH_Obj_RejoindreEmbossementLibre"
             do
                 Activate( self.activations.ACT_Dep_SePoster, 1, {} )
                 Activate( self.activations.ACT_Info_Trace, 1, { "%% Defilade position reached %%", } )
-                                return
+                                do return end
 
             end
 --[[//-----------------------------------------------------------------------------

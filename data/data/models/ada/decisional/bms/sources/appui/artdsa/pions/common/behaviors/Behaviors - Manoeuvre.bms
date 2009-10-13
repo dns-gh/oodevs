@@ -20,6 +20,7 @@ node "BEH_Manoeuvre_Pion_ASA_SeDeployer"
         if( not myself:DEC_Agent_EstEnMouvement() ) then
             do
                  do
+                    local _continue = true
                     local switch_1 = self.ePhase
                     local cases_switch_1 = {}
                         if switch_1 == eAttendre then
@@ -28,7 +29,7 @@ node "BEH_Manoeuvre_Pion_ASA_SeDeployer"
                                     self.eEtat = eActionEnCours
                                                                         do
                                         self.ePhase = eSeDeployer
-                                                                                return
+                                                                                do return end
 
                                     end
 
@@ -36,13 +37,13 @@ node "BEH_Manoeuvre_Pion_ASA_SeDeployer"
                             end
 
                             Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, self._namedParams.tempsDeploiement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                            
+                            _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == eSeDeployer then
                             Activate( self.activations.ACT_Pions_SInstaller, 1, {} )--[[//action de déploiement
 ]]
                                                         self.params.__returnValue = eActionEffectuee
-                            return
+                            do return end
 
                                                 end
                     end

@@ -131,7 +131,7 @@ node "BEH_Tir_Pion_INF_TirDebarque"
         local eActionReturn = self.eAction
         Activate( self.activations.ACT_Tir_Pion_INF_TirDebarque, 1, setmetatable( { self._namedParams.ksEni, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
                 self.params.__returnValue = eActionReturn
-        return
+        do return end
 
     end,
 
@@ -152,15 +152,16 @@ node "BEH_Eni_Pion_INF_GererContactEni"
 
     activate = function( self )
          do
+            local _continue = true
             local switch_1 = F_Pion_GeteTypeContact( myself )
             local cases_switch_1 = {}
                 if switch_1 == eTypeContact_Defensif then
                     Activate( self.activations.BEH_Eni_Pion_INF_DetruitEtFixe, 1, { self._namedParams.ksEni, false, } )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eTypeContact_Appui then
                     Activate( self.activations.BEH_Feu_Pion_INF_TirAppui, 1, { self._namedParams.ksEni, } )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 
                 else

@@ -57,7 +57,7 @@ do
             if( DEC_Automate_PionEstContamine( x ) ) then
                 do
                     _returnValue = true
-                                        return _returnValue
+                                        do return _returnValue end
 
                 end
             end
@@ -66,7 +66,7 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Automate_TauxDestruction( listePionsSubordonnes )
@@ -74,7 +74,7 @@ function S_Automate_TauxDestruction( listePionsSubordonnes )
     if( DIA_IsListEmpty( listePionsSubordonnes ) ) then
         do
             _returnValue = 1
-                        return _returnValue
+                        do return _returnValue end
 
         end
     end
@@ -93,7 +93,7 @@ do
     end
 
     _returnValue = rNombrePionsNonOp / #( listePionsSubordonnes )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Automate_CapaciteOperationnelle( listePionsSubordonnesInitiaux, listePionsSubordonnesCourants )
@@ -101,18 +101,18 @@ function S_Automate_CapaciteOperationnelle( listePionsSubordonnesInitiaux, liste
     if( DIA_IsListEmpty( listePionsSubordonnesInitiaux ) ) then
         do
             _returnValue = 0
-                        return _returnValue
+                        do return _returnValue end
 
         end
     end
 
     _returnValue = #( listePionsSubordonnesCourants ) / #( listePionsSubordonnesInitiaux )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Automate_EtatOperationnel( rCapaciteOperationnelle, rTauxDestruction )
     local _returnValue = 0
     _returnValue = ( 1 - rTauxDestruction ) * rCapaciteOperationnelle
-    return _returnValue
+    do return _returnValue end
 end
 

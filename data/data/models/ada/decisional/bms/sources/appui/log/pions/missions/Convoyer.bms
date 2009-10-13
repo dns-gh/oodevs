@@ -58,6 +58,7 @@ if( DEC_Ravitaillement_Convoi_ChargementEffectue() ) then
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eTestConvoyerStep_DeplacementVersPointChargement then
@@ -68,7 +69,7 @@ if( DEC_Ravitaillement_Convoi_ChargementEffectue() ) then
                         self.ePhase = eTestConvoyerStep_Chargement
                     end
 
-                    
+                    _continue = false
                 --[[// Chargement
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eTestConvoyerStep_Chargement then
@@ -77,7 +78,7 @@ elseif switch_1 == eTestConvoyerStep_Chargement then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhase = eTestConvoyerStep_DeplacementVersPointDechargement
-                                                                return
+                                                                do return end
 
                             end
 
@@ -85,7 +86,7 @@ elseif switch_1 == eTestConvoyerStep_Chargement then
                     end
 
                     Activate( self.activations.ACT_Misc_Pion_LOG_Charger, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// Aller
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eTestConvoyerStep_DeplacementVersPointDechargement then
@@ -95,7 +96,7 @@ elseif switch_1 == eTestConvoyerStep_DeplacementVersPointDechargement then
                         self.ePhase = eTestConvoyerStep_Dechargement
                     end
 
-                    
+                    _continue = false
                 --[[// Déchargement
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eTestConvoyerStep_Dechargement then
@@ -105,7 +106,7 @@ elseif switch_1 == eTestConvoyerStep_Dechargement then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhase = eTestConvoyerStep_DeplacementRetour
-                                                                return
+                                                                do return end
 
                             end
 
@@ -113,7 +114,7 @@ elseif switch_1 == eTestConvoyerStep_Dechargement then
                     end
 
                     Activate( self.activations.ACT_Misc_Pion_LOG_Decharger, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// Retour
 ]]                cases_switch_1[4] = true
 elseif switch_1 == eTestConvoyerStep_DeplacementRetour then
@@ -126,7 +127,7 @@ elseif switch_1 == eTestConvoyerStep_DeplacementRetour then
                         end
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[5] = true
                 end
             end
@@ -171,6 +172,7 @@ node "BEH_Dep_LOG_Suivre"
         end
 
          do
+            local _continue = true
             local switch_1 = --[[//---------------------------------------------------------------------
 ]]--[[// Rejoindre l'ami. A la fin si l'ami, n'est pas la, le rejoindre à
 ]]--[[// nouveaux etc.
@@ -182,7 +184,7 @@ node "BEH_Dep_LOG_Suivre"
 ]]--[[// 1) Creer l'itineraire et mettre à jour la position amie
 ]]--[[//-----------------------------------------------------------------
 ]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position() ) < self._namedParams.rDistanceMin - 500 ) then
-                        return
+                        do return end
                     end
 
                     self.itVersAmi = S_Misc_DetruireItineraire( self.itVersAmi, "BEH_Dep_Suivre: " )
@@ -201,7 +203,7 @@ node "BEH_Dep_LOG_Suivre"
                         do
                             self.eEtat = eActionEnCours
                             self.eComportement = eCreerItineraire
-                                                        return
+                                                        do return end
 
                         end
 --[[//-----------------------------------------------------------------------------
@@ -230,7 +232,7 @@ node "BEH_Dep_LOG_Suivre"
                         end
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 
                 else

@@ -107,7 +107,7 @@ include "bit.lua"
             do
                 self.eActionDetruire = eActionEnCours
                                 self.params.__returnValue = eActionEnPause
-                return
+                do return end
 
             end
 --[[// tir sur l'ennemi

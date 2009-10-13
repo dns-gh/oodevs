@@ -49,12 +49,12 @@ do
         end
 
         if( DIA_IsListEmpty( listeDirectionsPions ) ) then
-            return
+            do return end
         end
 
         directionGroupe = DEC_Geometrie_DirectionMoyenne( listeDirectionsPions )
         if( ( directionGroupe == 0 or directionGroupe == nil ) ) then
-            return
+            do return end
         end
 
         for _,x in pairs( self._namedParams.listePions ) do

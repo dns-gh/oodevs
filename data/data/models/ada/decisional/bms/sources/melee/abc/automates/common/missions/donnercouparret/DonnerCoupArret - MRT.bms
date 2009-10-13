@@ -38,7 +38,7 @@ includedFiles["sources/melee/abc/automates/common/missions/donnercouparret/Donne
 ]]self.rIterateurPosition = self.rIterateurPosition or 0
         self.listePositions = self.listePositions or {}
         if( ( #( self._namedParams.selPions ) == 0 or #( self._namedParams.selPions ) == nil ) ) then
-            return
+            do return end
         end
 
         --[[//-------------------------------------------------------------------------
@@ -52,7 +52,7 @@ includedFiles["sources/melee/abc/automates/common/missions/donnercouparret/Donne
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleLimaInvalide, } )
                                                 self.params.__returnValue = eActionImpossible
-                        return
+                        do return end
 
                     end
 --[[// positions
@@ -63,7 +63,7 @@ includedFiles["sources/melee/abc/automates/common/missions/donnercouparret/Donne
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleLimaInvalide, } )
                                                 self.params.__returnValue = eActionImpossible
-                        return
+                        do return end
 
                     end
 --[[//---------------------------------------------------------------------
@@ -120,7 +120,7 @@ node "BEH_Medo_Automate_ABC_DonnerCoupArret_AssignerMissionSurveillerA"
 ]]self.rIterateurPosition = self.rIterateurPosition or 0
         self.listePositions = self.listePositions or {}
         if( ( #( self._namedParams.selPions ) == 0 or #( self._namedParams.selPions ) == nil ) ) then
-            return
+            do return end
         end
 
         --[[//-------------------------------------------------------------------------
@@ -134,7 +134,7 @@ node "BEH_Medo_Automate_ABC_DonnerCoupArret_AssignerMissionSurveillerA"
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleLimaInvalide, } )
                                                 self.params.__returnValue = eActionImpossible
-                        return
+                        do return end
 
                     end
 --[[// positions
@@ -143,7 +143,7 @@ node "BEH_Medo_Automate_ABC_DonnerCoupArret_AssignerMissionSurveillerA"
                 self.listePositions = DEC_Geometrie_CalculerPositionsParRapportALima( LCAR, 10, #( self._namedParams.selPions ) )
                 if( ( self.listePositions == 0 or self.listePositions == nil ) ) then
                     self.params.__returnValue = eActionImpossible
-                    return
+                    do return end
                 end
 
                 for _,pion in pairs( --[[//---------------------------------------------------------------------

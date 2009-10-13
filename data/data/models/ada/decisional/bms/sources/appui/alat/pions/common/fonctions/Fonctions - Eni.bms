@@ -13,6 +13,6 @@ include "bit.lua"
     local bEstDefenseAirAir = agent:GetType() == "AirDefenseHelicopterPatrol"
     local bEstConnaissanceVolante = S_ConnaissanceAgent_EstEnVol( connaissance )
     _returnValue = ( bEstDefenseAirAir and bEstConnaissanceVolante ) or ( not bEstDefenseAirAir and not bEstConnaissanceVolante )
-    return _returnValue
+    do return _returnValue end
 end
 

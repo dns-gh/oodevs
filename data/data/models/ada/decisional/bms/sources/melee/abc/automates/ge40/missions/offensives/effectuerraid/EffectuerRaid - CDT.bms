@@ -53,7 +53,7 @@ includedFiles["sources/melee/abc/automates/ge40/missions/offensives/effectuerrai
 
                 end
 
-                                return
+                                do return end
 
             end
 --[[/***************TEST *******************/]]        end

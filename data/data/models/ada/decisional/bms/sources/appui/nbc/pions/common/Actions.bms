@@ -144,7 +144,7 @@ includedFiles["sources/appui/nbc/pions/common/Actions.bms"] = true
 
         DEC_ConnaissanceObjet_Reconnaitre( self._namedParams.siteROTA )
                 self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 

@@ -103,7 +103,7 @@ node "BEH_Dep_Pion_MARINE_RejoindrePion"
         if( self.eEtat ~= eActionEnCours ) then
             do
                                 self.params.__returnValue = self.eEtat
-                return
+                do return end
 
             end
         else
@@ -227,6 +227,7 @@ node "BEH_Dep_Pion_MARINE_RejoindreParItineraire"
         Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
         Activate( self.activations.BEH_Dep_Progresser, 1, setmetatable( { self.itineraire, self._namedParams.typeProgression, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
          do
+            local _continue = true
             local switch_1 = DEC_Itineraire_Etat( self.itineraire )
             local cases_switch_1 = {}
                 if switch_1 == eItineraire_Valide
@@ -272,7 +273,7 @@ node "BEH_Dep_Pion_MARINE_RejoindreParItineraire"
                         end
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eItineraire_Invalide then
                     do
@@ -288,7 +289,7 @@ elseif switch_1 == eItineraire_Invalide then
                     do
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
 elseif switch_1 == eItineraire_Impossible then
                     do

@@ -73,6 +73,7 @@ includedFiles["sources/melee/abc/pions/common/missions/ArmerPIA.bms"] = true
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhaseMission
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
@@ -80,7 +81,7 @@ includedFiles["sources/melee/abc/pions/common/missions/ArmerPIA.bms"] = true
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "Arming friend or foe identification point mission begining", } )
                     self.ePhaseMission = eProgresser
-                    
+                    _continue = false
                 --[[// 2) Progression tactique
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eProgresser then
@@ -90,7 +91,7 @@ elseif switch_1 == eProgresser then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhaseMission = eSurveiller
-                                                                return
+                                                                do return end
 
                             end
 
@@ -99,7 +100,7 @@ elseif switch_1 == eProgresser then
 ]]                    end
 
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.pia_, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// 5) Qd prêt pour armer le PIA --> commencer réellement la mission
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eSurveiller then
@@ -107,13 +108,13 @@ elseif switch_1 == eSurveiller then
                     Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )
                     Activate( self.activations.BEH_Pion_ABC_InstallerDispositif, 1, {} )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                    
+                    _continue = false
                 --[[// 4) Fin de la mission de reconnaissance SUR ORDRE
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                    
+                    _continue = false
                                 cases_switch_1[4] = true
 
                 else

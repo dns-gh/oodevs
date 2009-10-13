@@ -108,6 +108,7 @@ node "BEH_Medo_Automate_INF_DonnerLesOrdresPourMissionRetrograde"
         self.selABC_SE = self.selABC_SE or {}--[[// Liste des pions en second echelon
 ]]
          do
+            local _continue = true
             local switch_1 = --[[// =============================================================================
 ]]--[[// PHASE DU COMPORTEMENT
 ]]--[[// 1) Vérifier les moyens, des renforts éventuels
@@ -137,17 +138,18 @@ do
 
                                 if _continue then
                                  do
+                                    local _continue = true
                                     local switch_2 = pion:GetType()
                                     local cases_switch_2 = {}
                                         if switch_2 == "SectionInfanterie" then
                                             Activate( self.activations.ACT_Info_Automate_Trace, 1, { "-------$$$ Renforcements INF $$$------", } )
                                             DIA_PushFront( self.selABC_INF, pion )
-                                            
+                                            _continue = false
                                                                                 cases_switch_2[1] = true
 
                                         else
                                             DIA_PushFront( self.selABC_NonPrevu, pion )
-                                            
+                                            _continue = false
                                                                                 end
                                     end
 
@@ -156,8 +158,10 @@ do
 
                     end
 
-                    self.ePhase = eMRT_AssignerMissions
-                    
+                        if _continue then
+                        self.ePhase = eMRT_AssignerMissions
+                        _continue = false
+                    end
                 --[[//---------------------------------------------------------------------
 ]]--[[// Assignation des missions
 ]]--[[//---------------------------------------------------------------------
@@ -168,7 +172,7 @@ elseif switch_1 == eMRT_AssignerMissions then
                             --[[// ePhase = eMRT_MissionImpossible;
 ]]DEC_Trace( "Warning: some front units did not received mission " )
                             self.ePhase = eMRT_Valider
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -176,7 +180,7 @@ elseif switch_1 == eMRT_AssignerMissions then
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.ePhase = eMRT_Valider
-                                                        return
+                                                        do return end
 
                         end
 --[[/* ------------------------------------------------------------- */]]--[[/* ------- Fin Gestion erreur/ bon deroulement ------- */]]--[[/* ------------------------------------------------------------- */]]--[[// Suivant le type de mission...
@@ -189,14 +193,14 @@ elseif switch_1 == eMRT_AssignerMissions then
                         end
                     end
 
-                    
+                    _continue = false
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Mission impossible
 ]]--[[//-----------------------------------------------------------------------------
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eMRT_MissionImpossible then
                     Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
-                    
+                    _continue = false
                 --[[//---------------------------------------------------------------------
 ]]--[[// Validation
 ]]--[[//---------------------------------------------------------------------
@@ -284,21 +288,22 @@ node "BEH_Mission_Automate_INF_AssignerFreinerA"
         self.eActionCreation = self.eActionCreation or eActionEnCours
         local rForce = 1 / GetActivity()
          do
+            local _continue = true
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
-                                        return
+                                        do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
                     Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
-                                        return
+                                        do return end
 
                                 end
             end
@@ -333,17 +338,18 @@ node "ACT_Mission_Automate_INF_AssignerFreinerA"
         if( ModuleBegins() ) then
             do
                  do
+                    local _continue = true
                     local switch_1 = self._namedParams.ePhase
                     local cases_switch_1 = {}
                         if switch_1 == ePhase_MRT then
                                                     local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_INF_Freiner" )
                             self.missionPion = misMRT
-                            
+                            _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == ePhase_CDT then
                                                     local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_INF_Freiner" )
                             self.missionPion = misCDT
-                            
+                            _continue = false
                                                 cases_switch_1[2] = true
 
                         else
@@ -356,13 +362,13 @@ elseif switch_1 == ePhase_CDT then
 
         if( self.missionPion == nil ) then
             self.params.__returnValue = eActionImpossible
-            return
+            do return end
         end
 
         --[[//--------------------------------------------------------------------------
 ]]if( not ModuleBegins() ) then
             self.params.__returnValue = eActionEffectuee
-            return
+            do return end
         end
 
         --[[// Infos globales	    
@@ -379,7 +385,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
                 self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 

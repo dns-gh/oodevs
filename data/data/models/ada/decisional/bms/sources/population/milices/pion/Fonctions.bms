@@ -29,7 +29,7 @@ include "bit.lua"
 ]]function S_EstADistanceTir_Pt( ptTir )
     local _returnValue = false
     _returnValue = DEC_Geometrie_Distance( DEC_Agent_Position(), ptTir ) < 1000
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_CreerItineraire_Embuscade( ptEmbuscade )
@@ -39,7 +39,7 @@ function S_CreerItineraire_Embuscade( ptEmbuscade )
     assert( ( ptEmbuscade ~= 0 and ptEmbuscade ~= nil ), "ptEmbuscade != 0" )
     DEC_Copie_PointDansListePoints( myself.ptRegroupement_, _returnValue )
     DEC_ListePoints_PushBack( _returnValue, ptEmbuscade )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Geometrie_Milice_ChercherPositionObstacle( ptMission, natureObstacle, rDistMoyenObstacle )
@@ -51,7 +51,7 @@ function S_Geometrie_Milice_ChercherPositionObstacle( ptMission, natureObstacle,
     if( ( ptMineMieux ~= 0 and ptMineMieux ~= nil ) and not S_Geometrie_EstProchePosition( DEC_Agent_Position(), ptMineMieux, 200 ) ) then
         do
             _returnValue = DEC_Geometrie_ConvertirPointEnLocalisation( ptMineMieux )
-                        return _returnValue
+                        do return _returnValue end
 
         end
     end
@@ -66,13 +66,13 @@ function S_Geometrie_Milice_ChercherPositionObstacle( ptMission, natureObstacle,
     if( ( ptMineMieux ~= 0 and ptMineMieux ~= nil ) ) then
         do
             if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), ptMineMieux, 300 ) ) then
-                return _returnValue
+                do return _returnValue end
             end
 
             _returnValue = DEC_Geometrie_ConvertirPointEnLocalisation( ptMineMieux )
         end
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 

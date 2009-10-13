@@ -29,7 +29,7 @@ include "bit.lua"
     activate = function( self )
         Activate( self.activations.ACT_Dep_Pions_AIR_Voler, 1, { 0.001, } )
                 self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 
@@ -53,7 +53,7 @@ node "BEH_Dep_Pion_AIR_SePoser"
     activate = function( self )
         Activate( self.activations.ACT_Dep_Pions_AIR_Voler, 1, { 0, } )
                 self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 
@@ -89,6 +89,7 @@ node "BEH_Dep_Pion_AIR_Voler"
 ]]self.delaiDemarageOK = self.delaiDemarageOK or false
         self.eEtatDemarageMoteurs = self.eEtatDemarageMoteurs or eActionEnCours
          do
+            local _continue = true
             local switch_1 = F_Pion_GeteEtatAmbiance( myself )
             local cases_switch_1 = {}
                 if switch_1 == eEtatAmbiance_Surete then
@@ -99,7 +100,7 @@ node "BEH_Dep_Pion_AIR_Voler"
                         Activate( self.activations.BEH_Dep_Pion_AIR_SecondeAllureAvecAppuis, 1, {} )
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eEtatAmbiance_Vitesse then
                     if( DIA_IsListEmpty( F_Pion_GetselUnitesEnAppui( myself ) ) ) then
@@ -108,7 +109,7 @@ elseif switch_1 == eEtatAmbiance_Vitesse then
                         Activate( self.activations.BEH_Dep_Pion_AIR_TroisiemeAllureAvecAppuis, 1, {} )
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end
@@ -326,7 +327,7 @@ node "BEH_Dep_Pion_AIR_RejoindrePion"
 
         if( self.eEtat ~= eActionEnCours ) then
             self.params.__returnValue = self.eEtat
-            return
+            do return end
         else
             Activate( self.activations.BEH_Dep_Pion_AIR_RejoindrePoint, 1, setmetatable( { self.positionPion, self._namedParams.typeProgression, self._namedParams.ePathType, self._namedParams.distanceMin, self._namedParams.distanceMax, self._namedParams.forceDelaiSucces, self._namedParams.forceDelaiPenalite, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
         end
@@ -449,6 +450,7 @@ node "BEH_Dep_Pion_AIR_RejoindreParItineraire"
         Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
         Activate( self.activations.BEH_Dep_Progresser, 1, setmetatable( { self.itineraire, self._namedParams.typeProgression, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
          do
+            local _continue = true
             local switch_1 = DEC_Itineraire_Etat( self.itineraire )
             local cases_switch_1 = {}
                 if switch_1 == eItineraire_Valide
@@ -495,7 +497,7 @@ node "BEH_Dep_Pion_AIR_RejoindreParItineraire"
                         end
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eItineraire_Invalide then
                     do
@@ -511,7 +513,7 @@ elseif switch_1 == eItineraire_Invalide then
                     do
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
 elseif switch_1 == eItineraire_Impossible then
                     do

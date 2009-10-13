@@ -63,7 +63,7 @@ node "BEH_Dispositif_Automate_FaireSuivreLeSE"
 ]]--[[// Assignation des missions
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( DIA_IsListEmpty( sel_SE ) or DIA_IsListEmpty( sel_PE ) ) then
-            return
+            do return end
         end
 
         for _,x in pairs( sel_SE ) do

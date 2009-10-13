@@ -46,6 +46,7 @@ node "MIS_Pion_INF_EscorterUnite"
         Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Defensif, } )
         Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eIdentifie, M_TIR_PH_MISSION_MANOEUVRE(), } )
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eSeMettreEnPlace then
@@ -53,13 +54,13 @@ node "MIS_Pion_INF_EscorterUnite"
 ]]if( self.eCurrentPhase == eFinMission ) then
                         do
                             self.ePhase = eFinMission
-                                                        return
+                                                        do return end
 
                         end
                     end
 
                     Activate( self.activations.BEH_Mission_Pion_VAB_EscorterUnConvoi, GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eFinMission then
                     if( self.eAction == eActionEffectuee ) then
@@ -82,7 +83,7 @@ elseif switch_1 == eFinMission then
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 
                 else
@@ -124,6 +125,7 @@ node "BEH_Mission_Pion_VAB_EscorterUnConvoi"
         Activate( self.activations.ACT_Misc_Pion_Melee_Escorter, 1, { self.pionConvoi, } )
         Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
@@ -142,7 +144,7 @@ node "BEH_Mission_Pion_VAB_EscorterUnConvoi"
 ]]if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self.pionConvoi:DEC_Agent_Position(), 200 ) ) then
                         do
                             self.ePhase = eEscorter
-                                                        return
+                                                        do return end
 
                         end
 --[[//-----------------------------------------------------------------------------
@@ -151,7 +153,7 @@ node "BEH_Mission_Pion_VAB_EscorterUnConvoi"
 ]]                    end
 
                     Activate( self.activations.BEH_Dep_Suivre, 1, { self.pionConvoi, 50, } )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eEscorter then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EscorteUnite, } )
@@ -160,7 +162,7 @@ elseif switch_1 == eEscorter then
 ]]if( ( F_Pion_GetitMvt( self.pionConvoi ) == 0 or F_Pion_GetitMvt( self.pionConvoi ) == nil ) ) then
                         do
                             Activate( self.activations.ACT_Info_Trace, 1, { "**** L'unite escorter doit avoir un objectif **** ", } )
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -176,7 +178,7 @@ elseif switch_1 == eEscorter then
                     end
 
                     Activate( self.activations.BEH_Dep_Progresser, 1, setmetatable( { F_Pion_GetitMvt( self.pionConvoi ), eProgressionReco, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
                 end
             end
@@ -203,7 +205,7 @@ node "BEH_Dep_Pion_INF_SeCoordonnerSurEscorte"
         self.bActiveAttente = self.bActiveAttente or false
         self.bActiveRelai = self.bActiveRelai or false
         if( not S_Geometrie_EstProchePosition( self._namedParams.pionAmi:DEC_Agent_Position(), DEC_Agent_Position(), self._namedParams.rDistMax + self._namedParams.rDistMin ) ) then
-            return
+            do return end
         end
 
         if( S_Geometrie_EstProchePosition( self._namedParams.pionAmi:DEC_Agent_Position(), DEC_Agent_Position(), self._namedParams.rDistMin ) ) then

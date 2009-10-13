@@ -69,7 +69,7 @@ include "Melee/Abc/Automates/Common/Gestion pions detruits.bms"
 ]]--[[// ---------------------------------------------------------------------
 ]]
         if( not DEC_Automate_EstEmbraye() ) then
-            return
+            do return end
         end
 
         Activate( self.activations.BEH_Nbc_Automate_GererAlerteNiv4, 1, {} )--[[//-----------------------------------------------------------------------------
@@ -128,6 +128,7 @@ node "BEH_RC_Automate_GererConditionOperationnelle"
 ]]local listePEcl = S_ObtenirTousPionsDe( eEtatEchelon_Eclairage )
         local listePE = S_ObtenirTousPionsDe( eEtatEchelon_Premier )
          do
+            local _continue = true
             local switch_1 = self._namedParams.eEtatEchelon
             local cases_switch_1 = {}
                 if switch_1 == eEtatEchelon_Premier then
@@ -135,14 +136,14 @@ node "BEH_RC_Automate_GererConditionOperationnelle"
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eEtatEchelon_Eclairage then
                     if( DIA_IsListEmpty( listePE ) and DIA_IsListEmpty( listePEcl ) ) then
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end

@@ -226,6 +226,7 @@ node "BEH_Dispositif_Automate_ABC_GererLeDispositif_"
     activate = function( self )
         self.ePhase = self.ePhase or eGererSecondEchelon
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eGererPionDetruit then
@@ -236,7 +237,7 @@ node "BEH_Dispositif_Automate_ABC_GererLeDispositif_"
 ]]--[[// 1 iteration ou l'on redonne les missions
 ]]Activate( self.activations.BEH_Dispositif_Automate_ABC_GererPionsDetruits_, 1, { self._namedParams.bAvecReleve, } )
                     self.ePhase = eGererSecondEchelon
-                    
+                    _continue = false
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Organisation du SE
 ]]--[[//-----------------------------------------------------------------------------
@@ -245,13 +246,13 @@ elseif switch_1 == eGererSecondEchelon then
                     if( S_Dispositif_Automate_ABC_EvtPionDetruit() ) then
                         do
                             self.ePhase = eGererPionDetruit
-                                                        return
+                                                        do return end
 
                         end
                     end
 
                     Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLeSE_, 1, {} )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end
@@ -293,7 +294,7 @@ node "BEH_Dispositif_Automate_ABC_GererLeSE_"
 ]]--[[// Assignation des missions
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( DIA_IsListEmpty( selABC_SE ) or DIA_IsListEmpty( selABC_PE ) ) then
-            return
+            do return end
         end
 
         for _,x in pairs( selABC_SE ) do
@@ -344,7 +345,7 @@ node "BEH_Mission_Automate_AssignerMissionsSE"
 ]]if( ModuleBegins() ) then
             do
                 Activate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_CDT, self._namedParams.pion, self._namedParams.pionPE, } )
-                                return
+                                do return end
 
             end
 --[[// Sécurité --> si composantes reviennent sur dans le pion et téléportation vers PC
@@ -416,6 +417,7 @@ node "BEH_Dispositif_Automate_ABC_GererLeDispositifStatique_"
     activate = function( self )
         self.ePhase = self.ePhase or eGererSecondEchelon
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eGererPionDetruit then
@@ -426,7 +428,7 @@ node "BEH_Dispositif_Automate_ABC_GererLeDispositifStatique_"
 ]]--[[// 1 iteration ou l'on redonne les missions
 ]]Activate( self.activations.BEH_Dispositif_Automate_ABC_GererPionsDetruits_, 1, { self._namedParams.bAvecReleve, } )
                     self.ePhase = eGererSecondEchelon
-                    
+                    _continue = false
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Organisation du SE
 ]]--[[//-----------------------------------------------------------------------------
@@ -435,13 +437,13 @@ elseif switch_1 == eGererSecondEchelon then
                     if( S_Dispositif_Automate_ABC_EvtPionDetruit() ) then
                         do
                             self.ePhase = eGererPionDetruit
-                                                        return
+                                                        do return end
 
                         end
                     end
 
                     Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLeSEStatique_, 1, { self._namedParams.positionInstallation, } )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end
@@ -511,7 +513,7 @@ node "BEH_Dispositif_Automate_ABC_GererLeSEStatique_"
 do
                         DEC_Trace( "Pions in same fuseau or location not in fuseau" )
                         DEC_Trace( "Can't compute position in the localisation" )
-                                                return
+                                                do return end
 
                     end
                 end
@@ -546,6 +548,7 @@ node "BEH_Dispositif_Automate_ABC_GererLeDispositifStatiqueSurLima_"
     activate = function( self )
         self.ePhase = self.ePhase or eGererSecondEchelon
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eGererPionDetruit then
@@ -556,7 +559,7 @@ node "BEH_Dispositif_Automate_ABC_GererLeDispositifStatiqueSurLima_"
 ]]--[[// 1 iteration ou l'on redonne les missions
 ]]Activate( self.activations.BEH_Dispositif_Automate_ABC_GererPionsDetruits_, 1, { self._namedParams.bAvecReleve, } )
                     self.ePhase = eGererSecondEchelon
-                    
+                    _continue = false
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Organisation du SE
 ]]--[[//-----------------------------------------------------------------------------
@@ -565,13 +568,13 @@ elseif switch_1 == eGererSecondEchelon then
                     if( S_Dispositif_Automate_ABC_EvtPionDetruit() ) then
                         do
                             self.ePhase = eGererPionDetruit
-                                                        return
+                                                        do return end
 
                         end
                     end
 
                     Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLeSEStatiqueSurLima_, 1, { self._namedParams.lima, } )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end

@@ -75,7 +75,7 @@ include "Appui/Nbc/Pions/Common/Behaviors - Dep.bms"
 ]]--[[//-----------------------------------------------------------------------------
 ]]
         --[[/************************** Si totalement detruit... **************************/]]if( S_Misc_EstDetruitPhysique() ) then
-            return
+            do return end
         end
 
         Activate( self.activations.BEH_ROE, 1, {} )--[[//-----------------------------------------------------------------------------
@@ -206,7 +206,7 @@ node "BEH_Nbc_Pion_FaireUneMesureDans"
 ]]self.bMesureEffectuee = self.bMesureEffectuee or false
         --[[// Mesure effectuee
 ]]if( self.bMesureEffectuee ) then
-            return
+            do return end
         end
 
         --[[//---------------------------------------------------------------------
@@ -290,10 +290,11 @@ node "ACT_NBC_FaireMesure"
     activate = function( self )
         --[[//////////////// BMS OPTIM  ///////////////////
 ]]        if( F_Pion_GeteEtatDec( myself ) == eEtatDec_Sauvegarde ) then
-            return
+            do return end
         end
 
          do
+            local _continue = true
             local switch_1 = --[[////////////// FIN OPTIM  /////////////////////
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// En fonction du moral...
@@ -305,7 +306,7 @@ node "ACT_NBC_FaireMesure"
 ]]--[[// Fanatique --> esquive sur PAP, pas de ralentissement
 ]]--[[//-----------------------------------------------------------------------------
 ]]SetStateVariable( "VE_RapFor", 0 )
-                    
+                    _continue = false
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Moral bon --> esquive sur PAP et effet rapFor défavorable --> ralentissement
 ]]--[[//-----------------------------------------------------------------------------
@@ -318,20 +319,22 @@ elseif switch_1 == eMoral_Moyen
 ]]if( DEC_GetMission( myself ) == nil ) then
                         do
                             SetStateVariable( "VE_RapFor", ( 5 - DEC_RapportDeForceLocal() ) )
-                            
+                            _continue = false
                         end
 --[[// sinon
 ]]                    end
 
-                    SetStateVariable( "VE_RapFor", 0 )
-                    
+                        if _continue then
+                        SetStateVariable( "VE_RapFor", 0 )
+                        _continue = false
+                    end
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Moral mauvais: --> esquive sur PAP et sur rapFor défavorable
 ]]--[[//-----------------------------------------------------------------------------
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eMoral_Mauvais then
                     SetStateVariable( "VE_RapFor", ( 5 - DEC_RapportDeForceLocal() ) )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
                 end
             end
@@ -380,7 +383,7 @@ node "BEH_Dep_Virtuel_PreparationAction"
 
     activate = function( self )
                 self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 

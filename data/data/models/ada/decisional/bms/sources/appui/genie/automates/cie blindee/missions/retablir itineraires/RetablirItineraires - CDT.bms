@@ -41,7 +41,7 @@ includedFiles["sources/appui/genie/automates/cie blindee/missions/retablir itine
         if( ( #( listePionsGenie ) == 0 or #( listePionsGenie ) == nil ) ) then
             do
                 Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
-                                return
+                                do return end
 
             end
 --[[//---------------------------------------------------------------------
@@ -160,7 +160,7 @@ node "BEH_Misc_Automate_GEN_GererRenforcementReductionObstacle"
     activate = function( self )
         --[[// Renforcement déjà assigné
 ]]if( self._namedParams.objetADetruire:GetpionRenforcement_() ~= nil ) then
-            return
+            do return end
         end
 
         --[[//-------------------------------------------------------------------------

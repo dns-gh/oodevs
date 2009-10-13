@@ -74,7 +74,7 @@ include "bit.lua"
             do
                 self.eActionFixer = eActionEnCours
                                 self.params.__returnValue = eActionEnPause
-                return
+                do return end
 
             end
 --[[// Tout le monde tir lorsque l'on est a distance de tir	

@@ -45,6 +45,6 @@ includedFiles["sources/melee/inf/pions/common/Globals Poly.bms"] = true
         _returnValue = 0.8
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 

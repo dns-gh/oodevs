@@ -35,7 +35,7 @@ if( DEC_Agent_PeutTransporterPion( x, seulementEmbarquable ) ) then
     end
 
     _returnValue = listBuffer
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Liste_RefugiesTousEmbarques( listePions )
@@ -54,7 +54,7 @@ if( DEC_Refugies_EstEmbarque( pion ) ) then
         _returnValue = true
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Liste_PrisonniersTousEmbarques( listePions )
@@ -73,7 +73,7 @@ if( DEC_Prisonniers_EstEmbarque( pion ) ) then
         _returnValue = true
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Misc_Pion_RefugiesTousDebarquesDansCamp( listePions, camp )
@@ -92,7 +92,7 @@ if( DEC_Refugies_EstDebarqueDansCamp( pion, camp ) ) then
         _returnValue = true
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Misc_Pion_PrisonniersTousDebarquesDansCamp( listePions, camp )
@@ -111,6 +111,6 @@ if( DEC_Prisonniers_EstDebarqueDansCamp( pion, camp ) ) then
         _returnValue = true
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 

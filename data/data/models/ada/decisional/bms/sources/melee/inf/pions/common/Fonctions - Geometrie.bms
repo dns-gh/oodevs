@@ -53,7 +53,7 @@ include "bit.lua"
         _returnValue = DEC_Geometrie_Distance( ptDest, ptTest ) <= rEcart
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Geometrie_INF_PtPref( ptObj, bDroite )
@@ -67,7 +67,7 @@ function S_Geometrie_INF_PtPref( ptObj, bDroite )
     DEC_Geometrie_InverseDirection( dirObj )
     ptPref = DEC_Geometrie_PositionTranslateDir( ptInter, dirObj, 300 )
     _returnValue = ptPref
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Geometrie_INF_ChercherPositionObstacle( ptMission, natureObstacle, rDistMoyenObstacle )
@@ -80,7 +80,7 @@ function S_Geometrie_INF_ChercherPositionObstacle( ptMission, natureObstacle, rD
     if( ptMineMieux ~= nil and not S_Geometrie_EstProchePosition( DEC_Agent_Position(), ptMineMieux, 300 ) ) then
         do
             _returnValue = DEC_Geometrie_ConvertirPointEnLocalisation( ptMineMieux )
-                        return _returnValue
+                        do return _returnValue end
 
         end
     else
@@ -99,7 +99,7 @@ function S_Geometrie_INF_ChercherPositionObstacle( ptMission, natureObstacle, rD
             if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), ptMineMieux, 300 ) ) then
                 do
                     ptMineMieux = nil
-                                        return _returnValue
+                                        do return _returnValue end
 
                 end
             end
@@ -108,6 +108,6 @@ function S_Geometrie_INF_ChercherPositionObstacle( ptMission, natureObstacle, rD
         end
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 

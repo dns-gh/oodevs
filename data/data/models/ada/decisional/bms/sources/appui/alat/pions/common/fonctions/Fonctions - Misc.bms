@@ -35,7 +35,7 @@ do
             else
 do
                     _returnValue = 0
-                                        return _returnValue
+                                        do return _returnValue end
 
                 end
             end
@@ -44,7 +44,7 @@ do
     end
 
     _returnValue = DEC_Agent_TempsPourParcourirDistanceEnLigneDroite( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), pointDeRecompletement ) )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Misc_Pion_ALAT_PointInterception( listeConnaissances )
@@ -52,6 +52,6 @@ function S_Misc_Pion_ALAT_PointInterception( listeConnaissances )
     local barycentreConnaissances = DEC_Geometrie_CalculerBarycentreListeConnaissancesAgents( listeConnaissances )
     local eniAIntercepter = S_Eni_ChercheEniPlusProchePosition( barycentreConnaissances, listeConnaissances )
     _returnValue = DEC_Agent_PositionInterception( eniAIntercepter )
-    return _returnValue
+    do return _returnValue end
 end
 

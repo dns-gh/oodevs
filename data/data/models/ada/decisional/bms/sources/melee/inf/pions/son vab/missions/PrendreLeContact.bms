@@ -95,6 +95,7 @@ node "MIS_Pion_INF_PrendrePreciserContact"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == ePrendreContact then
@@ -102,7 +103,7 @@ node "MIS_Pion_INF_PrendrePreciserContact"
                         do
                             Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
                             Activate( self.activations.BEH_Mission_Pion_VAB_PrendrePreciserContact, GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
-                            
+                            _continue = false
                         end
                     else
                         self.ePhase = eFinMission
@@ -127,7 +128,7 @@ elseif switch_1 == eFinMission then
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 
                 else
@@ -160,7 +161,7 @@ node "BEH_Mission_Pion_VAB_PrendrePreciserContact"
             do
                 DEC_Trace( "Action impossible sur Eni" )
                 if( F_Pion_GeteniEnCours( myself ) ~= nil ) then
-                    return
+                    do return end
                 end
 
                                 self.params.__returnValue = eFinMission
@@ -175,7 +176,7 @@ node "BEH_Mission_Pion_VAB_PrendrePreciserContact"
                 self.eActionEni = eActionEnCours
                                 do
                                         self.params.__returnValue = eFinMission
-                    return
+                    do return end
 
                 end
 

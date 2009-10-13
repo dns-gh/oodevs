@@ -23,17 +23,18 @@ node "ACT_Mission_Automate_ASA_MISTRAL_AssignerDefendreZoneAPartirPositionA"
                 if( ModuleBegins() ) then
                     do
                          do
+                            local _continue = true
                             local switch_1 = self._namedParams.ePhase
                             local cases_switch_1 = {}
                                 if switch_1 == ePhase_MRT then
                                                                     local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ASA_MISTRAL_DefendreZoneAPartirPosition" )
                                     self.missionPion = misMRT
-                                    
+                                    _continue = false
                                                                 cases_switch_1[1] = true
 elseif switch_1 == ePhase_CDT then
                                                                     local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ASA_MISTRAL_DefendreZoneAPartirPosition" )
                                     self.missionPion = misCDT
-                                    
+                                    _continue = false
                                                                 cases_switch_1[2] = true
 
                                 else
@@ -44,45 +45,47 @@ elseif switch_1 == ePhase_CDT then
                     end
                 end
 
-                if( self.missionPion == nil ) then
-                    self.params.__returnValue = eActionImpossible
-                    return
-                end
+                    if _continue then
+                    if( self.missionPion == nil ) then
+                        self.params.__returnValue = eActionImpossible
+                        do return end
+                    end
 
-                DEC_AssignMissionParameter( self.missionPion, "modeDeploiement_", self._namedParams.typeDeploiement )
-                --[[//copie de tous les elements génériques de la mission automate
+                    DEC_AssignMissionParameter( self.missionPion, "modeDeploiement_", self._namedParams.typeDeploiement )
+                    --[[//copie de tous les elements génériques de la mission automate
 ]]--[[//( dir dangereuse, ROE... )
 ]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
-                --[[//copie des paramètres mission
+                    --[[//copie des paramètres mission
 ]]DEC_AssignMissionParameter( self.missionPion, "pointDeDeploiement_", DEC_Geometrie_CreerPoint() )
-                DEC_Copie_Point_Mission( self._namedParams.point, self.missionPion, "pointDeDeploiement_" )
-                DEC_Copie_Localisation_Mission( self._namedParams.zone, self.missionPion, "zone_" )
-                --[[//Modification de la direction dangereuse
+                    DEC_Copie_Point_Mission( self._namedParams.point, self.missionPion, "pointDeDeploiement_" )
+                    DEC_Copie_Localisation_Mission( self._namedParams.zone, self.missionPion, "zone_" )
+                    --[[//Modification de la direction dangereuse
 ]]--[[//La direction dangereuse va du centre de la zone au point de dislocation
 ]]local pointCentreLocalisation = S_Geometrie_BarycentreZone_Mission( self.missionPion, "zone_" )
-                if( ( pointCentreLocalisation == 0 or pointCentreLocalisation == nil ) ) then
-                    do
-                        DEC_Trace( "La localisation n'est pas située dans le fuseau" )
-                                                return
+                    if( ( pointCentreLocalisation == 0 or pointCentreLocalisation == nil ) ) then
+                        do
+                            DEC_Trace( "La localisation n'est pas située dans le fuseau" )
+                                                        do return end
 
+                        end
                     end
-                end
 
-                local directionObservation = DEC_Geometrie_CreerDirection( pointCentreLocalisation, self._namedParams.point )
-                --[[//on a par défaut la direction de l'automate.
+                    local directionObservation = DEC_Geometrie_CreerDirection( pointCentreLocalisation, self._namedParams.point )
+                    --[[//on a par défaut la direction de l'automate.
 ]]--[[//si on a calculé une direction non nulle    
 ]]if( ( directionObservation ~= 0 and directionObservation ~= nil ) ) then
-                    DEC_Copie_DirectionDanger_Mission( directionObservation, self.missionPion )
-                end
+                        DEC_Copie_DirectionDanger_Mission( directionObservation, self.missionPion )
+                    end
 
-                --[[// Envoie la mission si l'on se trouve dans la conduite
+                    --[[// Envoie la mission si l'on se trouve dans la conduite
 ]]if( self._namedParams.ePhase == ePhase_CDT ) then
-                    DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+                        DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+                    end
+
+                                        self.params.__returnValue = eActionEffectuee
+                    do return end
+
                 end
-
-                                self.params.__returnValue = eActionEffectuee
-                return
-
             end
         end
 
@@ -111,17 +114,18 @@ node "ACT_Mission_Automate_ASA_AssignerDefendreZoneAPartirPositionA"
                 if( ModuleBegins() ) then
                     do
                          do
+                            local _continue = true
                             local switch_1 = self._namedParams.ePhase
                             local cases_switch_1 = {}
                                 if switch_1 == ePhase_MRT then
                                                                     local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ASA_DefendreZoneAPartirPosition" )
                                     self.missionPion = misMRT
-                                    
+                                    _continue = false
                                                                 cases_switch_1[1] = true
 elseif switch_1 == ePhase_CDT then
                                                                     local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ASA_DefendreZoneAPartirPosition" )
                                     self.missionPion = misCDT
-                                    
+                                    _continue = false
                                                                 cases_switch_1[2] = true
 
                                 else
@@ -132,44 +136,46 @@ elseif switch_1 == ePhase_CDT then
                     end
                 end
 
-                if( self.missionPion == nil ) then
-                    self.params.__returnValue = eActionImpossible
-                    return
-                end
+                    if _continue then
+                    if( self.missionPion == nil ) then
+                        self.params.__returnValue = eActionImpossible
+                        do return end
+                    end
 
-                --[[//copie de tous les elements génériques de la mission automate
+                    --[[//copie de tous les elements génériques de la mission automate
 ]]--[[//( dir dangereuse, ROE... )
 ]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
-                --[[//copie des paramètres mission
+                    --[[//copie des paramètres mission
 ]]DEC_AssignMissionParameter( self.missionPion, "pointDeDeploiement_", DEC_Geometrie_CreerPoint() )
-                DEC_Copie_Point_Mission( self._namedParams.point, self.missionPion, "pointDeDeploiement_" )
-                DEC_Copie_Localisation_Mission( self._namedParams.zone, self.missionPion, "zone_" )
-                --[[//Modification de la direction dangereuse
+                    DEC_Copie_Point_Mission( self._namedParams.point, self.missionPion, "pointDeDeploiement_" )
+                    DEC_Copie_Localisation_Mission( self._namedParams.zone, self.missionPion, "zone_" )
+                    --[[//Modification de la direction dangereuse
 ]]--[[//La direction dangereuse va du centre de la zone au point de dislocation
 ]]local pointCentreLocalisation = S_Geometrie_BarycentreZone_Mission( self.missionPion, "zone_" )
-                if( ( pointCentreLocalisation == 0 or pointCentreLocalisation == nil ) ) then
-                    do
-                        DEC_Trace( "La localisation n'est pas située dans le fuseau" )
-                                                return
+                    if( ( pointCentreLocalisation == 0 or pointCentreLocalisation == nil ) ) then
+                        do
+                            DEC_Trace( "La localisation n'est pas située dans le fuseau" )
+                                                        do return end
 
+                        end
                     end
-                end
 
-                local directionObservation = DEC_Geometrie_CreerDirection( pointCentreLocalisation, self._namedParams.point )
-                --[[//on a par défaut la direction de l'automate.
+                    local directionObservation = DEC_Geometrie_CreerDirection( pointCentreLocalisation, self._namedParams.point )
+                    --[[//on a par défaut la direction de l'automate.
 ]]--[[//si on a calculé une direction non nulle
 ]]if( ( directionObservation ~= 0 and directionObservation ~= nil ) ) then
-                    DEC_Copie_DirectionDanger_Mission( directionObservation, self.missionPion )
-                end
+                        DEC_Copie_DirectionDanger_Mission( directionObservation, self.missionPion )
+                    end
 
-                --[[// Envoie la mission si l'on se trouve dans la conduite
+                    --[[// Envoie la mission si l'on se trouve dans la conduite
 ]]if( self._namedParams.ePhase == ePhase_CDT ) then
-                    DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+                        DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+                    end
+
+                                        self.params.__returnValue = eActionEffectuee
+                    do return end
+
                 end
-
-                                self.params.__returnValue = eActionEffectuee
-                return
-
             end
         end
 
@@ -198,17 +204,18 @@ node "ACT_Mission_Automate_ASA_AssignerDefendreSiteAPartirPositionA"
                 if( ModuleBegins() ) then
                     do
                          do
+                            local _continue = true
                             local switch_1 = self._namedParams.ePhase
                             local cases_switch_1 = {}
                                 if switch_1 == ePhase_MRT then
                                                                     local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ASA_DefendreSiteAPartirPosition" )
                                     self.missionPion = misMRT
-                                    
+                                    _continue = false
                                                                 cases_switch_1[1] = true
 elseif switch_1 == ePhase_CDT then
                                                                     local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ASA_DefendreSiteAPartirPosition" )
                                     self.missionPion = misCDT
-                                    
+                                    _continue = false
                                                                 cases_switch_1[2] = true
 
                                 else
@@ -219,44 +226,46 @@ elseif switch_1 == ePhase_CDT then
                     end
                 end
 
-                if( self.missionPion == nil ) then
-                    self.params.__returnValue = eActionImpossible
-                    return
-                end
+                    if _continue then
+                    if( self.missionPion == nil ) then
+                        self.params.__returnValue = eActionImpossible
+                        do return end
+                    end
 
-                --[[//copie de tous les elements génériques de la mission automate
+                    --[[//copie de tous les elements génériques de la mission automate
 ]]--[[//( dir dangereuse, ROE... )
 ]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
-                --[[//copie des paramètres mission
+                    --[[//copie des paramètres mission
 ]]DEC_AssignMissionParameter( self.missionPion, "pointDeDeploiement_", DEC_Geometrie_CreerPoint() )
-                DEC_Copie_Point_Mission( self._namedParams.point, self.missionPion, "pointDeDeploiement_" )
-                DEC_Copie_Localisation_Mission( self._namedParams.site, self.missionPion, "site_" )
-                --[[//Modification de la direction dangereuse
+                    DEC_Copie_Point_Mission( self._namedParams.point, self.missionPion, "pointDeDeploiement_" )
+                    DEC_Copie_Localisation_Mission( self._namedParams.site, self.missionPion, "site_" )
+                    --[[//Modification de la direction dangereuse
 ]]--[[//La direction dangereuse va du centre de la zone au point de dislocation
 ]]local pointCentreLocalisation = S_Geometrie_BarycentreZone_Mission( self.missionPion, "site_" )
-                if( ( pointCentreLocalisation == 0 or pointCentreLocalisation == nil ) ) then
-                    do
-                        DEC_Trace( "La localisation n'est pas située dans le fuseau" )
-                                                return
+                    if( ( pointCentreLocalisation == 0 or pointCentreLocalisation == nil ) ) then
+                        do
+                            DEC_Trace( "La localisation n'est pas située dans le fuseau" )
+                                                        do return end
 
+                        end
                     end
-                end
 
-                local directionObservation = DEC_Geometrie_CreerDirection( pointCentreLocalisation, self._namedParams.point )
-                --[[//on a par défaut la direction de l'automate.
+                    local directionObservation = DEC_Geometrie_CreerDirection( pointCentreLocalisation, self._namedParams.point )
+                    --[[//on a par défaut la direction de l'automate.
 ]]--[[//si on a calculé une direction non nulle    
 ]]if( ( directionObservation ~= 0 and directionObservation ~= nil ) ) then
-                    DEC_Copie_DirectionDanger_Mission( directionObservation, self.missionPion )
-                end
+                        DEC_Copie_DirectionDanger_Mission( directionObservation, self.missionPion )
+                    end
 
-                --[[// Envoie la mission si l'on se trouve dans la conduite
+                    --[[// Envoie la mission si l'on se trouve dans la conduite
 ]]if( self._namedParams.ePhase == ePhase_CDT ) then
-                    DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+                        DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+                    end
+
+                                        self.params.__returnValue = eActionEffectuee
+                    do return end
+
                 end
-
-                                self.params.__returnValue = eActionEffectuee
-                return
-
             end
         end
 
@@ -283,17 +292,18 @@ node "ACT_Mission_Automate_ASA_MISTRAL_AssignerDefendreSiteAPartirPositionA"
                 if( ModuleBegins() ) then
                     do
                          do
+                            local _continue = true
                             local switch_1 = self._namedParams.ePhase
                             local cases_switch_1 = {}
                                 if switch_1 == ePhase_MRT then
                                                                     local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ASA_MISTRAL_DefendreSiteAPartirPosition" )
                                     self.missionPion = misMRT
-                                    
+                                    _continue = false
                                                                 cases_switch_1[1] = true
 elseif switch_1 == ePhase_CDT then
                                                                     local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ASA_MISTRAL_DefendreSiteAPartirPosition" )
                                     self.missionPion = misCDT
-                                    
+                                    _continue = false
                                                                 cases_switch_1[2] = true
 
                                 else
@@ -304,45 +314,47 @@ elseif switch_1 == ePhase_CDT then
                     end
                 end
 
-                if( self.missionPion == nil ) then
-                    self.params.__returnValue = eActionImpossible
-                    return
-                end
+                    if _continue then
+                    if( self.missionPion == nil ) then
+                        self.params.__returnValue = eActionImpossible
+                        do return end
+                    end
 
-                DEC_AssignMissionParameter( self.missionPion, "modeDeploiement_", self._namedParams.typeDeploiement )
-                --[[//copie de tous les elements génériques de la mission automate
+                    DEC_AssignMissionParameter( self.missionPion, "modeDeploiement_", self._namedParams.typeDeploiement )
+                    --[[//copie de tous les elements génériques de la mission automate
 ]]--[[//( dir dangereuse, ROE... )
 ]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
-                --[[//copie des paramètres mission
+                    --[[//copie des paramètres mission
 ]]DEC_AssignMissionParameter( self.missionPion, "pointDeDeploiement_", DEC_Geometrie_CreerPoint() )
-                DEC_Copie_Point_Mission( self._namedParams.point, self.missionPion, "pointDeDeploiement_" )
-                DEC_Copie_Localisation_Mission( self._namedParams.site, self.missionPion, "site_" )
-                --[[//Modification de la direction dangereuse
+                    DEC_Copie_Point_Mission( self._namedParams.point, self.missionPion, "pointDeDeploiement_" )
+                    DEC_Copie_Localisation_Mission( self._namedParams.site, self.missionPion, "site_" )
+                    --[[//Modification de la direction dangereuse
 ]]--[[//La direction dangereuse va du centre de la zone au point de dislocation
 ]]local pointCentreLocalisation = S_Geometrie_BarycentreZone_Mission( self.missionPion, "site_" )
-                if( ( pointCentreLocalisation == 0 or pointCentreLocalisation == nil ) ) then
-                    do
-                        DEC_Trace( "La localisation n'est pas située dans le fuseau" )
-                                                return
+                    if( ( pointCentreLocalisation == 0 or pointCentreLocalisation == nil ) ) then
+                        do
+                            DEC_Trace( "La localisation n'est pas située dans le fuseau" )
+                                                        do return end
 
+                        end
                     end
-                end
 
-                local directionObservation = DEC_Geometrie_CreerDirection( pointCentreLocalisation, self._namedParams.point )
-                --[[//on a par défaut la direction de l'automate.
+                    local directionObservation = DEC_Geometrie_CreerDirection( pointCentreLocalisation, self._namedParams.point )
+                    --[[//on a par défaut la direction de l'automate.
 ]]--[[//si on a calculé une direction non nulle    
 ]]if( ( directionObservation ~= 0 and directionObservation ~= nil ) ) then
-                    DEC_Copie_DirectionDanger_Mission( directionObservation, self.missionPion )
-                end
+                        DEC_Copie_DirectionDanger_Mission( directionObservation, self.missionPion )
+                    end
 
-                --[[// Envoie la mission si l'on se trouve dans la conduite
+                    --[[// Envoie la mission si l'on se trouve dans la conduite
 ]]if( self._namedParams.ePhase == ePhase_CDT ) then
-                    DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+                        DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+                    end
+
+                                        self.params.__returnValue = eActionEffectuee
+                    do return end
+
                 end
-
-                                self.params.__returnValue = eActionEffectuee
-                return
-
             end
         end
 
@@ -370,17 +382,18 @@ node "ACT_Mission_Automate_ASA_AssignerSurveillerA"
                 if( ModuleBegins() ) then
                     do
                          do
+                            local _continue = true
                             local switch_1 = self._namedParams.ePhase
                             local cases_switch_1 = {}
                                 if switch_1 == ePhase_MRT then
                                                                     local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ASA_Surveiller" )
                                     self.missionPion = misMRT
-                                    
+                                    _continue = false
                                                                 cases_switch_1[1] = true
 elseif switch_1 == ePhase_CDT then
                                                                     local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ASA_Surveiller" )
                                     self.missionPion = misCDT
-                                    
+                                    _continue = false
                                                                 cases_switch_1[2] = true
 
                                 else
@@ -391,25 +404,27 @@ elseif switch_1 == ePhase_CDT then
                     end
                 end
 
-                if( self.missionPion == nil ) then
-                    self.params.__returnValue = eActionImpossible
-                    return
-                end
+                    if _continue then
+                    if( self.missionPion == nil ) then
+                        self.params.__returnValue = eActionImpossible
+                        do return end
+                    end
 
-                --[[//copie de tous les elements génériques de la mission automate
+                    --[[//copie de tous les elements génériques de la mission automate
 ]]--[[//( dir dangereuse, ROE... )
 ]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
-                --[[//copie des paramètres mission
+                    --[[//copie des paramètres mission
 ]]DEC_AssignMissionParameter( self.missionPion, "pointDeDeploiement_", DEC_Geometrie_CreerPoint() )
-                DEC_Copie_Point_Mission( self._namedParams.point, self.missionPion, "pointDeDeploiement_" )
-                --[[// Envoie la mission si l'on se trouve dans la conduite
+                    DEC_Copie_Point_Mission( self._namedParams.point, self.missionPion, "pointDeDeploiement_" )
+                    --[[// Envoie la mission si l'on se trouve dans la conduite
 ]]if( self._namedParams.ePhase == ePhase_CDT ) then
-                    DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+                        DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+                    end
+
+                                        self.params.__returnValue = eActionEffectuee
+                    do return end
+
                 end
-
-                                self.params.__returnValue = eActionEffectuee
-                return
-
             end
         end
 
@@ -438,17 +453,18 @@ node "ACT_Mission_Automate_ASA_MISTRAL_AssignerSurveillerA"
                 if( ModuleBegins() ) then
                     do
                          do
+                            local _continue = true
                             local switch_1 = self._namedParams.ePhase
                             local cases_switch_1 = {}
                                 if switch_1 == ePhase_MRT then
                                                                     local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ASA_MISTRAL_Surveiller" )
                                     self.missionPion = misMRT
-                                    
+                                    _continue = false
                                                                 cases_switch_1[1] = true
 elseif switch_1 == ePhase_CDT then
                                                                     local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ASA_MISTRAL_Surveiller" )
                                     self.missionPion = misCDT
-                                    
+                                    _continue = false
                                                                 cases_switch_1[2] = true
 
                                 else
@@ -459,26 +475,28 @@ elseif switch_1 == ePhase_CDT then
                     end
                 end
 
-                if( self.missionPion == nil ) then
-                    self.params.__returnValue = eActionImpossible
-                    return
-                end
+                    if _continue then
+                    if( self.missionPion == nil ) then
+                        self.params.__returnValue = eActionImpossible
+                        do return end
+                    end
 
-                DEC_AssignMissionParameter( self.missionPion, "modeDeploiement_", self._namedParams.typeDeploiement )
-                --[[//copie de tous les elements génériques de la mission automate
+                    DEC_AssignMissionParameter( self.missionPion, "modeDeploiement_", self._namedParams.typeDeploiement )
+                    --[[//copie de tous les elements génériques de la mission automate
 ]]--[[//( dir dangereuse, ROE... )
 ]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
-                --[[//copie des paramètres mission
+                    --[[//copie des paramètres mission
 ]]DEC_AssignMissionParameter( self.missionPion, "pointDeDeploiement_", DEC_Geometrie_CreerPoint() )
-                DEC_Copie_Point_Mission( self._namedParams.point, self.missionPion, "pointDeDeploiement_" )
-                --[[// Envoie la mission si l'on se trouve dans la conduite
+                    DEC_Copie_Point_Mission( self._namedParams.point, self.missionPion, "pointDeDeploiement_" )
+                    --[[// Envoie la mission si l'on se trouve dans la conduite
 ]]if( self._namedParams.ePhase == ePhase_CDT ) then
-                    DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+                        DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+                    end
+
+                                        self.params.__returnValue = eActionEffectuee
+                    do return end
+
                 end
-
-                                self.params.__returnValue = eActionEffectuee
-                return
-
             end
         end
 
@@ -506,17 +524,18 @@ node "ACT_Mission_Automate_ASA_AssignerDefendreUnitesA"
                 if( ModuleBegins() ) then
                     do
                          do
+                            local _continue = true
                             local switch_1 = self._namedParams.ePhase
                             local cases_switch_1 = {}
                                 if switch_1 == ePhase_MRT then
                                                                     local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ASA_DefendreUnites" )
                                     self.missionPion = misMRT
-                                    
+                                    _continue = false
                                                                 cases_switch_1[1] = true
 elseif switch_1 == ePhase_CDT then
                                                                     local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ASA_DefendreUnites" )
                                     self.missionPion = misCDT
-                                    
+                                    _continue = false
                                                                 cases_switch_1[2] = true
 
                                 else
@@ -527,24 +546,26 @@ elseif switch_1 == ePhase_CDT then
                     end
                 end
 
-                if( self.missionPion == nil ) then
-                    self.params.__returnValue = eActionImpossible
-                    return
-                end
+                    if _continue then
+                    if( self.missionPion == nil ) then
+                        self.params.__returnValue = eActionImpossible
+                        do return end
+                    end
 
-                --[[//copie de tous les elements génériques de la mission automate
+                    --[[//copie de tous les elements génériques de la mission automate
 ]]--[[//( dir dangereuse, ROE... )
 ]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
-                --[[//copie de la liste des unites
+                    --[[//copie de la liste des unites
 ]]DEC_AssignMissionParameter( self.missionPion, "unites_", self._namedParams.listeUnites )
-                --[[// Envoie la mission si l'on se trouve dans la conduite
+                    --[[// Envoie la mission si l'on se trouve dans la conduite
 ]]if( self._namedParams.ePhase == ePhase_CDT ) then
-                    DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+                        DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+                    end
+
+                                        self.params.__returnValue = eActionEffectuee
+                    do return end
+
                 end
-
-                                self.params.__returnValue = eActionEffectuee
-                return
-
             end
         end
 

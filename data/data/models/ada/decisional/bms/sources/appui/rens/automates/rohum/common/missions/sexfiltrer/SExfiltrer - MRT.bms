@@ -34,7 +34,7 @@ includedFiles["sources/appui/rens/automates/rohum/common/missions/sexfiltrer/SEx
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                         StartActivateOverride( self, self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
-                                                return
+                                                do return end
 
                     end
                 end

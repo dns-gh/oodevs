@@ -42,11 +42,12 @@ if( DEC_Geometrie_EstPointDansFuseau( DEC_Agent_Position() ) ) then
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eRejoindre then
                     if( not DEC_Geometrie_EstPointDansFuseau( DEC_Agent_Position() ) ) then
-                        return
+                        do return end
                     end
 
                     self.ePhase = eAttendre
@@ -54,7 +55,7 @@ if( DEC_Geometrie_EstPointDansFuseau( DEC_Agent_Position() ) ) then
                 end
                 if cases_switch_1[1] or switch_1 == eAttendre then
                     Activate( self.activations.BEH_Ordre_SePoster_EnAttente, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eOrdre = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end
@@ -137,6 +138,7 @@ node "BEH_Dep_Pion_INF_MiseEnPlace_Mission"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
@@ -171,7 +173,7 @@ node "BEH_Dep_Pion_INF_MiseEnPlace_Mission"
                         end
                     else
                         self.params.__returnValue = eActionEnCours
-                        return
+                        do return end
                     end
 
                                 cases_switch_1[2] = true
@@ -203,10 +205,10 @@ node "BEH_Dep_Pion_INF_MiseEnPlace_Mission"
                     end
 
                     Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, setmetatable( { eNiveauInstallation_Poste, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
 elseif switch_1 == eRejoindre then
-                    
+                    _continue = false
                                 cases_switch_1[4] = true
 
                 else
@@ -275,6 +277,7 @@ node "BEH_Dep_Pion_Milice_MiseEnPlace_Embuscade"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eReconnaitre then
@@ -293,7 +296,7 @@ node "BEH_Dep_Pion_Milice_MiseEnPlace_Embuscade"
                     end
 
                                         self.params.__returnValue = eActionEnCours
-                    return
+                    do return end
 
                                 end
                 if cases_switch_1[1] or switch_1 == eSurveiller then
@@ -309,12 +312,12 @@ node "BEH_Dep_Pion_Milice_MiseEnPlace_Embuscade"
                     else
 do
                             
-                                                        return
+                                                        do return end
 
                         end
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 
                 else

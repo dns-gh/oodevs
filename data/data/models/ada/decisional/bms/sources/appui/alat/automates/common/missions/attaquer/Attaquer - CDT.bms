@@ -64,6 +64,7 @@ includedFiles["sources/appui/alat/automates/common/missions/attaquer/Attaquer - 
         DIA_Clear( self.listePionsAAppuyerIMEX )
         self.listePionsAAppuyerIMEX = S_Cherche_Automate_Filtre_PionNonDansListe( S_Liste_Automate_ALAT_UnitesAAppuyer( DEC_Automate_PionsSansPC() ), self.listeHMLog )
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eDetruire then
@@ -72,7 +73,7 @@ includedFiles["sources/appui/alat/automates/common/missions/attaquer/Attaquer - 
 ]]if( DIA_IsListEmpty( self.listeAttaquer ) ) then
                         do
                             self.ePhase = eSExfiltrer
-                                                        return
+                                                        do return end
 
                         end
 --[[// Attaquer : ordre de creation des missions
@@ -88,12 +89,12 @@ includedFiles["sources/appui/alat/automates/common/missions/attaquer/Attaquer - 
                     --[[// IMEX et plots de ravitaillements
 ]]--[[// --------------------------------
 ]]Activate( self.activations.BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX, 1, { self.listeHMLog, self.listePionsAAppuyerIMEX, 30000, self._namedParams.mission.pointRegroupement_, false, } )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eSExfiltrer then
                     Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )
                     Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_CDT, DEC_Automate_PionsAvecPC(), self._namedParams.mission.pointRegroupement_, } )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end

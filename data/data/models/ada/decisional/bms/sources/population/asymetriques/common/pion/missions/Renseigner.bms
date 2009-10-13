@@ -41,6 +41,7 @@ includedFiles["sources/population/asymetriques/common/pion/missions/Renseigner.b
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhaseMission
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
@@ -48,7 +49,7 @@ includedFiles["sources/population/asymetriques/common/pion/missions/Renseigner.b
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "** MIS_Pion_ASY_Renseigner:debut **", } )
                     self.ePhaseMission = eTransmettreInformations
-                    
+                    _continue = false
                 --[[// Partager connaissance
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eTransmettreInformations then
@@ -69,7 +70,7 @@ do
                         end
                     end
 
-                    
+                    _continue = false
                 --[[// Fin
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then

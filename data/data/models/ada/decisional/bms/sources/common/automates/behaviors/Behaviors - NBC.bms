@@ -40,7 +40,7 @@ includedFiles["sources/common/automates/behaviors/Behaviors - NBC.bms"] = true
 ]]if( S_EstContamine() ) then
             do
                 Activate( self.activations.BEH_Ordre_Automate_ConduiteSurAlerteNBC, 1, {} )
-                                return
+                                do return end
 
             end
 --[[// Sinon on laisse la responsabilité aux comandement supérieur...
@@ -86,24 +86,27 @@ node "BEH_Ordre_Automate_RecevoirOrdreSurAlerteNBC"
 do
                 local repOrdre = x
                  do
+                    local _continue = true
                     local switch_1 = repOrdre:GetType()
                     local cases_switch_1 = {}
                         if switch_1 == "Rep_OrderConduite_MettreTenueNBC" then
                             DEC_Trace( "$ --- ORDRE Mettre tenue NBC ---$" )
                             StartActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduiteSurAlerteNBC, 1, {} )
                             StopActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduiteSurFinAlerteNBC, {} )
-                            
+                            _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == "Rep_OrderConduite_EnleverTenueNBC" then
                             DEC_Trace( "$ --- ORDRE Enlever tenue NBC ---$" )
                             StopActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduiteSurAlerteNBC, {} )
                             StartActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduiteSurFinAlerteNBC, 1, {} )
-                            
+                            _continue = false
                                                 cases_switch_1[2] = true
                         end
                     end
 
-                Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
+                    if _continue then
+                    Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
+                end
             end
 
         end

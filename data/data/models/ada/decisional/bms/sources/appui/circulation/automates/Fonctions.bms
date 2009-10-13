@@ -39,6 +39,6 @@ do
     end
 
     _returnValue = selOut
-    return _returnValue
+    do return _returnValue end
 end
 

@@ -26,13 +26,13 @@ includedFiles["sources/marine/pions/common/fonctions/Fonctions - Forces.bms"] = 
     if( distanceAuPoint - distanceArretAvantPoint <= 0 ) then
         do
             _returnValue = 0
-                        return _returnValue
+                        do return _returnValue end
 
         end
     end
 
     _returnValue = 1 - ( 1 / ( 1 + ( distanceAuPoint - distanceArretAvantPoint ) ) )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Eni_Pion_MARINE_ForceType( agent, typePrioritaire )
@@ -48,18 +48,18 @@ function S_Eni_Pion_MARINE_ForceType( agent, typePrioritaire )
         _returnValue = -1
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Eni_Pion_MARINE_ForceDistanceDeuxPoint( a, b, distMin )
     local _returnValue = 0
     _returnValue = 2 - S_ForceRejoindre( DEC_Geometrie_Distance( a, b ), distMin )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Eni_Pion_MARINE_ForceDistanceLePlusProche( eni, distMin )
     local _returnValue = 0
     _returnValue = S_Eni_Pion_MARINE_ForceDistanceDeuxPoint( myself:DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( eni ), distMin )
-    return _returnValue
+    do return _returnValue end
 end
 

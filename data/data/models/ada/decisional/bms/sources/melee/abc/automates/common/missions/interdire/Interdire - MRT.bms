@@ -26,7 +26,7 @@ includedFiles["sources/melee/abc/automates/common/missions/interdire/Interdire -
 ]]self.rIterateurPosition = self.rIterateurPosition or 0
         self.listePositions = self.listePositions or {}
         if( ( #( self._namedParams.selPions ) == 0 or #( self._namedParams.selPions ) == nil ) ) then
-            return
+            do return end
         end
 
         --[[//-------------------------------------------------------------------------
@@ -47,7 +47,7 @@ includedFiles["sources/melee/abc/automates/common/missions/interdire/Interdire -
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleLimaInvalide, } )
                                                 self.params.__returnValue = eActionImpossible
-                        return
+                        do return end
 
                     end
 --[[// positions
@@ -58,7 +58,7 @@ includedFiles["sources/melee/abc/automates/common/missions/interdire/Interdire -
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleLimaInvalide, } )
                                                 self.params.__returnValue = eActionImpossible
-                        return
+                        do return end
 
                     end
 --[[//---------------------------------------------------------------------
@@ -115,7 +115,7 @@ node "BEH_Medo_Automate_ABC_Interdire_AssignerMissionSurveillerA"
 ]]self.rIterateurPosition = self.rIterateurPosition or 0
         self.listePositions = self.listePositions or {}
         if( ( #( self._namedParams.selPions ) == 0 or #( self._namedParams.selPions ) == nil ) ) then
-            return
+            do return end
         end
 
         --[[//-------------------------------------------------------------------------
@@ -136,7 +136,7 @@ node "BEH_Medo_Automate_ABC_Interdire_AssignerMissionSurveillerA"
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleLimaInvalide, } )
                                                 self.params.__returnValue = eActionImpossible
-                        return
+                        do return end
 
                     end
 --[[// positions
@@ -147,7 +147,7 @@ node "BEH_Medo_Automate_ABC_Interdire_AssignerMissionSurveillerA"
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleLimaInvalide, } )
                                                 self.params.__returnValue = eActionImpossible
-                        return
+                        do return end
 
                     end
 --[[//---------------------------------------------------------------------

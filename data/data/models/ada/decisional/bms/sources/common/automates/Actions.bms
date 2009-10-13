@@ -29,20 +29,20 @@ include "Common/Automates/Actions/Actions - Rens.bms"
     select = function( self )
                 if( GetActivity() >= 1 ) then
             self.params.__returnValue = eActionEnCours
-            return
+            do return end
         end
 
     end,
 
     deselect = function( self )
                         self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 
     destroy = function( self )
                         self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 
@@ -62,11 +62,11 @@ include "Common/Automates/Actions/Actions - Rens.bms"
     select = function( self )
         if( GetActivity() ~= 1 ) then
             self.params.__returnValue = eActionHalt
-            return
+            do return end
         end
 
                 self.params.__returnValue = eActionEnCours
-        return
+        do return end
 
     end,
 
@@ -88,11 +88,11 @@ include "Common/Automates/Actions/Actions - Rens.bms"
         self.bActivite = self.bActivite or GetActivity() ~= 1
         if( GetActivity() == 1 and self.bActivite ) then
             self.params.__returnValue = eActionEffectuee
-            return
+            do return end
         end
 
                 self.params.__returnValue = eActionEnCours
-        return
+        do return end
 
     end,
 

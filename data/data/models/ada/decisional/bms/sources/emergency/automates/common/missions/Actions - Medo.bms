@@ -31,17 +31,18 @@ includedFiles["sources/emergency/automates/common/missions/Actions - Medo.bms"] 
         if( ModuleBegins() ) then
             do
                  do
+                    local _continue = true
                     local switch_1 = self._namedParams.ePhase
                     local cases_switch_1 = {}
                         if switch_1 == ePhase_MRT then
                                                     local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_Emergency_EvacuateArea" )
                             self.missionPion = misMRT
-                            
+                            _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == ePhase_CDT then
                                                     local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pPion, "T_Mission_Pion_Emergency_EvacuateArea" )
                             self.missionPion = misCDT
-                            
+                            _continue = false
                                                 cases_switch_1[2] = true
 
                         else
@@ -54,7 +55,7 @@ elseif switch_1 == ePhase_CDT then
 
         if( self.missionPion == nil ) then
             self.params.__returnValue = eActionImpossible
-            return
+            do return end
         end
 
         --[[//-----------------------------------------------------------------------------
@@ -64,7 +65,7 @@ elseif switch_1 == ePhase_CDT then
             end
         else
             self.params.__returnValue = eActionEffectuee
-            return
+            do return end
         end
 
         S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
@@ -78,7 +79,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
                 self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 

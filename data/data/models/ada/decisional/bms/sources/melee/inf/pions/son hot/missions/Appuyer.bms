@@ -81,13 +81,14 @@ includedFiles["sources/melee/inf/pions/son hot/missions/Appuyer.bms"] = true
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
                     if( GetStateVariable( "VE_PreparationMission" ) > 0 ) then
                         do
                             Activate( self.activations.BEH_Delai_Pion_INF_PreparerMission, 1, { M_TEMPS_PREPARATION_APPUYER(), } )
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -98,7 +99,7 @@ includedFiles["sources/melee/inf/pions/son hot/missions/Appuyer.bms"] = true
                 end
                 if cases_switch_1[1] or switch_1 == eAppuyer then
                     Activate( self.activations.BEH_Manoeuvre_Pion_HOT_Appuyer, 1, setmetatable( { self.repAmi, "spontanee", }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     if( self.eAction == eActionEffectuee ) then
@@ -127,7 +128,7 @@ elseif switch_1 == eFinMission then
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { false, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
 
                 else

@@ -157,7 +157,7 @@ node "BEH_Defaut"
         --[[// action ACT_Mot_MAJ_AgressivitePion();
 ]]--[[// Si totalement detruit...
 ]]if( S_Misc_EstDetruitPhysique() ) then
-            return
+            do return end
         end
 
         Activate( self.activations.BEH_Ambiance, 1, {} )--[[// -------------------------------------------------------------------------	

@@ -49,10 +49,11 @@ includedFiles["sources/melee/inf/pions/grp mortier/Actions.bms"] = true
         end
 
          do
+            local _continue = true
             local switch_1 = self.eEtat_EmbDeb
             local cases_switch_1 = {}
                 if switch_1 == eActionEmbDeb_EnCours then
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                 or switch_1 == eActionEmbDeb_PasDeTransporteurs then
@@ -157,6 +158,7 @@ node "ACT_Tir_Pion_INF_TirCouverture"
 
         myself.eEtatTir_Indirect_ = self.eTir
          do
+            local _continue = true
             local switch_1 = self.eTir
             local cases_switch_1 = {}
                 if switch_1 == eActionTirIndirect_Impossible then
@@ -251,13 +253,13 @@ node "ACT_Tir_Pion_INF_TirCouverture"
                     do
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[5] = true
                 end
             end
 
                 self.params.__returnValue = eActionEnCours
-        return
+        do return end
 
     end,
 
@@ -319,6 +321,7 @@ node "ACT_Tir_Pion_INF_TirCouverture"
 
         myself.eEtatTir_Indirect_ = self.eTir
          do
+            local _continue = true
             local switch_1 = self.eTir
             local cases_switch_1 = {}
                 if switch_1 == eActionTirIndirect_Impossible then
@@ -405,13 +408,13 @@ node "ACT_Tir_Pion_INF_TirCouverture"
                     do
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[5] = true
                 end
             end
 
                 self.params.__returnValue = eActionEnCours
-        return
+        do return end
 
     end,
 

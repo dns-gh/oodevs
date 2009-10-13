@@ -57,6 +57,7 @@ includedFiles["sources/population/asymetriques/common/pion/missions/CommettreAtt
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhaseMission
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
@@ -64,7 +65,7 @@ includedFiles["sources/population/asymetriques/common/pion/missions/CommettreAtt
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "** MIS_Pion_ASY_CommettreAttentatContreInstallation:debut **", } )
                     self.ePhaseMission = eSInfiltrer
-                    
+                    _continue = false
                 --[[// Infiltration
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eSInfiltrer then
@@ -74,7 +75,7 @@ elseif switch_1 == eSInfiltrer then
                             self.eAction = eActionEnCours
                                                         do
                                 self.ePhaseMission = eAborderObjectif
-                                                                return
+                                                                do return end
 
                             end
 
@@ -82,7 +83,7 @@ elseif switch_1 == eSInfiltrer then
                     end
 
                     Activate( self.activations.BEH_Dep_Pion_ASY_ProgresserATraversPopulationSur, 1, setmetatable( { self._namedParams.mission.itineraire_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// Infiltration en approchant le plus tard possible couvert par une population
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eAborderObjectif then
@@ -93,7 +94,7 @@ elseif switch_1 == eAborderObjectif then
                             self.eAction = eActionEnCours
                                                         do
                                 self.ePhaseMission = eSExfiltrer
-                                                                return
+                                                                do return end
 
                             end
 
@@ -106,7 +107,7 @@ elseif switch_1 == eAborderObjectif then
                         Activate( self.activations.ACT_Eni_Pion_ASY_CommettreAttentatContreInstallation, 1, setmetatable( { self._namedParams.mission.installationCible_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
                     end
 
-                    
+                    _continue = false
                 --[[// Rejoindre la position de repli
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eSExfiltrer then
@@ -116,7 +117,7 @@ elseif switch_1 == eSExfiltrer then
                             self.eAction = eActionEnCours
                                                         do
                                 self.ePhaseMission = eFinMission
-                                                                return
+                                                                do return end
 
                             end
 
@@ -124,7 +125,7 @@ elseif switch_1 == eSExfiltrer then
                     end
 
                     Activate( self.activations.BEH_Dep_Pion_ASY_ProgresserATraversPopulationVers, 1, setmetatable( { self._namedParams.mission.pointRepli_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// Fin
 ]]                cases_switch_1[4] = true
 elseif switch_1 == eFinMission then

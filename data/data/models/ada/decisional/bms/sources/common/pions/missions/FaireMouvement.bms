@@ -46,6 +46,7 @@ include "bit.lua"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
@@ -53,7 +54,7 @@ include "bit.lua"
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     DEC_Trace( "** MIS_Pion_FaireMouvement **" )
                     self.ePhase = eProgresser
-                    
+                    _continue = false
                 --[[// Deplacement: DEUX TYPES -- > deplacement seul vers point arrivee ou suivre unite si escorter
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eProgresser then
@@ -66,7 +67,7 @@ elseif switch_1 == eProgresser then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhase = eFinMission
-                                                                return
+                                                                do return end
 
                             end
 
@@ -74,13 +75,13 @@ elseif switch_1 == eProgresser then
                     end
 
                     Activate( self.activations.BEH_Dep_ProgressionAvecEscortePossibleSur, 1, setmetatable( { self._namedParams.mission.itineraire_, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// Fin mission
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
                 end
             end
@@ -124,6 +125,7 @@ node "BEH_Dep_ProgressionAvecEscortePossibleSur"
 ]]--[[//=============================================================================
 ]]Activate( self.activations.BEH_Dep_GererProgression, 1, { self._namedParams.eTypeProgression, } )
          do
+            local _continue = true
             local switch_1 = --[[//=============================================================================
 ]]--[[// 1) Calculer itineraire, 2) Progresser. Si obstacle ou NBC --> 1)
 ]]--[[//=============================================================================
@@ -136,7 +138,7 @@ node "BEH_Dep_ProgressionAvecEscortePossibleSur"
 ]]self.it = DEC_CreerItineraireListe( self._namedParams.itineraire, self._namedParams.eTypeIti )
                     F_Pion_SetitMvt( myself, self.it )
                     self.ePhase = eProgresser
-                    
+                    _continue = false
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// 2) Progression
 ]]--[[//-----------------------------------------------------------------------------
@@ -154,14 +156,14 @@ elseif switch_1 == eProgresser then
                                 do
                                     Activate( self.activations.ACT_Info_Trace, 1, { "*** Unit escorted ***", } )
                                     Activate( self.activations.ACT_Info_Trace, 1, { "Waiting for the escort", } )
-                                                                        return
+                                                                        do return end
 
                                 end
                             end
 
                             self.bAttenteEffectuee = true
                             Activate( self.activations.BEH_Dep_Suivre, 1, { pionEnEscorte, 800, } )
-                                                        return
+                                                        do return end
 
                         end
                     else
@@ -189,7 +191,7 @@ elseif switch_1 == eProgresser then
 
                     Activate( self.activations.BEH_Dep_SeDeplacer, 1, setmetatable( { self.it, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end

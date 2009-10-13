@@ -30,7 +30,7 @@ include "bit.lua"
         Activate( self.activations.ACT_Dep_Pions_ALAT_Voler, 1, { 0, } )
         if( not DEC_Agent_EstEnVol() ) then
             self.params.__returnValue = eActionEffectuee
-            return
+            do return end
         end
 
     end,
@@ -67,6 +67,7 @@ node "BEH_Dep_Pion_ALAT_Voler"
 
     activate = function( self )
          do
+            local _continue = true
             local switch_1 = F_Pion_GeteEtatAmbiance( myself )
             local cases_switch_1 = {}
                 if switch_1 == eEtatAmbiance_Surete then
@@ -77,7 +78,7 @@ node "BEH_Dep_Pion_ALAT_Voler"
                         Activate( self.activations.BEH_Dep_Pion_ALAT_SecondeAllureAvecAppuis, 1, {} )
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eEtatAmbiance_Vitesse then
                     if( DIA_IsListEmpty( F_Pion_GetselUnitesEnAppui( myself ) ) ) then
@@ -86,7 +87,7 @@ elseif switch_1 == eEtatAmbiance_Vitesse then
                         Activate( self.activations.BEH_Dep_Pion_ALAT_TroisiemeAllureAvecAppuis, 1, {} )
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end
@@ -308,7 +309,7 @@ node "BEH_Dep_Pion_ALAT_RejoindrePion"
 
         if( self.eEtat ~= eActionEnCours ) then
             self.params.__returnValue = self.eEtat
-            return
+            do return end
         else
             Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { self.positionPion, self._namedParams.typeProgression, self._namedParams.ePathType, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
         end
@@ -422,7 +423,7 @@ node "BEH_Dep_Pion_ALAT_RejoindreParItineraire"
         end
 
         if( not self.bCalculItineraire ) then
-            return
+            do return end
         end
 
         --[[// gestion de la progression
@@ -443,6 +444,7 @@ node "BEH_Dep_Pion_ALAT_RejoindreParItineraire"
         Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
         Activate( self.activations.BEH_Dep_Progresser, 1, setmetatable( { self.itineraire, self._namedParams.typeProgression, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
          do
+            local _continue = true
             local switch_1 = --[[// gestion de l'état du calcul de l'itineraire
 ]]DEC_Itineraire_Etat( self.itineraire )
             local cases_switch_1 = {}
@@ -455,7 +457,7 @@ node "BEH_Dep_Pion_ALAT_RejoindreParItineraire"
                         end
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eItineraire_Invalide then
                     self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_ALAT_RejoindreParItineraire" )
@@ -465,7 +467,7 @@ elseif switch_1 == eItineraire_Invalide then
 
                                 end
                 if cases_switch_1[2] or switch_1 == eItineraire_CalculEnCours then
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
 elseif switch_1 == eItineraire_Impossible then
                     self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_ALAT_RejoindreParItineraire" )

@@ -44,6 +44,7 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Ordre.bms"] = true
 do
                 local repOrdre = x
                  do
+                    local _continue = true
                     local switch_1 = repOrdre:GetType()
                     local cases_switch_1 = {}
                         if switch_1 == "Rep_OrderConduite_Interrompre" then
@@ -51,24 +52,26 @@ do
                             --[[// poursuivre si en poste
 ]]SetStateVariable( "VE_SePoster", 0 )
                                                         self.params.__returnValue = eActionHalt
-                            return
+                            do return end
 
                                                 end
                         if cases_switch_1[1] or switch_1 == "Rep_OrderConduite_AttendreSePoster" then
                             DEC_Trace( "======= Frag order --> WAIT =====" )
                             SetStateVariable( "VE_SePoster", 2 )
-                            
+                            _continue = false
                                                 cases_switch_1[2] = true
 elseif switch_1 == "Rep_OrderConduite_Deboucher"
                         or switch_1 == "Rep_OrderConduite_Poursuivre" then
                             DEC_Trace( "======= Frag order --> RESUME =====" )
                             SetStateVariable( "VE_SePoster", 0 )
-                            
+                            _continue = false
                                                 cases_switch_1[3] = true
                         end
                     end
 
-                Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
+                    if _continue then
+                    Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
+                end
             end
 
         end
@@ -105,7 +108,7 @@ node "BEH_Ordre_SePoster_EnAttente"
                 Activate( self.activations.ACT_Dep_SePoster, 1, {} )--[[// On force le poste au premier tour
 ]]
                                 self.params.__returnValue = eActionEnCours
-                return
+                do return end
 
             end
         end
@@ -114,7 +117,7 @@ node "BEH_Ordre_SePoster_EnAttente"
             do
                 DEC_Trace( "Conduite 'poursuivre' recu." )
                                 self.params.__returnValue = eActionEffectuee
-                return
+                do return end
 
             end
         end
@@ -125,7 +128,7 @@ node "BEH_Ordre_SePoster_EnAttente"
                 DEC_Trace( "Conduite 'poursuivre' recu." )
         SetStateVariable( "VE_SePoster", 0 )
                 self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 

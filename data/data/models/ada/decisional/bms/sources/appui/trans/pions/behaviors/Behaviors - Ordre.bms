@@ -38,7 +38,7 @@ do
 
         if( F_Pion_GetbOrdreInterrompreMission( myself ) or bOrdreConduiteInterrompre ) then
             self.params.__returnValue = eActionHalt
-            return
+            do return end
         end
 
     end,

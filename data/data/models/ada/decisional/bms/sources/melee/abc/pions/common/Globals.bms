@@ -34,6 +34,6 @@ include "Melee/Abc/Pions/Common/Parameters.bms"
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 

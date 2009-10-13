@@ -62,6 +62,7 @@ include "bit.lua"
 ]]        end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eReconnaitre then
@@ -73,7 +74,7 @@ include "bit.lua"
                         do
                             Activate( self.activations.BEH_Eni_Pion_VAB_RecoAxe, 1, {} )
                             Activate( self.activations.BEH_Mission_Pion_INF_RecoAxe, GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
-                                                        return
+                                                        do return end
 
                         end
                     else
@@ -88,7 +89,7 @@ include "bit.lua"
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )--[[// Ajout MIA ADA
 ]]
-                    --[[/*  // Virer MIA ADA
+                    _continue = false--[[/*  // Virer MIA ADA
 			if( 	eAction == eActionEffectuee )    {        	eAction=eActionEnCours;        								{										
 									DEC_Trace(  "Fin mission de mission reconnaitre un axe"  );										
 									DEC_FinMission();

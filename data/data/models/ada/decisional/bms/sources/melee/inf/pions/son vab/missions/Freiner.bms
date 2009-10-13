@@ -63,6 +63,7 @@ include "bit.lua"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhaseMission
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
@@ -74,7 +75,7 @@ include "bit.lua"
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhaseMission = eJalonner
-                                                                return
+                                                                do return end
 
                             end
 
@@ -82,7 +83,7 @@ include "bit.lua"
                     end
 
                     Activate( self.activations.BEH_Dep_Pion_INF_RejoindreFuseau, 1, setmetatable( { eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// 2) Jalonner l'eni
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eJalonner then
@@ -97,7 +98,7 @@ elseif switch_1 == eJalonner then
                     if( self.bLRPassee ) then
                         do
                             Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                                                        return
+                                                        do return end
 
                         end
 --[[//-----------------------------------------------------------------------------
@@ -112,7 +113,7 @@ elseif switch_1 == eJalonner then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhaseMission = eFinMission
-                                                                return
+                                                                do return end
 
                             end
 
@@ -126,21 +127,21 @@ elseif switch_1 == eJalonner then
 ]]--[[//=============================================================================
 ]]--[[// MIA à remplacer par une motivation
 ]]if( F_Pion_GetbOrdreDecrocher( myself ) or self.eEtatRecueil == eActionEffectuee ) then
-                        return
+                        do return end
                     end
 
                     --[[//-----------------------------------------------------------------------------
 ]]--[[// Jalonner les enis
 ]]--[[//-----------------------------------------------------------------------------
 ]]Activate( self.activations.BEH_Eni_Pion_INF_JalonnerLesGros, 1.1, {} )
-                    
+                    _continue = false
                 --[[// 4) Fin de la mission
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     StopActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, {} )--[[// reprendre sauvegarde
 ]]
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
                 end
             end
@@ -240,28 +241,31 @@ do
                         --[[// cast
 ]]local pointLima = pointABC
                          do
+                            local _continue = true
                             local switch_1 = DEC_GetTypeLimaPoint( pointLima )
                             local cases_switch_1 = {}
                                 if switch_1 == eTypeLima_LC then
                                                                     Activate( self.activations.BEH_Lima_Pion_INF_Jalonner_PasserSurLC, 1, { DEC_GetLimaPoint( pointLima ), } )
-                                    
+                                    _continue = false
                                                                 cases_switch_1[1] = true
 elseif switch_1 == eTypeLima_LR then
                                                                     Activate( self.activations.BEH_Lima_Pion_INF_Jalonner_PasserSurLR, 1, { DEC_GetLimaPoint( pointLima ), } )
                                                                         self.params.__returnValue = eActionEffectuee
-                                    return
+                                    do return end
 
-                                    
+                                    _continue = false
                                 elseif switch_1 == eTypeLima_LIA then
                                                                     Activate( self.activations.BEH_Lima_Pion_INF_Jalonner_PasserSurLIA, 1, { DEC_GetLimaPoint( pointLima ), } )
                                                                         self.params.__returnValue = eActionEffectuee
-                                    return
+                                    do return end
 
-                                    
+                                    _continue = false
                                                                 end
                             end
 
-                        Activate( self.activations.ACT_Limas_Suppression, 1, { pointLima, } )
+                            if _continue then
+                            Activate( self.activations.ACT_Limas_Suppression, 1, { pointLima, } )
+                        end
                     end
                 end
 

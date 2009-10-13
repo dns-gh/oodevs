@@ -60,7 +60,7 @@ function S_Tir_EstAPortee_Debarque( pPion, rPH )
     local rDist_Max = DEC_Tir_PorteeMaxPourTirerSurUnite( pPion, rPH )
     local rDist = DEC_Geometrie_Distance( DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( pPion ) )
     _returnValue = rDist < rDist_Max
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_CalculerPositionAppui( pion, rDist )
@@ -72,6 +72,6 @@ function S_CalculerPositionAppui( pion, rDist )
         _returnValue = S_Geometrie_PtInvDirDangereuse( pion:DEC_Agent_Position(), DEC_GetDirectionDanger( mission ), 900 )
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 

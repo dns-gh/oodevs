@@ -34,12 +34,12 @@ includedFiles["sources/appui/alat/automates/common/actions/Actions - Manoeuvre.b
 
         if( not self.bRelevePossible ) then
             self.params.__returnValue = eActionImpossible
-            return
+            do return end
         end
 
         F_Pion_SeteEtatEchelon( self._namedParams.pionReleve, F_Pion_GeteEtatEchelon( self._namedParams.pionARelever ) )
                 self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 

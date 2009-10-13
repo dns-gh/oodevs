@@ -53,7 +53,7 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Eni_EstDansZone( ksEni, locZone )
@@ -61,11 +61,11 @@ function S_Eni_EstDansZone( ksEni, locZone )
     _returnValue = false
     local ptEni = DEC_ConnaissanceAgent_Position( ksEni )
     if( ( ( ptEni == 0 or ptEni == nil ) or locZone == 0 or ( ptEni == 0 or ptEni == nil ) or locZone == nil ) ) then
-        return _returnValue
+        do return _returnValue end
     end
 
     _returnValue = DEC_Geometrie_EstPointDansFuseau( ptEni ) and DEC_Geometrie_EstPointDansLocalisation( ptEni, locZone )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Eni_EstDangereux( repEni )
@@ -77,19 +77,19 @@ function S_Eni_EstDangereux( repEni )
         _returnValue = true
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_ForceDangerSur( repEni )
     local _returnValue = 0
     _returnValue = DEC_ConnaissanceAgent_Dangerosite( repEni )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Eni_ForceDangerPour( pionAmi, repEni )
     local _returnValue = 0
     _returnValue = pionAmi:DEC_ConnaissanceAgent_Dangerosite( repEni )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Eni_EstCiblePrioritaireSelonCategorieAtlas( cible, nTypeCiblePrioriraitreAtlas )
@@ -101,7 +101,7 @@ function S_Eni_EstCiblePrioritaireSelonCategorieAtlas( cible, nTypeCiblePriorira
 do
             local typeAtlas = DEC_ConnaissanceAgent_NatureAtlas( cible )
             if( typeAtlas == eNatureAtlas_None ) then
-                return _returnValue
+                do return _returnValue end
             end
 
             if( ( bit.band( nTypeCiblePrioriraitreAtlas, typeAtlas ) ) == nTypeCiblePrioriraitreAtlas ) then
@@ -111,12 +111,12 @@ do
         end
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Eni_NatureAtlas( cible )
     local _returnValue = nil
     _returnValue = DEC_ConnaissanceAgent_NatureAtlas( cible )
-    return _returnValue
+    do return _returnValue end
 end
 

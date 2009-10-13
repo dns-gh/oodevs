@@ -33,6 +33,7 @@ includedFiles["sources/appui/trans/automates/missions/commander/Commander - MRT.
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eMRT_AssignerMissions then
@@ -40,7 +41,7 @@ includedFiles["sources/appui/trans/automates/missions/commander/Commander - MRT.
 ]]if( self.eEtatMissionCommander == eActionImpossible ) then
                         do
                             self.ePhase = eMRT_MissionImpossible
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -48,7 +49,7 @@ includedFiles["sources/appui/trans/automates/missions/commander/Commander - MRT.
                     if( self.eEtatMissionCommander == eActionEffectuee ) then
                         do
                             self.ePhase = eMRT_Valider
-                                                        return
+                                                        do return end
 
                         end
 --[[// controle de creation mission
@@ -60,7 +61,7 @@ includedFiles["sources/appui/trans/automates/missions/commander/Commander - MRT.
                         Activate( self.activations.BEH_Mission_Automate_TRANS_AssignerEtablirGererLiaisonAListe, 1, { ePhase_MRT, selPions, self.ptDest, } )
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eMRT_MissionImpossible then
                     --[[//DEC_RC( eRC_MissionImpossible );
@@ -68,14 +69,14 @@ elseif switch_1 == eMRT_MissionImpossible then
                     Halt( self )
                     do return end
 
-                    
+                    _continue = false
                 elseif switch_1 == eMRT_Valider then
                     DEC_MRT_Valide()
                                         self.params.__returnValue = eActionEffectuee
                     Halt( self )
                     do return end
 
-                    
+                    _continue = false
                 
                 else
                                 end

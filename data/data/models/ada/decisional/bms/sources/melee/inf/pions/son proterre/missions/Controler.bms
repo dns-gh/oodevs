@@ -66,6 +66,7 @@ node "MIS_Pion_INF_ControlerSecteur"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eSurveiller then
@@ -76,7 +77,7 @@ node "MIS_Pion_INF_ControlerSecteur"
                             end
 
                             self.ePhase = eFinMission
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -86,7 +87,7 @@ node "MIS_Pion_INF_ControlerSecteur"
                             self.eAction = eActionEnCours
                                                         do
                                 self.ePhase = eSeReplier
-                                                                return
+                                                                do return end
 
                             end
 
@@ -95,7 +96,7 @@ node "MIS_Pion_INF_ControlerSecteur"
 
                     Activate( self.activations.BEH_Eni_Pion_VAB_Controler_Traiter, 1, { self._namedParams.mission.secteur_, } )
                     Activate( self.activations.BEH_Mission_Pion_VAB_ControlerSecteur, GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.ePhaseMission = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// Rejoins la position de replis
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eSeReplier then
@@ -114,7 +115,7 @@ elseif switch_1 == eSeReplier then
                     else
 do
                             Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -138,7 +139,7 @@ do
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
 
                 else
@@ -207,6 +208,7 @@ node "BEH_Mission_Pion_VAB_ControlerSecteur"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eSeMettreEnPlace then
@@ -217,7 +219,7 @@ node "BEH_Mission_Pion_VAB_ControlerSecteur"
                                                         do
                                 self.ePhase = eInstallerDispositif
                                                                 self.params.__returnValue = self.ePhase
-                                return
+                                do return end
 
                             end
 
@@ -226,7 +228,7 @@ node "BEH_Mission_Pion_VAB_ControlerSecteur"
 
                     Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
                     Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, setmetatable( { M_TEMPS_PREPARATION_MISSION(), self.ptMission, true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eInstallerDispositif then
                     Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
@@ -239,7 +241,7 @@ elseif switch_1 == eInstallerDispositif then
                                                         do
                                 self.ePhase = eSurveiller
                                                                 self.params.__returnValue = self.ePhase
-                                return
+                                do return end
 
                             end
 
@@ -248,14 +250,14 @@ elseif switch_1 == eInstallerDispositif then
 ]]                    end
 
                     Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, setmetatable( { eNiveauInstallation_PosteAmenage, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// L'ensemble du dispositif est installe, on surveiller la zone
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eSurveiller then
                     --[[// Surveille secteur			
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnControleZone, } )
                     Activate( self.activations.ACT_Pion_VAB_ControleZone, 1, { self.mission.secteur_, M_CAPACITE_SURVEILLANCE(), F_Pion_GeteConsigneTir( myself ) == eEtatROE_TirLibre, } )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
 
                 else
@@ -263,7 +265,7 @@ elseif switch_1 == eSurveiller then
             end
 
                 self.params.__returnValue = self.ePhase
-        return
+        do return end
 
     end,
 
@@ -287,7 +289,7 @@ node "BEH_Eni_Pion_VAB_Controler_Traiter"
     activate = function( self )
         --[[// Si le pion n'est pas dans son fuseau, on n'agit pas sur les ennemis
 ]]if( not DEC_Geometrie_EstPointDansFuseau( DEC_Agent_Position() ) ) then
-            return
+            do return end
         end
 
         --[[// On traite l'unite si elle est dans le fuseau de la section

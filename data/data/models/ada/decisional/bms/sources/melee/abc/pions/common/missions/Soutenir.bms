@@ -73,6 +73,7 @@ include "bit.lua"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhaseMission
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
@@ -80,7 +81,7 @@ include "bit.lua"
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "Close support of" .. DEC_GetSzName( self._namedParams.pionAmi ) .. " mission begining **", } )
                     self.ePhaseMission = eSuivreUnite
-                    
+                    _continue = false
                 --[[// 2) Suivre l'unité, être prêt à passer en appui
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eSuivreUnite then
@@ -102,7 +103,7 @@ elseif switch_1 == eSuivreUnite then
                         do
                             Activate( self.activations.BEH_Dep_Pion_ABC_Appuyer, 1, { self._namedParams.pionAmi, } )
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnAppui, } )
-                                                        return
+                                                        do return end
 
                         end
 --[[//-----------------------------------------------------------------------------
@@ -112,13 +113,13 @@ elseif switch_1 == eSuivreUnite then
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_SuitUnite, } )
                     Activate( self.activations.BEH_Dep_Suivre, 1, { self._namedParams.pionAmi, M_MODELE_PION_ABC_DISTANCE_MIN_SUIVRE(), } )
-                    
+                    _continue = false
                 --[[// 3) Fin mission sur ordre
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
 
                 else
@@ -163,7 +164,7 @@ node "BEH_Dep_Pion_ABC_Appuyer"
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "Holding support position...", } )
                 Activate( self.activations.ACT_Info_Trace, 1, { "...ready to fire", } )
-                                return
+                                do return end
 
             end
         end

@@ -28,7 +28,7 @@ includedFiles["sources/appui/nbc/automates/common/missions/decontaminerzone/Deco
 ]]
         self.nErrorCode = self.nErrorCode or nil
         if( ( #( self._namedParams.selPions ) == 0 or #( self._namedParams.selPions ) == nil ) ) then
-            return
+            do return end
         end
 
         --[[//-------------------------------------------------------------------------
@@ -46,7 +46,7 @@ includedFiles["sources/appui/nbc/automates/common/missions/decontaminerzone/Deco
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleZoneHorsFuseau, } )
                         Activate( self.activations.ACT_Info_Trace, 1, { "Impossibl to comput position in this localisation", } )
-                                                return
+                                                do return end
 
                     end
 --[[//-----------------------------------------------------------------------------

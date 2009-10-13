@@ -42,10 +42,11 @@ includedFiles["sources/melee/inf/pions/son appui/Actions.bms"] = true
         end
 
          do
+            local _continue = true
             local switch_1 = self.eEtat_EmbDeb
             local cases_switch_1 = {}
                 if switch_1 == eActionEmbDeb_EnCours then
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                 or switch_1 == eActionEmbDeb_PasDeTransporteurs then
@@ -136,6 +137,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
         end
 
          do
+            local _continue = true
             local switch_1 = self.eTir
             local cases_switch_1 = {}
                 if switch_1 == eActionTirDirect_EnemyDestroyed then
@@ -199,13 +201,13 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     end
 
                     F_Pion_SeteEtatFeu( myself, eEtatFeu_Executer )
-                    
+                    _continue = false
                                 cases_switch_1[6] = true
                 end
             end
 
                 self.params.__returnValue = eActionEnCours
-        return
+        do return end
 
     end,
 
@@ -271,6 +273,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
         end
 
          do
+            local _continue = true
             local switch_1 = self.eTir
             local cases_switch_1 = {}
                 if switch_1 == eActionTirDirect_EnemyDestroyed then
@@ -334,13 +337,13 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
                     do
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[6] = true
                 end
             end
 
                 self.params.__returnValue = eActionEnCours
-        return
+        do return end
 
     end,
 

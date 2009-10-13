@@ -37,7 +37,7 @@ includedFiles["sources/melee/abc/automates/common/missions/surveiller/Surveiller
         self.listePoint = self.listePoint or {}
         self.rIterateurPosition = self.rIterateurPosition or 0
         if( ( #( self._namedParams.selPions ) == 0 or #( self._namedParams.selPions ) == nil ) ) then
-            return
+            do return end
         end
 
         --[[//-------------------------------------------------------------------------
@@ -74,7 +74,7 @@ includedFiles["sources/melee/abc/automates/common/missions/surveiller/Surveiller
 do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleZoneHorsFuseau, } )
                                                 self.params.__returnValue = eActionImpossible
-                        return
+                        do return end
 
                     end
                 end

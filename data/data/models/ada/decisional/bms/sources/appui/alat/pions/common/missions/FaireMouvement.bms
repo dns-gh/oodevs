@@ -52,6 +52,7 @@ includedFiles["sources/appui/alat/pions/common/missions/FaireMouvement.bms"] = t
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eRejoindre then
@@ -61,7 +62,7 @@ includedFiles["sources/appui/alat/pions/common/missions/FaireMouvement.bms"] = t
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhase = eFinMission
-                                                                return
+                                                                do return end
 
                             end
 
@@ -69,7 +70,7 @@ includedFiles["sources/appui/alat/pions/common/missions/FaireMouvement.bms"] = t
                     end
 
                     Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindreParItineraire, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self._namedParams.mission.itineraire_, eProgressionDefaut, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
@@ -90,7 +91,7 @@ elseif switch_1 == eFinMission then
                     end
 
                     Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end

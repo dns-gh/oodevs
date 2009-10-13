@@ -19,20 +19,20 @@ include "bit.lua"
     local _returnValue = 0
     g_CurrentDistanceEsquivePopulation = 225
     _returnValue = 200
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Augmente_g_DistanceEsquivePopulation( )
     local _returnValue = 0
     g_CurrentDistanceEsquivePopulation = 225
     _returnValue = 250
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_EtatOpsMinimalFaceAPopulations( )
     local _returnValue = 0
     _returnValue = 0.2
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_PopulationTropAggressive( pop )
@@ -63,44 +63,46 @@ if( ( roe == eEtatROEPopulation_DispersionParMoyensDeDefenseActifs ) and ( attit
         _returnValue = false
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_AugmenterROEPopulation( eROEPopulationVirtuel )
     local _returnValue = nil
      do
+        local _continue = true
         local switch_1 = eROEPopulationVirtuel
         local cases_switch_1 = {}
             if switch_1 == eEtatROEPopulation_None then
                 _returnValue = eEtatROEPopulation_EmploiForceInterdit
-                
+                _continue = false
                         cases_switch_1[1] = true
 elseif switch_1 == eEtatROEPopulation_EmploiForceInterdit then
                 _returnValue = eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux
-                
+                _continue = false
                         cases_switch_1[2] = true
 elseif switch_1 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
                 _returnValue = eEtatROEPopulation_DispersionParMoyensDeDefenseActifs
-                
+                _continue = false
                         cases_switch_1[3] = true
 elseif switch_1 == eEtatROEPopulation_DispersionParMoyensDeDefenseActifs
             or switch_1 == eEtatROEPopulation_ArmesLetalesAutorisees then
                 _returnValue = eEtatROEPopulation_ArmesLetalesAutorisees
-                
+                _continue = false
                         cases_switch_1[4] = true
             end
         end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_RCROE( eROEPopulationVirtuel )
     local _returnValue = false
      do
+        local _continue = true
         local switch_1 = eROEPopulationVirtuel
         local cases_switch_1 = {}
             if switch_1 == eEtatROEPopulation_EmploiForceInterdit then
-                
+                _continue = false
                         cases_switch_1[1] = true
 elseif switch_1 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
                 do
@@ -112,7 +114,7 @@ elseif switch_1 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
 
                 end
 
-                
+                _continue = false
                         cases_switch_1[2] = true
 elseif switch_1 == eEtatROEPopulation_DispersionParMoyensDeDefenseActifs then
                 do
@@ -124,7 +126,7 @@ elseif switch_1 == eEtatROEPopulation_DispersionParMoyensDeDefenseActifs then
 
                 end
 
-                
+                _continue = false
                         cases_switch_1[3] = true
 elseif switch_1 == eEtatROEPopulation_ArmesLetalesAutorisees then
                 do
@@ -136,12 +138,12 @@ elseif switch_1 == eEtatROEPopulation_ArmesLetalesAutorisees then
 
                 end
 
-                
+                _continue = false
                         cases_switch_1[4] = true
             end
         end
 
     _returnValue = true
-    return _returnValue
+    do return _returnValue end
 end
 

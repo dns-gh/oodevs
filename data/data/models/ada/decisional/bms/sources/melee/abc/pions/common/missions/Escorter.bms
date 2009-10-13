@@ -79,6 +79,7 @@ include "bit.lua"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhaseMission
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
@@ -86,7 +87,7 @@ include "bit.lua"
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "Escort mission beginig", } )
                     self.ePhaseMission = eRejoindre
-                    
+                    _continue = false
                 --[[// Progression tactique
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eRejoindre then
@@ -98,7 +99,7 @@ elseif switch_1 == eRejoindre then
 ]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.pionAmi:DEC_Agent_Position() ) < 200 ) then
                         do
                             self.ePhaseMission = eProgresser
-                                                        return
+                                                        do return end
 
                         end
 --[[//-----------------------------------------------------------------------------
@@ -107,7 +108,7 @@ elseif switch_1 == eRejoindre then
 ]]                    end
 
                     Activate( self.activations.BEH_Dep_Suivre, 1, { self._namedParams.pionAmi, 50, } )
-                    
+                    _continue = false
                 --[[// Escorte
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eProgresser then
@@ -116,7 +117,7 @@ elseif switch_1 == eProgresser then
 ]]if( ( F_Pion_GetitMvt( self._namedParams.pionAmi ) == 0 or F_Pion_GetitMvt( self._namedParams.pionAmi ) == nil ) ) then
                         do
                             Activate( self.activations.ACT_Info_Trace, 1, { "Waiting for friendly unit to have a mission", } )
-                                                        return
+                                                        do return end
 
                         end
 --[[//-----------------------------------------------------------------------------
@@ -129,7 +130,7 @@ elseif switch_1 == eProgresser then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhaseMission = eFinMission
-                                                                return
+                                                                do return end
 
                             end
 
@@ -141,14 +142,14 @@ elseif switch_1 == eProgresser then
 ]]--[[// Obstacle
 ]]--[[//-----------------------------------------------------------------------------
 ]]Activate( self.activations.BEH_Dep_ReagirFaceAObstacle, 1.1, {} )
-                    
+                    _continue = false
                 --[[// Fin de la mission
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
                     StopActivateOverride( self, self.activations.ACT_Misc_Pion_ABC_Escorter, { self._namedParams.pionAmi, } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                    
+                    _continue = false
                                 cases_switch_1[4] = true
 
                 else
@@ -264,6 +265,7 @@ do
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhaseMission
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
@@ -271,7 +273,7 @@ do
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "Company escort mission begining", } )
                     self.ePhaseMission = eRejoindre
-                    
+                    _continue = false
                 --[[// Progression tactique
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eRejoindre then
@@ -283,13 +285,13 @@ elseif switch_1 == eRejoindre then
 ]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), pionASuivre:DEC_Agent_Position() ) < 200 ) then
                         do
                             self.ePhaseMission = eProgresser
-                                                        return
+                                                        do return end
 
                         end
                     end
 
                     Activate( self.activations.BEH_Dep_Suivre, 1, { pionASuivre, 50, } )
-                    
+                    _continue = false
                 --[[// Escorte
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eProgresser then
@@ -300,7 +302,7 @@ elseif switch_1 == eProgresser then
 ]]if( ( ( pionTemoin == 0 or pionTemoin == nil ) or F_Pion_GetitMvt( pionTemoin ) == 0 or ( pionTemoin == 0 or pionTemoin == nil ) or F_Pion_GetitMvt( pionTemoin ) == nil ) ) then
                         do
                             Activate( self.activations.ACT_Info_Trace, 1, { "Waiting for friendly company to have a mission", } )
-                                                        return
+                                                        do return end
 
                         end
 --[[//-----------------------------------------------------------------------------
@@ -313,7 +315,7 @@ elseif switch_1 == eProgresser then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhaseMission = eFinMission
-                                                                return
+                                                                do return end
 
                             end
 
@@ -325,7 +327,7 @@ elseif switch_1 == eProgresser then
 ]]--[[// Obstacle
 ]]--[[//-----------------------------------------------------------------------------
 ]]Activate( self.activations.BEH_Dep_ReagirFaceAObstacle, 1.1, {} )
-                    
+                    _continue = false
                 --[[// Fin de la mission
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
@@ -339,7 +341,7 @@ elseif switch_1 == eFinMission then
 ]]StopActivateOverride( self, self.activations.ACT_Misc_Pion_ABC_Escorter, { DEC_Pion_PionPCDeAutomate( self._namedParams.automateAmi ), } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                    
+                    _continue = false
                                 cases_switch_1[4] = true
 
                 else

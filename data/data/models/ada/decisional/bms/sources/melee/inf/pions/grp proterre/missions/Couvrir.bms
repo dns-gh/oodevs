@@ -81,11 +81,12 @@ node "MIS_Pion_INF_Couvrir"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eCouvrir then
                     Activate( self.activations.BEH_Mission_Pion_VAB_Couvrir, GetMotivation( "MOT_Mission" ), {} )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eFinMission then
                     if( self.eAction == eActionEffectuee ) then
@@ -105,7 +106,7 @@ elseif switch_1 == eFinMission then
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, setmetatable( { true, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 
                 else
@@ -153,6 +154,7 @@ node "BEH_Mission_Pion_VAB_Couvrir"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eRejoindre then
@@ -170,7 +172,7 @@ node "BEH_Mission_Pion_VAB_Couvrir"
                     else
 do
                             Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_MissionCouvrir, 1, setmetatable( { M_TEMPS_PREPARATION_APPUYER(), self.mission.pointCouverture_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -187,13 +189,13 @@ do
                         Activate( self.activations.BEH_Eni_Pion_INF_DetruitEtFixe, -1 * GetMotivation( "MOT_ManoeuvrerSurEnis" ), { F_Pion_GeteniEnCours( self.repAmi ), true, } )
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end
 
                 self.params.__returnValue = self.ePhase
-        return
+        do return end
 
     end,
 
@@ -258,13 +260,14 @@ node "BEH_Dep_Pion_INF_MiseEnPlace_MissionCouvrir"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
                     if( GetStateVariable( "VE_PreparationMission" ) > 0 ) then
                         do
                             Activate( self.activations.BEH_Delai_Pion_INF_PreparerMission, 1, { self._namedParams.rTempsPreparation, } )
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -285,7 +288,7 @@ node "BEH_Dep_Pion_INF_MiseEnPlace_MissionCouvrir"
                             if( DEC_Perception_PointEstVisible( self._namedParams.ptObjectif ) ) then
                                 do
                                     self.ePhase = eRejoindre
-                                                                        return
+                                                                        do return end
 
                                 end
                             end
@@ -293,11 +296,11 @@ node "BEH_Dep_Pion_INF_MiseEnPlace_MissionCouvrir"
                         end
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eRejoindre then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
 
                 else

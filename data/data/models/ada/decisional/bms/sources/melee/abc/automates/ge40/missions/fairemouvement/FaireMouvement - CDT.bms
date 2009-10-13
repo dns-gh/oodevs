@@ -39,7 +39,7 @@ includedFiles["sources/melee/abc/automates/ge40/missions/fairemouvement/FaireMou
 
                 end
 
-                                return
+                                do return end
 
             end
         end
@@ -122,7 +122,7 @@ node "ACT_GTIA_AssignerMissionFaireMouvementA"
 
     select = function( self )
         if( not ModuleBegins() ) then
-            return
+            do return end
         end
 
         local missionPion = DEC_CreerMissionAutomate( self._namedParams.pion, "T_Mission_Automate_FaireMouvement" )

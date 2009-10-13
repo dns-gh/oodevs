@@ -14,6 +14,6 @@ includedFiles["sources/common/automates/functions/Functions - Obj.bms"] = true
     local contourne = DEC_ConnaissanceObjet_EstContourne( objet )
     local result = ( contourne == eTristate_True )
     _returnValue = result
-    return _returnValue
+    do return _returnValue end
 end
 

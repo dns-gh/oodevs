@@ -54,7 +54,7 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Misc_Automate_UniteMission_Reduire( pion )
@@ -66,7 +66,7 @@ function S_Misc_Automate_UniteMission_Reduire( pion )
         _returnValue = mission.uniteAReduire_
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Misc_Automate_NbrPionsAffectes_Reduire( ksEni )
@@ -84,7 +84,7 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Conduite_Automate_Relever_PionFinMouvement( selPions )
@@ -104,6 +104,6 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 

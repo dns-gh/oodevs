@@ -192,12 +192,13 @@ node "BEH_Dep_Pion_HOT_AppuyerFreinage"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eAppuyer then
                     Activate( self.activations.ACT_RC, 1, { eRC_PasseEnAppui, } )
                     StartActivateOverride( self, self.activations.BEH_Dep_Pion_INF_RejoindrePositionAppui, 1, { self._namedParams.tAmi, self.repCurEni, eProgressionDirect, } )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eSePoster then
                     Activate( self.activations.ACT_RC, 1, { eRC_EnAppui, } )
@@ -206,7 +207,7 @@ elseif switch_1 == eSePoster then
                     Activate( self.activations.ACT_Misc_UnitesEnAppui_EnPosition, 1, {} )--[[// on indique a l'unites appuyee que la section
 ]]--[[// est en position d'appui
 ]]
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 
                 else
@@ -214,7 +215,7 @@ elseif switch_1 == eSePoster then
             end
 
                 self.params.__returnValue = self.ePhase
-        return
+        do return end
 
     end,
 

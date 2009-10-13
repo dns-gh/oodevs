@@ -69,7 +69,7 @@ node "BEH_Situation_Automate_ASS_FinMission"
         if( ( #( self.lst_Pions_EnTete ) == 0 or #( self.lst_Pions_EnTete ) == nil ) ) then
             do
                 self.lst_Pions_EnTete = S_ObtenirTousPionsDe( eEtatEchelon_Premier )
-                                return
+                                do return end
 
             end
         end
@@ -80,6 +80,7 @@ node "BEH_Situation_Automate_ASS_FinMission"
 do
                 local x_pion = x
                  do
+                    local _continue = true
                     local switch_1 = --[[// Situation Mission
 ]]--[[// --------------------------------------------------------------------
 ]]F_Pion_GeteEtatPhaseMission( x_pion )
@@ -87,7 +88,7 @@ do
                         if switch_1 == eEtatPhaseMission_None
                         or switch_1 == eEtatPhaseMission_FinMission then
                                                         rN_Fin = rN_Fin + 1
-                            
+                            _continue = false
                                                 cases_switch_1[1] = true
                         end
                     end
@@ -98,7 +99,7 @@ do
 
         if( rN_Fin == #( self.lst_Pions_EnTete ) ) then
             self.params.__returnValue = eActionEffectuee
-            return
+            do return end
         end
 
     end,

@@ -22,7 +22,7 @@ includedFiles["sources/melee/abc/automates/ge40/missions/offensives/Gerer appuis
         --[[// On récupère les pions de premier échelons en difficultés 
 ]]local listePEEnDifficultes = S_Cherche_GE_Filtre_EtatSauvegarde( S_Cherche_GE_Filtre_PasFinMission( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Premier ) ) )
         if( DIA_IsListEmpty( listePEEnDifficultes ) ) then
-            return
+            do return end
         end
 
         --[[// Assignation appuis

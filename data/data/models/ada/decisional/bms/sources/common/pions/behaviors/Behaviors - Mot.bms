@@ -67,7 +67,7 @@ node "BEH_MOT_GarderSesDistances"
         --[[/*********************************************/]]Activate( self.activations.ACT_MAJ_EtatDec, 1, { eEtatDec_Sauvegarde, } )
         --[[/*********************************************/]]--[[// Pour certaines missions
 ]]if( g_bDesactiveSauvegarde ) then
-            return
+            do return end
         end
 
         local listeConnaissances = DEC_Connaissances_UnitesEnnemiesDangereuses()
@@ -260,7 +260,7 @@ if( S_Eni_EstNiveauPerceptionGTIA( self._namedParams.repEni, eReconnu ) ) then
                 Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { DEC_ConnaissanceAgent_Position( self._namedParams.repEni ), } )
                 if( not DEC_ConnaissanceAgent_EstPercuParUnite( self._namedParams.repEni ) ) then
                     self.params.__returnValue = eActionEnPause
-                    return
+                    do return end
                 end
 
                 local strMsg = "MP: Niveau d'identification demande ( " .. EnumToString( F_Pion_GeteNiveauAction( myself ), E_NiveauPerception ) .. " )"
@@ -268,7 +268,7 @@ if( S_Eni_EstNiveauPerceptionGTIA( self._namedParams.repEni, eReconnu ) ) then
                     do
                         Activate( self.activations.ACT_Info_Trace, 1, { strMsg .. " : NOK", } )
                                                 self.params.__returnValue = eActionEnPause
-                        return
+                        do return end
 
                     end
                 end
@@ -285,7 +285,7 @@ if( S_Eni_EstNiveauPerceptionGTIA( self._namedParams.repEni, eReconnu ) ) then
                     do
                         Activate( self.activations.ACT_Info_Trace, 1, { strMsg .. " : NOK", } )
                                                 self.params.__returnValue = eActionEnPause
-                        return
+                        do return end
 
                     end
                 end
@@ -301,7 +301,7 @@ if( S_Eni_EstNiveauPerceptionGTIA( self._namedParams.repEni, eReconnu ) ) then
                     do
                         Activate( self.activations.ACT_Info_Trace, 1, { strMsg .. " : NOK", } )
                                                 self.params.__returnValue = eActionEnPause
-                        return
+                        do return end
 
                     end
                 end

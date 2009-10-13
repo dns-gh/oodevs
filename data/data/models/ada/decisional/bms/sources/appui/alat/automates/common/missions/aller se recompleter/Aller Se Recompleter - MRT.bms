@@ -35,6 +35,7 @@ includedFiles["sources/appui/alat/automates/common/missions/aller se recompleter
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eMRT_AssignerMissions then
@@ -42,7 +43,7 @@ includedFiles["sources/appui/alat/automates/common/missions/aller se recompleter
 ]]if( self.eEtatMissionsAllerSeRecompleter == eActionImpossible ) then
                         do
                             self.ePhase = eMRT_MissionImpossible
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -50,7 +51,7 @@ includedFiles["sources/appui/alat/automates/common/missions/aller se recompleter
                     if( self.eEtatMissionsAllerSeRecompleter == eActionEffectuee ) then
                         do
                             self.ePhase = eMRT_Valider
-                                                        return
+                                                        do return end
 
                         end
 --[[// Reconnaitre le contour ennemi : controle de creation mission
@@ -62,7 +63,7 @@ includedFiles["sources/appui/alat/automates/common/missions/aller se recompleter
                         Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsAllerSeRecompleterAListe, 1, { ePhase_MRT, self.selPions, self._namedParams.mission.plotsRavitaillement_, } )
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eMRT_MissionImpossible then
                     DEC_RC( eRC_MissionImpossible )

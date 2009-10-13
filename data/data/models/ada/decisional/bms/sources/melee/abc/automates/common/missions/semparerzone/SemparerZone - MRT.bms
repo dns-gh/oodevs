@@ -27,7 +27,7 @@ includedFiles["sources/melee/abc/automates/common/missions/semparerzone/Semparer
         self.rIterateurSecteur = self.rIterateurSecteur or 0
         self.nErrorCode = self.nErrorCode or nil
         if( ( #( self._namedParams.selPions ) == 0 or #( self._namedParams.selPions ) == nil ) ) then
-            return
+            do return end
         end
 
         --[[//-------------------------------------------------------------------------
@@ -48,7 +48,7 @@ includedFiles["sources/melee/abc/automates/common/missions/semparerzone/Semparer
                         DEC_Trace( "$$$ impossible de trouver des positions dans la localisation" )
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleZoneHorsFuseau, } )
                                                 self.params.__returnValue = eActionImpossible
-                        return
+                        do return end
 
                     end
 --[[//-----------------------------------------------------------------------------

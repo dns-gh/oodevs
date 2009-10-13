@@ -120,13 +120,13 @@ includedFiles["sources/appui/log/pions/Actions.bms"] = true
             do
                 DEC_RC( eRC_Convoi_ChargementEffectue )
                                 self.params.__returnValue = eActionEffectuee
-                return
+                do return end
 
             end
         end
 
                 self.params.__returnValue = eActionEnCours
-        return
+        do return end
 
     end,
 
@@ -169,13 +169,13 @@ includedFiles["sources/appui/log/pions/Actions.bms"] = true
             do
                 DEC_RC( eRC_Convoi_DechargementEffectue )
                                 self.params.__returnValue = eActionEffectuee
-                return
+                do return end
 
             end
         end
 
                 self.params.__returnValue = eActionEnCours
-        return
+        do return end
 
     end,
 

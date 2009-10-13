@@ -146,7 +146,7 @@ do
     end
 
     _returnValue = pionLePlusProcheBuffer
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_SelectionnePCEtSubordonnes( unites_ )
@@ -183,7 +183,7 @@ do
     end
 
     _returnValue = bufferPionCont
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Misc_EstDetruitTactique( )
@@ -193,7 +193,7 @@ function S_Misc_EstDetruitTactique( )
         _returnValue = true
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Misc_EstPionDetruitTactique( pion )
@@ -203,19 +203,19 @@ function S_Misc_EstPionDetruitTactique( pion )
         _returnValue = true
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Misc_EstDetruitPhysique( )
     local _returnValue = false
     _returnValue = DEC_Agent_EstMort()
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Misc_EstPionDetruitPhysique( pion )
     local _returnValue = false
     _returnValue = pion:DEC_Agent_EstMort()
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_PionsNonDetruits( listePions )
@@ -230,7 +230,7 @@ if( not S_Misc_EstPionDetruitPhysique( x ) ) then
     end
 
     _returnValue = listeBuffer
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Geometrie_LocalisationProche( listeLocalisation )
@@ -245,7 +245,7 @@ function S_Geometrie_LocalisationProche( listeLocalisation )
 do
             ptEntreeLocalisation = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( loc )
             if( ( ptEntreeLocalisation == 0 or ptEntreeLocalisation == nil ) ) then
-                return _returnValue
+                do return _returnValue end
             end
 
             rDistanceCourante = DEC_Geometrie_Distance( DEC_Agent_Position(), ptEntreeLocalisation )
@@ -260,14 +260,14 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Misc_EstMissionAffectee( typeMission )
     local _returnValue = false
     local mission = DEC_GetMission( myself )
     _returnValue = ( mission ~= nil ) and ( mission:GetType() == typeMission )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Misc_EstMissionAffectee_Automate( typeMission )
@@ -275,14 +275,14 @@ function S_Misc_EstMissionAffectee_Automate( typeMission )
     local automate = DEC_GetAutomate( myself )
     local mission = DEC_GetMission( automate )
     _returnValue = ( mission ~= nil ) and ( mission:GetType() == typeMission )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Misc_EstMissionAffectee_Generique( )
     local _returnValue = false
     local mission = DEC_GetMission( myself )
     _returnValue = ( mission ~= nil ) and ( mission:GetType() == "T_Mission_Pion_FaireMouvement" or mission:GetType() == "T_Mission_Pion_Franchir" or mission:GetType() == "T_Mission_Pion_Decrocher" or mission:GetType() == "T_Mission_Pion_SeFaireDecontaminer" or mission:GetType() == "T_Mission_Pion_SeFaireTransporter" or mission:GetType() == "T_Mission_Pion_Stationner" or mission:GetType() == "T_Mission_Pion_Suivre" )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Force_DangerSur( repEni )
@@ -295,13 +295,13 @@ function S_Force_DangerSur( repEni )
         _returnValue = rForceDanger
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Force_DistancePt( pt )
     local _returnValue = 0
     _returnValue = 1 + 1 / ( 1 + DEC_Geometrie_Distance( DEC_Agent_Position(), pt ) / 1000 )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Force_Distance( ksEni )
@@ -314,13 +314,13 @@ function S_Force_Distance( ksEni )
         _returnValue = S_Force_DistancePt( positionEni )
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Pion_ForceDistancePt( pion, pt )
     local _returnValue = 0
     _returnValue = 1 + 1 / ( 1 + DEC_Geometrie_Distance( pion:DEC_Agent_Position(), pt ) / 1000 )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Pion_ForceDistance( pion, ksEni )
@@ -333,7 +333,7 @@ function S_Pion_ForceDistance( pion, ksEni )
         _returnValue = S_Pion_ForceDistancePt( pion, positionEni )
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Connaissance_ForceDistance( ksAmi, ksEni )
@@ -344,7 +344,7 @@ function S_Connaissance_ForceDistance( ksAmi, ksEni )
     if( ( positionEni == 0 or positionEni == nil ) ) then
         do
             _returnValue = 0
-                        return _returnValue
+                        do return _returnValue end
 
         end
     end
@@ -353,25 +353,25 @@ function S_Connaissance_ForceDistance( ksAmi, ksEni )
     if( ( positionAmi == 0 or positionAmi == nil ) ) then
         do
             _returnValue = 0
-                        return _returnValue
+                        do return _returnValue end
 
         end
     end
 
     _returnValue = 1 + 1 / ( 1 + DEC_Geometrie_Distance( positionAmi, positionEni ) / 1000 )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Force_ActionContre( ksEni )
     local _returnValue = 0
     _returnValue = S_Force_DangerSur( ksEni ) * ( S_Force_Distance( ksEni ) - 1 )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Force_DistanceFloat( dist )
     local _returnValue = 0
     _returnValue = 1 + 1 / ( 1 + dist / 1000 )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_RapForLocal( )
@@ -387,7 +387,7 @@ if( rapFor > 2.4 and rapFor <= 3.5 ) then
         end
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Misc_DetruireItineraire( it, debug )
@@ -397,6 +397,6 @@ function S_Misc_DetruireItineraire( it, debug )
     end
 
     _returnValue = nil
-    return _returnValue
+    do return _returnValue end
 end
 

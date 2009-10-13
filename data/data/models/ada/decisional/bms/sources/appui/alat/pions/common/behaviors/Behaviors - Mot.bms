@@ -103,7 +103,7 @@ node "BEH_MOT_Pion_ALAT_GarderSesDistancesFaceA"
         end
 
         if( g_bDesactiveSauvegarde ) then
-            return
+            do return end
         end
 
         self.rDistanceEfficace = self.rDistanceEfficace or S_Tir_PorteeMaxPourEtreTireParAgent( self._namedParams.repEni, M_POLY_PH_TIR_ENI_EFFICACE() )
@@ -129,20 +129,21 @@ node "BEH_Mot_Pion_ALAT_AffecterVariablesDEtat"
 ]]--[[// En fonction du moral...
 ]]--[[//-----------------------------------------------------------------------------
 ]]         do
+            local _continue = true
             local switch_1 = DEC_FacteurHumain_Moral()
             local cases_switch_1 = {}
                 if switch_1 == eMoral_Fanatique then
                     SetStateVariable( "VE_RapFor", 0 )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eMoral_Moyen
                 or switch_1 == eMoral_Bon then
                     SetStateVariable( "VE_RapFor", ( 5 - DEC_RapportDeForceLocal() ) )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eMoral_Mauvais then
                     SetStateVariable( "VE_RapFor", ( 5 - DEC_RapportDeForceLocal() ) )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
                 end
             end

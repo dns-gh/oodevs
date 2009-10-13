@@ -30,46 +30,52 @@ includedFiles["sources/common/automates/behaviors/Behaviors - POP - ROE.bms"] = 
 do
                 local repOrdre = x
                  do
+                    local _continue = true
                     local switch_1 = repOrdre:GetType()
                     local cases_switch_1 = {}
                         if switch_1 == "Rep_OrderConduite_ChangerReglesEngagementPopulation" then
                             local ordreROE = repOrdre
                              do
+                                local _continue = true
                                 local switch_2 = ordreROE:GetorderConduiteChangerReglesEngagementPopulation_()
                                 local cases_switch_2 = {}
                                     if switch_2 == eEtatROEPopulation_EmploiForceInterdit then
                                         --[[// TIR INTERDIT POP
 ]]DEC_Trace( " === ORDRE --> ROE POPULATION: EMPLOI FORCE INTERDIT" )
                                         Activate( self.activations.BEH_ROE_Automate_EmploiForceInterdit, 1, {} )
-                                        
+                                        _continue = false
                                     --[[// TIR SOMMATION POP
 ]]                                    cases_switch_2[1] = true
 elseif switch_2 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
                                         DEC_Trace( " === ORDRE --> ROE POPULATION: MAINTIEN A DISTANCE PAR MOYENS NON LETAUX" )
                                         Activate( self.activations.BEH_ROE_Automate_MaintienADistanceParMoyensNonLetaux, 1, {} )
-                                        
+                                        _continue = false
                                     --[[// TIR DISSUASION POP
 ]]                                    cases_switch_2[2] = true
 elseif switch_2 == eEtatROEPopulation_DispersionParMoyensDeDefenseActifs then
                                         DEC_Trace( " === ORDRE --> ROE POPULATION: ARMES LETALES AUTORISEES" )
                                         Activate( self.activations.BEH_ROE_Automate_DispersionParMoyensDeDefenseActifs, 1, {} )
-                                        
+                                        _continue = false
                                     --[[// TIR NEUTRALISATION POP
 ]]                                    cases_switch_2[3] = true
 elseif switch_2 == eEtatROEPopulation_ArmesLetalesAutorisees then
                                         DEC_Trace( " === ORDRE --> ROE TIR DE NEUTRALISATION SUR POPULATIONS" )
                                         Activate( self.activations.BEH_ROE_Automate_ArmesLetalesAutorisees, 1, {} )
-                                        
+                                        _continue = false
                                                                         cases_switch_2[4] = true
                                     end
                                 end
 
-                            
+                                if _continue then
+                                _continue = false
+                            end
                                                 cases_switch_1[1] = true
                         end
                     end
 
-                Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
+                    if _continue then
+                    Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
+                end
             end
 
         end

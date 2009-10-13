@@ -88,7 +88,7 @@ do
     end
 
     _returnValue = eniLePlusDangereux
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Eni_Automate_ASA_HAWK_LePlusDangereuxSurSite( listeEnis, zone )
@@ -125,7 +125,7 @@ do
     end
 
     _returnValue = eniLePlusDangereux
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Eni_Automate_ASA_HAWK_TrieParDangerositeSurAmisDansZone( sListeEnis, zone )
@@ -149,7 +149,7 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Eni_Automate_ASA_HAWK_TrieParDangerositeSurSite( sListeEnis, zone )
@@ -173,7 +173,7 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Liste_GererOverKill( pion, listeSectionsTir )
@@ -182,7 +182,7 @@ function S_Liste_GererOverKill( pion, listeSectionsTir )
     local listeConnaissancesBuffer = {}
     local listeConnaissancesEnisCopie = {}
     if( pion:GetType() ~= "TheaterHighAltitudeDefenseTroop" ) then
-        return
+        do return end
     end
 
     local sectionHawk = pion

@@ -57,37 +57,37 @@ include "bit.lua"
 ]]function S_Tir_PorteeMaxPourTirerSurAgent( agent, phVoulu )
     local _returnValue = 0
     _returnValue = DEC_Tir_PorteeMaxPourTirerSurUnite( agent, phVoulu )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Tir_PorteeMinPourTirerSurAgent( agent, phVoulu )
     local _returnValue = 0
     _returnValue = DEC_Tir_PorteeMinPourTirerSurUnite( agent, phVoulu )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Tir_PorteeMaxPourTirerSurAgentPosturesReelles( agent, phVoulu )
     local _returnValue = 0
     _returnValue = DEC_Tir_PorteeMaxPourTirerSurUnitePosturesReelles( agent, phVoulu )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Tir_PorteeMinPourTirerSurAgentPosturesReelles( agent, phVoulu )
     local _returnValue = 0
     _returnValue = DEC_Tir_PorteeMinPourTirerSurUnitePosturesReelles( agent, phVoulu )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Tir_PorteeMaxPourTirerDebarqueSurAgent( agent, phVoulu )
     local _returnValue = 0
     _returnValue = DEC_Tir_PorteeMaxPourTirerDebarqueSurUnite( agent, phVoulu )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Tir_PorteeMaxPourEtreTireParAgent( agent, phVoulu )
     local _returnValue = 0
     _returnValue = DEC_Tir_PorteeMaxPourEtreTireParUnite( agent, phVoulu )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Tir_EstTropLoinPourToucher( repEni, rPh )
@@ -99,7 +99,7 @@ function S_Tir_EstTropLoinPourToucher( repEni, rPh )
         _returnValue = false
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Tir_EstTropProchePourToucher( repEni, rPh )
@@ -111,7 +111,7 @@ function S_Tir_EstTropProchePourToucher( repEni, rPh )
         _returnValue = false
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Tir_EstAPortee( repEni, rPh )
@@ -119,7 +119,7 @@ function S_Tir_EstAPortee( repEni, rPh )
     local bTropProche = S_Tir_EstTropProchePourToucher( repEni, rPh )
     local bTropLoin = S_Tir_EstTropLoinPourToucher( repEni, rPh )
     _returnValue = not ( bTropProche or bTropLoin )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Tir_EstTropLoinPourToucherPosturesReelles( repEni, rPh )
@@ -131,7 +131,7 @@ function S_Tir_EstTropLoinPourToucherPosturesReelles( repEni, rPh )
         _returnValue = false
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Tir_EstTropProchePourToucherPosturesReelles( repEni, rPh )
@@ -143,7 +143,7 @@ function S_Tir_EstTropProchePourToucherPosturesReelles( repEni, rPh )
         _returnValue = false
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Tir_EstAPorteePosturesReelles( repEni, rPh )
@@ -151,7 +151,7 @@ function S_Tir_EstAPorteePosturesReelles( repEni, rPh )
     local bTropProche = S_Tir_EstTropProchePourToucherPosturesReelles( repEni, rPh )
     local bTropLoin = S_Tir_EstTropLoinPourToucherPosturesReelles( repEni, rPh )
     _returnValue = not ( bTropProche or bTropLoin )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Tir_EfficaceSur( repEni, rEtatInitial )
@@ -160,21 +160,21 @@ function S_Tir_EfficaceSur( repEni, rEtatInitial )
     if( ( rEtatInitial == 0 or rEtatInitial == nil ) ) then
         do
             _returnValue = false
-                        return _returnValue
+                        do return _returnValue end
 
         end
     end
 
     local rEfficacite = ( rEtatInitial - DEC_ConnaissanceAgent_EtatOps( repEni ) ) / rEtatInitial
     _returnValue = ( rEfficacite < 0.5 )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Tir_MunitionIndirect_EstValide( eDotation )
     local _returnValue = false
     local rInvalide = -1
     _returnValue = ( DEC_Tir_PorteeMaxTirIndirect( eDotation ) ~= rInvalide ) and ( DEC_Tir_PorteeMinTirIndirect( eDotation ) ~= rInvalide )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Tir_DistancePorteeIndirect_EstValide( dotation, ptCible )
@@ -183,6 +183,6 @@ function S_Tir_DistancePorteeIndirect_EstValide( dotation, ptCible )
     local rPorteeMin = DEC_Tir_PorteeMinTirIndirect_SansTesterEtatMunitions( dotation )
     local rDist = DEC_Geometrie_Distance( DEC_Agent_Position(), ptCible )
     _returnValue = ( rDist >= rPorteeMin ) and ( rDist < rPorteeMax )
-    return _returnValue
+    do return _returnValue end
 end
 

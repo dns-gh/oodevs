@@ -32,6 +32,7 @@ includedFiles["sources/appui/circulation/automates/missions/reconnaitreitinerair
         end
 
          do
+            local _continue = true
             local switch_1 = --[[// =============================================================================
 ]]--[[// PHASE DU COMPORTEMENT
 ]]--[[//
@@ -46,7 +47,7 @@ includedFiles["sources/appui/circulation/automates/missions/reconnaitreitinerair
 ]]if( self.eEtatMissionReconnaitre == eActionImpossible ) then
                         do
                             self.ePhase = eMRT_MissionImpossible
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -54,7 +55,7 @@ includedFiles["sources/appui/circulation/automates/missions/reconnaitreitinerair
                     if( self.eEtatMissionReconnaitre == eActionEffectuee ) then
                         do
                             self.ePhase = eMRT_Valider
-                                                        return
+                                                        do return end
 
                         end
 --[[// controle de creation des missions de construction de zone à mobilité améliorée
@@ -66,7 +67,7 @@ includedFiles["sources/appui/circulation/automates/missions/reconnaitreitinerair
                         Activate( self.activations.BEH_Mission_Automate_CIRCU_AssignerReconnaitreItineraireAListe, 1, { ePhase_MRT, self.selPions, self._namedParams.mission.itineraireLog_, } )
                     end
 
-                    
+                    _continue = false
                 --[[//---------------------------------------------------------------------
 ]]--[[// Mission impossible
 ]]--[[//---------------------------------------------------------------------
@@ -77,7 +78,7 @@ elseif switch_1 == eMRT_MissionImpossible then
                     Halt( self )
                     do return end
 
-                    
+                    _continue = false
                 --[[//---------------------------------------------------------------------
 ]]--[[// Validation
 ]]--[[//---------------------------------------------------------------------
@@ -87,7 +88,7 @@ elseif switch_1 == eMRT_MissionImpossible then
                     Halt( self )
                     do return end
 
-                    
+                    _continue = false
                 
                 else
                                 end

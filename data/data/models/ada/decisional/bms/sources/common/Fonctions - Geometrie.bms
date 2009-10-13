@@ -45,25 +45,25 @@ includedFiles["sources/common/Fonctions - Geometrie.bms"] = true
     if( ( #( listePions ) == 0 or #( listePions ) == nil ) ) then
         do
             _returnValue = nil
-                        return _returnValue
+                        do return _returnValue end
 
         end
     end
 
     _returnValue = DEC_Geometrie_CalculerBarycentreAgents( listePions )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Geometrie_PtInvDirDangereuse( ptSrc, dirEnnemi, rDist )
     local _returnValue = nil
     _returnValue = DEC_Geometrie_PositionTranslateDir( ptSrc, dirEnnemi, -rDist )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Geometrie_EstProchePosition( ptDest, ptTest, rEcart )
     local _returnValue = false
     _returnValue = DEC_Geometrie_Distance( ptDest, ptTest ) <= rEcart
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Geometrie_BarycentreZone( localisation )
@@ -78,7 +78,7 @@ function S_Geometrie_BarycentreZone( localisation )
         _returnValue = DEC_Geometrie_CalculerBarycentreLocalisation( localisation )
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Geometrie_PointPlusProcheLocalisation( zone, listePoints )
@@ -90,7 +90,7 @@ function S_Geometrie_PointPlusProcheLocalisation( zone, listePoints )
     _returnValue = nil
     pointEntreeDansZone = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( zone )
     if( pointEntreeDansZone == nil ) then
-        return _returnValue
+        do return _returnValue end
     end
 
     local distanceTmp = 0
@@ -112,7 +112,7 @@ do
     end
 
     _returnValue = pointRetour
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Geometrie_DecoupeLocalisation( localisationSrc, rNombreSections )
@@ -123,33 +123,34 @@ function S_Geometrie_DecoupeLocalisation( localisationSrc, rNombreSections )
     eError = listeLocalisationBuffer.second
     listeLocalisationBuffer = listeLocalisationBuffer.first
      do
+        local _continue = true
         local switch_1 = eError
         local cases_switch_1 = {}
             if switch_1 == eNoError then
                 _returnValue = listeLocalisationBuffer
-                
+                _continue = false
                         cases_switch_1[1] = true
 elseif switch_1 == eError_PionsPasDansMemeFuseau then
                 do
                 end
 
-                
+                _continue = false
                         cases_switch_1[2] = true
 elseif switch_1 == eError_LocalisationPasDansFuseau then
                 do
                 end
 
-                
+                _continue = false
                         cases_switch_1[3] = true
 elseif switch_1 == eWarning_DecoupageIncomplet then
                 do
                 end
 
-                
+                _continue = false
                         cases_switch_1[4] = true
             end
         end
 
-    return _returnValue
+    do return _returnValue end
 end
 

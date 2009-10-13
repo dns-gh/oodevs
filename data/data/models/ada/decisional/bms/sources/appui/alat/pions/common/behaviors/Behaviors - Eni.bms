@@ -181,7 +181,7 @@ node "BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire"
 
                 Activate( self.activations.ACT_Obs_ObserverPoint, 1, { myself:DEC_Agent_Position(), } )
                 Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, self._namedParams.delai, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                                return
+                                do return end
 
             end
 --[[//MAJ de l'ennemi en cours de traitement
@@ -297,7 +297,7 @@ node "BEH_Eni_Pion_ALAT_AllerDetruireEnnemi"
                     do
                         self.initPointRejoindre = false
                         Activate( self.activations.BEH_Eni_SePosterFaceA, 1, { self._namedParams.ennemi, } )
-                                                return
+                                                do return end
 --[[//pour killer l'instance de Rejoindre
 ]]
                     end

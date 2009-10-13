@@ -90,6 +90,7 @@ includedFiles["sources/appui/alat/automates/common/missions/surveiller/Surveille
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eMRT_AssignerMissions then
@@ -97,7 +98,7 @@ includedFiles["sources/appui/alat/automates/common/missions/surveiller/Surveille
 ]]if( self.eEtatMissionsSurveiller == eActionImpossible ) then
                         do
                             self.ePhase = eMRT_MissionImpossible
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -105,7 +106,7 @@ includedFiles["sources/appui/alat/automates/common/missions/surveiller/Surveille
                     if( self.eEtatMissionsSurveiller == eActionEffectuee ) then
                         do
                             self.ePhase = eMRT_Valider
-                                                        return
+                                                        do return end
 
                         end
 --[[// Surveiller : controle de creation mission
@@ -127,7 +128,7 @@ includedFiles["sources/appui/alat/automates/common/missions/surveiller/Surveille
                         Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_MRT, self.listePionsReserve, self._namedParams.mission.pointLogistique_, } )
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eMRT_MissionImpossible then
                     DEC_RC( eRC_MissionImpossible )

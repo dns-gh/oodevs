@@ -43,6 +43,7 @@ do
                         do
                             local compteur = 0
                              do
+                                local _continue = true
                                 local switch_1 = self._namedParams.mission.modeDeploiement_
                                 local cases_switch_1 = {}
                                     if switch_1 == deploiementOmnidirectionnelEnCarreAutourZone then
@@ -61,7 +62,7 @@ do
                                         end
 
                                         self.listePoints = DEC_Geometrie_PosDeploiementASAOmni( #( self.listeSectionMistralPourMissionDefendreZone ), self.barycentreZone, M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS() * 0.707 )
-                                        
+                                        _continue = false
                                                                         cases_switch_1[1] = true
 elseif switch_1 == deploiementOmnidirectionnelEnTriangleAutourZone then
                                         for _,x in pairs( self.listeSectionMistral ) do
@@ -79,7 +80,7 @@ do
                                         end
 
                                         self.listePoints = DEC_Geometrie_PosDeploiementASAOmni( #( self.listeSectionMistralPourMissionDefendreZone ), self.barycentreZone, ( M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS() / 2 ) * 1.155 )
-                                        
+                                        _continue = false
                                                                         cases_switch_1[2] = true
 elseif switch_1 == deploiementNasseTroisSections then
                                         for _,x in pairs( self.listeSectionMistral ) do
@@ -97,7 +98,7 @@ do
                                         end
 
                                         self.listePoints = DEC_Geometrie_PosDeploiementMistralNasse( #( self.listeSectionMistralPourMissionDefendreZone ), self.barycentreZone, self._namedParams.mission.angle_, M_POLY_DOCTRINE_DISTANCE_POINT_A_DEFENDRE(), M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS(), DEC_GetDirectionEnnemi( self._namedParams.mission ) )
-                                        
+                                        _continue = false
                                                                         cases_switch_1[3] = true
 elseif switch_1 == deploiementNasseQuatreSections then
                                         for _,x in pairs( self.listeSectionMistral ) do
@@ -115,12 +116,12 @@ do
                                         end
 
                                         self.listePoints = DEC_Geometrie_PosDeploiementMistralNasse( #( self.listeSectionMistralPourMissionDefendreZone ), self.barycentreZone, self._namedParams.mission.angle_, M_POLY_DOCTRINE_DISTANCE_POINT_A_DEFENDRE(), M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS(), DEC_GetDirectionEnnemi( self._namedParams.mission ) )
-                                        
+                                        _continue = false
                                                                         cases_switch_1[4] = true
 elseif switch_1 == deploiementDoubleRideau then
                                         self.listeSectionMistralPourMissionDefendreZone = self.listeSectionMistral
                                         self.listePoints = DEC_Geometrie_PosDeploiementDoubleRideau( #( self.listeSectionMistralPourMissionDefendreZone ), self.barycentreZone, M_POLY_DOCTRINE_DISTANCE_POINT_A_DEFENDRE(), M_POLY_DOCTRINE_DISTANCE_ENTRE_RIDEAUX(), M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS(), self._namedParams.mission.directionEnnemi_ )
-                                        
+                                        _continue = false
                                                                         cases_switch_1[5] = true
 elseif switch_1 == deploiementSimpleRideau then
                                         for _,x in pairs( self.listeSectionMistral ) do
@@ -138,7 +139,7 @@ do
                                         end
 
                                         self.listePoints = DEC_Geometrie_PosDeploiementMistralNasse( #( self.listeSectionMistralPourMissionDefendreZone ), self.barycentreZone, 180, M_POLY_DOCTRINE_DISTANCE_POINT_A_DEFENDRE(), M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS(), DEC_GetDirectionEnnemi( self._namedParams.mission ) )
-                                        
+                                        _continue = false
                                                                         cases_switch_1[6] = true
                                     end
                                 end
@@ -152,19 +153,22 @@ do
                     end
                 end
 
-                Activate( self.activations.BEH_ROE_Automate_TirLibre, 1, {} )
-                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
+                    if _continue then
+                    Activate( self.activations.BEH_ROE_Automate_TirLibre, 1, {} )
+                    Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
+                end
             end
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eMRT_AssignerMissions then
                     if( self.eEtatMissionsDefendreZone == eActionImpossible ) then
                         do
                             self.ePhase = eMRT_MissionImpossible
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -172,7 +176,7 @@ do
                     if( self.eEtatMissionsDefendreZone == eActionEffectuee ) then
                         do
                             self.ePhase = eMRT_Valider
-                                                        return
+                                                        do return end
 
                         end
 --[[//controle des creations de missions
@@ -186,7 +190,7 @@ do
 
                     --[[//Le pc va toujours stationner au centre de la zone défendue
 ]]Activate( self.activations.BEH_Mission_Automate_AssignerStationnerA, 1, { ePhase_MRT, self.pionPC, self.barycentreZone, } )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eMRT_MissionImpossible then
                     DEC_RC( eRC_MissionImpossible )

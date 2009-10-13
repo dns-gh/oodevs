@@ -96,7 +96,7 @@ do
     end
 
     _returnValue = listePionsPEEnRAS
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Dispositif_Automate_ABC_ObtenirPionsPE_EnDifficultes( )
@@ -116,7 +116,7 @@ do
     end
 
     _returnValue = listePionsPEEnDifficulte
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Dispositif_Automate_ABC_ObtenirPionsSoutien( )
@@ -130,12 +130,13 @@ do
             if( F_Pion_GeteEtatEchelon( pion ) == eEtatEchelon_Second and F_Pion_GeteEtatDestruction( pion ) == eEtatDestruction_None ) then
                 do
                      do
+                        local _continue = true
                         local switch_1 = pion:GetType()
                         local cases_switch_1 = {}
                             if switch_1 == "Peloton_AMX"
                             or switch_1 == "Peloton_XL" then
                                                             DIA_PushFront( listePionDeSoutien, pion )
-                                
+                                _continue = false
                                                         cases_switch_1[1] = true
                             end
                         end
@@ -148,7 +149,7 @@ do
     end
 
     _returnValue = listePionDeSoutien
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Dispositif_Automate_ABC_ObtenirPionEnSoutienDe( pionSoutenu )
@@ -175,7 +176,7 @@ do
     end
 
     _returnValue = pionEnSoutien
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Misc_Automate_ABC_PionsEnPosition( listePions )
@@ -195,7 +196,7 @@ do
     end
 
     _returnValue = ( rNbrePionsPrets == #( listePions ) )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Dispositif_Automate_ABC_EstPEclEnDanger( )
@@ -209,7 +210,7 @@ do
             if( F_Pion_GeteEtatDec( pionEcl ) == eEtatDec_Sauvegarde ) then
                 do
                     _returnValue = true
-                                        return _returnValue
+                                        do return _returnValue end
 
                 end
             end
@@ -218,7 +219,7 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Dispositif_Automate_ABC_EstPionInfanterie( pion )
@@ -228,7 +229,7 @@ function S_Dispositif_Automate_ABC_EstPionInfanterie( pion )
         _returnValue = true
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Dispositif_Automate_ABC_EvtPionDetruit( )
@@ -243,7 +244,7 @@ do
             if( F_Pion_GeteEtatDestruction( pion ) ~= eEtatDestruction_None ) then
                 do
                     _returnValue = true
-                                        return _returnValue
+                                        do return _returnValue end
 
                 end
             end
@@ -264,7 +265,7 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Dispositif_Automate_ABC_PionsSansMission( )
@@ -283,7 +284,7 @@ do
     end
 
     _returnValue = selTemp
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Dispositif_Automate_ABC_ObtenirListePionsFreinantDe( eEtatEchelon )
@@ -303,7 +304,7 @@ do
     end
 
     _returnValue = listeFiltre
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Dispositif_ObtenirPionSoutienProcheDe( pion )
@@ -332,7 +333,7 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Dispositif_Automate_ABC_PionsPourArmerPointControle( )
@@ -360,7 +361,7 @@ function S_Dispositif_Automate_ABC_PionsPourArmerPointControle( )
     end
 
     _returnValue = selTemp
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Dispositif_Automate_ABC_ObtenirPionDetruitsDe( eEtatEchelon )
@@ -380,7 +381,7 @@ do
     end
 
     _returnValue = selTemp
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Dispositif_Automate_ABC_Freiner_PionsDevant( resultatCalcul, eEtatEchelon )
@@ -399,7 +400,7 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Dispositif_Automate_ABC_PionsAmisEnDifficultes( compagnie )
@@ -417,7 +418,7 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Dispositif_ABC_Automate_TousPionsHorsFuseau( compagnie )
@@ -441,6 +442,6 @@ do
         _returnValue = true
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 

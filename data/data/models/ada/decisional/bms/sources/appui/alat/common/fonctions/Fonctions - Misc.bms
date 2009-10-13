@@ -11,7 +11,7 @@ include "bit.lua"
 ]]function S_EstPatrouilleALAT( agent )
     local _returnValue = false
     _returnValue = ( agent:GetType() == "AntitankHelicopterPatrol" ) or ( agent:GetType() == "EscortAndCloseSupportHelicopterPatrol" ) or ( agent:GetType() == "AirDefenseHelicopterPatrol" ) or ( agent:GetType() == "TransportHelicopterPatrol" ) or ( agent:GetType() == "GeneralPurposeHelicopterPatrol" ) or ( agent:GetType() == "AACCP" )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_ListePionsALAT( listeAgents )
@@ -29,6 +29,6 @@ do
     end
 
     _returnValue = listeBuffer
-    return _returnValue
+    do return _returnValue end
 end
 

@@ -75,7 +75,7 @@ node "BEH_Dep_Pion_Rens_GererEmbarquementDrone"
 ]]--[[// On ne gere pas les drones détruits
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( F_Pion_GeteEtatDestruction( self._namedParams.pionDrone ) ~= eEtatDestruction_None ) then
-            return
+            do return end
         end
 
         --[[//-----------------------------------------------------------------------------

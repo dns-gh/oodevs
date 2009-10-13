@@ -12,10 +12,11 @@ includedFiles["sources/appui/artdsa/pions/common/behaviors/Behaviors - Mot.bms"]
     activate = function( self )
         --[[//////////////// BMS OPTIM  ///////////////////
 ]]        if( F_Pion_GeteEtatDec( myself ) == eEtatDec_Sauvegarde ) then
-            return
+            do return end
         end
 
          do
+            local _continue = true
             local switch_1 = --[[////////////// FIN OPTIM  /////////////////////
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// En fonction du moral...
@@ -27,7 +28,7 @@ includedFiles["sources/appui/artdsa/pions/common/behaviors/Behaviors - Mot.bms"]
 ]]--[[// Fanatique --> esquive sur PAP, pas de ralentissement
 ]]--[[//-----------------------------------------------------------------------------
 ]]SetStateVariable( "VE_RapFor", 0 )
-                    
+                    _continue = false
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Moral bon --> esquive sur PAP et effet rapFor défavorable --> ralentissement
 ]]--[[//-----------------------------------------------------------------------------
@@ -40,20 +41,22 @@ elseif switch_1 == eMoral_Moyen
 ]]if( DEC_GetMission( myself ) == nil ) then
                         do
                             SetStateVariable( "VE_RapFor", ( 5 - DEC_RapportDeForceLocal() ) )
-                            
+                            _continue = false
                         end
 --[[// Par défaut ...
 ]]                    end
 
-                    SetStateVariable( "VE_RapFor", 0 )
-                    
+                        if _continue then
+                        SetStateVariable( "VE_RapFor", 0 )
+                        _continue = false
+                    end
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Moral mauvais: --> esquive sur PAP et sur rapFor défavorable
 ]]--[[//-----------------------------------------------------------------------------
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eMoral_Mauvais then
                     SetStateVariable( "VE_RapFor", ( 5 - DEC_RapportDeForceLocal() ) )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
                 end
             end

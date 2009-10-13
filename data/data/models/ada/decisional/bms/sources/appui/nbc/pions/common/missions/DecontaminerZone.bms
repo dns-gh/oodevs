@@ -58,6 +58,7 @@ includedFiles["sources/appui/nbc/pions/common/missions/DecontaminerZone.bms"] = 
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhaseMission
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
@@ -65,7 +66,7 @@ includedFiles["sources/appui/nbc/pions/common/missions/DecontaminerZone.bms"] = 
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "Aera decontamination mission begining", } )
                     self.ePhaseMission = eRejoindrePosition
-                    
+                    _continue = false
                 --[[// 2) Progression jusqu'au point à reconnaitre
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eRejoindrePosition then
@@ -78,7 +79,7 @@ elseif switch_1 == eRejoindrePosition then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhaseMission = eReconnaitre
-                                                                return
+                                                                do return end
 
                             end
 
@@ -86,7 +87,7 @@ elseif switch_1 == eRejoindrePosition then
                     end
 
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.positionDansZone, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// 3) Decontamination (joue un délai de decontamination)
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eReconnaitre then
@@ -98,13 +99,13 @@ elseif switch_1 == eReconnaitre then
                         end
                     end
 
-                    
+                    _continue = false
                 --[[// Fin de la mission --> SUR ORDRE DU SUPERIEUR
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                    
+                    _continue = false
                                 cases_switch_1[4] = true
 
                 else

@@ -52,6 +52,7 @@ include "bit.lua"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhaseMission
             local cases_switch_1 = {}
                 if switch_1 == eProgresser then
@@ -63,22 +64,24 @@ include "bit.lua"
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhaseMission = eFinMission
-                                
+                                _continue = false
                             end
 
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self._namedParams.mission.itineraire_, eProgressionReco, eTypeItiDeminage, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    --[[// Nettoyage obstacle si possible
+                        if _continue then
+                        Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self._namedParams.mission.itineraire_, eProgressionReco, eTypeItiDeminage, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                        --[[// Nettoyage obstacle si possible
 ]]Activate( self.activations.BEH_Dep_GEN_Ouvrir_ReagirFaceAObstacles, 2, {} )
-                    
+                        _continue = false
+                    end
                 --[[// Fin de la mission
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end

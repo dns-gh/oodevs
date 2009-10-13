@@ -57,13 +57,13 @@ include "bit.lua"
 ]]function S_Pion_EstDetruitTactique( pion )
     local _returnValue = false
     _returnValue = ( F_Pion_GeteEtatDestruction( pion ) == eEtatDestruction_Tactique ) or ( F_Pion_GeteEtatDestruction( pion ) == eEtatDestruction_Total )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Pion_EstDetruitPhysique( pion )
     local _returnValue = false
     _returnValue = ( F_Pion_GeteEtatDestruction( pion ) == eEtatDestruction_Total )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Eni_ChercheEniPlusProchePosition( point, listeEnis )
@@ -92,20 +92,20 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_ForceSoutien( pion1, pion2 )
     local _returnValue = 0
     _returnValue = 1
     _returnValue = 1 + ( 1 / ( 1 + ( DEC_Geometrie_Distance( DEC_Automate_PionPosition( pion1 ), DEC_Automate_PionPosition( pion2 ) ) / 1000 ) ) )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Pion_ForceDistancePt( pion, pt )
     local _returnValue = 0
     _returnValue = 1 + 1 / ( 1 + DEC_Geometrie_Distance( DEC_Automate_PionPosition( pion ), pt ) / 1000 )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Pion_ForceDistance( pion, ksEni )
@@ -117,7 +117,7 @@ function S_Pion_ForceDistance( pion, ksEni )
         _returnValue = S_Pion_ForceDistancePt( pion, positionEni )
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Connaissance_ForceDistance( ksA, ksB )
@@ -128,7 +128,7 @@ function S_Connaissance_ForceDistance( ksA, ksB )
     if( ( positionA == 0 or positionA == nil ) ) then
         do
             _returnValue = 0
-                        return _returnValue
+                        do return _returnValue end
 
         end
     end
@@ -137,19 +137,19 @@ function S_Connaissance_ForceDistance( ksA, ksB )
     if( ( positionB == 0 or positionB == nil ) ) then
         do
             _returnValue = 0
-                        return _returnValue
+                        do return _returnValue end
 
         end
     end
 
     _returnValue = 1 + 1 / ( 1 + DEC_Geometrie_Distance( positionA, positionB ) / 1000 )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Pion_ForceActionContre( pion, ksEni )
     local _returnValue = 0
     _returnValue = S_ForceDangerSurPion( ksEni, pion ) * ( S_Pion_ForceDistance( pion, ksEni ) - 1 )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Eni_EstDansZone( ksEni, locZone )
@@ -157,16 +157,16 @@ function S_Eni_EstDansZone( ksEni, locZone )
     local ptEni = DEC_ConnaissanceAgent_Position( ksEni )
     _returnValue = false
     if( ( ( ptEni == 0 or ptEni == nil ) or locZone == 0 or ( ptEni == 0 or ptEni == nil ) or locZone == nil ) ) then
-        return _returnValue
+        do return _returnValue end
     end
 
     _returnValue = DEC_Geometrie_EstPointDansFuseau( ptEni ) and DEC_Geometrie_EstPointDansLocalisation( ptEni, locZone )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Pion_EniEnCours( pion )
     local _returnValue = nil
     _returnValue = F_Pion_GeteniEnCours( pion )
-    return _returnValue
+    do return _returnValue end
 end
 

@@ -53,12 +53,13 @@ include "bit.lua"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhase = eEmbarquer
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eEmbarquer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
@@ -68,7 +69,7 @@ elseif switch_1 == eEmbarquer then
                     end
 
                     Activate( self.activations.BEH_Dep_Pion_AllerRecupererPrisonniers, 1, { self._namedParams.mission.unitesRendues_, } )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eDebarquer then
                     if( S_Misc_Pion_PrisonniersTousDebarquesDansCamp( self._namedParams.mission.unitesRendues_, self._namedParams.mission.campPrisonniers_ ) ) then
@@ -80,7 +81,7 @@ elseif switch_1 == eDebarquer then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhase = eFinMission
-                                                                return
+                                                                do return end
 
                             end
 
@@ -88,13 +89,13 @@ elseif switch_1 == eDebarquer then
                     end
 
                     Activate( self.activations.BEH_Dep_Pion_AllerDebarquerPrisonniers, 1, setmetatable( { self._namedParams.mission.unitesRendues_, self._namedParams.mission.campPrisonniers_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// Fin mission
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                    
+                    _continue = false
                                 cases_switch_1[4] = true
                 end
             end

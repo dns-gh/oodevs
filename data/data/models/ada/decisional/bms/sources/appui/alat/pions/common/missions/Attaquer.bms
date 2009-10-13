@@ -73,6 +73,7 @@ include "bit.lua"
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eDetruire then
@@ -86,7 +87,7 @@ include "bit.lua"
                     --[[// ATTAQUER LES ENNEMIS
 ]]--[[// --------------------
 ]]Activate( self.activations.BEH_Eni_Pion_ALAT_GererEniAttaquer, GetMotivation( "MOT_ManoeuvrerSurEnis" ) * 2, { self.listeLocalisationsMissionAttaquer, self.pointFinFuseau, self._namedParams.mission.ciblesPrioritaires_, self.pointDebutFuseau, } )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eSExfiltrer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnExfiltration, } )
@@ -99,7 +100,7 @@ elseif switch_1 == eSExfiltrer then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhase = eFinMission
-                                                                return
+                                                                do return end
 
                             end
 
@@ -127,8 +128,10 @@ elseif switch_1 == eSExfiltrer then
 
                     Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
                     Activate( self.activations.BEH_Manoeuvre_Pion_AllerStationner, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self._namedParams.mission.pointRegroupement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
-                    
+                    _continue = false
+                        if _continue then
+                        _continue = false
+                    end
                                 cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
@@ -149,7 +152,7 @@ elseif switch_1 == eFinMission then
                     end
 
                     Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
                 end
             end

@@ -50,6 +50,7 @@ includedFiles["sources/appui/alat/pions/common/missions/Suivre.bms"] = true
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eSuivreUnite then
@@ -57,7 +58,7 @@ includedFiles["sources/appui/alat/pions/common/missions/Suivre.bms"] = true
                     Activate( self.activations.ACT_Maj_Pions_ObjectifCourant, 1, { self._namedParams.mission.uniteASuivre_:DEC_Agent_Position(), } )
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.mission.uniteASuivre_:DEC_Agent_Position(), } )
                     Activate( self.activations.BEH_Dep_Pion_ALAT_Suivre, GetMotivation( "MOT_Manoeuvrer" ), { self._namedParams.mission.uniteASuivre_, 3000, eProgressionDefaut, eTypeItiInfiltration, } )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
@@ -78,7 +79,7 @@ elseif switch_1 == eFinMission then
                     end
 
                     Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end

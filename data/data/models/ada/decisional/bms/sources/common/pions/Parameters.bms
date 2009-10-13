@@ -54,7 +54,7 @@ end
     if( DEC_Pion_PionPC() ~= myself ) then
         do
             _returnValue = M_DISTANCE_MIN()
-                        return _returnValue
+                        do return _returnValue end
 
         end
     end
@@ -64,6 +64,7 @@ end
 do
             local pion = x
              do
+                local _continue = true
                 local switch_1 = pion:GetType()
                 local cases_switch_1 = {}
                     if switch_1 == "SectionASS_EO"
@@ -74,7 +75,7 @@ do
                             _returnValue = 300
                         end
 
-                        
+                        _continue = false
                                         cases_switch_1[1] = true
 elseif switch_1 == "SectionInfanterie_HOT"
                     or switch_1 == "SectionInfanterie_MILAN" then
@@ -82,7 +83,7 @@ elseif switch_1 == "SectionInfanterie_HOT"
                             _returnValue = 800
                         end
 
-                        
+                        _continue = false
                                         cases_switch_1[2] = true
 
                     else
@@ -97,7 +98,7 @@ elseif switch_1 == "SectionInfanterie_HOT"
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Dist_MissionSuivre_Max( )
@@ -106,7 +107,7 @@ function S_Dist_MissionSuivre_Max( )
     if( DEC_Pion_PionPC() ~= myself ) then
         do
             _returnValue = M_DISTANCE_MAX()
-                        return _returnValue
+                        do return _returnValue end
 
         end
     end
@@ -116,6 +117,7 @@ function S_Dist_MissionSuivre_Max( )
 do
             local pion = x
              do
+                local _continue = true
                 local switch_1 = pion:GetType()
                 local cases_switch_1 = {}
                     if switch_1 == "GroupeInfanterie_Commando"
@@ -125,7 +127,7 @@ do
                             _returnValue = 800
                         end
 
-                        
+                        _continue = false
                                         cases_switch_1[1] = true
 elseif switch_1 == "SectionInfanterie_HOT"
                     or switch_1 == "SectionInfanterie_MILAN" then
@@ -133,7 +135,7 @@ elseif switch_1 == "SectionInfanterie_HOT"
                             _returnValue = 1500
                         end
 
-                        
+                        _continue = false
                                         cases_switch_1[2] = true
 
                     else
@@ -148,6 +150,6 @@ elseif switch_1 == "SectionInfanterie_HOT"
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 

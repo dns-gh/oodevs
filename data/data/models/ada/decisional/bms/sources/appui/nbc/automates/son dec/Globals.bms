@@ -37,6 +37,6 @@ do
     end
 
     _returnValue = selPatrouillesOperationnelles
-    return _returnValue
+    do return _returnValue end
 end
 

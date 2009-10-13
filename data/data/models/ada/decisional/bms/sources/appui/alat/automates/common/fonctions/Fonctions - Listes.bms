@@ -44,7 +44,7 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Liste_Automate_ALAT_PionsNonEnCoursRavitaillement( listePions )
@@ -63,7 +63,7 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Liste_Automate_ALAT_PionsNonOperationnels( listePions )
@@ -82,7 +82,7 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Liste_Automate_ALAT_PionsNonEnCoursExtraction( listePions )
@@ -107,7 +107,7 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Liste_Automate_ALAT_UnitesAAppuyer( listeUnites )
@@ -135,6 +135,6 @@ do
 
     end
 
-    return _returnValue
+    do return _returnValue end
 end
 

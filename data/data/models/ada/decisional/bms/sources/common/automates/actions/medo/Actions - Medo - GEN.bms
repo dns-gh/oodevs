@@ -38,7 +38,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - GEN.bms"] 
             DEC_Trace( "$$$------>Assigne mission 'Renforcer' a " .. DEC_GetSzName( self._namedParams.pionEnRenfort ) .. " pour " .. DEC_GetSzName( self._namedParams.pionARenforcer ) )
         else
             self.params.__returnValue = eActionEffectuee
-            return
+            do return end
         end
 
         local pt = S_Geometrie_BarycentreZone( self._namedParams.PosObs )
@@ -49,17 +49,18 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - GEN.bms"] 
         if( ModuleBegins() ) then
             do
                  do
+                    local _continue = true
                     local switch_1 = self._namedParams.ePhase
                     local cases_switch_1 = {}
                         if switch_1 == ePhase_MRT then
                                                     local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pionEnRenfort, "T_Mission_Pion_GEN_Renforcer" )
                             self.missionPion = misMRT
-                            
+                            _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == ePhase_CDT then
                                                     local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pionEnRenfort, "T_Mission_Pion_GEN_Renforcer" )
                             self.missionPion = misCDT
-                            
+                            _continue = false
                                                 cases_switch_1[2] = true
 
                         else
@@ -72,7 +73,7 @@ elseif switch_1 == ePhase_CDT then
 
         if( self.missionPion == nil ) then
             self.params.__returnValue = eActionImpossible
-            return
+            do return end
         end
 
         S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
@@ -90,7 +91,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
                 self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 
@@ -120,7 +121,7 @@ elseif switch_1 == ePhase_CDT then
             DEC_Trace( "Assigne mission 'Degager obstacles' a " .. DEC_GetSzName( self._namedParams.pionGenie ) )
         else
             self.params.__returnValue = eActionEffectuee
-            return
+            do return end
         end
 
         self.missionPion = self.missionPion or nil--[[//-------------------------------------------------------------------------
@@ -130,17 +131,18 @@ elseif switch_1 == ePhase_CDT then
         if( ModuleBegins() ) then
             do
                  do
+                    local _continue = true
                     local switch_1 = self._namedParams.ePhase
                     local cases_switch_1 = {}
                         if switch_1 == ePhase_MRT then
                                                     local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pionGenie, "T_Mission_Pion_GEN_DegagerObstacles" )
                             self.missionPion = misMRT
-                            
+                            _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == ePhase_CDT then
                                                     local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pionGenie, "T_Mission_Pion_GEN_DegagerObstacles" )
                             self.missionPion = misCDT
-                            
+                            _continue = false
                                                 cases_switch_1[2] = true
 
                         else
@@ -153,7 +155,7 @@ elseif switch_1 == ePhase_CDT then
 
         if( self.missionPion == nil ) then
             self.params.__returnValue = eActionImpossible
-            return
+            do return end
         end
 
         --[[// Mission
@@ -170,7 +172,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
                 self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 
@@ -200,7 +202,7 @@ elseif switch_1 == ePhase_CDT then
             DEC_Trace( "Assigne mission 'Contourner obstacles' a " .. DEC_GetSzName( self._namedParams.pionGenie ) )
         else
             self.params.__returnValue = eActionEffectuee
-            return
+            do return end
         end
 
         self.missionPion = self.missionPion or nil--[[//-------------------------------------------------------------------------
@@ -210,17 +212,18 @@ elseif switch_1 == ePhase_CDT then
         if( ModuleBegins() ) then
             do
                  do
+                    local _continue = true
                     local switch_1 = self._namedParams.ePhase
                     local cases_switch_1 = {}
                         if switch_1 == ePhase_MRT then
                                                     local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pionGenie, "T_Mission_Pion_GEN_ContournerObstacles" )
                             self.missionPion = misMRT
-                            
+                            _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == ePhase_CDT then
                                                     local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pionGenie, "T_Mission_Pion_GEN_ContournerObstacles" )
                             self.missionPion = misCDT
-                            
+                            _continue = false
                                                 cases_switch_1[2] = true
 
                         else
@@ -233,7 +236,7 @@ elseif switch_1 == ePhase_CDT then
 
         if( self.missionPion == nil ) then
             self.params.__returnValue = eActionImpossible
-            return
+            do return end
         end
 
         --[[// Mission
@@ -250,7 +253,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
                 self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 
@@ -280,7 +283,7 @@ elseif switch_1 == ePhase_CDT then
             DEC_Trace( "Assigne mission 'Reconnaitre zone' a " .. DEC_GetSzName( self._namedParams.pionGenie ) )
         else
             self.params.__returnValue = eActionEffectuee
-            return
+            do return end
         end
 
         self.missionPion = self.missionPion or nil--[[//-------------------------------------------------------------------------
@@ -290,17 +293,18 @@ elseif switch_1 == ePhase_CDT then
         if( ModuleBegins() ) then
             do
                  do
+                    local _continue = true
                     local switch_1 = self._namedParams.ePhase
                     local cases_switch_1 = {}
                         if switch_1 == ePhase_MRT then
                                                     local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pionGenie, "T_Mission_Pion_GEN_ReconnaitreZone" )
                             self.missionPion = misMRT
-                            
+                            _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == ePhase_CDT then
                                                     local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pionGenie, "T_Mission_Pion_GEN_ReconnaitreZone" )
                             self.missionPion = misCDT
-                            
+                            _continue = false
                                                 cases_switch_1[2] = true
 
                         else
@@ -313,7 +317,7 @@ elseif switch_1 == ePhase_CDT then
 
         if( self.missionPion == nil ) then
             self.params.__returnValue = eActionImpossible
-            return
+            do return end
         end
 
         --[[// Mission
@@ -330,7 +334,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
                 self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 
@@ -360,7 +364,7 @@ elseif switch_1 == ePhase_CDT then
             DEC_Trace( "Assigne mission 'Ouvrir itineraire' a " .. DEC_GetSzName( self._namedParams.pionGenie ) )
         else
             self.params.__returnValue = eActionEffectuee
-            return
+            do return end
         end
 
         self.missionPion = self.missionPion or nil--[[//-------------------------------------------------------------------------
@@ -370,17 +374,18 @@ elseif switch_1 == ePhase_CDT then
         if( ModuleBegins() ) then
             do
                  do
+                    local _continue = true
                     local switch_1 = self._namedParams.ePhase
                     local cases_switch_1 = {}
                         if switch_1 == ePhase_MRT then
                                                     local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pionGenie, "T_Mission_Pion_GEN_OuvrirItineraire" )
                             self.missionPion = misMRT
-                            
+                            _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == ePhase_CDT then
                                                     local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pionGenie, "T_Mission_Pion_GEN_OuvrirItineraire" )
                             self.missionPion = misCDT
-                            
+                            _continue = false
                                                 cases_switch_1[2] = true
 
                         else
@@ -393,7 +398,7 @@ elseif switch_1 == ePhase_CDT then
 
         if( self.missionPion == nil ) then
             self.params.__returnValue = eActionImpossible
-            return
+            do return end
         end
 
         --[[// Mission
@@ -410,7 +415,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
                 self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 
@@ -440,7 +445,7 @@ elseif switch_1 == ePhase_CDT then
             DEC_Trace( "Assigne mission 'Retablir itineraire' a " .. DEC_GetSzName( self._namedParams.pionGenie ) )
         else
             self.params.__returnValue = eActionEffectuee
-            return
+            do return end
         end
 
         self.missionPion = self.missionPion or nil--[[//-------------------------------------------------------------------------
@@ -450,17 +455,18 @@ elseif switch_1 == ePhase_CDT then
         if( ModuleBegins() ) then
             do
                  do
+                    local _continue = true
                     local switch_1 = self._namedParams.ePhase
                     local cases_switch_1 = {}
                         if switch_1 == ePhase_MRT then
                                                     local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pionGenie, "T_Mission_Pion_GEN_RetablirItineraire" )
                             self.missionPion = misMRT
-                            
+                            _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == ePhase_CDT then
                                                     local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pionGenie, "T_Mission_Pion_GEN_RetablirItineraire" )
                             self.missionPion = misCDT
-                            
+                            _continue = false
                                                 cases_switch_1[2] = true
 
                         else
@@ -473,7 +479,7 @@ elseif switch_1 == ePhase_CDT then
 
         if( self.missionPion == nil ) then
             self.params.__returnValue = eActionImpossible
-            return
+            do return end
         end
 
         --[[// Mission
@@ -490,7 +496,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
                 self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 
@@ -520,7 +526,7 @@ elseif switch_1 == ePhase_CDT then
             DEC_Trace( "Assigne mission 'Reconnaitre site de franchissement' a " .. DEC_GetSzName( self._namedParams.pionGenie ) )
         else
             self.params.__returnValue = eActionEffectuee
-            return
+            do return end
         end
 
         self.missionPion = self.missionPion or nil--[[//-------------------------------------------------------------------------
@@ -530,17 +536,18 @@ elseif switch_1 == ePhase_CDT then
         if( ModuleBegins() ) then
             do
                  do
+                    local _continue = true
                     local switch_1 = self._namedParams.ePhase
                     local cases_switch_1 = {}
                         if switch_1 == ePhase_MRT then
                                                     local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pionGenie, "T_Mission_Pion_GEN_ReconnaitreSiteFranchissement" )
                             self.missionPion = misMRT
-                            
+                            _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == ePhase_CDT then
                                                     local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pionGenie, "T_Mission_Pion_GEN_ReconnaitreSiteFranchissement" )
                             self.missionPion = misCDT
-                            
+                            _continue = false
                                                 cases_switch_1[2] = true
 
                         else
@@ -553,7 +560,7 @@ elseif switch_1 == ePhase_CDT then
 
         if( self.missionPion == nil ) then
             self.params.__returnValue = eActionImpossible
-            return
+            do return end
         end
 
         --[[// Mission
@@ -570,7 +577,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
                 self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 
@@ -602,7 +609,7 @@ elseif switch_1 == ePhase_CDT then
             DEC_Trace( "Assigne mission 'Equiper exploiter' a " .. DEC_GetSzName( self._namedParams.pionGenie ) )
         else
             self.params.__returnValue = eActionEffectuee
-            return
+            do return end
         end
 
         self.missionPion = self.missionPion or nil--[[//-------------------------------------------------------------------------
@@ -612,17 +619,18 @@ elseif switch_1 == ePhase_CDT then
         if( ModuleBegins() ) then
             do
                  do
+                    local _continue = true
                     local switch_1 = self._namedParams.ePhase
                     local cases_switch_1 = {}
                         if switch_1 == ePhase_MRT then
                                                     local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pionGenie, "T_Mission_Pion_GEN_EquiperExploiterSiteFranchissement" )
                             self.missionPion = misMRT
-                            
+                            _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == ePhase_CDT then
                                                     local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pionGenie, "T_Mission_Pion_GEN_EquiperExploiterSiteFranchissement" )
                             self.missionPion = misCDT
-                            
+                            _continue = false
                                                 cases_switch_1[2] = true
 
                         else
@@ -635,7 +643,7 @@ elseif switch_1 == ePhase_CDT then
 
         if( self.missionPion == nil ) then
             self.params.__returnValue = eActionImpossible
-            return
+            do return end
         end
 
         --[[// Mission
@@ -654,7 +662,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
                 self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 
@@ -684,7 +692,7 @@ elseif switch_1 == ePhase_CDT then
             DEC_Trace( "Assigne mission 'Realiser Travaux' a " .. DEC_GetSzName( self._namedParams.pionGenie ) )
         else
             self.params.__returnValue = eActionEffectuee
-            return
+            do return end
         end
 
         self.missionPion = self.missionPion or nil--[[//-------------------------------------------------------------------------
@@ -694,17 +702,18 @@ elseif switch_1 == ePhase_CDT then
         if( ModuleBegins() ) then
             do
                  do
+                    local _continue = true
                     local switch_1 = self._namedParams.ePhase
                     local cases_switch_1 = {}
                         if switch_1 == ePhase_MRT then
                                                     local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pionGenie, "T_Mission_Pion_GEN_RealiserTravauxContreMobilite" )
                             self.missionPion = misMRT
-                            
+                            _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == ePhase_CDT then
                                                     local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pionGenie, "T_Mission_Pion_GEN_RealiserTravauxContreMobilite" )
                             self.missionPion = misCDT
-                            
+                            _continue = false
                                                 cases_switch_1[2] = true
 
                         else
@@ -717,7 +726,7 @@ elseif switch_1 == ePhase_CDT then
 
         if( self.missionPion == nil ) then
             self.params.__returnValue = eActionImpossible
-            return
+            do return end
         end
 
         --[[// Mission
@@ -734,7 +743,7 @@ elseif switch_1 == ePhase_CDT then
         end
 
                 self.params.__returnValue = eActionEffectuee
-        return
+        do return end
 
     end,
 

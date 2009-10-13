@@ -60,6 +60,7 @@ include "Common/Pions/Actions/Actions - Transport.bms"
 ]]DIA_Clear( self.listeUnitesMissionTransporter )
         self.listeUnitesMissionTransporter = S_Cherche_Filtre_TypeMission( self.sUnitesATransporter, "T_Mission_Pion_SeFaireTransporter" )
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eTransporterAllerEmbarquer then
@@ -69,7 +70,7 @@ include "Common/Pions/Actions/Actions - Transport.bms"
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhase = eTransporterEmbarquer
-                                                                return
+                                                                do return end
 
                             end
 
@@ -92,7 +93,7 @@ include "Common/Pions/Actions/Actions - Transport.bms"
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.posEmbarquement, } )
                     Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.posEmbarquement, eProgressionDirect, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eTransporterEmbarquer then
                     if( self.eEtat == eActionEffectuee ) then
@@ -100,7 +101,7 @@ elseif switch_1 == eTransporterEmbarquer then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhase = eTransporterAllerDebarquer
-                                                                return
+                                                                do return end
 
                             end
 
@@ -167,7 +168,7 @@ do
                         end
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eTransporterAllerDebarquer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_TransportEnCours, } )
@@ -176,7 +177,7 @@ elseif switch_1 == eTransporterAllerDebarquer then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhase = eTransporterDebarquer
-                                                                return
+                                                                do return end
 
                             end
 
@@ -202,7 +203,7 @@ elseif switch_1 == eTransporterAllerDebarquer then
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.posDebarquement, } )
                     Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.posDebarquement, eProgressionDirect, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
 elseif switch_1 == eTransporterDebarquer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_TransportDebarquement, } )
@@ -211,7 +212,7 @@ elseif switch_1 == eTransporterDebarquer then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhase = eTransporterAllerEmbarquer
-                                                                return
+                                                                do return end
 
                             end
 
@@ -235,7 +236,7 @@ elseif switch_1 == eTransporterDebarquer then
                     end
 
                     Activate( self.activations.ACT_Transport_Pion_TransportDebarquer, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[4] = true
                 end
             end

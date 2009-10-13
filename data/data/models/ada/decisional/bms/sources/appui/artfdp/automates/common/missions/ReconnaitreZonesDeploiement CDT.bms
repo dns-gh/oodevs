@@ -110,7 +110,7 @@ node "BEH_Conduite_Automate_ASS_FaireSuivreDispositif"
 ]]--[[//
 ]]local selPion_ASS = S_Cherche_Automate_Filtre_TypeMission( DEC_Automate_PionsAvecPC(), "T_Mission_Pion_ASS_ReconnaitreZoneDeploiement" )
         if( ( #( selPion_ASS ) == 0 or #( selPion_ASS ) == nil ) ) then
-            return
+            do return end
         end
 
         for _,x in pairs( --[[// Suit le pion le plus proche

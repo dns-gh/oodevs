@@ -95,6 +95,7 @@ node "BEH_Medo_Automate_Emergency_PreparerMission_EvacuateArea"
         self.eValidationMRT = self.eValidationMRT or eActionEnCours
         self.pions = self.pions or {}
          do
+            local _continue = true
             local switch_1 = --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------
@@ -118,7 +119,7 @@ do
 
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eMRT_AssignerMissions then
                     --[[//-----------------------------------------------------------------------------
@@ -164,11 +165,12 @@ elseif switch_1 == eMRT_AssignerMissions then
 
                     Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.pions ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eValidationMRT = v else rawset( t, k, v ) end end } ) )
                      do
+                        local _continue = true
                         local switch_2 = self._namedParams.eTypeMission
                         local cases_switch_2 = {}
                             if switch_2 == "T_Mission_Automate_INF_Controler" then
                                 Activate( self.activations.BEH_Medo_Automate_Emergency_EvacuateArea, 1, { self.pions, } )
-                                
+                                _continue = false
                                                         cases_switch_2[1] = true
 
                             else
@@ -180,7 +182,9 @@ elseif switch_1 == eMRT_AssignerMissions then
                                                         end
                         end
 
-                    
+                        if _continue then
+                        _continue = false
+                    end
                                 cases_switch_1[2] = true
                 end
             end
@@ -221,6 +225,7 @@ node "BEH_Medo_Automate_Emergency_EvacuateArea"
                 self.eCodeLoc = self.lstLocalisations.second
                 self.lstLocalisations = self.lstLocalisations.first
                  do
+                    local _continue = true
                     local switch_1 = self.eCodeLoc
                     local cases_switch_1 = {}
                         if switch_1 == eError_PionsPasDansMemeFuseau
@@ -230,37 +235,39 @@ node "BEH_Medo_Automate_Emergency_EvacuateArea"
                                 DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                                 Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
                                                                 self.params.__returnValue = eActionImpossible
-                                return
+                                do return end
 
                             end
 
-                            
+                            _continue = false
                         elseif switch_1 == eWarning_DecoupageIncomplet then
                                                     DEC_Trace( "Alerte MRT : Decoupage de la zone " .. EnumToString( self.eCodeLoc, E_LocalisationFunctionsReturnCode ) )
-                            
+                            _continue = false
                                                 cases_switch_1[2] = true
 elseif switch_1 == eNoError then
-                                                    
+                                                    _continue = false
                                                 cases_switch_1[3] = true
                         end
                     end
 
-                local rIt = 0
-                for _,x_pion in pairs( self._namedParams.lstPions ) do
-                local _continue = true
-                    do
-                        if( rIt < #( self.lstLocalisations ) ) then
-                            do
-                                local locZone = DEC_UserTypeList_GetAt( self.lstLocalisations, rIt )
-                                StartActivateOverride( self, self.activations.BEH_Mission_Automate_Emergency_AssignerA_EvacuateArea, 1, { ePhase_MRT, x_pion, locZone, } )
+                    if _continue then
+                    local rIt = 0
+                    for _,x_pion in pairs( self._namedParams.lstPions ) do
+                    local _continue = true
+                        do
+                            if( rIt < #( self.lstLocalisations ) ) then
+                                do
+                                    local locZone = DEC_UserTypeList_GetAt( self.lstLocalisations, rIt )
+                                    StartActivateOverride( self, self.activations.BEH_Mission_Automate_Emergency_AssignerA_EvacuateArea, 1, { ePhase_MRT, x_pion, locZone, } )
+                                end
                             end
+
+                                                        rIt = rIt + 1
                         end
 
-                                                rIt = rIt + 1
                     end
 
                 end
-
             end
         end
 

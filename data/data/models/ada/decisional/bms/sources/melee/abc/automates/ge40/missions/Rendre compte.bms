@@ -53,7 +53,7 @@ node "BEH_GTIA_RendreCompteDebutFinMission"
         if( ModuleBegins() ) then
             do
                 Activate( self.activations.ACT_RC_Automate, 1, { eRC_DebutMission, } )
-                                return
+                                do return end
 
             end
         end
@@ -131,7 +131,7 @@ node "BEH_GTIA_RendreCompteSurLima"
         local listePionsPE = S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Premier )
         --[[// Pas de PE donc pas de mission ou échouage
 ]]if( ( #( listePionsPE ) == 0 or #( listePionsPE ) == nil ) ) then
-            return
+            do return end
         end
 
         local listePionsSurLD = S_Cherche_GE_Filtre_EtatLima( eEtatLima_LD, listePionsPE )

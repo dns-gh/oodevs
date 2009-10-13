@@ -56,7 +56,7 @@ node "BEH_CoordDep_Automate_ABC_CoordonnerPEAvecSE_"
 ]]--[[// Inutile si plus de pions
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( DIA_IsListEmpty( listePionsBlindes ) ) then
-            return
+            do return end
         end
 
         --[[//-----------------------------------------------------------------------------
@@ -89,7 +89,7 @@ node "BEH_CoordDep_Automate_ABC_CoordonnerPEcl_"
 ]]--[[// Inutile si plus de pions
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( DIA_IsListEmpty( listePionsEclairant ) ) then
-            return
+            do return end
         end
 
         --[[//-----------------------------------------------------------------------------
@@ -247,7 +247,7 @@ node "BEH_CoordDep_Automate_ABC_ActiverCoordinnationSur"
 ]]--[[// Pas de pion en queue
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( ( pionEnQueue == 0 or pionEnQueue == nil ) ) then
-            return
+            do return end
         end
 
         --[[//-----------------------------------------------------------------------------
@@ -302,7 +302,7 @@ node "BEH_CoordDep_Automate_ABC_CoordonnerPEAvecPEcl_"
 ]]--[[// Inutile si plus de pions
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( DIA_IsListEmpty( listePionsEclairant ) or S_Dispositif_Automate_ABC_EstPEclEnDanger() ) then
-            return
+            do return end
         end
 
         --[[//-----------------------------------------------------------------------------
@@ -424,7 +424,7 @@ node "BEH_CoordDep_Automate_ABC_CoordonnerFreinage"
         end
 
         if( #( self._namedParams.selPionsFr ) == 1 ) then
-            return
+            do return end
         end
 
         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
@@ -474,7 +474,7 @@ node "BEH_CoordDep_Automate_ABC_CoordonnerJalonnement"
         end
 
         if( #( self._namedParams.selPionsJal ) == 1 ) then
-            return
+            do return end
         end
 
         for _,pion in pairs( --[[//-----------------------------------------------------------------------------

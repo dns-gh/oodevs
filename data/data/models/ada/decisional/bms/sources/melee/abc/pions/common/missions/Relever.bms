@@ -87,6 +87,7 @@ includedFiles["sources/melee/abc/pions/common/missions/Relever.bms"] = true
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhaseMission
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
@@ -94,7 +95,7 @@ includedFiles["sources/melee/abc/pions/common/missions/Relever.bms"] = true
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "Relief of " .. DEC_GetSzName( self._namedParams.mission.uniteARelever_ ) .. " mission begining", } )
                     self.ePhaseMission = eProgresser
-                    
+                    _continue = false
                 --[[// Progression tactique
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eProgresser then
@@ -103,7 +104,7 @@ elseif switch_1 == eProgresser then
 ]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self.positionPionARelever ) < M_MODELE_PION_ABC_DISTANCE_RELEVE() ) then
                         do
                             self.ePhaseMission = eRelever
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -111,7 +112,7 @@ elseif switch_1 == eProgresser then
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionPionARelever, eProgressionDirect, eTypeItiMouvement, } )
                     --[[// se dépecher
 ]]Activate( self.activations.ACT_Dep_ModulationVitesse, 1.1, { 1, } )
-                    
+                    _continue = false
                 --[[// Releve
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eRelever then
@@ -120,7 +121,7 @@ elseif switch_1 == eRelever then
                     Activate( self.activations.ACT_Misc_ReleverUnite, 1, { self._namedParams.mission.uniteARelever_, } )
                     --[[// cas particulier
 ]]DEC_RC( eRC_Releve, self._namedParams.mission.uniteARelever_ )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
 
                 else

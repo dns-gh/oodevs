@@ -70,10 +70,11 @@ node "ACT_Obj_Pion_ASS_RealiserObjet"
         end
 
          do
+            local _continue = true
             local switch_1 = self.eEtatObjet
             local cases_switch_1 = {}
                 if switch_1 == eActionObjetEnCours then
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionObjetTerminee then
                     DEC_Trace( "object construction: end" )
@@ -91,7 +92,7 @@ elseif switch_1 == eActionObjetTerminee then
                     Halt( self )
                     do return end
 
-                    
+                    _continue = false
                 elseif switch_1 == eActionObjetPasDeCapacite then
                     DEC_Trace( "object construction: no capability" )
                     self.actionID = DEC_StopAction( self.actionID )
@@ -99,7 +100,7 @@ elseif switch_1 == eActionObjetTerminee then
                     Halt( self )
                     do return end
 
-                    
+                    _continue = false
                 elseif switch_1 == eActionObjetManqueDotation then
                     DEC_Trace( "object construction: not enough issue" )
                 --[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMine );
@@ -111,7 +112,7 @@ elseif switch_1 == eActionObjetTerminee then
                     Halt( self )
                     do return end
 
-                    
+                    _continue = false
                                 end
             end
 
@@ -211,6 +212,7 @@ node "ACT_Tir_Pion_ASS_SurPosition"
 
         myself.eEtatTir_Indirect_ = self.eTir
          do
+            local _continue = true
             local switch_1 = self.eTir
             local cases_switch_1 = {}
                 if switch_1 == eActionTirIndirect_Impossible then
@@ -289,13 +291,13 @@ node "ACT_Tir_Pion_ASS_SurPosition"
 
                     self.bPremierCoupPartie = ModuleBegins()
                     DEC_Trace( "fire on: firing ..." )
-                    
+                    _continue = false
                                 cases_switch_1[5] = true
                 end
             end
 
                 self.params.__returnValue = eActionEnCours
-        return
+        do return end
 
     end,
 

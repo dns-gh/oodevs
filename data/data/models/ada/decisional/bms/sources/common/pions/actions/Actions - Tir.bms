@@ -39,12 +39,13 @@ node "ACT_Tir_DirectSur"
 ]]        end
 
          do
+            local _continue = true
             local switch_1 = self.eTir
             local cases_switch_1 = {}
                 if switch_1 == eActionTirDirect_Impossible then
                     --[[// Debug
 ]]DEC_Trace( "Impossible fire" )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionTirDirect_NoAmmo
                 or switch_1 == eActionTirDirect_NoCapacity
@@ -56,11 +57,11 @@ elseif switch_1 == eActionTirDirect_NoAmmo
                     Halt( self )
                     do return end
 
-                    
+                    _continue = false
                 elseif switch_1 == eActionTirDirect_None
                 or switch_1 == eActionTirDirect_Running then
                     F_Pion_SeteEtatFeu( myself, eEtatFeu_Executer )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
                 end
             end
@@ -118,6 +119,7 @@ elseif switch_1 == eActionTirDirect_NoAmmo
         end
 
          do
+            local _continue = true
             local switch_1 = --[[// --------------------------------------------------------------------- 
 ]]--[[// Retour tir --> debug
 ]]--[[// ---------------------------------------------------------------------
@@ -126,7 +128,7 @@ elseif switch_1 == eActionTirDirect_NoAmmo
                 if switch_1 == eActionTirDirect_Impossible then
                     --[[// Debug
 ]]DEC_Trace( "Fire impossible" )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionTirDirect_NoAmmo
                 or switch_1 == eActionTirDirect_NoCapacity
@@ -137,11 +139,11 @@ elseif switch_1 == eActionTirDirect_NoAmmo
                     Halt( self )
                     do return end
 
-                    
+                    _continue = false
                 elseif switch_1 == eActionTirDirect_None
                 or switch_1 == eActionTirDirect_Running then
                     F_Pion_SeteEtatFeu( myself, eEtatFeu_Executer )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
                 end
             end

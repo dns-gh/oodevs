@@ -48,7 +48,7 @@ do
         end
 
         if( etatAPoster == eEtatPhaseMission_None ) then
-            return
+            do return end
         end
 
         --[[// indicateur pour savoir si toutes les unites sont synchronisées.

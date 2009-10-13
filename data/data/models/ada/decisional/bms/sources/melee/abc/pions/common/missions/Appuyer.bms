@@ -81,6 +81,7 @@ includedFiles["sources/melee/abc/pions/common/missions/Appuyer.bms"] = true
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhaseMission
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
@@ -88,7 +89,7 @@ includedFiles["sources/melee/abc/pions/common/missions/Appuyer.bms"] = true
 ]]Activate( self.activations.ACT_Info_Trace, 1, { "Spontaneous support mission begining", } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhaseMission = eProgresser
-                    
+                    _continue = false
                 --[[// 3) Progression vers position amie --> au plus vite
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eProgresser then
@@ -98,7 +99,7 @@ elseif switch_1 == eProgresser then
                         do
                             DEC_Trace( "L'unite passe en appui" )
                             self.ePhaseMission = ePasserEnAppui
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -108,7 +109,7 @@ elseif switch_1 == eProgresser then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhaseMission = ePasserEnAppui
-                                                                return
+                                                                do return end
 
                             end
 
@@ -119,7 +120,7 @@ elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_Dep_ModulationVitesse, 1.5, { 1, } )
                     --[[// force de 1.
 ]]Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.positionAmie, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// Passer en appui
 ]]                cases_switch_1[2] = true
 elseif switch_1 == ePasserEnAppui then
@@ -128,7 +129,7 @@ elseif switch_1 == ePasserEnAppui then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhaseMission = eSePoster
-                                                                return
+                                                                do return end
 
                             end
 
@@ -136,20 +137,20 @@ elseif switch_1 == ePasserEnAppui then
                     end
 
                     Activate( self.activations.BEH_Dep_Pion_ABC_RejoindrePositionAppuiPour, 1, setmetatable( { self._namedParams.mission.uniteAAppuyer_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// On se poste sur la position d'appui
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eSePoster then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnAppui, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
                     Activate( self.activations.BEH_Obj_RejoindreEmbossements, 1, {} )
-                    
+                    _continue = false
                 --[[// 4) Fin de la mission de reconnaissance
 ]]                cases_switch_1[4] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                    
+                    _continue = false
                                 cases_switch_1[5] = true
 
                 else

@@ -41,13 +41,14 @@ includedFiles["sources/appui/circulation/pions/missions/RealiserObjetDansZone.bm
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
                     --[[// Preparation de la mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhase = eProgresser
-                    
+                    _continue = false
                 --[[// Progression
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eProgresser then
@@ -58,7 +59,7 @@ elseif switch_1 == eProgresser then
                             self.eEtatDefaut = eActionEnCours
                                                         do
                                 self.ePhase = eRealiserTravaux
-                                                                return
+                                                                do return end
 
                             end
 
@@ -66,7 +67,7 @@ elseif switch_1 == eProgresser then
                     end
 
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.positionInstallation, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatDefaut = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// Realisation des travaux
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eRealiserTravaux then
@@ -78,7 +79,7 @@ elseif switch_1 == eRealiserTravaux then
 
                     --[[//si l'objet est pas créé
 ]]if( self.eEtat == eActionEffectuee ) then
-                        return
+                        do return end
                     end
 
                     --[[// si imposible de créer l'objet                    
@@ -104,7 +105,7 @@ elseif switch_1 == eRealiserTravaux then
 ]]                    end
 
                     Activate( self.activations.ACT_Obj_Pion_LOG_RealiserTravaux, 1, setmetatable( { self._namedParams.zone, self._namedParams.eTypeObjet, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// Fin mission sur ordre
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
@@ -114,7 +115,7 @@ elseif switch_1 == eFinMission then
                         DEC_DetruireObjetSansDelais( myself.objMisEnCours_ )
                     end
 
-                    
+                    _continue = false
                                 cases_switch_1[4] = true
                 end
             end

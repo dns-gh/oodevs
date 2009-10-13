@@ -37,7 +37,7 @@ includedFiles["sources/appui/nbc/pions/common/missions/ReconnaitreSiteROTA.bms"]
             do
                 DEC_Trace( "$************ Le site ROTA a été détruit ***********$" )
                 self.ePhaseMission = eFinMission
-                                return
+                                do return end
 
             end
         end
@@ -72,6 +72,7 @@ includedFiles["sources/appui/nbc/pions/common/missions/ReconnaitreSiteROTA.bms"]
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhaseMission
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
@@ -79,7 +80,7 @@ includedFiles["sources/appui/nbc/pions/common/missions/ReconnaitreSiteROTA.bms"]
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "ROTA site reconnaissance mission begining", } )
                     self.ePhaseMission = eRejoindrePosition
-                    
+                    _continue = false
                 --[[// 2) Progression jusqu'au point à reconnaitre
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eRejoindrePosition then
@@ -92,7 +93,7 @@ elseif switch_1 == eRejoindrePosition then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhaseMission = eSePoster
-                                                                return
+                                                                do return end
 
                             end
 
@@ -100,7 +101,7 @@ elseif switch_1 == eRejoindrePosition then
                     end
 
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.positionROTA, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    --[[//---------------------------------------------------------------------
+                    _continue = false--[[//---------------------------------------------------------------------
 ]]--[[// Faire des mesures
 ]]--[[//---------------------------------------------------------------------
 ]]--[[//behavior BEH_Nbc_Pion_FaireDesMesures() : strength = 1.1; // Poste pour mesure donc en comptète avec deplacement
@@ -115,7 +116,7 @@ elseif switch_1 == eSePoster then
 ]]if( DEC_ConnaissanceObjet_EstReconnu( self._namedParams.mission.siteROTA_ ) ) then
                         do
                             self.ePhaseMission = eFinMission
-                                                        return
+                                                        do return end
 
                         end
 --[[//---------------------------------------------------------------------
@@ -128,7 +129,7 @@ elseif switch_1 == eSePoster then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhaseMission = eFinMission
-                                                                return
+                                                                do return end
 
                             end
 
@@ -137,13 +138,13 @@ elseif switch_1 == eSePoster then
 ]]                    end
 
                     Activate( self.activations.BEH_Pion_Nbc_ReconnaitreSiteROTA, 1, setmetatable( { self._namedParams.mission.siteROTA_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// Fin de la mission --> SUR ORDRE DU SUPERIEUR
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                    
+                    _continue = false
                                 cases_switch_1[4] = true
 
                 else
@@ -176,7 +177,7 @@ node "BEH_Pion_Nbc_ReconnaitreSiteROTA"
         self.eEtat = self.eEtat or eActionEnCours
         if( self.eEtat == eActionEffectuee ) then
             self.params.__returnValue = eActionEffectuee
-            return
+            do return end
         end
 
         if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then

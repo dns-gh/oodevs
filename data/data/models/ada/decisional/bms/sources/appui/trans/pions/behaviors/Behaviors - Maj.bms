@@ -51,7 +51,7 @@ node "BEH_MAJ_EtatOperationnel"
 ]]if( S_Misc_EstDetruitPhysique() ) then
             do
                 Activate( self.activations.ACT_MAJ_EtatDestruction, 1, { eEtatDestruction_Total, } )
-                                return
+                                do return end
 
             end
 --[[// Destruction tactique --> plus de composantes majeurs
@@ -60,7 +60,7 @@ node "BEH_MAJ_EtatOperationnel"
         if( S_Misc_EstDetruitTactique() ) then
             do
                 Activate( self.activations.ACT_MAJ_EtatDestruction, 1, { eEtatDestruction_Tactique, } )
-                                return
+                                do return end
 
             end
 --[[// Par defaut

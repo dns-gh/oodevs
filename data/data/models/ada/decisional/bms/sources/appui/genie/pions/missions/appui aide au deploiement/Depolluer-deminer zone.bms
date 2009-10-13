@@ -61,13 +61,14 @@ includedFiles["sources/appui/genie/pions/missions/appui aide au deploiement/Depo
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
                     --[[// Preparation de la mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhase = eProgresser
-                    
+                    _continue = false
                 --[[// Rejoindre la zone
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eProgresser then
@@ -77,7 +78,7 @@ elseif switch_1 == eProgresser then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhase = eDeminerObstacle
-                                                                return
+                                                                do return end
 
                             end
 
@@ -85,7 +86,7 @@ elseif switch_1 == eProgresser then
                     end
 
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptObst, eProgressionReco, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// Depolluer
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eDeminerObstacle then
@@ -95,7 +96,7 @@ elseif switch_1 == eDeminerObstacle then
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhase = eFinMission
-                                                                return
+                                                                do return end
 
                             end
 
@@ -103,13 +104,13 @@ elseif switch_1 == eDeminerObstacle then
                     end
 
                     Activate( self.activations.BEH_Objet_Pion_GEN_DeminerZone, 1, setmetatable( { self._namedParams.mission.zone_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// Fin de la mission
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                    
+                    _continue = false
                                 cases_switch_1[4] = true
                 end
             end
@@ -168,7 +169,7 @@ do
                 Activate( self.activations.ACT_Info_Trace, 1, { "Plus d'obstacles connus dans la zone", } )
                 --[[// pas sûr: peut être laisser "tourner" le comportement si reco en même temps
 ]]                self.params.__returnValue = eActionEffectuee
-                return
+                do return end
 
             end
         end

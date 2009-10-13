@@ -26,7 +26,7 @@ includedFiles["sources/appui/rens/automates/rohum/common/missions/renseignersur/
         --[[// Parcours de la liste
 ]]self.rIterateurSecteur = self.rIterateurSecteur or 0
         if( ( #( self._namedParams.selPions ) == 0 or #( self._namedParams.selPions ) == nil ) ) then
-            return
+            do return end
         end
 
         --[[//-------------------------------------------------------------------------
@@ -44,7 +44,7 @@ includedFiles["sources/appui/rens/automates/rohum/common/missions/renseignersur/
 ]]DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                         StartActivateOverride( self, self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
                                                 self.params.__returnValue = eActionImpossible
-                        return
+                        do return end
 
                     end
                 end

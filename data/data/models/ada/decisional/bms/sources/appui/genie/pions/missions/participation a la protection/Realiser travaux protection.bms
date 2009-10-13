@@ -50,13 +50,14 @@ includedFiles["sources/appui/genie/pions/missions/participation a la protection/
         end
 
          do
+            local _continue = true
             local switch_1 = self.ePhaseMission
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
                     --[[// Preparation de la mission
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhaseMission = eProgresser
-                    
+                    _continue = false
                 --[[// Progression tactique
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eProgresser then
@@ -65,19 +66,19 @@ elseif switch_1 == eProgresser then
                         do
                             self.eEtat = eActionEnCours
                             self.ePhaseMission = eFinMission
-                                                        return
+                                                        do return end
 
                         end
                     end
 
                     Activate( self.activations.BEH_Dep_GEN_AllerFaireTravauxSur, 1, setmetatable( { self._namedParams.mission.travaux_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[// Fin de la mission
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                    
+                    _continue = false
                                 cases_switch_1[3] = true
                 end
             end
@@ -116,7 +117,7 @@ node "BEH_Dep_GEN_AllerFaireTravauxSur"
 
         if( self.rIterateur == #( self._namedParams.travaux ) ) then
             self.params.__returnValue = eActionEffectuee
-            return
+            do return end
         end
 
         Activate( self.activations.BEH_Obj_GEN_AllerContruireObjetSur, 1, setmetatable( { DEC_UserTypeList_GetAt( self._namedParams.travaux, self.rIterateur ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
@@ -237,7 +238,7 @@ node "BEH_Objet_Pion_GEN_RealiserObjet"
         if( not DEC_Agent_PeutConstruireObjet( DEC_GenObject_Type( self._namedParams.objet ) ) ) then
             do
                 Activate( self.activations.ACT_RC, 1, { eRC_AttenteRenforcement, } )
-                                return
+                                do return end
 
             end
 --[[// ...SINON OK pour construire l'objet
@@ -280,6 +281,7 @@ node "BEH_Objet_Pion_GEN_RealiserTravaux"
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhase = self.ePhase or eRealiserObstacle
          do
+            local _continue = true
             local switch_1 = --[[//-----------------------------------------------------------------
 ]]--[[// Realisation obstacle et valorisation
 ]]--[[//-----------------------------------------------------------------
@@ -294,7 +296,7 @@ node "BEH_Objet_Pion_GEN_RealiserTravaux"
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhase = eValoriserObstacle
-                                                                return
+                                                                do return end
 
                             end
 
@@ -302,7 +304,7 @@ node "BEH_Objet_Pion_GEN_RealiserTravaux"
                     end
 
                     Activate( self.activations.ACT_Obj_Pion_GEN_RealiserTravaux, 1, setmetatable( { self._namedParams.objet, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                 --[[//-----------------------------------------------------------------
 ]]--[[// Valorisation si obsqtacle
 ]]--[[//-----------------------------------------------------------------
@@ -329,7 +331,7 @@ elseif switch_1 == eValoriserObstacle then
                     end
 
                     Activate( self.activations.ACT_Obj_Pion_GEN_ValoriserObstacle, 1, setmetatable( { myself.objMisEnCours_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
-                    
+                    _continue = false
                                 cases_switch_1[2] = true
                 end
             end

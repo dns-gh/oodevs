@@ -44,7 +44,7 @@ include "bit.lua"
 ]]--[[// Assignation des missions
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( DIA_IsListEmpty( sel_PE ) or DIA_IsListEmpty( sel_SE ) ) then
-            return
+            do return end
         end
 
         for _,x in pairs( sel_SE ) do

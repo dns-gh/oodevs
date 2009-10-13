@@ -40,6 +40,7 @@ do
                         --[[// cast
 ]]local pointLima = pointABC
                          do
+                            local _continue = true
                             local switch_1 = DEC_GetTypeLimaPoint( pointLima )
                             local cases_switch_1 = {}
                                 if switch_1 == eTypeLima_LC then
@@ -51,7 +52,7 @@ do
                                         StartActivateOverride( self, self.activations.BEH_Lima_Pion_SePosterSurLC, 1, { lima, } )
                                     end
 
-                                    
+                                    _continue = false
                                 --[[//-------------------------------------------------------------
 ]]--[[// Passage sur la ligne dechangement d'attitude fixée par 
 ]]--[[// le capitaine
@@ -139,7 +140,7 @@ if( meleeInfPionsCommon() ) then
                                         end
                                     end
 
-                                    
+                                    _continue = false
                                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Ligne de deboucher pour attaquer
 ]]--[[//-----------------------------------------------------------------------------
@@ -159,12 +160,14 @@ if( meleeInfPionsCommon() ) then
                                         end
                                     end
 
-                                    
+                                    _continue = false
                                                                 cases_switch_1[3] = true
                                 end
                             end
 
-                        Activate( self.activations.ACT_Limas_Suppression, 1, { pointLima, } )
+                            if _continue then
+                            Activate( self.activations.ACT_Limas_Suppression, 1, { pointLima, } )
+                        end
                     end
                 end
 

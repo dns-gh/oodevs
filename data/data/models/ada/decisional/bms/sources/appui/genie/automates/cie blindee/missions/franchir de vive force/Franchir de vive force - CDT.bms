@@ -48,7 +48,7 @@ include "bit.lua"
         if( ( #( listePionsGenie ) == 0 or #( listePionsGenie ) == nil ) ) then
             do
                 Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles, } )
-                                return
+                                do return end
 
             end
 --[[//-------------------------------------------------------------------------
@@ -99,7 +99,7 @@ node "BEH_Mission_Automate_GEN_CDT_OuvrirPlanObjets_"
 
                 end
 
-                                return
+                                do return end
 
             end
 --[[//-------------------------------------------------------------------------
@@ -334,7 +334,7 @@ node "BEH_Misc_Automate_GEN_GererFinRenforcementObstacle"
     activate = function( self )
         --[[// Sécurité
 ]]if( ( ( self._namedParams.objetABrecher:GetpionRenforcement_() == 0 or self._namedParams.objetABrecher:GetpionRenforcement_() == nil ) or self._namedParams.objetABrecher:Getpion_() == 0 or ( self._namedParams.objetABrecher:GetpionRenforcement_() == 0 or self._namedParams.objetABrecher:GetpionRenforcement_() == nil ) or self._namedParams.objetABrecher:Getpion_() == nil ) ) then
-            return
+            do return end
         end
 
         --[[//-------------------------------------------------------------------------
@@ -404,7 +404,7 @@ node "BEH_Misc_Automate_GEN_GererRenforcementObstacle"
     activate = function( self )
         --[[// Renforcement déjà assigné
 ]]if( self._namedParams.objetABrecher:GetpionRenforcement_() ~= nil or not DEC_ConnaissanceObjet_EstValide( self._namedParams.objetABrecher:Getobstacle_() ) ) then
-            return
+            do return end
         end
 
         --[[//-------------------------------------------------------------------------

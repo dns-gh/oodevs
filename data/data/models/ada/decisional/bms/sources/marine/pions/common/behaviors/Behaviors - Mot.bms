@@ -78,7 +78,7 @@ node "BEH_MOT_Pion_MARINE_GarderSesDistancesFaceA"
     activate = function( self )
         --[[// Pour certaines missions
 ]]if( g_bDesactiveSauvegarde ) then
-            return
+            do return end
         end
 
         --[[// variables persistantes	

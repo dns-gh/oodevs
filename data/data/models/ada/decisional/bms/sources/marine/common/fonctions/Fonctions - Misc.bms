@@ -10,6 +10,6 @@ includedFiles["sources/marine/common/fonctions/Fonctions - Misc.bms"] = true
 ]]function S_EstPatrouilleMarine( agent )
     local _returnValue = false
     _returnValue = agent:GetType() == "LandingCraft"
-    return _returnValue
+    do return _returnValue end
 end
 

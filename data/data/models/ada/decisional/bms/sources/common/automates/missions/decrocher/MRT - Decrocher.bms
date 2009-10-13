@@ -96,7 +96,7 @@ node "BEH_Medo_Automate_AssignerDecrocherA"
                 DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
                 Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
                                 self.params.__returnValue = eActionImpossible
-                return
+                do return end
 
             end
 --[[//---------------------------------------------------------------------

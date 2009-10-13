@@ -77,7 +77,7 @@ do
                 if( DEC_ConnaissancePopulation_Dangerosite( pop ) > 1 ) then
                     do
                         SetStimulus( "STIM_PopulationDangereuse", 1 )
-                                                return
+                                                do return end
 
                     end
                 end

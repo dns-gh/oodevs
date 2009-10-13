@@ -21,31 +21,31 @@ include "bit.lua"
     local rDist = DEC_Geometrie_Distance( DEC_Agent_Position(), pt )
     local rTempsParcours = rDist / M_VITESSE_INF_MIN()
     _returnValue = M_TEMPS_RECO_MIN() + 10
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Tir_EstAPortee_DebarquePt( ptTir )
     local _returnValue = false
     _returnValue = DEC_Geometrie_Distance( DEC_Agent_Position(), ptTir ) < 500
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Transport_INF_Demande_Embarquement( )
     local _returnValue = false
     local bEtatDecOK = ( F_Pion_GeteEtatDecPrudence( myself ) ~= eEtatDecPrudence_Actif ) and ( F_Pion_GeteEtatDec( myself ) ~= eEtatDec_Sauvegarde )
     _returnValue = bEtatDecOK and DEC_Agent_TransporteursPret() and ( not DEC_Agent_EstEmbarque() )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Transport_INF_Demande_Embarquement_Esquive( )
     local _returnValue = false
     _returnValue = DEC_Agent_TransporteursPret() and ( not DEC_Agent_EstEmbarque() )
-    return _returnValue
+    do return _returnValue end
 end
 
 function S_Misc_Pion_INF_ObtenirDistanceDangerSur( repEni )
     local _returnValue = 0
     _returnValue = DEC_Tir_PorteeMaxPourEtreTireParUnite( repEni, 0.2 )
-    return _returnValue
+    do return _returnValue end
 end
 

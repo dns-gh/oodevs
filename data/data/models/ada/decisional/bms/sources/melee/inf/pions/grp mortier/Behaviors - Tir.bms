@@ -123,7 +123,7 @@ node "BEH_Tir_Pion_Mortier_AppliquerFeux"
                 Activate( self.activations.ACT_Dep_SePosterFaceADir, 1, { self.dirCible, } )
                 self.eAction = eActionEnCours
                                 self.params.__returnValue = eActionEffectuee
-                return
+                do return end
 
             end
         end
@@ -186,7 +186,7 @@ node "BEH_Tir_Pion_INF_TirDebarque"
         local eActionReturn = self.eAction
         Activate( self.activations.ACT_Tir_DirectSur, 1, setmetatable( { self._namedParams.ksEni, 1, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
                 self.params.__returnValue = eActionReturn
-        return
+        do return end
 
     end,
 

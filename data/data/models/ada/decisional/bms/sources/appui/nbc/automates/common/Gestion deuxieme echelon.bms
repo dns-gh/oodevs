@@ -50,7 +50,7 @@ include "bit.lua"
 ]]--[[// Assignation des missions
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( DIA_IsListEmpty( selNBC_SE ) or DIA_IsListEmpty( selNBC_PE ) ) then
-            return
+            do return end
         end
 
         for _,pion in pairs( selNBC_SE ) do
@@ -102,7 +102,7 @@ node "BEH_Dispositif_Automate_NBC_FaireSuivreLePC_"
 ]]if( not DIA_IsListEmpty( listePionsSE ) ) then
             do
                 Activate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_CDT, self.pionPC, DIA_GetAt( listePionsSE, 0 ), } )
-                                return
+                                do return end
 
             end
 --[[// on a que des pions de premier echelon ou ecl
@@ -111,7 +111,7 @@ node "BEH_Dispositif_Automate_NBC_FaireSuivreLePC_"
         if( not DIA_IsListEmpty( listePionsPE ) ) then
             do
                 Activate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_CDT, self.pionPC, DIA_GetAt( listePionsPE, 0 ), } )
-                                return
+                                do return end
 
             end
         end

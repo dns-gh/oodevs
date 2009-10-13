@@ -6,6 +6,6 @@ function S_ForceDistance( distanceAuPoint )
     local _returnValue = 0
     assert( distanceAuPoint >= 0, "distanceAuPoint : distance negative" )
     _returnValue = 1 - ( 1 / ( 1 + ( distanceAuPoint ) ) )
-    return _returnValue
+    do return _returnValue end
 end
 

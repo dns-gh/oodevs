@@ -55,6 +55,7 @@ includedFiles["sources/appui/artdsa/automates/sgpt samp hawk/missions/defendre z
 ]]        end
 
          do
+            local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eMRT_AssignerMissions then
@@ -62,7 +63,7 @@ includedFiles["sources/appui/artdsa/automates/sgpt samp hawk/missions/defendre z
 ]]if( self.eEtatMissionsDefendreZone == eActionImpossible ) then
                         do
                             self.ePhase = eMRT_MissionImpossible
-                                                        return
+                                                        do return end
 
                         end
                     end
@@ -70,7 +71,7 @@ includedFiles["sources/appui/artdsa/automates/sgpt samp hawk/missions/defendre z
                     if( self.eEtatMissionsDefendreZone == eActionEffectuee ) then
                         do
                             self.ePhase = eMRT_Valider
-                                                        return
+                                                        do return end
 
                         end
 --[[//controle des creations de missions
@@ -84,7 +85,7 @@ includedFiles["sources/appui/artdsa/automates/sgpt samp hawk/missions/defendre z
 
                     --[[//Le pc va toujours stationner au centre de la zone défendue
 ]]Activate( self.activations.BEH_Mission_Automate_AssignerStationnerA, 1, { ePhase_MRT, self.pionPC, self.barycentreZone, } )
-                    
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eMRT_MissionImpossible then
                     DEC_RC( eRC_MissionImpossible )
