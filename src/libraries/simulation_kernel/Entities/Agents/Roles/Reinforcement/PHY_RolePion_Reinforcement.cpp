@@ -281,10 +281,10 @@ void PHY_RolePion_Reinforcement::LoadForTransport   ( const MIL_Agent_ABC& trans
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Reinforcement::Execute( moving::SpeedComputer_ABC& algorithm ) const
 {
-	for ( CIT_PionSet itPion = reinforcements_.begin(); itPion != reinforcements_.end(); ++itPion )
+	for( CIT_PionSet itPion = reinforcements_.begin(); itPion != reinforcements_.end(); ++itPion )
 	{
 		MIL_AgentPion& reinforcement = **itPion;
-		algorithm.ApplyOnReinforcement(reinforcement);
+		algorithm.ApplyOnReinforcement( reinforcement );
 	}
 }
 // -----------------------------------------------------------------------------
@@ -293,7 +293,7 @@ void PHY_RolePion_Reinforcement::Execute( moving::SpeedComputer_ABC& algorithm )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Reinforcement::Execute(moving::MoveComputer_ABC& algorithm) const
 {
-	if(IsReinforcing())
+	if( IsReinforcing() )
 		algorithm.NotifyReinforcing();
 }
 

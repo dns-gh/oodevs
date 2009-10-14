@@ -108,7 +108,7 @@ public:
     double ApplyOnReinforcement( MIL_AgentPion& pion) const
     {
         return withReinforcement_ ?
-                pionFunctor_(pion.GetRole<PHY_RoleAction_Moving>()):
+                pionFunctor_( pion.GetRole<PHY_RoleAction_Moving>() ):
                 std::numeric_limits<double>::max();
     }
     double ApplyOnPopulation(const DEC_Knowledge_PopulationCollision& population) const
@@ -246,7 +246,7 @@ double PHY_RoleAction_Moving::GetMaxSpeedWithReinforcement() const
     SpeedComputerStrategy strategy(true,true,0);
     const moving::SpeedComputer_ABC& computer =
                 pion_.Execute(
-                        pion_.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer(strategy));
+                        pion_.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy ) );
     double rSpeed = computer.GetSpeed();
     return ApplyMaxSpeedModificators( rSpeed );
 }
@@ -260,8 +260,9 @@ double PHY_RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& envi
     SpeedComputerStrategy strategy(false,true,&environment);
     const moving::SpeedComputer_ABC& computer =
                 pion_.Execute(
-                        pion_.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy) );
+                        pion_.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy ) );
     double rSpeed = computer.GetSpeed();
+    rSpeed = std::min( rSpeed, ApplyMaxSpeedModificators( rSpeed ) );
     return ApplySpeedModificators( rSpeed );
 }
 
