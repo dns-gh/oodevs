@@ -12,15 +12,21 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Transported.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
+#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Network/NET_ASN_Messages.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
 #include "simulation_kernel/TransportPermissionComputer_ABC.h"
+#include "simulation_kernel/TransportChangeNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/MoveComputer_ABC.h"
+
+#include "AlgorithmsFactories.h"
+#include "simulation_kernel/OnComponentFunctor_ABC.h"
+#include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
+#include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( transport::PHY_RolePion_Transported, "PHY_RolePion_Transported" )
 
@@ -180,15 +186,15 @@ void PHY_RolePion_Transported::RecoverHumanTransporters()
 
 namespace
 {
-    struct sTransporterComposantePresent
+  class sTransporterComposantePresent : public OnComponentFunctor_ABC
     {
+    public:
         sTransporterComposantePresent() : bComposantePresent_( false ) {}
 
-        void operator () ( const PHY_ComposantePion& composante )
+        void operator () ( PHY_ComposantePion& composante )
         {
             bComposantePresent_ |= composante.CanTransportHumans();
         }
-
         bool bComposantePresent_;
     };
 }
@@ -202,7 +208,7 @@ bool PHY_RolePion_Transported::HasHumanTransportersReady() const
 {
 
     sTransporterComposantePresent func;
-    pion_.GetRole< PHY_RolePion_Composantes >().Apply( func );
+    pion_.Execute( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( func ) );
     
     return vHumanTransporterPosition_.IsZero() && func.bComposantePresent_;
 }

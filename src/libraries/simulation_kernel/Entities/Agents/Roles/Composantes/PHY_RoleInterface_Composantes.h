@@ -133,7 +133,6 @@ public:
     virtual double GetMinRangeToFireOnActualPosture( const DEC_Knowledge_Agent& target, double rWantedPH ) const = 0;
     virtual double GetMaxRangeToIndirectFire       ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const = 0;
     virtual double GetMinRangeToIndirectFire       ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const = 0;
-    virtual double GetDangerosity                  ( const DEC_Knowledge_Agent& target ) const = 0;
     //@}
 
 

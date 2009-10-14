@@ -90,6 +90,6 @@ MT_Float PHY_RoleHLA_Communications::ModifySpeed            ( MT_Float rSpeed   
 // Created: AGE 2004-12-02
 // -----------------------------------------------------------------------------
 void PHY_RoleHLA_Communications::ChangeStatus( const std::vector< std::string >& statuses )
-{
+{//@TODO MGD USE NOTIFICATION
     bJammed_ = std::find( statuses.begin(), statuses.end(), "brouille" ) != statuses.end();
 }

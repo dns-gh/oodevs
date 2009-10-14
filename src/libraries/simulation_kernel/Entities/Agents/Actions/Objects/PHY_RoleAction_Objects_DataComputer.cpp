@@ -15,9 +15,13 @@
 
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Reinforcement/PHY_RoleInterface_Reinforcement.h"
 #include "MIL_AgentServer.h"
+
+#include "simulation_kernel/OnComponentFunctor_ABC.h"
+#include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
+#include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
+#include "simulation_kernel/AlgorithmsFactories.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Objects_DataComputer constructor
@@ -53,7 +57,8 @@ PHY_RoleAction_Objects_DataComputer::~PHY_RoleAction_Objects_DataComputer()
 void PHY_RoleAction_Objects_DataComputer::CollectData( MIL_AgentPion& pion )
 {
     pionsData_.push_back( PHY_RoleAction_Objects_DataComputerPionData( pion, operation_, object_ ) );
-    pion.GetRole< PHY_RolePion_Composantes >().Apply( *this );
+
+    pion.Execute( pion.GetAlgorithms().onComponentFunctorComputerFactory_->Create( *this ) );
     const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pion.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
     for( PHY_RoleInterface_Reinforcement::CIT_PionSet itReinforcement = reinforcements.begin(); itReinforcement != reinforcements.end(); ++itReinforcement )
         CollectData( **itReinforcement );
@@ -63,7 +68,7 @@ void PHY_RoleAction_Objects_DataComputer::CollectData( MIL_AgentPion& pion )
 // Name: PHY_RoleAction_Objects_DataComputer::operator()
 // Created: NLD 2004-10-01
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Objects_DataComputer::operator() ( const PHY_ComposantePion& composante )
+void PHY_RoleAction_Objects_DataComputer::operator() ( PHY_ComposantePion& composante )
 {    
     pionsData_.back()( composante );
 }

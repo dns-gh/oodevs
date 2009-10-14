@@ -22,7 +22,7 @@ namespace xml
 
 class MIL_CommunicationsAgentType;
 class NET_ASN_MsgUnitAttributes;
-class MIL_AgentPion;
+class MIL_Entity_ABC;
 
 namespace firing
 {
@@ -39,7 +39,7 @@ namespace moving
 // =============================================================================
 class PHY_RolePion_Communications : public PHY_RoleInterface_Communications
                                   , public tools::AlgorithmModifier_ABC< firing::WeaponReloadingComputer_ABC >
-	,public tools::AlgorithmModifier_ABC<moving::SpeedComputer_ABC>
+                                  , public tools::AlgorithmModifier_ABC<moving::SpeedComputer_ABC>
 {
 
 public:
@@ -48,7 +48,7 @@ public:
     static void Initialize( xml::xistream& xis );
     //@}
 
-    explicit PHY_RolePion_Communications( MIL_AgentPion& pion );
+             PHY_RolePion_Communications( MIL_Entity_ABC& entity, const bool bIsAutonomous );
     virtual ~PHY_RolePion_Communications();
 
     //! @name CheckPoints
@@ -62,9 +62,13 @@ public:
     void Clean     ();
     //@}
 
-    //! @name Main
+    //! @name Main @TODO MGD REMOVE
     //@{
     virtual bool CanCommunicate() const;
+    //@}
+
+    //! @name Notifications
+    //@{
     virtual void Jam           ( const MIL_Object_ABC& jammer );
     virtual void Unjam         ( const MIL_Object_ABC& jammer );
 
@@ -72,7 +76,7 @@ public:
     virtual void DeactivateBlackout();
     //@}
 
-    //! @name Operations
+    //! @name Algoritms visitors
     //@{
     virtual void Execute( firing::WeaponReloadingComputer_ABC& algorithm ) const;
     virtual void Execute(moving::SpeedComputer_ABC& algorithm) const;
@@ -97,10 +101,12 @@ private:
     bool HasChanged() const;
     //@}
 
-    MIL_AgentPion& pion_;
-    T_JammerSet    jammers_;
-    bool           bBlackoutActivated_;
-    bool           bHasChanged_;
+    MIL_Entity_ABC& entity_;
+    T_JammerSet     jammers_;
+    bool            bBlackoutActivated_;
+    bool            bHasChanged_;
+
+    const bool      bIsAutonomous_;
 
 private:
     static MT_Float rCoefSpeedModificator_;

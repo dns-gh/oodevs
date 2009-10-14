@@ -75,8 +75,6 @@ public:
     virtual MT_Float GetMinRangeToFireOnActualPosture( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const {return 0; };
     virtual MT_Float GetMaxRangeToIndirectFire       ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const {return 0; };
     virtual MT_Float GetMinRangeToIndirectFire       ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const {return 0; };
-    virtual MT_Float GetDangerosity                  ( const DEC_Knowledge_Agent& target ) const {return 0; };
-
     //@}
 
     //! @name Accessors

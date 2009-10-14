@@ -11,7 +11,7 @@
 #define __OnComponentFunctorComputerFactory_ABC_h_
 
 class OnComponentFunctor_ABC;
-class OnComponentFunctorComputer_ABC;
+class OnComponentComputer_ABC;
 // =============================================================================
 /** @class  DotationComputerFactory_ABC
     @brief  DotationComputerFactory_ABC
@@ -30,7 +30,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual OnComponentFunctorComputer_ABC& Create( OnComponentFunctor_ABC& componentOperator ) const = 0;
+    virtual OnComponentComputer_ABC& Create( OnComponentFunctor_ABC& componentOperator ) const = 0;
     //@}
 };
 

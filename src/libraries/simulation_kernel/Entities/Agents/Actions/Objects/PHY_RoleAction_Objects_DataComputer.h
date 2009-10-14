@@ -12,6 +12,7 @@
 #ifndef __PHY_RoleAction_Objects_DataComputer_h_
 #define __PHY_RoleAction_Objects_DataComputer_h_
 
+#include "simulation_kernel/OnComponentFunctor_ABC.h"
 #include "PHY_RoleAction_Objects_DataComputerPionData.h"
 
 class MIL_Object_ABC;
@@ -22,7 +23,7 @@ class PHY_ComposantePion;
 // @class  PHY_RoleAction_Objects_DataComputer
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RoleAction_Objects_DataComputer : private boost::noncopyable
+class PHY_RoleAction_Objects_DataComputer : public OnComponentFunctor_ABC
 {
 
 public:
@@ -38,7 +39,7 @@ public:
 
     MT_Float ComputeDeltaPercentage          ();
 
-    void     operator()                      ( const PHY_ComposantePion& composante );
+    void     operator()                      ( PHY_ComposantePion& composante );
     //@}
 
 private:

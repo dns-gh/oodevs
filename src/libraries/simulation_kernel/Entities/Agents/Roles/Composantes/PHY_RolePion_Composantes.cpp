@@ -18,7 +18,6 @@
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
-#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Logistic/Maintenance/PHY_MaintenanceComposanteState.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_SmokeData.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
@@ -1275,45 +1274,6 @@ MT_Float PHY_RolePion_Composantes::GetMinRangeToIndirectFire( const PHY_Dotation
     return rRange;
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetDangerosity
-// Created: NLD 2004-10-15
-// -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Composantes::GetDangerosity( const DEC_Knowledge_Agent& target ) const
-{
-
-
-    if( target.IsAFriend( pion_.GetArmy() ) == eTristate_True
-        ||  bIsSurrender_ )
-        return 0.;
-
-    // Target is dead
-    const DEC_Knowledge_AgentComposante* pTargetMajorComposante = target.GetMajorComposante();
-    if( !pTargetMajorComposante )
-        return 0.;
-
-    MT_Float rDangerosity = 0.;
-
-    // Fight score
-    const PHY_RoleInterface_Location& myLocation = pion_.GetRole< PHY_RoleInterface_Location >(); //@TODO AHC
-    const MT_Vector3D sourcePosition( myLocation.GetPosition().rX_, myLocation.GetPosition().rY_, myLocation.GetAltitude() );
-    const MT_Vector3D targetPosition( target.GetPosition().rX_, target.GetPosition().rY_, target.GetAltitude() );
-    const MT_Float    rDistBtwSourceAndTarget = sourcePosition.Distance( targetPosition );
-
-    for( PHY_ComposantePion::CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
-        rDangerosity = std::max( rDangerosity, (**itComposante).GetDangerosity( *pTargetMajorComposante, rDistBtwSourceAndTarget ) );
-
-    // Etat opérationel
-    rDangerosity *= ( 1 - ( (-rMaxDangerosityDegradationByOpState_ * rOperationalState_ ) + rMaxDangerosityDegradationByOpState_ ) );
-    if( rOperationalState_ == 0. ) // L'unité est morte
-        rDangerosity = 0;
-
-    // Source is neutralized
-    if( pion_.IsNeutralized() )
-        rDangerosity *= 1 - rMaxDangerosityDegradationByNeutralizedState_;
-
-    return rDangerosity;
-}
 
 // =============================================================================
 // LOGISTIC - MAINTENANCE

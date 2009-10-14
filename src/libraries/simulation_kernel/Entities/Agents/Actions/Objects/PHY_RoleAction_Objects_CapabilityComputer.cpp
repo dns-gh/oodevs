@@ -14,9 +14,13 @@
 #include "PHY_RoleAction_Objects_CapabilityComputer.h"
 
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Reinforcement/PHY_RoleInterface_Reinforcement.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+
+#include "simulation_kernel/OnComponentFunctor_ABC.h"
+#include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
+#include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
+#include "simulation_kernel/AlgorithmsFactories.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Objects_CapabilityComputer constructor
@@ -45,7 +49,8 @@ PHY_RoleAction_Objects_CapabilityComputer::~PHY_RoleAction_Objects_CapabilityCom
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Objects_CapabilityComputer::CollectData( const MIL_AgentPion& pion )
 {
-    pion.GetRole< PHY_RolePion_Composantes >().Apply( *this );
+    MIL_AgentPion& pionT = const_cast< MIL_AgentPion& >( pion );
+    pionT.Execute( pionT.GetAlgorithms().onComponentFunctorComputerFactory_->Create( *this ) );
     
     if( bHasCapability_ )
         return;
@@ -59,7 +64,7 @@ void PHY_RoleAction_Objects_CapabilityComputer::CollectData( const MIL_AgentPion
 // Name: PHY_RoleAction_Objects_CapabilityComputer::operator()
 // Created: NLD 2004-10-01
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Objects_CapabilityComputer::operator() ( const PHY_ComposantePion& composante )
+void PHY_RoleAction_Objects_CapabilityComputer::operator() ( PHY_ComposantePion& composante )
 {
     if( bHasCapability_ )
         return;

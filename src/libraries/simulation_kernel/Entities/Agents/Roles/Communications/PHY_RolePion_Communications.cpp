@@ -29,16 +29,19 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Communications, "PHY_RolePion_Communicatio
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePion_Communications* role, const unsigned int /*version*/ )
 {
-    MIL_AgentPion* const pion = &role->pion_;
-    archive << pion;
+    MIL_Entity_ABC* const entity = &role->entity_;
+    archive << entity
+            << role->bIsAutonomous_;
 }
 
 template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RolePion_Communications* role, const unsigned int /*version*/ )
 {
-	MIL_AgentPion* pion;
-	archive >> pion;
-	::new( role )PHY_RolePion_Communications( *pion );
+	MIL_Entity_ABC* entity;
+  bool isAutonomous;
+	archive >> entity
+          >> isAutonomous;
+	::new( role )PHY_RolePion_Communications( *entity, isAutonomous );
 }
 
 
@@ -65,10 +68,11 @@ void PHY_RolePion_Communications::Initialize( xml::xistream& xis )
 // Name: PHY_RolePion_Communications constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-PHY_RolePion_Communications::PHY_RolePion_Communications( MIL_AgentPion& pion )
-    : pion_                           ( pion )
+PHY_RolePion_Communications::PHY_RolePion_Communications( MIL_Entity_ABC& entity, const bool bIsAutonomous )
+    : entity_                          ( entity )
     , bHasChanged_                    ( true )
     , bBlackoutActivated_             ( false )
+    , bIsAutonomous_                  ( bIsAutonomous )
 {
     // NOTHING
 }
@@ -140,7 +144,7 @@ void PHY_RolePion_Communications::serialize( Archive& file, const uint )
 void PHY_RolePion_Communications::Jam( const MIL_Object_ABC& jammer )
 {
     // UAC ...
-    if( pion_.IsAutonomous() ) 
+    if( bIsAutonomous_ ) 
         return;
     bHasChanged_ = jammers_.insert( &jammer ).second;
 }
@@ -185,7 +189,7 @@ void PHY_RolePion_Communications::Update( bool /*bIsDead*/ )
 {
     if( HasChanged() )
     {
-        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+        entity_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
     } 
 }
 

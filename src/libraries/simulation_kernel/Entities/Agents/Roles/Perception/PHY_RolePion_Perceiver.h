@@ -50,13 +50,15 @@ public:
     //@}
 
 public:
-    explicit PHY_RolePion_Perceiver( MIL_AgentPion& pion);
+    explicit PHY_RolePion_Perceiver( MIL_AgentPion& pion );
     virtual ~PHY_RolePion_Perceiver();
 
     //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const uint );
     //@}
+
+    void Initialization( const MT_Vector2D& perceiverPosition, const MT_Vector2D& perceiverDirection );
 
     //@{
     virtual void NotifyExternalPerception( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& level );
@@ -183,6 +185,9 @@ private:
 
 private:
     MIL_AgentPion& pion_;
+    const MT_Vector2D* perceiverPosition_;
+    const MT_Vector2D* perceiverDirection_;
+
     bool           bPeriphericalVisionEnabled_;
     uint           nNextPeriphericalVisionStep_;
     bool           bRecordModeEnabled_;

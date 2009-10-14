@@ -83,8 +83,6 @@ public:
 
     //! @name Operations 
     //@{
-    template< typename T > void                Apply              ( T& t ) const;
-
     virtual void Execute( firing::WeaponAvailabilityComputer_ABC& algorithm ) const;
     virtual void Execute( transport::TransportCapacityComputer_ABC& algorithm ) const;
     virtual void Execute( transport::TransportWeightComputer_ABC& algorithm ) const;
@@ -167,7 +165,6 @@ public:
     virtual MT_Float GetMinRangeToFireOnActualPosture( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
     virtual MT_Float GetMaxRangeToIndirectFire       ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
     virtual MT_Float GetMinRangeToIndirectFire       ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
-    virtual MT_Float GetDangerosity                  ( const DEC_Knowledge_Agent& target ) const;
     //@}
 
     //! @name Perception / Knowledge

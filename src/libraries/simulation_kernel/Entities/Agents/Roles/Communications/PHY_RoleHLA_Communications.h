@@ -48,7 +48,6 @@ public:
     //@{
     virtual void Update    ( bool bIsDead ) {};
     virtual void Clean     () {};
-    virtual bool HasChanged() const { return false; };
     //@}
 
 

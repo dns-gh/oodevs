@@ -323,6 +323,7 @@ MIL_AgentPion* MIL_AgentTypePion::InstanciatePion( uint nID, MIL_Automate& autom
 // -----------------------------------------------------------------------------
 void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion ) const
 {
+    const bool bIsAutonomous = pion.IsAutonomous();
     pion.RegisterRole< NET_RolePion_Dotations         >( pion );
     pion.RegisterRole< PHY_RolePion_Reinforcement     >( pion );
     pion.RegisterRole< PHY_RolePion_Posture           >( pion );
@@ -331,8 +332,9 @@ void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion ) const
     pion.RegisterRole< human::PHY_RolePion_Humans     >( pion );
     pion.RegisterRole< PHY_RolePion_Composantes       >( pion );
     pion.RegisterRole< PHY_RolePion_Perceiver         >( pion );
+    pion.GetRole< PHY_RolePion_Perceiver >().Initialization( pion.GetRole< PHY_RoleInterface_Location >().GetPosition(),  pion.GetRole< PHY_RoleInterface_Location >().GetDirection() );
     pion.RegisterRole< nbc::PHY_RolePion_NBC          >( pion );
-    pion.RegisterRole< PHY_RolePion_Communications    >( pion );
+    pion.RegisterRole< PHY_RolePion_Communications    >( pion, bIsAutonomous );
     pion.RegisterRole< PHY_RolePion_HumanFactors      >( pion );
     pion.RegisterRole< transport::PHY_RolePion_Transported >( pion );
     pion.RegisterRole< surrender::PHY_RolePion_Surrender >( pion );

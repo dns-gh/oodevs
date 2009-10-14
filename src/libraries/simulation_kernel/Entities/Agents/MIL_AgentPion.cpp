@@ -185,7 +185,7 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const uint )
     { dotation::PHY_RolePion_Dotations        * pRole; file >> pRole; RegisterRole( pRole ); } 
     { human::PHY_RolePion_Humans           * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RolePion_Composantes      * pRole; file >> pRole; RegisterRole( pRole ); } 
-    { PHY_RolePion_Perceiver        * pRole; file >> pRole; RegisterRole( pRole ); } 
+    { PHY_RolePion_Perceiver        * pRole; file >> pRole; RegisterRole( pRole ); pRole->Initialization( GetRole< PHY_RoleInterface_Location >().GetPosition(), GetRole< PHY_RoleInterface_Location >().GetDirection() ); } 
     { nbc::PHY_RolePion_NBC         * pRole; file >> pRole; RegisterRole( pRole ); }
     { PHY_RolePion_Communications   * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RolePion_HumanFactors     * pRole; file >> pRole; RegisterRole( pRole ); } 

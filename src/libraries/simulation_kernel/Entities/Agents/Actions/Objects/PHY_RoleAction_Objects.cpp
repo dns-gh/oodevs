@@ -16,7 +16,6 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Reinforcement/PHY_RoleInterface_Reinforcement.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -37,6 +36,11 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "PHY_RoleAction_Objects_DataComputer.h"
 #include "PHY_RoleAction_Objects_CapabilityComputer.h"
+
+#include "simulation_kernel/OnComponentFunctor_ABC.h"
+#include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
+#include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
+#include "simulation_kernel/AlgorithmsFactories.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_Objects, "PHY_RoleAction_Objects" )
 
@@ -337,11 +341,12 @@ namespace
     // -----------------------------------------------------------------------------
     int GetBestExtinguisher( const MIL_AgentPion* pPion, MIL_FireFunctor& functor )
     {
-        pPion->GetRole< PHY_RolePion_Composantes >().Apply( functor );
+        MIL_AgentPion* pion = const_cast< MIL_AgentPion* >( pPion );
+        pion->Execute( pion->GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
 
         const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pPion->GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
         for( PHY_RoleInterface_Reinforcement::CIT_PionSet itReinforcement = reinforcements.begin(); itReinforcement != reinforcements.end(); ++itReinforcement )
-            (*itReinforcement)->GetRole< PHY_RolePion_Composantes >().Apply( functor );
+            (*itReinforcement)->Execute( (*itReinforcement)->GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
     
         return functor.GetNumberOfTheExtinguisherAgent();
     }

@@ -17,13 +17,17 @@
 #include "PHY_DotationType.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_SupplyStockRequestContainer.h"
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_RoleInterface_Supply.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Network/NET_ASN_Messages.h"
 #include <xeumeuleu/xml.h>
+
+#include "simulation_kernel/OnComponentFunctor_ABC.h"
+#include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
+#include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
+#include "simulation_kernel/AlgorithmsFactories.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_DotationStockContainer, "PHY_DotationStockContainer" )
 
@@ -306,26 +310,27 @@ namespace
     typedef std::map < const PHY_DotationNature*, T_StockData > T_NatureStockData;
     typedef T_NatureStockData::const_iterator                   CIT_NatureStockData;
 
-    struct sStockChecker
+    class sStockChecker : public OnComponentFunctor_ABC
     {
-        void operator() ( const PHY_ComposantePion& composante )
-        {
-            const PHY_DotationNature* pStockTransporterNature = composante.GetType().GetStockTransporterNature();
-
-            if( /*!composante.GetType().CanBePartOfConvoy() && */pStockTransporterNature )
+        public :
+            void operator() ( PHY_ComposantePion& composante )
             {
-                T_StockData& stockData = stockCapacities_[ pStockTransporterNature ];
+                const PHY_DotationNature* pStockTransporterNature = composante.GetType().GetStockTransporterNature();
 
-                MT_Float rWeight = 0.;
-                MT_Float rVolume = 0.;
-                composante.GetType().GetStockTransporterCapacity( rWeight, rVolume );
+                if( /*!composante.GetType().CanBePartOfConvoy() && */pStockTransporterNature )
+                {
+                    T_StockData& stockData = stockCapacities_[ pStockTransporterNature ];
 
-                stockData.rVolume_ += rVolume;
-                stockData.rWeight_ += rWeight;
+                    MT_Float rWeight = 0.;
+                    MT_Float rVolume = 0.;
+                    composante.GetType().GetStockTransporterCapacity( rWeight, rVolume );
+
+                    stockData.rVolume_ += rVolume;
+                    stockData.rWeight_ += rWeight;
+                }
             }
-        }
 
-        T_NatureStockData stockCapacities_;
+            T_NatureStockData stockCapacities_;
     };
 }
 
@@ -349,8 +354,10 @@ void PHY_DotationStockContainer::CheckStockCapacities()
 
     sStockChecker stockChecker;
 
-    assert( pRoleSupply_ );
-    pRoleSupply_->GetPion().GetRole< PHY_RolePion_Composantes >().Apply( stockChecker ); // TODO remove PHY_RolePion_Composantes::Apply
+    assert( pRoleSupply_ );//@TODO MGD stock pion and not role
+    MIL_AgentPionLOG_ABC& pion = const_cast< MIL_AgentPionLOG_ABC& >( pRoleSupply_->GetPion() );
+    
+    pion.Execute( pion.GetAlgorithms().onComponentFunctorComputerFactory_->Create( stockChecker ) );
 
     for( CIT_NatureStockData it = stocksByNatures.begin(); it != stocksByNatures.end(); ++it )
     {

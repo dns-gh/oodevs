@@ -17,17 +17,18 @@
 #define __MIL_FireFunctor_h_
 
 #include "MIL_FireClass.h"
+#include "simulation_kernel/OnComponentFunctor_ABC.h"
 
 class PHY_ComposantePion;
 class PHY_Weapon;
 
-class MIL_FireFunctor : private boost::noncopyable
+class MIL_FireFunctor : public OnComponentFunctor_ABC
 {
 public:
     explicit MIL_FireFunctor( const MIL_FireClass& fireClass );
     ~MIL_FireFunctor();
     
-    void operator()( const PHY_ComposantePion& composantePion );
+    void operator()( PHY_ComposantePion& composantePion );
     void operator()( const PHY_ComposantePion& composantePion, const PHY_Weapon& weapon );
 
     //!@name Accessors

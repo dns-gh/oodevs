@@ -37,17 +37,6 @@ inline void PHY_RolePion_Composantes::ApplyOnWeapons( T& t ) const
         (**it).ApplyOnWeapons( t );
 }
 
-// -----------------------------------------------------------------------------
-// Name: template< typename T > void PHY_RolePion_Composantes::Apply
-// Created: NLD 2004-08-16
-// -----------------------------------------------------------------------------
-template< typename T > 
-inline void PHY_RolePion_Composantes::Apply( T& functor ) const
-{
-    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-        functor( **it );
-}
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::LendComposantes

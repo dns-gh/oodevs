@@ -35,8 +35,8 @@ OnComponentFunctorComputerFactory::~OnComponentFunctorComputerFactory()
 // Name: DotationComputerFactory Create
 // Created: MGD 2009-08-24
 // -----------------------------------------------------------------------------
-OnComponentFunctorComputer_ABC& OnComponentFunctorComputerFactory::Create( OnComponentFunctor_ABC& componentOperator ) const
-{
+OnComponentComputer_ABC& OnComponentFunctorComputerFactory::Create( OnComponentFunctor_ABC& componentOperator ) const
+{//@TODO MGD NEED This factory?
     pDotationComputer_->Reset( componentOperator );
     return *pDotationComputer_;
 }

@@ -57,6 +57,10 @@
 #include "simulation_kernel/DetectionComputerFactory_ABC.h"
 #include "simulation_kernel/PerceptionDistanceComputer_ABC.h"
 
+#include "simulation_kernel/OnComponentFunctor_ABC.h"
+#include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
+#include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
+
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 
 using namespace detection;
@@ -86,6 +90,8 @@ void load_construct_data( Archive& archive, PHY_RolePion_Perceiver* role, const 
 // -----------------------------------------------------------------------------
 PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_AgentPion& pion )
     : pion_                        ( pion )
+    , perceiverPosition_           ( 0 )
+    , perceiverDirection_          ( 0 )
     , rMaxAgentPerceptionDistance_ ( 0. )
     , rMaxObjectPerceptionDistance_( 0. )
     , bPeriphericalVisionEnabled_  ( false )
@@ -121,6 +127,16 @@ PHY_RolePion_Perceiver::~PHY_RolePion_Perceiver()
     for( CIT_PerceptionVector it = activePerceptions_.begin(); it != activePerceptions_.end(); ++it )
         delete *it;
     activePerceptions_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver Initialization
+// Created: MGD 2009-10-14
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::Initialization( const MT_Vector2D& perceiverPosition, const MT_Vector2D& perceiverDirection )
+{
+    perceiverPosition_ = &perceiverPosition;
+    perceiverDirection_ = &perceiverDirection;
 }
 
 // =============================================================================
@@ -603,7 +619,7 @@ bool PHY_RolePion_Perceiver::CanPerceive() const
 // =============================================================================
 // UPDATE
 // =============================================================================
-struct sPerceptionRotation : private boost::noncopyable
+class sPerceptionRotation : public OnComponentFunctor_ABC
 {
 
 public:
@@ -612,7 +628,7 @@ public:
     {
     }
 
-    void operator () ( const PHY_ComposantePion& composante )
+    void operator () ( PHY_ComposantePion& composante )//@TODO MGD See to add const
     {
         rAngle_ = std::min( rAngle_, composante.GetType().GetSensorRotationAngle() );
     }
@@ -675,9 +691,8 @@ private:
 };
 
 // -----------------------------------------------------------------------------
-struct sPerceptionDataComposantes : private boost::noncopyable
+class sPerceptionDataComposantes : public OnComponentFunctor_ABC
 {
-
 public:
     sPerceptionDataComposantes( PHY_RolePion_Perceiver::T_SurfaceAgentMap& surfacesAgent, PHY_RolePion_Perceiver::T_SurfaceObjectMap& surfacesObject,
     		const MT_Vector2D& position, const MT_Vector2D& direction, const MT_Vector2D& vMainPerceptionDirection, MT_Float rDirectionRotation,
@@ -694,7 +709,7 @@ public:
     {
     }
 
-    void operator() ( const PHY_ComposantePion& composante )
+    void operator() ( PHY_ComposantePion& composante )
     {
         if( !composante.CanPerceive() )
             return;
@@ -725,7 +740,7 @@ private:
 
 
 // -----------------------------------------------------------------------------
-struct sRadarDataComposantes : private boost::noncopyable
+class sRadarDataComposantes : public OnComponentFunctor_ABC
 {
 
 public:
@@ -734,7 +749,7 @@ public:
     {        
     }
 
-    void operator() ( const PHY_ComposantePion& composante )
+    void operator() ( PHY_ComposantePion& composante )//@TODO MGD Use same design for weaponAvailability
     {
         if( !composante.CanPerceive() )
             return;
@@ -760,13 +775,13 @@ void PHY_RolePion_Perceiver::ComputeMainPerceptionDirection( MT_Vector2D& vMainP
 {
 
     if( nSensorMode_ == eNormal )
-        vMainPerceptionDirection = pion_.GetRole< PHY_RoleInterface_Location >().GetDirection();
+        vMainPerceptionDirection = *perceiverDirection_;
     else if( nSensorMode_ == eDirection )
         vMainPerceptionDirection = vSensorInfo_;
     else if( nSensorMode_ == ePoint )
     {
-        const MT_Vector2D& vDirection = pion_.GetRole< PHY_RoleInterface_Location >().GetDirection();
-        const MT_Vector2D& vPosition  = pion_.GetRole< PHY_RoleInterface_Location >().GetPosition ();
+        const MT_Vector2D& vDirection = *perceiverDirection_;
+        const MT_Vector2D& vPosition  = *perceiverPosition_;
         if( vSensorInfo_ != vPosition )
             vMainPerceptionDirection = ( vSensorInfo_ - vPosition ).Normalize();
         else
@@ -780,7 +795,6 @@ void PHY_RolePion_Perceiver::ComputeMainPerceptionDirection( MT_Vector2D& vMainP
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::PreparePerceptionData()
 {
-
     PHY_RoleInterface_Location&             roleLocation    = pion_.GetRole< PHY_RoleInterface_Location       >();
     PHY_RolePion_Composantes&          roleComposantes = pion_.GetRole< PHY_RolePion_Composantes    >();
     if(    !roleLocation.HasLocationChanged() 
@@ -800,10 +814,10 @@ void PHY_RolePion_Perceiver::PreparePerceptionData()
     rMaxObjectPerceptionDistance_ = 0;
 
     sPerceptionRotation rotation;
-    roleComposantes.Apply( rotation );
+    pion_.Execute( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( rotation ) );
 
-    sPerceptionDataComposantes dataFunctor( surfacesAgent_, surfacesObject_, roleLocation.GetPosition(), roleLocation.GetDirection() , vMainPerceptionDirection, rotation.GetAngle() , rMaxAgentPerceptionDistance_, rMaxObjectPerceptionDistance_ );
-    roleComposantes.Apply( dataFunctor );
+    sPerceptionDataComposantes dataFunctor( surfacesAgent_, surfacesObject_, *perceiverPosition_, *perceiverDirection_ , vMainPerceptionDirection, rotation.GetAngle() , rMaxAgentPerceptionDistance_, rMaxObjectPerceptionDistance_ );
+    pion_.Execute( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -823,7 +837,7 @@ void PHY_RolePion_Perceiver::PrepareRadarData()
     radars_.clear();
 
     sRadarDataComposantes dataFunctor( radars_ );
-    roleComposantes.Apply( dataFunctor );
+    pion_.Execute( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -905,23 +919,23 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
         CIT_PerceptionVector itPerception;
 
         TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
-        TER_World::GetWorld().GetAgentManager().GetListWithinCircle( pion_.GetRole< PHY_RoleInterface_Location >().GetPosition(), GetMaxAgentPerceptionDistance(), perceivableAgents );
+        TER_World::GetWorld().GetAgentManager().GetListWithinCircle( *perceiverPosition_, GetMaxAgentPerceptionDistance(), perceivableAgents );
         
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
             (**itPerception).Execute( perceivableAgents, *pion_.GetAlgorithms().detectionComputerFactory_ );
         
         TER_Object_ABC::T_ObjectVector perceivableObjects;
-        TER_World::GetWorld().GetObjectManager().GetListWithinCircle( pion_.GetRole< PHY_RoleInterface_Location>().GetPosition(), GetMaxObjectPerceptionDistance(), perceivableObjects );
+        TER_World::GetWorld().GetObjectManager().GetListWithinCircle( *perceiverPosition_, GetMaxObjectPerceptionDistance(), perceivableObjects );
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
             (**itPerception).Execute( perceivableObjects );
 
         TER_PopulationConcentration_ABC::T_PopulationConcentrationVector perceivableConcentrations;
-        TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinCircle( pion_.GetRole< PHY_RoleInterface_Location >().GetPosition(), GetMaxAgentPerceptionDistance(), perceivableConcentrations );
+        TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinCircle( *perceiverPosition_, GetMaxAgentPerceptionDistance(), perceivableConcentrations );
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
             (**itPerception).Execute( perceivableConcentrations );
 
         TER_PopulationFlow_ABC::T_PopulationFlowVector perceivableFlows;
-        TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListWithinCircle( pion_.GetRole< PHY_RoleInterface_Location >().GetPosition(), GetMaxAgentPerceptionDistance(), perceivableFlows );
+        TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListWithinCircle( *perceiverPosition_, GetMaxAgentPerceptionDistance(), perceivableFlows );
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
             (**itPerception).Execute( perceivableFlows );
     }

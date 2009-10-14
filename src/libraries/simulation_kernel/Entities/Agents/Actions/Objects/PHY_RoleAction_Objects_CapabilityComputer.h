@@ -12,6 +12,8 @@
 #ifndef __PHY_RoleAction_Objects_CapabilityComputer_h_
 #define __PHY_RoleAction_Objects_CapabilityComputer_h_
 
+#include "simulation_kernel/OnComponentFunctor_ABC.h"
+
 class MIL_ObjectType_ABC;
 class PHY_ComposantePion;
 class MIL_AgentPion;
@@ -20,7 +22,7 @@ class MIL_AgentPion;
 // @class  PHY_RoleAction_Objects_CapabilityComputer
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RoleAction_Objects_CapabilityComputer : private boost::noncopyable
+class PHY_RoleAction_Objects_CapabilityComputer : public OnComponentFunctor_ABC
 {
 
 public:
@@ -43,7 +45,7 @@ public:
     //! @name Operations
     //@{
     bool HasCapability() const;
-    void operator()   ( const PHY_ComposantePion& composante );
+    void operator()   ( PHY_ComposantePion& composante );
     //@}
 
 private:

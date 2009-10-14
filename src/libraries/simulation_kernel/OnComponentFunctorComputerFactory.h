@@ -13,6 +13,7 @@
 #include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
 
 class OnComponentFunctor_ABC;
+class OnComponentFunctorComputer_ABC;
 
 // =============================================================================
 /** @class  DotationComputerFactory
@@ -32,7 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual OnComponentFunctorComputer_ABC& Create( OnComponentFunctor_ABC& componentOperator ) const;
+    virtual OnComponentComputer_ABC& Create( OnComponentFunctor_ABC& componentOperator ) const;
     //@}
 
 private:

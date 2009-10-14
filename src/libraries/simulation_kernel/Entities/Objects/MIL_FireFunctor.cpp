@@ -46,7 +46,7 @@ MIL_FireFunctor::~MIL_FireFunctor()
 // Created: RFT 22/04/2008
 // Modified: RFT 14/05/2008
 // -----------------------------------------------------------------------------
-void MIL_FireFunctor::operator()( const PHY_ComposantePion& composantePion )
+void MIL_FireFunctor::operator()( PHY_ComposantePion& composantePion )
 {
     composantePion.ApplyOnWeapons( *this );
 }
