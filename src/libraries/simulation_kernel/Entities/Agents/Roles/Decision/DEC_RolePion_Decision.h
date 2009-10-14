@@ -118,8 +118,8 @@ public:
     void SetbPasserSurLC( bool value );
     DEC_Decision_ABC* GetpionEnEscorte() const;
     void SetpionEnEscorte( DEC_Decision_ABC* value );
-    DEC_Path_ABC* GetitMvt() const;
-    void SetitMvt( DEC_Path_ABC* value );
+    boost::shared_ptr< DEC_Path_ABC > GetitMvt() const;
+    void SetitMvt( const boost::shared_ptr< DEC_Path_ABC >& value );
     boost::shared_ptr< MT_Vector2D > GetobjectifEsquive() const;
     void SetobjectifEsquive( MT_Vector2D* value );
     DEC_Knowledge_Agent* GeteniEnCours() const;
@@ -218,7 +218,7 @@ private:
     bool bPasserSurLC_;
     DEC_Decision_ABC* pionEnEscorte_;
     std::vector< DEC_Decision_ABC* > pionsEnAppui_;
-    DEC_Path_ABC* itMvt_;
+    boost::shared_ptr< DEC_Path_ABC > itMvt_;
     boost::shared_ptr< MT_Vector2D > objectifEsquive_;
     DEC_Knowledge_Agent* eniEnCours_;
     std::string missionPrecedente_;

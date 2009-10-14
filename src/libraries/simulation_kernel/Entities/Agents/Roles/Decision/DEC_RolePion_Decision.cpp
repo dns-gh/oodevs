@@ -117,7 +117,6 @@ DEC_RolePion_Decision::DEC_RolePion_Decision( MIL_AgentPion& pion )
     , bOrdreTenir_              ( false                        )
     , bPasserSurLC_             ( false                        )
     , pionEnEscorte_            ( 0                            )
-    , itMvt_                    ( 0                            )
     , eniEnCours_               ( 0                            )
     , rTenir_                   ( 0.f                          )
     , eTypeContact_             ( 0                            )
@@ -177,7 +176,6 @@ DEC_RolePion_Decision::DEC_RolePion_Decision()
     , bOrdreTenir_              ( false                        )
     , bPasserSurLC_             ( false                        )
     , pionEnEscorte_            ( 0                            )
-    , itMvt_                    ( 0                            )
     , eniEnCours_               ( 0                            )
     , rTenir_                   ( 0.f                          )
     , eTypeContact_             ( 0                            )
@@ -1396,7 +1394,7 @@ void DEC_RolePion_Decision::SetpionEnEscorte( DEC_Decision_ABC* value )
 // Name: DEC_RolePion_Decision::GetitMvt
 // Created: LDC 2009-05-19
 // -----------------------------------------------------------------------------
-DEC_Path_ABC* DEC_RolePion_Decision::GetitMvt() const
+boost::shared_ptr< DEC_Path_ABC > DEC_RolePion_Decision::GetitMvt() const
 {
     return itMvt_;
 }
@@ -1405,7 +1403,7 @@ DEC_Path_ABC* DEC_RolePion_Decision::GetitMvt() const
 // Name: DEC_RolePion_Decision::SetitMvt
 // Created: LDC 2009-05-19
 // -----------------------------------------------------------------------------
-void DEC_RolePion_Decision::SetitMvt( DEC_Path_ABC* value )
+void DEC_RolePion_Decision::SetitMvt( const boost::shared_ptr< DEC_Path_ABC >& value )
 {
     itMvt_ = value;
 }

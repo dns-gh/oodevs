@@ -51,12 +51,12 @@ void DefaultSpeedComputer::Reset(const SpeedStrategy_ABC* strategy)
 // Name: DefaultSpeedComputer::ApplyOnComponent
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
-void DefaultSpeedComputer::ApplyOnComponent(const PHY_ComposantePion& component)
+void DefaultSpeedComputer::ApplyOnComponent( const PHY_ComposantePion& component )
 {
-    assert( strategy_);
-    if(component.CanMove())
+    assert( strategy_ );
+    if( component.CanMove() )
     {
-        speed_ = std::min(speed_ , strategy_->ApplyOnComponent(component));
+        speed_ = std::min( speed_ , strategy_->ApplyOnComponent( component ) );
         hasUsableComponent_ = true;
     }
 }
@@ -67,8 +67,8 @@ void DefaultSpeedComputer::ApplyOnComponent(const PHY_ComposantePion& component)
 // -----------------------------------------------------------------------------
 void DefaultSpeedComputer::ApplyOnReinforcement( MIL_AgentPion& reinforcement)
 {
-    assert( strategy_);
-    speed_ = std::min(speed_ , strategy_->ApplyOnReinforcement(reinforcement));
+    assert( strategy_ );
+    speed_ = std::min(speed_ , strategy_->ApplyOnReinforcement( reinforcement ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,8 +77,8 @@ void DefaultSpeedComputer::ApplyOnReinforcement( MIL_AgentPion& reinforcement)
 // -----------------------------------------------------------------------------
 void DefaultSpeedComputer::ApplyOnPopulation( const DEC_Knowledge_PopulationCollision& population)
 {
-    assert( strategy_);
-    speed_ = std::min(speed_ , strategy_->ApplyOnPopulation(population));
+    assert( strategy_ );
+    speed_ = std::min( speed_, strategy_->ApplyOnPopulation( population ) );
 }
 
 // -----------------------------------------------------------------------------

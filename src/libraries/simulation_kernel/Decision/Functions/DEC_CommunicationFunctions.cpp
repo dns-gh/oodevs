@@ -535,7 +535,7 @@ void DEC_CommunicationFunctions::F_Pion_SetpionEnEscorte( DEC_Decision_ABC* pPio
 // Name: DEC_CommunicationFunctions::
 //F_Pion_GetitMvt Created: LDC 2009-05-11
 // -----------------------------------------------------------------------------
-DEC_Path_ABC* DEC_CommunicationFunctions::F_Pion_GetitMvt( DEC_Decision_ABC* pPion )
+boost::shared_ptr< DEC_Path_ABC > DEC_CommunicationFunctions::F_Pion_GetitMvt( DEC_Decision_ABC* pPion )
 {
     return dynamic_cast< DEC_RolePion_Decision* >( pPion )->GetitMvt();
 }
@@ -544,7 +544,7 @@ DEC_Path_ABC* DEC_CommunicationFunctions::F_Pion_GetitMvt( DEC_Decision_ABC* pPi
 // Name: DEC_CommunicationFunctions::F_Pion_SetitMvt
 // Created: LDC 2009-05-11
 // -----------------------------------------------------------------------------
-void DEC_CommunicationFunctions::F_Pion_SetitMvt( DEC_Decision_ABC* pPion, DEC_Path_ABC* value )
+void DEC_CommunicationFunctions::F_Pion_SetitMvt( DEC_Decision_ABC* pPion, const boost::shared_ptr< DEC_Path_ABC >& value )
 {
     dynamic_cast< DEC_RolePion_Decision* >( pPion )->SetitMvt( value );
 }
