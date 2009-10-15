@@ -68,10 +68,6 @@ public:
     virtual bool                HasSpeedChanged     () const = 0; // Position or direction or height has changed 
     virtual bool                HasLocationChanged  () const = 0;
     //@}
-
-    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& asnMsg ) const = 0;
-    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& asnMsg ) const = 0;
-
     virtual void Serialize( HLA_UpdateFunctor& functor ) const = 0;
 private:
     //! @name Serialization

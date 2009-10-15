@@ -51,12 +51,6 @@ public:
     virtual bool IsReinforcedBy     ( MIL_AgentPion& pion ) const = 0;
     //@}
 
-    //! @name Network
-    //@{
-    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const = 0;
-    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const = 0;
-    //@}
-
     //! @name Accessors
     //@{
     virtual const T_PionSet& GetReinforcements() const = 0;

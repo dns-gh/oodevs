@@ -60,12 +60,6 @@ public:
 
     virtual MT_Float ModifyMaxSpeed         ( MT_Float rSpeed    ) const { return 0; };
     //@}
-
-    //! @name Network
-    //@{
-    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const {};
-    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const {};
-    //@}
 };
 
 #endif // __MockRoleNBC_h_

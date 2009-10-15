@@ -14,6 +14,7 @@
 
 #include "PHY_RoleInterface_Surrender.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
+#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
 class NET_ASN_MsgUnitAttributes;
 class MIL_AgentPion;
@@ -29,8 +30,9 @@ namespace surrender
 // @class  PHY_RolePion_Surrender
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RolePion_Surrender : public PHY_RoleInterface_Surrender,
-    public tools::AlgorithmModifier_ABC<moving::MoveComputer_ABC>
+class PHY_RolePion_Surrender : public PHY_RoleInterface_Surrender
+                             , public tools::AlgorithmModifier_ABC<moving::MoveComputer_ABC>
+                             , public network::NetworkUnitMessageNotificationHandler_ABC
 {
 
 public:

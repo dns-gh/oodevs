@@ -15,6 +15,7 @@
 #include "MT_Tools/Role_ABC.h"
 #include "Entities/Agents/Roles/NBC/ToxicEffectHandler_ABC.h"
 #include "TransportNotificationHandler_ABC.h"
+#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
 class NET_ASN_MsgUnitAttributes;
 class MIL_Agent_ABC;
@@ -30,9 +31,10 @@ namespace transport
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RoleAction_Transport : public tools::Role_ABC
-							   , public nbc::ToxicEffectHandler_ABC
+                               , public nbc::ToxicEffectHandler_ABC
                                , public transport::TransportNotificationHandler_ABC
                                , private boost::noncopyable
+                               , public network::NetworkUnitMessageNotificationHandler_ABC
 {
 
 public:
@@ -114,8 +116,8 @@ public:
 
     //! @name Network
     //@{
-    void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const;
-    void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const;
+    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const;
+    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const;
     //@}
 
 private:

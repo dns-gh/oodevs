@@ -726,8 +726,10 @@ void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, ASN1
 // Name: PHY_RolePionLOG_Maintenance::SendFullState
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Maintenance::SendFullState() const
+void PHY_RolePionLOG_Maintenance::SendFullState( NET_ASN_MsgUnitAttributes& asnUnit ) const
 {
+    UNREFERENCED_PARAMETER( asnUnit );
+
     NET_ASN_MsgLogMaintenanceState asn;
 
     asn().m.chaine_activeePresent             = 1;
@@ -800,11 +802,10 @@ void PHY_RolePionLOG_Maintenance::SendFullState() const
 // Name: PHY_RolePionLOG_Maintenance::SendChangedState
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Maintenance::SendChangedState() const
+void PHY_RolePionLOG_Maintenance::SendChangedState( NET_ASN_MsgUnitAttributes& asnUnit ) const
 {
-
     if( bHasChanged_ || bExternalMustChangeState_ )
-        SendFullState();
+        SendFullState( asnUnit );
 }
 
 // -----------------------------------------------------------------------------

@@ -324,7 +324,7 @@ MIL_AgentPion* MIL_AgentTypePion::InstanciatePion( uint nID, MIL_Automate& autom
 void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion ) const
 {
     const bool bIsAutonomous = pion.IsAutonomous();
-    pion.RegisterRole< NET_RolePion_Dotations         >( pion );
+    pion.RegisterRole< network::NET_RolePion_Dotations         >( pion );
     pion.RegisterRole< PHY_RolePion_Reinforcement     >( pion );
     pion.RegisterRole< PHY_RolePion_Posture           >( pion );
     pion.RegisterRole< PHY_RolePion_Location          >( pion );

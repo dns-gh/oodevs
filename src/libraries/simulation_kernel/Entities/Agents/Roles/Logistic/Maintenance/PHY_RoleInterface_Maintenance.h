@@ -67,12 +67,6 @@ public:
     virtual int                             GetAvailabilityScoreForRepair( PHY_MaintenanceComposanteState& composanteState ) = 0;
     //@}
 
-    //! @name Network
-    //@{
-    virtual void SendChangedState() const = 0;
-    virtual void SendFullState   () const = 0;
-    //@}
-
     //! @name Tools
     //@{
     virtual PHY_ComposantePion* GetAvailableHauler      ( const PHY_ComposanteTypePion& composanteType ) const = 0;          

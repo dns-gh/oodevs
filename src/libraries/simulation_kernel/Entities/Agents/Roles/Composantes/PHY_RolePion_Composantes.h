@@ -19,6 +19,7 @@
 #include "SurrenderNotificationHandler_ABC.h"
 
 #include "simulation_kernel/HumansChangedNotificationHandler_ABC.h"
+#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
 namespace xml
 {
@@ -51,18 +52,19 @@ class OnComponentLendedFunctorComputer_ABC;
 // =============================================================================
 class PHY_RolePion_Composantes : public PHY_RoleInterface_Composantes
                                , public tools::AlgorithmModifier_ABC< firing::WeaponAvailabilityComputer_ABC >
-							   , public tools::AlgorithmModifier_ABC< transport::TransportCapacityComputer_ABC >
-							   , public tools::AlgorithmModifier_ABC< transport::TransportWeightComputer_ABC>
+                               , public tools::AlgorithmModifier_ABC< transport::TransportCapacityComputer_ABC >
+                               , public tools::AlgorithmModifier_ABC< transport::TransportWeightComputer_ABC>
                                , public tools::AlgorithmModifier_ABC< OnComponentComputer_ABC >
                                , public tools::AlgorithmModifier_ABC< OnComponentLendedFunctorComputer_ABC >
-							   , public tools::AlgorithmModifier_ABC< transport::HumanLoadingTimeComputer_ABC>
-							   , public tools::AlgorithmModifier_ABC< transport::LoadedStateConsistencyComputer_ABC>
-							   , public tools::AlgorithmModifier_ABC< moving::SpeedComputer_ABC >
+            	                 , public tools::AlgorithmModifier_ABC< transport::HumanLoadingTimeComputer_ABC>
+                               , public tools::AlgorithmModifier_ABC< transport::LoadedStateConsistencyComputer_ABC>
+                               , public tools::AlgorithmModifier_ABC< moving::SpeedComputer_ABC >
                                , public nbc::ToxicEffectHandler_ABC
                                , public transport::TransportNotificationHandler_ABC
                                , public transport::TransportChangeNotificationHandler_ABC
                                , public surrender::SurrenderNotificationHandler_ABC
                                , public human::HumansChangedNotificationHandler_ABC
+                               , public network::NetworkUnitMessageNotificationHandler_ABC
 {
 
 
@@ -200,9 +202,6 @@ public:
     //@{
     virtual void SendChangedState( NET_ASN_MsgUnitAttributes& asn ) const;
     virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& asn ) const;
-
-    virtual void SendLogisticChangedState() const;
-    virtual void SendLogisticFullState   () const;
     //@}
 
     //! @name HLA
@@ -265,6 +264,9 @@ private:
     void UpdateDataWhenComposanteAdded  ( const PHY_ComposanteState& state, T_ComposanteTypeProperties& properties );
 
     void SendLoans( NET_ASN_MsgUnitAttributes& asn ) const;
+
+    void SendLogisticChangedState() const;
+    void SendLogisticFullState   () const;
     //@}
     //! @name Helpers
     //@{

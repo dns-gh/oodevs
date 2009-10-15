@@ -332,8 +332,10 @@ void PHY_RoleAction_Moving::SendCurrentPath() const
 // Name: PHY_RoleAction_Moving::SendFullState
 // Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Moving::SendFullState() const
+void PHY_RoleAction_Moving::SendFullState( NET_ASN_MsgUnitAttributes& asnMsg ) const
 {
+    UNREFERENCED_PARAMETER( asnMsg );
+
     SendCurrentPath    ();
     SendEnvironmentType();
 }
@@ -342,8 +344,10 @@ void PHY_RoleAction_Moving::SendFullState() const
 // Name: PHY_RoleAction_Moving::SendChangedState
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Moving::SendChangedState() const
+void PHY_RoleAction_Moving::SendChangedState( NET_ASN_MsgUnitAttributes& asnMsg ) const
 {
+    UNREFERENCED_PARAMETER( asnMsg );
+
     if( bCurrentPathHasChanged_  )
         SendCurrentPath();
 

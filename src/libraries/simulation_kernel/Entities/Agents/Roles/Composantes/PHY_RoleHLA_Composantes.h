@@ -149,15 +149,6 @@ public:
     virtual const MIL_AgentPion& GetPion                 () const { return *pPion_; };    
     //@}
 
-    //! @name Network
-    //@{
-    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& asn ) const {};
-    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& asn ) const {};
-
-    virtual void SendLogisticChangedState() const {};
-    virtual void SendLogisticFullState   () const {};
-    //@}
-
     //! @name HLA
     //@{
     virtual void Serialize( HLA_UpdateFunctor& functor ) const {};

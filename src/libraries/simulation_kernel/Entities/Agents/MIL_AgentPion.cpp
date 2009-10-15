@@ -178,7 +178,7 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const uint )
       // >> actions_ // actions non sauvegardées
          >> pKnowledgeBlackBoard_;
            
-    { NET_RolePion_Dotations        * pRole; file >> pRole; RegisterRole( pRole ); } 
+    { network::NET_RolePion_Dotations        * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RolePion_Reinforcement    * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RolePion_Posture          * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RolePion_Location         * pRole; file >> pRole; RegisterRole( pRole ); } 
@@ -222,7 +222,7 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const uint ) const
         // << actions_ // actions non sauvegardées
         << pKnowledgeBlackBoard_;
 
-    SaveRole< NET_RolePion_Dotations         >( *this, file );
+    SaveRole< network::NET_RolePion_Dotations         >( *this, file );
     SaveRole< PHY_RolePion_Reinforcement     >( *this, file );
     SaveRole< PHY_RolePion_Posture           >( *this, file );
     SaveRole< PHY_RolePion_Location          >( *this, file );
@@ -421,8 +421,8 @@ void MIL_AgentPion::UpdateState()
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::UpdateNetwork()
 {
-    GetRole< NET_RolePion_Dotations >().SendChangedState();
-    GetRole< NET_RolePion_Dotations >().Clean();
+    GetRole< network::NET_RolePion_Dotations >().SendChangedState();
+    GetRole< network::NET_RolePion_Dotations >().Clean();
 }
 
 // -----------------------------------------------------------------------------
@@ -585,7 +585,7 @@ void MIL_AgentPion::SendCreation() const
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::SendFullState() const
 {
-    GetRole< NET_RolePion_Dotations >().SendFullState();
+    GetRole< network::NET_RolePion_Dotations >().SendFullState();
 }
 
 // -----------------------------------------------------------------------------

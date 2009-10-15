@@ -15,6 +15,7 @@
 #include "MT_Tools/Role_ABC.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
+#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
 class PHY_RoleInterface_Location;
 class MIL_AgentPion;
@@ -37,6 +38,7 @@ class PHY_RoleAction_Moving : public tools::Role_ABC
                             , public PHY_MovingEntity_ABC
                             , private boost::noncopyable
                             , public tools::AlgorithmModifier_ABC< posture::PostureComputer_ABC >
+                            , public network::NetworkUnitMessageNotificationHandler_ABC
 {
 
 public:
@@ -74,8 +76,8 @@ public:
 
     //! @name Network
     //@{
-    void SendChangedState() const;
-    void SendFullState   () const;
+    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& asnMsg ) const;
+    virtual void SendFullState( NET_ASN_MsgUnitAttributes& asnMsg ) const;
     //@}
 
     //! @name Tools

@@ -17,6 +17,7 @@
 #include "simulation_kernel/ConsumptionChangeRequestHandler_ABC.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "simulation_kernel/ObjectCollisionNotificationHandler_ABC.h"
+#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
 class MIL_AgentPion;
 class NET_ASN_MsgUnitAttributes;
@@ -31,12 +32,13 @@ namespace moving
 // @class  PHY_RolePion_Reinforcement
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RolePion_Reinforcement : public PHY_RoleInterface_Reinforcement,
-	public tools::AlgorithmModifier_ABC< moving::SpeedComputer_ABC>,
-	public tools::AlgorithmModifier_ABC< moving::MoveComputer_ABC>,
-	public dotation::ConsumptionChangeRequestHandler_ABC,
-	public transport::TransportNotificationHandler_ABC,
-	public terrain::ObjectCollisionNotificationHandler_ABC
+class PHY_RolePion_Reinforcement : public PHY_RoleInterface_Reinforcement
+                                 , public tools::AlgorithmModifier_ABC< moving::SpeedComputer_ABC>
+                                 , public tools::AlgorithmModifier_ABC< moving::MoveComputer_ABC>
+                                 , public dotation::ConsumptionChangeRequestHandler_ABC
+                                 , public transport::TransportNotificationHandler_ABC
+                                 , public terrain::ObjectCollisionNotificationHandler_ABC
+                                 , public network::NetworkUnitMessageNotificationHandler_ABC
 {
 
 public:
@@ -84,8 +86,8 @@ public:
 
     //! @name Network
     //@{
-    void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const;
-    void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const;
+    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const;
+    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const;
     //@}
 
     //! @name Accessors

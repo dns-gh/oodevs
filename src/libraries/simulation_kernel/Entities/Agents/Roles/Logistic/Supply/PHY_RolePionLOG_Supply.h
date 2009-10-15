@@ -14,6 +14,7 @@
 
 #include "PHY_RoleInterface_Supply.h"
 #include "ComponentsChangedNotificationHandler_ABC.h"
+#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
 namespace xml
 {
@@ -31,6 +32,7 @@ class PHY_ComposantePion;
 // =============================================================================
 class PHY_RolePionLOG_Supply : public PHY_RoleInterface_Supply
                              , public component::ComponentsChangedNotificationHandler_ABC
+                             , public network::NetworkUnitMessageNotificationHandler_ABC
 {
 
 public:
@@ -87,8 +89,8 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendChangedState() const;
-    virtual void SendFullState   () const;
+    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& asnUnit ) const;
+    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& asnUnit ) const;
     //@}
 
 private:

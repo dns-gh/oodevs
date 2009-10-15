@@ -16,6 +16,7 @@
 #include "PHY_RoleInterface_Transported.h"
 #include "TransportNotificationHandler_ABC.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
+#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
 class MIL_AgentPion;
 class NET_ASN_MsgUnitAttributes;
@@ -35,7 +36,8 @@ namespace transport
 class PHY_RolePion_Transported : public PHY_RoleInterface_Transported,
     public tools::AlgorithmModifier_ABC<TransportPermissionComputer_ABC>,
     public tools::AlgorithmModifier_ABC<moving::MoveComputer_ABC>,
-    public TransportNotificationHandler_ABC
+    public TransportNotificationHandler_ABC,
+    public network::NetworkUnitMessageNotificationHandler_ABC
 {
 
 public:

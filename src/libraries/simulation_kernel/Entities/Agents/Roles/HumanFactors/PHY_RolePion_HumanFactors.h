@@ -15,6 +15,7 @@
 #include "MIL.h"
 #include "PHY_RoleInterface_HumanFactors.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
+#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
 namespace xml
 {
@@ -51,8 +52,9 @@ namespace detection
 class PHY_RolePion_HumanFactors : public PHY_RoleInterface_HumanFactors
                                 , public tools::AlgorithmModifier_ABC< posture::PostureComputer_ABC >
                                 , public tools::AlgorithmModifier_ABC< firing::WeaponReloadingComputer_ABC >
-								, public tools::AlgorithmModifier_ABC< moving::SpeedComputer_ABC >
+                                , public tools::AlgorithmModifier_ABC< moving::SpeedComputer_ABC >
                                 , public tools::AlgorithmModifier_ABC< detection::PerceptionDistanceComputer_ABC >
+                                , public network::NetworkUnitMessageNotificationHandler_ABC
 {
 
 public:
@@ -99,8 +101,8 @@ public:
 
     //! @name Network
     //@{
-    void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const;
-    void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const;
+    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const;
+    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const;
     //@}
 
 private: 

@@ -102,12 +102,6 @@ public:
     virtual bool IsStealth() const { return false; };
     //@}
 
-    //! @name Network
-    //@{
-    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& asnMsg ) const {};
-    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& asnMsg ) const {};
-    //@}
-
     //! @name HLA
     //@{
     virtual void Serialize( HLA_UpdateFunctor& functor ) const {};

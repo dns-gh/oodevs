@@ -19,6 +19,7 @@
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "simulation_kernel/PopulationCollisionNotificationHandler_ABC.h"
 #include "simulation_kernel/ObjectCollisionNotificationHandler_ABC.h"
+#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
 class MIL_AgentPion;
 
@@ -26,9 +27,10 @@ class MIL_AgentPion;
 // @class  PHY_RolePion_Location
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RolePion_Location : public PHY_RoleInterface_Location,
-    public population::PopulationCollisionNotificationHandler_ABC,
-    public terrain::ObjectCollisionNotificationHandler_ABC
+class PHY_RolePion_Location : public PHY_RoleInterface_Location
+                            , public population::PopulationCollisionNotificationHandler_ABC
+                            , public terrain::ObjectCollisionNotificationHandler_ABC
+                            , public network::NetworkUnitMessageNotificationHandler_ABC
 {
 
 public:

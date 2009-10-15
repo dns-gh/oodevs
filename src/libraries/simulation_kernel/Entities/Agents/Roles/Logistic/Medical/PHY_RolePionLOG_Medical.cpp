@@ -901,8 +901,10 @@ void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, ASN1
 // Name: PHY_RolePionLOG_Medical::SendFullState
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Medical::SendFullState() const
+void PHY_RolePionLOG_Medical::SendFullState( NET_ASN_MsgUnitAttributes& asnUnit ) const
 {
+    UNREFERENCED_PARAMETER( asnUnit );
+
     NET_ASN_MsgLogMedicalState asn;
 
     asn().m.chaine_activeePresent                      = 1;
@@ -981,11 +983,10 @@ void PHY_RolePionLOG_Medical::SendFullState() const
 // Name: PHY_RolePionLOG_Medical::SendChangedState
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Medical::SendChangedState() const
+void PHY_RolePionLOG_Medical::SendChangedState(  NET_ASN_MsgUnitAttributes& asnUnit ) const
 {
-
     if( bHasChanged_ || bExternalMustChangeState_ )
-        SendFullState();
+        SendFullState( asnUnit );
 }
 
 // -----------------------------------------------------------------------------

@@ -17,6 +17,7 @@
 #include "PHY_RoleInterface_Posture.h"
 #include "MT_Tools/MT_Random.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
+#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
 class MIL_AgentPion;
 class NET_ASN_MsgUnitAttributes;
@@ -40,6 +41,7 @@ class PHY_RolePion_Posture : public PHY_RoleInterface_Posture
                            , public tools::AlgorithmModifier_ABC< dotation::ConsumptionComputer_ABC >
                            , public tools::AlgorithmModifier_ABC< detection::DetectionComputer_ABC >
                            , public tools::AlgorithmModifier_ABC< detection::PerceptionDistanceComputer_ABC >
+                           , public network::NetworkUnitMessageNotificationHandler_ABC
 {
 
 public:
@@ -101,8 +103,8 @@ public:
 
     //! @name Network
     //@{
-    void SendChangedState( NET_ASN_MsgUnitAttributes& asnMsg ) const;
-    void SendFullState   ( NET_ASN_MsgUnitAttributes& asnMsg ) const;
+    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& asnMsg ) const;
+    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& asnMsg ) const;
     //@}
 
     //! @name HLA

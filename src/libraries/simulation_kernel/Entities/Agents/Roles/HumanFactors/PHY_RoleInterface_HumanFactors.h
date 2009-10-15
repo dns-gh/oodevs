@@ -62,11 +62,6 @@ public:
     virtual MT_Float ModifyPH                    ( MT_Float rPH       ) const = 0;
     //@}
 
-    //! @name Network
-    //@{
-    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const = 0;
-    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const = 0;
-    //@}
 private:
     //! @name Serialization
 	//@{

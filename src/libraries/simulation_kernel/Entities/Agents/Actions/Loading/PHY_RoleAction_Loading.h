@@ -15,6 +15,7 @@
 #include "MT_Tools/Role_ABC.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "TransportNotificationHandler_ABC.h"
+#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
 class MIL_Agent_ABC;
 class NET_ASN_MsgUnitAttributes;
@@ -32,7 +33,8 @@ namespace transport
 class PHY_RoleAction_Loading : public tools::Role_ABC
                              , private boost::noncopyable
                              , public tools::AlgorithmModifier_ABC< posture::PostureComputer_ABC >
-							 , public transport::TransportNotificationHandler_ABC
+                             , public transport::TransportNotificationHandler_ABC
+                             , public network::NetworkUnitMessageNotificationHandler_ABC
 {
 
 public:
@@ -81,8 +83,8 @@ public:
 
     //! @name Network
     //@{
-    void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const;
-    void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const;
+    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const;
+    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const;
     //@}
 
     //! @name Accessors

@@ -454,9 +454,9 @@ void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, ASN1
 // Name: PHY_RolePionLOG_Supply::SendFullState
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Supply::SendFullState() const
+void PHY_RolePionLOG_Supply::SendFullState( NET_ASN_MsgUnitAttributes& asnUnit ) const
 {
-
+    UNREFERENCED_PARAMETER( asnUnit );
 
     NET_ASN_MsgLogSupplyState asn;
 
@@ -489,8 +489,9 @@ void PHY_RolePionLOG_Supply::SendFullState() const
 // Name: PHY_RolePionLOG_Supply::SendChangedState
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Supply::SendChangedState() const
+void PHY_RolePionLOG_Supply::SendChangedState( NET_ASN_MsgUnitAttributes& asnUnit ) const
 {
+    UNREFERENCED_PARAMETER( asnUnit );
 
     assert( pStocks_ );    
     if( !( bHasChanged_ || bExternalMustChangeState_ || pStocks_->HasChanged() ) )

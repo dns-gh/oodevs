@@ -14,6 +14,7 @@
 
 #include "PHY_RoleInterface_NBC.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
+#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
 class NET_ASN_MsgUnitAttributes;
 class MIL_ToxicEffectManipulator;

@@ -19,6 +19,7 @@
 #include "ConsumeDotationNotificationHandler_ABC.h"
 #include "DotationsActionsNotificationHandler_ABC.h"
 #include "simulation_kernel/ConsumptionChangeRequestHandler_ABC.h"
+#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
 namespace xml
 {
@@ -47,6 +48,7 @@ class PHY_RolePion_Dotations : public PHY_RoleInterface_Dotations
                              , public surrender::SurrenderNotificationHandler_ABC
                              , public ConsumeDotationNotificationHandler_ABC
                              , public DotationsActionsNotificationHandler_ABC
+                             , public network::NetworkUnitMessageNotificationHandler_ABC
 {
 
 public:
@@ -107,8 +109,8 @@ public:
 
     //! @name Network
     //@{
-    void SendChangedState( NET_ASN_MsgUnitAttributes& asn ) const;
-    void SendFullState   ( NET_ASN_MsgUnitAttributes& asn ) const;
+    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& asn ) const;
+    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& asn ) const;
     //@}
 
     //! @name Logistic - Supply

@@ -61,12 +61,6 @@ public:
     virtual bool HasChanged() const { return true; };
     //@}
 
-    //! @name Network
-    //@{
-    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const {};
-    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const {};
-    //@}
-
 private:
     bool bPrisoner_;
 };

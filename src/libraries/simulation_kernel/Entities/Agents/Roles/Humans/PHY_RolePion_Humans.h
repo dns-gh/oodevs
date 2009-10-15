@@ -14,6 +14,7 @@
 
 #include "PHY_RoleInterface_Humans.h"
 #include "HumansActionsNotificationHandler_ABC.h"
+#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
 namespace human
 {
@@ -24,6 +25,7 @@ namespace human
 // =============================================================================
 class PHY_RolePion_Humans : public PHY_RoleInterface_Humans
                           , public HumansActionsNotificationHandler_ABC
+                          , public network::NetworkUnitMessageNotificationHandler_ABC
 {
 
 public:
@@ -74,9 +76,6 @@ public:
     //@{
     virtual void SendChangedState( NET_ASN_MsgUnitAttributes& asn ) const;
     virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& asn ) const;
-
-    virtual void SendLogisticChangedState() const;
-    virtual void SendLogisticFullState   () const;
     //@}
 
 private:
@@ -84,6 +83,9 @@ private:
     //@{
     void UpdateDataWhenHumanRemoved( const PHY_Human& human );
     void UpdateDataWhenHumanAdded  ( const PHY_Human& human );
+
+    void SendLogisticChangedState() const;
+    void SendLogisticFullState   () const;
     //@}
 
 private:

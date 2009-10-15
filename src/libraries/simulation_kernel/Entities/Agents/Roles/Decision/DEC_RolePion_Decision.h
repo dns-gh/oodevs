@@ -15,6 +15,7 @@
 #include "Decision/DEC_Decision.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
+#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
 class DEC_AutomateDecision;
 class DEC_Knowledge_Agent;
@@ -35,6 +36,7 @@ enum E_FireAvailability;
 // Created: JVT 2004-08-03
 // =============================================================================
 class DEC_RolePion_Decision : public DEC_Decision< MIL_AgentPion >
+                            , public network::NetworkUnitMessageNotificationHandler_ABC
                             , private boost::noncopyable
 {
 
@@ -141,8 +143,8 @@ public:
 
     //! @name Network
     //@{
-    void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const;
-    void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const;
+    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const;
+    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const;
     //@}
 
     //! @name Notifications

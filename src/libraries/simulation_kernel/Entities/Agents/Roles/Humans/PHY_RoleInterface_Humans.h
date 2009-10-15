@@ -72,14 +72,6 @@ public:
     virtual void ChangeHumansAvailability( const PHY_HumanRank& rank, uint nNbrAvailable ) = 0;
     //@}
 
-    //! @name Network
-    //@{
-    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& asn ) const = 0;
-    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& asn ) const = 0;
-
-    virtual void SendLogisticChangedState() const = 0;
-    virtual void SendLogisticFullState   () const = 0;
-    //@}
 private:
     //! @name Serialization
     //@{

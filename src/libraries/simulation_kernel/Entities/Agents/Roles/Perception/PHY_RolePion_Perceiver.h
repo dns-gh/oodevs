@@ -16,6 +16,7 @@
 
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "ComponentsChangedNotificationHandler_ABC.h"
+#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
 namespace detection
 {
@@ -29,6 +30,7 @@ namespace detection
 class PHY_RolePion_Perceiver : public PHY_RoleInterface_Perceiver
                              , public tools::AlgorithmModifier_ABC< detection::DetectionComputer_ABC >
                              , public component::ComponentsChangedNotificationHandler_ABC
+                             , public network::NetworkUnitMessageNotificationHandler_ABC
 {
 
 public:

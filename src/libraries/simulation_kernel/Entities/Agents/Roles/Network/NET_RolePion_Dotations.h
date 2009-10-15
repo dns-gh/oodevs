@@ -22,13 +22,16 @@ class MIL_AgentPion;
 class NET_ASN_MsgUnitDotations;
 class NET_ASN_MsgUnitAttributes;
 
+namespace network
+{
+
 // =============================================================================
 // @class  NET_RolePion_Dotations
 // $$$$ SBO 2009-06-30: WTF? name doesn't match anything the class actually does
 // Created: JVT 2004-08-03
 // =============================================================================
 class NET_RolePion_Dotations : public NET_RoleInterface_Dotations
-                             , public network::NetworkNotificationHandler_ABC
+                             , public NetworkNotificationHandler_ABC
 {
 
 public:
@@ -61,7 +64,7 @@ private:
     //@}
 
 private:
-    MIL_AgentPion* pPion_;
+    MIL_AgentPion& pion_;
     mutable bool   bLastStateDead_;
     mutable bool   bLastStateNeutralized_;
     bool bExternalMustUpdateData_;
@@ -72,5 +75,6 @@ private:
 
 };
 
+} // namespace network
 
 #endif // __NET_RolePion_Dotations_h_

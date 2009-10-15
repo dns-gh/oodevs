@@ -518,6 +518,8 @@ void PHY_RolePion_Humans::SendChangedState( NET_ASN_MsgUnitAttributes& asn ) con
     asn().dotation_eff_personnel.n        = nNbrHumansDataChanged_;
     asn().dotation_eff_personnel.elem     = pPersonnel;
     asn().m.dotation_eff_personnelPresent = 1;
+
+    SendLogisticChangedState();
 }
 
 // -----------------------------------------------------------------------------
@@ -550,6 +552,8 @@ void PHY_RolePion_Humans::SendFullState( NET_ASN_MsgUnitAttributes& asn ) const
     asn().dotation_eff_personnel.n        = ranks.size();
     asn().dotation_eff_personnel.elem     = pPersonnel;
     asn().m.dotation_eff_personnelPresent = 1;
+
+    SendLogisticFullState();
 }
 
 

@@ -276,24 +276,6 @@ void PHY_RoleInterface_Supply::ConvoyEndMission()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Supply::SendChangedState
-// Created: NLD 2004-12-30
-// -----------------------------------------------------------------------------
-void PHY_RoleInterface_Supply::SendChangedState() const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Supply::SendFullState
-// Created: NLD 2004-12-30
-// -----------------------------------------------------------------------------
-void PHY_RoleInterface_Supply::SendFullState() const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RoleInterface_Supply::Clean
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------

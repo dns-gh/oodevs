@@ -103,13 +103,6 @@ public:
     virtual       void             ConvoyEndMission          () ;
 
     //@}
-    //@}
-
-    //! @name Network
-    //@{
-    virtual void SendChangedState() const;
-    virtual void SendFullState   () const;
-    //@}
 
 private:
     MIL_AgentPionLOG_ABC*       pPion_; //$$$Hack

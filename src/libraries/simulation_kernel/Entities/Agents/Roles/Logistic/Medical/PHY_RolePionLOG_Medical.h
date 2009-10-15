@@ -16,6 +16,7 @@
 
 #include "PHY_RoleInterface_Medical.h"
 #include "ComponentsChangedNotificationHandler_ABC.h"
+#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
 class MIL_AgentPionLOG_ABC;
 class MIL_AutomateLOG;
@@ -35,6 +36,7 @@ class PHY_ComposanteUsePredicate;
 // =============================================================================
 class PHY_RolePionLOG_Medical : public PHY_RoleInterface_Medical
                               , public component::ComponentsChangedNotificationHandler_ABC
+                              , public network::NetworkUnitMessageNotificationHandler_ABC
 {
 
 public:
@@ -104,8 +106,8 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendChangedState() const;
-    virtual void SendFullState   () const;
+    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& asnUnit ) const;
+    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& asnUnit ) const;
     //@}
 
     //! @name Types

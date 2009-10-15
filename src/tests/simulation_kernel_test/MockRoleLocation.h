@@ -90,8 +90,6 @@ public:
     virtual void Fly      ( MT_Float rHeight ) {};
     virtual bool               HasSpeedChanged      () const { return false; }; // Position or direction or height has changed 
     virtual bool               HasLocationChanged   () const { return false; };
-    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& asnMsg ) const {};
-    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& asnMsg ) const {};
     virtual void Serialize( HLA_UpdateFunctor& functor ) const {};
 };
 

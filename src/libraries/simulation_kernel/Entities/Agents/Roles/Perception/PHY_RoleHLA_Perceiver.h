@@ -126,8 +126,6 @@ public:
     //! @name Network
     //@{
     virtual void SendDebugState  () const {};
-    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const {};
-    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const {};
     //@}
 
 private:

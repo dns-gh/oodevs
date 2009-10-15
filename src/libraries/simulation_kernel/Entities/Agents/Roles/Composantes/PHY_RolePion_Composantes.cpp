@@ -1093,6 +1093,8 @@ void PHY_RolePion_Composantes::SendFullState( NET_ASN_MsgUnitAttributes& msg ) c
     msg().etat_operationnel_brut          = (uint)( rOperationalState_ * 100. );
 
     SendLoans( msg );
+
+    SendLogisticFullState();
 }
 
 // -----------------------------------------------------------------------------
@@ -1135,6 +1137,8 @@ void PHY_RolePion_Composantes::SendChangedState( NET_ASN_MsgUnitAttributes& msg 
 
     if( bLoansChanged_ )
         SendLoans( msg );
+
+    SendLogisticChangedState();
 }
 
 // -----------------------------------------------------------------------------

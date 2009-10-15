@@ -16,6 +16,7 @@
 
 #include "PHY_RoleInterface_Maintenance.h"
 #include "ComponentsChangedNotificationHandler_ABC.h"
+#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
 class PHY_ComposantePion;
 class PHY_ComposanteTypePion;
@@ -32,6 +33,7 @@ class MIL_AutomateLOG;
 // =============================================================================
 class PHY_RolePionLOG_Maintenance : public PHY_RoleInterface_Maintenance
                                   , public component::ComponentsChangedNotificationHandler_ABC
+                                  , public network::NetworkUnitMessageNotificationHandler_ABC
 {
 
 public:
@@ -89,8 +91,8 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendChangedState() const;
-    virtual void SendFullState   () const;
+    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& asnUnit ) const;
+    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& asnUnit ) const;
     //@}
 
 private:

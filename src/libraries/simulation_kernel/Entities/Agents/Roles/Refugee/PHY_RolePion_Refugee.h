@@ -14,6 +14,7 @@
 
 #include "PHY_RoleInterface_Refugee.h"
 #include "simulation_kernel/RefugeeActionsNotificationHandler_ABC.h"
+#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
 class NET_ASN_MsgUnitAttributes;
 class MIL_AgentPion;
@@ -59,8 +60,8 @@ public:
 
     //! @name Network
     //@{
-    void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const;
-    void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const;
+    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const;
+    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const;
     //@}
 
 private:

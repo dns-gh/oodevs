@@ -93,12 +93,6 @@ public:
     virtual bool CanCollectionAmbulanceGo( const PHY_MedicalCollectionAmbulance& ambulance ) const = 0;
     //@}
 
-    //! @name Network
-    //@{
-    virtual void SendChangedState() const = 0;
-    virtual void SendFullState   () const = 0;
-    //@}
-
     virtual void StartUsingForLogistic   ( PHY_ComposantePion& composante ) = 0;
     virtual void StopUsingForLogistic    ( PHY_ComposantePion& composante ) = 0;
 
