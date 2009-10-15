@@ -31,7 +31,7 @@ class Object : public MIL_Object_ABC
 public:
 	//! @name Constructors/Destructor
     //@{
-            Object( uint id, const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const TER_Localisation* pLocation, const std::string& name = std::string(), bool reserved = true, const std::vector< double >& parameters = std::vector< double >() );
+            Object( uint id, const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const TER_Localisation* pLocation, const std::string& name = std::string(), bool reserved = true );
             Object();
 	virtual ~Object();
     //@}

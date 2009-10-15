@@ -100,9 +100,9 @@ ASN1T_EnumObjectErrorCode MIL_ObjectFactory::BuildObject( const ASN1T_MagicActio
 // Name: MIL_ObjectFactory::BuildObject
 // Created: JCR 2008-06-03
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, ASN1T_EnumDemolitionTargetType obstacleType, const std::vector< double >& parameters )
+MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, ASN1T_EnumDemolitionTargetType obstacleType )
 {
-    MIL_Object_ABC* pObject = GetLoader().CreateObject( type, army, localisation, obstacleType, parameters );
+    MIL_Object_ABC* pObject = GetLoader().CreateObject( type, army, localisation, obstacleType );
     if ( pObject )
         manager_.RegisterObject( *pObject );
     return pObject;

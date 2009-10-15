@@ -21,7 +21,7 @@ includedFiles["sources/appui/alat/pions/common/actions/Actions - Log.bms"] = tru
         if( ModuleBegins() ) then
             do
                 self.localisation = DEC_Geometrie_ConvertirPointEnLocalisation( self._namedParams.point )
-                self.actionCreerPlot = DEC_StartCreerObjet( self.repPlotLogistique, S_TypeObject_ToString( eTypeObjectPlotRavitaillement ), self.localisation, -1 )
+                self.actionCreerPlot = DEC_StartCreerObjet( self.repPlotLogistique, S_TypeObject_ToString( eTypeObjectPlotRavitaillement ), self.localisation )
                 actionCallbacks[ self.actionCreerPlot ] = function( arg ) self.eEtatConstruction = arg end
                 actionKnowledgeCallbacks[ self.actionCreerPlot ] = function( arg ) self.repPlotLogistique = arg end
 

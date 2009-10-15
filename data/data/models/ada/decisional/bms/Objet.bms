@@ -1,3 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["Objet.bms"] = true
-

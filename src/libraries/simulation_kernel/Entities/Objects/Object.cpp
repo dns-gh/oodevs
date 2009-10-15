@@ -52,7 +52,7 @@ using namespace hla;
 // Name: Object constructor
 // Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------
-Object::Object( uint id, const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const TER_Localisation* pLocation, const std::string& name, bool reserved, const std::vector< double >& parameters )
+Object::Object( uint id, const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const TER_Localisation* pLocation, const std::string& name, bool reserved )
     : MIL_Object_ABC( army, builder.GetType() )
     , id_       ( id )
     , name_     ( name )

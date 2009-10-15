@@ -54,7 +54,7 @@ public:
 
     void             CreateObject( xml::xistream& xis, MIL_Army_ABC& army ); 
     MIL_Object_ABC*  CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation );
-    MIL_Object_ABC*  CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, ASN1T_EnumDemolitionTargetType obstacleType, const std::vector< double >& parameters );
+    MIL_Object_ABC*  CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, ASN1T_EnumDemolitionTargetType obstacleType );
     MIL_Object_ABC*  CreateObject( MIL_Army_ABC& army, const MIL_ObjectBuilder_ABC& builder );
     MIL_Object_ABC*             Find( uint nID ) const;
     const MIL_ObjectType_ABC&   FindType( const std::string& type ) const;

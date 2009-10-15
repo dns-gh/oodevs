@@ -48,7 +48,7 @@ public:
     void Initialize( xml::xistream& xis );
     MIL_Object_ABC* CreateObject( xml::xistream& xis, MIL_Army_ABC& army ) const;
     MIL_Object_ABC* CreateObject( const ASN1T_MagicActionCreateObject& asn, MIL_Army_ABC& army, ASN1T_EnumObjectErrorCode& value ) const;
-    MIL_Object_ABC* CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& location, bool reserved, const std::vector< double >& parameters ) const;
+    MIL_Object_ABC* CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& location, bool reserved ) const;
     MIL_Object_ABC* CreateObject( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army ) const;
     //@}
 

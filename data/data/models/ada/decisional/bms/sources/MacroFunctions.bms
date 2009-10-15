@@ -589,8 +589,8 @@ function DEC_Connaissances_ObjetsDansCercle( position, radius, ... )
     return DEC_Knowledges_ObjectsInCircle( position, radius, {...} )
 end
 
-function DEC_StartCreerObjet( knowledge, type, localisation, ... )
-    return DEC_StartCreateObject( type, localisation, {...} )
+function DEC_StartCreerObjet( knowledge, type, localisation )
+    return DEC_StartCreateObject( type, localisation )
 end
 
 function DEC_Copie_ListePoints( source, destination )

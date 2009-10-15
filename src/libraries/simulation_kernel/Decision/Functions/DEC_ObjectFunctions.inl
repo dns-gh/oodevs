@@ -59,8 +59,7 @@ template< typename T >
 void DEC_ObjectFunctions::MagicCreateObject( const T& caller, const std::string& type, const TER_Localisation* pLocalisation )
 {
     //$$$ A réencapsuler    
-    std::vector< double > noParameter;
-    MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( caller.GetArmy(), type, pLocalisation, EnumDemolitionTargetType::preliminary, noParameter );
+    MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( caller.GetArmy(), type, pLocalisation, EnumDemolitionTargetType::preliminary );
 }
 
 // -----------------------------------------------------------------------------

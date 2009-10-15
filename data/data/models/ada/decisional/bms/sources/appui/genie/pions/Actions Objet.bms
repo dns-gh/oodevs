@@ -49,33 +49,10 @@ include "bit.lua"
         if( self.bInit and DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
             do
                 local type = DEC_GenObject_Type( self._namedParams.objet )
-                if( type == S_TypeObject_ToString( eTypeObjectCampPrisonniers ) or type == S_TypeObject_ToString( eTypeObjectCampRefugies ) ) then
-                    self.act = DEC_StartCreerObjet( myself.objMisEnCours_, type, DEC_GenObject_Localisation( self._namedParams.objet ), DEC_GenObject_TC2( self._namedParams.objet ) )
-                    actionCallbacks[ self.act ] = function( arg ) self.eActionObjet = arg end
-                    actionKnowledgeCallbacks[ self.act ] = function( arg ) myself.objMisEnCours_ = arg end
-
-                else
-if( type == S_TypeObject_ToString( eTypeObjectZoneMineeLineaire ) or type == S_TypeObject_ToString( eTypeObjectZoneMineeParDispersion ) ) then
-                        self.act = DEC_StartCreerObjet( myself.objMisEnCours_, type, DEC_GenObject_Localisation( self._namedParams.objet ), DEC_GenObject_Densite( self._namedParams.objet ), DEC_GenObject_DelaiActiviteMines( self._namedParams.objet ) )
-                        actionCallbacks[ self.act ] = function( arg ) self.eActionObjet = arg end
-                        actionKnowledgeCallbacks[ self.act ] = function( arg ) myself.objMisEnCours_ = arg end
-
-                    else
-if( type == S_TypeObject_ToString( eTypeObjectBouchonMines ) ) then
-                            self.act = DEC_StartCreerObjet( myself.objMisEnCours_, type, DEC_GenObject_Localisation( self._namedParams.objet ), DEC_GenObject_DelaiActiviteMines( self._namedParams.objet ) )
-                            actionCallbacks[ self.act ] = function( arg ) self.eActionObjet = arg end
-                            actionKnowledgeCallbacks[ self.act ] = function( arg ) myself.objMisEnCours_ = arg end
-
-                        else
                             --[[// Autres objets
 ]]self.act = DEC_StartCreerObjet( myself.objMisEnCours_, type, DEC_GenObject_Localisation( self._namedParams.objet ) )
                             actionCallbacks[ self.act ] = function( arg ) self.eActionObjet = arg end
                             actionKnowledgeCallbacks[ self.act ] = function( arg ) myself.objMisEnCours_ = arg end
-
-                        end
-                    end
-                end
-
                 do
                     if( not DEC_Agent_AutomateEstEmbraye() ) then
                         DEC_RC( eRC_DebutTravaux )

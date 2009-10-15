@@ -444,7 +444,6 @@ node "ACT_Pion_VAB_ControleZone"
     create = function( self )
         self._namedParams = {}
         self._namedParams.locObjet = self.params[1]
-        self._namedParams.rQte = self.params[2]
     end,
 
     select = function( self )
@@ -462,8 +461,7 @@ node "ACT_Pion_VAB_ControleZone"
                     do return end
                 end
 
-                DEC_Trace( "realisation bouchon mines : nbre = " .. FloatToString( self._namedParams.rQte ) )
-                self.actionID = DEC_StartCreerObjet( self.repObj, S_TypeObject_ToString( eTypeObjectBouchonMines ), self._namedParams.locObjet, self._namedParams.rQte )
+                self.actionID = DEC_StartCreerObjet( self.repObj, S_TypeObject_ToString( eTypeObjectBouchonMines ), self._namedParams.locObjet )
                 actionCallbacks[ self.actionID ] = function( arg ) self.eEtatObjet = arg end
                 actionKnowledgeCallbacks[ self.actionID ] = function( arg ) self.repObj = arg end
 
@@ -560,7 +558,6 @@ elseif switch_1 == eActionObjetTerminee then
         self._namedParams = {}
         self._namedParams.eTypeObjet = self.params[1]
         self._namedParams.locObjet = self.params[2]
-        self._namedParams.rParam = self.params[3]
     end,
 
     select = function( self )
@@ -583,7 +580,7 @@ elseif switch_1 == eActionObjetTerminee then
                 end
 
                 DEC_Trace( "realisation objet : debut" )
-                self.actionID = DEC_StartCreerObjet( self.repObj, S_TypeObject_ToString( self._namedParams.eTypeObjet ), self._namedParams.locObjet, self._namedParams.rParam )
+                self.actionID = DEC_StartCreerObjet( self.repObj, S_TypeObject_ToString( self._namedParams.eTypeObjet ), self._namedParams.locObjet )
                 actionCallbacks[ self.actionID ] = function( arg ) self.eEtatObjet = arg end
                 actionKnowledgeCallbacks[ self.actionID ] = function( arg ) self.repObj = arg end
 

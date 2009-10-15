@@ -38,7 +38,7 @@ public:
     //@{
     void                        BuildObject( xml::xistream& xis, MIL_Army_ABC& army );
     ASN1T_EnumObjectErrorCode   BuildObject( const ASN1T_MagicActionCreateObject& asn, MIL_Army_ABC& army );
-    MIL_Object_ABC*             BuildObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, ASN1T_EnumDemolitionTargetType obstacleType, const std::vector< double >& parameters );
+    MIL_Object_ABC*             BuildObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, ASN1T_EnumDemolitionTargetType obstacleType );
 	MIL_Object_ABC*             BuildObject( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army );
     //@}
 
