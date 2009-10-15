@@ -7,25 +7,25 @@
 //
 // *****************************************************************************
 
-#ifndef __NetworkNotificationHandler_ABC_H__
-#define __NetworkNotificationHandler_ABC_H__
+#ifndef __VisionConeNotificationHandler_ABC_H__
+#define __VisionConeNotificationHandler_ABC_H__
 
 namespace network {
 
 // =============================================================================
-/** @class  NetworkNotificationHandler_ABC
-@brief  NetworkNotificationHandler_ABC
+/** @class  VisionConeNotificationHandler_ABC
+@brief  VisionConeNotificationHandler_ABC
 */
 // Created: MGD 2009-09-24
 // =============================================================================
-class NetworkNotificationHandler_ABC {
+class VisionConeNotificationHandler_ABC {
 public:
-    NetworkNotificationHandler_ABC();
-    virtual ~NetworkNotificationHandler_ABC();
+    VisionConeNotificationHandler_ABC();
+    virtual ~VisionConeNotificationHandler_ABC();
 
-    virtual void NotifyDataHasChanged() = 0;
+    virtual void NotifyVisionConeDataHasChanged() = 0;
 };
 
 } // namespace network
 
-#endif /* __NetworkNotificationHandler_ABC_H__ */
+#endif /* __VisionConeNotificationHandler_ABC_H__ */

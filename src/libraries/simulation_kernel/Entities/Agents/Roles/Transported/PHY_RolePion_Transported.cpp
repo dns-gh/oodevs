@@ -21,6 +21,7 @@
 #include "simulation_kernel/TransportPermissionComputer_ABC.h"
 #include "simulation_kernel/TransportChangeNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+#include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
 #include "simulation_kernel/MoveComputer_ABC.h"
 
 #include "AlgorithmsFactories.h"
@@ -227,7 +228,7 @@ void PHY_RolePion_Transported::Update( bool /*bIsDead*/ )
     if( HasChanged() )
     {
         pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
-        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
+        pion_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
         pion_.Apply( &transport::TransportChangeNotificationHandler_ABC::NotifyTransportHasChanged );
     }
 }

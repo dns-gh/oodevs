@@ -78,6 +78,7 @@
 #include "Knowledge/DEC_Knowledge_Def.h"
 
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_RolePion_Decision, "DEC_RolePion_Decision" )
 
@@ -917,6 +918,16 @@ void DEC_RolePion_Decision::StopMissionBehavior( MIL_Mission_ABC& mission )
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::StopMissionBehavior
+// Created: NLD 2004-09-03
+// -----------------------------------------------------------------------------
+void DEC_RolePion_Decision::NotifyHasChanged()
+{
+    bStateHasChanged_ = true;
+    GetPion().Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision::NotifyRoePopulationChanged
 // Created: NLD 2005-11-15
 // -----------------------------------------------------------------------------
@@ -926,7 +937,7 @@ void DEC_RolePion_Decision::NotifyRoePopulationChanged( const PHY_RoePopulation&
     if( roe != *pRoePopulation_ )
     {
         pRoePopulation_   = &roe;
-        bStateHasChanged_ = true;
+        NotifyHasChanged();
     }
 }
 
@@ -1625,15 +1636,6 @@ void DEC_RolePion_Decision::Clean()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_RolePion_Decision::HasStateChanged
-// Created: NLD 2004-09-08
-// -----------------------------------------------------------------------------
-bool DEC_RolePion_Decision::HasStateChanged() const
-{
-    return bStateHasChanged_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision::GetRoePopulation
 // Created: NLD 2005-11-16
 // -----------------------------------------------------------------------------
@@ -1728,7 +1730,7 @@ void DEC_RolePion_Decision::NotifyIndirectFireAvailabilityChanged( E_FireAvailab
     if( nIndirectFireAvailability_ != nState )
     {
         nIndirectFireAvailability_ = nState;
-        bStateHasChanged_  = true;
+        NotifyHasChanged();
     }
 }
 
@@ -1741,7 +1743,7 @@ void DEC_RolePion_Decision::NotifyForceRatioStateChanged( E_ForceRatioState nSta
     if( nForceRatioState_ != nState )
     {
         nForceRatioState_ = nState;
-        bStateHasChanged_ = true;
+        NotifyHasChanged();
     }
 }
 
@@ -1754,7 +1756,7 @@ void DEC_RolePion_Decision::NotifyRulesOfEngagementStateChanged( E_RulesOfEngage
     if( nRulesOfEngagementState_ != nState )
     {
         nRulesOfEngagementState_ = nState;
-        bStateHasChanged_ = true;
+        NotifyHasChanged();
     }
 }
 
@@ -1767,7 +1769,7 @@ void DEC_RolePion_Decision::NotifyCloseCombatStateChanged( E_CloseCombatState nS
     if( nCloseCombatState_ != nState )
     {
         nCloseCombatState_ = nState;
-        bStateHasChanged_  = true;
+        NotifyHasChanged();
     }
 }
 
@@ -1780,7 +1782,7 @@ void DEC_RolePion_Decision::NotifyOperationalStateChanged( E_OperationalState nS
     if( nOperationalState_ != nState )
     {
         nOperationalState_ = nState;
-        bStateHasChanged_  = true;
+        NotifyHasChanged();
     }
 }
 

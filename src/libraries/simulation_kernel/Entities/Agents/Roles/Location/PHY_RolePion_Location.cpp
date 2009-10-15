@@ -29,6 +29,7 @@
 #include "simulation_kernel/MoveComputer_ABC.h"
 #include "simulation_kernel/MoveComputerFactory_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+#include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
 
 using namespace location;
 
@@ -464,7 +465,7 @@ void PHY_RolePion_Location::Update( bool bIsDead )
     if( HasLocationChanged() )
         pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
     if( HasSpeedChanged() )
-        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
+        pion_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
 
 }
 

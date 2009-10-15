@@ -16,7 +16,9 @@
 
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "ComponentsChangedNotificationHandler_ABC.h"
+#include "simulation_kernel/SurrenderNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
+#include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
 
 namespace detection
 {
@@ -30,7 +32,9 @@ namespace detection
 class PHY_RolePion_Perceiver : public PHY_RoleInterface_Perceiver
                              , public tools::AlgorithmModifier_ABC< detection::DetectionComputer_ABC >
                              , public component::ComponentsChangedNotificationHandler_ABC
+                             , public surrender::SurrenderNotificationHandler_ABC
                              , public network::NetworkUnitMessageNotificationHandler_ABC
+                             , public network::VisionConeNotificationHandler_ABC
 {
 
 public:
@@ -88,6 +92,9 @@ public:
 
     virtual void Execute( detection::DetectionComputer_ABC& algorithm ) const;
     virtual void NotifyComponentHasChanged();
+    virtual void NotifyCaptured();
+    virtual void NotifyReleased();
+    virtual void NotifyVisionConeDataHasChanged();
     //@}
 
     //! @name Perceptions
@@ -189,6 +196,8 @@ private:
     MIL_AgentPion& pion_;
     const MT_Vector2D* perceiverPosition_;
     const MT_Vector2D* perceiverDirection_;
+    
+    MT_Vector2D lastPerceiverPosition_;
 
     bool           bPeriphericalVisionEnabled_;
     uint           nNextPeriphericalVisionStep_;
@@ -218,6 +227,8 @@ private:
     bool bHasChanged_;
     bool bExternalMustChangePerception_;
     bool bExternalMustChangeRadar_;
+    bool bExternalCanPerceive_;
+    bool bExternalMustUpdateVisionCones_;
     bool bRadarStateHasChanged_;
 
 private:

@@ -20,10 +20,8 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
-#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
-#include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionView.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionCoupDeSonde.h"
@@ -62,6 +60,7 @@
 #include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
 
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+#include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
 
 using namespace detection;
 
@@ -101,6 +100,8 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_AgentPion& pion )
     , bHasChanged_                 ( true )
     , bExternalMustChangePerception_( false )
     , bExternalMustChangeRadar_    ( false )
+    , bExternalCanPerceive_        ( true )
+    , bExternalMustUpdateVisionCones_( false )
     , bRadarStateHasChanged_       ( true )
     , pPerceptionCoupDeSonde_      ( 0 )
     , pPerceptionRecoPoint_        ( 0 )
@@ -612,8 +613,8 @@ bool PHY_RolePion_Perceiver::CanPerceive() const
 {
 
     return !pion_.IsDead() 
-        && !pion_.GetRole< transport::PHY_RoleInterface_Transported >().IsTransported()
-        && !pion_.GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered();
+        && bExternalCanPerceive_
+        && !pion_.GetRole< transport::PHY_RoleInterface_Transported >().IsTransported();
 }
 
 // =============================================================================
@@ -795,13 +796,10 @@ void PHY_RolePion_Perceiver::ComputeMainPerceptionDirection( MT_Vector2D& vMainP
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::PreparePerceptionData()
 {
-    PHY_RoleInterface_Location&             roleLocation    = pion_.GetRole< PHY_RoleInterface_Location       >();
-    PHY_RolePion_Composantes&          roleComposantes = pion_.GetRole< PHY_RolePion_Composantes    >();
-    if(    !roleLocation.HasLocationChanged() 
+    if(    !( *perceiverPosition_ == lastPerceiverPosition_ )
         && !bExternalMustChangePerception_
         && !pion_.GetRole< transport::PHY_RoleAction_Loading   >().HasChanged()
         && !pion_.GetRole< transport::PHY_RoleInterface_Transported >().HasChanged()
-        && !pion_.GetRole< surrender::PHY_RoleInterface_Surrender   >().HasChanged()
         && !HasChanged() )
         return;
 
@@ -826,12 +824,9 @@ void PHY_RolePion_Perceiver::PreparePerceptionData()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::PrepareRadarData()
 {
-
-    PHY_RolePion_Composantes& roleComposantes = pion_.GetRole< PHY_RolePion_Composantes >();
     if(    !bExternalMustChangeRadar_
         && !pion_.GetRole< transport::PHY_RoleAction_Loading   >().HasChanged()
-        && !pion_.GetRole< transport::PHY_RoleInterface_Transported >().HasChanged()
-        && !pion_.GetRole< surrender::PHY_RoleInterface_Surrender   >().HasChanged() )
+        && !pion_.GetRole< transport::PHY_RoleInterface_Transported >().HasChanged() )
         return;
 
     radars_.clear();
@@ -1028,6 +1023,8 @@ void PHY_RolePion_Perceiver::Update( bool /*bIsDead*/ )
     PreparePerceptionData        ();
     PrepareRadarData             ();
 
+    lastPerceiverPosition_ = *perceiverPosition_;
+
     if ( pPerceptionRecoPoint_ )
         pPerceptionRecoPoint_->Update();
         
@@ -1038,7 +1035,15 @@ void PHY_RolePion_Perceiver::Update( bool /*bIsDead*/ )
     {
         if( HasRadarStateChanged() )
             pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
-        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
+        pion_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
+    }
+
+    // Debug - Cones de vision
+    if( MIL_AgentServer::GetWorkspace().GetAgentServer().MustSendUnitVisionCones() )
+    {
+        if(    bExternalMustUpdateVisionCones_
+            || MIL_AgentServer::GetWorkspace().GetAgentServer().MustInitUnitVisionCones() )
+            SendDebugState();
     }
 }
 
@@ -1341,6 +1346,7 @@ void PHY_RolePion_Perceiver::Clean()
     bExternalMustChangePerception_ = false;
     bExternalMustChangeRadar_ = false;
     bRadarStateHasChanged_ = false;
+    bExternalMustUpdateVisionCones_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -1388,4 +1394,34 @@ void PHY_RolePion_Perceiver::NotifyComponentHasChanged()
 {
     bExternalMustChangePerception_ = true;
     bExternalMustChangeRadar_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::NotifyCaptured
+// Created: MGD 2009-10-14
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::NotifyCaptured()
+{
+    bExternalCanPerceive_ = false;
+    bExternalMustChangePerception_ = true;
+    bExternalMustChangeRadar_ = true;
+}
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::NotifyReleased
+// Created: MGD 2009-10-1
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::NotifyReleased()
+{
+    bExternalCanPerceive_ = true;
+    bExternalMustChangePerception_ = true;
+    bExternalMustChangeRadar_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::NotifyVisionConeDataHasChanged
+// Created: MGD 2009-10-15
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::NotifyVisionConeDataHasChanged()
+{
+    bExternalMustUpdateVisionCones_ = true;
 }

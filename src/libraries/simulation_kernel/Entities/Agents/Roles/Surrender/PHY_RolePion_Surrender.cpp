@@ -20,6 +20,7 @@
 #include "SurrenderNotificationHandler_ABC.h"
 
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+#include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
 #include "simulation_kernel/MoveComputer_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( surrender::PHY_RolePion_Surrender, "PHY_RolePion_Surrender" )
@@ -96,7 +97,7 @@ void PHY_RolePion_Surrender::Update( bool /*bIsDead*/ )
     if( HasChanged() )
     {
         pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
-        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
+        pion_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
     }
 }
 

@@ -59,14 +59,13 @@ public:
 
     virtual void StartMissionBehavior( MIL_Mission_ABC& mission );
     virtual void StopMissionBehavior ( MIL_Mission_ABC& mission );
-
+    virtual void NotifyHasChanged();
     //@}
 
     //! @name Accessors
     //@{
     virtual MIL_AgentPion&        GetPion         () const;
 
-          bool                  HasStateChanged () const; // Etat decisionnel
     const PHY_RoePopulation&    GetRoePopulation() const;
 
     virtual std::string           GetName         () const;

@@ -12,9 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "NET_RolePion_Dotations.h"
 
-#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
-#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
-
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 
@@ -49,7 +46,6 @@ NET_RolePion_Dotations::NET_RolePion_Dotations( MIL_AgentPion& pion )
     , bLastStateDead_            ( false )
     , bLastStateNeutralized_     ( false )
     , bExternalMustUpdateData_    ( false )
-    , bExternalMustUpdateVisionCones_( false )
 {
     // NOTHING
 }
@@ -83,7 +79,6 @@ bool NET_RolePion_Dotations::DataUpdated() const
 {
 //@TODO Remove HasChanged in interface and hla
     if( bExternalMustUpdateData_
-        || pion_.GetRole< DEC_RolePion_Decision               >().HasStateChanged()//@TODO MGD add a private setter in RolePionDecision and use notification
         || pion_.IsDead()        != bLastStateDead_
         || pion_.IsNeutralized() != bLastStateNeutralized_ )
         return true;
@@ -130,14 +125,6 @@ void NET_RolePion_Dotations::SendMsg( NET_ASN_MsgUnitAttributes& asnMsg ) const
 // -----------------------------------------------------------------------------
 void NET_RolePion_Dotations::SendChangedState() const
 {
-    // Debug - Cones de vision
-    if( MIL_AgentServer::GetWorkspace().GetAgentServer().MustSendUnitVisionCones() )
-    {
-        if(    bExternalMustUpdateVisionCones_
-            || MIL_AgentServer::GetWorkspace().GetAgentServer().MustInitUnitVisionCones() )
-            pion_.GetRole< PHY_RoleInterface_Perceiver        >().SendDebugState(); //$$ BOF
-    }
-
     if( !DataUpdated() )
         return;
 
@@ -191,7 +178,6 @@ void NET_RolePion_Dotations::SendFullState() const
 void NET_RolePion_Dotations::Clean()
 {
     bExternalMustUpdateData_ = false;// Reinitialize for next step
-    bExternalMustUpdateVisionCones_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -201,15 +187,6 @@ void NET_RolePion_Dotations::Clean()
 void NET_RolePion_Dotations::NotifyDataHasChanged()
 {
     bExternalMustUpdateData_ = true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_RolePion_Dotations::NotifyHumanHasChanged
-// Created: MGD 2009-09-29
-// -----------------------------------------------------------------------------
-void NET_RolePion_Dotations::NotifyVisionConeDataHasChanged()
-{
-    bExternalMustUpdateVisionCones_ = true;
 }
 
 } // namespace network
