@@ -18,11 +18,6 @@
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeObject.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
-#include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
-#include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
-#include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionView.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionCoupDeSonde.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
@@ -613,8 +608,7 @@ bool PHY_RolePion_Perceiver::CanPerceive() const
 {
 
     return !pion_.IsDead() 
-        && bExternalCanPerceive_
-        && !pion_.GetRole< transport::PHY_RoleInterface_Transported >().IsTransported();
+        && bExternalCanPerceive_;
 }
 
 // =============================================================================
@@ -798,8 +792,6 @@ void PHY_RolePion_Perceiver::PreparePerceptionData()
 {
     if(    !( *perceiverPosition_ == lastPerceiverPosition_ )
         && !bExternalMustChangePerception_
-        && !pion_.GetRole< transport::PHY_RoleAction_Loading   >().HasChanged()
-        && !pion_.GetRole< transport::PHY_RoleInterface_Transported >().HasChanged()
         && !HasChanged() )
         return;
 
@@ -824,9 +816,7 @@ void PHY_RolePion_Perceiver::PreparePerceptionData()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::PrepareRadarData()
 {
-    if(    !bExternalMustChangeRadar_
-        && !pion_.GetRole< transport::PHY_RoleAction_Loading   >().HasChanged()
-        && !pion_.GetRole< transport::PHY_RoleInterface_Transported >().HasChanged() )
+    if( !bExternalMustChangeRadar_ )
         return;
 
     radars_.clear();
@@ -1222,10 +1212,9 @@ bool PHY_RolePion_Perceiver::HasDelayedPerceptions() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::SendDebugState() const
 {
-
     NET_ASN_MsgUnitVisionCones asn;
     asn().oid = pion_.GetID();
-    asn().elongation = pion_.GetRole< PHY_RoleInterface_Posture >().GetElongationFactor();
+    asn().elongation = pion_.Execute( pion_.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer() ).GetElongationFactor(); //@TODO MGD share
     asn().cones.n = surfacesAgent_.size();
     asn().cones.elem = asn().cones.n ? new ASN1T_VisionCone[ asn().cones.n ] : 0;
     unsigned i = 0;
@@ -1424,4 +1413,30 @@ void PHY_RolePion_Perceiver::NotifyReleased()
 void PHY_RolePion_Perceiver::NotifyVisionConeDataHasChanged()
 {
     bExternalMustUpdateVisionCones_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::NotifyTransportHasChanged
+// Created: MGD 2009-10-15
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::NotifyTransportHasChanged()
+{
+    bExternalMustChangePerception_ = true;
+    bExternalMustChangeRadar_ = true;
+}
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::NotifyIsLoaded
+// Created: MGD 2009-10-15
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::NotifyIsLoaded()
+{
+    bExternalCanPerceive_ = false;
+}
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::NotifyIsUnLoaded
+// Created: MGD 2009-10-15
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::NotifyIsUnLoaded()
+{
+    bExternalCanPerceive_ = true;
 }

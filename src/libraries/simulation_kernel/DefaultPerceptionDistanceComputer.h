@@ -35,6 +35,8 @@ public:
     //@{
     virtual void Reset();
     virtual void AddModifier( double modifier );
+    virtual void AddElongationFactor( double modifier );
+    virtual double GetElongationFactor() const;
     virtual double GetFactor() const;
     //@}
 
@@ -42,6 +44,7 @@ private:
     //! @name Member data
     //@{
     std::vector< double > modifiers_;
+    double elongation_;
     //@}
 };
 

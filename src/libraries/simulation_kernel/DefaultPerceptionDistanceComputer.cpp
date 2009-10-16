@@ -40,6 +40,7 @@ DefaultPerceptionDistanceComputer::~DefaultPerceptionDistanceComputer()
 void DefaultPerceptionDistanceComputer::Reset()
 {
     modifiers_.clear();
+    elongation_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -50,6 +51,16 @@ void DefaultPerceptionDistanceComputer::AddModifier( double modifier )
 {
     if( modifier != 0. )
         modifiers_.push_back( modifier );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DefaultPerceptionDistanceComputer::AddModifier
+// Created: MGD 2009-10-16
+// -----------------------------------------------------------------------------
+void DefaultPerceptionDistanceComputer::AddElongationFactor( double modifier )
+{
+    elongation_ = modifier;
+    AddModifier( modifier );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,6 +75,15 @@ double DefaultPerceptionDistanceComputer::GetFactor() const
         factor *= *it;
     }
     return factor;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DefaultPerceptionDistanceComputer::AddModifier
+// Created: MGD 2009-10-16
+// -----------------------------------------------------------------------------
+double DefaultPerceptionDistanceComputer::GetElongationFactor() const
+{
+    return elongation_;
 }
 
 } // namespace detection

@@ -19,6 +19,7 @@
 #include "simulation_kernel/SurrenderNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 #include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
+#include "simulation_kernel/TransportChangeNotificationHandler_ABC.h"
 
 namespace detection
 {
@@ -35,6 +36,7 @@ class PHY_RolePion_Perceiver : public PHY_RoleInterface_Perceiver
                              , public surrender::SurrenderNotificationHandler_ABC
                              , public network::NetworkUnitMessageNotificationHandler_ABC
                              , public network::VisionConeNotificationHandler_ABC
+                             , public transport::TransportChangeNotificationHandler_ABC
 {
 
 public:
@@ -95,6 +97,9 @@ public:
     virtual void NotifyCaptured();
     virtual void NotifyReleased();
     virtual void NotifyVisionConeDataHasChanged();
+    virtual void NotifyTransportHasChanged();
+    virtual void NotifyIsLoaded();
+    virtual void NotifyIsUnLoaded();
     //@}
 
     //! @name Perceptions
