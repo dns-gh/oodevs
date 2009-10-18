@@ -16,8 +16,8 @@
 // Name: MIL_Agent_ABC constructor
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_Agent_ABC::MIL_Agent_ABC( const std::string& name, xml::xistream& xis, uint nID )
-    : MIL_Entity_ABC ( name, xis ) 
+MIL_Agent_ABC::MIL_Agent_ABC( xml::xistream& xis, uint nID )
+    : MIL_Entity_ABC ( xis ) 
     , nID_           ( nID )
 {
     // NOTHING

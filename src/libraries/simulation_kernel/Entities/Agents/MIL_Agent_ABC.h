@@ -32,7 +32,7 @@ class MIL_Agent_ABC : public MIL_Entity_ABC
 {
 
 public:
-             MIL_Agent_ABC( const std::string& name, xml::xistream& xis, uint nID );
+             MIL_Agent_ABC( xml::xistream& xis, uint nID );
              MIL_Agent_ABC( const std::string& name, uint nID );
     virtual ~MIL_Agent_ABC();
 

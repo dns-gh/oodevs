@@ -61,7 +61,7 @@ void load_construct_data( Archive& archive, MIL_Population* population, const un
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
 MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_Army& army, xml::xistream& xis )
-    : MIL_Entity_ABC          ( type.GetName(), xis ) 
+    : MIL_Entity_ABC          ( xis ) 
     , pType_                  ( &type )
     , nID_                    ( nID )
     , pArmy_                  ( &army )

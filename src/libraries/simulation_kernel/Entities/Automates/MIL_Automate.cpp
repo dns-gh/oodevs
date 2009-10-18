@@ -83,7 +83,7 @@ void load_construct_data( Archive& archive, MIL_Automate* automat, const unsigne
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
 MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Formation& parent, xml::xistream& xis )
-    : MIL_Entity_ABC                     ( type.GetName() , xis ) 
+    : MIL_Entity_ABC                     ( xis ) 
     , pType_                             ( &type )
     , nID_                               ( nID )
     , pParentFormation_                  ( &parent )
@@ -114,7 +114,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Formatio
 // Created: NLD 2007-03-29
 // -----------------------------------------------------------------------------
 MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Automate& parent, xml::xistream& xis )
-    : MIL_Entity_ABC                     ( type.GetName(), xis ) 
+    : MIL_Entity_ABC                     ( xis ) 
     , pType_                             ( &type )
     , nID_                               ( nID )
     , pParentFormation_                  ( 0 )

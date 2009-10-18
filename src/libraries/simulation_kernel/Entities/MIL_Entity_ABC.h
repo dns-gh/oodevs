@@ -32,7 +32,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MIL_Entity_ABC( const std::string& name );
-             MIL_Entity_ABC( const std::string& name, xml::xistream& xis );
+             MIL_Entity_ABC( xml::xistream& xis );
     virtual ~MIL_Entity_ABC();
     //@}
 
@@ -62,7 +62,7 @@ private:
 private:
     //! @name data Members
     //@{
-    std::string strName_;
+    const std::string strName_;
     //@}
 
 };
@@ -84,7 +84,7 @@ template< typename Archive >
 void MIL_Entity_ABC::serialize( Archive& archive, const uint )
 {
     archive & boost::serialization::base_object< tools::RoleContainer >( *this )
-            & strName_ ; 
+        & const_cast< std::string& >( strName_ ) ; 
 }
 
 #endif // __MIL_Entity_ABC_h_

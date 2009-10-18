@@ -120,7 +120,7 @@ void load_construct_data( Archive& archive, MIL_AgentPion* pion, const unsigned 
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
 MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis )
-    : MIL_Agent_ABC            ( type.GetName(), xis, nID )
+    : MIL_Agent_ABC            ( xis, nID )
     , pType_                   ( &type )
     , bIsPC_                   ( xml::attribute< bool >( xis, "command-post", false ) )
     , pAutomate_               ( &automate )
