@@ -31,12 +31,12 @@ public:
 
     //! @name Operations
     //@{
-    void Reset(const SpeedStrategy_ABC* strategy);
-    void ApplyOnComponent(const PHY_ComposantePion&);
-    void ApplyOnReinforcement( MIL_AgentPion&);
-    void ApplyOnPopulation( const DEC_Knowledge_PopulationCollision&);
-    void AddModifier(double ratio, bool isMax=true);
-    double GetSpeed() const;
+    virtual void Reset( const SpeedStrategy_ABC* strategy );
+    virtual void ApplyOnComponent( const PHY_ComposantePion& );
+    virtual void ApplyOnReinforcement( MIL_AgentPion& );
+    virtual void ApplyOnPopulation( const DEC_Knowledge_PopulationCollision& );
+    virtual void AddModifier( double ratio, bool isMax=true );
+    virtual double GetSpeed() const;
     //@}
 private:
     //! @name Attributes

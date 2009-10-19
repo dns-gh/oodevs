@@ -241,7 +241,7 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< bool( const DEC_Knowledge_Agent* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetMajorOperationalState, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_NiveauPerceptionMax",
         boost::function< int( const DEC_Knowledge_Agent* ) >( boost::bind( &DEC_KnowledgeAgentFunctions ::GetMaxPerceptionLevelForKnowledgeGroup, _1 ) ) );
-    brain.RegisterFunction( "DEC_ConnaissanceObjet_EstValide",
+    brain.RegisterFunction( "DEC_IsValidKnowledgeObject",
         boost::function< bool (unsigned int) >( boost::bind( &DEC_KnowledgeObjectFunctions::IsKnowledgeValid< MIL_Automate >, boost::cref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceObjet_EstObstacleDeManoeuvreActif",
         boost::function< bool( int ) >( boost::bind( &DEC_KnowledgeObjectFunctions::IsReservedObstacleActivated< MIL_Automate >, boost::cref( GetAutomate() ), _1 ) ) );

@@ -96,7 +96,7 @@ end
 function S_Obj_ListeObjetsValides( liste )
     local _returnValue = {}
     local listeBuffer = {}
-    for _,x in pairs( liste ) do
+    for _,x in pairs( liste or {} ) do
     local _continue = true
 if( DEC_ConnaissanceObjet_EstValide( x ) ) then
             DEC_UserTypeList_PushBack( listeBuffer, x )

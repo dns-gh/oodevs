@@ -134,7 +134,7 @@ elseif switch_1 == eEtatActionDeplacement_DejaEnDeplacement then
     end,
 
     select = function( self )
-                assert( self._namedParams.rModulation > 0 or self._namedParams.rModulation <= 1, "ACT_Dep_ModulationVitesse: Modulation incorrecte" )
+                assert( self._namedParams.rModulation > 0 and self._namedParams.rModulation <= 1, "ACT_Dep_ModulationVitesse: Modulation incorrecte" )
         DEC_ModulationVitesseMax( self._namedParams.rModulation )
     end,
 

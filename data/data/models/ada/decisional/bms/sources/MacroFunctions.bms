@@ -620,6 +620,10 @@ function DEC_UserTypeList_Contient( list, element )
     return false
 end
 
+function DEC_ConnaissanceObjet_EstValide( value )
+    return DEC_IsValidKnowledgeObject( value or 0 )
+end
+
 function DEC_UserTypeList_PushBack( list, element )
     destination[ #list + 1 ] = element
 end

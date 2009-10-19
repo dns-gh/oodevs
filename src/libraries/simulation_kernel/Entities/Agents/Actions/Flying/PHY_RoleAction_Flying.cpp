@@ -51,6 +51,7 @@ PHY_RoleAction_Flying::PHY_RoleAction_Flying( MIL_Agent_ABC& entity )
     : entity_                        ( entity )
     , effectFly_                    ( *this )
     , pActionFly_                   ( 0 )
+    , rHeight_                      ( 0. )
 {
     // NOTHING
 }

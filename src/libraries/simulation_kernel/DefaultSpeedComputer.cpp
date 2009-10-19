@@ -20,9 +20,10 @@ namespace moving
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
 DefaultSpeedComputer::DefaultSpeedComputer() :
-        strategy_(0),
-        speed_(std::numeric_limits<double>::max()),
-        hasUsableComponent_(false)
+        strategy_          ( 0 ),
+        speed_             ( std::numeric_limits<double>::max() ),
+        hasUsableComponent_( false ),
+        speedRatio_        ( 1. )
 {
 }
 
@@ -38,13 +39,12 @@ DefaultSpeedComputer::~DefaultSpeedComputer()
 // Name: DefaultSpeedComputer::Reset
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
-void DefaultSpeedComputer::Reset(const SpeedStrategy_ABC* strategy)
+void DefaultSpeedComputer::Reset( const SpeedStrategy_ABC* strategy )
 {
     strategy_ = strategy;
     speed_ = std::numeric_limits<double>::max();
     hasUsableComponent_ = false;
-    speedRatio_ = 1;
-
+    speedRatio_ = 1.;
 }
 
 // -----------------------------------------------------------------------------
@@ -56,7 +56,7 @@ void DefaultSpeedComputer::ApplyOnComponent( const PHY_ComposantePion& component
     assert( strategy_ );
     if( component.CanMove() )
     {
-        speed_ = std::min( speed_ , strategy_->ApplyOnComponent( component ) );
+        speed_ = std::min( speed_, strategy_->ApplyOnComponent( component ) );
         hasUsableComponent_ = true;
     }
 }
@@ -68,7 +68,7 @@ void DefaultSpeedComputer::ApplyOnComponent( const PHY_ComposantePion& component
 void DefaultSpeedComputer::ApplyOnReinforcement( MIL_AgentPion& reinforcement)
 {
     assert( strategy_ );
-    speed_ = std::min(speed_ , strategy_->ApplyOnReinforcement( reinforcement ) );
+    speed_ = std::min( speed_, strategy_->ApplyOnReinforcement( reinforcement ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,16 +87,16 @@ void DefaultSpeedComputer::ApplyOnPopulation( const DEC_Knowledge_PopulationColl
 // -----------------------------------------------------------------------------
 double DefaultSpeedComputer::GetSpeed() const
 {
-    return hasUsableComponent_ ? speedRatio_ * speed_ : 0;
+    return hasUsableComponent_ ? speedRatio_ * speed_ : 0.;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DefaultSpeedComputer::AddModifier
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
-void DefaultSpeedComputer::AddModifier(double ratio, bool isMax)
+void DefaultSpeedComputer::AddModifier( double ratio, bool isMax )
 {
-    speedRatio_ *= strategy_->AddModifier(ratio, isMax);
+    speedRatio_ *= strategy_->AddModifier( ratio, isMax );
 }
 
 }

@@ -165,7 +165,7 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::Brain& brain )
     // Knowledge objects
     brain.RegisterFunction( "DEC_ConnaissanceObjet_Localisation",
         boost::function< boost::shared_ptr< MT_Vector2D > ( int ) > ( boost::bind(&DEC_PopulationFunctions::GetKnowledgeObjectLocalisation , _1) ) );
-    brain.RegisterFunction( "DEC_ConnaissanceObjet_EstValide",       &DEC_PopulationFunctions::IsKnowledgeObjectValid         );
+    brain.RegisterFunction( "DEC_IsValidKnowledgeObject",       &DEC_PopulationFunctions::IsKnowledgeObjectValid         );
     brain.RegisterFunction( "DEC_ObjectKnowledgesInZone",            &DEC_PopulationFunctions::GetObjectsInZone               );
     brain.RegisterFunction( "DEC_ConnaissanceObjet_Degrader",
     		boost::function< int ( int , float )> ( boost::bind(&DEC_PopulationFunctions::DamageObject, _1, _2)      ) );

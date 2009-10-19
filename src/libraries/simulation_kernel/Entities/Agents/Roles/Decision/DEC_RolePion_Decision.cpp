@@ -559,7 +559,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< bool( DEC_Knowledge_Agent* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::KillOfficers, _1 ) ) );
 
     // Object knowledges accessors
-    brain.RegisterFunction( "DEC_ConnaissanceObjet_EstValide",
+    brain.RegisterFunction( "DEC_IsValidKnowledgeObject",
         boost::function< bool(unsigned int) >( boost::bind( &DEC_KnowledgeObjectFunctions::IsKnowledgeValid< MIL_AgentPion >, boost::ref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceObjet_EstObstacleDeManoeuvreActif", 
         boost::function< bool( int ) >( boost::bind( &DEC_KnowledgeObjectFunctions::IsReservedObstacleActivated< MIL_AgentPion >, boost::cref( GetPion() ), _1 ) ) );
