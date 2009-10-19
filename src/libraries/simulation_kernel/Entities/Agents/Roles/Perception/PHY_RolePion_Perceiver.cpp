@@ -1414,29 +1414,42 @@ void PHY_RolePion_Perceiver::NotifyVisionConeDataHasChanged()
 {
     bExternalMustUpdateVisionCones_ = true;
 }
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::NotifyTransportHasChanged
-// Created: MGD 2009-10-15
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Perceiver::NotifyTransportHasChanged()
-{
-    bExternalMustChangePerception_ = true;
-    bExternalMustChangeRadar_ = true;
-}
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::NotifyIsLoaded
 // Created: MGD 2009-10-15
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Perceiver::NotifyIsLoaded()
+void PHY_RolePion_Perceiver::NotifyIsLoadedForTransport()
 {
     bExternalCanPerceive_ = false;
+    bExternalMustChangePerception_ = true;
+    bExternalMustChangeRadar_ = true;
 }
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::NotifyIsUnLoaded
 // Created: MGD 2009-10-15
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Perceiver::NotifyIsUnLoaded()
+void PHY_RolePion_Perceiver::NotifyIsUnLoadedForTransport()
 {
     bExternalCanPerceive_ = true;
+    bExternalMustChangePerception_ = true;
+    bExternalMustChangeRadar_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::NotifyIsLoaded
+// Created: MGD 2009-10-15
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::NotifyIsLoadedInVab()
+{
+    bExternalMustChangePerception_ = true;
+    bExternalMustChangeRadar_ = true;
+}
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::NotifyIsUnLoaded
+// Created: MGD 2009-10-15
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::NotifyIsUnLoadedInVab()
+{
+    bExternalMustChangePerception_ = true;
+    bExternalMustChangeRadar_ = true;
 }

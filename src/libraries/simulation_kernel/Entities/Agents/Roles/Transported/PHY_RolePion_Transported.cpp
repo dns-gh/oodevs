@@ -134,6 +134,7 @@ void PHY_RolePion_Transported::LoadForTransport( const MIL_Agent_ABC& transporte
     if( bTransportOnlyLoadable && vHumanTransporterPosition_.IsZero() )
         vHumanTransporterPosition_ = vLoadingPosition_;
     bHasChanged_ = true;
+    pion_.Apply( &transport::TransportChangeNotificationHandler_ABC::NotifyIsLoadedForTransport );
     return ;//true;
 }
 
@@ -154,6 +155,7 @@ void PHY_RolePion_Transported::UnloadFromTransport( const MIL_Agent_ABC& transpo
     vLoadingPosition_.Reset();
     if( !bTransportOnlyLoadable )
         vHumanTransporterPosition_.Reset();
+    pion_.Apply( &transport::TransportChangeNotificationHandler_ABC::NotifyIsUnLoadedForTransport );
     return ;//true;
 }
 
@@ -229,7 +231,6 @@ void PHY_RolePion_Transported::Update( bool /*bIsDead*/ )
     {
         pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
         pion_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
-        pion_.Apply( &transport::TransportChangeNotificationHandler_ABC::NotifyTransportHasChanged );
     }
 }
 

@@ -7,26 +7,26 @@
 //
 // *****************************************************************************
 
-#ifndef __TransportChangeNotificationHandler_ABC_H__
-#define __TransportChangeNotificationHandler_ABC_H__
+#ifndef __LoadingChangeNotificationHandler_ABC_H__
+#define __LoadingChangeNotificationHandler_ABC_H__
 
 namespace transport {
 
 // =============================================================================
-/** @class  TransportChangeNotificationHandler_ABC
-    @brief  TransportChangeNotificationHandler_ABC
+/** @class  LoadingChangeNotificationHandler_ABC
+    @brief  LoadingChangeNotificationHandler_ABC
 */
 // Created: MGD 2009-09-24
 // =============================================================================
-class TransportChangeNotificationHandler_ABC {
+class LoadingChangeNotificationHandler_ABC {
 public:
-	TransportChangeNotificationHandler_ABC();
-	virtual ~TransportChangeNotificationHandler_ABC();
+	LoadingChangeNotificationHandler_ABC();
+	virtual ~LoadingChangeNotificationHandler_ABC();
 
-    virtual void NotifyIsLoadedForTransport() = 0;
-    virtual void NotifyIsUnLoadedForTransport() = 0;
+    virtual void NotifyIsLoadedInVab() = 0;
+    virtual void NotifyIsUnLoadedInVab() = 0;
 };
 
 } // namespace transport
 
-#endif /* __TransportChangeNotificationHandler_ABC_H__ */
+#endif /* __LoadingChangeNotificationHandler_ABC_H__ */

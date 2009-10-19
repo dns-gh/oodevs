@@ -15,11 +15,11 @@
 #include "PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/NBC/ToxicEffectHandler_ABC.h"
 #include "TransportNotificationHandler_ABC.h"
-#include "TransportChangeNotificationHandler_ABC.h"
 #include "SurrenderNotificationHandler_ABC.h"
 
 #include "simulation_kernel/HumansChangedNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
+#include "simulation_kernel/LoadingChangeNotificationHandler_ABC.h"
 
 namespace xml
 {
@@ -56,12 +56,12 @@ class PHY_RolePion_Composantes : public PHY_RoleInterface_Composantes
                                , public tools::AlgorithmModifier_ABC< transport::TransportWeightComputer_ABC>
                                , public tools::AlgorithmModifier_ABC< OnComponentComputer_ABC >
                                , public tools::AlgorithmModifier_ABC< OnComponentLendedFunctorComputer_ABC >
-            	                 , public tools::AlgorithmModifier_ABC< transport::HumanLoadingTimeComputer_ABC>
+            	               , public tools::AlgorithmModifier_ABC< transport::HumanLoadingTimeComputer_ABC>
                                , public tools::AlgorithmModifier_ABC< transport::LoadedStateConsistencyComputer_ABC>
                                , public tools::AlgorithmModifier_ABC< moving::SpeedComputer_ABC >
                                , public nbc::ToxicEffectHandler_ABC
                                , public transport::TransportNotificationHandler_ABC
-                               , public transport::TransportChangeNotificationHandler_ABC
+                               , public transport::LoadingChangeNotificationHandler_ABC
                                , public surrender::SurrenderNotificationHandler_ABC
                                , public human::HumansChangedNotificationHandler_ABC
                                , public network::NetworkUnitMessageNotificationHandler_ABC
@@ -98,8 +98,8 @@ public:
 
     virtual void NotifyHumanHasChanged();
     virtual void NotifyTransportHasChanged();
-    virtual void NotifyIsLoaded();
-    virtual void NotifyIsUnLoaded();
+    virtual void NotifyIsLoadedInVab();
+    virtual void NotifyIsUnLoadedInVab();
 
 
     virtual void Update( bool bIsDead );

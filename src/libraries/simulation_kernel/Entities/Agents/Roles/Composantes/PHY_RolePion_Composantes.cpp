@@ -1659,7 +1659,7 @@ void PHY_RolePion_Composantes::NotifyTransportHasChanged()
 // Name: PHY_RolePion_Composantes::NotifyIsLoaded
 // Created: MGD 2009-10-02
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::NotifyIsLoaded()
+void PHY_RolePion_Composantes::NotifyIsLoadedInVab()
 {
     bIsLoaded_ = true;
 }
@@ -1668,7 +1668,7 @@ void PHY_RolePion_Composantes::NotifyIsLoaded()
 // Name: PHY_RolePion_Composantes::NotifyIsUnLoaded
 // Created: MGD 2009-10-02
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::NotifyIsUnLoaded()
+void PHY_RolePion_Composantes::NotifyIsUnLoadedInVab()
 {
     bIsLoaded_ = false;
 }

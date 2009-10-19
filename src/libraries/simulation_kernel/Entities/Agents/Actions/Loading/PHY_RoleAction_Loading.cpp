@@ -23,7 +23,7 @@
 
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
-#include "simulation_kernel/TransportChangeNotificationHandler_ABC.h"
+#include "simulation_kernel/LoadingChangeNotificationHandler_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( transport::PHY_RoleAction_Loading, "PHY_RoleAction_Loading" )
 
@@ -93,7 +93,7 @@ void PHY_RoleAction_Loading::SetLoadedState()
     assert( !bIsLoaded_ );
     bIsLoaded_   = true;
     bHasChanged_ = true;
-    pion_.Apply( &transport::TransportChangeNotificationHandler_ABC::NotifyIsLoaded );
+    pion_.Apply( &transport::LoadingChangeNotificationHandler_ABC::NotifyIsLoadedInVab );
     CheckConsistency();
 }
 
@@ -107,7 +107,7 @@ void PHY_RoleAction_Loading::SetUnloadedState()
     assert( bIsLoaded_ );
     bHasChanged_ = true;
     bIsLoaded_   = false;
-    pion_.Apply( &transport::TransportChangeNotificationHandler_ABC::NotifyIsUnLoaded );
+    pion_.Apply( &transport::LoadingChangeNotificationHandler_ABC::NotifyIsUnLoadedInVab );
     CheckConsistency();
 }
 
@@ -344,7 +344,6 @@ void PHY_RoleAction_Loading::Update( bool /*bIsDead*/ )
     {
         pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
         pion_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
-        pion_.Apply( &transport::TransportChangeNotificationHandler_ABC::NotifyTransportHasChanged );
     }
 }
 
