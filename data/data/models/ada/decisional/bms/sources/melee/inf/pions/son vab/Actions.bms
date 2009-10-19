@@ -688,7 +688,6 @@ elseif switch_1 == eActionObjetTerminee then
     create = function( self )
         self._namedParams = {}
         self._namedParams.locObjet = self.params[1]
-        self._namedParams.rLongueur = self.params[2]
     end,
 
     select = function( self )
@@ -700,14 +699,14 @@ elseif switch_1 == eActionObjetTerminee then
         self.repObj = self.repObj or 0
         if( ModuleBegins() ) then
             do
-                DEC_Trace( "preparation abatti ( l = " .. FloatToString( self._namedParams.rLongueur ) .. " ) : debut" )
+                DEC_Trace( "preparation abatti : debut" )
                 if( not DEC_Agent_PeutConstruireObjet( S_TypeObject_ToString( eTypeObjectAbatti ) ) ) then
                     self.params.__returnValue = eActionImpossible
                     Halt( self )
                     do return end
                 end
 
-                self.actionID = DEC_StartPreparerObjet( self.repObj, S_TypeObject_ToString( eTypeObjectAbatti ), self._namedParams.locObjet, self._namedParams.rLongueur )
+                self.actionID = DEC_StartPreparerObjet( self.repObj, S_TypeObject_ToString( eTypeObjectAbatti ), self._namedParams.locObjet )
                 actionCallbacks[ self.actionID ] = function( arg ) self.eEtatObjet = arg end
                 actionKnowledgeCallbacks[ self.actionID ] = function( arg ) self.repObj = arg end
 

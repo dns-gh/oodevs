@@ -593,6 +593,10 @@ function DEC_StartCreerObjet( knowledge, type, localisation )
     return DEC_StartCreateObject( type, localisation )
 end
 
+function DEC_StartPreparerObjet( knowledge, type, localisation, rParam )
+    return DEC_StartPrepareObject( type, localisation, rParam )
+end
+
 function DEC_Copie_ListePoints( source, destination )
     for i,j in pairs( source ) do
         destination[i] = j

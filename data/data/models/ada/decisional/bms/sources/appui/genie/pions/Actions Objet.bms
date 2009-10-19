@@ -167,7 +167,7 @@ include "bit.lua"
 
         if( self.bInit and DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
             do
-                self.act = DEC_StartPreparerObjet( myself.objMisEnCours_, DEC_GenObject_Type( self._namedParams.obstacle ), DEC_GenObject_Localisation( self._namedParams.obstacle ), DEC_GenObject_Densite( self._namedParams.obstacle ) )
+                self.act = DEC_StartPreparerObjet( myself.objMisEnCours_, DEC_GenObject_Type( self._namedParams.obstacle ), DEC_GenObject_Localisation( self._namedParams.obstacle ) )
                 actionCallbacks[ self.act ] = function( arg ) self.eActionObjet = arg end
                 actionKnowledgeCallbacks[ self.act ] = function( arg ) myself.objMisEnCours_ = arg end
 

@@ -90,10 +90,7 @@ end
 --[[// -----------------------------------------------------------------------------
 ]]--[[// Longueur du dispositif d'arret lors de l'embuscade
 ]]--[[// -----------------------------------------------------------------------------
-]]function M_LONGUEUR_ABATTIS()
-    return 8
-end
-
+]]
 
 
 function M_NOMBRE_MINES()

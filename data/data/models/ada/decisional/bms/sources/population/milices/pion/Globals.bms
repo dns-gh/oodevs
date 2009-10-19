@@ -81,12 +81,6 @@ end
 
 
 
-function M_LONGUEUR_ABATTIS()
-    return 50
-end
-
-
-
 function M_CAPACITE_SURVEILLANCE()
     return 1000
 end
