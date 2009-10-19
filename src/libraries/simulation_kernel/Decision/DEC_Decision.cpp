@@ -394,6 +394,7 @@ void InitFunctions()
         functors[ "bool" ] = BoolFunction;
         functors[ "string" ] = StringFunction;
         functors[ "enumeration" ] = EnumerationFunction;
+        functors[ "datetime" ] = GDHFunction;
         functors[ "Point" ] = PointFunction;
         functors[ "PointList" ] = PointListFunction;
         functors[ "Polygon" ] = PolygonFunction;
