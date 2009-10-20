@@ -262,8 +262,8 @@ double PHY_RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& envi
                 pion_.Execute(
                         pion_.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy ) );
     double rSpeed = computer.GetSpeed();
-    rSpeed = std::min( rSpeed, ApplyMaxSpeedModificators( rSpeed ) );
-    return ApplySpeedModificators( rSpeed );
+    rSpeed = std::min( rSpeed, GetMaxSpeedWithReinforcement() );
+    return rSpeed;
 }
 
 // -----------------------------------------------------------------------------
