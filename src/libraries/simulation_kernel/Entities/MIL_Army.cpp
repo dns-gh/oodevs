@@ -70,8 +70,6 @@ MIL_Army::MIL_Army( MIL_EntityManager& manager, uint id, xml::xistream& xis )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_Army( *this ) )
     , knowledgeGroups_     ()
     , diplomacies_         ()
-    , formations_          ()
-    , populations_         ()
     , objects_             ()
 {
     std::string strType;
@@ -176,9 +174,9 @@ void MIL_Army::serialize( Archive& file, const uint )
          & nType_
          & diplomacies_
          & knowledgeGroups_
-         & formations_
+         & tools::Resolver< MIL_Formation >::elements_
          & objects_
-         & populations_
+         & tools::Resolver< MIL_Population >::elements_
          & pKnowledgeBlackBoard_;
 }
 
@@ -199,13 +197,11 @@ void MIL_Army::WriteODB( xml::xostream& xos ) const
     xos     << xml::end();
     
     xos     << xml::start( "tactical" );
-    for( CIT_FormationSet it = formations_.begin(); it != formations_.end(); ++it )
-        (*it)->WriteODB( xos );
+    tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::WriteODB, _1, boost::ref(xos) ) );
     xos     << xml::end();
 
     xos     << xml::start( "logistic" );
-    for( CIT_FormationSet it = formations_.begin(); it != formations_.end(); ++it )
-        (*it)->WriteLogisticLinksODB( xos );
+    tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::WriteLogisticLinksODB, _1, boost::ref(xos) ) );
     xos     << xml::end();
 
     xos     << xml::start( "objects" );
@@ -214,8 +210,7 @@ void MIL_Army::WriteODB( xml::xostream& xos ) const
     xos     << xml::end();
 
     xos     << xml::start( "populations" );
-    for( CIT_PopulationSet it = populations_.begin(); it != populations_.end(); ++it )
-        (*it)->WriteODB( xos );
+    tools::Resolver< MIL_Population >::Apply( boost::bind( &MIL_Population::WriteODB, _1, boost::ref(xos) ) );
     xos     << xml::end();
 
     xos << xml::end();
@@ -499,21 +494,19 @@ void MIL_Army::SendCreation() const
     for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
         it->second->SendCreation();
 
-    for( CIT_FormationSet it = formations_.begin(); it != formations_.end(); ++it )
-        (**it).SendCreation();
+    tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::SendCreation, _1 ) );
 
     for( CIT_ObjectSet it = objects_.begin(); it != objects_.end(); ++it )
         (**it).SendCreation();
 
-    for( CIT_PopulationSet it = populations_.begin(); it != populations_.end(); ++it )
-        (**it).SendCreation();
+    tools::Resolver< MIL_Population >::Apply( boost::bind( &MIL_Population::SendCreation, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Army::SendFullState
 // Created: NLD 2005-02-14
 // -----------------------------------------------------------------------------
-void MIL_Army::SendFullState() const
+void MIL_Army::SendFullState()
 {
     for( CIT_DiplomacyMap it = diplomacies_.begin(); it != diplomacies_.end(); ++it )
     {
@@ -527,14 +520,12 @@ void MIL_Army::SendFullState() const
     for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
         it->second->SendFullState();
 
-    for( CIT_FormationSet it = formations_.begin(); it != formations_.end(); ++it )
-        (**it).SendFullState();
+    tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::SendFullState, _1 ) );
 
     for( CIT_ObjectSet it = objects_.begin(); it != objects_.end(); ++it )
         (**it).SendFullState();
 
-    for( CIT_PopulationSet it = populations_.begin(); it != populations_.end(); ++it )
-        (**it).SendFullState();
+    tools::Resolver< MIL_Population >::Apply( boost::bind( &MIL_Population::SendFullState, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -597,8 +588,7 @@ void MIL_Army::UnregisterObject( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void MIL_Army::RegisterFormation( MIL_Formation& formation )
 {
-    bool bOut = formations_.insert( &formation ).second;
-    assert( bOut );
+    tools::Resolver< MIL_Formation >::Register( formation.GetID(), formation );
 }
 
 // -----------------------------------------------------------------------------
@@ -607,8 +597,7 @@ void MIL_Army::RegisterFormation( MIL_Formation& formation )
 // -----------------------------------------------------------------------------
 void MIL_Army::UnregisterFormation( MIL_Formation& formation )
 {
-    int nOut = formations_.erase( &formation );
-    assert( nOut == 1 );
+    tools::Resolver< MIL_Formation >::Remove( formation.GetID() );
 }
 
 // -----------------------------------------------------------------------------
@@ -617,8 +606,7 @@ void MIL_Army::UnregisterFormation( MIL_Formation& formation )
 // -----------------------------------------------------------------------------
 void MIL_Army::RegisterPopulation( MIL_Population& population )
 {
-    bool bOut = populations_.insert( &population ).second;
-    assert( bOut );
+   tools::Resolver< MIL_Population >::Register( population.GetID(), population );
 }
 
 // -----------------------------------------------------------------------------
@@ -627,8 +615,7 @@ void MIL_Army::RegisterPopulation( MIL_Population& population )
 // -----------------------------------------------------------------------------
 void MIL_Army::UnregisterPopulation( MIL_Population& population )
 {
-    int nOut = populations_.erase( &population );
-    assert( nOut == 1 );
+    tools::Resolver< MIL_Population >::Remove( population.GetID() );
 }
 
 // -----------------------------------------------------------------------------

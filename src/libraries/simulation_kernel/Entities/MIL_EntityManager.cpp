@@ -1323,8 +1323,8 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const uint )
     file //>> effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
          >> armies_
          >> formations_
-         //>> pions_ //TODO ADD tools::Resolver serialization
-         //>> automates_ //TODO ADD tools::Resolver serialization
+         >> tools::Resolver< MIL_AgentPion >::elements_
+         >> tools::Resolver< MIL_Automate >::elements_
          >> populations_
          >> pObjectManager_
          >> rKnowledgesTime_
@@ -1350,8 +1350,8 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const uint ) const
     file //<< effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
          << armies_
          << formations_
-         //<< pions_ //TODO ADD tools::Resolver serialization
-         //<< automates_ //TODO ADD tools::Resolver serialization
+         << tools::Resolver< MIL_AgentPion >::elements_
+         << tools::Resolver< MIL_Automate >::elements_
          << populations_
          << pObjectManager_
          << rKnowledgesTime_

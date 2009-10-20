@@ -15,6 +15,8 @@
 #include "Entities/MIL_Army_ABC.h"
 #include "MT_Tools/MT_Converter.h"
 
+#include "tools/Resolver.h"
+
 namespace xml
 {
     class xostream;
@@ -37,6 +39,8 @@ struct ASN1T_MsgChangeDiplomacy;
 // Created: JVT 2004-08-03
 // =============================================================================
 class MIL_Army : public MIL_Army_ABC
+               , public tools::Resolver< MIL_Formation >
+               , public tools::Resolver< MIL_Population >
                , private boost::noncopyable
 {
 
@@ -48,12 +52,6 @@ public:
 
     typedef std::map< const MIL_Army_ABC*, E_Diplomacy > T_DiplomacyMap;
     typedef T_DiplomacyMap::const_iterator           CIT_DiplomacyMap;
-
-    typedef std::set< MIL_Formation* >      T_FormationSet;
-    typedef T_FormationSet::const_iterator  CIT_FormationSet;
-
-    typedef std::set< MIL_Population* >      T_PopulationSet;
-    typedef T_PopulationSet::const_iterator  CIT_PopulationSet;
 
     typedef std::set< MIL_Object_ABC* > T_ObjectSet;
     typedef T_ObjectSet::const_iterator     CIT_ObjectSet;
@@ -92,13 +90,11 @@ public:
     //@{
     void RegisterFormation  ( MIL_Formation& formation );
     void UnregisterFormation( MIL_Formation& formation );
-
     void RegisterObject  ( MIL_Object_ABC& object );
     void UnregisterObject( MIL_Object_ABC& object );
 
     void RegisterPopulation  ( MIL_Population& population );
     void UnregisterPopulation( MIL_Population& population );
-
     MIL_KnowledgeGroup* FindKnowledgeGroup      ( uint nID ) const;
     void                RegisterKnowledgeGroup  ( MIL_KnowledgeGroup& knowledgeGroup );
     void                UnregisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup );
@@ -125,7 +121,7 @@ public:
     //! @name Network
     //@{
     void SendCreation               () const;
-    void SendFullState              () const;
+    void SendFullState              () ; //@TODO MGD Change MIL_Population sendFullState to be const;
     void SendKnowledge              () const;
 
     void OnReceiveMsgChangeDiplomacy( const ASN1T_MsgChangeDiplomacy& msg );
@@ -148,8 +144,6 @@ private:
           E_Diplomacy   nType_;
     T_DiplomacyMap      diplomacies_;
     T_KnowledgeGroupMap knowledgeGroups_;
-    T_FormationSet      formations_;
-    T_PopulationSet     populations_;
     T_ObjectSet         objects_;
 
     DEC_KnowledgeBlackBoard_Army* pKnowledgeBlackBoard_;
