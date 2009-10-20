@@ -54,6 +54,18 @@ TimeLimitedAttribute::TimeLimitedAttribute()
 }
 
 // -----------------------------------------------------------------------------
+// Name: TimeLimitedAttribute constructor
+// Created: RPD 2009-10-19
+// -----------------------------------------------------------------------------
+TimeLimitedAttribute::TimeLimitedAttribute( const ASN1T_ObjectAttributes& asn )
+    : nActivityTime_ ( asn.activity_time.value )
+    , nDeathTimeStep_ ( 0 )
+{
+    // NOTHING
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: TimeLimitedAttributeconstructor
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------

@@ -66,10 +66,16 @@ private:
     //@}
 
 protected:
+    //! @name Helpers
+    //@{
+    bool IsActivated() const;    
+    //@}
+
+protected:
     //! @name Member data
     //@{
     ValuedComboBox< E_DemolitionTargetType >* types_;
-    QCheckBox*                                bActivated_;
+    QCheckBox*                                activation_;
     //@}
 };
 

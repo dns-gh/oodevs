@@ -36,19 +36,15 @@ ObstaclePrototype_ABC::ObstaclePrototype_ABC( QWidget* parent )
     {
         new QLabel( tr( "Obstacle type:" ), this );
         types_ = new ValuedComboBox< E_DemolitionTargetType >( this );
-        // connect( this, SIGNAL( ToggleReservable( bool ) ), label, SLOT( setShown( bool ) ) );
-        // connect( this, SIGNAL( ToggleReservable( bool ) ), types_, SLOT( setShown( bool ) ) );
     }
-
     {
         QLabel* label = new QLabel( tr( "Reserved obstacle activated:" ), this );
-        bActivated_ = new QCheckBox( this );
+        activation_ = new QCheckBox( this );
         label->hide();
-        bActivated_->hide();
+        activation_->hide();
         connect( this, SIGNAL( ToggleActivable( bool ) ), label, SLOT( setShown( bool ) ) );
-        connect( this, SIGNAL( ToggleActivable( bool ) ), bActivated_, SLOT( setShown( bool ) ) );
+        connect( this, SIGNAL( ToggleActivable( bool ) ), activation_, SLOT( setShown( bool ) ) );
     }
-    
     connect( types_, SIGNAL( activated( int ) ), this, SLOT( OnObstacleTypeChanged() ) );
 }
 
@@ -89,4 +85,13 @@ bool ObstaclePrototype_ABC::CheckValidity() const
 void ObstaclePrototype_ABC::OnObstacleTypeChanged()
 {
     emit ToggleActivable( types_->GetValue() == eDemolitionTargetType_Reserved );    
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObstaclePrototype_ABC::OnObstacleTypeChanged
+// Created: SBO 2007-05-24
+// -----------------------------------------------------------------------------
+bool ObstaclePrototype_ABC::IsActivated() const
+{
+    return types_->GetValue() == eDemolitionTargetType_Reserved ? activation_->isChecked() : false;
 }

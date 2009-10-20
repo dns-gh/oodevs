@@ -51,6 +51,24 @@ NBCAttribute::NBCAttribute()
 }
 
 // -----------------------------------------------------------------------------
+// Name: NBCAttribute constructor
+// Created: RPD 2009-10-20
+// -----------------------------------------------------------------------------
+NBCAttribute::NBCAttribute( const ASN1T_ObjectAttributes& asn )
+    : nForm_ ( eGas )
+    , danger_( asn.nbc.danger_level )
+{
+    //NOTHING
+    for ( unsigned i = 0; i < asn.nbc.nbc_agents.n; ++i )
+    {                
+        const MIL_NbcAgentType* pType = MIL_NbcAgentType::Find( asn.nbc.nbc_agents.elem[ i ] );
+        if( !pType )
+            throw std::runtime_error( "Unknown agent type for NBC attribute" );
+        agents_.push_back( pType );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: NBCAttribute destructor
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------

@@ -51,6 +51,7 @@ public:
     //@{
              NBCAttribute();
     explicit NBCAttribute( xml::xistream& xis );
+    explicit NBCAttribute( const ASN1T_ObjectAttributes& asn );
     virtual ~NBCAttribute();
     //@}
 

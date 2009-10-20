@@ -32,6 +32,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              BypassAttribute();
+    explicit BypassAttribute( const ASN1T_ObjectAttributes& asn );
     virtual ~BypassAttribute();
     //@}
 

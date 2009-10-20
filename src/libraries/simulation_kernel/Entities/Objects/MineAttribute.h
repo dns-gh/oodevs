@@ -36,6 +36,7 @@ public:
     //@{
              MineAttribute();    
     explicit MineAttribute( const PHY_DotationCategory& category, uint nFullNbrDotation );
+    explicit MineAttribute( const ASN1T_ObjectAttributes& asn );
     virtual ~MineAttribute();
     //@}
 

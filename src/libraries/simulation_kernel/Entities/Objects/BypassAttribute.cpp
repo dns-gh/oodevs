@@ -30,6 +30,17 @@ BypassAttribute::BypassAttribute()
 }
 
 // -----------------------------------------------------------------------------
+// Name: BypassAttribute constructor
+// Created: RPD 2009-10-20
+// -----------------------------------------------------------------------------
+BypassAttribute::BypassAttribute( const ASN1T_ObjectAttributes& asn )
+    : rBypass_ ( asn.bypass.percentage )
+{
+    // NOTHING
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: BypassAttribute destructor
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------

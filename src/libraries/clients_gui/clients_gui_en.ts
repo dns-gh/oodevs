@@ -950,7 +950,4 @@ Do you want to remove it?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
-<context>
-    <name>gui::UserControlPanel</name>
-</context>
 </TS>

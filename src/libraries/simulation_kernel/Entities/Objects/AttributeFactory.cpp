@@ -20,6 +20,7 @@
 #include "MedicalTreatmentAttribute.h"
 #include "MineAttribute.h"
 #include "NBCAttribute.h"
+#include "BypassAttribute.h"
 #include "ObstacleAttribute.h"
 #include "OccupantAttribute.h"
 #include "PopulationAttribute.h"
@@ -139,12 +140,19 @@ void AttributeFactory::Create( Object& object, const ASN1T_ObjectAttributes& asn
 {
     // Initialize construction with 100%
     ConstructionAttribute& construction = object.GetAttribute< ConstructionAttribute >();
-    // $$$$ LDC: All physical objects have an occupant attribute.
-    object.GetAttribute< OccupantAttribute >();
-    ASN_CREATE_ATTRIBUTE( crossing_site, CrossingSiteAttribute );
-    ASN_CREATE_ATTRIBUTE( fire, FireAttribute );
-    ASN_CREATE_ATTRIBUTE( interaction_height, InteractionHeightAttribute );
-    ASN_CREATE_ATTRIBUTE( medical_treatment, MedicalTreatmentAttribute );
+    
+    object.GetAttribute< OccupantAttribute >();     // $$$$ LDC: All physical objects have an occupant attribute.
     ASN_CREATE_ATTRIBUTE( obstacle, ObstacleAttribute );
+    ASN_CREATE_ATTRIBUTE( mine, MineAttribute );
+    ASN_CREATE_ATTRIBUTE( activity_time, TimeLimitedAttribute );
+    ASN_CREATE_ATTRIBUTE( bypass, BypassAttribute );
+    ASN_CREATE_ATTRIBUTE( logistic, LogisticAttribute );
+    ASN_CREATE_ATTRIBUTE( nbc, NBCAttribute );
+    ASN_CREATE_ATTRIBUTE( crossing_site, CrossingSiteAttribute );
     ASN_CREATE_ATTRIBUTE( supply_route, SupplyRouteAttribute );
+    //ASN_CREATE_ATTRIBUTE( toxic_cloud, ??? );
+    ASN_CREATE_ATTRIBUTE( fire, FireAttribute );
+    ASN_CREATE_ATTRIBUTE( medical_treatment, MedicalTreatmentAttribute );
+    ASN_CREATE_ATTRIBUTE( interaction_height, InteractionHeightAttribute );
+
 }

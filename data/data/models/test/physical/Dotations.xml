@@ -101,8 +101,28 @@
     <indirect-fire intervention-type="10" life-time="600s" setup-time="60s" type="fumigene" x-dispersion="450" y-dispersion="300"/>
   </dotation>
   <dotation category="gasoil" codeEMAT6="gasoil" codeEMAT8="gasoil" codeLFRIL="gasoil" codeNNO="gasoil" id="9" name="carburant" nature="Liquide" package-mass="6" package-size="50" package-volume="5"/>
-  <dotation category="explosif classique" codeEMAT6="explosif classique" codeEMAT8="explosif classique" codeLFRIL="explosif classique" codeNNO="explosif classique" id="10" name="explosif" nature="Solide" package-mass="65" package-size="5" package-volume="5"/>
-  <dotation category="mine classique" codeEMAT6="mine classique" codeEMAT8="mine classique" codeLFRIL="mine classique" codeNNO="mine classique" id="11" name="mine" nature="Solide" package-mass="65" package-size="5" package-volume="5"/>
+  <dotation category="explosif classique" codeEMAT6="explosif classique" codeEMAT8="explosif classique" codeLFRIL="explosif classique" codeNNO="explosif classique" id="10" name="explosif" nature="Solide" package-mass="65" package-size="5" package-volume="5">
+    <attritions>
+        <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
+        <attrition destruction="0.1" protection="CharMoyen" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
+        <attrition destruction="0.1" protection="BlindeLeger" repairable-with-evacuation="0.8" repairable-without-evacuation="0.1"/>
+        <attrition destruction="0.7" protection="TransportBlinde" repairable-with-evacuation="0.2" repairable-without-evacuation="0.1"/>
+        <attrition destruction="0" protection="Aeronef" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        <attrition destruction="0.8" protection="VehiculeNonProtege" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+        <attrition destruction="1" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+    </attritions>
+  </dotation>
+  <dotation category="mine classique" codeEMAT6="mine classique" codeEMAT8="mine classique" codeLFRIL="mine classique" codeNNO="mine classique" id="11" name="mine" nature="Solide" package-mass="65" package-size="5" package-volume="5">
+      <attritions>
+        <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
+        <attrition destruction="0.1" protection="CharMoyen" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
+        <attrition destruction="0.1" protection="BlindeLeger" repairable-with-evacuation="0.8" repairable-without-evacuation="0.1"/>
+        <attrition destruction="0.7" protection="TransportBlinde" repairable-with-evacuation="0.2" repairable-without-evacuation="0.1"/>
+        <attrition destruction="0" protection="Aeronef" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+        <attrition destruction="0.8" protection="VehiculeNonProtege" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+        <attrition destruction="1" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+    </attritions>
+  </dotation>
   <dotation category="pont flottant de la mort" codeEMAT6="pont flottant" codeEMAT8="pont flottant" codeLFRIL="pont flottant" codeNNO="pont flottant" id="12" name="mine" nature="Solide" package-mass="65" package-size="5" package-volume="5"/>
   <dotation category="barbele classique" codeEMAT6="barbele classique" codeEMAT8="barbele classique" codeLFRIL="barbele classique" codeNNO="barbele classique" id="13" name="barbele" nature="Solide" package-mass="65" package-size="5" package-volume="5"/>
   <dotation category="Truc pour reparer la mobilite 1" codeEMAT6="Truc pour reparer la mobilite 1" codeEMAT8="Truc pour reparer la mobilite 1" codeLFRIL="Truc pour reparer la mobilite 1" codeNNO="Truc pour reparer la mobilite 1" id="14" name="piece" nature="Solide" package-mass="65" package-size="5" package-volume="5"/>

@@ -472,6 +472,7 @@ void MainWindow::Load()
         selector_->Close();
         selector_->Load();
         staticModel_.Load( config_ );
+        //model_.urbanModel_.Load();
         ReadOptions();
     }
     catch( xml::exception& e )

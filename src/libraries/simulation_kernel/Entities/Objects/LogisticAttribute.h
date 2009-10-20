@@ -21,6 +21,7 @@ public:
     //@{
 	         LogisticAttribute();
     explicit LogisticAttribute( xml::xistream& xis );
+    explicit LogisticAttribute( const ASN1T_ObjectAttributes& asn );
 	virtual ~LogisticAttribute();
 	//@}
 

@@ -23,6 +23,7 @@ public:
     	     TimeLimitedAttribute();
     explicit TimeLimitedAttribute( xml::xistream& xis );
     explicit TimeLimitedAttribute( uint nActivityTime );
+    explicit TimeLimitedAttribute( const ASN1T_ObjectAttributes& asn );
     virtual ~TimeLimitedAttribute();
 	//@}
 

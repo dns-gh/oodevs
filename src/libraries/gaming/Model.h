@@ -18,7 +18,7 @@ namespace kernel
     class ObjectKnowledgeConverter_ABC;
 }
 
-/*namespace urban
+namespace urban
 {
     class Model;
     class StaticModel;
@@ -27,7 +27,7 @@ namespace kernel
 namespace tools
 {
     class Controllers;
-}*/
+}
 
 namespace actions
 {
@@ -127,9 +127,9 @@ public:
     IntelligencesModel&   intelligences_;
     DrawingsModel&        drawings_;
     ScoreModel&           scores_;
-//    tools::Controllers&    urbanControllers_;
-//    urban::StaticModel&   urbanStaticModel_;
-//    urban::Model&         urbanModel_;
+    //tools::Controllers&   urbanControllers_;
+    //urban::StaticModel&   urbanStaticModel_;
+    //urban::Model&         urbanModel_;
     //@}
 
 private:

@@ -37,7 +37,12 @@ ObstaclePrototype::~ObstaclePrototype()
 // -----------------------------------------------------------------------------
 void ObstaclePrototype::Commit()
 {
-
+    if( types_ )
+    {
+        msg_.attributes.m.obstaclePresent = 1;
+        msg_.attributes.obstacle.type = ASN1T_EnumDemolitionTargetType( types_->GetValue() );
+        msg_.attributes.obstacle.activated = IsActivated();
+    }
 }
 
 // -----------------------------------------------------------------------------

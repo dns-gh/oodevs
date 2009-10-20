@@ -50,6 +50,29 @@ MineAttribute::MineAttribute( const PHY_DotationCategory& dotation, uint nDefaul
 }
 
 // -----------------------------------------------------------------------------
+// Name: MineAttribute constructor
+// Created: RPD 2009-10-19
+// -----------------------------------------------------------------------------
+MineAttribute::MineAttribute( const ASN1T_ObjectAttributes& asn  )
+    : dotation_( 0 )
+    , nFullNbrDotation_( 0 )
+    , nCurrentNbrDotation_( 0 )
+    , rMiningPercentage_( 0 )
+    , nMinesActivityTime_( 0 )
+    , nDeathTimeStep_( 0 )
+{
+    dotation_ = PHY_DotationType::FindDotationCategory( asn.mine.dotation_type );
+    if( !dotation_ )
+        throw std::runtime_error( "Unknown 'Dotation Type' for mine attribute" );
+    nFullNbrDotation_ = asn.mine.density;
+    nCurrentNbrDotation_ = asn.mine.dotation_nbr;
+    rMiningPercentage_ = asn.mine.percentage;
+    //nMinesActivityTime_;
+    //nDeathTimeStep_;
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: MineAttribute::Load
 // Created: JCR 2008-08-26
 // -----------------------------------------------------------------------------
