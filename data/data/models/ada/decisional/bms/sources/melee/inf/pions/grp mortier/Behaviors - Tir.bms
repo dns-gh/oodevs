@@ -217,7 +217,7 @@ node "BEH_MOT_Pion_Mortier_AppliquerLesFeux"
 
         Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 2, {} )
         local selPions_Compagnie = DEC_Pion_PionsAvecPC()
-        for _,x_pion in pairs( selPions_Compagnie ) do
+        for _,x_pion in pairs( selPions_Compagnie or {} ) do
         local _continue = true
 do
                 local pPion = x_pion

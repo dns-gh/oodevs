@@ -42,7 +42,7 @@ includedFiles["sources/melee/abc/automates/common/missions/eclairer/Eclairer - M
         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Affectation des missions à l'echelon
 ]]--[[//-----------------------------------------------------------------------------
-]]self._namedParams.selABC_Ecl ) do
+]]self._namedParams.selABC_Ecl or {} ) do
         local _continue = true
             Activate( self.activations.BEH_Mission_Automate_ABC_AssignerEclairerA, 1, { ePhase_MRT, pion, self._namedParams.eEtatEchelon, } )
 

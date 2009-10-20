@@ -47,7 +47,7 @@ includedFiles["sources/appui/artfdp/pions/common/Fonctions.bms"] = true
     end
 
     local selPions = DEC_Pion_PionsDeAutomateSansPC( pAutomate )
-    for _,x in pairs( selPions ) do
+    for _,x in pairs( selPions or {} ) do
     local _continue = true
 do
             local pion = x

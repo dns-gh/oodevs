@@ -76,7 +76,7 @@ node "BEH_Mission_Automate_TRANS_AssignerEtablirGererLiaisonAListe"
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         if( ModuleBegins() ) then
             do
-                for _,x in pairs( self._namedParams.listePions ) do
+                for _,x in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     StartActivateOverride( self, self.activations.BEH_Mission_Automate_TRANS_AssignerEtablirGererLiaisonA, 1, { self._namedParams.ePhase, x, self._namedParams.position, } )
 

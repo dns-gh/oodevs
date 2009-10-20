@@ -105,7 +105,7 @@ node "BEH_Medo_Automate_Emergency_PreparerMission_EvacuateArea"
                     self.ePhase = eMRT_AssignerMissions
                     local selTmp = DEC_Automate_PionsSansPC()
                     local i = #( selTmp ) - #( selTmp ) / 3
-                    for _,x in pairs( selTmp ) do
+                    for _,x in pairs( selTmp or {} ) do
                     local _continue = true
 do
                             local pion = x
@@ -252,7 +252,7 @@ elseif switch_1 == eNoError then
 
                     if _continue then
                     local rIt = 0
-                    for _,x_pion in pairs( self._namedParams.lstPions ) do
+                    for _,x_pion in pairs( self._namedParams.lstPions or {} ) do
                     local _continue = true
                         do
                             if( rIt < #( self.lstLocalisations ) ) then

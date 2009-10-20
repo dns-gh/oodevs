@@ -102,7 +102,7 @@ include "bit.lua"
 ]]self._namedParams.eTypeObjet
                                 local cases_switch_2 = {}
                                     if switch_2 == eTypeObjectBouchonMines then
-                                                                            Activate( self.activations.ACT_Obj_Pion_INF_RealiserBouchonMines, 1, setmetatable( { self.locEmbuscade, M_NOMBRE_MINES(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionAbattis = v else rawset( t, k, v ) end end } ) )
+                                                                            Activate( self.activations.ACT_Obj_Pion_INF_RealiserBouchonMines, 1, setmetatable( { self.locEmbuscade, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionAbattis = v else rawset( t, k, v ) end end } ) )
                                         _continue = false
                                                                         cases_switch_2[1] = true
 elseif switch_2 == eTypeObjectAbatti then
@@ -274,7 +274,7 @@ node "BEH_Eni_Pion_INF_DetruireEmbuscade"
         --[[//
 ]]--[[// Gestion des unites percues
 ]]local lstEnisPercus = DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansFuseau()
-        for _,x in pairs( lstEnisPercus ) do
+        for _,x in pairs( lstEnisPercus or {} ) do
         local _continue = true
 do
                 --[[// On fait l'assaut

@@ -23,7 +23,7 @@ include "bit.lua"
 
     activate = function( self )
         local lstPops = DEC_Connaissances_CollisionsPopulations()
-        for _,pop in pairs( lstPops ) do
+        for _,pop in pairs( lstPops or {} ) do
         local _continue = true
 do
                 Activate( self.activations.BEH_RiposteSurPopulation, DEC_ConnaissancePopulation_Dangerosite( pop ), { pop, } )
@@ -59,7 +59,7 @@ node "BEH_MOT_DecrochageFaceAPopulations"
 
         local lstPops = DEC_Connaissances_Populations()
         local lstPopsCollision = DEC_Connaissances_CollisionsPopulations()
-        for _,pop in pairs( lstPops ) do
+        for _,pop in pairs( lstPops or {} ) do
         local _continue = true
 do
                 local rDangerosite = DEC_ConnaissancePopulation_Dangerosite( pop )

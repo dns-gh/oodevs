@@ -53,7 +53,7 @@ includedFiles["sources/appui/rens/automates/rohum/common/missions/renseignersur/
                 for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Assignation des mission une par une au pion (pas simultanément)
 ]]--[[//-----------------------------------------------------------------------------
-]]self._namedParams.selPions ) do
+]]self._namedParams.selPions or {} ) do
                 local _continue = true
 do
                         if( self.rIterateurSecteur == #( listeSousSecteurs ) ) then

@@ -143,7 +143,7 @@ node "BEH_Mission_Automate_AssignerSuivreAListe"
 
     activate = function( self )
         if( ModuleBegins() ) then
-for _,x in pairs( self._namedParams.listePions ) do
+for _,x in pairs( self._namedParams.listePions or {} ) do
             local _continue = true
                 StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { self._namedParams.ePhase, x, self._namedParams.pASuivre, } )
 
@@ -241,7 +241,7 @@ node "BEH_Medo_Automate_AssignerMissionsTransporterAListe"
 ]]local listeCopiePionsATraiter = self._namedParams.listeUnitesATransporter
                 local nbPionsParPatrouille = Floor( #( self._namedParams.listeUnitesATransporter ) / #( self._namedParams.listePions ) )
                 local pionBuffer = nil
-                for _,x in pairs( self._namedParams.listePions ) do
+                for _,x in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
                         --[[//si plus de pion a traiter, ne pas donner de mission pour rien
@@ -266,7 +266,7 @@ do
 
                         if( DIA_GetAt( self._namedParams.listePions, #( self._namedParams.listePions ) - 1 ) == x ) then
                             do
-                                for _,y in pairs( listeCopiePionsATraiter ) do
+                                for _,y in pairs( listeCopiePionsATraiter or {} ) do
                                 local _continue = true
                                     DIA_PushBack( listePionsATransporterBuffer, y )
 
@@ -471,7 +471,7 @@ node "BEH_Mission_Automate_AssignerFaireMouvementAListe"
     activate = function( self )
         if( ModuleBegins() ) then
             do
-                for _,x in pairs( self._namedParams.listePions ) do
+                for _,x in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
                         StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, 1, { self._namedParams.ePhase, x, DEC_Geometrie_PositionAleatoireDansCercle( self._namedParams.dest, 400 ), eEtatEchelon_Premier, } )
@@ -832,7 +832,7 @@ node "BEH_Mission_Automate_AssignerStationnerAListe"
     activate = function( self )
         if( ModuleBegins() ) then
             do
-                for _,x in pairs( self._namedParams.listePions ) do
+                for _,x in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
                         StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerStationnerA, 1, { self._namedParams.ePhase, x, self._namedParams.pointArrivee, } )
@@ -1028,7 +1028,7 @@ node "BEH_Mission_Automate_AssignerInterdireFranchissementPopulationsAListe"
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
-                for _,x in pairs( self._namedParams.listePions ) do
+                for _,x in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
                         if( iterateur == DEC_ListePoints_Size( self._namedParams.points ) ) then
@@ -1125,7 +1125,7 @@ node "BEH_Mission_Automate_AssignerFiltrerPopulationsAListe"
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
-                for _,x in pairs( self._namedParams.listePions ) do
+                for _,x in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
                         if( iterateur == DEC_ListePoints_Size( self._namedParams.points ) ) then
@@ -1222,7 +1222,7 @@ node "BEH_Mission_Automate_AssignerSecuriserZoneContrePopulationsAListe"
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
-                for _,x in pairs( self._namedParams.listePions ) do
+                for _,x in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
                         if( iterateur == DEC_ListePoints_Size( self._namedParams.points ) ) then
@@ -1319,7 +1319,7 @@ node "BEH_Mission_Automate_AssignerControlerPopulationsDansZoneAListe"
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
-                for _,x in pairs( self._namedParams.listePions ) do
+                for _,x in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
                         if( iterateur == #( self._namedParams.listeLocalisations ) ) then
@@ -1416,7 +1416,7 @@ node "BEH_Mission_Automate_AssignerCanaliserPopulationsAListe"
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
-                for _,x in pairs( self._namedParams.listePions ) do
+                for _,x in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
                         if( iterateur == #( self._namedParams.listeLocalisations ) ) then

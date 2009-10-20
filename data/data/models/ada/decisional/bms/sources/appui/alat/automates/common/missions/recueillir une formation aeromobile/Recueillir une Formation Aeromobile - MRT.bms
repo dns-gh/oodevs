@@ -104,7 +104,7 @@ do
 ]]                end
 
                 local unSurDeux = false
-                for _,x in pairs( self.listePeutTraiterAero ) do
+                for _,x in pairs( self.listePeutTraiterAero or {} ) do
                 local _continue = true
 do
                         if( DIA_IsListEmpty( self.listePionRef ) ) then
@@ -161,7 +161,7 @@ do
 ]]                it = it + 1
                 end
 
-                for _,x in pairs( self.listePeutTraiterAero ) do
+                for _,x in pairs( self.listePeutTraiterAero or {} ) do
                 local _continue = true
                     DEC_UserTypeList_PushBack( self.localisationsASurveiller, self._namedParams.mission.zone_ )
 

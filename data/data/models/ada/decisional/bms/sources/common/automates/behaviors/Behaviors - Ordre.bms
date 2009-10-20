@@ -77,7 +77,7 @@ node "BEH_Ordre_Automate_RecevoirOrdreInopine"
 
     activate = function( self )
                 local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus ) do
+        for _,x in pairs( ordres_recus or {} ) do
         local _continue = true
 do
                 local repOrdre = x
@@ -158,7 +158,7 @@ node "BEH_Ordre_Automate_Interrompre_"
     activate = function( self )
         --[[// Le PC peut avoir une mission
 ]]local listePions = DEC_Automate_PionsAvecPC()
-        for _,pion in pairs( listePions ) do
+        for _,pion in pairs( listePions or {} ) do
         local _continue = true
             Activate( self.activations.ACT_Ordre_Automate_Interrompre, 1, { pion, } )
 
@@ -192,7 +192,7 @@ node "BEH_Ordre_Automate_Attendre_"
             self.resultatCalcul = DEC_Geometrie_StartCalculLignesAvantEtArriere( listePions )
         end
 
-        for _,pion in pairs( listePions ) do
+        for _,pion in pairs( listePions or {} ) do
         local _continue = true
 do
                 local rDistanceLigne = DEC_Geometrie_CalculerDistanceLigneAvant( self.resultatCalcul, pion )
@@ -236,7 +236,7 @@ node "BEH_Ordre_Automate_Ralentir_"
             self.resultatCalcul = DEC_Geometrie_StartCalculLignesAvantEtArriere( listePions )
         end
 
-        for _,pion in pairs( listePions ) do
+        for _,pion in pairs( listePions or {} ) do
         local _continue = true
 do
                 local rDistanceLigne = DEC_Geometrie_CalculerDistanceLigneAvant( self.resultatCalcul, pion )
@@ -276,7 +276,7 @@ node "BEH_Ordre_Automate_Poursuivre_"
 
     activate = function( self )
         local listePionsPE = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
-        for _,pion in pairs( listePionsPE ) do
+        for _,pion in pairs( listePionsPE or {} ) do
         local _continue = true
             Activate( self.activations.ACT_Ordre_Automate_Continue, 1, { pion, } )
 
@@ -304,7 +304,7 @@ node "BEH_Ordre_Automate_Decrocher_"
 
     activate = function( self )
         local listePionsPE = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
-        for _,pion in pairs( listePionsPE ) do
+        for _,pion in pairs( listePionsPE or {} ) do
         local _continue = true
             Activate( self.activations.ACT_Ordre_Automate_Decrocher, 1, { pion, } )
 
@@ -332,7 +332,7 @@ node "BEH_Ordre_Automate_AmbianceSurete_"
 
     activate = function( self )
         local listePionsPE = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
-        for _,pion in pairs( listePionsPE ) do
+        for _,pion in pairs( listePionsPE or {} ) do
         local _continue = true
             Activate( self.activations.ACT_Ordre_Automate_PasserEnAmbianceSurete, 1, { pion, } )
 
@@ -360,7 +360,7 @@ node "BEH_Ordre_Automate_AmbianceVitesse_"
 
     activate = function( self )
         local listePionsPE = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
-        for _,pion in pairs( listePionsPE ) do
+        for _,pion in pairs( listePionsPE or {} ) do
         local _continue = true
             Activate( self.activations.ACT_Ordre_Automate_PasserEnAmbianceVitesse, 1, { pion, } )
 
@@ -388,7 +388,7 @@ node "BEH_Ordre_Automate_TenirSurLR_"
 
     activate = function( self )
         local listePionsPE = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
-        for _,pion in pairs( listePionsPE ) do
+        for _,pion in pairs( listePionsPE or {} ) do
         local _continue = true
             Activate( self.activations.ACT_Ordre_Automate_TenirSurLR, 1, { pion, } )
 
@@ -416,7 +416,7 @@ node "BEH_Ordre_Automate_Tenir_"
 
     activate = function( self )
         local listePionsPE = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
-        for _,pion in pairs( listePionsPE ) do
+        for _,pion in pairs( listePionsPE or {} ) do
         local _continue = true
             Activate( self.activations.ACT_Ordre_Automate_Tenir, 1, { pion, } )
 

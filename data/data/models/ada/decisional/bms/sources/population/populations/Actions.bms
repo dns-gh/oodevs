@@ -177,7 +177,7 @@ includedFiles["sources/population/populations/Actions.bms"] = true
 ]]        if( self._namedParams.intensite > 0 ) then
             do
                 local lstInstallations = DEC_Connaissances_ObjetsDansZone( self._namedParams.zone, S_TypeObject_ToString( eTypeObjectInstallation ) )
-                for _,installation in pairs( lstInstallations ) do
+                for _,installation in pairs( lstInstallations or {} ) do
                 local _continue = true
                     do
                         if( DEC_ConnaissanceObjet_Distance( installation ) < 10 ) then

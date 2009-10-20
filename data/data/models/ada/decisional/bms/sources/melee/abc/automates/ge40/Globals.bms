@@ -109,7 +109,7 @@ g_bPhaseReceuil = false
 ]]function S_Cherche_GE_Filtre_TypeAutomate_ABC( sPions )
     local _returnValue = {}
     local sFiltre = {}
-    for _,x in pairs( sPions ) do
+    for _,x in pairs( sPions or {} ) do
     local _continue = true
 do
             local pion = x
@@ -128,7 +128,7 @@ end
 function S_Cherche_GE_Filtre_TypeAutomate_INF( sPions )
     local _returnValue = {}
     local sFiltre = {}
-    for _,x in pairs( sPions ) do
+    for _,x in pairs( sPions or {} ) do
     local _continue = true
 do
             local pion = x
@@ -147,7 +147,7 @@ end
 function S_Cherche_GE_Filtre_TypeAutomate_Melee( sPions )
     local _returnValue = {}
     local sFiltre = {}
-    for _,x in pairs( sPions ) do
+    for _,x in pairs( sPions or {} ) do
     local _continue = true
 do
             local pion = x
@@ -176,7 +176,7 @@ end
 function S_Cherche_GE_Filtre_TypeAutomate_Log( sPions )
     local _returnValue = {}
     local sFiltre = {}
-    for _,x in pairs( sPions ) do
+    for _,x in pairs( sPions or {} ) do
     local _continue = true
 do
             local pion = x
@@ -195,7 +195,7 @@ end
 function S_Cherche_GE_Filtre_TypeAutomate_Eclairage( sPions )
     local _returnValue = {}
     local sFiltre = {}
-    for _,x in pairs( sPions ) do
+    for _,x in pairs( sPions or {} ) do
     local _continue = true
 do
             local pion = x
@@ -214,7 +214,7 @@ end
 function S_Cherche_GE_Filtre_TypeAutomate_Genie( sPions )
     local _returnValue = {}
     local sFiltre = {}
-    for _,x in pairs( sPions ) do
+    for _,x in pairs( sPions or {} ) do
     local _continue = true
 do
             local pion = x
@@ -233,7 +233,7 @@ end
 function S_Cherche_GE_Filtre_TypeAutomate_ART( sPions )
     local _returnValue = {}
     local sFiltre = {}
-    for _,x in pairs( sPions ) do
+    for _,x in pairs( sPions or {} ) do
     local _continue = true
 do
             local pion = x
@@ -252,7 +252,7 @@ end
 function S_Cherche_GE_Filtre_TypeAutomate_Appui( sPions )
     local _returnValue = {}
     local sFiltre = {}
-    for _,x in pairs( sPions ) do
+    for _,x in pairs( sPions or {} ) do
     local _continue = true
 do
             local pion = x
@@ -286,7 +286,7 @@ end
 function S_Cherche_GE_AutomateOperationnels( sPions )
     local _returnValue = {}
     local sFiltre = {}
-    for _,x in pairs( sPions ) do
+    for _,x in pairs( sPions or {} ) do
     local _continue = true
 do
             local automat = x
@@ -305,7 +305,7 @@ end
 function S_Cherche_GE_AutomateNonOperationnels( sPions )
     local _returnValue = {}
     local sFiltre = {}
-    for _,pion in pairs( sPions ) do
+    for _,pion in pairs( sPions or {} ) do
     local _continue = true
 if( S_Cherche_GE_EstDetruitTactique( pion ) ) then
             DIA_PushBack( sFiltre, pion )
@@ -321,7 +321,7 @@ function S_Cherche_GE_ObtenirPionsDe( eEtatEchelon )
     local _returnValue = {}
     local selTemp = {}
     local selPions = DEC_Automate_AutomatesSubordonnes()
-    for _,x in pairs( selPions ) do
+    for _,x in pairs( selPions or {} ) do
     local _continue = true
 do
             local automat = x
@@ -340,7 +340,7 @@ end
 function S_Cherche_GE_Filtre_EnMesureDe( listePions )
     local _returnValue = {}
     local sFiltre = {}
-    for _,x in pairs( listePions ) do
+    for _,x in pairs( listePions or {} ) do
     local _continue = true
 do
             local pion = x
@@ -360,7 +360,7 @@ end
 function S_Cherche_GE_Filtre_PasFinMission( listePions )
     local _returnValue = {}
     local sFiltre = {}
-    for _,x in pairs( listePions ) do
+    for _,x in pairs( listePions or {} ) do
     local _continue = true
 do
             local automat = x
@@ -387,7 +387,7 @@ end
 function S_Cherche_GE_Filtre_EtatLima( eEtatLima, listePions )
     local _returnValue = {}
     local selTemp = {}
-    for _,x in pairs( listePions ) do
+    for _,x in pairs( listePions or {} ) do
     local _continue = true
 do
             local automat = x
@@ -406,7 +406,7 @@ end
 function S_Cherche_GE_Filtre_EtatSauvegarde( listePions )
     local _returnValue = {}
     local selTemp = {}
-    for _,x in pairs( listePions ) do
+    for _,x in pairs( listePions or {} ) do
     local _continue = true
 do
             local automat = x
@@ -426,7 +426,7 @@ function S_Cherche_GE_Filtre_APasserLima( pionAuto, eEtatLima )
     local _returnValue = false
     _returnValue = false
     local listePionsSubordonnes = DEC_Automate_PionsDeAutomateAvecPC( pionAuto )
-    for _,x in pairs( listePionsSubordonnes ) do
+    for _,x in pairs( listePionsSubordonnes or {} ) do
     local _continue = true
 do
             local pion = x
@@ -474,7 +474,7 @@ function S_Analyse_GE_TousPionsDansFuseau( listePions, fuseau )
     local _returnValue = false
     _returnValue = true
     local locFuseau = DEC_Geometrie_ConvertirFuseauEnLocalisation( fuseau )
-    for _,pion in pairs( listePions ) do
+    for _,pion in pairs( listePions or {} ) do
     local _continue = true
 if( not DEC_Geometrie_EstPointDansLocalisation( DEC_Geometrie_CalculerBarycentreAgents( DEC_Automate_PionsDeAutomateAvecPC( pion ) ), locFuseau ) ) then
             _returnValue = false
@@ -489,7 +489,7 @@ function S_Cherche_GE_Filtre_PionsDansFuseau( listePions, fuseau )
     local _returnValue = {}
     local sel = {}
     local locFuseau = DEC_Geometrie_ConvertirFuseauEnLocalisation( fuseau )
-    for _,pion in pairs( listePions ) do
+    for _,pion in pairs( listePions or {} ) do
     local _continue = true
 if( DEC_Geometrie_EstPointDansLocalisation( DEC_Geometrie_CalculerBarycentreAgents( DEC_Automate_PionsDeAutomateAvecPC( pion ) ), locFuseau ) ) then
             DIA_PushFront( sel, pion )
@@ -506,7 +506,7 @@ function S_Automate_EchelonEnDifficulte( echelon )
     _returnValue = false
     local listePions = S_Cherche_GE_ObtenirPionsDe( echelon )
     local rIterateur = 0
-    for _,x in pairs( listePions ) do
+    for _,x in pairs( listePions or {} ) do
     local _continue = true
 do
             local automat = x

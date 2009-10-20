@@ -78,7 +78,7 @@ includedFiles["sources/appui/alat/automates/common/missions/appuyer/Appuyer - CD
         DIA_Clear( self.listeAppuyer )
         local compteur = 0
         for _,x in pairs( --[[//1 unité qui appui pour deux qui détruisent
-]]self.listePionsPourMissionAppuyerOuDetruireSansRavitaillementsEnCours ) do
+]]self.listePionsPourMissionAppuyerOuDetruireSansRavitaillementsEnCours or {} ) do
         local _continue = true
 do
                 if( ( compteur == 0 or compteur == nil ) ) then
@@ -107,7 +107,7 @@ do
                     --[[//Tir sur riposte si est unites a appuyer sont dans une position
 ]]--[[//favorable, sinon, tir libre.
 ]]local bBesoinAppuisFeu = false
-                    for _,x in pairs( self.listePionsAAppuyer ) do
+                    for _,x in pairs( self.listePionsAAppuyer or {} ) do
                     local _continue = true
 do
                             local pionDEC = x

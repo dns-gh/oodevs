@@ -25,7 +25,7 @@ includedFiles["sources/common/automates/behaviors/Behaviors - Misc.bms"] = true
         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Pour chaque pion de l'automate...
 ]]--[[//-----------------------------------------------------------------------------
-]]DEC_Automate_PionsAvecPC() ) do
+]]DEC_Automate_PionsAvecPC() or {} ) do
         local _continue = true
             Activate( self.activations.ACT_Misc_Automate_Gerer, 1, { pion, } )
 

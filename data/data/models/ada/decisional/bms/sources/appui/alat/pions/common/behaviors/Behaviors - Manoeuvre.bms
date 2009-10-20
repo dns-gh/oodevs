@@ -17,7 +17,7 @@ includedFiles["sources/appui/alat/pions/common/behaviors/Behaviors - Manoeuvre.b
     end,
 
     activate = function( self )
-        for _,x in pairs( myself.listePionsCoordination_ ) do
+        for _,x in pairs( myself.listePionsCoordination_ or {} ) do
         local _continue = true
 do
                 --[[//seulement sur les pions alat pour le moment

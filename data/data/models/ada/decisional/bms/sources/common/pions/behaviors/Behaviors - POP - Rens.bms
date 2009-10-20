@@ -25,7 +25,7 @@ include "bit.lua"
 ]]--[[// Renseigner sur les pop
 ]]--[[//-----------------------------------------------------------------------------
 ]]local lstPop = DEC_Connaissances_CollisionsPopulations()
-        for _,pop in pairs( lstPop ) do
+        for _,pop in pairs( lstPop or {} ) do
         local _continue = true
 do
                 if( not DEC_ConnaissancePopulation_EstReconnu( pop ) ) then
@@ -75,7 +75,7 @@ node "BEH_Pion_RenseignerSurPops"
 ]]        end
 
         local lstPop = DEC_Connaissances_Populations()
-        for _,pop in pairs( lstPop ) do
+        for _,pop in pairs( lstPop or {} ) do
         local _continue = true
             Activate( self.activations.BEH_Pion_RenseignerSurPop, 1, { pop, } )
 

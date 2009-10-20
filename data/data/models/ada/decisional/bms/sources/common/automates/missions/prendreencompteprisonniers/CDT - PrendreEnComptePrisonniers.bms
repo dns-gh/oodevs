@@ -66,7 +66,7 @@ node "BEH_Dispositif_Automate_FaireSuivreLeSE"
             do return end
         end
 
-        for _,x in pairs( sel_SE ) do
+        for _,x in pairs( sel_SE or {} ) do
         local _continue = true
 do
                 local pion = x

@@ -22,7 +22,7 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Misc.bms"] = true
     end,
 
     activate = function( self )
-        for _,x_appui in pairs( F_Pion_GetselUnitesEnAppui( myself ) ) do
+        for _,x_appui in pairs( F_Pion_GetselUnitesEnAppui( myself ) or {} ) do
         local _continue = true
             Activate( self.activations.ACT_MAJ_EnAppuiPionMobile, 1, { x_appui, } )
 

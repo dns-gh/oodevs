@@ -63,7 +63,7 @@ node "BEH_Conduite_Automate_GererFuseau_Init"
             do
                 --[[// Dit a tous les pions dans le fuseau de se poster
 ]]local rPions_DansFuseau = 0
-                for _,x in pairs( sUnites_PE ) do
+                for _,x in pairs( sUnites_PE or {} ) do
                 local _continue = true
                     do
                         if( DEC_Automate_EstPointDansFuseauPion( DEC_Automate_PionPosition( x ), x ) ) then
@@ -103,7 +103,7 @@ node "BEH_Conduite_Automate_GererFuseau_Init"
 
         if( ( rPion_Rejoins ~= 0 and rPion_Rejoins ~= nil ) and rPion_SurFuseau == rPion_Rejoins ) then
             do
-                for _,x in pairs( sUnites_PE ) do
+                for _,x in pairs( sUnites_PE or {} ) do
                 local _continue = true
                     Activate( self.activations.ACT_Ordre_Automate_Continue, 1, { x, } )
 
@@ -129,7 +129,7 @@ node "BEH_Conduite_Automate_GererFuseau_Valide"
 
     activate = function( self )
         local sUnites_PE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
-        for _,x in pairs( sUnites_PE ) do
+        for _,x in pairs( sUnites_PE or {} ) do
         local _continue = true
 do
                 local pion = x
@@ -165,7 +165,7 @@ node "BEH_Conduite_Automate_GererFinMission"
                 self.eActionMission = eActionEnCours
                                 do
                     for _,pion in pairs( --[[//selection selPions = DEC_Pion_PionsAvecPC();
-]]DEC_Automate_PionsAvecPC() ) do
+]]DEC_Automate_PionsAvecPC() or {} ) do
                     local _continue = true
                         pion:SetStateVariable( "VE_PreparationMission", 1 )
 

@@ -50,7 +50,7 @@ node "BEH_GTIA_GererAppuiPour"
     end,
 
     activate = function( self )
-        for _,pion in pairs( self._namedParams.listePEEnDifficultes ) do
+        for _,pion in pairs( self._namedParams.listePEEnDifficultes or {} ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionsPourAppuyer, 1, { pion, } )
 
@@ -82,13 +82,13 @@ node "BEH_GTIA_AssignerMissionsPourAppuyer"
         --[[// On récupère les pions de second échelons "en mesure de" 
 ]]local listePionsSE = S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Second ) )
         local listePionSEDansFuseau = S_Cherche_GE_Filtre_PionsDansFuseau( listePionsSE, F_Automat_Getfuseau( self._namedParams.pion ) )
-        for _,pionAppui in pairs( S_Cherche_GE_Filtre_TypeAutomate_ABC( listePionSEDansFuseau ) ) do
+        for _,pionAppui in pairs( S_Cherche_GE_Filtre_TypeAutomate_ABC( listePionSEDansFuseau ) or {} ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionMeleeA, 1, { pionAppui, "T_Mission_Automate_ABC_Attaquer", } )
 
         end
 
-        for _,pionAppui in pairs( S_Cherche_GE_Filtre_TypeAutomate_INF( listePionSEDansFuseau ) ) do
+        for _,pionAppui in pairs( S_Cherche_GE_Filtre_TypeAutomate_INF( listePionSEDansFuseau ) or {} ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionMeleeA, 1, { pionAppui, "T_Mission_Automate_INF_PrendrePreciserMaintenirContact", } )
 

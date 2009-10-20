@@ -81,7 +81,7 @@ node "BEH_Ordre_Automate_RecevoirOrdreSurAlerteNBC"
 ]]--[[// Recevoir un ordre
 ]]--[[//-----------------------------------------------------------------------------
 ]]local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus ) do
+        for _,x in pairs( ordres_recus or {} ) do
         local _continue = true
 do
                 local repOrdre = x
@@ -141,7 +141,7 @@ node "BEH_Ordre_Automate_ConduiteSurAlerteNBC"
 ]]--[[// Donner l'ordre aux pions si embrayé
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listePionsSubordonnes = myself:DEC_Automate_PionsAvecPC()
-        for _,x in pairs( listePionsSubordonnes ) do
+        for _,x in pairs( listePionsSubordonnes or {} ) do
         local _continue = true
 do
                 local pion = x
@@ -180,7 +180,7 @@ node "BEH_Ordre_Automate_ConduiteSurFinAlerteNBC"
 ]]--[[// Donner l'ordre aux pions si embrayé
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listePionsSubordonnes = DEC_Automate_PionsAvecPC()
-        for _,x in pairs( listePionsSubordonnes ) do
+        for _,x in pairs( listePionsSubordonnes or {} ) do
         local _continue = true
 do
                 local pion = x

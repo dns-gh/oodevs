@@ -55,7 +55,7 @@ node "BEH_Nbc_Recevoir_OrdreInopine"
 
     activate = function( self )
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus ) do
+        for _,x in pairs( ordres_recus or {} ) do
         local _continue = true
 do
                 local repOrdre = x

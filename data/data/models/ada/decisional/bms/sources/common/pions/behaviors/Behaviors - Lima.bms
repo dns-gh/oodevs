@@ -31,7 +31,7 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Lima.bms"] = true
 ]]--[[// Traiter les points interressants
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listePointInterressant = DEC_GetCategory( "points_interressants" )
-        for _,x in pairs( listePointInterressant ) do
+        for _,x in pairs( listePointInterressant or {} ) do
         local _continue = true
 do
                 local pointABC = x
@@ -215,7 +215,7 @@ node "BEH_Lima_GererLCAR"
 ]]--[[// Traiter les points interressants
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listePointInterressant = DEC_GetCategory( "points_interressants" )
-        for _,x in pairs( listePointInterressant ) do
+        for _,x in pairs( listePointInterressant or {} ) do
         local _continue = true
 do
                 local pointABC = x
@@ -307,7 +307,7 @@ node "BEH_Lima_GererLR"
 ]]--[[// Traiter les points interressants
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listePointInterressant = DEC_GetCategory( "points_interressants" )
-        for _,x in pairs( listePointInterressant ) do
+        for _,x in pairs( listePointInterressant or {} ) do
         local _continue = true
 do
                 local pointABC = x
@@ -381,7 +381,7 @@ node "BEH_Lima_GererLIA"
 ]]--[[// Traiter les points interressants
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listePointInterressant = DEC_GetCategory( "points_interressants" )
-        for _,x in pairs( listePointInterressant ) do
+        for _,x in pairs( listePointInterressant or {} ) do
         local _continue = true
 do
                 local pointABC = x

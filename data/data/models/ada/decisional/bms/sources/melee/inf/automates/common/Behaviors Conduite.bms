@@ -69,7 +69,7 @@ include "Melee/Inf/Automates/Common/Behaviors CDT - Retrograde.bms"
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eActionMission ~= eActionEnCours ) then
             do
-                for _,pion in pairs( DEC_Automate_PionsAvecPC() ) do
+                for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
                 local _continue = true
                     pion:SetStateVariable( "VE_PreparationMission", 0 )
 
@@ -283,7 +283,7 @@ node "BEH_CoordTir_Automate_INF_Intervention_LCAR"
 
         Activate( self.activations.BEH_CoordTir_Automate_INF_EvalueActivite_Eni, 1, setmetatable( { self._namedParams.pPion, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
         for _,x_appuis in pairs( --[[// Regarde si les appuis traitent un ennemi
-]]F_Pion_GetselUnitesEnAppui( self._namedParams.pPion ) ) do
+]]F_Pion_GetselUnitesEnAppui( self._namedParams.pPion ) or {} ) do
         local _continue = true
 do
                 local pionAppui = x_appuis

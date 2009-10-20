@@ -126,7 +126,7 @@ node "BEH_Medo_Automate_INF_ReleverEnRecueillant"
                     --[[// Second Echelon
 ]]local rN_SE = #( DEC_Automate_PionsSansPC() ) - rN_PE
                     DEC_Trace( "Selection des composantes pion" )
-                    for _,x in pairs( self.selPions ) do
+                    for _,x in pairs( self.selPions or {} ) do
                     local _continue = true
 do
                             local pion = x

@@ -30,7 +30,7 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Objet.bms"] = true
 ]]--[[// Rejoindre embossement le plus proche
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listeEmbossements = DEC_Connaissances_ObjetsDansCercle( self.positionInitiale, 500, S_TypeObject_ToString( eTypeObjectPosteTir ), S_TypeObject_ToString( eTypeObjectZoneProtegee ) )
-        for _,repEmbossement in pairs( listeEmbossements ) do
+        for _,repEmbossement in pairs( listeEmbossements or {} ) do
         local _continue = true
 do
                 if( DEC_ConnaissanceObjet_PeutEtreOccupe( repEmbossement ) ) then

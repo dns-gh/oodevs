@@ -80,7 +80,7 @@ include "bit.lua"
                     for _,x in pairs( --[[//---------------------------------------------------------------------
 ]]--[[// Assignation des grands échelons Ecl / Utile( PE + SE )/ non prevus
 ]]--[[//---------------------------------------------------------------------
-]]selPions ) do
+]]selPions or {} ) do
                     local _continue = true
 do
                             local pion = x
@@ -155,7 +155,7 @@ elseif switch_1 == eMRT_DeterminerEchelonsLocals then
 ]]--[[// à équilibrer la formation --> tous les pions en premier echeleon
 ]]--[[// ( sauf ceux qui ne peuvent pas comme le PAD et autre pion non prevu )
 ]]--[[//-----------------------------------------------------------------------------
-]]self.selABC_Blinde ) do
+]]self.selABC_Blinde or {} ) do
                     local _continue = true
 do
                             local pion = x

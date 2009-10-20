@@ -54,7 +54,7 @@ includedFiles["sources/melee/inf/pions/son vab/missions/OrganiserUnCheckPoint.bm
         end
 
         local sOrdre = DEC_GetCategory( "ordres_recus" )
-        for _,repOrder in pairs( sOrdre ) do
+        for _,repOrder in pairs( sOrdre or {} ) do
         local _continue = true
 do
                 local repOrdreCond = repOrder

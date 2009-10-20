@@ -78,7 +78,7 @@ node "BEH_Conduite_Automate_GEN_RecoZoneDeploiement_GererSE_"
         for _,x in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion pions détruit
 ]]--[[//-----------------------------------------------------------------------------
-]]DEC_Automate_PionsAvecPC() ) do
+]]DEC_Automate_PionsAvecPC() or {} ) do
         local _continue = true
 do
                 --[[// cast
@@ -105,7 +105,7 @@ do
 ]]--[[// Assignation des missions
 ]]--[[//-----------------------------------------------------------------------------
 ]]local rIterateurPionASuivre = 0
-        for _,x in pairs( sel_SE ) do
+        for _,x in pairs( sel_SE or {} ) do
         local _continue = true
 do
                 local pion = x

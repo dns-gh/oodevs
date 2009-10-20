@@ -36,7 +36,7 @@ node "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsDefendreZoneAListe"
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
-                for _,x in pairs( self._namedParams.listePions ) do
+                for _,x in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
                         --[[//si on a moins de positions que de pions, on renforce des positions
@@ -77,7 +77,7 @@ node "BEH_Medo_Automate_ASA_AssignerMissionsDefendreZoneAListe"
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
-                for _,x in pairs( self._namedParams.listePions ) do
+                for _,x in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
                         --[[//si on a moins de positions que de pions, on renforce des positions
@@ -214,7 +214,7 @@ node "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsDefendreSiteAListe"
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
-                for _,x in pairs( self._namedParams.listePions ) do
+                for _,x in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
                         --[[//si on a moins de positions que de pions, on renforce des positions
@@ -255,7 +255,7 @@ node "BEH_Medo_Automate_ASA_AssignerMissionsDefendreSiteAListe"
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
-                for _,x in pairs( self._namedParams.listePions ) do
+                for _,x in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
                         --[[//si on a moins de positions que de pions, on renforce des positions
@@ -391,7 +391,7 @@ node "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsSurveillerAListe"
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
-                for _,x in pairs( self._namedParams.listePions ) do
+                for _,x in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
                         --[[//si on a moins de positions que de pions, on renforce des positions
@@ -431,7 +431,7 @@ node "BEH_Medo_Automate_ASA_AssignerMissionsSurveillerAListe"
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
-                for _,x in pairs( self._namedParams.listePions ) do
+                for _,x in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
                         --[[//si on a moins de positions que de pions, on renforce des positions
@@ -566,7 +566,7 @@ node "BEH_Medo_Automate_ASA_AssignerMissionsDefendreUnitesAListe"
                 --[[//copie de la liste de pions
 ]]local listeSectionsASA = self._namedParams.listePions
                 local iterateur = 0
-                for _,x in pairs( self._namedParams.listePions ) do
+                for _,x in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
                         --[[//si on a attribué au moins une fois tous les pc de la liste

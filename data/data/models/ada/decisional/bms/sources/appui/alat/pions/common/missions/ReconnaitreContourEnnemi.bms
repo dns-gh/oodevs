@@ -130,7 +130,7 @@ if( DEC_UserTypeList_Contient( self.listeLocalisationsATraiter, self.localisatio
                     end
 
                     self.nouvelleLocalisation = nil
-                    for _,x in pairs( self.listeLocalisations ) do
+                    for _,x in pairs( self.listeLocalisations or {} ) do
                     local _continue = true
 do
                             if( DEC_Geometrie_EstPointDansLocalisation( myself:DEC_Agent_Position(), x ) ) then
@@ -145,7 +145,7 @@ do
 
                     if( self.nouvelleLocalisation ~= nil ) then
                         do
-                            for _,x in pairs( self.listeLocalisations ) do
+                            for _,x in pairs( self.listeLocalisations or {} ) do
                             local _continue = true
                                 do
                                     if( x ~= self.nouvelleLocalisation ) then
@@ -298,7 +298,7 @@ node "BEH_Eni_Pion_ALAT_GererEniRecoContourEni"
     activate = function( self )
         self.eEtatProgressionTactique = self.eEtatProgressionTactique or eActionEnCours
         local listeUnitesDetecteesDansFuseau = DEC_Connaissances_UnitesDetecteesDansFuseau()
-        for _,x in pairs( listeUnitesDetecteesDansFuseau ) do
+        for _,x in pairs( listeUnitesDetecteesDansFuseau or {} ) do
         local _continue = true
 do
                 if( DEC_ConnaissanceAgent_EstMort( x ) or not DEC_Geometrie_EstPointDansLocalisation( DEC_ConnaissanceAgent_Position( x ), self._namedParams.localisation ) ) then

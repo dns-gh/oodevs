@@ -24,7 +24,7 @@ include "bit.lua"
 ]]function S_Conduite_Pions_EtatMission( sPions, eEtatPhase_Mission )
     local _returnValue = 0
     _returnValue = 0
-    for _,x in pairs( sPions ) do
+    for _,x in pairs( sPions or {} ) do
     local _continue = true
 do
             local pion = x
@@ -42,7 +42,7 @@ end
 function S_Conduite_Pions_EtatLima( sPions, eEtatLima )
     local _returnValue = 0
     _returnValue = 0
-    for _,x in pairs( sPions ) do
+    for _,x in pairs( sPions or {} ) do
     local _continue = true
 do
             local pion = x
@@ -62,7 +62,7 @@ function S_Automate_EstEnDifficulte( )
     _returnValue = false
     local listePionsPE = S_ObtenirTousPionsDe( eEtatEchelon_Premier )
     local rIterateur = 0
-    for _,x in pairs( listePionsPE ) do
+    for _,x in pairs( listePionsPE or {} ) do
     local _continue = true
 do
             local pion = x
@@ -85,7 +85,7 @@ function S_Automate_EstPasEnDifficulte( )
     local _returnValue = false
     _returnValue = true
     local listePionsPE = S_ObtenirTousPionsDe( eEtatEchelon_Premier )
-    for _,x in pairs( listePionsPE ) do
+    for _,x in pairs( listePionsPE or {} ) do
     local _continue = true
 do
             local pion = x

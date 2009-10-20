@@ -45,7 +45,7 @@ includedFiles["sources/melee/abc/automates/common/Gestion pions detruits.bms"] =
 ]]--[[// Pions de PEcl
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listePionsPEclDetruits = S_Dispositif_Automate_ABC_ObtenirPionDetruitsDe( eEtatEchelon_Eclairage )
-        for _,x in pairs( listePionsPEclDetruits ) do
+        for _,x in pairs( listePionsPEclDetruits or {} ) do
         local _continue = true
 do
                 local pionDetruit = x
@@ -63,7 +63,7 @@ do
 
         local listePionsDeSoutien = S_Dispositif_Automate_ABC_ObtenirPionsSoutien()
         local listePionsPEDetruits = S_Dispositif_Automate_ABC_ObtenirPionDetruitsDe( eEtatEchelon_Premier )
-        for _,x in pairs( listePionsPEDetruits ) do
+        for _,x in pairs( listePionsPEDetruits or {} ) do
         local _continue = true
 do
                 local pionDetruit = x
@@ -74,7 +74,7 @@ do
                         if( not DIA_IsListEmpty( listePionsDeSoutien ) ) then
                             do
                                 for _,y in pairs( --[[// Ce qui faudrait faire c'est un max instance sur le paramètre 'pionEnSoutien'...
-]]listePionsDeSoutien ) do
+]]listePionsDeSoutien or {} ) do
                                 local _continue = true
                                     do
                                         local pionEnSoutien = y

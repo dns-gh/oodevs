@@ -29,7 +29,7 @@ include "Common/Automates/Actions/Medo/Actions - Medo - CIRCU.bms"
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         if( ModuleBegins() ) then
             do
-                for _,x in pairs( self._namedParams.listePions ) do
+                for _,x in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
                         StartActivateOverride( self, self.activations.BEH_Mission_Automate_CIRCU_AssignerReconnaitreItineraireA, 1, { self._namedParams.ePhase, x, self._namedParams.itineraireLog, } )
@@ -114,7 +114,7 @@ node "BEH_Medo_Automate_CIRCU_AssignerMissionsRenforcerAListe"
         assert( ( #( self._namedParams.listePions ) ~= 0 and #( self._namedParams.listePions ) ~= nil ), "Liste pions vide" )
         if( ModuleBegins() ) then
             do
-                for _,x in pairs( self._namedParams.listePions ) do
+                for _,x in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
                         StartActivateOverride( self, self.activations.BEH_Medo_Automate_CIRCU_AssignerMissionRenforcerA, 1, { self._namedParams.ePhase, x, self._namedParams.uniteARenforcer, } )
@@ -194,7 +194,7 @@ node "BEH_Medo_Automate_CIRCU_AssignerMissionsAppuyerFranchissementSurUnPointALi
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
-                for _,x in pairs( self._namedParams.listePions ) do
+                for _,x in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
                         --[[//si on a moins de positions que de pions, on renforce des positions
@@ -286,7 +286,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementDansZoneAListe"
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
-                for _,x in pairs( self._namedParams.listePions ) do
+                for _,x in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
                         --[[//si on a moins de positions que de pions, on renforce des positions
@@ -384,7 +384,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerAppuyerMouvementAListe"
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
-                for _,x in pairs( self._namedParams.listePions ) do
+                for _,x in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
                         --[[//si on a moins de positions que de pions, on renforce des positions
@@ -476,7 +476,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerArmerPIAAListe"
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
-                for _,x in pairs( self._namedParams.listePions ) do
+                for _,x in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
                         --[[//si on a moins de positions que de pions, on renforce des positions
@@ -568,7 +568,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerBloquerZoneAListe"
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
-                for _,x in pairs( self._namedParams.listePions ) do
+                for _,x in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
                         --[[//si on a moins de positions que de pions, on renforce des positions
@@ -660,7 +660,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerMettreEnOeuvreStationnementAListe"
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
-                for _,x in pairs( self._namedParams.listePions ) do
+                for _,x in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
                         --[[//si on a moins de positions que de pions, on renforce des positions
@@ -752,7 +752,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneContamineeAListe"
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
-                for _,x in pairs( self._namedParams.listePions ) do
+                for _,x in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
                         --[[//si on a moins de positions que de pions, on renforce des positions
@@ -844,7 +844,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerReconnaitreZoneDeDeploiementAListe"
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
-                for _,x in pairs( self._namedParams.listePions ) do
+                for _,x in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
                         --[[//si on a moins de positions que de pions, on renforce des positions
@@ -936,7 +936,7 @@ node "BEH_Mission_Automate_CIRCU_AssignerSurveillerAListe"
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
-                for _,x in pairs( self._namedParams.listePions ) do
+                for _,x in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
                         --[[//si on a moins de positions que de pions, on renforce des positions

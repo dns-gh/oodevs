@@ -166,7 +166,7 @@ node "BEH_Conduite_Automate_INF_CoupArret"
         self.eAction = self.eAction or eActionEnCours
         self.eAction_CoupArret = self.eAction_CoupArret or eActionEnCours
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus ) do
+        for _,x in pairs( ordres_recus or {} ) do
         local _continue = true
 do
                 local repOrdre = x
@@ -191,7 +191,7 @@ do
 ]]        end
 
         local lst_Pions_EnTete = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
-        for _,x_EnTete in pairs( lst_Pions_EnTete ) do
+        for _,x_EnTete in pairs( lst_Pions_EnTete or {} ) do
         local _continue = true
 do
                 Activate( self.activations.BEH_CoordTir_Automate_INF_Intervention_LCAR, 1, setmetatable( { x_EnTete, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction_CoupArret = v else rawset( t, k, v ) end end } ) )
@@ -320,7 +320,7 @@ node "BEH_Conduite_Automate_INF_DesactiveSauvegarde"
         end
 
         if( ModuleBegins() ) then
-for _,x in pairs( self.selPions ) do
+for _,x in pairs( self.selPions or {} ) do
             local _continue = true
                 StartActivateOverride( self, self.activations.BEH_Ordre_Automate_ArretSauvegardeSur, 1, setmetatable( { x, self._namedParams.rDelai, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
 

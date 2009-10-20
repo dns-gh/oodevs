@@ -8,7 +8,7 @@ include "bit.lua"
     local _returnValue = {}
     local agentDec = nil
     DIA_Clear( _returnValue )
-    for _,x in pairs( listeUnites ) do
+    for _,x in pairs( listeUnites or {} ) do
     local _continue = true
 do
             agentDec = x
@@ -26,7 +26,7 @@ end
 function S_ConnaissancesOperationnelles( listePions )
     local _returnValue = {}
     DIA_Clear( _returnValue )
-    for _,x in pairs( listePions ) do
+    for _,x in pairs( listePions or {} ) do
     local _continue = true
 do
             if( not ( S_Misc_EstPionDetruitPhysique( x ) or S_Misc_EstPionDetruitTactique( x ) ) ) then
@@ -44,7 +44,7 @@ function S_ConnaissancesEnnemiesVivantesPercuesVolantes( )
     local _returnValue = {}
     DIA_Clear( _returnValue )
     local listeUnitesEnnemiesVivantesPercues = DEC_Connaissances_UnitesEnnemiesVivantesPercues()
-    for _,x in pairs( listeUnitesEnnemiesVivantesPercues ) do
+    for _,x in pairs( listeUnitesEnnemiesVivantesPercues or {} ) do
     local _continue = true
 do
             if( not S_ConnaissanceAgent_EstEnVol( x ) ) then
@@ -65,7 +65,7 @@ function S_ConnaissancesEnnemiesDangereusesNonVolantes( )
     local _returnValue = {}
     DIA_Clear( _returnValue )
     local listeUnitesEnnemiesDangereuses = DEC_Connaissances_UnitesEnnemiesDangereuses()
-    for _,x in pairs( listeUnitesEnnemiesDangereuses ) do
+    for _,x in pairs( listeUnitesEnnemiesDangereuses or {} ) do
     local _continue = true
 do
             if( S_ConnaissanceAgent_EstEnVol( x ) ) then

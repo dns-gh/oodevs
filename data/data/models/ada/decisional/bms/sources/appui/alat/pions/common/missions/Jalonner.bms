@@ -182,7 +182,7 @@ node "BEH_Eni_Pion_ALAT_GererEniJalonner"
         Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.pointDebutFuseau, } )
         --[[// gestion des unités reconnues
 ]]local listeUnitesEnnemiesVivantesDansFuseau = DEC_Connaissances_UnitesEnnemiesVivantesDansFuseau()
-        for _,x in pairs( listeUnitesEnnemiesVivantesDansFuseau ) do
+        for _,x in pairs( listeUnitesEnnemiesVivantesDansFuseau or {} ) do
         local _continue = true
 do
                 Activate( self.activations.ACT_RC, 1, { eRC_EnJalonnement, } )
@@ -223,7 +223,7 @@ node "BEH_Eni_Pion_ALAT_JalonnerGererFeu"
         end
 
         local listeUnitesEnnemiesVivantesPercuesDansFuseau = DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansFuseau()
-        for _,x in pairs( listeUnitesEnnemiesVivantesPercuesDansFuseau ) do
+        for _,x in pairs( listeUnitesEnnemiesVivantesPercuesDansFuseau or {} ) do
         local _continue = true
 do
                 if( not DEC_ConnaissanceAgent_EstValide( x ) ) then

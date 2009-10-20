@@ -39,7 +39,7 @@ includedFiles["sources/appui/rens/automates/rohum/common/missions/sexfiltrer/SEx
                     end
                 end
 
-                for _,pion in pairs( DEC_Automate_PionsAvecPC() ) do
+                for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
                 local _continue = true
                     StartActivateOverride( self, self.activations.BEH_Mission_Automate_RENS_ROHUM_AssignerSExfiltrerA, 1, { ePhase_MRT, pion, self.mission.zoneDeRegroupement_, self._namedParams.eEtatEchelon, } )
 

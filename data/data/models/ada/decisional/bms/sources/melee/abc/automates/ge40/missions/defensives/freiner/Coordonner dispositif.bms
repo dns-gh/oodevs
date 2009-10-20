@@ -62,7 +62,7 @@ node "BEH_GTIA_AssurerLaCoordinationSurLR"
     end,
 
     activate = function( self )
-        for _,pion in pairs( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Second ) ) do
+        for _,pion in pairs( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Second ) or {} ) do
         local _continue = true
             Activate( self.activations.ACT_GTIA_Automate_DonnerOrdreTenirSurLR, 1, { pion, } )
 
@@ -89,7 +89,7 @@ node "BEH_GTIA_AssurerLaCoordinationAuContact"
     end,
 
     activate = function( self )
-        for _,x in pairs( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Premier ) ) do
+        for _,x in pairs( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Premier ) or {} ) do
         local _continue = true
 do
                 local automat = x
@@ -124,13 +124,13 @@ node "BEH_GTIA_AssurerLaCoordinationRetrogradeSurRetard"
     activate = function( self )
         if( S_AnalyseDelai_GE_EstEnRetard() ) then
             do
-                for _,pion in pairs( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Premier ) ) do
+                for _,pion in pairs( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Premier ) or {} ) do
                 local _continue = true
                     Activate( self.activations.ACT_GTIA_Automate_DonnerOrdreDecrocher, 1, { pion, } )
 
                 end
 
-                for _,pion in pairs( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Eclairage ) ) do
+                for _,pion in pairs( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Eclairage ) or {} ) do
                 local _continue = true
                     Activate( self.activations.ACT_GTIA_Automate_DonnerOrdreDecrocher, 1, { pion, } )
 
@@ -168,7 +168,7 @@ node "BEH_GTIA_AssurerLaCoordinationRetrogradeInterEchelon"
             self.resultatCalcul = DEC_Geometrie_StartCalculAutomateLignesAvantEtArriere( self._namedParams.listePionsPE )
         end
 
-        for _,pion in pairs( self._namedParams.listePionsSE ) do
+        for _,pion in pairs( self._namedParams.listePionsSE or {} ) do
         local _continue = true
 --[[// A REMPLACER PAR Distance vers prochaine Position calculée
 ]]if( DEC_Geometrie_CalculerAutomateDistanceLigneArriere( self.resultatCalcul, pion ) > -2000 ) then
@@ -213,7 +213,7 @@ node "BEH_GTIA_AssurerLaCoordinationRetrogradeIntraEchelon"
             do return end
         end
 
-        for _,pion in pairs( self._namedParams.listePions ) do
+        for _,pion in pairs( self._namedParams.listePions or {} ) do
         local _continue = true
 if( DEC_Geometrie_CalculerAutomateDistanceLigneAvant( self.resultatCalcul, pion ) > 2000 ) then
                 Activate( self.activations.ACT_GTIA_Automate_DonnerOrdreDecrocher, 1, { pion, } )

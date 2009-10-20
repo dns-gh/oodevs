@@ -90,7 +90,7 @@ node "BEH_Medo_Automate_AssignerFaireMouvementA"
     activate = function( self )
         self.mission = self.mission or DEC_GetMission( myself )
         if( ModuleBegins() ) then
-for _,pion in pairs( DEC_Automate_PionsAvecPC() ) do
+for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
             local _continue = true
                 StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerFaireMouvementSurItA, 1, { ePhase_MRT, pion, self.mission.itineraire_, } )
 

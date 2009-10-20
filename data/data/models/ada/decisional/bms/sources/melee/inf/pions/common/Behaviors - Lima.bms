@@ -186,7 +186,7 @@ node "BEH_Lima_Pion_INF_GererLIA"
 ]]        end
 
         local listePointInterressant = DEC_GetCategory( "points_interressants" )
-        for _,x in pairs( listePointInterressant ) do
+        for _,x in pairs( listePointInterressant or {} ) do
         local _continue = true
 do
                 local pointABC = x

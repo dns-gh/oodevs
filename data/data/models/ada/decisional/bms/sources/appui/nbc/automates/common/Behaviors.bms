@@ -116,7 +116,7 @@ node "BEH_Ordre_Automate_NBC_FairePosterLePremierEchelon_"
 
     activate = function( self )
         local listePionsPE = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
-        for _,x in pairs( listePionsPE ) do
+        for _,x in pairs( listePionsPE or {} ) do
         local _continue = true
 do
                 local pion = x

@@ -66,7 +66,7 @@ node "BEH_MOT_TenirFaceAuxEnnemis"
 
     activate = function( self )
         local listeConnaissances = DEC_Connaissances_UnitesEnnemiesDangereuses()
-        for _,eni in pairs( listeConnaissances ) do
+        for _,eni in pairs( listeConnaissances or {} ) do
         local _continue = true
             Activate( self.activations.ACT_Dep_SePosterFaceA, 1, { eni, } )
 

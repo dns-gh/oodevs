@@ -196,7 +196,7 @@ node "BEH_Medo_Automate_ASS_AcquerirObjectifs"
             do
                 DEC_Copie_ListePoints( self._namedParams.lstPtDeploiement, self.lstPtTmp )
                 local rIt_Pion = 0
-                for _,x_loc in pairs( self._namedParams.lstLocObservation ) do
+                for _,x_loc in pairs( self._namedParams.lstLocObservation or {} ) do
                 local _continue = true
                     do
                         local pion = DIA_GetAt( self._namedParams.selPions, rIt_Pion )

@@ -100,7 +100,7 @@ do
                 if switch_1 == eAppuyer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_SuitUnite, } )
                     for _,x in pairs( --[[//desactivation de la gestion des alarmes sanitaires vers les TC2
-]]self.listePionsAPotentiellementExtraire ) do
+]]self.listePionsAPotentiellementExtraire or {} ) do
                     local _continue = true
                         Activate( self.activations.ACT_Log_Pion_ALAT_HM_BloquerLiaisonSanitaire, 1, { x, } )
 
@@ -211,7 +211,7 @@ node "Pion_ALAT_IMEX_GererTransport"
         if( not myself.bEnCoursExtractionPersonnel_ ) then
             do
                 for _,x in pairs( --[[//si chargement non complet    
-]]self._namedParams.unitesAPotentiellementExtraire ) do
+]]self._namedParams.unitesAPotentiellementExtraire or {} ) do
                 local _continue = true
                     do
                         local forceDistancePlusProche = S_Force_Pion_ALAT_Raprochement( DEC_Geometrie_Distance( x:DEC_Agent_Position(), myself:DEC_Agent_Position() ), 0 )

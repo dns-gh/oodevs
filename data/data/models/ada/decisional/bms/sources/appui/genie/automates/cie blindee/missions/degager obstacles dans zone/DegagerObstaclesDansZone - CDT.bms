@@ -90,7 +90,7 @@ node "BEH_Mission_Automate_GEN_CDT_DegagerPlanObjets_"
 ]]--[[//-------------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
             do
-                for _,pion in pairs( DEC_Automate_PionsAvecPC() ) do
+                for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
                 local _continue = true
                     Activate( self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, 1, { ePhase_CDT, pion, self.positionRegroupement, eEtatEchelon_Second, } )
 
@@ -141,7 +141,7 @@ node "BEH_Misc_Automate_GEN_GererRenforcementsPourDegagerObstacles"
         for _,x in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Iteration sur les T_ConnaissanceObjet_local --> Assignation renforcement
 ]]--[[//-------------------------------------------------------------------------
-]]g_selConnaissanceObs ) do
+]]g_selConnaissanceObs or {} ) do
         local _continue = true
 do
                 local objetABrecher = x
@@ -159,7 +159,7 @@ do
 ]]
         end
 
-        for _,x in pairs( g_selConnaissanceObs ) do
+        for _,x in pairs( g_selConnaissanceObs or {} ) do
         local _continue = true
 do
                 local objetABrecher = x
@@ -174,7 +174,7 @@ do
         if( DIA_IsListEmpty( S_Obj_ListeObjetsValides( self._namedParams.obstacles ) ) ) then
             do
                 local listeGroupes = S_Gen_ObtenirGroupeGenie()
-                for _,pion in pairs( listeGroupes ) do
+                for _,pion in pairs( listeGroupes or {} ) do
                 local _continue = true
                     do
                         --[[// cast
@@ -222,7 +222,7 @@ node "BEH_Misc_Automate_GEN_GererReductionDesObstacles"
 ]]--[[// Assignation des missions
 ]]--[[//-------------------------------------------------------------------------
 ]]local listePionsGenie = S_Gen_ObtenirSectionsGenieDisponibles()
-        for _,pion in pairs( listePionsGenie ) do
+        for _,pion in pairs( listePionsGenie or {} ) do
         local _continue = true
 do
                 local objetADegager = 0

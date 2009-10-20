@@ -68,7 +68,7 @@ node "BEH_Conduite_Automate_NBC_FaireReconnaitreLesSitesROTA"
         for _,pion in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Assignation des mission
 ]]--[[//-------------------------------------------------------------------------
-]]listePionsROTA ) do
+]]listePionsROTA or {} ) do
         local _continue = true
 do
                 --[[// Cherche le site le plus proche du pion disponible

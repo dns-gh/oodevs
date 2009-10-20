@@ -90,7 +90,7 @@ node "BEH_Eni_Pion_ASA_GererEniDefendreZone"
     end,
 
     activate = function( self )
-        for _,x in pairs( S_ConnaissancesEnnemiesVivantesPercuesVolantes() ) do
+        for _,x in pairs( S_ConnaissancesEnnemiesVivantesPercuesVolantes() or {} ) do
         local _continue = true
 do
                 Activate( self.activations.BEH_Eni_Pion_ASA_MISTRAL_InterceptionBalistique, S_Eni_Pion_ASA_DefendreZone( x, self._namedParams.localisation ), { x, eReconnu, M_DOCTRINE_PION_ASA_PH(), M_MODELE_VITESSE_MISSILE_MISTRAL(), myself.typeDeploiement_, true, } )
@@ -122,7 +122,7 @@ node "BEH_Eni_Pion_ASA_GererEniDefendreSite"
     end,
 
     activate = function( self )
-        for _,x in pairs( S_ConnaissancesEnnemiesVivantesPercuesVolantes() ) do
+        for _,x in pairs( S_ConnaissancesEnnemiesVivantesPercuesVolantes() or {} ) do
         local _continue = true
 do
                 Activate( self.activations.BEH_Eni_Pion_ASA_MISTRAL_InterceptionBalistique, S_Eni_Pion_ASA_DefendreZone( x, self._namedParams.localisation ), { x, eReconnu, M_DOCTRINE_PION_ASA_PH(), M_MODELE_VITESSE_MISSILE_MISTRAL(), myself.typeDeploiement_, true, } )
@@ -150,7 +150,7 @@ node "BEH_Eni_Pion_ASA_MISTRAL_GererEniSurveiller"
 
     activate = function( self )
         local listeEnnemiesVivantesPercuesVolantes = S_ConnaissancesEnnemiesVivantesPercuesVolantes()
-        for _,x in pairs( listeEnnemiesVivantesPercuesVolantes ) do
+        for _,x in pairs( listeEnnemiesVivantesPercuesVolantes or {} ) do
         local _continue = true
 do
                 Activate( self.activations.BEH_Eni_Pion_ASA_MISTRAL_InterceptionBalistique, S_Eni_Pion_ASA_Surveiller( x ), { x, eReconnu, M_DOCTRINE_PION_ASA_PH(), M_MODELE_VITESSE_MISSILE_MISTRAL(), myself.typeDeploiement_, true, } )

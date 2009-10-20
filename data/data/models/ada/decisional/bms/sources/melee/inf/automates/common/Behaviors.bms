@@ -179,7 +179,7 @@ node "BEH_Ordre_Automate_INF_GererTransporteur"
 ]]--[[// Reception d'un ordre de l'ANIBAS
 ]]--[[// =============================================================================
 ]]local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus ) do
+        for _,x in pairs( ordres_recus or {} ) do
         local _continue = true
 do
                 local repOrdre = x

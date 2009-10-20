@@ -322,7 +322,7 @@ node "BEH_Medo_Automate_INF_OrganiserMissions_Freiner"
 ]]--[[//---------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
             do
-                for _,x_inf in pairs( self._namedParams.selPions_PE ) do
+                for _,x_inf in pairs( self._namedParams.selPions_PE or {} ) do
                 local _continue = true
                     do
                         --[[// On affecte appuyer aux pions qui vont freiner en PE
@@ -421,7 +421,7 @@ node "BEH_Medo_Automate_INF_AssignerFreiner"
         self.ptRgpt_Foo = self.ptRgpt_Foo or nil
         --[[// Mission Pion		
 ]]if( ModuleBegins() ) then
-for _,x_inf in pairs( self._namedParams.selPions_PE ) do
+for _,x_inf in pairs( self._namedParams.selPions_PE or {} ) do
             local _continue = true
                 StartActivateOverride( self, self.activations.BEH_Mission_Automate_INF_AssignerA_Freiner, 1, { ePhase_MRT, x_inf, self.ptRgpt_Foo, } )
 
@@ -448,7 +448,7 @@ node "BEH_Medo_Automate_INF_AssignerDecrocher_RgptDansZone"
     activate = function( self )
         --[[// Mission Pion		
 ]]if( ModuleBegins() ) then
-for _,x_inf in pairs( self._namedParams.selPions_PE ) do
+for _,x_inf in pairs( self._namedParams.selPions_PE or {} ) do
             local _continue = true
                 StartActivateOverride( self, self.activations.BEH_Medo_Automate_INF_AssignerDecrocherA_RgptDansZone, 1, { x_inf, self._namedParams.locRgpt, } )
 
@@ -494,7 +494,7 @@ node "BEH_Medo_Automate_INF_AssignerInterdire_Lima"
 
     activate = function( self )
         if( ModuleBegins() ) then
-for _,x in pairs( self._namedParams.lstPionsAttaque ) do
+for _,x in pairs( self._namedParams.lstPionsAttaque or {} ) do
             local _continue = true
                 StartActivateOverride( self, self.activations.BEH_Medo_Automate_INF_AssignerInterdire_Lima_PourPion, 1, { x, self._namedParams.lima, } )
 
@@ -583,7 +583,7 @@ node "BEH_Medo_Automate_INF_AssignerSurveiller_Lima"
 
     activate = function( self )
         if( ModuleBegins() ) then
-for _,x in pairs( self._namedParams.lstPionsSurveillance ) do
+for _,x in pairs( self._namedParams.lstPionsSurveillance or {} ) do
             local _continue = true
                 StartActivateOverride( self, self.activations.BEH_Medo_Automate_INF_AssignerSurveiller_Lima_PourPion, 1, { x, self._namedParams.lima, } )
 
@@ -683,7 +683,7 @@ node "BEH_Medo_Automate_INF_AssignerAppuyerFreinage"
                 local rIt_Pion = 0
                 local rIt_Appui = 0
                 local rIt_NbrAppuisMax = 1 + Floor( ( 1 + #( self._namedParams.selPions_PE ) ) / #( selPionsAppui_PE ) )
-                for _,x_pion in pairs( self._namedParams.selPions_PE ) do
+                for _,x_pion in pairs( self._namedParams.selPions_PE or {} ) do
                 local _continue = true
                     do
                         if( rIt_Pion < #( selPionsAppui_PE ) ) then

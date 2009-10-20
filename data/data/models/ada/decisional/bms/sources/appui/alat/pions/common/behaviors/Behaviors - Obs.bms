@@ -50,9 +50,9 @@ includedFiles["sources/appui/alat/pions/common/behaviors/Behaviors - Obs.bms"] =
                         end
                     end
 
-                    for _,x in pairs( DEC_Connaissances_UnitesEnnemiesDangereuses() ) do
+                    for _,x in pairs( DEC_Connaissances_UnitesEnnemiesDangereuses() or {} ) do
                     local _continue = true
-for _,y in pairs( DEC_Connaissances_UnitesEnnemiesVivantesDansZone( self._namedParams.zone ) ) do
+for _,y in pairs( DEC_Connaissances_UnitesEnnemiesVivantesDansZone( self._namedParams.zone ) or {} ) do
                         local _continue = true
 if( x == y ) then
                                 self.params.__returnValue = eActionEffectuee
@@ -263,7 +263,7 @@ node "BEH_Eni_Pion_ALAT_GererUnitesDetectes"
         --[[// variable persistantes
 ]]self.eEtatProgressionTactique = self.eEtatProgressionTactique or eActionEnCours
         local listeUnitesDetecteesDansFuseau = DEC_Connaissances_UnitesDetecteesDansFuseau()
-        for _,x in pairs( listeUnitesDetecteesDansFuseau ) do
+        for _,x in pairs( listeUnitesDetecteesDansFuseau or {} ) do
         local _continue = true
 do
                 if( DEC_ConnaissanceAgent_EstMort( x ) ) then

@@ -34,7 +34,7 @@ node "BEH_Pion_ASS_GererOrdre_AppliquerFeux"
         --[[// Prise en charge de l'ordre d'application des feux
 ]]--[[//---------------------------------------------------------------------	
 ]]local selOrder = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( selOrder ) do
+        for _,x in pairs( selOrder or {} ) do
         local _continue = true
 do
                 local repOrdreCond = x

@@ -106,7 +106,7 @@ node "BEH_Medo_Automate_AssignerDecrocherA"
 
         if( ModuleBegins() ) then
             do
-                for _,pion in pairs( DEC_Automate_PionsAvecPC() ) do
+                for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
                 local _continue = true
                     StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_MRT, pion, self.ptRegroupement, eEtatEchelon_Premier, } )
 

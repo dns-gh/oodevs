@@ -65,7 +65,7 @@ node "BEH_Situation_Automate_INF_Controler_Reduire"
     activate = function( self )
         local selPions_SE = S_ObtenirPionsDe( eEtatEchelon_Second, eEtatDestruction_None )
         local selPions_SE_INF = S_Cherche_Automate_Filtre_TypePion_INF( selPions_SE )
-        for _,x_appui in pairs( selPions_SE_INF ) do
+        for _,x_appui in pairs( selPions_SE_INF or {} ) do
         local _continue = true
 do
                 local pAppui = x_appui

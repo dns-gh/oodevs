@@ -213,7 +213,7 @@ node "BEH_Log_Pion_ALAT_GererPlotsRavitaillement"
             pionTC2 = DEC_Pion_PionPCDeAutomate( TC2 )
         end
 
-        for _,x in pairs( S_Obj_ListeObjetsValides( myself.plotsRavitaillement_ ) ) do
+        for _,x in pairs( S_Obj_ListeObjetsValides( myself.plotsRavitaillement_ ) or {} ) do
         local _continue = true
 do
                 local positionLocalisation = S_Geometrie_BarycentreZone( DEC_ConnaissanceObjet_Localisation( x ) )
@@ -376,7 +376,7 @@ node "BEH_Log_Pion_ALAT_AjoutNouveauPlotsDansFuseau"
 ]]local sConnaissancesObjets = DEC_Connaissances_ObjetsDansFuseau( S_TypeObject_ToString( eTypeObjectPlotRavitaillement ) )
         --[[// dependance de comportements
 ]]Activate( self.activations.BEH_Log_Pion_ALAT_GererPlotsRavitaillement, 0, {} )
-        for _,x in pairs( sConnaissancesObjets ) do
+        for _,x in pairs( sConnaissancesObjets or {} ) do
         local _continue = true
 do
                 if( ( not DEC_UserTypeList_Contient( myself.plotsRavitaillement_, x ) ) ) then

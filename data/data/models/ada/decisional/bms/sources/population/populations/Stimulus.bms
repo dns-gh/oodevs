@@ -27,7 +27,7 @@ motivation_plugin.stimuli["STIM_Mission"] = function()
 
 motivation_plugin.stimuli["STIM_PriseAPartieTirDirect"] = function()
         local lstPions = DEC_Connaissances_PionsPrenantAPartie()
-        for _,pion in pairs( lstPions ) do
+        for _,pion in pairs( lstPions or {} ) do
         local _continue = true
 do
                 local roe = DEC_ConnaissanceAgent_RoePopulation( pion )
@@ -69,7 +69,7 @@ do
 
 motivation_plugin.stimuli["STIM_ZoneSecurisee"] = function()
         local lstSecus = DEC_Connaissances_PionsSecurisant()
-        for _,secu in pairs( lstSecus ) do
+        for _,secu in pairs( lstSecus or {} ) do
         local _continue = true
 do
                 UpdateStateVariable( "VE_Domination", S_EffetSecurisationSurDomination( DEC_ConnaissanceAgent_RoePopulation( secu ) ) )

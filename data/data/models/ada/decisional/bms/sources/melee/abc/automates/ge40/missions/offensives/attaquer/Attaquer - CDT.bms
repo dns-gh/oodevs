@@ -38,7 +38,7 @@ include "bit.lua"
                                 do
                     g_bPhaseReceuil = false
                     local listePionsSubordonnes = DEC_Automate_AutomatesSubordonnes()
-                    for _,x in pairs( listePionsSubordonnes ) do
+                    for _,x in pairs( listePionsSubordonnes or {} ) do
                     local _continue = true
                         do
                             local automat = x
@@ -208,7 +208,7 @@ node "BEH_GTIA_AssignerMissionsEcl"
     end,
 
     activate = function( self )
-        for _,pion in pairs( S_Cherche_GE_Filtre_TypeAutomate_Eclairage( self._namedParams.listePion ) ) do
+        for _,pion in pairs( S_Cherche_GE_Filtre_TypeAutomate_Eclairage( self._namedParams.listePion ) or {} ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionMeleeA, 1, { pion, "T_Mission_Automate_ABC_Eclairer", } )
 
@@ -240,7 +240,7 @@ node "BEH_GTIA_AssignerMissionsPE"
     activate = function( self )
         self.point = self.point or DEC_Geometrie_CalculerPointDepart()
         for _,x in pairs( --[[// Assignation missions ABC
-]]S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePions ) ) do
+]]S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePions ) or {} ) do
         local _continue = true
 do
                 local pion = x
@@ -257,7 +257,7 @@ do
 ]]
         end
 
-        for _,x in pairs( S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePions ) ) do
+        for _,x in pairs( S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePions ) or {} ) do
         local _continue = true
 do
                 local pion = x
@@ -297,14 +297,14 @@ node "BEH_GTIA_AssignerMissionsSE"
 
     activate = function( self )
         for _,pion in pairs( --[[// Assignation missions ABC
-]]S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePion ) ) do
+]]S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePion ) or {} ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionMeleeA, 1, { pion, "T_Mission_Automate_SoutenirEnMesureDe", } )
 
         end
 
         for _,pion in pairs( --[[// Assignation missions INF 
-]]S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePion ) ) do
+]]S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePion ) or {} ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionMeleeA, 1, { pion, "T_Mission_Automate_SoutenirEnMesureDe", } )
 
@@ -362,21 +362,21 @@ node "BEH_GTIA_AssignerMissionsSEAppui"
 
     activate = function( self )
         for _,pion in pairs( --[[// TC2
-]]S_Cherche_GE_Filtre_TypeAutomate_Log( self._namedParams.listePion ) ) do
+]]S_Cherche_GE_Filtre_TypeAutomate_Log( self._namedParams.listePion ) or {} ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionLogA, 1, { pion, } )
 
         end
 
         for _,pion in pairs( --[[// Génie
-]]S_Cherche_GE_Filtre_TypeAutomate_Genie( self._namedParams.listePion ) ) do
+]]S_Cherche_GE_Filtre_TypeAutomate_Genie( self._namedParams.listePion ) or {} ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionGenieA, 1, { pion, self._namedParams.objectifs, } )
 
         end
 
         for _,pion in pairs( --[[// DLO
-]]S_Cherche_GE_Filtre_TypeAutomate_ART( self._namedParams.listePion ) ) do
+]]S_Cherche_GE_Filtre_TypeAutomate_ART( self._namedParams.listePion ) or {} ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionART, 1, { pion, } )
 
@@ -695,7 +695,7 @@ elseif switch_1 == "T_Mission_Automate_INF_Semparer" then
         local listeItineraires = {}--[[// itineraires à assigner
 ]]
         for _,objectif in pairs( --[[// Itineraires vers les zones prioritaires
-]]self._namedParams.objectifs ) do
+]]self._namedParams.objectifs or {} ) do
         local _continue = true
 do
                 local ptVersZone = S_Geometrie_BarycentreZone( DEC_Objectif_Localisation( objectif ) )

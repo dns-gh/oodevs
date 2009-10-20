@@ -172,7 +172,7 @@ node "ACT_Nbc_SeDecontaminer"
 ]]--[[// il s'agirait d'une zone contaminée
 ]]--[[//---------------------------------------------------------------------
 ]]local listeObjet = DEC_Connaissances_CollisionsObjets()
-        for _,objet in pairs( listeObjet ) do
+        for _,objet in pairs( listeObjet or {} ) do
         local _continue = true
             Activate( self.activations.BEH_Nbc_Pion_FaireUneMesureDans, 1, { objet, } )
 

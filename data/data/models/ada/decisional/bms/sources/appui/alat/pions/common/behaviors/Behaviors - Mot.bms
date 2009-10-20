@@ -41,7 +41,7 @@ node "BEH_MOT_Pion_ALAT_GarderSesDistances"
 
     activate = function( self )
         local listeUnitesEnnemiesDangereuses = DEC_Connaissances_UnitesEnnemiesDangereuses()
-        for _,repEni in pairs( listeUnitesEnnemiesDangereuses ) do
+        for _,repEni in pairs( listeUnitesEnnemiesDangereuses or {} ) do
         local _continue = true
 do
                 Activate( self.activations.ACT_MAJ_EtatDec, 1, { eEtatDec_Sauvegarde, } )

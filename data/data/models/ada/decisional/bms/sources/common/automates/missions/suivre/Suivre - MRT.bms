@@ -89,7 +89,7 @@ node "BEH_Mission_Automate_AssignerFaireMouvement"
 
     activate = function( self )
         if( ModuleBegins() ) then
-for _,pion in pairs( self._namedParams.listePions ) do
+for _,pion in pairs( self._namedParams.listePions or {} ) do
             local _continue = true
                 StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, 1, { ePhase_MRT, pion, DEC_Geometrie_CalculerPointArriveePourPion( pion ), eEtatEchelon_Premier, } )
 

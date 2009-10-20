@@ -41,11 +41,11 @@ function S_Geometrie_Pion_ALAT_ZonePlusInterressanteDansFuseau( listeLocalisatio
         end
     end
 
-    for _,x in pairs( listeLocalisation ) do
+    for _,x in pairs( listeLocalisation or {} ) do
     local _continue = true
 do
             nbEnis = 0
-            for _,y in pairs( listeUnitesEnnemiesVivantesDansFuseau ) do
+            for _,y in pairs( listeUnitesEnnemiesVivantesDansFuseau or {} ) do
             local _continue = true
 do
                     if( DEC_Geometrie_EstPointDansLocalisation( DEC_ConnaissanceAgent_Position( y ), x ) ) then
@@ -77,10 +77,10 @@ function S_Geometrie_Pion_ALAT_ZoneAvantPremierEchelonEnnemi( listeLocalisation 
     local meilleureZoneAvantPremierEchelon = nil
     local listeUnitesEnnemiesVivantesDansFuseau = DEC_Connaissances_UnitesEnnemiesVivantesDansFuseau()
     meilleureZoneAvantPremierEchelon = DEC_UserTypeList_GetAt( listeLocalisation, 0 )
-    for _,x in pairs( listeLocalisation ) do
+    for _,x in pairs( listeLocalisation or {} ) do
     local _continue = true
 do
-            for _,y in pairs( listeUnitesEnnemiesVivantesDansFuseau ) do
+            for _,y in pairs( listeUnitesEnnemiesVivantesDansFuseau or {} ) do
             local _continue = true
 do
                     if( DEC_Geometrie_EstPointDansLocalisation( DEC_ConnaissanceAgent_Position( y ), x ) ) then

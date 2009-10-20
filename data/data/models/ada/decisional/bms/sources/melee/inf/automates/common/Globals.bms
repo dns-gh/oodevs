@@ -67,7 +67,7 @@ include "Melee/Inf/Automates/Common/Parameters.bms"
 end
 
 function S_Medo_Automate_InitialiseSE( selPions, eEtatEchelon )
-    for _,x in pairs( selPions ) do
+    for _,x in pairs( selPions or {} ) do
     local _continue = true
 do
             local pion = x
@@ -82,7 +82,7 @@ function S_Dispositif_Automate_INF_ObtenirListePionsFreinantDe( eEtatEchelon )
     local _returnValue = {}
     local listeFiltre = {}
     local listePionFreinant = S_Cherche_Automate_Filtre_TypeMission( DEC_Automate_PionsAvecPC(), "T_Mission_Pion_INF_Freiner" )
-    for _,x in pairs( listePionFreinant ) do
+    for _,x in pairs( listePionFreinant or {} ) do
     local _continue = true
 do
             local pion = x
@@ -102,7 +102,7 @@ function S_Dispositif_Automate_INF_Freiner_PionsDevant( resultatCalcul, eEtatEch
     local _returnValue = false
     _returnValue = false
     local listePions = S_ObtenirTousPionsDe( eEtatEchelon )
-    for _,x in pairs( listePions ) do
+    for _,x in pairs( listePions or {} ) do
     local _continue = true
 do
             local pion = x
@@ -238,7 +238,7 @@ end
     local _returnValue = nil
     _returnValue = nil
     local selPions = DEC_Automate_PionsSansPC()
-    for _,x in pairs( selPions ) do
+    for _,x in pairs( selPions or {} ) do
     local _continue = true
 do
             local pion = x
@@ -262,7 +262,7 @@ function S_Nombre_PionsActifs( )
     local _returnValue = 0
     _returnValue = 0
     local selPions = DEC_Automate_PionsSansPC()
-    for _,x in pairs( selPions ) do
+    for _,x in pairs( selPions or {} ) do
     local _continue = true
 do
              do
@@ -291,7 +291,7 @@ function S_Cherche_Automate_PionsPourReleve( )
     local _returnValue = {}
     local lstPionsEnSoutien = {}
     local selPion = S_Cherche_Automate_Filtre_TypePion( DEC_Automate_PionsSansPC(), "SectionInfanterie" )
-    for _,x in pairs( selPion ) do
+    for _,x in pairs( selPion or {} ) do
     local _continue = true
 do
             local pion = x
@@ -311,7 +311,7 @@ function S_TousPionsEnPE_Ou_Freinant( )
     local _returnValue = {}
     local selTemp = {}
     local selPions = DEC_Automate_PionsSansPC()
-    for _,x in pairs( selPions ) do
+    for _,x in pairs( selPions or {} ) do
     local _continue = true
 do
             local pion = x
@@ -331,7 +331,7 @@ function S_Cherche_Automate_INF_PE( selPions, pPion )
     local _returnValue = nil
     local pionFoo = nil
     _returnValue = pionFoo
-    for _,x in pairs( selPions ) do
+    for _,x in pairs( selPions or {} ) do
     local _continue = true
 do
             local pion = x
@@ -359,7 +359,7 @@ function S_Cherche_Automate_INF_PionAAppuyer( sPion_PE, pPion )
         do return _returnValue end
     end
 
-    for _,x in pairs( sPion_PE ) do
+    for _,x in pairs( sPion_PE or {} ) do
     local _continue = true
 do
             local pion = x
@@ -422,7 +422,7 @@ end
 function S_Automate_INF_EstAppuye( pPion, sPionsAppui )
     local _returnValue = false
     _returnValue = false
-    for _,x in pairs( sPionsAppui ) do
+    for _,x in pairs( sPionsAppui or {} ) do
     local _continue = true
 do
             local pAppui = x
@@ -447,7 +447,7 @@ function S_CompagnieAbimee( )
     local _returnValue = false
     _returnValue = false
     local selPions = DEC_Automate_PionsSansPC()
-    for _,x in pairs( selPions ) do
+    for _,x in pairs( selPions or {} ) do
     local _continue = true
 do
             local pion = x
@@ -475,7 +475,7 @@ function S_Misc_Automate_INF_Pions_EnReductionsSur( ksEni )
     end
 
     _returnValue = 0
-    for _,x in pairs( selPions ) do
+    for _,x in pairs( selPions or {} ) do
     local _continue = true
 do
             local pion = x
@@ -511,7 +511,7 @@ function S_Cherche_Automate_INF_EniDangereux_DansZone( pionAppui, locZone )
     local lstEnisPourAppui = DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion( pionAppui )
     local pionFoo = nil
     _returnValue = pionFoo
-    for _,ksEni in pairs( lstEnisPourAppui ) do
+    for _,ksEni in pairs( lstEnisPourAppui or {} ) do
     local _continue = true
 do
             if( not S_Eni_EstDansZone( ksEni, locZone ) ) then
@@ -540,7 +540,7 @@ function S_ObtenirPionsOperationnels_SansPC_Coordination( )
     local _returnValue = {}
     local selTemp = {}
     local selPions = S_ObtenirPionsOperationnels_SansPC()
-    for _,x in pairs( selPions ) do
+    for _,x in pairs( selPions or {} ) do
     local _continue = true
 do
             local pion = x
@@ -569,7 +569,7 @@ function S_Cherche_Automate_INF_PionReception_Appui( pionAppui, lst_Pions_AAppuy
     local _returnValue = nil
     local pionAppui_Max = nil
     local rForceAppui_Max = 0
-    for _,x in pairs( lst_Pions_AAppuyer ) do
+    for _,x in pairs( lst_Pions_AAppuyer or {} ) do
     local _continue = true
 do
             local pion = x
@@ -651,7 +651,7 @@ function S_Cherche_Automate_INF_EniValide_Pour( pion )
     local lstEnisPourPion = DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion( pion )
     local ksEni = nil
     local rEni_MaxDist = 2500
-    for _,x_eni in pairs( lstEnisPourPion ) do
+    for _,x_eni in pairs( lstEnisPourPion or {} ) do
     local _continue = true
 do
             local rEni_Dist = DEC_Geometrie_Distance( DEC_ConnaissanceAgent_Position( x_eni ), DEC_Automate_PionPosition( pion ) )
@@ -674,7 +674,7 @@ function S_Misc_Automate_INF_Compte_MissionEchelon( typeMission, eEtatEchelon )
     local _returnValue = 0
     _returnValue = 0
     local selPions = DEC_Automate_PionsSansPC()
-    for _,x in pairs( selPions ) do
+    for _,x in pairs( selPions or {} ) do
     local _continue = true
 do
             local pion = x
@@ -693,7 +693,7 @@ function S_Cherche_Automate_INF_PionMission( sPions, typeMission )
     local _returnValue = nil
     local pionFoo = nil
     _returnValue = pionFoo
-    for _,x in pairs( sPions ) do
+    for _,x in pairs( sPions or {} ) do
     local _continue = true
 do
             local pion = x
@@ -715,7 +715,7 @@ end
 function S_Conduite_PionHorsFuseau( sPionsOrdre )
     local _returnValue = false
     _returnValue = false
-    for _,x in pairs( sPionsOrdre ) do
+    for _,x in pairs( sPionsOrdre or {} ) do
     local _continue = true
 do
             _returnValue = not DEC_Geometrie_EstPointDansFuseau( DEC_Automate_PionPosition( x ) )
@@ -733,7 +733,7 @@ end
 function S_Conduite_PionEnAttente_OrdreCoordination( sPionsOrdre )
     local _returnValue = false
     _returnValue = false
-    for _,x in pairs( sPionsOrdre ) do
+    for _,x in pairs( sPionsOrdre or {} ) do
     local _continue = true
 do
             local pionOrdre = x
@@ -803,7 +803,7 @@ end
 function S_Dispositif_Automate_INF_PionsAmisEnDifficultes( compagnie )
     local _returnValue = false
     _returnValue = false
-    for _,x in pairs( DEC_Automate_PionsDeAutomateAvecPC( compagnie ) ) do
+    for _,x in pairs( DEC_Automate_PionsDeAutomateAvecPC( compagnie ) or {} ) do
     local _continue = true
 do
             local pion = x
@@ -852,7 +852,7 @@ function S_Dispositif_Automate_INF_ObtenirPionsPE_EnDifficultes( )
     local _returnValue = {}
     local listePionsPEEnDifficulte = {}
     local listePions = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
-    for _,x in pairs( listePions ) do
+    for _,x in pairs( listePions or {} ) do
     local _continue = true
 do
             local pion = x
@@ -872,7 +872,7 @@ function S_Dispositif_Automate_INF_ObtenirPionsSoutien( )
     local _returnValue = {}
     local listePion = DEC_Automate_PionsSansPC()
     local listePionDeSoutien = {}
-    for _,x in pairs( listePion ) do
+    for _,x in pairs( listePion or {} ) do
     local _continue = true
 do
             local pion = x
@@ -905,7 +905,7 @@ function S_Dispositif_Automate_INF_ObtenirPionsPE_EnRAS( )
     local _returnValue = {}
     local listePionsPEEnRAS = {}
     local listePions = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
-    for _,x in pairs( listePions ) do
+    for _,x in pairs( listePions or {} ) do
     local _continue = true
 do
             local pion = x
@@ -925,7 +925,7 @@ function S_Dispositif_Automate_INF_ObtenirPionEnSoutienDe( pionSoutenu )
     local _returnValue = nil
     local pionEnSoutien = nil
     local listePions = DEC_Automate_PionsSansPC()
-    for _,x in pairs( listePions ) do
+    for _,x in pairs( listePions or {} ) do
     local _continue = true
 do
             local pion = x
@@ -953,7 +953,7 @@ function S_Dispositif_Automate_INF_EvtPionDetruit( )
     _returnValue = false
     local listePionsPE = S_ObtenirTousPionsDe( eEtatEchelon_Premier )
     local listePionsPEcl = S_ObtenirTousPionsDe( eEtatEchelon_Eclairage )
-    for _,x in pairs( listePionsPE ) do
+    for _,x in pairs( listePionsPE or {} ) do
     local _continue = true
 do
             local pion = x
@@ -969,7 +969,7 @@ do
 
     end
 
-    for _,x in pairs( listePionsPEcl ) do
+    for _,x in pairs( listePionsPEcl or {} ) do
     local _continue = true
 do
             local pion = x
@@ -987,7 +987,7 @@ end
 function S_Dispositif_Automate_INF_PionsSansMission( )
     local _returnValue = {}
     local selTemp = {}
-    for _,x in pairs( DEC_Automate_PionsAvecPC() ) do
+    for _,x in pairs( DEC_Automate_PionsAvecPC() or {} ) do
     local _continue = true
 do
             local pion = x
@@ -1007,7 +1007,7 @@ function S_Dispositif_Automate_INF_ObtenirPionDetruitsDe( eEtatEchelon )
     local _returnValue = {}
     local selTemp = {}
     local listePions = S_ObtenirTousPionsDe( eEtatEchelon )
-    for _,x in pairs( listePions ) do
+    for _,x in pairs( listePions or {} ) do
     local _continue = true
 do
             local pion = x

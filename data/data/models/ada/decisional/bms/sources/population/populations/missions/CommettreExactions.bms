@@ -42,7 +42,7 @@ include "bit.lua"
 
         local lstInstallations = DEC_Connaissances_ObjetsDansZone( self._namedParams.mission.zone_, S_TypeObject_ToString( eTypeObjectInstallation ) )
         local bInstallation = false
-        for _,installation in pairs( lstInstallations ) do
+        for _,installation in pairs( lstInstallations or {} ) do
         local _continue = true
 if( DEC_ConnaissanceObjet_EstValide( installation ) and DEC_ConnaissanceObjet_EstEnnemi( installation ) ~= eTristate_False ) then
                 do

@@ -80,7 +80,7 @@ node "BEH_RC_Automate_Situation_Neutralisation"
 ]]--[[// Juste CR Prise à partie par Art
 ]]--[[// pour voir neutralisation cf CR. des pions
 ]]--[[//-------------------------------------------------------------------------
-]]DEC_Automate_PionsAvecPC() ) do
+]]DEC_Automate_PionsAvecPC() or {} ) do
         local _continue = true
 do
                 if( DEC_Automate_PionEstNeutralise( pion ) ) then
@@ -115,7 +115,7 @@ node "BEH_RC_Automate_Situation_Ambiance"
         for _,x in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Des qu'un pion à changé d'ambiance...
 ]]--[[//-------------------------------------------------------------------------
-]]DEC_Automate_PionsAvecPC() ) do
+]]DEC_Automate_PionsAvecPC() or {} ) do
         local _continue = true
 do
                 local pion = x
@@ -157,7 +157,7 @@ node "BEH_RC_Automate_Situation_Coordination"
 ]]--[[// CR si on donne l'ordre à l'automate d'attendre
 ]]--[[//-------------------------------------------------------------------------
 ]]local listePions = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
-        for _,x in pairs( listePions ) do
+        for _,x in pairs( listePions or {} ) do
         local _continue = true
 do
                 local pion = x
@@ -246,7 +246,7 @@ node "BEH_RC_Automate_Situation_ROE"
 ]]--[[//-------------------------------------------------------------------------
 ]]local nbrePions = #( DEC_Automate_PionsAvecPC() )
         for _,x in pairs( --[[// AVEC PC!
-]]DEC_Automate_PionsAvecPC() ) do
+]]DEC_Automate_PionsAvecPC() or {} ) do
         local _continue = true
 do
                 local pion = x
@@ -300,7 +300,7 @@ node "BEH_RC_Automate_Situation_Radio"
 ]]--[[// Sur tous les pions
 ]]--[[//-------------------------------------------------------------------------
 ]]--[[// AVEC PC!
-]]DEC_Automate_PionsAvecPC() ) do
+]]DEC_Automate_PionsAvecPC() or {} ) do
         local _continue = true
 do
                 local pion = x
@@ -339,7 +339,7 @@ node "BEH_RC_Automate_Situation_Radar"
 ]]--[[// Sur tous les pions
 ]]--[[//-------------------------------------------------------------------------
 ]]--[[// AVEC PC!
-]]DEC_Automate_PionsAvecPC() ) do
+]]DEC_Automate_PionsAvecPC() or {} ) do
         local _continue = true
 do
                 local pion = x
@@ -380,7 +380,7 @@ node "BEH_RC_Automate_Situation_NBC"
 ]]--[[// Alerte de niveau 4 sur ordre
 ]]--[[//-------------------------------------------------------------------------
 ]]--[[// AVEC PC!
-]]DEC_Automate_PionsAvecPC() ) do
+]]DEC_Automate_PionsAvecPC() or {} ) do
         local _continue = true
 do
                 local pion = x
@@ -434,7 +434,7 @@ node "BEH_RC_Automate_Situation_Mission"
 ]]--[[// Situation mission
 ]]--[[//-------------------------------------------------------------------------
 ]]local listePions = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
-        for _,x in pairs( listePions ) do
+        for _,x in pairs( listePions or {} ) do
         local _continue = true
 do
                 local pion = x
@@ -495,7 +495,7 @@ node "BEH_RC_Automate_Situation_FinMission"
         for _,x in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Echelon ecl
 ]]--[[//-------------------------------------------------------------------------
-]]listePionsPecl ) do
+]]listePionsPecl or {} ) do
         local _continue = true
 do
                 local pion = x
@@ -510,7 +510,7 @@ do
 ]]
         end
 
-        for _,x in pairs( listePionsPE ) do
+        for _,x in pairs( listePionsPE or {} ) do
         local _continue = true
 do
                 local pion = x
@@ -546,7 +546,7 @@ node "BEH_RC_Automate_Situation_Contact"
         for _,x in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Sur tous les pions même le PC...
 ]]--[[//-------------------------------------------------------------------------
-]]myself:DEC_Automate_PionsAvecPC() ) do
+]]myself:DEC_Automate_PionsAvecPC() or {} ) do
         local _continue = true
 do
                 local pion = x
@@ -614,7 +614,7 @@ node "BEH_RC_Automate_SurLima"
         for _,x in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Le premier pion a atteindre la lima = CR
 ]]--[[//-------------------------------------------------------------------------
-]]DEC_Automate_PionsSansPC() ) do
+]]DEC_Automate_PionsSansPC() or {} ) do
         local _continue = true
 do
                 local pion = x

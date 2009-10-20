@@ -315,7 +315,7 @@ node "BEH_Obj_Pion_INF_DestructionTerrain_DansZone"
                     do return end
                 end
 
-                Activate( self.activations.ACT_Obj_Pion_INF_RealiserObjet, 1, setmetatable( { self.eTypeObjet, self.locObjet, 0, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                Activate( self.activations.ACT_Obj_Pion_INF_RealiserObjet, 1, setmetatable( { self.eTypeObjet, self.locObjet, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
             end
         end
 
@@ -396,7 +396,7 @@ node "BEH_Obj_Pion_INF_Detruire_Objets"
                 --[[// Recuperer les objets dans la zone :
 ]]--[[// OPT MIA: Faire avec DEC_Connaissances_ObjetsDansZone()
 ]]local lstObjets = DEC_Connaissances_ObjetsDansZone( self._namedParams.zone, S_TypeObject_ToString( eTypeObjectPosteTir ), S_TypeObject_ToString( eTypeObjectZoneProtegee ), S_TypeObject_ToString( eTypeObjectZoneImplantationCanon ), S_TypeObject_ToString( eTypeObjectZoneImplantationCOBRA ), S_TypeObject_ToString( eTypeObjectZoneImplantationMortier ), S_TypeObject_ToString( eTypeObjectZoneImplantationLRM ), S_TypeObject_ToString( eTypeObjectSiteFranchissement ), S_TypeObject_ToString( eTypeObjectPlotRavitaillement ), S_TypeObject_ToString( eTypeObjectSiteDecontamination ), S_TypeObject_ToString( eTypeObjectRota ) )
-                for _,x_obj in pairs( lstObjets ) do
+                for _,x_obj in pairs( lstObjets or {} ) do
                 local _continue = true
                     do
                         --[[/*    MIA OPT : attention on ne détruit que les objets dans la zone

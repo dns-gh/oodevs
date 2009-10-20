@@ -219,7 +219,7 @@ node "BEH_Dep_GererAvantPoint"
 
     activate = function( self )
         local listePointInterressant = DEC_GetCategory( "points_interressants" )
-        for _,x in pairs( listePointInterressant ) do
+        for _,x in pairs( listePointInterressant or {} ) do
         local _continue = true
 do
                 local ptABC = x
@@ -336,7 +336,7 @@ node "BEH_Dep_GererPoint"
 ]]--[[// Regarder les points interssants
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listePointInterressant = DEC_GetCategory( "points_interressants" )
-        for _,x in pairs( listePointInterressant ) do
+        for _,x in pairs( listePointInterressant or {} ) do
         local _continue = true
 do
                 local ptABC = x

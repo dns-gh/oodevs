@@ -44,7 +44,7 @@ includedFiles["sources/melee/abc/automates/common/missions/jalonner/Jalonner - M
 ]]--[[// Affectation des missions du premier echelon
 ]]--[[// Tous les pion de premier echelon on la mssion reconnaitre
 ]]--[[//-----------------------------------------------------------------------------
-]]self._namedParams.selPions ) do
+]]self._namedParams.selPions or {} ) do
         local _continue = true
             Activate( self.activations.BEH_Mission_Automate_ABC_AssignerJalonnerA, 1, { ePhase_MRT, pion, self._namedParams.eEtatEchelon, } )
 

@@ -141,7 +141,7 @@ node "BEH_Eni_Pion_VAB_RecoAxe"
 
         --[[// Precise le contact sur les unites detectees
 ]]local lstUnitesDansFuseau = DEC_Connaissances_UnitesDetecteesDansFuseau()
-        for _,ksEni in pairs( lstUnitesDansFuseau ) do
+        for _,ksEni in pairs( lstUnitesDansFuseau or {} ) do
         local _continue = true
 do
                 local rForce = GetMotivation( "MOT_ManoeuvrerSurEnis" ) + S_Force_ActionContre( ksEni )
@@ -154,7 +154,7 @@ do
         end
 
         local lstEnisDansFuseau = DEC_Connaissances_UnitesEnnemiesVivantesDansFuseau()
-        for _,ksEni in pairs( lstEnisDansFuseau ) do
+        for _,ksEni in pairs( lstEnisDansFuseau or {} ) do
         local _continue = true
 do
                 if( DEC_ConnaissanceAgent_EstDetruitTactique( ksEni ) ) then

@@ -34,7 +34,7 @@ includedFiles["sources/population/asymetriques/common/automate/missions/commettr
                 if( szListeZones > 0 ) then
                     do
                         local nCurrentZoneIndex = 0
-                        for _,pion in pairs( DEC_Automate_PionsAvecPC() ) do
+                        for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
                         local _continue = true
                             do
                                 StartActivateOverride( self, self.activations.BEH_Mission_Automate_ASY_AssignerCommettreExactionsA, 1, { ePhase_MRT, pion, DEC_UserTypeList_GetAt( self.missionExaction.zones_, nCurrentZoneIndex ), } )

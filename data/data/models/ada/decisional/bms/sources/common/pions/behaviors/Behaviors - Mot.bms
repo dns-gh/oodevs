@@ -36,7 +36,7 @@ include "bit.lua"
 
     activate = function( self )
         local listeConnaissances = DEC_Connaissances_UnitesEnnemiesDangereuses()
-        for _,repEni in pairs( listeConnaissances ) do
+        for _,repEni in pairs( listeConnaissances or {} ) do
         local _continue = true
             Activate( self.activations.ACT_Dep_SePosterFaceA, S_Force_DangerSur( repEni ), { repEni, } )
 
@@ -71,7 +71,7 @@ node "BEH_MOT_GarderSesDistances"
         end
 
         local listeConnaissances = DEC_Connaissances_UnitesEnnemiesDangereuses()
-        for _,repEni in pairs( listeConnaissances ) do
+        for _,repEni in pairs( listeConnaissances or {} ) do
         local _continue = true
             Activate( self.activations.BEH_MOT_GarderSesDistancesFaceA, S_Force_DangerSur( repEni ), { repEni, } )
 
@@ -206,7 +206,7 @@ node "BEH_MOT_TirerSurEnis"
 
     activate = function( self )
         local listeConnaissances = DEC_Connaissances_UnitesEnnemiesVivantesPercues()
-        for _,repEni in pairs( listeConnaissances ) do
+        for _,repEni in pairs( listeConnaissances or {} ) do
         local _continue = true
             Activate( self.activations.BEH_MOT_GererLesFeuxSur, S_Force_DangerSur( repEni ), { repEni, } )
 
@@ -335,7 +335,7 @@ node "BEH_MOT_RiposterSurEnis"
 
     activate = function( self )
         local listeConnaissances = DEC_Connaissances_UnitesPrenantAPartie()
-        for _,repEni in pairs( listeConnaissances ) do
+        for _,repEni in pairs( listeConnaissances or {} ) do
         local _continue = true
 do
                 if( S_Tir_EstAPortee( repEni, M_POLY_PH_RIPOSTE() ) ) then

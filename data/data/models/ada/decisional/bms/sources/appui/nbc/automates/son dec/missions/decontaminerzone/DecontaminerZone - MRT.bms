@@ -28,7 +28,7 @@ includedFiles["sources/appui/nbc/automates/son dec/missions/decontaminerzone/Dec
                 DEC_Trace( "$ MIS_Automate_MRT_NBC_DecontaminerUneZone: $" )
                 DEC_SetMission( myself, self._namedParams.mission )
                 local listePionsSubordonnes = DEC_Automate_PionsSansPC()
-                for _,x in pairs( listePionsSubordonnes ) do
+                for _,x in pairs( listePionsSubordonnes or {} ) do
                 local _continue = true
                     do
                         local pion = x

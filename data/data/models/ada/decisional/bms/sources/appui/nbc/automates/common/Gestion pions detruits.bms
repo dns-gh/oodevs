@@ -32,7 +32,7 @@ includedFiles["sources/appui/nbc/automates/common/Gestion pions detruits.bms"] =
         for _,x in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Revoir la place du pion dans le dispositif
 ]]--[[//-----------------------------------------------------------------------------
-]]listePionsDetruits ) do
+]]listePionsDetruits or {} ) do
         local _continue = true
 do
                 local pionDetruit = x

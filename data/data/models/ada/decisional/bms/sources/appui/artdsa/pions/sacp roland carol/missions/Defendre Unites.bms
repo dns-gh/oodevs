@@ -138,7 +138,7 @@ node "BEH_Eni_Pion_ASA_GererEniDefendreUnites"
     end,
 
     activate = function( self )
-        for _,x in pairs( S_ConnaissancesEnnemiesVivantesPercuesVolantes() ) do
+        for _,x in pairs( S_ConnaissancesEnnemiesVivantesPercuesVolantes() or {} ) do
         local _continue = true
 do
                 Activate( self.activations.BEH_Eni_Pion_ASA_Roland_Carol_InterceptionBalistique, S_Eni_Pion_ASA_DefendreUnites( self._namedParams.listePions ), { x, eReconnu, M_DOCTRINE_PION_ASA_PH(), 700, true, } )

@@ -294,7 +294,7 @@ node "BEH_Eni_Pion_VAB_Controler_Traiter"
 
         --[[// On traite l'unite si elle est dans le fuseau de la section
 ]]local lstEnis = DEC_Connaissances_UnitesEnnemiesVivantesDansZone( self._namedParams.locZone )
-        for _,ksEni in pairs( lstEnis ) do
+        for _,ksEni in pairs( lstEnis or {} ) do
         local _continue = true
 do
                 if( DEC_ConnaissanceAgent_EstDetruitTactique( ksEni ) ) then

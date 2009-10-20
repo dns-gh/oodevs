@@ -74,7 +74,7 @@ motivation_plugin.stimuli["STIM_PresenceEnisRendus"] = function()
 ]]--[[// PRISONNIERS
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listeEniRendus = DEC_Connaissances_UnitesRenduesAProximite( 1000 )
-        for _,eniRendu in pairs( listeEniRendus ) do
+        for _,eniRendu in pairs( listeEniRendus or {} ) do
         local _continue = true
 do
                 if( not DEC_ConnaissanceAgent_EstPrisonnier( eniRendu ) ) then
@@ -105,7 +105,7 @@ motivation_plugin.stimuli["STIM_PresenceRefugies"] = function()
 ]]--[[// REFUGIES
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listeRefugies = DEC_Connaissances_RefugiesAProximite( 1000 )
-        for _,repRefugies in pairs( listeRefugies ) do
+        for _,repRefugies in pairs( listeRefugies or {} ) do
         local _continue = true
 do
                 if( not DEC_Refugies_EstEmbarque( repRefugies ) ) then
@@ -127,7 +127,7 @@ do
 motivation_plugin.stimuli["STIM_PresenceZoneTirInterdit"] = function()
         SetStimulus( "STIM_PresenceZoneTirInterdit", 0 )
         local listeObjet = DEC_Connaissances_CollisionsObjets()
-        for _,objet in pairs( listeObjet ) do
+        for _,objet in pairs( listeObjet or {} ) do
         local _continue = true
 do
                 if( DEC_ConnaissanceObjet_Type( objet ) == S_TypeObject_ToString( eTypeObjectZoneInterditeTir ) ) then

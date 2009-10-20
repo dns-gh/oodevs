@@ -27,7 +27,7 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Ambiances.bms"] = true
 ]]--[[// Permet (Eventuellement!) de repasser en ambiance vitesse si besoin
 ]]--[[//-----------------------------------------------------------------------------
 ]]local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus ) do
+        for _,x in pairs( ordres_recus or {} ) do
         local _continue = true
 do
                 local repOrdre = x

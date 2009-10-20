@@ -56,7 +56,7 @@ node "BEH_Conduite_ABC_Automate_Jalonner_GererLesLC"
     activate = function( self )
         local selPionsFr = S_Cherche_Automate_Filtre_TypeMission( DEC_Automate_PionsAvecPC(), "T_Mission_Pion_ABC_Jalonner" )
         if( DEC_AutomateSuperieur_EstEmbraye() and F_Automat_GeteEtatEchelon( myself ) ~= eEtatEchelon_Premier ) then
-for _,pion in pairs( selPionsFr ) do
+for _,pion in pairs( selPionsFr or {} ) do
             local _continue = true
                 Activate( self.activations.ACT_Ordre_Automate_PasserSurLC, 1, { pion, } )
 

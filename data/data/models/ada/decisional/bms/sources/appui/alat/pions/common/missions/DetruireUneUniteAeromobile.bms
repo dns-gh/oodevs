@@ -188,7 +188,7 @@ node "BEH_Eni_Pion_ALAT_GererEniDetruireAeromobile"
             do return end
         end
 
-        for _,x in pairs( self._namedParams.listeEnis ) do
+        for _,x in pairs( self._namedParams.listeEnis or {} ) do
         local _continue = true
 do
                 if( not DEC_ConnaissanceAgent_EstPercuParUnite( x ) ) then

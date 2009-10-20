@@ -29,7 +29,7 @@ include "Common/Automates/Actions/Medo/Actions - Medo - LOG.bms"
         if( ModuleBegins() ) then
             do
                 local pointBuffer = nil
-                for _,pion in pairs( self._namedParams.listePions ) do
+                for _,pion in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
                         if( ( self._namedParams.positionDeploiement == 0 or self._namedParams.positionDeploiement == nil ) ) then
@@ -128,7 +128,7 @@ node "BEH_Mission_Automate_LOG_AssignerDecontaminerBlessesAListe"
         if( ModuleBegins() ) then
             do
                 local pointBuffer = nil
-                for _,pion in pairs( self._namedParams.listePions ) do
+                for _,pion in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
                         if( ( self._namedParams.positionDeploiement == 0 or self._namedParams.positionDeploiement == nil ) ) then
@@ -227,7 +227,7 @@ node "BEH_Mission_Automate_LOG_AssignerTrierEtTraiterBlessesAListe"
         if( ModuleBegins() ) then
             do
                 local pointBuffer = nil
-                for _,pion in pairs( self._namedParams.listePions ) do
+                for _,pion in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
                         if( ( self._namedParams.positionDeploiement == 0 or self._namedParams.positionDeploiement == nil ) ) then
@@ -326,7 +326,7 @@ node "BEH_Mission_Automate_LOG_AssignerTraiterBlessesAListe"
         if( ModuleBegins() ) then
             do
                 local pointBuffer = nil
-                for _,pion in pairs( self._namedParams.listePions ) do
+                for _,pion in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
                         if( ( self._namedParams.positionDeploiement == 0 or self._namedParams.positionDeploiement == nil ) ) then
@@ -425,7 +425,7 @@ node "BEH_Mission_Automate_LOG_AssignerPrendreEnCompteReacMentalAListe"
         if( ModuleBegins() ) then
             do
                 local pointBuffer = nil
-                for _,pion in pairs( self._namedParams.listePions ) do
+                for _,pion in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
                         if( ( self._namedParams.positionDeploiement == 0 or self._namedParams.positionDeploiement == nil ) ) then
@@ -524,7 +524,7 @@ node "BEH_Mission_Automate_LOG_AssignerReparerAListe"
         if( ModuleBegins() ) then
             do
                 local pointBuffer = nil
-                for _,pion in pairs( self._namedParams.listePions ) do
+                for _,pion in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
                     do
                         if( ( self._namedParams.positionDeploiement == 0 or self._namedParams.positionDeploiement == nil ) ) then

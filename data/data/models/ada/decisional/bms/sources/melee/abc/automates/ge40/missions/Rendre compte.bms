@@ -86,7 +86,7 @@ node "BEH_GTIA_RendreCompteSurOrdreDeConduite"
 
     activate = function( self )
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,ordre in pairs( ordres_recus ) do
+        for _,ordre in pairs( ordres_recus or {} ) do
         local _continue = true
 do
                 local repOrdre = ordre

@@ -59,7 +59,7 @@ end
         end
     end
 
-    for _,x in pairs( DEC_Pion_PionsSansPC() ) do
+    for _,x in pairs( DEC_Pion_PionsSansPC() or {} ) do
     local _continue = true
 do
             local pion = x
@@ -112,7 +112,7 @@ function S_Dist_MissionSuivre_Max( )
         end
     end
 
-    for _,x in pairs( myself:DEC_Pion_PionsSansPC() ) do
+    for _,x in pairs( myself:DEC_Pion_PionsSansPC() or {} ) do
     local _continue = true
 do
             local pion = x

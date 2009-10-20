@@ -98,7 +98,7 @@ node "BEH_Conduite_Automate_ABC_DonnerCoupArret_FaireDecrocherLesPions"
         Activate( self.activations.ACT_Info_Trace, 1, { "----- FIRE OPENED -----", } )
         Activate( self.activations.ACT_Info_Trace, 1, { "----- DISENGAGEMENT -----", } )
         local listePions = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
-        for _,pion in pairs( DEC_Automate_PionsAvecPC() ) do
+        for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
         local _continue = true
 do
                 local pionDEC = pion

@@ -171,7 +171,7 @@ node "BEH_Eni_Pion_ABC_Freiner"
         local listeConnaissances = DEC_Connaissances_UnitesEnnemiesDangereuses()
         if( not DIA_IsListEmpty( listeConnaissances ) ) then
             do
-                for _,repEni in pairs( listeConnaissances ) do
+                for _,repEni in pairs( listeConnaissances or {} ) do
                 local _continue = true
 --[[// Attention au seuil
 ]]if( DEC_ConnaissanceAgent_Dangerosite( repEni ) < 1.5 ) then

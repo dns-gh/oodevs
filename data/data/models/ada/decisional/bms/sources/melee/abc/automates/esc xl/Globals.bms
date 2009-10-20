@@ -50,7 +50,7 @@ include "Melee/Abc/Automates/Esc XL/Parameters.bms"
     local listePionsAttaquant = {}
     local mission = DEC_GetMission( myself )
     local selPion = DEC_Automate_PionsSansPC()
-    for _,x in pairs( selPion ) do
+    for _,x in pairs( selPion or {} ) do
     local _continue = true
 do
             local pion = x
@@ -71,7 +71,7 @@ function S_Pions_AppuiSoutien( )
     local _returnValue = {}
     local listePionsEnSoutien = {}
     local selPion = DEC_Automate_PionsSansPC()
-    for _,x in pairs( selPion ) do
+    for _,x in pairs( selPion or {} ) do
     local _continue = true
 do
             local pion = x

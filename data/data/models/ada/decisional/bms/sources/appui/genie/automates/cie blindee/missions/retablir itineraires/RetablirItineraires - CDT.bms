@@ -84,7 +84,7 @@ node "BEH_Mission_Automate_GEN_CDT_RetablirItinerairesGererRenforcement"
 ]]--[[// T_ConnaissanceObjet_local
 ]]--[[//---------------------------------------------------------------------
 ]]        local listePionsGenie = S_ObtenirPionsOperationnelsFiltre( SectionGenie )
-        for _,pion in pairs( listePionsGenie ) do
+        for _,pion in pairs( listePionsGenie or {} ) do
         local _continue = true
 do
                 --[[// cast
@@ -104,7 +104,7 @@ do
 ]]
         end
 
-        for _,x in pairs( g_selConnaissanceObs ) do
+        for _,x in pairs( g_selConnaissanceObs or {} ) do
         local _continue = true
 do
                 local objet = x
@@ -121,7 +121,7 @@ do
 ]]
         end
 
-        for _,x in pairs( g_selConnaissanceObs ) do
+        for _,x in pairs( g_selConnaissanceObs or {} ) do
         local _continue = true
 do
                 local objet = x
@@ -238,7 +238,7 @@ node "BEH_Misc_Automate_GEN_GererRenforcementReductionObstaclePour"
         for _,x in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Iteration sur les pions en renforcement
 ]]--[[//-------------------------------------------------------------------------
-]]self._namedParams.listePionsRenforcement ) do
+]]self._namedParams.listePionsRenforcement or {} ) do
         local _continue = true
 do
                 local pionRenfort = x

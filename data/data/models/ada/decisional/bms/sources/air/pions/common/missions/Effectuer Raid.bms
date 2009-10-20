@@ -125,7 +125,7 @@ node "BEH_Eni_Pion_AIR_EffectuerRaid"
     activate = function( self )
         self.eEtat = self.eEtat or eActionEnCours
         local listeConnaissances = DEC_Connaissances_UnitesEnnemiesVivantesDansZone( self._namedParams.zone )
-        for _,x in pairs( listeConnaissances ) do
+        for _,x in pairs( listeConnaissances or {} ) do
         local _continue = true
 do
                 Activate( self.activations.BEH_Eni_Pion_AIR_FrappeIndirecteSur, S_Eni_Pion_AIR_ForceDetruire( x, eNatureAtlas_None ), { x, eDetecte, 1, eObus_Explosif, M_DOCTRINE_PION_AIR_PH(), } )

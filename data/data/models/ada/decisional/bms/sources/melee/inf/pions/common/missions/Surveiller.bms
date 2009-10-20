@@ -166,7 +166,7 @@ node "BEH_Eni_Pion_INF_SurveillerSecteur"
 
     activate = function( self )
         local lstEnisPercus = DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansFuseau()
-        for _,ksEni in pairs( lstEnisPercus ) do
+        for _,ksEni in pairs( lstEnisPercus or {} ) do
         local _continue = true
 do
                 if( S_Tir_EstAPorteePosturesReelles( ksEni, GetStateVariable( "VE_Agressivite_Tir" ) ) ) then

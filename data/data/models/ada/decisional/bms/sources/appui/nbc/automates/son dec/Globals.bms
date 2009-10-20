@@ -24,7 +24,7 @@ include "Appui/Nbc/Automates/Son Dec/Parameters.bms"
     local _returnValue = {}
     local selPatrouillesOperationnelles = {}
     local selTemp = S_Cherche_Automate_Filtre_TypePion( DEC_Automate_PionsAvecPC(), "Equipe_NBC_Dec" )
-    for _,x in pairs( selTemp ) do
+    for _,x in pairs( selTemp or {} ) do
     local _continue = true
 do
             local pion = x

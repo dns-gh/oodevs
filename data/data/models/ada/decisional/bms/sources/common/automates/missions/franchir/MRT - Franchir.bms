@@ -103,7 +103,7 @@ node "BEH_Medo_Automate_AssignerSeFaireFranchirA"
 ]]--[[//---------------------------------------------------------------------	
 ]]if( ModuleBegins() ) then
             do
-                for _,pion in pairs( DEC_Automate_PionsAvecPC() ) do
+                for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
                 local _continue = true
                     do
                         local position = DEC_Geometrie_PositionAleatoireDansCercle( self.positionArrivee, 300 )

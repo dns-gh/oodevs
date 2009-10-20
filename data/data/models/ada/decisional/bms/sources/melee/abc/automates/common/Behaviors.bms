@@ -199,7 +199,7 @@ node "BEH_Conduite_Automate_ABC_GererOrdre_Mortier"
     activate = function( self )
         local selPions_PE = S_Dispositif_Automate_ABC_ObtenirPionsPE_EnDifficultes()
         local rIterateur = 0
-        for _,pion in pairs( selPions_PE ) do
+        for _,pion in pairs( selPions_PE or {} ) do
         local _continue = true
 if( rIterateur < #( self._namedParams.selAppuis_Mortier ) ) then
                 do

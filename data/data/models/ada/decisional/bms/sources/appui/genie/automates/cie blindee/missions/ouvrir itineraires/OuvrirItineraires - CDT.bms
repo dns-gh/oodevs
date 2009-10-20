@@ -86,7 +86,7 @@ node "BEH_Mission_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcement"
 ]]--[[// T_ConnaissanceObjet_local
 ]]--[[//---------------------------------------------------------------------
 ]]        local listePionsGenie = S_ObtenirPionsOperationnelsFiltre( SectionGenie )
-        for _,pion in pairs( listePionsGenie ) do
+        for _,pion in pairs( listePionsGenie or {} ) do
         local _continue = true
 do
                 --[[// cast
@@ -105,7 +105,7 @@ do
 ]]
         end
 
-        for _,x in pairs( g_selConnaissanceObs ) do
+        for _,x in pairs( g_selConnaissanceObs or {} ) do
         local _continue = true
 do
                 local objet = x
@@ -122,7 +122,7 @@ do
 ]]
         end
 
-        for _,x in pairs( g_selConnaissanceObs ) do
+        for _,x in pairs( g_selConnaissanceObs or {} ) do
         local _continue = true
 do
                 local objet = x
@@ -273,7 +273,7 @@ node "BEH_Conduite_Automate_GEN_OuvrirAxe_GererSE_"
         for _,x in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion pions détruit
 ]]--[[//-----------------------------------------------------------------------------
-]]DEC_Automate_PionsAvecPC() ) do
+]]DEC_Automate_PionsAvecPC() or {} ) do
         local _continue = true
 do
                 --[[// cast
@@ -328,7 +328,7 @@ node "BEH_Conduite_Automate_GEN_OuvrirAxe_FaireSuivre"
 ]]--[[// Assignation mission suivre
 ]]--[[//-----------------------------------------------------------------------------
 ]]local rIterateurPionASuivre = 0
-        for _,x in pairs( sel_SE ) do
+        for _,x in pairs( sel_SE or {} ) do
         local _continue = true
 do
                 local pion = x

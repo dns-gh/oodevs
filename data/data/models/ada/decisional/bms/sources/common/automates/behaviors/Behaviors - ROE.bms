@@ -61,7 +61,7 @@ node "BEH_ROE_Automate_RecevoirOrdreInopine"
 ]]--[[// Reception d'un ordre du superieur
 ]]--[[//-----------------------------------------------------------------------------
 ]]local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus ) do
+        for _,x in pairs( ordres_recus or {} ) do
         local _continue = true
 do
                 local repOrdre = x
@@ -137,7 +137,7 @@ node "BEH_ROE_Automate_TirLibre"
     end,
 
     activate = function( self )
-        for _,pion in pairs( DEC_Automate_PionsAvecPC() ) do
+        for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
         local _continue = true
             Activate( self.activations.ACT_ROE_Automate_DonnerOrdreTirLibre, 1, { pion, } )
 
@@ -164,7 +164,7 @@ node "BEH_ROE_Automate_TirRestreint"
     end,
 
     activate = function( self )
-        for _,pion in pairs( DEC_Automate_PionsAvecPC() ) do
+        for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
         local _continue = true
             Activate( self.activations.ACT_ROE_Automate_DonnerOrdreTirRestreint, 1, { pion, } )
 
@@ -191,7 +191,7 @@ node "BEH_ROE_Automate_TirInterdit"
     end,
 
     activate = function( self )
-        for _,pion in pairs( DEC_Automate_PionsAvecPC() ) do
+        for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
         local _continue = true
             Activate( self.activations.ACT_ROE_Automate_DonnerOrdreTirInterdit, 1, { pion, } )
 

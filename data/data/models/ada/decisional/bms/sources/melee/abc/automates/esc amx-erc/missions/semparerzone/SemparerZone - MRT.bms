@@ -38,7 +38,7 @@ includedFiles["sources/melee/abc/automates/esc amx-erc/missions/semparerzone/Sem
                 DEC_Trace( "$ MIS AUTO SemparerZone: debut MRT $" )
                                 do
                     local listePionsSubordonnes = DEC_Automate_PionsAvecPC()
-                    for _,x in pairs( listePionsSubordonnes ) do
+                    for _,x in pairs( listePionsSubordonnes or {} ) do
                     local _continue = true
                         do
                             local pion = x

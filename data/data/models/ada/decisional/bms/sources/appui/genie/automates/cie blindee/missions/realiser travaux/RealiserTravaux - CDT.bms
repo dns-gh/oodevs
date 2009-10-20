@@ -91,7 +91,7 @@ node "BEH_Mission_Automate_GEN_CDT_RealiserPlanObjets"
         self.positionRegroupement = self.positionRegroupement or S_Geometrie_BarycentreZone( self._namedParams.zoneRegroupement )
         if( ModuleBegins() ) then
             do
-                for _,pion in pairs( DEC_Automate_PionsAvecPC() ) do
+                for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
                 local _continue = true
                     Activate( self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, 1, { ePhase_CDT, pion, self.positionRegroupement, eEtatEchelon_Second, } )
 
@@ -142,7 +142,7 @@ node "BEH_Misc_Automate_GEN_GererTravaux"
 ]]--[[// Assignation des missions
 ]]--[[//-------------------------------------------------------------------------
 ]]local listePionsGenie = S_Gen_ObtenirSectionsGenieDisponibles()
-        for _,pion in pairs( listePionsGenie ) do
+        for _,pion in pairs( listePionsGenie or {} ) do
         local _continue = true
 do
                 local objetAConstruire = nil
@@ -223,7 +223,7 @@ node "BEH_Misc_Automate_GEN_GererRenforcementsPourTravaux"
         for _,x in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Iteration sur les T_Gen_Objet_ARealiser --> Assignation renforcement
 ]]--[[//-------------------------------------------------------------------------
-]]g_selObs_ARealiser ) do
+]]g_selObs_ARealiser or {} ) do
         local _continue = true
 do
                 local objetARealiser = x
@@ -239,7 +239,7 @@ do
 ]]
         end
 
-        for _,x in pairs( g_selObs_ARealiser ) do
+        for _,x in pairs( g_selObs_ARealiser or {} ) do
         local _continue = true
 do
                 local objetARealiser = x
@@ -255,7 +255,7 @@ do
         if( DIA_IsListEmpty( listePE ) and not ModuleBegins() ) then
             do
                 local listeGroupes = S_Gen_ObtenirGroupeGenie()
-                for _,pion in pairs( listeGroupes ) do
+                for _,pion in pairs( listeGroupes or {} ) do
                 local _continue = true
                     do
                         --[[// cast
@@ -443,7 +443,7 @@ node "BEH_Misc_Automate_GEN_GererRenforcementDe"
         for _,x in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Iteration sur les pions en renforcement
 ]]--[[//-------------------------------------------------------------------------
-]]self._namedParams.listePionsRenforcement ) do
+]]self._namedParams.listePionsRenforcement or {} ) do
         local _continue = true
 do
                 local pionRenfort = x

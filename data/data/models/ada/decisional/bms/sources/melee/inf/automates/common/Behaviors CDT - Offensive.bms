@@ -144,7 +144,7 @@ node "BEH_Situation_Automate_INF_Assaut"
         for _,x in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion des RC recus 
 ]]--[[//-----------------------------------------------------------------------------		
-]]DEC_Automate_PionsSansPC() ) do
+]]DEC_Automate_PionsSansPC() or {} ) do
         local _continue = true
 do
                 local x_pion = x
@@ -375,7 +375,7 @@ do
         for _,x_assaut in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Installation de l'assaut
 ]]--[[//-----------------------------------------------------------------------------		
-]]S_Cherche_Automate_Filtre_TypePion( selAppui, "SectionInfanterie" ) ) do
+]]S_Cherche_Automate_Filtre_TypePion( selAppui, "SectionInfanterie" ) or {} ) do
         local _continue = true
 do
                 --[[// Initialise la reduction

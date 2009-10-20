@@ -75,7 +75,7 @@ node "BEH_CoordDep_Automate_ActiverCoordinationAmisSur"
 ]]--[[// Determiner les pions à coordonner
 ]]--[[//-----------------------------------------------------------------------------
 ]]local selPions = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
-        for _,x in pairs( selPions ) do
+        for _,x in pairs( selPions or {} ) do
         local _continue = true
 do
                 local pion = x

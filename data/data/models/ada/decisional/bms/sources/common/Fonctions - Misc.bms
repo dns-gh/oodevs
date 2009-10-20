@@ -71,13 +71,13 @@ end
 function S_Liste_Concatene( listeA, listeB )
     local _returnValue = {}
     local bufferSelection = {}
-    for _,x in pairs( listeA ) do
+    for _,x in pairs( listeA or {} ) do
     local _continue = true
         DIA_PushBack( bufferSelection, x )
 
     end
 
-    for _,x in pairs( listeB ) do
+    for _,x in pairs( listeB or {} ) do
     local _continue = true
         DIA_PushBack( bufferSelection, x )
 
@@ -89,7 +89,7 @@ end
 
 function S_ListeLocalisations_Copie( listeSrc, listeDest )
     local bufferSelection = {}
-    for _,x in pairs( listeSrc ) do
+    for _,x in pairs( listeSrc or {} ) do
     local _continue = true
         DEC_UserTypeList_PushBack( listeDest, x )
 

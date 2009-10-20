@@ -31,7 +31,7 @@ includedFiles["sources/appui/alat/automates/sgpt hm/behaviors/Behaviors - Manoeu
         local pionDECBuffer = nil
         for _,x in pairs( --[[//synchronisation sur la dernière unité de la liste.
 ]]--[[//c'est la réference de synchronisation
-]]self._namedParams.listeUnites ) do
+]]self._namedParams.listeUnites or {} ) do
         local _continue = true
 do
                 pionDECBuffer = x
@@ -53,7 +53,7 @@ do
 
         --[[// indicateur pour savoir si toutes les unites sont synchronisées.
 ]]local bUnitesSynchronisees = true
-        for _,x in pairs( self._namedParams.listeUnites ) do
+        for _,x in pairs( self._namedParams.listeUnites or {} ) do
         local _continue = true
 do
                 pionDECBuffer = x
@@ -68,7 +68,7 @@ do
         if( not bUnitesSynchronisees ) then
             do
                 for _,x in pairs( --[[//poster toutes les unites qui sont dans etatAPoster
-]]self._namedParams.listeUnites ) do
+]]self._namedParams.listeUnites or {} ) do
                 local _continue = true
                     do
                         pionDECBuffer = x
@@ -84,7 +84,7 @@ do
         else
 do
                 for _,x in pairs( --[[//continuer avec toutes les unites
-]]self._namedParams.listeUnites ) do
+]]self._namedParams.listeUnites or {} ) do
                 local _continue = true
                     Activate( self.activations.ACT_Ordre_Automate_Continue, 1, { x, } )
 

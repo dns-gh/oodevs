@@ -47,7 +47,7 @@ do
                                 local switch_1 = self._namedParams.mission.modeDeploiement_
                                 local cases_switch_1 = {}
                                     if switch_1 == deploiementOmnidirectionnelEnCarreAutourZone then
-                                        for _,x in pairs( self.listeSectionMistral ) do
+                                        for _,x in pairs( self.listeSectionMistral or {} ) do
                                         local _continue = true
 do
                                                 if( compteur ~= 4 ) then
@@ -65,7 +65,7 @@ do
                                         _continue = false
                                                                         cases_switch_1[1] = true
 elseif switch_1 == deploiementOmnidirectionnelEnTriangleAutourZone then
-                                        for _,x in pairs( self.listeSectionMistral ) do
+                                        for _,x in pairs( self.listeSectionMistral or {} ) do
                                         local _continue = true
 do
                                                 if( compteur ~= 3 ) then
@@ -83,7 +83,7 @@ do
                                         _continue = false
                                                                         cases_switch_1[2] = true
 elseif switch_1 == deploiementNasseTroisSections then
-                                        for _,x in pairs( self.listeSectionMistral ) do
+                                        for _,x in pairs( self.listeSectionMistral or {} ) do
                                         local _continue = true
 do
                                                 if( compteur ~= 3 ) then
@@ -101,7 +101,7 @@ do
                                         _continue = false
                                                                         cases_switch_1[3] = true
 elseif switch_1 == deploiementNasseQuatreSections then
-                                        for _,x in pairs( self.listeSectionMistral ) do
+                                        for _,x in pairs( self.listeSectionMistral or {} ) do
                                         local _continue = true
 do
                                                 if( compteur ~= 4 ) then
@@ -124,7 +124,7 @@ elseif switch_1 == deploiementDoubleRideau then
                                         _continue = false
                                                                         cases_switch_1[5] = true
 elseif switch_1 == deploiementSimpleRideau then
-                                        for _,x in pairs( self.listeSectionMistral ) do
+                                        for _,x in pairs( self.listeSectionMistral or {} ) do
                                         local _continue = true
 do
                                                 if( compteur ~= 4 ) then

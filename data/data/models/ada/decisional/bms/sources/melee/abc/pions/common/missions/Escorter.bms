@@ -203,7 +203,7 @@ node "BEH_Mission_Pion_ABC_EscorterAutomate"
 ]]local listePionsAmis = DEC_Pion_PionsDeAutomateSansPC( self._namedParams.automateAmi )
         --[[// pion de premier échelon au hasard de l'unité à escorter
 ]]local pionTemoin = nil
-        for _,x in pairs( listePionsAmis ) do
+        for _,x in pairs( listePionsAmis or {} ) do
         local _continue = true
 do
                 local pion = x
@@ -229,7 +229,7 @@ do
         if( ModuleBegins() ) then
             do
                 for _,pion in pairs( --[[// Escorter (dire à l'unite qu'on l'escorte
-]]listePionsAmis ) do
+]]listePionsAmis or {} ) do
                 local _continue = true
                     StartActivateOverride( self, self.activations.ACT_Misc_Pion_ABC_Escorter, 1, { pion, } )
 
@@ -331,7 +331,7 @@ elseif switch_1 == eProgresser then
                 --[[// Fin de la mission
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
-                    for _,pion in pairs( listePionsAmis ) do
+                    for _,pion in pairs( listePionsAmis or {} ) do
                     local _continue = true
                         StopActivateOverride( self, self.activations.ACT_Misc_Pion_ABC_Escorter, { pion, } )
 

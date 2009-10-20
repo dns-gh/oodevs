@@ -99,7 +99,7 @@ node "BEH_RiposteSurPopulation"
         if( self.eEtatDelai == eActionEnCours ) then
             Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { BEH_RiposteSurPopulation, rDelai, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatDelai = v else rawset( t, k, v ) end end } ) )
         else
-for _,popPrenantAPartie in pairs( lstPops ) do
+for _,popPrenantAPartie in pairs( lstPops or {} ) do
             local _continue = true
 do
                     --[[//DEC_Trace(  "--->>> Fire in return on population ---"  );

@@ -145,7 +145,7 @@ node "BEH_Objet_Pion_GEN_DeminerZone"
 ]]--[[// Pour chaque obstacles de la zone
 ]]--[[//-----------------------------------------------------------------
 ]]local rIterateur = 0
-        for _,objet in pairs( ListObjets ) do
+        for _,objet in pairs( ListObjets or {} ) do
         local _continue = true
 do
                                 rIterateur = rIterateur + 1

@@ -158,7 +158,7 @@ node "BEH_LOG_Pion_FaireDesMesures"
 ]]--[[// il s'agirait d'une zone contaminée
 ]]--[[//---------------------------------------------------------------------
 ]]local listeObjet = DEC_Connaissances_CollisionsObjets()
-        for _,objet in pairs( listeObjet ) do
+        for _,objet in pairs( listeObjet or {} ) do
         local _continue = true
             Activate( self.activations.BEH_LOG_Pion_FaireUneMesureDans, 1, { objet, } )
 
@@ -238,7 +238,7 @@ node "BEH_Ordre_Pion_CIRCU_OrdresInopines"
 
     activate = function( self )
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus ) do
+        for _,x in pairs( ordres_recus or {} ) do
         local _continue = true
 do
                 local repOrdre = x

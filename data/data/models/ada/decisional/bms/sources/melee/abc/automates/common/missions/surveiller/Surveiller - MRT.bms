@@ -55,7 +55,7 @@ includedFiles["sources/melee/abc/automates/common/missions/surveiller/Surveiller
                         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Assignation de la mission 
 ]]--[[//-----------------------------------------------------------------------------    
-]]self._namedParams.selPions ) do
+]]self._namedParams.selPions or {} ) do
                         local _continue = true
                             do
                                 if( self.rIterateurPosition == DEC_ListePoints_Size( self.listePoint ) ) then

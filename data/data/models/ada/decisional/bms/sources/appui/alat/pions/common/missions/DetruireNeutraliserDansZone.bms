@@ -282,7 +282,7 @@ elseif switch_1 == eDetruire then
                         end
                     end
 
-                    for _,x in pairs( listeUnitesEnnemiesVivantesDansZone ) do
+                    for _,x in pairs( listeUnitesEnnemiesVivantesDansZone or {} ) do
                     local _continue = true
                         Activate( self.activations.BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire, S_Force_Pion_ALAT_AllerDetruire( x, self._namedParams.ciblesPrioritaires_ ), { self._namedParams.delai, x, eReconnu, self._namedParams.pourcentageComposantes, M_DOCTRINE_PION_ALAT_PH(), true, } )
 

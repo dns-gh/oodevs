@@ -56,7 +56,7 @@ includedFiles["sources/melee/abc/automates/common/missions/semparerzone/Semparer
 ]]--[[//-----------------------------------------------------------------------------
 ]]                end
 
-                for _,pion in pairs( self._namedParams.selPions ) do
+                for _,pion in pairs( self._namedParams.selPions or {} ) do
                 local _continue = true
 do
                         if( self.rIterateurSecteur == #( self.listeSecteur ) ) then

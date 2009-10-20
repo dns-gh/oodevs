@@ -83,7 +83,7 @@ includedFiles["sources/melee/inf/pions/grp mortier/missions/Appuyer.bms"] = true
         end
 
         local selOrder = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( selOrder ) do
+        for _,x in pairs( selOrder or {} ) do
         local _continue = true
 do
                 local repOrdreCond = x

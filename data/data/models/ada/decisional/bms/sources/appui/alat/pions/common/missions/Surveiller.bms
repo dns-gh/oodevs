@@ -247,7 +247,7 @@ node "BEH_Eni_Pion_ALAT_GererEniSurveiller"
         local pasDeConnaissanceReconnueInterressante = true
         --[[// prise à partie des ennemis dans la zone 
 ]]local listeUnitesEnnemiesVivantesDansZone = DEC_Connaissances_UnitesEnnemiesVivantesDansZone( self._namedParams.zone )
-        for _,x in pairs( listeUnitesEnnemiesVivantesDansZone ) do
+        for _,x in pairs( listeUnitesEnnemiesVivantesDansZone or {} ) do
         local _continue = true
 do
                 pasDeConnaissanceReconnueInterressante = false

@@ -154,7 +154,7 @@ node "BEH_Obs_Pion_Rens_GererObservationDans"
 ]]--[[//---------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
             do
-                for _,zone in pairs( self._namedParams.zonesDeRecherche ) do
+                for _,zone in pairs( self._namedParams.zonesDeRecherche or {} ) do
                 local _continue = true
                     StartActivateOverride( self, self.activations.BEH_Obs_Pion_Rens_ActiverObservationDans, 1, { zone, } )
 

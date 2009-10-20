@@ -246,7 +246,7 @@ node "ACT_MAJ_Automate_EtatDestruction"
         for _,x in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Echelon ecl
 ]]--[[//-------------------------------------------------------------------------
-]]listePionsPecl ) do
+]]listePionsPecl or {} ) do
         local _continue = true
 do
                 local pion = x
@@ -270,7 +270,7 @@ do
 ]]        end
 
         rIt = 0
-        for _,x in pairs( listePionsPE ) do
+        for _,x in pairs( listePionsPE or {} ) do
         local _continue = true
 do
                 local pion = x

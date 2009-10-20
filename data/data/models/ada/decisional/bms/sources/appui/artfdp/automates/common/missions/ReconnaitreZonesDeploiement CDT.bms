@@ -36,7 +36,7 @@ node "BEH_Conduite_Automate_ASS_ReconnaitreZonesDeploiement"
         for _,x_ass in pairs( --[[// Remets des Points dans la liste si le pion s'est fait detuire ou autre ..
 ]]--[[// TODO
 ]]--[[//
-]]selPion_ASS_Reco ) do
+]]selPion_ASS_Reco or {} ) do
         local _continue = true
 do
                 --[[// On ne donne la mission qu'au pion ne possedant pas la mission de reconnaissance
@@ -114,7 +114,7 @@ node "BEH_Conduite_Automate_ASS_FaireSuivreDispositif"
         end
 
         for _,x in pairs( --[[// Suit le pion le plus proche
-]]DEC_Automate_PionsAvecPC() ) do
+]]DEC_Automate_PionsAvecPC() or {} ) do
         local _continue = true
 do
                 local x_pion = x

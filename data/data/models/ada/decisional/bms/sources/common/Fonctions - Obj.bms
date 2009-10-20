@@ -48,7 +48,7 @@ function S_Geometrie_PositionObjetPlusProche( listeObjets, point )
     local _returnValue = nil
     local ptBuffer = nil
     local distanceMax = 1105199104
-    for _,x in pairs( listeObjets ) do
+    for _,x in pairs( listeObjets or {} ) do
     local _continue = true
 do
             local ptX = S_Obj_Position( x )
@@ -73,7 +73,7 @@ function S_Geometrie_ObjetPlusProche( listeObjets, point )
     _returnValue = 0
     local distanceMax = 1105199104
     local objetProche = 0
-    for _,x in pairs( listeObjets ) do
+    for _,x in pairs( listeObjets or {} ) do
     local _continue = true
 do
             local objet = x

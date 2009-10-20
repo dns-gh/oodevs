@@ -49,7 +49,7 @@ include "bit.lua"
         for _,x_inf in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Distribution des pions INF
 ]]--[[//-------------------------------------------------------------------------
-]]selPions_SE_INF ) do
+]]selPions_SE_INF or {} ) do
         local _continue = true
 do
                 local pionAppui_INF = x_inf
@@ -108,7 +108,7 @@ node "BEH_Conduite_Automate_INF_GererAppuis_ABC"
         for _,x_abc in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Distribution des pions ABC
 ]]--[[//-------------------------------------------------------------------------	
-]]selPions_SE_ABC ) do
+]]selPions_SE_ABC or {} ) do
         local _continue = true
 do
                 local pionAppui_ABC = x_abc
@@ -185,7 +185,7 @@ node "BEH_Conduite_Automate_INF_GererMission_Mortier"
         end
 
         local selPions_Appuye = S_Cherche_Automate_Filtre_NotTypePion( selPions_SE, "GroupeInfanterie_Mortier" )
-        for _,x in pairs( self._namedParams.selAppuis_Mortier ) do
+        for _,x in pairs( self._namedParams.selAppuis_Mortier or {} ) do
         local _continue = true
 do
                 local pionAppui_Mortier = x
@@ -233,7 +233,7 @@ node "BEH_Conduite_Automate_INF_GererOrdre_Mortier"
 ]]--[[// S_ObtenirTousPionsDe( eEtatEchelon_Premier );
 ]]local selPions_PE = DEC_Automate_PionsAvecPC()
         local rN_Demande = 0
-        for _,x in pairs( selPions_PE ) do
+        for _,x in pairs( selPions_PE or {} ) do
         local _continue = true
 do
                 local pion = x
@@ -267,7 +267,7 @@ node "BEH_Conduite_Automate_INF_GererMission_PC"
     end,
 
     activate = function( self )
-        for _,x in pairs( DEC_Automate_PionsSansPC() ) do
+        for _,x in pairs( DEC_Automate_PionsSansPC() or {} ) do
         local _continue = true
 do
                 local pion = x
@@ -327,7 +327,7 @@ node "BEH_Conduite_Automate_INF_Gerer_UniteInconnues"
     end,
 
     activate = function( self )
-        for _,x in pairs( DEC_Automate_PionsSansPC() ) do
+        for _,x in pairs( DEC_Automate_PionsSansPC() or {} ) do
         local _continue = true
 do
                 local pion = x

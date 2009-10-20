@@ -29,7 +29,7 @@ includedFiles["sources/melee/abc/automates/esc amx-erc/missions/freiner/Freiner 
                 DEC_SetMission( myself, self._namedParams.mission )
                                 do
                     local listePionsSubordonnes = DEC_Automate_PionsAvecPC()
-                    for _,x in pairs( listePionsSubordonnes ) do
+                    for _,x in pairs( listePionsSubordonnes or {} ) do
                     local _continue = true
                         do
                             local pion = x

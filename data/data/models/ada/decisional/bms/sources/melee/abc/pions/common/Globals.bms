@@ -28,7 +28,7 @@ include "Melee/Abc/Pions/Common/Parameters.bms"
     local _returnValue = nil
     _returnValue = nil
     local listeObjet = DEC_Connaissances_ObjetsDansCercle( position, 300, S_TypeObject_ToString( eTypeObjectPosteControle ) )
-    for _,x in pairs( listeObjet ) do
+    for _,x in pairs( listeObjet or {} ) do
     local _continue = true
         _returnValue = x
 

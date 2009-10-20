@@ -67,7 +67,7 @@ elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     --[[// Reduction
 ]]local obstacles = S_Obj_ListeObjetsValides( self._namedParams.mission.obstacles_ )
-                    for _,obstacle in pairs( obstacles ) do
+                    for _,obstacle in pairs( obstacles or {} ) do
                     local _continue = true
 do
                             Activate( self.activations.BEH_Dep_GEN_AllerReduireObstacle, S_Obj_ForceDistance( obstacle ), { obstacle, } )

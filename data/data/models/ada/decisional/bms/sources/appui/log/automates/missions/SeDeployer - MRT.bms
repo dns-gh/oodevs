@@ -60,7 +60,7 @@ includedFiles["sources/appui/log/automates/missions/SeDeployer - MRT.bms"] = tru
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eMRT_AssignerMissions then
-                    for _,x in pairs( self.selPions ) do
+                    for _,x in pairs( self.selPions or {} ) do
                     local _continue = true
 do
                             local pion = x

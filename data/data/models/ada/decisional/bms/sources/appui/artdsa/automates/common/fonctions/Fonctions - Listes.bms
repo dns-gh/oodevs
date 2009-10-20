@@ -9,7 +9,7 @@ includedFiles["sources/appui/artdsa/automates/common/fonctions/Fonctions - Liste
     local _returnValue = {}
     local listeCopie = listeEnis
     DIA_Clear( _returnValue )
-    for _,x in pairs( listeEnis ) do
+    for _,x in pairs( listeEnis or {} ) do
     local _continue = true
 do
             if( not DEC_ConnaissanceAgent_EstValide( x ) ) then
@@ -31,11 +31,11 @@ end
 function S_ConnaissancesEnnemiesVivantesPercuesVolantesPourSgpt( listePions )
     local _returnValue = {}
     DIA_Clear( _returnValue )
-    for _,x in pairs( listePions ) do
+    for _,x in pairs( listePions or {} ) do
     local _continue = true
 do
             local listeUnitesEnnemiesVivantesPercuesParPion = DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion( x )
-            for _,y in pairs( listeUnitesEnnemiesVivantesPercuesParPion ) do
+            for _,y in pairs( listeUnitesEnnemiesVivantesPercuesParPion or {} ) do
             local _continue = true
 do
                     if( not S_ConnaissanceAgent_EstEnVol( y ) ) then

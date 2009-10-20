@@ -10,7 +10,7 @@ include "bit.lua"
     local _returnValue = {}
     local selTemp = {}
     local listePions = DEC_Pion_PionsSansPC()
-    for _,x in pairs( listePions ) do
+    for _,x in pairs( listePions or {} ) do
     local _continue = true
 do
             local pion = x
@@ -30,7 +30,7 @@ function S_Misc_Pion_Rens_ObtenirDronesDisponibles( )
     local _returnValue = {}
     local selTemp = {}
     local listePions = DEC_Pion_PionsSansPC()
-    for _,x in pairs( listePions ) do
+    for _,x in pairs( listePions or {} ) do
     local _continue = true
 do
             local pion = x

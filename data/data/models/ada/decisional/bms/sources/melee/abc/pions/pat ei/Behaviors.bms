@@ -172,7 +172,7 @@ node "BEH_Pion_ABC_GarderSesDistancesPourSInfiltrer"
     activate = function( self )
         --[[// Garder ses distances sur enis dangereux
 ]]local listeConnaissances = DEC_Connaissances_UnitesEnnemiesDangereuses()
-        for _,repEni in pairs( listeConnaissances ) do
+        for _,repEni in pairs( listeConnaissances or {} ) do
         local _continue = true
             Activate( self.activations.BEH_Pion_ABC_GarderSesDistancesPourSInfiltrerFaceA, S_Force_Distance( repEni ), { repEni, } )
 

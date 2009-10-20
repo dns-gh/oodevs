@@ -53,7 +53,7 @@ include "bit.lua"
             do return end
         end
 
-        for _,pion in pairs( selNBC_SE ) do
+        for _,pion in pairs( selNBC_SE or {} ) do
         local _continue = true
 do
                 --[[// Pion du PE à suivre

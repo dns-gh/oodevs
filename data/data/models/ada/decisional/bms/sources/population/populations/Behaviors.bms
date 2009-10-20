@@ -112,7 +112,7 @@ if( ( GetStateVariable( "VE_Domination" ) == 1 and rCourage == 0 or GetStateVari
 ]]--[[// Reception d'un ordre de l'ANIBAS
 ]]--[[// =============================================================================
 ]]local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus ) do
+        for _,x in pairs( ordres_recus or {} ) do
         local _continue = true
 do
                 local repOrdre = x
@@ -397,7 +397,7 @@ node "BEH_Pop_RepondreALaPriseAPartie"
 
     activate = function( self )
         local lstPions = DEC_Connaissances_PionsPrenantAPartie()
-        for _,pion in pairs( lstPions ) do
+        for _,pion in pairs( lstPions or {} ) do
         local _continue = true
 do
                 Activate( self.activations.BEH_Pop_PAPPion, 1, { pion, } )

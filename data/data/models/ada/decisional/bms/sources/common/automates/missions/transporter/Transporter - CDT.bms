@@ -71,7 +71,7 @@ node "MIS_Automate_CDT_Transporter"
 ]]--[[// ------------------------------------------------------------
 ]]local gestionCDTMissionsTransport = false
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus ) do
+        for _,x in pairs( ordres_recus or {} ) do
         local _continue = true
 do
                 local repOrdre = x
@@ -103,7 +103,7 @@ do
 elseif switch_1 == eFinMission then
                     --[[//quand plus aucun pion n'a de mission
 ]]local plusDeMissions = true
-                    for _,x in pairs( DEC_Automate_PionsAvecPC() ) do
+                    for _,x in pairs( DEC_Automate_PionsAvecPC() or {} ) do
                     local _continue = true
 do
                             local pionBuffer = x

@@ -31,7 +31,7 @@ node "BEH_Situation_Automate_INF_Defaut"
 
     activate = function( self )
         local sComposants = DEC_Automate_PionsSansPC()
-        for _,x in pairs( sComposants ) do
+        for _,x in pairs( sComposants or {} ) do
         local _continue = true
 do
                 local x_pion = x
@@ -91,7 +91,7 @@ node "BEH_Situation_Automate_INF_CadreOffensif"
 
     activate = function( self )
         local sComposants = DEC_Automate_PionsSansPC()
-        for _,x in pairs( sComposants ) do
+        for _,x in pairs( sComposants or {} ) do
         local _continue = true
 do
                 local x_pion = x

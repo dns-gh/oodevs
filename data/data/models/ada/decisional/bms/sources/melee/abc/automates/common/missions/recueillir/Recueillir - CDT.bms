@@ -78,7 +78,7 @@ node "BEH_Conduite_Automate_ABC_Recueillir_FaireDecrocherLePEcl"
             do
                 --[[// Donner décrocher des que problème
 ]]local listePionsEclairant = S_ObtenirPionsDe( eEtatEchelon_Eclairage, eEtatDestruction_None )
-                for _,pion in pairs( listePionsEclairant ) do
+                for _,pion in pairs( listePionsEclairant or {} ) do
                 local _continue = true
                     do
                         local pionDEC = pion

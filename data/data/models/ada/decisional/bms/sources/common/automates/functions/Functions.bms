@@ -71,7 +71,7 @@ function S_Eni_ChercheEniPlusProchePosition( point, listeEnis )
     local rDist_Min = 1105199104
     local rDistanceConnaissance = 0
     _returnValue = nil
-    for _,ksEni in pairs( listeEnis ) do
+    for _,ksEni in pairs( listeEnis or {} ) do
     local _continue = true
 do
             if( not DEC_ConnaissanceAgent_EstValide( ksEni ) ) then

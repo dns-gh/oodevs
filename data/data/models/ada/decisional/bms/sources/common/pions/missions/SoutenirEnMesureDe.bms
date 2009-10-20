@@ -217,7 +217,7 @@ node "BEH_MAJ_Pion_EniDangereux"
 
     activate = function( self )
         local listeConnaissances = DEC_Connaissances_UnitesEnnemiesDangereuses()
-        for _,repEni in pairs( listeConnaissances ) do
+        for _,repEni in pairs( listeConnaissances or {} ) do
         local _continue = true
             Activate( self.activations.ACT_MAJ_EnnemiEnCours, S_Force_DangerSur( repEni ), { repEni, } )
 

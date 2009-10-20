@@ -81,7 +81,7 @@ node "BEH_Dispositif_Automate_NBC_FaireArmerSite_"
 ]]        end
 
         local listePionsDecontamination = S_Automate_NBC_ObtenirPatrouilleDecOperationnelles()
-        for _,pion in pairs( listePionsDecontamination ) do
+        for _,pion in pairs( listePionsDecontamination or {} ) do
         local _continue = true
             Activate( self.activations.BEH_Mission_Automate_NBC_AssignerArmerSiteA, 1, { ePhase_CDT, pion, self.positionSite, } )
 

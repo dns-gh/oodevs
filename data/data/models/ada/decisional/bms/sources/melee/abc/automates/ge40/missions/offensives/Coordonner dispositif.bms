@@ -97,7 +97,7 @@ node "BEH_GTIA_SePosterSurEntreeFuseau"
     end,
 
     activate = function( self )
-        for _,pion in pairs( S_Cherche_GE_Filtre_PionsDansFuseau( DEC_Automate_AutomatesSubordonnes(), self._namedParams.fuseau ) ) do
+        for _,pion in pairs( S_Cherche_GE_Filtre_PionsDansFuseau( DEC_Automate_AutomatesSubordonnes(), self._namedParams.fuseau ) or {} ) do
         local _continue = true
             Activate( self.activations.ACT_GTIA_Automate_DonnerOrdreAttendre, 1, { pion, } )
 
@@ -129,7 +129,7 @@ node "BEH_GTIA_AssurerLaCoordinationExterne"
 
     activate = function( self )
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,ordre in pairs( ordres_recus ) do
+        for _,ordre in pairs( ordres_recus or {} ) do
         local _continue = true
 do
                 local repOrdre = ordre
@@ -177,7 +177,7 @@ node "BEH_GTIA_Automate_Attendre"
             self.resultatCalcul = DEC_Geometrie_StartCalculAutomateLignesAvantEtArriere( self._namedParams.listePions )
         end
 
-        for _,pion in pairs( self._namedParams.listePions ) do
+        for _,pion in pairs( self._namedParams.listePions or {} ) do
         local _continue = true
 --[[// MIA à voir
 ]]if( DEC_Geometrie_CalculerAutomateDistanceLigneAvant( self.resultatCalcul, pion ) < 300 ) then
@@ -213,7 +213,7 @@ node "BEH_GTIA_Automate_Poursuivre"
     end,
 
     activate = function( self )
-        for _,pion in pairs( self._namedParams.listePions ) do
+        for _,pion in pairs( self._namedParams.listePions or {} ) do
         local _continue = true
             Activate( self.activations.ACT_GTIA_Automate_DonnerOrdrePoursuivre, 1, { pion, } )
 
@@ -254,7 +254,7 @@ node "BEH_GTIA_AssurerLaCoordinationInterEchelonDistanceMax"
             self.resultatCalcul = DEC_Geometrie_StartCalculAutomateLignesAvantEtArriere( self._namedParams.listePions2 )
         end
 
-        for _,pion in pairs( self._namedParams.listePions1 ) do
+        for _,pion in pairs( self._namedParams.listePions1 or {} ) do
         local _continue = true
 if( DEC_Geometrie_CalculerAutomateDistanceLigneAvant( self.resultatCalcul, pion ) < -self._namedParams.rDistance ) then
                 Activate( self.activations.ACT_GTIA_Automate_DonnerOrdreRalentir, 1, { pion, } )
@@ -301,7 +301,7 @@ node "BEH_GTIA_AssurerLaCoordinationInterEchelonDistanceMin"
             self.resultatCalcul = DEC_Geometrie_StartCalculAutomateLignesAvantEtArriere( self._namedParams.listePions1 )
         end
 
-        for _,pion in pairs( self._namedParams.listePions2 ) do
+        for _,pion in pairs( self._namedParams.listePions2 or {} ) do
         local _continue = true
 if( DEC_Geometrie_CalculerAutomateDistanceLigneArriere( self.resultatCalcul, pion ) < self._namedParams.rDistance ) then
                 Activate( self.activations.ACT_GTIA_Automate_DonnerOrdreAttendre, 1, { pion, } )

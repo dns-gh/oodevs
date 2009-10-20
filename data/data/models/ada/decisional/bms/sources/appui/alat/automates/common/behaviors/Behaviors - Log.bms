@@ -19,7 +19,7 @@ include "bit.lua"
             self.pionTC2 = DEC_Automate_PionPCDeAutomate( self.TC2 )
         end
 
-        for _,x in pairs( DEC_Automate_PionsAvecPC() ) do
+        for _,x in pairs( DEC_Automate_PionsAvecPC() or {} ) do
         local _continue = true
 do
                 if( not S_EstPatrouilleALAT( x ) ) then
@@ -33,7 +33,7 @@ do
                     F_CopyPlotsRavitaillement( patrouilleAlat, myself.sPlotsDeRavitaillement_ )
                     local distance = 1105199104
                     local distanceBuffer = 0
-                    for _,y in pairs( S_Obj_ListeObjetsValides( myself.sPlotsDeRavitaillement_ ) ) do
+                    for _,y in pairs( S_Obj_ListeObjetsValides( myself.sPlotsDeRavitaillement_ ) or {} ) do
                     local _continue = true
 do
                             local positionPlot = S_Geometrie_BarycentreZone( DEC_ConnaissanceObjet_Localisation( y ) )
@@ -78,7 +78,7 @@ node "BEH_Log_Automate_ALAT_AjoutNouveauxPlotsDansFuseau"
 
     activate = function( self )
         local listeObjet = DEC_Connaissances_ObjetsDansFuseau( S_TypeObject_ToString( eTypeObjectPlotRavitaillement ) )
-        for _,x in pairs( listeObjet ) do
+        for _,x in pairs( listeObjet or {} ) do
         local _continue = true
 do
                 if( not DEC_UserTypeList_Contient( myself.sPlotsDeRavitaillement_, x ) ) then
@@ -121,7 +121,7 @@ node "BEH_Log_Automate_ALAT_GererRavitaillementsCoordonne"
 
         local patrouilleAlerteMax = S_Misc_Automate_ALAT_PionAlerteLaPlusIminente( listePionsACoordonner )
         local patrouilleAlerteMin = S_Misc_Automate_ALAT_PionAlerteLaMoinsIminente( listePionsACoordonner )
-        for _,x in pairs( listePionsACoordonner ) do
+        for _,x in pairs( listePionsACoordonner or {} ) do
         local _continue = true
 do
                 bufferPionAlat = x
@@ -135,7 +135,7 @@ do
         local sizeList = #( listePionsACoordonner )
         local tmpRavitaillement = ( totalTpsAlertesRav * ( sizeList - 1 ) ) / ( sizeList * sizeList )
         for _,x in pairs( --[[//on check si une unité est deja en cours de ravitaillement
-]]listePionsACoordonner ) do
+]]listePionsACoordonner or {} ) do
         local _continue = true
 do
                 bufferPionAlat = x
@@ -200,7 +200,7 @@ node "BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX"
         self.listePionsIMEX = S_Cherche_Automate_Filtre_TypeMission( self._namedParams.listePionsHMLog, "T_Mission_Pion_ALAT_IMEX" )
         self.listePionsTransportPlots = S_Cherche_Automate_Filtre_TypeMission( self._namedParams.listePionsHMLog, "T_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement" )
         self.listePionsPourHeliporterPlots = S_Cherche_Automate_Filtre_PionNonDansListe( S_Liste_Automate_ALAT_PionsNonEnCoursExtraction( self._namedParams.listePionsHMLog ), self.listePionsTransportPlots )
-        for _,x in pairs( self._namedParams.listePions ) do
+        for _,x in pairs( self._namedParams.listePions or {} ) do
         local _continue = true
 do
                 DIA_PushBack( self.listePionsASoutenirIMEX, x )
@@ -214,7 +214,7 @@ do
         end
 
         self.listePionsASoutenirIMEX = S_Cherche_Automate_Filtre_PionNonDansListe( self.listePionsASoutenirIMEX, self.listePionsIMEX )
-        for _,x in pairs( self.listePionsASoutenirRav ) do
+        for _,x in pairs( self.listePionsASoutenirRav or {} ) do
         local _continue = true
 do
                 local mission = DEC_GetMission( myself )
@@ -284,7 +284,7 @@ do
         else
 do
                 local bDesPionsAExtraire = false
-                for _,k in pairs( self._namedParams.listePions ) do
+                for _,k in pairs( self._namedParams.listePions or {} ) do
                 local _continue = true
 do
                         if( DEC_NecessiteEvacuationBlesses( k ) ) then

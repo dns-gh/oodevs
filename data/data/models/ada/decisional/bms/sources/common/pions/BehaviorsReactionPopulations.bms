@@ -77,7 +77,7 @@ node "BEH_Pop_RC"
 
         local lstPops = DEC_Connaissances_Populations()
         local populationDangereuse = false
-        for _,pop in pairs( lstPops ) do
+        for _,pop in pairs( lstPops or {} ) do
         local _continue = true
 do
                 if( DEC_ConnaissancePopulation_Dangerosite( pop ) > 1 ) then
@@ -109,7 +109,7 @@ do
 ]]local lstPopsPAP = DEC_Connaissances_PopulationsPrenantAPartie()
         local rNouvellesPopPAP = 0
         local rTailleNouvelleListe = #( lstPopsPAP )
-        for _,pop in pairs( lstPopsPAP ) do
+        for _,pop in pairs( lstPopsPAP or {} ) do
         local _continue = true
 if( not DEC_UserTypeList_Contient( self.lstPopsPAPenCours, pop ) ) then
                 do

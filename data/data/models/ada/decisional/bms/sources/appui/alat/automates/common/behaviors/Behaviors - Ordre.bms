@@ -42,7 +42,7 @@ node "BEH_Ordre_Automate_ALAT_ChangerParametresRecompletement"
 
     activate = function( self )
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus ) do
+        for _,x in pairs( ordres_recus or {} ) do
         local _continue = true
 do
                 local repOrdre = x
@@ -77,7 +77,7 @@ node "BEH_Ordre_Automate_ALAT_ChangerParametresRecompletementPions"
 
     activate = function( self )
         local listePions = DEC_Automate_PionsAvecPC()
-        for _,x in pairs( S_ListePionsALAT( listePions ) ) do
+        for _,x in pairs( S_ListePionsALAT( listePions ) or {} ) do
         local _continue = true
             Activate( self.activations.ACT_Ordre_Automate_ALAT_ChangerParametresRecompletement, 1, { x, self._namedParams.porteeAction, self._namedParams.ambianceMission, } )
 

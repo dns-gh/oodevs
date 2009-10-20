@@ -68,7 +68,7 @@ node "MIS_Automate_CDT_ALAT_Escorter"
         --[[// init des listes de pions pour les missions couvrir et escorter
 ]]DIA_Clear( self.listePionsPourMissionsCouvrir )
         DIA_Clear( self.listePionsPourMissionsEscorter )
-        for _,x in pairs( self.listePionsPeuventCouvrirOuEscorterSansRavitaillementsEnCours ) do
+        for _,x in pairs( self.listePionsPeuventCouvrirOuEscorterSansRavitaillementsEnCours or {} ) do
         local _continue = true
 do
                 if( DIA_IsListEmpty( self.listePionsPourMissionsEscorter ) ) then

@@ -32,7 +32,7 @@ includedFiles["sources/appui/nbc/automates/common/missions/reconnaitreaxe/Reconn
         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Affectation des missions du premier echelon
 ]]--[[//-----------------------------------------------------------------------------
-]]self._namedParams.selPions ) do
+]]self._namedParams.selPions or {} ) do
         local _continue = true
             Activate( self.activations.BEH_Mission_Automate_NBC_AssignerReconnaitreA, 1, { ePhase_MRT, pion, } )
 

@@ -71,7 +71,7 @@ include "bit.lua"
 ]]--[[// Différenece avec mission marche à l'ennemi: que des blindes dans PE 
 ]]--[[// et SE
 ]]--[[//---------------------------------------------------------------------
-]]selPions ) do
+]]selPions or {} ) do
                     local _continue = true
 do
                             local pion = x
@@ -142,7 +142,7 @@ elseif switch_1 == eMRT_DeterminerEchelonsLocals then
 ]]--[[// à équilibrer la formation --> tous les pions en premier echeleon
 ]]--[[// ( sauf ceux qui ne peuvent pas comme le PAD et autre pion non prevu )
 ]]--[[//-----------------------------------------------------------------------------
-]]self.selABC_Blinde ) do
+]]self.selABC_Blinde or {} ) do
                     local _continue = true
 do
                             local pion = x

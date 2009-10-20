@@ -27,7 +27,7 @@ includedFiles["sources/melee/abc/automates/ge40/missions/fairemouvement/FaireMou
                                 do
                     g_bPhaseReceuil = false
                     local listePionsSubordonnes = DEC_Automate_AutomatesSubordonnes()
-                    for _,x in pairs( listePionsSubordonnes ) do
+                    for _,x in pairs( listePionsSubordonnes or {} ) do
                     local _continue = true
                         do
                             local automat = x
@@ -69,7 +69,7 @@ node "BEH_GTIA_AssignerLesOrdresPourFaireMouvement"
     end,
 
     activate = function( self )
-        for _,pion in pairs( DEC_Automate_AutomatesSubordonnes() ) do
+        for _,pion in pairs( DEC_Automate_AutomatesSubordonnes() or {} ) do
         local _continue = true
             Activate( self.activations.ACT_GTIA_AssignerMissionFaireMouvementA, 1, { pion, self._namedParams.zoneArrivee, } )
 

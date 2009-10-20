@@ -41,7 +41,7 @@ includedFiles["sources/melee/abc/automates/ge40/missions/offensives/effectuerrai
                                 do
                     g_bPhaseReceuil = false
                     local listePionsSubordonnes = DEC_Automate_AutomatesSubordonnes()
-                    for _,x in pairs( listePionsSubordonnes ) do
+                    for _,x in pairs( listePionsSubordonnes or {} ) do
                     local _continue = true
                         do
                             local automat = x

@@ -100,7 +100,7 @@ node "BEH_MAJ_Pion_ABC_EniDangereux"
 
     activate = function( self )
         local listeConnaissances = DEC_Connaissances_UnitesEnnemiesDangereuses()
-        for _,repEni in pairs( listeConnaissances ) do
+        for _,repEni in pairs( listeConnaissances or {} ) do
         local _continue = true
             Activate( self.activations.ACT_MAJ_EnnemiEnCours, S_Force_DangerSur( repEni ), { repEni, } )
 
@@ -697,7 +697,7 @@ node "BEH_Dep_Pion_ABC_GererDeboucher"
 ]]--[[// Regarder les eAvantPoint dans la liste des points interessants
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listePointInterressant = DEC_GetCategory( "points_interressants" )
-        for _,x in pairs( listePointInterressant ) do
+        for _,x in pairs( listePointInterressant or {} ) do
         local _continue = true
 do
                 local ptABC = x
@@ -806,7 +806,7 @@ node "BEH_Dep_Pion_ABC_GererDeboucherEclairage"
 ]]--[[// Regarder les eAvantPoint dans la liste des points interessants
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listePointInterressant = DEC_GetCategory( "points_interressants" )
-        for _,x in pairs( listePointInterressant ) do
+        for _,x in pairs( listePointInterressant or {} ) do
         local _continue = true
 do
                 local ptABC = x

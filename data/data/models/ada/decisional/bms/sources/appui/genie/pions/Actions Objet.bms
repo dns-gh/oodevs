@@ -49,11 +49,11 @@ include "bit.lua"
         if( self.bInit and DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
             do
                 local type = DEC_GenObject_Type( self._namedParams.objet )
-                            --[[// Autres objets
-]]self.act = DEC_StartCreerObjet( myself.objMisEnCours_, type, DEC_GenObject_Localisation( self._namedParams.objet ) )
-                            actionCallbacks[ self.act ] = function( arg ) self.eActionObjet = arg end
-                            actionKnowledgeCallbacks[ self.act ] = function( arg ) myself.objMisEnCours_ = arg end
-                do
+                self.act = DEC_StartCreerObjet( myself.objMisEnCours_, type, DEC_GenObject_Localisation( self._namedParams.objet ) )
+                actionCallbacks[ self.act ] = function( arg ) self.eActionObjet = arg end
+                actionKnowledgeCallbacks[ self.act ] = function( arg ) myself.objMisEnCours_ = arg end
+
+                                do
                     if( not DEC_Agent_AutomateEstEmbraye() ) then
                         DEC_RC( eRC_DebutTravaux )
                     else

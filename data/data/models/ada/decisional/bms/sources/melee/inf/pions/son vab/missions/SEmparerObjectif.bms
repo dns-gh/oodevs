@@ -185,7 +185,7 @@ node "BEH_Dep_Pion_INF_GererDeboucher"
         --[[// Init
 ]]--[[//-----------------------------------------------------------------------------		
 ]]local listePointInterressant = DEC_GetCategory( "points_interressants" )
-        for _,x in pairs( listePointInterressant ) do
+        for _,x in pairs( listePointInterressant or {} ) do
         local _continue = true
 do
                 local ptABC = x
@@ -485,7 +485,7 @@ node "BEH_Eni_Pion_VAB_Semparer"
         end
 
         local lstEnisDansFuseau = DEC_Connaissances_UnitesEnnemiesVivantesDansFuseau()
-        for _,ksEni in pairs( lstEnisDansFuseau ) do
+        for _,ksEni in pairs( lstEnisDansFuseau or {} ) do
         local _continue = true
 do
                 --[[// On se poster

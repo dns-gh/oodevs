@@ -191,7 +191,7 @@ node "BEH_Obs_Pion_ASS_TirIndirect_DansZones"
         if( eNiveauInstallation_Poste == eNiveauInstallation or eNiveauInstallation_PosteAmenage == eNiveauInstallation ) then
             do
                 Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1.1, { eEtatPhaseMission_DispositifInstalle, } )
-                for _,zone in pairs( self._namedParams.locZones ) do
+                for _,zone in pairs( self._namedParams.locZones or {} ) do
                 local _continue = true
                     Activate( self.activations.ACT_Obs_Pion_ASS_ActiverPerceptionTirIndirect_DansZone, 1, { zone, self._namedParams.bMenaceRoem, } )
 

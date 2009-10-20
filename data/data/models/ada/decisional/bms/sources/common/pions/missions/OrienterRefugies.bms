@@ -103,7 +103,7 @@ elseif switch_1 == eFinMission then
     end,
 
     destroy = function( self )
-                for _,refugie in pairs( self._namedParams.mission.refugies_ ) do
+                for _,refugie in pairs( self._namedParams.mission.refugies_ or {} ) do
         local _continue = true
             DEC_Refugies_Debarquer( refugie )
 
@@ -135,7 +135,7 @@ node "BEH_Dep_Pion_AllerRecupererRefugies"
         for _,refugie in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion de chaque pion refugie
 ]]--[[//-----------------------------------------------------------------------------
-]]self._namedParams.refugies ) do
+]]self._namedParams.refugies or {} ) do
         local _continue = true
 if( DEC_ConnaissanceAgent_EstValide( refugie ) and not DEC_Refugies_EstEmbarque( refugie ) ) then
                 Activate( self.activations.BEH_Dep_Pion_GererEmbarquementRefugie, S_Force_DistancePt( DEC_ConnaissanceAgent_Position( refugie ) ), { refugie, } )
@@ -222,7 +222,7 @@ node "BEH_Dep_Pion_AllerDebarquerRefugies"
 ]]        end
 
         if( DEC_Geometrie_Distance( self.point, DEC_Agent_Position() ) < 100 ) then
-for _,refugie in pairs( self._namedParams.refugies ) do
+for _,refugie in pairs( self._namedParams.refugies or {} ) do
             local _continue = true
                 Activate( self.activations.ACT_Transport_Pion_DebarquerRefugieDansCamp, 1, { refugie, self._namedParams.campRefugie, } )
 

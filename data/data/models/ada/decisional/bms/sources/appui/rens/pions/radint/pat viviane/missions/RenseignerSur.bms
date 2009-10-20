@@ -208,7 +208,7 @@ node "BEH_Obs_Pion_Rens_Radint_RenseignerDans"
         for _,zone in pairs( --[[//---------------------------------------------------------------------
 ]]--[[// Observation ( si station => exploitation du Rens possible)
 ]]--[[//---------------------------------------------------------------------
-]]self._namedParams.zonesDeRecherches ) do
+]]self._namedParams.zonesDeRecherches or {} ) do
         local _continue = true
             Activate( self.activations.ACT_Obs_SurveillerZone, 1, { zone, } )
 

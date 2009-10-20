@@ -78,7 +78,7 @@ includedFiles["sources/common/automates/missions/serecompleter/MRT - SeRecomplet
         for _,x in pairs( --[[//---------------------------------------------------------------------
 ]]--[[// Assignation de la mission "Faire mouvement" dans la zone
 ]]--[[//---------------------------------------------------------------------
-]]DEC_Automate_PionsAvecPC() ) do
+]]DEC_Automate_PionsAvecPC() or {} ) do
         local _continue = true
 do
                 local pion = x

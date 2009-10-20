@@ -61,7 +61,7 @@ includedFiles["sources/melee/inf/pions/son vab/missions/Recueillir.bms"] = true
         end
 
         local selOrder = DEC_GetCategory( "ordres_recus" )
-        for _,repOrder in pairs( selOrder ) do
+        for _,repOrder in pairs( selOrder or {} ) do
         local _continue = true
 do
                 DEC_Trace( "reception ordre de conduite" )

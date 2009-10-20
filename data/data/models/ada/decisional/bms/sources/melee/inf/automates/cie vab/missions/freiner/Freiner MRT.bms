@@ -123,7 +123,7 @@ node "BEH_Medo_Automate_INF_DonnerLesOrdresPourMissionRetrograde"
 ]]--[[// Différenece avec mission marche à l'ennemi: que des blindes dans PE 
 ]]--[[// et SE
 ]]--[[//---------------------------------------------------------------------
-]]selPions ) do
+]]selPions or {} ) do
                     local _continue = true
 do
                             local pion = x
@@ -251,7 +251,7 @@ node "BEH_Medo_Automate_INF_AssignerMissionFreinerA"
 ]]--[[// Affectation des missions du premier echelon
 ]]--[[// Tous les pions de premier echelon on la mssion reconnaitre
 ]]--[[//-----------------------------------------------------------------------------
-]]self._namedParams.selPion ) do
+]]self._namedParams.selPion or {} ) do
         local _continue = true
             Activate( self.activations.BEH_Mission_Automate_INF_AssignerFreinerA, 1, { ePhase_MRT, pion, self._namedParams.eEtatEchelon, } )
 

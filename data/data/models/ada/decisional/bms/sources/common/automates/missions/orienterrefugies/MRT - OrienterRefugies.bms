@@ -32,7 +32,7 @@ includedFiles["sources/common/automates/missions/orienterrefugies/MRT - Orienter
                 DEC_Trace( "$ MIS_Automate_MRT_OrienterRefugies : debut MRT $" )
                                 do
                     local listePionsSubordonnes = DEC_Automate_PionsAvecPC()
-                    for _,x in pairs( listePionsSubordonnes ) do
+                    for _,x in pairs( listePionsSubordonnes or {} ) do
                     local _continue = true
                         do
                             local pion = x

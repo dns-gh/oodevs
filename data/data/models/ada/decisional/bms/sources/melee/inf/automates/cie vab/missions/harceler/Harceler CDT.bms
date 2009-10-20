@@ -111,7 +111,7 @@ node "BEH_Situation_Automate_INF_Harceler_GestionSituation"
 
     activate = function( self )
         local selEnTete = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
-        for _,x in pairs( DEC_Automate_PionsSansPC() ) do
+        for _,x in pairs( DEC_Automate_PionsSansPC() or {} ) do
         local _continue = true
 do
                 local x_pion = x
@@ -208,7 +208,7 @@ node "BEH_Conduite_Automate_INF_Harceler_FaireRejoindrePositionRegroupement"
         if( ModuleBegins() ) then
             do
                 Activate( self.activations.BEH_Mission_Automate_AssignerStationnerA, 1, { ePhase_CDT, DEC_Automate_PionPC(), self.ptRegroupement, } )
-                for _,x_pion in pairs( S_ObtenirTousPionsDe( eEtatEchelon_Second ) ) do
+                for _,x_pion in pairs( S_ObtenirTousPionsDe( eEtatEchelon_Second ) or {} ) do
                 local _continue = true
                     Activate( self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, 1, { ePhase_CDT, x_pion, self.ptRegroupement, eEtatEchelon_Second, } )
 

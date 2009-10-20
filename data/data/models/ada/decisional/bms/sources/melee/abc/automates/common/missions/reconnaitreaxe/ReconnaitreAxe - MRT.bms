@@ -42,7 +42,7 @@ includedFiles["sources/melee/abc/automates/common/missions/reconnaitreaxe/Reconn
         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Affectation des missions du premier echelon
 ]]--[[//-----------------------------------------------------------------------------
-]]self._namedParams.selABC_PE ) do
+]]self._namedParams.selABC_PE or {} ) do
         local _continue = true
             Activate( self.activations.BEH_Mission_Automate_ABC_AssignerReconnaitreA, 1, { ePhase_MRT, pion, self._namedParams.eEtatEchelon, } )
 

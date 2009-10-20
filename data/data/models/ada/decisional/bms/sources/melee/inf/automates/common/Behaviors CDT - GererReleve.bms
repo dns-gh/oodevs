@@ -35,7 +35,7 @@ includedFiles["sources/melee/inf/automates/common/Behaviors CDT - GererReleve.bm
     activate = function( self )
         --[[// Recupere les section d'infanterie en appui
 ]]local selPions_PourReleve = S_Cherche_Automate_PionsPourReleve()
-        for _,x_pion in pairs( DEC_Automate_PionsSansPC() ) do
+        for _,x_pion in pairs( DEC_Automate_PionsSansPC() or {} ) do
         local _continue = true
 do
                 if( not S_Pion_EstDetruitTactique( x_pion ) ) then
@@ -46,7 +46,7 @@ do
                     local pionDetruit = x_pion
                     if( F_Pion_GeteEtatEchelon( pionDetruit ) == eEtatEchelon_Premier ) then
                         do
-                            for _,x_appui in pairs( selPions_PourReleve ) do
+                            for _,x_appui in pairs( selPions_PourReleve or {} ) do
                             local _continue = true
                                 do
                                     if( not DEC_Automate_PionPeutReleverPion( x_appui, pionDetruit ) ) then

@@ -158,7 +158,7 @@ node "BEH_Medo_Automate_GEN_MRT_FaireReconnaitre"
 ]]--[[//-----------------------------------------------------------------------------
 ]]                end
 
-                for _,pion in pairs( self._namedParams.listePionsGenie ) do
+                for _,pion in pairs( self._namedParams.listePionsGenie or {} ) do
                 local _continue = true
 do
                         if( self.rIterateurSecteur == #( self.listeZones ) ) then

@@ -37,7 +37,7 @@ includedFiles["sources/appui/rens/automates/radint/pat viviane/missions/renseign
                 DEC_SetMission( myself, self._namedParams.mission )
                                 do
                     local listePionsSubordonnes = DEC_Automate_PionsSansPC()
-                    for _,x in pairs( listePionsSubordonnes ) do
+                    for _,x in pairs( listePionsSubordonnes or {} ) do
                     local _continue = true
                         do
                             local pion = x

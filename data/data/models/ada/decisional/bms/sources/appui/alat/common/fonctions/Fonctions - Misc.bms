@@ -17,7 +17,7 @@ end
 function S_ListePionsALAT( listeAgents )
     local _returnValue = {}
     local listeBuffer = {}
-    for _,x in pairs( listeAgents ) do
+    for _,x in pairs( listeAgents or {} ) do
     local _continue = true
 do
             if( S_EstPatrouilleALAT( x ) ) then

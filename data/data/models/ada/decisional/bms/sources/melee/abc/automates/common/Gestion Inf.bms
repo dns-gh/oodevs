@@ -42,7 +42,7 @@ include "bit.lua"
         --[[// --> S'il ya des pions en difficulte en PE, demande de les aider
 ]]local selPions_PE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
         local rNbreDemande = 0
-        for _,x in pairs( selPions_PE ) do
+        for _,x in pairs( selPions_PE or {} ) do
         local _continue = true
 do
                 local pion = x

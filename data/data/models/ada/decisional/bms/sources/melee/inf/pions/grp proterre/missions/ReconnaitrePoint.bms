@@ -262,7 +262,7 @@ node "BEH_Eni_Pion_VAB_RecoPoint"
         self.eAction = self.eAction or eActionEnCours
         self.bContinue = self.bContinue or true
         local lstEnisDansFuseau = DEC_Connaissances_UnitesEnnemiesVivantesDansFuseau()
-        for _,ksEni in pairs( lstEnisDansFuseau ) do
+        for _,ksEni in pairs( lstEnisDansFuseau or {} ) do
         local _continue = true
 do
                 if( DEC_ConnaissanceAgent_EstDetruitTactique( ksEni ) ) then

@@ -125,7 +125,7 @@ elseif switch_1 == eTransporterEmbarquer then
 
                     local attendreUnites = false
                     DIA_Clear( self.listeUnitesPretes )
-                    for _,x in pairs( self.listeUnitesMissionTransporter ) do
+                    for _,x in pairs( self.listeUnitesMissionTransporter or {} ) do
                     local _continue = true
 do
                             --[[// si on est à plus de "distanceEmbarquement" de l'unité à transporter,

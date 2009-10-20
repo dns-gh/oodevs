@@ -56,7 +56,7 @@ node "BEH_Conduite_INF_Automate_Freiner_GererLesLC"
     activate = function( self )
         local selPionsFr = S_Cherche_Automate_Filtre_TypeMission( DEC_Automate_PionsAvecPC(), "T_Mission_Pion_INF_Freiner" )
         if( DEC_AutomateSuperieur_EstEmbraye() and F_Automat_GeteEtatEchelon( myself ) == eEtatEchelon_Second ) then
-for _,pion in pairs( selPionsFr ) do
+for _,pion in pairs( selPionsFr or {} ) do
             local _continue = true
                 Activate( self.activations.ACT_Ordre_Automate_PasserSurLC, 1, { pion, } )
 
@@ -91,7 +91,7 @@ node "BEH_Dispositif_Automate_INF_GererLeDispositifRetrograde_"
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
             do
-                for _,pion in pairs( S_Dispositif_Automate_INF_PionsSansMission() ) do
+                for _,pion in pairs( S_Dispositif_Automate_INF_PionsSansMission() or {} ) do
                 local _continue = true
                     do
                         local pionDEC = pion
@@ -115,7 +115,7 @@ node "BEH_Dispositif_Automate_INF_GererLeDispositifRetrograde_"
 
         local listePionsSE = S_ObtenirTousPionsDe( eEtatEchelon_Second )
         local rIterateur = 0
-        for _,pion in pairs( listePionsSE ) do
+        for _,pion in pairs( listePionsSE or {} ) do
         local _continue = true
 do
                 local pionDEC = pion
@@ -198,7 +198,7 @@ node "BEH_CoordDep_Automate_INF_CoordonnerJalonnement"
         for _,x in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Coordination
 ]]--[[//-----------------------------------------------------------------------------
-]]self.selPionsJal ) do
+]]self.selPionsJal or {} ) do
         local _continue = true
 do
                 local pion = x
@@ -248,7 +248,7 @@ node "BEH_CoordDep_Automate_INF_CoordonnerMouvement"
 ]]--[[// Récuper les unités qui on la mission decrocher
 ]]--[[//---------------------------------------------------------------------
 ]]local listePionEnMvt = S_Cherche_Automate_Filtre_TypeMission( DEC_Automate_PionsAvecPC(), "T_Mission_Pion_Decrocher" )
-        for _,pion in pairs( listePionEnMvt ) do
+        for _,pion in pairs( listePionEnMvt or {} ) do
         local _continue = true
 do
                 --[[// VALEUR A DEFINIR

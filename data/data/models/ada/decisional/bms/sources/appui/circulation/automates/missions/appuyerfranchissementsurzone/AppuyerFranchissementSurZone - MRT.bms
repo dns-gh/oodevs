@@ -40,7 +40,7 @@ includedFiles["sources/appui/circulation/automates/missions/appuyerfranchissemen
 ]]--[[//---------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
             do
-                for _,x in pairs( selPions ) do
+                for _,x in pairs( selPions or {} ) do
                 local _continue = true
                     do
                         local pionBuffer = x

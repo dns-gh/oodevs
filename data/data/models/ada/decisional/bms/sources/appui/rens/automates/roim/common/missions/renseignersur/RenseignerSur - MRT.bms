@@ -26,7 +26,7 @@ includedFiles["sources/appui/rens/automates/roim/common/missions/renseignersur/R
         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Affectation des missions à l'echelon
 ]]--[[//-----------------------------------------------------------------------------
-]]self._namedParams.selSMO ) do
+]]self._namedParams.selSMO or {} ) do
         local _continue = true
 do
                 Activate( self.activations.ACT_Info_Trace, 1, { "Operating mission assigned", } )

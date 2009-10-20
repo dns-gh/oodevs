@@ -32,7 +32,7 @@ node "BEH_Conduite_Automate_INF_MenerDefenseUsure"
 ]]--[[//-----------------------------------------------------------------------------
 ]]
         local lstSection = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
-        for _,x_pe in pairs( lstSection ) do
+        for _,x_pe in pairs( lstSection or {} ) do
         local _continue = true
 do
                 local pionPE = x_pe
@@ -67,7 +67,7 @@ node "BEH_Conduite_Automate_INF_MenerDefenseUsure_AffecterAppuis"
         if( ModuleBegins() ) then
             do
                 DEC_Trace( "Cherche appui : " .. DEC_GetSzName( self._namedParams.pionEnTete ) )
-                for _,x_pion in pairs( lstSectionSE ) do
+                for _,x_pion in pairs( lstSectionSE or {} ) do
                 local _continue = true
                     do
                         local pionSE = x_pion
@@ -87,7 +87,7 @@ node "BEH_Conduite_Automate_INF_MenerDefenseUsure_AffecterAppuis"
             end
         end
 
-        for _,x_pion in pairs( lstSectionSE ) do
+        for _,x_pion in pairs( lstSectionSE or {} ) do
         local _continue = true
 do
                 Activate( self.activations.ACT_Misc_Automate_INF_Defini_PionAppuiMobile, 1, { x_pion, } )

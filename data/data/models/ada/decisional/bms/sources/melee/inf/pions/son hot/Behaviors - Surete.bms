@@ -98,7 +98,7 @@ node "BEH_Eni_Pion_HOT_Appuyer"
 
     activate = function( self )
         local lstEnisPercus = DEC_Connaissances_UnitesEnnemiesVivantesPercues()
-        for _,ksEni in pairs( lstEnisPercus ) do
+        for _,ksEni in pairs( lstEnisPercus or {} ) do
         local _continue = true
 do
                 if( DEC_ConnaissanceAgent_EstDetruitTactique( ksEni ) ) then

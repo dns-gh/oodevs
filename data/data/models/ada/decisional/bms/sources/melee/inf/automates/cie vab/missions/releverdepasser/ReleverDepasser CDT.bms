@@ -160,7 +160,7 @@ node "BEH_Situation_Automate_INF_Relever"
     activate = function( self )
         self.selPions = self.selPions or S_ObtenirTousPionsDe( eEtatEchelon_Premier )
         local rPion_FinMouvement = 0
-        for _,x in pairs( self.selPions ) do
+        for _,x in pairs( self.selPions or {} ) do
         local _continue = true
 do
                 local x_pion = x
@@ -235,7 +235,7 @@ node "BEH_Conduite_Automate_INF_Relever_AssignerReleve"
         if( ModuleBegins() ) then
             do
                 local rIt_Pion = 0
-                for _,x_releve in pairs( S_ObtenirTousPionsPour( self._namedParams.compagnie, eEtatEchelon_Premier ) ) do
+                for _,x_releve in pairs( S_ObtenirTousPionsPour( self._namedParams.compagnie, eEtatEchelon_Premier ) or {} ) do
                 local _continue = true
                     do
                         if( rIt_Pion >= #( selUnites ) ) then

@@ -75,7 +75,7 @@ node "BEH_Situation_Automate_ASS_FinMission"
         end
 
         local rN_Fin = 0
-        for _,x in pairs( self.lst_Pions_EnTete ) do
+        for _,x in pairs( self.lst_Pions_EnTete or {} ) do
         local _continue = true
 do
                 local x_pion = x

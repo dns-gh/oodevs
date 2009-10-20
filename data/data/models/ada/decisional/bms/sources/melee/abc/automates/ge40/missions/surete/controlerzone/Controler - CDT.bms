@@ -40,7 +40,7 @@ include "bit.lua"
                                 do
                     g_bPhaseReceuil = false
                     local listePionsSubordonnes = DEC_Automate_AutomatesSubordonnes()
-                    for _,x in pairs( listePionsSubordonnes ) do
+                    for _,x in pairs( listePionsSubordonnes or {} ) do
                     local _continue = true
                         do
                             local automat = x
@@ -101,7 +101,7 @@ node "BEH_GTIA_RepartirPionsDansFuseauPourControler"
         end
 
         self.fuseaux = self.fuseaux or DEC_DecouperFuseau( 1 )
-        for _,pion in pairs( self._namedParams.listePions ) do
+        for _,pion in pairs( self._namedParams.listePions or {} ) do
         local _continue = true
 do
                 Activate( self.activations.ACT_GTIA_AssignerFuseau, 1, { pion, DEC_UserTypeList_GetAt( self.fuseaux, 0 ), } )
@@ -243,7 +243,7 @@ node "BEH_GTIA_AssignerMissionsSuretePEcl"
     end,
 
     activate = function( self )
-        for _,pion in pairs( S_Cherche_GE_Filtre_TypeAutomate_Eclairage( self._namedParams.listePion ) ) do
+        for _,pion in pairs( S_Cherche_GE_Filtre_TypeAutomate_Eclairage( self._namedParams.listePion ) or {} ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionSureteMeleeA, 1, { pion, "T_Mission_Automate_ABC_Controler", } )
 
@@ -273,14 +273,14 @@ node "BEH_GTIA_AssignerMissionsSuretePE"
 
     activate = function( self )
         for _,pion in pairs( --[[// Assignation missions ABC
-]]S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePions ) ) do
+]]S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePions ) or {} ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionSureteMeleeA, 1, { pion, "T_Mission_Automate_ABC_Controler", } )
 
         end
 
         for _,pion in pairs( --[[// Assignation missions INF
-]]S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePions ) ) do
+]]S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePions ) or {} ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionSureteMeleeA, 1, { pion, "T_Mission_Automate_INF_Controler", } )
 
@@ -311,14 +311,14 @@ node "BEH_GTIA_AssignerMissionsSureteSE"
 
     activate = function( self )
         for _,pion in pairs( --[[// Assignation missions ABC
-]]S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePions ) ) do
+]]S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePions ) or {} ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionSureteMeleeA, 1, { pion, "T_Mission_Automate_SoutenirSurPositionEnMesureDe", } )
 
         end
 
         for _,pion in pairs( --[[// Assignation missions INF
-]]S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePions ) ) do
+]]S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePions ) or {} ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionSureteMeleeA, 1, { pion, "T_Mission_Automate_SoutenirSurPositionEnMesureDe", } )
 
@@ -379,21 +379,21 @@ node "BEH_GTIA_AssignerMissionsSureteSEAppui"
 
     activate = function( self )
         for _,pion in pairs( --[[// TC2
-]]S_Cherche_GE_Filtre_TypeAutomate_Log( self._namedParams.listePion ) ) do
+]]S_Cherche_GE_Filtre_TypeAutomate_Log( self._namedParams.listePion ) or {} ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionSureteLogA, 1, { pion, } )
 
         end
 
         for _,pion in pairs( --[[// Génie
-]]S_Cherche_GE_Filtre_TypeAutomate_Genie( self._namedParams.listePion ) ) do
+]]S_Cherche_GE_Filtre_TypeAutomate_Genie( self._namedParams.listePion ) or {} ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionSureteGenieA, 1, { pion, self._namedParams.travaux, } )
 
         end
 
         for _,pion in pairs( --[[// DLO
-]]S_Cherche_GE_Filtre_TypeAutomate_ART( self._namedParams.listePion ) ) do
+]]S_Cherche_GE_Filtre_TypeAutomate_ART( self._namedParams.listePion ) or {} ) do
         local _continue = true
             --[[// Idem autres Mis
 ]]Activate( self.activations.BEH_GTIA_AssignerMissionART, 1, { pion, } )

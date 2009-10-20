@@ -268,7 +268,7 @@ elseif switch_1 == eNoError then
 
                     if _continue then
                     local rIt = 0
-                    for _,x_pion in pairs( self._namedParams.lstPions_PE ) do
+                    for _,x_pion in pairs( self._namedParams.lstPions_PE or {} ) do
                     local _continue = true
                         do
                             if( rIt < #( self.lstLocalisations ) ) then
@@ -362,7 +362,7 @@ elseif switch_1 == eNoError then
                     self.lstLocRgpt = self.lstLocRgpt.first
                     local rIt = 0
                     local natureObjectif = eNatureObjectif_ElementTerrain
-                    for _,x_pion in pairs( self._namedParams.lstPions_PE ) do
+                    for _,x_pion in pairs( self._namedParams.lstPions_PE or {} ) do
                     local _continue = true
                         do
                             if( rIt < #( self.lstLocalisations ) ) then
@@ -429,7 +429,7 @@ if( ( #( self._namedParams.lstPionsAppui ) ~= 0 and #( self._namedParams.lstPion
                 end
 
                 StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_MRT, DEC_Automate_PionPC(), pAppui, } )
-                for _,x_appui in pairs( self._namedParams.lstPionsAppui ) do
+                for _,x_appui in pairs( self._namedParams.lstPionsAppui or {} ) do
                 local _continue = true
                     StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_MRT, x_appui, pAppui, } )
 

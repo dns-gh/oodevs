@@ -31,7 +31,7 @@ include "bit.lua"
 
     activate = function( self )
         local lstEnisDangereux = DEC_Connaissances_UnitesEnnemiesDangereuses()
-        for _,ksEni in pairs( lstEnisDangereux ) do
+        for _,ksEni in pairs( lstEnisDangereux or {} ) do
         local _continue = true
             Activate( self.activations.BEH_MOT_Pion_INF_GarderSesDistancesFaceA, S_Force_DangerSur( ksEni ), { ksEni, } )
 
@@ -94,7 +94,7 @@ node "BEH_MOT_Pion_INF_GarderSesDistances_GererTransport"
         if( DEC_Agent_EstEmbarque() and ( eNiveauInstallation_Poste == DEC_Agent_NiveauInstallation() ) ) then
             do
                 local lstEnisDangereux = DEC_Connaissances_UnitesEnnemiesDangereuses()
-                for _,ksEni in pairs( lstEnisDangereux ) do
+                for _,ksEni in pairs( lstEnisDangereux or {} ) do
                 local _continue = true
                     StartActivateOverride( self, self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
 
@@ -127,7 +127,7 @@ node "BEH_MOT_Pion_INF_EtrePrudent_GererTransport"
         if( F_Pion_GeteEtatDecPrudence( myself ) == eEtatDecPrudence_Actif and DEC_Agent_EstEmbarque() ) then
             do
                 local lstEnisDangereux = DEC_Connaissances_UnitesEnnemiesDangereuses()
-                for _,ksEni in pairs( lstEnisDangereux ) do
+                for _,ksEni in pairs( lstEnisDangereux or {} ) do
                 local _continue = true
                     StartActivateOverride( self, self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )--[[// : strength = 1.1 * S_Force_DangerSur( ksEni );
 ]]

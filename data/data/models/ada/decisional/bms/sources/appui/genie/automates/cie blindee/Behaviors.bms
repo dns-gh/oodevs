@@ -105,7 +105,7 @@ node "BEH_Ordre_Automate_GEN_ActiverObstacle"
 ]]--[[// En fonction de l'ordre recu
 ]]--[[//-----------------------------------------------------------------
 ]]local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus ) do
+        for _,x in pairs( ordres_recus or {} ) do
         local _continue = true
 do
                 --[[// cast
@@ -147,7 +147,7 @@ node "BEH_Objet_Automate_GEN_VerifierRenfortPourConstruireObjets"
     end,
 
     activate = function( self )
-        for _,objet in pairs( self._namedParams.objets ) do
+        for _,objet in pairs( self._namedParams.objets or {} ) do
         local _continue = true
             Activate( self.activations.BEH_Objet_Automate_GEN_VerifierRenfortPourConstruire, 1, { objet, } )
 
@@ -178,7 +178,7 @@ node "BEH_Objet_Automate_GEN_VerifierRenfortPourConstruire"
     activate = function( self )
         local eValidite = nil
         local listePions = DEC_Automate_PionsSansPC()
-        for _,pion in pairs( listePions ) do
+        for _,pion in pairs( listePions or {} ) do
         local _continue = true
 do
                 if( DEC_Automate_PionPeutConstruireObjet( pion, DEC_GenObject_Type( self._namedParams.objet ) ) ) then
@@ -214,7 +214,7 @@ node "BEH_Ordre_Automate_GEN_VerifierRenfortPourDetruireObjets"
     end,
 
     activate = function( self )
-        for _,objet in pairs( self._namedParams.objets ) do
+        for _,objet in pairs( self._namedParams.objets or {} ) do
         local _continue = true
 if( DEC_ConnaissanceObjet_EstValide( objet ) ) then
                 Activate( self.activations.BEH_Objet_Automate_GEN_VerifierRenfortPourDetruireObjet, 1, { objet, } )
@@ -247,7 +247,7 @@ node "BEH_Objet_Automate_GEN_VerifierRenfortPourDetruireObjet"
     activate = function( self )
         local eValidite = nil
         local listePions = DEC_Automate_PionsSansPC()
-        for _,pion in pairs( listePions ) do
+        for _,pion in pairs( listePions or {} ) do
         local _continue = true
 do
                 if( DEC_Automate_PionPeutDetruireObjet( pion, self._namedParams.objet ) ) then
@@ -283,7 +283,7 @@ node "BEH_Objet_Automate_GEN_VerifierRenfortPourContournerObjets"
     end,
 
     activate = function( self )
-        for _,objet in pairs( self._namedParams.objets ) do
+        for _,objet in pairs( self._namedParams.objets or {} ) do
         local _continue = true
 if( DEC_ConnaissanceObjet_EstValide( objet ) ) then
                 Activate( self.activations.BEH_Objet_Automate_GEN_VerifierRenfortPourContourner, 1, { objet, } )
@@ -321,7 +321,7 @@ node "BEH_Objet_Automate_GEN_VerifierRenfortPourContourner"
 
         local eValidite = nil
         local listePions = DEC_Automate_PionsSansPC()
-        for _,pion in pairs( listePions ) do
+        for _,pion in pairs( listePions or {} ) do
         local _continue = true
 do
                 if( DEC_Automate_PionPeutConstruireContournementObjet( pion, self._namedParams.objet ) ) then

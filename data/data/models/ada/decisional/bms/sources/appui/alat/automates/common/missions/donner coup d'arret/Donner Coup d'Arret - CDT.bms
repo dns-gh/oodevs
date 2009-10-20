@@ -64,7 +64,7 @@ include "bit.lua"
 ]]DIA_Clear( self.listeHMLog )
         self.listeHMLog = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "GeneralPurposeHelicopterPatrol" )
         for _,x in pairs( --[[//Gestion du debut du coup d'arret
-]]self.listeDetruire ) do
+]]self.listeDetruire or {} ) do
         local _continue = true
 do
                 local pionDEC = x
@@ -95,7 +95,7 @@ do
                             --[[//ROE pour le pion le plus en arrière
 ]]local pionArriere = DEC_Geometrie_PionDerriere( self.listeDetruire, DEC_GetDirectionEnnemi( self._namedParams.mission ) )
                             Activate( self.activations.ACT_ROE_Automate_DonnerOrdreTirLibre, 1, { pionArriere, } )
-                            for _,x in pairs( self.listeDetruire ) do
+                            for _,x in pairs( self.listeDetruire or {} ) do
                             local _continue = true
 do
                                     local pionDEC = x

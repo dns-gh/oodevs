@@ -505,7 +505,7 @@ node "BEH_Info_Pion_RendreCompteSurPriseAPartiParEnis"
 
     activate = function( self )
         local listeUnitesPrenantAPartie = DEC_Connaissances_UnitesPrenantAPartie()
-        for _,repEni in pairs( listeUnitesPrenantAPartie ) do
+        for _,repEni in pairs( listeUnitesPrenantAPartie or {} ) do
         local _continue = true
             StartActivateOverride( self, self.activations.BEH_Info_Pion_RendreCompteSurPriseAPartiDe, 1, { repEni, } )
 
@@ -600,7 +600,7 @@ node "BEH_Info_Pion_RendreCompteSurPresencePop"
         for _,eniRendu in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Prisoniers
 ]]--[[//-----------------------------------------------------------------------------
-]]DEC_Connaissances_UnitesRenduesAProximite( 1000 ) ) do
+]]DEC_Connaissances_UnitesRenduesAProximite( 1000 ) or {} ) do
         local _continue = true
 do
                 Activate( self.activations.ACT_RC, 1, { eRC_PresenceEnnemiRendu, } )
@@ -618,7 +618,7 @@ do
 ]]
         end
 
-        for _,repRefugies in pairs( DEC_Connaissances_RefugiesAProximite( 1000 ) ) do
+        for _,repRefugies in pairs( DEC_Connaissances_RefugiesAProximite( 1000 ) or {} ) do
         local _continue = true
 do
                 Activate( self.activations.ACT_RC, 1, { eRC_PresencePopulation, } )

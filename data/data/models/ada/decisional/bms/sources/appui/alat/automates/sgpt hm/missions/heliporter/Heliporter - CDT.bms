@@ -131,7 +131,7 @@ include "bit.lua"
         --[[// liste des unités qui peuvent couvrir ou escorter et qui ne sont pas 
 ]]--[[// en cours de ravitaillement
 ]]self.listePionsARepartir = S_Cherche_Automate_Filtre_PionNonDansListe( self.listePionsPeuventCouvrirOuEscorter, self.listePionsEnCoursRavitaillement )
-        for _,x in pairs( self.listePionsARepartir ) do
+        for _,x in pairs( self.listePionsARepartir or {} ) do
         local _continue = true
 do
                 if( DIA_IsListEmpty( self.listePionsPourMissionsEscorter ) ) then
@@ -157,7 +157,7 @@ do
 
         local gestionCDTMissionsTransport = false
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus ) do
+        for _,x in pairs( ordres_recus or {} ) do
         local _continue = true
 do
                 local repOrdre = x

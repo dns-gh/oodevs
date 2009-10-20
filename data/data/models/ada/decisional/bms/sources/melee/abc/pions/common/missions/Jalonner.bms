@@ -165,7 +165,7 @@ node "BEH_Eni_Pion_ABC_JalonnerLesGros"
 ]]local listeConnaissances = DEC_Connaissances_UnitesEnnemiesDangereuses()
         if( not DIA_IsListEmpty( listeConnaissances ) ) then
             do
-                for _,repEni in pairs( listeConnaissances ) do
+                for _,repEni in pairs( listeConnaissances or {} ) do
                 local _continue = true
 --[[// Attention au seuil
 ]]if( DEC_ConnaissanceAgent_Dangerosite( repEni ) < 1.5 ) then
@@ -255,7 +255,7 @@ node "BEH_Lima_Pion_ABC_Jalonner_GererLimas"
 ]]--[[// Traiter les points interressants
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listePointInterressant = DEC_GetCategory( "points_interressants" )
-        for _,x in pairs( listePointInterressant ) do
+        for _,x in pairs( listePointInterressant or {} ) do
         local _continue = true
 do
                 local pointABC = x
