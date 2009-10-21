@@ -48,7 +48,7 @@ void ObstaclePrototype::Commit()
     {
         PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
         ObstacleAttribute* attribute = new ObstacleAttribute( dico, types_->GetValue() );
-                           attribute->Activate( bActivated_->isChecked() );
+                           attribute->Activate( activation_->isChecked() );
         creation_->Get< ObjectAttributesContainer >().Register( *attribute );
     }
 }
