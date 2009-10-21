@@ -102,7 +102,6 @@ public:
     void UpdateDecision  ( float duration );
     void UpdateState     ();
     void Clean           ();
-    uint GetBoundedPeople( MT_Float rPeople );
     //@}
 
     //! @name Actions
@@ -129,7 +128,7 @@ public:
     void OnReceiveMsgOrder    ( const ASN1T_MsgPopulationOrder& msg );
     void OnReceiveMsgFragOrder( const ASN1T_MsgFragOrder&       msg );
     void SendCreation         () const;
-    void SendFullState        ();
+    void SendFullState        () const;
     void UpdateNetwork        ();
 
     void OnReceiveMsgPopulationMagicAction( const ASN1T_MsgPopulationMagicAction& asnMsg );
@@ -148,6 +147,17 @@ public:
     //@{
     virtual void Apply( MIL_EntityVisitor_ABC< MIL_PopulationElement_ABC >& visitor ) const;
     //@}
+
+       //! @name People Counter
+    //@{
+    struct sPeopleCounter
+    {
+        sPeopleCounter( MT_Float rInit );   
+        uint GetBoundedPeople( MT_Float rPeople );
+
+        int nPeople_;
+    };
+    
 
 protected:
     MIL_Population( const MIL_PopulationType& type );
@@ -190,24 +200,12 @@ private:
     typedef T_FlowVector::const_iterator                CIT_FlowVector;
     //@}
 
-    //! @name People Counter
-    //@{
-    struct sPeopleCounter
-    {
-        sPeopleCounter( MT_Float rInit ) : nPeople_ ( uint( rInit ) ) {}
-        int nPeople_;
-    };
-    void SetCurrentCounter( sPeopleCounter& counter ) { pPeopleCounter_ = &counter; }
-    void ResetCounter     ()                          { pPeopleCounter_ = 0; }
-    //@}
-
 private:
     const MIL_PopulationType*        pType_;
     const uint                       nID_;
           MIL_Army*                  pArmy_;
     const MIL_PopulationAttitude*    pDefaultAttitude_;
           MT_Float                   rPeopleCount_;
-          sPeopleCounter*            pPeopleCounter_;
 
           T_ConcentrationVector      concentrations_;
           T_FlowVector               flows_;

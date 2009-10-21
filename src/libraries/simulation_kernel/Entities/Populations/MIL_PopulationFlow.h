@@ -13,11 +13,11 @@
 #include "MIL.h"
 
 #include "MIL_PopulationElement_ABC.h"
+#include "MIL_Population.h"
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
 #include "simulation_terrain/TER_PopulationFlow_ABC.h"
 #include <boost/shared_ptr.hpp>
 
-class MIL_Population;
 class MIL_PopulationConcentration;
 class MIL_PopulationAttitude;
 class DEC_Population_Path;
@@ -70,8 +70,8 @@ public:
     //! @name Network
     //@{
     void SendCreation    () const;
-    void SendFullState   () const;
-    void SendChangedState() const;
+    void SendFullState   ( MIL_Population::sPeopleCounter& peopleCounter ) const;
+    void SendChangedState( MIL_Population::sPeopleCounter& peopleCounter ) const;
     //@}
 
     //! @name CheckPoints

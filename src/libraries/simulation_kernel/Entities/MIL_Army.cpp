@@ -70,7 +70,6 @@ MIL_Army::MIL_Army( MIL_EntityManager& manager, uint id, xml::xistream& xis )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_Army( *this ) )
     , knowledgeGroups_     ()
     , diplomacies_         ()
-    , objects_             ()
 {
     std::string strType;
     xis >> xml::attribute( "name", strName_ )
@@ -175,7 +174,7 @@ void MIL_Army::serialize( Archive& file, const uint )
          & diplomacies_
          & knowledgeGroups_
          & tools::Resolver< MIL_Formation >::elements_
-         & objects_
+         & tools::Resolver< MIL_Object_ABC >::elements_
          & tools::Resolver< MIL_Population >::elements_
          & pKnowledgeBlackBoard_;
 }
@@ -205,8 +204,7 @@ void MIL_Army::WriteODB( xml::xostream& xos ) const
     xos     << xml::end();
 
     xos     << xml::start( "objects" );
-    for( CIT_ObjectSet it = objects_.begin(); it != objects_.end(); ++it )
-        (*it)->WriteODB( xos );    
+    tools::Resolver< MIL_Object_ABC >::Apply( boost::bind( &MIL_Object_ABC::WriteODB, _1, boost::ref(xos) ) );   
     xos     << xml::end();
 
     xos     << xml::start( "populations" );
@@ -495,10 +493,7 @@ void MIL_Army::SendCreation() const
         it->second->SendCreation();
 
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::SendCreation, _1 ) );
-
-    for( CIT_ObjectSet it = objects_.begin(); it != objects_.end(); ++it )
-        (**it).SendCreation();
-
+    tools::Resolver< MIL_Object_ABC >::Apply( boost::bind( &MIL_Object_ABC::SendCreation, _1 ) ); 
     tools::Resolver< MIL_Population >::Apply( boost::bind( &MIL_Population::SendCreation, _1 ) );
 }
 
@@ -506,7 +501,7 @@ void MIL_Army::SendCreation() const
 // Name: MIL_Army::SendFullState
 // Created: NLD 2005-02-14
 // -----------------------------------------------------------------------------
-void MIL_Army::SendFullState()
+void MIL_Army::SendFullState() const
 {
     for( CIT_DiplomacyMap it = diplomacies_.begin(); it != diplomacies_.end(); ++it )
     {
@@ -521,10 +516,7 @@ void MIL_Army::SendFullState()
         it->second->SendFullState();
 
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::SendFullState, _1 ) );
-
-    for( CIT_ObjectSet it = objects_.begin(); it != objects_.end(); ++it )
-        (**it).SendFullState();
-
+    tools::Resolver< MIL_Object_ABC >::Apply( boost::bind( &MIL_Object_ABC::SendFullState, _1 ) );
     tools::Resolver< MIL_Population >::Apply( boost::bind( &MIL_Population::SendFullState, _1 ) );
 }
 
@@ -568,8 +560,7 @@ void MIL_Army::OnReceiveMsgChangeDiplomacy( const ASN1T_MsgChangeDiplomacy& asnM
 // -----------------------------------------------------------------------------
 void MIL_Army::RegisterObject( MIL_Object_ABC& object )
 {
-    bool bOut = objects_.insert( &object ).second;
-    assert( bOut );
+    tools::Resolver< MIL_Object_ABC >::Register( object.GetID(), object );
 }
 
 // -----------------------------------------------------------------------------
@@ -578,8 +569,7 @@ void MIL_Army::RegisterObject( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void MIL_Army::UnregisterObject( MIL_Object_ABC& object )
 {
-    int nOut = objects_.erase( &object );
-    assert( nOut == 1 );
+    tools::Resolver< MIL_Object_ABC >::Remove( object.GetID() );
 }
 
 // -----------------------------------------------------------------------------

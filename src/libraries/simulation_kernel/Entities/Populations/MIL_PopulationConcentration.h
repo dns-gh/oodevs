@@ -13,6 +13,7 @@
 #include "MIL.h"
 
 #include "MIL_PopulationElement_ABC.h"
+#include "MIL_Population.h"
 #include "simulation_terrain/TER_PopulationConcentration_ABC.h"
 
 namespace xml
@@ -20,7 +21,6 @@ namespace xml
     class xistream;
 }
 
-class MIL_Population;
 class MIL_PopulationFlow;
 class MIL_PopulationAttitude;
 class MIL_Object_ABC;
@@ -78,8 +78,8 @@ public:
     //! @name Network
     //@{
     void SendCreation    () const;
-    void SendFullState   () const;
-    void SendChangedState() const;
+    void SendFullState   ( MIL_Population::sPeopleCounter& peopleCounter ) const;
+    void SendChangedState( MIL_Population::sPeopleCounter& peopleCounter ) const;
     //@}
 
     //! @name CheckPoints

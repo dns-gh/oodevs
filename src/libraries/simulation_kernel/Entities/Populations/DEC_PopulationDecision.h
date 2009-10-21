@@ -63,8 +63,8 @@ public:
 
     //! @name Network
     //@{
-    void SendChangedState( NET_ASN_MsgPopulationUpdate& msg );
-    void SendFullState   ( NET_ASN_MsgPopulationUpdate& msg );
+    void SendChangedState( NET_ASN_MsgPopulationUpdate& msg ) const ;
+    void SendFullState   ( NET_ASN_MsgPopulationUpdate& msg ) const ;
     //@}
 
 protected:

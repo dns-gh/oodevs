@@ -631,7 +631,7 @@ void MIL_PopulationFlow::SendDestruction() const
 // Name: MIL_PopulationFlow::SendFullState
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
-void MIL_PopulationFlow::SendFullState() const
+void MIL_PopulationFlow::SendFullState( MIL_Population::sPeopleCounter& peopleCounter ) const
 {
     NET_ASN_MsgPopulationFlowUpdate asnMsg;
     
@@ -652,8 +652,8 @@ void MIL_PopulationFlow::SendFullState() const
     NET_ASN_Tools::WriteDirection( direction_, asnMsg().direction );
     asnMsg().attitude           = GetAttitude().GetAsnID();
     asnMsg().vitesse            = (uint)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ );
-    asnMsg().nb_humains_vivants = GetPopulation().GetBoundedPeople( GetNbrAliveHumans() );
-    asnMsg().nb_humains_morts   = GetPopulation().GetBoundedPeople( GetNbrDeadHumans () );
+    asnMsg().nb_humains_vivants = peopleCounter.GetBoundedPeople( GetNbrAliveHumans() );
+    asnMsg().nb_humains_morts   = peopleCounter.GetBoundedPeople( GetNbrDeadHumans () );
 
     asnMsg.Send();
 
@@ -666,7 +666,7 @@ void MIL_PopulationFlow::SendFullState() const
 // Name: MIL_PopulationFlow::SendChangedState
 // Created: NLD 2005-10-04
 // -----------------------------------------------------------------------------
-void MIL_PopulationFlow::SendChangedState() const
+void MIL_PopulationFlow::SendChangedState( MIL_Population::sPeopleCounter& peopleCounter ) const
 {
     if( !HasChanged() )
         return;
@@ -701,8 +701,8 @@ void MIL_PopulationFlow::SendChangedState() const
     {
         asnMsg().m.nb_humains_vivantsPresent = 1; 
         asnMsg().m.nb_humains_mortsPresent   = 1;
-        asnMsg().nb_humains_vivants          = GetPopulation().GetBoundedPeople( GetNbrAliveHumans() );
-        asnMsg().nb_humains_morts            = GetPopulation().GetBoundedPeople( GetNbrDeadHumans () );
+        asnMsg().nb_humains_vivants          = peopleCounter.GetBoundedPeople( GetNbrAliveHumans() );
+        asnMsg().nb_humains_morts            = peopleCounter.GetBoundedPeople( GetNbrDeadHumans () );
     }
 
     if( bSpeedUpdated_ )

@@ -41,6 +41,7 @@ struct ASN1T_MsgChangeDiplomacy;
 class MIL_Army : public MIL_Army_ABC
                , public tools::Resolver< MIL_Formation >
                , public tools::Resolver< MIL_Population >
+               , public tools::Resolver< MIL_Object_ABC >
                , private boost::noncopyable
 {
 
@@ -52,9 +53,6 @@ public:
 
     typedef std::map< const MIL_Army_ABC*, E_Diplomacy > T_DiplomacyMap;
     typedef T_DiplomacyMap::const_iterator           CIT_DiplomacyMap;
-
-    typedef std::set< MIL_Object_ABC* > T_ObjectSet;
-    typedef T_ObjectSet::const_iterator     CIT_ObjectSet;
     //@}
 
 public:
@@ -95,6 +93,7 @@ public:
 
     void RegisterPopulation  ( MIL_Population& population );
     void UnregisterPopulation( MIL_Population& population );
+
     MIL_KnowledgeGroup* FindKnowledgeGroup      ( uint nID ) const;
     void                RegisterKnowledgeGroup  ( MIL_KnowledgeGroup& knowledgeGroup );
     void                UnregisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup );
@@ -121,7 +120,7 @@ public:
     //! @name Network
     //@{
     void SendCreation               () const;
-    void SendFullState              () ; //@TODO MGD Change MIL_Population sendFullState to be const;
+    void SendFullState              () const;
     void SendKnowledge              () const;
 
     void OnReceiveMsgChangeDiplomacy( const ASN1T_MsgChangeDiplomacy& msg );
@@ -144,7 +143,6 @@ private:
           E_Diplomacy   nType_;
     T_DiplomacyMap      diplomacies_;
     T_KnowledgeGroupMap knowledgeGroups_;
-    T_ObjectSet         objects_;
 
     DEC_KnowledgeBlackBoard_Army* pKnowledgeBlackBoard_;
 

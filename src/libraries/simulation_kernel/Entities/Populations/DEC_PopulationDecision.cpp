@@ -272,18 +272,17 @@ void DEC_PopulationDecision::StopMissionBehavior( MIL_Mission_ABC& mission )
 // Name: DEC_PopulationDecision::SendFullState
 // Created: NLD 2006-02-22
 // -----------------------------------------------------------------------------
-void DEC_PopulationDecision::SendFullState( NET_ASN_MsgPopulationUpdate& msg )
+void DEC_PopulationDecision::SendFullState( NET_ASN_MsgPopulationUpdate& msg ) const
 {
     msg().m.etat_dominationPresent = 1;
     msg().etat_domination          = (uint)( rDominationState_ * 100. );
-    rLastDominationState_ = rDominationState_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationDecision::SendChangedState
 // Created: NLD 2006-02-22
 // -----------------------------------------------------------------------------
-void DEC_PopulationDecision::SendChangedState( NET_ASN_MsgPopulationUpdate& msg )
+void DEC_PopulationDecision::SendChangedState( NET_ASN_MsgPopulationUpdate& msg ) const
 {
     if( bStateHasChanged_ )
         SendFullState( msg );
@@ -322,7 +321,10 @@ void DEC_PopulationDecision::NotifyDominationStateChanged( MT_Float rValue )
 
     static const MT_Float rDeltaPercentageForNetwork = 0.05;
     if( fabs( rLastDominationState_ - rDominationState_ ) > rDeltaPercentageForNetwork || rDominationState_ == 0. || rDominationState_ == 1. )
+    {   
         bStateHasChanged_ = true;
+        rLastDominationState_ = rDominationState_;
+    }
 }
 
 // -----------------------------------------------------------------------------

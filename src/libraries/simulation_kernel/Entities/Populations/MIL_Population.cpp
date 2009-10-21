@@ -1024,7 +1024,7 @@ void MIL_Population::SendCreation() const
 // Name: MIL_Population::SendFullState
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
-void MIL_Population::SendFullState()
+void MIL_Population::SendFullState() const
 {
     NET_ASN_MsgPopulationUpdate asnMsg;
     asnMsg().oid = nID_;
@@ -1034,21 +1034,17 @@ void MIL_Population::SendFullState()
     sPeopleCounter counter( rPeopleCount_ );
     sPeopleCounter trashCounter( rPeopleCount_ );
 
-    SetCurrentCounter( counter );
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
-        (**it).SendFullState();
-    SetCurrentCounter( trashCounter );
+        (**it).SendFullState( counter );
+
     for( CIT_ConcentrationVector it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
-        (**it).SendFullState();
+        (**it).SendFullState( trashCounter );
 
-    SetCurrentCounter( counter );
     for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
-        (**it).SendFullState();
-    SetCurrentCounter( trashCounter );
-    for( CIT_FlowVector it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
-        (**it).SendFullState();
+        (**it).SendFullState( counter );
 
-    ResetCounter();
+    for( CIT_FlowVector it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
+        (**it).SendFullState( trashCounter );
 }
 
 // -----------------------------------------------------------------------------
@@ -1068,21 +1064,15 @@ void MIL_Population::UpdateNetwork()
     sPeopleCounter counter( rPeopleCount_ );
     sPeopleCounter trashCounter( rPeopleCount_ );
 
-    SetCurrentCounter( counter );
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
-        (**it).SendChangedState();
-    SetCurrentCounter( trashCounter );
+        (**it).SendChangedState( counter );
     for( CIT_ConcentrationVector it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
-        (**it).SendChangedState();
+        (**it).SendChangedState( trashCounter);
 
-    SetCurrentCounter( counter );
     for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
-        (**it).SendChangedState();
-    SetCurrentCounter( trashCounter );
+        (**it).SendChangedState( counter);
     for( CIT_FlowVector it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
-        (**it).SendChangedState();
-
-    ResetCounter();
+        (**it).SendChangedState( trashCounter );
 }
 
 // -----------------------------------------------------------------------------
@@ -1097,18 +1087,28 @@ void MIL_Population::Apply( MIL_EntityVisitor_ABC< MIL_PopulationElement_ABC >& 
         visitor.Visit( **it );
 }
 
+
+
 // -----------------------------------------------------------------------------
-// Name: MIL_Population::GetBoundedPeople
+// Name: MIL_Population::sPeopleCounter::sPeopleCounter
+// Created: MGD 2009-10-21
+// -----------------------------------------------------------------------------
+MIL_Population::sPeopleCounter::sPeopleCounter( MT_Float rInit ) 
+    : nPeople_ ( uint( rInit ) )
+{
+
+}    
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::sPeopleCounter::GetBoundedPeople
 // Created: SBO 2006-04-03
 // -----------------------------------------------------------------------------
-uint MIL_Population::GetBoundedPeople( MT_Float rPeople )
+uint MIL_Population::sPeopleCounter::GetBoundedPeople( MT_Float rPeople )
 {
-    if( !pPeopleCounter_ )
-        return uint( floor( rPeople + 0.5 ) );
-    uint nResult = std::min( pPeopleCounter_->nPeople_, int( ceil( rPeople ) ) );
-    pPeopleCounter_->nPeople_ -= nResult;
-    if( pPeopleCounter_->nPeople_ < 0. )
-        pPeopleCounter_->nPeople_ = 0;
+    uint nResult = std::min( nPeople_, int( ceil( rPeople ) ) );
+    nPeople_ -= nResult;
+    if( nPeople_ < 0. )
+        nPeople_ = 0;
     return nResult;
 }
 

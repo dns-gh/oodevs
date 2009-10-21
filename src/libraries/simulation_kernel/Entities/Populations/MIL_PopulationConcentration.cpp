@@ -288,7 +288,7 @@ void MIL_PopulationConcentration::SendDestruction() const
 // Name: MIL_PopulationConcentration::SendFullState
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
-void MIL_PopulationConcentration::SendFullState() const
+void MIL_PopulationConcentration::SendFullState( MIL_Population::sPeopleCounter& peopleCounter ) const
 {
     NET_ASN_MsgPopulationConcentrationUpdate asnMsg;
     asnMsg().oid = GetID();
@@ -299,8 +299,8 @@ void MIL_PopulationConcentration::SendFullState() const
     asnMsg().m.nb_humains_vivantsPresent = 1;
     
     asnMsg().attitude           = GetAttitude().GetAsnID();
-    asnMsg().nb_humains_morts   = GetPopulation().GetBoundedPeople( GetNbrDeadHumans () );
-    asnMsg().nb_humains_vivants = GetPopulation().GetBoundedPeople( GetNbrAliveHumans() );
+    asnMsg().nb_humains_morts   = peopleCounter.GetBoundedPeople( GetNbrDeadHumans () );
+    asnMsg().nb_humains_vivants = peopleCounter.GetBoundedPeople( GetNbrAliveHumans() );
 
     asnMsg.Send();
 }
@@ -309,7 +309,7 @@ void MIL_PopulationConcentration::SendFullState() const
 // Name: MIL_PopulationConcentration::SendChangedState
 // Created: NLD 2005-10-04
 // -----------------------------------------------------------------------------
-void MIL_PopulationConcentration::SendChangedState() const
+void MIL_PopulationConcentration::SendChangedState( MIL_Population::sPeopleCounter& peopleCounter ) const
 {
     if( !HasChanged() )
         return;
@@ -329,8 +329,8 @@ void MIL_PopulationConcentration::SendChangedState() const
         asnMsg().m.nb_humains_mortsPresent   = 1;
         asnMsg().m.nb_humains_vivantsPresent = 1;
     
-        asnMsg().nb_humains_morts   = GetPopulation().GetBoundedPeople( GetNbrDeadHumans () );
-        asnMsg().nb_humains_vivants = GetPopulation().GetBoundedPeople( GetNbrAliveHumans() );
+        asnMsg().nb_humains_morts   = peopleCounter.GetBoundedPeople( GetNbrDeadHumans () );
+        asnMsg().nb_humains_vivants = peopleCounter.GetBoundedPeople( GetNbrAliveHumans() );
     }
 
     asnMsg.Send();
