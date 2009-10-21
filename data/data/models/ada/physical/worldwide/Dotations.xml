@@ -431,26 +431,26 @@
   <dotation category="Gas" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="36" name="carburant" nature="Gasoil" package-mass="1" package-size="1000" package-volume="1"/>
   <dotation category="Kerosene" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="37" name="carburant" nature="Kerosene" package-mass="1" package-size="1000" package-volume="1"/>
   <dotation category="standard explosive" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="38" name="explosif" nature="Solid" package-mass="0.005" package-size="1" package-volume="0.005">
-	<attritions>
-        <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
-        <attrition destruction="0.1" protection="MediumTank" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
-        <attrition destruction="0.1" protection="LightTank" repairable-with-evacuation="0.8" repairable-without-evacuation="0.1"/>
-        <attrition destruction="0.7" protection="ArmouredCarrier" repairable-with-evacuation="0.2" repairable-without-evacuation="0.1"/>
-        <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        <attrition destruction="0.8" protection="UnarmouredVehicle" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
-        <attrition destruction="1" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-      </attritions>
+	  <attritions>
+      <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0.1" protection="MediumTank" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0.1" protection="LightTank" repairable-with-evacuation="0.8" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.7" protection="ArmouredCarrier" repairable-with-evacuation="0.2" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0.8" protection="UnarmouredVehicle" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+      <attrition destruction="1" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+    </attritions>
   </dotation>
   <dotation category="standard landmine" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="39" name="mine" nature="Solid" package-mass="0.005" package-size="1" package-volume="0.005">
   	<attritions>
-        <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
-        <attrition destruction="0.1" protection="MediumTank" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
-        <attrition destruction="0.1" protection="LightTank" repairable-with-evacuation="0.8" repairable-without-evacuation="0.1"/>
-        <attrition destruction="0.7" protection="ArmouredCarrier" repairable-with-evacuation="0.2" repairable-without-evacuation="0.1"/>
-        <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        <attrition destruction="0.8" protection="UnarmouredVehicle" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
-        <attrition destruction="1" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-      </attritions>
+      <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0.1" protection="MediumTank" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0.1" protection="LightTank" repairable-with-evacuation="0.8" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.7" protection="ArmouredCarrier" repairable-with-evacuation="0.2" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0.8" protection="UnarmouredVehicle" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+      <attrition destruction="1" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+    </attritions>
   </dotation>
   <dotation category="standard barbed wire" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="40" name="barbele" nature="Solid" package-mass="0.005" package-size="1" package-volume="0.005"/>
   <dotation category="UR NTI1 MOB" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="41" name="piece" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
