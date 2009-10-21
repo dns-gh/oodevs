@@ -43,11 +43,11 @@
 #include "ScoreModel.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/FormationLevels.h"
-#include "urban/Model.h"
-#include "urban/StaticModel.h"
-#include "urban/Controllers.h"
-#include "urban/Controller.h"
-#include "urban/ActionController.h"
+//#include "urban/Model.h"
+//#include "urban/StaticModel.h"
+//#include "urban/Controllers.h"
+//#include "urban/Controller.h"
+//#include "urban/ActionController.h"
 
 #pragma warning( disable : 4355 )
 
@@ -91,9 +91,9 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , intelligences_( *new IntelligencesModel( intelligenceFactory_ ) )
     , drawings_( *new DrawingsModel( controllers, drawingFactory_ ) )
     , scores_( *new ScoreModel( controllers, publisher, staticModel.scores_ ) )
- //   , urbanControllers_( *new tools::Controllers() )
- //   , urbanStaticModel_( *new urban::StaticModel() )
- //   , urbanModel_( *new urban::Model( urbanControllers_, urbanStaticModel_ ) )
+    //, urbanControllers_( *new tools::Controllers() )
+    //, urbanStaticModel_( *new urban::StaticModel() )
+    //, urbanModel_( *new urban::Model( urbanControllers_, urbanStaticModel_ ) )
 {
     // NOTHING
 }
