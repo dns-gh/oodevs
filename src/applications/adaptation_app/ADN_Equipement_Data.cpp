@@ -491,12 +491,14 @@ void ADN_Equipement_Data::AmmoCategoryInfo::ReadArchive( xml::xistream& input )
     CategoryInfo::ReadArchive( input );
 
     std::string type;
-    input >> xml::optional() >> xml::attribute( "d-type", bTrancheD_ )
-          >> xml::attribute( "type", type );
-    nType_ = ADN_Tr::ConvertToMunitionType( type );
-    if( nType_ == E_MunitionType( -1 ) )
-        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Equipment - Invalid resource type '%1'" ).arg( type.c_str() ).ascii() );
-
+    input >> xml::optional() >> xml::attribute( "d-type", bTrancheD_ );
+    input >> xml::optional() >> xml::attribute( "type", type );
+    if ( !type.empty() )
+    {
+        nType_ = ADN_Tr::ConvertToMunitionType( type );
+        if( nType_ == E_MunitionType( -1 ) )
+            throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Equipment - Invalid resource type '%1'" ).arg( type.c_str() ).ascii() );
+    }
     input >> xml::optional() 
           >> xml::start( "attritions" )
             >> xml::list( "attrition", *this, &ADN_Equipement_Data::AmmoCategoryInfo::ReadAttrition )
@@ -607,7 +609,7 @@ ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::DotationInfos::FindCateg
 void ADN_Equipement_Data::DotationInfos::ReadArchive( xml::xistream& input )
 {
     std::auto_ptr< CategoryInfo > spNew;
-    if( strName_.GetData() == "munition" )
+    if( strName_.GetData() == "munition" || strName_.GetData() == "explosif" || strName_.GetData() == "mine" )
         spNew.reset( new AmmoCategoryInfo( *this ) );
     else
         spNew.reset( new CategoryInfo( *this ) );

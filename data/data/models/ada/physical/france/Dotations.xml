@@ -1513,26 +1513,26 @@
   <dotation category="F63 Gasoil" codeEMAT6="F63" codeEMAT8="F63" codeLFRIL="" codeNNO="" id="114" name="carburant" nature="Gasoil" package-mass="1" package-size="1000" package-volume="1"/>
   <dotation category="F57 Essence" codeEMAT6="F57" codeEMAT8="F57" codeLFRIL="" codeNNO="" id="115" name="carburant" nature="Gasoil" package-mass="1" package-size="1000" package-volume="1"/>
   <dotation category="F35 Kerosene" codeEMAT6="F35" codeEMAT8="F35" codeLFRIL="" codeNNO="" id="116" name="carburant" nature="Kerosene" package-mass="1" package-size="1000" package-volume="1"/>
-  <dotation category="explosif classique" codeEMAT6="explosif classique" codeEMAT8="explosif classique" codeLFRIL="explosif classique" codeNNO="explosif classique" id="117" name="explosif" nature="Solide" package-mass="0.005" package-size="1" package-volume="0.005">
+  <dotation category="explosif classique" codeEMAT6="explosif classique" codeEMAT8="explosif classique" codeLFRIL="explosif classique" codeNNO="explosif classique" id="117" name="explosif" nature="Solide" package-mass="0.005" package-size="1" package-volume="0.005" type="Obus">
     <attritions>
-        <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
-        <attrition destruction="0.1" protection="CharMoyen" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
-        <attrition destruction="0.1" protection="BlindeLeger" repairable-with-evacuation="0.8" repairable-without-evacuation="0.1"/>
-        <attrition destruction="0.7" protection="TransportBlinde" repairable-with-evacuation="0.2" repairable-without-evacuation="0.1"/>
-        <attrition destruction="0" protection="Aeronef" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        <attrition destruction="0.8" protection="VehiculeNonProtege" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
-        <attrition destruction="1" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0.1" protection="CharMoyen" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0.1" protection="BlindeLeger" repairable-with-evacuation="0.8" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.7" protection="TransportBlinde" repairable-with-evacuation="0.2" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0" protection="Aeronef" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0.8" protection="VehiculeNonProtege" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+      <attrition destruction="1" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
   </dotation>
-  <dotation category="mine classique" codeEMAT6="mine classique" codeEMAT8="mine classique" codeLFRIL="mine classique" codeNNO="mine classique" id="118" name="mine" nature="Solide" package-mass="0.005" package-size="1" package-volume="0.005">
+  <dotation category="mine classique" codeEMAT6="mine classique" codeEMAT8="mine classique" codeLFRIL="mine classique" codeNNO="mine classique" id="118" name="mine" nature="Solide" package-mass="0.005" package-size="1" package-volume="0.005" type="Obus">
     <attritions>
-        <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
-        <attrition destruction="0.1" protection="CharMoyen" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
-        <attrition destruction="0.1" protection="BlindeLeger" repairable-with-evacuation="0.8" repairable-without-evacuation="0.1"/>
-        <attrition destruction="0.7" protection="TransportBlinde" repairable-with-evacuation="0.2" repairable-without-evacuation="0.1"/>
-        <attrition destruction="0" protection="Aeronef" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        <attrition destruction="0.8" protection="VehiculeNonProtege" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
-        <attrition destruction="1" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0.1" protection="CharMoyen" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0.1" protection="BlindeLeger" repairable-with-evacuation="0.8" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.7" protection="TransportBlinde" repairable-with-evacuation="0.2" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0" protection="Aeronef" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0.8" protection="VehiculeNonProtege" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+      <attrition destruction="1" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
   </dotation>
   <dotation category="barbele classique" codeEMAT6="barbele classique" codeEMAT8="barbele classique" codeLFRIL="barbele classique" codeNNO="barbele classique" id="119" name="barbele" nature="Solide" package-mass="0.005" package-size="1" package-volume="0.005"/>
