@@ -219,6 +219,8 @@ do
 
 }
 
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.BEH_Mot_Delai_Pion_INF_AugmenterAgression = { "param" }
 connections = connections or {}
 connections[ #connections + 1 ] = { nodes.BEH_Lima_Pion_INF_GererLIA, "ACT_RC", nodes.ACT_RC }
 connections[ #connections + 1 ] = { nodes.BEH_Lima_Pion_INF_GererLIA, "ACT_Dep_PasserSurLima", nodes.ACT_Dep_PasserSurLima }

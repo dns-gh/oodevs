@@ -399,6 +399,8 @@ node "BEH_Delai_Pion_INF_PreparerMission"
 
 }
 
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.BEH_Obs_Pion_INF_ReconnaitrePoint_Maintenu = { "param" }
 connections = connections or {}
 connections[ #connections + 1 ] = { nodes.BEH_Delai_Pion_INF_PreparerMission, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
 connections[ #connections + 1 ] = { nodes.BEH_Delai_Pion_INF_PreparerMission, "ACT_Misc_Delai", nodes.ACT_Misc_Delai }
