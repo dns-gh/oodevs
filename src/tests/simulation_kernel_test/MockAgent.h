@@ -57,9 +57,9 @@ public:
         return *GetArmyShadow();
     }
 
-    virtual DEC_Knowledge_Agent& CreateKnowledge( const MIL_KnowledgeGroup& knowledgeGroup )
+    virtual boost::shared_ptr< DEC_Knowledge_Agent > CreateKnowledge( const MIL_KnowledgeGroup& knowledgeGroup )
     {
-        return *CreateKnowledgeShadow( knowledgeGroup );
+        return CreateKnowledgeShadow( knowledgeGroup );
     }
     virtual DEC_KnowledgeBlackBoard_AgentPion& GetKnowledge   () const
     {
@@ -84,7 +84,7 @@ public:
 
     MOCKPP_CONST_CHAINABLE_EXT1      ( MockAgent, bool, BelongsTo, const MIL_KnowledgeGroup&, bool, , MIL_KnowledgeGroup );
     MOCKPP_CONST_CHAINABLE_EXT1      ( MockAgent, bool, IsPerceived, const MIL_Agent_ABC&, bool, , MIL_Agent_ABC );
-    MOCKPP_CHAINABLE_EXT1            ( MockAgent, DEC_Knowledge_Agent*, CreateKnowledgeShadow, const MIL_KnowledgeGroup&, DEC_Knowledge_Agent, , MIL_KnowledgeGroup );    
+    MOCKPP_CHAINABLE_EXT1            ( MockAgent, boost::shared_ptr< DEC_Knowledge_Agent >, CreateKnowledgeShadow, const MIL_KnowledgeGroup&, DEC_Knowledge_Agent, , MIL_KnowledgeGroup );    
 };
 
 #endif // __MockAgent_h_

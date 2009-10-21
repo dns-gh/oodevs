@@ -96,7 +96,7 @@ public:
     virtual bool GetMiseEnOeuvre() = 0;
     virtual void SetMiseEnOeuvre( bool ) = 0;
     virtual int GetEtatFeu() = 0;
-    virtual std::vector<DEC_Knowledge_Agent*> GetListeEnisTirAutorise() = 0;
+    virtual std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > GetListeEnisTirAutorise() = 0;
     virtual std::vector<DEC_Decision_ABC*> GetListePionsCoordination() = 0;
     virtual int GetObjMisEnCours() = 0;
     virtual void SetObjMisEnCours( int ) = 0;

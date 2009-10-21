@@ -65,7 +65,11 @@ include "bit.lua"
                 local eEtatDecoupeLocalisation = nil--[[// surface de la zone et decoupage en zones de 10km²            
 ]]--[[// ------------------------------------------------
 ]]
-                DEC_Copie_ListeLocalisations( DEC_Geometrie_DecoupeLocalisationSurface( self._namedParams.mission.zone_, 10000000, eEtatDecoupeLocalisation ), self.listeLocalisations )
+                local listeSousSecteurs = {}
+                listeSousSecteurs = DEC_Geometrie_DecoupeLocalisationSurface( self._namedParams.mission.zone_, 10000000, eEtatDecoupeLocalisation )
+                eEtatDecoupeLocalisation = listeSousSecteurs.second
+                listeSousSecteurs = listeSousSecteurs.first
+                DEC_Copie_ListeLocalisations( listeSousSecteurs, self.listeLocalisations )
                 if( eEtatDecoupeLocalisation ~= eNoError ) then
                     do
                         DEC_Warning( eRC_MissionImpossible )

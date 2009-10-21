@@ -455,7 +455,7 @@ bool MIL_BaseParameter::ToAgentList( std::vector< DEC_Decision_ABC* >& ) const
 // Name: MIL_BaseParameter::ToAgentKnowledge
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToAgentKnowledge( DEC_Knowledge_Agent*& ) const
+bool MIL_BaseParameter::ToAgentKnowledge( boost::shared_ptr< DEC_Knowledge_Agent >& ) const
 {
     return false;
 }
@@ -464,7 +464,7 @@ bool MIL_BaseParameter::ToAgentKnowledge( DEC_Knowledge_Agent*& ) const
 // Name: MIL_BaseParameter::ToAgentKnowledgeList
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToAgentKnowledgeList( std::vector< DEC_Knowledge_Agent* >& ) const
+bool MIL_BaseParameter::ToAgentKnowledgeList( std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >& ) const
 {
     return false;
 }
@@ -491,7 +491,7 @@ bool MIL_BaseParameter::ToObjectKnowledgeList( std::vector< DEC_Knowledge_Object
 // Name: MIL_BaseParameter::ToPopulationKnowledge
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToPopulationKnowledge( DEC_Knowledge_Population* ) const
+bool MIL_BaseParameter::ToPopulationKnowledge( DEC_Knowledge_Population*& ) const
 {
     return false;
 }

@@ -190,6 +190,7 @@ MIL_EntityManager::MIL_EntityManager()
     , rActionsTime_                 ( 0. )
     , rEffectsTime_                 ( 0. )
     , rStatesTime_                  ( 0. )
+    , idManager_                    ( new MIL_IDManager() )
     , agentFactory_                 ( new AgentFactory( *idManager_ ) )
     , automateFactory_              ( new AutomateFactory( *idManager_ ) )
 {

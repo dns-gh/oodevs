@@ -25,7 +25,7 @@ class DEC_KnowledgePopulationFunctions
 public:
     //! @name Functions
     //@{
-    template< typename T > static float GetDominationState( const T& caller, unsigned int knowledgeId );
+    template< typename T > static std::pair< float, int > GetDominationState( const T& caller, unsigned int knowledgeId );
     template< typename T > static unsigned int GetAttitude( const T& caller, unsigned int knowledgeId );
                            static float GetDangerosity    ( const MIL_AgentPion& caller, int knowledgeId);
                            static void Recon             ( const MIL_AgentPion& caller, int knowledgeId );

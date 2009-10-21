@@ -85,8 +85,8 @@ void MIL_Effect_IndirectFire::UpdateTargetPositionFromKnowledge()
 {
     if( nTargetKnowledgeID_ == 0 )
         return;
-    const DEC_Knowledge_Agent* pTargetKnowledge = firer_.GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgentFromID( nTargetKnowledgeID_ );
-    if( !pTargetKnowledge )
+    boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge = firer_.GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgentFromID( nTargetKnowledgeID_ );
+    if( !pTargetKnowledge || !pTargetKnowledge->IsValid() )
     {
         nTargetKnowledgeID_ = 0;
         return;

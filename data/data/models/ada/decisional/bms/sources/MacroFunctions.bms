@@ -585,6 +585,10 @@ function DEC_Geometrie_DecoupeLocalisationSurface( localisation, area, returnCod
     return DEC_Geometry_SplitLocalisationSurface( localisation, area )
 end
 
+function DEC_ConnaissancePopulation_Domination( pop, returnCode )
+    return DEC_KnowledgePopulation_Domination( pop )
+end
+
 function DEC_Connaissances_ObjetsDansCercle( position, radius, ... )
     return DEC_Knowledges_ObjectsInCircle( position, radius, {...} )
 end

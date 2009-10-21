@@ -71,9 +71,6 @@ PHY_RolePion_HumanFactors::~PHY_RolePion_HumanFactors()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_HumanFactors::load( MIL_CheckPointInArchive& file, const uint )
 {
-    assert( !pMorale_ );
-    assert( !pExperience_ );
-    assert( !pTiredness_ );
     file >> boost::serialization::base_object< PHY_RoleInterface_HumanFactors >( *this );
     uint nID;
     file >> nID;

@@ -65,7 +65,7 @@ bool MIL_PopulationKnowledgeParameter::ToPopulationKnowledge( ASN1T_PopulationKn
 // Name: MIL_PopulationKnowledgeParameter::ToPopulationKnowledge
 // Created: LDC 2009-06-04
 // -----------------------------------------------------------------------------
-bool MIL_PopulationKnowledgeParameter::ToPopulationKnowledge( DEC_Knowledge_Population* value ) const
+bool MIL_PopulationKnowledgeParameter::ToPopulationKnowledge( DEC_Knowledge_Population*& value ) const
 {
     value = pKnowledgePopulation_;
     return true;

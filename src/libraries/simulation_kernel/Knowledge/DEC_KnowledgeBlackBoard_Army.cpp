@@ -476,27 +476,27 @@ DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_Army::GetKnowledgeObject( const DE
 // Name: DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeAgent
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeAgent( const ASN1T_UnitKnowledge& /*asn*/ ) const
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeAgent( const ASN1T_UnitKnowledge& /*asn*/ ) const
 {
-    return 0;
+    return boost::shared_ptr< DEC_Knowledge_Agent >();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeAgent
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeAgent( const DIA_Variable_ABC& /*dia*/ ) const
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeAgent( const DIA_Variable_ABC& /*dia*/ ) const
 {
-    return 0;
+    return boost::shared_ptr< DEC_Knowledge_Agent >();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeAgent
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeAgent( uint /*nID*/ ) const
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeAgent( uint /*nID*/ ) const
 {
-    return 0;
+    return boost::shared_ptr< DEC_Knowledge_Agent >();
 }
 
 // -----------------------------------------------------------------------------

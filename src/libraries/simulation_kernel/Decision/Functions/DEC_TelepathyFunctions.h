@@ -34,8 +34,8 @@ public:
     //! @name Functions used to directly access or modify another brain
     //@{
     void CopyPlotsRavitaillement( DEC_Decision_ABC* pPion, const std::vector< int >& value );
-    std::vector<DEC_Knowledge_Agent*> GetListeEnisTirAutorise( DEC_Decision_ABC* pPion );
-    void RemoveAgentFromListeEnisTirAutorise( DEC_Decision_ABC* pPion, DEC_Knowledge_Agent* eni );
+    std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > GetListeEnisTirAutorise( DEC_Decision_ABC* pPion );
+    void RemoveAgentFromListeEnisTirAutorise( DEC_Decision_ABC* pPion, boost::shared_ptr< DEC_Knowledge_Agent > eni );
     //@}
 };
 

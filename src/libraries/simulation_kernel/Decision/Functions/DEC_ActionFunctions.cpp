@@ -32,9 +32,9 @@
 
 namespace
 {
-    bool IsNotCampKnowledgeOrHasLogisticCapacity( DEC_Knowledge_Agent* pKnowledge, DEC_Knowledge_Object* pCampKnowledge )
+    bool IsNotCampKnowledgeOrHasLogisticCapacity( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, DEC_Knowledge_Object* pCampKnowledge )
     {
-        return( !pKnowledge || !pCampKnowledge || !pCampKnowledge->GetObjectKnown() ); //|| pCampKnowledge->GetObjectKnown()->Retrieve< LogisticCapacity >() != 0 )
+        return( !pKnowledge || !pKnowledge->IsValid() || !pCampKnowledge || !pCampKnowledge->GetObjectKnown() ); //|| pCampKnowledge->GetObjectKnown()->Retrieve< LogisticCapacity >() != 0 )
     }
 }
 
@@ -42,9 +42,9 @@ namespace
 // Name: DEC_ActionFunctions::Prisoners_CaptureAndLoad
 // Created: NLD 2007-02-14
 // -----------------------------------------------------------------------------
-void DEC_ActionFunctions::Prisoners_CaptureAndLoad( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge )
+void DEC_ActionFunctions::Prisoners_CaptureAndLoad( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
-    if( pKnowledge && pKnowledge->GetAgentKnown().GetRole< surrender::PHY_RoleInterface_Surrender >().Capture( callerAgent ) )
+    if( pKnowledge && pKnowledge->IsValid() && pKnowledge->GetAgentKnown().GetRole< surrender::PHY_RoleInterface_Surrender >().Capture( callerAgent ) )
     {
         bool transportOnlyLoadable = false;
         callerAgent.Apply( &transport::TransportNotificationHandler_ABC::MagicLoadPion, pKnowledge->GetAgentKnown(), transportOnlyLoadable );
@@ -55,9 +55,9 @@ void DEC_ActionFunctions::Prisoners_CaptureAndLoad( MIL_AgentPion& callerAgent, 
 // Name: DEC_ActionFunctions::Prisoners_Unload
 // Created: NLD 2007-02-14
 // -----------------------------------------------------------------------------
-void DEC_ActionFunctions::Prisoners_Unload( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge )
+void DEC_ActionFunctions::Prisoners_Unload( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent >  pKnowledge )
 {
-    if( pKnowledge )
+    if( pKnowledge && pKnowledge->IsValid() )
     {
         pKnowledge->GetAgentKnown().GetRole< surrender::PHY_RoleInterface_Surrender >().Release();
         callerAgent.GetRole< transport::PHY_RoleAction_Transport >().MagicUnloadPion( pKnowledge->GetAgentKnown() );
@@ -68,7 +68,7 @@ void DEC_ActionFunctions::Prisoners_Unload( MIL_AgentPion& callerAgent, DEC_Know
 // Name: DEC_ActionFunctions::Prisoners_UnloadInCamp
 // Created: NLD 2007-02-14
 // -----------------------------------------------------------------------------
-void DEC_ActionFunctions::Prisoners_UnloadInCamp( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge, unsigned int campKnowledgeID  )
+void DEC_ActionFunctions::Prisoners_UnloadInCamp( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, unsigned int campKnowledgeID  )
 {
 	DEC_Knowledge_Object* pCampKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( campKnowledgeID, callerAgent.GetArmy() );
     if( IsNotCampKnowledgeOrHasLogisticCapacity( pKnowledge, pCampKnowledge ) )
@@ -82,7 +82,7 @@ void DEC_ActionFunctions::Prisoners_UnloadInCamp( MIL_AgentPion& callerAgent, DE
 // Name: DEC_ActionFunctions::Prisoners_IsUnloadedInCamp
 // Created: NLD 2007-02-26
 // -----------------------------------------------------------------------------
-bool DEC_ActionFunctions::Prisoners_IsUnloadedInCamp( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge, unsigned int campKnowledgeID )
+bool DEC_ActionFunctions::Prisoners_IsUnloadedInCamp( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, unsigned int campKnowledgeID )
 {
 	DEC_Knowledge_Object* pCampKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( campKnowledgeID, callerAgent.GetArmy          () );
     if( IsNotCampKnowledgeOrHasLogisticCapacity( pKnowledge, pCampKnowledge ) )
@@ -95,9 +95,9 @@ bool DEC_ActionFunctions::Prisoners_IsUnloadedInCamp( MIL_AgentPion& callerAgent
 // Name: DEC_ActionFunctions::Refugees_OrientateAndLoad
 // Created: NLD 2007-02-14
 // -----------------------------------------------------------------------------
-void DEC_ActionFunctions::Refugees_OrientateAndLoad( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge )
+void DEC_ActionFunctions::Refugees_OrientateAndLoad( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
-	if( pKnowledge )
+	if( pKnowledge && pKnowledge->IsValid() )
         pKnowledge->GetAgentKnown().Apply( &refugee::RefugeeActionsNotificationHandler_ABC::Orientate, callerAgent );      
 }
    
@@ -105,9 +105,9 @@ void DEC_ActionFunctions::Refugees_OrientateAndLoad( MIL_AgentPion& callerAgent,
 // Name: DEC_ActionFunctions::Refugees_Unload
 // Created: NLD 2007-02-14
 // -----------------------------------------------------------------------------
-void DEC_ActionFunctions::Refugees_Unload( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge )
+void DEC_ActionFunctions::Refugees_Unload( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
-	if( !pKnowledge )
+	if( !pKnowledge || !pKnowledge->IsValid() )
         return;
     pKnowledge->GetAgentKnown().Apply( &refugee::RefugeeActionsNotificationHandler_ABC::Release, callerAgent );
 }
@@ -116,7 +116,7 @@ void DEC_ActionFunctions::Refugees_Unload( MIL_AgentPion& callerAgent, DEC_Knowl
 // Name: DEC_ActionFunctions::Refugees_UnloadInCamp
 // Created: NLD 2007-02-14
 // -----------------------------------------------------------------------------
-void DEC_ActionFunctions::Refugees_UnloadInCamp( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge, unsigned int campKnowledgeID )
+void DEC_ActionFunctions::Refugees_UnloadInCamp( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, unsigned int campKnowledgeID )
 {
 	DEC_Knowledge_Object* pCampKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( campKnowledgeID, callerAgent.GetArmy() );
     if( IsNotCampKnowledgeOrHasLogisticCapacity( pKnowledge, pCampKnowledge ) )
@@ -128,9 +128,9 @@ void DEC_ActionFunctions::Refugees_UnloadInCamp( MIL_AgentPion& callerAgent, DEC
 // Name: DEC_ActionFunctions::Refugees_IsLoaded
 // Created: NLD 2007-02-26
 // -----------------------------------------------------------------------------
-bool DEC_ActionFunctions::PrisonnersRefugees_IsLoaded( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge )
+bool DEC_ActionFunctions::PrisonnersRefugees_IsLoaded( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
-    if( !pKnowledge )
+    if( !pKnowledge || !pKnowledge->IsValid() )
         return false;
     else
         return callerAgent.GetRole< transport::PHY_RoleAction_Transport >().IsLoaded( pKnowledge->GetAgentKnown() ) ;
@@ -140,7 +140,7 @@ bool DEC_ActionFunctions::PrisonnersRefugees_IsLoaded( MIL_AgentPion& callerAgen
 // Name: DEC_ActionFunctions::Refugees_IsUnloadedInCamp
 // Created: NLD 2007-02-26
 // -----------------------------------------------------------------------------
-bool DEC_ActionFunctions::Refugees_IsUnloadedInCamp( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge, unsigned int campKnowledgeID )
+bool DEC_ActionFunctions::Refugees_IsUnloadedInCamp( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, unsigned int campKnowledgeID )
 {
     DEC_Knowledge_Object* pCampKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( campKnowledgeID, callerAgent.GetArmy() );
     if( IsNotCampKnowledgeOrHasLogisticCapacity( pKnowledge, pCampKnowledge ) )

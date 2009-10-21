@@ -123,8 +123,8 @@ public:
     void SetitMvt( const boost::shared_ptr< DEC_Path_ABC >& value );
     boost::shared_ptr< MT_Vector2D > GetobjectifEsquive() const;
     void SetobjectifEsquive( MT_Vector2D* value );
-    DEC_Knowledge_Agent* GeteniEnCours() const;
-    void SeteniEnCours( DEC_Knowledge_Agent* value );
+    boost::shared_ptr< DEC_Knowledge_Agent > GeteniEnCours() const;
+    void SeteniEnCours( boost::shared_ptr< DEC_Knowledge_Agent > value );
     std::string GetmissionPrecedente() const;
     void SetmissionPrecedente( const std::string& value );
     float GetrTenir() const;
@@ -221,7 +221,7 @@ private:
     std::vector< DEC_Decision_ABC* > pionsEnAppui_;
     boost::shared_ptr< DEC_Path_ABC > itMvt_;
     boost::shared_ptr< MT_Vector2D > objectifEsquive_;
-    DEC_Knowledge_Agent* eniEnCours_;
+    boost::shared_ptr< DEC_Knowledge_Agent > eniEnCours_;
     std::string missionPrecedente_;
     float rTenir_;
     int eTypeContact_;

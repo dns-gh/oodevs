@@ -136,9 +136,10 @@ void MIL_AgentHLA::NotifyAttackedBy( MIL_Population& population )
 // Name: MIL_AgentHLA::CreateKnowledge
 // Created: AGE 2004-11-09
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent& MIL_AgentHLA::CreateKnowledge( const MIL_KnowledgeGroup& knowledgeGroup )
+boost::shared_ptr< DEC_Knowledge_Agent > MIL_AgentHLA::CreateKnowledge( const MIL_KnowledgeGroup& knowledgeGroup )
 {
-    return *new DEC_Knowledge_Agent( knowledgeGroup, *this );
+    boost::shared_ptr< DEC_Knowledge_Agent > result( new DEC_Knowledge_Agent( knowledgeGroup, *this ) );
+    return result;
 }
     
 // -----------------------------------------------------------------------------

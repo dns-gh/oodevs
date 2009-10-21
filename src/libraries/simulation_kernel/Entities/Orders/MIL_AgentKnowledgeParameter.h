@@ -26,7 +26,7 @@ class MIL_AgentKnowledgeParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_AgentKnowledgeParameter( DEC_Knowledge_Agent* pKnowledge );
+    explicit MIL_AgentKnowledgeParameter( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
              MIL_AgentKnowledgeParameter( const ASN1T_UnitKnowledge& asn, const DEC_KnowledgeResolver_ABC& resolver );
     virtual ~MIL_AgentKnowledgeParameter();
     //@}
@@ -39,7 +39,7 @@ public:
     //! @name Conversions
     //@{
     virtual bool ToAgentKnowledge( ASN1T_UnitKnowledge& asn ) const;
-    virtual bool ToAgentKnowledge( DEC_Knowledge_Agent*& value ) const;
+    virtual bool ToAgentKnowledge( boost::shared_ptr< DEC_Knowledge_Agent >& value ) const;
     //@}
 
 private:
@@ -52,7 +52,7 @@ private:
 private:
     //! @name Member data
     //@{
-    DEC_Knowledge_Agent* pKnowledgeAgent_;
+    boost::shared_ptr< DEC_Knowledge_Agent > pKnowledgeAgent_;
     //@}
 };
 

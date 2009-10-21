@@ -643,9 +643,9 @@ int DEC_Decision<T>::GetEtatFeu()
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
 template <class T>
-std::vector<DEC_Knowledge_Agent*> DEC_Decision<T>::GetListeEnisTirAutorise()
+std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > DEC_Decision<T>::GetListeEnisTirAutorise()
 {
-    return GetVariable< std::vector<DEC_Knowledge_Agent*> >( "myself.listeEnisTirAutorise_" );
+    return GetVariable< std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > >( "myself.listeEnisTirAutorise_" );
 }
 
 // -----------------------------------------------------------------------------

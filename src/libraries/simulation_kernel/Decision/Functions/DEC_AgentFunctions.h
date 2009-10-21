@@ -87,7 +87,7 @@ public:
     static bool ChangeAutomate( MIL_AgentPion& callerAgent, DEC_Decision_ABC* automat );
        
     // Interception
-    static boost::shared_ptr< MT_Vector2D > GetInterceptionPoint( const MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge );
+    static boost::shared_ptr< MT_Vector2D > GetInterceptionPoint( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
 
     // NBC
     static bool IsContaminated         ( const MIL_AgentPion& callerAgent );

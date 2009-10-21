@@ -19,17 +19,13 @@
 // Created: NLD 2006-02-22
 // -----------------------------------------------------------------------------
 template< typename T > 
-float DEC_KnowledgePopulationFunctions::GetDominationState( const T& caller, unsigned int knowledgeId )
+std::pair< float, int > DEC_KnowledgePopulationFunctions::GetDominationState( const T& caller, unsigned int knowledgeId )
 {
 	DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
     if( !pKnowledge )
-    {
-        // $$$ call.GetParameter( 1 ).SetValue( eQueryInvalid );
-        return 0.f;
-    }
+        return std::pair< float, int >( 0.f, eQueryInvalid );
 
-    // $$$ call.GetParameter( 1 ).SetValue( eQueryValid );
-    return (float)pKnowledge->GetDominationState() ;
+    return std::pair< float, int >( pKnowledge->GetDominationState(), eQueryValid );
 }
 
 // -----------------------------------------------------------------------------

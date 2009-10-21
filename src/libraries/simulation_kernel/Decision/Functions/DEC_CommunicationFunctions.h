@@ -72,8 +72,8 @@ public:
     static void F_Pion_SetitMvt( DEC_Decision_ABC* pPion, const boost::shared_ptr< DEC_Path_ABC >& value );
     static boost::shared_ptr< MT_Vector2D > F_Pion_GetobjectifEsquive( DEC_Decision_ABC* pPion );
     static void F_Pion_SetobjectifEsquive( DEC_Decision_ABC* pPion, MT_Vector2D* value );
-    static DEC_Knowledge_Agent* F_Pion_GeteniEnCours( DEC_Decision_ABC* pPion );
-    static void F_Pion_SeteniEnCours( DEC_Decision_ABC* pPion, DEC_Knowledge_Agent* value );
+    static boost::shared_ptr< DEC_Knowledge_Agent > F_Pion_GeteniEnCours( DEC_Decision_ABC* pPion );
+    static void F_Pion_SeteniEnCours( DEC_Decision_ABC* pPion, boost::shared_ptr< DEC_Knowledge_Agent > value );
     static std::string F_Pion_GetmissionPrecedente( DEC_Decision_ABC* pPion );
     static void F_Pion_SetmissionPrecedente( DEC_Decision_ABC* pPion, const std::string& value );
     static float F_Pion_GetrTenir( DEC_Decision_ABC* pPion );

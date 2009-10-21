@@ -28,9 +28,9 @@ class DEC_BlackBoard_CanContainKnowledgeAgent : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::map< const MIL_Agent_ABC*, DEC_Knowledge_Agent* > T_KnowledgeAgentMap;
-    typedef T_KnowledgeAgentMap::iterator                          IT_KnowledgeAgentMap;
-    typedef T_KnowledgeAgentMap::const_iterator                    CIT_KnowledgeAgentMap;
+    typedef std::map< const MIL_Agent_ABC*, boost::shared_ptr< DEC_Knowledge_Agent > > T_KnowledgeAgentMap;
+    typedef T_KnowledgeAgentMap::iterator                                              IT_KnowledgeAgentMap;
+    typedef T_KnowledgeAgentMap::const_iterator                                        CIT_KnowledgeAgentMap;
     //@}
 
 public:
@@ -57,8 +57,8 @@ public:
 
     //! @name Queries
     //@{
-    DEC_Knowledge_Agent* GetKnowledgeAgentFromID( uint nID ) const;
-    DEC_Knowledge_Agent* GetKnowledgeAgent      ( const MIL_Agent_ABC& agentKnown ) const;
+    boost::shared_ptr< DEC_Knowledge_Agent > GetKnowledgeAgentFromID( uint nID ) const;
+    boost::shared_ptr< DEC_Knowledge_Agent > GetKnowledgeAgent      ( const MIL_Agent_ABC& agentKnown ) const;
     bool                 HasKnowledgeAgent      ( const MIL_Agent_ABC& agentKnown ) const;
 
     template < class UnaryFunction >
@@ -93,9 +93,9 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::map< uint, DEC_Knowledge_Agent* >   T_KnowledgeAgentIDMap;
-    typedef T_KnowledgeAgentIDMap::iterator          IT_KnowledgeAgentIDMap;
-    typedef T_KnowledgeAgentIDMap::const_iterator    CIT_KnowledgeAgentIDMap;
+    typedef std::map< uint, boost::shared_ptr< DEC_Knowledge_Agent > > T_KnowledgeAgentIDMap;
+    typedef T_KnowledgeAgentIDMap::iterator                            IT_KnowledgeAgentIDMap;
+    typedef T_KnowledgeAgentIDMap::const_iterator                      CIT_KnowledgeAgentIDMap;
     //@}
 
 private:

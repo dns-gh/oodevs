@@ -64,7 +64,7 @@ void DEC_KnowledgeBlackBoard_Automate::serialize( Archive& archive, const uint )
 // Name: DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeAgent
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeAgent( const ASN1T_UnitKnowledge& asn ) const
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeAgent( const ASN1T_UnitKnowledge& asn ) const
 {
     return pAutomate_->GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgentFromID( asn );
 }
@@ -73,7 +73,7 @@ DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeAgent( co
 // Name: DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeAgent
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeAgent( uint nID ) const
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeAgent( uint nID ) const
 {
     return pAutomate_->GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgentFromID( nID );
 }

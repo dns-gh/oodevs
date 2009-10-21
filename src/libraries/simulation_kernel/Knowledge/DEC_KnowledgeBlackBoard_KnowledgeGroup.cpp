@@ -121,7 +121,7 @@ bool DEC_KnowledgeBlackBoard_KnowledgeGroup::IsKnown( const MIL_Agent_ABC& agent
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgeAgentFromID
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgeAgentFromID( uint nID ) const
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgeAgentFromID( uint nID ) const
 {
     assert( pKnowledgeAgentContainer_ );
     return pKnowledgeAgentContainer_->GetKnowledgeAgentFromID( nID );
@@ -131,7 +131,7 @@ DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgeAgentFr
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgeAgent
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgeAgent( const DEC_Knowledge_AgentPerception& perception ) const
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgeAgent( const DEC_Knowledge_AgentPerception& perception ) const
 {
     assert( pKnowledgeAgentContainer_ );
     return pKnowledgeAgentContainer_->GetKnowledgeAgent( perception.GetAgentPerceived() );
@@ -147,7 +147,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetDetectedAgentsInZone( T_ConstKno
     const T_KnowledgeAgentVector& detected = pKnowledgeAgentContainer_->GetDetected();
     for( CIT_KnowledgeAgentVector it = detected.begin(); it != detected.end(); ++it )
     {
-        const DEC_Knowledge_Agent* knowledge = *it;
+        boost::shared_ptr< DEC_Knowledge_Agent > knowledge = *it;
         if( zone.IsInside( knowledge->GetPosition() ) )
             container.push_back( knowledge );
     }
@@ -163,9 +163,9 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetDetectedAgentsInZone( T_ConstKno
     const T_KnowledgeAgentVector& detected = pKnowledgeAgentContainer_->GetDetected();
     for( CIT_KnowledgeAgentVector it = detected.begin(); it != detected.end(); ++it )
     {
-        const DEC_Knowledge_Agent& knowledge = **it;
-        if( zone.IsInside( knowledge.GetPosition() ) )
-            container.push_back( &knowledge );
+        boost::shared_ptr< DEC_Knowledge_Agent > knowledge = *it;
+        if( zone.IsInside( knowledge->GetPosition() ) )
+            container.push_back( knowledge );
     }
 }
 
@@ -189,9 +189,9 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetFriendsInZone( T_ConstKnowledgeA
     const T_KnowledgeAgentVector& friends = GetFriends();
     for( CIT_KnowledgeAgentVector it = friends.begin(); it != friends.end(); ++it )
     {
-        const DEC_Knowledge_Agent& knowledge = **it;
-        if( zone.IsInside( knowledge.GetPosition() ) )
-            container.push_back( &knowledge );
+        boost::shared_ptr< DEC_Knowledge_Agent > knowledge = *it;
+        if( zone.IsInside( knowledge->GetPosition() ) )
+            container.push_back( knowledge );
     }
 }
 
@@ -215,7 +215,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetLivingEnemiesInZone( T_ConstKnow
     const T_KnowledgeAgentVector& enemies = GetEnemies();
     for( CIT_KnowledgeAgentVector it = enemies.begin(); it != enemies.end(); ++it )
     {
-        const DEC_Knowledge_Agent* knowledge = *it;
+        boost::shared_ptr< DEC_Knowledge_Agent > knowledge = *it;
         if( !knowledge->IsDead() && zone.IsInside( knowledge->GetPosition() ) )
             container.push_back( knowledge );
     }
@@ -231,7 +231,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetLivingEnemiesInZone( T_ConstKnow
     const T_KnowledgeAgentVector& enemies = GetEnemies();
     for( CIT_KnowledgeAgentVector it = enemies.begin(); it != enemies.end(); ++it )
     {
-        const DEC_Knowledge_Agent* knowledge = *it;
+        boost::shared_ptr< DEC_Knowledge_Agent > knowledge = *it;
         if( !knowledge->IsDead() && zone.IsInside( knowledge->GetPosition() ) )
             container.push_back( knowledge );
     }
@@ -247,7 +247,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetLivingEnemiesInCircle( T_ConstKn
     const T_KnowledgeAgentVector& enemies = GetEnemies();
     for( CIT_KnowledgeAgentVector it = enemies.begin(); it != enemies.end(); ++it )
     {
-        const DEC_Knowledge_Agent* knowledge = *it;
+        boost::shared_ptr< DEC_Knowledge_Agent > knowledge = *it;
         if( !knowledge->IsDead() && center.Distance( knowledge->GetPosition() ) <= rRadius )
             container.push_back( knowledge );
     }
@@ -280,7 +280,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetRefugeesInCircle( T_ConstKnowled
     const T_KnowledgeAgentVector& refugees = pKnowledgeAgentContainer_->GetRefugees();
     for( CIT_KnowledgeAgentVector it = refugees.begin(); it != refugees.end(); ++it )
     {
-        const DEC_Knowledge_Agent* knowledge = *it;
+        boost::shared_ptr< DEC_Knowledge_Agent > knowledge = *it;
         if( center.Distance( knowledge->GetPosition() ) <= rRadius )
             container.push_back( knowledge );
     }
@@ -297,7 +297,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetSurrenderedAgentsInCircle( T_Con
     const T_KnowledgeAgentVector& surrenderedAgents = pKnowledgeAgentContainer_->GetSurrenderedAgents();
     for( CIT_KnowledgeAgentVector it = surrenderedAgents.begin(); it != surrenderedAgents.end(); ++it )
     {
-        const DEC_Knowledge_Agent* knowledge = *it;
+        boost::shared_ptr< DEC_Knowledge_Agent > knowledge = *it;
         if( center.Distance( knowledge->GetPosition() ) <= rRadius )
             container.push_back( knowledge );
     }
@@ -403,11 +403,9 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::TranslateKnowledges( const T_ConstK
         translatedKnowledges.clear();
         for( CIT_ConstKnowledgeAgentVector it = sourceKnowledges.begin(); it != sourceKnowledges.end(); ++it )
         {
-            const DEC_Knowledge_Agent* pSourceKnowledge = sourceKnowledgeGroup.GetKnowledge().GetKnowledgeAgentFromID( (uint)*it );
-            assert( pSourceKnowledge );
-
-            const DEC_Knowledge_Agent* pTranslatedKnowledge = pKnowledgeAgentContainer_->GetKnowledgeAgent( pSourceKnowledge->GetAgentKnown() );
-            if( pTranslatedKnowledge )
+            boost::shared_ptr< DEC_Knowledge_Agent > pSourceKnowledge = *it;
+            boost::shared_ptr< DEC_Knowledge_Agent > pTranslatedKnowledge = pKnowledgeAgentContainer_->GetKnowledgeAgent( pSourceKnowledge->GetAgentKnown() );
+            if( pTranslatedKnowledge.get() && pTranslatedKnowledge->IsValid() )
                 translatedKnowledges.push_back( pTranslatedKnowledge );
         }
     }
@@ -417,7 +415,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::TranslateKnowledges( const T_ConstK
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeAgent
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeAgent( const ASN1T_UnitKnowledge& asn ) const
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeAgent( const ASN1T_UnitKnowledge& asn ) const
 {
     return GetKnowledgeAgentFromID( asn );
 }
@@ -426,7 +424,7 @@ DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeAge
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeAgent
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeAgent( uint nID ) const
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeAgent( uint nID ) const
 {
     return GetKnowledgeAgentFromID( nID );
 }

@@ -150,11 +150,11 @@ float DEC_KnowledgeFunctions::ComputeEnemiesRatio( const T& caller, const B& bou
     const T_KnowledgeAgentVector& enemies = caller.GetKnowledgeGroup().GetKnowledge().GetEnemies();
     for( CIT_KnowledgeAgentVector itKnowledgeAgent = enemies.begin(); itKnowledgeAgent != enemies.end(); ++itKnowledgeAgent )
     {
-        const DEC_Knowledge_Agent& knowledge = **itKnowledgeAgent;
-        if( !knowledge.IsDead() && boundaries.IsInside( knowledge.GetPosition() ) )
+        boost::shared_ptr< DEC_Knowledge_Agent > knowledge = **itKnowledgeAgent;
+        if( knowledsge->IsValid() && !knowledge->IsDead() && boundaries.IsInside( knowledge->GetPosition() ) )
         {
             ++ nNbrTotalLivingEnemies;
-            if( knowledge.IsHuman() == unloaded )
+            if( knowledge->IsHuman() == unloaded )
                 ++ nNbrSelectedLivingEnemies;
         }
     }

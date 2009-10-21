@@ -38,19 +38,19 @@ void DEC_TelepathyFunctions::CopyPlotsRavitaillement( DEC_Decision_ABC* pPion, c
 // Name: std::vector<int> DEC_TelepathyFunctions::GetListeEnisTirAutorise
 // Created: LDC 2009-07-31
 // -----------------------------------------------------------------------------
-std::vector<DEC_Knowledge_Agent*> DEC_TelepathyFunctions::GetListeEnisTirAutorise( DEC_Decision_ABC* pPion )
+std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > DEC_TelepathyFunctions::GetListeEnisTirAutorise( DEC_Decision_ABC* pPion )
 {
-    return pPion->GetVariable< std::vector<DEC_Knowledge_Agent*> >( "myself.listeEnisTirAutorise_" );
+    return pPion->GetVariable< std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > >( "myself.listeEnisTirAutorise_" );
 }
     
 // -----------------------------------------------------------------------------
 // Name: DEC_TelepathyFunctions::RemoveAgentFromListeEnisTirAutorise
 // Created: LDC 2009-07-31
 // -----------------------------------------------------------------------------
-void DEC_TelepathyFunctions::RemoveAgentFromListeEnisTirAutorise( DEC_Decision_ABC* pPion, DEC_Knowledge_Agent* eni )
+void DEC_TelepathyFunctions::RemoveAgentFromListeEnisTirAutorise( DEC_Decision_ABC* pPion, boost::shared_ptr< DEC_Knowledge_Agent > eni )
 {
-    std::vector<DEC_Knowledge_Agent*> listEnis = pPion->GetVariable< std::vector<DEC_Knowledge_Agent*> >( "myself.listeEnisTirAutorise_" );
-    for( std::vector<DEC_Knowledge_Agent*>::iterator it = listEnis.begin(); it != listEnis.end(); ++it )
+    std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > listEnis = pPion->GetVariable< std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > >( "myself.listeEnisTirAutorise_" );
+    for( std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >::iterator it = listEnis.begin(); it != listEnis.end(); ++it )
     {
         if( *it == eni )
         {

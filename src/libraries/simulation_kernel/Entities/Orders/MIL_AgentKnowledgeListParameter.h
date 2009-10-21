@@ -27,7 +27,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_AgentKnowledgeListParameter( const ASN1T_UnitKnowledgeList& asn, const DEC_KnowledgeResolver_ABC& resolver );
-    explicit MIL_AgentKnowledgeListParameter( const std::vector< DEC_Knowledge_Agent* >& knowledgeAgentList );
+    explicit MIL_AgentKnowledgeListParameter( const std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >& knowledgeAgentList );
     virtual ~MIL_AgentKnowledgeListParameter();
     //@}
 
@@ -39,7 +39,7 @@ public:
     //! @name Conversions
     //@{
     virtual bool ToAgentKnowledgeList( ASN1T_UnitKnowledgeList& asn ) const;
-    virtual bool ToAgentKnowledgeList( std::vector< DEC_Knowledge_Agent* >& ) const;
+    virtual bool ToAgentKnowledgeList( std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >& ) const;
     //@}
 
 private:
@@ -52,7 +52,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::vector< DEC_Knowledge_Agent* > knowledgeAgentList_;
+    std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > knowledgeAgentList_;
     //@}
 };
 

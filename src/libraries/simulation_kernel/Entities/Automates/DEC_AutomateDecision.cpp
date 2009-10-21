@@ -218,29 +218,29 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
 
     // Connaissance
     brain.RegisterFunction( "DEC_ConnaissanceAgent_Verrouiller",
-        boost::function< int( DEC_Knowledge_Agent* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::Lock, _1 ) ) );
+        boost::function< int( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::Lock, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_Deverrouiller",
-        boost::function< void( DEC_Knowledge_Agent* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::Unlock, _1 ) ) );
+        boost::function< void( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::Unlock, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_Position",
-        boost::function< const MT_Vector2D*( const DEC_Knowledge_Agent* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetPosition, _1 ) ) );
+        boost::function< const MT_Vector2D*( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetPosition, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_EstEnVol",
-        boost::function< bool( const DEC_Knowledge_Agent* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsFlying, _1 ) ) );
+        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsFlying, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_EstValide",
-        boost::function< bool( const DEC_Knowledge_Agent* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsKnowledgeValid, _1 ) ) );
+        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsKnowledgeValid, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_EstMort",
-        boost::function< bool( const DEC_Knowledge_Agent* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsDead, _1 ) ) );
+        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsDead, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_EstPrisonnier",
-        boost::function< bool( const DEC_Knowledge_Agent* ) >( boost::bind( &DEC_KnowledgeAgentFunctions ::IsPrisoner, _1 ) ) );
+        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions ::IsPrisoner, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_DangerositeSurPion",
-        boost::function< float( const DEC_Knowledge_Agent*, const DEC_Decision_ABC* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetDangerosityOnPion, _1, _2 ) ) );
+        boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent >, const DEC_Decision_ABC* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetDangerosityOnPion, _1, _2 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_DangerositeSurConnaissance",
-        boost::function< float( const DEC_Knowledge_Agent*, const DEC_Knowledge_Agent* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge, _1, _2 ) ) );
+        boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent >, boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge, _1, _2 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_EtatOps", 
-        boost::function< float( const DEC_Knowledge_Agent* ) >( boost::bind( &DEC_KnowledgeAgentFunctions ::GetOperationalState, _1 ) ) );
+        boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions ::GetOperationalState, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_EstDetruitTactique",
-        boost::function< bool( const DEC_Knowledge_Agent* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetMajorOperationalState, _1 ) ) );
+        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetMajorOperationalState, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_NiveauPerceptionMax",
-        boost::function< int( const DEC_Knowledge_Agent* ) >( boost::bind( &DEC_KnowledgeAgentFunctions ::GetMaxPerceptionLevelForKnowledgeGroup, _1 ) ) );
+        boost::function< int( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions ::GetMaxPerceptionLevelForKnowledgeGroup, _1 ) ) );
     brain.RegisterFunction( "DEC_IsValidKnowledgeObject",
         boost::function< bool (unsigned int) >( boost::bind( &DEC_KnowledgeObjectFunctions::IsKnowledgeValid< MIL_Automate >, boost::cref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceObjet_EstObstacleDeManoeuvreActif",
@@ -296,7 +296,7 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_RC1",
         boost::function< void ( int, int ) >( boost::bind( &DEC_MiscFunctions::Report< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_RC_AgentKnowledge",
-        boost::function< void ( int, int, DEC_Knowledge_Agent* ) >( boost::bind( &DEC_MiscFunctions::ReportAgentKnowledge< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2, _3 ) ) );
+        boost::function< void ( int, int, boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_MiscFunctions::ReportAgentKnowledge< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_RC_DotationType",
         boost::function< void ( int, int, const PHY_DotationCategory* ) >( boost::bind( &DEC_MiscFunctions::ReportDotationType< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_RC_EquipmentType",
@@ -441,13 +441,14 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_DemandeDeRavitaillement", &DEC_LogisticFunctions::AutomateRequestSupply );
 
     // Objects
-    brain.RegisterFunction( "DEC_CreerObjetSansDelais",    &DEC_ObjectFunctions::MagicCreateObject < MIL_Automate > );
+    brain.RegisterFunction( "DEC_CreerObjetSansDelais",
+        boost::function< void( const std::string&, const TER_Localisation* ) > (boost::bind( &DEC_ObjectFunctions::MagicCreateObject < MIL_Automate >, boost::ref( GetAutomate() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_DetruireObjetSansDelais",
     		boost::function< void (int) > (boost::bind( &DEC_ObjectFunctions::MagicDestroyObject< MIL_Automate >, boost::ref( GetAutomate()), _1 ) ) );
 
     // Populations
-    brain.RegisterFunction( "DEC_ConnaissancePopulation_Domination",
-    		boost::function< float (int) > ( boost::bind ( &DEC_KnowledgePopulationFunctions::GetDominationState< MIL_Automate >, boost::cref( GetAutomate() ) ,_1 ) ) ) ;
+    brain.RegisterFunction( "DEC_KnowledgePopulation_Domination",
+        boost::function< std::pair< float, int > (int) > ( boost::bind ( &DEC_KnowledgePopulationFunctions::GetDominationState< MIL_Automate >, boost::cref( GetAutomate() ) ,_1 ) ) ) ;
     brain.RegisterFunction( "DEC_ConnaissancePopulation_EstDansZone",
     		boost::function< bool (unsigned int , TER_Localisation*) > ( boost::bind ( &DEC_KnowledgePopulationFunctions::IsInZone  < MIL_Automate >, boost::cref( GetAutomate() ), _1, _2 ) ) );
 

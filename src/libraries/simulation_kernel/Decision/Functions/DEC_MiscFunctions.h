@@ -47,7 +47,7 @@ class DEC_MiscFunctions
 public:
     // Communication
     template< typename T > static void Report                   ( T& caller, int type, int reportId );
-    template< typename T > static void ReportAgentKnowledge     ( T& caller, int type, int reportId, DEC_Knowledge_Agent* agentKnowledge );
+    template< typename T > static void ReportAgentKnowledge     ( T& caller, int type, int reportId, boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge );
     template< typename T > static void ReportDotationType       ( T& caller, int type, int reportId, const PHY_DotationCategory* dotationType );
     template< typename T > static void ReportEquipmentType      ( T& caller, int type, int reportId, const PHY_ComposanteTypePion* equipmentType );
     template< typename T > static void ReportFloat              ( T& caller, int type, int reportId, float param );

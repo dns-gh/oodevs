@@ -47,12 +47,13 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent( const MIL_KnowledgeGroup& knowledgeGro
     , pMaxPerceptionLevel_           ( &PHY_PerceptionLevel::notSeen_ )
     , nTimeLastUpdate_               ( 0 )
     , rRelevance_                    ( -1. )
+    , nTimeExtrapolationEnd_         ( 0 )
+    , bLocked_                       ( false )
+    , bValid_                        ( true )
     , bCreatedOnNetwork_             ( !pAgentKnown_->BelongsTo( *pKnowledgeGroup_ ) )
     , bRelevanceUpdated_             ( false )
     , bCurrentPerceptionLevelUpdated_( false )
     , bMaxPerceptionLevelUpdated_    ( false )
-    , bLocked_                       ( false )
-    , nTimeExtrapolationEnd_         ( 0 )
     , rLastRelevanceSent_            ( 0. )
 {
     if ( bCreatedOnNetwork_ )
@@ -72,18 +73,19 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent()
     , dataRecognition_                      ()
     , dataIdentification_                   ()
     , nTimeLastUpdate_                      ()
-    , pCurrentPerceptionLevel_              ( 0 )
-    , pPreviousPerceptionLevel_             ( 0 )
-    , pMaxPerceptionLevel_                  ( 0 )
+    , pCurrentPerceptionLevel_              ( &PHY_PerceptionLevel::notSeen_ )
+    , pPreviousPerceptionLevel_             ( &PHY_PerceptionLevel::notSeen_ )
+    , pMaxPerceptionLevel_                  ( &PHY_PerceptionLevel::notSeen_ )
     , perceptionLevelPerAutomateMap_        ()
     , previousPerceptionLevelPerAutomateMap_()
     , rRelevance_                           ()
+    , nTimeExtrapolationEnd_                ( 0 )
+    , bLocked_                              ( false )
+    , bValid_                               ( true )
     , bCreatedOnNetwork_                    ( true )
     , bRelevanceUpdated_                    ( true )
     , bCurrentPerceptionLevelUpdated_       ( true )
     , bMaxPerceptionLevelUpdated_           ( true )
-    , bLocked_                              ( false )
-    , nTimeExtrapolationEnd_                ( 0 )
     , rLastRelevanceSent_                   ( 0. )
 {
 }
@@ -1073,4 +1075,22 @@ bool DEC_Knowledge_Agent::Clean() const
 bool DEC_Knowledge_Agent::IsHuman() const
 {
     return dataRecognition_.IsHuman();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::Invalidate
+// Created: LDC 2009-10-20
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Agent::Invalidate()
+{
+    bValid_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::IsValid
+// Created: LDC 2009-10-20
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_Agent::IsValid() const
+{
+    return bValid_;
 }

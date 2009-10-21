@@ -59,7 +59,11 @@ if( ( roe == eEtatROEPopulation_DispersionParMoyensDeDefenseActifs ) and ( attit
         end
     end
 
-    if( not DEC_ConnaissancePopulation_Domination( pop, eValiditeRequete ) ) then
+    local domination = 0
+    domination = DEC_ConnaissancePopulation_Domination( pop, eValiditeRequete )
+    eValiditeRequete = domination.second
+    domination = domination.first
+    if( 0 == domination ) then
         _returnValue = false
     end
 

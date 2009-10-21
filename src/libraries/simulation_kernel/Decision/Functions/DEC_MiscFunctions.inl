@@ -29,7 +29,7 @@ void DEC_MiscFunctions::Report( T& caller, int type, int reportId )
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
 template< typename T > 
-void DEC_MiscFunctions::ReportAgentKnowledge( T& caller, int type, int reportId, DEC_Knowledge_Agent* agentKnowledge )
+void DEC_MiscFunctions::ReportAgentKnowledge( T& caller, int type, int reportId, boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge )
 {
     const MIL_Report* pReport = MIL_Report::Find( reportId );
     if( pReport )

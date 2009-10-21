@@ -29,13 +29,13 @@ typedef std::vector< DEC_Knowledge_AgentPerception* >     T_KnowledgeAgentPercep
 typedef T_KnowledgeAgentPerceptionVector::iterator        IT_KnowledgeAgentPerceptionVector;
 typedef T_KnowledgeAgentPerceptionVector::const_iterator  CIT_KnowledgeAgentPerceptionVector;
 
-typedef std::vector< DEC_Knowledge_Agent* >     T_KnowledgeAgentVector;
-typedef T_KnowledgeAgentVector::iterator        IT_KnowledgeAgentVector;
-typedef T_KnowledgeAgentVector::const_iterator  CIT_KnowledgeAgentVector;
+typedef std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > T_KnowledgeAgentVector;
+typedef T_KnowledgeAgentVector::iterator                        IT_KnowledgeAgentVector;
+typedef T_KnowledgeAgentVector::const_iterator                  CIT_KnowledgeAgentVector;
 
-typedef std::vector< const DEC_Knowledge_Agent* >    T_ConstKnowledgeAgentVector;
-typedef T_ConstKnowledgeAgentVector::iterator        IT_ConstKnowledgeAgentVector;
-typedef T_ConstKnowledgeAgentVector::const_iterator  CIT_ConstKnowledgeAgentVector;
+typedef std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > T_ConstKnowledgeAgentVector;
+typedef T_ConstKnowledgeAgentVector::iterator                   IT_ConstKnowledgeAgentVector;
+typedef T_ConstKnowledgeAgentVector::const_iterator             CIT_ConstKnowledgeAgentVector;
 
 typedef std::vector< DEC_Knowledge_ObjectCollision* >     T_KnowledgeObjectCollisionVector;
 typedef T_KnowledgeObjectCollisionVector::iterator        IT_KnowledgeObjectCollisionVector;

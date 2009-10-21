@@ -351,7 +351,7 @@ bool NET_ASN_Tools::ReadAutomateList( const ASN1T_AutomatList& asnListAgent, T_O
 // Created: AGN 03-04-24
 //-----------------------------------------------------------------------------
 // static $$NLDJVT$$ Interet de cette fonction
-DEC_Knowledge_Agent* NET_ASN_Tools::ReadAgentKnowledge( const ASN1T_UnitKnowledge& asnAgent, const DEC_KnowledgeResolver_ABC& resolver )
+boost::shared_ptr< DEC_Knowledge_Agent > NET_ASN_Tools::ReadAgentKnowledge( const ASN1T_UnitKnowledge& asnAgent, const DEC_KnowledgeResolver_ABC& resolver )
 {
     return resolver.ResolveKnowledgeAgent( asnAgent );
 }

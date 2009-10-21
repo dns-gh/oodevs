@@ -146,27 +146,27 @@ std::vector< unsigned int > DEC_PopulationKnowledge::GetPionsSecuring( ) const
 // Name: DEC_PopulationKnowledge::ResolveKnowledgeAgent
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent* DEC_PopulationKnowledge::ResolveKnowledgeAgent( const ASN1T_UnitKnowledge& /*asn*/ ) const
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_PopulationKnowledge::ResolveKnowledgeAgent( const ASN1T_UnitKnowledge& /*asn*/ ) const
 {
-    return 0;
+    return boost::shared_ptr< DEC_Knowledge_Agent >();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationKnowledge::ResolveKnowledgeAgent
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent* DEC_PopulationKnowledge::ResolveKnowledgeAgent( const DIA_Variable_ABC& /*dia*/ ) const
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_PopulationKnowledge::ResolveKnowledgeAgent( const DIA_Variable_ABC& /*dia*/ ) const
 {
-    return 0;
+    return boost::shared_ptr< DEC_Knowledge_Agent >();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationKnowledge::ResolveKnowledgeAgent
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent* DEC_PopulationKnowledge::ResolveKnowledgeAgent( uint /*nID*/ ) const
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_PopulationKnowledge::ResolveKnowledgeAgent( uint /*nID*/ ) const
 {
-    return 0;
+    return boost::shared_ptr< DEC_Knowledge_Agent >();
 }
 
 // -----------------------------------------------------------------------------

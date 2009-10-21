@@ -80,9 +80,9 @@ public:
     static boost::shared_ptr< MT_Vector2D > ComputeNearestFuseauEntryPoint( const MIL_AgentPion& callerAgent );
     static boost::shared_ptr< MT_Vector2D > ComputeSupportPosition( const MIL_AgentPion& callerAgent, DEC_Decision_ABC* pAgentToSupport, MT_Float rDist );
     static boost::shared_ptr< MT_Vector2D > ComputeAmbushPosition ( const MIL_AgentPion& callerAgent, MT_Vector2D* pAmbushPosition, MT_Vector2D* pRetreatPosition, MT_Float rDist );
-    static boost::shared_ptr< MT_Vector2D > ComputeSafetyPosition( const MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledgeEnemy, MT_Float rMinDistance );
+    static boost::shared_ptr< MT_Vector2D > ComputeSafetyPosition( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledgeEnemy, MT_Float rMinDistance );
     static boost::shared_ptr< MT_Vector2D > ComputeSafetyPositionWithPopulation              ( const MIL_AgentPion& callerAgent, uint nPopulationKnowledgeID, MT_Float rMinDistance );
-    static boost::shared_ptr< MT_Vector2D > ComputeSafetyPositionWithObjective( const MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledgeEnnemy, MT_Float rMinMeterDistance, MT_Vector2D* pObjective );
+    static boost::shared_ptr< MT_Vector2D > ComputeSafetyPositionWithObjective( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledgeEnnemy, MT_Float rMinMeterDistance, MT_Vector2D* pObjective );
     template< typename T > static boost::shared_ptr< MT_Vector2D > ComputeDestPoint     ( const T& caller );
     static boost::shared_ptr< MT_Vector2D > ComputeDestPointForPion( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion );
     template< typename T > static boost::shared_ptr< MT_Vector2D > ComputeStartPoint    ( const T& caller );
@@ -98,7 +98,7 @@ public:
     template< typename T > static boost::shared_ptr< MT_Vector2D > ComputeNearestLocalisationPointInFuseau( const T& caller, const TER_Localisation* location );
     template< typename T > static boost::shared_ptr< MT_Vector2D > ComputeNearestUnclippedLocalisationPointInFuseau ( const T& caller, const TER_Localisation* pLocation );
     template< typename T > static bool IsPointInFuseau           ( const T& caller, MT_Vector2D* pVect );
-    static boost::shared_ptr< MT_Vector2D > ComputeKnowledgeAgentBarycenter ( const MIL_AgentPion& caller, const std::vector< const DEC_Knowledge_Agent* > vKnowledges );
+    static boost::shared_ptr< MT_Vector2D > ComputeKnowledgeAgentBarycenter ( const MIL_AgentPion& caller, const std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > vKnowledges );
     static DEC_Decision_ABC* GetFrontestPion    ( const std::vector< DEC_Decision_ABC* >& pions, const MT_Vector2D* pDirection );
     static DEC_Decision_ABC* ComputeBackestAgent( const std::vector< DEC_Decision_ABC* >& pions, const MT_Vector2D* pDirection );
     static float ComputeAutomatDelayFromSchedule                 ( const MIL_Fuseau* pFuseau, const std::vector< DEC_Decision_ABC* >& automates, const MIL_LimaOrder* pLima );
@@ -110,7 +110,7 @@ public:
     static std::vector< boost::shared_ptr< MT_Vector2D > > ComputePosDeploiementASADoubleRideau( int positionCount, const MT_Vector2D* center, float initialDistance, float lineSpacing, float pointSpacing, const MT_Vector2D* direction );
     
     // Interception
-    static boost::shared_ptr< MT_Vector2D > GetInterceptionPosition( const MIL_AgentPion& caller, DEC_Knowledge_Agent* pKnowledge, MT_Vector2D* pInterceptingPosition, MT_Float rSpeed );
+    static boost::shared_ptr< MT_Vector2D > GetInterceptionPosition( const MIL_AgentPion& caller, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, MT_Vector2D* pInterceptingPosition, MT_Float rSpeed );
 
     static bool GetInterceptionPoint   ( const MT_Vector2D& vToInterceptPosition, const MT_Vector2D& vToInterceptSpeed, const MT_Vector2D& vInterceptingPosition, MT_Float rInterceptingSpeed, MT_Vector2D& result );
     //@}

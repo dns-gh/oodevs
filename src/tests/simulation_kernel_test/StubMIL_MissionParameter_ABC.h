@@ -134,15 +134,15 @@ public:
     { throw; }
     virtual bool ToAgentList( std::vector< DEC_Decision_ABC* >& ) const
     { throw; }
-    virtual bool ToAgentKnowledge( DEC_Knowledge_Agent*& ) const
+    virtual bool ToAgentKnowledge( boost::shared_ptr< DEC_Knowledge_Agent >& ) const
     { throw; }
-    virtual bool ToAgentKnowledgeList( std::vector< DEC_Knowledge_Agent* >& ) const
+    virtual bool ToAgentKnowledgeList( std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >& ) const
     { throw; }
     virtual bool ToObjectKnowledge( DEC_Knowledge_Object*& ) const
     { throw; }
     virtual bool ToObjectKnowledgeList( std::vector< DEC_Knowledge_Object* >& ) const
     { throw; }
-    virtual bool ToPopulationKnowledge( DEC_Knowledge_Population* ) const
+    virtual bool ToPopulationKnowledge( DEC_Knowledge_Population*& ) const
     { throw; }
     virtual bool ToDotationType( const PHY_DotationCategory*& ) const
     { throw; }

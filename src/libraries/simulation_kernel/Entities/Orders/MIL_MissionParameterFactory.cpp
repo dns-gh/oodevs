@@ -245,7 +245,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 // Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
-boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( DEC_Knowledge_Agent* agentKnowledge )
+boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge )
 {
     boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_AgentKnowledgeParameter( agentKnowledge) );
     return result;
@@ -485,7 +485,7 @@ void MIL_MissionParameterFactory::SetAutomatListParameter( MIL_Mission_ABC* pMis
 // Name: MIL_MissionParameterFactory::SetAgentKnowledgeParameter
 // Created: LDC 2009-09-25
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::SetAgentKnowledgeParameter( MIL_Mission_ABC* pMission, const std::string& parameter, DEC_Knowledge_Agent* agentKnowledge )
+void MIL_MissionParameterFactory::SetAgentKnowledgeParameter( MIL_Mission_ABC* pMission, const std::string& parameter, boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge )
 {
     pMission->SetParameter( parameter, Create( agentKnowledge ) );
 }
@@ -541,7 +541,7 @@ void MIL_MissionParameterFactory::SetPointParameter( MIL_Mission_ABC* pMission, 
 // Name: MIL_MissionParameterFactory::SetAgentKnowledgeListParameter
 // Created: LDC 2009-09-25
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::SetAgentKnowledgeListParameter( MIL_Mission_ABC* pMission, const std::string& parameter, const std::vector< DEC_Knowledge_Agent* >& agentKnowledgeList )
+void MIL_MissionParameterFactory::SetAgentKnowledgeListParameter( MIL_Mission_ABC* pMission, const std::string& parameter, const std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >& agentKnowledgeList )
 {
     boost::shared_ptr< MIL_AgentKnowledgeListParameter > listParam( new MIL_AgentKnowledgeListParameter( agentKnowledgeList ) );
     pMission->SetParameter( parameter, listParam );

@@ -65,8 +65,8 @@ public:
 
     //! @name tools::Resolver
     //@{
-    virtual DEC_Knowledge_Agent*      ResolveKnowledgeAgent ( const ASN1T_UnitKnowledge&  asn ) const;
-    virtual DEC_Knowledge_Agent*      ResolveKnowledgeAgent (       uint                   nID ) const;
+    virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent ( const ASN1T_UnitKnowledge&  asn ) const;
+    virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent (       uint                   nID ) const;
 
     virtual DEC_Knowledge_Object*     ResolveKnowledgeObject( const ASN1T_ObjectKnowledge& asn ) const;
     virtual DEC_Knowledge_Object*     ResolveKnowledgeObject(       uint                   nID ) const;
@@ -80,8 +80,8 @@ public:
 
     // Knowledge agents
           bool                         IsKnown                     ( const MIL_Agent_ABC& agent ) const;
-          DEC_Knowledge_Agent*         GetKnowledgeAgent           ( const DEC_Knowledge_AgentPerception& perception ) const;
-          DEC_Knowledge_Agent*         GetKnowledgeAgentFromID     ( uint nID ) const;
+          boost::shared_ptr< DEC_Knowledge_Agent > GetKnowledgeAgent           ( const DEC_Knowledge_AgentPerception& perception ) const;
+          boost::shared_ptr< DEC_Knowledge_Agent > GetKnowledgeAgentFromID     ( uint nID ) const;
           void                         GetDetectedAgentsInZone     ( T_ConstKnowledgeAgentVector& container, const TER_Polygon&      zone ) const;          
           void                         GetDetectedAgentsInZone     ( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const;          
 

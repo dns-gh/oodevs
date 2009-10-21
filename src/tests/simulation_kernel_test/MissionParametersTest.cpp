@@ -68,8 +68,8 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentKnowledgeListParameter_ToASN )
     asnIn.elem = new ASN1T_UnitKnowledge[1];
     asnIn.elem[0] = 0;
     MockDEC_KnowledgeResolver_ABC resolver;
-    DEC_Knowledge_Agent knowledge; // $$$$ LDC: id == 0... :(
-    resolver.ResolveKnowledgeAgent_mocker.expects( once() ).will( returnValue( &knowledge ) );
+    boost::shared_ptr< DEC_Knowledge_Agent > knowledge; // $$$$ LDC: id == 0... :(
+    resolver.ResolveKnowledgeAgent_mocker.expects( once() ).will( returnValue( knowledge ) );
     MIL_AgentKnowledgeListParameter param( asnIn, resolver );
     delete[] asnIn.elem;
     ASN1T_UnitKnowledgeList asnOut;
@@ -87,8 +87,8 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentKnowledgeParameter_ToASN )
 {
     ASN1T_UnitKnowledge asnIn = 0;
     MockDEC_KnowledgeResolver_ABC resolver;
-    DEC_Knowledge_Agent knowledge; // $$$$ LDC: id == 0... :(
-    resolver.ResolveKnowledgeAgent_mocker.expects( once() ).will( returnValue( &knowledge ) );
+    boost::shared_ptr< DEC_Knowledge_Agent > knowledge; // $$$$ LDC: id == 0... :(
+    resolver.ResolveKnowledgeAgent_mocker.expects( once() ).will( returnValue( knowledge ) );
     MIL_AgentKnowledgeParameter param( asnIn, resolver );
     ASN1T_UnitKnowledge asnOut;
     BOOST_CHECK_EQUAL( true, param.ToAgentKnowledge( asnOut ) );

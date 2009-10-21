@@ -23,8 +23,8 @@ MIL_AgentKnowledgeListParameter::MIL_AgentKnowledgeListParameter( const ASN1T_Un
     knowledgeAgentList_.reserve( asn.n );
     for( unsigned int i = 0; i < asn.n; ++i )
     {
-        DEC_Knowledge_Agent* pKnowledgeAgent = NET_ASN_Tools::ReadAgentKnowledge( asn.elem[i], resolver );
-        if( !pKnowledgeAgent )
+        boost::shared_ptr< DEC_Knowledge_Agent > pKnowledgeAgent = NET_ASN_Tools::ReadAgentKnowledge( asn.elem[i], resolver );
+        if( !pKnowledgeAgent || !pKnowledgeAgent->IsValid() )
             throw std::runtime_error( "Agent Knowledge does not exist" );
         knowledgeAgentList_.push_back( pKnowledgeAgent );
     }
@@ -34,7 +34,7 @@ MIL_AgentKnowledgeListParameter::MIL_AgentKnowledgeListParameter( const ASN1T_Un
 // Name: MIL_AgentKnowledgeListParameter constructor
 // Created: LDC 2009-09-25
 // -----------------------------------------------------------------------------
-MIL_AgentKnowledgeListParameter::MIL_AgentKnowledgeListParameter( const std::vector< DEC_Knowledge_Agent* >& knowledgeAgentList )
+MIL_AgentKnowledgeListParameter::MIL_AgentKnowledgeListParameter( const std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >& knowledgeAgentList )
 : knowledgeAgentList_( knowledgeAgentList )
 {
     // NOTHING
@@ -81,7 +81,7 @@ bool MIL_AgentKnowledgeListParameter::ToAgentKnowledgeList( ASN1T_UnitKnowledgeL
 // Name: MIL_AgentKnowledgeListParameter::ToAgentKnowledgeList
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-bool MIL_AgentKnowledgeListParameter::ToAgentKnowledgeList( std::vector< DEC_Knowledge_Agent* >& value ) const
+bool MIL_AgentKnowledgeListParameter::ToAgentKnowledgeList( std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >& value ) const
 {
     value.resize( knowledgeAgentList_.size() );
     for( unsigned int i = 0; i < knowledgeAgentList_.size(); ++i )

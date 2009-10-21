@@ -93,7 +93,7 @@ public:
     static bool                         ReadAgentList          ( const ASN1T_UnitList&           asn, T_ObjectVector& unitList );
     static DEC_Decision_ABC*            ReadAutomate           ( const ASN1T_Unit&               asn );
     static bool                         ReadAutomateList       ( const ASN1T_AutomatList&        asn, T_ObjectVector& unitList );
-    static DEC_Knowledge_Agent*         ReadAgentKnowledge     ( const ASN1T_UnitKnowledge&      asn, const DEC_KnowledgeResolver_ABC& resolver );
+    static boost::shared_ptr< DEC_Knowledge_Agent > ReadAgentKnowledge     ( const ASN1T_UnitKnowledge&      asn, const DEC_KnowledgeResolver_ABC& resolver );
     static DEC_Knowledge_Population*    ReadPopulationKnowledge( const ASN1T_PopulationKnowledge& asn, const DEC_KnowledgeResolver_ABC& resolver );
 
     static DEC_Knowledge_Object*        ReadObjectKnowledge    ( const ASN1T_ObjectKnowledge&     asn, const DEC_KnowledgeResolver_ABC& resolver );

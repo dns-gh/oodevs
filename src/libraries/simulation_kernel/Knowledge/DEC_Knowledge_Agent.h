@@ -70,6 +70,8 @@ public:
     void Update     ( const DEC_Knowledge_Agent& knowledge );
     void Extrapolate();
     bool Clean      () const;
+    void Invalidate ();
+    bool IsValid    () const;
     //@}
 
     //! @name Relevance management
@@ -178,8 +180,9 @@ private:
           T_PerceptionSourceMap perceptionLevelPerAutomateMap_;
           T_PerceptionSourceMap previousPerceptionLevelPerAutomateMap_;
           MT_Float              rRelevance_;
-          bool                  bLocked_;
           uint                  nTimeExtrapolationEnd_;
+          bool                  bLocked_;
+          bool                  bValid_;
 
     // Network
     bool     bCreatedOnNetwork_;

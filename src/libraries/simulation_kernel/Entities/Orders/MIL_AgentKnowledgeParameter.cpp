@@ -18,7 +18,7 @@
 // Name: MIL_AgentKnowledgeParameter constructor
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
-MIL_AgentKnowledgeParameter::MIL_AgentKnowledgeParameter( DEC_Knowledge_Agent* pKnowledge )
+MIL_AgentKnowledgeParameter::MIL_AgentKnowledgeParameter( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 : pKnowledgeAgent_( pKnowledge )
 {
     // NOTHING
@@ -66,7 +66,7 @@ bool MIL_AgentKnowledgeParameter::ToAgentKnowledge( ASN1T_UnitKnowledge& asn ) c
 // Name: MIL_AgentKnowledgeParameter::ToAgentKnowledge
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-bool MIL_AgentKnowledgeParameter::ToAgentKnowledge( DEC_Knowledge_Agent*& value ) const
+bool MIL_AgentKnowledgeParameter::ToAgentKnowledge( boost::shared_ptr< DEC_Knowledge_Agent >& value ) const
 {
     value = pKnowledgeAgent_;
     return true;

@@ -25,7 +25,7 @@ class PHY_ActionDirectFirePionUsingOnlyCarrier : public PHY_ActionDirectFirePion
     MT_COPYNOTALLOWED( PHY_ActionDirectFirePionUsingOnlyCarrier )
 
 public:
-             PHY_ActionDirectFirePionUsingOnlyCarrier( MIL_AgentPion& pion, DEC_Knowledge_Agent* pEnemy, MT_Float percentage, int firingMode );
+             PHY_ActionDirectFirePionUsingOnlyCarrier( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Agent > pEnemy, MT_Float percentage, int firingMode );
     virtual ~PHY_ActionDirectFirePionUsingOnlyCarrier();
 };
 #endif // __PHY_ActionDirectFirePionUsingOnlyCarrier_h_

@@ -158,9 +158,9 @@ void PHY_RoleAction_DirectFiring::FirePion( PHY_DirectFireData& firerWeapons, MI
 // Name: PHY_RoleAction_DirectFiring::FirePion
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_DirectFiring::FirePion( DEC_Knowledge_Agent* pEnemy, PHY_DirectFireData::E_FiringMode nFiringMode, MT_Float rPercentageComposantesToUse, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType, PHY_FireResults_Pion*& pFireResult, const PHY_AmmoDotationClass* pAmmoDotationClass /* =0 */  )
+int PHY_RoleAction_DirectFiring::FirePion( boost::shared_ptr< DEC_Knowledge_Agent > pEnemy, PHY_DirectFireData::E_FiringMode nFiringMode, MT_Float rPercentageComposantesToUse, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType, PHY_FireResults_Pion*& pFireResult, const PHY_AmmoDotationClass* pAmmoDotationClass /* =0 */  )
 {
-    MIL_Agent_ABC* pTarget = pEnemy ? &pEnemy->GetAgentKnown() : 0;
+    MIL_Agent_ABC* pTarget = pEnemy && pEnemy->IsValid() ? &pEnemy->GetAgentKnown() : 0;
     if( !pTarget )
         return eImpossible;
 
@@ -208,14 +208,10 @@ int PHY_RoleAction_DirectFiring::FirePion( DEC_Knowledge_Agent* pEnemy, PHY_Dire
 // Name: PHY_RoleAction_DirectFiring::FirePionSuspended
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_DirectFiring::FirePionSuspended( DEC_Knowledge_Agent* pEnemy )
+void PHY_RoleAction_DirectFiring::FirePionSuspended( boost::shared_ptr< DEC_Knowledge_Agent > pEnemy )
 {
-    MIL_Agent_ABC* pTarget = pEnemy ? &pEnemy->GetAgentKnown() : 0;
-    if ( pTarget )
-    {
-    
-        pTarget->NotifyAttackedBy( pion_ );
-    }
+    if( pEnemy && pEnemy->IsValid() )
+        pEnemy->GetAgentKnown().NotifyAttackedBy( pion_ );
 }
 
 // -----------------------------------------------------------------------------

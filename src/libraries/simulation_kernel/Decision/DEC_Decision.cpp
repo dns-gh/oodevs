@@ -19,6 +19,7 @@
 #include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Entities/Orders/MIL_MissionParameterFactory.h"
 #include "Entities/Orders/MIL_MissionParameterVisitor_ABC.h"
+#include "Knowledge/DEC_Knowledge_Population.h"
 #include <boost/bind.hpp>
 
 // -----------------------------------------------------------------------------
@@ -290,13 +291,13 @@ void AgentListFunction( const directia::ScriptRef& refMission, const std::string
 }
 void AgentKnowledgeFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    DEC_Knowledge_Agent* value = 0;
-    if( element.ToAgentKnowledge( value ) && value )
+    boost::shared_ptr< DEC_Knowledge_Agent > value;
+    if( element.ToAgentKnowledge( value ) && value.get() )
         refMission.RegisterObject( name, value );
 }
 void AgentKnowledgeListFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    std::vector< DEC_Knowledge_Agent* > value;
+    std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > value;
     if( element.ToAgentKnowledgeList( value ) )
         refMission.RegisterObject( name, value );
 }
@@ -316,7 +317,7 @@ void PopulationKnowledgeFunction( const directia::ScriptRef& refMission, const s
 {
     DEC_Knowledge_Population* value = 0;
     if( element.ToPopulationKnowledge( value ) && value )
-        refMission.RegisterObject( name, value );
+        refMission.RegisterObject( name, value->GetID() );
 }
 void DotationTypeFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {

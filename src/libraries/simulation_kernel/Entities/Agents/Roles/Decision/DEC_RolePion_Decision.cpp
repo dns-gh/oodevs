@@ -118,7 +118,6 @@ DEC_RolePion_Decision::DEC_RolePion_Decision( MIL_AgentPion& pion )
     , bOrdreTenir_              ( false                        )
     , bPasserSurLC_             ( false                        )
     , pionEnEscorte_            ( 0                            )
-    , eniEnCours_               ( 0                            )
     , rTenir_                   ( 0.f                          )
     , eTypeContact_             ( 0                            )
     , eNiveauAction_            ( 0                            )
@@ -177,7 +176,6 @@ DEC_RolePion_Decision::DEC_RolePion_Decision()
     , bOrdreTenir_              ( false                        )
     , bPasserSurLC_             ( false                        )
     , pionEnEscorte_            ( 0                            )
-    , eniEnCours_               ( 0                            )
     , rTenir_                   ( 0.f                          )
     , eTypeContact_             ( 0                            )
     , eNiveauAction_            ( 0                            )
@@ -304,13 +302,13 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC__StartTirSurPopulation",
             boost::function< PHY_Action_ABC*( unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionDirectFirePopulation, unsigned int >, boost::ref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_StartTirDirect",
-            boost::function< PHY_Action_ABC*( DEC_Knowledge_Agent*, MT_Float, int, int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionDirectFirePion, DEC_Knowledge_Agent*, MT_Float, int, int >, boost::ref( GetPion() ), _1, _2, _3, _4 ) ) );
+            boost::function< PHY_Action_ABC*( boost::shared_ptr< DEC_Knowledge_Agent >, MT_Float, int, int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionDirectFirePion, boost::shared_ptr< DEC_Knowledge_Agent >, MT_Float, int, int >, boost::ref( GetPion() ), _1, _2, _3, _4 ) ) );
     brain.RegisterFunction( "DEC_StartTirDirectDebarques",
-            boost::function< PHY_Action_ABC*( DEC_Knowledge_Agent*, MT_Float, int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionDirectFirePionUsingOnlyLoadable, DEC_Knowledge_Agent*, MT_Float, int >, boost::ref( GetPion() ), _1, _2, _3 ) ) );
+            boost::function< PHY_Action_ABC*( boost::shared_ptr< DEC_Knowledge_Agent >, MT_Float, int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionDirectFirePionUsingOnlyLoadable, boost::shared_ptr< DEC_Knowledge_Agent >, MT_Float, int >, boost::ref( GetPion() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_StartTirDirectTransporteurs",
-            boost::function< PHY_Action_ABC*( DEC_Knowledge_Agent*, MT_Float, int ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionDirectFirePionUsingOnlyCarrier, DEC_Knowledge_Agent*, MT_Float, int >, boost::ref( GetPion() ), _1, _2, _3 ) ) );
+            boost::function< PHY_Action_ABC*( boost::shared_ptr< DEC_Knowledge_Agent >, MT_Float, int ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionDirectFirePionUsingOnlyCarrier, boost::shared_ptr< DEC_Knowledge_Agent >, MT_Float, int >, boost::ref( GetPion() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC__StartTirDirectSurComposantesMajeures",
-            boost::function< PHY_Action_ABC*( DEC_Knowledge_Agent*, MT_Float, int, int ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionDirectFirePionOnMajorComposantes, DEC_Knowledge_Agent*, MT_Float, int, int >, boost::ref( GetPion() ), _1, _2, _3, _4 ) ) );
+            boost::function< PHY_Action_ABC*( boost::shared_ptr< DEC_Knowledge_Agent >, MT_Float, int, int ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionDirectFirePionOnMajorComposantes, boost::shared_ptr< DEC_Knowledge_Agent >, MT_Float, int, int >, boost::ref( GetPion() ), _1, _2, _3, _4 ) ) );
     brain.RegisterFunction( "DEC_StartTirIndirectSurPosition",
             boost::function< PHY_Action_ABC* ( const PHY_DotationCategory*, float, MT_Vector2D* ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionIndirectFire_Position, const PHY_DotationCategory*, float, MT_Vector2D* >, boost::ref( GetPion() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_StartTirIndirectSurConnaissance",
@@ -355,7 +353,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     // Objects
     brain.RegisterFunction( "DEC_ActiverObjet",
         boost::function< bool (unsigned int) >( boost::bind( &DEC_ObjectFunctions::ActivateObject< MIL_AgentPion >, boost::ref( GetPion() ), _1 ) ) );
-    brain.RegisterFunction( "DEC_CreerObjetSansDelais"    , &DEC_ObjectFunctions::MagicCreateObject < MIL_AgentPion > );
+    brain.RegisterFunction( "DEC_CreerObjetSansDelais",
+        boost::function< void( const std::string&, const TER_Localisation* ) > (boost::bind( &DEC_ObjectFunctions::MagicCreateObject < MIL_AgentPion >, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_DetruireObjetSansDelais" ,
     		boost::function< void (int) > (boost::bind( &DEC_ObjectFunctions::MagicDestroyObject< MIL_AgentPion >, boost::ref( GetPion() ), _1 ) ) );
 
@@ -518,45 +517,45 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
 
     // Agent knowledges accessors
     brain.RegisterFunction( "DEC_ConnaissanceAgent_EtatOps",
-        boost::function< float( const DEC_Knowledge_Agent* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetOperationalState, _1 ) ) );
+        boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetOperationalState, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_EstDetruitTactique",
-        boost::function< bool( const DEC_Knowledge_Agent* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetMajorOperationalState, _1 ) ) );
+        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetMajorOperationalState, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_Position",
-        boost::function< const MT_Vector2D*( const DEC_Knowledge_Agent* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetPosition, _1 ) ) );
+        boost::function< const MT_Vector2D*( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetPosition, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_EstEnVol", 
-        boost::function< bool( const DEC_Knowledge_Agent* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsFlying, _1 ) ) );
+        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsFlying, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_NatureAtlas", 
-        boost::function< int( const DEC_Knowledge_Agent* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetNatureAtlas, _1 ) ) );
+        boost::function< int( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetNatureAtlas, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_NiveauPerceptionMax",
-        boost::function< int( const DEC_Knowledge_Agent* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetMaxPerceptionLevelForKnowledgeGroup, _1 ) ) );
+        boost::function< int( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetMaxPerceptionLevelForKnowledgeGroup, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_Dangerosite",
-        boost::function< float( const DEC_Knowledge_Agent* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetDangerosity, boost::cref( GetPion() ), _1 ) ) );
+        boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetDangerosity, boost::cref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_DangerositeSurPion", 
-        boost::function< float( const DEC_Knowledge_Agent*, const DEC_Decision_ABC* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetDangerosityOnPion, _1, _2 ) ) );
+        boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent >, const DEC_Decision_ABC* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetDangerosityOnPion, _1, _2 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_DangerositeSurConnaissance", 
-        boost::function< float( const DEC_Knowledge_Agent*, const DEC_Knowledge_Agent* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge, _1, _2 ) ) );
+        boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent >, boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge, _1, _2 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_EstPercuParUnite", 
-        boost::function< bool( const DEC_Knowledge_Agent* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsPerceivedByAgent, boost::cref( GetPion() ), _1 ) ) );
+        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsPerceivedByAgent, boost::cref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_EstUnEnnemi",
-        boost::function< int( const DEC_Knowledge_Agent* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsAnEnemy, boost::cref( GetPion() ), _1 ) ) );
+        boost::function< int( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsAnEnemy, boost::cref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_EstValide",
-        boost::function< bool( const DEC_Knowledge_Agent* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsKnowledgeValid, _1 ) ) );
+        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsKnowledgeValid, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_EstEnMouvement", 
-        boost::function< bool( const DEC_Knowledge_Agent* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsMoving, _1 ) ) );
+        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsMoving, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_PercoitUnite",
-        boost::function< bool( const DEC_Knowledge_Agent* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsPerceivingAgent, boost::cref( GetPion() ), _1 ) ));
+        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsPerceivingAgent, boost::cref( GetPion() ), _1 ) ));
     brain.RegisterFunction( "DEC_ConnaissanceAgent_EstPrisonnier", 
-        boost::function< bool( const DEC_Knowledge_Agent* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsPrisoner, _1 ) ) );
+        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsPrisoner, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_EstMort",
-        boost::function< bool( const DEC_Knowledge_Agent* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsDead, _1 ) ) );
+        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsDead, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_Verrouiller",
-        boost::function< int( DEC_Knowledge_Agent* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::Lock, _1 ) ) );
+        boost::function< int( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::Lock, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_Deverrouiller", 
-        boost::function< void( DEC_Knowledge_Agent* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::Unlock, _1 ) ) );
+        boost::function< void( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::Unlock, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_EstAPorteDeCapteurDansCone", 
-        boost::function< bool( const DEC_Knowledge_Agent*, const MT_Vector2D*, MT_Float ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsInDetectionCone, boost::cref( GetPion() ), _1, _2, _3 ) ) );
+        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent >, const MT_Vector2D*, MT_Float ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsInDetectionCone, boost::cref( GetPion() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_TuerOfficiers", 
-        boost::function< bool( DEC_Knowledge_Agent* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::KillOfficers, _1 ) ) );
+        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::KillOfficers, _1 ) ) );
 
     // Object knowledges accessors
     brain.RegisterFunction( "DEC_IsValidKnowledgeObject",
@@ -591,8 +590,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< void( int ) >( boost::bind( &DEC_KnowledgeObjectFunctions::ResetExitingPopulationDensity, boost::cref( GetPion() ), _1 ) ) );
 
     // Population knowledges accessors
-    brain.RegisterFunction( "DEC_ConnaissancePopulation_Domination"                   ,
-    		boost::function< float (int) > (boost::bind( &DEC_KnowledgePopulationFunctions::GetDominationState< MIL_AgentPion >, boost::ref( GetPion()), _1 ) ) );
+    brain.RegisterFunction( "DEC_KnowledgePopulation_Domination"                   ,
+    		boost::function< std::pair< float, int > (int) > (boost::bind( &DEC_KnowledgePopulationFunctions::GetDominationState< MIL_AgentPion >, boost::ref( GetPion()), _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissancePopulation_Attitude"                     ,
     		boost::function< unsigned int (int) > ( boost::bind( &DEC_KnowledgePopulationFunctions::GetAttitude< MIL_AgentPion >, boost::ref( GetPion()), _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissancePopulation_Reconnaitre"                  ,
@@ -699,19 +698,19 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
 
     // Calculs de position
     brain.RegisterFunction( "DEC_Geometrie_PositionInterception",
-        boost::function< boost::shared_ptr< MT_Vector2D >(DEC_Knowledge_Agent*, MT_Vector2D*, MT_Float )>( boost::bind( &DEC_GeometryFunctions::GetInterceptionPosition, boost::cref( GetPion() ), _1, _2, _3 ) ) );
+        boost::function< boost::shared_ptr< MT_Vector2D >( boost::shared_ptr< DEC_Knowledge_Agent >, MT_Vector2D*, MT_Float )>( boost::bind( &DEC_GeometryFunctions::GetInterceptionPosition, boost::cref( GetPion() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_Agent_PositionInterception", 
-        boost::function< boost::shared_ptr< MT_Vector2D >( DEC_Knowledge_Agent* ) >( boost::bind( &DEC_AgentFunctions::GetInterceptionPoint, boost::cref( GetPion() ), _1 ) ) );
+        boost::function< boost::shared_ptr< MT_Vector2D >( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_AgentFunctions::GetInterceptionPoint, boost::cref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPositionAppui",
         boost::function< boost::shared_ptr< MT_Vector2D >( DEC_Decision_ABC*, MT_Float ) >( boost::bind( &DEC_GeometryFunctions::ComputeSupportPosition, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPositionEmbuscade",
         boost::function< boost::shared_ptr< MT_Vector2D >( MT_Vector2D*, MT_Vector2D*, MT_Float ) >( boost::bind( &DEC_GeometryFunctions::ComputeAmbushPosition, boost::ref( GetPion() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPositionSurete",
-        boost::function< boost::shared_ptr< MT_Vector2D >( DEC_Knowledge_Agent*, MT_Float ) >( boost::bind( &DEC_GeometryFunctions::ComputeSafetyPosition, boost::ref( GetPion() ), _1, _2 ) ) );
+        boost::function< boost::shared_ptr< MT_Vector2D >( boost::shared_ptr< DEC_Knowledge_Agent >, MT_Float ) >( boost::bind( &DEC_GeometryFunctions::ComputeSafetyPosition, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPositionSureteAvecPopulation",
         boost::function< boost::shared_ptr< MT_Vector2D >( uint, MT_Float ) >( boost::bind( &DEC_GeometryFunctions::ComputeSafetyPositionWithPopulation, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPositionSureteAvecObjectif",
-        boost::function< boost::shared_ptr< MT_Vector2D >( DEC_Knowledge_Agent*, MT_Float, MT_Vector2D* ) >( boost::bind( &DEC_GeometryFunctions::ComputeSafetyPositionWithObjective, boost::ref( GetPion() ), _1, _2, _3 ) ) );
+        boost::function< boost::shared_ptr< MT_Vector2D >( boost::shared_ptr< DEC_Knowledge_Agent >, MT_Float, MT_Vector2D* ) >( boost::bind( &DEC_GeometryFunctions::ComputeSafetyPositionWithObjective, boost::ref( GetPion() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau",
         boost::function< boost::shared_ptr< MT_Vector2D >( const TER_Localisation* ) >( boost::bind( &DEC_GeometryFunctions::ComputeNearestLocalisationPointInFuseau< MIL_AgentPion>, boost::ref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPointProcheLocalisationNonClippeeDansFuseau" ,
@@ -735,7 +734,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_Geometrie_EstPointDansFuseau",
         boost::function< bool( MT_Vector2D* ) >( boost::bind( &DEC_GeometryFunctions::IsPointInFuseau< MIL_AgentPion >, boost::ref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerBarycentreListeConnaissancesAgents",
-        boost::function< boost::shared_ptr< MT_Vector2D >( const std::vector< const DEC_Knowledge_Agent* > ) >( boost::bind( &DEC_GeometryFunctions::ComputeKnowledgeAgentBarycenter, boost::ref( GetPion() ), _1 ) ) );
+        boost::function< boost::shared_ptr< MT_Vector2D >( const std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > ) >( boost::bind( &DEC_GeometryFunctions::ComputeKnowledgeAgentBarycenter, boost::ref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_PionDevant"                                            , &DEC_GeometryFunctions::GetFrontestPion );
     brain.RegisterFunction( "DEC_Geometrie_PionDerriere"                                          , &DEC_GeometryFunctions::ComputeBackestAgent );    
     brain.RegisterFunction( "DEC_Geometrie_CalculerPositionParRapportALima",
@@ -743,17 +742,17 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
 
     // Fire 
     brain.RegisterFunction( "DEC_Tir_PorteeMaxPourTirerSurUnite",
-        boost::function< float( DEC_Knowledge_Agent*, float ) >( boost::bind( &DEC_FireFunctions::GetMaxRangeToFireOnEnemy, boost::ref( GetPion() ), _1, _2 ) ) );
+        boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent >, float ) >( boost::bind( &DEC_FireFunctions::GetMaxRangeToFireOnEnemy, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Tir_PorteeMinPourTirerSurUnite",
-        boost::function< float( DEC_Knowledge_Agent*, float ) >( boost::bind( &DEC_FireFunctions::GetMinRangeToFireOnEnemy, boost::ref( GetPion() ), _1, _2 ) ) );
+        boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent >, float ) >( boost::bind( &DEC_FireFunctions::GetMinRangeToFireOnEnemy, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Tir_PorteeMaxPourTirerSurUnitePosturesReelles",
-        boost::function< float( DEC_Knowledge_Agent*, float ) >( boost::bind( &DEC_FireFunctions::GetMaxRangeToFireOnEnemyActualPosture, boost::ref( GetPion() ), _1, _2 ) ) );
+        boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent >, float ) >( boost::bind( &DEC_FireFunctions::GetMaxRangeToFireOnEnemyActualPosture, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Tir_PorteeMinPourTirerSurUnitePosturesReelles",
-        boost::function< float( DEC_Knowledge_Agent*, float ) >( boost::bind( &DEC_FireFunctions::GetMinRangeToFireOnEnemyActualPosture, boost::ref( GetPion() ), _1, _2 ) ) );
+        boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent >, float ) >( boost::bind( &DEC_FireFunctions::GetMinRangeToFireOnEnemyActualPosture, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Tir_PorteeMaxPourTirerDebarqueSurUnite",
-        boost::function< float( DEC_Knowledge_Agent*, float ) >( boost::bind( &DEC_FireFunctions::GetMaxRangeToFireOnEnemyWhenUnloaded, boost::ref( GetPion() ), _1, _2 ) ) );
+        boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent >, float ) >( boost::bind( &DEC_FireFunctions::GetMaxRangeToFireOnEnemyWhenUnloaded, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Tir_PorteeMaxPourEtreTireParUnite",
-        boost::function< float( DEC_Knowledge_Agent*, float ) >( boost::bind( &DEC_FireFunctions::GetMaxRangeToBeFiredByEnemy, boost::ref( GetPion() ), _1, _2 ) ) );
+        boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent >, float ) >( boost::bind( &DEC_FireFunctions::GetMaxRangeToBeFiredByEnemy, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Tir_PorteeMaxTirIndirect",
         boost::function< float( const PHY_DotationCategory* ) >( boost::bind( &DEC_FireFunctions::GetMaxRangeToIndirectFire, boost::ref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Tir_PorteeMinTirIndirect",
@@ -763,7 +762,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_Tir_PorteeMinTirIndirect_SansTesterEtatMunitions",
         boost::function< float( const PHY_DotationCategory* ) >( boost::bind( &DEC_FireFunctions::GetMinRangeToIndirectFireWithoutAmmoCheck, boost::ref( GetPion() ), _1 ) ) );   
     brain.RegisterFunction( "DEC_Tir_LancerFumigeneSurConnaissance",
-        boost::function< void( DEC_Knowledge_Agent* ) >( boost::bind( &DEC_FireFunctions::ThrowSmokeOnKnowledgeAgent, boost::ref( GetPion() ), _1 ) ) );
+        boost::function< void( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_FireFunctions::ThrowSmokeOnKnowledgeAgent, boost::ref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Tir_MunitionPourTirIndirect",
         boost::function< const PHY_DotationCategory* ( int, const MT_Vector2D* ) >( boost::bind( &DEC_FireFunctions::GetMunitionForIndirectFire, boost::ref( GetPion() ), _1, _2 ) ) );
 
@@ -771,7 +770,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_RC1",
         boost::function< void ( int, int ) >( boost::bind( &DEC_MiscFunctions::Report< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_RC_AgentKnowledge",
-        boost::function< void ( int, int, DEC_Knowledge_Agent* ) >( boost::bind( &DEC_MiscFunctions::ReportAgentKnowledge< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2, _3 ) ) );
+        boost::function< void ( int, int, boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_MiscFunctions::ReportAgentKnowledge< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_RC_DotationType",
         boost::function< void ( int, int, const PHY_DotationCategory* ) >( boost::bind( &DEC_MiscFunctions::ReportDotationType< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_RC_EquipmentType",
@@ -842,27 +841,27 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
 
     // Prisonniers
     brain.RegisterFunction( "DEC_Prisonniers_CapturerEtEmbarquer" ,
-    		boost::function< void ( DEC_Knowledge_Agent* )>(boost::bind(&DEC_ActionFunctions::Prisoners_CaptureAndLoad , boost::ref( GetPion()) ,_1 ) ) );
+    		boost::function< void ( boost::shared_ptr< DEC_Knowledge_Agent > )>(boost::bind(&DEC_ActionFunctions::Prisoners_CaptureAndLoad , boost::ref( GetPion()) ,_1 ) ) );
     brain.RegisterFunction( "DEC_Prisonniers_Debarquer"           ,
-    		boost::function< void ( DEC_Knowledge_Agent* )>(boost::bind(&DEC_ActionFunctions::Prisoners_Unload , boost::ref(GetPion()), _1 ) ) );
+    		boost::function< void ( boost::shared_ptr< DEC_Knowledge_Agent > )>(boost::bind(&DEC_ActionFunctions::Prisoners_Unload , boost::ref(GetPion()), _1 ) ) );
     brain.RegisterFunction( "DEC_Prisonniers_DebarquerDansCamp"   ,
-    		boost::function< void (DEC_Knowledge_Agent*, unsigned int)>(boost::bind(&DEC_ActionFunctions::Prisoners_UnloadInCamp , boost::ref( GetPion() ), _1, _2  ) ) );
+    		boost::function< void (boost::shared_ptr< DEC_Knowledge_Agent >, unsigned int)>(boost::bind(&DEC_ActionFunctions::Prisoners_UnloadInCamp , boost::ref( GetPion() ), _1, _2  ) ) );
     brain.RegisterFunction( "DEC_Prisonniers_EstEmbarque"         ,
-    		boost::function< bool (DEC_Knowledge_Agent*) >(boost::bind(&DEC_ActionFunctions::PrisonnersRefugees_IsLoaded , boost::ref( GetPion() ), _1  ) ) );
+    		boost::function< bool (boost::shared_ptr< DEC_Knowledge_Agent >) >(boost::bind(&DEC_ActionFunctions::PrisonnersRefugees_IsLoaded , boost::ref( GetPion() ), _1  ) ) );
     brain.RegisterFunction( "DEC_Prisonniers_EstDebarqueDansCamp" ,
-    		boost::function< bool (DEC_Knowledge_Agent*, unsigned int)>( boost::bind(&DEC_ActionFunctions::Prisoners_IsUnloadedInCamp , boost::ref( GetPion()), _1, _2 ) ) );
+    		boost::function< bool (boost::shared_ptr< DEC_Knowledge_Agent >, unsigned int)>( boost::bind(&DEC_ActionFunctions::Prisoners_IsUnloadedInCamp , boost::ref( GetPion()), _1, _2 ) ) );
     
     // Refugies
     brain.RegisterFunction( "DEC_Refugies_OrienterEtEmbarquer" ,
-    		boost::function< void ( DEC_Knowledge_Agent* ) > ( boost::bind(&DEC_ActionFunctions::Refugees_OrientateAndLoad , boost::ref(GetPion()), _1 ) ) );
+    		boost::function< void ( boost::shared_ptr< DEC_Knowledge_Agent > ) > ( boost::bind(&DEC_ActionFunctions::Refugees_OrientateAndLoad , boost::ref(GetPion()), _1 ) ) );
     brain.RegisterFunction( "DEC_Refugies_Debarquer"           ,
-		boost::function< void ( DEC_Knowledge_Agent* ) > ( boost::bind(&DEC_ActionFunctions::Refugees_Unload , boost::ref(GetPion()), _1 ) ) );
+		boost::function< void ( boost::shared_ptr< DEC_Knowledge_Agent > ) > ( boost::bind(&DEC_ActionFunctions::Refugees_Unload , boost::ref(GetPion()), _1 ) ) );
     brain.RegisterFunction( "DEC_Refugies_DebarquerDansCamp"   ,
-    		boost::function< void (DEC_Knowledge_Agent*, unsigned int)> ( boost::bind(&DEC_ActionFunctions::Refugees_UnloadInCamp , boost::ref( GetPion() ), _1, _2  ) ) );
+    		boost::function< void ( boost::shared_ptr< DEC_Knowledge_Agent >, unsigned int)> ( boost::bind(&DEC_ActionFunctions::Refugees_UnloadInCamp , boost::ref( GetPion() ), _1, _2  ) ) );
     brain.RegisterFunction( "DEC_Refugies_EstEmbarque"         ,
-    		boost::function< bool ( DEC_Knowledge_Agent* ) > ( boost::bind ( &DEC_ActionFunctions::PrisonnersRefugees_IsLoaded , boost::ref( GetPion() ), _1  ) ) );
+    		boost::function< bool ( boost::shared_ptr< DEC_Knowledge_Agent > ) > ( boost::bind ( &DEC_ActionFunctions::PrisonnersRefugees_IsLoaded , boost::ref( GetPion() ), _1  ) ) );
     brain.RegisterFunction( "DEC_Refugies_EstDebarqueDansCamp" ,
-       		boost::function< bool (DEC_Knowledge_Agent*, unsigned int) >( boost::bind(&DEC_ActionFunctions::Refugees_IsUnloadedInCamp , boost::ref( GetPion() ), _1, _2 ) ) );
+       		boost::function< bool (boost::shared_ptr< DEC_Knowledge_Agent >, unsigned int) >( boost::bind(&DEC_ActionFunctions::Refugees_IsUnloadedInCamp , boost::ref( GetPion() ), _1, _2 ) ) );
 
     // Emergency functions
     brain.RegisterFunction( "DEC_Emergency_StartInfluence" , &DEC_ActionFunctions::StartAction< PHY_ActionInfluence, const std::string&, double > );
@@ -1444,7 +1443,7 @@ void DEC_RolePion_Decision::SetobjectifEsquive( MT_Vector2D* value )
 // Name: DEC_RolePion_Decision::GeteniEnCours
 // Created: LDC 2009-05-19
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent* DEC_RolePion_Decision::GeteniEnCours() const
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_RolePion_Decision::GeteniEnCours() const
 {
     return eniEnCours_;
 }
@@ -1453,7 +1452,7 @@ DEC_Knowledge_Agent* DEC_RolePion_Decision::GeteniEnCours() const
 // Name: DEC_RolePion_Decision::SeteniEnCours
 // Created: LDC 2009-05-19
 // -----------------------------------------------------------------------------
-void DEC_RolePion_Decision::SeteniEnCours( DEC_Knowledge_Agent* id )
+void DEC_RolePion_Decision::SeteniEnCours( boost::shared_ptr< DEC_Knowledge_Agent > id )
 {
     eniEnCours_ = id;
 }

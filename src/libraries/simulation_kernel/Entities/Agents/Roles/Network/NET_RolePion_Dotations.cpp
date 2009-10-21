@@ -26,7 +26,8 @@ namespace network
 template< typename Archive >
 void save_construct_data( Archive& archive, const NET_RolePion_Dotations* role, const unsigned int /*version*/ )
 {
-    archive << role->pion_;
+    const MIL_AgentPion* pPion = &role->pion_;
+    archive << pPion;
 }
 
 template< typename Archive >

@@ -30,6 +30,7 @@
 #include "Entities/Agents/Perceptions/PHY_PerceptionFlyingShell.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/MIL_Army.h"
+#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
@@ -935,7 +936,7 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_RolePion_Perceiver::ComputePerception( const DEC_Knowledge_Agent& knowledge ) const
 {
-    if( !CanPerceive() )
+    if( !CanPerceive() || !knowledge.IsValid() )
         return PHY_PerceptionLevel::notSeen_;
 
     const PHY_PerceptionLevel* pBestPerceptionLevel_ = &PHY_PerceptionLevel::notSeen_;

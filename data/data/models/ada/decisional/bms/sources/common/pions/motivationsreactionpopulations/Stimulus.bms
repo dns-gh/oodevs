@@ -22,7 +22,11 @@ motivation_plugin.stimuli["STIM_PopulationDangereuse"] = function()
         for _,pop in pairs( lstPops or {} ) do
         local _continue = true
 do
-                if( ( DEC_ConnaissancePopulation_Dangerosite( pop ) > 1 ) and ( DEC_ConnaissancePopulation_Domination( pop, eValidite ) > 0 ) ) then
+                local domination = 0
+                domination = DEC_ConnaissancePopulation_Domination( pop, eValidite )
+                eValidite = domination.second
+                domination = domination.first
+                if( ( DEC_ConnaissancePopulation_Dangerosite( pop ) > 1 ) and ( domination > 0 ) ) then
                     do
                         SetStimulus( "STIM_PopulationDangereuse", 1 )
                                                 do return end

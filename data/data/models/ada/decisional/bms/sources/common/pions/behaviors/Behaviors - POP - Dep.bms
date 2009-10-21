@@ -82,6 +82,8 @@ node "BEH_EsquiverLaPopulationIncontrolable"
             do
                 local eValiditeRequete = nil
                 self.prevDomination = DEC_ConnaissancePopulation_Domination( self._namedParams.pop, eValiditeRequete )
+                eValiditeRequete = self.prevDomination.second
+                self.prevDomination = self.prevDomination.first
             end
 --[[//on checke les changements de ROE
 ]]        end
@@ -100,6 +102,8 @@ node "BEH_EsquiverLaPopulationIncontrolable"
                 self.eROEPopulation = eRoe
                 local eValiditeRequete = nil
                 self.prevDomination = DEC_ConnaissancePopulation_Domination( self._namedParams.pop, eValiditeRequete )
+                eValiditeRequete = self.prevDomination.second
+                self.prevDomination = self.prevDomination.first
                                 Halt( self )
                 do return end
 --[[//pour forcer à tuer l'instance de ACT_Misc_Delai
@@ -121,7 +125,10 @@ node "BEH_EsquiverLaPopulationIncontrolable"
         else
 do
                 local eValiditeRequete = nil
-                local domination = DEC_ConnaissancePopulation_Domination( self._namedParams.pop, eValiditeRequete )
+                local domination = 0
+                domination = DEC_ConnaissancePopulation_Domination( self._namedParams.pop, eValiditeRequete )
+                eValiditeRequete = domination.second
+                domination = domination.first
                 --[[//la domination doit avoir diminuée au moins de 20%
 ]]if( ( ( domination < ( self.prevDomination - 0.2 ) ) or domination == 0 or ( domination < ( self.prevDomination - 0.2 ) ) or domination == nil ) ) then
                     do
@@ -331,7 +338,11 @@ do
                     do
                         local eValiditeRequete = nil
                         local danger = DEC_ConnaissancePopulation_Dangerosite( pop )
-                        if( ( ( DEC_ConnaissancePopulation_Domination( pop, eValiditeRequete ) == 0 or DEC_ConnaissancePopulation_Domination( pop, eValiditeRequete ) == nil ) ) and ( eValiditeRequete == eRequeteValide ) ) then
+                        local domination = 0
+                        domination = DEC_ConnaissancePopulation_Domination( pop, eValiditeRequete )
+                        eValiditeRequete = domination.second
+                        domination = domination.first
+                        if( ( ( domination == 0 or domination == nil ) ) and ( eValiditeRequete == eRequeteValide ) ) then
                             danger = 0.1
                         end
 

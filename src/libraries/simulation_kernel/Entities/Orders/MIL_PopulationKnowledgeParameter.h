@@ -39,7 +39,7 @@ public:
     //! @name Conversions
     //@{
     virtual bool ToPopulationKnowledge( ASN1T_PopulationKnowledge& asn ) const;
-    virtual bool ToPopulationKnowledge( DEC_Knowledge_Population* ) const;
+    virtual bool ToPopulationKnowledge( DEC_Knowledge_Population*& ) const;
     //@}
 
 private:

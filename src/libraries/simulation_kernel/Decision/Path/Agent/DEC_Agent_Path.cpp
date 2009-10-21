@@ -228,7 +228,7 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
         for( CIT_KnowledgeAgentVector itKnowledgeAgent = enemies.begin(); itKnowledgeAgent != enemies.end(); ++itKnowledgeAgent )
         {
             const DEC_Knowledge_Agent& knowledge = **itKnowledgeAgent;
-            if( fuseau_.IsInside( knowledge.GetPosition() ) )
+            if( knowledge.IsValid() && fuseau_.IsInside( knowledge.GetPosition() ) )
                 pathKnowledgeAgents_.push_back( DEC_Path_KnowledgeAgent( pathClass_, knowledge, queryMaker_ ) );
         }
     }

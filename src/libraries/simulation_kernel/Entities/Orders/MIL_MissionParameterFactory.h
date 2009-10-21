@@ -41,7 +41,7 @@ public:
     //! @name Operations
     //@{
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const ASN1T_MissionParameter& asn, const DEC_KnowledgeResolver_ABC& resolver );
-    static boost::shared_ptr<MIL_MissionParameter_ABC> Create( DEC_Knowledge_Agent* agentKnowledge );
+    static boost::shared_ptr<MIL_MissionParameter_ABC> Create( boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const PHY_DotationCategory* dotationType );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const PHY_ComposanteTypePion* equipmentType );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( float param );
@@ -68,13 +68,13 @@ public:
     static void SetObjectKnowledgeParameter( MIL_Mission_ABC* pMission, const std::string& parameter, DEC_Knowledge_Object* objectKnowledge );
     static void SetNatureAtlasTypeParameter( MIL_Mission_ABC* pMission, const std::string& parameter, int natureAtlas );
     static void SetAutomatListParameter( MIL_Mission_ABC* pMission, const std::string& parameter, const std::vector< DEC_Decision_ABC* >& automatList );
-    static void SetAgentKnowledgeParameter( MIL_Mission_ABC* pMission, const std::string& parameter, DEC_Knowledge_Agent* agentKnowledge );
+    static void SetAgentKnowledgeParameter( MIL_Mission_ABC* pMission, const std::string& parameter, boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge );
     static void SetPathListParameter( MIL_Mission_ABC* pMission, const std::string& parameter, const std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > >& );
     static void SetEnumereParameter( MIL_Mission_ABC* pMission, const std::string& parameter, int value );
     static void SetLocationParameter( MIL_Mission_ABC* pMission, const std::string& parameter, boost::shared_ptr< TER_Localisation > pLocation );
     static void SetObjectKnowledgeListParameter( MIL_Mission_ABC* pMission, const std::string& parameter, const std::vector< DEC_Knowledge_Object* >& objectKnowledgeList );
     static void SetPointParameter( MIL_Mission_ABC* pMission, const std::string& parameter, MT_Vector2D& point );
-    static void SetAgentKnowledgeListParameter( MIL_Mission_ABC* pMission, const std::string& parameter, const std::vector< DEC_Knowledge_Agent* >& agentKnowledgeList );
+    static void SetAgentKnowledgeListParameter( MIL_Mission_ABC* pMission, const std::string& parameter, const std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >& agentKnowledgeList );
     static void SetGenObjectListParameter( MIL_Mission_ABC* pMission, const std::string& parameter, const std::vector< boost::shared_ptr< DEC_Gen_Object > >& list );
     static void SetPionListParameter( MIL_Mission_ABC* pMission, const std::string& parameter, const std::vector< DEC_Decision_ABC* >& pionList );
     static void SetLocationListParameter( MIL_Mission_ABC* pMission, const std::string& parameter, const std::vector< boost::shared_ptr< TER_Localisation > >& locationList );    

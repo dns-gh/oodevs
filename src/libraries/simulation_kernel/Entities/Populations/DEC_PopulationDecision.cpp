@@ -192,7 +192,7 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_RC1",
         boost::function< void ( int, int ) >( boost::bind( &DEC_MiscFunctions::Report< MIL_Population >, boost::ref( GetPopulation() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_RC_AgentKnowledge",
-        boost::function< void ( int, int, DEC_Knowledge_Agent* ) >( boost::bind( &DEC_MiscFunctions::ReportAgentKnowledge< MIL_Population >, boost::ref( GetPopulation() ), _1, _2, _3 ) ) );
+        boost::function< void ( int, int, boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_MiscFunctions::ReportAgentKnowledge< MIL_Population >, boost::ref( GetPopulation() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_RC_DotationType",
         boost::function< void ( int, int, const PHY_DotationCategory* ) >( boost::bind( &DEC_MiscFunctions::ReportDotationType< MIL_Population >, boost::ref( GetPopulation() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_RC_EquipmentType",

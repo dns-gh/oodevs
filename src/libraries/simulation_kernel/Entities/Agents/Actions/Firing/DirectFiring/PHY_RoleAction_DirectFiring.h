@@ -63,8 +63,8 @@ public:
     int  FirePopulation         ( uint nTargetKnowledgeID, PHY_FireResults_Pion*& pFireResult );
     void FirePopulationSuspended( uint nTargetKnowledgeID );
 
-    int  FirePion               ( DEC_Knowledge_Agent* pAgent, PHY_DirectFireData::E_FiringMode nFiringMode, MT_Float rPercentageComposantesToUse, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType, PHY_FireResults_Pion*& pFireResult, const PHY_AmmoDotationClass* pAmmoDotationClass = 0 );
-    void FirePionSuspended      ( DEC_Knowledge_Agent* pAgent );
+    int  FirePion               ( boost::shared_ptr< DEC_Knowledge_Agent > pAgent, PHY_DirectFireData::E_FiringMode nFiringMode, MT_Float rPercentageComposantesToUse, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType, PHY_FireResults_Pion*& pFireResult, const PHY_AmmoDotationClass* pAmmoDotationClass = 0 );
+    void FirePionSuspended      ( boost::shared_ptr< DEC_Knowledge_Agent > pAgent );
 
     void FireZone               ( const MIL_Object_ABC& zone, PHY_FireResults_Default*& pFireResult );
     //@}

@@ -46,16 +46,16 @@ public:
     static void Transport_Cancel          ( MIL_AgentPion& callerAgent );
     static bool CanTransportPion          ( const MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable );
 
-    static void Prisoners_CaptureAndLoad  ( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge );
-    static void Prisoners_Unload          ( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge );
-    static void Prisoners_UnloadInCamp    ( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge, unsigned int campKnowledgeID );
-    static bool Prisoners_IsUnloadedInCamp( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge, unsigned int campKnowledgeID );
+    static void Prisoners_CaptureAndLoad  ( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static void Prisoners_Unload          ( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static void Prisoners_UnloadInCamp    ( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, unsigned int campKnowledgeID );
+    static bool Prisoners_IsUnloadedInCamp( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, unsigned int campKnowledgeID );
 
-    static void Refugees_OrientateAndLoad( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge );
-    static void Refugees_Unload          ( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge );
-    static void Refugees_UnloadInCamp    ( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge, unsigned int campKnowledgeID );
-    static bool PrisonnersRefugees_IsLoaded( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge );
-    static bool Refugees_IsUnloadedInCamp( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge, unsigned int campKnowledgeID );
+    static void Refugees_OrientateAndLoad( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static void Refugees_Unload          ( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static void Refugees_UnloadInCamp    ( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, unsigned int campKnowledgeID );
+    static bool PrisonnersRefugees_IsLoaded( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static bool Refugees_IsUnloadedInCamp( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, unsigned int campKnowledgeID );
     //@}
 };
 

@@ -222,7 +222,7 @@ namespace {
             if( !knowledge.IsAvailable() ) // Record mode
                 return;
                 
-            DEC_Knowledge_Agent* pKnowledge = pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgent( knowledge );
+            boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgent( knowledge );
             assert( pKnowledge );
 
             if(    knowledge.GetAgentPerceived() == *pPion_ 
@@ -289,7 +289,7 @@ namespace {
             if( !knowledge.IsAttacker() || !knowledge.IsAvailable() ) // Record mode
                 return;
 
-            DEC_Knowledge_Agent* pKnowledge = pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgent( knowledge );
+            boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgent( knowledge );
             assert( pKnowledge );
             pContainer_->push_back( pKnowledge );
         }
@@ -346,7 +346,7 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetDangerousEnemiesInZone( T_ConstKnowle
     const T_ConstKnowledgeAgentVector& knowledges = pKnowledgeRapForLocal_->GetDangerousEnemies();
     for( CIT_ConstKnowledgeAgentVector it = knowledges.begin(); it != knowledges.end(); ++it )
     {
-        const DEC_Knowledge_Agent* pKnowledge = *it;
+        boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = *it;
         if( zone.IsInside( pKnowledge->GetPosition() ) )
             container.push_back( pKnowledge );
     }
@@ -524,7 +524,7 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetPopulationsAttacking( T_KnowledgePopu
 // Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeAgent
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeAgent( const ASN1T_UnitKnowledge& asn ) const
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeAgent( const ASN1T_UnitKnowledge& asn ) const
 {
     return pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgentFromID( asn );
 }
@@ -533,7 +533,7 @@ DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeAgent( c
 // Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeAgent
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeAgent( uint nID ) const
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeAgent( uint nID ) const
 {
     return pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgentFromID( nID );
 }

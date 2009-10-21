@@ -118,9 +118,9 @@ namespace
 
             MIL_Agent_ABC& agentKnown = knowledge.GetAgentKnown();
 
-            DEC_Knowledge_Agent* pNewKnowledge = blackBoard_.GetKnowledgeAgent( agentKnown );
-            if( !pNewKnowledge )
-                pNewKnowledge = &blackBoard_.CreateKnowledgeAgent( knowledgeGroup_, agentKnown );
+            boost::shared_ptr< DEC_Knowledge_Agent > pNewKnowledge = blackBoard_.GetKnowledgeAgent( agentKnown );
+            if( !pNewKnowledge.get() )
+                pNewKnowledge.reset( &blackBoard_.CreateKnowledgeAgent( knowledgeGroup_, agentKnown ) );
             pNewKnowledge->Update( knowledge );
         }
 

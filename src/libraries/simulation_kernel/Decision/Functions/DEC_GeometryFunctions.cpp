@@ -459,10 +459,10 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeAmbushPosition( c
 // Name: DEC_GeometryFunctions::ComputeSafetyPosition
 // Created: NLD 2004-04-28 (Copied from shit's JDY code)
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPosition( const MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledgeEnemy, MT_Float rMinDistance )
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPosition( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledgeEnemy, MT_Float rMinDistance )
 {
     boost::shared_ptr< MT_Vector2D > pResult;
-    if( pKnowledgeEnemy )
+    if( pKnowledgeEnemy && pKnowledgeEnemy->IsValid() )
     {
         // Position de l'ennemi
         const MT_Vector2D& vEnemyPos  = pKnowledgeEnemy->GetPosition();
@@ -498,10 +498,10 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPositionWit
 // Name: DEC_GeometryFunctions::ComputeSafetyPositionWithObjective
 // Created: NLD 2004-04-28
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPositionWithObjective( const MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledgeEnnemy, MT_Float rMinMeterDistance, MT_Vector2D* pObjective )
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPositionWithObjective( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledgeEnnemy, MT_Float rMinMeterDistance, MT_Vector2D* pObjective )
 {
     boost::shared_ptr< MT_Vector2D > pResult;
-    if( pKnowledgeEnnemy )
+    if( pKnowledgeEnnemy.get() && pKnowledgeEnnemy->IsValid() )
     {
         assert( pObjective );
 
@@ -921,15 +921,15 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeMeanDirection( co
 // Created: JVT 2005-01-17
 // Modified: RPD 2009-08-05
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeKnowledgeAgentBarycenter( const MIL_AgentPion& /*caller*/, const std::vector< const DEC_Knowledge_Agent* > vKnowledges )
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeKnowledgeAgentBarycenter( const MIL_AgentPion& /*caller*/, const std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > vKnowledges )
 {
     boost::shared_ptr< MT_Vector2D > pResult( new MT_Vector2D( 0., 0. ) );
 
     uint nNbr = 0;
-    for( std::vector< const DEC_Knowledge_Agent* >::const_iterator it = vKnowledges.begin(); it != vKnowledges.end(); ++it )
+    for( std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >::const_iterator it = vKnowledges.begin(); it != vKnowledges.end(); ++it )
     {
-        const DEC_Knowledge_Agent* pKnowledge = *it;
-        if( pKnowledge )
+        boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = *it;
+        if( pKnowledge && pKnowledge->IsValid() )
         {
             *pResult += pKnowledge->GetPosition();
             ++ nNbr;
@@ -1097,11 +1097,11 @@ bool DEC_GeometryFunctions::GetInterceptionPoint( const MT_Vector2D& vToIntercep
 // Name: DEC_GeometryFunctions::GetInterceptionPosition
 // Created: JVT 2005-02-17
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::GetInterceptionPosition( const MIL_AgentPion& /*caller*/, DEC_Knowledge_Agent* pKnowledge, MT_Vector2D* pInterceptingPosition, MT_Float rSpeed )
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::GetInterceptionPosition( const MIL_AgentPion& /*caller*/, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, MT_Vector2D* pInterceptingPosition, MT_Float rSpeed )
 {
     assert( pInterceptingPosition );
     boost::shared_ptr< MT_Vector2D > point;
-    if( pKnowledge )
+    if( pKnowledge && pKnowledge->IsValid() )
     {
         const MT_Float rInterceptingSpeed = MIL_Tools::ConvertSpeedMosToSim( 3.6 /*m.s-1 => km.h-1*/ * rSpeed );
         MT_Vector2D vInterceptionPosition;

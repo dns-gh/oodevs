@@ -31,9 +31,9 @@
 // Name: DEC_KnowledgeAgentFunctions::GetNatureAtlas
 // Created: NLD 2004-03-31
 // -----------------------------------------------------------------------------
-int DEC_KnowledgeAgentFunctions::GetNatureAtlas( const DEC_Knowledge_Agent* pKnowledge )
+int DEC_KnowledgeAgentFunctions::GetNatureAtlas( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
-    if( pKnowledge )
+    if( pKnowledge && pKnowledge->IsValid() )
         return int( pKnowledge->GetNatureAtlas().GetID() );
     return int( PHY_NatureAtlas::notDefined_.GetID() );
 }
@@ -42,10 +42,10 @@ int DEC_KnowledgeAgentFunctions::GetNatureAtlas( const DEC_Knowledge_Agent* pKno
 // Name: DEC_KnowledgeAgentFunctions::GetDangerosity
 // Created: NLD 2004-04-02
 // -----------------------------------------------------------------------------
-float DEC_KnowledgeAgentFunctions::GetDangerosity( const MIL_AgentPion& callerAgent, const DEC_Knowledge_Agent* pKnowledge )
+float DEC_KnowledgeAgentFunctions::GetDangerosity( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     // For DIA, the dangerosity value is 1 <= dangerosity <= 2
-    if( pKnowledge )
+    if( pKnowledge && pKnowledge->IsValid() )
         return float( pKnowledge->GetDangerosity( callerAgent ) + 1.f );
     return 0.f;
 }
@@ -54,9 +54,9 @@ float DEC_KnowledgeAgentFunctions::GetDangerosity( const MIL_AgentPion& callerAg
 // Name: DEC_KnowledgeAgentFunctions::IsInDetectionCone
 // Created: JVT 2005-08-23
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeAgentFunctions::IsInDetectionCone( const MIL_AgentPion& callerAgent, const DEC_Knowledge_Agent* pKnowledge, const MT_Vector2D* direction, MT_Float angle )
+bool DEC_KnowledgeAgentFunctions::IsInDetectionCone( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, const MT_Vector2D* direction, MT_Float angle )
 {
-    if( !pKnowledge )
+    if( !pKnowledge || !pKnowledge->IsValid() )
         return false;
     assert( direction );
     const MT_Vector2D& vOrigin = callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition();
@@ -69,18 +69,18 @@ bool DEC_KnowledgeAgentFunctions::IsInDetectionCone( const MIL_AgentPion& caller
 // Name: DEC_KnowledgeAgentFunctions::IsPerceivedByAgent
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeAgentFunctions::IsPerceivedByAgent( const MIL_AgentPion& callerAgent, const DEC_Knowledge_Agent* pKnowledge )
+bool DEC_KnowledgeAgentFunctions::IsPerceivedByAgent( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
-    return pKnowledge && callerAgent.GetKnowledge().IsPerceived( pKnowledge->GetAgentKnown() );
+    return pKnowledge && pKnowledge->IsValid() && callerAgent.GetKnowledge().IsPerceived( pKnowledge->GetAgentKnown() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::IsAnEnemy
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
-int DEC_KnowledgeAgentFunctions::IsAnEnemy( const MIL_AgentPion& callerAgent, const DEC_Knowledge_Agent* pKnowledge )
+int DEC_KnowledgeAgentFunctions::IsAnEnemy( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
-    if( !pKnowledge )
+    if( !pKnowledge || !pKnowledge->IsValid() )
         return int( eTristate_DontKnow );
     return int( pKnowledge->IsAnEnemy( callerAgent.GetArmy() ) );
 }
@@ -89,28 +89,28 @@ int DEC_KnowledgeAgentFunctions::IsAnEnemy( const MIL_AgentPion& callerAgent, co
 // Name: DEC_KnowledgeAgentFunctions::IsMoving
 // Created: NLD 2004-04-09
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeAgentFunctions::IsMoving( const DEC_Knowledge_Agent* pKnowledge )
+bool DEC_KnowledgeAgentFunctions::IsMoving( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
-    return pKnowledge && pKnowledge->GetSpeed() != 0.;
+    return pKnowledge && pKnowledge->IsValid() && pKnowledge->GetSpeed() != 0.;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::IsPerceivingAgent
 // Created: NLD 2004-05-17
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeAgentFunctions::IsPerceivingAgent( const MIL_AgentPion& callerAgent, const DEC_Knowledge_Agent* pKnowledge )
+bool DEC_KnowledgeAgentFunctions::IsPerceivingAgent( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     //$$$ Fonction BOF : trop de triche ...
-    return pKnowledge && pKnowledge->GetAgentKnown().IsPerceived( callerAgent );
+    return pKnowledge && pKnowledge->IsValid() && pKnowledge->GetAgentKnown().IsPerceived( callerAgent );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::KillOfficers
 // Created: SBO 2005-12-21
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeAgentFunctions::KillOfficers( DEC_Knowledge_Agent* pKnowledge )
+bool DEC_KnowledgeAgentFunctions::KillOfficers( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
-    if( pKnowledge )
+    if( pKnowledge.get() && pKnowledge->IsValid() )
     {
         pKnowledge->KillOfficers();
         return true;
@@ -122,7 +122,7 @@ bool DEC_KnowledgeAgentFunctions::KillOfficers( DEC_Knowledge_Agent* pKnowledge 
 // Name: DEC_KnowledgeAgentFunctions::GetOperationalState
 // Created: NLD 2004-04-14
 // -----------------------------------------------------------------------------
-float DEC_KnowledgeAgentFunctions::GetOperationalState( const DEC_Knowledge_Agent* pKnowledge )
+float DEC_KnowledgeAgentFunctions::GetOperationalState( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     if( pKnowledge )
         return float( pKnowledge->GetOperationalState() );
@@ -133,9 +133,9 @@ float DEC_KnowledgeAgentFunctions::GetOperationalState( const DEC_Knowledge_Agen
 // Name: DEC_KnowledgeAgentFunctions::GetMajorOperationalState
 // Created: NLD 2004-04-14
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeAgentFunctions::GetMajorOperationalState( const DEC_Knowledge_Agent* pKnowledge )
+bool DEC_KnowledgeAgentFunctions::GetMajorOperationalState( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
-    if( pKnowledge )
+    if( pKnowledge && pKnowledge->IsValid() )
         return pKnowledge->GetMajorOperationalState() == 0;
     return true;
 }
@@ -144,9 +144,9 @@ bool DEC_KnowledgeAgentFunctions::GetMajorOperationalState( const DEC_Knowledge_
 // Name: DEC_KnowledgeAgentFunctions::GetPosition
 // Created: NLD 2004-03-31
 // -----------------------------------------------------------------------------
-const MT_Vector2D* DEC_KnowledgeAgentFunctions::GetPosition( const DEC_Knowledge_Agent* pKnowledge )
+const MT_Vector2D* DEC_KnowledgeAgentFunctions::GetPosition( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
-    if( pKnowledge )
+    if( pKnowledge && pKnowledge->IsValid() )
         return &pKnowledge->GetPosition();
     return 0;
 }
@@ -155,45 +155,45 @@ const MT_Vector2D* DEC_KnowledgeAgentFunctions::GetPosition( const DEC_Knowledge
 // Name: DEC_KnowledgeAgentFunctions::IsFlying
 // Created: JVT 2005-08-23
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeAgentFunctions::IsFlying( const DEC_Knowledge_Agent* pKnowledge )
+bool DEC_KnowledgeAgentFunctions::IsFlying( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
-    return pKnowledge && pKnowledge->GetAltitude() > MIL_Tools::GetAltitude( pKnowledge->GetPosition() );
+    return pKnowledge && pKnowledge->IsValid() && pKnowledge->GetAltitude() > MIL_Tools::GetAltitude( pKnowledge->GetPosition() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::IsKnowledgeValid
 // Created: NLD 2004-04-02
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeAgentFunctions::IsKnowledgeValid( const DEC_Knowledge_Agent* pKnowledge )
+bool DEC_KnowledgeAgentFunctions::IsKnowledgeValid( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
-    return pKnowledge != 0;
+    return pKnowledge && pKnowledge->IsValid();
 }
     
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::IsPrisoner
 // Created: NLD 2005-03-04
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeAgentFunctions::IsPrisoner( const DEC_Knowledge_Agent* pKnowledge )
+bool DEC_KnowledgeAgentFunctions::IsPrisoner( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
-    return pKnowledge && pKnowledge->IsPrisoner();
+    return pKnowledge&& pKnowledge->IsValid() && pKnowledge->IsPrisoner();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::IsDead
 // Created: NLD 2005-03-10
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeAgentFunctions::IsDead( const DEC_Knowledge_Agent* pKnowledge )
+bool DEC_KnowledgeAgentFunctions::IsDead( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
-    return pKnowledge && pKnowledge->IsDead();
+    return pKnowledge && pKnowledge->IsValid() && pKnowledge->IsDead();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::Lock
 // Created: NLD 2005-04-21
 // -----------------------------------------------------------------------------
-int DEC_KnowledgeAgentFunctions::Lock( DEC_Knowledge_Agent* pKnowledge )
+int DEC_KnowledgeAgentFunctions::Lock( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
-    if( pKnowledge )
+    if( pKnowledge.get() && pKnowledge->IsValid() )
     {
         pKnowledge->Lock();
         return int( eQueryValid );
@@ -205,9 +205,9 @@ int DEC_KnowledgeAgentFunctions::Lock( DEC_Knowledge_Agent* pKnowledge )
 // Name: DEC_KnowledgeAgentFunctions::Unlock
 // Created: NLD 2005-04-21
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeAgentFunctions::Unlock( DEC_Knowledge_Agent* pKnowledge )
+void DEC_KnowledgeAgentFunctions::Unlock( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
-    if( pKnowledge )
+    if( pKnowledge.get() && pKnowledge->IsValid() )
         pKnowledge->Unlock();
 }
 
@@ -215,10 +215,10 @@ void DEC_KnowledgeAgentFunctions::Unlock( DEC_Knowledge_Agent* pKnowledge )
 // Name: DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge
 // Created: NLD 2005-05-17
 // -----------------------------------------------------------------------------
-float DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge( const DEC_Knowledge_Agent* pSource, const DEC_Knowledge_Agent* pTarget )
+float DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge( boost::shared_ptr< DEC_Knowledge_Agent > pSource, boost::shared_ptr< DEC_Knowledge_Agent > pTarget )
 {
     // For DIA, the dangerosity value is 1 <= dangerosity <= 2
-    if( pSource && pTarget )
+    if( pSource && pTarget && pSource->IsValid() && pTarget->IsValid() )
             return float( pSource->GetDangerosity( *pTarget ) + 1. );
     return 0.f;
 }
@@ -227,11 +227,11 @@ float DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge( const DEC_Knowledg
 // Name: DEC_KnowledgeAgentFunctions::GetDangerosityOnPion
 // Created: NLD 2004-04-02
 // -----------------------------------------------------------------------------
-float DEC_KnowledgeAgentFunctions::GetDangerosityOnPion( const DEC_Knowledge_Agent* pKnowledge, const DEC_Decision_ABC* pTarget )
+float DEC_KnowledgeAgentFunctions::GetDangerosityOnPion( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, const DEC_Decision_ABC* pTarget )
 {
     assert( pTarget );
     // For DIA, the dangerosity value is 1 <= dangerosity <= 2
-    if( pKnowledge )
+    if( pKnowledge && pKnowledge->IsValid() )
         return float( pKnowledge->GetDangerosity( pTarget->GetPion() ) + 1. );
     return 0.f;
 }
@@ -240,10 +240,10 @@ float DEC_KnowledgeAgentFunctions::GetDangerosityOnPion( const DEC_Knowledge_Age
 // Name: DEC_KnowledgeAgentFunctions::GetMaxPerceptionLevelForKnowledgeGroup
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
-int DEC_KnowledgeAgentFunctions::GetMaxPerceptionLevelForKnowledgeGroup( const DEC_Knowledge_Agent* pKnowledge )
+int DEC_KnowledgeAgentFunctions::GetMaxPerceptionLevelForKnowledgeGroup( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
-    if( !pKnowledge )
-        return 0;
-    else
+    if( pKnowledge.get() && pKnowledge->IsValid( ) )
         return (int)pKnowledge->GetMaxPerceptionLevel().GetID();
+    else
+        return 0;
 }

@@ -89,7 +89,7 @@ public:
     virtual bool GetMiseEnOeuvre();
     virtual void SetMiseEnOeuvre( bool );
     virtual int GetEtatFeu();
-    virtual std::vector<DEC_Knowledge_Agent*> GetListeEnisTirAutorise();
+    virtual std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > GetListeEnisTirAutorise();
     virtual std::vector<DEC_Decision_ABC*> GetListePionsCoordination();
     virtual int GetObjMisEnCours();
     virtual void SetObjMisEnCours( int );

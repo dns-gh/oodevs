@@ -74,8 +74,8 @@ inline
 DEC_Knowledge_Agent& DEC_KS_AgentKnowledgeSynthetizer::GetKnowledgeToUpdate( MIL_Agent_ABC& agentKnown ) const
 {
     assert( pBlackBoard_ );
-    DEC_Knowledge_Agent* pKnowledge = pBlackBoard_->GetKnowledgeAgentContainer().GetKnowledgeAgent( agentKnown );
-    if( pKnowledge )
+    boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = pBlackBoard_->GetKnowledgeAgentContainer().GetKnowledgeAgent( agentKnown );
+    if( pKnowledge.get() )
         return *pKnowledge;
     
     return pBlackBoard_->GetKnowledgeAgentContainer().CreateKnowledgeAgent( pBlackBoard_->GetKnowledgeGroup(), agentKnown );

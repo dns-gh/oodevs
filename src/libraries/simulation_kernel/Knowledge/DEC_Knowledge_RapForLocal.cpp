@@ -96,12 +96,12 @@ void DEC_Knowledge_RapForLocal::Update()
     // 1 - Compute the enemy fight score, and get the dangerous enemies
     for( CIT_KnowledgeAgentVector itEnemy = enemies.begin(); itEnemy != enemies.end(); ++itEnemy )
     {
-        DEC_Knowledge_Agent& knowledgeEnemy = **itEnemy;
-        MT_Float rDangerosity = knowledgeEnemy.GetDangerosity( *pPion_ ) * knowledgeEnemy.GetOperationalState();
+        boost::shared_ptr< DEC_Knowledge_Agent > knowledgeEnemy = *itEnemy;
+        MT_Float rDangerosity = knowledgeEnemy->GetDangerosity( *pPion_ ) * knowledgeEnemy->GetOperationalState();
         if( rDangerosity != 0. )
         {
             rTotalFightScoreEnemy += rDangerosity;
-            dangerousEnemies_.push_back( &knowledgeEnemy );
+            dangerousEnemies_.push_back( knowledgeEnemy );
         }
     }
 

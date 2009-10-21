@@ -28,9 +28,9 @@ using namespace firing;
 // Name: DEC_FireFunctions::GetMaxRangeToFireOnEnemy
 // Created: NLD 2004-04-02
 // -----------------------------------------------------------------------------
-float DEC_FireFunctions::GetMaxRangeToFireOnEnemy( const MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge, float rWantedPH )
+float DEC_FireFunctions::GetMaxRangeToFireOnEnemy( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, float rWantedPH )
 {
-    if( !pKnowledge )
+    if( !pKnowledge || !pKnowledge->IsValid() )
         return -1.f;
     return MIL_Tools::ConvertSimToMeter( callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMaxRangeToFireOn( *pKnowledge, rWantedPH ) );
 }
@@ -39,9 +39,9 @@ float DEC_FireFunctions::GetMaxRangeToFireOnEnemy( const MIL_AgentPion& callerAg
 // Name: DEC_FireFunctions::GetMinRangeToFireOnEnemy
 // Created: JVT 2004-12-17
 // -----------------------------------------------------------------------------
-float DEC_FireFunctions::GetMinRangeToFireOnEnemy( const MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge, float rWantedPH )
+float DEC_FireFunctions::GetMinRangeToFireOnEnemy( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, float rWantedPH )
 {
-    if ( !pKnowledge )
+    if ( !pKnowledge || !pKnowledge->IsValid() )
         return -1.f;
     
     const MT_Float rRange = callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMinRangeToFireOn( *pKnowledge, rWantedPH );
@@ -54,9 +54,9 @@ float DEC_FireFunctions::GetMinRangeToFireOnEnemy( const MIL_AgentPion& callerAg
 // Name: DEC_FireFunctions::GetMaxRangeToFireOnEnemyActualPosture
 // Created: SBO 2006-01-10
 // -----------------------------------------------------------------------------
-float DEC_FireFunctions::GetMaxRangeToFireOnEnemyActualPosture( const MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge, float rWantedPH )
+float DEC_FireFunctions::GetMaxRangeToFireOnEnemyActualPosture( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, float rWantedPH )
 {
-    if( !pKnowledge )
+    if( !pKnowledge || !pKnowledge->IsValid() )
         return -1.f;
     return MIL_Tools::ConvertSimToMeter( callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMaxRangeToFireOnActualPosture( *pKnowledge, rWantedPH ) );
 }
@@ -65,9 +65,9 @@ float DEC_FireFunctions::GetMaxRangeToFireOnEnemyActualPosture( const MIL_AgentP
 // Name: DEC_FireFunctions::GetMinRangeToFireOnEnemyActualPosture
 // Created: SBO 2006-01-10
 // -----------------------------------------------------------------------------
-float DEC_FireFunctions::GetMinRangeToFireOnEnemyActualPosture( const MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge, float rWantedPH )
+float DEC_FireFunctions::GetMinRangeToFireOnEnemyActualPosture( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, float rWantedPH )
 {
-    if( !pKnowledge )
+    if( !pKnowledge || !pKnowledge->IsValid() )
         return -1.f;
     
     const MT_Float rRange = callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMinRangeToFireOnActualPosture( *pKnowledge, rWantedPH );
@@ -80,9 +80,9 @@ float DEC_FireFunctions::GetMinRangeToFireOnEnemyActualPosture( const MIL_AgentP
 // Name: DEC_FireFunctions::GetMaxRangeToFireOnEnemyWhenUnloaded
 // Created: NLD 2004-04-02
 // -----------------------------------------------------------------------------
-float DEC_FireFunctions::GetMaxRangeToFireOnEnemyWhenUnloaded( const MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge, float rWantedPH )
+float DEC_FireFunctions::GetMaxRangeToFireOnEnemyWhenUnloaded( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, float rWantedPH )
 {
-    if( !pKnowledge )
+    if( !pKnowledge || !pKnowledge->IsValid() )
         return -1.f;
    return MIL_Tools::ConvertSimToMeter( callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetOnlyLoadableMaxRangeToFireOn( *pKnowledge, rWantedPH ) );
 }
@@ -91,9 +91,9 @@ float DEC_FireFunctions::GetMaxRangeToFireOnEnemyWhenUnloaded( const MIL_AgentPi
 // Name: DEC_FireFunctions::GetMaxRangeToBeFiredByEnemy
 // Created: NLD 2004-04-14
 // -----------------------------------------------------------------------------
-float DEC_FireFunctions::GetMaxRangeToBeFiredByEnemy( const MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge, float rWantedPH )
+float DEC_FireFunctions::GetMaxRangeToBeFiredByEnemy( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, float rWantedPH )
 {
-    if( !pKnowledge )
+    if( !pKnowledge || !pKnowledge->IsValid() )
         return -1.f;
     return MIL_Tools::ConvertSimToMeter( pKnowledge->GetMaxRangeToFireOn( callerAgent, rWantedPH ) );
 }
@@ -163,9 +163,9 @@ float DEC_FireFunctions::GetMinRangeToIndirectFireWithoutAmmoCheck( const MIL_Ag
 // Name: DEC_FireFunctions::ThrowSmokeOnKnowledgeAgent
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
-void DEC_FireFunctions::ThrowSmokeOnKnowledgeAgent( MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pTarget )
+void DEC_FireFunctions::ThrowSmokeOnKnowledgeAgent( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pTarget )
 {
-    if( pTarget )
+    if( pTarget && pTarget->IsValid() )
         callerAgent.GetRole< PHY_RoleAction_IndirectFiring >().ThrowSmoke( pTarget->GetPosition(), 2 ); //$$$ 
 }
 

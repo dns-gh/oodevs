@@ -554,10 +554,10 @@ float DEC_AgentFunctions::TimeToMoveDistance( const MIL_AgentPion& callerAgent, 
 // Name: DEC_AgentFunctions::GetInterceptionPoint
 // Created: JVT 2005-02-16
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_AgentFunctions::GetInterceptionPoint( const MIL_AgentPion& callerAgent, DEC_Knowledge_Agent* pKnowledge )
+boost::shared_ptr< MT_Vector2D > DEC_AgentFunctions::GetInterceptionPoint( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     boost::shared_ptr< MT_Vector2D > result;
-    if( pKnowledge )
+    if( pKnowledge && pKnowledge->IsValid())
     {
         result.reset( new MT_Vector2D() );
         DEC_GeometryFunctions::GetInterceptionPoint( pKnowledge->GetPosition(), pKnowledge->GetDirection() * pKnowledge->GetSpeed(), 

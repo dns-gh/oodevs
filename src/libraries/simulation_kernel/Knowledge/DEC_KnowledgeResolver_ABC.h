@@ -34,8 +34,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual DEC_Knowledge_Agent*      ResolveKnowledgeAgent ( const ASN1T_UnitKnowledge&  asn ) const = 0;
-    virtual DEC_Knowledge_Agent*      ResolveKnowledgeAgent (       uint                   nID ) const = 0;
+    virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent ( const ASN1T_UnitKnowledge&  asn ) const = 0;
+    virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent (       uint                   nID ) const = 0;
 
     virtual DEC_Knowledge_Object*     ResolveKnowledgeObject( const ASN1T_ObjectKnowledge& asn ) const = 0;
     virtual DEC_Knowledge_Object*     ResolveKnowledgeObject(       uint                   nID ) const = 0;

@@ -571,7 +571,7 @@ void DEC_CommunicationFunctions::F_Pion_SetobjectifEsquive( DEC_Decision_ABC* pP
 // Name: DEC_CommunicationFunctions::
 //F_Pion_GeteniEnCours Created: LDC 2009-05-11
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent* DEC_CommunicationFunctions::F_Pion_GeteniEnCours( DEC_Decision_ABC* pPion )
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_CommunicationFunctions::F_Pion_GeteniEnCours( DEC_Decision_ABC* pPion )
 {
     return dynamic_cast< DEC_RolePion_Decision* >( pPion )->GeteniEnCours();
 }
@@ -580,7 +580,7 @@ DEC_Knowledge_Agent* DEC_CommunicationFunctions::F_Pion_GeteniEnCours( DEC_Decis
 // Name: DEC_CommunicationFunctions::F_Pion_SeteniEnCours
 // Created: LDC 2009-05-11
 // -----------------------------------------------------------------------------
-void DEC_CommunicationFunctions::F_Pion_SeteniEnCours( DEC_Decision_ABC* pPion, DEC_Knowledge_Agent* value )
+void DEC_CommunicationFunctions::F_Pion_SeteniEnCours( DEC_Decision_ABC* pPion, boost::shared_ptr< DEC_Knowledge_Agent > value )
 {
     dynamic_cast< DEC_RolePion_Decision* >( pPion )->SeteniEnCours( value );
 }

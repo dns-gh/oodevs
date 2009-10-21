@@ -88,22 +88,22 @@ namespace boost
             for ( DEC_BlackBoard_CanContainKnowledgeAgent::CIT_KnowledgeAgentMap it = map.begin(); it != map.end(); ++it )
             {
                 file << it->first
-                     << it->second;
+                     << *it->second;
             }
         }
         
         template< typename Archive >
         void load( Archive& file, DEC_BlackBoard_CanContainKnowledgeAgent::T_KnowledgeAgentMap& map, const uint )
         {
-            uint nNbr;
+            DEC_BlackBoard_CanContainKnowledgeAgent::T_KnowledgeAgentMap::size_type nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {
                 MIL_Agent_ABC*       pAgent;
-                DEC_Knowledge_Agent* pKnowledge;
+                boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge( new DEC_Knowledge_Agent() );
                 
                 file >> pAgent
-                     >> pKnowledge;
+                     >> *pKnowledge;
                      
                 map.insert( std::make_pair( pAgent, pKnowledge ) );
             }
@@ -118,9 +118,17 @@ namespace boost
 void DEC_BlackBoard_CanContainKnowledgeAgent::load( MIL_CheckPointInArchive& file, const uint )
 {
     file >> const_cast< MIL_KnowledgeGroup*& >( pKnowledgeGroup_ )
-         >> nLastCacheUpdateTick_
-         >> realAgentMap_
-         >> unitKnowledgeFromIDMap_;
+         >> nLastCacheUpdateTick_;
+    unsigned int size = 0;
+    file >> size;
+    for( unsigned int i = 0; i < size; ++i )
+    {
+        MIL_Agent_ABC* agent;
+        file >> agent;
+        realAgentMap_[ agent ].reset( new DEC_Knowledge_Agent() );
+        file >> *realAgentMap_[ agent ];
+        unitKnowledgeFromIDMap_.insert( std::make_pair( realAgentMap_[ agent ]->GetID(), realAgentMap_[ agent ] ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -130,9 +138,15 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::load( MIL_CheckPointInArchive& fil
 void DEC_BlackBoard_CanContainKnowledgeAgent::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     file << pKnowledgeGroup_
-         << nLastCacheUpdateTick_
-         << realAgentMap_
-         << unitKnowledgeFromIDMap_;
+         << nLastCacheUpdateTick_;
+    unsigned int size = realAgentMap_.size();
+    file << size;
+    for( CIT_KnowledgeAgentMap it = realAgentMap_.begin(); it != realAgentMap_.end(); ++it )
+    {
+        MIL_Agent_ABC* agent = const_cast<MIL_Agent_ABC*>( it->first );
+        file << agent;
+        file << *it->second;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -141,14 +155,14 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::save( MIL_CheckPointOutArchive& fi
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Agent& DEC_BlackBoard_CanContainKnowledgeAgent::CreateKnowledgeAgent( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Agent_ABC& agentKnown )
 {
-    DEC_Knowledge_Agent& knowledge = agentKnown.CreateKnowledge( knowledgeGroup );
-    bool bOut = realAgentMap_.insert( std::make_pair( &agentKnown, &knowledge ) ).second;
+    boost::shared_ptr< DEC_Knowledge_Agent > knowledge = agentKnown.CreateKnowledge( knowledgeGroup );
+    bool bOut = realAgentMap_.insert( std::make_pair( &agentKnown, knowledge ) ).second;
     assert( bOut );
 
-    bOut = unitKnowledgeFromIDMap_.insert( std::make_pair( knowledge.GetID(), &knowledge ) ).second;
+    bOut = unitKnowledgeFromIDMap_.insert( std::make_pair( knowledge->GetID(), knowledge ) ).second;
     assert( bOut );
 
-    return knowledge;
+    return *knowledge;
 }
 
 // -----------------------------------------------------------------------------
@@ -157,11 +171,11 @@ DEC_Knowledge_Agent& DEC_BlackBoard_CanContainKnowledgeAgent::CreateKnowledgeAge
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeAgent::DestroyKnowledgeAgent( DEC_Knowledge_Agent& knowledge )
 {
+    knowledge.Invalidate();
     int nOut = realAgentMap_.erase( &knowledge.GetAgentKnown() );
     assert( nOut >= 1 );
     nOut = unitKnowledgeFromIDMap_.erase( knowledge.GetID() );
     assert( nOut == 1 );
-    delete &knowledge;
 }
 
 // -----------------------------------------------------------------------------
@@ -188,36 +202,30 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::UpdateQueriesCache()
 
     for( CIT_KnowledgeAgentMap itKnowledge = realAgentMap_.begin(); itKnowledge != realAgentMap_.end(); ++itKnowledge )
     {
-        DEC_Knowledge_Agent& knowledge = *itKnowledge->second;
+        boost::shared_ptr< DEC_Knowledge_Agent > knowledge = itKnowledge->second;
 
-        if( knowledge.IsRefugee() )
-            refugeesContainer_.push_back( &knowledge );
-
-        else if( knowledge.IsSurrendered() )
+        if( knowledge->IsRefugee() )
+            refugeesContainer_.push_back( knowledge );
+        else if( knowledge->IsSurrendered() )
         {
-            if( !knowledge.GetArmy() || *knowledge.GetArmy() != army ) 
-                surrenderedAgentsContainer_.push_back( &knowledge );
+            if( !knowledge->GetArmy() || *knowledge->GetArmy() != army ) 
+                surrenderedAgentsContainer_.push_back( knowledge );
         }
-
         else
         {
-            if( !knowledge.GetArmy() )
+            if( !knowledge->GetArmy() )
             {
-                if( army.IsAFriend( knowledge.GetAgentKnown().GetArmy() ) != eTristate_True )
-                    detectedContainer_.push_back( &knowledge );
+                if( army.IsAFriend( knowledge->GetAgentKnown().GetArmy() ) != eTristate_True )
+                    detectedContainer_.push_back( knowledge );
             }
-
-            else if( knowledge.IsAFriend( army ) == eTristate_True )
-                friendsContainer_.push_back( &knowledge );
-            
-            else if( knowledge.IsAnEnemy( army ) == eTristate_True )
-                enemiesContainer_.push_back( &knowledge );
-
-            if( knowledge.IsMilitia() )
-                militiasContainer_.push_back( &knowledge );
-
-            if( knowledge.IsTerrorist() )
-                terroristsContainer_.push_back( &knowledge );
+            else if( knowledge->IsAFriend( army ) == eTristate_True )
+                friendsContainer_.push_back( knowledge );            
+            else if( knowledge->IsAnEnemy( army ) == eTristate_True )
+                enemiesContainer_.push_back( knowledge );
+            if( knowledge->IsMilitia() )
+                militiasContainer_.push_back( knowledge );
+            if( knowledge->IsTerrorist() )
+                terroristsContainer_.push_back( knowledge );
         }
     }
 }
@@ -226,11 +234,11 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::UpdateQueriesCache()
 // Name: DEC_BlackBoard_CanContainKnowledgeAgent::GetKnowledgeAgent
 // Created: NLD 2004-03-16
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent* DEC_BlackBoard_CanContainKnowledgeAgent::GetKnowledgeAgent( const MIL_Agent_ABC& agentKnown ) const
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_BlackBoard_CanContainKnowledgeAgent::GetKnowledgeAgent( const MIL_Agent_ABC& agentKnown ) const
 {
     CIT_KnowledgeAgentMap it = realAgentMap_.find( &agentKnown );
     if( it == realAgentMap_.end() )
-        return 0;
+        return boost::shared_ptr< DEC_Knowledge_Agent >();
     return it->second;
 }
 
@@ -247,10 +255,10 @@ bool DEC_BlackBoard_CanContainKnowledgeAgent::HasKnowledgeAgent( const MIL_Agent
 // Name: DEC_BlackBoard_CanContainKnowledgeAgent::GetKnowledgeAgentFromID
 // Created: NLD 2004-03-24
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent* DEC_BlackBoard_CanContainKnowledgeAgent::GetKnowledgeAgentFromID( uint nID ) const
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_BlackBoard_CanContainKnowledgeAgent::GetKnowledgeAgentFromID( uint nID ) const
 {
     CIT_KnowledgeAgentIDMap itKnowledge = unitKnowledgeFromIDMap_.find( nID );
-    return itKnowledge == unitKnowledgeFromIDMap_.end() ? 0 : itKnowledge->second;
+    return itKnowledge == unitKnowledgeFromIDMap_.end() ? boost::shared_ptr< DEC_Knowledge_Agent >() : itKnowledge->second;
 }
 
 // -----------------------------------------------------------------------------

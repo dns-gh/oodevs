@@ -24,7 +24,7 @@ using namespace firing;
 // Name: PHY_ActionDirectFirePion_ABC constructor
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionDirectFirePion_ABC::PHY_ActionDirectFirePion_ABC( MIL_AgentPion& pion, DEC_Knowledge_Agent* pEnemy, MT_Float percentage, int firingMode, int ammoDotationClass, firing::PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, firing::PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType )
+PHY_ActionDirectFirePion_ABC::PHY_ActionDirectFirePion_ABC( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Agent > pEnemy, MT_Float percentage, int firingMode, int ammoDotationClass, firing::PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, firing::PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType )
     : PHY_DecisionCallbackAction_ABC( pion )
     , role_                       ( pion.GetRole< PHY_RoleAction_DirectFiring >() )
     , pEnemy_                     ( pEnemy )

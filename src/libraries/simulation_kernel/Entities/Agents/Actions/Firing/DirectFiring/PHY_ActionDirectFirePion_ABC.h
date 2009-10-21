@@ -32,7 +32,7 @@ public:
     typedef MIL_AgentPion ActorType;        
 
 public:
-             PHY_ActionDirectFirePion_ABC( MIL_AgentPion& pion, DEC_Knowledge_Agent* pEnemy, MT_Float percentage, int firingMode, int ammoDotationClass, firing::PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, firing::PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType );
+             PHY_ActionDirectFirePion_ABC( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Agent > pEnemy, MT_Float percentage, int firingMode, int ammoDotationClass, firing::PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, firing::PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType );
     virtual ~PHY_ActionDirectFirePion_ABC();
 
     //! @name Operations
@@ -43,7 +43,7 @@ public:
 
 private:
           firing::PHY_RoleAction_DirectFiring&       role_;
-          DEC_Knowledge_Agent*                       pEnemy_;
+          boost::shared_ptr< DEC_Knowledge_Agent >   pEnemy_;
     const MT_Float                                   rPercentageComposantesToUse_;
     const firing::PHY_DirectFireData::E_FiringMode           nFiringMode_;
     const firing::PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType_;
