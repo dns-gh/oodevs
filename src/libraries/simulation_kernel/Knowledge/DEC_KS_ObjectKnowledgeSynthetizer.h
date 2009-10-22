@@ -50,7 +50,7 @@ public:
     //@{
     void AddEphemeralObjectKnowledge( MIL_Object_ABC& objectKnown ); // The object will be perceived virtually only for one tick
     void AddObjectKnowledgeToForget ( MIL_Object_ABC& objectKnown );
-    void AddObjectKnowledgeToForget ( DEC_Knowledge_Object& knowledge );
+    void AddObjectKnowledgeToForget ( boost::shared_ptr< DEC_Knowledge_Object > knowledge );
     //@}
 
     //! @name Operations
@@ -65,9 +65,9 @@ private:
     //@{
     void                  UpdateKnowledgesFromObjectPerception( const DEC_Knowledge_ObjectPerception& perception );
     void                  UpdateKnowledgesFromObjectCollision ( const DEC_Knowledge_ObjectCollision& collision );
-    DEC_Knowledge_Object& GetKnowledgeToUpdate                ( MIL_Object_ABC& objectKnown ) const;
-    void                  UpdateKnowledgeRelevance            ( DEC_Knowledge_Object& knowledge );
-    void                  CleanKnowledgeObject                ( DEC_Knowledge_Object& knowledge );
+    boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeToUpdate                ( MIL_Object_ABC& objectKnown ) const;
+    void                  UpdateKnowledgeRelevance            ( boost::shared_ptr< DEC_Knowledge_Object >& knowledge );
+    void                  CleanKnowledgeObject                ( boost::shared_ptr< DEC_Knowledge_Object >& knowledge );
     //@}
 
     //! @name Operations

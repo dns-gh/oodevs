@@ -20,10 +20,10 @@
 // Name: PHY_ActionMineObject constructor
 // Mined: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionMineObject::PHY_ActionMineObject( MIL_AgentPion& pion, unsigned int nKnowledgeID )
+PHY_ActionMineObject::PHY_ActionMineObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
     : PHY_DecisionCallbackAction_ABC( pion )
     , role_         ( pion.GetRole< PHY_RoleAction_Objects >() )
-    , nKnowledgeID_ ( nKnowledgeID )
+    , pKnowledge_   ( pKnowledge )
 {
     Callback( role_.GetInitialReturnCode() );
 }
@@ -43,7 +43,7 @@ PHY_ActionMineObject::~PHY_ActionMineObject()
 // -----------------------------------------------------------------------------
 void PHY_ActionMineObject::Execute()
 {   
-    int nReturn = role_.Mine( nKnowledgeID_ );
+    int nReturn = role_.Mine( pKnowledge_ );
     Callback( nReturn );
 }
 

@@ -473,7 +473,7 @@ bool MIL_BaseParameter::ToAgentKnowledgeList( std::vector< boost::shared_ptr< DE
 // Name: MIL_BaseParameter::ToObjectKnowledge
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToObjectKnowledge( DEC_Knowledge_Object*& ) const
+bool MIL_BaseParameter::ToObjectKnowledge( boost::shared_ptr< DEC_Knowledge_Object >& ) const
 {
     return false;
 }
@@ -482,7 +482,7 @@ bool MIL_BaseParameter::ToObjectKnowledge( DEC_Knowledge_Object*& ) const
 // Name: MIL_BaseParameter::ToObjectKnowledgeList
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToObjectKnowledgeList( std::vector< DEC_Knowledge_Object* >& ) const
+bool MIL_BaseParameter::ToObjectKnowledgeList( std::vector< boost::shared_ptr< DEC_Knowledge_Object > >& ) const
 {
     return false;
 }

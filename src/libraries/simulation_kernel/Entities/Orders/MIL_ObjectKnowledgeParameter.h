@@ -26,7 +26,7 @@ class MIL_ObjectKnowledgeParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_ObjectKnowledgeParameter( DEC_Knowledge_Object* pObjectKnowledge );
+    explicit MIL_ObjectKnowledgeParameter( boost::shared_ptr< DEC_Knowledge_Object > pObjectKnowledge );
              MIL_ObjectKnowledgeParameter( const ASN1T_ObjectKnowledge& asn, const DEC_KnowledgeResolver_ABC& resolver );
     virtual ~MIL_ObjectKnowledgeParameter();
     //@}
@@ -39,7 +39,7 @@ public:
     //! @name Conversions
     //@{
     virtual bool ToObjectKnowledge( ASN1T_ObjectKnowledge& asn ) const;
-    virtual bool ToObjectKnowledge( DEC_Knowledge_Object*& ) const;
+    virtual bool ToObjectKnowledge( boost::shared_ptr< DEC_Knowledge_Object >& ) const;
     //@}
 
 private:
@@ -52,7 +52,7 @@ private:
 private:
     //! @name Member data
     //@{
-    DEC_Knowledge_Object* pKnowledgeObject_;
+    boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObject_;
     //@}
 };
 

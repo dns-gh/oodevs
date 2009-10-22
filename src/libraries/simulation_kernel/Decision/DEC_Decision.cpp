@@ -303,13 +303,13 @@ void AgentKnowledgeListFunction( const directia::ScriptRef& refMission, const st
 }
 void ObjectKnowledgeFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    DEC_Knowledge_Object* value = 0;
-    if( element.ToObjectKnowledge( value ) && value )
+    boost::shared_ptr< DEC_Knowledge_Object > value;
+    if( element.ToObjectKnowledge( value ) && value && value->IsValid() )
         refMission.RegisterObject( name, value );
 }
 void ObjectKnowledgeListFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    std::vector< DEC_Knowledge_Object* > value;
+    std::vector< boost::shared_ptr< DEC_Knowledge_Object > > value;
     if( element.ToObjectKnowledgeList( value ) )
         refMission.RegisterObject( name, value );
 }

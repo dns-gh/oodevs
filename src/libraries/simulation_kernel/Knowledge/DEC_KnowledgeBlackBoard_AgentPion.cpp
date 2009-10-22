@@ -408,9 +408,9 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetObjectsColliding( T_KnowledgeObjectDi
     container.clear(); container.reserve( objectsColliding.size() );
     for ( CIT_KnowledgeObjectCollisionVector itObjectColliding = objectsColliding.begin(); itObjectColliding != objectsColliding.end(); ++itObjectColliding )
     {
-        DEC_Knowledge_Object* pKnowledge = pPion_->GetArmy().GetKnowledge().GetKnowledgeObject( **itObjectColliding );
-        assert( pKnowledge );
-        container.push_back( pKnowledge->GetID() );
+        boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = pPion_->GetArmy().GetKnowledge().GetKnowledgeObject( **itObjectColliding );
+        assert( pKnowledge && pKnowledge->IsValid() );
+        container.push_back( pKnowledge );
     }
 }
 
@@ -542,7 +542,7 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_AgentPion::Reso
 // Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject( const ASN1T_ObjectKnowledge& asn ) const
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject( const ASN1T_ObjectKnowledge& asn ) const
 {
     return pPion_->GetKnowledgeGroup().GetArmy().GetKnowledge().GetKnowledgeObjectFromID( asn );
 }
@@ -551,7 +551,7 @@ DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject(
 // Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject( uint nID ) const
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject( uint nID ) const
 {
     return pPion_->GetKnowledgeGroup().GetArmy().GetKnowledge().GetKnowledgeObjectFromID( nID );
 }

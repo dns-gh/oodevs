@@ -19,7 +19,6 @@ class MIL_Army_ABC;
 class MIL_AgentPion;
 class MIL_Object_ABC;
 class DEC_Knowledge_Agent;
-class DEC_Knowledge_Object;
 class DEC_Knowledge_Population;
 
 // =============================================================================
@@ -30,8 +29,6 @@ class DEC_FunctionsTools
 public:
     //! @name Functions
     //@{
-    static DEC_Knowledge_Object*     GetKnowledgeObjectFromDia    ( unsigned int nKnowledgeID, const MIL_Army_ABC& caller );
-
     static MIL_Object_ABC*           GetPopulationKnowledgeObjectFromDia( unsigned int nID );
     //@}
 };

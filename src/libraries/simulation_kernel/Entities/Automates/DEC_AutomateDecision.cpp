@@ -242,31 +242,31 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_ConnaissanceAgent_NiveauPerceptionMax",
         boost::function< int( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions ::GetMaxPerceptionLevelForKnowledgeGroup, _1 ) ) );
     brain.RegisterFunction( "DEC_IsValidKnowledgeObject",
-        boost::function< bool (unsigned int) >( boost::bind( &DEC_KnowledgeObjectFunctions::IsKnowledgeValid< MIL_Automate >, boost::cref( GetAutomate() ), _1 ) ) );
+        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::IsKnowledgeValid< MIL_Automate >, boost::cref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceObjet_EstObstacleDeManoeuvreActif",
-        boost::function< bool( int ) >( boost::bind( &DEC_KnowledgeObjectFunctions::IsReservedObstacleActivated< MIL_Automate >, boost::cref( GetAutomate() ), _1 ) ) );
+        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::IsReservedObstacleActivated< MIL_Automate >, boost::cref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceObjet_EstObstacleDeManoeuvre", 
-        boost::function< bool( int ) >( boost::bind( &DEC_KnowledgeObjectFunctions::IsReservedObstacle< MIL_Automate >, boost::cref( GetAutomate() ), _1 ) ) );
+        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::IsReservedObstacle< MIL_Automate >, boost::cref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceObjet_EstContourne", 
-        boost::function< int( int ) >( boost::bind( &DEC_KnowledgeObjectFunctions::IsBypassed< MIL_Automate >, boost::cref( GetAutomate() ), _1 ) ) );
+        boost::function< int( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::IsBypassed< MIL_Automate >, boost::cref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceObjet_Localisation",
-        boost::function< const TER_Localisation*( int ) >( boost::bind( &DEC_KnowledgeObjectFunctions::GetLocalisation< MIL_Automate >, boost::cref( GetAutomate() ), _1 ) ) );
+        boost::function< const TER_Localisation*( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::GetLocalisation< MIL_Automate >, boost::cref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceObjet_Type", 
-        boost::function< std::string( int ) >( boost::bind( &DEC_KnowledgeObjectFunctions::GetType< MIL_Automate >, boost::cref( GetAutomate() ), _1 ) ) );
+        boost::function< std::string( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::GetType< MIL_Automate >, boost::cref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceObjet_LargeurSiteFranchissement", 
-        boost::function< float( int ) >( boost::bind( &DEC_KnowledgeObjectFunctions::GetSiteFranchissementWidth< MIL_Automate >, boost::cref( GetAutomate() ), _1 ) ) );
+        boost::function< float( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::GetSiteFranchissementWidth< MIL_Automate >, boost::cref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceObjet_EstReconnu",
-        boost::function< bool( int ) >( boost::bind( &DEC_KnowledgeObjectFunctions::IsRecon< MIL_Automate >, boost::cref( GetAutomate() ), _1 ) ) );
+        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::IsRecon< MIL_Automate >, boost::cref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Connaissances_PartageConnaissancesAvec",
         boost::function< void( DEC_Decision_ABC*, float ) >( boost::bind( &DEC_KnowledgeFunctions::ShareKnowledgesWith< MIL_Automate >, boost::cref( GetAutomate() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Connaissances_PartageConnaissancesDansZoneAvec",
         boost::function< void( DEC_Decision_ABC*, const MT_Vector2D*, float ) >( boost::bind( &DEC_KnowledgeFunctions::ShareKnowledgesInZoneWith< MIL_Automate >, boost::cref( GetAutomate() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_Knowledges_ObjectsInCircle",
-        boost::function< std::vector< unsigned int >( const MT_Vector2D*, MT_Float, const std::vector< std::string >& ) >( boost::bind( &DEC_KnowledgeFunctions::GetObjectsInCircle< MIL_Automate >, boost::cref( GetAutomate() ), _1, _2, _3 ) ) );
+        boost::function< std::vector< boost::shared_ptr< DEC_Knowledge_Object > >( const MT_Vector2D*, MT_Float, const std::vector< std::string >& ) >( boost::bind( &DEC_KnowledgeFunctions::GetObjectsInCircle< MIL_Automate >, boost::cref( GetAutomate() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_ObjectKnowledgesInZone",
-        boost::function< std::vector< unsigned int >( const TER_Localisation*, const std::vector< std::string >& ) >( boost::bind( &DEC_KnowledgeFunctions::GetObjectsInZone< MIL_Automate >, boost::cref( GetAutomate() ), _1, _2 ) ) );
+        boost::function< std::vector< boost::shared_ptr< DEC_Knowledge_Object > >( const TER_Localisation*, const std::vector< std::string >& ) >( boost::bind( &DEC_KnowledgeFunctions::GetObjectsInZone< MIL_Automate >, boost::cref( GetAutomate() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Connaissances_ObjetsDansFuseau", 
-        boost::function< std::vector< unsigned int >( const std::string ) >( boost::bind( &DEC_KnowledgeFunctions::GetObjectsInFuseau< MIL_Automate >, boost::cref( GetAutomate() ), _1 ) ) );
+        boost::function< std::vector< boost::shared_ptr< DEC_Knowledge_Object > >( const std::string ) >( boost::bind( &DEC_KnowledgeFunctions::GetObjectsInFuseau< MIL_Automate >, boost::cref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion",
         boost::function< T_ConstKnowledgeAgentVector( const DEC_Decision_ABC* ) >( boost::bind( &DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedByPion< MIL_Automate >, boost::cref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Connaissances_Populations", boost::bind( &DEC_KnowledgeFunctions::GetPopulations< MIL_Automate >, boost::cref( GetAutomate() ) ) );
@@ -308,7 +308,7 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_RC_Id",
         boost::function< void ( int, int, int ) >( boost::bind( &DEC_MiscFunctions::ReportId< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_RC_ObjectKnowledge",
-        boost::function< void ( int, int, DEC_Knowledge_Object* ) >( boost::bind( &DEC_MiscFunctions::ReportObjectKnoweldge< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2, _3 ) ) );
+        boost::function< void ( int, int, boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_MiscFunctions::ReportObjectKnoweldge< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_RC_Pion",
         boost::function< void ( int, int, DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::ReportPion< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_RC_Pion_Automate",
@@ -429,9 +429,9 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_Automate_PionPeutConstruireObjet",
         boost::function< bool( const DEC_Decision_ABC*, const std::string& ) >( boost::bind( &DEC_AutomateFunctions::CanPionConstructObject, boost::cref( GetAutomate() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Automate_PionPeutConstruireContournementObjet",
-        boost::function< bool( const DEC_Decision_ABC*, int ) >( boost::bind( &DEC_AutomateFunctions::CanPionBypassObject, boost::cref( GetAutomate() ), _1, _2 ) ) );
+        boost::function< bool( const DEC_Decision_ABC*, boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_AutomateFunctions::CanPionBypassObject, boost::cref( GetAutomate() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Automate_PionPeutDetruireObjet",
-        boost::function< bool( const DEC_Decision_ABC*, int ) >( boost::bind( &DEC_AutomateFunctions::CanPionDestroyObject, boost::cref( GetAutomate() ), _1, _2 ) ) );
+        boost::function< bool( const DEC_Decision_ABC*, boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_AutomateFunctions::CanPionDestroyObject, boost::cref( GetAutomate() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Automate_PionTempsPourParcourirDistanceEnLigneDroite",
         boost::function< float( const DEC_Decision_ABC*, float ) >( boost::bind( &DEC_AutomateFunctions::PionTimeToMoveDistance, _1, _2 ) ) );
 
@@ -444,7 +444,7 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_CreerObjetSansDelais",
         boost::function< void( const std::string&, const TER_Localisation* ) > (boost::bind( &DEC_ObjectFunctions::MagicCreateObject < MIL_Automate >, boost::ref( GetAutomate() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_DetruireObjetSansDelais",
-    		boost::function< void (int) > (boost::bind( &DEC_ObjectFunctions::MagicDestroyObject< MIL_Automate >, boost::ref( GetAutomate()), _1 ) ) );
+    		boost::function< void (boost::shared_ptr< DEC_Knowledge_Object >) > (boost::bind( &DEC_ObjectFunctions::MagicDestroyObject< MIL_Automate >, boost::ref( GetAutomate()), _1 ) ) );
 
     // Populations
     brain.RegisterFunction( "DEC_KnowledgePopulation_Domination",

@@ -66,6 +66,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_Army_ABC& armyKnowing, MIL
     , previousPerceptionPerAutomateSet_ ()
     , nTimeLastUpdate_                  ( 0 )
     , rRelevance_                       ( 1. )
+    , bValid_                           ( true )
 {
     SendMsgCreation();
 }
@@ -91,6 +92,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object()
     , previousPerceptionPerAutomateSet_()
     , nTimeLastUpdate_                 ( 0 )
     , rRelevance_                      ( 0. )
+    , bValid_                          ( true )
 {
     // NOTHING
 }
@@ -798,4 +800,22 @@ const MIL_Army_ABC& DEC_Knowledge_Object::GetArmyKnowing() const
 {
     assert( pArmyKnowing_ );
     return *pArmyKnowing_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::IsValid
+// Created: LDC 2009-10-22
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_Object::IsValid() const
+{
+    return bValid_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::Invalidate
+// Created: LDC 2009-10-22
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Object::Invalidate()
+{
+    bValid_ = false;
 }

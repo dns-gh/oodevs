@@ -17,6 +17,7 @@
 class DEC_AutomateDecision;
 class DEC_Decision_ABC;
 class DEC_Knowledge_Agent;
+class DEC_Knowledge_Object;
 class MIL_AgentPion;
 class MIL_Mission_ABC;
 
@@ -43,10 +44,10 @@ public:
     static int  GetPosture                  ( const MIL_AgentPion& callerAgent );
         
     static bool CanConstructObject          ( const MIL_AgentPion& callerAgent, const std::string& type );
-    static bool CanBypassObject             ( const MIL_AgentPion& callerAgent, int knowledgeId );
-    static bool CanDestroyObject            ( const MIL_AgentPion& callerAgent, int knowledgeId );
-    static bool CanMineObject               ( const MIL_AgentPion& callerAgent, int knowledgeId );
-    static bool CanActivateObject           ( const MIL_AgentPion& callerAgent, int knowledgeId );
+    static bool CanBypassObject             ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > knowledgeId );
+    static bool CanDestroyObject            ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > knowledgeId );
+    static bool CanMineObject               ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > knowledgeId );
+    static bool CanActivateObject           ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > knowledgeId );
     
     static void EnableDiscreteMode          ( MIL_AgentPion& callerAgent );
     static void DisableDiscreteMode         ( MIL_AgentPion& callerAgent );

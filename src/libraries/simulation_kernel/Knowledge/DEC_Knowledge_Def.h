@@ -41,13 +41,13 @@ typedef std::vector< DEC_Knowledge_ObjectCollision* >     T_KnowledgeObjectColli
 typedef T_KnowledgeObjectCollisionVector::iterator        IT_KnowledgeObjectCollisionVector;
 typedef T_KnowledgeObjectCollisionVector::const_iterator  CIT_KnowledgeObjectCollisionVector;
 
-typedef std::vector< DEC_Knowledge_Object* >     T_KnowledgeObjectVector;
-typedef T_KnowledgeObjectVector::iterator        IT_KnowledgeObjectVector;
-typedef T_KnowledgeObjectVector::const_iterator  CIT_KnowledgeObjectVector;
+typedef std::vector< boost::shared_ptr< DEC_Knowledge_Object > > T_KnowledgeObjectVector;
+typedef T_KnowledgeObjectVector::iterator                        IT_KnowledgeObjectVector;
+typedef T_KnowledgeObjectVector::const_iterator                  CIT_KnowledgeObjectVector;
 
-typedef std::vector< unsigned int >                   T_KnowledgeObjectDiaIDVector;
-typedef T_KnowledgeObjectDiaIDVector::iterator        IT_KnowledgeObjectDiaIDVector;
-typedef T_KnowledgeObjectDiaIDVector::const_iterator  CIT_KnowledgeObjectDiaIDVector;
+typedef std::vector< boost::shared_ptr< DEC_Knowledge_Object > > T_KnowledgeObjectDiaIDVector;
+typedef T_KnowledgeObjectDiaIDVector::iterator                   IT_KnowledgeObjectDiaIDVector;
+typedef T_KnowledgeObjectDiaIDVector::const_iterator             CIT_KnowledgeObjectDiaIDVector;
 
 typedef std::vector< DEC_Knowledge_PopulationCollision* >     T_KnowledgePopulationCollisionVector;
 typedef T_KnowledgePopulationCollisionVector::iterator        IT_KnowledgePopulationCollisionVector;

@@ -61,9 +61,9 @@ public:
     virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent ( const DIA_Variable_ABC&      dia ) const;
     virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent (       uint                   nID ) const;
 
-    virtual DEC_Knowledge_Object*     ResolveKnowledgeObject( const ASN1T_ObjectKnowledge& asn ) const;
-    virtual DEC_Knowledge_Object*     ResolveKnowledgeObject( const DIA_Variable_ABC&      dia ) const;
-    virtual DEC_Knowledge_Object*     ResolveKnowledgeObject(       uint                   nID ) const;
+    virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const ASN1T_ObjectKnowledge& asn ) const;
+    virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const DIA_Variable_ABC&      dia ) const;
+    virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject(       uint                   nID ) const;
 
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const ASN1T_PopulationKnowledge& asn ) const;
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const DIA_Variable_ABC&          dia ) const;
@@ -73,21 +73,20 @@ public:
     //! @name Queries
     //@{
     bool                  IsKnown                 ( const MIL_Object_ABC& oject ) const;
-    DEC_Knowledge_Object* GetKnowledgeObjectFromID( uint nID ) const;
+    boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObjectFromID( uint nID ) const;
 
     void                  GetKnowledgesObject( T_KnowledgeObjectVector& container ) const;
-    DEC_Knowledge_Object* GetKnowledgeObject ( MIL_Object_ABC& object ) const;
-    DEC_Knowledge_Object* GetKnowledgeObject ( const DEC_Knowledge_ObjectCollision& collision ) const;
+    boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObject ( MIL_Object_ABC& object ) const;
+    boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObject ( const DEC_Knowledge_ObjectCollision& collision ) const;
 
     void                  GetObjects                   ( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter ) const;
-    void                  GetObjects                   ( T_KnowledgeObjectVector&      container, const MIL_ObjectFilter& filter ) const;
     void                  GetObjects                   ( T_KnowledgeObjectVector&      container ) const;
     void                  GetObjectsInCircle           ( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const MT_Vector2D& center, MT_Float rRadius );
     void                  GetObjectsInZone             ( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const TER_Localisation& zone );
     void                  GetObjectsInZone             ( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const TER_Polygon& zone );
     void                  GetObjectsAtInteractionHeight( T_KnowledgeObjectVector&      container, MT_Float rHeight, const MIL_ObjectFilter& filter ) const;
-    DEC_Knowledge_Object* GetClosestObject             ( const MT_Vector2D& vPos, const MIL_ObjectFilter& filter  ) const;
-    DEC_Knowledge_Object* GetClosestFriendObject       ( const MT_Vector2D& vPos, const MIL_ObjectFilter& filter  ) const;
+    boost::shared_ptr< DEC_Knowledge_Object > GetClosestObject             ( const MT_Vector2D& vPos, const MIL_ObjectFilter& filter  ) const;
+    boost::shared_ptr< DEC_Knowledge_Object > GetClosestFriendObject       ( const MT_Vector2D& vPos, const MIL_ObjectFilter& filter  ) const;
     //@}
 
 private:

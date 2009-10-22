@@ -51,5 +51,5 @@ const MIL_AgentTypePion* MIL_AgentTypePionCIRCULATION::Create( const std::string
 void MIL_AgentTypePionCIRCULATION::RegisterFunctions( directia::Brain& brain, MIL_AgentPion& agent ) const
 {    
     brain.RegisterFunction( "DEC_Circulation_EquiperItineraireLogistique", 
-        boost::function< int( int ) >( boost::bind( &DEC_KnowledgeObjectFunctions::EquipLogisticRoute, boost::cref( agent ), _1 ) ) );
+        boost::function< int( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::EquipLogisticRoute, boost::cref( agent ), _1 ) ) );
 }

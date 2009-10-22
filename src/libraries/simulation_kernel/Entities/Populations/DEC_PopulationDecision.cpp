@@ -204,7 +204,7 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_RC_Id",
         boost::function< void ( int, int, int ) >( boost::bind( &DEC_MiscFunctions::ReportId< MIL_Population >, boost::ref( GetPopulation() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_RC_ObjectKnowledge",
-        boost::function< void ( int, int, DEC_Knowledge_Object* ) >( boost::bind( &DEC_MiscFunctions::ReportObjectKnoweldge< MIL_Population >, boost::ref( GetPopulation() ), _1, _2, _3 ) ) );
+        boost::function< void ( int, int, boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_MiscFunctions::ReportObjectKnoweldge< MIL_Population >, boost::ref( GetPopulation() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_RC_Pion",
         boost::function< void ( int, int, DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::ReportPion< MIL_Population >, boost::ref( GetPopulation() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_RC_Pion_Automate",

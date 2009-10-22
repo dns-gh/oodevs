@@ -15,6 +15,7 @@
 #include "MIL.h"
 
 class DEC_Decision_ABC;
+class DEC_Knowledge_Object;
 class MIL_Automate;
 class MIL_AgentPion;
 class MIL_Mission_ABC;
@@ -54,8 +55,8 @@ public:
     static boost::shared_ptr< MT_Vector2D > GetPionPosition( const DEC_Decision_ABC* pion ); 
     static bool CanPionRelievePion                         ( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* relieving, const DEC_Decision_ABC* relieved );
     static bool CanPionConstructObject                     ( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, const std::string& type );
-    static bool CanPionBypassObject                        ( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, int knowledgeId );
-    static bool CanPionDestroyObject                       ( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, int knowledgeId );
+    static bool CanPionBypassObject                        ( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, boost::shared_ptr< DEC_Knowledge_Object > knowledgeId );
+    static bool CanPionDestroyObject                       ( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, boost::shared_ptr< DEC_Knowledge_Object > knowledgeId );
     static boost::shared_ptr< MT_Vector2D > ComputePointBeforeLimaForPion( int phaseLine, float distanceBefore, const DEC_Decision_ABC* pion );
     static boost::shared_ptr< MT_Vector2D > ComputePionNearestLocalisationPointInFuseau( const TER_Localisation* location, const DEC_Decision_ABC* pion );
     static float PionTimeToMoveDistance                    ( const DEC_Decision_ABC* pion, float distance );

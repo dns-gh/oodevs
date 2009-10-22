@@ -59,6 +59,7 @@ Object::Object( uint id, const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& arm
     , pView_    ( 0 )
     , manipulator_ ( new MIL_ObjectManipulator( *this ) )
 {
+    MIL_Object_ABC::Register();
     if( pLocation )
         Initialize( *pLocation );
     builder.Build( *this );
@@ -78,7 +79,7 @@ Object::Object()
     , pView_    ( 0 )
     , manipulator_ ( new MIL_ObjectManipulator( *this ) )
 {
-    // NOTHING
+    MIL_Object_ABC::Register();
 }
 
 // -----------------------------------------------------------------------------
@@ -87,7 +88,7 @@ Object::Object()
 // -----------------------------------------------------------------------------
 Object::~Object() 
 {
-    // NOTHING
+    MIL_Object_ABC::Unregister();
 }
 
 // -----------------------------------------------------------------------------
@@ -457,12 +458,12 @@ void Object::Serialize( HLA_UpdateFunctor& functor ) const
 // Name: Object::CreateKnowledge
 // Created: JCR 2008-06-04
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Object& Object::CreateKnowledge( const MIL_Army_ABC& team )
+boost::shared_ptr< DEC_Knowledge_Object > Object::CreateKnowledge( const MIL_Army_ABC& team )
 {
-    DEC_Knowledge_Object& knowledge = *new DEC_Knowledge_Object( team, *this );
+    boost::shared_ptr< DEC_Knowledge_Object > pKnowledge( new DEC_Knowledge_Object( team, *this ) );
     std::for_each( attributes_.begin(), attributes_.end(),
-                   boost::bind( &ObjectAttribute_ABC::Instanciate, _1, boost::ref( knowledge ) ) );
-    return knowledge;
+                   boost::bind( &ObjectAttribute_ABC::Instanciate, _1, boost::ref( *pKnowledge ) ) );
+    return pKnowledge;
 }
 
 // -----------------------------------------------------------------------------

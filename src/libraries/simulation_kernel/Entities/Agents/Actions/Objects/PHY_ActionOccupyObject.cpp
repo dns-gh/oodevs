@@ -19,12 +19,12 @@
 // Name: PHY_ActionOccupyObject constructor
 // Demined: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionOccupyObject::PHY_ActionOccupyObject( MIL_AgentPion& pion, unsigned int nKnowledgeID )
+PHY_ActionOccupyObject::PHY_ActionOccupyObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
     : PHY_Action_ABC( pion )
     , role_         ( pion.GetRole< PHY_RoleAction_Objects >() )
-    , nKnowledgeID_ ( nKnowledgeID )
+    , pKnowledge_   ( pKnowledge )
 {    
-    role_.StartOccupyingObject( nKnowledgeID_ );
+    role_.StartOccupyingObject( pKnowledge_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -33,7 +33,7 @@ PHY_ActionOccupyObject::PHY_ActionOccupyObject( MIL_AgentPion& pion, unsigned in
 // -----------------------------------------------------------------------------
 PHY_ActionOccupyObject::~PHY_ActionOccupyObject()
 {
-    role_.StopOccupyingObject( nKnowledgeID_ );
+    role_.StopOccupyingObject( pKnowledge_ );
 }
 
 // -----------------------------------------------------------------------------

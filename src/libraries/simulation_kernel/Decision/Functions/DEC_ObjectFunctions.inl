@@ -37,10 +37,9 @@ namespace
 // Created: NLD 2005-07-26
 // -----------------------------------------------------------------------------
 template< typename T > 
-bool DEC_ObjectFunctions::ActivateObject( const T& caller, unsigned int nID )
+bool DEC_ObjectFunctions::ActivateObject( const T& caller, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( nID, caller.GetArmy() );
-    if( !pKnowledge )
+    if( !pKnowledge || !pKnowledge->IsValid() )
         return false;
 
     MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
@@ -67,10 +66,9 @@ void DEC_ObjectFunctions::MagicCreateObject( const T& caller, const std::string&
 // Created: NLD 2005-01-19
 // -----------------------------------------------------------------------------
 template< typename T > 
-void DEC_ObjectFunctions::MagicDestroyObject( const T& caller, int knowledgeId )
+void DEC_ObjectFunctions::MagicDestroyObject( const T& caller, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( knowledgeId, caller.GetArmy() );
-    if( pKnowledge )
+    if( pKnowledge && pKnowledge->IsValid() )
     {
         MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
         if( pObject && (*pObject)().CanBeDestroyed() )

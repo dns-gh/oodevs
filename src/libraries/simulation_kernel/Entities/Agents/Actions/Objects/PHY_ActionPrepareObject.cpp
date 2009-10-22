@@ -50,7 +50,7 @@ void PHY_ActionPrepareObject::Execute()
     if( pObject_ && pObject_->IsMarkedForDestruction() )
         pObject_ = 0;
 
-    DEC_Knowledge_Object* pKnowledge = 0;
+    boost::shared_ptr< DEC_Knowledge_Object > pKnowledge;
     int nReturn = role_.Construct( pObject_, pKnowledge );
     Callback( nReturn );
     CallbackKnowledge( pKnowledge ? pKnowledge->GetID() : 0 );

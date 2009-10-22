@@ -75,7 +75,7 @@ void DEC_KnowledgeBlackBoard_Army::serialize( Archive& archive, const uint )
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_Army::SendFullState() const
 {
-    pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( std::mem_fun_ref( & DEC_Knowledge_Object::SendStateToNewClient ) );
+    pKnowledgeObjectContainer_->ApplyOnKnowledgesObjectRef( std::mem_fun_ref( & DEC_Knowledge_Object::SendStateToNewClient ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,7 +84,7 @@ void DEC_KnowledgeBlackBoard_Army::SendFullState() const
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_Army::SendChangedState() const
 {
-    pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( std::mem_fun_ref( & DEC_Knowledge_Object::UpdateOnNetwork ) );
+    pKnowledgeObjectContainer_->ApplyOnKnowledgesObjectRef( std::mem_fun_ref( & DEC_Knowledge_Object::UpdateOnNetwork ) );
 }
 
 
@@ -106,10 +106,10 @@ namespace
         {
         }
 
-        void operator() ( DEC_Knowledge_Object& knowledge )
+        void operator() ( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
-            if( filter_.Test( knowledge.GetType() ) )
-                pContainer_->push_back( knowledge.GetID() );
+            if( filter_.Test( knowledge->GetType() ) )
+                pContainer_->push_back( knowledge );
         }
 
     private:
@@ -122,41 +122,6 @@ namespace
 void DEC_KnowledgeBlackBoard_Army::GetObjects( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter ) const
 {
     sObjectKnowledgesDiaIDInserter functor( container, filter );
-    
-    assert( pKnowledgeObjectContainer_ );
-    pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );           
-}
-
-namespace
-{
-    // -----------------------------------------------------------------------------
-    // Name: DEC_KnowledgeBlackBoard_Army::GetKnowledgesObject
-    // Created: NLD 2004-05-06
-    // -----------------------------------------------------------------------------
-    class sObjectKnowledgesFilteredInserter
-    {
-    public:
-        sObjectKnowledgesFilteredInserter( T_KnowledgeObjectVector& container, const MIL_ObjectFilter& filter )
-            : pContainer_( &container )
-            , filter_    ( filter )
-        {
-        }
-
-        void operator() ( DEC_Knowledge_Object& knowledge )
-        {
-            if( filter_.Test( knowledge.GetType() ) && ( !knowledge.IsReservedObstacle() || knowledge.IsReservedObstacleActivated() ) ) //$$ ??
-                pContainer_->push_back( &knowledge );
-        }
-
-    private:
-              T_KnowledgeObjectVector* pContainer_;
-        const MIL_ObjectFilter& filter_;
-    };
-}
-
-void DEC_KnowledgeBlackBoard_Army::GetObjects( T_KnowledgeObjectVector& container, const MIL_ObjectFilter& filter ) const
-{
-    sObjectKnowledgesFilteredInserter functor( container, filter );
     
     assert( pKnowledgeObjectContainer_ );
     pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );           
@@ -179,10 +144,10 @@ namespace
         {
         }
 
-        void operator() ( DEC_Knowledge_Object& knowledge )
+        void operator() ( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
-            if( filter_.Test( knowledge.GetType() ) && ( !knowledge.IsReservedObstacle() || knowledge.IsReservedObstacleActivated() ) && knowledge.GetLocalisation().ComputeBarycenter().Distance( *pCenter_ ) <= rRadius_ )
-                pContainer_->push_back( knowledge.GetID()  );
+            if( filter_.Test( knowledge->GetType() ) && ( !knowledge->IsReservedObstacle() || knowledge->IsReservedObstacleActivated() ) && knowledge->GetLocalisation().ComputeBarycenter().Distance( *pCenter_ ) <= rRadius_ )
+                pContainer_->push_back( knowledge );
         }
 
     private:
@@ -218,10 +183,10 @@ namespace
         {
         }
 
-        void operator() ( DEC_Knowledge_Object& knowledge )
+        void operator() ( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
-            if( filter_.Test( knowledge.GetType() ) && ( !knowledge.IsReservedObstacle() || knowledge.IsReservedObstacleActivated() ) && pZone_->IsInside( knowledge.GetLocalisation().ComputeBarycenter() ) )
-                pContainer_->push_back( knowledge.GetID()  );
+            if( filter_.Test( knowledge->GetType() ) && ( !knowledge->IsReservedObstacle() || knowledge->IsReservedObstacleActivated() ) && pZone_->IsInside( knowledge->GetLocalisation().ComputeBarycenter() ) )
+                pContainer_->push_back( knowledge );
         }
 
     private:
@@ -263,10 +228,10 @@ namespace
         {
         }
 
-        void operator() ( DEC_Knowledge_Object& knowledge )
+        void operator() ( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
-            if( filter_.Test( knowledge.GetType() ) && rHeight_ <= knowledge.GetMaxInteractionHeight() ) ///$$$ A ENCAPSULER DEC_Knowledge_Object::CanInteractWith()
-                pContainer_->push_back( &knowledge );
+            if( filter_.Test( knowledge->GetType() ) && rHeight_ <= knowledge->GetMaxInteractionHeight() ) ///$$$ A ENCAPSULER DEC_Knowledge_Object::CanInteractWith()
+                pContainer_->push_back( knowledge );
         }
 
     private:
@@ -298,10 +263,10 @@ namespace
         {
         }
 
-        void operator() ( DEC_Knowledge_Object& knowledge )
+        void operator() ( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
-            if( ( !knowledge.IsReservedObstacle() || knowledge.IsReservedObstacleActivated() ) ) //$$ ??
-                pContainer_->push_back( &knowledge );
+            if( ( !knowledge->IsReservedObstacle() || knowledge->IsReservedObstacleActivated() ) ) //$$ ??
+                pContainer_->push_back( knowledge );
         }
 
     private:
@@ -328,27 +293,26 @@ namespace
     {
     public:
         sClosestObjectInserter( const MT_Vector2D& vPos, const MIL_ObjectFilter& filter )
-            : pResult_     ( 0 )
-            , rClosestDist_( std::numeric_limits< MT_Float >::max() )
+            : rClosestDist_( std::numeric_limits< MT_Float >::max() )
             , pPos_        ( vPos )
             , filter_      ( filter )
         {
         }
 
-        void operator() ( DEC_Knowledge_Object& knowledge )
+        void operator() ( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
-            if( !filter_.Test( knowledge.GetType() ) )
+            if( !filter_.Test( knowledge->GetType() ) )
                 return;
 
-            const MT_Float rDist = knowledge.GetLocalisation().ComputeBarycenter().Distance( pPos_ );
+            const MT_Float rDist = knowledge->GetLocalisation().ComputeBarycenter().Distance( pPos_ );
             if( rDist > rClosestDist_ )
                 return;
             rClosestDist_ = rDist;
-            pResult_      = &knowledge;
+            pResult_      = knowledge;
         }
 
     public:
-        DEC_Knowledge_Object* pResult_;
+        boost::shared_ptr< DEC_Knowledge_Object > pResult_;
 
     private:
               MT_Float          rClosestDist_;
@@ -357,7 +321,7 @@ namespace
     };
 }
 
-DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_Army::GetClosestObject( const MT_Vector2D& vPos, const MIL_ObjectFilter& filter  ) const
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Army::GetClosestObject( const MT_Vector2D& vPos, const MIL_ObjectFilter& filter  ) const
 {
     sClosestObjectInserter functor( vPos, filter );
     
@@ -376,31 +340,30 @@ namespace
     {
     public:
         sClosestObjectFriendInserter( const MT_Vector2D& vPos, const MIL_Army& army, const MIL_ObjectFilter& filter )
-            : pResult_     ( 0 )
-            , pArmy_       ( &army )
+            : pArmy_       ( &army )
             , rClosestDist_( std::numeric_limits< MT_Float >::max() )
             , pos_         ( vPos )
             , filter_      ( filter )
         {
         }
 
-        void operator() ( DEC_Knowledge_Object& knowledge )
+        void operator() ( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
-            if( !filter_.Test( knowledge.GetType() ) )
+            if( !filter_.Test( knowledge->GetType() ) )
                 return;
 
-            if( pArmy_->IsAFriend( knowledge.GetArmy() ) != eTristate_True )
+            if( pArmy_->IsAFriend( knowledge->GetArmy() ) != eTristate_True )
                 return;
 
-            const MT_Float rDist = knowledge.GetLocalisation().ComputeBarycenter().Distance( pos_ );
+            const MT_Float rDist = knowledge->GetLocalisation().ComputeBarycenter().Distance( pos_ );
             if( rDist > rClosestDist_ )
                 return;
             rClosestDist_ = rDist;
-            pResult_      = &knowledge;
+            pResult_      = knowledge;
         }
 
     public:
-        DEC_Knowledge_Object* pResult_;
+        boost::shared_ptr< DEC_Knowledge_Object > pResult_;
 
     private:
               MT_Float          rClosestDist_;
@@ -409,7 +372,7 @@ namespace
         const MIL_ObjectFilter& filter_;
     };
 }
-DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_Army::GetClosestFriendObject( const MT_Vector2D& vPos, const MIL_ObjectFilter& filter  ) const
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Army::GetClosestFriendObject( const MT_Vector2D& vPos, const MIL_ObjectFilter& filter  ) const
 {
     assert( pArmy_ );
     sClosestObjectFriendInserter functor( vPos, *pArmy_, filter );
@@ -433,7 +396,7 @@ void DEC_KnowledgeBlackBoard_Army::GetKnowledgesObject( T_KnowledgeObjectVector&
 // Name: DEC_KnowledgeBlackBoard_Army::GetKnowledgeObjectFromID
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_Army::GetKnowledgeObjectFromID( uint nID ) const
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Army::GetKnowledgeObjectFromID( uint nID ) const
 {
     assert( pKnowledgeObjectContainer_ );
     return pKnowledgeObjectContainer_->GetKnowledgeObjectFromID( nID );
@@ -443,7 +406,7 @@ DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_Army::GetKnowledgeObjectFromID( ui
 // Name: DEC_KnowledgeBlackBoard_Army::GetKnowledgeObject
 // Created: NLD 2004-03-26
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_Army::GetKnowledgeObject( MIL_Object_ABC& object ) const
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Army::GetKnowledgeObject( MIL_Object_ABC& object ) const
 {
     assert( pKnowledgeObjectContainer_ );
     return pKnowledgeObjectContainer_->GetKnowledgeObject( object );
@@ -463,7 +426,7 @@ bool DEC_KnowledgeBlackBoard_Army::IsKnown( const MIL_Object_ABC& object ) const
 // Name: DEC_KnowledgeBlackBoard_Army::GetKnowledgeObject
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_Army::GetKnowledgeObject( const DEC_Knowledge_ObjectCollision& collision ) const
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Army::GetKnowledgeObject( const DEC_Knowledge_ObjectCollision& collision ) const
 {
     return GetKnowledgeObject( collision.GetObject() );
 }
@@ -503,27 +466,27 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_Army::ResolveKn
 // Name: DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeObject
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeObject( const ASN1T_ObjectKnowledge& /*asn*/ ) const
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeObject( const ASN1T_ObjectKnowledge& /*asn*/ ) const
 {
-    return 0;
+    return boost::shared_ptr< DEC_Knowledge_Object >();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeObject
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeObject( const DIA_Variable_ABC& /*dia*/ ) const
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeObject( const DIA_Variable_ABC& /*dia*/ ) const
 {
-    return 0;
+    return boost::shared_ptr< DEC_Knowledge_Object >();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeObject
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeObject( uint /*nID*/ ) const
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeObject( uint /*nID*/ ) const
 {
-    return 0;
+    return boost::shared_ptr< DEC_Knowledge_Object >();
 }
 
 // -----------------------------------------------------------------------------

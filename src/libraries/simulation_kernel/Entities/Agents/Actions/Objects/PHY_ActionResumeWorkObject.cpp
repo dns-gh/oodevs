@@ -19,10 +19,10 @@
 // Name: PHY_ActionResumeWorkObject constructor
 // Mined: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionResumeWorkObject::PHY_ActionResumeWorkObject( MIL_AgentPion& pion, unsigned int nKnowledgeID )
+PHY_ActionResumeWorkObject::PHY_ActionResumeWorkObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
     : PHY_DecisionCallbackAction_ABC( pion )
     , role_         ( pion.GetRole< PHY_RoleAction_Objects >() )
-    , nKnowledgeID_ ( nKnowledgeID )
+    , pKnowledge_   ( pKnowledge )
 {
     Callback( role_.GetInitialReturnCode() );
 }
@@ -42,7 +42,7 @@ PHY_ActionResumeWorkObject::~PHY_ActionResumeWorkObject()
 // -----------------------------------------------------------------------------
 void PHY_ActionResumeWorkObject::Execute()
 {   
-    int nReturn = role_.ResumeWork( nKnowledgeID_ );
+    int nReturn = role_.ResumeWork( pKnowledge_ );
     Callback( nReturn );
 }
 

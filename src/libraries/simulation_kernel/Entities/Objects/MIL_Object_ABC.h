@@ -114,7 +114,7 @@ public:
 
     //! @name Knowledge
     //@{
-    virtual DEC_Knowledge_Object& CreateKnowledge( const MIL_Army_ABC& team ) = 0;
+    virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_Army_ABC& team ) = 0;
     //@}
 
     //! @name Manipulator
@@ -165,6 +165,8 @@ protected:
     virtual bool CanCollideWithEntity() const;
     virtual void UpdateLocalisation( const TER_Localisation& newLocalisation ); 
     virtual void Update( uint time ) = 0;
+    void Register();
+    void Unregister();
     //@}
 
 private:

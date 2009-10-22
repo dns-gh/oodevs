@@ -189,11 +189,11 @@ bool DEC_AutomateFunctions::CanPionConstructObject( const MIL_Automate& callerAu
 // Name: DEC_AutomateFunctions::CanPionBypassObject
 // Created: JVT 2004-12-17
 // -----------------------------------------------------------------------------
-bool DEC_AutomateFunctions::CanPionBypassObject( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, int knowledgeId )
+bool DEC_AutomateFunctions::CanPionBypassObject( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     assert( pion && IsPionInAutomate( callerAutomate, pion->GetPion() ) );
-    if( const DEC_Knowledge_Object* knowledge = callerAutomate.GetArmy().GetKnowledge().GetKnowledgeObjectFromID( knowledgeId ) )
-        return pion->GetPion().GetRole< PHY_RoleAction_Objects >().CanBypassWithReinforcement( knowledge->GetType() );
+    if( pKnowledge && pKnowledge->IsValid() )
+        return pion->GetPion().GetRole< PHY_RoleAction_Objects >().CanBypassWithReinforcement( pKnowledge->GetType() );
     return false;
 }
 
@@ -201,11 +201,11 @@ bool DEC_AutomateFunctions::CanPionBypassObject( const MIL_Automate& callerAutom
 // Name: DEC_AutomateFunctions::CanPionDestroyObject
 // Created: JVT 2004-12-17
 // -----------------------------------------------------------------------------
-bool DEC_AutomateFunctions::CanPionDestroyObject( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, int knowledgeId )
+bool DEC_AutomateFunctions::CanPionDestroyObject( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     assert( pion && IsPionInAutomate( callerAutomate, pion->GetPion() ) );
-    if( const DEC_Knowledge_Object* knowledge = callerAutomate.GetArmy().GetKnowledge().GetKnowledgeObjectFromID( knowledgeId ) )
-        return pion->GetPion().GetRole< PHY_RoleAction_Objects >().CanDestroyWithReinforcement( knowledge->GetType() );
+    if( pKnowledge && pKnowledge->IsValid() )
+        return pion->GetPion().GetRole< PHY_RoleAction_Objects >().CanDestroyWithReinforcement( pKnowledge->GetType() );
     return false;
 }
 

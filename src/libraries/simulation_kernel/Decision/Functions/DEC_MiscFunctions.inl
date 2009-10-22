@@ -133,13 +133,13 @@ void DEC_MiscFunctions::ReportId( T& caller, int type, int reportId, int id )
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
 template< typename T >
-void DEC_MiscFunctions::ReportObjectKnoweldge( T& caller, int type, int reportId, DEC_Knowledge_Object* objectKnowledge )
+void DEC_MiscFunctions::ReportObjectKnoweldge( T& caller, int type, int reportId, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     const MIL_Report* pReport = MIL_Report::Find( reportId );
     if( pReport )
     {
         std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > params;
-        boost::shared_ptr<MIL_MissionParameter_ABC> missionParam( MIL_MissionParameterFactory::Create( objectKnowledge ) );
+        boost::shared_ptr<MIL_MissionParameter_ABC> missionParam( MIL_MissionParameterFactory::Create( pKnowledge ) );
         params.push_back( missionParam );
         pReport->SendReportWithTypeAsArgument( caller, MIL_Report::E_Type( type ), reportId, params );
     }

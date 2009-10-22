@@ -16,8 +16,9 @@
 
 class MIL_AgentPion;
 class MIL_Automate;
-class DEC_Gen_Object;
 class DEC_Decision_ABC;
+class DEC_Gen_Object;
+class DEC_Knowledge_Object;
 
 // =============================================================================
 // Created: NLD 2004-03-31
@@ -31,8 +32,8 @@ public:
     //! @name Functions
     //@{
     template< typename T > static void MagicCreateObject ( const T& caller, const std::string& type, const TER_Localisation* pLocalisation );
-    template< typename T > static void MagicDestroyObject( const T& caller, int knowledgeId );
-    template< typename T > static bool ActivateObject    ( const T& caller, unsigned int );
+    template< typename T > static void MagicDestroyObject( const T& caller, boost::shared_ptr< DEC_Knowledge_Object > knowledgeId );
+    template< typename T > static bool ActivateObject    ( const T& caller, boost::shared_ptr< DEC_Knowledge_Object > knowledgeId );
 
 
     // Gen object

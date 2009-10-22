@@ -476,8 +476,8 @@ BOOST_AUTO_TEST_CASE( TestMIL_ObjectKnowledgeParameter_ToASN )
 {
     ASN1T_ObjectKnowledge asnIn = 0;
     MockDEC_KnowledgeResolver_ABC resolver;
-    DEC_Knowledge_Object knowledge; // $$$$ LDC: id == 0... :(
-    resolver.ResolveKnowledgeObject_mocker.expects( once() ).will( returnValue( &knowledge ) );
+    boost::shared_ptr< DEC_Knowledge_Object > knowledge( new DEC_Knowledge_Object() ); // $$$$ LDC: id == 0... :(
+    resolver.ResolveKnowledgeObject_mocker.expects( once() ).will( returnValue( knowledge ) );
 
     MIL_ObjectKnowledgeParameter param( asnIn, resolver );
     ASN1T_ObjectKnowledge asnOut;
@@ -496,8 +496,8 @@ BOOST_AUTO_TEST_CASE( TestMIL_ObjectKnowledgeListParameter_ToASN )
     asnIn.elem = new ASN1T_ObjectKnowledge[1];
     asnIn.elem[0] = 0;
     MockDEC_KnowledgeResolver_ABC resolver;
-    DEC_Knowledge_Object knowledge; // $$$$ LDC: id == 0... :(
-    resolver.ResolveKnowledgeObject_mocker.expects( once() ).will( returnValue( &knowledge ) );
+    boost::shared_ptr< DEC_Knowledge_Object > knowledge( new DEC_Knowledge_Object() ); // $$$$ LDC: id == 0... :(
+    resolver.ResolveKnowledgeObject_mocker.expects( once() ).will( returnValue( knowledge ) );
     MIL_ObjectKnowledgeListParameter param( asnIn, resolver );
     delete[] asnIn.elem;
     ASN1T_ObjectKnowledgeList asnOut;

@@ -58,17 +58,17 @@ public:
     int GetInitialReturnCode() const;
     int GetFinalReturnCode  () const;
 
-    int  Construct           ( MIL_Object_ABC* pObject, DEC_Knowledge_Object*& pKnowledge );
-    int  ResumeWork          ( uint nKnowledgeObjectID );
-    int  Destroy             ( uint nKnowledgeObjectID ); 
-    int  Mine                ( uint nKnowledgeObjectID ); 
-    int  Demine              ( uint nKnowledgeObjectID ); 
-    int  Bypass              ( uint nKnowledgeObjectID );
-    int  Extinguish          ( uint nKnowledgeObjectID );
-    void StartAnimateObject  ( uint nKnowledgeObjectID );
-    void StopAnimateObject   ( uint nKnowledgeObjectID );
-    void StartOccupyingObject( uint nKnowledgeObjectID );
-    void StopOccupyingObject ( uint nKnowledgeObjectID );
+    int  Construct           ( MIL_Object_ABC* pObject, boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge );
+    int  ResumeWork          ( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge );
+    int  Destroy             ( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge ); 
+    int  Mine                ( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge ); 
+    int  Demine              ( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge ); 
+    int  Bypass              ( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge );
+    int  Extinguish          ( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge );
+    void StartAnimateObject  ( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge );
+    void StopAnimateObject   ( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge );
+    void StartOccupyingObject( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge );
+    void StopOccupyingObject ( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge );
 
     void ResumeWorkSuspended();
     void ConstructSuspended ();
@@ -103,7 +103,7 @@ private:
 private:
     //! @name Tools
     //@{
-    MIL_Object_ABC* GetObject( uint nKnowledgeObjectID );
+    MIL_Object_ABC* GetObject( const boost::shared_ptr< DEC_Knowledge_Object >& object );
 
     int Construct( MIL_Object_ABC& object );
     int Mine     ( MIL_Object_ABC& object );

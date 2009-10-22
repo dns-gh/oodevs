@@ -130,13 +130,14 @@ void PHY_ActionMove::AvoidObstacles()
     if( !UpdateObjectsToAvoid() )
         return;
 
-    const DEC_Knowledge_Object* pObjectColliding   = 0;
-          MT_Float              rDistanceCollision = 0.;
+    boost::shared_ptr< DEC_Knowledge_Object > pObjectColliding;
+          
+    MT_Float rDistanceCollision = 0.;
 
-    if( !role_.ComputeFutureObjectCollision( pion_.GetRole< PHY_RoleInterface_Location >().GetPosition(), objectsToAvoid_, rDistanceCollision, &pObjectColliding ) )
+    if( !role_.ComputeFutureObjectCollision( pion_.GetRole< PHY_RoleInterface_Location >().GetPosition(), objectsToAvoid_, rDistanceCollision, pObjectColliding ) )
         return;
 
-    assert( pObjectColliding );
+    assert( pObjectColliding && pObjectColliding->IsValid() );
     const uint nObjectToAvoidDiaID = pObjectColliding->GetID();
     // Le pion à déjà tenté d'éviter l'obstacle
     if( objectAvoidAttempts_.find( nObjectToAvoidDiaID ) != objectAvoidAttempts_.end() )

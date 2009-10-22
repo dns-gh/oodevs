@@ -76,7 +76,7 @@ public:
 
     //! @name Knowledge
     //@{
-    DEC_Knowledge_Object& CreateKnowledge( const MIL_Army_ABC& team );
+    boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_Army_ABC& team );
     //@}
 
     //! @name Manipulators

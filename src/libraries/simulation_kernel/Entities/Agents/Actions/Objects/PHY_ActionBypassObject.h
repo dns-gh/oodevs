@@ -14,8 +14,9 @@
 
 #include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 
-class PHY_RoleAction_Objects;
+class DEC_Knowledge_Object;
 class MIL_AgentPion;
+class PHY_RoleAction_Objects;
 
 // =============================================================================
 // @class  PHY_ActionBypassObject
@@ -28,7 +29,7 @@ public:
     typedef MIL_AgentPion ActorType;
 
 public:
-             PHY_ActionBypassObject( MIL_AgentPion& pion, unsigned int nKnowledgeID );
+             PHY_ActionBypassObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     virtual ~PHY_ActionBypassObject();
 
     //! @name Operations
@@ -39,7 +40,7 @@ public:
 
 private:
     PHY_RoleAction_Objects&  role_;
-    uint                     nKnowledgeID_;    
+    boost::shared_ptr< DEC_Knowledge_Object > pKnowledge_;    
 };
 
 #endif // __PHY_ActionBypassObject_h_

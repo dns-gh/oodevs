@@ -19,10 +19,10 @@
 // Name: PHY_ActionBypassObject constructor
 // Bypassd: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionBypassObject::PHY_ActionBypassObject( MIL_AgentPion& pion, unsigned int nKnowledgeID )
+PHY_ActionBypassObject::PHY_ActionBypassObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
     : PHY_DecisionCallbackAction_ABC( pion )
     , role_         ( pion.GetRole< PHY_RoleAction_Objects >() )
-    , nKnowledgeID_ ( nKnowledgeID )
+    , pKnowledge_   ( pKnowledge )
 {
     Callback( role_.GetInitialReturnCode() );
 }
@@ -42,7 +42,7 @@ PHY_ActionBypassObject::~PHY_ActionBypassObject()
 // -----------------------------------------------------------------------------
 void PHY_ActionBypassObject::Execute()
 {   
-    int nReturn = role_.Bypass( nKnowledgeID_ );
+    int nReturn = role_.Bypass( pKnowledge_ );
     Callback( nReturn );
 }
 

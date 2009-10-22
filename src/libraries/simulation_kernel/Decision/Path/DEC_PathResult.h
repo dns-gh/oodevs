@@ -47,7 +47,7 @@ public:
             CIT_PathPointList GetCurrentKeyOnPath         ( const MT_Vector2D& vPos ) const;
             MT_Vector2D       GetPointOnPathCloseTo       ( const MT_Vector2D& posToTest ) const;
             MT_Vector2D       GetFuturePosition           ( const MT_Vector2D& vStartPos, MT_Float rDist, bool bBoundOnPath ) const;
-            bool              ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, MT_Float& rDistance, const DEC_Knowledge_Object** pObject ) const;
+            bool              ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, MT_Float& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) const;
     virtual void              InsertDecPoints             () = 0;
     //@}
 

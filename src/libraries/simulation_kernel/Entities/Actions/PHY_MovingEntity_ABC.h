@@ -74,7 +74,7 @@ public:
     //! @name Tools
     //@{
     bool IsMovingOn                  ( const DEC_Path_ABC& path ) const;
-    bool ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, MT_Float& rDistance, const DEC_Knowledge_Object** pObject ) const;
+    bool ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, MT_Float& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) const;
     //@}
 
     //! @name Serialization

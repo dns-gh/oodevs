@@ -18,8 +18,8 @@
 // Name: MIL_ObjectKnowledgeParameter constructor
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
-MIL_ObjectKnowledgeParameter::MIL_ObjectKnowledgeParameter( DEC_Knowledge_Object* pObjectKnowledge )
-: pKnowledgeObject_( pObjectKnowledge )
+MIL_ObjectKnowledgeParameter::MIL_ObjectKnowledgeParameter( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+: pKnowledgeObject_( pKnowledge )
 {
     // NOTHING
 }
@@ -66,7 +66,7 @@ bool MIL_ObjectKnowledgeParameter::ToObjectKnowledge( ASN1T_ObjectKnowledge& asn
 // Name: MIL_ObjectKnowledgeParameter::ToObjectKnowledge
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-bool MIL_ObjectKnowledgeParameter::ToObjectKnowledge( DEC_Knowledge_Object*& value ) const
+bool MIL_ObjectKnowledgeParameter::ToObjectKnowledge( boost::shared_ptr< DEC_Knowledge_Object >& value ) const
 {
     value = pKnowledgeObject_;
     return true;

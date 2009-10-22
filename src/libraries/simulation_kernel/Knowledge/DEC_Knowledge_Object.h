@@ -71,6 +71,9 @@ public:
     void Update( const DEC_Knowledge_ObjectCollision& collision  );
 
     bool Clean() const;
+
+    bool IsValid() const;
+    void Invalidate();
     //@}
 
     //! @name Relevance management
@@ -201,6 +204,7 @@ private:
 
     uint     nTimeLastUpdate_;
     MT_Float rRelevance_;
+    bool     bValid_;
 
     T_AgentTypeSet reconByAgentTypes_;
 };

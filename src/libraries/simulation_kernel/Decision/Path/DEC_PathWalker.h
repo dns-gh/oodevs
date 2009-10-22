@@ -69,7 +69,7 @@ public:
 
     //! @name Tools
     //@{
-    bool        ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, MT_Float& rDistance, const DEC_Knowledge_Object** pObject ) const;
+    bool        ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, MT_Float& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) const;
     MT_Vector2D ExtrapolatePosition         ( const MT_Vector2D& position, const MT_Float rSpeed, const MT_Float rTime, const bool bBoundOnPath ) const;
     bool        IsMovingOn                  ( const DEC_Path_ABC& path ) const;
     //@}

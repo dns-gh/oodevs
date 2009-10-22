@@ -16,7 +16,6 @@ class PHY_PerceptionLevel;
 class DEC_Knowledge_Object;
 class DEC_Knowledge_ObjectPerception;
 class DEC_Knowledge_ObjectCollision;
-class DEC_Knowledge_Object;
 
 // =============================================================================
 // Created: NLD 2004-05-04

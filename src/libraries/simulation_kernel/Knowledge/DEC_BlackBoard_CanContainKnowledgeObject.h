@@ -44,7 +44,8 @@ public:
 
     //! @name Operations
     //@{
-    DEC_Knowledge_Object& CreateKnowledgeObject ( const MIL_Army& teamKnowing, MIL_Object_ABC& objectKnown );
+    boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject ( const MIL_Army& teamKnowing, MIL_Object_ABC& objectKnown );
+    
     void                  DestroyKnowledgeObject( DEC_Knowledge_Object& knowledge );
 
     void                  NotifyKnowledgeObjectDissociatedFromRealObject( const MIL_Object_ABC& objectKnown, DEC_Knowledge_Object& knowledge );
@@ -52,13 +53,24 @@ public:
 
     //! @name Queries
     //@{
-    DEC_Knowledge_Object* GetKnowledgeObjectFromID( uint nID ) const;
-    DEC_Knowledge_Object* GetKnowledgeObject      ( const MIL_Object_ABC& objectKnown ) const;
+    boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObjectFromID( uint nID ) const;
+    boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObject      ( const MIL_Object_ABC& objectKnown ) const;
     void                  GetKnowledgesObject     ( T_KnowledgeObjectVector& outContainer ) const;
     bool                  HasKnowledgeObject      ( const MIL_Object_ABC& objectKnown ) const;
 
     template < class UnaryFunction >
     void ApplyOnKnowledgesObject( UnaryFunction& fct ) const
+    {
+        for( CIT_KnowledgeObjectIDMap itKnowledge = knowledgeObjectFromIDMap_.begin(); itKnowledge != knowledgeObjectFromIDMap_.end(); )
+        {
+            boost::shared_ptr< DEC_Knowledge_Object > knowledge = itKnowledge->second;
+            ++itKnowledge;
+            fct( knowledge );
+        }
+    }
+
+    template < class UnaryFunction >
+    void ApplyOnKnowledgesObjectRef( UnaryFunction& fct ) const
     {
         for( CIT_KnowledgeObjectIDMap itKnowledge = knowledgeObjectFromIDMap_.begin(); itKnowledge != knowledgeObjectFromIDMap_.end(); )
         {
@@ -72,17 +84,17 @@ public:
 public:
     //! @name Types
     //@{
-    typedef std::map< const MIL_Object_ABC*, DEC_Knowledge_Object* >    T_KnowledgeObjectMap;
-    typedef T_KnowledgeObjectMap::iterator                              IT_KnowledgeObjectMap;
-    typedef T_KnowledgeObjectMap::const_iterator                        CIT_KnowledgeObjectMap;
+    typedef std::map< const MIL_Object_ABC*, boost::shared_ptr< DEC_Knowledge_Object > > T_KnowledgeObjectMap;
+    typedef T_KnowledgeObjectMap::iterator                                               IT_KnowledgeObjectMap;
+    typedef T_KnowledgeObjectMap::const_iterator                                         CIT_KnowledgeObjectMap;
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::map< uint, DEC_Knowledge_Object* >   T_KnowledgeObjectIDMap;
-    typedef T_KnowledgeObjectIDMap::iterator          IT_KnowledgeObjectIDMap;
-    typedef T_KnowledgeObjectIDMap::const_iterator    CIT_KnowledgeObjectIDMap;
+    typedef std::map< uint, boost::shared_ptr< DEC_Knowledge_Object > > T_KnowledgeObjectIDMap;
+    typedef T_KnowledgeObjectIDMap::iterator                            IT_KnowledgeObjectIDMap;
+    typedef T_KnowledgeObjectIDMap::const_iterator                      CIT_KnowledgeObjectIDMap;
     //@}
 
 private:

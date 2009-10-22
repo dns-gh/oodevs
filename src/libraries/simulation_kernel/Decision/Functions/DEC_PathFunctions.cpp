@@ -90,31 +90,32 @@ boost::shared_ptr< MT_Vector2D > DEC_PathFunctions::ExtrapolatePosition( const M
 // Name: DEC_PathFunctions::GetNextObjectOnPath
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
-std::pair< bool, std::pair< int, float > > DEC_PathFunctions::GetNextObjectOnPath( const MIL_AgentPion& callerAgent, int /*oId*/, float /*oDistance*/, const std::vector< std::string >& params )
+std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > DEC_PathFunctions::GetNextObjectOnPath( const MIL_AgentPion& callerAgent, int /*oId*/, float /*oDistance*/, const std::vector< std::string >& params )
 {
     MIL_ObjectFilter filter( params );
     
-    std::pair< bool, std::pair< int, float > > result;
+    std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > result;
     
-    const DEC_Knowledge_Object* pObjectColliding   = 0;
-          MT_Float              rDistanceCollision = 0.;
+    boost::shared_ptr< DEC_Knowledge_Object > pObjectColliding;
+    
+    MT_Float rDistanceCollision = 0.;
 
     const PHY_RoleInterface_Location& roleLocation = callerAgent.GetRole< PHY_RoleInterface_Location >();
-    const MT_Float               rHeight      = roleLocation.GetHeight  ();
-    const MT_Vector2D&           position     = roleLocation.GetPosition();
+    const MT_Float                    rHeight      = roleLocation.GetHeight  ();
+    const MT_Vector2D&                position     = roleLocation.GetPosition();
 
     T_KnowledgeObjectVector knowledges;
     callerAgent.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledges, rHeight, filter );
 
-    if( knowledges.empty() || !callerAgent.GetRole< moving::PHY_RoleAction_Moving >().ComputeFutureObjectCollision( position, knowledges, rDistanceCollision, &pObjectColliding ) )
+    if( knowledges.empty() || !callerAgent.GetRole< moving::PHY_RoleAction_Moving >().ComputeFutureObjectCollision( position, knowledges, rDistanceCollision, pObjectColliding ) )
     {
         result.first = false;
         return result;
     }
-    assert( pObjectColliding );
+    assert( pObjectColliding && pObjectColliding->IsValid() );
 
     result.first = true;
-    result.second.first = pObjectColliding->GetID();
+    result.second.first = pObjectColliding;
     result.second.second = MIL_Tools::ConvertSimToMeter( rDistanceCollision );
     return result;
 }

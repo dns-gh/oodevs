@@ -170,10 +170,10 @@ MT_Vector2D DEC_PathResult::GetFuturePosition( const MT_Vector2D& vStartPos, MT_
 // Name: DEC_PathResult::ComputeFutureObjectCollision
 // Created: NLD 2003-10-08
 // -----------------------------------------------------------------------------
-bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, MT_Float& rDistance, const DEC_Knowledge_Object** pObject ) const
+bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, MT_Float& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) const
 {
     rDistance = std::numeric_limits< MT_Float >::max();
-    *pObject  = 0;
+    pObject.reset();
 
     E_State nPathState = GetState();
     if( nPathState != eValid && nPathState != ePartial )
@@ -187,12 +187,12 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos,
     CIT_PathPointList itNextPathPoint = itCurrentPathPoint;
     ++itNextPathPoint;
        
-    std::multimap< MT_Float, const DEC_Knowledge_Object* > objectsOnPathMap;
+    std::multimap< MT_Float, boost::shared_ptr< DEC_Knowledge_Object > > objectsOnPathMap;
 
     // Determination de tous les objets connus avec lesquels il va y avoir collision dans le déplacement en cours
     for( CIT_KnowledgeObjectVector itKnowledge = objectsToTest.begin(); itKnowledge != objectsToTest.end(); ++itKnowledge )
     {
-        const DEC_Knowledge_Object& knowledge = **itKnowledge;
+        boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = *itKnowledge;
         
         const MT_Vector2D* pPrevPos = &vStartPos;
 
@@ -203,12 +203,12 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos,
             TER_DistanceLess colCmp( *pPrevPos );
             T_PointSet collisions( colCmp );
 
-            if( knowledge.GetLocalisation().Intersect2D( lineTmp, collisions ) )
+            if( pKnowledge->GetLocalisation().Intersect2D( lineTmp, collisions ) )
             {
                 assert( !collisions.empty() );
                 //$$$ Distance fausse (distance en ligne droite)
                 const MT_Float rColDist = vStartPos.Distance( *collisions.begin() );
-                objectsOnPathMap.insert( std::make_pair( rColDist, &knowledge ) );
+                objectsOnPathMap.insert( std::make_pair( rColDist, pKnowledge ) );
                 break;
             }
             pPrevPos = &(*itPathPoint)->GetPos();
@@ -219,7 +219,7 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos,
         return false;
 
     rDistance = objectsOnPathMap.begin()->first;
-    *pObject  = objectsOnPathMap.begin()->second;
+    pObject   = objectsOnPathMap.begin()->second;
     return true;
 }
 

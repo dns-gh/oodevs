@@ -85,8 +85,8 @@ public:
     virtual bool ToAgentList( std::vector< DEC_Decision_ABC* >& ) const;
     virtual bool ToAgentKnowledge( boost::shared_ptr< DEC_Knowledge_Agent >& ) const;
     virtual bool ToAgentKnowledgeList( std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >& ) const;
-    virtual bool ToObjectKnowledge( DEC_Knowledge_Object*& ) const;
-    virtual bool ToObjectKnowledgeList( std::vector< DEC_Knowledge_Object* >& ) const;
+    virtual bool ToObjectKnowledge( boost::shared_ptr< DEC_Knowledge_Object >& ) const;
+    virtual bool ToObjectKnowledgeList( std::vector< boost::shared_ptr< DEC_Knowledge_Object > >& ) const;
     virtual bool ToPopulationKnowledge( DEC_Knowledge_Population*& ) const;
     virtual bool ToDotationType( const PHY_DotationCategory*& ) const;
     virtual bool ToEquipmentType( const PHY_ComposanteTypePion*& ) const;

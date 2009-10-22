@@ -14,9 +14,9 @@
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------
 template< typename T > 
-bool DEC_KnowledgeObjectFunctions::IsRecon( const T& caller, int knowledgeId )
+bool DEC_KnowledgeObjectFunctions::IsRecon( const T& caller, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( const DEC_Knowledge_Object* pKnowledge = caller.GetArmy().GetKnowledge().GetKnowledgeObjectFromID( knowledgeId ) )
+    if( pKnowledge && pKnowledge->IsValid() )
         return pKnowledge->IsRecon();
     return false;
 }
@@ -27,9 +27,9 @@ bool DEC_KnowledgeObjectFunctions::IsRecon( const T& caller, int knowledgeId )
 // Modified: JVT 2004-12-17
 // -----------------------------------------------------------------------------
 template< typename T >
-float DEC_KnowledgeObjectFunctions::GetSiteFranchissementWidth( const T& caller, int knowledgeId )
+float DEC_KnowledgeObjectFunctions::GetSiteFranchissementWidth( const T& caller, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( const DEC_Knowledge_Object* pKnowledge = caller.GetArmy().GetKnowledge().GetKnowledgeObjectFromID( knowledgeId ) )
+    if( pKnowledge && pKnowledge->IsValid() )
         if( const DEC_Knowledge_ObjectAttributeCrossingSite* attribute = pKnowledge->Retrieve< DEC_Knowledge_ObjectAttributeCrossingSite >() )
             return attribute->GetWidth();
     return 0.f;
@@ -39,9 +39,9 @@ float DEC_KnowledgeObjectFunctions::GetSiteFranchissementWidth( const T& caller,
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
 template< typename T > 
-const TER_Localisation* DEC_KnowledgeObjectFunctions::GetLocalisation( const T& caller, int knowledgeId )
+const TER_Localisation* DEC_KnowledgeObjectFunctions::GetLocalisation( const T& caller, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( const DEC_Knowledge_Object* pKnowledge = caller.GetArmy().GetKnowledge().GetKnowledgeObjectFromID( knowledgeId ) )
+    if( pKnowledge && pKnowledge->IsValid() )
         return &pKnowledge->GetLocalisation();
     return 0;
 }
@@ -51,10 +51,9 @@ const TER_Localisation* DEC_KnowledgeObjectFunctions::GetLocalisation( const T& 
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
 template< typename T > 
-static bool DEC_KnowledgeObjectFunctions::IsKnowledgeValid( const T& caller, unsigned int knowledgeId )
+static bool DEC_KnowledgeObjectFunctions::IsKnowledgeValid( const T& caller, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( knowledgeId, caller.GetArmy() );
-    return( pKnowledge != 0 );
+    return( pKnowledge && pKnowledge->IsValid() );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,9 +62,9 @@ static bool DEC_KnowledgeObjectFunctions::IsKnowledgeValid( const T& caller, uns
 // Modified: JVT 2004-12-17
 // -----------------------------------------------------------------------------
 template< typename T >
-int DEC_KnowledgeObjectFunctions::IsBypassed( const T& caller, int knowledgeId )
+int DEC_KnowledgeObjectFunctions::IsBypassed( const T& caller, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( const DEC_Knowledge_Object* pKnowledge = caller.GetArmy().GetKnowledge().GetKnowledgeObjectFromID( knowledgeId ) )
+    if( pKnowledge && pKnowledge->IsValid() )
         return int( pKnowledge->IsBypassed() ? eTristate_True : eTristate_False );
     return int( eTristate_DontKnow );
 }
@@ -76,11 +75,9 @@ int DEC_KnowledgeObjectFunctions::IsBypassed( const T& caller, int knowledgeId )
 // Modified: JVT 2004-12-17
 // -----------------------------------------------------------------------------
 template< typename T >
-bool DEC_KnowledgeObjectFunctions::IsReservedObstacle( const T& caller, int knowledgeId )
+bool DEC_KnowledgeObjectFunctions::IsReservedObstacle( const T& caller, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( const DEC_Knowledge_Object* pKnowledge = caller.GetArmy().GetKnowledge().GetKnowledgeObjectFromID( knowledgeId ) )
-        return pKnowledge->IsReservedObstacle();
-    return false;
+    return pKnowledge && pKnowledge->IsValid() && pKnowledge->IsReservedObstacle();
 }
 
 // -----------------------------------------------------------------------------
@@ -89,9 +86,9 @@ bool DEC_KnowledgeObjectFunctions::IsReservedObstacle( const T& caller, int know
 // Modified: JVT 2004-12-17
 // -----------------------------------------------------------------------------
 template< typename T >
-bool DEC_KnowledgeObjectFunctions::IsReservedObstacleActivated( const T& caller, int knowledgeId )
+bool DEC_KnowledgeObjectFunctions::IsReservedObstacleActivated( const T& caller, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( const DEC_Knowledge_Object* pKnowledge = caller.GetArmy().GetKnowledge().GetKnowledgeObjectFromID( knowledgeId ) )
+    if( pKnowledge && pKnowledge->IsValid() )
         return pKnowledge->IsReservedObstacleActivated();
     return false;
 }
@@ -102,9 +99,9 @@ bool DEC_KnowledgeObjectFunctions::IsReservedObstacleActivated( const T& caller,
 // Modified: JVT 2004-12-17
 // -----------------------------------------------------------------------------
 template< typename T >
-std::string DEC_KnowledgeObjectFunctions::GetType( const T& caller, int knowledgeId )
+std::string DEC_KnowledgeObjectFunctions::GetType( const T& caller, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( const DEC_Knowledge_Object* pKnowledge = caller.GetArmy().GetKnowledge().GetKnowledgeObjectFromID( knowledgeId ) )
+    if( pKnowledge && pKnowledge->IsValid() )
         return pKnowledge->GetType().GetName();
     return "";
 }

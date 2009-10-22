@@ -82,7 +82,7 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_Automate::Resol
 // Name: DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeObject
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeObject( const ASN1T_ObjectKnowledge& asn ) const
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeObject( const ASN1T_ObjectKnowledge& asn ) const
 {
     return pAutomate_->GetKnowledgeGroup().GetArmy().GetKnowledge().GetKnowledgeObjectFromID( asn );
 }
@@ -91,7 +91,7 @@ DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeObject( 
 // Name: DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeObject
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeObject( uint nID ) const
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeObject( uint nID ) const
 {
     return pAutomate_->GetKnowledgeGroup().GetArmy().GetKnowledge().GetKnowledgeObjectFromID( nID );
 }

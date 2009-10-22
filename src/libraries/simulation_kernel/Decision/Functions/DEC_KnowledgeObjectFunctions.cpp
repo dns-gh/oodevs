@@ -32,18 +32,18 @@
 // Name: DEC_KnowledgeObjectFunctions::Recon
 // Created: NLD 2004-10-29
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeObjectFunctions::Recon( const MIL_AgentPion& callerAgent, int knowledgeId )
+void DEC_KnowledgeObjectFunctions::Recon( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( DEC_Knowledge_Object* pKnowledge = callerAgent.GetArmy().GetKnowledge().GetKnowledgeObjectFromID( knowledgeId ) )
+    if( pKnowledge && pKnowledge->IsValid() )
         pKnowledge->Recon( callerAgent );
 }
 
 namespace 
 {
     template< typename Capacity >
-    Capacity* IsValidObjectCapacity( DEC_Knowledge_Object* pKnowledge )
+    Capacity* IsValidObjectCapacity( const boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
     {
-        if ( !pKnowledge )
+        if ( !pKnowledge || !pKnowledge->IsValid() )
             return 0;
 
         MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
@@ -57,9 +57,8 @@ namespace
 // Name: DEC_KnowledgeObjectFunctions::QueueForDecontamination
 // Created: NLD 2004-11-02
 // -----------------------------------------------------------------------------
-int DEC_KnowledgeObjectFunctions::QueueForDecontamination( MIL_AgentPion& callerAgent, int knowledgeId )
+int DEC_KnowledgeObjectFunctions::QueueForDecontamination( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    DEC_Knowledge_Object* pKnowledge = callerAgent.GetArmy().GetKnowledge().GetKnowledgeObjectFromID( knowledgeId );
     if( DecontaminationCapacity* pCapacity = IsValidObjectCapacity< DecontaminationCapacity >( pKnowledge ) )
     {
         pCapacity->QueueForDecontamination( callerAgent );
@@ -72,9 +71,9 @@ int DEC_KnowledgeObjectFunctions::QueueForDecontamination( MIL_AgentPion& caller
 // Name: DEC_KnowledgeObjectFunctions::CanBeAnimated
 // Created: NLD 2004-11-03
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeObjectFunctions::CanBeAnimated( const MIL_AgentPion& callerAgent, int knowledgeId )
+bool DEC_KnowledgeObjectFunctions::CanBeAnimated( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( const DEC_Knowledge_Object* pKnowledge = callerAgent.GetArmy().GetKnowledge().GetKnowledgeObjectFromID( knowledgeId ) )
+    if( pKnowledge && pKnowledge->IsValid() )
         if( const MIL_Object_ABC* object = pKnowledge->GetObjectKnown() )
             return (*object)().CanBeAnimatedBy( callerAgent );
     return false;
@@ -104,9 +103,9 @@ void DEC_KnowledgeObjectFunctions::DecontaminateZone( const MIL_AgentPion& calle
 // Name: DEC_KnowledgeObjectFunctions::DamageObject
 // Created: SBO 2006-01-23
 // -----------------------------------------------------------------------------
-int DEC_KnowledgeObjectFunctions::DamageObject( const MIL_AgentPion& callerAgent, int knowledgeId, float factor )
+int DEC_KnowledgeObjectFunctions::DamageObject( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, float factor )
 {
-    if( const DEC_Knowledge_Object* pKnowledge = callerAgent.GetArmy().GetKnowledge().GetKnowledgeObjectFromID( knowledgeId ) )
+    if( pKnowledge && pKnowledge->IsValid() )
         if( MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown() )
             if( (*pObject)().CanBePerceived() )
             {
@@ -120,9 +119,9 @@ int DEC_KnowledgeObjectFunctions::DamageObject( const MIL_AgentPion& callerAgent
 // Name: DEC_KnowledgeObjectFunctions::CanBeOccupied
 // Created: NLD 2004-11-26
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeObjectFunctions::CanBeOccupied( const MIL_AgentPion& callerAgent, int knowledgeId )
+bool DEC_KnowledgeObjectFunctions::CanBeOccupied( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( const DEC_Knowledge_Object* pKnowledge = callerAgent.GetArmy().GetKnowledge().GetKnowledgeObjectFromID( knowledgeId ) )
+    if( pKnowledge && pKnowledge->IsValid() )
         if( const OccupantAttribute* pAttribute = pKnowledge->GetObjectKnown()->RetrieveAttribute< OccupantAttribute >() )
         {
             const MIL_Agent_ABC* occupant = pAttribute->GetOccupant();
@@ -135,9 +134,9 @@ bool DEC_KnowledgeObjectFunctions::CanBeOccupied( const MIL_AgentPion& callerAge
 // Name: DEC_KnowledgeObjectFunctions::CanBeBypassed
 // Created: JCR 2008-06-03
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeObjectFunctions::CanBeBypassed( const MIL_AgentPion& callerAgent, int knowledgeId )
+bool DEC_KnowledgeObjectFunctions::CanBeBypassed( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( const DEC_Knowledge_Object* pKnowledge = callerAgent.GetArmy().GetKnowledge().GetKnowledgeObjectFromID( knowledgeId ) )
+    if( pKnowledge && pKnowledge->IsValid() )
         if( const MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown() )
             return (*pObject)().CanBeBypassed();
     return false;
@@ -147,9 +146,9 @@ bool DEC_KnowledgeObjectFunctions::CanBeBypassed( const MIL_AgentPion& callerAge
 // Name: DEC_KnowledgeObjectFunctions::EquipLogisticRoute
 // Created: NLD 2005-02-18
 // -----------------------------------------------------------------------------
-int DEC_KnowledgeObjectFunctions::EquipLogisticRoute( const MIL_AgentPion& callerAgent, int knowledgeId )
+int DEC_KnowledgeObjectFunctions::EquipLogisticRoute( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( const DEC_Knowledge_Object* pKnowledge = callerAgent.GetArmy().GetKnowledge().GetKnowledgeObjectFromID( knowledgeId ) )
+    if( pKnowledge && pKnowledge->IsValid() )
         if( MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown() )
             if( SupplyRouteAttribute* pAttribute = pObject->RetrieveAttribute< SupplyRouteAttribute >() )
             {
@@ -163,9 +162,9 @@ int DEC_KnowledgeObjectFunctions::EquipLogisticRoute( const MIL_AgentPion& calle
 // Name: DEC_KnowledgeObjectFunctions::SetExitingPopulationDensity
 // Created: NLD 2006-03-08
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeObjectFunctions::SetExitingPopulationDensity( const MIL_AgentPion& callerAgent, int knowledgeId, float density )
+void DEC_KnowledgeObjectFunctions::SetExitingPopulationDensity( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, float density )
 {
-    if( const DEC_Knowledge_Object* pKnowledge = callerAgent.GetArmy().GetKnowledge().GetKnowledgeObjectFromID( knowledgeId ) )
+    if( pKnowledge && pKnowledge->IsValid() )
         if( MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown() )
             if( PopulationAttribute* pAttribute = pObject->RetrieveAttribute< PopulationAttribute >() )
                 pAttribute->SetDensity( density );
@@ -175,9 +174,9 @@ void DEC_KnowledgeObjectFunctions::SetExitingPopulationDensity( const MIL_AgentP
 // Name: DEC_KnowledgeObjectFunctions::ResetExitingPopulationDensity
 // Created: NLD 2006-03-08
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeObjectFunctions::ResetExitingPopulationDensity( const MIL_AgentPion& callerAgent, int knowledgeId )
+void DEC_KnowledgeObjectFunctions::ResetExitingPopulationDensity( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( const DEC_Knowledge_Object* pKnowledge = callerAgent.GetArmy().GetKnowledge().GetKnowledgeObjectFromID( knowledgeId ) )
+    if( pKnowledge && pKnowledge->IsValid() )
         if( MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown() )
             if( PopulationAttribute* pAttribute = pObject->RetrieveAttribute< PopulationAttribute >() )
                 pAttribute->Reset();

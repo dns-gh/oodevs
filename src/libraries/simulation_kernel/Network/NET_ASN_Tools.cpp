@@ -361,7 +361,7 @@ boost::shared_ptr< DEC_Knowledge_Agent > NET_ASN_Tools::ReadAgentKnowledge( cons
 // Created: AGN 03-04-24
 //-----------------------------------------------------------------------------
 // static
-DEC_Knowledge_Object* NET_ASN_Tools::ReadObjectKnowledge( const ASN1T_ObjectKnowledge& asnObject, const DEC_KnowledgeResolver_ABC& resolver )
+boost::shared_ptr< DEC_Knowledge_Object > NET_ASN_Tools::ReadObjectKnowledge( const ASN1T_ObjectKnowledge& asnObject, const DEC_KnowledgeResolver_ABC& resolver )
 {
     return resolver.ResolveKnowledgeObject( asnObject );
 }
@@ -375,10 +375,10 @@ bool NET_ASN_Tools::ReadObjectKnowledgeList( const ASN1T_ObjectKnowledgeList& as
     knowledges.clear(); knowledges.reserve( asnListObject.n );
     for( uint n = 0; n < asnListObject.n; ++n )
     {        
-        DEC_Knowledge_Object* pKnowledge = ReadObjectKnowledge( asnListObject.elem[n], resolver );
+        boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = ReadObjectKnowledge( asnListObject.elem[n], resolver );
         if( !pKnowledge )
             return false;
-        knowledges.push_back( pKnowledge->GetID() );
+        knowledges.push_back( pKnowledge );
     }
     return true;        
 }
@@ -774,8 +774,8 @@ void NET_ASN_Tools::WriteObjectKnowledgeList( const T_KnowledgeObjectDiaIDVector
     uint i = 0;
     for( CIT_KnowledgeObjectDiaIDVector itKnowledge = knowledges.begin(); itKnowledge != knowledges.end(); ++itKnowledge )    
     {
-        const DEC_Knowledge_Object* pKnowledge = resolver.ResolveKnowledgeObject( *itKnowledge );
-        if( pKnowledge )
+        boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = *itKnowledge;
+        if( pKnowledge && pKnowledge->IsValid() )
             asnListKnowledge.elem[i] = pKnowledge->GetID();
         else
             asnListKnowledge.elem[i] = 0;       

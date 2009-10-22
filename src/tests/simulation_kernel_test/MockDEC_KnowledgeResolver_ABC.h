@@ -41,13 +41,13 @@ public:
     virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent (       uint                   nID ) const
     { throw; }
 
-    virtual DEC_Knowledge_Object*     ResolveKnowledgeObject( const ASN1T_ObjectKnowledge& asn ) const
+    virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const ASN1T_ObjectKnowledge& asn ) const
     { 
         return ResolveKnowledgeObject_mocker.forward( &asn );
     }
-    virtual DEC_Knowledge_Object*     ResolveKnowledgeObject( const DIA_Variable_ABC&      dia ) const
+    virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const DIA_Variable_ABC&      dia ) const
     { throw; }
-    virtual DEC_Knowledge_Object*     ResolveKnowledgeObject(       uint                   nID ) const
+    virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject(       uint                   nID ) const
     { throw; }
 
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const ASN1T_PopulationKnowledge& asn ) const
@@ -60,7 +60,7 @@ public:
     { throw; }
 
     mockpp::ChainableMockMethod< boost::shared_ptr< DEC_Knowledge_Agent >, const ASN1T_UnitKnowledge* > ResolveKnowledgeAgent_mocker;
-    mockpp::ChainableMockMethod< DEC_Knowledge_Object*, const ASN1T_ObjectKnowledge* > ResolveKnowledgeObject_mocker;
+    mockpp::ChainableMockMethod< boost::shared_ptr< DEC_Knowledge_Object >, const ASN1T_ObjectKnowledge* > ResolveKnowledgeObject_mocker;
     mockpp::ChainableMockMethod< DEC_Knowledge_Population*, const ASN1T_PopulationKnowledge* > ResolveKnowledgePopulation_mocker;
 };
 

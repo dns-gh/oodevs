@@ -33,8 +33,8 @@ MIL_Object_ABC::MIL_Object_ABC( MIL_Army_ABC& army, const MIL_ObjectType_ABC& ty
     , pType_                ( &type )
     , bMarkedForDestruction_( false )
     , bReadyForDeletion_    ( false )
-{    
-    pArmy_->RegisterObject( *this );
+{  
+    // NOTHING  
 }
 
 // -----------------------------------------------------------------------------
@@ -58,6 +58,23 @@ MIL_Object_ABC::~MIL_Object_ABC()
 {
     if ( !bMarkedForDestruction_ ) // Should already be done
         MarkForDestruction();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Object_ABC::Register
+// Created: LDC 2009-10-22
+// -----------------------------------------------------------------------------
+void MIL_Object_ABC::Register()
+{
+    pArmy_->RegisterObject( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Object_ABC::Unregister
+// Created: LDC 2009-10-22
+// -----------------------------------------------------------------------------
+void MIL_Object_ABC::Unregister()
+{
     pArmy_->UnregisterObject( *this );
 }
 

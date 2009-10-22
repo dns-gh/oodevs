@@ -24,15 +24,6 @@
 // TOOLS
 // =============================================================================
 
-// -----------------------------------------------------------------------------
-// Name: DEC_FunctionsTools::GetKnowledgeObjectFromDia
-// Created: NLD 2004-03-31
-// -----------------------------------------------------------------------------
-DEC_Knowledge_Object* DEC_FunctionsTools::GetKnowledgeObjectFromDia( unsigned int nKnowledgeID, const MIL_Army_ABC& caller )
-{
-    return caller.GetKnowledge().GetKnowledgeObjectFromID( nKnowledgeID ); 
-}
-
 // =============================================================================
 // POPULATION
 // =============================================================================

@@ -30,29 +30,29 @@ class DEC_KnowledgeObjectFunctions
 public:
     //! @name Functions
     //@{
-    template< typename T > static float GetSiteFranchissementWidth      ( const T& caller, int knowledgeId );
-    template< typename T > static std::string GetType                   ( const T& caller, int knowledegeId );
-    template< typename T > static const TER_Localisation* GetLocalisation( const T& caller, int knowledegId );
-    template< typename T > static int  IsBypassed                       ( const T& caller, int knowledgeId );
-    template< typename T > static bool IsReservedObstacleActivated      ( const T& caller, int knowledgeId );
-    template< typename T > static bool IsReservedObstacle               ( const T& caller, int knowledegeId );
-    template< typename T > static bool IsKnowledgeValid                 ( const T& caller, unsigned int knowledgeId );
+    template< typename T > static float GetSiteFranchissementWidth      ( const T& caller, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    template< typename T > static std::string GetType                   ( const T& caller, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    template< typename T > static const TER_Localisation* GetLocalisation( const T& caller, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    template< typename T > static int  IsBypassed                       ( const T& caller, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    template< typename T > static bool IsReservedObstacleActivated      ( const T& caller, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    template< typename T > static bool IsReservedObstacle               ( const T& caller, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    template< typename T > static bool IsKnowledgeValid                 ( const T& caller, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
 
-                           static int  QueueForDecontamination          ( MIL_AgentPion& callerAgent, int knowledgeId );
-                           static bool CanBeAnimated                    ( const MIL_AgentPion& callerAgent, int knowledgeId );
-                           static bool CanBeOccupied                    ( const MIL_AgentPion& callerAgent, int knowledgeId );
+                           static int  QueueForDecontamination          ( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+                           static bool CanBeAnimated                    ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+                           static bool CanBeOccupied                    ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
                            static void DecontaminateZone                ( const MIL_AgentPion& callerAgent, const TER_Localisation* location );
-                           static int  DamageObject                     ( const MIL_AgentPion& callerAgent, int knowledgeId, float factor );
+                           static int  DamageObject                     ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, float factor );
                            
-                           static bool CanBeBypassed                    ( const MIL_AgentPion& callerAgent, int knowledgeId );
+                           static bool CanBeBypassed                    ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
 
-                           static void SetExitingPopulationDensity      ( const MIL_AgentPion& callerAgent, int knowledgeId, float density );
-                           static void ResetExitingPopulationDensity    ( const MIL_AgentPion& callerAgent, int knowledgeId );
+                           static void SetExitingPopulationDensity      ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, float density );
+                           static void ResetExitingPopulationDensity    ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
 
-                           static void Recon                            ( const MIL_AgentPion& callerAgent, int knowledgeId );
-    template< typename T > static bool IsRecon                          ( const T& caller, int knowledgeId );
+                           static void Recon                            ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    template< typename T > static bool IsRecon                          ( const T& caller, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
 
-                           static int  EquipLogisticRoute               ( const MIL_AgentPion& callerAgent, int knowledgeId );
+                           static int  EquipLogisticRoute               ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     //@}
 };
 

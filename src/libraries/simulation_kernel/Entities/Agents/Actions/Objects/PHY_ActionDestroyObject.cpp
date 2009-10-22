@@ -20,10 +20,10 @@
 // Name: PHY_ActionDestroyObject constructor
 // Destroyd: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionDestroyObject::PHY_ActionDestroyObject( MIL_AgentPion& pion, unsigned int nKnowledgeID )
+PHY_ActionDestroyObject::PHY_ActionDestroyObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
     : PHY_DecisionCallbackAction_ABC( pion )
     , role_         ( pion.GetRole< PHY_RoleAction_Objects >() )
-    , nKnowledgeID_ ( nKnowledgeID )
+    , pKnowledge_   ( pKnowledge )
 {    
     Callback( role_.GetInitialReturnCode() );
 }
@@ -43,7 +43,7 @@ PHY_ActionDestroyObject::~PHY_ActionDestroyObject()
 // -----------------------------------------------------------------------------
 void PHY_ActionDestroyObject::Execute()
 {   
-    int nReturn = role_.Destroy( nKnowledgeID_ );
+    int nReturn = role_.Destroy( pKnowledge_ );
     Callback( nReturn );
 }
 

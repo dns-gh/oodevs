@@ -63,27 +63,27 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeResolver_Empty::ResolveKno
 // Name: DEC_KnowledgeResolver_Empty::ResolveKnowledgeObject
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Object* DEC_KnowledgeResolver_Empty::ResolveKnowledgeObject( const ASN1T_ObjectKnowledge& /*asn*/ ) const
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeResolver_Empty::ResolveKnowledgeObject( const ASN1T_ObjectKnowledge& /*asn*/ ) const
 {
-    return 0;
+    return boost::shared_ptr< DEC_Knowledge_Object >();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeResolver_Empty::ResolveKnowledgeObject
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Object* DEC_KnowledgeResolver_Empty::ResolveKnowledgeObject( const DIA_Variable_ABC& /*dia*/ ) const
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeResolver_Empty::ResolveKnowledgeObject( const DIA_Variable_ABC& /*dia*/ ) const
 {
-    return 0;
+    return boost::shared_ptr< DEC_Knowledge_Object >();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeResolver_Empty::ResolveKnowledgeObject
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Object* DEC_KnowledgeResolver_Empty::ResolveKnowledgeObject( uint /*nID*/ ) const
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeResolver_Empty::ResolveKnowledgeObject( uint /*nID*/ ) const
 {
-    return 0;
+    return boost::shared_ptr< DEC_Knowledge_Object >();
 }
 
 // -----------------------------------------------------------------------------

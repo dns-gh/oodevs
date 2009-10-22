@@ -138,9 +138,9 @@ public:
     { throw; }
     virtual bool ToAgentKnowledgeList( std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >& ) const
     { throw; }
-    virtual bool ToObjectKnowledge( DEC_Knowledge_Object*& ) const
+    virtual bool ToObjectKnowledge( boost::shared_ptr< DEC_Knowledge_Object >& ) const
     { throw; }
-    virtual bool ToObjectKnowledgeList( std::vector< DEC_Knowledge_Object* >& ) const
+    virtual bool ToObjectKnowledgeList( std::vector< boost::shared_ptr< DEC_Knowledge_Object > >& ) const
     { throw; }
     virtual bool ToPopulationKnowledge( DEC_Knowledge_Population*& ) const
     { throw; }

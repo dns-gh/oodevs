@@ -175,22 +175,20 @@ MT_Float DEC_KnowledgeFunctions::GetRapForLocal( const MIL_AgentPion& callerAgen
 // Name: DEC_KnowledgeFunctions::GetClosestObject
 // Created: NLD 2005-03-10
 // -----------------------------------------------------------------------------
-int DEC_KnowledgeFunctions::GetClosestObject( const MIL_AgentPion& callerAgent, const std::vector< std::string >& types )
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeFunctions::GetClosestObject( const MIL_AgentPion& callerAgent, const std::vector< std::string >& types )
 {
     const MIL_ObjectFilter filter( types );
-    const DEC_Knowledge_Object* pKnowledge = callerAgent.GetArmy().GetKnowledge().GetClosestObject( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), filter );
-    return pKnowledge ? pKnowledge->GetID() : 0;
+    return callerAgent.GetArmy().GetKnowledge().GetClosestObject( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), filter );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetClosestFriendObject
 // Created: NLD 2005-03-10
 // -----------------------------------------------------------------------------
-int DEC_KnowledgeFunctions::GetClosestFriendObject( const MIL_AgentPion& callerAgent, const std::vector< std::string >& types )
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeFunctions::GetClosestFriendObject( const MIL_AgentPion& callerAgent, const std::vector< std::string >& types )
 {
     const MIL_ObjectFilter filter( types );
-    const DEC_Knowledge_Object* pKnowledge = callerAgent.GetArmy().GetKnowledge().GetClosestFriendObject( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), filter );
-    return pKnowledge ? pKnowledge->GetID() : 0;
+    return callerAgent.GetArmy().GetKnowledge().GetClosestFriendObject( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), filter );
 }
 
 // -----------------------------------------------------------------------------

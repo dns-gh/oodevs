@@ -105,7 +105,7 @@ bool PHY_MovingEntity_ABC::IsMovingOn( const DEC_Path_ABC& path ) const
 // Name: PHY_MovingEntity_ABC::ComputeFutureObjectCollision
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-bool PHY_MovingEntity_ABC::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, MT_Float& rDistance, const DEC_Knowledge_Object** pObject ) const
+bool PHY_MovingEntity_ABC::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, MT_Float& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) const
 {
     return pathWalker_.ComputeFutureObjectCollision( vStartPos, objectsToTest, rDistance, pObject );
 }

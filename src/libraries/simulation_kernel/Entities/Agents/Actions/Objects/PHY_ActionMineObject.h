@@ -18,6 +18,7 @@ class PHY_RoleAction_Objects;
 class MIL_Object_ABC;
 class MIL_AgentPion;
 class DEC_Decision_ABC;
+class DEC_Knowledge_Object;
 
 // =============================================================================
 // @class  PHY_ActionMineObject
@@ -30,7 +31,7 @@ public:
     typedef MIL_AgentPion ActorType;
 
 public:
-             PHY_ActionMineObject( MIL_AgentPion& pion, unsigned int nKnowledgeID );
+             PHY_ActionMineObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     virtual ~PHY_ActionMineObject();
 
     //! @name Operations
@@ -41,7 +42,7 @@ public:
 
 private:
     PHY_RoleAction_Objects& role_;
-    unsigned int            nKnowledgeID_;    
+    boost::shared_ptr< DEC_Knowledge_Object > pKnowledge_;    
 };
 
 #endif // __PHY_ActionMineObject_h_

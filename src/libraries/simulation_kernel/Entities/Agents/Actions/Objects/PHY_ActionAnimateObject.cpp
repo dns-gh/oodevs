@@ -19,12 +19,12 @@
 // Name: PHY_ActionAnimateObject constructor
 // Demined: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionAnimateObject::PHY_ActionAnimateObject( MIL_AgentPion& pion, unsigned int nKnowledgeID )
+PHY_ActionAnimateObject::PHY_ActionAnimateObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
     : PHY_Action_ABC    ( pion )
     , role_             ( pion.GetRole< PHY_RoleAction_Objects >() )
-    , nKnowledgeID_     ( nKnowledgeID )
+    , pKnowledge_       ( pKnowledge )
 {    
-    role_.StartAnimateObject( nKnowledgeID_ );
+    role_.StartAnimateObject( pKnowledge_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -33,7 +33,7 @@ PHY_ActionAnimateObject::PHY_ActionAnimateObject( MIL_AgentPion& pion, unsigned 
 // -----------------------------------------------------------------------------
 PHY_ActionAnimateObject::~PHY_ActionAnimateObject()
 {
-    role_.StopAnimateObject( nKnowledgeID_ );
+    role_.StopAnimateObject( pKnowledge_ );
 }
 
 // -----------------------------------------------------------------------------

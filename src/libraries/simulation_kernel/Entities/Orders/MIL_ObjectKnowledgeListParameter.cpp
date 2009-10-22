@@ -23,8 +23,8 @@ MIL_ObjectKnowledgeListParameter::MIL_ObjectKnowledgeListParameter( const ASN1T_
     knowledgeObjectList_.reserve( asn.n );
     for( unsigned int i = 0; i < asn.n; ++i )
     {
-        DEC_Knowledge_Object* pKnowledgeObject = resolver.ResolveKnowledgeObject( asn.elem[i] );
-        if( !pKnowledgeObject )
+        boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObject = resolver.ResolveKnowledgeObject( asn.elem[i] );
+        if( !pKnowledgeObject || !pKnowledgeObject->IsValid() )
             throw std::runtime_error( "Object Knowledge does not exist" );
         knowledgeObjectList_.push_back( pKnowledgeObject );
     }
@@ -34,7 +34,7 @@ MIL_ObjectKnowledgeListParameter::MIL_ObjectKnowledgeListParameter( const ASN1T_
 // Name: MIL_ObjectKnowledgeListParameter constructor
 // Created: LDC 2009-09-25
 // -----------------------------------------------------------------------------
-MIL_ObjectKnowledgeListParameter::MIL_ObjectKnowledgeListParameter( const std::vector< DEC_Knowledge_Object* >& knowledgeObjectList )
+MIL_ObjectKnowledgeListParameter::MIL_ObjectKnowledgeListParameter( const std::vector< boost::shared_ptr< DEC_Knowledge_Object > >& knowledgeObjectList )
 : knowledgeObjectList_( knowledgeObjectList )
 {
     // NOTHING
@@ -81,7 +81,7 @@ bool MIL_ObjectKnowledgeListParameter::ToObjectKnowledgeList( ASN1T_ObjectKnowle
 // Name: MIL_ObjectKnowledgeListParameter::ToObjectKnowledgeList
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-bool MIL_ObjectKnowledgeListParameter::ToObjectKnowledgeList( std::vector< DEC_Knowledge_Object* >& value ) const
+bool MIL_ObjectKnowledgeListParameter::ToObjectKnowledgeList( std::vector< boost::shared_ptr< DEC_Knowledge_Object > >& value ) const
 {
     value.resize( knowledgeObjectList_.size() );
     for( unsigned int i = 0; i < knowledgeObjectList_.size(); ++i )

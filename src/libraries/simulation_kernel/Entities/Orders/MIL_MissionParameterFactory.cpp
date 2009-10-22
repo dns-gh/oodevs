@@ -295,9 +295,9 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 // Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
-boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( DEC_Knowledge_Object* objectKnowledge )
+boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_ObjectKnowledgeParameter( objectKnowledge ) );
+    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_ObjectKnowledgeParameter( pKnowledge ) );
     return result;
 }
 
@@ -453,9 +453,9 @@ void MIL_MissionParameterFactory::SetBoolParameter( MIL_Mission_ABC* pMission, c
 // Name: MIL_MissionParameterFactory::SetObjectKnowledgeParameter
 // Created: LDC 2009-09-25
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::SetObjectKnowledgeParameter( MIL_Mission_ABC* pMission, const std::string& parameter, DEC_Knowledge_Object* objectKnowledge )
+void MIL_MissionParameterFactory::SetObjectKnowledgeParameter( MIL_Mission_ABC* pMission, const std::string& parameter, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    pMission->SetParameter( parameter, Create( objectKnowledge ) );
+    pMission->SetParameter( parameter, Create( pKnowledge ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -522,7 +522,7 @@ void MIL_MissionParameterFactory::SetLocationParameter( MIL_Mission_ABC* pMissio
 // Name: MIL_MissionParameterFactory::SetObjectKnowledgeListParameter
 // Created: LDC 2009-09-25
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::SetObjectKnowledgeListParameter( MIL_Mission_ABC* pMission, const std::string& parameter, const std::vector< DEC_Knowledge_Object* >& objectKnowledgeList )
+void MIL_MissionParameterFactory::SetObjectKnowledgeListParameter( MIL_Mission_ABC* pMission, const std::string& parameter, const std::vector< boost::shared_ptr< DEC_Knowledge_Object > >& objectKnowledgeList )
 {
     boost::shared_ptr< MIL_ObjectKnowledgeListParameter > listParam( new MIL_ObjectKnowledgeListParameter( objectKnowledgeList ) );
     pMission->SetParameter( parameter, listParam );

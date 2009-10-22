@@ -14,6 +14,7 @@
 
 #include "Entities/Actions/PHY_Action_ABC.h"
 
+class DEC_Knowledge_Object;
 class PHY_RoleAction_Objects;
 class MIL_AgentPion;
 
@@ -28,7 +29,7 @@ public:
     typedef MIL_AgentPion ActorType;
 
 public:
-             PHY_ActionAnimateObject( MIL_AgentPion& pion, unsigned int nKnowledgeID );
+             PHY_ActionAnimateObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     virtual ~PHY_ActionAnimateObject();
 
     //! @name Operations
@@ -39,7 +40,7 @@ public:
 
 private:
     PHY_RoleAction_Objects& role_;
-    uint                    nKnowledgeID_;    
+    boost::shared_ptr< DEC_Knowledge_Object > pKnowledge_;    
 };
 
 #endif // __PHY_ActionAnimateObject_h_
