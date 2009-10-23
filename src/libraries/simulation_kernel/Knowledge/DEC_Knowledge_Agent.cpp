@@ -1083,7 +1083,12 @@ bool DEC_Knowledge_Agent::IsHuman() const
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Agent::Invalidate()
 {
-    bValid_ = false;
+    bValid_ = false;    
+    if( bCreatedOnNetwork_ )
+    {
+        SendMsgDestruction();
+        bCreatedOnNetwork_ = false;
+    }
 }
 
 // -----------------------------------------------------------------------------

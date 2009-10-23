@@ -103,8 +103,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object()
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Object::~DEC_Knowledge_Object()
 {
-    if( pObjectType_ )
-        SendMsgDestruction();
+    Invalidate();
 }
 
 // =============================================================================
@@ -817,5 +816,10 @@ bool DEC_Knowledge_Object::IsValid() const
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Object::Invalidate()
 {
-    bValid_ = false;
+    if( bValid_ )
+    {
+        bValid_ = false;    
+        if( pObjectType_ )
+            SendMsgDestruction();
+    }
 }
