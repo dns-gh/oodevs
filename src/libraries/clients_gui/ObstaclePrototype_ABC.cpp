@@ -94,7 +94,7 @@ void ObstaclePrototype_ABC::OnObstacleTypeChanged()
 bool ObstaclePrototype_ABC::IsActivated() const
 {
     if ( types_->GetValue() == eDemolitionTargetType_Reserved )
-        activation_->isChecked();
+        return activation_->isChecked();
     else if ( types_->GetValue() == eDemolitionTargetType_Preliminary  )
         return true;
     else
