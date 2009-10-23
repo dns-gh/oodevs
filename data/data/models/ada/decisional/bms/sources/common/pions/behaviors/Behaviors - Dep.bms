@@ -506,7 +506,7 @@ node "BEH_Dep_ReagirFaceAObstacle"
     end,
 
     activate = function( self )
-        self.repObjet = self.repObjet or 0
+        self.repObjet = self.repObjet or nil
         self.rDist = self.rDist or 0
         self.bObjetProcheSurItineraire = self.bObjetProcheSurItineraire or false
         --[[// -----------------------------------------------------------------------------

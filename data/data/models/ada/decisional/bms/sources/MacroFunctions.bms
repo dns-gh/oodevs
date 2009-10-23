@@ -629,7 +629,7 @@ function DEC_ConnaissanceObjet_EstValide( value )
 end
 
 function DEC_UserTypeList_PushBack( list, element )
-    destination[ #list + 1 ] = element
+    list[ #list + 1 ] = element
 end
 
 DEC_ListePoints_PushBack = DEC_UserTypeList_PushBack

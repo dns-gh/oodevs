@@ -366,7 +366,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_Itineraire_Etat", 
         boost::function< int ( DEC_Path_ABC* ) >( boost::bind( &DEC_PathFunctions::GetPathState, boost::ref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_GetNextObjectOnPath",
-        boost::function< std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > >( int, float, const std::vector< std::string >& ) >(
+        boost::function< std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > >( boost::shared_ptr< DEC_Knowledge_Object >, float, const std::vector< std::string >& ) >(
         boost::bind( &DEC_PathFunctions::GetNextObjectOnPath, boost::ref( GetPion() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_Itineraire_ExtrapolerPosition" ,
         boost::function< boost::shared_ptr< MT_Vector2D > ( const MT_Float, bool ) >( boost::bind( &DEC_PathFunctions::ExtrapolatePosition, boost::ref( GetPion() ), _1, _2 ) ) );

@@ -107,7 +107,7 @@ node "BEH_Dep_GEN_Ouvrir_ReagirFaceAObstacles"
     end,
 
     activate = function( self )
-        self.repObjet = self.repObjet or 0
+        self.repObjet = self.repObjet or nil
         self.rDist = self.rDist or 0
         self.bObjetProcheSurItineraire = self.bObjetProcheSurItineraire or false
         self.bObjetProcheSurItineraire = DEC_Itineraire_ProchainObjet( self.repObjet, self.rDist, S_TypeObject_ToString( eTypeObjectBouchonMines ), S_TypeObject_ToString( eTypeObjectZoneMineeLineaire ), S_TypeObject_ToString( eTypeObjectZoneMineeParDispersion ), S_TypeObject_ToString( eTypeObjectFosseAntiChar ), S_TypeObject_ToString( eTypeObjectAbatti ), S_TypeObject_ToString( eTypeObjectBarricade ), S_TypeObject_ToString( eTypeObjectEboulement ), S_TypeObject_ToString( eTypeObjectDestructionRoute ), S_TypeObject_ToString( eTypeObjectDestructionPont ) )

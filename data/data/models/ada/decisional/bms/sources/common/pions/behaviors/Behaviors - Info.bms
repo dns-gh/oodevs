@@ -650,7 +650,7 @@ node "BEH_Info_Pion_RendreCompteSurSituationDeplacement"
 
     activate = function( self )
         self.rDist = self.rDist or 0
-        self.repObjet = self.repObjet or 0
+        self.repObjet = self.repObjet or nil
         self.bObjetProcheSurItineraire = self.bObjetProcheSurItineraire or false
          do
             local _continue = true
