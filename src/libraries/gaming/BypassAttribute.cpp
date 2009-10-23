@@ -44,7 +44,8 @@ BypassAttribute::~BypassAttribute()
 // -----------------------------------------------------------------------------
 void BypassAttribute::Display( kernel::Displayer_ABC& displayer ) const
 {
-    displayer.Display( tools::translate( "Object", "Bypass:" ), rBypassConstructionPercentage_ * Units::percentage );
+    displayer.Group( tools::translate( "Object", "Information" ) )
+                .Display( tools::translate( "Object", "Bypass:" ), rBypassConstructionPercentage_ * Units::percentage );
 }
 
 // -----------------------------------------------------------------------------

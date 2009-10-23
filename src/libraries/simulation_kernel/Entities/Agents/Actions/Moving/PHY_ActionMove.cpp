@@ -29,6 +29,7 @@
 #include "Entities/Objects/AttritionCapacity.h"
 #include "Entities/Objects/ContaminationCapacity.h"
 #include "Entities/Objects/InterferenceCapacity.h"
+#include "Entities/Objects/AvoidanceCapacity.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionMove constructor
@@ -96,7 +97,9 @@ namespace
         {
             return type.GetCapacity< AttritionCapacity >() != 0 ||
                    type.GetCapacity< ContaminationCapacity >() != 0 ||
-                   type.GetCapacity< InterferenceCapacity >() != 0;
+                   type.GetCapacity< InterferenceCapacity >() != 0 ||
+                   type.GetCapacity< AvoidanceCapacity >() != 0;
+                   
         }
     };
 }
