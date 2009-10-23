@@ -6,31 +6,12 @@ DEC_GetMission = function( entity )
     return mission
 end
 
-node "MIS_Automat_MRT_Dumb"
-{
-    create = function( self )
-        DEC_Geometrie_ConvertirPointEnLocalisation( DEC_GetMission( myself ).Point_ )
-        self._namedParams = {}
-        self._namedParams.mission = self.params.mission
-        DEC_Geometrie_ConvertirPointEnLocalisation( self._namedParams.mission.Point_ )
-    end
-}
-
-node "MIS_Automat_CDT_Dumb"
-{
-    activate = function( self )
-        print( "Hello World 2" )
-    end
-}
-
 node "BEH_Defaut"
 {}
 
 local configTable = {   eventmanager_plugin = 
                         {
                             BEH_Defaut = {},
-                            MIS_Automat_MRT_Dumb = { "mission" },
-                            MIS_Automat_CDT_Dumb = { "mission" },
                         },
                         connections =
                         {
