@@ -31,7 +31,7 @@ includedFiles["sources/appui/artfdp/pions/common/Actions - Radar.bms"] = true
 
     select = function( self )
                 self.eTir = self.eTir or eActionTirIndirect_EnCours
-        self.bInit = self.bInit or true
+        self.bInit = self.bInit or false
         self.actionID = self.actionID or nil
         if( ModuleBegins() ) then
             do
@@ -44,11 +44,11 @@ includedFiles["sources/appui/artfdp/pions/common/Actions - Radar.bms"] = true
             end
         end
 
-        if( self.bInit ) then
+        if( not self.bInit ) then
             do
                 DEC_Trace( "Activate radar in zone" )
                 self.actionID = DEC_Perception_ActiverRadarSurLocalisation( self._namedParams.eRadar, self._namedParams.locZone )
-                self.bInit = false
+                self.bInit = true
             end
         end
 
@@ -56,7 +56,7 @@ includedFiles["sources/appui/artfdp/pions/common/Actions - Radar.bms"] = true
 
     deselect = function( self )
                 DEC_Trace( "Activate radar in zone: pause" )
-        self.bInit = true
+        self.bInit = false
         DEC_Perception_DesactiverRadarSurLocalisation( self._namedParams.eRadar, self.actionID )
     end,
 
@@ -91,7 +91,7 @@ node "ACT_Obs_Pion_ASS_ActiverPerceptionTirIndirect_DansZone"
 
     select = function( self )
                 self.eTir = self.eTir or eActionTirIndirect_EnCours
-        self.bInit = self.bInit or true
+        self.bInit = self.bInit or false
         self.actionID = self.actionID or nil
         if( ModuleBegins() ) then
             do
@@ -104,12 +104,12 @@ node "ACT_Obs_Pion_ASS_ActiverPerceptionTirIndirect_DansZone"
             end
         end
 
-        if( self.bInit ) then
+        if( not self.bInit ) then
             do
                 DEC_Trace( "Activate radar in zone" )
                 --[[// Integrere la menace Roem
 ]]--[[/*, bMenaceRoem */]]self.actionID = DEC_Perception_ActiverPerceptionTirsIndirect( self._namedParams.locZone )
-                self.bInit = false
+                self.bInit = true
             end
         end
 
@@ -117,7 +117,7 @@ node "ACT_Obs_Pion_ASS_ActiverPerceptionTirIndirect_DansZone"
 
     deselect = function( self )
                 DEC_Trace( "Activate radar in zone: pause" )
-        self.bInit = true
+        self.bInit = false
         DEC_Perception_DesactiverPerceptionTirsIndirect( self.actionID )
     end,
 

@@ -304,7 +304,7 @@ node "BEH_Medo_Automate_INF_OrganiserMissions_Freiner"
     end,
 
     activate = function( self )
-        self.bAppui = self.bAppui or true
+        self.bAppui = self.bAppui or false
         local rItPion = 0
         local rItLoc = 0
         local rNSize_PE = #( self._namedParams.selPions_PE )
@@ -328,7 +328,7 @@ node "BEH_Medo_Automate_INF_OrganiserMissions_Freiner"
                         --[[// On affecte appuyer aux pions qui vont freiner en PE
 ]]--[[// Dans la conduite, on alterne les echelons en train de freiner ..
 ]]--[[// Cela permet de repartir les appuis suivant le PE.
-]]if( self.bAppui ) then
+]]if( not self.bAppui ) then
                             do
                                 local pionAppui = 0
                                 local rItAppuis = 0

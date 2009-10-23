@@ -52,14 +52,13 @@ node "BEH_Conduite_Automate_GererFuseau_Init"
         self.rN_PE_Init = self.rN_PE_Init or 0
         self.selPions = self.selPions or DEC_Automate_PionsSansPC()
         self.bOrdre_Donne = self.bOrdre_Donne or false
-        self.bAttente_MAJ_VE = self.bAttente_MAJ_VE or true
-        self.bInit = self.bInit or true
+        self.bInit = self.bInit or false
         local sUnites_PE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
-        if( self.bInit ) then
+        if( not self.bInit ) then
             self.rN_PE_Init = #( sUnites_PE )
         end
 
-        if( ( self.bInit and #( sUnites_PE ) ~= 0 and self.bInit and #( sUnites_PE ) ~= nil ) ) then
+        if( not ( self.bInit and #( sUnites_PE ) ~= 0 and self.bInit and #( sUnites_PE ) ~= nil ) ) then
             do
                 --[[// Dit a tous les pions dans le fuseau de se poster
 ]]local rPions_DansFuseau = 0
@@ -83,11 +82,11 @@ node "BEH_Conduite_Automate_GererFuseau_Init"
                     do return end
                 end
 
-                self.bInit = false
+                self.bInit = true
             end
         end
 
-        if( self.bInit ) then
+        if( not self.bInit ) then
             do return end
         end
 

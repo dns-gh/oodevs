@@ -159,7 +159,7 @@ node "BEH_Misc_Pion_INF_MAJ_Repli"
     end,
 
     activate = function( self )
-                self.bMAJ_Effectuee = self.bMAJ_Effectuee or true
+                self.bMAJ_A_Effectuer = self.bMAJ_A_Effectuer or false
         self.ptRepli_Courant = self.ptRepli_Courant or DEC_Geometrie_CreerPoint()
         if( ModuleBegins() ) then
             do
@@ -169,10 +169,10 @@ node "BEH_Misc_Pion_INF_MAJ_Repli"
         end
 
         if( GetActivity() <= 1 ) then
-            self.bMAJ_Effectuee = true
+            self.bMAJ_A_Effectuer = false
         end
 
-        if( self.bMAJ_Effectuee and GetActivity() > 1 ) then
+        if( not self.bMAJ_A_Effectuer and GetActivity() > 1 ) then
             do
                 DEC_Trace( "MAJ position de repli" )
                 --[[// MAJ de la position de repli, correspondant a la precedente 
@@ -192,7 +192,7 @@ node "BEH_Misc_Pion_INF_MAJ_Repli"
                     end
                 end
 
-                self.bMAJ_Effectuee = false
+                self.bMAJ_A_Effectuer = true
             end
         end
 

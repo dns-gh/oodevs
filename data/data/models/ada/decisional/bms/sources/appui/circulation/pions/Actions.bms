@@ -91,7 +91,6 @@ elseif switch_1 == eActionObjetTerminee then
 
                     _continue = false
                 elseif switch_1 == eActionObjetManqueDotation then
-                    self.bDummy = self.bDummy or true
                                         do return end
 
                     _continue = false

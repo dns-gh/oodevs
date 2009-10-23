@@ -58,7 +58,6 @@ node "BEH_MOT_Pion_INF_GarderSesDistancesFaceA"
     end,
 
     activate = function( self )
-        self.bAutoriseDebarquement = self.bAutoriseDebarquement or ( myself:GetType() ~= "SectionInfanterie_HOT" ) or ( not DEC_Agent_EstPC() )
         if( ModuleBegins() ) then
             do
                 --[[// Tir les fumigenes	

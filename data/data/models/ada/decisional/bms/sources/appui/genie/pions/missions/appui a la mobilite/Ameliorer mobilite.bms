@@ -214,7 +214,7 @@ node "ACT_Obj_Pion_GEN_RealiserZoneMobilite"
         --[[//booleens suspension reprise et terminaison
 ]]        self.eActionObjet = self.eActionObjet or eActionObjetEnCours
         self.bSuspendu = self.bSuspendu or false
-        self.bInit = self.bInit or true
+        self.bInit = self.bInit or false
         self.act = self.act or nil
         --[[//-----------------------------------------------------------------
 ]]--[[// Init
@@ -233,7 +233,7 @@ node "ACT_Obj_Pion_GEN_RealiserZoneMobilite"
 ]]--[[//-----------------------------------------------------------------
 ]]        end
 
-        if( self.bInit and DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
+        if( not self.bInit and DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
             do
                 self.act = DEC_StartCreerObjet( myself.objMisEnCours_, S_TypeObject_ToString( self._namedParams.eTypeObjet ), self._namedParams.loc )
                 actionCallbacks[ self.act ] = function( arg ) self.eActionObjet = arg end
@@ -248,7 +248,7 @@ node "ACT_Obj_Pion_GEN_RealiserZoneMobilite"
 
                 end
 
-                self.bInit = false
+                self.bInit = true
             end
 --[[//-----------------------------------------------------------------
 ]]--[[// RC éventuels

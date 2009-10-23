@@ -113,7 +113,7 @@ end
     end,
 
     select = function( self )
-        self.bSuspendu = self.bSuspendu or true
+        self.bInit = self.bInit or false
         self.bRecoMax = self.bRecoMax or false
         self.bRecoMaxObj = self.bRecoMaxObj or false
         self.ptRecoCopie = self.ptRecoCopie or DEC_Geometrie_CreerPoint()
@@ -126,8 +126,8 @@ end
             DEC_Copie_Point( self._namedParams.pointAReconnaitre, self.ptRecoCopie )
         end
 
-        if( self.bSuspendu ) then
-            self.bSuspendu = false
+        if( not self.bInit ) then
+            self.bInit = true
             DEC_Trace( ">> En reconnaissance..." )
             self.pPt = DEC_Perception_ActiverReconnaissancePoint( self.ptRecoCopie, M_POLY_MODELE_PION_CAPACITE_RECO_POINT(), M_POLY_MODELE_PION_VITESSE_RECO_POINT() )
             RegisterPerception_ReconnaissancePoint_Callback( self.pPt, function () self.bRecoMax = true end )
@@ -143,7 +143,7 @@ end
     end,
 
     deselect = function( self )
-        self.bSuspendu = true
+        self.bInit = false
         myself.eEtatDeplacement_ = eEtatDeplacement_aucun
         RemovePerception_ReconnaissancePoint_Callback ( self.pPt )
         RemovePerception_ReconnaissancePoint_Callback ( self.pPtObj )

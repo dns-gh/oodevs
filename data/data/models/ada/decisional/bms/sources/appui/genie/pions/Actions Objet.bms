@@ -27,7 +27,7 @@ include "bit.lua"
         --[[//booleens suspension reprise et terminaison
 ]]        self.eActionObjet = self.eActionObjet or eActionObjetEnCours
         self.bSuspendu = self.bSuspendu or false
-        self.bInit = self.bInit or true
+        self.bInit = self.bInit or false
         self.act = self.act or nil
         --[[//-----------------------------------------------------------------
 ]]--[[// Init
@@ -46,7 +46,7 @@ include "bit.lua"
 ]]--[[//-----------------------------------------------------------------
 ]]        end
 
-        if( self.bInit and DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
+        if( not self.bInit and DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
             do
                 local type = DEC_GenObject_Type( self._namedParams.objet )
                 self.act = DEC_StartCreerObjet( myself.objMisEnCours_, type, DEC_GenObject_Localisation( self._namedParams.objet ) )
@@ -62,7 +62,7 @@ include "bit.lua"
 
                 end
 
-                self.bInit = false
+                self.bInit = true
             end
 --[[//-----------------------------------------------------------------
 ]]--[[// RC éventuels
@@ -146,7 +146,7 @@ include "bit.lua"
         --[[//booleens suspension reprise et terminaison
 ]]        self.eActionObjet = self.eActionObjet or eActionObjetEnCours
         self.bSuspendu = self.bSuspendu or false
-        self.bInit = self.bInit or true
+        self.bInit = self.bInit or false
         self.act = self.act or nil
         --[[//-----------------------------------------------------------------
 ]]--[[// Init
@@ -165,7 +165,7 @@ include "bit.lua"
 ]]--[[//-----------------------------------------------------------------
 ]]        end
 
-        if( self.bInit and DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
+        if( not self.bInit and DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
             do
                 self.act = DEC_StartPreparerObjet( myself.objMisEnCours_, DEC_GenObject_Type( self._namedParams.obstacle ), DEC_GenObject_Localisation( self._namedParams.obstacle ) )
                 actionCallbacks[ self.act ] = function( arg ) self.eActionObjet = arg end
@@ -181,7 +181,7 @@ include "bit.lua"
                 end
 
                 DEC_Trace( "Create prepared object: begin" )
-                self.bInit = false
+                self.bInit = true
             end
 --[[//-----------------------------------------------------------------
 ]]--[[// RC éventuels
@@ -307,7 +307,7 @@ include "bit.lua"
         --[[//booleens suspension reprise et terminaison
 ]]        self.eActionObjet = self.eActionObjet or eActionObjetEnCours
         self.bSuspendu = self.bSuspendu or false
-        self.bInit = self.bInit or true
+        self.bInit = self.bInit or false
         self.act = self.act or nil
         --[[//-----------------------------------------------------------------
 ]]--[[// Init
@@ -326,7 +326,7 @@ include "bit.lua"
 ]]--[[//-----------------------------------------------------------------
 ]]        end
 
-        if( self.bInit and DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
+        if( not self.bInit and DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
             do
                 self.act = DEC_StartValoriserObjet( self._namedParams.repObj )
                 actionCallbacks[ self.act ] = function( arg ) self.eActionObjet = arg end
@@ -341,7 +341,7 @@ include "bit.lua"
                 end
 
                 DEC_Trace( "----- To improve obstacle: begin ----" )
-                self.bInit = false
+                self.bInit = true
             end
 --[[//-----------------------------------------------------------------
 ]]--[[// RC éventuels
@@ -423,7 +423,7 @@ include "bit.lua"
         --[[//booleens suspension reprise et terminaison
 ]]        self.eActionObjet = self.eActionObjet or eActionObjetEnCours
         self.bSuspendu = self.bSuspendu or false
-        self.bInit = self.bInit or true
+        self.bInit = self.bInit or false
         self.act = self.act or nil
         --[[//-----------------------------------------------------------------
 ]]--[[// Init
@@ -442,7 +442,7 @@ include "bit.lua"
 ]]--[[//-----------------------------------------------------------------
 ]]        end
 
-        if( self.bInit and DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
+        if( not self.bInit and DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
             do
                 self.act = DEC_StartDetruireObjet( self._namedParams.repObj )
                 actionCallbacks[ self.act ] = function( arg ) self.eActionObjet = arg end
@@ -457,7 +457,7 @@ include "bit.lua"
                 end
 
                 DEC_Trace( "Begin to remove" )
-                self.bInit = false
+                self.bInit = true
             end
 --[[//-----------------------------------------------------------------
 ]]--[[// RC éventuels
@@ -537,7 +537,7 @@ include "bit.lua"
         --[[//booleens suspension reprise et terminaison
 ]]        self.eActionObjet = self.eActionObjet or eActionObjetEnCours
         self.bSuspendu = self.bSuspendu or false
-        self.bInit = self.bInit or true
+        self.bInit = self.bInit or false
         self.act = self.act or nil
         --[[//-----------------------------------------------------------------
 ]]--[[// Init
@@ -556,7 +556,7 @@ include "bit.lua"
 ]]--[[//-----------------------------------------------------------------
 ]]        end
 
-        if( self.bInit and DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
+        if( not self.bInit and DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
             do
                 self.act = DEC_StartCreerContournementObjet( self._namedParams.repObj )
                 actionCallbacks[ self.act ] = function( arg ) self.eActionObjet = arg end
@@ -570,7 +570,7 @@ include "bit.lua"
 
                 end
 
-                self.bInit = false
+                self.bInit = true
             end
 --[[//-----------------------------------------------------------------
 ]]--[[// RC éventuels
@@ -650,7 +650,7 @@ include "bit.lua"
         --[[//booleens suspension reprise et terminaison
 ]]        self.eActionObjet = self.eActionObjet or eActionObjetEnCours
         self.bSuspendu = self.bSuspendu or false
-        self.bInit = self.bInit or true
+        self.bInit = self.bInit or false
         self.act = self.act or nil
         --[[//-----------------------------------------------------------------
 ]]--[[// Init
@@ -669,7 +669,7 @@ include "bit.lua"
 ]]--[[//-----------------------------------------------------------------
 ]]        end
 
-        if( self.bInit and DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
+        if( not self.bInit and DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
             do
                 DEC_Trace( "  resume obstacle creation: " )
                 self.act = DEC_StartReprendreTravauxObjet( self._namedParams.repObj )
@@ -684,7 +684,7 @@ include "bit.lua"
 
                 end
 
-                self.bInit = false
+                self.bInit = true
             end
 --[[//-----------------------------------------------------------------
 ]]--[[// RC éventuels

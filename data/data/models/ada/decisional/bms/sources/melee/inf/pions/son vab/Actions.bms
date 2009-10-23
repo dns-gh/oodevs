@@ -382,12 +382,12 @@ node "ACT_Pion_VAB_ControleZone"
     end,
 
     select = function( self )
-                self.bInit = self.bInit or true
+                self.bInit = self.bInit or false
         self.bTirDeclenche = self.bTirDeclenche or false
         self.actionID = self.actionID or nil
         --[[// Le rc eRC_DebutControleZone est fait au debut de la phase de la 
 ]]--[[// mission
-]]if( self.bInit ) then
+]]if( not self.bInit ) then
             do
                 --[[// {	if( ! DEC_Agent_AutomateEstEmbraye() )	    DEC_RC(  eRC_DebutControleZone  );    else        DEC_Message(  eRC_DebutControleZone  );}
 ]]DEC_Trace( "Controle Zone : debut" )
@@ -406,11 +406,11 @@ node "ACT_Pion_VAB_ControleZone"
             end
         end
 
-        self.bInit = false
+        self.bInit = true
     end,
 
     deselect = function( self )
-                self.bInit = true
+                self.bInit = false
         DEC_Trace( "Controle Zone : fin" )
         self.actionID = DEC_StopAction( self.actionID )
         do
@@ -425,7 +425,7 @@ node "ACT_Pion_VAB_ControleZone"
     end,
 
     destroy = function( self )
-                if( not self.bInit ) then
+                if( self.bInit ) then
             self.actionID = DEC_StopAction( self.actionID )
         end
 

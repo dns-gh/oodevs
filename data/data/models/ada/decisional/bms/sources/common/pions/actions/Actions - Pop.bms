@@ -93,7 +93,7 @@ includedFiles["sources/common/pions/actions/Actions - Pop.bms"] = true
 
     select = function( self )
                 self.actionAnimer = self.actionAnimer or nil
-        self.bAnime = self.bAnime or true
+        self.bInit = self.bInit or false
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------
@@ -119,10 +119,10 @@ includedFiles["sources/common/pions/actions/Actions - Pop.bms"] = true
         --[[//---------------------------------------------------------------------
 ]]--[[// Reprise après focus loss
 ]]--[[//---------------------------------------------------------------------        
-]]if( not self.bAnime ) then
+]]if( self.bInit ) then
             do
                 DEC_ReprendAction( self.actionAnimer )
-                self.bAnime = true
+                self.bInit = false
             end
         end
 
@@ -132,7 +132,7 @@ includedFiles["sources/common/pions/actions/Actions - Pop.bms"] = true
     deselect = function( self )
                 DEC_Trace( "Pause animation du site" )
         DEC_PauseAction( self.actionAnimer )
-        self.bAnime = false
+        self.bInit = true
         DEC_ConnaisssanceObjet_ResetDensitePopulationSortante( self._namedParams.posteControle )
     end,
 

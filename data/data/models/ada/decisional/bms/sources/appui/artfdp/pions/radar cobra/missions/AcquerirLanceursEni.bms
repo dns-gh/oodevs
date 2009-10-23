@@ -182,8 +182,7 @@ node "BEH_Obs_Pion_ASS_TirIndirect_DansZones"
     end,
 
     activate = function( self )
-                self.bAllumageRadar = self.bAllumageRadar or true
-        local eNiveauInstallation = DEC_Agent_NiveauInstallation()
+                local eNiveauInstallation = DEC_Agent_NiveauInstallation()
         if( ModuleBegins() ) then
             StartActivateOverride( self, self.activations.ACT_Obs_Pion_ASS_DelaiAllumageRadar, 1, { 2, } )
         end

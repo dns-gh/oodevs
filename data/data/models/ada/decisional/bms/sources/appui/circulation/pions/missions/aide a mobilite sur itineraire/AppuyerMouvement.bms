@@ -112,8 +112,8 @@ node "ACT_Misc_Pion_AppuyerMvtDe"
     end,
 
     select = function( self )
-                self.bInit = self.bInit or true
-        if( self.bInit ) then
+                self.bInit = self.bInit or false
+        if( not self.bInit ) then
             do
                 --[[// On renforce le pion pour lui donner les moyens d'aller plus vite
 ]]DEC_Renforce( self._namedParams.pionAmi )
@@ -126,7 +126,7 @@ node "ACT_Misc_Pion_AppuyerMvtDe"
 
                 end
 
-                self.bInit = false
+                self.bInit = true
             end
         end
 
@@ -134,7 +134,7 @@ node "ACT_Misc_Pion_AppuyerMvtDe"
 
     deselect = function( self )
                 DEC_AnnuleRenforcement()
-        self.bInit = true
+        self.bInit = false
     end,
 
     destroy = function( self )

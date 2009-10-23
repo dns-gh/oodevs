@@ -358,40 +358,33 @@ node "BEH_Poste_Pion_INF_NettoyerPosition"
     activate = function( self )
                 self.ptEni = self.ptEni or DEC_Geometrie_CreerPoint()
         self.eAction = self.eAction or eActionEnCours
-        self.bInitFouille = self.bInitFouille or true
         if( ModuleBegins() ) then
             DEC_Copie_Point( DEC_ConnaissanceAgent_Position( self._namedParams.ksEni ), self.ptEni )
         end
 
-        --[[/*
-		if ( bInitFouille )
-		{
-			bInitFouille = false;
-			start behavior BEH_Poste_Pion_INF_RetablirDispositif() : strength = 1.1;			
-		}
-		*/]]if( self.eAction ~= eActionEnCours ) then
+        --[[// Vision vers l'ennemi Ennemi
+]]if( self.eAction ~= eActionEnCours ) then
             self.params.__returnValue = eActionEffectuee
             do return end
         end
 
-        --[[// Vision vers l'ennemi Ennemi
-]]if( not S_Geometrie_EstProchePosition( DEC_Agent_Position(), self.ptEni, 200 ) ) then
+        if( not S_Geometrie_EstProchePosition( DEC_Agent_Position(), self.ptEni, 200 ) ) then
             self.params.__returnValue = eActionEnCours
             do return end
         end
 
-        --[[// ----------------------------------------------------------------------------
+        Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { self.ptEni, } )
+        Activate( self.activations.ACT_Dep_Pion_INF_Arret, 1, setmetatable( { M_DELAI_NETTOYAGE(), "nettoyage de la position", }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+--[[// ----------------------------------------------------------------------------
 ]]--[[// Manoeuvre sur les unites potentiellement dangereuses
 ]]--[[// ----------------------------------------------------------------------------
-]]Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { self.ptEni, } )
-        Activate( self.activations.ACT_Dep_Pion_INF_Arret, 1, setmetatable( { M_DELAI_NETTOYAGE(), "nettoyage de la position", }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
---[[// Si le pion n'est pas dans son fuseau, on n'agit pas sur les ennemis
 ]]    end,
 
     destroy = function( self )
             end,
 
-}
+--[[// Si le pion n'est pas dans son fuseau, on n'agit pas sur les ennemis
+]]}
 
 node "BEH_Eni_Pion_VAB_Offensif_Manoeuvre"
 {
@@ -413,8 +406,7 @@ node "BEH_Eni_Pion_VAB_Offensif_Manoeuvre"
         for _,ksEni in pairs( lstUnitesDetectees or {} ) do
         local _continue = true
 do
-                --[[// On lance l'assaut si le niveau de perception attendu est atteind
-]]local rForce = GetMotivation( "MOT_ManoeuvrerSurEnis" ) + S_Force_ActionContre( ksEni )
+                local rForce = GetMotivation( "MOT_ManoeuvrerSurEnis" ) + S_Force_ActionContre( ksEni )
                 Activate( self.activations.BEH_Dep_Pion_INF_GererDispositif_Offensif, rForce, { ksEni, true, } )
             end
 
@@ -424,23 +416,24 @@ do
         for _,ksEni in pairs( lstEnisPercus or {} ) do
         local _continue = true
 do
-                if( DEC_ConnaissanceAgent_EstDetruitTactique( ksEni ) ) then
-                    _continue = false--[[// ----------------------------------------------------------------------------
-]]
+                --[[// On lance l'assaut si le niveau de perception attendu est atteind
+]]if( DEC_ConnaissanceAgent_EstDetruitTactique( ksEni ) ) then
+                    _continue = false
                 end
 
                     if _continue then
-                    --[[// Gestion du tir
-]]--[[// ----------------------------------------------------------------------------
-]]local rForce = GetMotivation( "MOT_ManoeuvrerSurEnis" ) + S_Force_ActionContre( ksEni )
+                    local rForce = GetMotivation( "MOT_ManoeuvrerSurEnis" ) + S_Force_ActionContre( ksEni )
                     if( S_Eni_EstNiveauPerceptionGTIA( ksEni, F_Pion_GeteNiveauAction( myself ) ) ) then
-                        Activate( self.activations.BEH_Eni_Pion_VAB_ManoeuvreDetruire, 1 + rForce, { ksEni, true, } )
+                        --[[// ----------------------------------------------------------------------------
+]]Activate( self.activations.BEH_Eni_Pion_VAB_ManoeuvreDetruire, 1 + rForce, { ksEni, true, } )
                     end
 
-                    Activate( self.activations.BEH_Dep_Pion_INF_GererDispositif_Offensif, rForce, { ksEni, true, } )
+                    --[[// Gestion du tir
+]]Activate( self.activations.BEH_Dep_Pion_INF_GererDispositif_Offensif, rForce, { ksEni, true, } )
                 end
             end
-
+--[[// ----------------------------------------------------------------------------
+]]
         end
 
     end,

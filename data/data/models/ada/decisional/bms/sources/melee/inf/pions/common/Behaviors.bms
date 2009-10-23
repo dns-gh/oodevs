@@ -220,18 +220,10 @@ node "BEH_Poste_Pion_INF_TomberEnGarde"
     activate = function( self )
         self.eAction = self.eAction or eActionEnCours
         self.eActionDeb = self.eActionDeb or eActionEnCours
-        self.bDebarquement = self.bDebarquement or self._namedParams.bDemandeDebarquement
-        if( ModuleBegins() ) then
-            do
-                --[[// Verifie que les HOT ne debarquent pas .. 
+        --[[// Verifie que les HOT ne debarquent pas .. 
 ]]--[[// .. Sinon attention aux surprises
-]]self.bDebarquement = self.bDebarquement and ( myself:GetType() ~= "SectionInfanterie_HOT" ) and DEC_Agent_EstEmbarque()
-            end
---[[// if ( bDebarquement )
-]]--[[//	start action ACT_Transport_Pion_INF_Debarquer() return in eActionDeb : strength = 1.1;
-]]        end
-
-        if( self.bDebarquement ) then
+]]local bDebarquement = self._namedParams.bDemandeDebarquement and ( myself:GetType() ~= "SectionInfanterie_HOT" ) and DEC_Agent_EstEmbarque()
+        if( bDebarquement ) then
             Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
         end
 
@@ -241,7 +233,7 @@ node "BEH_Poste_Pion_INF_TomberEnGarde"
         if( self.eAction == eActionEnCours ) then
             Activate( self.activations.ACT_Dep_Pion_INF_Arret, 1, setmetatable( { M_DELAI_TOMBE_EN_GARDE(), "Tombe en garde", }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
         else
-if( not ( self.bDebarquement and DEC_Agent_EstEmbarque() ) ) then
+if( not ( bDebarquement and DEC_Agent_EstEmbarque() ) ) then
                 self.params.__returnValue = eActionEffectuee
                 do return end
             end
@@ -655,14 +647,7 @@ node "BEH_Feu_Pion_INF_TirAppui"
         self.eActionDeplacement = self.eActionDeplacement or eActionEnCours
         self.eAction = self.eAction or eActionEnCours
         self.eActionFixer = self.eActionFixer or eActionEnCours
-        self.bSpontanee = self.bSpontanee or true
         Activate( self.activations.ACT_MAJ_EnnemiEnCours, 1, { self._namedParams.ksEni, } )
-        if( self.eAction == eActionImpossible and not self.bSpontanee ) then
-            self.params.__returnValue = eActionImpossible
-            Halt( self )
-            do return end
-        end
-
         if( DEC_ConnaissanceAgent_EstDetruitTactique( self._namedParams.ksEni ) or self.eAction == eActionEffectuee ) then
             self.params.__returnValue = self.eAction
             Halt( self )
