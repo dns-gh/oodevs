@@ -62,7 +62,6 @@ void DefaultPostureComputer::Reset( PostureComputer_ABC::Parameters& param )
 // -----------------------------------------------------------------------------
 void DefaultPostureComputer::SetPostureMovement()
 {
-    assert( !bForceStop_ );
     bForceMovement_ = true;
 }
 
@@ -72,8 +71,8 @@ void DefaultPostureComputer::SetPostureMovement()
 // -----------------------------------------------------------------------------
 void DefaultPostureComputer::UnsetPostureMovement()
 {
-    assert( !bForceMovement_ );
-    bForceStop_ = true;
+    if( !bForceMovement_ ) // $$$$ LDC Role action flying can force movement with 0 horizontal speed.
+        bForceStop_ = true;
 }
 
 // -----------------------------------------------------------------------------
