@@ -11,7 +11,7 @@
 #define __MIL_Formation_h_
 
 #include "MIL.h"
-
+#include "tools/Resolver.h"
 namespace xml
 {
     class xostream;
@@ -23,18 +23,21 @@ class PHY_NatureLevel;
 class MIL_EntityManager;
 class MIL_Intelligence;
 
+class FormationFactory_ABC;
+class AutomateFactory_ABC;
 // =============================================================================
 /** @class  MIL_Formation
     @brief  MIL_Formation
 */
 // Created: NLD 2006-10-11
 // =============================================================================
-class MIL_Formation
+class MIL_Formation : public tools::Resolver< MIL_Formation >
+                    , public tools::Resolver< MIL_Automate >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_Formation( MIL_EntityManager& manager, unsigned int nID, MIL_Army& army, xml::xistream& xis, MIL_Formation* pParent = 0 );
+             MIL_Formation(  xml::xistream& xis, MIL_Army& army, MIL_Formation* pParent, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory );
              MIL_Formation();
     virtual ~MIL_Formation();
     //@}
@@ -80,29 +83,19 @@ private:
 
     //! @name Tools
     //@{
-    void InitializeSubordinates( MIL_EntityManager& manager, xml::xistream& xis );
-    void CreateAutomat         ( xml::xistream& xis, MIL_EntityManager& manager, MIL_Formation& formation );
+    void InitializeFormation( xml::xistream& xis, FormationFactory_ABC& formationFactory );
+    void InitializeAutomate( xml::xistream& xis, AutomateFactory_ABC& automateFactory );
     //@}
 
 private:
-    //! @name Types
+    //! @name Attributes
     //@{
-    typedef std::set< MIL_Formation* >     T_FormationSet;
-    typedef T_FormationSet::const_iterator CIT_FormationSet;
-
-    typedef std::set< MIL_Automate* >      T_AutomateSet;
-    typedef T_AutomateSet::const_iterator  CIT_AutomateSet;
-
-    //@}
-
-private:
-    const uint              nID_;
+          uint              nID_;
           MIL_Army*         pArmy_;
           MIL_Formation*    pParent_;
     const PHY_NatureLevel*  pLevel_;
           std::string       strName_;
-          T_FormationSet    formations_;
-          T_AutomateSet     automates_;
+    //@}
 };
 
 #endif // __MIL_Formation_h_

@@ -11,7 +11,6 @@
 #define __AutomateFactory_h_
 
 #include "AutomateFactory_ABC.h"
-#include "tools/Resolver.h"
 
 class MIL_IDManager;
 
@@ -27,28 +26,20 @@ class AutomateFactory : public AutomateFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomateFactory( MIL_IDManager& idManager );
+    explicit AutomateFactory( MIL_IDManager& idManager );
     virtual ~AutomateFactory();
     //@}
 
     //! @name Operations
     //@{
-    //! @name Operations
-    //@{
-    virtual MIL_Automate* Create( const MIL_AutomateType& type, MIL_Automate& parent, xml::xistream& xis );
-    virtual MIL_Automate* Create( const MIL_AutomateType& type, MIL_Formation& parent, xml::xistream& xis );
+    virtual MIL_Automate& Create( xml::xistream& xis, MIL_Automate& parent );
+    virtual MIL_Automate& Create( xml::xistream& xis, MIL_Formation& parent );
     //@}
-    //@}
-
 private:
-    //! @name Copy/Assignment
+    //! @name CheckPoint
     //@{
-    AutomateFactory( const AutomateFactory& );            //!< Copy constructor
-    AutomateFactory& operator=( const AutomateFactory& ); //!< Assignment operator
-    //@}
-
-    //! @name Operations
-    //@{
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const AutomateFactory* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, AutomateFactory* role, const unsigned int /*version*/ );
     //@}
 
 private:

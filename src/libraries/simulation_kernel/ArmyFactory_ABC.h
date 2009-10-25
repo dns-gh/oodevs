@@ -7,39 +7,37 @@
 //
 // *****************************************************************************
 
-#ifndef __AutomateFactory_ABC_h_
-#define __AutomateFactory_ABC_h_
+#ifndef __ArmyFactory_ABC_h_
+#define __ArmyFactory_ABC_h_
 
 #include "tools/Resolver.h"
 
-class MIL_Automate;
-class MIL_AutomateType;
-class MIL_Formation;
+class MIL_Army;
+class MIL_Army;
 
 namespace xml
 {
     class xistream;
 }
 // =============================================================================
-/** @class  AutomateFactory_ABC
-    @brief  AutomateFactory_ABC
+/** @class  ArmyFactory_ABC
+    @brief  ArmyFactory_ABC
 */
-// Created: MGD 2009-08-13
+// Created: MGD 2009-10-24 @TODO MGD add serialization for resolver and divide factory-resolver, pass resolver by ref in constructor
 // =============================================================================
-class AutomateFactory_ABC : public tools::Resolver< MIL_Automate >
-                          , private boost::noncopyable
+class ArmyFactory_ABC : public tools::Resolver< MIL_Army >
+                      , private boost::noncopyable
 {
 
 public:
     //! @name Destructor
     //@{
-    virtual ~AutomateFactory_ABC();
+    virtual ~ArmyFactory_ABC() { DeleteAll(); };
     //@}
 
     //! @name Operations
     //@{
-    virtual MIL_Automate& Create( xml::xistream& xis, MIL_Automate& parent ) = 0;
-    virtual MIL_Automate& Create( xml::xistream& xis, MIL_Formation& parent ) = 0;
+    virtual MIL_Army* Create( xml::xistream& xis ) = 0;
     //@}
 
     //! @name CheckPoint
@@ -50,18 +48,18 @@ public:
 protected:
     //! @name Constructor
     //@{
-    AutomateFactory_ABC();
+    ArmyFactory_ABC() {};
     //@}
 };
 
 // -----------------------------------------------------------------------------
-// Name: template< typename Archive > void AutomateFactory_ABC::serialize
+// Name: template< typename Archive > void ArmyFactory_ABC::serialize
 // Created: MGD 2009-10-24
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void AutomateFactory_ABC::serialize( Archive& file, const uint )
+void ArmyFactory_ABC::serialize( Archive& file, const uint )
 {
     file & elements_;
 }
 
-#endif // __AutomateFactory_ABC_h_
+#endif // __ArmyFactory_ABC_h_

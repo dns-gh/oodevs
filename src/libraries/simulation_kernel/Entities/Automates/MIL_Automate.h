@@ -16,6 +16,8 @@
 #include "Entities/MIL_Entity_ABC.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
 
+#include "tools/Resolver.h"
+
 namespace xml
 {
     class xostream;
@@ -40,7 +42,6 @@ class PHY_SupplyDotationState;
 class PHY_DotationCategory;
 class NET_ASN_MsgAutomatCreation;
 class DEC_KnowledgeBlackBoard_Automate;
-
 // =============================================================================
 // @class  MIL_Automate
 // Created: JVT 2004-08-03
@@ -155,9 +156,9 @@ public:
             void OnReceiveMsgFragOrder            ( const ASN1T_MsgFragOrder&                   msg );
             void OnReceiveMsgSetAutomateMode      ( const ASN1T_MsgSetAutomatMode&              msg );
             void OnReceiveMsgUnitCreationRequest  ( const ASN1T_MsgUnitCreationRequest&         msg );
-            void OnReceiveMsgUnitMagicAction      ( const ASN1T_MsgUnitMagicAction&             msg );
-            void OnReceiveMsgChangeKnowledgeGroup ( const ASN1T_MsgAutomatChangeKnowledgeGroup& msg );
-            void OnReceiveMsgChangeSuperior       ( const ASN1T_MsgAutomatChangeSuperior&       msg );
+            void OnReceiveMsgUnitMagicAction      ( const ASN1T_MsgUnitMagicAction&             msg, const tools::Resolver< MIL_Army >& armies );
+            void OnReceiveMsgChangeKnowledgeGroup ( const ASN1T_MsgAutomatChangeKnowledgeGroup& msg, const tools::Resolver< MIL_Army >& armies );
+            void OnReceiveMsgChangeSuperior       ( const ASN1T_MsgAutomatChangeSuperior&       msg, const tools::Resolver< MIL_Formation >& formations );
     virtual void OnReceiveMsgChangeLogisticLinks  ( const ASN1T_MsgAutomatChangeLogisticLinks&  msg );
     virtual void OnReceiveMsgLogSupplyChangeQuotas( const ASN1T_MsgLogSupplyChangeQuotas&       msg );
     virtual void OnReceiveMsgLogSupplyPushFlow    ( const ASN1T_MsgLogSupplyPushFlow&           msg );

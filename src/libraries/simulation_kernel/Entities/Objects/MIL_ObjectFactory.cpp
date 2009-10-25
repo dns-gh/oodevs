@@ -14,6 +14,8 @@
 #include "MIL_Object_ABC.h"
 #include "MIL_ObjectManipulator_ABC.h"
 
+#include "simulation_kernel/Entities/MIL_Army_ABC.h"
+
 using namespace xml;
 
 MIL_ObjectLoader* MIL_ObjectFactory::pLoader_ = 0;
@@ -72,11 +74,19 @@ const MIL_ObjectType_ABC& MIL_ObjectFactory::FindType( const std::string& type )
 // Name: MIL_ObjectFactory::BuildObject
 // Created: JCR 2008-05-29
 // -----------------------------------------------------------------------------
-void MIL_ObjectFactory::BuildObject( xml::xistream& xis, MIL_Army_ABC& army )
+MIL_Object_ABC& MIL_ObjectFactory::BuildObject( xml::xistream& xis, MIL_Army_ABC& army )
 {
     MIL_Object_ABC* pObject = GetLoader().CreateObject( xis, army );
     if ( pObject )
+    {
         manager_.RegisterObject( *pObject );
+        return *pObject;
+    }
+    else
+    {
+        //@TODO MGD propaguade reference
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown object" ) );
+    }
 }
 
 // -----------------------------------------------------------------------------

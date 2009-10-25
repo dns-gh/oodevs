@@ -135,18 +135,18 @@ const MIL_ObjectType_ABC& MIL_ObjectManager::FindType( const std::string& type )
 // Name: MIL_ObjectManager::CreateObject
 // Created: NLD 2006-10-23
 // -----------------------------------------------------------------------------
-void MIL_ObjectManager::CreateObject( xml::xistream& xis, MIL_Army_ABC& army )
+MIL_Object_ABC& MIL_ObjectManager::CreateObject( xml::xistream& xis, MIL_Army_ABC& army )
 {
-    builder_->BuildObject( xis, army );
+    return builder_->BuildObject( xis, army );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectManager::CreateObject
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-ASN1T_EnumObjectErrorCode MIL_ObjectManager::CreateObject( const ASN1T_MagicActionCreateObject& asn )
-{  
-    MIL_Army* pArmy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( asn.team );
+ASN1T_EnumObjectErrorCode MIL_ObjectManager::CreateObject( const ASN1T_MagicActionCreateObject& asn, const tools::Resolver< MIL_Army >& armies )
+{  //@TODO MGD Try to externalize ASN when protobuff will be merged
+    MIL_Army* pArmy = armies.Find( asn.team );
     if( !pArmy )
         return EnumObjectErrorCode::error_invalid_camp;
     return builder_->BuildObject( asn, *pArmy );
@@ -189,14 +189,14 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC& army, const MIL_O
 // Name: MIL_ObjectManager::OnReceiveMsgObjectMagicAction
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_ObjectManager::OnReceiveMsgObjectMagicAction( const ASN1T_MsgObjectMagicAction& asnMsg, uint nCtx )
+void MIL_ObjectManager::OnReceiveMsgObjectMagicAction( const ASN1T_MsgObjectMagicAction& asnMsg, uint nCtx, const tools::Resolver< MIL_Army >& armies )
 {
     ASN1T_EnumObjectErrorCode nErrorCode = EnumObjectErrorCode::no_error;
 
     switch ( asnMsg.action.t )
     {
     case T_MsgObjectMagicAction_action_create_object:
-        nErrorCode = CreateObject( *asnMsg.action.u.create_object );
+        nErrorCode = CreateObject( *asnMsg.action.u.create_object, armies );
         break;
     case T_MsgObjectMagicAction_action_destroy_object:
         {

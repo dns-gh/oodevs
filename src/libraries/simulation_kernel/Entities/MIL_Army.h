@@ -23,15 +23,20 @@ namespace xml
     class xistream;
 }
 
+class ArmyFactory_ABC;
+class AutomateFactory_ABC;
 class DEC_KnowledgeBlackBoard_Army;
 class DEC_Knowledge_Object;
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_Population;
+class FormationFactory_ABC;
 class MIL_KnowledgeGroup;
 class MIL_EntityManager;
 class MIL_Formation;
 class MIL_Population;
 class MIL_Object_ABC;
+class MIL_ObjectManager;
+class PopulationFactory_ABC;
 struct ASN1T_MsgChangeDiplomacy;
 
 // =============================================================================
@@ -56,9 +61,11 @@ public:
     //@}
 
 public:
-             MIL_Army( MIL_EntityManager& manager, uint nID, xml::xistream& xis );
-             MIL_Army();
+    //! @name Constructor/Destructor
+    //@{
+             MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory, MIL_ObjectManager& objectFactory, PopulationFactory_ABC& populationFactory );
     virtual ~MIL_Army();
+     //@}
 
     //! @name CheckPoints
     //@{
@@ -130,19 +137,30 @@ private:
     //! @name Tools
     //@{
     E_Diplomacy GetDiplomacy( const MIL_Army_ABC& army ) const;
+    void ReadFormation          ( xml::xistream& xis, FormationFactory_ABC& formationFactory );
+    void ReadObject             ( xml::xistream& xis, MIL_ObjectManager& objectFactory );
+    void ReadPopulation         ( xml::xistream& xis, PopulationFactory_ABC& populationFactory );
     void ReadLogistic           ( xml::xistream& xis );
-    void ReadAutomat            ( xml::xistream& xis );
-    void ReadSubordinate        ( xml::xistream& xis, MIL_Automate* pSuperior );
+    void ReadAutomat            ( xml::xistream& xis, AutomateFactory_ABC& automateFactory );
+    void ReadSubordinate        ( xml::xistream& xis, AutomateFactory_ABC& automateFactory, MIL_Automate* pSuperior );
     void ReadDiplomacy          ( xml::xistream& xis );
     //@}
 
+    //! @name CheckPoint
+    //@{
+    explicit MIL_Army( ArmyFactory_ABC& armyFactory );
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Army* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_Army* role, const unsigned int /*version*/ );
+    //@}
+
 private:
-    MIL_EntityManager&  manager_;
     const uint          nID_;
           std::string   strName_;
           E_Diplomacy   nType_;
     T_DiplomacyMap      diplomacies_;
     T_KnowledgeGroupMap knowledgeGroups_;
+
+    ArmyFactory_ABC& armyFactory_;
 
     DEC_KnowledgeBlackBoard_Army* pKnowledgeBlackBoard_;
 

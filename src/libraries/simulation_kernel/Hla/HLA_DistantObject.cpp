@@ -145,7 +145,7 @@ void HLA_DistantObject::Deserialize( const AttributeIdentifier& attributeID, con
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* HLA_DistantObject::InstanciateObject()
 {
-    MIL_Army* pArmy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( strArmy_ );
+    MIL_Army* pArmy = 0;// = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( strArmy_ );//@TODO MGD give armies resolver to HLA role 
     if( !pArmy )
         return 0;
     if( localisation_.GetType() == TER_Localisation::eNone )

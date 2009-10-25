@@ -17,12 +17,15 @@
 #include "MIL_AgentTypePion.h"
 #include "Entities/Orders/MIL_PionOrderManager.h"
 
+#include "tools/Resolver.h"
+
 namespace xml
 {
     class xostream;
     class xistream;
 }
 
+class MIL_Army;
 class MIL_AgentPion;
 class MIL_Automate;
 class MIL_Fuseau;
@@ -110,7 +113,7 @@ public:
     void SendFullState() const;
     void SendKnowledge() const;
 
-    void OnReceiveMsgUnitMagicAction  ( const ASN1T_MsgUnitMagicAction&    msg );
+    void OnReceiveMsgUnitMagicAction  ( const ASN1T_MsgUnitMagicAction&    msg, const tools::Resolver< MIL_Army>& armies );
     void OnReceiveMsgOrder            ( const ASN1T_MsgUnitOrder&          msg ); 
     void OnReceiveMsgFragOrder        ( const ASN1T_MsgFragOrder&          msg );
     void OnReceiveMsgChangeSuperior   ( const MIL_EntityManager& manager, const ASN1T_MsgUnitChangeSuperior& msg );

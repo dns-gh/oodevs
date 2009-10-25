@@ -24,6 +24,10 @@ namespace xml
     class xistream;
 }
 
+class ArmyFactory_ABC;
+class AgentFactory_ABC;
+class AutomateFactory_ABC;
+class FormationFactory_ABC;
 class MIL_EffectManager;
 class MIL_ObjectManager;
 class MIL_Army;
@@ -48,9 +52,9 @@ class MIL_Config;
 class MIL_ProfilerMgr;
 class MIL_Time_ABC;
 class MIL_Intelligence;
-class AgentFactory_ABC;
-class AutomateFactory_ABC;
 class MIL_IDManager;
+class PopulationFactory_ABC;
+
 
 class HLA_Federate;
 
@@ -78,16 +82,8 @@ class DIA_Parameters;
 // =============================================================================
 class MIL_EntityManager : public MIL_EntityManager_ABC,
                           public tools::Resolver< MIL_AgentPion >,
-                          public tools::Resolver< MIL_Automate >,
                           private boost::noncopyable
 {
-
-public:
-    //! @name Types
-    //@{
-    typedef std::map< uint, MIL_Army*> T_ArmyMap;
-    typedef T_ArmyMap::const_iterator  CIT_ArmyMap;
-    //@}
 
 public:
              MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ProfilerMgr& profiler, HLA_Federate* hla );
@@ -99,10 +95,8 @@ public:
 
     //! @name Factory
     //@{
-    void CreateFormation   ( xml::xistream& xis, MIL_Army& army, MIL_Formation* parent = 0 );
     void CreateAutomat     ( xml::xistream& xis, MIL_Automate&  parent );
     void CreateAutomat     ( xml::xistream& xis, MIL_Formation& formation );
-    void CreatePopulation  ( xml::xistream& xis, MIL_Army& army );
     void CreateIntelligence( xml::xistream& xis, MIL_Formation& formation );
     MIL_AgentPion&  CreatePion( const MIL_AgentTypePion& type, MIL_Automate&  automate , xml::xistream& xis );
     MIL_AgentPion&  CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition );
@@ -116,17 +110,14 @@ public:
 
     //! @name Accessors
     //@{
-                  MIL_Army*           FindArmy      ( const std::string& strName ) const;
-                  MIL_Army*           FindArmy      ( uint nID ) const;
-                  MIL_Formation*      FindFormation ( uint nID ) const;
     virtual       MIL_Automate*       FindAutomate  ( uint nID ) const;
-                  MIL_Population*     FindPopulation( uint nID ) const;
     virtual       MIL_AgentPion*      FindAgentPion ( uint nID ) const;
                   MIL_Object_ABC*     FindObject    ( uint nID ) const;
-    virtual const MIL_ObjectType_ABC& FindObjectType( const std::string& type ) const;    
-            const T_ArmyMap&          GetArmies     () const;
+    virtual const MIL_ObjectType_ABC& FindObjectType( const std::string& type ) const;
+        
+    const tools::Resolver< MIL_Army >& MIL_EntityManager::GetArmies() const;
     
-          MIL_EffectManager& GetEffectManager() const;
+                   MIL_EffectManager& GetEffectManager() const;
     //@}
 
     //! @name Stats
@@ -185,14 +176,9 @@ public:
     //@}
     
 private:
-    //! @name Types
+
+    //! @name types
     //@{
-    typedef std::map< uint, MIL_Formation* > T_FormationMap;
-    typedef T_FormationMap::const_iterator   CIT_FormationMap;
-
-    typedef std::map< uint, MIL_Population* > T_PopulationMap;
-    typedef T_PopulationMap::const_iterator   CIT_PopulationMap;
-
     typedef std::map< uint, MIL_Intelligence* > T_IntelligenceMap;
     typedef T_IntelligenceMap::const_iterator   CIT_IntelligenceMap;
     //@}
@@ -212,7 +198,6 @@ private:
     void InitializeArmies     ( xml::xistream& xis );
     void InitializeDiplomacy  ( xml::xistream& xis );
     void InitializePopulations( xml::xistream& xis );
-    void ReadArmy             ( xml::xistream& xis );
     void ReadDiplomacy        ( xml::xistream& xis );
     //@}
 
@@ -234,18 +219,17 @@ private:
     MIL_EffectManager&  effectManager_;
     MIL_ObjectManager*  pObjectManager_;
 
-    T_ArmyMap         armies_;
-    T_FormationMap    formations_;
     T_IntelligenceMap intelligences_;
-
-
-    T_PopulationMap populations_;
 
     // ID Manager
     std::auto_ptr< MIL_IDManager > idManager_;
     // Factories
+    std::auto_ptr< PopulationFactory_ABC > populationFactory_;
     std::auto_ptr< AgentFactory_ABC >  agentFactory_;
     std::auto_ptr< AutomateFactory_ABC > automateFactory_;
+    std::auto_ptr< FormationFactory_ABC > formationFactory_;
+    std::auto_ptr< ArmyFactory_ABC > armyFactory_;
+
 
     // Profiling
     MT_Profiler   profiler_;

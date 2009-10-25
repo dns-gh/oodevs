@@ -14,6 +14,9 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/MIL_AgentType_ABC.h"
+
+#include "tools/Resolver.h"
+
 #include <boost/ptr_container/serialize_ptr_vector.hpp>
 #include <xeumeuleu/xml.h>
 
@@ -102,7 +105,8 @@ void SupplyCapacity::ProcessAgentEntering( Object& object, MIL_Agent_ABC& agent 
         {
             ASN1T_MsgUnitMagicAction asnMsg;
             asnMsg.action.t = T_MsgUnitMagicAction_action_recompletement_ressources;
-            pion->OnReceiveMsgUnitMagicAction( asnMsg );
+            //@TODO MGD replace asn by action in general, temp hack with an empty resolver because this magic action dont't use armies
+            pion->OnReceiveMsgUnitMagicAction( asnMsg, tools::Resolver< MIL_Army >() );
         }
     }
 }

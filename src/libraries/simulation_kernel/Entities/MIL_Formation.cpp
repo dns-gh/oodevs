@@ -16,6 +16,10 @@
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Network/NET_ASN_Messages.h"
+
+#include "simulation_kernel/FormationFactory_ABC.h"
+#include "simulation_kernel/AutomateFactory_ABC.h"
+
 #include <xeumeuleu/xml.h>
 
 
@@ -24,15 +28,14 @@
 // Name: MIL_Formation constructor
 // Created: NLD 2006-10-11
 // -----------------------------------------------------------------------------
-MIL_Formation::MIL_Formation( MIL_EntityManager& manager, uint nID, MIL_Army& army, xml::xistream& xis, MIL_Formation* pParent )
-    : nID_       ( nID )
-    , pArmy_     ( &army )
+MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army& army, MIL_Formation* pParent, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory )
+    : pArmy_     ( &army )
     , pParent_   ( pParent )
     , pLevel_    ( 0 )
     , strName_   ()
-    , formations_()
-    , automates_ ()
 {
+    xis >> xml::attribute( "id", nID_ );
+
     std::string strLevel;
     xis >> xml::attribute( "name", strName_ )
         >> xml::attribute( "level", strLevel );
@@ -41,12 +44,14 @@ MIL_Formation::MIL_Formation( MIL_EntityManager& manager, uint nID, MIL_Army& ar
     if( !pLevel_ )
         xis.error( "Unknown level" );
 
-    if( pParent )
+    if( pParent_ )
         pParent_->RegisterFormation( *this );
     else
         pArmy_->RegisterFormation( *this );
 
-    InitializeSubordinates( manager, xis );
+
+    xis >> xml::list( "formation", *this, &MIL_Formation::InitializeFormation, formationFactory )
+        >> xml::list( "automat", *this, &MIL_Formation::InitializeAutomate, automateFactory ); 
 }
 
 // -----------------------------------------------------------------------------
@@ -59,8 +64,6 @@ MIL_Formation::MIL_Formation()
     , pParent_   ( 0 )
     , pLevel_    ( 0 )
     , strName_   ()
-    , formations_()
-    , automates_ ()
 {
     // NOTHING
 }
@@ -72,30 +75,26 @@ MIL_Formation::MIL_Formation()
 MIL_Formation::~MIL_Formation()
 {
     assert( pArmy_ );
-    if( pParent_ )
-        pParent_->UnregisterFormation( *this );
-    else
+    if( !pParent_ )
         pArmy_->UnregisterFormation( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Formation::InitializeSubordinates
-// Created: AGE 2007-08-22
+// Created: MGD 2009-10-22
 // -----------------------------------------------------------------------------
-void MIL_Formation::InitializeSubordinates( MIL_EntityManager& manager, xml::xistream& xis )
+void MIL_Formation::InitializeFormation( xml::xistream& xis, FormationFactory_ABC& formationFactory )
 {
-    assert( pArmy_ );
-    xis >> xml::list( "formation"   , manager, &MIL_EntityManager::CreateFormation, *pArmy_, this )
-        >> xml::list( "automat"     , *this,   &MIL_Formation::CreateAutomat, manager, *this ); 
+    formationFactory.Create( xis, *pArmy_, this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Formation::CreateAutomat
-// Created: NLD 2007-09-07
+// Name: MIL_Formation::InitializeSubordinates
+// Created: MGD 2009-10-22
 // -----------------------------------------------------------------------------
-void MIL_Formation::CreateAutomat( xml::xistream& xis, MIL_EntityManager& manager, MIL_Formation& formation )
+void MIL_Formation::InitializeAutomate( xml::xistream& xis, AutomateFactory_ABC& automateFactory )
 {
-    manager.CreateAutomat( xis, formation );
+    automateFactory.Create( xis, *this );
 }
 
 // =============================================================================
@@ -153,8 +152,8 @@ void MIL_Formation::load( MIL_CheckPointInArchive& file, const uint )
    assert( pLevel_ );
 
    file >> strName_
-        >> formations_
-        >> automates_ ;
+        >> tools::Resolver< MIL_Formation >::elements_
+        >> tools::Resolver< MIL_Automate >::elements_;
 }
 
 // -----------------------------------------------------------------------------
@@ -170,8 +169,8 @@ void MIL_Formation::save( MIL_CheckPointOutArchive& file, const uint ) const
          << pParent_
          << level
          << strName_
-         << formations_
-         << automates_ ;
+         << tools::Resolver< MIL_Formation >::elements_
+         << tools::Resolver< MIL_Automate >::elements_;
 }
 
 // -----------------------------------------------------------------------------
@@ -187,11 +186,8 @@ void MIL_Formation::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "level", pLevel_->GetName() )
             << xml::attribute( "name", strName_ );
 
-    for( CIT_FormationSet it = formations_.begin(); it != formations_.end(); ++it )
-        (**it).WriteODB( xos );
-
-    for( CIT_AutomateSet it = automates_.begin(); it != automates_.end(); ++it )
-        (**it).WriteODB( xos );
+    tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::WriteODB, _1, boost::ref(xos) ) );
+    tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::WriteODB, _1, boost::ref(xos) ) );
 
     xos << xml::end(); // formation
 }
@@ -202,11 +198,8 @@ void MIL_Formation::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void MIL_Formation::WriteLogisticLinksODB( xml::xostream& xos ) const
 {
-    for( CIT_FormationSet it = formations_.begin(); it != formations_.end(); ++it )
-        (**it).WriteLogisticLinksODB( xos );
-
-    for( CIT_AutomateSet it = automates_.begin(); it != automates_.end(); ++it )
-        (**it).WriteLogisticLinksODB( xos );
+    tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::WriteLogisticLinksODB, _1, boost::ref(xos) ) );
+    tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::WriteLogisticLinksODB, _1, boost::ref(xos) ) );
 }
 
 // =============================================================================
@@ -234,11 +227,8 @@ void MIL_Formation::SendCreation() const
     }
     asn.Send();
 
-    for( CIT_FormationSet it = formations_.begin(); it != formations_.end(); ++it )
-        (**it).SendCreation();
-
-    for( CIT_AutomateSet it = automates_.begin(); it != automates_.end(); ++it )
-        (**it).SendCreation();
+    tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::SendCreation, _1 ) );//@TODO MGD Move to factory
+    tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::SendCreation, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -247,12 +237,8 @@ void MIL_Formation::SendCreation() const
 // -----------------------------------------------------------------------------
 void MIL_Formation::SendFullState() const
 {
-    for( CIT_FormationSet it = formations_.begin(); it != formations_.end(); ++it )
-        (**it).SendFullState();
-
-    for( CIT_AutomateSet it = automates_.begin(); it != automates_.end(); ++it )
-        (**it).SendFullState();
-
+    tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::SendFullState, _1 ) );
+    tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::SendFullState, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -273,15 +259,13 @@ uint MIL_Formation::GetID() const
 {
     return nID_;
 }
-
 // -----------------------------------------------------------------------------
 // Name: MIL_Formation::RegisterAutomate
 // Created: NLD 2006-10-13
 // -----------------------------------------------------------------------------
 void MIL_Formation::RegisterAutomate( MIL_Automate& automate )
 {
-    assert( automates_.find( &automate ) == automates_.end() );
-    automates_.insert( &automate );
+    tools::Resolver< MIL_Automate >::Register( automate.GetID(), automate );
 }
 
 // -----------------------------------------------------------------------------
@@ -290,8 +274,7 @@ void MIL_Formation::RegisterAutomate( MIL_Automate& automate )
 // -----------------------------------------------------------------------------
 void MIL_Formation::UnregisterAutomate( MIL_Automate& automate )
 {
-    assert( automates_.find( &automate ) != automates_.end() );
-    automates_.erase( &automate );
+    tools::Resolver< MIL_Automate >::Remove( automate.GetID() );
 }
 
 // -----------------------------------------------------------------------------
@@ -300,8 +283,7 @@ void MIL_Formation::UnregisterAutomate( MIL_Automate& automate )
 // -----------------------------------------------------------------------------
 void MIL_Formation::RegisterFormation( MIL_Formation& formation )
 {
-    assert( formations_.find( &formation ) == formations_.end() );
-    formations_.insert( &formation );
+    tools::Resolver< MIL_Formation >::Register( formation.GetID(), formation );
 }
 
 // -----------------------------------------------------------------------------
@@ -310,6 +292,5 @@ void MIL_Formation::RegisterFormation( MIL_Formation& formation )
 // -----------------------------------------------------------------------------
 void MIL_Formation::UnregisterFormation( MIL_Formation& formation )
 {
-    assert( formations_.find( &formation ) != formations_.end() );
-    formations_.erase( &formation );
+   tools::Resolver< MIL_Formation >::Remove( formation.GetID() );
 }

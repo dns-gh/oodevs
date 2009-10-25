@@ -44,7 +44,7 @@ class MIL_Population : public MIL_Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     MIL_Population( const MIL_PopulationType& type, uint nID, MIL_Army& army, xml::xistream& xis );
+     MIL_Population( xml::xistream& xis, const MIL_PopulationType& type, MIL_Army& army );
     ~MIL_Population();
     //@}
 

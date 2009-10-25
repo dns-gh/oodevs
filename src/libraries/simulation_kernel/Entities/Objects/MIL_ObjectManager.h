@@ -15,6 +15,7 @@
 #include "MIL.h"
 
 #include "game_asn/Simulation.h"
+#include "tools/Resolver.h"
 
 namespace xml
 {
@@ -22,6 +23,7 @@ namespace xml
 }
 
 class MIL_Army_ABC;
+class MIL_Army;
 class TER_Localisation;
 class MIL_Object_ABC;
 class MIL_ObjectType_ABC;
@@ -52,7 +54,8 @@ public:
     void ProcessEvents();
     void UpdateStates ();
 
-    void             CreateObject( xml::xistream& xis, MIL_Army_ABC& army ); 
+    //@TODO MGD return reference
+    MIL_Object_ABC&  CreateObject( xml::xistream& xis, MIL_Army_ABC& army ); 
     MIL_Object_ABC*  CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation );
     MIL_Object_ABC*  CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, ASN1T_EnumDemolitionTargetType obstacleType );
     MIL_Object_ABC*  CreateObject( MIL_Army_ABC& army, const MIL_ObjectBuilder_ABC& builder );
@@ -62,7 +65,7 @@ public:
 
     //! @name Network
     //@{
-    void OnReceiveMsgObjectMagicAction( const ASN1T_MsgObjectMagicAction& asnMsg, uint nCtx );
+    void OnReceiveMsgObjectMagicAction( const ASN1T_MsgObjectMagicAction& asnMsg, uint nCtx, const tools::Resolver< MIL_Army >& armies );
     //@}
 
     //! @name 
@@ -81,7 +84,7 @@ private:
 private:
     //! @name Tools
     //@{
-    ASN1T_EnumObjectErrorCode CreateObject( const ASN1T_MagicActionCreateObject& asn );    
+    ASN1T_EnumObjectErrorCode CreateObject( const ASN1T_MagicActionCreateObject& asn, const tools::Resolver< MIL_Army >& armies );    
     //@}
 
 private:

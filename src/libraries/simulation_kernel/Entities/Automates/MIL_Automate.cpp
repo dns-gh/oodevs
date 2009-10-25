@@ -989,7 +989,7 @@ void MIL_Automate::OnReceiveMsgUnitCreationRequest( const ASN1T_MsgUnitCreationR
 // Name: MIL_Automate::OnReceiveMsgUnitMagicAction
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgUnitMagicAction( const ASN1T_MsgUnitMagicAction& asnMsg )
+void MIL_Automate::OnReceiveMsgUnitMagicAction( const ASN1T_MsgUnitMagicAction& asnMsg, const tools::Resolver< MIL_Army >& armies )
 {
     if( asnMsg.action.t == T_MsgUnitMagicAction_action_move_to )
     {
@@ -1005,7 +1005,7 @@ void MIL_Automate::OnReceiveMsgUnitMagicAction( const ASN1T_MsgUnitMagicAction& 
     }
     else if( asnMsg.action.t == T_MsgUnitMagicAction_action_se_rendre )
     {
-        const MIL_Army* pSurrenderedToArmy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( asnMsg.action.u.se_rendre );
+        const MIL_Army* pSurrenderedToArmy = armies.Find( asnMsg.action.u.se_rendre );
         if( !pSurrenderedToArmy || *pSurrenderedToArmy == GetArmy() )
             throw NET_AsnException< ASN1T_EnumUnitErrorCode >( EnumUnitErrorCode::error_invalid_attribute );
         else if( IsSurrendered() )
@@ -1024,16 +1024,16 @@ void MIL_Automate::OnReceiveMsgUnitMagicAction( const ASN1T_MsgUnitMagicAction& 
             (**itPion).OnReceiveMagicCancelSurrender();
     }
     else
-        pPionPC_->OnReceiveMsgUnitMagicAction( asnMsg );
+        pPionPC_->OnReceiveMsgUnitMagicAction( asnMsg, armies );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate::OnReceiveMsgChangeKnowledgeGroup
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgChangeKnowledgeGroup( const ASN1T_MsgAutomatChangeKnowledgeGroup& asnMsg )
+void MIL_Automate::OnReceiveMsgChangeKnowledgeGroup( const ASN1T_MsgAutomatChangeKnowledgeGroup& asnMsg, const tools::Resolver< MIL_Army >& armies  )
 {
-    MIL_Army* pNewArmy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( asnMsg.oid_camp );
+    MIL_Army* pNewArmy = armies.Find( asnMsg.oid_camp );
     if( !pNewArmy || *pNewArmy != GetArmy() )
         throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_camp );
 
@@ -1076,11 +1076,11 @@ void MIL_Automate::OnReceiveMsgChangeLogisticLinks( const ASN1T_MsgAutomatChange
 // Name: MIL_Automate::OnReceiveMsgChangeSuperior
 // Created: NLD 2007-04-11
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgChangeSuperior( const ASN1T_MsgAutomatChangeSuperior& msg )
+void MIL_Automate::OnReceiveMsgChangeSuperior( const ASN1T_MsgAutomatChangeSuperior& msg, const tools::Resolver< MIL_Formation >& formations )
 {
     if( msg.oid_superior.t == T_MsgAutomatChangeSuperior_oid_superior_formation )
     {
-        MIL_Formation* pNewFormation = MIL_AgentServer::GetWorkspace().GetEntityManager().FindFormation( msg.oid_superior.u.formation );
+        MIL_Formation* pNewFormation = formations.Find( msg.oid_superior.u.formation );
         if( !pNewFormation )
             throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_formation );
         if( pNewFormation->GetArmy() != GetArmy() )

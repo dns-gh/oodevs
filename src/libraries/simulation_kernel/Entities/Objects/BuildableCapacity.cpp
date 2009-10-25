@@ -225,9 +225,11 @@ void BuildableCapacity::Destroy( Object& object )
     object.MarkForDestruction();
 
     // All the knowledges associated to this object MUST be destroyed (for all the teams ..)
-    const MIL_EntityManager::T_ArmyMap& armies = MIL_AgentServer::GetWorkspace().GetEntityManager().GetArmies();
-    for( MIL_EntityManager::CIT_ArmyMap itArmy = armies.begin(); itArmy != armies.end(); ++itArmy )
-        itArmy->second->GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( object );
+    const tools::Resolver< MIL_Army >& armies = MIL_AgentServer::GetWorkspace().GetEntityManager().GetArmies();
+    for( tools::Iterator< const MIL_Army& > it = armies.CreateIterator(); it.HasMoreElements(); )
+    {
+        it.NextElement().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( object );
+    }
 }
 
 // -----------------------------------------------------------------------------

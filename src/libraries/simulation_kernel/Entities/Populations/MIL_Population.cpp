@@ -60,10 +60,10 @@ void load_construct_data( Archive& archive, MIL_Population* population, const un
 // Name: MIL_Population constructor
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
-MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_Army& army, xml::xistream& xis )
+MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& type, MIL_Army& army )
     : MIL_Entity_ABC          ( xis ) 
     , pType_                  ( &type )
-    , nID_                    ( nID )
+    , nID_                    ( xml::attribute< unsigned int >( xis, "id" ) )
     , pArmy_                  ( &army )
     , pDefaultAttitude_       ( 0 )
     , rPeopleCount_           ( 0. )

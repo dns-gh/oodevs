@@ -20,17 +20,46 @@
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/MIL_ObjectManager.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "MIL_Formation.h"
 #include "MIL_EntityManager.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_AsnException.h"
 #include "MIL_Singletons.h"
+
+#include "simulation_kernel/ArmyFactory_ABC.h"
+#include "simulation_kernel/AutomateFactory_ABC.h"
+#include "simulation_kernel/FormationFactory_ABC.h"
+#include "simulation_kernel/PopulationFactory_ABC.h"
+
 #include <xeumeuleu/xml.h>
 
 MT_Converter< std::string, MIL_Army_ABC::E_Diplomacy > MIL_Army::diplomacyConverter_( eUnknown );
 
 BOOST_CLASS_EXPORT_GUID( MIL_Army, "MIL_Army" )
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::save_construct_data
+// Created: MGD 2009-10-24
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void save_construct_data( Archive& archive, const MIL_Army* army, const unsigned int /*version*/ )
+{
+    const ArmyFactory_ABC* const armyFactory = &army->armyFactory_;
+    archive << armyFactory;
+}
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::load_construct_data
+// Created: MGD 2009-10-24
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void load_construct_data( Archive& archive, MIL_Army* army, const unsigned int /*version*/ )
+{
+    ArmyFactory_ABC* armyFactory;
+    archive >> armyFactory;
+    ::new( army )MIL_Army( *armyFactory );
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Army::Initialize
@@ -62,48 +91,46 @@ void MIL_Army::Terminate()
 // Name: MIL_Army constructor
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_Army::MIL_Army( MIL_EntityManager& manager, uint id, xml::xistream& xis )
-    : manager_             ( manager )
-    , nID_                 ( id )
-    , strName_             ()
+MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory, MIL_ObjectManager& objectFactory, PopulationFactory_ABC& populationFactory )
+    : nID_                 ( xml::attribute< unsigned int >( xis, "id" ) )
+    , strName_             ( xml::attribute< std::string>( xis, "name") )
     , nType_               ( eUnknown )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_Army( *this ) )
+    , armyFactory_         ( armyFactory )
     , knowledgeGroups_     ()
     , diplomacies_         ()
 {
     std::string strType;
-    xis >> xml::attribute( "name", strName_ )
-        >> xml::attribute( "type", strType );
+    xis >> xml::attribute( "type", strType );
 
     nType_ = diplomacyConverter_.Convert( strType );
 
-    MIL_Formation* formation = 0;
     xis >> xml::start( "communication" )
             >> xml::list( "knowledge-group", *this, &MIL_Army::ReadLogistic )
         >> xml::end()
         >> xml::start( "tactical" )
-            >> xml::list( "formation", manager_, &MIL_EntityManager::CreateFormation, *this, formation )
+            >> xml::list( "formation", *this, &MIL_Army::ReadFormation, formationFactory )
         >> xml::end()
         >> xml::start( "objects" )
-            >> xml::list( "object", manager_, &MIL_EntityManager::CreateObject, *this )
+            >> xml::list( "object", *this, &MIL_Army::ReadObject, objectFactory )
         >> xml::end()
         >> xml::start( "logistic" )
-            >> xml::list( "automat", *this, &MIL_Army::ReadAutomat  )
+            >> xml::list( "automat", *this, &MIL_Army::ReadAutomat, automateFactory  )
         >> xml::end()
         >> xml::start( "populations" )
-            >> xml::list( "population", manager_, &MIL_EntityManager::CreatePopulation, *this )
+            >> xml::list( "population", *this, &MIL_Army::ReadPopulation, populationFactory )
         >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Army constructor
-// Created: JVT 2005-03-24
+// Created: MGD 2009-10-24
 // -----------------------------------------------------------------------------
-MIL_Army::MIL_Army()
-    : manager_( MIL_Singletons::GetEntityManager() )
-    , nID_    ( (uint)-1 )
+MIL_Army::MIL_Army( ArmyFactory_ABC& armyFactory )
+    : armyFactory_( armyFactory )
+    , nID_( 0 )
 {
-    // NOTHING
+    
 }
 
 // -----------------------------------------------------------------------------
@@ -246,6 +273,33 @@ void MIL_Army::InitializeDiplomacy( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Army::ReadFormation
+// Created: MGD 2009-10-24
+// -----------------------------------------------------------------------------
+void MIL_Army::ReadFormation( xml::xistream& xis, FormationFactory_ABC& formationFactory )
+{
+    MIL_Formation& formation = formationFactory.Create( xis, *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::ReadObject
+// Created: MGD 2009-10-24
+// -----------------------------------------------------------------------------
+void MIL_Army::ReadObject( xml::xistream& xis, MIL_ObjectManager& objectFactory )
+{
+    MIL_Object_ABC& object = objectFactory.CreateObject( xis, *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::ReadPopulation
+// Created: MGD 2009-10-24
+// -----------------------------------------------------------------------------
+void MIL_Army::ReadPopulation( xml::xistream& xis, PopulationFactory_ABC& populationFactory )
+{
+    MIL_Population& population = populationFactory.Create( xis, *this );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Army::ReadDiplomacy
 // Created: ABL 2007-07-10
 // -----------------------------------------------------------------------------
@@ -261,7 +315,7 @@ void MIL_Army::ReadDiplomacy( xml::xistream& xis )
     if( nDiplomacy == eUnknown )
         xis.error( "Unknown diplomacy relation between armies" );
 
-    MIL_Army* pArmy = manager_.FindArmy( nTeam );
+    MIL_Army* pArmy = armyFactory_.Find( nTeam );
     if( !pArmy )
         xis.error( "Unknown army" );
 
@@ -297,12 +351,12 @@ void MIL_Army::ReadLogistic( xml::xistream& xis )
 // Name: MIL_Army::ReadAutomat
 // Created: ABL 2007-07-10
 // -----------------------------------------------------------------------------
-void MIL_Army::ReadAutomat( xml::xistream& xis )
+void MIL_Army::ReadAutomat( xml::xistream& xis, AutomateFactory_ABC& automateFactory )
 {
     uint id;
     xis >> xml::attribute( "id", id );
 
-    MIL_Automate* pSuperior = manager_.FindAutomate( id );
+    MIL_Automate* pSuperior = automateFactory.Find( id );
     if( !pSuperior )
         xis.error( "Unknown automat" );
     if( pSuperior->GetArmy() != *this )
@@ -310,20 +364,20 @@ void MIL_Army::ReadAutomat( xml::xistream& xis )
     if( !pSuperior->GetType().IsLogistic() )
         xis.error( "Automat isn't a logistic automat" );
 
-    xis >> xml::list( "subordinate" , *this, &MIL_Army::ReadSubordinate, pSuperior );
+    xis >> xml::list( "subordinate" , *this, &MIL_Army::ReadSubordinate, automateFactory, pSuperior );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Army::ReadSubordinate
 // Created: ABL 2007-07-10
 // -----------------------------------------------------------------------------
-void MIL_Army::ReadSubordinate( xml::xistream& xis, MIL_Automate* pSuperior )
+void MIL_Army::ReadSubordinate( xml::xistream& xis, AutomateFactory_ABC& automateFactory, MIL_Automate* pSuperior )
 {
     uint        nSubordinateID;
     std::string strLink;
     xis >> xml::attribute( "id", nSubordinateID );
 
-    MIL_Automate* pSubordinate = manager_.FindAutomate( nSubordinateID );
+    MIL_Automate* pSubordinate = automateFactory.Find( nSubordinateID );
     if( !pSubordinate )
         xis.error( "Unknown automat" );
     if( pSubordinate->GetArmy() != *this )
@@ -538,7 +592,7 @@ void MIL_Army::SendKnowledge() const
 // -----------------------------------------------------------------------------
 void MIL_Army::OnReceiveMsgChangeDiplomacy( const ASN1T_MsgChangeDiplomacy& asnMsg )
 {
-    MIL_Army* pArmy2 = manager_.FindArmy( asnMsg.oid_camp2 );
+    MIL_Army* pArmy2 = armyFactory_.Find( asnMsg.oid_camp2 );
     if( !pArmy2 || *pArmy2 == *this )
         throw NET_AsnException< ASN1T_EnumChangeDiplomacyErrorCode >( EnumChangeDiplomacyErrorCode::error_invalid_camp );
 

@@ -834,7 +834,7 @@ void  MIL_AgentPion::OnReceiveMsgRecoverHumansTransporters()
 // Name: MIL_AgentPion::OnReceiveMsgUnitMagicAction
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgUnitMagicAction( const ASN1T_MsgUnitMagicAction& asnMsg )
+void MIL_AgentPion::OnReceiveMsgUnitMagicAction( const ASN1T_MsgUnitMagicAction& asnMsg, const tools::Resolver< MIL_Army>& armies )
 {
     switch( asnMsg.action.t )
     {
@@ -848,8 +848,8 @@ void MIL_AgentPion::OnReceiveMsgUnitMagicAction( const ASN1T_MsgUnitMagicAction&
         case T_MsgUnitMagicAction_action_destruction_totale         : OnReceiveMsgDestroyAll                 (); break;
         case T_MsgUnitMagicAction_action_destruction_composante     : OnReceiveMsgDestroyComponent           (); break;
         case T_MsgUnitMagicAction_action_recuperer_transporteurs    : OnReceiveMsgRecoverHumansTransporters  (); break;
-        case T_MsgUnitMagicAction_action_se_rendre                  : pAutomate_->OnReceiveMsgUnitMagicAction( asnMsg ); return;        
-        case T_MsgUnitMagicAction_action_annuler_reddition          : pAutomate_->OnReceiveMsgUnitMagicAction( asnMsg ); return;        
+        case T_MsgUnitMagicAction_action_se_rendre                  : pAutomate_->OnReceiveMsgUnitMagicAction( asnMsg, armies ); return;        
+        case T_MsgUnitMagicAction_action_annuler_reddition          : pAutomate_->OnReceiveMsgUnitMagicAction( asnMsg, armies ); return;        
         default:
             assert( false );
     }

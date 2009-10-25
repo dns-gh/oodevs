@@ -253,9 +253,9 @@ void MIL_PopulationType::InitializeDiaFunctions()
 // Name: MIL_PopulationType::InstanciatePopulation
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
-MIL_Population& MIL_PopulationType::InstanciatePopulation( uint nID, MIL_Army& army, xml::xistream& xis ) const
+MIL_Population& MIL_PopulationType::InstanciatePopulation( xml::xistream& xis, MIL_Army& army ) const
 {
-    return *new MIL_Population( *this, nID, army, xis );
+    return *new MIL_Population( xis, *this, army );
 }
 
 // -----------------------------------------------------------------------------

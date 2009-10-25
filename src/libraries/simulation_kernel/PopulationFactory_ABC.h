@@ -7,39 +7,39 @@
 //
 // *****************************************************************************
 
-#ifndef __AutomateFactory_ABC_h_
-#define __AutomateFactory_ABC_h_
+#ifndef __PopulationFactory_ABC_h_
+#define __PopulationFactory_ABC_h_
 
 #include "tools/Resolver.h"
 
-class MIL_Automate;
-class MIL_AutomateType;
-class MIL_Formation;
+class MIL_Population;
+class MIL_Population;
 
 namespace xml
 {
     class xistream;
 }
+
+class MIL_Army;
 // =============================================================================
-/** @class  AutomateFactory_ABC
-    @brief  AutomateFactory_ABC
+/** @class  PopulationFactory_ABC
+    @brief  PopulationFactory_ABC
 */
-// Created: MGD 2009-08-13
+// Created: MGD 2009-10-24
 // =============================================================================
-class AutomateFactory_ABC : public tools::Resolver< MIL_Automate >
-                          , private boost::noncopyable
+class PopulationFactory_ABC : public tools::Resolver< MIL_Population >
+                      , private boost::noncopyable
 {
 
 public:
     //! @name Destructor
     //@{
-    virtual ~AutomateFactory_ABC();
+    virtual ~PopulationFactory_ABC() { DeleteAll(); };
     //@}
 
     //! @name Operations
     //@{
-    virtual MIL_Automate& Create( xml::xistream& xis, MIL_Automate& parent ) = 0;
-    virtual MIL_Automate& Create( xml::xistream& xis, MIL_Formation& parent ) = 0;
+    virtual MIL_Population& Create( xml::xistream& xis, MIL_Army& army ) = 0;
     //@}
 
     //! @name CheckPoint
@@ -50,18 +50,18 @@ public:
 protected:
     //! @name Constructor
     //@{
-    AutomateFactory_ABC();
+    PopulationFactory_ABC() {};
     //@}
 };
 
 // -----------------------------------------------------------------------------
-// Name: template< typename Archive > void AutomateFactory_ABC::serialize
+// Name: template< typename Archive > void PopulationFactory_ABC::serialize
 // Created: MGD 2009-10-24
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void AutomateFactory_ABC::serialize( Archive& file, const uint )
+void PopulationFactory_ABC::serialize( Archive& file, const uint )
 {
     file & elements_;
 }
 
-#endif // __AutomateFactory_ABC_h_
+#endif // __PopulationFactory_ABC_h_

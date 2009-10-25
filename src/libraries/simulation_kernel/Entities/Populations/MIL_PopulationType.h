@@ -56,7 +56,7 @@ public:
 
     //! @name Operations
     //@{
-          MIL_Population& InstanciatePopulation( uint nID, MIL_Army& army, xml::xistream& xis ) const;
+          MIL_Population& InstanciatePopulation( xml::xistream& xis, MIL_Army& army ) const;
     //@}
 
     //! @name Effects

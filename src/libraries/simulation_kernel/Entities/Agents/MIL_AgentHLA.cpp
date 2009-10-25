@@ -171,7 +171,7 @@ void MIL_AgentHLA::Deserialize( const AttributeIdentifier& attributeID, Deserial
     {
         std::string strArmy;
         deserializer >> strArmy;
-        pArmy_ = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( strArmy );
+        //pArmy_ = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( strArmy );//@TODO MGD give armies resolver ton HLA role
     }
     else if( attributeID == "type" )
     {

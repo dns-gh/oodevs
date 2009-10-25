@@ -16,6 +16,7 @@
 #include "Effects/MIL_EffectManager.h"
 #include "Objects/MIL_ObjectManager.h"
 #include "Objects/MIL_ObjectFactory.h"
+#include "Objects/MIL_Object_ABC.h"
 #include "Agents/Units/Categories/PHY_NatureLevel.h"
 #include "Agents/Units/Categories/PHY_NatureAtlas.h"
 #include "Agents/Units/Categories/PHY_RoePopulation.h"
@@ -57,8 +58,13 @@
 #include "Automates/MIL_AutomateType.h"
 #include "Automates/MIL_Automate.h"
 
-#include "AgentFactory.h"
-#include "AutomateFactory.h"
+#include "simulation_kernel/AgentFactory.h"
+#include "simulation_kernel/ArmyFactory.h"
+#include "simulation_kernel/AutomateFactory.h"
+#include "simulation_kernel/FormationFactory.h"
+#include "simulation_kernel/PopulationFactory.h"
+
+
 #include "Tools/MIL_IDManager.h"
 
 #include "Objects/MIL_FireClass.h"
@@ -155,7 +161,6 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , profilerManager_              ( profiler )
     , hla_                          ( hla )
     , effectManager_                ( effects )
-    , pObjectManager_               ( new MIL_ObjectManager() )
     , nRandomBreakdownsNextTimeStep_( 0  )
     , rKnowledgesTime_              ( 0. )
     , rAutomatesDecisionTime_       ( 0. )
@@ -165,8 +170,12 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , rEffectsTime_                 ( 0. )
     , rStatesTime_                  ( 0. )
     , idManager_                    ( new MIL_IDManager() )
+    , pObjectManager_               ( new MIL_ObjectManager() )
+    , populationFactory_            ( new PopulationFactory() )          
     , agentFactory_                 ( new AgentFactory( *idManager_ ) )
     , automateFactory_              ( new AutomateFactory( *idManager_ ) )
+    , formationFactory_             ( new FormationFactory( *automateFactory_ ) )
+    , armyFactory_                  ( new ArmyFactory( *automateFactory_, *formationFactory_, *pObjectManager_, *populationFactory_) )
 {
     if( !singleton_ )
         singleton_ = this;
@@ -181,7 +190,6 @@ MIL_EntityManager::MIL_EntityManager()
     , profilerManager_              ( MIL_Singletons::GetProfiler() )
     , hla_                          ( MIL_Singletons::GetHla() )
     , effectManager_                ( MIL_Singletons::GetEffectManager() )
-    , pObjectManager_               (  new MIL_ObjectManager() )
     , nRandomBreakdownsNextTimeStep_( 0  )
     , rKnowledgesTime_              ( 0. )
     , rAutomatesDecisionTime_       ( 0. )
@@ -191,8 +199,12 @@ MIL_EntityManager::MIL_EntityManager()
     , rEffectsTime_                 ( 0. )
     , rStatesTime_                  ( 0. )
     , idManager_                    ( new MIL_IDManager() )
+    , pObjectManager_               ( new MIL_ObjectManager() )
+    , populationFactory_            ( new PopulationFactory() )          
     , agentFactory_                 ( new AgentFactory( *idManager_ ) )
     , automateFactory_              ( new AutomateFactory( *idManager_ ) )
+    , formationFactory_             ( new FormationFactory( *automateFactory_ ) )
+    , armyFactory_                  ( new ArmyFactory( *automateFactory_, *formationFactory_, *pObjectManager_, *populationFactory_) )
 {
     if( !singleton_ )
         singleton_ = this;
@@ -322,14 +334,11 @@ void MIL_EntityManager::InitializeWeapons( xml::xistream& xis, MIL_Config& confi
 MIL_EntityManager::~MIL_EntityManager()
 {
     // ODB - $$$ Virer ça ... utiliser des factories
-    tools::Resolver< MIL_AgentPion >::DeleteAll();
-    tools::Resolver< MIL_Automate >::DeleteAll();
-
-    for( CIT_PopulationMap itPopulation = populations_.begin(); itPopulation != populations_.end(); ++itPopulation )
-        delete itPopulation->second;
-
-    for( CIT_ArmyMap itArmy = armies_.begin(); itArmy != armies_.end(); ++itArmy )
-        delete itArmy->second;
+    tools::Resolver< MIL_AgentPion >::DeleteAll();//@TODO move resolver in factory
+    automateFactory_->DeleteAll();
+    formationFactory_->DeleteAll(); //@TODO test if can be done in destructor or maintain this
+    armyFactory_->DeleteAll();
+    populationFactory_->DeleteAll();
 
     // Types
     MIL_PopulationAttitude        ::Terminate();
@@ -400,16 +409,16 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     InitializeArmies   ( xis );
     InitializeDiplomacy( xis );
 
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , tools::Resolver< MIL_Automate >::Count() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automateFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , tools::Resolver< MIL_AgentPion >::Count() ) );
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populations_.size() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populationFactory_->Count() ) );//@TODO MGD maybe add more informations
     
     xis >> xml::end();
 
     // Check automate composition
     if( config.CheckAutomateComposition() )
-    {
-        for( tools::Iterator< const MIL_Automate& > it = tools::Resolver< MIL_Automate >::CreateIterator(); it.HasMoreElements(); )
+    {//@TODO MGD move exception in called function
+        for( tools::Iterator< const MIL_Automate& > it = automateFactory_->CreateIterator(); it.HasMoreElements(); )
         {
             const MIL_Automate& automate = it.NextElement();
             if( !automate.CheckComposition() )
@@ -420,7 +429,7 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     // Disengage automata for frozen mode
     if( config.IsFrozenMode() )
     {
-        tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::Disengage, _1 ) );
+        automateFactory_->Apply( boost::bind( &MIL_Automate::Disengage, _1 ) );
     }
     UpdateStates();
 }
@@ -447,7 +456,7 @@ void MIL_EntityManager::ReadDiplomacy( xml::xistream& xis )
     uint id;
     xis >> xml::attribute( "id", id );
 
-    MIL_Army* pArmy = FindArmy( id );
+    MIL_Army* pArmy = armyFactory_->Find( id );
     if( !pArmy )
         xis.error( "Unknown side" );
     pArmy->InitializeDiplomacy( xis );
@@ -461,40 +470,11 @@ void MIL_EntityManager::InitializeArmies( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing armies" );
 
-    assert( armies_.empty() );
+    assert( armyFactory_->Count() == 0 );
 
     xis >> xml::start( "sides" )
-            >> xml::list( "side", *this, &MIL_EntityManager::ReadArmy )
+        >> xml::list( "side", boost::bind( &ArmyFactory_ABC::Create, boost::ref( *armyFactory_ ), _1 ) )
         >> xml::end();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::ReadArmy
-// Created: ABL 2007-07-09
-// -----------------------------------------------------------------------------
-void MIL_EntityManager::ReadArmy( xml::xistream& xis )
-{
-    uint id;
-    xis >> xml::attribute( "id", id );
-
-    MIL_Army*& pArmy = armies_[ id ];
-    if( pArmy )
-        xis.error( "Army already exists" );
-    pArmy = new MIL_Army( *this, id, xis );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::CreateFormation
-// Created: NLD 2006-10-11
-// -----------------------------------------------------------------------------
-void MIL_EntityManager::CreateFormation( xml::xistream& xis, MIL_Army& army, MIL_Formation* parent /*=0*/ )
-{
-    uint id;
-    xis >> xml::attribute( "id", id );
-    MIL_Formation*& pFormation = formations_[ id ];
-    if( pFormation )
-        xis.error( "Formation using this id already exists" );
-    pFormation = new MIL_Formation( *this,  id, army, xis, parent );
 }
 
 // -----------------------------------------------------------------------------
@@ -503,18 +483,8 @@ void MIL_EntityManager::CreateFormation( xml::xistream& xis, MIL_Army& army, MIL
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::CreateAutomat( xml::xistream& xis, MIL_Formation& formation )
 {
-    uint id;
-    std::string strType;
-
-    xis >> xml::attribute( "id", id )
-        >> xml::attribute( "type", strType );
-
-    const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( strType );
-    if( !pType )
-        xis.error( "Unknown automat type" );
-
-    MIL_Automate* pAutomate = automateFactory_->Create( *pType, formation, xis );
-    tools::Resolver< MIL_Automate >::Register( pAutomate->GetID(), *pAutomate );
+    //@TODO MGD Remove
+    automateFactory_->Create( xis, formation );
     // $$$ Network
 }
 
@@ -524,18 +494,8 @@ void MIL_EntityManager::CreateAutomat( xml::xistream& xis, MIL_Formation& format
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::CreateAutomat( xml::xistream& xis, MIL_Automate& parent )
 {
-    uint id;
-    std::string strType;
-
-    xis >> xml::attribute( "id", id )
-        >> xml::attribute( "type", strType );
-
-    const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( strType );
-    if( !pType )
-        xis.error( "Unknown automat type" );
-            
-    MIL_Automate* pAutomate = automateFactory_->Create( *pType, parent, xis );
-    tools::Resolver< MIL_Automate >::Register( pAutomate->GetID(), *pAutomate );
+    //@TODO MGD Remove
+    automateFactory_->Create( xis, parent );
     // $$$ Network
 }
 
@@ -573,43 +533,9 @@ MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL
     return *pPion;
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::CreatePopulation
-// Created: NLD 2005-02-08
-// -----------------------------------------------------------------------------
-void MIL_EntityManager::CreatePopulation( xml::xistream& xis, MIL_Army& army )
-{
-    uint id;
-    std::string strType;
-    xis >> xml::attribute( "id", id )
-        >> xml::attribute( "type", strType );
-
-    const MIL_PopulationType* pType = MIL_PopulationType::Find( strType );
-    if( !pType )
-        xis.error( "Unknown population type" );
-
-    MIL_Population*& pPopulation = populations_[ id ];
-    if( pPopulation )
-        xis.error( "Population using this id already exists" );
-
-    pPopulation = &pType->InstanciatePopulation( id, army, xis );
-}
-
 // =============================================================================
 // TOOLS
 // =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::FindArmy
-// Created: NLD 2004-08-11
-// -----------------------------------------------------------------------------
-MIL_Army* MIL_EntityManager::FindArmy( const std::string& strName ) const
-{
-    for( CIT_ArmyMap it = armies_.begin(); it != armies_.end(); ++it )
-        if( sCaseInsensitiveLess()( it->second->GetName(), strName ) )
-            return it->second;
-    return 0;
-}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::CreateObject
@@ -617,6 +543,7 @@ MIL_Army* MIL_EntityManager::FindArmy( const std::string& strName ) const
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::CreateObject( xml::xistream& xis, MIL_Army_ABC& army )
 {
+    //@TODO MGD REMOVE
     assert( pObjectManager_ );
     pObjectManager_->CreateObject( xis, army );
 }
@@ -692,15 +619,11 @@ void MIL_EntityManager::UpdateKnowledges()
 {
     profiler_.Start();
 
-    for( CIT_ArmyMap it = armies_.begin(); it != armies_.end(); ++it )
-        it->second->UpdateKnowledges();
-    for( CIT_PopulationMap it = populations_.begin(); it != populations_.end(); ++it )
-        it->second->UpdateKnowledges();
+    armyFactory_->Apply( boost::bind( &MIL_Army::UpdateKnowledges, _1 ) );
+    populationFactory_->Apply( boost::bind( &MIL_Population::UpdateKnowledges, _1 ) );
 
-    for( CIT_ArmyMap it = armies_.begin(); it != armies_.end(); ++it )
-        it->second->CleanKnowledges();
-    for( CIT_PopulationMap it = populations_.begin(); it != populations_.end(); ++it )
-        it->second->CleanKnowledges();
+    armyFactory_->Apply( boost::bind( &MIL_Army::CleanKnowledges, _1 ) );
+    populationFactory_->Apply( boost::bind( &MIL_Population::CleanKnowledges, _1 ) );
 
     rKnowledgesTime_ = profiler_.Stop();
 }
@@ -719,6 +642,12 @@ namespace
         pion.UpdateDecision( duration );
         MIL_AgentServer::GetWorkspace().GetProfilerManager().NotifyDecisionUpdated( pion, profiler.Stop() );
     }
+    void UpdatePopulation( MT_Profiler& profiler, float duration, MIL_Population& population )
+    {
+        profiler.Start();
+        population.UpdateDecision( duration );
+        MIL_AgentServer::GetWorkspace().GetProfilerManager().NotifyDecisionUpdated( population, profiler.Stop() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -733,8 +662,7 @@ void MIL_EntityManager::UpdateDecisions()
         MT_Profiler decisionUpdateProfiler;
 
         profiler_.Start();
-        tools::Resolver< MIL_Automate >::Apply( boost::bind( &UpdateAutomate, boost::ref(decisionUpdateProfiler), duration, _1 ) );
-
+        automateFactory_->Apply( boost::bind( &UpdateAutomate, boost::ref(decisionUpdateProfiler), duration, _1 ) );
         rAutomatesDecisionTime_ = profiler_.Stop();
 
         profiler_.Start();
@@ -742,18 +670,13 @@ void MIL_EntityManager::UpdateDecisions()
         rPionsDecisionTime_ = profiler_.Stop();
 
         profiler_.Start();
-        for( CIT_PopulationMap it = populations_.begin(); it != populations_.end(); ++it )
-        {
-            decisionUpdateProfiler.Start();
-            it->second->UpdateDecision( duration );
-            MIL_AgentServer::GetWorkspace().GetProfilerManager().NotifyDecisionUpdated( *it->second, decisionUpdateProfiler.Stop() );
-        }
+        populationFactory_->Apply( boost::bind( &UpdatePopulation, boost::ref(decisionUpdateProfiler), duration, _1 ) );
         rPopulationsDecisionTime_ = profiler_.Stop();
     }
     else
     {
         profiler_.Start();
-        tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::UpdateDecision, _1, duration ) );
+        automateFactory_->Apply( boost::bind( &MIL_Automate::UpdateDecision, _1, duration ) );
         rAutomatesDecisionTime_ = profiler_.Stop();
 
         profiler_.Start();
@@ -761,8 +684,7 @@ void MIL_EntityManager::UpdateDecisions()
         rPionsDecisionTime_ = profiler_.Stop();
 
         profiler_.Start();
-        for( CIT_PopulationMap it = populations_.begin(); it != populations_.end(); ++it )
-            it->second->UpdateDecision( duration );
+        populationFactory_->Apply( boost::bind( &MIL_Population::UpdateDecision, _1, duration ) );
         rPopulationsDecisionTime_ = profiler_.Stop();
     }
 }
@@ -775,11 +697,10 @@ void MIL_EntityManager::UpdateActions()
 {
     profiler_.Start();
 
-    tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::UpdateActions, _1 ) );
+    automateFactory_->Apply( boost::bind( &MIL_Automate::UpdateActions, _1 ) );
     tools::Resolver< MIL_AgentPion >::Apply( boost::bind( &MIL_AgentPion::UpdateActions, _1 ) );
 
-    for( CIT_PopulationMap it = populations_.begin(); it != populations_.end(); ++it )
-        it->second->UpdateActions();
+    populationFactory_->Apply( boost::bind( &MIL_Population::UpdateActions, _1 ) );
 
     rActionsTime_ = profiler_.Stop();
 }
@@ -807,15 +728,13 @@ void MIL_EntityManager::UpdateStates()
     profiler_.Start();
 
     // !! Automate avant Pions (?? => LOG ??)
-    tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::UpdateState, _1 ) );
+    automateFactory_->Apply( boost::bind( &MIL_Automate::UpdateState, _1 ) );
     tools::Resolver< MIL_AgentPion >::Apply( boost::bind( &MIL_AgentPion::UpdateState, _1 ) );
-    for( CIT_PopulationMap itPopulation = populations_.begin(); itPopulation != populations_.end(); ++itPopulation )
-        itPopulation->second->UpdateState();
+    populationFactory_->Apply( boost::bind( &MIL_Population::UpdateState, _1 ) );
 
-    tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::UpdateNetwork, _1 ) );
+    automateFactory_->Apply( boost::bind( &MIL_Automate::UpdateNetwork, _1 ) );
     tools::Resolver< MIL_AgentPion >::Apply( boost::bind( &MIL_AgentPion::UpdateNetwork, _1 ) );
-    for( CIT_PopulationMap itPopulation = populations_.begin(); itPopulation != populations_.end(); ++itPopulation )
-        itPopulation->second->UpdateNetwork();
+    populationFactory_->Apply( boost::bind( &MIL_Population::UpdateState, _1 ) );
 
     assert( pObjectManager_ );
     pObjectManager_->UpdateStates();
@@ -864,10 +783,8 @@ void MIL_EntityManager::Update()
 void MIL_EntityManager::Clean()
 {
     tools::Resolver< MIL_AgentPion >::Apply( boost::bind( &MIL_AgentPion::Clean, _1 ) );
-    tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::Clean, _1 ) );
-
-    for( CIT_PopulationMap itPopulation = populations_.begin(); itPopulation != populations_.end(); ++itPopulation )
-        itPopulation->second->Clean();
+    automateFactory_->Apply( boost::bind( &MIL_Automate::Clean, _1 ) );
+    populationFactory_->Apply( boost::bind( &MIL_Population::Clean, _1 ) );
 }
 
 // =============================================================================
@@ -880,15 +797,9 @@ void MIL_EntityManager::Clean()
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::SendStateToNewClient() const
 {
-    for( CIT_ArmyMap itArmy = armies_.begin(); itArmy != armies_.end(); ++itArmy )
-        itArmy->second->SendCreation();
-
-    for( CIT_ArmyMap itArmy = armies_.begin(); itArmy != armies_.end(); ++itArmy )
-        itArmy->second->SendFullState();
-
-    // Knowledge
-    for( CIT_ArmyMap itArmy = armies_.begin(); itArmy != armies_.end(); ++itArmy )
-        itArmy->second->SendKnowledge();
+    armyFactory_->Apply( boost::bind( &MIL_Army::SendCreation, _1 ) );
+    armyFactory_->Apply( boost::bind( &MIL_Army::SendFullState, _1 ) );
+    armyFactory_->Apply( boost::bind( &MIL_Army::SendKnowledge, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -952,9 +863,9 @@ void MIL_EntityManager::OnReceiveMsgUnitMagicAction( const ASN1T_MsgUnitMagicAct
     try
     {
         if( MIL_Automate*  pAutomate = FindAutomate ( asnMsg.oid ) )
-            pAutomate->OnReceiveMsgUnitMagicAction( asnMsg );
+            pAutomate->OnReceiveMsgUnitMagicAction( asnMsg, *armyFactory_ );
         else if( MIL_AgentPion* pPion = FindAgentPion( asnMsg.oid ) )
-            pPion->OnReceiveMsgUnitMagicAction( asnMsg );
+            pPion->OnReceiveMsgUnitMagicAction( asnMsg, *armyFactory_ );
         else
             throw NET_AsnException< ASN1T_EnumUnitErrorCode >( EnumUnitErrorCode::error_invalid_unit );
     }
@@ -977,7 +888,7 @@ void MIL_EntityManager::OnReceiveMsgPopulationOrder( const ASN1T_MsgPopulationOr
 
     try
     {
-        MIL_Population* pPopulation = FindPopulation( asnMsg.oid );
+        MIL_Population* pPopulation = populationFactory_->Find( asnMsg.oid );
         if( !pPopulation )
             throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_unit );
         pPopulation->OnReceiveMsgOrder( asnMsg );
@@ -1003,7 +914,7 @@ void MIL_EntityManager::OnReceiveMsgFragOrder( const ASN1T_MsgFragOrder& asnMsg,
     {
         if( MIL_Automate* pAutomate = FindAutomate  ( asnMsg.oid ) )
             pAutomate->OnReceiveMsgFragOrder( asnMsg );
-        else if( MIL_Population* pPopulation = FindPopulation( asnMsg.oid ) )
+        else if( MIL_Population* pPopulation = populationFactory_->Find( asnMsg.oid ) )
             pPopulation->OnReceiveMsgFragOrder( asnMsg );
         else if( MIL_AgentPion* pPion = FindAgentPion ( asnMsg.oid ) )
             pPion->OnReceiveMsgFragOrder( asnMsg );
@@ -1070,7 +981,7 @@ void MIL_EntityManager::OnReceiveMsgUnitCreationRequest( const ASN1T_MsgUnitCrea
 void MIL_EntityManager::OnReceiveMsgObjectMagicAction( const ASN1T_MsgObjectMagicAction& asnMsg, uint nCtx )
 {
     assert( pObjectManager_ );
-    pObjectManager_->OnReceiveMsgObjectMagicAction( asnMsg, nCtx );
+    pObjectManager_->OnReceiveMsgObjectMagicAction( asnMsg, nCtx, *armyFactory_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -1085,7 +996,7 @@ void MIL_EntityManager::OnReceiveMsgPopulationMagicAction( const ASN1T_MsgPopula
 
     try
     {
-        MIL_Population* pPopulation = FindPopulation( asnMsg.oid );
+        MIL_Population* pPopulation = populationFactory_->Find( asnMsg.oid );
         if( !pPopulation )
             throw NET_AsnException< ASN1T_EnumPopulationErrorCode >( EnumPopulationErrorCode::error_invalid_unit );
         pPopulation->OnReceiveMsgPopulationMagicAction( asnMsg );
@@ -1110,7 +1021,7 @@ void MIL_EntityManager::OnReceiveMsgChangeDiplomacy( const ASN1T_MsgChangeDiplom
 
     try
     {
-        MIL_Army* pArmy1 = FindArmy( asnMsg.oid_camp1 );
+        MIL_Army* pArmy1 = armyFactory_->Find( asnMsg.oid_camp1 );
         if( !pArmy1 )
             throw NET_AsnException< ASN1T_EnumChangeDiplomacyErrorCode >( EnumChangeDiplomacyErrorCode::error_invalid_camp );
         pArmy1->OnReceiveMsgChangeDiplomacy( asnMsg );
@@ -1135,7 +1046,7 @@ void MIL_EntityManager::OnReceiveMsgAutomateChangeKnowledgeGroup( const ASN1T_Ms
         MIL_Automate* pAutomate = FindAutomate( asnMsg.oid );
         if( !pAutomate )
             throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_automate );
-        pAutomate->OnReceiveMsgChangeKnowledgeGroup( asnMsg );
+        pAutomate->OnReceiveMsgChangeKnowledgeGroup( asnMsg, *armyFactory_ );
     }
     catch( NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >& e )
     {
@@ -1203,7 +1114,7 @@ void MIL_EntityManager::OnReceiveMsgAutomateChangeSuperior( const ASN1T_MsgAutom
         MIL_Automate* pAutomate = FindAutomate( asnMsg.oid );
         if( !pAutomate )
             throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_automate );
-        pAutomate->OnReceiveMsgChangeSuperior( asnMsg ); 
+        pAutomate->OnReceiveMsgChangeSuperior( asnMsg, *formationFactory_ ); 
     }
     catch( NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >& e )
     {
@@ -1307,8 +1218,7 @@ void MIL_EntityManager::OnReceiveMsgLogSupplyPushFlow( const ASN1T_MsgLogSupplyP
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::ChannelPopulations( const TER_Localisation& localisation )
 {
-    for( CIT_PopulationMap it = populations_.begin(); it != populations_.end(); ++it )
-        it->second->NotifyChanneled( localisation );
+    populationFactory_->Apply( boost::bind( &MIL_Population::NotifyChanneled, _1, localisation ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1321,12 +1231,16 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const uint )
     delete pObjectManager_;
     pObjectManager_ = 0;
 
+    ArmyFactory * armyFactory;
+    FormationFactory * formationFactory;
+    AutomateFactory * automateFactory;
+    PopulationFactory * populationFactory;
     file //>> effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
-         >> armies_
-         >> formations_
+         >> armyFactory
+         >> formationFactory//@TODO MGD serialize
          >> tools::Resolver< MIL_AgentPion >::elements_
-         >> tools::Resolver< MIL_Automate >::elements_
-         >> populations_
+         >> automateFactory
+         >> populationFactory
          >> pObjectManager_
          >> rKnowledgesTime_
          >> rAutomatesDecisionTime_
@@ -1337,9 +1251,14 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const uint )
          >> rStatesTime_
          >> nRandomBreakdownsNextTimeStep_;
 
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , tools::Resolver< MIL_Automate >::Count() ) );
+    armyFactory_.reset( armyFactory );
+    formationFactory_.reset( formationFactory );
+    automateFactory_.reset( automateFactory );
+    populationFactory_.reset( populationFactory );
+
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automateFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , tools::Resolver< MIL_AgentPion >::Count() ) );
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populations_.size() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populationFactory_->Count() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1348,12 +1267,17 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const uint )
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
+    const ArmyFactory_ABC * const tempArmy = armyFactory_.get();
+    const FormationFactory_ABC * const tempFormationFactory = formationFactory_.get();//@TODO MGD See to move std::auto_ptr serialization in an include file in tools
+    const AutomateFactory_ABC * const tempAutomateFactory = automateFactory_.get();
+    const PopulationFactory_ABC * const populationFactory = populationFactory_.get();
+
     file //<< effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
-         << armies_
-         << formations_
+         << tempArmy
+         << tempFormationFactory
          << tools::Resolver< MIL_AgentPion >::elements_
-         << tools::Resolver< MIL_Automate >::elements_
-         << populations_
+         << tempAutomateFactory
+         << populationFactory
          << pObjectManager_
          << rKnowledgesTime_
          << rAutomatesDecisionTime_
@@ -1373,40 +1297,14 @@ void MIL_EntityManager::WriteODB( xml::xostream& xos ) const
 {
     xos << xml::start( "orbat" )
             << xml::start( "sides" );
-    for( CIT_ArmyMap it = armies_.begin(); it != armies_.end(); ++it )
-        it->second->WriteODB( xos );
+                armyFactory_->Apply( boost::bind( &MIL_Army::WriteODB, _1, boost::ref( xos ) ) );
     xos     << xml::end();
 
     xos     << xml::start( "diplomacies" );
-    for( CIT_ArmyMap it = armies_.begin(); it != armies_.end(); ++it )
-        it->second->WriteDiplomacyODB( xos );
+                armyFactory_->Apply( boost::bind( &MIL_Army::WriteDiplomacyODB, _1, boost::ref( xos ) ) );
     xos     << xml::end();
 
     xos << xml::end();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::FindFormation
-// Created: NLD 2006-11-13
-// -----------------------------------------------------------------------------
-MIL_Formation* MIL_EntityManager::FindFormation( uint nID ) const
-{
-    CIT_FormationMap it = formations_.find( nID );
-    if( it == formations_.end() )
-        return 0;
-    return it->second;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::FindArmy
-// Created: NLD 2004-08-11
-// -----------------------------------------------------------------------------
-MIL_Army* MIL_EntityManager::FindArmy( uint nID ) const
-{
-    CIT_ArmyMap it = armies_.find( nID );
-    if( it == armies_.end() )
-        return 0;
-    return it->second;
 }
 
 // -----------------------------------------------------------------------------
@@ -1414,8 +1312,8 @@ MIL_Army* MIL_EntityManager::FindArmy( uint nID ) const
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
 MIL_Automate* MIL_EntityManager::FindAutomate( uint nID ) const
-{
-    return tools::Resolver< MIL_Automate >::Find( nID );
+{//@TODO MGD Remove
+    return automateFactory_->Find( nID );
 }
 
 // -----------------------------------------------------------------------------
@@ -1428,24 +1326,13 @@ MIL_AgentPion* MIL_EntityManager::FindAgentPion( uint nID ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::FindPopulation
-// Created: NLD 2004-08-30
-// -----------------------------------------------------------------------------
-MIL_Population* MIL_EntityManager::FindPopulation( uint nID ) const
-{
-    CIT_PopulationMap it = populations_.find( nID );
-    if( it == populations_.end() )
-        return 0;
-    return it->second;
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::GetArmies
-// Created: NLD 2004-09-01
+// Created: NLD 2004-09-01 //@TODO MGD just use on time in object to destroy knowledge, find a way to remove this function
 // -----------------------------------------------------------------------------
-const MIL_EntityManager::T_ArmyMap& MIL_EntityManager::GetArmies() const
+const tools::Resolver< MIL_Army >& MIL_EntityManager::GetArmies() const
 {
-    return armies_;
+    return *armyFactory_;
 }
 
 // -----------------------------------------------------------------------------
