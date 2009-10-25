@@ -75,7 +75,9 @@ MIL_Formation::MIL_Formation()
 MIL_Formation::~MIL_Formation()
 {
     assert( pArmy_ );
-    if( !pParent_ )
+    if( pParent_ )
+        pParent_->UnregisterFormation( *this );
+    else
         pArmy_->UnregisterFormation( *this );
 }
 
