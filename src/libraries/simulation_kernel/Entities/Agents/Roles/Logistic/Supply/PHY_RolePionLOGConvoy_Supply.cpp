@@ -13,9 +13,10 @@
 #include "PHY_RolePionLOGConvoy_Supply.h"
 #include "PHY_StockConvoy.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
-#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
+
+#include "simulation_kernel/LocationActionNotificationHandler_ABC.h"
 #include "simulation_kernel/SpeedComputer_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePionLOGConvoy_Supply, "PHY_RolePionLOGConvoy_Supply" )
@@ -73,9 +74,8 @@ void PHY_RolePionLOGConvoy_Supply::serialize( Archive& file, const uint )
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOGConvoy_Supply::Update( bool bIsDead )
 { 
-    //@TODO AHC Add RolePionLOGConvoy in move compute modifiers
     if( bIsDead )
-        pion_.GetRole< PHY_RoleInterface_Location >().Follow( pion_.GetAutomate().GetPionPC() );
+        pion_.Apply( &location::LocationActionNotificationHandler_ABC::Follow, pion_.GetAutomate().GetPionPC() );
 }
     
 // -----------------------------------------------------------------------------

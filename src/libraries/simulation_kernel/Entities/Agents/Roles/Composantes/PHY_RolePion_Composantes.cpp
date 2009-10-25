@@ -1653,7 +1653,7 @@ void PHY_RolePion_Composantes::NotifyHumanHasChanged()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::NotifyTransportHasChanged()
 {
-    bTransportHasChanged_ = true;
+    bTransportHasChanged_ = true;//@TODO MGD See to remove it isn't more called
 }
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::NotifyIsLoaded

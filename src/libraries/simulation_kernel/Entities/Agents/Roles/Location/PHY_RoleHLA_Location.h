@@ -48,11 +48,8 @@ public:
     virtual void Update( bool bIsDead ) {};
     virtual void Clean () {};
 
-    virtual void Hide     () {};
-    virtual void Show     ( const MT_Vector2D& vNewPosition ) {};
     virtual void MagicMove( const MT_Vector2D& vNewPosition ) {};
     virtual void Move     ( const MT_Vector2D& vNewPosition, const MT_Vector2D& vNewDirection, MT_Float rNewSpeed ) {};
-    virtual void Follow   ( const MIL_Agent_ABC& agent ) {};
     virtual void Fly      ( MT_Float rHeight ) {};
     //@}
 

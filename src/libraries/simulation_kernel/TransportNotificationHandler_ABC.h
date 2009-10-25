@@ -37,6 +37,8 @@ public:
     virtual void UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
     virtual void CancelTransport    ( const MIL_Agent_ABC& transporter );
 
+    virtual void ForceUnloadedState();
+
     virtual void MagicLoadPion   ( MIL_Agent_ABC& pion, bool bTransportOnlyLoadable );
     virtual void MagicUnloadPion ( MIL_Agent_ABC& pion );
 

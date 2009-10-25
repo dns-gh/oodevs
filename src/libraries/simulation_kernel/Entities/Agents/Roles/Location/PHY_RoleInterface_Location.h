@@ -49,11 +49,8 @@ public:
     virtual void Update( bool bIsDead ) = 0;
     virtual void Clean () = 0;
 
-    virtual void Hide     () = 0;
-    virtual void Show     ( const MT_Vector2D& vNewPosition ) = 0;
     virtual void MagicMove( const MT_Vector2D& vNewPosition ) = 0;
     virtual void Move     ( const MT_Vector2D& vNewPosition, const MT_Vector2D& vNewDirection, MT_Float rNewSpeed ) = 0;
-    virtual void Follow   ( const MIL_Agent_ABC& agent ) = 0;
     //@}
 
     //! @name Accessors

@@ -54,6 +54,16 @@ void TransportNotificationHandler_ABC::CancelTransport( const MIL_Agent_ABC& /*t
 }
 
 // -----------------------------------------------------------------------------
+// Name: TransportNotificationHandler_ABC::ForceUnloadedState
+// Created: MGD 2009-10-25
+// -----------------------------------------------------------------------------
+void TransportNotificationHandler_ABC::ForceUnloadedState()
+{
+
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: TransportNotificationHandler_ABC::MagicLoadPion
 // Created: LDC 2009-10-05
 // -----------------------------------------------------------------------------

@@ -11,8 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Reinforcement.h"
-#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Network/NET_ASN_Messages.h"
 
@@ -20,7 +18,8 @@
 #include "simulation_kernel/MoveComputer_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/ConsumptionModeChangeRequest_ABC.h"
-#include "simulation_kernel/ObjectCollisionNotificationHandler_ABC.h""
+#include "simulation_kernel/ObjectCollisionNotificationHandler_ABC.h"
+#include "simulation_kernel/LocationActionNotificationHandler_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Reinforcement, "PHY_RolePion_Reinforcement" )
 
@@ -46,6 +45,7 @@ void load_construct_data( Archive& archive, PHY_RolePion_Reinforcement* role, co
 PHY_RolePion_Reinforcement::PHY_RolePion_Reinforcement( MIL_AgentPion& pion )
     : pion_                          ( pion )
     , bHasChanged_                   ( true )
+    , bExternalCanReinforce_         ( true )
     , reinforcements_                ()
     , pPionReinforced_               ( 0 )
 {
@@ -77,8 +77,7 @@ void PHY_RolePion_Reinforcement::serialize( Archive& file, const uint )
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Reinforcement::CanReinforce() const
 {
-
-    return !pion_.IsDead() && !pion_.GetRole< transport::PHY_RoleInterface_Transported >().IsTransported();
+    return !pion_.IsDead() && bExternalCanReinforce_;
 }
     
 // -----------------------------------------------------------------------------
@@ -87,8 +86,7 @@ bool PHY_RolePion_Reinforcement::CanReinforce() const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Reinforcement::CanBeReinforced() const
 {
-
-    return !pion_.IsDead() && !pion_.GetRole< transport::PHY_RoleInterface_Transported >().IsTransported();
+    return !pion_.IsDead() && bExternalCanReinforce_;
 }
 
 // -----------------------------------------------------------------------------
@@ -158,7 +156,7 @@ void PHY_RolePion_Reinforcement::Update( bool bIsDead )
     if( bIsDead )
         CancelReinforcement();
     else
-        pion_.GetRole< PHY_RoleInterface_Location >().Follow( *pPionReinforced_ );
+        pion_.Apply( &location::LocationActionNotificationHandler_ABC::Follow, *pPionReinforced_ );
 
     if( HasChanged() )
         pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
@@ -352,4 +350,21 @@ void PHY_RolePion_Reinforcement::NotifyPutOutsideObject( MIL_Object_ABC& object 
     const T_PionSet& reinforcements = GetReinforcements();
         for( CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
             (**it).Apply(&terrain::ObjectCollisionNotificationHandler_ABC::NotifyPutOutsideObject, object );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Reinforcement::NotifyIsLoaded
+// Created: MGD 2009-10-25
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Reinforcement::NotifyIsLoadedForTransport()
+{
+    bExternalCanReinforce_ = false;
+}
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Reinforcement::NotifyIsUnLoaded
+// Created: MGD 2009-10-25
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Reinforcement::NotifyIsUnLoadedForTransport()
+{
+    bExternalCanReinforce_ = true;
 }

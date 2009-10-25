@@ -12,17 +12,18 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Transported.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Network/NET_ASN_Messages.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
+#include "simulation_kernel/LocationActionNotificationHandler_ABC.h"
+#include "simulation_kernel/MoveComputer_ABC.h"
+#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/TransportPermissionComputer_ABC.h"
 #include "simulation_kernel/TransportChangeNotificationHandler_ABC.h"
-#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+#include "simulation_kernel/TransportNotificationHandler_ABC.h"
 #include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
-#include "simulation_kernel/MoveComputer_ABC.h"
 
 #include "AlgorithmsFactories.h"
 #include "simulation_kernel/OnComponentFunctor_ABC.h"
@@ -108,7 +109,7 @@ void PHY_RolePion_Transported::CancelTransport( const MIL_Agent_ABC& transporter
 
     if( pTransporter_ != &transporter )
         return ;//false;
-    pion_.GetRole< PHY_RoleInterface_Location >().Show( vLoadingPosition_ );
+    pion_.Apply( &location::LocationActionNotificationHandler_ABC::Show, vLoadingPosition_ );
     pTransporter_ = 0;
     bHasChanged_ = true;
     vLoadingPosition_.Reset();  
@@ -129,7 +130,7 @@ void PHY_RolePion_Transported::LoadForTransport( const MIL_Agent_ABC& transporte
 
     pTransporter_ = &transporter;
 
-    pion_.GetRole< PHY_RoleInterface_Location  >().Hide               ();   
+    pion_.Apply( &location::LocationActionNotificationHandler_ABC::Hide ); 
     vLoadingPosition_= transporter.GetRole< PHY_RoleInterface_Location >().GetPosition();
     if( bTransportOnlyLoadable && vHumanTransporterPosition_.IsZero() )
         vHumanTransporterPosition_ = vLoadingPosition_;
@@ -149,7 +150,8 @@ void PHY_RolePion_Transported::UnloadFromTransport( const MIL_Agent_ABC& transpo
         return ; //false;
 
     assert( pTransporter_ );
-    pion_.GetRole< PHY_RoleInterface_Location  >().Show( pTransporter_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    pion_.Apply( &location::LocationActionNotificationHandler_ABC::Show, pTransporter_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
+
     pTransporter_ = 0;
     bHasChanged_  = true;
     vLoadingPosition_.Reset();
@@ -168,7 +170,7 @@ void PHY_RolePion_Transported::DisableHumanTransporters( const MT_Vector2D& vPos
 
     if ( vHumanTransporterPosition_.IsZero() )
     {
-        pion_.GetRole< PHY_RoleAction_Loading >().ForceUnloadedState();
+        pion_.Apply( &TransportNotificationHandler_ABC::ForceUnloadedState );
         vHumanTransporterPosition_ = vPos;
         bHasChanged_ = true;
     }
@@ -225,7 +227,7 @@ void PHY_RolePion_Transported::Update( bool /*bIsDead*/ )
 
     if( !pTransporter_ )
         return;
-    pion_.GetRole< PHY_RoleInterface_Location >().Follow( *pTransporter_ );
+    pion_.Apply( &location::LocationActionNotificationHandler_ABC::Follow, *pTransporter_ );
 
     if( HasChanged() )
     {

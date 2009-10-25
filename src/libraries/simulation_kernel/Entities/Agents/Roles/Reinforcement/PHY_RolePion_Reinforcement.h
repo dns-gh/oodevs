@@ -18,6 +18,7 @@
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "simulation_kernel/ObjectCollisionNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
+#include "simulation_kernel/TransportChangeNotificationHandler_ABC.h"
 
 class MIL_AgentPion;
 class NET_ASN_MsgUnitAttributes;
@@ -39,6 +40,7 @@ class PHY_RolePion_Reinforcement : public PHY_RoleInterface_Reinforcement
                                  , public transport::TransportNotificationHandler_ABC
                                  , public terrain::ObjectCollisionNotificationHandler_ABC
                                  , public network::NetworkUnitMessageNotificationHandler_ABC
+                                 , public transport::TransportChangeNotificationHandler_ABC
 {
 
 public:
@@ -82,6 +84,9 @@ public:
     void NotifyMovingOutsideObject( MIL_Object_ABC& object );
     void NotifyPutInsideObject( MIL_Object_ABC& object );
     void NotifyPutOutsideObject( MIL_Object_ABC& object );
+
+    virtual void NotifyIsLoadedForTransport();
+    virtual void NotifyIsUnLoadedForTransport();
     //@}
 
     //! @name Network
@@ -114,6 +119,7 @@ private:
     MIL_AgentPion* pPionReinforced_;
     T_PionSet      reinforcements_;
     bool           bHasChanged_;
+    bool           bExternalCanReinforce_;
 
 	template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Reinforcement* role, const unsigned int /*version*/ );
 	template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Reinforcement* role, const unsigned int /*version*/ );
