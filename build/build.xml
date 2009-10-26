@@ -347,7 +347,7 @@
 
     <target name="application.simulation_app" description="build CSword Simulation executable" depends="library.dispatcher,library.simulation_kernel">
         <build-app name="simulation_app" depends="mt,din,dia3,terrain,boost,xerces,flexlm"
-                   libs="HLA,libFedTime,masalloc,tools,masasn,directia-${platform}-mt-4_5,
+                   libs="HLA,libFedTime,masalloc,tools,masasn,directia-${platform}-mt-4_5,libdatabase-${platform}-mt,
                          gdal_i,gdal_ogr,geodata,
                          population-${platform}-mt@{suffix},
                          dispatcher-${platform}-mt@{suffix},
