@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
+<orbat>
+  <sides>
+    <side id="1" name="Les Gentils" type="friend">
+      <objects/>
+      <tactical>
+        <formation id="5" level="ii" name="Bataillon Case 1">
+          <automat engaged="true" id="15" knowledge-group="2" name="Escadron de Chars LECLERC [15]" type="Escadron de Chars LECLERC">
+            <unit command-post="true" id="16" name="Peloton LECLERC CDT ESC" position="30TXT3986098819" type="Peloton LECLERC CDT ESC"/>
+            <unit command-post="false" id="17" name="Peloton LECLERC CDP OFF" position="30TXT4037998338" type="Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="18" name="Peloton LECLERC CDP OFF" position="30TXT3989697821" type="Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="19" name="Peloton LECLERC CDP SOFF" position="30TXT3937898302" type="Peloton LECLERC CDP SOFF"/>
+            <unit command-post="false" id="20" name="Peloton d appui direct" position="30TXT4036198837" type="Peloton d appui direct"/>
+          </automat>
+          <automat engaged="true" id="21" knowledge-group="2" name="Escadron de Chars AMX30B2 BRENNUS [21]" type="Escadron de Chars AMX30B2 BRENNUS">
+            <unit command-post="true" id="22" name="Peloton CDT ESC AMX30B2 BRENNUS" position="30TXU3755100835" type="Peloton CDT ESC AMX30B2 BRENNUS"/>
+            <unit command-post="false" id="23" name="Peloton d appui direct" position="30TXU3807000354" type="Peloton d appui direct"/>
+            <unit command-post="false" id="24" name="Peloton AMX30B2 BRENNUS CDP OFF" position="30TXT3758799837" type="Peloton AMX30B2 BRENNUS CDP OFF"/>
+            <unit command-post="false" id="25" name="Peloton AMX30B2 BRENNUS CDP OFF" position="30TXU3706900318" type="Peloton AMX30B2 BRENNUS CDP OFF"/>
+            <unit command-post="false" id="26" name="Peloton AMX30B2 BRENNUS CDP SOFF" position="30TXU3805200853" type="Peloton AMX30B2 BRENNUS CDP SOFF"/>
+          </automat>
+          <automat engaged="true" id="87" knowledge-group="2" name="Escadron ERIAC [87]" type="Escadron ERIAC">
+            <unit command-post="true" id="88" name="PC CDT LOG ERIAC" position="30TXU3222500804" type="PC CDT LOG ERIAC"/>
+            <unit command-post="false" id="89" name="Peloton ERIAC OFF" position="30TXU3274400323" type="Peloton ERIAC OFF"/>
+            <unit command-post="false" id="90" name="Peloton ERIAC OFF" position="30TXT3226199806" type="Peloton ERIAC OFF"/>
+            <unit command-post="false" id="91" name="Peloton ERIAC OFF" position="30TXU3174300287" type="Peloton ERIAC OFF"/>
+            <unit command-post="false" id="92" name="Peloton ERIAC S/OFF" position="30TXU3272600821" type="Peloton ERIAC S/OFF"/>
+          </automat>
+          <lima name="Lima 113">
+            <point>30TXU2923901788</point>
+            <point>30TXU3827107927</point>
+          </lima>
+          <limit name="Limite 111">
+            <point>30TXT3522394560</point>
+            <point>30TXU2941000712</point>
+            <point>30TXU2287114183</point>
+          </limit>
+          <limit name="Limite 112">
+            <point>30TXT4612398755</point>
+            <point>30TXU3930707167</point>
+            <point>30TXU3059916953</point>
+          </limit>
+          <lima name="Lima 122">
+            <point>30TXU2304313361</point>
+            <point>30TXU3183316883</point>
+          </lima>
+          <lima name="Lima 123">
+            <point>30TXT3462494657</point>
+            <point>30TXT4612099354</point>
+          </lima>
+        </formation>
+        <formation id="6" level="ii" name="Bataillon Case 2">
+          <automat engaged="true" id="33" knowledge-group="2" name="Escadron de Chars LECLERC [33]" type="Escadron de Chars LECLERC">
+            <unit command-post="true" id="34" name="Peloton LECLERC CDT ESC" position="30TYU0095600919" type="Peloton LECLERC CDT ESC"/>
+            <unit command-post="false" id="35" name="Peloton LECLERC CDP OFF" position="30TYU0147400437" type="Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="36" name="Peloton LECLERC CDP OFF" position="30TYT0099299920" type="Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="37" name="Peloton LECLERC CDP SOFF" position="30TYU0047300401" type="Peloton LECLERC CDP SOFF"/>
+            <unit command-post="false" id="38" name="Peloton d appui direct" position="30TYU0145600936" type="Peloton d appui direct"/>
+          </automat>
+          <automat engaged="true" id="39" knowledge-group="2" name="Escadron de Chars AMX30B2 BRENNUS [39]" type="Escadron de Chars AMX30B2 BRENNUS">
+            <unit command-post="true" id="40" name="Peloton CDT ESC AMX30B2 BRENNUS" position="30TXU9868703158" type="Peloton CDT ESC AMX30B2 BRENNUS"/>
+            <unit command-post="false" id="41" name="Peloton d appui direct" position="30TXU9920602677" type="Peloton d appui direct"/>
+            <unit command-post="false" id="42" name="Peloton AMX30B2 BRENNUS CDP OFF" position="30TXU9872302160" type="Peloton AMX30B2 BRENNUS CDP OFF"/>
+            <unit command-post="false" id="43" name="Peloton AMX30B2 BRENNUS CDP OFF" position="30TXU9820502641" type="Peloton AMX30B2 BRENNUS CDP OFF"/>
+            <unit command-post="false" id="44" name="Peloton AMX30B2 BRENNUS CDP SOFF" position="30TXU9918803176" type="Peloton AMX30B2 BRENNUS CDP SOFF"/>
+          </automat>
+          <automat engaged="true" id="93" knowledge-group="2" name="Escadron ERIAC [93]" type="Escadron ERIAC">
+            <unit command-post="true" id="94" name="PC CDT LOG ERIAC" position="30TXU9338303068" type="PC CDT LOG ERIAC"/>
+            <unit command-post="false" id="95" name="Peloton ERIAC OFF" position="30TXU9390202587" type="Peloton ERIAC OFF"/>
+            <unit command-post="false" id="96" name="Peloton ERIAC OFF" position="30TXU9341902070" type="Peloton ERIAC OFF"/>
+            <unit command-post="false" id="97" name="Peloton ERIAC OFF" position="30TXU9290002551" type="Peloton ERIAC OFF"/>
+            <unit command-post="false" id="98" name="Peloton ERIAC S/OFF" position="30TXU9388303086" type="Peloton ERIAC S/OFF"/>
+          </automat>
+          <lima name="Lima 116">
+            <point>30TXU9110202181</point>
+            <point>30TXU9798510170</point>
+          </lima>
+          <limit name="Limite 114">
+            <point>30TXT9821696468</point>
+            <point>30TXU9099901390</point>
+            <point>30TXU8441814207</point>
+          </limit>
+          <limit name="Limite 115">
+            <point>30TYU0699401179</point>
+            <point>30TXU9939809302</point>
+            <point>30TXU9079517979</point>
+          </limit>
+          <lima name="Lima 124">
+            <point>30TXU8448013553</point>
+            <point>30TXU9163317893</point>
+          </lima>
+          <lima name="Lima 125">
+            <point>30TXT9723096491</point>
+            <point>30TYU0727401780</point>
+          </lima>
+        </formation>
+        <formation id="7" level="ii" name="Bataillon Case 3">
+          <automat engaged="true" id="51" knowledge-group="2" name="Escadron de Chars LECLERC [51]" type="Escadron de Chars LECLERC">
+            <unit command-post="true" id="52" name="Peloton LECLERC CDT ESC" position="30TXT4250225154" type="Peloton LECLERC CDT ESC"/>
+            <unit command-post="false" id="53" name="Peloton LECLERC CDP OFF" position="30TXT4302124673" type="Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="54" name="Peloton LECLERC CDP OFF" position="30TXT4253824156" type="Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="55" name="Peloton LECLERC CDP SOFF" position="30TXT4202024637" type="Peloton LECLERC CDP SOFF"/>
+            <unit command-post="false" id="56" name="Peloton d appui direct" position="30TXT4300325172" type="Peloton d appui direct"/>
+          </automat>
+          <automat engaged="true" id="57" knowledge-group="2" name="Escadron de Chars AMX30B2 BRENNUS [57]" type="Escadron de Chars AMX30B2 BRENNUS">
+            <unit command-post="true" id="58" name="Peloton CDT ESC AMX30B2 BRENNUS" position="30TXT4028527228" type="Peloton CDT ESC AMX30B2 BRENNUS"/>
+            <unit command-post="false" id="59" name="Peloton d appui direct" position="30TXT4080326747" type="Peloton d appui direct"/>
+            <unit command-post="false" id="60" name="Peloton AMX30B2 BRENNUS CDP OFF" position="30TXT4032026230" type="Peloton AMX30B2 BRENNUS CDP OFF"/>
+            <unit command-post="false" id="61" name="Peloton AMX30B2 BRENNUS CDP OFF" position="30TXT3980226711" type="Peloton AMX30B2 BRENNUS CDP OFF"/>
+            <unit command-post="false" id="62" name="Peloton AMX30B2 BRENNUS CDP SOFF" position="30TXT4078527246" type="Peloton AMX30B2 BRENNUS CDP SOFF"/>
+          </automat>
+          <automat engaged="true" id="99" knowledge-group="2" name="Escadron ERIAC [99]" type="Escadron ERIAC">
+            <unit command-post="true" id="100" name="PC CDT LOG ERIAC" position="30TXT3485027455" type="PC CDT LOG ERIAC"/>
+            <unit command-post="false" id="101" name="Peloton ERIAC OFF" position="30TXT3536926974" type="Peloton ERIAC OFF"/>
+            <unit command-post="false" id="102" name="Peloton ERIAC OFF" position="30TXT3488626457" type="Peloton ERIAC OFF"/>
+            <unit command-post="false" id="103" name="Peloton ERIAC OFF" position="30TXT3436826938" type="Peloton ERIAC OFF"/>
+            <unit command-post="false" id="104" name="Peloton ERIAC S/OFF" position="30TXT3535127473" type="Peloton ERIAC S/OFF"/>
+          </automat>
+          <lima name="Lima 119">
+            <point>30TXT3098027332</point>
+            <point>30TXT3956335037</point>
+          </lima>
+          <limit name="Limite 117">
+            <point>30TXT3842519598</point>
+            <point>30TXT3111325435</point>
+            <point>30TXT2632439821</point>
+          </limit>
+          <limit name="Limite 118">
+            <point>30TXT4814725518</point>
+            <point>30TXT4168933222</point>
+            <point>30TXT3312342817</point>
+          </limit>
+          <lima name="Lima 126">
+            <point>30TXT2615039260</point>
+            <point>30TXT3388442625</point>
+          </lima>
+          <lima name="Lima 127">
+            <point>30TXT3763419499</point>
+            <point>30TXT4835426321</point>
+          </lima>
+        </formation>
+        <formation id="8" level="ii" name="Bataillon Case 4">
+          <automat engaged="true" id="69" knowledge-group="2" name="Escadron de Chars LECLERC [69]" type="Escadron de Chars LECLERC">
+            <unit command-post="true" id="70" name="Peloton LECLERC CDT ESC" position="30TYT0365327356" type="Peloton LECLERC CDT ESC"/>
+            <unit command-post="false" id="71" name="Peloton LECLERC CDP OFF" position="30TYT0417126875" type="Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="72" name="Peloton LECLERC CDP OFF" position="30TYT0368826358" type="Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="73" name="Peloton LECLERC CDP SOFF" position="30TYT0317026839" type="Peloton LECLERC CDP SOFF"/>
+            <unit command-post="false" id="74" name="Peloton d appui direct" position="30TYT0415327374" type="Peloton d appui direct"/>
+          </automat>
+          <automat engaged="true" id="75" knowledge-group="2" name="Escadron de Chars AMX30B2 BRENNUS [75]" type="Escadron de Chars AMX30B2 BRENNUS">
+            <unit command-post="true" id="76" name="Peloton CDT ESC AMX30B2 BRENNUS" position="30TYT0147329443" type="Peloton CDT ESC AMX30B2 BRENNUS"/>
+            <unit command-post="false" id="77" name="Peloton d appui direct" position="30TYT0199128962" type="Peloton d appui direct"/>
+            <unit command-post="false" id="78" name="Peloton AMX30B2 BRENNUS CDP OFF" position="30TYT0150828445" type="Peloton AMX30B2 BRENNUS CDP OFF"/>
+            <unit command-post="false" id="79" name="Peloton AMX30B2 BRENNUS CDP OFF" position="30TYT0099028926" type="Peloton AMX30B2 BRENNUS CDP OFF"/>
+            <unit command-post="false" id="80" name="Peloton AMX30B2 BRENNUS CDP SOFF" position="30TYT0197329461" type="Peloton AMX30B2 BRENNUS CDP SOFF"/>
+          </automat>
+          <automat engaged="true" id="105" knowledge-group="2" name="Escadron ERIAC [105]" type="Escadron ERIAC">
+            <unit command-post="true" id="106" name="PC CDT LOG ERIAC" position="30TXT9605329539" type="PC CDT LOG ERIAC"/>
+            <unit command-post="false" id="107" name="Peloton ERIAC OFF" position="30TXT9657129058" type="Peloton ERIAC OFF"/>
+            <unit command-post="false" id="108" name="Peloton ERIAC OFF" position="30TXT9608828541" type="Peloton ERIAC OFF"/>
+            <unit command-post="false" id="109" name="Peloton ERIAC OFF" position="30TXT9557029022" type="Peloton ERIAC OFF"/>
+            <unit command-post="false" id="110" name="Peloton ERIAC S/OFF" position="30TXT9655329557" type="Peloton ERIAC S/OFF"/>
+          </automat>
+          <lima name="Lima 122">
+            <point>30TXT9252930626</point>
+            <point>30TXT9997537451</point>
+          </lima>
+          <limit name="Limite 120">
+            <point>30TXT9921920936</point>
+            <point>30TXT9309628457</point>
+            <point>30TXT8651341470</point>
+          </limit>
+          <limit name="Limite 121">
+            <point>30TYT1109025688</point>
+            <point>30TYT0191835658</point>
+            <point>30TXT9376444746</point>
+          </limit>
+          <lima name="Lima 128">
+            <point>30TXT8632540757</point>
+            <point>30TXT9466244728</point>
+          </lima>
+          <lima name="Lima 129">
+            <point>30TXT9851921050</point>
+            <point>30TYT1119626370</point>
+          </lima>
+        </formation>
+        <formation id="9" level="ii" name="Bataillon Case 5"/>
+      </tactical>
+      <communication>
+        <knowledge-group id="2" name="Groupe de connaissance [2]" type="Standard"/>
+      </communication>
+      <populations/>
+      <logistic/>
+    </side>
+    <side id="3" name="Les Méchants" type="enemy">
+      <objects/>
+      <tactical>
+        <formation id="10" level="ii" name="GTIA Case 1">
+          <automat engaged="true" id="27" knowledge-group="4" name="Escadron de Chars LECLERC [27]" type="Escadron de Chars LECLERC">
+            <unit command-post="true" id="28" name="Peloton LECLERC CDT ESC" position="30TXU2938312157" type="Peloton LECLERC CDT ESC"/>
+            <unit command-post="false" id="29" name="Peloton LECLERC CDP OFF" position="30TXU2990211676" type="Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="30" name="Peloton LECLERC CDP OFF" position="30TXU2941911159" type="Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="31" name="Peloton LECLERC CDP SOFF" position="30TXU2890111640" type="Peloton LECLERC CDP SOFF"/>
+            <unit command-post="false" id="32" name="Peloton d appui direct" position="30TXU2988412175" type="Peloton d appui direct"/>
+          </automat>
+          <limit name="Limite 125">
+            <point>30TXU3175914669</point>
+            <point>30TXU3802106413</point>
+            <point>30TXU4454901750</point>
+          </limit>
+          <limit name="Limite 126">
+            <point>30TXU2630812594</point>
+            <point>30TXT3130795591</point>
+          </limit>
+        </formation>
+        <formation id="11" level="ii" name="GTIA Case 2">
+          <automat engaged="true" id="45" knowledge-group="4" name="Escadron de Chars LECLERC [45]" type="Escadron de Chars LECLERC">
+            <unit command-post="true" id="46" name="Peloton LECLERC CDT ESC" position="30TXU9054214344" type="Peloton LECLERC CDT ESC"/>
+            <unit command-post="false" id="47" name="Peloton LECLERC CDP OFF" position="30TXU9106113863" type="Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="48" name="Peloton LECLERC CDP OFF" position="30TXU9057813346" type="Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="49" name="Peloton LECLERC CDP SOFF" position="30TXU9005913827" type="Peloton LECLERC CDP SOFF"/>
+            <unit command-post="false" id="50" name="Peloton d appui direct" position="30TXU9104214362" type="Peloton d appui direct"/>
+          </automat>
+          <limit name="Limite 127">
+            <point>30TXU8587815379</point>
+            <point>30TXT9343295644</point>
+          </limit>
+          <limit name="Limite 128">
+            <point>30TXU9060317517</point>
+            <point>30TXU9797408337</point>
+            <point>30TYU0596903771</point>
+          </limit>
+        </formation>
+        <formation id="12" level="ii" name="GTIA Case 3">
+          <automat engaged="true" id="63" knowledge-group="4" name="Escadron de Chars LECLERC [63]" type="Escadron de Chars LECLERC">
+            <unit command-post="true" id="64" name="Peloton LECLERC CDT ESC" position="30TXT3202638692" type="Peloton LECLERC CDT ESC"/>
+            <unit command-post="false" id="65" name="Peloton LECLERC CDP OFF" position="30TXT3254438211" type="Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="66" name="Peloton LECLERC CDP OFF" position="30TXT3206137694" type="Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="67" name="Peloton LECLERC CDP SOFF" position="30TXT3154338175" type="Peloton LECLERC CDP SOFF"/>
+            <unit command-post="false" id="68" name="Peloton d appui direct" position="30TXT3252638710" type="Peloton d appui direct"/>
+          </automat>
+          <limit name="Limite 129">
+            <point>30TXT2937839163</point>
+            <point>30TXT3341620030</point>
+          </limit>
+          <limit name="Limite 130">
+            <point>30TXT3337941339</point>
+            <point>30TXT4119330667</point>
+            <point>30TXT4781627559</point>
+          </limit>
+        </formation>
+        <formation id="13" level="ii" name="GTIA Case 4">
+          <automat engaged="true" id="81" knowledge-group="4" name="Escadron de Chars LECLERC [81]" type="Escadron de Chars LECLERC">
+            <unit command-post="true" id="82" name="Peloton LECLERC CDT ESC" position="30TXT9317440755" type="Peloton LECLERC CDT ESC"/>
+            <unit command-post="false" id="83" name="Peloton LECLERC CDP OFF" position="30TXT9369340274" type="Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="84" name="Peloton LECLERC CDP OFF" position="30TXT9321039757" type="Peloton LECLERC CDP OFF"/>
+            <unit command-post="false" id="85" name="Peloton LECLERC CDP SOFF" position="30TXT9269140239" type="Peloton LECLERC CDP SOFF"/>
+            <unit command-post="false" id="86" name="Peloton d appui direct" position="30TXT9367540773" type="Peloton d appui direct"/>
+          </automat>
+          <limit name="Limite 131">
+            <point>30TXT8940741864</point>
+            <point>30TXT9615020659</point>
+          </limit>
+          <limit name="Limite 132">
+            <point>30TXT9328643774</point>
+            <point>30TYT0336432393</point>
+            <point>30TYT1029130017</point>
+          </limit>
+        </formation>
+        <formation id="14" level="ii" name="GTIA Case 5"/>
+      </tactical>
+      <communication>
+        <knowledge-group id="4" name="Groupe de connaissance [4]" type="Standard"/>
+      </communication>
+      <populations/>
+      <logistic/>
+    </side>
+  </sides>
+  <diplomacies>
+    <side id="1">
+      <relationship diplomacy="enemy" side="3"/>
+    </side>
+    <side id="3">
+      <relationship diplomacy="enemy" side="1"/>
+    </side>
+  </diplomacies>
+</orbat>

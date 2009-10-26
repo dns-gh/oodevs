@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="247" name="ABC Appuyer Sur Position" target="57" time="2009-09-30T07:53:01" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="341"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT3842519598"/>
+        <point coordinates="30TXT3111325435"/>
+        <point coordinates="30TXT2632439821"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT4814725518"/>
+        <point coordinates="30TXT4168933222"/>
+        <point coordinates="30TXT3312342817"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Position installation" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TXT3532331139"/>
+        <point coordinates="30TXT3375431563"/>
+        <point coordinates="30TXT3331633465"/>
+        <point coordinates="30TXT3482935658"/>
+        <point coordinates="30TXT3705634410"/>
+        <point coordinates="30TXT3786532484"/>
+        <point coordinates="30TXT3532331139"/>
+      </location>
+    </parameter>
+    <parameter name="Compagnie" type="Automate" value="51"/>
+  </action>
+  <action id="208" name="ABC Attaquer" target="51" time="2009-09-30T08:22:51" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="331"/>
+    <parameter name="Limas" type="PhaseLineList">
+      <parameter name="Phase line 1" type="lima" value="LD">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30TXT2615039260"/>
+            <point coordinates="30TXT3388442625"/>
+          </location>
+        </parameter>
+        <parameter name="Schedule" type="datetime" value="20090930T060051"/>
+      </parameter>
+    </parameter>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT3842519598"/>
+        <point coordinates="30TXT3111325435"/>
+        <point coordinates="30TXT2632439821"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT4814725518"/>
+        <point coordinates="30TXT4168933222"/>
+        <point coordinates="30TXT3312342817"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+</actions>
