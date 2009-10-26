@@ -5,54 +5,25 @@ dofile "resources/scripts/events.lua"
 include "resources/model.lua"
 include "resources/config.lua"
 
-scriptName = "Pion ABC Reconnaitre point"
+scriptName = "Automate ABC Proteger PC"
 
 local tick = 0
 
-functionTick = {
+functionTick =
+{
 
 [5] = function()
-	Select( { target = "id://agent/"..formation[1].automat[2].agent[2].id } )
 	Center( { coordinates = coord:UtmPosition( config.positions.center_ABC[1] ) } )
 	Zoom( { width = 35000 } )
-	actions:IssueOrder( "Pion ABC Reconnaitre Point 1 - C1 bis" )
+	actions:IssueOrder( "Automate ABC Proteger PC C1" )
 end,
-
-[30] = function()
-	actions:IssueOrder( "Pion ABC Reconnaitre Point 2 - C1 bis" )
+[20] = function()
+	actions:IssueOrder( "Automate ABC Proteger PC C1 etape 2" )
 end,
-
-[2000+5] = function()
-	Select( { target = "id://agent/"..formation[2].automat[2].agent[2].id } )
+[5+2000] = function()
 	Center( { coordinates = coord:UtmPosition( config.positions.center_ABC[2] ) } )
 	Zoom( { width = 35000 } )
-	actions:IssueOrder( "Pion ABC Reconnaitre Point 1 - C2" )
-end,
-
-[2000+40] = function()
-	actions:IssueOrder( "Pion ABC Reconnaitre Point 2 - C2" )
-end,
-
-[4000+5] = function()
-	Select( { target = "id://agent/"..formation[3].automat[2].agent[2].id } )
-	Center( { coordinates = coord:UtmPosition( config.positions.center_ABC[3] ) } )
-	Zoom( { width = 35000 } )
-	actions:IssueOrder( "Pion ABC Reconnaitre Point 1 - C3" )
-end,
-
-[4000+40] = function()
-	actions:IssueOrder( "Pion ABC Reconnaitre Point 2 - C3" )
-end,
-
-[6000+5] = function()
-	Select( { target = "id://agent/"..formation[4].automat[2].agent[2].id } )
-	Center( { coordinates = coord:UtmPosition( config.positions.center_ABC[4] ) } )
-	Zoom( { width = 35000 } )
-	actions:IssueOrder( "Pion ABC Reconnaitre Point 1 - C4" )
-end,
-
-[6000+40] = function()
-	actions:IssueOrder( "Pion ABC Reconnaitre Point 2 - C4" )
+	actions:IssueOrder( "Automate ABC Proteger PC C2" )
 end,
 
 }
@@ -72,8 +43,8 @@ function Start()
             events.sim:ClientConnected(),
             { },
             function( client, profile )
-                if profile ~= "Pion ABC Reconnaitre point" then return end
-				tick=0
+                if profile ~= "Automate ABC Proteger PC" then return end
+				tick = 0
 				local text = "Changer de Case ?"
 				Dialog( { id = "Case", message = text, buttons = { "Case 1", "Case 2", "Case 3", "Case 4" } } )
 				ChangeState( "Missions_Init" )
@@ -84,12 +55,13 @@ function Start()
 		events.sim:TickEnded( ),
 		{ "Missions_Init" },
 			function()
-				if profile ~= "Pion ABC Reconnaitre point" then
+				if profile ~= "Automate ABC Proteger PC" then
 					runStep()
 				end
 			end
 		},
-        {
+
+		{
 			events.client:UserChose(),
 			{ },
 			function( dialog, answer )
