@@ -23,7 +23,7 @@ class MIL_ParameterType_Automat : public MIL_ParameterType_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_ParameterType_Automat();
+    explicit MIL_ParameterType_Automat( const std::string& name );
     virtual ~MIL_ParameterType_Automat();
     //@}
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill name="net.masagroup.military.skills.TestParam" xmlns="http://www.masagroup.net/directia/schemas/bm">
+	<parameters>
+		<parameter name="Point_">
+			<description>Test point</description>
+			<type>
+				<class name="net.masagroup.military.generic.knowledge.Reachable" />
+			</type>
+		</parameter>
+		<parameter name="PointList_">
+			<description>Test pointList</description>
+			<type>
+				<list>
+					<class name="net.masagroup.military.generic.knowledge.Reachable" />
+				</list>
+			</type>
+		</parameter>
+	</parameters>
+	<modifiers/>
+	<links/>
+	<resources/>
+</skill>

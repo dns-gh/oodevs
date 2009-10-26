@@ -16,8 +16,8 @@
 // Name: MIL_ParameterType_PolygonList constructor
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-MIL_ParameterType_PolygonList::MIL_ParameterType_PolygonList()
-    : MIL_ParameterType_ABC( "PolygonList" )
+MIL_ParameterType_PolygonList::MIL_ParameterType_PolygonList( const std::string& name )
+    : MIL_ParameterType_ABC( name )
 {
     // NOTHING
 }

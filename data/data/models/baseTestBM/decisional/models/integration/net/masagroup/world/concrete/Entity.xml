@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class name="net.masagroup.world.concrete.Entity" xmlns="http://www.masagroup.net/directia/schemas/bm" abstract="false">
+	<description>Part commune des entités avec implémentation basique temporaire.</description>
+	
+    <realizes>net.masagroup.military.generic.knowledge.Observable</realizes>
+    <realizes>net.masagroup.military.generic.knowledge.Reachable</realizes>
+	
+</class>

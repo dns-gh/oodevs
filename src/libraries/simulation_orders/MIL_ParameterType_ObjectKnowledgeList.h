@@ -23,7 +23,7 @@ class MIL_ParameterType_ObjectKnowledgeList : public MIL_ParameterType_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_ParameterType_ObjectKnowledgeList();
+             MIL_ParameterType_ObjectKnowledgeList( const std::string& name );
     virtual ~MIL_ParameterType_ObjectKnowledgeList();
     //@}
 

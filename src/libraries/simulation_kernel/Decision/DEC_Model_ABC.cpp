@@ -28,10 +28,8 @@ DEC_Model_ABC::DEC_Model_ABC( const std::string& strModel, xml::xistream& xis, c
     : strModel_            ( strModel )
     , strIncludePath_      ( strSourcePath )
 {
-    std::string strScript;
     xis >> xml::attribute( "dia-type", strDIAType_ )
-        >> xml::attribute( "file", strScript );
-    strScript_ = strSourcePath + "/" + strScript;
+        >> xml::attribute( "file", strScript_ );
 
     InitializeMissions( xis, missionTypes );
 }

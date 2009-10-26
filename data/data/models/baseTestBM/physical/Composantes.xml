@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<elements>
+  <element codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="22" name="Truc" protection="BlindeLeger" size="Moyen" weight="2.6">
+    <speeds max="90">
+      <speed terrain="inconnu" value="500"/>
+      <speed terrain="foret" value="500"/>
+      <speed terrain="plantation" value="500"/>
+      <speed terrain="marais" value="500"/>
+      <speed terrain="dune" value="500"/>
+      <speed terrain="urbain" value="500"/>
+      <speed terrain="etendue eau" value="500"/>
+      <speed terrain="glace" value="500"/>
+      <speed terrain="lisiere" value="500"/>
+      <speed terrain="banlieue" value="500"/>
+      <speed terrain="cote" value="500"/>
+      <speed terrain="bord de plantation" value="500"/>
+      <speed terrain="bord de marais" value="500"/>
+      <speed terrain="bord de dune" value="500"/>
+      <speed terrain="bord de glace" value="500"/>
+      <speed terrain="chemin" value="500"/>
+      <speed terrain="autoroute" value="500"/>
+      <speed terrain="nationale" value="500"/>
+      <speed terrain="departementale" value="500"/>
+      <speed terrain="ruisseau" value="500"/>
+      <speed terrain="riviere" value="500"/>
+      <speed terrain="riviere importante" value="500"/>
+      <speed terrain="pont" value="500"/>
+      <speed terrain="falaise" value="500"/>
+      <speed terrain="voie ferree" value="500"/>
+      <speed terrain="carrefour" value="500"/>
+      <speed terrain="montagne" value="0"/>
+      <speed terrain="bord de montagne" value="0"/>
+    </speeds>
+    <composition>
+    </composition>
+    <sensors>
+    </sensors>
+    <radars>
+    </radars>
+    <transports>
+    </transports>
+    <consumptions>
+    </consumptions>
+    <weapon-systems>
+    </weapon-systems>
+    <objects/>
+    <breakdowns>
+      <breakdown origin="random" percentage="100" type="Panne 1"/>
+      <breakdown origin="attrition" percentage="100" type="Panne 1"/>
+    </breakdowns>
+  </element>
+</elements>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task name="net.masagroup.military.tasks.TestParam" xmlns="http://www.masagroup.net/directia/schemas/bm">
+	<parameters>
+		<parameter name="Point_">
+			<description>Point</description>
+			<type>
+				<class name="net.masagroup.military.generic.knowledge.Reachable" />
+			</type>
+		</parameter>
+ 		<parameter name="PointList_">
+			<description>PointList</description>
+			<type>
+				<list><class name="net.masagroup.military.generic.knowledge.Reachable" /></list>
+			</type>
+		</parameter>					
+	</parameters>
+	<stages>
+		<stage label="test">
+			<description></description>
+			<skills>
+				<skill
+					name="net.masagroup.military.skills.TestParam" main="true"
+					priority="10">
+					<parameter name="Point_">
+						<value>
+							<parameter>Point_</parameter>
+						</value>
+					</parameter>
+					<parameter name="PointList_">
+						<value>
+							<parameter>PointList_</parameter>
+						</value>
+					</parameter>
+				</skill>
+			</skills>
+		</stage>
+	</stages>
+</task>

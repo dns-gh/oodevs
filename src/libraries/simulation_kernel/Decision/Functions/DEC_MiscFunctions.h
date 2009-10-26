@@ -81,7 +81,8 @@ public:
     static void RemoveFromPointsCategory                 ( MIL_Entity_ABC& callerAgent, DEC_PathPoint* pPoint );
     
     //
-    static void FillMissionParameters                         ( const directia::ScriptRef& refMission, MIL_Mission_ABC* mission );
+    static void FillMissionParameters                         ( directia::ScriptRef& initTaskFunction, const directia::ScriptRef& refMission, MIL_Mission_ABC* mission );
+    
     static std::string  GetName                               ( DEC_Decision_ABC* pEntity );
     static DEC_Decision_ABC* GetAutomate                      ( DEC_Decision_ABC* pAgent );
     static boost::shared_ptr< MT_Vector2D > GetDirectionEnnemi( MIL_Mission_ABC* pMission );

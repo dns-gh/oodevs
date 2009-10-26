@@ -1,0 +1,22 @@
+pragma "once"
+
+node "MIS_Pion_Dumb"
+{
+    activate = function( self )
+        print( "Hello World" )
+    end
+}
+
+node "BEH_Defaut"
+{}
+
+local configTable = {   eventmanager_plugin = 
+                        {
+                            BEH_Defaut = {},
+                            MIS_Pion_Dumb = { "params" },
+                        },
+                        connections =
+                        {
+                        } }
+
+brain "name" ( configTable )

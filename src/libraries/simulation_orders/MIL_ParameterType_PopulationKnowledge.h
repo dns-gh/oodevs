@@ -23,7 +23,7 @@ class MIL_ParameterType_PopulationKnowledge : public MIL_ParameterType_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_ParameterType_PopulationKnowledge();
+    explicit MIL_ParameterType_PopulationKnowledge( const std::string& name );
     virtual ~MIL_ParameterType_PopulationKnowledge();
     //@}
 

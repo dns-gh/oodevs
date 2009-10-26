@@ -52,6 +52,7 @@ private:
     //! @name Initialization
     //@{
     template< typename T > static void RegisterParameterType();
+    template< typename T > static void RegisterParameterType( const std::string& name );
     //@}
 
 private:

@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class name="net.masagroup.world.concrete.UrbanBlock" extends="net.masagroup.world.concrete.Entity" xmlns="http://www.masagroup.net/directia/schemas/bm" abstract="false">  
+</class>

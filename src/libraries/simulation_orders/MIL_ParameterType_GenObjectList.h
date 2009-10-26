@@ -24,7 +24,7 @@ class MIL_ParameterType_GenObjectList : public MIL_ParameterType_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_ParameterType_GenObjectList();
+    explicit MIL_ParameterType_GenObjectList( const std::string& name );
     virtual ~MIL_ParameterType_GenObjectList();
     //@}
 

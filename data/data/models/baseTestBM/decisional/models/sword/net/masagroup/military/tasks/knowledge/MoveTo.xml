@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class name="net.masagroup.military.tasks.knowledge.MoveTo" extends="directia.core.model.Task" xmlns="http://www.masagroup.net/directia/schemas/bm">
+	<interface/>
+</class>

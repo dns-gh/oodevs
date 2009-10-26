@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<buildpath>
+	<buildpathentry kind="src" path=""/>
+	<buildpathentry external="true" kind="lib" path="D:/projets/sotDIA4/data/data/models/baseTestBM/decisional/models/base"/>
+	<buildpathentry external="true" kind="lib" path="D:/projets/sotDIA4/data/data/models/baseTestBM/decisional/models/core"/>
+	<buildpathentry external="true" kind="lib" path="D:/projets/sotDIA4/data/data/models/baseTestBM/decisional/models/sword"/>
+	<buildpathentry external="true" kind="lib" path="D:/projets/sotDIA4/data/data/models/baseTestBM/decisional/models/integration"/>
+</buildpath>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<models>
+  <units>
+    <unit dia-type="BMPion" file="BMPion.bms" name="BMPion">
+      <missions>
+        <mission name="BM MoveTowardCrossroad"/>
+        <mission name="BM TestReachable"/>
+      </missions>
+    </unit>
+  </units>
+  <automats>
+    <automat dia-type="DumbAutomat" file="DumbAutomat.bms" name="DumbAutomat">
+      <missions>
+        <mission name="Dumb Automat Mission"/>
+      </missions>
+    </automat>
+  </automats>
+  <automats>
+    <automat dia-type="DumbAutomat" file="DumbAutomat.bms" name="DumbAutomat">
+      <missions>
+        <mission name="Dumb Automat Mission"/>
+      </missions>
+    </automat>
+  </automats>
+  <populations>
+  </populations>
+</models>

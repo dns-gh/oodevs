@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<decisional>
+    <RepertoireBinaires>Binaires</RepertoireBinaires>
+    <RepertoireSources>.</RepertoireSources>
+    <DIATypes>Common/Types.hal</DIATypes>
+    <DIAWorkspace>Common/Moteur/Workspace.hal</DIAWorkspace>
+    <BMDatabase>
+      <RepertoiresBM>
+        <Repertoire>models/base</Repertoire>
+        <Repertoire>models/core</Repertoire>
+        <Repertoire>models/integration</Repertoire>
+        <Repertoire>models/sword</Repertoire>
+      </RepertoiresBM>
+      <Knowledges>
+        <Knowledge>net.masagroup.world.concrete.Point</Knowledge>
+      </Knowledges>
+    </BMDatabase>
+</decisional>

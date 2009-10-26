@@ -15,8 +15,8 @@
 // Name: MIL_ParameterType_Agent constructor
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-MIL_ParameterType_Agent::MIL_ParameterType_Agent()
-    : MIL_ParameterType_ABC( "Agent" )
+MIL_ParameterType_Agent::MIL_ParameterType_Agent( const std::string& name )
+    : MIL_ParameterType_ABC( name )
 {
 }
 

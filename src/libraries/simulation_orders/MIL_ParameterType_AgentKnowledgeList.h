@@ -23,7 +23,7 @@ class MIL_ParameterType_AgentKnowledgeList : public MIL_ParameterType_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_ParameterType_AgentKnowledgeList();
+    explicit MIL_ParameterType_AgentKnowledgeList( const std::string& name );
     virtual ~MIL_ParameterType_AgentKnowledgeList();
     //@}
 

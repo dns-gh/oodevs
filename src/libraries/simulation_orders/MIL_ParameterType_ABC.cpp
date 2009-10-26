@@ -63,6 +63,20 @@ template< typename T > void MIL_ParameterType_ABC::RegisterParameterType()
 }
 
 // -----------------------------------------------------------------------------
+// Name: template< typename T > void MIL_ParameterType_ABC::RegisterParameterType
+// Created: MGD 2009-10-21
+// -----------------------------------------------------------------------------
+template< typename T > void MIL_ParameterType_ABC::RegisterParameterType( const std::string& name)
+{
+    const MIL_ParameterType_ABC* pParameter = new T( name );
+
+    const MIL_ParameterType_ABC*& pTmp = parameters_[ pParameter->GetName() ];
+    if( pTmp )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Parameter type %s already defined", pParameter->GetName() ) );
+    pTmp = pParameter;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_ABC::Initialize
 // Created: NLD 2006-12-05
 // -----------------------------------------------------------------------------
@@ -70,31 +84,46 @@ void MIL_ParameterType_ABC::Initialize()
 {
     RegisterParameterType< MIL_ParameterType_Bool                  >();
     RegisterParameterType< MIL_ParameterType_Enumeration           >();
-    RegisterParameterType< MIL_ParameterType_Point                 >();
-    RegisterParameterType< MIL_ParameterType_PointList             >();
-    RegisterParameterType< MIL_ParameterType_Polygon               >();
-    RegisterParameterType< MIL_ParameterType_PolygonList           >();
+    RegisterParameterType< MIL_ParameterType_Point                 >( std::string("Point") );
+    RegisterParameterType< MIL_ParameterType_Point                 >( std::string("PointBM") );
+    RegisterParameterType< MIL_ParameterType_PointList             >( std::string("PointList"));
+    RegisterParameterType< MIL_ParameterType_PointList             >( std::string("PointListBM"));
+    RegisterParameterType< MIL_ParameterType_Polygon               >( std::string("Polygon") );
+    RegisterParameterType< MIL_ParameterType_Polygon               >( std::string("AreaBM") );
+    RegisterParameterType< MIL_ParameterType_PolygonList           >( std::string("PolygonList") );
+    RegisterParameterType< MIL_ParameterType_PolygonList           >( std::string("AreaListBM") );
     RegisterParameterType< MIL_ParameterType_Location              >();
     RegisterParameterType< MIL_ParameterType_LocationList          >();
     RegisterParameterType< MIL_ParameterType_Path                  >();
     RegisterParameterType< MIL_ParameterType_PathList              >();
     RegisterParameterType< MIL_ParameterType_Direction             >();
     RegisterParameterType< MIL_ParameterType_NatureAtlas           >();
-    RegisterParameterType< MIL_ParameterType_Automat               >();
-    RegisterParameterType< MIL_ParameterType_AutomatList           >();
-    RegisterParameterType< MIL_ParameterType_Agent                 >();
-    RegisterParameterType< MIL_ParameterType_AgentList             >();
-    RegisterParameterType< MIL_ParameterType_AgentKnowledge        >();
-    RegisterParameterType< MIL_ParameterType_AgentKnowledgeList    >();
-    RegisterParameterType< MIL_ParameterType_ObjectKnowledge       >();
-    RegisterParameterType< MIL_ParameterType_ObjectKnowledgeList   >();
-    RegisterParameterType< MIL_ParameterType_PopulationKnowledge   >();
+    RegisterParameterType< MIL_ParameterType_Automat               >( std::string("Automate") );
+    RegisterParameterType< MIL_ParameterType_Automat               >( std::string("AutomateBM") );
+    RegisterParameterType< MIL_ParameterType_AutomatList           >( std::string("AutomateList") );
+    RegisterParameterType< MIL_ParameterType_AutomatList           >( std::string("AutomateListBM") );
+    RegisterParameterType< MIL_ParameterType_Agent                 >( std::string("Agent") );
+    RegisterParameterType< MIL_ParameterType_Agent                 >( std::string("AgentBM") );
+    RegisterParameterType< MIL_ParameterType_AgentList             >( std::string("AgentList") );
+    RegisterParameterType< MIL_ParameterType_AgentList             >( std::string("AgentListBM") );
+    RegisterParameterType< MIL_ParameterType_AgentKnowledge        >( std::string("AgentKnowledge") );
+    RegisterParameterType< MIL_ParameterType_AgentKnowledge        >( std::string("AgentKnowledgeBM") );
+    RegisterParameterType< MIL_ParameterType_AgentKnowledgeList    >( std::string("AgentKnowledgeList") );
+    RegisterParameterType< MIL_ParameterType_AgentKnowledgeList    >( std::string("AgentKnowledgeListBM") );
+    RegisterParameterType< MIL_ParameterType_ObjectKnowledge       >( std::string("ObjectKnowledge") );
+    RegisterParameterType< MIL_ParameterType_ObjectKnowledge       >( std::string("ObjectKnowledgeBM") );
+    RegisterParameterType< MIL_ParameterType_ObjectKnowledgeList   >( std::string("ObjectKnowledgeList") );
+    RegisterParameterType< MIL_ParameterType_ObjectKnowledgeList   >( std::string("ObjectKnowledgeListBM") );
+    RegisterParameterType< MIL_ParameterType_PopulationKnowledge   >( std::string("PopulationKnowledge") );
+    RegisterParameterType< MIL_ParameterType_PopulationKnowledge   >( std::string("PopulationKnowledgeBM") );
     RegisterParameterType< MIL_ParameterType_DotationType          >();
     RegisterParameterType< MIL_ParameterType_EquipmentType         >();
     RegisterParameterType< MIL_ParameterType_GDH                   >();
     RegisterParameterType< MIL_ParameterType_Numeric               >();
-    RegisterParameterType< MIL_ParameterType_GenObject             >();
-    RegisterParameterType< MIL_ParameterType_GenObjectList         >();
+    RegisterParameterType< MIL_ParameterType_GenObject             >( std::string("GenObject") );
+    RegisterParameterType< MIL_ParameterType_GenObject             >( std::string("GenObjectBM") );
+    RegisterParameterType< MIL_ParameterType_GenObjectList         >( std::string("GenObjectList") );
+    RegisterParameterType< MIL_ParameterType_GenObjectList         >( std::string("GenObjectListBM") );
     RegisterParameterType< MIL_ParameterType_MaintenancePriorities >();
     RegisterParameterType< MIL_ParameterType_MedicalPriorities     >();
     RegisterParameterType< MIL_ParameterType_IndirectFire          >();

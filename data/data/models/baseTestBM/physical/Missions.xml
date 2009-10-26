@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<missions>
+  <units>
+    <context>
+      <parameter dia-name="dangerDirection_" name="Danger direction" optional="true" type="direction"/>
+      <parameter dia-name="phaseLines_" name="Phase lines" optional="true" type="PhaseLineList"/>
+      <parameter dia-name="boundaryLimit1_" name="Boundary limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Boundary limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="intelligences_" name="Intelligences" optional="true" type="IntelligenceList"/>
+    </context>
+    <mission dia-behavior="net.masagroup.military.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_BM_MoveToward" id="1" name="BM MoveTowardCrossroad">
+      <parameter dia-name="objectives" name="objectives" optional="false" type="PointBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.military.tasks.TestParam" dia-type="T_Mission_Pion_BM_TestReachable" id="2" name="BM TestReachable">
+      <parameter dia-name="Point_" name="Point" optional="true" type="PointBM"/>
+      <parameter dia-name="PointList_" name="PointList" optional="true" type="PointListBM"/>
+      <parameter dia-name="Area_" name="Polygon" optional="true" type="AreaBM"/>
+      <parameter dia-name="AreaList_" name="PolygonList" optional="true" type="AreaListBM"/>
+      <parameter dia-name="Automat_" name="Automat" optional="true" type="AutomateBM"/>
+      <parameter dia-name="AutomatList_" name="Automat" optional="true" type="AutomateListBM"/>
+      <parameter dia-name="Agent_" name="Agent" optional="true" type="AgentBM"/>
+      <parameter dia-name="AgentList_" name="AgentList" optional="true" type="AgentListBM"/>
+      <parameter dia-name="AgentKnowledge_" name="AgentKnowledge" optional="true" type="AgentKnowledgeBM"/>
+      <parameter dia-name="AgentKnowledgeList_" name="AgentKnowledgeList" optional="true" type="AgentKnowledgeListBM"/>
+      <parameter dia-name="ObjectKnowledge_" name="ObjectKnowledge" optional="true" type="ObjectKnowledgeBM"/>
+      <parameter dia-name="ObjectKnowledgeList_" name="ObjectKnowledgeList" optional="true" type="ObjectKnowledgeListBM"/>
+      <parameter dia-name="PopulationKnowledge_" name="PopulationKnowledge" optional="true" type="PopulationKnowledgeBM"/>
+      <parameter dia-name="GenObject_" name="GenObject" optional="true" type="GenObjectBM"/>
+      <parameter dia-name="GenObjectList_" name="GenObjectList" optional="true" type="GenObjectListBM"/>
+    </mission>
+  </units>
+  <automats>
+    <context>
+      <parameter dia-name="dangerDirection_" name="Danger direction" optional="false" type="direction"/>
+      <parameter dia-name="phaseLines_" name="Phase lines" optional="true" type="PhaseLineList"/>
+      <parameter dia-name="boundaryLimit1_" name="Boundary limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Boundary limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="intelligences_" name="Intelligences" optional="true" type="IntelligenceList"/>
+    </context>
+    <mission cdt-dia-behavior="MIS_Automat_CDT_Dumb" dia-type="T_Mission_Automat_Dumb" id="100" mrt-dia-behavior="MIS_Automat_MRT_Dumb" name="Dumb Automat Mission">
+      <parameter dia-name="bool_" name="BoolParam" optional="true" type="Bool"/>
+      <parameter dia-name="numeric_" name="NumericParam" optional="true" type="Numeric"/>
+      <parameter dia-name="Enumeration_" name="EnumerationParam" optional="true" type="Enumeration">
+        <value id="0" name="regime_1"/>
+        <value id="1" name="regime_2"/>
+      </parameter>
+      <parameter dia-name="Path_" name="PathParam" optional="true" type="Path"/>
+      <parameter dia-name="PathList_" name="PathListParam" optional="true" type="PathList"/>
+      <parameter dia-name="Point_" name="PointParam" optional="true" type="Point"/>
+      <parameter dia-name="PointList_" name="PointListParam" optional="true" type="PointList"/>
+      <parameter dia-name="Polygon_" name="PolygonParam" optional="true" type="Polygon"/>
+      <parameter dia-name="PolygonList_" name="PolygonListParam" optional="true" type="PolygonList"/>
+      <parameter dia-name="Location_" name="LocationParam" optional="true" type="Location"/>
+      <parameter dia-name="LocationList_" name="LocationListParam" optional="true" type="LocationList"/>
+      <parameter dia-name="Direction_" name="DirectionParam" optional="true" type="Direction"/>
+      <parameter dia-name="NatureAtlas_" name="NatureAtlasParam" optional="true" type="NatureAtlas"/>
+      <parameter dia-name="Agent_" name="AgentParam" optional="true" type="Agent"/>
+      <parameter dia-name="AgentList_" name="AgentListParam" optional="true" type="AgentList"/>
+      <parameter dia-name="Automate_" name="AutomateParam" optional="true" type="Automate"/>
+      <parameter dia-name="AutomateList_" name="AutomateListParam" optional="true" type="AutomateList"/>
+      <parameter dia-name="AgentKnowledge_" name="AgentKnowledgeParam" optional="true" type="AgentKnowledge"/>
+      <parameter dia-name="AgentKnowledgeList_" name="AgentKnowledgeListParam" optional="true" type="AgentKnowledgeList"/>
+      <parameter dia-name="ObjectKnowledge_" name="ObjectKnowledgeParam" optional="true" type="ObjectKnowledge"/>
+      <parameter dia-name="ObjectKnowledgeList_" name="ObjectKnowledgeListParam" optional="true" type="ObjectKnowledgeList"/>
+      <parameter dia-name="PopulationKnowledge_" name="PopulationKnowledgeParam" optional="true" type="PopulationKnowledge"/>
+      <parameter dia-name="GenObject_" name="GenObjectParam" optional="true" type="GenObject"/>
+      <parameter dia-name="GenObjectList_" name="GenObjectListParam" optional="true" type="GenObjectList"/>
+      <!--<parameter dia-name="DotationType_" name="DotationTypeParam" optional="true" type="DotationType"/>-->
+      <parameter dia-name="MaintenancePriorities_" name="MaintenancePrioritiesParam" optional="true" type="MaintenancePriorities"/>
+      <parameter dia-name="MedicalPriorities_" name="MedicalPrioritiesParam" optional="true" type="MedicalPriorities"/>
+      <parameter dia-name="ObjectiveList_" name="ObjectiveListParam" optional="true" type="ObjectiveList"/>
+    </mission>
+  </automats>
+  <populations>
+  </populations>
+  <fragorders>
+  </fragorders>
+</missions>

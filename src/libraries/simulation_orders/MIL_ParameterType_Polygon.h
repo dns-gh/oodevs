@@ -24,7 +24,7 @@ class MIL_ParameterType_Polygon : public MIL_ParameterType_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_ParameterType_Polygon();
+    explicit MIL_ParameterType_Polygon( const std::string& name );
     virtual ~MIL_ParameterType_Polygon();
     //@}
 

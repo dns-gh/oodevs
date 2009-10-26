@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<units>
+   <unit decisional-model="BMPion" id="2" name="BMPion" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature="combat/engineer/combat"/>
+    <equipments>
+       <equipment count="5" crew="2" type="Truc"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+    </crew-ranks>
+    <logistics>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <setup installation-time="500s" uninstallation-time="30s"/>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+      <distance-before-point type="lima" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="100"/>
+    <force-ratio feedback-time="6000s"/>
+  </unit>
+</units>

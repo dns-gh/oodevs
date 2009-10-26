@@ -23,7 +23,7 @@ class MIL_ParameterType_Agent : public MIL_ParameterType_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_ParameterType_Agent();
+    explicit MIL_ParameterType_Agent( const std::string& name );
     virtual ~MIL_ParameterType_Agent();
     //@}
 

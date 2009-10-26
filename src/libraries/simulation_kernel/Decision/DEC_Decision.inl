@@ -11,6 +11,8 @@
 #include "DEC_Decision.h"
 #include "DEC_Model_ABC.h"
 #include "MIL_AgentServer.h"
+#include "Decision/DEC_Workspace.h"
+#include "Decision/DEC_DataBase.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "MT_Tools/MT_CrashHandler.h"
 
@@ -48,8 +50,8 @@ DEC_Decision<T>::~DEC_Decision()
 
 namespace DEC_DecisionImpl
 {
-    void RegisterCommonUserFunctions( directia::Brain& brain, unsigned int id );
-    void RegisterMissionParameters( const directia::ScriptRef& refMission, MIL_Mission_ABC& mission );
+    void RegisterCommonUserFunctions( directia::Brain& brain, unsigned int id, directia::ScriptRef& initParameterFunction  );
+    void RegisterMissionParameters( directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, MIL_Mission_ABC& mission );
 }
 
 namespace directia
@@ -68,10 +70,14 @@ void DEC_Decision<T>::InitBrain( const std::string& brainFile, const std::string
     brainFile_ = brainFile;
     includePath_ = includePath;
     pRefs_.reset( 0 );//Must delete ScriptRef before call Brain destructor and destroy vm
-    pBrain_.reset( new directia::Brain( brainFile, "name", includePath ) );
-    pRefs_.reset( new ScriptRefs( *pBrain_ ) );
+    pBrain_.reset( new directia::Brain( includePath ) );
+    pBrain_->GetScriptFunction( "include" )( ( brainFile ),(includePath) );
+
+    MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().InitKnowledges( *pBrain_ );//@TODO MGD Find a better way to merge dia4/dia5
+
+    pRefs_.reset( new ScriptRefs( *pBrain_) );
     RegisterUserFunctions( *pBrain_ );
-    DEC_DecisionImpl::RegisterCommonUserFunctions( *pBrain_, pEntity_->GetID() );
+    DEC_DecisionImpl::RegisterCommonUserFunctions( *pBrain_, pEntity_->GetID(), InitTaskParameter() );
     RegisterSelf( *pBrain_ );
 }
 
@@ -216,6 +222,23 @@ void DEC_Decision<T>::StartDefaultBehavior()
     }
 }
 
+// Name: DEC_Decision::StopDefaultBehavior
+// Created: LDC 2009-03-02
+// -----------------------------------------------------------------------------
+template <class T>
+void DEC_Decision<T>::StopDefaultBehavior()
+{
+    try
+    {
+        if( pRefs_.get() )
+            pRefs_->stopEvents_( std::string( "BEH_Defaut" ) );
+    }
+    catch( std::runtime_error& )
+    {
+        // Ignore error if BEH_Defaut doesn't exist
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::ActivateOrder
 // Created: LDC 2009-04-07
@@ -226,7 +249,7 @@ void DEC_Decision<T>::ActivateOrder( const std::string& strBehavior, MIL_Mission
     pMission_ = &mission;
     // Register mission parameters in the brain...
     directia::ScriptRef refMission = pBrain_->RegisterObject( pMission_ );
-    DEC_DecisionImpl::RegisterMissionParameters( refMission, *pMission_ );
+    DEC_DecisionImpl::RegisterMissionParameters( pBrain_->GetScriptFunction( "InitTaskParameter" ), refMission, *pMission_ );
     pRefs_->startEvent_( strBehavior, pMission_ );
 }
 
@@ -817,3 +840,14 @@ void DEC_Decision<T>::RemoveNbcProtectionSuit() const
 {
     throw std::runtime_error( "Invalid call of this Decision class" );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::InitTaskParameter
+// Created: MGD 2009-08-05
+// -----------------------------------------------------------------------------
+template <class T>
+directia::ScriptRef& DEC_Decision<T>::InitTaskParameter() const
+{
+    return pRefs_->initTaskParameter_;
+}
+

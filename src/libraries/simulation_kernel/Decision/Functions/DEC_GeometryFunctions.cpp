@@ -1415,3 +1415,12 @@ float DEC_GeometryFunctions::ComputeDelayFromSchedule( const MIL_Fuseau* pFuseau
             return (float)( 1.f - std::min( 1., rDelay / rTimeLeeway ) );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::GetCrossroads
+// Created: MGD 2009-08-19
+// -----------------------------------------------------------------------------
+std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::GetCrossroads(  const MT_Vector2D& vCenter, float radius )
+{
+    return TER_PathFindManager::GetPathFindManager().FindCrossroadsWithinCircle( vCenter, radius );
+}

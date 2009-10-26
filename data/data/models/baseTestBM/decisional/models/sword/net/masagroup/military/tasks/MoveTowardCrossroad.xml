@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.military.tasks.MoveTowardCrossroad" knowledge-class="net.masagroup.military.generic.tasks.knowledge.MoveToward">
+	<description>Mouvement simple vers un objectif.</description>
+	<parameters>
+		<parameter name="objectives">
+			<description>Le ou les élements à rejoindre</description>
+			<type>
+				<list>
+            		<class name="net.masagroup.military.generic.knowledge.Reachable" />
+            	</list>
+        	</type>
+		</parameter>
+ 					
+ 					
+	</parameters>
+	<stages>
+		<stage label="movement">
+			<description>La mission "MoveTo" n'est pas une mission "opérationnelle" à proprement parler. Cette mission peut être utilisée 
+			par divers entités pour rejoindre la position de n'importe quel élément.
+			
+			Cette mission utilise de manière dynamique l'automatisme de bas niveau "MoveTo" qui permet de rejoindre un élément de l'environnement
+			sans prise de décision particulière (cf. description de l'automatisme "MoveTo"). 
+			C'est l'automatisme principal de la mission. La mission se restreint à un ordre simple de mouvement dont l'importance est basse et
+            n'utilise pas l'automatisme d'engagement.</description>
+			<skills>
+				<skill
+					name="net.masagroup.military.skills.MoveTo" main="true"
+					priority="10">
+					<parameter name="entities">
+						<value>
+							<parameter>objectives</parameter>
+						</value>
+					</parameter>
+					<parameter name="area">
+						<value>
+							<call
+								method="net.masagroup.military.queries.getCrossroads">
+								<parameter name="objectives">
+									<value>
+										<parameter>objectives</parameter>
+									</value>
+								</parameter>
+							</call>
+						</value>
+					</parameter>
+				</skill>
+			</skills>
+		</stage>
+	</stages>
+</task>

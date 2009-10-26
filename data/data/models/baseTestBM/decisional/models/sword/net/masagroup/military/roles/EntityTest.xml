@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<role xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.military.roles.EntityTest">
+	<description>Une entité décisionnelle quelconque dans un contexte militaire.</description>
+	<skills>
+		<skill name="net.masagroup.military.generic.skills.primitives.MoveToward"></skill>
+		<skill name="net.masagroup.military.generic.skills.primitives.MoveAndTakePosition"></skill>
+		<skill name="net.masagroup.military.generic.skills.primitives.Observe"></skill>
+		<skill name="net.masagroup.military.skills.MoveTo"></skill>
+		<skill name="net.masagroup.military.skills.TestParam"></skill>
+	</skills>
+	<resources>
+		<resource name="net.masagroup.military.generic.resources.Move"></resource>
+		<resource name="net.masagroup.military.generic.resources.Observe"></resource>
+		<resource name="net.masagroup.military.generic.resources.Engage"></resource>
+	</resources>
+</role>

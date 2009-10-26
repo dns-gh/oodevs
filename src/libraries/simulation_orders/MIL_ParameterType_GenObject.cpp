@@ -16,8 +16,8 @@
 // Name: MIL_ParameterType_GenObject constructor
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-MIL_ParameterType_GenObject::MIL_ParameterType_GenObject()
-    : MIL_ParameterType_ABC( "GenObject" )
+MIL_ParameterType_GenObject::MIL_ParameterType_GenObject( const std::string& name )
+    : MIL_ParameterType_ABC( name )
 {
 }
 

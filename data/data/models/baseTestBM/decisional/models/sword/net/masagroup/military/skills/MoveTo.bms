@@ -1,0 +1,37 @@
+rootnode
+{
+    connections =
+    {
+        skill.nodes.MoveToPosition
+    };
+
+    activate = function( self )
+        BreakForDebug( "root" )
+		for _, entity in pairs( self.params.entities ) do
+    		Activate( skill.nodes.MoveToPosition, 1, { position = entity, area = self.params.area[entity] } )
+    	end
+    end
+}
+
+node "MoveToPosition"
+{
+	connections =
+    {
+        skill.nodes.MoveToNode
+    };
+
+	activate = function( self )
+	    BreakForDebug( "movetoposition" )
+		for _, keypoint in pairs( self.params.area ) do
+			Activate( skill.nodes.MoveToNode, keypoint:reachEfficiency( self.params.position ), { position = keypoint } )
+		end
+	end
+}
+
+node "MoveToNode"
+{
+    select = function( self )
+        BreakForDebug( "moveto" )
+        self.params.position:moveToIt()
+    end
+}

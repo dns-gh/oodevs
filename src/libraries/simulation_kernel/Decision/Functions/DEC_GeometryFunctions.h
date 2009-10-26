@@ -113,6 +113,9 @@ public:
     static boost::shared_ptr< MT_Vector2D > GetInterceptionPosition( const MIL_AgentPion& caller, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, MT_Vector2D* pInterceptingPosition, MT_Float rSpeed );
 
     static bool GetInterceptionPoint   ( const MT_Vector2D& vToInterceptPosition, const MT_Vector2D& vToInterceptSpeed, const MT_Vector2D& vInterceptingPosition, MT_Float rInterceptingSpeed, MT_Vector2D& result );
+
+    // Terrain keypoint
+    static std::vector< boost::shared_ptr< MT_Vector2D > > GetCrossroads(  const MT_Vector2D& vCenter, float radius );
     //@}
 
 private:

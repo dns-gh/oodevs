@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.military.skills.Observe">
+	<description>Action simple qui consiste à mettre l'effort d'observation vers l'élément désigné.</description>
+	<parameters>
+		<parameter name="target">
+			<type>
+				<list class="net.masagroup.military.generic.knowledge.Observable" />
+			</type>
+		</parameter>
+	</parameters>
+	<modifiers/>
+	<resources>
+	</resources>
+</skill>

@@ -15,8 +15,8 @@
 // Name: MIL_ParameterType_ObjectKnowledge constructor
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-MIL_ParameterType_ObjectKnowledge::MIL_ParameterType_ObjectKnowledge()
-    : MIL_ParameterType_ABC( "ObjectKnowledge" )
+MIL_ParameterType_ObjectKnowledge::MIL_ParameterType_ObjectKnowledge( const std::string& name )
+    : MIL_ParameterType_ABC( name )
 {
 }
 

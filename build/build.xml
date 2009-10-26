@@ -472,6 +472,50 @@
             <syslibset libs="user32"/>
         </build-app>
     </target>
+    
+  <!--
+    ============================================================================
+      data
+    ============================================================================
+      -->
+          
+    <macrodef name="bmc">
+        <attribute name="dir"/>
+        <attribute name="core"/>
+        <sequential>
+            <java taskname="bmc" classname="net.masagroup.sword.bm.tools.bmc.Tool"
+                  fork="true" failonerror="true" outputproperty="" logerror="true">
+                <classpath>
+                    <fileset dir="${bin.dir}" includes="*.jar"/>
+                </classpath>
+                <arg value="-rootpath"/>
+                <arg value="@{core};@{dir}"/>
+                <arg value="@{dir}"/>
+            </java>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="update-database">
+        <attribute name="database"/>
+        <attribute name="dir"/>
+        <sequential>
+            <delete dir="@{dir}"/>
+            <update name="BM" package="@{database}" todir="@{dir}"/>
+        </sequential>
+    </macrodef>
+
+    <target name="generate-database" description="compile behavior model database">
+        <bmc dir="${data.dir}/data/models/baseTestBM/decisional/models/core" core="${data.dir}/data/models/baseTestBM/decisional/models/core"/>
+        <bmc dir="${data.dir}/data/models/baseTestBM/decisional/models/base" core="${data.dir}/data/models/baseTestBM/decisional/models/core"/>
+        <delete>
+          <fileset dir="${data.dir}/data/models/baseTestBM/decisional/models/sword" includes="**/*.bmt,**/*.bmk,**/*.bmr"/>
+          <fileset dir="${data.dir}/data/models/baseTestBM/decisional/models/integration" includes="**/*.bmt,**/*.bmk,**/*.bmr"/>
+        </delete>
+        <bmc dir="${data.dir}/data/models/baseTestBM/decisional/models/sword" core="${data.dir}/data/models/baseTestBM/decisional/models/core;${data.dir}/data/models/baseTestBM/decisional/models/base"/>
+        <bmc dir="${data.dir}/data/models/baseTestBM/decisional/models/integration" core="${data.dir}/data/models/baseTestBM/decisional/models/core;${data.dir}/data/models/baseTestBM/decisional/models/base;${data.dir}/data/models/baseTestBM/decisional/models/sword"/>
+    </target>
+    
+    <target name="generate-data" depends="generate-database" description="generate data"/>
 
     <!--
     ============================================================================
@@ -722,6 +766,8 @@
         <update name="DIA"/>
         <update name="DIA" version="3.5"/>
         <update name="DIA" version="3.5" package="DIA_Tool_DebugGUI_${platform}"/>
+        <update name="BM" />
+        <update name="BM" package="bmc" todir="${bin.dir}"/>
         <update name="hla"/>
         <update name="tools"/>
         <update name="flexlm"/>
@@ -739,6 +785,9 @@
         <update name="folk"/>
         <update name="mockpp"/>
         <update name="vcredist" package="vcredist"/>
+        <update-database database="core-database" dir="${data.dir}/data/models/baseTestBM/decisional/models/core"/>
+        <update-database database="generic-database" dir="${data.dir}/data/models/baseTestBM/decisional/models/base"/>
+        <antcall target="generate-data"/>
     </target>
 
     <!--

@@ -1,0 +1,68 @@
+rootnode
+{
+    connections =
+    {
+        skill.nodes.DestroyElement
+    };
+
+	done = function( self, params, additionnalParams )
+		self.targets[ additionnalParams.destroyedEntity ] = nil
+		if not next( self.targets ) then
+		    Feedback( self.feedbacks.done ) -- the job is done, all targets are destroyed
+		end
+	end,
+	
+	create = function( self )
+		self.targets = {}
+		for _, entity in ipairs( self.params.entity ) do 
+		    self.targets[ entity ] = true
+		end
+	end,
+
+	activate = function( self )
+		for _, entity in ipairs( self.params.entity ) do
+	   		Activate( skill.nodes.DestroyElement, entity:destructionPriority(), { entity = entity, area = self.params.area[ entity ] or self.params.area } )
+	   	end
+	end
+}
+
+node "DestroyElement"
+{
+    connections =
+    {
+     	skill.links.MoveTo,
+     	skill.nodes.Destroy,
+     	skill.links.observe
+    };
+
+    feedbacks = 
+	{
+		{ { "done" }, "DestroyElement" }
+	}; 
+
+    activate = function( self )
+    	if self.params.entity:isDestroyed() then
+			Feedback( self.feedbacks.done, { destroyedEntity = self.params.entity } )
+		end
+
+	-- ajout du skill moveTo pour chaque entity au lieu de faire parcours de positions clés
+ 	  Activate( skill.nodes.MoveTo, 1, { position = self.params.entity } )
+ 	  
+      Activate( skill.links.observe, 1, { entity = self.params.entity } )
+    	
+        if self.params.entity:canDestroyIt() then
+            Activate( skill.nodes.Destroy, 1, { entity = self.params.entity } )
+        end
+
+	    --[[ for _,position in ipairs( self.params.area )  do
+	    	Activate( skill.links.moveAndTakePosition, position:destructionEfficiency( self.params.entity ), { entity = position } )
+	    end --]]
+    end
+}
+
+node "Destroy"
+{
+	--select = acquire{ [ skill.resources.engage ] = 1 } + function( self )
+		self.params.entity:destroyIt()
+	--end
+}

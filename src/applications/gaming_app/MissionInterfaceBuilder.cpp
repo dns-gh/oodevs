@@ -76,11 +76,17 @@ MissionInterfaceBuilder::MissionInterfaceBuilder( Controllers& controllers, gui:
     , entity_                  ( 0 )
 {
     builderFunctors_["agent"]               = &MissionInterfaceBuilder::BuildAgent;
+    builderFunctors_["agentbm"]             = &MissionInterfaceBuilder::BuildAgent;
     builderFunctors_["agentlist"]           = &MissionInterfaceBuilder::BuildAgentList;
+    builderFunctors_["agentlistbm"]         = &MissionInterfaceBuilder::BuildAgentList;
     builderFunctors_["automate"]            = &MissionInterfaceBuilder::BuildAutomat;
+    builderFunctors_["automatebm"]          = &MissionInterfaceBuilder::BuildAutomat;
     builderFunctors_["automatelist"]        = &MissionInterfaceBuilder::BuildAutomatList;
+    builderFunctors_["automatelistbm"]      = &MissionInterfaceBuilder::BuildAutomatList;
     builderFunctors_["genobject"]           = &MissionInterfaceBuilder::BuildGenObject;
+    builderFunctors_["genobjectbm"]         = &MissionInterfaceBuilder::BuildGenObject;
     builderFunctors_["genobjectlist"]       = &MissionInterfaceBuilder::BuildGenObjectList;
+    builderFunctors_["genobjectlistbm"]     = &MissionInterfaceBuilder::BuildGenObjectList;
     builderFunctors_["objective"]           = &MissionInterfaceBuilder::BuildMissionObjective;
     builderFunctors_["objectivelist"]       = &MissionInterfaceBuilder::BuildMissionObjectiveList;
     builderFunctors_["dotationtype"]        = &MissionInterfaceBuilder::BuildDotation;
@@ -91,18 +97,27 @@ MissionInterfaceBuilder::MissionInterfaceBuilder( Controllers& controllers, gui:
     builderFunctors_["numeric"]             = &MissionInterfaceBuilder::BuildNumeric;
     builderFunctors_["datetime"]            = &MissionInterfaceBuilder::BuildParamDateTime;
 
-    builderFunctors_["agentknowledge"]      = &MissionInterfaceBuilder::BuildAgentKnowledge;
-    builderFunctors_["agentknowledgelist"]  = &MissionInterfaceBuilder::BuildAgentKnowledgeList;
-    builderFunctors_["objectknowledge"]     = &MissionInterfaceBuilder::BuildObjectKnowledge;
-    builderFunctors_["objectknowledgelist"] = &MissionInterfaceBuilder::BuildObjectKnowledgeList;
-    builderFunctors_["populationknowledge"] = &MissionInterfaceBuilder::BuildPopulationKnowledge;
+    builderFunctors_["agentknowledge"]        = &MissionInterfaceBuilder::BuildAgentKnowledge;
+    builderFunctors_["agentknowledgebm"]      = &MissionInterfaceBuilder::BuildAgentKnowledge;
+    builderFunctors_["agentknowledgelist"]    = &MissionInterfaceBuilder::BuildAgentKnowledgeList;
+    builderFunctors_["agentknowledgelistbm"]  = &MissionInterfaceBuilder::BuildAgentKnowledgeList;
+    builderFunctors_["objectknowledge"]       = &MissionInterfaceBuilder::BuildObjectKnowledge;
+    builderFunctors_["objectknowledgebm"]     = &MissionInterfaceBuilder::BuildObjectKnowledge;
+    builderFunctors_["objectknowledgelist"]   = &MissionInterfaceBuilder::BuildObjectKnowledgeList;
+    builderFunctors_["objectknowledgelistbm"] = &MissionInterfaceBuilder::BuildObjectKnowledgeList;
+    builderFunctors_["populationknowledge"]   = &MissionInterfaceBuilder::BuildPopulationKnowledge;
+    builderFunctors_["populationknowledgebm"] = &MissionInterfaceBuilder::BuildPopulationKnowledge;
 
     builderFunctors_["path"]                = &MissionInterfaceBuilder::BuildPath;
     builderFunctors_["pathlist"]            = &MissionInterfaceBuilder::BuildPathList;
     builderFunctors_["point"]               = &MissionInterfaceBuilder::BuildPoint;
+    builderFunctors_["pointbm"]             = &MissionInterfaceBuilder::BuildPoint;
     builderFunctors_["pointlist"]           = &MissionInterfaceBuilder::BuildPointList;
+    builderFunctors_["pointlistbm"]         = &MissionInterfaceBuilder::BuildPointList;
     builderFunctors_["polygon"]             = &MissionInterfaceBuilder::BuildPolygon;
+    builderFunctors_["areabm"]              = &MissionInterfaceBuilder::BuildPolygon;
     builderFunctors_["polygonlist"]         = &MissionInterfaceBuilder::BuildPolygonList;
+    builderFunctors_["arealistbm"]          = &MissionInterfaceBuilder::BuildPolygonList;
     builderFunctors_["location"]            = &MissionInterfaceBuilder::BuildLocation;
     builderFunctors_["locationlist"]        = &MissionInterfaceBuilder::BuildLocationList;
 

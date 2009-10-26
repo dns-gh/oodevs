@@ -135,6 +135,10 @@ public:
 	}
 	//@}
 
+    virtual directia::ScriptRef& InitTaskParameter() const = 0;
+    directia::ScriptRef& GetScriptVariableRef( const std::string& name );
+    //@}
+
 private:
     //! @name Helpers
     //@{

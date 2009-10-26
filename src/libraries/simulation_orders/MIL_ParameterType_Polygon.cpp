@@ -16,8 +16,8 @@
 // Name: MIL_ParameterType_Polygon constructor
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-MIL_ParameterType_Polygon::MIL_ParameterType_Polygon()
-    : MIL_ParameterType_ABC( "Polygon" )
+MIL_ParameterType_Polygon::MIL_ParameterType_Polygon( const std::string& name )
+    : MIL_ParameterType_ABC( name )
 {
     // NOTHING
 }

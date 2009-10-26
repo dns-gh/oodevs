@@ -15,8 +15,8 @@
 // Name: MIL_ParameterType_AgentKnowledge constructor
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-MIL_ParameterType_AgentKnowledge::MIL_ParameterType_AgentKnowledge()
-    : MIL_ParameterType_ABC( "AgentKnowledge" )
+MIL_ParameterType_AgentKnowledge::MIL_ParameterType_AgentKnowledge( const std::string& name )
+    : MIL_ParameterType_ABC( name )
 {
 }
 

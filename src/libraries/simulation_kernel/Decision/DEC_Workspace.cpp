@@ -152,6 +152,7 @@ void DEC_Workspace::InitializeConfig( MIL_Config& config )
 //-----------------------------------------------------------------------------
 void DEC_Workspace::InitializeDIA( MIL_Config& config )
 {
+    //DIA4
     const std::string strDecFile = config.GetDecisionalFile();
 
     xml::xifstream xis( strDecFile );
@@ -171,6 +172,15 @@ void DEC_Workspace::InitializeDIA( MIL_Config& config )
     {
         MT_LOG_INFO_MSG( MT_FormatString( "Starting DirectIA debug server on port %d", config.GetDiaDebuggerPort() ) );
     }
+
+    //BM
+    if( xis.has_child( "BMDatabase" ) )
+    {
+        xis >> xml::start( "BMDatabase" );
+        dataBase_.reset( new DEC_DataBase( xis, strSourcePath ) );
+        xis >> xml::end();
+    }
+
 }
 
 // -----------------------------------------------------------------------------
@@ -316,4 +326,14 @@ void DEC_Workspace::InitializeObjectNames( MIL_Config& config )
 
     xml::xifstream xisObjectNames( strFile );
     DEC_ObjectFunctions::RegisterObjectNames( xisObjectNames );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Workspace::InitKnowledges
+// Created: MGD 2009-10-23
+// -----------------------------------------------------------------------------
+void DEC_Workspace::InitKnowledges( directia::Brain& brain ) const
+{
+    if( dataBase_.get() )
+        dataBase_->InitKnowledges( brain );
 }

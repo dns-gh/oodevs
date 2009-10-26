@@ -16,8 +16,8 @@
 // Name: MIL_ParameterType_AutomatList constructor
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-MIL_ParameterType_AutomatList::MIL_ParameterType_AutomatList()
-    : MIL_ParameterType_ABC( "AutomateList" )
+MIL_ParameterType_AutomatList::MIL_ParameterType_AutomatList( const std::string& name )
+    : MIL_ParameterType_ABC( name )
 {
 }
 

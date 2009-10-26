@@ -16,8 +16,8 @@
 // Name: MIL_ParameterType_PointList constructor
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-MIL_ParameterType_PointList::MIL_ParameterType_PointList()
-    : MIL_ParameterType_ABC( "PointList" )
+MIL_ParameterType_PointList::MIL_ParameterType_PointList( const std::string& name )
+    : MIL_ParameterType_ABC( name )
 {
     // NOTHING
 }

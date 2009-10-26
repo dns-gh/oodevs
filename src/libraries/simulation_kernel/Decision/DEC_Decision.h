@@ -123,12 +123,17 @@ public:
 		ar & boost::serialization::base_object< DEC_Decision_ABC >( *this );
 	}
 
+    virtual directia::ScriptRef& InitTaskParameter() const;
+
+    //@}
+
 protected:
     //! @name Helpers
     //@{
     void CleanStateAfterCrash     ();
 
     void StartDefaultBehavior     ();
+    void StopDefaultBehavior      ();
     void LogCrash                 ();
     
     void ActivateOrder( const std::string& strBehavior, MIL_Mission_ABC& mission );
@@ -159,6 +164,7 @@ private:
     //!@name Data
     //@{
     std::auto_ptr< directia::Brain >   pBrain_;
+    bool                               bDIA5_;
     std::auto_ptr< struct ScriptRefs > pRefs_;
     std::string                        brainFile_;
     std::string                        includePath_;
@@ -170,13 +176,15 @@ private:
 struct ScriptRefs
 {
 public:
-    explicit ScriptRefs( directia::Brain& brain );
+    ScriptRefs( directia::Brain& brain );
     
+    directia::ScriptRef sendEvent_;
     directia::ScriptRef startEvent_;
     directia::ScriptRef stopEvents_;
     directia::ScriptRef setStateVariable_;
     directia::ScriptRef collectgarbage_;
     directia::ScriptRef step_;
+    directia::ScriptRef initTaskParameter_;
 private:
     ScriptRefs();
     ScriptRefs( const ScriptRefs& );

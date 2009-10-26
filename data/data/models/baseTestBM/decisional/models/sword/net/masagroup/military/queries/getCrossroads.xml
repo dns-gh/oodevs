@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query name="net.masagroup.military.queries.getCrossroads" xmlns="http://www.masagroup.net/directia/schemas/bm">
+	<description>Test : retourne les carrefours dans un cercle d'un rayon donné autour d'un Reachable</description>
+	<parameters>
+		<parameter name="objectives" >
+        <type>
+        	<list>
+              <class name="net.masagroup.military.generic.knowledge.Reachable"></class>
+            </list>
+         </type>     
+        </parameter>
+	</parameters>
+	<get>
+		<target>
+			<variable name="k">
+				<type>
+					<class name="net.masagroup.military.generic.knowledge.Reaching" />
+				</type>
+			</variable>
+		</target>
+		<condition>isInAOR(k) and isReachingFor( k, objective )</condition>
+	</get>
+</query>

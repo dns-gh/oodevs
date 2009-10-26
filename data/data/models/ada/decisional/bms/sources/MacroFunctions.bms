@@ -679,8 +679,7 @@ do
     end )
 end
 
-behavior_model = 
-{
-    StartTask = StartEvent,
-    StopTasks = StopEvents
-}
+behavior_model = {}
+behavior_model.StartTask = StartEvent
+behavior_model.StopTask = StopEvents
+

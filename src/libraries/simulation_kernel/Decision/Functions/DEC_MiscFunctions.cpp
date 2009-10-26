@@ -134,17 +134,17 @@ void DEC_MiscFunctions::DeleteOrderRepresentation( MIL_Entity_ABC& callerAgent, 
 
 namespace DEC_DecisionImpl
 {
-    void RegisterMissionParameters( const directia::ScriptRef& refMission, MIL_Mission_ABC& mission );
+    void RegisterMissionParameters( directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, MIL_Mission_ABC& mission );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_MiscFunctions::FillMissionParameters
 // Created: LDC 2009-05-04
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::FillMissionParameters( const directia::ScriptRef& refMission, MIL_Mission_ABC* pMission )
+void DEC_MiscFunctions::FillMissionParameters( directia::ScriptRef& initTaskFunction, const directia::ScriptRef& refMission, MIL_Mission_ABC* pMission )
 {
     if( pMission )
-        DEC_DecisionImpl::RegisterMissionParameters( refMission, *pMission );
+        DEC_DecisionImpl::RegisterMissionParameters( initTaskFunction, refMission, *pMission );
 }
 
 // -----------------------------------------------------------------------------

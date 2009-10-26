@@ -13,8 +13,15 @@ namespace xml
 }
 
 class DEC_Model_ABC;
+class DEC_DataBase;
 class MIL_MissionType_ABC;
 class MIL_Config;
+
+namespace directia
+{
+    class Brain;
+}
+
 
 //*****************************************************************************
 // Created: JVT 02-06-28
@@ -38,6 +45,8 @@ public:
     const DEC_Model_ABC*       FindModelAutomate     ( const std::string& strModelName  ) const;  
     const DEC_Model_ABC*       FindModelPopulation   ( const std::string& strModelName  ) const;    
     //@}
+
+    void InitKnowledges( directia::Brain& brain ) const;
     
 private:
     //! @name Init
@@ -71,7 +80,9 @@ private:
 
     T_MissionTypeNameMap                unitMissionsNames_ ; 
     T_MissionTypeNameMap                automatMissionsNames_ ; 
-    T_MissionTypeNameMap                populationMissionsNames_ ; 
+    T_MissionTypeNameMap                populationMissionsNames_ ;
+
+    std::auto_ptr< DEC_DataBase > dataBase_;
 };
 
 #include "DEC_Workspace.inl"

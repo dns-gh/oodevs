@@ -23,7 +23,7 @@ class MIL_ParameterType_Point : public MIL_ParameterType_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_ParameterType_Point();
+    explicit MIL_ParameterType_Point( const std::string& name );
     virtual ~MIL_ParameterType_Point();
     //@}
 
