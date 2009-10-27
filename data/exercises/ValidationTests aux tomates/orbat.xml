@@ -26,6 +26,9 @@
             <unit command-post="false" id="91" name="Peloton ERIAC OFF" position="30TXU3174300287" type="Peloton ERIAC OFF"/>
             <unit command-post="false" id="92" name="Peloton ERIAC S/OFF" position="30TXU3272600821" type="Peloton ERIAC S/OFF"/>
           </automat>
+          <automat engaged="true" id="124" knowledge-group="2" name="Peloton Protection PC [124]" type="Peloton Protection PC">
+            <unit command-post="true" id="125" name="Peloton Protection PC" position="30TXT3289298470" type="Peloton Protection PC"/>
+          </automat>
           <lima name="Lima 113">
             <point>30TXU2858801346</point>
             <point>30TXU3929708509</point>
@@ -70,6 +73,9 @@
             <unit command-post="false" id="96" name="Peloton ERIAC OFF" position="30TXU9341902070" type="Peloton ERIAC OFF"/>
             <unit command-post="false" id="97" name="Peloton ERIAC OFF" position="30TXU9290002551" type="Peloton ERIAC OFF"/>
             <unit command-post="false" id="98" name="Peloton ERIAC S/OFF" position="30TXU9388303086" type="Peloton ERIAC S/OFF"/>
+          </automat>
+          <automat engaged="true" id="126" knowledge-group="2" name="Peloton Protection PC [126]" type="Peloton Protection PC">
+            <unit command-post="true" id="127" name="Peloton Protection PC" position="30TXU9408700611" type="Peloton Protection PC"/>
           </automat>
           <lima name="Lima 116">
             <point>30TXU9045401647</point>
