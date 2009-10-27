@@ -17,7 +17,6 @@ function Start()
 			events.sim:ClientConnected(),
 			{ },
 				function( client, profile )
-				SetDock( { client = client, hide = docks.ALL } ) -- hide all docks
 				SetDock( { show = { "orbat" } } )
 				SetDock( { show = { "actions" } } )
 				SetDock( { show = { "info" } } )
