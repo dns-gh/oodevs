@@ -15,24 +15,18 @@ functionTick =
 [5] = function()
 	Center( { coordinates = coord:UtmPosition( config.positions.center_ABC[1] ) } )
 	Zoom( { width = 35000 } )
-	actions:IssueOrder( "Mission Attaquer ABC Attaquer C1" )
+	actions:IssueOrder( "Automate ABC Attaquer C1" )
 end,
 
 [2000+5] = function()
-	Center( { coordinates = coord:UtmPosition( config.positions.center_ABC[2] ) } )
-	Zoom( { width = 35000 } )
-	actions:IssueOrder( "Mission Attaquer ABC Attaquer C2" )
-end,
-[4000+5] = function()
-	Center( { coordinates = coord:UtmPosition( config.positions.center_ABC[3] ) } )
-	Zoom( { width = 35000 } )
-	actions:IssueOrder( "Mission Attaquer ABC Attaquer C3" )
-end,
-[6000+5] = function()
 	Center( { coordinates = coord:UtmPosition( config.positions.center_ABC[4] ) } )
 	Zoom( { width = 35000 } )
-	actions:IssueOrder( "Mission Attaquer ABC Attaquer C4" )
+	actions:IssueOrder( "Automate ABC Attaquer C2 - 1" )
 end,
+[2000+20] = function()
+	actions:IssueOrder( "Automate ABC Attaquer C2 - 2" )
+end,
+
 }
 
 local function runStep( )
@@ -50,7 +44,7 @@ function Start()
             events.sim:ClientConnected(),
             { },
             function( client, profile )
-                if profile ~= "Pion ABC Attaquer" then return end
+                if profile ~= "Automate ABC Attaquer" then return end
 				tick=0
 				local text = "Changer de Case ?"
 				Dialog( { id = "Case", message = text, buttons = { "Case 1", "Case 2", "Case 3", "Case 4" } } )
@@ -62,7 +56,7 @@ function Start()
 		events.sim:TickEnded( ),
 		{ "Missions_Init" },
 			function()
-				if profile ~= "Pion ABC Attaquer" then
+				if profile ~= "Automate ABC Attaquer" then
 					runStep()
 				end
 			end

@@ -6,6 +6,7 @@
 <!-- ABC -->
 
 <!-- Automate ABC Proteger PC -->
+
 <action id="246" name="Automate ABC Proteger PC C1" target="124" time="2009-09-29T16:33:41" type="mission">
     <parameter name="direction dangereuse" type="Direction" value="313"/>
     <parameter name="Limas" type="PhaseLineList"/>
@@ -333,6 +334,37 @@
     </parameter>
     <parameter name="Renseignements" type="IntelligenceList"/>
   </action>
+  
+   <action id="208" name="Automate ABC Appuyer sur position C2 - 2" target="75" time="2009-09-29T17:07:01" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="330"/>
+    <parameter name="Limas" type="PhaseLineList">
+      <parameter name="Phase line 1" type="lima" value="LD">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30TXT8632540757"/>
+            <point coordinates="30TXT9466244728"/>
+          </location>
+        </parameter>
+        <parameter name="Schedule" type="datetime" value="20090929T145851"/>
+      </parameter>
+    </parameter>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT9921920936"/>
+        <point coordinates="30TXT9309628457"/>
+        <point coordinates="30TXT8651341470"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TYT1109025688"/>
+        <point coordinates="30TYT0191835658"/>
+        <point coordinates="30TXT9376444746"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+  
   <action id="247" name="Automate ABC Appuyer sur position C2 - 2" target="69" time="2009-09-29T16:52:41" type="mission">
     <parameter name="direction dangereuse" type="Direction" value="330"/>
     <parameter name="Limas" type="PhaseLineList"/>
@@ -496,7 +528,7 @@
     <parameter name="Compagnie" type="Automate" value="75"/>
   </action>
   
-  <!-- Auto Appuyer Contre attaquer -->
+  <!-- Auto ABC Contre attaquer -->
   
   <action id="218" name="Automate ABC Contre Attaquer 1" target="15" time="2009-09-29T16:35:51" type="mission">
     <parameter name="direction dangereuse" type="Direction" value="330"/>
