@@ -594,4 +594,64 @@
       </parameter>
     </parameter>
   </action>
+    <!-- Pion LOG Préparer Bascule Case 5-->
+  
+    <action id="113" name="LOG Preparer Bascule C5" target="782" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit"/>
+    <parameter name="Limit 2" type="Limit"/>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Automate pour bascule" type="Automate" value="596"/>
+    <parameter name="Rester sur place" type="Bool" value="false"/>
+  </action>
+  
+    <!-- Pion LOG Réparer Case 5-->
+  <action id="47" name="LOG Reparer ABC Attaquer C5" target="456" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit"/>
+    <parameter name="Limit 2" type="Limit"/>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Itineraire assaut" type="Path">
+      <parameter name="Point de passage 1" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UBP9963835059"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 2" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UBP9927036520"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 3" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UBP9877237096"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 4" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UBP9744336400"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 5" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UBP9753035436"/>
+        </location>
+      </parameter>
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UBP9987335141"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="120" name="LOG Reparer C5" target="784" time="2009-09-29T16:58:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="212"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit"/>
+    <parameter name="Limit 2" type="Limit"/>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Position deploiement" set="false" type="Point"/>
+  </action>
   </actions>
