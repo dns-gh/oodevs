@@ -745,5 +745,247 @@
       </location>
     </parameter>
   </action>
+    
+<!-- Automate ABC Escorter une unite  C1-->
+  
+  <action id="131" name="Escorter Unite Faire Mouvement C1" target="164" time="2009-09-29T16:42:31" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit"/>
+    <parameter name="Limit 2" type="Limit"/>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Itineraire" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXU3103315250"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="242" name="ABC Escorter Unite C1" target="87" time="2009-09-29T16:48:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT3522394560"/>
+        <point coordinates="30TXU2941000712"/>
+        <point coordinates="30TXU2287114183"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT4612398755"/>
+        <point coordinates="30TXU3930707167"/>
+        <point coordinates="30TXU3059916953"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Unite a escorter" type="Agent" value="164"/>
+  </action>
+  
+  <!-- Automate ABC Escorter une unite  C2-->
+    <action id="131" name="Escorter Unite Faire Mouvement C2" target="195" time="2009-09-29T16:44:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit"/>
+    <parameter name="Limit 2" type="Limit"/>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Itineraire" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXU8906515464"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="242" name="ABC Escorter Unite C2" target="93" time="2009-09-29T16:51:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT9821696468"/>
+        <point coordinates="30TXU9099901390"/>
+        <point coordinates="30TXU8441814207"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TYU0699401179"/>
+        <point coordinates="30TXU9939809302"/>
+        <point coordinates="30TXU9079517979"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Unite a escorter" type="Agent" value="195"/>
+  </action>
+  
+   <!-- Automate ABC Escorter Unites  C1-->
+   
+   <action id="299" name="Escorter Unites Faire Mouvement C1" target="21" time="2009-09-29T16:51:51" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT3522394560"/>
+        <point coordinates="30TXU2941000712"/>
+        <point coordinates="30TXU2287114183"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT4612398755"/>
+        <point coordinates="30TXU3930707167"/>
+        <point coordinates="30TXU3059916953"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Itineraire" type="Path">
+      <parameter name="Point de passage 1" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXU3646408042"/>
+        </location>
+      </parameter>
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXU3096914596"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="243" name="Escorter Unites ABC Escorter Unites C1" target="87" time="2009-09-29T16:59:31" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT3522394560"/>
+        <point coordinates="30TXU2941000712"/>
+        <point coordinates="30TXU2287114183"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT4612398755"/>
+        <point coordinates="30TXU3930707167"/>
+        <point coordinates="30TXU3059916953"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Automate a escorter" type="Automate" value="21"/>
+  </action>
+  
+   <!-- Automate ABC Escorter Unites  C2-->
+   
+   <action id="299" name="Escorter Unites Faire Mouvement C2" target="39" time="2009-09-29T16:42:21" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT9821696468"/>
+        <point coordinates="30TXU9099901390"/>
+        <point coordinates="30TXU8441814207"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TYU0699401179"/>
+        <point coordinates="30TXU9939809302"/>
+        <point coordinates="30TXU9079517979"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Itineraire" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXU8963215463"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="243" name="ABC Escorter Unites C2" target="93" time="2009-09-29T16:50:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT9821696468"/>
+        <point coordinates="30TXU9099901390"/>
+        <point coordinates="30TXU8441814207"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TYU0699401179"/>
+        <point coordinates="30TXU9939809302"/>
+        <point coordinates="30TXU9079517979"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Automate a escorter" type="Automate" value="39"/>
+  </action>
+  
+    <!-- Automate ABC Jalonner  C1-->
+	 <action id="299" name="Automate ABC Jalonner Faire Mouvement C1" target="87" time="2009-09-29T16:47:11" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT3522394560"/>
+        <point coordinates="30TXU2941000712"/>
+        <point coordinates="30TXU2287114183"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT4612398755"/>
+        <point coordinates="30TXU3930707167"/>
+        <point coordinates="30TXU3059916953"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Itineraire" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXU3133008937"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="208" name="Automate ABC Jalonner ABC Attaquer C1" target="27" time="2009-09-29T16:56:11" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT3522394560"/>
+        <point coordinates="30TXU2941000712"/>
+        <point coordinates="30TXU2287114183"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT4612398755"/>
+        <point coordinates="30TXU3930707167"/>
+        <point coordinates="30TXU3059916953"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+  <action id="225" name="ABC Jalonner C1" target="87" time="2009-09-29T16:57:01" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT3522394560"/>
+        <point coordinates="30TXU2941000712"/>
+        <point coordinates="30TXU2287114183"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT4612398755"/>
+        <point coordinates="30TXU3930707167"/>
+        <point coordinates="30TXU3059916953"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
   
 </actions>
