@@ -34,14 +34,15 @@ class DEC_AutomateDecision : public DEC_Decision< MIL_Automate >
 {
 
 public:
-    explicit DEC_AutomateDecision( MIL_Automate& automate );
-             DEC_AutomateDecision();
+    explicit DEC_AutomateDecision( MIL_Automate& automate, DEC_DataBase& database );
     virtual ~DEC_AutomateDecision();
 
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const DEC_AutomateDecision* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, DEC_AutomateDecision* role, const unsigned int /*version*/ );
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}
@@ -149,5 +150,23 @@ private:
     static int nDIAMissionIdx_; // index de mission_ dans T_Automate
     //    static int nDIANameIdx_;
 };
+
+template< typename Archive >
+void save_construct_data( Archive& archive, const DEC_AutomateDecision* role, const unsigned int /*version*/ )
+{
+    const DEC_DataBase* const database = &role->database_;
+    archive << role->pEntity_ 
+        << database;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, DEC_AutomateDecision* role, const unsigned int /*version*/ )
+{
+    MIL_Automate* automate;
+    DEC_DataBase* database;
+    archive >> automate
+        >> database;
+    ::new( role )DEC_AutomateDecision( *automate, *database );
+}
 
 #endif // __DEC_AutomateDecision_h_

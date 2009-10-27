@@ -21,6 +21,9 @@ namespace xml
     class xistream;
 }
 
+class DEC_DataBase;
+class DEC_PopulationDecision;
+class DEC_PopulationKnowledge;
 class MIL_PopulationType;
 class MIL_PopulationFlow;
 class MIL_PopulationConcentration;
@@ -29,8 +32,6 @@ class MIL_PopulationAttitude;
 class MIL_Army;
 class MIL_Agent_ABC;
 class MIL_AgentPion;
-class DEC_PopulationDecision;
-class DEC_PopulationKnowledge;
 class PHY_Volume;
 class PHY_FireResults_Population;
 class TER_Localisation;
@@ -44,7 +45,7 @@ class MIL_Population : public MIL_Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     MIL_Population( xml::xistream& xis, const MIL_PopulationType& type, MIL_Army& army );
+     MIL_Population( xml::xistream& xis, const MIL_PopulationType& type, MIL_Army& army, DEC_DataBase& database );
     ~MIL_Population();
     //@}
 

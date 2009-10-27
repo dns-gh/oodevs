@@ -24,6 +24,12 @@ namespace xml
     class xistream;
 }
 
+class DEC_AutomateDecision;
+class DEC_DataBase;
+class DEC_Knowledge_Agent;
+class DEC_KnowledgeBlackBoard_Automate;
+class DEC_Knowledge_Object;
+class NET_ASN_MsgAutomatCreation;
 class MIL_Formation;
 class MIL_AutomateType;
 class MIL_AgentPion;
@@ -35,13 +41,9 @@ class MIL_AutomateLOG;
 class MIL_Object_ABC;
 class MIL_AgentTypePion;
 class MIL_LimaFunction;
-class DEC_Knowledge_Agent;
-class DEC_Knowledge_Object;
-class DEC_AutomateDecision;
 class PHY_SupplyDotationState;
 class PHY_DotationCategory;
-class NET_ASN_MsgAutomatCreation;
-class DEC_KnowledgeBlackBoard_Automate;
+
 // =============================================================================
 // @class  MIL_Automate
 // Created: JVT 2004-08-03
@@ -67,8 +69,8 @@ public:
     //@}
 
 public:
-             MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Formation& formation, xml::xistream& xis );
-             MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Automate&  parent   , xml::xistream& xis);
+             MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Formation& formation, xml::xistream& xis, DEC_DataBase& database );
+             MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Automate&  parent   , xml::xistream& xis, DEC_DataBase& database);
     virtual ~MIL_Automate();
 
     //! @name CheckPoints
@@ -206,7 +208,7 @@ protected:
 private:
     //! @name Tools
     //@{
-    void Initialize( xml::xistream& xis ); 
+    void Initialize( xml::xistream& xis, DEC_DataBase& database ); 
     //@}
     
     //! @name Helpers

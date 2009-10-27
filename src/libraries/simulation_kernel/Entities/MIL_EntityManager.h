@@ -27,6 +27,7 @@ namespace xml
 class ArmyFactory_ABC;
 class AgentFactory_ABC;
 class AutomateFactory_ABC;
+class DEC_DataBase;
 class FormationFactory_ABC;
 class MIL_EffectManager;
 class MIL_ObjectManager;
@@ -86,8 +87,7 @@ class MIL_EntityManager : public MIL_EntityManager_ABC,
 {
 
 public:
-             MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ProfilerMgr& profiler, HLA_Federate* hla );
-             MIL_EntityManager();
+             MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ProfilerMgr& profiler, HLA_Federate* hla, DEC_DataBase& database );
     virtual ~MIL_EntityManager();
 
     static void Initialize( MIL_Config& config, const MIL_Time_ABC& time, MIL_EffectManager& effects );
@@ -171,6 +171,9 @@ public:
     
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_EntityManager* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_EntityManager* role, const unsigned int /*version*/ );
+
 
     void WriteODB( xml::xostream& xos ) const;
     //@}
@@ -249,6 +252,7 @@ private:
     static MIL_EntityManager* singleton_;
     //@}
 };
+
 
 #endif // __MIL_EntityManager_h_
 

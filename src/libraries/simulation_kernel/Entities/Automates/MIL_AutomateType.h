@@ -24,10 +24,12 @@ namespace directia
     class Brain;
 }
 
+class DEC_DataBase;
+class DEC_Model_ABC;
 class MIL_AgentTypePion;
 class MIL_Automate;
 class MIL_Formation;
-class DEC_Model_ABC;
+
 
 // =============================================================================
 // @class  MIL_AutomateType
@@ -52,8 +54,8 @@ public:
 
     //! @name Instanciation
     //@{
-    virtual MIL_Automate& InstanciateAutomate( uint nID, MIL_Formation& parent, xml::xistream& xis ) const;
-    virtual MIL_Automate& InstanciateAutomate( uint nID, MIL_Automate&  parent, xml::xistream& xis ) const;
+    virtual MIL_Automate& InstanciateAutomate( uint nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database ) const;
+    virtual MIL_Automate& InstanciateAutomate( uint nID, MIL_Automate&  parent, xml::xistream& xis, DEC_DataBase& database ) const;
     //@}
 
     //! @name Accessors

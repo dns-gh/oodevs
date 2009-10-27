@@ -12,6 +12,7 @@
 
 #include "AutomateFactory_ABC.h"
 
+class DEC_DataBase;
 class MIL_IDManager;
 
 // =============================================================================
@@ -26,7 +27,7 @@ class AutomateFactory : public AutomateFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit AutomateFactory( MIL_IDManager& idManager );
+    explicit AutomateFactory( MIL_IDManager& idManager, DEC_DataBase& database  );
     virtual ~AutomateFactory();
     //@}
 
@@ -38,15 +39,34 @@ public:
 private:
     //! @name CheckPoint
     //@{
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const AutomateFactory* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, AutomateFactory* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const AutomateFactory* factory, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, AutomateFactory* factory, const unsigned int /*version*/ );
     //@}
 
 private:
     //! @name Member data
     //@{
     MIL_IDManager& idManager_;
+    DEC_DataBase& database_;
     //@}
 };
+
+template< typename Archive >
+void save_construct_data( Archive& archive, const AutomateFactory* factory, const unsigned int /*version*/ )
+{
+    const MIL_IDManager* const idManager = &factory->idManager_;
+    const DEC_DataBase* const database = &factory->database_;
+    archive << idManager
+        << database;
+}
+template< typename Archive >
+void load_construct_data( Archive& archive, AutomateFactory* factory, const unsigned int /*version*/ )
+{
+    MIL_IDManager* idManager;
+    DEC_DataBase* database;
+    archive >> idManager
+        >> database;
+    ::new( factory )AutomateFactory( *idManager, *database );
+}
 
 #endif // __AutomateFactory_h_

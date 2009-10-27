@@ -37,3 +37,7 @@ local MissionParamTestBrain =
 }
 
 brain "name" ( MissionParamTestBrain )
+
+behavior_model = {}
+behavior_model.StartTask = StartEvent
+behavior_model.StopTask = StopEvents

@@ -10,8 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Decision.h"
 #include "DEC_Model_ABC.h"
-#include "MIL_AgentServer.h"
-#include "Decision/DEC_Workspace.h"
 #include "Decision/DEC_DataBase.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "MT_Tools/MT_CrashHandler.h"
@@ -21,20 +19,10 @@
 // Created: LDC 2009-02-27
 // -----------------------------------------------------------------------------
 template <class T>
-DEC_Decision<T>::DEC_Decision( T& entity)
+DEC_Decision<T>::DEC_Decision( T& entity, DEC_DataBase& database )
 : pEntity_( &entity )
 , pMission_( 0 )
-{
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Decision constructor
-// Created: LDC 2009-02-27
-// -----------------------------------------------------------------------------
-template <class T>
-DEC_Decision<T>::DEC_Decision()
-: pEntity_( 0 )
-, pMission_ ( 0 )
+, database_( database )
 {
 }
 
@@ -73,7 +61,7 @@ void DEC_Decision<T>::InitBrain( const std::string& brainFile, const std::string
     pBrain_.reset( new directia::Brain( includePath ) );
     pBrain_->GetScriptFunction( "include" )( ( brainFile ),(includePath) );
 
-    MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().InitKnowledges( *pBrain_ );//@TODO MGD Find a better way to merge dia4/dia5
+    database_.InitKnowledges( *pBrain_ );//@TODO MGD Find a better way to merge dia4/dia5
 
     pRefs_.reset( new ScriptRefs( *pBrain_) );
     RegisterUserFunctions( *pBrain_ );

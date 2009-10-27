@@ -86,8 +86,8 @@ BOOST_CLASS_EXPORT_GUID( DEC_RolePion_Decision, "DEC_RolePion_Decision" )
 // Name: DEC_RolePion_Decision constructor
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
-DEC_RolePion_Decision::DEC_RolePion_Decision( MIL_AgentPion& pion )
-    : DEC_Decision              ( pion )
+DEC_RolePion_Decision::DEC_RolePion_Decision( MIL_AgentPion& pion, DEC_DataBase& database )
+    : DEC_Decision              ( pion, database )
     , nForceRatioState_         ( eForceRatioStateNone         )
     , nRulesOfEngagementState_  ( eRoeStateNone                )
     , nCloseCombatState_        ( eCloseCombatStateNone        )
@@ -138,50 +138,6 @@ DEC_RolePion_Decision::DEC_RolePion_Decision( MIL_AgentPion& pion )
 
     // Parameters list for calling default behavior
     StartDefaultBehavior();    
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_RolePion_Decision constructor
-// Created: JVT 2005-04-01
-// -----------------------------------------------------------------------------
-DEC_RolePion_Decision::DEC_RolePion_Decision()
-    : DEC_Decision              () 
-    , nForceRatioState_         ( eForceRatioStateNone      )
-    , nRulesOfEngagementState_  ( eRoeStateNone             )
-    , nCloseCombatState_        ( eCloseCombatStateNone     )
-    , nOperationalState_        ( eOpStateOperational       )
-    , nIndirectFireAvailability_( eFireAvailabilityNone     )
-    , pRoePopulation_           ( &PHY_RoePopulation::none_ )
-    , bStateHasChanged_         ( true                      )
-    , eEtatDec_                 ( 0                            )
-    , eEtatDecPrudence_         ( 0                            )
-    , eEtatLima_                ( 0                            )
-    , eEtatNbc_                 ( 0                            )
-    , eEtatDestruction_         ( 0                            )
-    , eEtatFeu_                 ( 0                            )
-    , eEtatAmbiance_            ( 0                            )
-    , eEtatRadio_               ( 0                            )
-    , eEtatRadar_               ( 0                            )
-    , eEtatDeplacement_         ( 0                            )
-    , eEtatOrdreCoordination_   ( 0                            )
-    , eConsigneTir_             ( 0                            )
-    , eConsigneTirPopulation_   ( 0                            )
-    , eEtatEchelon_             ( 0                            )
-    , eEtatSoutien_             ( 0                            )
-    , eEtatSituationEnnemi_     ( 0                            )
-    , eEtatPhaseMission_        ( 0                            )
-    , bOrdreInterrompreMission_ ( false                        )
-    , bOrdreDecrocher_          ( false                        )
-    , bOrdreTenirSurLR_         ( false                        )
-    , bOrdreTenir_              ( false                        )
-    , bPasserSurLC_             ( false                        )
-    , pionEnEscorte_            ( 0                            )
-    , rTenir_                   ( 0.f                          )
-    , eTypeContact_             ( 0                            )
-    , eNiveauAction_            ( 0                            )
-    , bDefenseStatique_Mobile_  ( false                        )
-    , pAutomate_                ( 0                            )
-{
 }
 
 // -----------------------------------------------------------------------------

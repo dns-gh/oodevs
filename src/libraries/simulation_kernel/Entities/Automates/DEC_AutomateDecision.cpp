@@ -42,12 +42,13 @@
 
 BOOST_CLASS_EXPORT_GUID( DEC_AutomateDecision, "DEC_AutomateDecision" )
 
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision constructor
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
-DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate )
-    : DEC_Decision             ( automate )
+DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate, DEC_DataBase& database )
+    : DEC_Decision             ( automate, database )
     , nRulesOfEngagementState_ ( eRoeStateNone         )
     , nCloseCombatState_       ( eCloseCombatStateNone )
     , nOperationalState_       ( eOpStateOperational   )
@@ -75,30 +76,6 @@ DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate )
     }
 
     StartDefaultBehavior();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AutomateDecision constructor
-// Created: JVT 2005-04-05
-// -----------------------------------------------------------------------------
-DEC_AutomateDecision::DEC_AutomateDecision()
-    : DEC_Decision             (                      ) 
-    , nRulesOfEngagementState_ ( eRoeStateNone         )
-    , nCloseCombatState_       ( eCloseCombatStateNone )
-    , nOperationalState_       ( eOpStateOperational   )
-    , bStateHasChanged_        ( true                  )   
-    , ePhaseMission_           ( 0                     )
-    , eEtatLima_               ( 0                     )
-    , eEtatDec_                ( 0                     )
-    , rDestruction_            ( 0                     )
-    , eEtatEchelon_            ( 0                     )
-    , bOrdreAttendre_          ( false                 )
-    , bOrdrePoursuivre_        ( false                 )
-    , bOrdreRalentir_          ( false                 )
-    , bOrdreDecrocher_         ( false                 )
-    , bOrdreTenirSurLR_        ( false                 )
-    , bOrdreTenir_             ( false                 )
-{
 }
 
 // -----------------------------------------------------------------------------

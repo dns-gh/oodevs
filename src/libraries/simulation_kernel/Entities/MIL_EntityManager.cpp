@@ -57,6 +57,7 @@
 #include "Agents/MIL_AgentPion.h"
 #include "Automates/MIL_AutomateType.h"
 #include "Automates/MIL_Automate.h"
+#include "simulation_kernel/Decision/DEC_Workspace.h"
 
 #include "simulation_kernel/AgentFactory.h"
 #include "simulation_kernel/ArmyFactory.h"
@@ -91,6 +92,20 @@
 BOOST_CLASS_EXPORT_GUID( MIL_EntityManager, "MIL_EntityManager" )
 
 MIL_EntityManager* MIL_EntityManager::singleton_ = 0;
+
+template< typename Archive >
+void save_construct_data( Archive& archive, const MIL_EntityManager* role, const unsigned int /*version*/ )
+{
+    //@TODO MGD work on serialization to avoid singleton and add test for all entities
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, MIL_EntityManager* role, const unsigned int /*version*/ )
+{
+    DEC_DataBase* database;
+    archive >> database;
+    ::new( role )MIL_EntityManager( MIL_Singletons::GetTime(), MIL_Singletons::GetEffectManager(), MIL_Singletons::GetProfiler(), MIL_Singletons::GetHla(), MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().GetDatabase() );
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::Initialize
@@ -156,7 +171,7 @@ void MIL_EntityManager::Initialize( MIL_Config& config, const MIL_Time_ABC& time
 // Name: MIL_EntityManager constructor
 // Created: NLD 2004-08-10
 // -----------------------------------------------------------------------------
-MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ProfilerMgr& profiler, HLA_Federate* hla )
+MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ProfilerMgr& profiler, HLA_Federate* hla, DEC_DataBase& database )
     : time_                         ( time )
     , profilerManager_              ( profiler )
     , hla_                          ( hla )
@@ -171,38 +186,9 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , rStatesTime_                  ( 0. )
     , idManager_                    ( new MIL_IDManager() )
     , pObjectManager_               ( new MIL_ObjectManager() )
-    , populationFactory_            ( new PopulationFactory() )          
-    , agentFactory_                 ( new AgentFactory( *idManager_ ) )
-    , automateFactory_              ( new AutomateFactory( *idManager_ ) )
-    , formationFactory_             ( new FormationFactory( *automateFactory_ ) )
-    , armyFactory_                  ( new ArmyFactory( *automateFactory_, *formationFactory_, *pObjectManager_, *populationFactory_) )
-{
-    if( !singleton_ )
-        singleton_ = this;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager constructor
-// Created: AGE 2007-08-13
-// -----------------------------------------------------------------------------
-MIL_EntityManager::MIL_EntityManager()
-    : time_                         ( MIL_Singletons::GetTime() )
-    , profilerManager_              ( MIL_Singletons::GetProfiler() )
-    , hla_                          ( MIL_Singletons::GetHla() )
-    , effectManager_                ( MIL_Singletons::GetEffectManager() )
-    , nRandomBreakdownsNextTimeStep_( 0  )
-    , rKnowledgesTime_              ( 0. )
-    , rAutomatesDecisionTime_       ( 0. )
-    , rPionsDecisionTime_           ( 0. )
-    , rPopulationsDecisionTime_     ( 0. )
-    , rActionsTime_                 ( 0. )
-    , rEffectsTime_                 ( 0. )
-    , rStatesTime_                  ( 0. )
-    , idManager_                    ( new MIL_IDManager() )
-    , pObjectManager_               ( new MIL_ObjectManager() )
-    , populationFactory_            ( new PopulationFactory() )          
-    , agentFactory_                 ( new AgentFactory( *idManager_ ) )
-    , automateFactory_              ( new AutomateFactory( *idManager_ ) )
+    , populationFactory_            ( new PopulationFactory( database ) )          
+    , agentFactory_                 ( new AgentFactory( *idManager_, database ) )
+    , automateFactory_              ( new AutomateFactory( *idManager_, database ) )
     , formationFactory_             ( new FormationFactory( *automateFactory_ ) )
     , armyFactory_                  ( new ArmyFactory( *automateFactory_, *formationFactory_, *pObjectManager_, *populationFactory_) )
 {

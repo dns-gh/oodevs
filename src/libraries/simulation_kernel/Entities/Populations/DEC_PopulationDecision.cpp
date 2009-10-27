@@ -39,8 +39,8 @@ BOOST_CLASS_EXPORT_GUID( DEC_PopulationDecision, "DEC_PopulationDecision" )
 // Name: DEC_PopulationDecision constructor
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
-DEC_PopulationDecision::DEC_PopulationDecision( MIL_Population& population )
-    : DEC_Decision             ( population )
+DEC_PopulationDecision::DEC_PopulationDecision( MIL_Population& population, DEC_DataBase& database )
+    : DEC_Decision             ( population, database )
     , rDominationState_        ( 0. )
     , rLastDominationState_    ( 0. )
     , bStateHasChanged_        ( true )
@@ -57,18 +57,6 @@ DEC_PopulationDecision::DEC_PopulationDecision( MIL_Population& population )
     }
 
     StartDefaultBehavior();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PopulationDecision constructor
-// Created: JVT 2005-04-05
-// -----------------------------------------------------------------------------
-DEC_PopulationDecision::DEC_PopulationDecision()
-    : DEC_Decision             () 
-    , rDominationState_        ( 0. )
-    , rLastDominationState_    ( 0. )
-    , bStateHasChanged_        ( true )
-{
 }
 
 // -----------------------------------------------------------------------------

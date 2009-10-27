@@ -50,10 +50,25 @@ namespace
 DEC_DataBase::DEC_DataBase( xml::xistream& xis, const std::string strPath )
 : directia5::Library( GetLibPaths( xis, strPath ) )
 {
+    //@TODO MGD Change to aggregation for directia5::Library
+    libPaths_ = GetLibPaths( xis, strPath );
     xis >> xml::start( "Knowledges" )
-        >> xml::list( "Knowledge", boost::bind( &ReadKnowledge, _1, boost::ref( knowledges_ ) ) )
+            >> xml::list( "Knowledge", boost::bind( &ReadKnowledge, _1, boost::ref( knowledges_ ) ) )
         >> xml::end();
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_DataBase constructor
+// Created: MGD 2009-08-27
+// -----------------------------------------------------------------------------
+DEC_DataBase::DEC_DataBase( T_LibPaths libPaths, std::vector< const std::string >& knowledge )
+    : directia5::Library( libPaths )
+    , libPaths_( libPaths )
+    , knowledges_( knowledge )
+{
+    
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: DEC_DataBase destructor

@@ -91,25 +91,25 @@ namespace
 template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_AgentPion* pion, const unsigned int /*version*/ )
 {
-	unsigned int nTypeID = pion->GetType().GetID();
+    unsigned int nTypeID = pion->GetType().GetID();
     unsigned int nID = pion->GetID();
     const AlgorithmsFactories* const algorithmFactories = &pion->algorithmFactories_;
-	archive << nTypeID
-			<< nID
-			<< pion->pAutomate_
-            << algorithmFactories;
+    archive << nTypeID
+        << nID
+        << pion->pAutomate_
+        << algorithmFactories;
 }
 
 template< typename Archive >
 void load_construct_data( Archive& archive, MIL_AgentPion* pion, const unsigned int /*version*/ )
 {
-	unsigned int nTypeID, nID;
-	MIL_Automate* pAutomate = 0;
+    unsigned int nTypeID, nID;
+    MIL_Automate* pAutomate = 0;
     AlgorithmsFactories* algorithmFactories = 0;
     archive >> nTypeID
-            >> nID
-            >> pAutomate
-            >> algorithmFactories;
+        >> nID
+        >> pAutomate
+        >> algorithmFactories;
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( nTypeID );
     assert( pType );
     ::new( pion )MIL_AgentPion( *pType, nID, *pAutomate, *algorithmFactories );

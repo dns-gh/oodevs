@@ -50,18 +50,18 @@ bool MIL_AutomateTypeLOG::IsLogistic() const
 // Name: MIL_AutomateTypeLOG::InstanciateAutomate
 // Created: NLD 2004-12-27
 // -----------------------------------------------------------------------------
-MIL_Automate& MIL_AutomateTypeLOG::InstanciateAutomate( uint nID, MIL_Formation& parent, xml::xistream& xis ) const
+MIL_Automate& MIL_AutomateTypeLOG::InstanciateAutomate( uint nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database ) const
 {
-    return *new MIL_AutomateLOG( *this, nID, parent, xis );
+    return *new MIL_AutomateLOG( *this, nID, parent, xis, database );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateTypeLOG::InstanciateAutomate
 // Created: NLD 2004-12-27
 // -----------------------------------------------------------------------------
-MIL_Automate& MIL_AutomateTypeLOG::InstanciateAutomate( uint nID, MIL_Automate& parent, xml::xistream& xis ) const
+MIL_Automate& MIL_AutomateTypeLOG::InstanciateAutomate( uint nID, MIL_Automate& parent, xml::xistream& xis, DEC_DataBase& database ) const
 {
-    return *new MIL_AutomateLOG( *this, nID, parent, xis );
+    return *new MIL_AutomateLOG( *this, nID, parent, xis, database );
 }
 
 // -----------------------------------------------------------------------------

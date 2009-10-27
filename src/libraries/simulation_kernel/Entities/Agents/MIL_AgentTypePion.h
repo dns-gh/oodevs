@@ -26,12 +26,14 @@ namespace directia
     class Brain;
 }
 
-class PHY_UnitType;
+class AlgorithmsFactories;
+class DEC_DataBase;
 class DEC_Model_ABC;
 class MIL_Automate;
 class MIL_AgentPion;
 class MIL_RealObjectType;
-class AlgorithmsFactories;
+class PHY_UnitType;
+
 
 // =============================================================================
 // @class  MIL_AgentTypePion
@@ -58,7 +60,7 @@ public:
     //@{
     virtual MIL_AgentPion* InstanciatePion( uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis ) const;
     virtual MIL_AgentPion* InstanciatePion( uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories ) const;
-    virtual void RegisterRoles( MIL_AgentPion& pion ) const;
+    virtual void RegisterRoles( MIL_AgentPion& pion, DEC_DataBase& database ) const;
     //@}
 
     //! @name Accessors

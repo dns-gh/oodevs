@@ -14,6 +14,7 @@
 #include "Entities/Populations/DEC_PopulationDecision.h"
 #include "Fixture.h"
 #include "MockMIL_MissionType_ABC.h"
+#include "StubDEC_Database.h"
 #include "StubMIL_AgentPion.h"
 #include "StubMIL_AgentTypePion.h"
 #include "StubMIL_Automate.h"
@@ -27,22 +28,13 @@
 using namespace mockpp;
 
 // -----------------------------------------------------------------------------
-// Name: InstantiateDEC_RolePion_Decision
-// Created: LDC 2009-04-23
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( InstantiateDEC_RolePion_Decision )
-{
-    DEC_RolePion_Decision decision;
-}
-
-// -----------------------------------------------------------------------------
 // Name: InstantiateBrainForMIL_AgentPion
 // Created: LDC 2009-04-08
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( InstantiateBrainForMIL_AgentPion )
 {
     FixturePion fixture;
-    DEC_RolePion_Decision decision( *fixture.pPion_);
+    DEC_RolePion_Decision decision ( *fixture.pPion_, StubDEC_Database() );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,7 +44,7 @@ BOOST_AUTO_TEST_CASE( InstantiateBrainForMIL_AgentPion )
 BOOST_AUTO_TEST_CASE( InstantiateDEC_AutomateDecision )
 {
     FixtureAutomate fixture;
-    DEC_AutomateDecision decision( *fixture.pAutomat_);
+    DEC_AutomateDecision decision( *fixture.pAutomat_, StubDEC_Database() );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +59,7 @@ BOOST_AUTO_TEST_CASE( InstantiateDEC_PopulationDecision )
     DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
     StubMIL_PopulationType type( model );
     StubMIL_Population population( type );
-    DEC_PopulationDecision decision( population );
+    DEC_PopulationDecision decision( population, StubDEC_Database() );
 }
 
 class ScriptMocker : public mockpp::ChainableMockObject
@@ -102,7 +94,7 @@ class DEC_TestPopulationDecision : public DEC_Decision<MIL_Population>
 {
 public:
     DEC_TestPopulationDecision( MIL_Population& population, DEC_TestPopulationDecision* pOther )
-        : DEC_Decision( population ) 
+        : DEC_Decision( population, StubDEC_Database() ) 
         , pOther_     ( pOther )
     {
         const DEC_Model_ABC& model = population.GetType().GetModel();
@@ -140,7 +132,8 @@ protected:
         brain.RegisterFunction( "DEC_TestBehaviorCalled",    &NotifyCallFromScript );
         brain.RegisterFunction( "DEC_TestMissionCalled",     &NotifyMissionCallFromScript );
         brain.RegisterFunction( "DEC_GetRawMission",         &GetRawMission );
-        brain.RegisterFunction( "DEC_FillMissionParameters", &DEC_MiscFunctions::FillMissionParameters );
+        brain.RegisterFunction( "DEC_FillMissionParameters",
+            boost::function< void( const directia::ScriptRef&, MIL_Mission_ABC* ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, boost::ref( brain.GetScriptFunction("InitTaskParameter") ), _1 , _2 ) ) );
         if( pOther_ )
             brain.RegisterObject< DEC_TestPopulationDecision* >( "other", pOther_ );
     }

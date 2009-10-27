@@ -16,32 +16,21 @@
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Decision/DEC_Representations.h"
 
+#include "simulation_kernel/Decision/DEC_DataBase.h"
+
 #include "Tools/MIL_IDManager.h"
 
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( AutomateFactory, "AutomateFactory" )
 
-template< typename Archive >
-void save_construct_data( Archive& archive, const AutomateFactory* factory, const unsigned int /*version*/ )
-{
-    const MIL_IDManager* const idManager = &factory->idManager_;
-    archive << idManager;
-}
-template< typename Archive >
-void load_construct_data( Archive& archive, AutomateFactory* factory, const unsigned int /*version*/ )
-{
-    MIL_IDManager* idManager;
-    archive >> idManager;
-    ::new( factory )AutomateFactory( *idManager );
-}
-
 // -----------------------------------------------------------------------------
 // Name: AutomateFactory constructor
 // Created: MGD 2009-08-17
 // -----------------------------------------------------------------------------
-AutomateFactory::AutomateFactory( MIL_IDManager& idManager )
+AutomateFactory::AutomateFactory( MIL_IDManager& idManager, DEC_DataBase& database )
     : idManager_( idManager ) 
+    , database_( database )
 {
 
 }
@@ -60,7 +49,7 @@ AutomateFactory::~AutomateFactory()
 // Created: MGD 2009-08-17
 // -----------------------------------------------------------------------------
 MIL_Automate& AutomateFactory::Create( xml::xistream& xis, MIL_Automate& parent )
-{//@TODO MMgd Method's pattern
+{//@TODO MGD Method's pattern
     uint id;
     std::string strType;
 
@@ -69,7 +58,7 @@ MIL_Automate& AutomateFactory::Create( xml::xistream& xis, MIL_Automate& parent 
 
     const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( strType );
 
-    MIL_Automate& automate = pType->InstanciateAutomate( id, parent, xis );
+    MIL_Automate& automate = pType->InstanciateAutomate( id, parent, xis, database_ );
     automate.ReadOverloading( xis );
 
     tools::Resolver< MIL_Automate >::Register( automate.GetID(), automate );
@@ -91,7 +80,7 @@ MIL_Automate& AutomateFactory::Create( xml::xistream& xis, MIL_Formation& parent
 
     const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( strType );
 
-    MIL_Automate& automate = pType->InstanciateAutomate( id, parent, xis );
+    MIL_Automate& automate = pType->InstanciateAutomate( id, parent, xis, database_ );
     automate.ReadOverloading( xis );
 
     tools::Resolver< MIL_Automate >::Register( automate.GetID(), automate );

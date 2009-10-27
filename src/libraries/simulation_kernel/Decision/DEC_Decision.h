@@ -17,6 +17,7 @@
 class DEC_Model_ABC;
 class MIL_Entity_ABC;
 class MIL_Mission_ABC;
+class DEC_DataBase;
 
 namespace directia
 {
@@ -38,8 +39,7 @@ class DEC_Decision : public DEC_Decision_ABC
 public:
     //! @name Constructor
     //@{
-    explicit DEC_Decision( T& entity );
-             DEC_Decision();
+    explicit DEC_Decision( T& entity, DEC_DataBase& database );
     virtual ~DEC_Decision();
     //@}
 
@@ -156,8 +156,9 @@ private://! @name Helpers
 protected:
     //!@name Data
     //@{
-    T*                               pEntity_;
+    T*                              pEntity_;
     MIL_Mission_ABC*                pMission_;
+    DEC_DataBase&                   database_;
     //@}
 
 private:

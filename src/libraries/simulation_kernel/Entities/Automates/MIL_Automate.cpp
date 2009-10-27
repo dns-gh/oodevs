@@ -64,14 +64,14 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_Automate* automat, const unsigned int /*version*/ )
 {
     assert( automat->pType_ );
-	unsigned int type = automat->pType_->GetID();
-	archive << type;
+    unsigned int type = automat->pType_->GetID();
+    archive << type;
 }
 
 template< typename Archive >
 void load_construct_data( Archive& archive, MIL_Automate* automat, const unsigned int /*version*/ )
 {
-	unsigned int type;
+    unsigned int type;
     archive >> type;
     const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( type );
     assert( pType );
@@ -82,7 +82,7 @@ void load_construct_data( Archive& archive, MIL_Automate* automat, const unsigne
 // Name: MIL_Automate constructor
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Formation& parent, xml::xistream& xis )
+MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database )
     : MIL_Entity_ABC                     ( xis ) 
     , pType_                             ( &type )
     , nID_                               ( nID )
@@ -105,7 +105,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Formatio
     , pKnowledgeBlackBoard_              ( new DEC_KnowledgeBlackBoard_Automate( *this ) )
     , pArmySurrenderedTo_                ( 0 )
 {
-    Initialize( xis );
+    Initialize( xis, database );
     pParentFormation_->RegisterAutomate( *this );
 }
     
@@ -113,7 +113,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Formatio
 // Name: MIL_Automate constructor
 // Created: NLD 2007-03-29
 // -----------------------------------------------------------------------------
-MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Automate& parent, xml::xistream& xis )
+MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Automate& parent, xml::xistream& xis, DEC_DataBase& database )
     : MIL_Entity_ABC                     ( xis ) 
     , pType_                             ( &type )
     , nID_                               ( nID )
@@ -136,7 +136,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Automate
     , pKnowledgeBlackBoard_              ( new DEC_KnowledgeBlackBoard_Automate( *this ) )
     , pArmySurrenderedTo_                ( 0 )
 {
-    Initialize( xis );
+    Initialize( xis, database );
     pParentAutomate_->RegisterAutomate( *this );
 }
 
@@ -316,7 +316,7 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const uint ) const
 // Name: MIL_Automate::Initialize
 // Created: NLD 2007-03-29
 // -----------------------------------------------------------------------------
-void MIL_Automate::Initialize( xml::xistream& xis )
+void MIL_Automate::Initialize( xml::xistream& xis, DEC_DataBase& database )
 {
     xis >> xml::optional() >> xml::attribute( "engaged", bEngaged_ ); 
 
@@ -327,7 +327,7 @@ void MIL_Automate::Initialize( xml::xistream& xis )
         xis.error( "Unknown knowledge group" );
     pKnowledgeGroup_->RegisterAutomate( *this );
       
-    RegisterRole( new DEC_AutomateDecision( *this ) ) ;
+    RegisterRole( new DEC_AutomateDecision( *this, database ) ) ; 
     RegisterRole( new DEC_Representations() );
     
     xis >> xml::list( "unit"    , *this, &MIL_Automate::ReadUnitSubordinate    )

@@ -19,13 +19,14 @@ namespace xml
     class xistream;
 }
 
+class DEC_DataBase;
+class DEC_Model_ABC;
+class MIL_Army;
 class MIL_Population;
 class MIL_PopulationAttitude;
 class PHY_Volume;
 class PHY_Protection;
 class PHY_RoePopulation;
-class DEC_Model_ABC;
-class MIL_Army;
 
 // =============================================================================
 // @class  MIL_PopulationType
@@ -56,7 +57,7 @@ public:
 
     //! @name Operations
     //@{
-          MIL_Population& InstanciatePopulation( xml::xistream& xis, MIL_Army& army ) const;
+          MIL_Population& InstanciatePopulation( xml::xistream& xis, MIL_Army& army, DEC_DataBase& database ) const;
     //@}
 
     //! @name Effects

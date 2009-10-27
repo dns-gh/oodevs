@@ -27,14 +27,17 @@ class DEC_PopulationDecision : public DEC_Decision< MIL_Population >
 {
 
 public:
-             DEC_PopulationDecision( MIL_Population& population );
-             DEC_PopulationDecision();
+             DEC_PopulationDecision( MIL_Population& population, DEC_DataBase& database );
     virtual ~DEC_PopulationDecision();
 
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
+    //! @name Checkpoint
+    //@{
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const DEC_PopulationDecision* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, DEC_PopulationDecision* role, const unsigned int /*version*/ );
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}
@@ -93,5 +96,24 @@ private:
     static int nDIAMissionIdx_; // index de mission_ dans T_Population
     static int nDIANameIdx_;
 };
+
+template< typename Archive >
+void save_construct_data( Archive& archive, const DEC_PopulationDecision* role, const unsigned int /*version*/ )
+{
+    const DEC_DataBase* const database = &role->database_;
+    archive << role->pEntity_ 
+        << database;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, DEC_PopulationDecision* role, const unsigned int /*version*/ )
+{
+    MIL_Population* population;
+    DEC_DataBase* database;
+    archive >> population
+        >> database;
+    ::new( role )DEC_PopulationDecision( *population, *database );
+}
+
 
 #endif // __DEC_PopulationDecision_h_

@@ -337,3 +337,12 @@ void DEC_Workspace::InitKnowledges( directia::Brain& brain ) const
     if( dataBase_.get() )
         dataBase_->InitKnowledges( brain );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Workspace::GetBMDatabase
+// Created: MGD 2009-10-27
+// -----------------------------------------------------------------------------
+DEC_DataBase& DEC_Workspace::GetDatabase() const
+{
+    return *dataBase_;
+}

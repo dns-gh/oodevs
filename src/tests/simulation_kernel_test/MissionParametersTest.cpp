@@ -107,7 +107,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentListParameter_ToASN )
     asnIn.elem[0] = 0;
     MockMIL_EntityManager_ABC entityManager;
     FixturePion fixture;
-    fixture.pPion_->RegisterRole< DEC_RolePion_Decision >( *fixture.pPion_ );
+    fixture.pPion_->RegisterRole< DEC_RolePion_Decision >( *fixture.pPion_, StubDEC_Database() );
     entityManager.FindAgentPion_mocker.expects( once() ).will( returnValue( static_cast< MIL_AgentPion* >( fixture.pPion_.get() ) ) );
     MIL_AgentListParameter param( asnIn, entityManager );
     delete[] asnIn.elem;
@@ -127,7 +127,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentParameter_ToASN )
     ASN1T_Unit asnIn = 0;
     MockMIL_EntityManager_ABC entityManager;
     FixturePion fixture;
-    fixture.pPion_->RegisterRole< DEC_RolePion_Decision >( *fixture.pPion_ );
+    fixture.pPion_->RegisterRole< DEC_RolePion_Decision >( *fixture.pPion_,  StubDEC_Database() );
     entityManager.FindAgentPion_mocker.expects( once() ).will( returnValue( static_cast< MIL_AgentPion* >( fixture.pPion_.get() ) ) );
     MIL_AgentParameter param( asnIn, entityManager );
     ASN1T_Unit asnOut;

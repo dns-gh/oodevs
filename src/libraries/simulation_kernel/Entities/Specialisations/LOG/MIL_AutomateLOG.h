@@ -20,6 +20,7 @@ namespace xml
     class xistream;
 }
 
+class DEC_DataBase;
 class MIL_AutomateTypeLOG;
 class PHY_MaintenanceComposanteState;
 class PHY_MedicalHumanState;
@@ -54,8 +55,8 @@ public:
     };
     
 public:
-             MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID, MIL_Formation& parent, xml::xistream& xis );
-             MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID, MIL_Automate&  parent, xml::xistream& xis );
+             MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database );
+             MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID, MIL_Automate&  parent, xml::xistream& xis, DEC_DataBase& database );
     virtual ~MIL_AutomateLOG();
 
     //! @name CheckPoints
