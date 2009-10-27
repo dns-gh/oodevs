@@ -5,7 +5,7 @@ dofile "resources/scripts/events.lua"
 include "resources/model.lua"
 include "resources/config.lua"
 
-scriptName = "Automate ABC Proteger PC"
+scriptName = "Automate ABC Effectuer Raid"
 
 local tick = 0
 
@@ -15,16 +15,9 @@ functionTick =
 [5] = function()
 	Center( { coordinates = coord:UtmPosition( config.positions.center_ABC[1] ) } )
 	Zoom( { width = 35000 } )
-	actions:IssueOrder( "Automate ABC Proteger PC C1" )
+	actions:IssueOrder( "Automate ABC Effectuer Raid C1" )
 end,
-[60+5] = function()
-	actions:IssueOrder( "Automate ABC Proteger PC C1 etape 2" )
-end,
-[5+2000] = function()
-	Center( { coordinates = coord:UtmPosition( config.positions.center_ABC[2] ) } )
-	Zoom( { width = 35000 } )
-	actions:IssueOrder( "Automate ABC Proteger PC C2" )
-end,
+
 
 }
 
@@ -43,7 +36,7 @@ function Start()
             events.sim:ClientConnected(),
             { },
             function( client, profile )
-                if profile ~= "Automate ABC Proteger PC" then return end
+                if profile ~= "Automate ABC Effectuer Raid" then return end
 				tick = 0
 				local text = "Changer de Case ?"
 				Dialog( { id = "Case", message = text, buttons = { "Case 1", "Case 2", "Case 3", "Case 4" } } )
@@ -55,7 +48,7 @@ function Start()
 		events.sim:TickEnded( ),
 		{ "Missions_Init" },
 			function()
-				if profile ~= "Automate ABC Proteger PC" then
+				if profile ~= "Automate ABC Effectuer Raid" then
 					runStep()
 				end
 			end

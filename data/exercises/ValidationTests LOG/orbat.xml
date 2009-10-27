@@ -3,7 +3,6 @@
   <sides>
     <side id="1" name="Les Méchants" type="enemy">
       <objects/>
-      <populations/>
       <tactical>
         <formation id="444" level="ii" name="GTIA Case 5">
           <automat engaged="false" id="451" knowledge-group="2" name="Escadron de Chars AMX30B2 BRENNUS [451]" type="Escadron de Chars AMX30B2 BRENNUS">
@@ -24,11 +23,11 @@
       <communication>
         <knowledge-group id="2" name="Groupe de connaissance [2]" type="Standard"/>
       </communication>
+      <populations/>
       <logistic/>
     </side>
     <side id="3" name="Les Gentils" type="friend">
       <objects/>
-      <populations/>
       <tactical>
         <formation id="443" level="ii" name="Bataillon Case 5">
           <automat engaged="false" id="445" knowledge-group="4" name="Escadron de Chars AMX30B2 BRENNUS [445]" type="Escadron de Chars AMX30B2 BRENNUS">
@@ -39,7 +38,14 @@
             <unit command-post="false" id="450" name="Peloton AMX30B2 BRENNUS CDP SOFF[450]" position="31UCP1928027364" type="Peloton AMX30B2 BRENNUS CDP SOFF"/>
           </automat>
           <automat engaged="false" id="459" knowledge-group="4" name="TC2 RGT AMX30B2 BRENNUS [459]" type="TC2 RGT AMX30B2 BRENNUS">
-            <unit command-post="true" id="460" name="TC2 RGT AMX30B2 BRENNUS[460]" position="31UCP2393826631" type="TC2 RGT AMX30B2 BRENNUS"/>
+            <unit command-post="true" id="460" name="TC2 RGT AMX30B2 BRENNUS[460]" position="31UCP2393826631" type="TC2 RGT AMX30B2 BRENNUS">
+              <dotations>
+                <dotation name="F63 Gasoil" quantity="500"/>
+              </dotations>
+              <stocks>
+                <dotation name="F63 Gasoil" quantity="500"/>
+              </stocks>
+            </unit>
           </automat>
           <automat engaged="false" id="463" knowledge-group="4" name="Refugies x100 [463]" type="Refugies x100">
             <unit command-post="true" id="464" name="Refugies 100 Pers[464]" position="31UCP2786137322" type="Refugies 100 Pers"/>
@@ -134,19 +140,23 @@
           </automat>
         </formation>
         <formation id="775" level="ii" name="Logistique Case 5 [775]">
-          <automat engaged="false" id="776" knowledge-group="4" name="Zone Fonctionnelle Maintenance BLD [776]" type="Zone Fonctionnelle Maintenance BLD">
-            <unit command-post="true" id="777" name="PC LOG BLD Maintenance [777]" position="31UCP0216848618" type="PC LOG BLD Maintenance"/>
-            <unit command-post="false" id="778" name="Section CDT CMM (EVAC) [778]" position="31UCP0264848098" type="Section CDT CMM (EVAC)"/>
-            <unit command-post="false" id="779" name="Section Reparation Mob BLD  MOB [779]" position="31UCP0212647620" type="Section Reparation Mob BLD  MOB"/>
-            <unit command-post="false" id="780" name="Section Reparation EA BLD SREAT [780]" position="31UCP0164648140" type="Section Reparation EA BLD SREAT"/>
-            <unit command-post="false" id="781" name="Section Reparation Mob Feu BLD  SRMF [781]" position="31UCP0266848597" type="Section Reparation Mob Feu BLD  SRMF"/>
-            <unit command-post="false" id="782" name="Section CDT CMM (EVA) glaise [782]" position="31UCP0285548089" type="Section CDT CMM (EVA) glaise"/>
-            <unit command-post="false" id="783" name="Section Reparation Mob BLD glaise [783]" position="31UCP0262647599" type="Section Reparation Mob BLD glaise"/>
-            <unit command-post="false" id="784" name="Section Reparation EA BLD glaise [784]" position="31UCP0211747413" type="Section Reparation EA BLD glaise"/>
-            <unit command-post="false" id="785" name="Section Reparation MOB FEU BLD glaise [785]" position="31UCP0162647641" type="Section Reparation MOB FEU BLD glaise"/>
+          <automat engaged="false" id="596" knowledge-group="4" name="Zone Fonctionnelle Maintenance BLT [596]" type="Zone Fonctionnelle Maintenance BLT">
+            <unit command-post="true" id="597" name="PC LOG BLD Maintenance" position="31UCP1911252191" type="PC LOG BLD Maintenance"/>
+            <unit command-post="false" id="598" name="Section CDT CMM (EVAC)" position="31UCP1959251671" type="Section CDT CMM (EVAC)"/>
+            <unit command-post="false" id="599" name="Section Reparation EA BLT SREAT" position="31UCP1907051193" type="Section Reparation EA BLT SREAT"/>
+            <unit command-post="false" id="600" name="Section Reparation Mob BLT MOB" position="31UCP1859151713" type="Section Reparation Mob BLT MOB"/>
+            <unit command-post="false" id="601" name="Section Reparation Mob Feu BLT SRMF" position="31UCP1961252170" type="Section Reparation Mob Feu BLT SRMF"/>
+            <unit command-post="false" id="602" name="Section CDT CMM (EVA) glaise" position="31UCP1979951663" type="Section CDT CMM (EVA) glaise"/>
+            <unit command-post="false" id="603" name="Section Reparation EA BLT SREAT Glaise" position="31UCP1957151172" type="Section Reparation EA BLT SREAT Glaise"/>
+            <unit command-post="false" id="604" name="Section Reparation Mob BLT MOB Glaise" position="31UCP1906150987" type="Section Reparation Mob BLT MOB Glaise"/>
+            <unit command-post="false" id="605" name="Section Reparation Mob Feu BLT SRMF Glaise" position="31UCP1857051214" type="Section Reparation Mob Feu BLT SRMF Glaise"/>
           </automat>
           <automat engaged="false" id="606" knowledge-group="4" name="Zone Fonctionnelle Ravitaillement Transport BLD [606]" type="Zone Fonctionnelle Ravitaillement Transport BLD">
-            <unit command-post="true" id="607" name="PC LOG BLD Ravitaillerment [607]" position="31UCP0413249152" type="PC LOG BLD Ravitaillerment"/>
+            <unit command-post="true" id="607" name="PC LOG BLD Ravitaillerment [607]" position="31UCP0413249152" type="PC LOG BLD Ravitaillerment">
+              <stocks>
+                <dotation name="F63 Gasoil" quantity="500"/>
+              </stocks>
+            </unit>
             <unit command-post="false" id="608" name="Groupe Munitions SOFF TT - D [608]" position="31UCP0461148632" type="Groupe Munitions SOFF TT - D"/>
             <unit command-post="false" id="609" name="Groupe Munitions OFF TT- D [609]" position="31UCP0409048153" type="Groupe Munitions OFF TT- D"/>
             <unit command-post="false" id="610" name="Groupe Appro Vivre Eau [610]" position="31UCP0361048673" type="Groupe Appro Vivre Eau"/>
@@ -171,6 +181,24 @@
             <unit command-post="false" id="629" name="Escouade Trspt CARB 60 m3 glaise [629]" position="31UCP0389249627" type="Escouade Trspt CARB 60 m3 glaise"/>
             <unit command-post="false" id="630" name="Escouade Trspt CARB 180 m3 glaise [630]" position="31UCP0441049606" type="Escouade Trspt CARB 180 m3 glaise"/>
           </automat>
+          <automat engaged="false" id="728" knowledge-group="4" name="Zone Fonctionnelle Sante BLIAT [728]" type="Zone Fonctionnelle Sante BLIAT">
+            <unit command-post="true" id="729" name="PC LOG BLD Sante" position="31UCP4252250774" type="PC LOG BLD Sante"/>
+            <unit command-post="false" id="730" name="Groupe VS J5 BLIAT" position="31UCP4300150255" type="Groupe VS J5 BLIAT"/>
+            <unit command-post="false" id="731" name="Equipe HM EVASAN BLIAT" position="31UCP4248049776" type="Equipe HM EVASAN BLIAT"/>
+            <unit command-post="false" id="732" name="Section Chirurgicale HMC BLIAT" position="31UCP4200050296" type="Section Chirurgicale HMC BLIAT"/>
+            <unit command-post="false" id="733" name="Section Medico Psychologique BLIAT" position="31UCP4302250753" type="Section Medico Psychologique BLIAT"/>
+          </automat>
+          <automat engaged="false" id="776" knowledge-group="4" name="Zone Fonctionnelle Maintenance BLD [776]" type="Zone Fonctionnelle Maintenance BLD">
+            <unit command-post="true" id="777" name="PC LOG BLD Maintenance [777]" position="31UCP0216848618" type="PC LOG BLD Maintenance"/>
+            <unit command-post="false" id="778" name="Section CDT CMM (EVAC) [778]" position="31UCP0264848098" type="Section CDT CMM (EVAC)"/>
+            <unit command-post="false" id="779" name="Section Reparation Mob BLD  MOB [779]" position="31UCP0212647620" type="Section Reparation Mob BLD  MOB"/>
+            <unit command-post="false" id="780" name="Section Reparation EA BLD SREAT [780]" position="31UCP0164648140" type="Section Reparation EA BLD SREAT"/>
+            <unit command-post="false" id="781" name="Section Reparation Mob Feu BLD  SRMF [781]" position="31UCP0266848597" type="Section Reparation Mob Feu BLD  SRMF"/>
+            <unit command-post="false" id="782" name="Section CDT CMM (EVA) glaise [782]" position="31UCP0285548089" type="Section CDT CMM (EVA) glaise"/>
+            <unit command-post="false" id="783" name="Section Reparation Mob BLD glaise [783]" position="31UCP0262647599" type="Section Reparation Mob BLD glaise"/>
+            <unit command-post="false" id="784" name="Section Reparation EA BLD glaise [784]" position="31UCP0211747413" type="Section Reparation EA BLD glaise"/>
+            <unit command-post="false" id="785" name="Section Reparation MOB FEU BLD glaise [785]" position="31UCP0162647641" type="Section Reparation MOB FEU BLD glaise"/>
+          </automat>
           <automat engaged="false" id="811" knowledge-group="4" name="Zone Fonctionnelle Sante BLD [811]" type="Zone Fonctionnelle Sante BLD">
             <unit command-post="true" id="812" name="PC LOG BLD Sante" position="31UCP0346447273" type="PC LOG BLD Sante"/>
             <unit command-post="false" id="813" name="Groupe VS J5" position="31UCP0394446753" type="Groupe VS J5"/>
@@ -191,17 +219,6 @@
             <unit command-post="false" id="828" name="Section Chirurgicale Modulaire glaise" position="31UCP0366245799" type="Section Chirurgicale Modulaire glaise"/>
             <unit command-post="false" id="829" name="Section Chirurgicale HMC glaise" position="31UCP0314445821" type="Section Chirurgicale HMC glaise"/>
             <unit command-post="false" id="830" name="Section Triage Modulaire glaise" position="31UCP0270646098" type="Section Triage Modulaire glaise"/>
-          </automat>
-          <automat engaged="false" id="596" knowledge-group="4" name="Zone Fonctionnelle Maintenance BLT [596]" type="Zone Fonctionnelle Maintenance BLT">
-            <unit command-post="true" id="597" name="PC LOG BLD Maintenance" position="31UCP1911252191" type="PC LOG BLD Maintenance"/>
-            <unit command-post="false" id="598" name="Section CDT CMM (EVAC)" position="31UCP1959251671" type="Section CDT CMM (EVAC)"/>
-            <unit command-post="false" id="599" name="Section Reparation EA BLT SREAT" position="31UCP1907051193" type="Section Reparation EA BLT SREAT"/>
-            <unit command-post="false" id="600" name="Section Reparation Mob BLT MOB" position="31UCP1859151713" type="Section Reparation Mob BLT MOB"/>
-            <unit command-post="false" id="601" name="Section Reparation Mob Feu BLT SRMF" position="31UCP1961252170" type="Section Reparation Mob Feu BLT SRMF"/>
-            <unit command-post="false" id="602" name="Section CDT CMM (EVA) glaise" position="31UCP1979951663" type="Section CDT CMM (EVA) glaise"/>
-            <unit command-post="false" id="603" name="Section Reparation EA BLT SREAT Glaise" position="31UCP1957151172" type="Section Reparation EA BLT SREAT Glaise"/>
-            <unit command-post="false" id="604" name="Section Reparation Mob BLT MOB Glaise" position="31UCP1906150987" type="Section Reparation Mob BLT MOB Glaise"/>
-            <unit command-post="false" id="605" name="Section Reparation Mob Feu BLT SRMF Glaise" position="31UCP1857051214" type="Section Reparation Mob Feu BLT SRMF Glaise"/>
           </automat>
           <automat engaged="false" id="841" knowledge-group="4" name="Zone Fonctionnelle Ravitaillement Transport BLT [841]" type="Zone Fonctionnelle Ravitaillement Transport BLT">
             <unit command-post="true" id="842" name="PC LOG BLD Ravitaillerment" position="31UCP2222452765" type="PC LOG BLD Ravitaillerment"/>
@@ -262,18 +279,12 @@
             <unit command-post="false" id="894" name="Section Magasin CAP BLIAT" position="31UCP4349552200" type="Section Magasin CAP BLIAT"/>
             <unit command-post="false" id="895" name="Groupe Appro Vivre Eau BLIAT" position="31UCP4368151692" type="Groupe Appro Vivre Eau BLIAT"/>
           </automat>
-          <automat engaged="false" id="728" knowledge-group="4" name="Zone Fonctionnelle Sante BLIAT [728]" type="Zone Fonctionnelle Sante BLIAT">
-            <unit command-post="true" id="729" name="PC LOG BLD Sante" position="31UCP4252250774" type="PC LOG BLD Sante"/>
-            <unit command-post="false" id="730" name="Groupe VS J5 BLIAT" position="31UCP4300150255" type="Groupe VS J5 BLIAT"/>
-            <unit command-post="false" id="731" name="Equipe HM EVASAN BLIAT" position="31UCP4248049776" type="Equipe HM EVASAN BLIAT"/>
-            <unit command-post="false" id="732" name="Section Chirurgicale HMC BLIAT" position="31UCP4200050296" type="Section Chirurgicale HMC BLIAT"/>
-            <unit command-post="false" id="733" name="Section Medico Psychologique BLIAT" position="31UCP4302250753" type="Section Medico Psychologique BLIAT"/>
-          </automat>
         </formation>
       </tactical>
       <communication>
         <knowledge-group id="4" name="Groupe de connaissance [4]" type="Standard"/>
       </communication>
+      <populations/>
       <logistic>
         <automat id="459">
           <subordinate id="445" link="tc2"/>
@@ -294,19 +305,24 @@
           <subordinate id="576" link="tc2"/>
           <subordinate id="734" link="tc2"/>
         </automat>
-        <automat id="776">
-          <subordinate id="459" link="maintenance"/>
+        <automat id="596">
+          <subordinate id="776" link="maintenance"/>
         </automat>
         <automat id="606">
           <subordinate id="459" link="supply">
-            <quotas/>
+            <quotas>
+              <dotation name="F63 Gasoil" quantity="500"/>
+            </quotas>
           </subordinate>
+        </automat>
+        <automat id="728">
+          <subordinate id="865" link="medical"/>
+        </automat>
+        <automat id="776">
+          <subordinate id="459" link="maintenance"/>
         </automat>
         <automat id="811">
           <subordinate id="459" link="medical"/>
-        </automat>
-        <automat id="596">
-          <subordinate id="776" link="maintenance"/>
         </automat>
         <automat id="841">
           <subordinate id="606" link="supply">
@@ -321,11 +337,10 @@
         </automat>
         <automat id="889">
           <subordinate id="841" link="supply">
-            <quotas/>
+            <quotas>
+              <dotation name="F63 Gasoil" quantity="500"/>
+            </quotas>
           </subordinate>
-        </automat>
-        <automat id="728">
-          <subordinate id="865" link="medical"/>
         </automat>
       </logistic>
     </side>
