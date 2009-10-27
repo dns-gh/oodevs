@@ -117,5 +117,433 @@
     </parameter>
     <parameter name="Renseignements" type="IntelligenceList"/>
   </action>
+
+<!-- Auto ABC Attacquer UC1 -->
+
+<action id="208" name="Automate ABC Attaquer C1" target="15" time="2009-09-29T16:44:31" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="330"/>
+    <parameter name="Limas" type="PhaseLineList">
+      <parameter name="Phase line 1" type="lima" value="LD">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30TXU2304313361"/>
+            <point coordinates="30TXU3183316883"/>
+          </location>
+        </parameter>
+        <parameter name="Schedule" type="datetime" value="20090929T143551"/>
+      </parameter>
+    </parameter>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT3522394560"/>
+        <point coordinates="30TXU2941000712"/>
+        <point coordinates="30TXU2287114183"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT4612398755"/>
+        <point coordinates="30TXU3930707167"/>
+        <point coordinates="30TXU3059916953"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
   
-  </actions>
+<!-- Auto ABC Attaquer UC2 -->
+
+  <action id="234" name="Automate ABC Attaquer C2 - 1" target="81" time="2009-09-29T16:49:01" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="150"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT9328643774"/>
+        <point coordinates="30TYT0336432393"/>
+        <point coordinates="30TYT1029130017"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT8940741864"/>
+        <point coordinates="30TXT9615020659"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone installation" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TXT9444738826"/>
+        <point coordinates="30TXT9269036439"/>
+        <point coordinates="30TXT9414033735"/>
+        <point coordinates="30TXT9672334774"/>
+        <point coordinates="30TXT9801736428"/>
+        <point coordinates="30TXT9665938962"/>
+        <point coordinates="30TXT9444738826"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="208" name="Automate ABC Attaquer C2 - 2" target="75" time="2009-09-29T17:07:01" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="330"/>
+    <parameter name="Limas" type="PhaseLineList">
+      <parameter name="Phase line 1" type="lima" value="LD">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30TXT8632540757"/>
+            <point coordinates="30TXT9466244728"/>
+          </location>
+        </parameter>
+        <parameter name="Schedule" type="datetime" value="20090929T145851"/>
+      </parameter>
+    </parameter>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT9921920936"/>
+        <point coordinates="30TXT9309628457"/>
+        <point coordinates="30TXT8651341470"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TYT1109025688"/>
+        <point coordinates="30TYT0191835658"/>
+        <point coordinates="30TXT9376444746"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+  
+  
+<!-- Auto ABC Appuyer sur position UC 1-->
+
+<action id="247" name="Automate ABC Appuyer sur position 2" target="51" time="2009-09-30T07:53:01" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="330"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT3842519598"/>
+        <point coordinates="30TXT3111325435"/>
+        <point coordinates="30TXT2632439821"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT4814725518"/>
+        <point coordinates="30TXT4168933222"/>
+        <point coordinates="30TXT3312342817"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Position installation" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TXT3236540067"/>
+        <point coordinates="30TXT3422440506"/>
+        <point coordinates="30TXT3481338188"/>
+        <point coordinates="30TXT3285838520"/>
+        <point coordinates="30TXT3236540067"/>
+      </location>
+    </parameter>
+    <parameter name="Compagnie" type="Automate" value="51"/>
+  </action>
+  <action id="208" name="Automate ABC Appuyer sur position 1" target="57" time="2009-09-30T08:22:51" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="330"/>
+    <parameter name="Limas" type="PhaseLineList">
+      <parameter name="Phase line 1" type="lima" value="LD">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30TXT2615039260"/>
+            <point coordinates="30TXT3388442625"/>
+          </location>
+        </parameter>
+        <parameter name="Schedule" type="datetime" value="20090930T060051"/>
+      </parameter>
+    </parameter>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT3842519598"/>
+        <point coordinates="30TXT3111325435"/>
+        <point coordinates="30TXT2632439821"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT4814725518"/>
+        <point coordinates="30TXT4168933222"/>
+        <point coordinates="30TXT3312342817"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+ 
+ <!-- Auto ABC Appuyer sur position UC2 -->
+
+  <action id="234" name="Automate ABC Appuyer sur position C2 - 1" target="81" time="2009-09-29T16:49:01" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="150"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT9328643774"/>
+        <point coordinates="30TYT0336432393"/>
+        <point coordinates="30TYT1029130017"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT8940741864"/>
+        <point coordinates="30TXT9615020659"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone installation" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TXT9444738826"/>
+        <point coordinates="30TXT9269036439"/>
+        <point coordinates="30TXT9414033735"/>
+        <point coordinates="30TXT9672334774"/>
+        <point coordinates="30TXT9801736428"/>
+        <point coordinates="30TXT9665938962"/>
+        <point coordinates="30TXT9444738826"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="208" name="Automate ABC Appuyer sur position C2 - 2" target="69" time="2009-09-29T17:07:01" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="330"/>
+    <parameter name="Limas" type="PhaseLineList">
+      <parameter name="Phase line 1" type="lima" value="LD">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30TXT8632540757"/>
+            <point coordinates="30TXT9466244728"/>
+          </location>
+        </parameter>
+        <parameter name="Schedule" type="datetime" value="20090929T145851"/>
+      </parameter>
+    </parameter>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT9921920936"/>
+        <point coordinates="30TXT9309628457"/>
+        <point coordinates="30TXT8651341470"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TYT1109025688"/>
+        <point coordinates="30TYT0191835658"/>
+        <point coordinates="30TXT9376444746"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+  <action id="247" name="Automate ABC Appuyer sur position C2 - 2" target="69" time="2009-09-29T16:52:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="330"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TYT1109025688"/>
+        <point coordinates="30TYT0191835658"/>
+        <point coordinates="30TXT9376444746"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT9921920936"/>
+        <point coordinates="30TXT9309628457"/>
+        <point coordinates="30TXT8651341470"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Position installation" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TXT9883534581"/>
+        <point coordinates="30TXT9910837819"/>
+        <point coordinates="30TYT0183237723"/>
+        <point coordinates="30TYT0207934438"/>
+        <point coordinates="30TXT9883534581"/>
+      </location>
+    </parameter>
+    <parameter name="Compagnie" type="Automate" value="75"/>
+  </action>
+  
+  <!-- Auto ABC Appuyer UC 1 (Eni passif)-->
+  
+  <action id="207" name="Automate ABC Appuyer 2" target="15" time="2009-09-29T16:43:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="330"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT3522394560"/>
+        <point coordinates="30TXU2941000712"/>
+        <point coordinates="30TXU2287114183"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT4612398755"/>
+        <point coordinates="30TXU3930707167"/>
+        <point coordinates="30TXU3059916953"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Compagnie" type="Automate" value="21"/>
+  </action>
+  <action id="208" name="Automate ABC Appuyer 1" target="21" time="2009-09-29T16:56:11" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="330"/>
+    <parameter name="Limas" type="PhaseLineList">
+      <parameter name="Phase line 1" type="lima" value="LD">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30TXU2304313361"/>
+            <point coordinates="30TXU3183316883"/>
+          </location>
+        </parameter>
+        <parameter name="Horaire" type="datetime" value="20090929T151731"/>
+      </parameter>
+    </parameter>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT3522394560"/>
+        <point coordinates="30TXU2941000712"/>
+        <point coordinates="30TXU2287114183"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT4612398755"/>
+        <point coordinates="30TXU3930707167"/>
+        <point coordinates="30TXU3059916953"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+    
+  <!-- Auto ABC Appuyer UC 2 (Eni en surveillance) -->
+
+  <action id="234" name="Automate ABC Appuyer C2 - 1" target="81" time="2009-09-29T16:49:01" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="150"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT9328643774"/>
+        <point coordinates="30TYT0336432393"/>
+        <point coordinates="30TYT1029130017"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT8940741864"/>
+        <point coordinates="30TXT9615020659"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone installation" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TXT9444738826"/>
+        <point coordinates="30TXT9269036439"/>
+        <point coordinates="30TXT9414033735"/>
+        <point coordinates="30TXT9672334774"/>
+        <point coordinates="30TXT9801736428"/>
+        <point coordinates="30TXT9665938962"/>
+        <point coordinates="30TXT9444738826"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="208" name="Automate ABC Appuyer C2 - 2" target="75" time="2009-09-29T17:07:01" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="330"/>
+    <parameter name="Limas" type="PhaseLineList">
+      <parameter name="Phase line 1" type="lima" value="LD">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30TXT8632540757"/>
+            <point coordinates="30TXT9466244728"/>
+          </location>
+        </parameter>
+        <parameter name="Schedule" type="datetime" value="20090929T145851"/>
+      </parameter>
+    </parameter>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT9921920936"/>
+        <point coordinates="30TXT9309628457"/>
+        <point coordinates="30TXT8651341470"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TYT1109025688"/>
+        <point coordinates="30TYT0191835658"/>
+        <point coordinates="30TXT9376444746"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+  <action id="207" name="Automate ABC Appuyer C2 - 2" target="69" time="2009-09-29T17:19:31" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="330"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT9921920936"/>
+        <point coordinates="30TXT9309628457"/>
+        <point coordinates="30TXT8651341470"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TYT1109025688"/>
+        <point coordinates="30TYT0191835658"/>
+        <point coordinates="30TXT9376444746"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Compagnie" type="Automate" value="75"/>
+  </action>
+  
+  <!-- Auto Appuyer Contre attaquer -->
+  
+  <action id="218" name="Automate ABC Contre Attaquer 1" target="15" time="2009-09-29T16:35:51" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="330"/>
+    <parameter name="Limas" type="PhaseLineList">
+      <parameter name="Phase line 1" type="lima" value="LD">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30TXU2923901788"/>
+            <point coordinates="30TXU3827107927"/>
+          </location>
+        </parameter>
+        <parameter name="Horaire" type="datetime" value="20090929T143531"/>
+      </parameter>
+    </parameter>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT3522394560"/>
+        <point coordinates="30TXU2941000712"/>
+        <point coordinates="30TXU2287114183"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT4612398755"/>
+        <point coordinates="30TXU3930707167"/>
+        <point coordinates="30TXU3059916953"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+  <action id="208" name="Automate ABC Contre Attaquer 2" target="27" time="2009-09-29T17:02:21" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="150"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXU3175914669"/>
+        <point coordinates="30TXU3802106413"/>
+        <point coordinates="30TXU4454901750"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXU2630812594"/>
+        <point coordinates="30TXT3130795591"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+  
+</actions>
