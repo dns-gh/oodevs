@@ -27,8 +27,8 @@
             <unit command-post="false" id="92" name="Peloton ERIAC S/OFF" position="30TXU3272600821" type="Peloton ERIAC S/OFF"/>
           </automat>
           <lima name="Lima 113">
-            <point>30TXU2923901788</point>
-            <point>30TXU3827107927</point>
+            <point>30TXU2858801346</point>
+            <point>30TXU3929708509</point>
           </lima>
           <limit name="Limite 111">
             <point>30TXT3522394560</point>
@@ -72,8 +72,8 @@
             <unit command-post="false" id="98" name="Peloton ERIAC S/OFF" position="30TXU9388303086" type="Peloton ERIAC S/OFF"/>
           </automat>
           <lima name="Lima 116">
-            <point>30TXU9110202181</point>
-            <point>30TXU9798510170</point>
+            <point>30TXU9045401647</point>
+            <point>30TXU9877910801</point>
           </lima>
           <limit name="Limite 114">
             <point>30TXT9821696468</point>
@@ -117,8 +117,8 @@
             <unit command-post="false" id="104" name="Peloton ERIAC S/OFF" position="30TXT3535127473" type="Peloton ERIAC S/OFF"/>
           </automat>
           <lima name="Lima 119">
-            <point>30TXT3098027332</point>
-            <point>30TXT3956335037</point>
+            <point>30TXT3007526595</point>
+            <point>30TXT4015735477</point>
           </lima>
           <limit name="Limite 117">
             <point>30TXT3842519598</point>
@@ -162,8 +162,8 @@
             <unit command-post="false" id="110" name="Peloton ERIAC S/OFF" position="30TXT9655329557" type="Peloton ERIAC S/OFF"/>
           </automat>
           <lima name="Lima 122">
-            <point>30TXT9252930626</point>
-            <point>30TXT9997537451</point>
+            <point>30TXT9191630094</point>
+            <point>30TYT0103238137</point>
           </lima>
           <limit name="Limite 120">
             <point>30TXT9921920936</point>
