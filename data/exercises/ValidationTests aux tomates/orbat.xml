@@ -29,9 +29,21 @@
           <automat engaged="true" id="124" knowledge-group="2" name="Peloton Protection PC [124]" type="Peloton Protection PC">
             <unit command-post="true" id="125" name="Peloton Protection PC" position="30TXT3289298470" type="Peloton Protection PC"/>
           </automat>
+          <automat engaged="false" id="160" knowledge-group="2" name="Escadron Blinde ERC 90 [160]" type="Escadron Blinde ERC 90">
+            <unit command-post="true" id="161" name="PC ABC" position="30TXU3866403681" type="PC ABC"/>
+            <unit command-post="false" id="164" name="Peloton ERC 90 CDP OFF" position="30TXU3802203521" type="Peloton ERC 90 CDP OFF"/>
+          </automat>
           <lima name="Lima 113">
             <point>30TXU2858801346</point>
             <point>30TXU3929708509</point>
+          </lima>
+          <lima name="Lima 122">
+            <point>30TXU2304313361</point>
+            <point>30TXU3183316883</point>
+          </lima>
+          <lima name="Lima 123">
+            <point>30TXT3462494657</point>
+            <point>30TXT4612099354</point>
           </lima>
           <limit name="Limite 111">
             <point>30TXT3522394560</point>
@@ -43,14 +55,6 @@
             <point>30TXU3930707167</point>
             <point>30TXU3059916953</point>
           </limit>
-          <lima name="Lima 122">
-            <point>30TXU2304313361</point>
-            <point>30TXU3183316883</point>
-          </lima>
-          <lima name="Lima 123">
-            <point>30TXT3462494657</point>
-            <point>30TXT4612099354</point>
-          </lima>
         </formation>
         <formation id="6" level="ii" name="Bataillon Case 2">
           <automat engaged="true" id="33" knowledge-group="2" name="Escadron de Chars LECLERC [33]" type="Escadron de Chars LECLERC">
@@ -77,9 +81,21 @@
           <automat engaged="true" id="126" knowledge-group="2" name="Peloton Protection PC [126]" type="Peloton Protection PC">
             <unit command-post="true" id="127" name="Peloton Protection PC" position="30TXU9408700611" type="Peloton Protection PC"/>
           </automat>
+          <automat engaged="false" id="193" knowledge-group="2" name="Escadron Blinde AMX 10 RC [193]" type="Escadron Blinde AMX 10 RC">
+            <unit command-post="true" id="194" name="PC ABC" position="30TXU9758807193" type="PC ABC"/>
+            <unit command-post="false" id="195" name="Peloton AMX 10 RC CDP OFF" position="30TXU9810706712" type="Peloton AMX 10 RC CDP OFF"/>
+          </automat>
           <lima name="Lima 116">
             <point>30TXU9045401647</point>
             <point>30TXU9877910801</point>
+          </lima>
+          <lima name="Lima 124">
+            <point>30TXU8448013553</point>
+            <point>30TXU9163317893</point>
+          </lima>
+          <lima name="Lima 125">
+            <point>30TXT9723096491</point>
+            <point>30TYU0727401780</point>
           </lima>
           <limit name="Limite 114">
             <point>30TXT9821696468</point>
@@ -91,14 +107,6 @@
             <point>30TXU9939809302</point>
             <point>30TXU9079517979</point>
           </limit>
-          <lima name="Lima 124">
-            <point>30TXU8448013553</point>
-            <point>30TXU9163317893</point>
-          </lima>
-          <lima name="Lima 125">
-            <point>30TXT9723096491</point>
-            <point>30TYU0727401780</point>
-          </lima>
         </formation>
         <formation id="7" level="ii" name="Bataillon Case 3">
           <automat engaged="true" id="51" knowledge-group="2" name="Escadron de Chars LECLERC [51]" type="Escadron de Chars LECLERC">
@@ -126,6 +134,14 @@
             <point>30TXT3007526595</point>
             <point>30TXT4015735477</point>
           </lima>
+          <lima name="Lima 126">
+            <point>30TXT2615039260</point>
+            <point>30TXT3388442625</point>
+          </lima>
+          <lima name="Lima 127">
+            <point>30TXT3763419499</point>
+            <point>30TXT4835426321</point>
+          </lima>
           <limit name="Limite 117">
             <point>30TXT3842519598</point>
             <point>30TXT3111325435</point>
@@ -136,14 +152,6 @@
             <point>30TXT4168933222</point>
             <point>30TXT3312342817</point>
           </limit>
-          <lima name="Lima 126">
-            <point>30TXT2615039260</point>
-            <point>30TXT3388442625</point>
-          </lima>
-          <lima name="Lima 127">
-            <point>30TXT3763419499</point>
-            <point>30TXT4835426321</point>
-          </lima>
         </formation>
         <formation id="8" level="ii" name="Bataillon Case 4">
           <automat engaged="true" id="69" knowledge-group="2" name="Escadron de Chars LECLERC [69]" type="Escadron de Chars LECLERC">
@@ -171,6 +179,14 @@
             <point>30TXT9191630094</point>
             <point>30TYT0103238137</point>
           </lima>
+          <lima name="Lima 128">
+            <point>30TXT8632540757</point>
+            <point>30TXT9466244728</point>
+          </lima>
+          <lima name="Lima 129">
+            <point>30TXT9851921050</point>
+            <point>30TYT1119626370</point>
+          </lima>
           <limit name="Limite 120">
             <point>30TXT9921920936</point>
             <point>30TXT9309628457</point>
@@ -181,14 +197,6 @@
             <point>30TYT0191835658</point>
             <point>30TXT9376444746</point>
           </limit>
-          <lima name="Lima 128">
-            <point>30TXT8632540757</point>
-            <point>30TXT9466244728</point>
-          </lima>
-          <lima name="Lima 129">
-            <point>30TXT9851921050</point>
-            <point>30TYT1119626370</point>
-          </lima>
         </formation>
         <formation id="9" level="ii" name="Bataillon Case 5"/>
       </tactical>
