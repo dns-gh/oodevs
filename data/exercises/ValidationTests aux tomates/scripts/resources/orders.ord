@@ -4,6 +4,189 @@
 <!-- Missions de niveau Automate -->
 
 <!-- INF -->
+<!-- Automate INF Donner Coup Arret -->
+<action id="260" name="Automate INF Donner Coup Arret C1 etape 1" target="287" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="22"/>
+    <parameter name="Limas" type="PhaseLineList">
+      <parameter name="Phase line 1" type="lima" value="LCAR">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXU2642043322"/>
+            <point coordinates="30UXU4180431345"/>
+          </location>
+        </parameter>
+        <parameter name="Schedule" type="datetime" value="20090929T143341"/>
+      </parameter>
+    </parameter>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone regroupement" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30UXU2903032215"/>
+        <point coordinates="30UXU2580733602"/>
+        <point coordinates="30UXU2619630672"/>
+        <point coordinates="30UXU2840629499"/>
+        <point coordinates="30UXU2903032215"/>
+      </location>
+    </parameter>
+    <parameter name="Preparer terrain" type="Bool" value="true"/>
+  </action>
+  <action id="299" name="Automate INF Donner Coup Arret C1 etape 2" target="299" time="2009-09-29T16:48:11" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="201"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU3757549462"/>
+        <point coordinates="30UXU2739042104"/>
+        <point coordinates="30UXU2120333967"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU4579045471"/>
+        <point coordinates="30UXU4065232095"/>
+        <point coordinates="30UXU2767825033"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Itineraire" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3070733618"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+
+<!-- Automate INF Defendre Ferme -->
+ <action id="278" name="Automate INF Defendre Ferme C1 etape 1" target="287" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="23"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Position" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30UXU3391741509"/>
+        <point coordinates="30UXU3132438973"/>
+        <point coordinates="30UXU3612035341"/>
+        <point coordinates="30UXU3926838179"/>
+        <point coordinates="30UXU3391741509"/>
+      </location>
+    </parameter>
+    <parameter name="Preparer terrain" type="Bool" value="true"/>
+  </action>
+  <action id="299" name="Automate INF Defendre Ferme C1 etape 2" target="299" time="2009-09-29T16:48:11" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="201"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU3757549462"/>
+        <point coordinates="30UXU2739042104"/>
+        <point coordinates="30UXU2120333967"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU4579045471"/>
+        <point coordinates="30UXU4065232095"/>
+        <point coordinates="30UXU2767825033"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Itineraire" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3070733618"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+
+<!-- Automate INF Controler -->
+<action id="258" name="Automate INF Controler C1" target="287" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="38"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30UXU3677843168"/>
+        <point coordinates="30UXU3510441276"/>
+        <point coordinates="30UXU3891138923"/>
+        <point coordinates="30UXU4090842331"/>
+        <point coordinates="30UXU3677843168"/>
+      </location>
+    </parameter>
+    <parameter name="Preparer terrain" type="Bool" value="true"/>
+  </action>
+   <action id="258" name="Automate INF Controler C2" target="316" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU8924831012"/>
+        <point coordinates="30UYU0057038085"/>
+        <point coordinates="30UYU0920549943"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU8362938197"/>
+        <point coordinates="30UXU8826947073"/>
+        <point coordinates="30UYU0112255719"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30UYU0042452241"/>
+        <point coordinates="30UYU0116248791"/>
+        <point coordinates="30UYU0461051171"/>
+        <point coordinates="30UYU0195452955"/>
+        <point coordinates="30UYU0042452241"/>
+      </location>
+    </parameter>
+    <parameter name="Preparer terrain" type="Bool" value="true"/>
+  </action>
 
 <!-- Automate INF Attaquer en souplesse UC1 -->
 
