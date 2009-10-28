@@ -42,6 +42,20 @@
           <automat engaged="true" id="252" knowledge-group="2" name="Refugies x10 [252]" type="Refugies x10">
             <unit command-post="true" id="253" name="Refugies 10 Pers" position="30TXU4238901363" type="Refugies 10 Pers"/>
           </automat>
+          <automat engaged="true" id="287" knowledge-group="2" name="Compagnie INF AMX 10 P [287]" type="Compagnie INF AMX 10 P">
+            <unit command-post="true" id="288" name="Section CDT CIE INF AMX10P" position="30UXU2512631574" type="Section CDT CIE INF AMX10P"/>
+            <unit command-post="false" id="289" name="Section CBT INF AMX10P CDS OFF" position="30UXU2564531093" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="290" name="Section CBT INF AMX10P CDS OFF" position="30UXU2516230576" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="291" name="Section CBT INF AMX10P CDS OFF" position="30UXU2464331057" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="292" name="Section CBT INF AMX10P CDS SOFF" position="30UXU2562631592" type="Section CBT INF AMX10P CDS SOFF"/>
+          </automat>
+          <automat engaged="true" id="293" knowledge-group="2" name="Compagnie Anti Char HOT [293]" type="Compagnie Anti Char HOT">
+            <unit command-post="true" id="294" name="Section CDT CAC" position="30UXU2736731787" type="Section CDT CAC"/>
+            <unit command-post="false" id="295" name="Section Antichar HOT CDP OFF" position="30UXU2788631306" type="Section Antichar HOT CDP OFF"/>
+            <unit command-post="false" id="296" name="Section Antichar HOT CDP OFF" position="30UXU2740330788" type="Section Antichar HOT CDP OFF"/>
+            <unit command-post="false" id="297" name="Section Antichar HOT CDP SOFF" position="30UXU2688531269" type="Section Antichar HOT CDP SOFF"/>
+            <unit command-post="false" id="298" name="Section Antichar HOT CDP SOFF" position="30UXU2786831804" type="Section Antichar HOT CDP SOFF"/>
+          </automat>
           <lima name="Lima 113">
             <point>30TXU2858801346</point>
             <point>30TXU3929708509</point>
@@ -63,6 +77,21 @@
             <point>30TXT4612398755</point>
             <point>30TXU3930707167</point>
             <point>30TXU3059916953</point>
+          </limit>
+          <limit name="Limite 282">
+            <point>30UXU2240833549</point>
+            <point>30UXU2901141173</point>
+            <point>30UXU3908249846</point>
+          </limit>
+          <limit name="Limite 283">
+            <point>30UXU2815626435</point>
+            <point>30UXU3939833831</point>
+            <point>30UXU4476846292</point>
+          </limit>
+          <limit name="Limite 284">
+            <point>30UXU3757549462</point>
+            <point>30UXU2739042104</point>
+            <point>30UXU2120333967</point>
           </limit>
         </formation>
         <formation id="6" level="ii" name="Bataillon Case 2">
@@ -94,6 +123,20 @@
             <unit command-post="true" id="194" name="PC ABC" position="30TXU9758807193" type="PC ABC"/>
             <unit command-post="false" id="195" name="Peloton AMX 10 RC CDP OFF" position="30TXU9810706712" type="Peloton AMX 10 RC CDP OFF"/>
           </automat>
+          <automat engaged="true" id="316" knowledge-group="2" name="Compagnie INF AMX 10 P [316]" type="Compagnie INF AMX 10 P">
+            <unit command-post="true" id="317" name="Section CDT CIE INF AMX10P" position="30UXU8782837332" type="Section CDT CIE INF AMX10P"/>
+            <unit command-post="false" id="318" name="Section CBT INF AMX10P CDS OFF" position="30UXU8807137100" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="319" name="Section CBT INF AMX10P CDS OFF" position="30UXU8796336822" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="320" name="Section CBT INF AMX10P CDS OFF" position="30UXU8734636814" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="321" name="Section CBT INF AMX10P CDS SOFF" position="30UXU8832937350" type="Section CBT INF AMX10P CDS SOFF"/>
+          </automat>
+          <automat engaged="true" id="322" knowledge-group="2" name="Compagnie Anti Char HOT [322]" type="Compagnie Anti Char HOT">
+            <unit command-post="true" id="323" name="Section CDT CAC" position="30UXU8970636866" type="Section CDT CAC"/>
+            <unit command-post="false" id="324" name="Section Antichar HOT CDP OFF" position="30UXU8903436150" type="Section Antichar HOT CDP OFF"/>
+            <unit command-post="false" id="325" name="Section Antichar HOT CDP OFF" position="30UXU8975436105" type="Section Antichar HOT CDP OFF"/>
+            <unit command-post="false" id="326" name="Section Antichar HOT CDP SOFF" position="30UXU8926136185" type="Section Antichar HOT CDP SOFF"/>
+            <unit command-post="false" id="327" name="Section Antichar HOT CDP SOFF" position="30UXU8901636649" type="Section Antichar HOT CDP SOFF"/>
+          </automat>
           <lima name="Lima 116">
             <point>30TXU9045401647</point>
             <point>30TXU9877910801</point>
@@ -116,6 +159,51 @@
             <point>30TXU9939809302</point>
             <point>30TXU9079517979</point>
           </limit>
+          <lima name="Lima 305">
+            <point>30UXU2263838173</point>
+            <point>30UXU2333030020</point>
+            <point>30UXU3229025529</point>
+          </lima>
+          <lima name="Lima 306">
+            <point>30UXU2642043322</point>
+            <point>30UXU4180431345</point>
+          </lima>
+          <lima name="Lima 307">
+            <point>30UXU3170147272</point>
+            <point>30UXU4175149217</point>
+            <point>30UXU4638641799</point>
+          </lima>
+          <limit name="Limite 308">
+            <point>30UXU8362938197</point>
+            <point>30UXU8826947073</point>
+            <point>30UYU0112255719</point>
+          </limit>
+          <limit name="Limite 309">
+            <point>30UXU8924831012</point>
+            <point>30UYU0057038085</point>
+            <point>30UYU0920549943</point>
+          </limit>
+          <limit name="Limite 310">
+            <point>30UXU8281738696</point>
+            <point>30UXU8799449174</point>
+            <point>30UXU9989956599</point>
+          </limit>
+          <lima name="Lima 313">
+            <point>30UXU8301442397</point>
+            <point>30UXU8456236186</point>
+            <point>30UXU8786932546</point>
+            <point>30UXU9425131721</point>
+          </lima>
+          <lima name="Lima 314">
+            <point>30UXU8663050312</point>
+            <point>30UYU0541435885</point>
+          </lima>
+          <lima name="Lima 315">
+            <point>30UXU9473154960</point>
+            <point>30UYU0305055460</point>
+            <point>30UYU0843551103</point>
+            <point>30UYU1055945440</point>
+          </lima>
         </formation>
         <formation id="7" level="ii" name="Bataillon Case 3">
           <automat engaged="true" id="51" knowledge-group="2" name="Escadron de Chars LECLERC [51]" type="Escadron de Chars LECLERC">
@@ -226,6 +314,13 @@
             <unit command-post="false" id="31" name="Peloton LECLERC CDP SOFF" position="30TXU2890111640" type="Peloton LECLERC CDP SOFF"/>
             <unit command-post="false" id="32" name="Peloton d appui direct" position="30TXU2988412175" type="Peloton d appui direct"/>
           </automat>
+          <automat engaged="true" id="299" knowledge-group="4" name="Compagnie INF AMX 10 P [299]" type="Compagnie INF AMX 10 P">
+            <unit command-post="true" id="300" name="Section CDT CIE INF AMX10P" position="30UXU4002147676" type="Section CDT CIE INF AMX10P"/>
+            <unit command-post="false" id="301" name="Section CBT INF AMX10P CDS OFF" position="30UXU4053947195" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="302" name="Section CBT INF AMX10P CDS OFF" position="30UXU4005746677" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="303" name="Section CBT INF AMX10P CDS OFF" position="30UXU3953847158" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="304" name="Section CBT INF AMX10P CDS SOFF" position="30UXU4052147694" type="Section CBT INF AMX10P CDS SOFF"/>
+          </automat>
           <limit name="Limite 125">
             <point>30TXU3175914669</point>
             <point>30TXU3802106413</point>
@@ -234,6 +329,11 @@
           <limit name="Limite 126">
             <point>30TXU2630812594</point>
             <point>30TXT3130795591</point>
+          </limit>
+          <limit name="Limite 286">
+            <point>30UXU4579045471</point>
+            <point>30UXU4065232095</point>
+            <point>30UXU2767825033</point>
           </limit>
         </formation>
         <formation id="11" level="ii" name="GTIA Case 2">
@@ -244,6 +344,13 @@
             <unit command-post="false" id="49" name="Peloton LECLERC CDP SOFF" position="30TXU9005913827" type="Peloton LECLERC CDP SOFF"/>
             <unit command-post="false" id="50" name="Peloton d appui direct" position="30TXU9104214362" type="Peloton d appui direct"/>
           </automat>
+          <automat engaged="true" id="328" knowledge-group="4" name="Compagnie INF AMX 10 P [328]" type="Compagnie INF AMX 10 P">
+            <unit command-post="true" id="329" name="Section CDT CIE INF AMX10P" position="30UYU0250152289" type="Section CDT CIE INF AMX10P"/>
+            <unit command-post="false" id="330" name="Section CBT INF AMX10P CDS OFF" position="30UYU0302051808" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="331" name="Section CBT INF AMX10P CDS OFF" position="30UYU0253751290" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="332" name="Section CBT INF AMX10P CDS OFF" position="30UYU0201851771" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="333" name="Section CBT INF AMX10P CDS SOFF" position="30UYU0300152307" type="Section CBT INF AMX10P CDS SOFF"/>
+          </automat>
           <limit name="Limite 127">
             <point>30TXU8587815379</point>
             <point>30TXT9343295644</point>
@@ -252,6 +359,11 @@
             <point>30TXU9060317517</point>
             <point>30TXU9797408337</point>
             <point>30TYU0596903771</point>
+          </limit>
+          <limit name="Limite 311">
+            <point>30UXU9108431474</point>
+            <point>30UYU0376637541</point>
+            <point>30UYU1020649715</point>
           </limit>
         </formation>
         <formation id="12" level="ii" name="GTIA Case 3">
