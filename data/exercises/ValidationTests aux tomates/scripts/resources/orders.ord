@@ -1761,4 +1761,155 @@
     </parameter>
     <parameter name="Renseignements" type="IntelligenceList"/>
   </action>
+  
+    
+  <!-- Auto ABC Surveiller UC 1 -->
+  
+  <action id="234" name="Automate ABC Surveiller C1 - 1" target="15" time="2009-09-29T17:01:21" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="328"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT3522394560"/>
+        <point coordinates="30TXU2941000712"/>
+        <point coordinates="30TXU2287114183"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT4612398755"/>
+        <point coordinates="30TXU3930707167"/>
+        <point coordinates="30TXU3059916953"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone installation" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TXU3184804090"/>
+        <point coordinates="30TXU2917405141"/>
+        <point coordinates="30TXU3168207637"/>
+        <point coordinates="30TXU3442706662"/>
+        <point coordinates="30TXU3184804090"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="222" name="Automate ABC Surveiller C1 - 2" target="27" time="2009-09-29T17:21:21" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="164"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXU2630812594"/>
+        <point coordinates="30TXT3130795591"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXU3175914669"/>
+        <point coordinates="30TXU3802106413"/>
+        <point coordinates="30TXU4454901750"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+  
+  <!-- Auto ABC Surveiller UC 2 -->
+  
+  <action id="234" name="Automate ABC Surveiller C2 - 1" target="33" time="2009-09-29T17:47:21" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="324"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT9821696468"/>
+        <point coordinates="30TXU9099901390"/>
+        <point coordinates="30TXU8441814207"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TYU0699401179"/>
+        <point coordinates="30TXU9939809302"/>
+        <point coordinates="30TXU9079517979"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone installation" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TXU9424606924"/>
+        <point coordinates="30TXU9131307262"/>
+        <point coordinates="30TXU9101008806"/>
+        <point coordinates="30TXU9333510222"/>
+        <point coordinates="30TXU9641509889"/>
+        <point coordinates="30TXU9424606924"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="223" name="Automate ABC Surveiller C2 - 2" target="45" time="2009-09-29T18:01:21" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="170"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXU9060317517"/>
+        <point coordinates="30TXU9797408337"/>
+        <point coordinates="30TYU0596903771"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXU8587815379"/>
+        <point coordinates="30TXT9343295644"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+  
+  <!-- Auto ABC Tenir UC1 -->
+  
+  <action id="232" name="Automate ABC Tenir C1 - 1" target="15" time="2009-09-29T16:34:31" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="327"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT3522394560"/>
+        <point coordinates="30TXU2941000712"/>
+        <point coordinates="30TXU2287114183"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT4612398755"/>
+        <point coordinates="30TXU3930707167"/>
+        <point coordinates="30TXU3059916953"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Position installation" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TXU2964605454"/>
+        <point coordinates="30TXU3112607617"/>
+        <point coordinates="30TXU3620009982"/>
+        <point coordinates="30TXU3667707039"/>
+        <point coordinates="30TXU3211603841"/>
+        <point coordinates="30TXU2964605454"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="208" name="Automate ABC Tenir C1 - 2" target="27" time="2009-09-29T16:52:11" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="157"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXU2630812594"/>
+        <point coordinates="30TXT3130795591"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXU3175914669"/>
+        <point coordinates="30TXU3802106413"/>
+        <point coordinates="30TXU4454901750"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+  
 </actions>
