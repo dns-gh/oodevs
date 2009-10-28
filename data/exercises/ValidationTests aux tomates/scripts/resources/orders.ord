@@ -1682,5 +1682,83 @@
     </parameter>
     <parameter name="Renseignements" type="IntelligenceList"/>
   </action>
+   
+   <!-- Automate ABC Organiser Accueil Colonne Refugies  C1-->
+   
+  <action id="245" name="ABC Organiser Accueil Colonne Refugies C1" target="219" time="2009-09-29T16:42:21" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT4612398755"/>
+        <point coordinates="30TXU3930707167"/>
+        <point coordinates="30TXU3059916953"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT3522394560"/>
+        <point coordinates="30TXU2941000712"/>
+        <point coordinates="30TXU2287114183"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone installation" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TXU3538707021"/>
+        <point coordinates="30TXU3699507257"/>
+        <point coordinates="30TXU3567908881"/>
+        <point coordinates="30TXU3493008078"/>
+        <point coordinates="30TXU3538707021"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="299" name="ABC Organiser Accueil Colonne Refugies Faire Mouvement C1" target="252" time="2009-09-29T17:26:11" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT3522394560"/>
+        <point coordinates="30TXU2941000712"/>
+        <point coordinates="30TXU2287114183"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT4612398755"/>
+        <point coordinates="30TXU3930707167"/>
+        <point coordinates="30TXU3059916953"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Itineraire" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXU3601707534"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
   
+     <!-- Automate ABC Prendre Preciser Contact C1-->
+  
+    <action id="226" name="ABC Prendre Preciser Contact C1" target="21" time="2009-09-29T16:45:31" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT3522394560"/>
+        <point coordinates="30TXU2941000712"/>
+        <point coordinates="30TXU2287114183"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT4612398755"/>
+        <point coordinates="30TXU3930707167"/>
+        <point coordinates="30TXU3059916953"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
 </actions>
