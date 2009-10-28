@@ -3,6 +3,228 @@
 
 <!-- Missions de niveau Automate -->
 
+<!-- INF -->
+
+<!-- Automate INF Attaquer en souplesse UC1 -->
+
+<action id="256" name="Automate INF Attaquer Souplesse C1 - 1" target="287" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="50"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Objectifs" type="PointList">
+      <parameter name="Location 1" type="location">
+        <location type="point">
+          <point coordinates="30UXU4000647496"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+
+<!-- Automate INF Attaquer en souplesse UC2 -->
+
+<action id="256" name="Automate INF Attaquer Souplesse C2 - 1" target="316" time="2009-09-29T19:43:31" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="50"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU8362938197"/>
+        <point coordinates="30UXU8826947073"/>
+        <point coordinates="30UYU0112255719"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU8924831012"/>
+        <point coordinates="30UYU0057038085"/>
+        <point coordinates="30UYU0920549943"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Objectifs" type="PointList">
+      <parameter name="Location 1" type="location">
+        <location type="point">
+          <point coordinates="30UYU0089951182"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+
+  <action id="279" name="Automate INF Attaquer Souplesse C2 - 1" target="328" time="2009-09-29T19:43:31" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="230"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU9108431474"/>
+        <point coordinates="30UYU0376637541"/>
+        <point coordinates="30UYU1020649715"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU8281738696"/>
+        <point coordinates="30UXU8799449174"/>
+        <point coordinates="30UXU9989956599"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Position" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30UXU9947348898"/>
+        <point coordinates="30UXU9732750373"/>
+        <point coordinates="30UYU0151053096"/>
+        <point coordinates="30UYU0475250933"/>
+        <point coordinates="30UXU9947348898"/>
+      </location>
+    </parameter>
+    <parameter name="Preparer terrain" type="Bool" value="false"/>
+  </action>
+
+  
+<!-- Automate INF Appuyer Une Attaque UC1 -->
+
+<action id="256" name="Automate INF Appuyer Une Attaque C1 - 1" target="287" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="50"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Objectifs" type="PointList">
+      <parameter name="Location 1" type="location">
+        <location type="point">
+          <point coordinates="30UXU4000647496"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  
+  <action id="281" name="Automate INF Appuyer Une Attaque C1 - 1" target="293" time="2009-09-29T16:49:01" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="50"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Compagnie" type="Automate" value="287"/>
+  </action>
+
+<!-- Automate INF Appuyer une attaque UC2 -->
+
+<action id="256" name="Automate INF Appuyer Une Attaque C2 - 1" target="316" time="2009-09-29T19:43:31" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="50"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU8362938197"/>
+        <point coordinates="30UXU8826947073"/>
+        <point coordinates="30UYU0112255719"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU8924831012"/>
+        <point coordinates="30UYU0057038085"/>
+        <point coordinates="30UYU0920549943"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Objectifs" type="PointList">
+      <parameter name="Location 1" type="location">
+        <location type="point">
+          <point coordinates="30UYU0089951182"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  
+  <action id="281" name="Automate INF Appuyer Une Attaque C2 - 2" target="322" time="2009-09-29T19:43:31" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="50"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU8362938197"/>
+        <point coordinates="30UXU8826947073"/>
+        <point coordinates="30UYU0112255719"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU8924831012"/>
+        <point coordinates="30UYU0057038085"/>
+        <point coordinates="30UYU0920549943"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Compagnie" type="Automate" value="316"/>
+  </action>
+
+  <action id="279" name="Automate INF Appuyer Une Attaque C2 - 1" target="328" time="2009-09-29T19:43:31" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="230"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU9108431474"/>
+        <point coordinates="30UYU0376637541"/>
+        <point coordinates="30UYU1020649715"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU8281738696"/>
+        <point coordinates="30UXU8799449174"/>
+        <point coordinates="30UXU9989956599"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Position" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30UXU9947348898"/>
+        <point coordinates="30UXU9732750373"/>
+        <point coordinates="30UYU0151053096"/>
+        <point coordinates="30UYU0475250933"/>
+        <point coordinates="30UXU9947348898"/>
+      </location>
+    </parameter>
+    <parameter name="Preparer terrain" type="Bool" value="false"/>
+  </action>
+
+
 <!-- ABC -->
 <!-- Automate ABC Renseigner Sur -->
  <action id="236" name="Automate ABC Renseigner Sur C1" target="21" time="2009-09-29T16:33:41" type="mission">
