@@ -2499,5 +2499,115 @@
     <parameter name="Renseignements" type="IntelligenceList"/>
     <parameter name="Compagnie" type="Automate" value="87"/>
   </action>
+    
+  
+    <!-- Automate INF Couvrir C1-->
+  <action id="261" name="Automate Couvrir INF Eclairer C1" target="287" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+  <action id="259" name="Automate Couvrir INF Couvrir C1" target="293" time="2009-09-29T16:47:51" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Compagnie" type="Automate" value="287"/>
+    <parameter name="Objectifs" type="PointList">
+      <parameter name="Location 1" type="location">
+        <location type="point">
+          <point coordinates="30UXU4003547411"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  
+   <!-- Automate INF Eclairer C1-->
+
+  <action id="261" name="Automate INF Eclairer INF Eclairer C1" target="287" time="2009-09-29T18:28:01" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="58"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>  
+  
+  <!-- Automate INF Harceler C1-->
+    <action id="264" name="Automate Harceler INF Harceler C1" target="287" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone surveillance" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30UXU3891844760"/>
+        <point coordinates="30UXU4373845241"/>
+        <point coordinates="30UXU4130948848"/>
+        <point coordinates="30UXU3721347332"/>
+        <point coordinates="30UXU3891844760"/>
+      </location>
+    </parameter>
+    <parameter name="Point regroupement" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30UXU3988640793"/>
+        <point coordinates="30UXU4047742456"/>
+        <point coordinates="30UXU4269742741"/>
+        <point coordinates="30UXU4203541110"/>
+        <point coordinates="30UXU3988640793"/>
+      </location>
+    </parameter>
+  </action>
 
 </actions>
