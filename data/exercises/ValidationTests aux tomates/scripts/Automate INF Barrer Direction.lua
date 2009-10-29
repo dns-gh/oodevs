@@ -5,7 +5,7 @@ dofile "resources/scripts/events.lua"
 include "resources/model.lua"
 include "resources/config.lua"
 
-scriptName = "Automate INF Recueillir Unite"
+scriptName = "Automate INF Barrer Direction"
 
 local tick = 0
 
@@ -15,16 +15,13 @@ functionTick =
 [5] = function()
 	Center( { coordinates = coord:UtmPosition( config.positions.center_INF[1] ) } )
 	Zoom( { width = 35000 } )
-	actions:IssueOrder( "Automate INF Recueillir Unite C1 - 1" )
+	actions:IssueOrder( "Automate INF Barrer Direction C1 - 1" )
 end,
 
-[210] = function()
-	actions:IssueOrder( "Automate INF Recueillir Unite C1 - 2" )
+[50] = function()
+	actions:IssueOrder( "Automate INF Barrer Direction C1 - 2" )
 end,
 
-[230] = function()
-	actions:IssueOrder( "Automate INF Recueillir Unite C1 - 3" )
-end,
 }
 
 local function runStep( )
@@ -42,7 +39,7 @@ function Start()
             events.sim:ClientConnected(),
             { },
             function( client, profile )
-                if profile ~= "Automate INF Recueillir Unite" then return end
+                if profile ~= "Automate INF Barrer Direction" then return end
 				tick = 0
 				local text = "Changer de Case ?"
 				Dialog( { id = "Case", message = text, buttons = { "Case 1", "Case 2", "Case 3", "Case 4" } } )
@@ -54,7 +51,7 @@ function Start()
 		events.sim:TickEnded( ),
 		{ "Missions_Init" },
 			function()
-				if profile ~= "Automate INF Recueillir Unite" then
+				if profile ~= "Automate INF Barrer Direction" then
 					runStep()
 				end
 			end

@@ -5,10 +5,61 @@
 
 <!-- INF -->
 
+<!-- Automate INF Barrer Direction UC1 -->
+
+<action id="277" name="Automate INF Barrer Direction C1 - 1" target="287" time="2009-09-29T16:34:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="50"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Position" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30UXU3632536562"/>
+        <point coordinates="30UXU3895634482"/>
+        <point coordinates="30UXU3637932547"/>
+        <point coordinates="30UXU3314232900"/>
+        <point coordinates="30UXU3632536562"/>
+      </location>
+    </parameter>
+    <parameter name="Preparer terrain" type="Bool" value="false"/>
+  </action>
+  <action id="268" name="Automate INF Barrer Direction C1 - 2" target="299" time="2009-09-29T16:46:11" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="230"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU4579045471"/>
+        <point coordinates="30UXU4065232095"/>
+        <point coordinates="30UXU2767825033"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU3757549462"/>
+        <point coordinates="30UXU2739042104"/>
+        <point coordinates="30UXU2120333967"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+
 <!-- Automate INF Recueillir Unite UC1 -->
 
-<action id="269" name="Automate INF Recueillir Unite C1 - 1" target="287" time="2009-09-29T17:25:11" type="mission">
-    <parameter name="direction dangereuse" type="Direction" value="53"/>
+<action id="269" name="Automate INF Recueillir Unite C1 - 2" target="287" time="2009-09-29T17:25:11" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="50"/>
     <parameter name="Limas" type="PhaseLineList">
       <parameter name="Phase line 1" type="lima" value="LR">
         <parameter name="Position" type="location">
@@ -57,13 +108,13 @@
     <parameter name="Pias" type="PointList">
       <parameter name="Location 1" type="location">
         <location type="point">
-          <point coordinates="30UXU3473941844"/>
+          <point coordinates="30UXU3968338941"/>
         </location>
       </parameter>
     </parameter>
   </action>
   <action id="299" name="Automate INF Recueillir Unite C1 - 1" target="293" time="2009-09-29T18:06:31" type="mission">
-    <parameter name="direction dangereuse" type="Direction" value="28"/>
+    <parameter name="direction dangereuse" type="Direction" value="50"/>
     <parameter name="Limas" type="PhaseLineList"/>
     <parameter name="Limit 1" type="Limit">
       <location type="line">
@@ -83,13 +134,13 @@
     <parameter name="Itineraire" type="Path">
       <parameter name="Destination" type="pathpoint">
         <location type="point">
-          <point coordinates="30UXU3829047273"/>
+          <point coordinates="30UXU4098746136"/>
         </location>
       </parameter>
     </parameter>
   </action>
   <action id="268" name="Automate INF Recueillir Unite C1 - 2" target="299" time="2009-09-29T19:15:41" type="mission">
-    <parameter name="direction dangereuse" type="Direction" value="203"/>
+    <parameter name="direction dangereuse" type="Direction" value="230"/>
     <parameter name="Limas" type="PhaseLineList"/>
     <parameter name="Limit 1" type="Limit">
       <location type="line">
@@ -107,8 +158,8 @@
     </parameter>
     <parameter name="Renseignements" type="IntelligenceList"/>
   </action>
-  <action id="297" name="Automate INF Recueillir Unite C1 - 2" target="293" time="2009-09-29T19:17:21" type="mission">
-    <parameter name="direction dangereuse" type="Direction" value="44"/>
+  <action id="297" name="Automate INF Recueillir Unite C1 - 3" target="293" time="2009-09-29T19:17:21" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="50"/>
     <parameter name="Limas" type="PhaseLineList"/>
     <parameter name="Limit 1" type="Limit">
       <location type="line">
