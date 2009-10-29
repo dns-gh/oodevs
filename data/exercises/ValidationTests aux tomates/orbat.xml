@@ -332,6 +332,9 @@
             <unit command-post="false" id="303" name="Section CBT INF AMX10P CDS OFF" position="30UXU3953847158" type="Section CBT INF AMX10P CDS OFF"/>
             <unit command-post="false" id="304" name="Section CBT INF AMX10P CDS SOFF" position="30UXU4052147694" type="Section CBT INF AMX10P CDS SOFF"/>
           </automat>
+          <automat engaged="true" id="427" knowledge-group="4" name="Terroristes [427]" type="Terroristes">
+            <unit command-post="true" id="428" name="Terroriste" position="30UXU3974537555" type="Terroriste"/>
+          </automat>
           <limit name="Limite 125">
             <point>30TXU3175914669</point>
             <point>30TXU3802106413</point>
@@ -366,6 +369,9 @@
             <unit command-post="false" id="331" name="Section CBT INF AMX10P CDS OFF" position="30UYU0253751290" type="Section CBT INF AMX10P CDS OFF"/>
             <unit command-post="false" id="332" name="Section CBT INF AMX10P CDS OFF" position="30UYU0201851771" type="Section CBT INF AMX10P CDS OFF"/>
             <unit command-post="false" id="333" name="Section CBT INF AMX10P CDS SOFF" position="30UYU0300152307" type="Section CBT INF AMX10P CDS SOFF"/>
+          </automat>
+          <automat engaged="true" id="429" knowledge-group="4" name="Terroristes [429]" type="Terroristes">
+            <unit command-post="true" id="430" name="Terroriste" position="30UYU0098842552" type="Terroriste"/>
           </automat>
           <limit name="Limite 127">
             <point>30TXU8587815379</point>
@@ -430,7 +436,7 @@
       </communication>
       <populations>
         <population attitude="calme" humans="1000" id="364" name="Population standard [364]" position="30UXU4014141775" type="Population standard"/>
-        <population attitude="calme" humans="1000" id="365" name="Population standard [365]" position="30UYU0103543360" type="Population standard"/>
+        <population attitude="calme" humans="1000" id="365" name="Population standard [365]" position="30UYU0095743402" type="Population standard"/>
       </populations>
       <logistic/>
     </side>
