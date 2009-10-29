@@ -88,6 +88,14 @@
             <point>30UXU3939833831</point>
             <point>30UXU4476846292</point>
           </limit>
+          <lima name="Lima 363">
+            <point>30UXU3167946243</point>
+            <point>30UXU4363037186</point>
+          </lima>
+          <lima name="Lima 364">
+            <point>30UXU9180752659</point>
+            <point>30UYU0755442995</point>
+          </lima>
         </formation>
         <formation id="6" level="ii" name="Bataillon Case 2">
           <automat engaged="true" id="33" knowledge-group="2" name="Escadron de Chars LECLERC [33]" type="Escadron de Chars LECLERC">
@@ -144,16 +152,6 @@
             <point>30TXT9723096491</point>
             <point>30TYU0727401780</point>
           </lima>
-          <limit name="Limite 114">
-            <point>30TXT9821696468</point>
-            <point>30TXU9099901390</point>
-            <point>30TXU8441814207</point>
-          </limit>
-          <limit name="Limite 115">
-            <point>30TYU0699401179</point>
-            <point>30TXU9939809302</point>
-            <point>30TXU9079517979</point>
-          </limit>
           <lima name="Lima 305">
             <point>30UXU2263838173</point>
             <point>30UXU2333030020</point>
@@ -168,16 +166,6 @@
             <point>30UXU4175149217</point>
             <point>30UXU4638641799</point>
           </lima>
-          <limit name="Limite 308">
-            <point>30UXU8362938197</point>
-            <point>30UXU8826947073</point>
-            <point>30UYU0112255719</point>
-          </limit>
-          <limit name="Limite 309">
-            <point>30UXU8924831012</point>
-            <point>30UYU0057038085</point>
-            <point>30UYU0920549943</point>
-          </limit>
           <lima name="Lima 313">
             <point>30UXU8301442397</point>
             <point>30UXU8456236186</point>
@@ -194,6 +182,26 @@
             <point>30UYU0843551103</point>
             <point>30UYU1055945440</point>
           </lima>
+          <limit name="Limite 114">
+            <point>30TXT9821696468</point>
+            <point>30TXU9099901390</point>
+            <point>30TXU8441814207</point>
+          </limit>
+          <limit name="Limite 115">
+            <point>30TYU0699401179</point>
+            <point>30TXU9939809302</point>
+            <point>30TXU9079517979</point>
+          </limit>
+          <limit name="Limite 308">
+            <point>30UXU8362938197</point>
+            <point>30UXU8826947073</point>
+            <point>30UYU0112255719</point>
+          </limit>
+          <limit name="Limite 309">
+            <point>30UXU8924831012</point>
+            <point>30UYU0057038085</point>
+            <point>30UYU0920549943</point>
+          </limit>
         </formation>
         <formation id="7" level="ii" name="Bataillon Case 3">
           <automat engaged="true" id="51" knowledge-group="2" name="Escadron de Chars LECLERC [51]" type="Escadron de Chars LECLERC">
