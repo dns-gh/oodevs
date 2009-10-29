@@ -3373,7 +3373,88 @@
     </parameter>
     <parameter name="Renseignements" type="IntelligenceList"/>
   </action>
-
+  <!-- Automate INF Reduire C1-->
+  
+  <action id="270" name="INF Reduire C1" target="287" time="2009-09-29T16:35:01" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Points resistance" type="PointList">
+      <parameter name="Location 1" type="location">
+        <location type="point">
+          <point coordinates="30UXU4007747430"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  
+    <!-- Automate INF Relever C1-->
+	
+   <action id="299" name="Automate INF Relever Faire Mouvement C1" target="293" time="2009-09-29T16:33:51" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Itineraire" type="Path">
+      <parameter name="Point de passage 1" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3714338512"/>
+        </location>
+      </parameter>
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU4116643925"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="271" name="INF Relever C1" target="287" time="2009-09-29T16:42:21" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="8"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Compagnie" type="Automate" value="293"/>
+  </action>
   
 
 </actions>
