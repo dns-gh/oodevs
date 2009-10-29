@@ -68,6 +68,14 @@
             <point>30TXT3462494657</point>
             <point>30TXT4612099354</point>
           </lima>
+          <lima name="Lima 363">
+            <point>30UXU3167946243</point>
+            <point>30UXU4363037186</point>
+          </lima>
+          <lima name="Lima 364">
+            <point>30UXU9180752659</point>
+            <point>30UYU0755442995</point>
+          </lima>
           <limit name="Limite 111">
             <point>30TXT3522394560</point>
             <point>30TXU2941000712</point>
@@ -88,14 +96,6 @@
             <point>30UXU3939833831</point>
             <point>30UXU4476846292</point>
           </limit>
-          <lima name="Lima 363">
-            <point>30UXU3167946243</point>
-            <point>30UXU4363037186</point>
-          </lima>
-          <lima name="Lima 364">
-            <point>30UXU9180752659</point>
-            <point>30UYU0755442995</point>
-          </lima>
         </formation>
         <formation id="6" level="ii" name="Bataillon Case 2">
           <automat engaged="true" id="33" knowledge-group="2" name="Escadron de Chars LECLERC [33]" type="Escadron de Chars LECLERC">
@@ -298,7 +298,10 @@
       <communication>
         <knowledge-group id="2" name="Groupe de connaissance [2]" type="Standard"/>
       </communication>
-      <populations/>
+      <populations>
+        <population attitude="calme" humans="1000" id="363" name="Population standard [363]" position="30UXU3072941084" type="Population standard"/>
+        <population attitude="calme" humans="1000" id="366" name="Population standard [366]" position="30UXU8978145987" type="Population standard"/>
+      </populations>
       <logistic/>
     </side>
     <side id="3" name="Les Méchants" type="enemy">
@@ -415,7 +418,10 @@
       <communication>
         <knowledge-group id="4" name="Groupe de connaissance [4]" type="Standard"/>
       </communication>
-      <populations/>
+      <populations>
+        <population attitude="calme" humans="1000" id="364" name="Population standard [364]" position="30UXU4014141775" type="Population standard"/>
+        <population attitude="calme" humans="1000" id="365" name="Population standard [365]" position="30UYU0103543360" type="Population standard"/>
+      </populations>
       <logistic/>
     </side>
   </sides>
