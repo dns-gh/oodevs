@@ -4,6 +4,310 @@
 <!-- Missions de niveau Automate -->
 
 <!-- INF -->
+
+<!-- Automate INF Freiner UC1 -->
+
+  <action id="299" name="Automate INF Freiner C1 - 1" target="287" time="2009-09-29T17:00:51" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="40"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Itineraire" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3350140589"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="263" name="Automate INF Freiner C1 - 2" target="287" time="2009-09-29T17:18:51" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="41"/>
+    <parameter name="Limas" type="PhaseLineList">
+      <parameter name="Phase line 1" type="lima" value="LCAR">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXU2642043322"/>
+            <point coordinates="30UXU4180431345"/>
+          </location>
+        </parameter>
+        <parameter name="Schedule" type="datetime" value="20090929T151851"/>
+      </parameter>
+      <parameter name="Phase line 2" type="lima" value="LFM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXU2263838173"/>
+            <point coordinates="30UXU2333030020"/>
+            <point coordinates="30UXU3229025529"/>
+          </location>
+        </parameter>
+        <parameter name="Schedule" type="datetime" value="20090929T151851"/>
+      </parameter>
+      <parameter name="Phase line 3" type="lima" value="LDM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXU3170147272"/>
+            <point coordinates="30UXU4175149217"/>
+            <point coordinates="30UXU4638641799"/>
+          </location>
+        </parameter>
+        <parameter name="Schedule" type="datetime" value="20090929T151851"/>
+      </parameter>
+    </parameter>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+  <action id="267" name="Automate INF Freiner C1 - 2" target="299" time="2009-09-29T17:24:31" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="225"/>
+    <parameter name="Limas" type="PhaseLineList">
+      <parameter name="Phase line 1" type="lima" value="LDM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXU3170147272"/>
+            <point coordinates="30UXU4175149217"/>
+            <point coordinates="30UXU4638641799"/>
+          </location>
+        </parameter>
+        <parameter name="Schedule" type="datetime" value="20090929T152431"/>
+      </parameter>
+      <parameter name="Phase line 2" type="lima" value="LFM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXU2263838173"/>
+            <point coordinates="30UXU2333030020"/>
+            <point coordinates="30UXU3229025529"/>
+          </location>
+        </parameter>
+        <parameter name="Schedule" type="datetime" value="20090929T152431"/>
+      </parameter>
+    </parameter>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU3757549462"/>
+        <point coordinates="30UXU2739042104"/>
+        <point coordinates="30UXU2120333967"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU4579045471"/>
+        <point coordinates="30UXU4065232095"/>
+        <point coordinates="30UXU2767825033"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+  
+<!-- Automate INF Appuyer Un Freinage UC1 -->
+
+<action id="299" name="Automate INF Appuyer Un Freinage C1 - 1" target="293" time="2009-09-29T17:00:51" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="54"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Itineraire" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3042537996"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="299" name="Automate INF Appuyer Un Freinage C1 - 1" target="287" time="2009-09-29T17:00:51" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="40"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Itineraire" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3350140589"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="263" name="Automate INF Appuyer Un Freinage C1 - 2" target="287" time="2009-09-29T17:18:51" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="41"/>
+    <parameter name="Limas" type="PhaseLineList">
+      <parameter name="Phase line 1" type="lima" value="LCAR">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXU2642043322"/>
+            <point coordinates="30UXU4180431345"/>
+          </location>
+        </parameter>
+        <parameter name="Schedule" type="datetime" value="20090929T151851"/>
+      </parameter>
+      <parameter name="Phase line 2" type="lima" value="LFM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXU2263838173"/>
+            <point coordinates="30UXU2333030020"/>
+            <point coordinates="30UXU3229025529"/>
+          </location>
+        </parameter>
+        <parameter name="Schedule" type="datetime" value="20090929T151851"/>
+      </parameter>
+      <parameter name="Phase line 3" type="lima" value="LDM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXU3170147272"/>
+            <point coordinates="30UXU4175149217"/>
+            <point coordinates="30UXU4638641799"/>
+          </location>
+        </parameter>
+        <parameter name="Schedule" type="datetime" value="20090929T151851"/>
+      </parameter>
+    </parameter>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+  <action id="280" name="Automate INF Appuyer Un Freinage C1 - 2" target="293" time="2009-09-29T17:18:51" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="34"/>
+    <parameter name="Limas" type="PhaseLineList">
+      <parameter name="Phase line 1" type="lima" value="LFM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXU2263838173"/>
+            <point coordinates="30UXU2333030020"/>
+            <point coordinates="30UXU3229025529"/>
+          </location>
+        </parameter>
+        <parameter name="Schedule" type="datetime" value="20090929T151851"/>
+      </parameter>
+      <parameter name="Phase line 2" type="lima" value="LDM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXU3170147272"/>
+            <point coordinates="30UXU4175149217"/>
+            <point coordinates="30UXU4638641799"/>
+          </location>
+        </parameter>
+        <parameter name="Schedule" type="datetime" value="20090929T151851"/>
+      </parameter>
+    </parameter>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Compagnie" type="Automate" value="287"/>
+  </action>
+  <action id="267" name="Automate INF Appuyer Un Freinage C1 - 2" target="299" time="2009-09-29T17:24:31" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="225"/>
+    <parameter name="Limas" type="PhaseLineList">
+      <parameter name="Phase line 1" type="lima" value="LDM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXU3170147272"/>
+            <point coordinates="30UXU4175149217"/>
+            <point coordinates="30UXU4638641799"/>
+          </location>
+        </parameter>
+        <parameter name="Schedule" type="datetime" value="20090929T152431"/>
+      </parameter>
+      <parameter name="Phase line 2" type="lima" value="LFM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXU2263838173"/>
+            <point coordinates="30UXU2333030020"/>
+            <point coordinates="30UXU3229025529"/>
+          </location>
+        </parameter>
+        <parameter name="Schedule" type="datetime" value="20090929T152431"/>
+      </parameter>
+    </parameter>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU3757549462"/>
+        <point coordinates="30UXU2739042104"/>
+        <point coordinates="30UXU2120333967"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU4579045471"/>
+        <point coordinates="30UXU4065232095"/>
+        <point coordinates="30UXU2767825033"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+  
 <!-- Automate INF Donner Coup Arret -->
 <action id="260" name="Automate INF Donner Coup Arret C1 etape 1" target="287" time="2009-09-29T16:33:41" type="mission">
     <parameter name="direction dangereuse" type="Direction" value="22"/>
