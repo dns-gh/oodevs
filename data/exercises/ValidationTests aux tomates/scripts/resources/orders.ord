@@ -5,6 +5,180 @@
 
 <!-- INF -->
 
+<!-- Automate INF Surveiller -->
+<action id="273" name="Automate INF Surveiller C1 etape 1" target="287" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="23"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30UXU3118539472"/>
+        <point coordinates="30UXU2898637748"/>
+        <point coordinates="30UXU3289833803"/>
+        <point coordinates="30UXU3518835623"/>
+        <point coordinates="30UXU3118539472"/>
+      </location>
+    </parameter>
+    <parameter name="Zone regroupement" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30UXU2517533712"/>
+        <point coordinates="30UXU2398831368"/>
+        <point coordinates="30UXU2830929128"/>
+        <point coordinates="30UXU3071331704"/>
+        <point coordinates="30UXU2517533712"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="299" name="Automate INF Surveiller C1 etape 2" target="299" time="2009-09-29T17:02:01" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="214"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU4579045471"/>
+        <point coordinates="30UXU4065232095"/>
+        <point coordinates="30UXU2767825033"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU3757549462"/>
+        <point coordinates="30UXU2739042104"/>
+        <point coordinates="30UXU2120333967"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Itineraire" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU2896035095"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+
+<!-- Automate INF Semparer -->
+  <action id="274" name="Automate INF Semparer C1" target="287" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="47"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Objectif" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30UXU3103939313"/>
+        <point coordinates="30UXU2875537351"/>
+        <point coordinates="30UXU3358332828"/>
+        <point coordinates="30UXU3598335498"/>
+        <point coordinates="30UXU3103939313"/>
+      </location>
+    </parameter>
+  </action>
+  
+  <action id="274" name="Automate INF Semparer C2" target="316" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="13"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU8924831012"/>
+        <point coordinates="30UYU0057038085"/>
+        <point coordinates="30UYU0920549943"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU8362938197"/>
+        <point coordinates="30UXU8826947073"/>
+        <point coordinates="30UYU0112255719"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Objectif" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30UYU0072552722"/>
+        <point coordinates="30UYU0383348888"/>
+        <point coordinates="30UYU0421953836"/>
+        <point coordinates="30UYU0072552722"/>
+      </location>
+    </parameter>
+  </action>
+
+<!-- Automate INF Rompre Contact -->
+  <action id="272" name="Automate INF Rompre Contact C1" target="287" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="40"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone regroupement" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30UXU2611830745"/>
+        <point coordinates="30UXU2501429985"/>
+        <point coordinates="30UXU2832627881"/>
+        <point coordinates="30UXU2974029592"/>
+        <point coordinates="30UXU2611830745"/>
+      </location>
+    </parameter>
+  </action>
+<!-- Automate INF Reconnaissance Offensive -->
+<action id="268" name="Automate INF Reconnaissance Offensive C1" target="287" time="2009-09-29T18:02:11" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="19"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+
+
 <!-- Automate INF Freiner UC1 -->
 
   <action id="299" name="Automate INF Freiner C1 - 1" target="287" time="2009-09-29T17:00:51" type="mission">
