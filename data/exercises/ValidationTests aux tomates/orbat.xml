@@ -56,6 +56,11 @@
             <unit command-post="false" id="297" name="Section Antichar HOT CDP SOFF" position="30UXU2688531269" type="Section Antichar HOT CDP SOFF"/>
             <unit command-post="false" id="298" name="Section Antichar HOT CDP SOFF" position="30UXU2786831804" type="Section Antichar HOT CDP SOFF"/>
           </automat>
+          <automat engaged="true" id="379" knowledge-group="2" name="Compagnie INF PROTERRE [379]" type="Compagnie INF PROTERRE">
+            <unit command-post="true" id="380" name="Section CDT PROTERRE" position="30UXU2822330191" type="Section CDT PROTERRE"/>
+            <unit command-post="false" id="381" name="Section PROTERRE" position="30UXU2874129710" type="Section PROTERRE"/>
+            <unit command-post="false" id="382" name="Section PROTERRE" position="30UXU2825929193" type="Section PROTERRE"/>
+          </automat>
           <lima name="Lima 113">
             <point>30TXU2858801346</point>
             <point>30TXU3929708509</point>
@@ -139,6 +144,11 @@
             <unit command-post="false" id="325" name="Section Antichar HOT CDP OFF" position="30UXU8975436105" type="Section Antichar HOT CDP OFF"/>
             <unit command-post="false" id="326" name="Section Antichar HOT CDP SOFF" position="30UXU8926136185" type="Section Antichar HOT CDP SOFF"/>
             <unit command-post="false" id="327" name="Section Antichar HOT CDP SOFF" position="30UXU8901636649" type="Section Antichar HOT CDP SOFF"/>
+          </automat>
+          <automat engaged="true" id="383" knowledge-group="2" name="Compagnie INF PROTERRE [383]" type="Compagnie INF PROTERRE">
+            <unit command-post="true" id="384" name="Section CDT PROTERRE" position="30UXU9134136043" type="Section CDT PROTERRE"/>
+            <unit command-post="false" id="385" name="Section PROTERRE" position="30UXU9078536023" type="Section PROTERRE"/>
+            <unit command-post="false" id="386" name="Section PROTERRE" position="30UXU9030235505" type="Section PROTERRE"/>
           </automat>
           <lima name="Lima 116">
             <point>30TXU9045401647</point>
