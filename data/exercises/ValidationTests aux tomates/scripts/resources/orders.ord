@@ -3,6 +3,182 @@
 
 <!-- Missions de niveau Automate -->
 
+
+<!-- COMMUNES -->
+
+
+<!-- Automate Communes Interdire franchissement Populations -->
+
+ <action id="308" name="Automate Communes Interdire franchissement Populations C1" target="379" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="22"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Points" type="PointList">
+      <parameter name="Location 1" type="location">
+        <location type="point">
+          <point coordinates="30UXU3036337975"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="332" name="Automate Communes Interdire franchissement Populations C1" target="363" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="Destination" type="Point">
+      <location type="point">
+        <point coordinates="30UXU2948737004"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="299" name="Automate Communes Interdire franchissement Populations C1" target="427" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="222"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU4579045471"/>
+        <point coordinates="30UXU4065232095"/>
+        <point coordinates="30UXU2767825033"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU3757549462"/>
+        <point coordinates="30UXU2739042104"/>
+        <point coordinates="30UXU2120333967"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Itineraire" type="Path">
+      <parameter name="Point de passage 1" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3042837915"/>
+        </location>
+      </parameter>
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU2870136162"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  
+<!-- Automate Communes Filtrer Populations -->
+
+   <action id="309" name="Automate Communes Filtrer Populations C1" target="379" time="2009-09-29T16:34:21" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="21"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Points" type="PointList">
+      <parameter name="Location 1" type="location">
+        <location type="point">
+          <point coordinates="30UXU3051138004"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="299" name="Automate Communes Filtrer Populations C1" target="427" time="2009-09-29T16:34:21" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="206"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU4579045471"/>
+        <point coordinates="30UXU4065232095"/>
+        <point coordinates="30UXU2767825033"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU3757549462"/>
+        <point coordinates="30UXU2739042104"/>
+        <point coordinates="30UXU2120333967"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Itineraire" type="Path">
+      <parameter name="Point de passage 1" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3096838396"/>
+        </location>
+      </parameter>
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU2910336544"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="332" name="Automate Communes Filtrer Populations C1" target="363" time="2009-09-29T16:39:01" type="mission">
+    <parameter name="Destination" type="Point">
+      <location type="point">
+        <point coordinates="30UXU2964937081"/>
+      </location>
+    </parameter>
+  </action>
+  
+<!-- Automate Communes Canaliser Populations -->
+
+ <action id="310" name="Automate Communes Canaliser Populations C1" target="379" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="42"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zones" type="LocationList">
+      <parameter name="Location 1" type="location">
+        <location type="line">
+          <point coordinates="30UXU2865838419"/>
+          <point coordinates="30UXU3128636118"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="332" name="Automate Communes Canaliser Populations C1" target="363" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="Destination" type="Point">
+      <location type="point">
+        <point coordinates="30UXU3010837414"/>
+      </location>
+    </parameter>
+  </action>
+
+
 <!-- INF -->
 
 <!-- Automate INF Barrer Direction UC1 -->
