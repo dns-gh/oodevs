@@ -61,6 +61,11 @@
             <unit command-post="false" id="381" name="Section PROTERRE" position="30UXU2874129710" type="Section PROTERRE"/>
             <unit command-post="false" id="382" name="Section PROTERRE" position="30UXU2825929193" type="Section PROTERRE"/>
           </automat>
+          <automat engaged="true" id="447" knowledge-group="2" name="Compagnie INF AMX 10 P [447]" type="Compagnie INF AMX 10 P">
+            <unit command-post="true" id="448" name="Section CDT CIE INF AMX10P" position="30UXU2397134457" type="Section CDT CIE INF AMX10P"/>
+            <unit command-post="false" id="449" name="Section CBT INF AMX10P CDS OFF" position="30UXU2449033976" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="452" name="Section CBT INF AMX10P CDS SOFF" position="30UXU2447234475" type="Section CBT INF AMX10P CDS SOFF"/>
+          </automat>
           <lima name="Lima 113">
             <point>30TXU2858801346</point>
             <point>30TXU3929708509</point>
