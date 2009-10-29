@@ -2609,5 +2609,162 @@
       </location>
     </parameter>
   </action>
+  
+  <!-- Automate INF Flanc Garder C1-->
+  
+  <action id="299" name="Automate INF Flanc Garder Faire Mouvement C1" target="299" time="2009-09-29T16:57:51" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="214"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU4579045471"/>
+        <point coordinates="30UXU4065232095"/>
+        <point coordinates="30UXU2767825033"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU3757549462"/>
+        <point coordinates="30UXU2739042104"/>
+        <point coordinates="30UXU2120333967"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Itineraire" type="Path">
+      <parameter name="Point de passage 1" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3736334800"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 2" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3187232411"/>
+        </location>
+      </parameter>
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU2823431397"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="299" name="Automate INF Flanc Garder Faire Mouvement C1" target="293" time="2009-09-29T16:58:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="21"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Itineraire" type="Path">
+      <parameter name="Point de passage 1" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3414534881"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 2" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3749639287"/>
+        </location>
+      </parameter>
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3806144509"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  
+  
+  <action id="262" name="INF Flanc Garder C1" target="287" time="2009-09-29T16:58:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="37"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Compagnie" type="Automate" value="293"/>
+  </action>
+  
+   <!-- Automate INF Interdire C1-->
+   
+   <action id="265" name="INF Interdire C1" target="287" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Points a interdire" type="PointList">
+      <parameter name="Location 1" type="location">
+        <location type="point">
+          <point coordinates="30UXU3978447735"/>
+        </location>
+      </parameter>
+      <parameter name="Location 2" type="location">
+        <location type="point">
+          <point coordinates="30UXU4022346975"/>
+        </location>
+      </parameter>
+    </parameter>
+    <parameter name="Preparer terrain" type="Bool" value="false"/>
+  </action>
+  
+  
+  <!-- Automate INF Prendre Preciser Maintenir Contact C1-->
+    
+    <action id="267" name="INF Prendre Preciser Maintenir Contact C1" target="287" time="2009-09-29T16:50:31" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="30"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+
+  
 
 </actions>
