@@ -5,6 +5,92 @@
 
 
 <!-- COMMUNES -->
+<!-- Automate Communes Stationner -->
+  <action id="304" name="Automate Communes Stationner C1" target="287" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="37"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone attente" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30UXU2787537291"/>
+        <point coordinates="30UXU3052531186"/>
+        <point coordinates="30UXU3158437216"/>
+        <point coordinates="30UXU2787537291"/>
+      </location>
+    </parameter>
+  </action>
+
+
+
+<action id="304" name="Automate Communes Stationner C2" target="316" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="22"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU8924831012"/>
+        <point coordinates="30UYU0057038085"/>
+        <point coordinates="30UYU0920549943"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU8362938197"/>
+        <point coordinates="30UXU8826947073"/>
+        <point coordinates="30UYU0112255719"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone attente" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30UXU9408449063"/>
+        <point coordinates="30UXU9288347093"/>
+        <point coordinates="30UXU9587343912"/>
+        <point coordinates="30UXU9778447082"/>
+        <point coordinates="30UXU9408449063"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="299" name="Automate Communes Stationner C2" target="328" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="233"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU9108431474"/>
+        <point coordinates="30UYU0376637541"/>
+        <point coordinates="30UYU1020649715"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU8281738696"/>
+        <point coordinates="30UXU8799449174"/>
+        <point coordinates="30UXU9989956599"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Itineraire" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU9500045901"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+
 <!-- Automate Communes Faire Mouvement C1-->
   
    <action id="299" name="Automate Communes Faire Mouvement C1" target="287" time="2009-09-29T17:07:51" type="mission">
