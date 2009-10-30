@@ -35,7 +35,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     DEC_DataBase( xml::xistream& xis, const std::string strPath );
-    explicit DEC_DataBase( T_LibPaths libPaths, std::vector< const std::string >& knowledge );
+    DEC_DataBase( T_LibPaths libPaths, std::vector< const std::string >& knowledge );
     virtual ~DEC_DataBase();
     //@}
 

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<interface name="net.masagroup.military.world.Unit" xmlns="http://www.masagroup.net/directia/schemas/bm">
-	<description>Unité
-    </description>
-    
-    <realizes>net.masagroup.military.generic.knowledge.Reachable</realizes>
-     
-</interface>

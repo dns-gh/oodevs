@@ -8,7 +8,7 @@
       <parameter dia-name="boundaryLimit2_" name="Boundary limit 2" optional="true" type="Limit"/>
       <parameter dia-name="intelligences_" name="Intelligences" optional="true" type="IntelligenceList"/>
     </context>
-    <mission dia-behavior="net.masagroup.military.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_BM_MoveToward" id="1" name="BM MoveTowardCrossroad">
+    <mission dia-behavior="net.masagroup.sword.military.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_BM_MoveToward" id="1" name="BM MoveTowardCrossroad">
       <parameter dia-name="objectives" name="objectives" optional="false" type="PointBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.military.tasks.TestParam" dia-type="T_Mission_Pion_BM_TestReachable" id="2" name="BM TestReachable">

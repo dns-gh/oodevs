@@ -768,6 +768,7 @@
         <update name="DIA" version="3.5" package="DIA_Tool_DebugGUI_${platform}"/>
         <update name="BM" />
         <update name="BM" package="bmc" todir="${bin.dir}"/>
+        <update name="cgal"/> <!-- MGD For mpfr dll use in BM terrain analyse -->
         <update name="hla"/>
         <update name="tools"/>
         <update name="flexlm"/>

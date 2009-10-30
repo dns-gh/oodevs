@@ -37,3 +37,7 @@ local configTable = {   eventmanager_plugin =
                         } }
 
 brain "name" ( configTable )
+
+behavior_model = {}
+behavior_model.StartTask = StartEvent
+behavior_model.StopTask = StopEvents

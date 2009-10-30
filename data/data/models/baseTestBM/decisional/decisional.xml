@@ -12,7 +12,8 @@
         <Repertoire>models/sword</Repertoire>
       </RepertoiresBM>
       <Knowledges>
-        <Knowledge>net.masagroup.world.concrete.Point</Knowledge>
+        <Knowledge>net.masagroup.sword.military.world.Point</Knowledge>
+        <Knowledge>net.masagroup.sword.military.world.Unit</Knowledge>
       </Knowledges>
     </BMDatabase>
 </decisional>

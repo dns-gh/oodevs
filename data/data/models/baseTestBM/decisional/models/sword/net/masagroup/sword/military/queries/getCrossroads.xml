@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<query name="net.masagroup.military.queries.getCrossroads" xmlns="http://www.masagroup.net/directia/schemas/bm">
+<query name="net.masagroup.sword.military.queries.getCrossroads" xmlns="http://www.masagroup.net/directia/schemas/bm">
 	<description>Test : retourne les carrefours dans un cercle d'un rayon donné autour d'un Reachable</description>
 	<parameters>
 		<parameter name="objectives" >

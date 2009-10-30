@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.military.skills.MoveTo">
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.skills.MoveTo">
 	<description>Déplacement simple vers l'objectif et occupation de celui-ci. 
 	
 	Cet automatisme de bas niveau est utilisé par d'autres automatismes pour le déplacement vers des positions adaptées

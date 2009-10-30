@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task name="net.masagroup.military.tasks.TestParam" xmlns="http://www.masagroup.net/directia/schemas/bm">
+<task name="net.masagroup.sword.military.tasks.TestParam" xmlns="http://www.masagroup.net/directia/schemas/bm">
 	<parameters>
 		<parameter name="Point_">
 			<description>Point</description>
@@ -19,7 +19,7 @@
 			<description></description>
 			<skills>
 				<skill
-					name="net.masagroup.military.skills.TestParam" main="true"
+					name="net.masagroup.sword.military.skills.TestParam" main="true"
 					priority="10">
 					<parameter name="Point_">
 						<value>

@@ -1,0 +1,16 @@
+--
+-- DO NOT EDIT!
+--
+knowledgeStructure "MoveTo" {
+  ["extends"] = {
+    directia.core.model.Task,
+  };
+  ["methods"] = {};
+  ["valid"] = true;
+  ["abstract"] = false;
+  ["realizes"] = {};
+  ["structure"] = {};
+}
+--
+-- END
+--

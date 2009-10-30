@@ -1,0 +1,17 @@
+--
+-- DO NOT EDIT!
+--
+knowledgeStructure "Unit" {
+  ["description"] = "Unit\233";
+  ["extends"] = {
+    net.masagroup.military.generic.world.Keypoint,
+  };
+  ["methods"] = {};
+  ["valid"] = true;
+  ["abstract"] = false;
+  ["realizes"] = {};
+  ["structure"] = {};
+}
+--
+-- END
+--

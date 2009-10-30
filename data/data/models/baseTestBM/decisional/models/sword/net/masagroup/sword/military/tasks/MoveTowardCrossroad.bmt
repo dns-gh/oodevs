@@ -24,7 +24,7 @@ task "MoveTowardCrossroad" {
       ["label"] = "movement";
       ["lets"] = {};
       ["skills"] = {
-        [net.masagroup.military.skills.MoveTo] = {
+        [net.masagroup.sword.military.skills.MoveTo] = {
           "main";
           ["parameters"] = {
             ["entities"] = {
@@ -34,7 +34,7 @@ task "MoveTowardCrossroad" {
             ["area"] = {
               ["tag"] = "methodcall";
               ["value"] = {
-                ["name"] = net.masagroup.military.queries.getCrossroads;
+                ["name"] = net.masagroup.sword.military.queries.getCrossroads;
                 ["parameters"] = {
                   ["objectives"] = {
                     ["tag"] = "parameter";

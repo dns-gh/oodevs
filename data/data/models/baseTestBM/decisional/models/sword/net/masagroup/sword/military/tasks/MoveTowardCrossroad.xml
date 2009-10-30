@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.military.tasks.MoveTowardCrossroad" knowledge-class="net.masagroup.military.generic.tasks.knowledge.MoveToward">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.tasks.MoveTowardCrossroad" knowledge-class="net.masagroup.military.generic.tasks.knowledge.MoveToward">
 	<description>Mouvement simple vers un objectif.</description>
 	<parameters>
 		<parameter name="objectives">
@@ -24,7 +24,7 @@
             n'utilise pas l'automatisme d'engagement.</description>
 			<skills>
 				<skill
-					name="net.masagroup.military.skills.MoveTo" main="true"
+					name="net.masagroup.sword.military.skills.MoveTo" main="true"
 					priority="10">
 					<parameter name="entities">
 						<value>
@@ -34,7 +34,7 @@
 					<parameter name="area">
 						<value>
 							<call
-								method="net.masagroup.military.queries.getCrossroads">
+								method="net.masagroup.sword.military.queries.getCrossroads">
 								<parameter name="objectives">
 									<value>
 										<parameter>objectives</parameter>

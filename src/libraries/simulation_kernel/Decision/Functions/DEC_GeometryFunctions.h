@@ -26,6 +26,11 @@ class MIL_LimaOrder;
 class MT_Vector2D;
 class TER_Localisation;
 
+namespace directia
+{
+    class ScriptRef;
+}
+
 // =============================================================================
 // Created: NLD 2003-08-20
 // =============================================================================
@@ -115,7 +120,7 @@ public:
     static bool GetInterceptionPoint   ( const MT_Vector2D& vToInterceptPosition, const MT_Vector2D& vToInterceptSpeed, const MT_Vector2D& vInterceptingPosition, MT_Float rInterceptingSpeed, MT_Vector2D& result );
 
     // Terrain keypoint
-    static std::vector< boost::shared_ptr< MT_Vector2D > > GetCrossroads(  const MT_Vector2D& vCenter, float radius );
+    static void GetCrossroads( directia::ScriptRef& knowledgeCreateFunction, const MT_Vector2D& vCenter, float radius, const directia::ScriptRef& table );
     //@}
 
 private:

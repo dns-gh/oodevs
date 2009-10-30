@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.military.skills.Destroy">
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.skills.Destroy">
 	<description>Atteindre une position de tir et engager un élément par le feu (tir offensif) et de le détruire totalement</description>
 	<parameters>
 		<parameter name="entity">
@@ -14,7 +14,7 @@
 	</goal>
 	<modifiers/>
 	<links>
-		<link name="MoveTo" skill="net.masagroup.military.skills.MoveTo"></link>
+		<link name="MoveTo" skill="net.masagroup.sword.military.skills.MoveTo"></link>
 		<link name="observe" skill="net.masagroup.military.generic.skills.primitives.Observe" ></link> 
 		</links> 
 	<resources>

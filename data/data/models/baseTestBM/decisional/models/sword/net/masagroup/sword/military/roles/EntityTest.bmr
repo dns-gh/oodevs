@@ -1,0 +1,42 @@
+--
+-- DO NOT EDIT!
+--
+role "EntityTest" {
+  ["description"] = "Une entit\233 d\233cisionnelle quelconque dans un contexte militaire.";
+  ["abstract"] = false;
+  ["skills"] = {
+    [net.masagroup.military.generic.skills.primitives.MoveToward] = {
+      ["modifiers"] = {};
+    };
+    [net.masagroup.military.generic.skills.primitives.MoveAndTakePosition] = {
+      ["modifiers"] = {};
+    };
+    [net.masagroup.military.generic.skills.primitives.Observe] = {
+      ["modifiers"] = {};
+    };
+    [net.masagroup.sword.military.skills.MoveTo] = {
+      ["modifiers"] = {};
+    };
+    [net.masagroup.sword.military.skills.TestParam] = {
+      ["modifiers"] = {};
+    };
+  };
+  ["resources"] = {
+    [net.masagroup.military.generic.resources.Move] = {
+      ["initialCapacity"] = 1.0;
+      ["requiredResources"] = {};
+    };
+    [net.masagroup.military.generic.resources.Observe] = {
+      ["initialCapacity"] = 1.0;
+      ["requiredResources"] = {};
+    };
+    [net.masagroup.military.generic.resources.Engage] = {
+      ["initialCapacity"] = 1.0;
+      ["requiredResources"] = {};
+    };
+  };
+  ["valid"] = true;
+}
+--
+-- END
+--

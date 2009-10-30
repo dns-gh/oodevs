@@ -1,0 +1,40 @@
+--
+-- DO NOT EDIT!
+--
+skill "MoveTo" {
+  ["description"] = "D\233placement simple vers l'objectif et occupation de celui-ci. \010\009\010\009Cet automatisme de bas niveau est utilis\233 par d'autres automatismes pour le d\233placement vers des positions adapt\233es\010\009\224 l'action \224 entreprendre sur les \233l\233ments.";
+  ["abstract"] = false;
+  ["parameters"] = {
+    ["entities"] = {
+      ["description"] = "L'\233l\233ment que l'on veut rejoindre et occuper";
+      ["type"] = {
+        ["tag"] = "list";
+        ["value"] = {
+          ["tag"] = "interfaces";
+          ["value"] = {
+            net.masagroup.military.generic.knowledge.Reachable;
+          };
+        };
+      };
+    };
+    ["area"] = {
+      ["description"] = "Zone dans laquelle l'entit\233 peut se d\233placer pour identifier l'\233l\233ment.";
+      ["type"] = {
+        ["tag"] = "list";
+        ["value"] = {
+          ["tag"] = "interfaces";
+          ["value"] = {
+            net.masagroup.military.generic.knowledge.Reaching;
+          };
+        };
+      };
+    };
+  };
+  ["modifiers"] = {};
+  ["links"] = {};
+  ["resources"] = {};
+  ["valid"] = true;
+}
+--
+-- END
+--
