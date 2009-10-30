@@ -66,6 +66,12 @@
             <unit command-post="false" id="449" name="Section CBT INF AMX10P CDS OFF" position="30UXU2449033976" type="Section CBT INF AMX10P CDS OFF"/>
             <unit command-post="false" id="452" name="Section CBT INF AMX10P CDS SOFF" position="30UXU2447234475" type="Section CBT INF AMX10P CDS SOFF"/>
           </automat>
+          <automat engaged="true" id="497" knowledge-group="2" name="Refugies x1000 [497]" type="Refugies x1000">
+            <unit command-post="true" id="498" name="Refugies 1000 Pers" position="30UXU2226730386" type="Refugies 1000 Pers"/>
+          </automat>
+          <automat engaged="true" id="543" knowledge-group="2" name="TC2 GE40 LECLERC [543]" type="TC2 GE40 LECLERC">
+            <unit command-post="true" id="544" name="TC2 GE40 LECLERC" position="30UXU2602328289" type="TC2 GE40 LECLERC"/>
+          </automat>
           <lima name="Lima 113">
             <point>30TXU2858801346</point>
             <point>30TXU3929708509</point>
@@ -154,6 +160,9 @@
             <unit command-post="true" id="384" name="Section CDT PROTERRE" position="30UXU9134136043" type="Section CDT PROTERRE"/>
             <unit command-post="false" id="385" name="Section PROTERRE" position="30UXU9078536023" type="Section PROTERRE"/>
             <unit command-post="false" id="386" name="Section PROTERRE" position="30UXU9030235505" type="Section PROTERRE"/>
+          </automat>
+          <automat engaged="true" id="501" knowledge-group="2" name="Refugies x1000 [501]" type="Refugies x1000">
+            <unit command-post="true" id="502" name="Refugies 1000 Pers" position="30UXU8447834476" type="Refugies 1000 Pers"/>
           </automat>
           <lima name="Lima 116">
             <point>30TXU9045401647</point>
@@ -317,7 +326,9 @@
         <population attitude="calme" humans="1000" id="363" name="Population standard [363]" position="30UXU3072941084" type="Population standard"/>
         <population attitude="calme" humans="1000" id="366" name="Population standard [366]" position="30UXU8978145987" type="Population standard"/>
       </populations>
-      <logistic/>
+      <logistic>
+        <automat id="543"/>
+      </logistic>
     </side>
     <side id="3" name="Les Méchants" type="enemy">
       <objects/>
@@ -339,6 +350,9 @@
           </automat>
           <automat engaged="true" id="427" knowledge-group="4" name="Terroristes [427]" type="Terroristes">
             <unit command-post="true" id="428" name="Terroriste" position="30UXU3974537555" type="Terroriste"/>
+          </automat>
+          <automat engaged="true" id="499" knowledge-group="4" name="Refugies x1000 [499]" type="Refugies x1000">
+            <unit command-post="true" id="500" name="Refugies 1000 Pers" position="30UXU2107030563" type="Refugies 1000 Pers"/>
           </automat>
           <limit name="Limite 125">
             <point>30TXU3175914669</point>
@@ -377,6 +391,9 @@
           </automat>
           <automat engaged="true" id="429" knowledge-group="4" name="Terroristes [429]" type="Terroristes">
             <unit command-post="true" id="430" name="Terroriste" position="30UYU0098842552" type="Terroriste"/>
+          </automat>
+          <automat engaged="true" id="503" knowledge-group="4" name="Refugies x1000 [503]" type="Refugies x1000">
+            <unit command-post="true" id="504" name="Refugies 1000 Pers" position="30UXU8524334064" type="Refugies 1000 Pers"/>
           </automat>
           <limit name="Limite 127">
             <point>30TXU8587815379</point>
