@@ -38,7 +38,7 @@ DEC_Decision<T>::~DEC_Decision()
 
 namespace DEC_DecisionImpl
 {
-    void RegisterCommonUserFunctions( directia::Brain& brain, unsigned int id, directia::ScriptRef& initParameterFunction  );
+    void RegisterCommonUserFunctions( directia::Brain& brain, unsigned int id );
     void RegisterMissionParameters( directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, MIL_Mission_ABC& mission );
 }
 
@@ -60,12 +60,13 @@ void DEC_Decision<T>::InitBrain( const std::string& brainFile, const std::string
     pRefs_.reset( 0 );//Must delete ScriptRef before call Brain destructor and destroy vm
     pBrain_.reset( new directia::Brain( includePath ) );
     pBrain_->GetScriptFunction( "include" )( ( brainFile ),(includePath) );
-
     database_.InitKnowledges( *pBrain_ );//@TODO MGD Find a better way to merge dia4/dia5
+
+    
 
     pRefs_.reset( new ScriptRefs( *pBrain_) );
     RegisterUserFunctions( *pBrain_ );
-    DEC_DecisionImpl::RegisterCommonUserFunctions( *pBrain_, pEntity_->GetID(), InitTaskParameter() );
+    DEC_DecisionImpl::RegisterCommonUserFunctions( *pBrain_, pEntity_->GetID() );
     RegisterSelf( *pBrain_ );
 }
 
@@ -99,6 +100,7 @@ void DEC_Decision<T>::UpdateDecision( float duration )
 {
     __try
     {
+        UpdateMeKnowledge( *pBrain_ );
         pBrain_->SelectActions         ();
         pBrain_->TriggerSelectedActions( duration );
     }
@@ -827,15 +829,5 @@ template< class T >
 void DEC_Decision<T>::RemoveNbcProtectionSuit() const
 {
     throw std::runtime_error( "Invalid call of this Decision class" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Decision::InitTaskParameter
-// Created: MGD 2009-08-05
-// -----------------------------------------------------------------------------
-template <class T>
-directia::ScriptRef& DEC_Decision<T>::InitTaskParameter() const
-{
-    return pRefs_->initTaskParameter_;
 }
 

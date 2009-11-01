@@ -58,6 +58,7 @@ void MIL_AutomateType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing automate types" );
 
+    automateTypeAllocators_[ "Automate SGTIA"                  ] = &MIL_AutomateType       ::Create;
     automateTypeAllocators_[ "Automate INF"                    ] = &MIL_AutomateType       ::Create; 
     automateTypeAllocators_[ "Automate ASA"                    ] = &MIL_AutomateTypeASA    ::Create; 
     automateTypeAllocators_[ "Automate ALAT"                   ] = &MIL_AutomateType       ::Create; 

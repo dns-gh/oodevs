@@ -608,6 +608,15 @@ void DEC_AutomateDecision::RegisterSelf( directia::Brain& brain )
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AutomateDecision::UpdateMeKnowledge
+// Created: MGD 2009-11-01
+// -----------------------------------------------------------------------------
+void DEC_AutomateDecision::UpdateMeKnowledge( directia::Brain& brain )
+{
+    brain.GetScriptFunction( "InitializeLeaderMe" )( std::string("net.masagroup.sword.military.world.Automat"), (DEC_Decision_ABC*)this );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::GeteEtatPhaseMission
 // Created: LDC 2009-05-19
 // -----------------------------------------------------------------------------

@@ -31,6 +31,16 @@
 #include "Decision/Knowledge/DEC_Rep_PathPoint_Front.h"
 #include "Decision/Knowledge/DEC_Rep_PathPoint_Lima.h"
 
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathFunctions::CreatePathToPoint
+// Created: MGD 2009-10-31
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPointBM( MIL_AgentPion& callerAgent, float x, float y, float z, int pathType )
+{
+    MT_Vector2D end( x, y );
+    return CreatePathToPoint( callerAgent, &end, pathType );
+}
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::CreatePathToPoint
 // Created: NLD 2004-09-23

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <supply>
-  <convoys mission="BM MoveTowardCrossroad" unit-type="BMPion">
+  <convoys mission="MoveToPoint" unit-type="Section CBT INF VAB CDS OFF">
     <constitution-times>
       <unit-time time="10m" truck-count="1"/>
       <unit-time time="10m" truck-count="10"/>

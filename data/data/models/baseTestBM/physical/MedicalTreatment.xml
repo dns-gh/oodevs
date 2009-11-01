@@ -1,3 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <medical-treatments>
+  <medical-treatment id="1" name="Surgery" >
+    <injuries>
+   		<injury category="UA" treatment-time="120m" hospitalisation-time="72m"/>
+ 	    <injury category="UR" treatment-time="30m" hospitalisation-time="3m"/>
+   	</injuries>
+	</medical-treatment>
+	<medical-treatment id="2" name="NBC" >	
+    <injuries>
+   		<injury category="UA" treatment-time="120m" hospitalisation-time="72m"/>
+ 	    <injury category="UR" treatment-time="30m" hospitalisation-time="3m"/>	
+   	</injuries>
+  </medical-treatment>
+  <medical-treatment id="3" name="Poison" >
+    <injuries>
+    	<injury category="UA" treatment-time="120m" hospitalisation-time="72m"/>
+ 		  <injury category="UR" treatment-time="30m" hospitalisation-time="3m"/>	
+    </injuries>
+	</medical-treatment>
 </medical-treatments>

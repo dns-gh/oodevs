@@ -6,9 +6,8 @@ rootnode
     };
 
     activate = function( self )
-        BreakForDebug( "root" )
 		for _, entity in pairs( self.params.entities ) do
-    		Activate( skill.nodes.MoveToPosition, 1, { position = entity, area = self.params.area[entity] } )
+    		Activate( skill.nodes.MoveToPosition, entity:reachPriority(), { position = entity, area = self.params.area[entity] } )
     	end
     end
 }
@@ -21,6 +20,7 @@ node "MoveToPosition"
     };
 
 	activate = function( self )
+        BreakForDebug( "moveto" )
 		for _, keypoint in pairs( self.params.area ) do
 			Activate( skill.nodes.MoveToNode, keypoint:reachEfficiency( self.params.position ), { position = keypoint } )
 		end
@@ -30,6 +30,7 @@ node "MoveToPosition"
 node "MoveToNode"
 {
     select = function( self )
+        BreakForDebug( "call move to it" )
         self.params.position:moveToIt()
     end
 }

@@ -1,31 +1,86 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<units>
-   <unit decisional-model="BMPion" id="2" name="BMPion" type="Pion INF">
-    <nature atlas-nature="Vehicule" level="ooo" nature="combat/engineer/combat"/>
+<units xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Units.xsd">
+  <unit decisional-model="BMPion" id="1" name="Section CBT INF VAB CDS OFF" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature="combat/infantry/motorized"/>
     <equipments>
-       <equipment count="5" crew="2" type="Truc"/>
+      <equipment count="4" crew="2" major="true" type="VAB 12,7"/>
+      <equipment count="9" crew="1" loadable="true" type="Fantassin"/>
+      <equipment count="3" crew="1" loadable="true" type="Fantassin MINIMI"/>
+      <equipment count="2" crew="2" loadable="true" type="Equipe ERYX"/>
+      <equipment count="2" crew="1" loadable="true" type="Tireur Precision"/>
+      <equipment count="3" crew="1" loadable="true" type="Fantassin Appui AC"/>
+      <equipment count="3" crew="1" loadable="true" type="Fantassin LGI"/>
     </equipments>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
+      <crew-rank count="6" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup installation-time="500s" uninstallation-time="30s"/>
-    <nbc decontamination-delay="180s"/>
+    <nbc decontamination-delay="1350s"/>
     <distance-before-points>
       <distance-before-point type="foret" value="500"/>
       <distance-before-point type="urbain" value="500"/>
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+  </unit>
+  <unit decisional-model="BMPion" id="2" name="Section CDT CIE INF VAB" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="2" crew="3" type="VBL 7,62"/>
+      <equipment count="3" crew="1" loadable="true" type="Fantassin"/>
+      <equipment count="1" crew="1" type="Moto CAGIVA 350"/>
+      <equipment count="1" crew="4" major="true" type="VAB PC 7.62"/>
+      <equipment count="1" crew="3" major="true" type="VAB CN 20mm"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="2" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1200s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+  </unit>
+  <unit decisional-model="BMPion" id="3" name="Peloton LECLERC CDP OFF" type="Pion ABC">
+    <nature atlas-nature="Blinde" level="ooo" nature="combat/armor/track/heavy"/>
+    <equipments>
+      <equipment count="4" crew="3" major="true" type="Char LECLERC"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="4" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="3000s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="200"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
       <distance-before-point type="lima" value="500"/>
     </distance-before-points>
-    <drill-blow length="5000" width="100"/>
-    <force-ratio feedback-time="6000s"/>
+    <drill-blow length="500" width="350"/>
   </unit>
 </units>

@@ -360,3 +360,12 @@ void DEC_PopulationDecision::RegisterSelf( directia::Brain& brain )
 {
     brain.RegisterObject( "myself", (DEC_Decision_ABC*)this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationDecision::UpdateMeKnowledge
+// Created: MGD 2009-11-01
+// -----------------------------------------------------------------------------
+void DEC_PopulationDecision::UpdateMeKnowledge( directia::Brain& brain )
+{
+    brain.GetScriptFunction( "InitializeLeaderMe" )( std::string("net.masagroup.sword.military.world.Population"), (DEC_Decision_ABC*)this );
+}

@@ -1420,17 +1420,24 @@ float DEC_GeometryFunctions::ComputeDelayFromSchedule( const MIL_Fuseau* pFuseau
 // Name: DEC_GeometryFunctions::GetCrossroads
 // Created: MGD 2009-08-19
 // -----------------------------------------------------------------------------
-void DEC_GeometryFunctions::GetCrossroads( directia::ScriptRef& knowledgeCreateFunction, const MT_Vector2D& vCenter, float radius, const directia::ScriptRef& table )
+void DEC_GeometryFunctions::GetCrossroads( directia::ScriptRef& knowledgeCreateFunction, float x, float y, float z, float radius, const directia::ScriptRef& table )
 {
-    std::vector< boost::shared_ptr< MT_Vector2D > > points = TER_PathFindManager::GetPathFindManager().FindCrossroadsWithinCircle( vCenter, radius );
+    std::vector< boost::shared_ptr< MT_Vector2D > > points = TER_PathFindManager::GetPathFindManager().FindCrossroadsWithinCircle( MT_Vector2D( x, y ), radius );
     std::vector< std::vector< MT_Float > > positions;
     for( std::vector< boost::shared_ptr< MT_Vector2D > >::iterator it = points.begin(); it != points.end(); it++ )
     {
-        std::vector< MT_Float > pos;
-        pos.push_back( (*it)->rX_ );
-        pos.push_back( (*it)->rY_ );
-        pos.push_back( ( 0. ) );
-        positions.push_back( pos );
+        positions.push_back( (*it)->ToStdVector() );
     }
-    knowledgeCreateFunction( table, std::string( "net.masagroup.sword.military.world.Point" ), std::string( "none" ), points, positions, true );//@TODO MGD replace "none" by another function
+    knowledgeCreateFunction( table, std::string( "net.masagroup.sword.military.world.Point" ), points, positions, true );//@TODO MGD replace "none" by another function
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeBarycenter
+// Created: MGD 2009-10-30
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeBarycenter( const TER_Localisation* localisation )
+{
+    boost::shared_ptr< MT_Vector2D > result;
+    result.reset( new MT_Vector2D( localisation->ComputeBarycenter() ) );
+    return result;
 }

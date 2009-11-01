@@ -4,7 +4,7 @@
 knowledgeStructure "Unit" {
   ["description"] = "Unit\233";
   ["extends"] = {
-    net.masagroup.military.generic.world.Keypoint,
+    net.masagroup.military.generic.world.Entity,
   };
   ["methods"] = {};
   ["valid"] = true;

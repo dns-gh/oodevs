@@ -123,8 +123,6 @@ public:
 		ar & boost::serialization::base_object< DEC_Decision_ABC >( *this );
 	}
 
-    virtual directia::ScriptRef& InitTaskParameter() const;
-
     //@}
 
 protected:
@@ -151,6 +149,7 @@ private://! @name Helpers
     void InitBrain( const std::string& brainFile, const std::string& type, const std::string& includePath );
     
     virtual void RegisterSelf( directia::Brain& brain ) = 0;
+    virtual void UpdateMeKnowledge( directia::Brain& brain ) = 0;
     //@}
 
 protected:
@@ -185,7 +184,6 @@ public:
     directia::ScriptRef setStateVariable_;
     directia::ScriptRef collectgarbage_;
     directia::ScriptRef step_;
-    directia::ScriptRef initTaskParameter_;
 private:
     ScriptRefs();
     ScriptRefs( const ScriptRefs& );

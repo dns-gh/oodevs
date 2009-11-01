@@ -381,3 +381,17 @@ MT_Vector2D& MT_Vector2D::Rotate180()
     rY_ = -rY_;
     return *this;
 }
+
+//-----------------------------------------------------------------------------
+// Name: MT_Vector2D::ToStdVector
+// Created: MGD 2009-10-31
+//-----------------------------------------------------------------------------
+inline
+std::vector< MT_Float > MT_Vector2D::ToStdVector() const
+{
+    std::vector< MT_Float >position;
+    position.push_back( rX_);
+    position.push_back( rY_);
+    position.push_back( 0. );
+    return position;
+}

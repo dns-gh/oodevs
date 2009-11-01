@@ -18,16 +18,18 @@ eEtatActionDeplacement_NonAutorise = 4
 eEtatActionDeplacement_DejaEnDeplacement = 5
 eEtatActionDeplacement_ItineraireDoitEtreRejoint = 6
 
-
-integration.reachPriority = function( point )
-  --TODO
-	return LinearInterpolation( 0, 1, 200, 5000, false, DEC_Geometrie_Distance( point.source, DEC_Agent_Position() ) )
+integration.magnitude = function ( pos1, pos2 )
+    return math.sqrt( ( pos1.sim_pos.x - pos2.sim_pos.x )^2 + (pos1.sim_pos.y - pos2.sim_pos.y )^2 + ( pos1.sim_pos.z - pos2.sim_pos.z )^2 )
 end
 
-integration.moveToIt = function( point )
+integration.reachPriority = function( reachable )
+	return LinearInterpolation( 0, 1, 200, 5000, false, integration.magnitude( reachable, knowledges.me ) )
+end
+
+integration.moveToIt = function( reachable)
   moveAction = moveAction or nil
   if not moveAction then
-    it = DEC_CreerItineraire( point.source, eTypeItiMouvement )
+    it = DEC_CreerItineraireBM( reachable.sim_pos.x, reachable.sim_pos.y, reachable.sim_pos.z, eTypeItiMouvement )
     moveAction = DEC_StartDeplacement( it )
     actionCallbacks[ moveAction ] = function( arg ) etat = arg end
   elseif etat == eEtatActionDeplacement_Termine then

@@ -33,6 +33,7 @@ class DEC_PathFunctions
 public:
     //! @name Functions
     //@{
+    static boost::shared_ptr< DEC_Path_ABC > CreatePathToPointBM( MIL_AgentPion& callerAgent, float x, float y, float z, int pathType );
     static boost::shared_ptr< DEC_Path_ABC > CreatePathToPoint( MIL_AgentPion& callerAgent, MT_Vector2D* pEnd, int pathType );
 
     static boost::shared_ptr< DEC_Path_ABC > CreatePathToPointList( MIL_AgentPion& callerAgent, std::vector< boost::shared_ptr< MT_Vector2D > > listPt, int pathType );

@@ -82,6 +82,7 @@ private:
     //! @name Helpers
     //@{
     virtual void RegisterSelf( directia::Brain& brain );
+    virtual void UpdateMeKnowledge( directia::Brain& brain );
     //@}
 
 private:

@@ -317,6 +317,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     // Path
     brain.RegisterFunction( "DEC_CreerItineraire",
         boost::function< boost::shared_ptr< DEC_Path_ABC >( MT_Vector2D*, int ) >( boost::bind( &DEC_PathFunctions::CreatePathToPoint, boost::ref( GetPion() ), _1, _2 ) ) );
+    brain.RegisterFunction( "DEC_CreerItineraireBM",
+        boost::function< boost::shared_ptr< DEC_Path_ABC >( float, float, float, int ) >( boost::bind( &DEC_PathFunctions::CreatePathToPointBM, boost::ref( GetPion() ), _1, _2, _3, _4 ) ) );
     brain.RegisterFunction( "DEC_CreerItineraireListe",
         boost::function< boost::shared_ptr< DEC_Path_ABC >( std::vector< boost::shared_ptr< MT_Vector2D > >, int ) >( boost::bind( &DEC_PathFunctions::CreatePathToPointList, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Itineraire_Etat", 
@@ -940,6 +942,16 @@ void DEC_RolePion_Decision::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) c
 void DEC_RolePion_Decision::RegisterSelf( directia::Brain& brain )
 {
     brain.RegisterObject( "myself", (DEC_Decision_ABC*)this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::UpdateMeKnowledge
+// Created: MGD 2009-11-01
+// -----------------------------------------------------------------------------
+void DEC_RolePion_Decision::UpdateMeKnowledge( directia::Brain& brain )
+{
+    const MT_Vector2D*  pos = GetPosition();
+    brain.GetScriptFunction( "InitializeMe" )( std::string("net.masagroup.sword.military.world.Agent"), (DEC_Decision_ABC*)this, pos->rX_, pos->rY_, 0 );
 }
 
 // -----------------------------------------------------------------------------

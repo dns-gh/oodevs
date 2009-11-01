@@ -39,7 +39,8 @@ public:
     MT_Vector2D       Rotated90ClockWise() const;
     MT_Vector2D&      Rotate90          ();
     MT_Vector2D       Rotated90         () const;
-    MT_Vector2D&      Rotate180         (); 
+    MT_Vector2D&      Rotate180         ();
+    std::vector< MT_Float > ToStdVector() const;
     bool            IsZero() const;
     void            Reset();
     

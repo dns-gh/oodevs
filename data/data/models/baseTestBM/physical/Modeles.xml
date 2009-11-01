@@ -3,8 +3,18 @@
   <units>
     <unit dia-type="BMPion" file="BMPion.bms" name="BMPion">
       <missions>
-        <mission name="BM MoveTowardCrossroad"/>
-        <mission name="BM TestReachable"/>
+        <mission name="MoveToPoint"/>
+        <mission name="MoveToPolygon"/>
+        <mission name="MoveToAutomate"/>
+        <mission name="MoveToAgent"/>
+        <mission name="MoveToAgentKnowledge"/>
+        <mission name="MoveToObjectKnowledge"/>
+        <mission name="MoveToPointList"/>
+        <mission name="MoveToPolygonList"/>
+        <mission name="MoveToAutomateList"/>
+        <mission name="MoveToAgentList"/>
+        <mission name="MoveToAgentKnowledgeList"/>
+        <mission name="MoveToObjectKnowledgeList"/>
       </missions>
     </unit>
   </units>

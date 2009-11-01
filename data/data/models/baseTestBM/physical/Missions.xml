@@ -8,10 +8,43 @@
       <parameter dia-name="boundaryLimit2_" name="Boundary limit 2" optional="true" type="Limit"/>
       <parameter dia-name="intelligences_" name="Intelligences" optional="true" type="IntelligenceList"/>
     </context>
-    <mission dia-behavior="net.masagroup.sword.military.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_BM_MoveToward" id="1" name="BM MoveTowardCrossroad">
+    <mission dia-behavior="net.masagroup.sword.military.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToPoint" id="1" name="MoveToPoint">
       <parameter dia-name="objectives" name="objectives" optional="false" type="PointBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.military.tasks.TestParam" dia-type="T_Mission_Pion_BM_TestReachable" id="2" name="BM TestReachable">
+    <mission dia-behavior="net.masagroup.sword.military.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToPolygon" id="2" name="MoveToPolygon">
+      <parameter dia-name="objectives" name="objectives" optional="false" type="AreaBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.military.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToAutomate" id="3" name="MoveToAutomate">
+      <parameter dia-name="objectives" name="objectives" optional="false" type="AutomateBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.military.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToAgent" id="4" name="MoveToAgent">
+      <parameter dia-name="objectives" name="objectives" optional="false" type="AgentBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.military.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToAgentKnowledge" id="5" name="MoveToAgentKnowledge">
+      <parameter dia-name="objectives" name="objectives" optional="false" type="AgentKnowledgeBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.military.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToObjectKnowledge" id="6" name="MoveToObjectKnowledge">
+      <parameter dia-name="objectives" name="objectives" optional="false" type="ObjectKnowledgeBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.military.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToPointList" id="7" name="MoveToPointList">
+      <parameter dia-name="objectives" name="objectives" optional="false" type="PointListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.military.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToPolygonList" id="8" name="MoveToPolygonList">
+      <parameter dia-name="objectives" name="objectives" optional="false" type="AreaListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.military.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToAutomateList" id="9" name="MoveToAutomateList">
+      <parameter dia-name="objectives" name="objectives" optional="false" type="AutomateListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.military.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToAgentList" id="10" name="MoveToAgentList">
+      <parameter dia-name="objectives" name="objectives" optional="false" type="AgentListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.military.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToAgentKnowledgeList" id="11" name="MoveToAgentKnowledgeList">
+      <parameter dia-name="objectives" name="objectives" optional="false" type="AgentKnowledgeListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.military.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToObjectKnowledgeList" id="12" name="MoveToObjectKnowledgeList">
+      <parameter dia-name="objectives" name="objectives" optional="false" type="ObjectKnowledgeListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.military.tasks.TestParam" dia-type="T_Mission_Pion_BM_TestReachable" id="100" name="BM TestReachable">
       <parameter dia-name="Point_" name="Point" optional="true" type="PointBM"/>
       <parameter dia-name="PointList_" name="PointList" optional="true" type="PointListBM"/>
       <parameter dia-name="Area_" name="Polygon" optional="true" type="AreaBM"/>
@@ -37,7 +70,7 @@
       <parameter dia-name="boundaryLimit2_" name="Boundary limit 2" optional="false" type="Limit"/>
       <parameter dia-name="intelligences_" name="Intelligences" optional="true" type="IntelligenceList"/>
     </context>
-    <mission cdt-dia-behavior="MIS_Automat_CDT_Dumb" dia-type="T_Mission_Automat_Dumb" id="100" mrt-dia-behavior="MIS_Automat_MRT_Dumb" name="Dumb Automat Mission">
+    <mission cdt-dia-behavior="MIS_Automat_CDT_Dumb" dia-type="T_Mission_Automat_Dumb" id="1000" mrt-dia-behavior="MIS_Automat_MRT_Dumb" name="Dumb Automat Mission">
       <parameter dia-name="bool_" name="BoolParam" optional="true" type="Bool"/>
       <parameter dia-name="numeric_" name="NumericParam" optional="true" type="Numeric"/>
       <parameter dia-name="Enumeration_" name="EnumerationParam" optional="true" type="Enumeration">

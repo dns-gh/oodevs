@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<automats>
-  <automat decisional-model="DumbAutomat" id="2" name="DumbAutomat" type="Automate ABC">
-    <unit command-post="true" max="5" min="1" type="BMPion"/>
+<automats xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Automats.xsd">
+  <automat decisional-model="DumbAutomat" id="1" name="SGTIA" type="Automate SGTIA">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="Section CBT INF VAB CDS OFF"/>
+    <unit max-occurs="2" min-occurs="2" type="Section CDT CIE INF VAB"/>
+    <unit max-occurs="2" min-occurs="2" type="Peloton LECLERC CDP OFF"/>
   </automat>
 </automats>
