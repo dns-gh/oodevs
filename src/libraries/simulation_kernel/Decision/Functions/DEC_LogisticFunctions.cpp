@@ -364,12 +364,12 @@ void DEC_LogisticFunctions::AutomateMedicalChangeTacticalPriorities( MIL_Automat
 // Name: DEC_LogisticFunctions::ChangeDotationsValueUsingTC2
 // Created: NLD 2005-03-17
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::ChangeDotationsValueUsingTC2( MIL_AgentPion& callerAgent, const PHY_DotationType* pDotationType, const MT_Float rCapacityFactor, int ammoDotationClassId )
+void DEC_LogisticFunctions::ChangeDotationsValueUsingTC2( MIL_AgentPion& callerAgent, int dotationType, const MT_Float rCapacityFactor, int ammoDotationClassId )
 {
+    const PHY_DotationType* pDotationType = PHY_DotationType::FindDotationType( dotationType );
     assert( pDotationType );
     const PHY_AmmoDotationClass* pAmmoDotationClass = PHY_AmmoDotationClass::Find( ammoDotationClassId );
-    assert( pAmmoDotationClass );
-    
+        
     callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >().ChangeDotationsValueUsingTC2( *pDotationType, pAmmoDotationClass, rCapacityFactor );
 }
 

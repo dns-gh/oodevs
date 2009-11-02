@@ -773,7 +773,10 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_Pion_TC2",
         boost::bind( &DEC_LogisticFunctions::PionGetTC2, boost::ref( GetPion() ) ) );
     brain.RegisterFunction( "DEC_DemandeDeRavitaillement" , &DEC_LogisticFunctions::PionRequestSupply                                  );
-    brain.RegisterFunction( "DEC_ChangeValeurDotations"   , &DEC_LogisticFunctions::ChangeDotationsValueUsingTC2                       );
+    brain.RegisterFunction( "DEC_ChangeValeurDotations2", 
+        boost::function< void( int, const MT_Float ) >( boost::bind( &DEC_LogisticFunctions::ChangeDotationsValueUsingTC2, boost::ref( GetPion() ), _1, _2, -1 ) ) );
+    brain.RegisterFunction( "DEC_ChangeValeurDotations3",
+        boost::function< void( int, const MT_Float, int ) >( boost::bind( &DEC_LogisticFunctions::ChangeDotationsValueUsingTC2, boost::ref( GetPion() ), _1, _2, _3 ) ) );
 
     // Transport / Hliportage
     brain.RegisterFunction( "DEC_Transport_AjouterPion",

@@ -94,7 +94,7 @@ public:
     static void AutomateRequestSupply      ( MIL_Automate&  callerAutomate );
     static void PionRequestSupply          ( MIL_AgentPion& callerAgent );
 
-    static void ChangeDotationsValueUsingTC2( MIL_AgentPion& callerAgent, const PHY_DotationType* pDotationType, const MT_Float rCapacityFactor, int ammoDotationClassId );
+    static void ChangeDotationsValueUsingTC2( MIL_AgentPion& callerAgent, int dotationType, const MT_Float rCapacityFactor, int ammoDotationClassId );
     //@}
     
     //! @name Misc
