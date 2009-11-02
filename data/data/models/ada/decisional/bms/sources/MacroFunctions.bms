@@ -660,7 +660,9 @@ function DEC_CreerDIAThing( thingType )
         if string.sub( name, 1, 3 ) == "Get" then 
             return rawget( table, string.sub( name, 4 ) )
         elseif string.sub( name, 1, 3 ) == "Set" then
-            return rawset( table, string.sub( name, 4 ) )
+            return function( value )
+                rawset( table, string.sub( name, 4 ), value )
+            end
         else
             return rawget( table, name )
         end
