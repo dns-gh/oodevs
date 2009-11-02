@@ -17,6 +17,7 @@
 
 class DEC_AutomateDecision;
 class DEC_Knowledge_Agent;
+class DEC_Knowledge_Object;
 class MIL_AgentPion;
 class MIL_Automate;
 class MIL_Mission_ABC;
@@ -59,7 +60,7 @@ public:
     virtual std::string GetName() const = 0;
     virtual void RemoveCallback( PHY_Action_ABC* pAction ) = 0;
     template< typename T > void Callback( PHY_Action_ABC* pAction, T value );
-    virtual void CallbackKnowledge( PHY_Action_ABC* pAction, int value ) = 0;
+    virtual void CallbackKnowledge( PHY_Action_ABC* pAction, boost::shared_ptr< DEC_Knowledge_Object > value ) = 0;
     virtual void CallbackPerception( int id ) = 0;
     virtual const std::string& GetDIAType() const = 0;
     virtual MIL_AgentPion& GetPion() const = 0;

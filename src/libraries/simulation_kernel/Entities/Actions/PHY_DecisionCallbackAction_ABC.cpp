@@ -36,7 +36,7 @@ PHY_DecisionCallbackAction_ABC::~PHY_DecisionCallbackAction_ABC()
 // Name: PHY_DecisionCallbackAction_ABC::CallbackKnowledge
 // Created: LDC 2009-06-29
 // -----------------------------------------------------------------------------
-void PHY_DecisionCallbackAction_ABC::CallbackKnowledge( int id )
+void PHY_DecisionCallbackAction_ABC::CallbackKnowledge( boost::shared_ptr< DEC_Knowledge_Object > id )
 {
     decision_.CallbackKnowledge( this, id );
 }

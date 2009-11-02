@@ -53,7 +53,7 @@ void PHY_ActionConstructObject::Execute()
     boost::shared_ptr< DEC_Knowledge_Object > pKnowledge;
     int nReturn = role_.Construct( pObject_, pKnowledge );
     Callback( nReturn ); // $$$$ LDC: Was DIA3 Parameter 0
-    CallbackKnowledge( pKnowledge ? pKnowledge->GetID() : 0 ); // $$$$ LDC: Was DIA3 Parameter 1
+    CallbackKnowledge( pKnowledge ); // $$$$ LDC: Was DIA3 Parameter 1
     // $$$$ LDC: Could as well hardcode the fact that myself.objMisEnCours_ = pKnowledge ? pKnowledge->GetID() : 0
 }
 

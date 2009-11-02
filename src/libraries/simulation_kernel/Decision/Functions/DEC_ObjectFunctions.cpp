@@ -85,3 +85,12 @@ std::string DEC_ObjectFunctions::ConvertTypeObjectToString( int id )
 {
     return objectNames_[ id ];
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ObjectFunctions::GetGenObjectLocalisation
+// Created: LDC 2009-10-23
+// -----------------------------------------------------------------------------
+const TER_Localisation& DEC_ObjectFunctions::GetGenObjectLocalisation( boost::shared_ptr< DEC_Gen_Object > knowledgeId )
+{
+    return knowledgeId->GetLocalisation();
+}

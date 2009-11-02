@@ -116,7 +116,7 @@ void RegisterCommonUserFunctions( directia::Brain& brain, unsigned int id )
 
     // Gen objects
     brain.RegisterFunction( "DEC_GenObject_Type",                  &DEC_ObjectFunctions::GetGenObjectType );
-    brain.RegisterFunction( "DEC_GenObject_Localisation",          &DEC_Gen_Object::GetLocalisation );
+    brain.RegisterFunction( "DEC_GenObject_Localisation",          &DEC_ObjectFunctions::GetGenObjectLocalisation );
     brain.RegisterFunction( "DEC_GenObject_Densite",               &DEC_Gen_Object::GetDensity );
     brain.RegisterFunction( "DEC_GenObject_TypeObstacleManoeuvre", &DEC_ObjectFunctions::GetGenObjectReservedObstacle );
     brain.RegisterFunction( "DEC_GenObject_TC2",                   &DEC_ObjectFunctions::GetGenObjectTC2 );

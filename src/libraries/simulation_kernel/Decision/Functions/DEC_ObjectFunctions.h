@@ -34,7 +34,7 @@ public:
     template< typename T > static void MagicCreateObject ( const T& caller, const std::string& type, const TER_Localisation* pLocalisation );
     template< typename T > static void MagicDestroyObject( const T& caller, boost::shared_ptr< DEC_Knowledge_Object > knowledgeId );
     template< typename T > static bool ActivateObject    ( const T& caller, boost::shared_ptr< DEC_Knowledge_Object > knowledgeId );
-
+    static const TER_Localisation& GetGenObjectLocalisation     ( boost::shared_ptr< DEC_Gen_Object > knowledgeId );
 
     // Gen object
     static std::string GetGenObjectType             			( const DEC_Gen_Object* object );

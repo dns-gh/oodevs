@@ -14,10 +14,11 @@
 #include "Decision/DEC_Decision_ABC.h"
 #include <directia/Brain.h>
 
+class DEC_DataBase;
+class DEC_Knowledge_Object;
 class DEC_Model_ABC;
 class MIL_Entity_ABC;
 class MIL_Mission_ABC;
-class DEC_DataBase;
 
 namespace directia
 {
@@ -52,7 +53,7 @@ public:
     virtual void SetMission( MIL_Mission_ABC* pMission );
     virtual MIL_Mission_ABC* GetMission();
     virtual void RemoveCallback( PHY_Action_ABC* pAction );
-    virtual void CallbackKnowledge( PHY_Action_ABC* pAction, int value );
+    virtual void CallbackKnowledge( PHY_Action_ABC* pAction, boost::shared_ptr< DEC_Knowledge_Object > value );
     virtual void CallbackPerception( int id );
     virtual const std::string& GetDIAType() const;
     virtual MIL_AgentPion& GetPion() const;

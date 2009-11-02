@@ -286,7 +286,7 @@ MIL_Mission_ABC* DEC_Decision<T>::GetMission()
 // Created: LDC 2009-07-06
 // -----------------------------------------------------------------------------
 template <class T>
-void DEC_Decision<T>::CallbackKnowledge( PHY_Action_ABC* pAction, int value )
+void DEC_Decision<T>::CallbackKnowledge( PHY_Action_ABC* pAction, boost::shared_ptr< DEC_Knowledge_Object > value )
 {
     GetBrain().GetScriptFunction( "KnowledgeCallbackAction" )( pAction, value );
 }

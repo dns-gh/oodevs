@@ -12,6 +12,8 @@
 
 #include "PHY_Action_ABC.h"
 #include "Decision/DEC_Decision_ABC.h"
+
+class DEC_Knowledge_Object;
 class MIL_Entity_ABC;
 
 // =============================================================================
@@ -34,7 +36,7 @@ protected:
     //! @name Operations
     //@{
     template< typename T > void Callback( T );
-    void CallbackKnowledge( int id );
+    void CallbackKnowledge( boost::shared_ptr< DEC_Knowledge_Object > id );
     //@}
 
 private:
