@@ -2,6 +2,214 @@
 <actions>
 
 <!-- Missions de niveau Automate -->
+<!-- GEN -->
+<!-- Automate GEN Se Deployer -->
+<action id="248" name="Automate GEN Se Deployer" target="648" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU6337045018"/>
+        <point coordinates="30TXU6366212280"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU5123143194"/>
+        <point coordinates="30UXU4464330590"/>
+        <point coordinates="30TXU5220513550"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30UXU5286322973"/>
+        <point coordinates="30TXU5328018151"/>
+        <point coordinates="30TXU5994218391"/>
+        <point coordinates="30UXU5988423347"/>
+        <point coordinates="30UXU5286322973"/>
+      </location>
+    </parameter>
+  </action>
+
+<!-- Automate GEN Retablir Itineraires -->
+<action id="252" name="Automate GEN Retablir Itineraires" target="589" time="2009-09-29T16:54:01" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU6337045018"/>
+        <point coordinates="30TXU6366212280"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU5123143194"/>
+        <point coordinates="30UXU4464330590"/>
+        <point coordinates="30TXU5220513550"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Itineraires" type="PathList">
+      <parameter name="Route 1" type="path">
+        <parameter name="Destination" type="pathpoint">
+          <location type="point">
+            <point coordinates="30UXU5182735409"/>
+          </location>
+        </parameter>
+      </parameter>
+      <parameter name="Route 2" type="path">
+        <parameter name="Destination" type="pathpoint">
+          <location type="point">
+            <point coordinates="30UXU5142221511"/>
+          </location>
+        </parameter>
+      </parameter>
+      <parameter name="Route 3" type="path">
+        <parameter name="Point de passage 1" type="pathpoint">
+          <location type="point">
+            <point coordinates="30UXU5466526151"/>
+          </location>
+        </parameter>
+        <parameter name="Point de passage 2" type="pathpoint">
+          <location type="point">
+            <point coordinates="30UXU5781625547"/>
+          </location>
+        </parameter>
+        <parameter name="Destination" type="pathpoint">
+          <location type="point">
+            <point coordinates="30UXU5979527927"/>
+          </location>
+        </parameter>
+      </parameter>
+    </parameter>
+  </action>
+<!-- Automate GEN Reconnaitre Zone -->
+<action id="249" name="Automate GEN Reconnaitre Zone" target="589" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU5123143194"/>
+        <point coordinates="30UXU4464330590"/>
+        <point coordinates="30TXU5220513550"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU6337045018"/>
+        <point coordinates="30TXU6366212280"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30UXU5070237076"/>
+        <point coordinates="30UXU5080434272"/>
+        <point coordinates="30UXU5900933234"/>
+        <point coordinates="30UXU5928137386"/>
+        <point coordinates="30UXU5070237076"/>
+      </location>
+    </parameter>
+  </action>
+
+<!-- Automate GEN Realiser Travaux -->
+<action id="250" name="Automate GEN Realiser Travaux" target="589" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU5123143194"/>
+        <point coordinates="30UXU4464330590"/>
+        <point coordinates="30TXU5220513550"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU6337045018"/>
+        <point coordinates="30TXU6366212280"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Travaux" type="GenObjectList">
+      <parameter name="Obstacle 1" type="obstacle" value="abattis">
+        <parameter name="Obstacle type" type="obstacletype" value="0"/>
+        <parameter name="Location" type="location">
+          <location type="polygon">
+            <point coordinates="30UXU5120432453"/>
+            <point coordinates="30UXU5136931357"/>
+            <point coordinates="30UXU5207731383"/>
+            <point coordinates="30UXU5223732158"/>
+            <point coordinates="30UXU5120432453"/>
+          </location>
+        </parameter>
+      </parameter>
+    </parameter>
+    <parameter name="Zone regroupement" type="Location">
+      <location type="polygon">
+        <point coordinates="30UXU5230122884"/>
+        <point coordinates="30UXU5272422151"/>
+        <point coordinates="30UXU5615622441"/>
+        <point coordinates="30UXU5531223845"/>
+        <point coordinates="30UXU5230122884"/>
+      </location>
+    </parameter>
+  </action>
+
+<!-- Automate GEN Ouvrir Itineraires -->
+
+<action id="251" name="Automate GEN Ouvrir Itineraires" target="589" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU6337045018"/>
+        <point coordinates="30TXU6366212280"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU5123143194"/>
+        <point coordinates="30UXU4464330590"/>
+        <point coordinates="30TXU5220513550"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Itineraires" type="PathList">
+      <parameter name="Route 1" type="path">
+        <parameter name="Destination" type="pathpoint">
+          <location type="point">
+            <point coordinates="30TXU5712617372"/>
+          </location>
+        </parameter>
+      </parameter>
+      <parameter name="Route 2" type="path">
+        <parameter name="Point de passage 1" type="pathpoint">
+          <location type="point">
+            <point coordinates="30UXU5447025934"/>
+          </location>
+        </parameter>
+        <parameter name="Point de passage 2" type="pathpoint">
+          <location type="point">
+            <point coordinates="30UXU5730325474"/>
+          </location>
+        </parameter>
+        <parameter name="Destination" type="pathpoint">
+          <location type="point">
+            <point coordinates="30UXU6078429156"/>
+          </location>
+        </parameter>
+      </parameter>
+      <parameter name="Route 3" type="path">
+        <parameter name="Destination" type="pathpoint">
+          <location type="point">
+            <point coordinates="30UXU5186635621"/>
+          </location>
+        </parameter>
+      </parameter>
+    </parameter>
+  </action>
+
 
 
 <!-- COMMUNES -->

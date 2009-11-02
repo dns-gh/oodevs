@@ -18,7 +18,7 @@
       </readwrite>
     </rights>
   </profile>
-   <profile name="Automate GEN Faire Franchir" password="" supervision="true">
+  <profile name="Automate GEN Faire Franchir" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -27,7 +27,7 @@
       </readwrite>
     </rights>
   </profile>
-   <profile name="Automate GEN Franchir De Vive Force" password="" supervision="true">
+  <profile name="Automate GEN Franchir De Vive Force" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -35,7 +35,7 @@
         <side id="1"/>
       </readwrite>
     </rights>
-  </profile> 
+  </profile>
   <profile name="Automate GEN Ouvrir Itineraires" password="" supervision="true">
     <rights>
       <readonly/>
@@ -44,7 +44,7 @@
         <side id="1"/>
       </readwrite>
     </rights>
-  </profile> 
+  </profile>
   <profile name="Automate GEN Realiser Travaux" password="" supervision="true">
     <rights>
       <readonly/>
@@ -53,7 +53,7 @@
         <side id="1"/>
       </readwrite>
     </rights>
-  </profile> 
+  </profile>
   <profile name="Automate GEN Reconnaitre Zone" password="" supervision="true">
     <rights>
       <readonly/>
@@ -62,7 +62,7 @@
         <side id="1"/>
       </readwrite>
     </rights>
-  </profile> 
+  </profile>
   <profile name="Automate GEN Retablir Itineraires" password="" supervision="true">
     <rights>
       <readonly/>
@@ -72,7 +72,7 @@
       </readwrite>
     </rights>
   </profile>
-   <profile name="Automate GEN Se Deployer" password="" supervision="true">
+  <profile name="Automate GEN Se Deployer" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>

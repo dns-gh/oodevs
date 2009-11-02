@@ -98,6 +98,25 @@
             <unit command-post="false" id="598" name="Groupe MPG" position="30UXU5142827726" type="Groupe MPG"/>
             <unit command-post="false" id="599" name="Groupe MPG" position="30UXU5120328217" type="Groupe MPG"/>
           </automat>
+          <automat engaged="true" id="648" knowledge-group="2" name="Compagnie Appui GEN generique [648]" type="Compagnie Appui GEN generique">
+            <unit command-post="true" id="649" name="Section CDT APP GEN" position="30UXU4856228117" type="Section CDT APP GEN"/>
+            <unit command-post="false" id="650" name="Groupe OT" position="30UXU4908127636" type="Groupe OT"/>
+            <unit command-post="false" id="651" name="Groupe MATS" position="30UXU4859827119" type="Groupe MATS"/>
+            <unit command-post="false" id="652" name="Demi Groupe MFRD CDT" position="30UXU4808027600" type="Demi Groupe MFRD CDT"/>
+            <unit command-post="false" id="653" name="Demi Groupe MFRD" position="30UXU4906328135" type="Demi Groupe MFRD"/>
+            <unit command-post="false" id="654" name="Groupe Enfouisseur" position="30UXU4928827644" type="Groupe Enfouisseur"/>
+            <unit command-post="false" id="655" name="Groupe Disperseur" position="30UXU4909927137" type="Groupe Disperseur"/>
+            <unit command-post="false" id="656" name="Groupe EFA CDT" position="30UXU4860626913" type="Groupe EFA CDT"/>
+            <unit command-post="false" id="657" name="Groupe EFA" position="30UXU4809827101" type="Groupe EFA"/>
+            <unit command-post="false" id="658" name="Groupe PAA" position="30UXU4787327593" type="Groupe PAA"/>
+            <unit command-post="false" id="659" name="Groupe PAA CDT" position="30UXU4806228099" type="Groupe PAA CDT"/>
+            <unit command-post="false" id="660" name="Groupe MLF CDT" position="30UXU4855528324" type="Groupe MLF CDT"/>
+            <unit command-post="false" id="661" name="Groupe MLF" position="30UXU4926328349" type="Groupe MLF"/>
+            <unit command-post="false" id="662" name="Section Aide au Deploiement" position="30UXU4953827911" type="Section Aide au Deploiement"/>
+            <unit command-post="false" id="663" name="Section Equipement Plage" position="30UXU4955627395" type="Section Equipement Plage"/>
+            <unit command-post="false" id="664" name="Section Equipement Zone Poser" position="30UXU4931426938" type="Section Equipement Zone Poser"/>
+            <unit command-post="false" id="665" name="Groupe Chantier" position="30UXU4887426664" type="Groupe Chantier"/>
+          </automat>
           <lima name="Lima 113">
             <point>30TXU2858801346</point>
             <point>30TXU3929708509</point>
