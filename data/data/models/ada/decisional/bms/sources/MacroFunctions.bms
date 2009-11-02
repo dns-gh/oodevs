@@ -214,17 +214,17 @@ end
 
 function F_POLY_PION_ALAT_RECOMPLETEMENT_BASE( porteeAction, ambianceMission, munition )
     if( porteeAction == eCourtePortee ) then
-        DEC_ChangeValeurDotations( eDotation_Munition, 1, munition )
-        DEC_ChangeValeurDotations( eDotation_Carburant, 0.8 )
+        DEC_ChangeValeurDotations3( eDotation_Munition, 1, munition or -1 )
+        DEC_ChangeValeurDotations2( eDotation_Carburant, 0.8 )
     elseif( porteeAction == eMoyennePortee ) then
-        DEC_ChangeValeurDotations( eDotation_Munition, 0.75, munition ) 
-        DEC_ChangeValeurDotations( eDotation_Carburant, 0.85 )
+        DEC_ChangeValeurDotations3( eDotation_Munition, 0.75, munition or -1 ) 
+        DEC_ChangeValeurDotations2( eDotation_Carburant, 0.85 )
     elseif( porteeAction == eLonguePortee ) then
-        DEC_ChangeValeurDotations( eDotation_Munition, 0.5, munition )
-        DEC_ChangeValeurDotations( eDotation_Carburant, 0.9 )
+        DEC_ChangeValeurDotations3( eDotation_Munition, 0.5, munition or -1 )
+        DEC_ChangeValeurDotations2( eDotation_Carburant, 0.9 )
     elseif( porteeAction == eSansMunitions ) then
-        DEC_ChangeValeurDotations( eDotation_Munition, 0, munition )
-        DEC_ChangeValeurDotations( eDotation_Carburant, 1 )
+        DEC_ChangeValeurDotations3( eDotation_Munition, 0, munition or -1 )
+        DEC_ChangeValeurDotations2( eDotation_Carburant, 1 )
     end
 end
 
@@ -251,10 +251,10 @@ function F_POLY_PION_ALAT_RECOMPLETEMENT( porteeAction, ambianceMission )
 end
 
 function F_POLY_PION_ALAT_RECOMPLETEMENT_TOUT( carburant, air, sol, obus )
-        DEC_ChangeValeurDotations( eDotation_Carburant, carburant )
-        DEC_ChangeValeurDotations( eDotation_Munition, air, eMunitionClasse_MissileAir )
-        DEC_ChangeValeurDotations( eDotation_Munition, sol, eMunitionClasse_MissileSol )
-        DEC_ChangeValeurDotations( eDotation_Munition, obus, eMunitionClasse_Obus )
+        DEC_ChangeValeurDotations2( eDotation_Carburant, carburant )
+        DEC_ChangeValeurDotations3( eDotation_Munition, air, eMunitionClasse_MissileAir )
+        DEC_ChangeValeurDotations3( eDotation_Munition, sol, eMunitionClasse_MissileSol )
+        DEC_ChangeValeurDotations3( eDotation_Munition, obus, eMunitionClasse_Obus )
 end
 
 function F_POLY_PION_ALAT_RECOMPLETEMENT_TIGRE( porteeAction, ambianceMission )
@@ -281,13 +281,13 @@ end
 
 function F_POLY_PION_ALAT_RECOMPLETEMENT_CARBURANT( porteeAction, court, moyen, long )
     if( porteeAction == eCourtePortee ) then
-        DEC_ChangeValeurDotations(eDotation_Carburant, court )
+        DEC_ChangeValeurDotations2(eDotation_Carburant, court )
     elseif( porteeAction == eMoyennePortee ) then
-        DEC_ChangeValeurDotations(eDotation_Carburant, moyen )
+        DEC_ChangeValeurDotations2(eDotation_Carburant, moyen )
     elseif( porteeAction == eLonguePortee ) then
-        DEC_ChangeValeurDotations(eDotation_Carburant, long )
+        DEC_ChangeValeurDotations2(eDotation_Carburant, long )
     elseif( porteeAction == eSansMunitions ) then
-        DEC_ChangeValeurDotations(eDotation_Carburant, 1 )
+        DEC_ChangeValeurDotations2(eDotation_Carburant, 1 )
     end
 end
 
@@ -625,7 +625,7 @@ function DEC_UserTypeList_Contient( list, element )
 end
 
 function DEC_ConnaissanceObjet_EstValide( value )
-    return DEC_IsValidKnowledgeObject( value or 0 )
+    return DEC_IsValidKnowledgeObject( value or nil )
 end
 
 function DEC_UserTypeList_PushBack( list, element )
