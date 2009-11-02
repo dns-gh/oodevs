@@ -2,7 +2,21 @@
 <orbat>
   <sides>
     <side id="1" name="Les Gentils" type="friend">
-      <objects/>
+      <objects>
+        <object id="613" name="Abattis [613]" type="abattis">
+          <shape type="polygone">
+            <points>
+              <point>30UXU5649829845</point>
+              <point>30UXU5647628818</point>
+              <point>30UXU5754228622</point>
+              <point>30UXU5761329885</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+          </attributes>
+        </object>
+      </objects>
       <tactical>
         <formation id="5" level="ii" name="Bataillon Case 1">
           <automat engaged="true" id="15" knowledge-group="2" name="Escadron de Chars LECLERC [15]" type="Escadron de Chars LECLERC">
@@ -71,6 +85,18 @@
           </automat>
           <automat engaged="true" id="543" knowledge-group="2" name="TC2 GE40 LECLERC [543]" type="TC2 GE40 LECLERC">
             <unit command-post="true" id="544" name="TC2 GE40 LECLERC" position="30UXU2602328289" type="TC2 GE40 LECLERC"/>
+          </automat>
+          <automat engaged="true" id="589" knowledge-group="2" name="Compagnie CBT GENIE type BB BM [589]" type="Compagnie CBT GENIE type BB BM">
+            <unit command-post="true" id="590" name="PC CIE CBT GENIEType BB/BM" position="30UXU5189228742" type="PC CIE CBT GENIEType BB/BM"/>
+            <unit command-post="false" id="591" name="Section CBT GEN" position="30UXU5241128261" type="Section CBT GEN"/>
+            <unit command-post="false" id="592" name="Section CBT GEN" position="30UXU5192827744" type="Section CBT GEN"/>
+            <unit command-post="false" id="593" name="Section CBT GEN" position="30UXU5141028225" type="Section CBT GEN"/>
+            <unit command-post="false" id="594" name="Groupe EBG" position="30UXU5239328760" type="Groupe EBG"/>
+            <unit command-post="false" id="595" name="Groupe EBG" position="30UXU5261828268" type="Groupe EBG"/>
+            <unit command-post="false" id="596" name="Groupe EBG" position="30UXU5242927762" type="Groupe EBG"/>
+            <unit command-post="false" id="597" name="Groupe EBG" position="30UXU5193627537" type="Groupe EBG"/>
+            <unit command-post="false" id="598" name="Groupe MPG" position="30UXU5142827726" type="Groupe MPG"/>
+            <unit command-post="false" id="599" name="Groupe MPG" position="30UXU5120328217" type="Groupe MPG"/>
           </automat>
           <lima name="Lima 113">
             <point>30TXU2858801346</point>
@@ -226,6 +252,15 @@
             <point>30UYU0057038085</point>
             <point>30UYU0920549943</point>
           </limit>
+          <limit name="Limite 611">
+            <point>30UXU5123143194</point>
+            <point>30UXU4464330590</point>
+            <point>30TXU5220513550</point>
+          </limit>
+          <limit name="Limite 612">
+            <point>30UXU6337045018</point>
+            <point>30TXU6366212280</point>
+          </limit>
         </formation>
         <formation id="7" level="ii" name="Bataillon Case 3">
           <automat engaged="true" id="51" knowledge-group="2" name="Escadron de Chars LECLERC [51]" type="Escadron de Chars LECLERC">
@@ -331,7 +366,21 @@
       </logistic>
     </side>
     <side id="3" name="Les Méchants" type="enemy">
-      <objects/>
+      <objects>
+        <object id="614" name="Abattis [614]" type="abattis">
+          <shape type="polygone">
+            <points>
+              <point>30UXU5458426668</point>
+              <point>30UXU5457125408</point>
+              <point>30UXU5649125154</point>
+              <point>30UXU5645426179</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+          </attributes>
+        </object>
+      </objects>
       <tactical>
         <formation id="10" level="ii" name="GTIA Case 1">
           <automat engaged="true" id="27" knowledge-group="4" name="Escadron de Chars LECLERC [27]" type="Escadron de Chars LECLERC">
@@ -354,6 +403,16 @@
           <automat engaged="true" id="499" knowledge-group="4" name="Refugies x1000 [499]" type="Refugies x1000">
             <unit command-post="true" id="500" name="Refugies 1000 Pers" position="30UXU2107030563" type="Refugies 1000 Pers"/>
           </automat>
+          <automat engaged="true" id="600" knowledge-group="4" name="Compagnie CBT GENIE type BLB BIM BP [600]" type="Compagnie CBT GENIE type BLB BIM BP">
+            <unit command-post="true" id="601" name="PC CIE CBT GENIE Type BLB/BIM/BP" position="30UXU5318638521" type="PC CIE CBT GENIE Type BLB/BIM/BP"/>
+            <unit command-post="false" id="602" name="Section CBT GEN" position="30UXU5370538040" type="Section CBT GEN"/>
+            <unit command-post="false" id="603" name="Section CBT GEN" position="30UXU5322237523" type="Section CBT GEN"/>
+            <unit command-post="false" id="604" name="Section CBT GEN" position="30UXU5270438004" type="Section CBT GEN"/>
+            <unit command-post="false" id="605" name="Groupe MPG" position="30UXU5368738539" type="Groupe MPG"/>
+            <unit command-post="false" id="606" name="Groupe MPG" position="30UXU5391238047" type="Groupe MPG"/>
+            <unit command-post="false" id="607" name="Groupe MPG" position="30UXU5372337541" type="Groupe MPG"/>
+            <unit command-post="false" id="608" name="Groupe MPG" position="30UXU5323037316" type="Groupe MPG"/>
+          </automat>
           <limit name="Limite 125">
             <point>30TXU3175914669</point>
             <point>30TXU3802106413</point>
@@ -372,6 +431,16 @@
             <point>30UXU3757549462</point>
             <point>30UXU2739042104</point>
             <point>30UXU2120333967</point>
+          </limit>
+          <limit name="Limite 609">
+            <point>30UXU5322043068</point>
+            <point>30UXU4599131727</point>
+            <point>30TXU5262515642</point>
+          </limit>
+          <limit name="Limite 610">
+            <point>30UXU6176042882</point>
+            <point>30UXU6281330256</point>
+            <point>30TXU6221413910</point>
           </limit>
         </formation>
         <formation id="11" level="ii" name="GTIA Case 2">
