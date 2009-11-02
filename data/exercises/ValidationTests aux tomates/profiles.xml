@@ -81,6 +81,33 @@
       </readwrite>
     </rights>
   </profile>
+  <profile name="Automate ASS Acquerir Objectifs" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+   <profile name="Automate ASS Reconnaitre Zones Deploiement" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+   <profile name="Automate ASS Se Deployer" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile> 
   <profile name="Automate ABC Appuyer" password="" supervision="true">
     <rights>
       <readonly/>

@@ -117,6 +117,23 @@
             <unit command-post="false" id="664" name="Section Equipement Zone Poser" position="30UXU4931426938" type="Section Equipement Zone Poser"/>
             <unit command-post="false" id="665" name="Groupe Chantier" position="30UXU4887426664" type="Groupe Chantier"/>
           </automat>
+          <automat engaged="true" id="714" knowledge-group="2" name="Batterie de Reco AUF1 [714]" type="Batterie de Reco AUF1">
+            <unit command-post="true" id="715" name="Section de Reco AUF1" position="30TXU5697118074" type="Section de Reco AUF1"/>
+            <unit command-post="false" id="716" name="Section de Reco AUF1" position="30TXU5748917593" type="Section de Reco AUF1"/>
+            <unit command-post="false" id="717" name="Section de Reco AUF1" position="30TXU5700717076" type="Section de Reco AUF1"/>
+          </automat>
+          <automat engaged="true" id="718" knowledge-group="2" name="DLO AMX10P [718]" type="DLO AMX10P">
+            <unit command-post="true" id="719" name="Equipe CDT DLO" position="30UXU5231519480" type="Equipe CDT DLO"/>
+            <unit command-post="false" id="720" name="EO CHEF OFF sur AMX10P" position="30UXU5283418999" type="EO CHEF OFF sur AMX10P"/>
+            <unit command-post="false" id="721" name="EO CHEF OFF sur AMX10P" position="30UXU5235118482" type="EO CHEF OFF sur AMX10P"/>
+            <unit command-post="false" id="722" name="EO CHEF OFF sur AMX10P" position="30UXU5183218963" type="EO CHEF OFF sur AMX10P"/>
+            <unit command-post="false" id="723" name="EO CHEF SOFF sur AMX10P" position="30UXU5281519498" type="EO CHEF SOFF sur AMX10P"/>
+          </automat>
+          <automat engaged="true" id="724" knowledge-group="2" name="Section RATAC [724]" type="Section RATAC">
+            <unit command-post="true" id="725" name="Groupe CDT RATAC" position="30UXU5182625715" type="Groupe CDT RATAC"/>
+            <unit command-post="false" id="726" name="Groupe RATAC" position="30UXU5234525234" type="Groupe RATAC"/>
+            <unit command-post="false" id="727" name="Groupe RATAC" position="30UXU5186224717" type="Groupe RATAC"/>
+          </automat>
           <lima name="Lima 113">
             <point>30TXU2858801346</point>
             <point>30TXU3929708509</point>

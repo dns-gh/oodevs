@@ -2,6 +2,127 @@
 <actions>
 
 <!-- Missions de niveau Automate -->
+
+<!-- Missions ASS -->
+
+<!-- Automate ASS Acquerir Objectifs UC1 -->
+
+<action id="206" name="Automate ASS Acquerir Objectifs C1 - 1" target="724" time="2009-09-29T17:35:11" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU5123143194"/>
+        <point coordinates="30UXU4464330590"/>
+        <point coordinates="30TXU5220513550"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU6337045018"/>
+        <point coordinates="30TXU6366212280"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zones a observer" type="PolygonList">
+      <parameter name="Location 1" type="location">
+        <location type="polygon">
+          <point coordinates="30UXU5324435120"/>
+          <point coordinates="30UXU4951636859"/>
+          <point coordinates="30UXU5415840224"/>
+          <point coordinates="30UXU5575038043"/>
+          <point coordinates="30UXU5324435120"/>
+        </location>
+      </parameter>
+      <parameter name="Location 2" type="location">
+        <location type="polygon">
+          <point coordinates="30UXU4133045266"/>
+          <point coordinates="30UXU3746947525"/>
+          <point coordinates="30UXU4116149919"/>
+          <point coordinates="30UXU4271648742"/>
+          <point coordinates="30UXU4133045266"/>
+        </location>
+      </parameter>
+    </parameter>
+    <parameter name="Positions deploiement" type="PointList">
+      <parameter name="Location 1" type="location">
+        <location type="point">
+          <point coordinates="30UXU5470329544"/>
+        </location>
+      </parameter>
+      <parameter name="Location 2" type="location">
+        <location type="point">
+          <point coordinates="30UXU5162133696"/>
+        </location>
+      </parameter>
+    </parameter>
+    <parameter name="Categories" type="NatureAtlas" value="33536"/>
+  </action>
+  
+<!-- Automate ASS Reconnaitre Zones Deploiement UC1 -->
+
+  <action id="205" name="Automate ASS Reconnaitre Zones Deploiement C1 - 1" target="714" time="2009-09-29T18:30:31" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU5123143194"/>
+        <point coordinates="30UXU4464330590"/>
+        <point coordinates="30TXU5220513550"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU6337045018"/>
+        <point coordinates="30TXU6366212280"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Positions a reconnaitre" type="PointList">
+      <parameter name="Location 1" type="location">
+        <location type="point">
+          <point coordinates="30UXU5192125422"/>
+        </location>
+      </parameter>
+      <parameter name="Location 2" type="location">
+        <location type="point">
+          <point coordinates="30UXU4749427059"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  
+  <!-- Automate ASS Se Deployer UC1 -->
+  
+<action id="204" name="Automate ASS Se Deployer C1 - 1" target="718" time="2009-09-29T18:10:51" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU5123143194"/>
+        <point coordinates="30UXU4464330590"/>
+        <point coordinates="30TXU5220513550"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU6337045018"/>
+        <point coordinates="30TXU6366212280"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone deploiement" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30UXU5127923754"/>
+        <point coordinates="30UXU4938622894"/>
+        <point coordinates="30UXU4859425363"/>
+        <point coordinates="30UXU5369726125"/>
+        <point coordinates="30UXU5447124174"/>
+        <point coordinates="30UXU5127923754"/>
+      </location>
+    </parameter>
+  </action>
+
 <!-- GEN -->
 <!-- Automate GEN Se Deployer -->
 <action id="248" name="Automate GEN Se Deployer" target="648" time="2009-09-29T16:33:41" type="mission">
