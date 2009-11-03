@@ -11,8 +11,9 @@
 #include "MIL_Mission_ABC.h"
 #include "MIL_MissionType_ABC.h"
 #include "MIL_MissionParameterFactory.h"
-#include "simulation_orders/MIL_MissionParameter_ABC.h"
 #include "MIL_MissionParameterVisitor_ABC.h"
+#include "MIL_NullParameter.h"
+#include "simulation_orders/MIL_MissionParameter_ABC.h"
 
 namespace
 {
@@ -161,7 +162,26 @@ void MIL_Mission_ABC::Visit( MIL_MissionParameterVisitor_ABC& parameterVisitor )
     {
         const std::string& paramName = type_.GetParameterName( i );
         const MIL_ParameterType_ABC& paramType = type_.GetParameterType( i );
-        parameterVisitor.Accept( paramName, paramType, *parameters_[i] );
+        if( parameters_[i] )
+            parameterVisitor.Accept( paramName, paramType, *parameters_[i] );
+
+    }
+}
+
+namespace
+{
+    void EnsureParameters( std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters_, unsigned int index )
+    {
+        if( parameters_.size() <= index )
+        {
+            unsigned int currentSize = parameters_.size();
+            parameters_.resize( index + 1 );
+            for( unsigned int i = currentSize; i < index; ++i )
+            {
+                boost::shared_ptr< MIL_MissionParameter_ABC > dummy ( new MIL_NullParameter() );
+                parameters_[i] = dummy;
+            }
+        }
     }
 }
 
@@ -172,8 +192,7 @@ void MIL_Mission_ABC::Visit( MIL_MissionParameterVisitor_ABC& parameterVisitor )
 void MIL_Mission_ABC::SetParameter( const std::string& name, boost::shared_ptr< MIL_MissionParameter_ABC > param )
 {
     unsigned int index = type_.GetParameterIndex( name );
-    if( parameters_.size() <= index )
-        parameters_.resize( index + 1 );
+    EnsureParameters( parameters_, index );
     parameters_[index] = param;
 }
 
@@ -184,8 +203,7 @@ void MIL_Mission_ABC::SetParameter( const std::string& name, boost::shared_ptr< 
 void MIL_Mission_ABC::AppendToParameter( const std::string& name, boost::shared_ptr< TER_Localisation > pLocation )
 {
     unsigned int index = type_.GetParameterIndex( name );
-    if( parameters_.size() <= index )
-        parameters_.resize( index + 1 );
+    EnsureParameters( parameters_, index );
     parameters_[index]->Append( pLocation );
 }
 

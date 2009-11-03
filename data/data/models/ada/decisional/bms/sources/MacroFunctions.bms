@@ -1,6 +1,7 @@
 -- Functions used that are neither DEC_, DIA_ nor S_ :
 
 require "math"
+require "debug"
 
 include "Common/Types.bms"
 
@@ -357,7 +358,7 @@ local tableRC = {}
 tableRC[ eRC_EnPosteFaceAObstacle ] = 
     function( typeMessage, id, list ) return DEC_RC_ObjectKnowledge( typeMessage, id, list[1] ) end
 tableRC[ eRC_PreparationMission ] = 
-    function( typeMessage, id, list ) return DEC_RC_Float( typeMessage, id, list[1] ) end
+    function( typeMessage, id, list ) return DEC_RC_Float( typeMessage, id, list[1] or 0 ) end
 tableRC[ eRC_SurPIA ] = 
     function( typeMessage, id, list ) return DEC_RC_Pion( typeMessage, id, list[1] ) end
 tableRC[ eRC_UniteRecueillie ] = 
@@ -403,7 +404,7 @@ tableRC[ eRC_UniteDecontaminee ] =
 tableRC[ eRC_ObservationTirIndirect ] = 
     function( typeMessage, id, list ) return DEC_RC_TirPion( typeMessage, id, list[1] ) end
 tableRC[ eRC_TraceID ] = 
-    function( typeMessage, id, list ) return DEC_RC_Float( typeMessage, id, list[1] ) end
+    function( typeMessage, id, list ) return DEC_RC_Float( typeMessage, id, list[1] or 0 ) end
 tableRC[ eRC_PopulationDetectee ] = 
     function( typeMessage, id, list ) return DEC_RC_PopulationKnowledge( typeMessage, id, list[1] ) end
 tableRC[ eRC_PriseAPartieParPopulation ] = 
@@ -413,7 +414,7 @@ tableRC[ eRC_RiposteContrePopulation ] =
 tableRC[ eRC_DebutInterventionFaceAPopulation ] = 
     function( typeMessage, id, list ) return DEC_RC_Id( typeMessage, id, list[1] ) end
 tableRC[ eRC_PopulationVictimeAffrontements ] = 
-    function( typeMessage, id, list ) return DEC_RC_Float_Float( typeMessage, id, list[1], list[2] ) end
+    function( typeMessage, id, list ) return DEC_RC_Float_Float( typeMessage, id, list[1] or 0, list[2] or 0 ) end
 tableRC[ eRC_AttitudePopulation ] = 
     function( typeMessage, id, list ) return DEC_RC_Id( typeMessage, id, list[1] ) end
 tableRC[ eRC_AgressionDePopulation ] = 
@@ -423,7 +424,7 @@ tableRC[ eRC_AgressionParPopulation ] =
 tableRC[ eRC_RiposteContreAgressionParPopulation ] = 
     function( typeMessage, id, list ) return DEC_RC_PopulationKnowledge( typeMessage, id, list[1] ) end
 tableRC[ eRC_PopulationVictimeExplosionMines ] = 
-    function( typeMessage, id, list ) return DEC_RC_Float_Float( typeMessage, id, list[1], list[2] ) end
+    function( typeMessage, id, list ) return DEC_RC_Float_Float( typeMessage, id, list[1] or 0, list[2] or 0 ) end
 
 DEC_RC = function( id, ... )
     local list = {...}

@@ -46,6 +46,7 @@ public:
     virtual bool ToObjectiveList( ASN1T_MissionObjectiveList& asn ) const;
     virtual bool ToObjectKnowledgeList( ASN1T_ObjectKnowledgeList& asn ) const;
     virtual bool ToPathList( ASN1T_PathList& asn ) const;
+    virtual bool ToNatureAtlas( ASN1T_AtlasNature& asn ) const;
     //@}
 
 private:

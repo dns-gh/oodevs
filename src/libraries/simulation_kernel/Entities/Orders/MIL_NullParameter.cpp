@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_NullParameter.h"
+#include "Network/NET_ASN_Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_NullParameter constructor
@@ -135,4 +136,13 @@ bool MIL_NullParameter::ToPathList( ASN1T_PathList& asn ) const
 {
     asn.n = 0;
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_NullParameter::ToNatureAtlas
+// Created: LDC 2009-11-03
+// -----------------------------------------------------------------------------
+bool MIL_NullParameter::ToNatureAtlas( ASN1T_AtlasNature& asn ) const
+{
+    return NET_ASN_Tools::CopyNatureAtlas( 0, asn );
 }
