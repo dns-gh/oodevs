@@ -1,0 +1,86 @@
+--
+-- file name : Urban.asn
+--
+-- Messages de gestion des blocs urbains
+--
+
+Urban DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+-- BEGIN includes
+IMPORTS BaseExports FROM Base;
+UrbanIncludes ::= SEQUENCE { BaseExports }
+UrbanExports  ::= NULL
+-- END includes
+
+
+EnumUrbanErrorCode ::= ENUMERATED
+{
+    no-error                         (0),
+    error-invalid-urban              (1),
+    error-invalid-id                 (2),
+    error-invalid-camp               (3),
+    error-invalid-localisation       (4),
+    error-missing-specific-attributes(5),
+    error-invalid-specific-attributes(6)
+}
+
+
+-- UrbanAttributes ::= SEQUENCE OF UrbantAttribute
+ 
+---------------------------
+-- Objet réel
+---------------------------     
+
+MsgUrbanCreation ::= SEQUENCE
+{
+    oid         OID,
+    name        VisibleString,
+    location    Location
+    -- attributes  UrbanAttributes
+}
+
+MsgUrbanUpdate ::= SEQUENCE
+{
+    oid             OID,
+    location        Location OPTIONAL
+    -- attributes      UrbanAttributes
+}
+
+MsgUrbanDestruction ::= OID
+
+
+---------------------------
+-- Actions magiques
+---------------------------
+
+MagicActionUpdateUrban ::= SEQUENCE
+{
+    oid                             OID    
+    -- attributes                      UrbanAttributes
+}
+
+MagicActionCreateUrban ::= SEQUENCE
+{          
+    location    Location,
+    name        VisibleString
+    -- attributes  UrbanAttributes
+}
+
+MagicActionDestroyUrban ::= OID -- oid-objet
+
+MsgUrbanMagicAction ::= SEQUENCE
+{
+    action CHOICE
+    {
+        create-urban    MagicActionCreateUrban,
+        update-urban    MagicActionUpdateUrban,
+        destroy-urban   MagicActionDestroyUrban
+    }       
+}
+
+MsgUrbanMagicActionAck ::= SEQUENCE
+{
+    error-code  EnumUrbanErrorCode
+}
+
+END -- Urban
