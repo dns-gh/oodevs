@@ -202,6 +202,8 @@ SectionGroup "Exercises" s_exo
         !insertmacro OT.AddExercise "Cabourg" "Cabourg" "s_exo17"
         !insertmacro OT.AddExercise "Ares" "Blois" "s_exo18"
         !insertmacro OT.AddExercise "ValidationTests" "Angers_x9" "s_exo19"
+        !insertmacro OT.AddExercise "ValidationTests aux tomates" "Angers_x9" "s_exo20"
+        !insertmacro OT.AddExercise "ValidationTests LOG" "Angers_x9" "s_exo21"
     !endif
 
 SectionGroupEnd
@@ -333,6 +335,8 @@ Function .onSelChange
         !insertmacro OT.CheckDependency "s_exo17" "s_ter4"
         !insertmacro OT.CheckDependency "s_exo18" "s_ter5"
         !insertmacro OT.CheckDependency "s_exo19" "s_ter6"
+        !insertmacro OT.CheckDependency "s_exo20" "s_ter6"
+        !insertmacro OT.CheckDependency "s_exo21" "s_ter6"
     !endif
      
 FunctionEnd
