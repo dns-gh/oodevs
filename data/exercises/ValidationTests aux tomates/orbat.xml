@@ -134,6 +134,23 @@
             <unit command-post="false" id="726" name="Groupe RATAC" position="30UXU5234525234" type="Groupe RATAC"/>
             <unit command-post="false" id="727" name="Groupe RATAC" position="30UXU5186224717" type="Groupe RATAC"/>
           </automat>
+          <automat engaged="true" id="776" knowledge-group="2" name="Batterie HAWK [776]" type="Batterie HAWK">
+            <unit command-post="true" id="777" name="PC Batterie HAWK" position="30UXU3496232495" type="PC Batterie HAWK"/>
+            <unit command-post="false" id="778" name="Section de Tir HAWK" position="30UXU3548132014" type="Section de Tir HAWK"/>
+            <unit command-post="false" id="779" name="Section de Tir HAWK" position="30UXU3499831497" type="Section de Tir HAWK"/>
+          </automat>
+          <automat engaged="true" id="780" knowledge-group="2" name="Batterie MISTRAL [780]" type="Batterie MISTRAL">
+            <unit command-post="true" id="781" name="PC Batterie MISTRAL" position="30UXU3070132691" type="PC Batterie MISTRAL"/>
+            <unit command-post="false" id="782" name="Section MISTRAL" position="30UXU3122032210" type="Section MISTRAL"/>
+            <unit command-post="false" id="783" name="Section MISTRAL" position="30UXU3073731693" type="Section MISTRAL"/>
+            <unit command-post="false" id="784" name="Section MISTRAL" position="30UXU3021932174" type="Section MISTRAL"/>
+            <unit command-post="false" id="785" name="Section MISTRAL" position="30UXU3120132709" type="Section MISTRAL"/>
+          </automat>
+          <automat engaged="true" id="786" knowledge-group="2" name="Batterie ROLAND [786]" type="Batterie ROLAND">
+            <unit command-post="true" id="787" name="PC Batterie SACP ROL" position="30UXU2732138822" type="PC Batterie SACP ROL"/>
+            <unit command-post="false" id="788" name="Section ROLAND" position="30UXU2784038341" type="Section ROLAND"/>
+            <unit command-post="false" id="789" name="Section ROLAND" position="30UXU2735737824" type="Section ROLAND"/>
+          </automat>
           <lima name="Lima 113">
             <point>30TXU2858801346</point>
             <point>30TXU3929708509</point>
