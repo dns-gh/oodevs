@@ -63,7 +63,7 @@
       </readwrite>
     </rights>
   </profile>
-    <profile name="Pion LOG Decontaminer Blesses" password="" supervision="true">
+  <profile name="Pion LOG Decontaminer Blesses" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -72,7 +72,7 @@
       </readwrite>
     </rights>
   </profile>
-    <profile name="Pion LOG Mettre En Oeuvre Zone Stationnement" password="" supervision="true">
+  <profile name="Pion LOG Mettre En Oeuvre Zone Stationnement" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -81,7 +81,7 @@
       </readwrite>
     </rights>
   </profile>
-    <profile name="Pion LOG Prendre En Compte Reactions Mentales" password="" supervision="true">
+  <profile name="Pion LOG Prendre En Compte Reactions Mentales" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -117,7 +117,7 @@
       </readwrite>
     </rights>
   </profile>
-    <profile name="Pion LOG Reconnaitre Zone De Deploiement" password="" supervision="true">
+  <profile name="Pion LOG Reconnaitre Zone De Deploiement" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -126,7 +126,7 @@
       </readwrite>
     </rights>
   </profile>
-    <profile name="Pion LOG Renforcer" password="" supervision="true">
+  <profile name="Pion LOG Renforcer" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -190,6 +190,114 @@
     </rights>
   </profile>
   <profile name="Pion LOG Trier Et Traiter Blesses" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Automate LOG Appuyer Franchissement Dans Zone" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Automate LOG Appuyer Mouvement" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Automate LOG Appuyer Mouvement Dans Zone" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Automate LOG Armer PIAs" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Automate LOG Bloquer Zone" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Automate LOG Mettre En Oeuvre Zone Stationnement" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Automate LOG Reconnaitre Itineraire" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Automate LOG Reconnaitre Zone Contaminee" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Automate LOG Reconnaitre Zone De Deploiement" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Automate LOG Se Deployer" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Automate LOG Surveiller" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Automate LOG Transporter Unites" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>

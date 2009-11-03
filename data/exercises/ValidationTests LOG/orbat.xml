@@ -27,7 +27,24 @@
       <logistic/>
     </side>
     <side id="3" name="Les Gentils" type="friend">
-      <objects/>
+      <objects>
+        <object id="896" name="Site de franchissement [896]" type="crossing site">
+          <shape type="ligne">
+            <points>
+              <point>31TCP1309319287</point>
+              <point>31UCP1592122219</point>
+            </points>
+          </shape>
+          <attributes>
+            <crossing-site>
+              <width>1</width>
+              <depth>1</depth>
+              <speed>0</speed>
+              <construction-needed>false</construction-needed>
+            </crossing-site>
+          </attributes>
+        </object>
+      </objects>
       <tactical>
         <formation id="443" level="ii" name="Bataillon Case 5">
           <automat engaged="false" id="445" knowledge-group="4" name="Escadron de Chars AMX30B2 BRENNUS [445]" type="Escadron de Chars AMX30B2 BRENNUS">
@@ -138,6 +155,18 @@
             <unit command-post="false" id="738" name="Patrouille CIRCU P4 [738]" position="31UCP0000950875" type="Patrouille CIRCU P4"/>
             <unit command-post="false" id="739" name="Patrouille CIRCU P4 [739]" position="31UCP0103151332" type="Patrouille CIRCU P4"/>
           </automat>
+          <limit name="Limite 897">
+            <point>31UCP1405038322</point>
+            <point>31TCP0623914016</point>
+          </limit>
+          <limit name="Limite 898">
+            <point>31UCP3087234454</point>
+            <point>31TCP2376905150</point>
+          </limit>
+          <lima name="Lima 897">
+            <point>31UCP0834626692</point>
+            <point>31UCP3464020913</point>
+          </lima>
         </formation>
         <formation id="775" level="ii" name="Logistique Case 5 [775]">
           <automat engaged="false" id="596" knowledge-group="4" name="Zone Fonctionnelle Maintenance BLT [596]" type="Zone Fonctionnelle Maintenance BLT">

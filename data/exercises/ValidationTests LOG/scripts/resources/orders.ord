@@ -1,9 +1,372 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <actions>
 
+<!-- Missions de niveau Automate -->
+
+<!-- LOG -->
+<!-- Automate LOG Surveiller -->
+  <action id="295" name="Automate LOG Surveiller" target="734" time="2009-09-29T17:01:01" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP1405038322"/>
+        <point coordinates="31TCP0623914016"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP3087234454"/>
+        <point coordinates="31TCP2376905150"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone" type="Polygon">
+      <location type="polygon">
+        <point coordinates="31UCP1615434501"/>
+        <point coordinates="31UCP1583129594"/>
+        <point coordinates="31UCP2619127288"/>
+        <point coordinates="31UCP2725230172"/>
+        <point coordinates="31UCP1615434501"/>
+      </location>
+    </parameter>
+  </action>
+<!-- Automate LOG Se Deployer -->
+<action id="286" name="Automate LOG Se Deployer" target="606" time="2009-09-29T18:37:51" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP3087234454"/>
+        <point coordinates="31TCP2376905150"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP1405038322"/>
+        <point coordinates="31TCP0623914016"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Position deploiement" type="Point">
+      <location type="point">
+        <point coordinates="31UCP1651946435"/>
+      </location>
+    </parameter>
+  </action>
+<!-- Automate LOG Reconnaitre Zone De Deploiement -->
+ <action id="294" name="Automate LOG Reconnaitre Zone De Deploiement" target="734" time="2009-09-29T17:33:11" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP1405038322"/>
+        <point coordinates="31TCP0623914016"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP3087234454"/>
+        <point coordinates="31TCP2376905150"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone" type="Polygon">
+      <location type="polygon">
+        <point coordinates="31UCP1812532935"/>
+        <point coordinates="31UCP1572027881"/>
+        <point coordinates="31UCP2473526177"/>
+        <point coordinates="31UCP2594130657"/>
+        <point coordinates="31UCP1812532935"/>
+      </location>
+    </parameter>
+  </action>
+<!-- Automate LOG Reconnaitre Zone Contaminee -->
+  <action id="293" name="Automate LOG Reconnaitre Zone Contaminee" target="734" time="2009-09-29T16:56:51" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP3087234454"/>
+        <point coordinates="31TCP2376905150"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP1405038322"/>
+        <point coordinates="31TCP0623914016"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone" type="Polygon">
+      <location type="polygon">
+        <point coordinates="31UCP1796735714"/>
+        <point coordinates="31UCP1550330193"/>
+        <point coordinates="31UCP2634328102"/>
+        <point coordinates="31UCP2608933267"/>
+        <point coordinates="31UCP1796735714"/>
+      </location>
+    </parameter>
+  </action>
+<!-- Automate LOG Reconnaitre Itineraire -->
+  <action id="288" name="Automate LOG Reconnaitre Itineraire" target="734" time="2009-09-29T16:57:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="202"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP1405038322"/>
+        <point coordinates="31TCP0623914016"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP3087234454"/>
+        <point coordinates="31TCP2376905150"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Itineraire log" type="Path">
+      <parameter name="Point de passage 1" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP0353533387"/>
+        </location>
+      </parameter>
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP2703736273"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="299" name="Automate LOG Reconnaitre Itineraire" target="451" time="2009-09-29T17:05:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP3087234454"/>
+        <point coordinates="31TCP2376905150"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP1405038322"/>
+        <point coordinates="31TCP0623914016"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Itineraire" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP0367633967"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <!-- Automate LOG Mettre En Oeuvre Zone Stationnement -->
+    <action id="290" name="Automate LOG Mettre En Oeuvre Zone Stationnement" target="734" time="2009-09-29T16:47:01" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP1405038322"/>
+        <point coordinates="31TCP0623914016"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP3087234454"/>
+        <point coordinates="31TCP2376905150"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone" type="Polygon">
+      <location type="polygon">
+        <point coordinates="31UCP1727833907"/>
+        <point coordinates="31UCP1607428855"/>
+        <point coordinates="31UCP2451528399"/>
+        <point coordinates="31UCP2457633603"/>
+        <point coordinates="31UCP1727833907"/>
+      </location>
+    </parameter>
+  </action>
+  <!-- Automate LOG Bloquer Zone -->
+   <action id="292" name="Automate LOG Bloquer Zone" target="734" time="2009-09-29T16:52:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP1405038322"/>
+        <point coordinates="31TCP0623914016"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP3087234454"/>
+        <point coordinates="31TCP2376905150"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone" type="Polygon">
+      <location type="polygon">
+        <point coordinates="31UCP1624334974"/>
+        <point coordinates="31UCP1632130181"/>
+        <point coordinates="31UCP2311229412"/>
+        <point coordinates="31UCP2396734861"/>
+        <point coordinates="31UCP1624334974"/>
+      </location>
+    </parameter>
+  </action>
+    <!-- Automate LOG Armer PIAs -->
+     <action id="296" name="Automate LOG Armer PIAs" target="734" time="2009-09-29T20:12:21" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList">
+      <parameter name="Phase line 1" type="lima" value="LIA">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="31UCP0834626692"/>
+            <point coordinates="31UCP3464020913"/>
+          </location>
+        </parameter>
+        <parameter name="Schedule" type="datetime" value="20090929T180841"/>
+      </parameter>
+    </parameter>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP3087234454"/>
+        <point coordinates="31TCP2376905150"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP1405038322"/>
+        <point coordinates="31TCP0623914016"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+     <!-- Automate LOG Appuyer Mouvement Dans Zone -->
+     <action id="289" name="Automate LOG Appuyer Mouvement Dans Zone etape 1" target="734" time="2009-09-29T16:52:21" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP1405038322"/>
+        <point coordinates="31TCP0623914016"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP3087234454"/>
+        <point coordinates="31TCP2376905150"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone" type="Polygon">
+      <location type="polygon">
+        <point coordinates="31UCP1653136021"/>
+        <point coordinates="31UCP1509030302"/>
+        <point coordinates="31UCP2574427827"/>
+        <point coordinates="31UCP2402935500"/>
+        <point coordinates="31UCP1653136021"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="131" name="Automate LOG Appuyer Mouvement Dans Zone etape 2" target="448" time="2009-09-29T18:27:11" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit"/>
+    <parameter name="Limit 2" type="Limit"/>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Itineraire" type="Path">
+      <parameter name="Point de passage 1" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP1746229451"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 2" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP1794431536"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 3" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP1963936672"/>
+        </location>
+      </parameter>
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP1804539759"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+    <!-- Automate LOG Appuyer Mouvement -->
+    <action id="287" name="Automate LOG Appuyer Mouvement etape 1" target="734" time="2009-09-29T16:38:31" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP3087234454"/>
+        <point coordinates="31TCP2376905150"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP1405038322"/>
+        <point coordinates="31TCP0623914016"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Unites a appuyer" type="AgentList">
+      <parameter name="Agent 1:Peloton AMX30B2 BRENNUS CDP OFF[448]" type="agent" value="448"/>
+    </parameter>
+  </action>
+  <action id="131" name="Automate LOG Appuyer Mouvement etape 2" target="448" time="2009-09-29T17:17:51" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit"/>
+    <parameter name="Limit 2" type="Limit"/>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Itineraire" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP1528523400"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+    
+    <!-- Automate LOG Appuyer Franchissement Dans Zone -->
+<action id="291" name="Automate LOG Appuyer Franchissement Dans Zone" target="734" time="2009-09-29T16:48:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP3087234454"/>
+        <point coordinates="31TCP2376905150"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP1405038322"/>
+        <point coordinates="31TCP0623914016"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone" type="Polygon">
+      <location type="polygon">
+        <point coordinates="31UCP1234525930"/>
+        <point coordinates="31TCP0998517616"/>
+        <point coordinates="31TCP1547513760"/>
+        <point coordinates="31UCP2058423040"/>
+        <point coordinates="31UCP1234525930"/>
+      </location>
+    </parameter>
+  </action>
+
 <!-- Missions de niveau Pion -->
   
-    <!-- LOG -->
+     <!-- LOG -->
 <!-- Pion LOG Armer PIA -->
 <action id="129" name="Pion LOG Armer PIA" target="735" time="2009-09-29T18:21:21" type="mission">
     <parameter name="direction dangereuse" type="Direction" value="360"/>
@@ -201,86 +564,7 @@
       </parameter>
     </parameter>
   </action>
-  
-  <!-- Missions ASA -->
-  
-  <!-- Pion ASA Mistral Surveiller / Défendre Site -->
-  <action id="28" name="Pion ASA Mistral Surveiller 1" target="258" time="2009-09-29T16:43:51" type="mission">
-    <parameter name="direction dangereuse" type="Direction" value="360"/>
-    <parameter name="Limas" type="PhaseLineList"/>
-    <parameter name="Limit 1" type="Limit"/>
-    <parameter name="Limit 2" type="Limit"/>
-    <parameter name="Renseignements" type="IntelligenceList"/>
-    <parameter name="Point de deploiement" type="Point">
-      <location type="point">
-        <point coordinates="30UXU3333628836"/>
-      </location>
-    </parameter>
-    <parameter name="Mode deploiement" type="Enumeration" value="0"/>
-  </action>
-  <action id="26" name="Pion ASA Mistral Surveiller 1" target="260" time="2009-09-29T16:44:31" type="mission">
-    <parameter name="direction dangereuse" type="Direction" value="360"/>
-    <parameter name="Limas" type="PhaseLineList"/>
-    <parameter name="Limit 1" type="Limit"/>
-    <parameter name="Limit 2" type="Limit"/>
-    <parameter name="Renseignements" type="IntelligenceList"/>
-    <parameter name="Zone" type="Polygon">
-      <location type="polygon">
-        <point coordinates="30UXU3240630633"/>
-        <point coordinates="30UXU3124629795"/>
-        <point coordinates="30UXU3190628211"/>
-        <point coordinates="30UXU3465528475"/>
-        <point coordinates="30UXU3373530576"/>
-        <point coordinates="30UXU3240630633"/>
-      </location>
-    </parameter>
-    <parameter name="Mode deploiement" type="Enumeration" value="0"/>
-  </action>
-  <action id="151" name="Pion ASA Mistral Surveiller 2" target="744" time="2009-09-29T16:55:11" type="mission">
-    <parameter name="direction dangereuse" type="Direction" value="360"/>
-    <parameter name="Limas" type="PhaseLineList"/>
-    <parameter name="Limit 1" type="Limit"/>
-    <parameter name="Limit 2" type="Limit"/>
-    <parameter name="Renseignements" type="IntelligenceList"/>
-    <parameter name="Itineraire" type="Path">
-      <parameter name="Point de passage 1" type="pathpoint">
-        <location type="point">
-          <point coordinates="30UXU2596733545"/>
-        </location>
-      </parameter>
-      <parameter name="Point de passage 2" type="pathpoint">
-        <location type="point">
-          <point coordinates="30UXU3021729506"/>
-        </location>
-      </parameter>
-      <parameter name="Point de passage 3" type="pathpoint">
-        <location type="point">
-          <point coordinates="30UXU3647528987"/>
-        </location>
-      </parameter>
-      <parameter name="Point de passage 4" type="pathpoint">
-        <location type="point">
-          <point coordinates="30UXU4017234563"/>
-        </location>
-      </parameter>
-      <parameter name="Destination" type="pathpoint">
-        <location type="point">
-          <point coordinates="30UXU3888942834"/>
-        </location>
-      </parameter>
-    </parameter>
-    <parameter name="Zone" type="Polygon">
-      <location type="polygon">
-        <point coordinates="30UXU3250131042"/>
-        <point coordinates="30UXU3098229905"/>
-        <point coordinates="30UXU3171628376"/>
-        <point coordinates="30UXU3464627975"/>
-        <point coordinates="30UXU3453330168"/>
-        <point coordinates="30UXU3250131042"/>
-      </location>
-    </parameter>
-  </action>
-  
+    
     <!-- Pion LOG Reconnaitre Itineraire Case 5-->
    <action id="131" name="LOG Reconnaitre Itineraire Faire Mouvement C5" target="452" time="2009-09-29T16:33:41" type="mission">
     <parameter name="direction dangereuse" type="Direction" value="360"/>
