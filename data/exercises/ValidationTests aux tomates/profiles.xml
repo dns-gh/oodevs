@@ -81,6 +81,96 @@
       </readwrite>
     </rights>
   </profile>
+  <profile name="Automate ASA Defendre Itineraire" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Automate ASA ROLAND-CAROL Defendre Site" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Automate ASA ROLAND-CAROL Defendre Zone" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Automate ASA ROLAND-CAROL Surveiller" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Automate ASA HAWK Defendre Site" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Automate ASA HAWK Defendre Zone" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Automate ASA HAWK Surveiller" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Automate ASA MISTRAL Defendre Site" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Automate ASA MISTRAL Defendre Zone" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Automate ASA MISTRAL Surveiller" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
   <profile name="Automate ASS Acquerir Objectifs" password="" supervision="true">
     <rights>
       <readonly/>
@@ -90,7 +180,7 @@
       </readwrite>
     </rights>
   </profile>
-   <profile name="Automate ASS Reconnaitre Zones Deploiement" password="" supervision="true">
+  <profile name="Automate ASS Reconnaitre Zones Deploiement" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -99,7 +189,7 @@
       </readwrite>
     </rights>
   </profile>
-   <profile name="Automate ASS Se Deployer" password="" supervision="true">
+  <profile name="Automate ASS Se Deployer" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -107,7 +197,7 @@
         <side id="1"/>
       </readwrite>
     </rights>
-  </profile> 
+  </profile>
   <profile name="Automate ABC Appuyer" password="" supervision="true">
     <rights>
       <readonly/>

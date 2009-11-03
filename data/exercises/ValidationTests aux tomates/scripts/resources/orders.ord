@@ -3,6 +3,369 @@
 
 <!-- Missions de niveau Automate -->
 
+<!-- Missions ASA -->
+
+<!-- Automate ASA Defendre Itineraire UC1 -->
+
+<action id="197" name="Automate ASA Defendre Itineraire C1 - 1" target="786" time="2009-09-29T17:18:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Itineraire" type="Path">
+      <parameter name="Point de passage 1" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3231139999"/>
+        </location>
+      </parameter>
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3778747812"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  
+<!-- Automate ASA ROLAND-CAROL Defendre Site UC1 -->
+
+<action id="193" name="Automate ASA ROLAND-CAROL Defendre Site C1 - 1" target="786" time="2009-09-29T17:09:51" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30UXU2488533282"/>
+        <point coordinates="30UXU2936532031"/>
+        <point coordinates="30UXU2919329138"/>
+        <point coordinates="30UXU2458229740"/>
+        <point coordinates="30UXU2488533282"/>
+      </location>
+    </parameter>
+    <parameter name="Positions sections" type="PointList">
+      <parameter name="Location 1" type="location">
+        <location type="point">
+          <point coordinates="30UXU2975638248"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+
+<!-- Automate ASA ROLAND-CAROL Defendre Zone UC1 -->
+
+<action id="194" name="Automate ASA ROLAND-CAROL Defendre Zone C1 - 1" target="786" time="2009-09-29T17:18:11" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30UXU2503433410"/>
+        <point coordinates="30UXU2948532127"/>
+        <point coordinates="30UXU2919429107"/>
+        <point coordinates="30UXU2458029801"/>
+        <point coordinates="30UXU2503433410"/>
+      </location>
+    </parameter>
+    <parameter name="Positions sections" type="PointList">
+      <parameter name="Location 1" type="location">
+        <location type="point">
+          <point coordinates="30UXU2994438163"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+
+<!-- Automate ASA ROLAND-CAROL Surveiller UC1 -->
+
+<action id="196" name="Automate ASA ROLAND-CAROL Surveiller C1 - 1" target="786" time="2009-09-29T17:18:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30UXU2509533443"/>
+        <point coordinates="30UXU2951332220"/>
+        <point coordinates="30UXU2916129168"/>
+        <point coordinates="30UXU2454429923"/>
+        <point coordinates="30UXU2509533443"/>
+      </location>
+    </parameter>
+    <parameter name="Positions sections" type="PointList">
+      <parameter name="Location 1" type="location">
+        <location type="point">
+          <point coordinates="30UXU3014037863"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  
+<!-- Automate ASA HAWK Defendre Site UC1 -->
+
+<action id="202" name="Automate ASA HAWK Defendre Site C1 - 1" target="776" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30UXU2679233339"/>
+        <point coordinates="30UXU2365931844"/>
+        <point coordinates="30UXU2831528281"/>
+        <point coordinates="30UXU3015731019"/>
+        <point coordinates="30UXU2679233339"/>
+      </location>
+    </parameter>
+    <parameter name="Positions sections" type="PointList">
+      <parameter name="Location 1" type="location">
+        <location type="point">
+          <point coordinates="30UXU3459733811"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  
+<!-- Automate ASA HAWK Defendre Zone UC1 -->
+
+<action id="201" name="Automate ASA HAWK Defendre Zone C1 - 1" target="776" time="2009-09-29T16:39:51" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30UXU2837728553"/>
+        <point coordinates="30UXU3036631065"/>
+        <point coordinates="30UXU2671333698"/>
+        <point coordinates="30UXU2354631833"/>
+        <point coordinates="30UXU2837728553"/>
+      </location>
+    </parameter>
+    <parameter name="Positions sections" type="PointList">
+      <parameter name="Location 1" type="location">
+        <location type="point">
+          <point coordinates="30UXU3465233462"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  
+<!-- Automate ASA HAWK Surveiller UC1 -->
+
+<action id="203" name="Automate ASA HAWK Surveiller C1 - 1" target="776" time="2009-09-29T16:41:11" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30UXU2676533945"/>
+        <point coordinates="30UXU3024530984"/>
+        <point coordinates="30UXU2843328708"/>
+        <point coordinates="30UXU2369831900"/>
+        <point coordinates="30UXU2676533945"/>
+      </location>
+    </parameter>
+    <parameter name="Positions sections" type="PointList">
+      <parameter name="Location 1" type="location">
+        <location type="point">
+          <point coordinates="30UXU3471733293"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  
+<!-- Automate ASA MISTRAL Defendre Site UC1 -->
+
+<action id="199" name="Automate ASA MISTRAL Defendre Site C1 - 1" target="780" time="2009-09-29T17:06:11" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30UXU2891229251"/>
+        <point coordinates="30UXU2467429743"/>
+        <point coordinates="30UXU2485733189"/>
+        <point coordinates="30UXU2927531966"/>
+        <point coordinates="30UXU2891229251"/>
+      </location>
+    </parameter>
+    <parameter name="Mode deploiement" type="Enumeration" value="4"/>
+    <parameter name="Angle" type="Numeric" value="60"/>
+  </action>
+  
+<!-- Automate ASA MISTRAL Defendre Zone UC1 -->
+
+<action id="198" name="Automate ASA MISTRAL Defendre Zone C1 - 1" target="780" time="2009-09-29T17:09:11" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30UXU2488433313"/>
+        <point coordinates="30UXU2952431914"/>
+        <point coordinates="30UXU2909929196"/>
+        <point coordinates="30UXU2464329742"/>
+        <point coordinates="30UXU2488433313"/>
+      </location>
+    </parameter>
+    <parameter name="Mode deploiement" type="Enumeration" value="4"/>
+    <parameter name="Angle" type="Numeric" value="60"/>
+  </action>
+  
+<!-- Automate ASA MISTRAL Surveiller UC1 -->
+
+<action id="200" name="Automate ASA MISTRAL Surveiller C1 - 1" target="780" time="2009-09-29T17:09:51" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2240833549"/>
+        <point coordinates="30UXU2901141173"/>
+        <point coordinates="30UXU3908249846"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU2815626435"/>
+        <point coordinates="30UXU3939833831"/>
+        <point coordinates="30UXU4476846292"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30UXU2982931986"/>
+        <point coordinates="30UXU2506933289"/>
+        <point coordinates="30UXU2470129867"/>
+        <point coordinates="30UXU2912529320"/>
+        <point coordinates="30UXU2982931986"/>
+      </location>
+    </parameter>
+    <parameter name="Mode deploiement" type="Enumeration" value="4"/>
+    <parameter name="Angle" type="Numeric" value="60"/>
+  </action>
+
 <!-- Missions ASS -->
 
 <!-- Automate ASS Acquerir Objectifs UC1 -->
