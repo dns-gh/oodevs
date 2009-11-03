@@ -25,13 +25,14 @@ IMPORTS BaseExports                   FROM Base
         AutomateExports               FROM Automat
         ArmyExports                   FROM Army
         AuthExports                   FROM Auth
-        FolkExports                   FROM Folk;
+        FolkExports                   FROM Folk
+        UrbanExports                  FROM Urban;
 
 SimMessagesIncludes ::= SEQUENCE
 { BaseExports, OrderExports, ControlExports, KnowledgeGroupExports,
   FormationExports, FireExports, UnitExports, UnitKnowledgeExports, ObjectExports,
   ObjectKnowledgeExports, PopulationExports, PopulationKnowledgeExports, LogMaintenanceExports,
-  LogRavitaillementExports, LogSanteExports, AutomateExports, ArmyExports, AuthExports, FolkExports}
+  LogRavitaillementExports, LogSanteExports, AutomateExports, ArmyExports, AuthExports, FolkExports, UrbanExports}
 SimMessagesExports  ::= NULL
 -- END includes
 
@@ -173,7 +174,9 @@ MsgsSimToClient ::= SEQUENCE
         msg-population-flow-knowledge-update                    MsgPopulationFlowKnowledgeUpdate,
 
         msg-folk-creation                                       MsgFolkCreation,
-        msg-folk-graph-update                                   MsgFolkGraphUpdate
+        msg-folk-graph-update                                   MsgFolkGraphUpdate,
+        
+        msg-urban-creation                                      MsgUrbanCreation
     }
 }
 

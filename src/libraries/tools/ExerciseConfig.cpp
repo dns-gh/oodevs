@@ -81,6 +81,9 @@ void ExerciseConfig::LoadExercise( const std::string& file )
                 >> start( "profiles" )
                     >> attribute( "file", profiles_ )
                 >> end()
+                >> optional() >> start( "urban" )
+                    >> attribute( "file", urban_ )
+                >> end()
                 >> optional() >> start( "population" )
                     >> attribute( "name", population_ )
                 >> end()
@@ -217,6 +220,17 @@ std::string ExerciseConfig::GetWeatherFile() const
 std::string ExerciseConfig::GetOrbatFile() const
 {
     return BuildExerciseChildFile( orbat_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetUrbanFile
+// Created: AGE 2008-03-13
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::GetUrbanFile() const
+{
+    if( urban_.empty() )
+        return urban_;
+    return BuildExerciseChildFile( urban_ );
 }
 
 // -----------------------------------------------------------------------------

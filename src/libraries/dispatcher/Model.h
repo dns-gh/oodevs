@@ -56,6 +56,7 @@ namespace dispatcher
     class AgentKnowledge;
     class ObjectKnowledge;
     class PopulationKnowledge;
+    class UrbanObject;
 
 // =============================================================================
 /** @class  Model
@@ -164,6 +165,7 @@ public:
     tools::Resolver< PopulationFire >         populationFires_;
     tools::Resolver< FireEffect >             fireEffects_;
     tools::Resolver< Report >                 reports_;
+    tools::Resolver< UrbanObject >            urbanBlocks_;
     //@}
 };
 

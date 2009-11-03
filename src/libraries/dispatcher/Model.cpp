@@ -33,6 +33,7 @@
 #include "Synchroniser.h"
 #include "FolkModel.h"
 #include "Report.h"
+#include "UrbanObject.h"
 #include "SimulationModel.h"
 #include "clients_kernel/AgentTypes.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
@@ -85,6 +86,7 @@ void Model::Reset()
     knowledgeGroups_        .DeleteAll();
     formations_             .DeleteAll();
     sides_                  .DeleteAll();
+    urbanBlocks_            .DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -227,6 +229,7 @@ void Model::Update( const ASN1T_MsgsSimToClient& asn )
         case T_MsgsSimToClient_msg_msg_population_flow_knowledge_destruction          : populationKnowledges_.Get( asn.msg.u.msg_population_flow_knowledge_destruction->oid_connaissance_population ).Update( *asn.msg.u.msg_population_flow_knowledge_destruction ); break;
         case T_MsgsSimToClient_msg_msg_folk_creation                                  : folk_->Update( *asn.msg.u.msg_folk_creation ); break;
 
+        case T_MsgsSimToClient_msg_msg_urban_creation                                 : CreateUpdate( urbanBlocks_, *asn.msg.u.msg_urban_creation ); break;
 //        default:
 //            assert( false );//@TODO restore an exception, some messages aren't linked
     }
@@ -346,6 +349,7 @@ void Model::Accept( ModelVisitor_ABC& visitor ) const
     populationFires_       .Apply( boost::bind( &PopulationFire::Accept, _1, boost::ref( visitor ) ) );
     fireEffects_           .Apply( boost::bind( &FireEffect::Accept, _1, boost::ref( visitor ) ) );
     reports_               .Apply( boost::bind( &Report::Accept, _1, boost::ref( visitor ) ) );
+    urbanBlocks_           .Apply( boost::bind( &UrbanObject::Accept, _1, boost::ref( visitor ) ) );
 }
 
 // -----------------------------------------------------------------------------

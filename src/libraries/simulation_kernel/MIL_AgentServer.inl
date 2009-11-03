@@ -231,6 +231,17 @@ MIL_Folk& MIL_AgentServer::GetFolkManager() const
     return *pFolk_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::UrbanModel
+// Created: SLG 2009-10-11
+// -----------------------------------------------------------------------------
+inline
+UrbanModel& MIL_AgentServer::GetUrbanModel() const
+{
+    assert( pUrbanModel_ );
+    return *pUrbanModel_;
+}
+
 //=============================================================================
 // STATICS
 //=============================================================================

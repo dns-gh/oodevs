@@ -272,6 +272,8 @@ private:
     // Plugin
     void OnReceiveMsgPluginTextMessage  ( const ASN1T_MsgPluginTextMessage& asnMsg );
 
+    // Urban
+    void OnReceiveMsgUrbanCreation( const ASN1T_MsgUrbanCreation& asnMsg );
     //@}
 
     //! @name Helpers

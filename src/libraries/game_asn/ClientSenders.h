@@ -99,6 +99,7 @@ GENERATE_ASN_MSG_SENDER      ( SimToClient, PopulationFlowKnowledgeCreation     
 GENERATE_ASN_MSG_SENDER      ( SimToClient, PopulationFlowKnowledgeDestruction            , population_flow_knowledge_destruction             );
 GENERATE_ASN_MSG_SENDER      ( SimToClient, PopulationFlowKnowledgeUpdate                 , population_flow_knowledge_update                  );
 GENERATE_ASN_MSG_SENDER      ( SimToClient, FolkCreation                                  , folk_creation                                     );
+GENERATE_ASN_MSG_SENDER      ( SimToClient, UrbanCreation                                 , urban_creation                                    );
 
 }
 

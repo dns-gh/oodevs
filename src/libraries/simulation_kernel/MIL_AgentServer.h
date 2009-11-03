@@ -30,6 +30,7 @@ class MIL_ProfilerMgr;
 class HLA_Federate;
 class ProcessMonitor;
 class MIL_Folk;
+class UrbanModel;
 
 //*****************************************************************************
 // Created: DFT 02-02-28
@@ -90,6 +91,7 @@ public:
     //@{    
     MIL_EntityManager&       GetEntityManager      () const;
     MIL_Folk&                GetFolkManager        () const;
+    UrbanModel&              GetUrbanModel         () const;
     MIL_EffectManager&       GetEffectManager      () const;
     DEC_Workspace&           GetWorkspaceDIA       () const;
     NET_AgentServer&         GetAgentServer        () const;
@@ -171,6 +173,8 @@ private:
     HLA_Federate*                pFederate_;
     
     MIL_Folk*                    pFolk_;
+
+    UrbanModel*                  pUrbanModel_;
 
     ProcessMonitor*              pProcessMonitor_;
 

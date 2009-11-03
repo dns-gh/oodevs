@@ -18,12 +18,6 @@ namespace kernel
     class ObjectKnowledgeConverter_ABC;
 }
 
-namespace urban
-{
-    class Model;
-    class StaticModel;
-}
-
 namespace tools
 {
     class Controllers;
@@ -66,6 +60,7 @@ class DrawingsModel;
 class ScoreModel;
 class ActionFactory_ABC;
 class ParameterFactory_ABC;
+class UrbanModel;
 
 // =============================================================================
 /** @class  Model
@@ -127,9 +122,7 @@ public:
     IntelligencesModel&   intelligences_;
     DrawingsModel&        drawings_;
     ScoreModel&           scores_;
-    //tools::Controllers&   urbanControllers_;
-    //urban::StaticModel&   urbanStaticModel_;
-    //urban::Model&         urbanModel_;
+    UrbanModel&           urbanObjects_;
     //@}
 
 private:

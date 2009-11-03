@@ -1156,6 +1156,10 @@
         <source> - Not connected</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Urban</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceConsignsWidget</name>

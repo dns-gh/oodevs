@@ -10,6 +10,11 @@
 #ifndef __StaticModel_h_
 #define __StaticModel_h_
 
+
+namespace urban
+{
+    class StaticModel;
+}
 namespace kernel
 {
     class AgentTypes;
@@ -81,6 +86,7 @@ public:
     indicators::Primitives&          indicators_;
     indicators::GaugeTypes&          gaugeTypes_;
     ScoreDefinitions&                scores_;
+    urban::StaticModel&              urbanTypes_;
     //@}
 
 private:

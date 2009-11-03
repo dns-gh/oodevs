@@ -146,7 +146,8 @@ void ObjectMagicOrdersInterface::ActivateReservedObstacle()
 {
     ASN1T_MagicActionUpdateObject asn;
     asn.attributes.m.obstaclePresent = 1;
-    asn.attributes.obstacle.activated = 1;    
+    asn.attributes.obstacle.activated = 1;  
+    asn.attributes.obstacle.type =  EnumDemolitionTargetType.reserved; 
     SendObjectMagic( asn );
 }
     
@@ -158,7 +159,8 @@ void ObjectMagicOrdersInterface::DeactivateReservedObstacle()
 {
     ASN1T_MagicActionUpdateObject asn;
     asn.attributes.m.obstaclePresent = 1;
-    asn.attributes.obstacle.activated = 0;    
+    asn.attributes.obstacle.activated = 0;
+    asn.attributes.obstacle.type =  EnumDemolitionTargetType.reserved; 
     SendObjectMagic( asn );
 }
 

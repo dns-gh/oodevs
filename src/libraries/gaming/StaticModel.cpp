@@ -25,6 +25,7 @@
 #include "indicators/Primitives.h"
 #include "indicators/GaugeTypes.h"
 #include "tools/ExerciseConfig.h"
+#include "urban/StaticModel.h"
 
 using namespace kernel;
 
@@ -46,6 +47,7 @@ StaticModel::StaticModel( Controllers& controllers, const RcEntityResolver_ABC& 
     , indicators_         ( *new indicators::Primitives() )
     , gaugeTypes_         ( *new indicators::GaugeTypes() )
     , scores_             ( *new ScoreDefinitions( indicators_, gaugeTypes_ ) )
+    , urbanTypes_         ( *new urban::StaticModel() )
 {
     // NOTHING
 }
@@ -68,6 +70,7 @@ StaticModel::~StaticModel()
     delete &types_;
     delete &detection_;
     delete &coordinateConverter_;
+    delete &urbanTypes_;
 }
 
 // -----------------------------------------------------------------------------
@@ -102,6 +105,7 @@ void StaticModel::Purge()
     reportFactory_.Purge();
     types_.Purge();
     objectTypes_.Purge();
+    //urbanTypes_.Purge();
 }
 
     

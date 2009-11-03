@@ -225,6 +225,9 @@ GENERATE_ASN_MSG_SENDER( SimToClient, PopulationFlowKnowledgeUpdate             
 GENERATE_ASN_MSG_SENDER( SimToClient, FolkCreation   , folk_creation     )
 GENERATE_ASN_MSG_SENDER( SimToClient, FolkGraphUpdate, folk_graph_update )
 
+// Urban
+GENERATE_ASN_MSG_SENDER( SimToClient, UrbanCreation  , urban_creation    )
+
 #endif // __NET_ASN_Messages_h_
 
 

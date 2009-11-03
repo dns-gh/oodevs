@@ -14,6 +14,7 @@
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "MIL_Folk.h"
+#include "Urban/UrbanModel.h"
 
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Network/NET_AgentServer.h"
@@ -65,6 +66,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , pFederate_               ( 0 )
     , pProcessMonitor_         ( new ProcessMonitor() )
     , pFolk_                   ( new MIL_Folk( config ) )
+    , pUrbanModel_             ( new UrbanModel() )
 {
     assert( !pTheAgentServer_ );
     pTheAgentServer_ = this;
@@ -80,7 +82,8 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
         // $$$$ NLD 2007-01-11: A nettoyer - pb pEntityManager_ instancié par checkpoint
         pEntityManager_     = new MIL_EntityManager    ( *this, *pEffectManager_, *pProfilerMgr_, pFederate_, pWorkspaceDIA_->GetDatabase() );
         pCheckPointManager_ = new MIL_CheckPointManager( config_ );
-        pEntityManager_->ReadODB( config_ );                        
+        pEntityManager_->ReadODB( config_ );  
+        pUrbanModel_->ReadUrbanModel( config_ );
         Resume();
     }
 
@@ -322,6 +325,7 @@ void MIL_AgentServer::SendStateToNewClient() const
 {    
     pEntityManager_->SendStateToNewClient();
     pFolk_->SendStateToNewClient();
+    pUrbanModel_->SendStateToNewClient();
 }
 
 // =============================================================================

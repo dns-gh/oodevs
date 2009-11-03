@@ -50,6 +50,7 @@ public:
 
     virtual std::string GetWeatherFile () const;
     virtual std::string GetOrbatFile   () const;
+    virtual std::string GetUrbanFile   () const;
     virtual std::string GetProfilesFile() const;
     virtual std::string GetPopulationFile() const;
     virtual std::string GetScoresFile() const;
@@ -80,6 +81,7 @@ private:
     std::string weather_;
     std::string orbat_;
     std::string profiles_;
+    std::string urban_;
     std::string scores_;
     std::string successFactors_;
     std::string population_;

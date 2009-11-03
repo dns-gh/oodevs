@@ -43,6 +43,7 @@
 #include "IntelligencesModel.h"
 #include "DrawingsModel.h"
 #include "ScoreModel.h"
+#include "UrbanModel.h"
 #include "CommandHandler.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
@@ -1475,7 +1476,14 @@ void AgentServerMsgMgr::OnReceiveMsgPluginTextMessage  ( const ASN1T_MsgPluginTe
     commands_.Receive( "xmlia", message.destinataire, message.message );
 }
 
-
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgFolkCreation
+// Created: SLG 2009-10-24
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgUrbanCreation( const ASN1T_MsgUrbanCreation& asnMsg )
+{
+    GetModel().urbanObjects_.Create( asnMsg );
+}
 
 
 namespace
@@ -1623,9 +1631,11 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const ASN1
         case T_MsgsSimToClient_msg_msg_population_flow_knowledge_destruction          : OnReceiveMsgPopulationFlowKnowledgeDestruction         ( *message.msg.u.msg_population_flow_knowledge_destruction          ); break;
         case T_MsgsSimToClient_msg_msg_unit_environment_type                          : break; // $$$$ AGE 2007-07-06: 
 
-        case T_MsgsSimToClient_msg_msg_folk_creation                                  : OnReceiveMsgFolkCreation   ( *message.msg.u.msg_folk_creation ); break;
-        case T_MsgsSimToClient_msg_msg_folk_graph_update                              : OnReceiveMsgFolkGraphUpdate( *message.msg.u.msg_folk_graph_update ); break;
+        case T_MsgsSimToClient_msg_msg_folk_creation                                  : OnReceiveMsgFolkCreation    ( *message.msg.u.msg_folk_creation ); break;
+        case T_MsgsSimToClient_msg_msg_folk_graph_update                              : OnReceiveMsgFolkGraphUpdate ( *message.msg.u.msg_folk_graph_update ); break;
 
+        case T_MsgsSimToClient_msg_msg_urban_creation                                 : OnReceiveMsgUrbanCreation   ( *message.msg.u.msg_urban_creation ); break;
+   
         default:
             UnhandledMessage( message.msg.t );
     };
