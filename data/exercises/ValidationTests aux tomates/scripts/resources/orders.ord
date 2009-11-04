@@ -3,6 +3,120 @@
 
 <!-- Missions de niveau Automate -->
 
+<!-- Mission NBC -->
+
+<!-- Automate NBC Armer Un Site De Decontamination UC1 -->
+
+<action id="317" name="Automate NBC Armer Un Site De Decontamination C1 - 1" target="838" time="2009-09-29T18:54:11" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU5123143194"/>
+        <point coordinates="30UXU4464330590"/>
+        <point coordinates="30TXU5220513550"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU6337045018"/>
+        <point coordinates="30TXU6366212280"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Site" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30UXU5526031061"/>
+        <point coordinates="30UXU5317132045"/>
+        <point coordinates="30UXU5518034274"/>
+        <point coordinates="30UXU5778633162"/>
+        <point coordinates="30UXU5526031061"/>
+      </location>
+    </parameter>
+  </action>
+
+<!-- Automate NBC Decontaminer Une Zone UC1 -->
+
+<action id="318" name="Automate NBC Decontaminer Une Zone C1 - 1" target="838" time="2009-09-29T18:37:31" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU5123143194"/>
+        <point coordinates="30UXU4464330590"/>
+        <point coordinates="30TXU5220513550"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU6337045018"/>
+        <point coordinates="30TXU6366212280"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30UXU5505630615"/>
+        <point coordinates="30UXU5305932114"/>
+        <point coordinates="30UXU5507934014"/>
+        <point coordinates="30UXU5803233463"/>
+        <point coordinates="30UXU5505630615"/>
+      </location>
+    </parameter>
+  </action>
+
+<!-- Automate NBC Reconnaitre Un Axe UC1 -->
+
+<action id="315" name="Automate NBC Reconnaitre Un Axe C1 - 1" target="843" time="2009-09-29T17:48:51" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU5123143194"/>
+        <point coordinates="30UXU4464330590"/>
+        <point coordinates="30TXU5220513550"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU6337045018"/>
+        <point coordinates="30TXU6366212280"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+
+<!-- Automate NBC Reconnaitre Une Zone UC1 -->
+
+<action id="316" name="Automate NBC Reconnaitre Une Zone C1 - 1" target="843" time="2009-09-29T18:09:21" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU5123143194"/>
+        <point coordinates="30UXU4464330590"/>
+        <point coordinates="30TXU5220513550"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UXU6337045018"/>
+        <point coordinates="30TXU6366212280"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30UXU5395933572"/>
+        <point coordinates="30UXU5044137611"/>
+        <point coordinates="30UXU5573640178"/>
+        <point coordinates="30UXU5849235928"/>
+        <point coordinates="30UXU5395933572"/>
+      </location>
+    </parameter>
+  </action>
+
+
 <!-- Missions ASA -->
 
 <!-- Automate ASA Defendre Itineraire UC1 -->
