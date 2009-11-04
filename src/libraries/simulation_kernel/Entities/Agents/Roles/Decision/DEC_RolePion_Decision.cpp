@@ -327,11 +327,11 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > >( boost::shared_ptr< DEC_Knowledge_Object >, float, const std::vector< std::string >& ) >(
         boost::bind( &DEC_PathFunctions::GetNextObjectOnPath, boost::ref( GetPion() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_Itineraire_ExtrapolerPosition" ,
-        boost::function< boost::shared_ptr< MT_Vector2D > ( const MT_Float, bool ) >( boost::bind( &DEC_PathFunctions::ExtrapolatePosition, boost::ref( GetPion() ), _1, _2 ) ) );
+        boost::function< boost::shared_ptr< MT_Vector2D >( const MT_Float, bool ) >( boost::bind( &DEC_PathFunctions::ExtrapolatePosition, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Itineraire_DernierPoint",
-        boost::function< boost::shared_ptr< MT_Vector2D > ( const DEC_Path_ABC* ) >(boost::bind( &DEC_PathFunctions::GetLastPointOfPath, boost::ref( GetPion() ), _1 ) ) );
+        boost::function< boost::shared_ptr< MT_Vector2D >( const DEC_Path_ABC* ) >( boost::bind( &DEC_PathFunctions::GetLastPointOfPath, boost::ref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Itineraire_EstEnMouvementSur",
-        boost::function< bool ( const DEC_Path_ABC* ) >(boost::bind( &DEC_PathFunctions::IsMovingOnPath, boost::ref( GetPion() ), _1 ) ) );
+        boost::function< bool ( const DEC_Path_ABC* ) >( boost::bind( &DEC_PathFunctions::IsMovingOnPath, boost::ref( GetPion() ), _1 ) ) );
   
     // Perception
     brain.RegisterFunction( "DEC_Perception_ActiverCoupsDeSonde",

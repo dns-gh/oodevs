@@ -322,7 +322,6 @@ end
             RemovePerception_ReconnaissancePoint_Callback ( self.pPtObj )
             DEC_Perception_DesactiverReconnaissancePoint( self.perceptionPoint )
             DEC_Perception_DesactiverDetectionObjetLocalisation( self.pPtObj )
-            Feedback( self.feedbacks["onHalt"], { "ACT_Obs_ObserverPoint" } )
             Halt( self )
             return
         end,

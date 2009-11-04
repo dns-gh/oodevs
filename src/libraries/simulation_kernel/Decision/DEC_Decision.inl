@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#include "simulation_kernel_pch.h"
-#include "DEC_Decision.h"
 #include "DEC_Model_ABC.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "Decision/DEC_DataBase.h"
+#include "Decision/Functions/DEC_PathFunctions.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "MT_Tools/MT_CrashHandler.h"
 
@@ -749,6 +749,26 @@ template <class T>
 float DEC_Decision<T>::GetNiveauAlerteRavitaillement()
 {
     return GetVariable<float>( "myself.rNiveauAlerteRavitaillement_" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< MT_Vector2D > DEC_Decision::GetLastPointOfPath
+// Created: LDC 2009-11-04
+// -----------------------------------------------------------------------------
+template <class T>
+boost::shared_ptr< MT_Vector2D > DEC_Decision<T>::GetLastPointOfPath( const MT_Float time, bool bBoundOnPath ) const
+{
+    return DEC_PathFunctions::ExtrapolatePosition( GetPion(), time, bBoundOnPath );
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< MT_Vector2D > DEC_Decision::ExtrapolatePosition
+// Created: LDC 2009-11-04
+// -----------------------------------------------------------------------------
+template <class T>
+boost::shared_ptr< MT_Vector2D > DEC_Decision<T>::ExtrapolatePosition( const MT_Float time, bool bBoundOnPath ) const
+{
+    return DEC_PathFunctions::ExtrapolatePosition( GetPion(), time, bBoundOnPath );
 }
 
 // -----------------------------------------------------------------------------

@@ -126,6 +126,9 @@ public:
     virtual bool IsDead() const = 0;
     virtual void WearNbcProtectionSuit() const = 0;
     virtual void RemoveNbcProtectionSuit() const = 0;
+    
+    virtual boost::shared_ptr< MT_Vector2D > GetLastPointOfPath( const MT_Float time, bool bBoundOnPath ) const = 0;
+    virtual boost::shared_ptr< MT_Vector2D > ExtrapolatePosition( const MT_Float time, bool bBoundOnPath ) const = 0;  
     //@}
 
     //! @name Serialization

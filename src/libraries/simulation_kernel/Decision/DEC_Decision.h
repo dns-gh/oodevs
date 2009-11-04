@@ -100,7 +100,9 @@ public:
     virtual int GetPorteeAction();
     virtual void SetPorteeAction( int );
     virtual float GetNiveauAlerteRavitaillement();
-    
+    virtual boost::shared_ptr< MT_Vector2D > GetLastPointOfPath( const MT_Float time, bool bBoundOnPath ) const;
+    virtual boost::shared_ptr< MT_Vector2D > ExtrapolatePosition( const MT_Float time, bool bBoundOnPath ) const;
+   
     virtual std::vector< DEC_Decision_ABC* > GetPionsWithPC();
     virtual bool IsNeutralized() const;
     virtual bool IsMoving() const;

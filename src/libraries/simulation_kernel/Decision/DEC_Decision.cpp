@@ -82,7 +82,7 @@ void RegisterCommonUserFunctions( directia::Brain& brain, unsigned int id )
     brain.RegisterFunction( "DEC_Geometrie_ConvertirFuseauEnLocalisation",      &DEC_GeometryFunctions::ConvertFuseauToLocalisation );
     brain.RegisterFunction( "DEC_Geometrie_ProchainObjectifDansFuseau",         &DEC_GeometryFunctions::GetNextObjectiveInFuseau );
     
-    directia::ScriptRef& initQueryFunction = brain.GetScriptFunction( "InitQueryReturn" );
+    directia::ScriptRef initQueryFunction = brain.GetScriptFunction( "InitQueryReturn" );
     //Keypoint
     brain.RegisterFunction( "DEC_Crossroads", 
         boost::function< void( float, float, float, float, const directia::ScriptRef& ) >( boost::bind( &DEC_GeometryFunctions::GetCrossroads, initQueryFunction, _1 , _2, _3, _4, _5 ) ) ) ;
@@ -163,7 +163,7 @@ void RegisterCommonUserFunctions( directia::Brain& brain, unsigned int id )
     brain.RegisterFunction( "DEC_AssignMissionPionListParameter",            &MIL_MissionParameterFactory::SetPionListParameter );
     brain.RegisterFunction( "DEC_AssignMissionLocationListParameter",        &MIL_MissionParameterFactory::SetLocationListParameter );
     
-    directia::ScriptRef& initParameterFunction = brain.GetScriptFunction( "InitTaskParameter" );
+    directia::ScriptRef initParameterFunction = brain.GetScriptFunction( "InitTaskParameter" );
     brain.RegisterFunction( "DEC_FillMissionParameters",
         boost::function< void( const directia::ScriptRef&, MIL_Mission_ABC* ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, initParameterFunction, _1 , _2 ) ) );
     
@@ -197,6 +197,9 @@ void RegisterCommonUserFunctions( directia::Brain& brain, unsigned int id )
     brain.RegisterFunction( "GetporteeAction_", &DEC_Decision_ABC::GetPorteeAction );
     brain.RegisterFunction( "SetporteeAction_", &DEC_Decision_ABC::SetPorteeAction );
     brain.RegisterFunction( "GetrNiveauAlerteRavitaillement_", &DEC_Decision_ABC::GetNiveauAlerteRavitaillement );
+
+    brain.RegisterFunction( "DEC_Itineraire_DernierPoint", &DEC_Decision_ABC::GetLastPointOfPath );
+    brain.RegisterFunction( "DEC_Itineraire_ExtrapolerPosition" , &DEC_Decision_ABC::ExtrapolatePosition );
 
     //Representations    
     brain.RegisterFunction( "Getpoint_", &DEC_PathPoint::GetPos );
