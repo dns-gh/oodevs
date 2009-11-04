@@ -139,6 +139,7 @@ bool UrbanLayer::HandleMousePress( QMouseEvent* input, const geometry::Point2f& 
                 {
                     selectedObjects_.clear();
                     selectedObjects_.push_back( object );
+                    return true;
                 }
                 else
                 {
@@ -146,7 +147,10 @@ bool UrbanLayer::HandleMousePress( QMouseEvent* input, const geometry::Point2f& 
                     if ( selectedObject != selectedObjects_.end() )
                         selectedObjects_.erase( selectedObject );
                     else
+                    {
                         selectedObjects_.push_back( object );
+                        return true;
+                    }
                 }
             }
         }
@@ -154,7 +158,7 @@ bool UrbanLayer::HandleMousePress( QMouseEvent* input, const geometry::Point2f& 
             selectedObjects_.clear();
 
     }
-    return true;
+    return false;
 
 }
 
