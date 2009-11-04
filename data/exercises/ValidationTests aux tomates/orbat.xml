@@ -161,6 +161,11 @@
             <unit command-post="true" id="844" name="Patrouille Reco NBC CDT" position="30UXU6094922128" type="Patrouille Reco NBC CDT"/>
             <unit command-post="false" id="845" name="Patrouille Reco NBC" position="30UXU6146821647" type="Patrouille Reco NBC"/>
           </automat>
+          <automat engaged="true" id="894" knowledge-group="2" name="Reco ROTA [894]" type="Reco ROTA">
+            <unit command-post="true" id="895" name="Equipe Reco ROTA" position="30UXU5126421670" type="Equipe Reco ROTA"/>
+            <unit command-post="false" id="896" name="Equipe Reco ROTA" position="30UXU5178321189" type="Equipe Reco ROTA"/>
+            <unit command-post="false" id="897" name="Equipe Reco ROTA" position="30UXU5130120672" type="Equipe Reco ROTA"/>
+          </automat>
           <lima name="Lima 113">
             <point>30TXU2858801346</point>
             <point>30TXU3929708509</point>
@@ -441,6 +446,16 @@
           </shape>
           <attributes>
             <obstacle activated="true" type="preliminary"/>
+          </attributes>
+        </object>
+        <object id="946" name="Site ROTA [946]" type="rota area">
+          <shape type="point">
+            <points>
+              <point>30UXU5188026898</point>
+            </points>
+          </shape>
+          <attributes>
+            <nbc-agents state="gaseous"/>
           </attributes>
         </object>
       </objects>
