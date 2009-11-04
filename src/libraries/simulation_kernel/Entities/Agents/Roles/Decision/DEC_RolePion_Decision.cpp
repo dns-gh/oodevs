@@ -798,7 +798,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_Transport_EnCoursDeTransport",
                             boost::bind( &DEC_ActionFunctions::Transport_IsTransporting, boost::ref( GetPion() ) ) );
 
-    brain.RegisterFunction( "DEC_Agent_PeutTransporterPion"          , &DEC_ActionFunctions::CanTransportPion                         );        
+    brain.RegisterFunction( "DEC_Agent_PeutTransporterPion",
+            boost::function< bool( const DEC_Decision_ABC*, bool ) >( boost::bind( &DEC_ActionFunctions::CanTransportPion, boost::ref( GetPion() ), _1, _2 ) ) );
 
     // Prisonniers
     brain.RegisterFunction( "DEC_Prisonniers_CapturerEtEmbarquer" ,
