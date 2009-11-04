@@ -9,6 +9,15 @@
       </readwrite>
     </rights>
   </profile>
+   <profile name="Automate TRANS Commander" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
   <profile name="Automate GEN Degager Obstacles Dans Zone" password="" supervision="true">
     <rights>
       <readonly/>
@@ -73,159 +82,6 @@
     </rights>
   </profile>
   <profile name="Automate GEN Se Deployer" password="" supervision="true">
-    <rights>
-      <readonly/>
-      <readwrite>
-        <side id="3"/>
-        <side id="1"/>
-      </readwrite>
-    </rights>
-  </profile>
-  <profile name="Automate NBC Armer Un Site De Decontamination" password="" supervision="true">
-    <rights>
-      <readonly/>
-      <readwrite>
-        <side id="3"/>
-        <side id="1"/>
-      </readwrite>
-    </rights>
-  </profile>
-  <profile name="Automate NBC Decontaminer Une Zone" password="" supervision="true">
-    <rights>
-      <readonly/>
-      <readwrite>
-        <side id="3"/>
-        <side id="1"/>
-      </readwrite>
-    </rights>
-  </profile>
-  <profile name="Automate NBC Reconnaitre Un Axe" password="" supervision="true">
-    <rights>
-      <readonly/>
-      <readwrite>
-        <side id="3"/>
-        <side id="1"/>
-      </readwrite>
-    </rights>
-  </profile>
-  <profile name="Automate NBC Reconnaitre Une Zone" password="" supervision="true">
-    <rights>
-      <readonly/>
-      <readwrite>
-        <side id="3"/>
-        <side id="1"/>
-      </readwrite>
-    </rights>
-  </profile>
-  <profile name="Automate ASA Defendre Itineraire" password="" supervision="true">
-    <rights>
-      <readonly/>
-      <readwrite>
-        <side id="3"/>
-        <side id="1"/>
-      </readwrite>
-    </rights>
-  </profile>
-  <profile name="Automate ASA ROLAND-CAROL Defendre Site" password="" supervision="true">
-    <rights>
-      <readonly/>
-      <readwrite>
-        <side id="3"/>
-        <side id="1"/>
-      </readwrite>
-    </rights>
-  </profile>
-  <profile name="Automate ASA ROLAND-CAROL Defendre Zone" password="" supervision="true">
-    <rights>
-      <readonly/>
-      <readwrite>
-        <side id="3"/>
-        <side id="1"/>
-      </readwrite>
-    </rights>
-  </profile>
-  <profile name="Automate ASA ROLAND-CAROL Surveiller" password="" supervision="true">
-    <rights>
-      <readonly/>
-      <readwrite>
-        <side id="3"/>
-        <side id="1"/>
-      </readwrite>
-    </rights>
-  </profile>
-  <profile name="Automate ASA HAWK Defendre Site" password="" supervision="true">
-    <rights>
-      <readonly/>
-      <readwrite>
-        <side id="3"/>
-        <side id="1"/>
-      </readwrite>
-    </rights>
-  </profile>
-  <profile name="Automate ASA HAWK Defendre Zone" password="" supervision="true">
-    <rights>
-      <readonly/>
-      <readwrite>
-        <side id="3"/>
-        <side id="1"/>
-      </readwrite>
-    </rights>
-  </profile>
-  <profile name="Automate ASA HAWK Surveiller" password="" supervision="true">
-    <rights>
-      <readonly/>
-      <readwrite>
-        <side id="3"/>
-        <side id="1"/>
-      </readwrite>
-    </rights>
-  </profile>
-  <profile name="Automate ASA MISTRAL Defendre Site" password="" supervision="true">
-    <rights>
-      <readonly/>
-      <readwrite>
-        <side id="3"/>
-        <side id="1"/>
-      </readwrite>
-    </rights>
-  </profile>
-  <profile name="Automate ASA MISTRAL Defendre Zone" password="" supervision="true">
-    <rights>
-      <readonly/>
-      <readwrite>
-        <side id="3"/>
-        <side id="1"/>
-      </readwrite>
-    </rights>
-  </profile>
-  <profile name="Automate ASA MISTRAL Surveiller" password="" supervision="true">
-    <rights>
-      <readonly/>
-      <readwrite>
-        <side id="3"/>
-        <side id="1"/>
-      </readwrite>
-    </rights>
-  </profile>
-  <profile name="Automate ASS Acquerir Objectifs" password="" supervision="true">
-    <rights>
-      <readonly/>
-      <readwrite>
-        <side id="3"/>
-        <side id="1"/>
-      </readwrite>
-    </rights>
-  </profile>
-  <profile name="Automate ASS Reconnaitre Zones Deploiement" password="" supervision="true">
-    <rights>
-      <readonly/>
-      <readwrite>
-        <side id="3"/>
-        <side id="1"/>
-      </readwrite>
-    </rights>
-  </profile>
-  <profile name="Automate ASS Se Deployer" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>

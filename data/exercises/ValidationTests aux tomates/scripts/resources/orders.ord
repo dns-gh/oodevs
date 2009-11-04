@@ -3,6 +3,39 @@
 
 <!-- Missions de niveau Automate -->
 
+<!-- TRANS -->
+
+<!-- Automate TRANS Commander -->
+
+<action id="328" name="Automate TRANS Commander" target="714" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT4814725518"/>
+        <point coordinates="30TXT4168933222"/>
+        <point coordinates="30TXT3312342817"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30TXT3842519598"/>
+        <point coordinates="30TXT3111325435"/>
+        <point coordinates="30TXT2632439821"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone deploiement" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30TXT3522324410"/>
+        <point coordinates="30TXT3710622889"/>
+        <point coordinates="30TXT3841324288"/>
+        <point coordinates="30TXT3758226081"/>
+        <point coordinates="30TXT3522324410"/>
+      </location>
+    </parameter>
+  </action>
+
 <!-- Mission NBC -->
 
 <!-- Automate NBC Armer Un Site De Decontamination UC1 -->

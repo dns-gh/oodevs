@@ -117,55 +117,6 @@
             <unit command-post="false" id="664" name="Section Equipement Zone Poser" position="30UXU4931426938" type="Section Equipement Zone Poser"/>
             <unit command-post="false" id="665" name="Groupe Chantier" position="30UXU4887426664" type="Groupe Chantier"/>
           </automat>
-          <automat engaged="true" id="714" knowledge-group="2" name="Batterie de Reco AUF1 [714]" type="Batterie de Reco AUF1">
-            <unit command-post="true" id="715" name="Section de Reco AUF1" position="30TXU5697118074" type="Section de Reco AUF1"/>
-            <unit command-post="false" id="716" name="Section de Reco AUF1" position="30TXU5748917593" type="Section de Reco AUF1"/>
-            <unit command-post="false" id="717" name="Section de Reco AUF1" position="30TXU5700717076" type="Section de Reco AUF1"/>
-          </automat>
-          <automat engaged="true" id="718" knowledge-group="2" name="DLO AMX10P [718]" type="DLO AMX10P">
-            <unit command-post="true" id="719" name="Equipe CDT DLO" position="30UXU5231519480" type="Equipe CDT DLO"/>
-            <unit command-post="false" id="720" name="EO CHEF OFF sur AMX10P" position="30UXU5283418999" type="EO CHEF OFF sur AMX10P"/>
-            <unit command-post="false" id="721" name="EO CHEF OFF sur AMX10P" position="30UXU5235118482" type="EO CHEF OFF sur AMX10P"/>
-            <unit command-post="false" id="722" name="EO CHEF OFF sur AMX10P" position="30UXU5183218963" type="EO CHEF OFF sur AMX10P"/>
-            <unit command-post="false" id="723" name="EO CHEF SOFF sur AMX10P" position="30UXU5281519498" type="EO CHEF SOFF sur AMX10P"/>
-          </automat>
-          <automat engaged="true" id="724" knowledge-group="2" name="Section RATAC [724]" type="Section RATAC">
-            <unit command-post="true" id="725" name="Groupe CDT RATAC" position="30UXU5182625715" type="Groupe CDT RATAC"/>
-            <unit command-post="false" id="726" name="Groupe RATAC" position="30UXU5234525234" type="Groupe RATAC"/>
-            <unit command-post="false" id="727" name="Groupe RATAC" position="30UXU5186224717" type="Groupe RATAC"/>
-          </automat>
-          <automat engaged="true" id="776" knowledge-group="2" name="Batterie HAWK [776]" type="Batterie HAWK">
-            <unit command-post="true" id="777" name="PC Batterie HAWK" position="30UXU3496232495" type="PC Batterie HAWK"/>
-            <unit command-post="false" id="778" name="Section de Tir HAWK" position="30UXU3548132014" type="Section de Tir HAWK"/>
-            <unit command-post="false" id="779" name="Section de Tir HAWK" position="30UXU3499831497" type="Section de Tir HAWK"/>
-          </automat>
-          <automat engaged="true" id="780" knowledge-group="2" name="Batterie MISTRAL [780]" type="Batterie MISTRAL">
-            <unit command-post="true" id="781" name="PC Batterie MISTRAL" position="30UXU3070132691" type="PC Batterie MISTRAL"/>
-            <unit command-post="false" id="782" name="Section MISTRAL" position="30UXU3122032210" type="Section MISTRAL"/>
-            <unit command-post="false" id="783" name="Section MISTRAL" position="30UXU3073731693" type="Section MISTRAL"/>
-            <unit command-post="false" id="784" name="Section MISTRAL" position="30UXU3021932174" type="Section MISTRAL"/>
-            <unit command-post="false" id="785" name="Section MISTRAL" position="30UXU3120132709" type="Section MISTRAL"/>
-          </automat>
-          <automat engaged="true" id="786" knowledge-group="2" name="Batterie ROLAND [786]" type="Batterie ROLAND">
-            <unit command-post="true" id="787" name="PC Batterie SACP ROL" position="30UXU2732138822" type="PC Batterie SACP ROL"/>
-            <unit command-post="false" id="788" name="Section ROLAND" position="30UXU2784038341" type="Section ROLAND"/>
-            <unit command-post="false" id="789" name="Section ROLAND" position="30UXU2735737824" type="Section ROLAND"/>
-          </automat>
-          <automat engaged="true" id="838" knowledge-group="2" name="Section Decontamination [838]" type="Section Decontamination">
-            <unit command-post="true" id="839" name="Equipe CDT deconta NBC" position="30UXU5673221510" type="Equipe CDT deconta NBC"/>
-            <unit command-post="false" id="840" name="Equipe decontamination NBC" position="30UXU5725121029" type="Equipe decontamination NBC"/>
-            <unit command-post="false" id="841" name="Equipe decontamination NBC" position="30UXU5676820511" type="Equipe decontamination NBC"/>
-            <unit command-post="false" id="842" name="Equipe decontamination NBC" position="30UXU5625020992" type="Equipe decontamination NBC"/>
-          </automat>
-          <automat engaged="true" id="843" knowledge-group="2" name="Section Reco NBC [843]" type="Section Reco NBC">
-            <unit command-post="true" id="844" name="Patrouille Reco NBC CDT" position="30UXU6094922128" type="Patrouille Reco NBC CDT"/>
-            <unit command-post="false" id="845" name="Patrouille Reco NBC" position="30UXU6146821647" type="Patrouille Reco NBC"/>
-          </automat>
-          <automat engaged="true" id="894" knowledge-group="2" name="Reco ROTA [894]" type="Reco ROTA">
-            <unit command-post="true" id="895" name="Equipe Reco ROTA" position="30UXU5126421670" type="Equipe Reco ROTA"/>
-            <unit command-post="false" id="896" name="Equipe Reco ROTA" position="30UXU5178321189" type="Equipe Reco ROTA"/>
-            <unit command-post="false" id="897" name="Equipe Reco ROTA" position="30UXU5130120672" type="Equipe Reco ROTA"/>
-          </automat>
           <lima name="Lima 113">
             <point>30TXU2858801346</point>
             <point>30TXU3929708509</point>
@@ -352,6 +303,9 @@
             <unit command-post="false" id="103" name="Peloton ERIAC OFF" position="30TXT3436826938" type="Peloton ERIAC OFF"/>
             <unit command-post="false" id="104" name="Peloton ERIAC S/OFF" position="30TXT3535127473" type="Peloton ERIAC S/OFF"/>
           </automat>
+          <automat engaged="true" id="714" knowledge-group="2" name="PC DIV [714]" type="PC DIV">
+            <unit command-post="true" id="715" name="PC DIV" position="30TXT3851420922" type="PC DIV"/>
+          </automat>
           <lima name="Lima 119">
             <point>30TXT3007526595</point>
             <point>30TXT4015735477</point>
@@ -361,8 +315,8 @@
             <point>30TXT3388442625</point>
           </lima>
           <lima name="Lima 127">
-            <point>30TXT3763419499</point>
-            <point>30TXT4835426321</point>
+            <point>30TXT3722519426</point>
+            <point>30TXT4794526248</point>
           </lima>
           <limit name="Limite 117">
             <point>30TXT3842519598</point>
@@ -446,16 +400,6 @@
           </shape>
           <attributes>
             <obstacle activated="true" type="preliminary"/>
-          </attributes>
-        </object>
-        <object id="946" name="Site ROTA [946]" type="rota area">
-          <shape type="point">
-            <points>
-              <point>30UXU5188026898</point>
-            </points>
-          </shape>
-          <attributes>
-            <nbc-agents state="gaseous"/>
           </attributes>
         </object>
       </objects>
