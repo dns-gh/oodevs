@@ -456,6 +456,13 @@ DIA_Clear = function( list )
     for k,_ in pairs( t ) do list[k]=nil end
 end
 
+DIA_Contains = function( list, item )
+    for k,v in pairs( list ) do
+        if v == item then return true end
+    end
+    return false
+end
+
 DIA_Remove = function( list, item )
     local listEnd = #list
     for i = 1, listEnd do
