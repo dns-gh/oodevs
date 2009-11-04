@@ -801,6 +801,9 @@ void TER_Localisation::GetPointsClippedBetweenTwoLines( const MT_Droite& leftDro
 {
     clippedPointVector.clear();
 
+    if( pointVector_.empty() )
+        return;
+
     CIT_PointVector itPoint = pointVector_.begin();
     const MT_Vector2D* pPrevPoint = &*itPoint;
 
