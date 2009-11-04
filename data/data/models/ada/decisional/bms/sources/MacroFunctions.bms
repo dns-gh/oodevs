@@ -450,6 +450,12 @@ end
 
 DIA_PushFront = DIA_PushBack
 
+DIA_Clear = function( list )
+    local t={}
+    for k,_ in pairs( list ) do t[k]=1 end
+    for k,_ in pairs( t ) do list[k]=nil end
+end
+
 DIA_Remove = function( list, item )
     local listEnd = #list
     for i = 1, listEnd do
