@@ -351,6 +351,7 @@
                          gdal_i,gdal_ogr,geodata,
                          population-${platform}-mt@{suffix},
                          dispatcher-${platform}-mt@{suffix},
+						 urban,
                          lib${ant.project.name}_tools-${platform}-mt@{suffix},
                          lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                          lib${ant.project.name}_game_asn-${platform}-mt@{suffix},
