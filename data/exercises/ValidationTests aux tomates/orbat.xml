@@ -423,7 +423,49 @@
             <point>30TXT9376444746</point>
           </limit>
         </formation>
-        <formation id="9" level="ii" name="Bataillon Case 5"/>
+       <formation id="9" level="ii" name="Bataillon Case 5">
+          <automat engaged="true" id="740" knowledge-group="2" name="ELGE [740]" type="ELGE">
+            <unit command-post="true" id="741" name="Groupe ELGE" position="31UCP1480950114" type="Groupe ELGE"/>
+          </automat>
+          <automat engaged="true" id="745" knowledge-group="2" name="Groupe Brouillage VHF BROMURE [745]" type="Groupe Brouillage VHF BROMURE">
+            <unit command-post="true" id="746" name="Groupe BROMURE" position="31UCP1513448048" type="Groupe BROMURE"/>
+          </automat>
+          <automat engaged="true" id="750" knowledge-group="2" name="Peloton Capteur Module Viviane [750]" type="Peloton Capteur Module Viviane">
+            <unit command-post="true" id="751" name="Patrouille Rens Viviane" position="31UCP1420949142" type="Patrouille Rens Viviane"/>
+          </automat>
+          <automat engaged="true" id="752" knowledge-group="2" name="Section Drone CL 289 [752]" type="Section Drone CL 289">
+            <unit command-post="true" id="753" name="Section MO CL 289" position="31UCP1360648788" type="Section MO CL 289"/>
+            <unit command-post="false" id="754" name="Drone CL 289" position="31UCP1408648268" type="Drone CL 289"/>
+            <unit command-post="false" id="755" name="Drone CL 289" position="31UCP1356447790" type="Drone CL 289"/>
+            <unit command-post="false" id="756" name="Drone CL 289" position="31UCP1308548310" type="Drone CL 289"/>
+            <unit command-post="false" id="757" name="Drone CL 289" position="31UCP1410748767" type="Drone CL 289"/>
+            <unit command-post="false" id="758" name="Drone CL 289" position="31UCP1429348259" type="Drone CL 289"/>
+            <unit command-post="false" id="759" name="Drone CL 289" position="31UCP1406547769" type="Drone CL 289"/>
+          </automat>
+          <automat engaged="true" id="760" knowledge-group="2" name="Section Drone SDTI [760]" type="Section Drone SDTI">
+            <unit command-post="true" id="761" name="Section MO SDTI" position="31UCP1457247281" type="Section MO SDTI"/>
+            <unit command-post="false" id="762" name="Drone SDTI" position="31UCP1505246761" type="Drone SDTI"/>
+            <unit command-post="false" id="763" name="Drone SDTI" position="31UCP1453146283" type="Drone SDTI"/>
+            <unit command-post="false" id="764" name="Drone SDTI" position="31UCP1405146803" type="Drone SDTI"/>
+            <unit command-post="false" id="765" name="Drone SDTI" position="31UCP1507347260" type="Drone SDTI"/>
+            <unit command-post="false" id="766" name="Drone SDTI" position="31UCP1525946752" type="Drone SDTI"/>
+            <unit command-post="false" id="767" name="Drone SDTI" position="31UCP1503146262" type="Drone SDTI"/>
+          </automat>
+          <automat engaged="false" id="784" knowledge-group="2" name="Compagnie INF AMX 10 P [784]" type="Compagnie INF AMX 10 P">
+            <unit command-post="true" id="7851" name="Section CDT CIE INF AMX10P" position="31UCP0429928680" type="Section CDT CIE INF AMX10P"/>
+            <unit command-post="false" id="7861" name="Section CBT INF AMX10P CDS OFF" position="31UCP0375429025" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="7871" name="Section CBT INF AMX10P CDS OFF" position="31UCP0545029482" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="7881" name="Section CBT INF AMX10P CDS OFF" position="31UCP0443529114" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="7891" name="Section CBT INF AMX10P CDS SOFF" position="31UCP0505829264" type="Section CBT INF AMX10P CDS SOFF"/>
+          </automat>
+          <automat engaged="true" id="806" knowledge-group="2" name="URH [806]" type="URH">
+            <unit command-post="true" id="807" name="equipe URH OFF" position="31UCP1539850126" type="equipe URH OFF"/>
+            <unit command-post="false" id="808" name="equipe URH S/OFF" position="31UCP1587749606" type="equipe URH S/OFF"/>
+            <unit command-post="false" id="809" name="equipe URH S/OFF" position="31UCP1535649128" type="equipe URH S/OFF"/>
+            <unit command-post="false" id="810" name="equipe URH S/OFF" position="31UCP1487649648" type="equipe URH S/OFF"/>
+            <unit command-post="false" id="811" name="equipe URH S/OFF" position="31UCP1589850105" type="equipe URH S/OFF"/>
+          </automat>
+        </formation>
       </tactical>
       <communication>
         <knowledge-group id="2" name="Groupe de connaissance [2]" type="Standard"/>
@@ -601,7 +643,30 @@
             <point>30TYT1029130017</point>
           </limit>
         </formation>
-        <formation id="14" level="ii" name="GTIA Case 5"/>
+         <formation id="14" level="ii" name="GTIA Case 5">
+          <automat engaged="true" id="768" knowledge-group="4" name="Compagnie INF AMX 10 P [768]" type="Compagnie INF AMX 10 P">
+            <unit command-post="true" id="769" name="Section CDT CIE INF AMX10P" position="31UCP0996739145" type="Section CDT CIE INF AMX10P"/>
+            <unit command-post="false" id="770" name="Section CBT INF AMX10P CDS OFF" position="31UCP1044638625" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="771" name="Section CBT INF AMX10P CDS OFF" position="31UCP0992538147" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="772" name="Section CBT INF AMX10P CDS OFF" position="31UCP0944538667" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="773" name="Section CBT INF AMX10P CDS SOFF" position="31UCP1046739124" type="Section CBT INF AMX10P CDS SOFF"/>
+          </automat>
+          <automat engaged="false" id="790" knowledge-group="4" name="Compagnie INF AMX 10 P [790]" type="Compagnie INF AMX 10 P">
+            <unit command-post="true" id="791" name="Section CDT CIE INF AMX10P" position="31UBP9965532090" type="Section CDT CIE INF AMX10P"/>
+            <unit command-post="false" id="792" name="Section CBT INF AMX10P CDS OFF" position="31UCP0051231482" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="793" name="Section CBT INF AMX10P CDS OFF" position="31UCP0016531629" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="794" name="Section CBT INF AMX10P CDS OFF" position="31UCP0070831958" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="795" name="Section CBT INF AMX10P CDS SOFF" position="31UCP0024432461" type="Section CBT INF AMX10P CDS SOFF"/>
+          </automat>
+          <limit name="Limite 774">
+            <point>31UCP1263553666</point>
+            <point>31UCP0421438035</point>
+          </limit>
+          <limit name="Limite 775">
+            <point>31UCP1974952195</point>
+            <point>31UCP1081434797</point>
+          </limit>
+        </formation>
       </tactical>
       <communication>
         <knowledge-group id="4" name="Groupe de connaissance [4]" type="Standard"/>

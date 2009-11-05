@@ -3,6 +3,480 @@
 
 <!-- Missions de niveau Automate -->
 
+<!-- RENS -->
+
+<!-- Automate RENS ROHUM SExfiltrer -->
+<action id="322" name="Automate RENS ROHUM SExfiltrer" target="806" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="206"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP1974952195"/>
+        <point coordinates="31UCP1081434797"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP1263553666"/>
+        <point coordinates="31UCP0421438035"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone de regroupement" type="Polygon">
+      <location type="polygon">
+        <point coordinates="31UCP1418953017"/>
+        <point coordinates="31UCP1837951944"/>
+        <point coordinates="31UCP1746950452"/>
+        <point coordinates="31UCP1364951509"/>
+        <point coordinates="31UCP1418953017"/>
+      </location>
+    </parameter>
+  </action>
+<!-- Automate RENS ROHUM Renseigner Sur -->
+<action id="320" name="Automate RENS ROHUM Renseigner Sur" target="806" time="2009-09-29T17:09:31" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="210"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP1974952195"/>
+        <point coordinates="31UCP1081434797"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP1263553666"/>
+        <point coordinates="31UCP0421438035"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone a observer" type="Polygon">
+      <location type="polygon">
+        <point coordinates="31UCP0988040364"/>
+        <point coordinates="31UCP0763638610"/>
+        <point coordinates="31UCP1092137418"/>
+        <point coordinates="31UCP1151638976"/>
+        <point coordinates="31UCP0988040364"/>
+      </location>
+    </parameter>
+  </action>
+<!-- Automate RENS ROIM SDTI Renseigner Sur -->
+<action id="324" name="Automate RENS ROIM SDTI Renseigner Sur etape 1" target="760" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="216"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP1974952195"/>
+        <point coordinates="31UCP1081434797"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP1263553666"/>
+        <point coordinates="31UCP0421438035"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Ficelle de vole" type="Path">
+      <parameter name="Point de passage 1" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP0919238358"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 2" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP0877136722"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 3" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP1129740592"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 4" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP1109838349"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 5" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP0898640161"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 6" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP1031737396"/>
+        </location>
+      </parameter>
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP1449747039"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="299" name="Automate RENS ROIM SDTI Renseigner Sur etape 2" target="768" time="2009-09-29T16:46:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP1974952195"/>
+        <point coordinates="31UCP1081434797"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP1263553666"/>
+        <point coordinates="31UCP0421438035"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Itineraire" type="Path">
+      <parameter name="Point de passage 1" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP0829139592"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 2" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP0984639633"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 3" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP0993237483"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 4" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP0834438323"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 5" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP0928938987"/>
+        </location>
+      </parameter>
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP1123938343"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+<!-- Automate RENS ROIM CL289 Renseigner Sur -->
+  <action id="323" name="Automate RENS ROIM CL289 Renseigner Sur etape 1" target="752" time="2009-09-29T16:33:51" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP1974952195"/>
+        <point coordinates="31UCP1081434797"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP1263553666"/>
+        <point coordinates="31UCP0421438035"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Ficelle de vole" type="Path">
+      <parameter name="Point de passage 1" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP0900234733"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 2" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP0760435038"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 3" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP1111441331"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 4" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP0697940342"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 5" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP1097737220"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 6" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP1120339251"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 7" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP0941738727"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 8" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP1068238604"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 9" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP0938239573"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 10" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP0904038990"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 11" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP1019938026"/>
+        </location>
+      </parameter>
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP1402748528"/>
+        </location>
+      </parameter>
+    </parameter>
+    <parameter name="Zones de recherche" type="PolygonList">
+      <parameter name="Location 1" type="location">
+        <location type="polygon">
+          <point coordinates="31UCP0983440258"/>
+          <point coordinates="31UCP0817038463"/>
+          <point coordinates="31UCP1056337448"/>
+          <point coordinates="31UCP1147839064"/>
+          <point coordinates="31UCP0983440258"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="299" name="Automate RENS ROIM CL289 Renseigner Sur etape 2" target="768" time="2009-09-29T16:51:31" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP1974952195"/>
+        <point coordinates="31UCP1081434797"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP1263553666"/>
+        <point coordinates="31UCP0421438035"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Itineraire" type="Path">
+      <parameter name="Point de passage 1" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP0959139787"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 2" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP1028939726"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 3" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP1142538636"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 4" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP1024937778"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 5" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP0907839537"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 6" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP0875338258"/>
+        </location>
+      </parameter>
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP1130739319"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+
+<!-- Automate RENS ROEM Renseigner Sur -->
+<action id="326" name="Automate RENS ROEM Renseigner Sur" target="740" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="199"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP1974952195"/>
+        <point coordinates="31UCP1081434797"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP1263553666"/>
+        <point coordinates="31UCP0421438035"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone" type="Polygon">
+      <location type="polygon">
+        <point coordinates="31UCP1025640490"/>
+        <point coordinates="31UCP0888138609"/>
+        <point coordinates="31UCP1071237298"/>
+        <point coordinates="31UCP1138439268"/>
+        <point coordinates="31UCP1025640490"/>
+      </location>
+    </parameter>
+  </action>
+<!-- Automate RENS ROEM Brovab Appuyer -->
+<action id="325" name="Automate RENS ROEM Brovab Appuyer etape 1" target="745" time="2009-09-29T17:46:31" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="206"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP1974952195"/>
+        <point coordinates="31UCP1081434797"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP1263553666"/>
+        <point coordinates="31UCP0421438035"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Position deploiement" type="Point">
+      <location type="point">
+        <point coordinates="31UCP1549452781"/>
+      </location>
+    </parameter>
+    <parameter name="Point regroupement" type="Point">
+      <location type="point">
+        <point coordinates="31UCP1537550640"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="131" name="Automate RENS ROEM Brovab Appuyer etape 2" target="792" time="2009-09-29T17:56:01" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit"/>
+    <parameter name="Limit 2" type="Limit"/>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Itineraire" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP0341334519"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="131" name="Automate RENS ROEM Brovab Appuyer etape 2" target="7861" time="2009-09-29T18:06:11" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit"/>
+    <parameter name="Limit 2" type="Limit"/>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Itineraire" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP0905131228"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+<!-- Automate RENS ROEM Elge Appuyer -->
+<action id="325" name="Automate RENS ROEM Elge Appuyer etape 1" target="740" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="204"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP1974952195"/>
+        <point coordinates="31UCP1081434797"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP1263553666"/>
+        <point coordinates="31UCP0421438035"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Position deploiement" type="Point">
+      <location type="point">
+        <point coordinates="31UCP1751155451"/>
+      </location>
+    </parameter>
+    <parameter name="Point regroupement" type="Point">
+      <location type="point">
+        <point coordinates="31UCP1373948440"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="131" name="Automate RENS ROEM Elge Appuyer etape 2" target="792" time="2009-09-29T16:46:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit"/>
+    <parameter name="Limit 2" type="Limit"/>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Itineraire" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP0335834182"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="131" name="Automate RENS ROEM Elge Appuyer etape 2" target="7871" time="2009-09-29T16:56:01" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit"/>
+    <parameter name="Limit 2" type="Limit"/>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Itineraire" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP0854031263"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+
+<!-- Automate RENS RADINT Renseigner Sur -->
+<action id="327" name="Automate RENS RADINT Renseigner Sur" target="750" time="2009-09-29T16:33:41" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="217"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP1974952195"/>
+        <point coordinates="31UCP1081434797"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31UCP1263553666"/>
+        <point coordinates="31UCP0421438035"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Zone" type="Polygon">
+      <location type="polygon">
+        <point coordinates="31UCP0962540279"/>
+        <point coordinates="31UCP0857738717"/>
+        <point coordinates="31UCP1080137410"/>
+        <point coordinates="31UCP1170039174"/>
+        <point coordinates="31UCP0962540279"/>
+      </location>
+    </parameter>
+  </action>
+
 <!-- TRANS -->
 
 <!-- Automate TRANS Commander -->

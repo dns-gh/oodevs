@@ -9,6 +9,78 @@
       </readwrite>
     </rights>
   </profile>
+   <profile name="Automate RENS RADINT Renseigner Sur" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Automate RENS ROEM Elge Appuyer" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Automate RENS ROEM Brovab Appuyer" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Automate RENS ROEM Renseigner Sur" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Automate RENS ROHUM Renseigner Sur" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Automate RENS ROHUM SExfiltrer" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Automate RENS ROIM CL289 Renseigner Sur" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Automate RENS ROIM SDTI Renseigner Sur" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="3"/>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
    <profile name="Automate TRANS Commander" password="" supervision="true">
     <rights>
       <readonly/>
