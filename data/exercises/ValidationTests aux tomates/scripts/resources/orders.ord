@@ -7,7 +7,7 @@
 
 <!-- Automate TRANS Commander -->
 
-<action id="328" name="Automate TRANS Commander" target="714" time="2009-09-29T16:33:41" type="mission">
+<action id="328" name="Automate TRANS Commander" target="898" time="2009-09-29T16:33:41" type="mission">
     <parameter name="direction dangereuse" type="Direction" value="360"/>
     <parameter name="Limas" type="PhaseLineList"/>
     <parameter name="Limit 1" type="Limit">
