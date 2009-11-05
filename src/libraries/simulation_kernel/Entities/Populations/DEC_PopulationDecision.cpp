@@ -65,8 +65,7 @@ DEC_PopulationDecision::DEC_PopulationDecision( MIL_Population& population, DEC_
 // -----------------------------------------------------------------------------
 DEC_PopulationDecision::~DEC_PopulationDecision()
 {
-    MT_DELETEOWNED( missionBehaviorParameters_.GetParameters() );
-    missionBehaviorParameters_.GetParameters().clear();
+    // NOTHING
 }
 
 // =============================================================================

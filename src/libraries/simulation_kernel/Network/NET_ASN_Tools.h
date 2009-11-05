@@ -90,9 +90,7 @@ public:
     static bool                         ReadPathList           ( const ASN1T_PathList&   asn, T_ItinerairePtrVector& itineraireVector );
 
     static DEC_Decision_ABC*            ReadAgent              ( const ASN1T_Unit&               asn );
-    static bool                         ReadAgentList          ( const ASN1T_UnitList&           asn, T_ObjectVector& unitList );
     static DEC_Decision_ABC*            ReadAutomate           ( const ASN1T_Unit&               asn );
-    static bool                         ReadAutomateList       ( const ASN1T_AutomatList&        asn, T_ObjectVector& unitList );
     static boost::shared_ptr< DEC_Knowledge_Agent > ReadAgentKnowledge     ( const ASN1T_UnitKnowledge&      asn, const DEC_KnowledgeResolver_ABC& resolver );
     static DEC_Knowledge_Population*    ReadPopulationKnowledge( const ASN1T_PopulationKnowledge& asn, const DEC_KnowledgeResolver_ABC& resolver );
 
@@ -110,8 +108,6 @@ public:
 
     static void WriteAgent              ( const DEC_Decision_ABC&             pion      , ASN1T_Unit&     asn );
     static void WriteAutomate           ( const DEC_Decision_ABC&             automate  , ASN1T_Automat&  asn );
-    static void WriteAgentList          ( const T_ObjectVector&               unitList  , ASN1T_UnitList& asn );   
-    static void WriteAutomateList       ( const T_ObjectVector&               unitList  , ASN1T_AutomatList& asn );   
     static void WriteAgentKnowledge     ( const DEC_Knowledge_Agent&          knowledge , ASN1T_UnitKnowledge&      asnKnowledge );
     static void WriteObjectKnowledge    ( const DEC_Knowledge_Object&         knowledge , ASN1T_ObjectKnowledge&     asnKnowledge );
     static void WriteObjectKnowledgeList( const T_KnowledgeObjectDiaIDVector& knowledges, ASN1T_ObjectKnowledgeList& asnListKnowledge, const DEC_KnowledgeResolver_ABC& resolver );

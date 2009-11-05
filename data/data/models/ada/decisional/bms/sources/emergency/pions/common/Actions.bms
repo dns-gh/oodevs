@@ -23,7 +23,9 @@ node "ACT_Pion_Emergency_BlockRoad"
         self.eEtatInfluence = self.eEtatInfluence or nil
         if( ModuleBegins() ) then
             do
-                self.actionID = DEC_Emergency_StartInfluence( self.eEtatInfluence, "any", -100 )
+                self.actionID = DEC_Start_EmergencyInfluence( "any", -100 )
+                actionCallbacks[ self.actionID ] = function( arg ) self.eEtatInfluence = arg end
+
             end
         end
 
@@ -89,7 +91,9 @@ node "ACT_Pion_Emergency_Influence"
         self.eEtatInfluence = self.eEtatInfluence or nil
         if( ModuleBegins() ) then
             do
-                self.actionID = DEC_Emergency_StartInfluence( self.eEtatInfluence, self._namedParams.name, self._namedParams.influence * GetActivity() )
+                self.actionID = DEC_Start_EmergencyInfluence( self._namedParams.name, self._namedParams.influence * GetActivity() )
+                actionCallbacks[ self.actionID ] = function( arg ) self.eEtatInfluence = arg end
+
                                 do
                     if( not DEC_Agent_AutomateEstEmbraye() ) then
                         DEC_RC( eRC_DebutTravaux )
@@ -165,7 +169,9 @@ node "ACT_Pion_Emergency_InfluenceInArea"
         self.eEtatInfluence = self.eEtatInfluence or nil
         if( ModuleBegins() ) then
             do
-                self.actionID = DEC_Emergency_StartInfluenceInArea( self.eEtatInfluence, self._namedParams.name, self._namedParams.influence * GetActivity(), self._namedParams.area )
+                self.actionID = DEC_Start_EmergencyInfluenceInArea( self._namedParams.name, self._namedParams.influence * GetActivity(), self._namedParams.area )
+                actionCallbacks[ self.actionID ] = function( arg ) self.eEtatInfluence = arg end
+
                 DEC_Trace( "start influence." )
             end
         end
@@ -233,7 +239,9 @@ node "ACT_Pion_Emergency_TriggerActivity"
         self.eEtatInfluence = self.eEtatInfluence or nil
         if( ModuleBegins() ) then
             do
-                self.actionID = DEC_Emergency_StartTriggerActivity( self.eEtatInfluence, self._namedParams.name, self._namedParams.influence * GetActivity() )
+                self.actionID = DEC_Start_EmergencyTriggerActivity( self._namedParams.name, self._namedParams.influence * GetActivity() )
+                actionCallbacks[ self.actionID ] = function( arg ) self.eEtatInfluence = arg end
+
                                 do
                     if( not DEC_Agent_AutomateEstEmbraye() ) then
                         DEC_RC( eRC_DebutTravaux )
@@ -309,7 +317,9 @@ node "ACT_Pion_Emergency_TriggerActivityInArea"
         self.eEtatInfluence = self.eEtatInfluence or nil
         if( ModuleBegins() ) then
             do
-                self.actionID = DEC_Emergency_StartTriggerActivityInArea( self.eEtatInfluence, self._namedParams.name, self._namedParams.influence * GetActivity(), self._namedParams.area )
+                self.actionID = DEC_Start_EmergencyTriggerActivityInArea( self._namedParams.name, self._namedParams.influence * GetActivity(), self._namedParams.area )
+                actionCallbacks[ self.actionID ] = function( arg ) self.eEtatInfluence = arg end
+
             end
         end
 
@@ -375,7 +385,9 @@ node "ACT_Pion_Emergency_UnloadActivity"
         self.eEtatInfluence = self.eEtatInfluence or nil
         if( ModuleBegins() ) then
             do
-                self.actionID = DEC_Emergency_StartUnloadActivity( self.eEtatInfluence, self._namedParams.name, self._namedParams.influence * GetActivity() )
+                self.actionID = DEC_Start_EmergencyUnloadActivity( self._namedParams.name, self._namedParams.influence * GetActivity() )
+                actionCallbacks[ self.actionID ] = function( arg ) self.eEtatInfluence = arg end
+
                                 do
                     if( not DEC_Agent_AutomateEstEmbraye() ) then
                         DEC_RC( eRC_DebutTravaux )

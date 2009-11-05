@@ -26,10 +26,12 @@ class MT_Vector2D;
 class NET_ASN_MsgUnitAttributes;
 class PHY_RoePopulation;
 
-enum E_FightRateState;
-enum E_RulesOfEngagementState;
 enum E_CloseCombatState;
+enum E_FightRateState;
 enum E_FireAvailability;
+enum E_ForceRatioState;
+enum E_OperationalState;
+enum E_RulesOfEngagementState;
 
 // =============================================================================
 // @class  DEC_RolePion_Decision

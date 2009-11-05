@@ -17,8 +17,12 @@
 #include "MIL_AgentServer.h"
 #include "Tools/MIL_ProfilerMgr.h"
 
+class DIA_FunctionCall;
 class DIA_Instance;
 class DIA_Instruction_ABC;
+class DIA_Type;
+class DIA_TypeDef;
+class DIA_TypedObject;
 
 class DEC_Decision_ABC;
 

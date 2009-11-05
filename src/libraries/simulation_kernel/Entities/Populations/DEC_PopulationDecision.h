@@ -86,8 +86,6 @@ private:
     //@}
 
 private:
-    DIA_Parameters                       missionBehaviorParameters_;   
-
     MT_Float                             rDominationState_;
     MT_Float                             rLastDominationState_;
     bool                                 bStateHasChanged_;

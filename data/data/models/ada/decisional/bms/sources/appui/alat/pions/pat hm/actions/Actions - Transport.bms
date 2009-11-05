@@ -23,7 +23,9 @@ includedFiles["sources/appui/alat/pions/pat hm/actions/Actions - Transport.bms"]
         self.actionEnPause = self.actionEnPause or false
         self.eEtatTransport = self.eEtatTransport or nil
         if( ModuleBegins() ) then
-            self.actionEmbarquer = DEC_Transport_StartEmbarquer( self.eEtatTransport )
+            self.actionEmbarquer = DEC_Start_TransportEmbarquer(  )
+            actionCallbacks[ self.actionEmbarquer ] = function( arg ) self.eEtatTransport = arg end
+
         end
 
         if( self.actionEnPause ) then
@@ -91,7 +93,9 @@ elseif switch_1 == eActionTransport_Finished then
         self.eEtatTransport = self.eEtatTransport or nil
         if( ModuleBegins() ) then
             do
-                self.actionDebarquer = DEC_Transport_StartDebarquer( self.eEtatTransport )
+                self.actionDebarquer = DEC_Start_TransportDebarquer(  )
+                actionCallbacks[ self.actionDebarquer ] = function( arg ) self.eEtatTransport = arg end
+
             end
         end
 

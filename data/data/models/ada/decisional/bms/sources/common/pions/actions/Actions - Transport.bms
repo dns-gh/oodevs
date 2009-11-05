@@ -28,7 +28,9 @@ includedFiles["sources/common/pions/actions/Actions - Transport.bms"] = true
 ]]--[[// Init
 ]]--[[// -----------------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
-            self.actionEmbarquer = DEC_Transport_StartEmbarquer( self.eEtatTransport )
+            self.actionEmbarquer = DEC_Start_TransportEmbarquer(  )
+            actionCallbacks[ self.actionEmbarquer ] = function( arg ) self.eEtatTransport = arg end
+
         end
 
         --[[// Reprise
@@ -113,7 +115,9 @@ elseif switch_1 == eActionTransport_Finished then
 ]]--[[// Init
 ]]--[[// -----------------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
-            self.actionDebarquer = DEC_Transport_StartDebarquer( self.eEtatTransport )
+            self.actionDebarquer = DEC_Start_TransportDebarquer(  )
+            actionCallbacks[ self.actionDebarquer ] = function( arg ) self.eEtatTransport = arg end
+
         end
 
         --[[// reprise

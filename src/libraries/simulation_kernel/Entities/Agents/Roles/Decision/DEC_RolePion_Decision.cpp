@@ -783,8 +783,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< void( DEC_Decision_ABC*, bool ) >( boost::bind( &DEC_ActionFunctions::Transport_AddPion, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Transport_AjouterPions",
         boost::function< void( const std::vector< DEC_Decision_ABC* >&, bool ) >( boost::bind( &DEC_ActionFunctions::Transport_AddPions, boost::ref( GetPion() ), _1, _2 ) ) );
-    brain.RegisterFunction( "DEC_Transport_StartEmbarquer"           , &DEC_ActionFunctions::StartAction< PHY_ActionTransportLoad   > );
-    brain.RegisterFunction( "DEC_Transport_StartDebarquer"           , &DEC_ActionFunctions::StartAction< PHY_ActionTransportUnload > );    
+    brain.RegisterFunction( "DEC_Start_TransportEmbarquer"           , boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionTransportLoad >, boost::ref( GetPion() ) ) );
+    brain.RegisterFunction( "DEC_Start_TransportDebarquer"           , boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionTransportUnload >, boost::ref( GetPion() ) ) );
     brain.RegisterFunction( "DEC_Transport_EmbarquerPionSansDelais"  ,
     		boost::function< void( const DEC_Decision_ABC*, bool ) >( boost::bind( &DEC_ActionFunctions::Transport_MagicLoadPion, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Transport_EmbarquerPionsSansDelais" ,
@@ -826,11 +826,11 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
        		boost::function< bool (boost::shared_ptr< DEC_Knowledge_Agent >, boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind(&DEC_ActionFunctions::Refugees_IsUnloadedInCamp , boost::ref( GetPion() ), _1, _2 ) ) );
 
     // Emergency functions
-    brain.RegisterFunction( "DEC_Emergency_StartInfluence" , &DEC_ActionFunctions::StartAction< PHY_ActionInfluence, const std::string&, double > );
-    brain.RegisterFunction( "DEC_Emergency_StartTriggerActivity" , &DEC_ActionFunctions::StartAction< PHY_ActionTriggerActivity, const std::string&, double > );
-    brain.RegisterFunction( "DEC_Emergency_StartInfluenceInArea" , &DEC_ActionFunctions::StartAction< PHY_ActionInfluenceInArea, const std::string&, double, const TER_Localisation* > );
-    brain.RegisterFunction( "DEC_Emergency_StartTriggerActivityInArea" , &DEC_ActionFunctions::StartAction< PHY_ActionTriggerActivityInArea, const std::string&, double, const TER_Localisation* > );
-    brain.RegisterFunction( "DEC_Emergency_StartUnloadActivity" , &DEC_ActionFunctions::StartAction< PHY_ActionUnloadActivity, const std::string&, double > );    
+    brain.RegisterFunction( "DEC_Start_EmergencyInfluence" , &DEC_ActionFunctions::StartAction< PHY_ActionInfluence, const std::string&, double > );
+    brain.RegisterFunction( "DEC_Start_EmergencyTriggerActivity" , &DEC_ActionFunctions::StartAction< PHY_ActionTriggerActivity, const std::string&, double > );
+    brain.RegisterFunction( "DEC_Start_EmergencyInfluenceInArea" , &DEC_ActionFunctions::StartAction< PHY_ActionInfluenceInArea, const std::string&, double, const TER_Localisation* > );
+    brain.RegisterFunction( "DEC_Start_EmergencyTriggerActivityInArea" , &DEC_ActionFunctions::StartAction< PHY_ActionTriggerActivityInArea, const std::string&, double, const TER_Localisation* > );
+    brain.RegisterFunction( "DEC_Start_EmergencyUnloadActivity" , &DEC_ActionFunctions::StartAction< PHY_ActionUnloadActivity, const std::string&, double > );    
 
     // Representations
     brain.RegisterFunction( "DEC_GetOrdersCategory",

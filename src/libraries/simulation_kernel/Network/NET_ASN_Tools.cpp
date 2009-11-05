@@ -292,28 +292,6 @@ DEC_Decision_ABC* NET_ASN_Tools::ReadAgent( const ASN1T_Unit& asnAgent )
 }
 
 //-----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::ReadListAgent
-// Created: AGN 03-01-20
-//-----------------------------------------------------------------------------
-// static
-bool NET_ASN_Tools::ReadAgentList( const ASN1T_UnitList& asnListAgent, T_ObjectVector& unitList )
-{
-    unitList.clear(); unitList.reserve( asnListAgent.n );
-    for( uint n = 0; n < asnListAgent.n; ++n )
-    {
-        DEC_Decision_ABC* pAgent = ReadAgent( asnListAgent.elem[n] );
-        if( !pAgent )
-        {
-            unitList.clear();
-            return false;
-        }
-        unitList.push_back( reinterpret_cast< DIA_TypedObject* >( pAgent ) );// $$$$ LDC: Remove DIA_TypedObjects
-    }
-    return true;
-}
-
-
-//-----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::ReadAutomate
 // Created: NLD 2003-03-24
 //-----------------------------------------------------------------------------
@@ -324,26 +302,6 @@ DEC_Decision_ABC* NET_ASN_Tools::ReadAutomate( const ASN1T_Unit& asnAgent )
     if( !pAutomate ) 
         return 0;
     return &pAutomate->GetDecision();
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::ReadAutomatList
-// Created: NLD 2004-04-22
-// -----------------------------------------------------------------------------
-bool NET_ASN_Tools::ReadAutomateList( const ASN1T_AutomatList& asnListAgent, T_ObjectVector& unitList )
-{
-    unitList.clear(); unitList.reserve( asnListAgent.n );
-    for( uint n = 0; n < asnListAgent.n; ++n )
-    {
-        DEC_Decision_ABC* pAgent = ReadAutomate( asnListAgent.elem[n] );
-        if( !pAgent)
-        {
-            unitList.clear();
-            return false;
-        }
-        unitList.push_back( reinterpret_cast< DIA_TypedObject* >( pAgent ) );// $$$$ LDC: Remove DIA_TypedObjects
-    }
-    return true;
 }
 
 //-----------------------------------------------------------------------------
@@ -698,48 +656,6 @@ void NET_ASN_Tools::WriteAgent( const DEC_Decision_ABC& pion, ASN1T_Unit& asn )
 void NET_ASN_Tools::WriteAutomate( const DEC_Decision_ABC& automate, ASN1T_Automat& asn )
 {
     asn = automate.GetAutomate().GetID();    
-}
-
-//-----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::WriteListAgent
-// Created: AGN 03-01-20
-//-----------------------------------------------------------------------------
-void NET_ASN_Tools::WriteAgentList( const T_ObjectVector& unitList, ASN1T_UnitList& asnListAgent )
-{
-    if( unitList.empty() )
-    {
-        asnListAgent.n = 0;
-        return;
-    }
-    
-    ASN1T_OID* pOID = new ASN1T_OID[ unitList.size() ]; //$$$ RAM
-    asnListAgent.n    = unitList.size();
-    asnListAgent.elem = pOID;
-
-    uint i = 0;
-    for( CIT_ObjectVector itUnit = unitList.begin(); itUnit != unitList.end(); ++itUnit )
-        pOID[i++] = reinterpret_cast< DEC_Decision_ABC* >( *itUnit )->GetPion().GetID();// $$$$ LDC: Remove DIA_TypedObjects
-}
-
-//-----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::WriteAutomatList
-// Created: AGN 03-01-20
-//-----------------------------------------------------------------------------
-void NET_ASN_Tools::WriteAutomateList( const T_ObjectVector& unitList, ASN1T_AutomatList& asnListAgent )
-{
-    if( unitList.empty() )
-    {
-        asnListAgent.n = 0;
-        return;
-    }
-    
-    ASN1T_OID* pOID = new ASN1T_OID[ unitList.size() ]; //$$$ RAM
-    asnListAgent.n    = unitList.size();
-    asnListAgent.elem = pOID;
-
-    uint i = 0;
-    for( CIT_ObjectVector itUnit = unitList.begin(); itUnit != unitList.end(); ++itUnit )
-        pOID[i++] = reinterpret_cast< DEC_Decision_ABC* >( *itUnit )->GetAutomate().GetID();// $$$$ LDC: Remove DIA_TypedObjects
 }
 
 // -----------------------------------------------------------------------------
