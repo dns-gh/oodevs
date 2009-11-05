@@ -764,8 +764,10 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< DEC_Decision_ABC*( DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::GetAutomate, _1 ) ) );
 
     // Logistique
-    brain.RegisterFunction( "DEC_StartPreterVSRAM"        , &DEC_ActionFunctions::StartAction< PHY_ActionLendCollectionComposantes, DEC_RolePion_Decision*, unsigned int > );
-    brain.RegisterFunction( "DEC_StartPreterRemorqueurs"  , &DEC_ActionFunctions::StartAction< PHY_ActionLendHaulerComposantes, DEC_RolePion_Decision*, unsigned int > );
+    brain.RegisterFunction( "DEC_StartPreterVSRAM",        
+        boost::function< PHY_Action_ABC*( DEC_RolePion_Decision*, unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionLendCollectionComposantes, DEC_RolePion_Decision*, unsigned int >, boost::ref( GetPion() ), _1, _2 ) ) );
+    brain.RegisterFunction( "DEC_StartPreterRemorqueurs",
+        boost::function< PHY_Action_ABC*( DEC_RolePion_Decision*, unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionLendHaulerComposantes, DEC_RolePion_Decision*, unsigned int >, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_RecupererVSRAM",
         boost::function< void( const DEC_Decision_ABC*, const uint ) >( boost::bind( &DEC_LogisticFunctions::UndoLendCollectionComposantes, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_RecupererRemorqueurs",
@@ -826,11 +828,16 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
        		boost::function< bool (boost::shared_ptr< DEC_Knowledge_Agent >, boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind(&DEC_ActionFunctions::Refugees_IsUnloadedInCamp , boost::ref( GetPion() ), _1, _2 ) ) );
 
     // Emergency functions
-    brain.RegisterFunction( "DEC_Start_EmergencyInfluence" , &DEC_ActionFunctions::StartAction< PHY_ActionInfluence, const std::string&, double > );
-    brain.RegisterFunction( "DEC_Start_EmergencyTriggerActivity" , &DEC_ActionFunctions::StartAction< PHY_ActionTriggerActivity, const std::string&, double > );
-    brain.RegisterFunction( "DEC_Start_EmergencyInfluenceInArea" , &DEC_ActionFunctions::StartAction< PHY_ActionInfluenceInArea, const std::string&, double, const TER_Localisation* > );
-    brain.RegisterFunction( "DEC_Start_EmergencyTriggerActivityInArea" , &DEC_ActionFunctions::StartAction< PHY_ActionTriggerActivityInArea, const std::string&, double, const TER_Localisation* > );
-    brain.RegisterFunction( "DEC_Start_EmergencyUnloadActivity" , &DEC_ActionFunctions::StartAction< PHY_ActionUnloadActivity, const std::string&, double > );    
+    brain.RegisterFunction( "DEC_Start_EmergencyInfluence",
+        boost::function< PHY_Action_ABC*( const std::string&, double ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionInfluence, const std::string&, double >, boost::ref( GetPion() ), _1, _2 ) ) );
+    brain.RegisterFunction( "DEC_Start_EmergencyTriggerActivity",
+        boost::function< PHY_Action_ABC*( const std::string&, double ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionTriggerActivity, const std::string&, double >, boost::ref( GetPion() ), _1, _2 ) ) );
+    brain.RegisterFunction( "DEC_Start_EmergencyInfluenceInArea",
+        boost::function< PHY_Action_ABC*( const std::string&, double, const TER_Localisation* ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionInfluenceInArea, const std::string&, double, const TER_Localisation* >, boost::ref( GetPion() ), _1, _2, _3 ) ) );
+    brain.RegisterFunction( "DEC_Start_EmergencyTriggerActivityInArea",
+        boost::function< PHY_Action_ABC*( const std::string&, double, const TER_Localisation* ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionTriggerActivityInArea, const std::string&, double, const TER_Localisation* >, boost::ref( GetPion() ), _1, _2, _3 ) ) );
+    brain.RegisterFunction( "DEC_Start_EmergencyUnloadActivity",
+        boost::function< PHY_Action_ABC*( const std::string&, double ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionUnloadActivity, const std::string&, double >, boost::ref( GetPion() ), _1, _2 ) ) );    
 
     // Representations
     brain.RegisterFunction( "DEC_GetOrdersCategory",
