@@ -15,7 +15,6 @@
 #include "tic_plugin/TicPluginFactory.h"
 #include "bml_plugin/BmlPluginFactory.h"
 #ifdef CROSSBOW_PLUGIN
-#   include "gearth_plugin/GearthPluginFactory.h"
 #   include "crossbow_plugin/CrossbowPluginFactory.h"
 #endif
 
@@ -47,7 +46,6 @@ DispatcherFacade::DispatcherFacade( int argc, char** argv )
         dispatcher_->RegisterPluginFactory( *new bml::BmlPluginFactory() );
 #ifdef CROSSBOW_PLUGIN
         dispatcher_->RegisterPluginFactory( *new crossbow::CrossbowPluginFactory() );
-        dispatcher_->RegisterPluginFactory( *new gearth::GearthPluginFactory() );
 #endif
 #ifdef XMLIA_PLUGIN
         dispatcher_->RegisterPluginFactory( *new xmlia::XmliaPluginFactory() );
