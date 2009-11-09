@@ -253,7 +253,7 @@
 
     <target name="library.plugins" description="build all dispatcher plugins"
             depends="library.messenger_plugin,library.tic_plugin,library.dis_plugin,library.hla_plugin,library.3a,
-                     library.bml_plugin,library.xmlia_plugin,library.script_plugin,library.score_plugin"/>
+                     library.bml_plugin,library.crossbow_plugin,library.xmlia_plugin,library.script_plugin,library.score_plugin"/>
 
     <!--
     ============================================================================
