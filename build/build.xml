@@ -350,7 +350,7 @@
 
     <target name="application.simulation_app" description="build CSword Simulation executable" depends="library.dispatcher,library.simulation_kernel">
         <build-app name="simulation_app" depends="mt,din,dia3,terrain,boost,xerces,flexlm"
-                   libs="HLA,libFedTime,masalloc,tools,masasn,directia-${platform}-mt-4_5,libdatabase-${platform}-mt,
+                   libs="HLA,libFedTime,masalloc,tools,masasn,directia-${platform}-mt-4_5,library-${platform}-mt,
                          gdal_i,gdal_ogr,geodata,
                          population-${platform}-mt@{suffix},
                          dispatcher-${platform}-mt@{suffix},
@@ -641,7 +641,7 @@
 
     <target name="application.simulation_kernel_test" description="build CSword Simulation kernel test executable" depends="library.simulation_kernel">
         <build-test name="simulation_kernel"
-                   libs="HLA,libFedTime,masalloc,tools,masasn,directia-${platform}-mt-4_5,libdatabase-${platform}-mt,
+                   libs="HLA,libFedTime,masalloc,tools,masasn,directia-${platform}-mt-4_5,library-${platform}-mt,
                          gdal_i,gdal_ogr,geodata,
                          population-${platform}-mt@{suffix},
                          dispatcher-${platform}-mt@{suffix},
