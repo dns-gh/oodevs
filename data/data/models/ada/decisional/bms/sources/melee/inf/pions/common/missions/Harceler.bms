@@ -227,9 +227,7 @@ elseif switch_1 == eNoError then
                         end
                     end
 
-                    if _continue then
-                    self.ptRegroupement = S_Geometrie_BarycentreZone( DEC_UserTypeList_GetAt( self.selPointsAttente, self.nPos ) )
-                end
+                self.ptRegroupement = S_Geometrie_BarycentreZone( DEC_UserTypeList_GetAt( self.selPointsAttente, self.nPos ) )
             end
         end
 

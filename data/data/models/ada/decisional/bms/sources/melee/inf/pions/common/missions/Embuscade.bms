@@ -44,7 +44,7 @@ include "bit.lua"
         self.locEmbuscade = self.locEmbuscade or nil
         self.eAction = self.eAction or eActionEnCours
         self.eActionAbattis = self.eActionAbattis or eActionEnCours
-        self.repObj = self.repObj or 0
+        self.repObj = self.repObj or nil
         self.ePhase = self.ePhase or eRealiserObstacle
         do
         end
@@ -119,14 +119,12 @@ elseif switch_2 == eTypeObjectAbatti then
                         end
                     end
 
-                        if _continue then
-                        if( self.eAction == eActionEnCours ) then
-                            --[[// Temps de mise en place du dispositif
+                    if( self.eAction == eActionEnCours ) then
+                        --[[// Temps de mise en place du dispositif
 ]]Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, setmetatable( { eNiveauInstallation_Poste, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                        end
-
-                        _continue = false
                     end
+
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActiverObstacle then
                     if( not DEC_ConnaissanceObjet_EstValide( self.repObj ) ) then

@@ -144,7 +144,7 @@ node "BEH_Misc_Automate_GEN_GererOuvertureDesObstacles"
         for _,pion in pairs( listePionsGenie or {} ) do
         local _continue = true
 do
-                local objetABrecher = 0
+                local objetABrecher = nil
                 --[[//-------------------------------------------------------------------------
 ]]--[[// ...On traite les objets dans l'ordre dans lequel ils ont été rentrés 
 ]]--[[// dans l'interface 

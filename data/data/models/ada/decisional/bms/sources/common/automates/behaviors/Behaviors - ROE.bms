@@ -102,16 +102,12 @@ elseif switch_2 == eEtatROE_TirInterdit then
                                     end
                                 end
 
-                                if _continue then
-                                _continue = false
-                            end
+                            _continue = false
                                                 cases_switch_1[1] = true
                         end
                     end
 
-                    if _continue then
-                    Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
-                end
+                Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
             end
 
         end

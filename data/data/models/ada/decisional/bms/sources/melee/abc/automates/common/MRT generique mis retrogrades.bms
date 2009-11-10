@@ -118,10 +118,8 @@ elseif switch_2 == "SectionInfanterie"
 
                     end
 
-                        if _continue then
-                        self.ePhase = eMRT_DeterminerEchelonsLocals
-                        _continue = false
-                    end
+                    self.ePhase = eMRT_DeterminerEchelonsLocals
+                    _continue = false
                 --[[//---------------------------------------------------------------------
 ]]--[[// Assignation premier echelon et second echelon utile
 ]]--[[//---------------------------------------------------------------------
@@ -236,9 +234,7 @@ elseif switch_2 == "T_Mission_Automate_ABC_Jalonner" then
                             end
                         end
 
-                        if _continue then
-                        _continue = false
-                    end
+                    _continue = false
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Mission impossible
 ]]--[[//-----------------------------------------------------------------------------

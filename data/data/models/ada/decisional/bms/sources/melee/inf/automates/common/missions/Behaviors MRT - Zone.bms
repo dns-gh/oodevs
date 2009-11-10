@@ -91,20 +91,18 @@ node "BEH_Medo_Automate_INF_PreparerMission_Zone"
                         end
 --[[// L'execution de la mission necessite la presence d'un 1er ech
 ]]
-                        if _continue then
-                        if( ( #( self.lstPionsAttaque ) == 0 or #( self.lstPionsAttaque ) == nil ) ) then
-                            do
-                                DEC_Trace( "Pas de 1er echelon" )
-                                DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
-                                                                self.params.__returnValue = eActionImpossible
-                                Halt( self )
-                                do return end
+                    if( ( #( self.lstPionsAttaque ) == 0 or #( self.lstPionsAttaque ) == nil ) ) then
+                        do
+                            DEC_Trace( "Pas de 1er echelon" )
+                            DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
+                                                        self.params.__returnValue = eActionImpossible
+                            Halt( self )
+                            do return end
 
-                            end
                         end
-
-                        _continue = false
                     end
+
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eMRT_AffecterFuseaux then
                     --[[//-----------------------------------------------------------------------------
@@ -193,11 +191,9 @@ elseif switch_2 == "T_Mission_Automate_INF_Harceler" then
                                                         end
                         end
 
-                        if _continue then
-                        Activate( self.activations.BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier, 1, { self.selPions_INF_Mortier, } )
-                        Activate( self.activations.BEH_Medo_Automate_INF_InitialiseSE, 1, { self.lstPionsAppui, } )
-                        _continue = false
-                    end
+                    Activate( self.activations.BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier, 1, { self.selPions_INF_Mortier, } )
+                    Activate( self.activations.BEH_Medo_Automate_INF_InitialiseSE, 1, { self.lstPionsAppui, } )
+                    _continue = false
                                 cases_switch_1[3] = true
                 end
             end
@@ -266,24 +262,22 @@ elseif switch_1 == eNoError then
                         end
                     end
 
-                    if _continue then
-                    local rIt = 0
-                    for _,x_pion in pairs( self._namedParams.lstPions_PE or {} ) do
-                    local _continue = true
-                        do
-                            if( rIt < #( self.lstLocalisations ) ) then
-                                do
-                                    local locZone = DEC_UserTypeList_GetAt( self.lstLocalisations, rIt )
-                                    StartActivateOverride( self, self.activations.BEH_Mission_Automate_INF_AssignerA_Controler, 1, { ePhase_MRT, x_pion, locZone, self.mission.preparerTerrain_, } )
-                                end
+                local rIt = 0
+                for _,x_pion in pairs( self._namedParams.lstPions_PE or {} ) do
+                local _continue = true
+                    do
+                        if( rIt < #( self.lstLocalisations ) ) then
+                            do
+                                local locZone = DEC_UserTypeList_GetAt( self.lstLocalisations, rIt )
+                                StartActivateOverride( self, self.activations.BEH_Mission_Automate_INF_AssignerA_Controler, 1, { ePhase_MRT, x_pion, locZone, self.mission.preparerTerrain_, } )
                             end
-
-                                                        rIt = rIt + 1
                         end
 
+                                                rIt = rIt + 1
                     end
 
                 end
+
             end
         end
 
@@ -356,34 +350,32 @@ elseif switch_1 == eNoError then
                         end
                     end
 
-                    if _continue then
-                    self.lstLocRgpt = DEC_Geometrie_DecoupeLocalisation( self.mission.pointRegroupement_, #( self._namedParams.lstPions_PE ), self.eCodeLocRgpt )
-                    self.eCodeLocRgpt = self.lstLocRgpt.second
-                    self.lstLocRgpt = self.lstLocRgpt.first
-                    local rIt = 0
-                    local natureObjectif = eNatureObjectif_ElementTerrain
-                    for _,x_pion in pairs( self._namedParams.lstPions_PE or {} ) do
-                    local _continue = true
-                        do
-                            if( rIt < #( self.lstLocalisations ) ) then
-                                do
-                                    local locZone = DEC_UserTypeList_GetAt( self.lstLocalisations, rIt )
-                                    local locZoneRgpt = self.mission.pointRegroupement_
-                                    if( self.eCodeLocRgpt == eNoError ) then
-                                        locZoneRgpt = DEC_UserTypeList_GetAt( self.lstLocRgpt, rIt )
-                                    end
-
-                                    StartActivateOverride( self, self.activations.BEH_Mission_Automate_INF_AssignerA_Harceler, 1, { ePhase_MRT, x_pion, locZone, locZoneRgpt, natureObjectif, } )
-                                    natureObjectif = eNatureObjectif_ElementMobile
+                self.lstLocRgpt = DEC_Geometrie_DecoupeLocalisation( self.mission.pointRegroupement_, #( self._namedParams.lstPions_PE ), self.eCodeLocRgpt )
+                self.eCodeLocRgpt = self.lstLocRgpt.second
+                self.lstLocRgpt = self.lstLocRgpt.first
+                local rIt = 0
+                local natureObjectif = eNatureObjectif_ElementTerrain
+                for _,x_pion in pairs( self._namedParams.lstPions_PE or {} ) do
+                local _continue = true
+                    do
+                        if( rIt < #( self.lstLocalisations ) ) then
+                            do
+                                local locZone = DEC_UserTypeList_GetAt( self.lstLocalisations, rIt )
+                                local locZoneRgpt = self.mission.pointRegroupement_
+                                if( self.eCodeLocRgpt == eNoError ) then
+                                    locZoneRgpt = DEC_UserTypeList_GetAt( self.lstLocRgpt, rIt )
                                 end
-                            end
 
-                                                        rIt = rIt + 1
+                                StartActivateOverride( self, self.activations.BEH_Mission_Automate_INF_AssignerA_Harceler, 1, { ePhase_MRT, x_pion, locZone, locZoneRgpt, natureObjectif, } )
+                                natureObjectif = eNatureObjectif_ElementMobile
+                            end
                         end
 
+                                                rIt = rIt + 1
                     end
 
                 end
+
             end
         end
 

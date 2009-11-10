@@ -720,7 +720,7 @@ void MIL_EntityManager::UpdateStates()
 
     automateFactory_->Apply( boost::bind( &MIL_Automate::UpdateNetwork, _1 ) );
     tools::Resolver< MIL_AgentPion >::Apply( boost::bind( &MIL_AgentPion::UpdateNetwork, _1 ) );
-    populationFactory_->Apply( boost::bind( &MIL_Population::UpdateState, _1 ) );
+    populationFactory_->Apply( boost::bind( &MIL_Population::UpdateNetwork, _1 ) );
 
     assert( pObjectManager_ );
     pObjectManager_->UpdateStates();

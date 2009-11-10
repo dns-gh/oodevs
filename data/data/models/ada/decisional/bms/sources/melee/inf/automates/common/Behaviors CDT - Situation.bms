@@ -62,9 +62,7 @@ do
                                 end
                             end
 
-                                if _continue then
-                                _continue = false
-                            end
+                            _continue = false
                                                 cases_switch_1[1] = true
                         end
                     end
@@ -141,9 +139,7 @@ end
                                     end
                                 end
 
-                                if _continue then
-                                _continue = false
-                            end
+                            _continue = false
                                                 cases_switch_1[1] = true
                         end
                     end

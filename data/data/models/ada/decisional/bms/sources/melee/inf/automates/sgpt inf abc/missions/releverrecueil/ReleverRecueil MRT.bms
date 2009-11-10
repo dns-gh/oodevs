@@ -158,12 +158,10 @@ elseif switch_2 == "SectionInfanterie_MILAN"
                                     end
                                 end
 
-                                if _continue then
-                                if( #( self.lstPionsAttaque ) >= rN_PE and #( self.lstPionsAppui ) >= rN_SE ) then
-                                    break
-                                end
-
+                            if( #( self.lstPionsAttaque ) >= rN_PE and #( self.lstPionsAppui ) >= rN_SE ) then
+                                break
                             end
+
                         end
 --[[// 
 ]]--[[// L'execution de la mission necessite la presence d'un 1er ech

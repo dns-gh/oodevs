@@ -643,9 +643,7 @@ elseif switch_1 == "Rep_OrderConduite_Poursuivre" then
                         end
                     end
 
-                    if _continue then
-                    Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
-                end
+                Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
             end
 
         end
@@ -732,10 +730,10 @@ node "BEH_Ordre_Automate_GEN_CDT_Varianter"
             do return end
         end
 
-        --[[//-----------------------------------------------------------------
+        local conSiteOriginal = nil--[[//-----------------------------------------------------------------
 ]]--[[// Variantement
 ]]--[[//-----------------------------------------------------------------
-]]local conSiteOriginal = 0
+]]
         for _,site in pairs( g_selConnaissanceObs or {} ) do
         local _continue = true
 do

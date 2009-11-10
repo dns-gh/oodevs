@@ -70,9 +70,9 @@ end
 
 function S_Geometrie_ObjetPlusProche( listeObjets, point )
     local _returnValue = nil
-    _returnValue = 0
+    _returnValue = nil
     local distanceMax = 1105199104
-    local objetProche = 0
+    local objetProche = nil
     for _,x in pairs( listeObjets or {} ) do
     local _continue = true
 do

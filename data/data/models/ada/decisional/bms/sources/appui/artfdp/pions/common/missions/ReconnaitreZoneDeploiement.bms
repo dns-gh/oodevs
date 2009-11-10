@@ -133,9 +133,7 @@ elseif switch_2 == eTypeObjectZoneImplantationLRM then
                                                         end
                         end
 
-                        if _continue then
-                        _continue = false
-                    end
+                    _continue = false
                 --[[// ------------------------------------------------------------------------
 ]]--[[//  Fin de mission --> rejoindre plot munition
 ]]--[[// ------------------------------------------------------------------------

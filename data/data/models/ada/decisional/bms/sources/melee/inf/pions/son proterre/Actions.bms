@@ -696,7 +696,7 @@ elseif switch_1 == eActionObjetTerminee then
         self.eEtatObjet = self.eEtatObjet or eActionObjetEnCours
         self.bSuspendu = self.bSuspendu or false
         self.bReprise = self.bReprise or false
-        self.repObj = self.repObj or 0
+        self.repObj = self.repObj or nil
         if( ModuleBegins() ) then
             do
                 DEC_Trace( "preparation abatti : debut" )

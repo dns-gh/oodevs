@@ -158,9 +158,7 @@ elseif switch_2 == "T_Mission_Automate_RENS_ROIM_SDTI_RenseignerSur" then
                                                         end
                         end
 
-                        if _continue then
-                        _continue = false
-                    end
+                    _continue = false
                 --[[//---------------------------------------------------------------------
 ]]--[[// Validation
 ]]--[[//---------------------------------------------------------------------

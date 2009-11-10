@@ -120,10 +120,8 @@ elseif switch_2 == "SectionInfanterie"
 
                     end
 
-                        if _continue then
-                        self.ePhase = eMRT_AssignerMissions
-                        _continue = false
-                    end
+                    self.ePhase = eMRT_AssignerMissions
+                    _continue = false
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// 1) Assigner les missions
 ]]--[[//-----------------------------------------------------------------------------
@@ -240,9 +238,7 @@ elseif switch_2 == "T_Mission_Automate_NBC_ReconnaitreUneZone" then
                             end
                         end
 
-                        if _continue then
-                        _continue = false
-                    end
+                    _continue = false
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Mission impossible
 ]]--[[//-----------------------------------------------------------------------------

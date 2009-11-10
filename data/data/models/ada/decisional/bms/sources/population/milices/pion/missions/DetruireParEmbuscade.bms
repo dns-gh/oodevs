@@ -88,31 +88,29 @@ elseif switch_2 == eFinMission then
                                                         end
                         end
 
-                        if _continue then
-                        if( self.eAction == eActionImpossible or self.eAction == eActionHalt ) then
-                            do
+                    if( self.eAction == eActionImpossible or self.eAction == eActionHalt ) then
+                        do
+                            self.ePhase = eRompreContact
+                                                        do return end
+
+                        end
+                    end
+
+                    if( self.eAction == eActionEffectuee ) then
+                        do
+                            self.eAction = eActionEnCours
+                                                        do
                                 self.ePhase = eRompreContact
                                                                 do return end
 
                             end
+
                         end
-
-                        if( self.eAction == eActionEffectuee ) then
-                            do
-                                self.eAction = eActionEnCours
-                                                                do
-                                    self.ePhase = eRompreContact
-                                                                        do return end
-
-                                end
-
-                            end
-                        end
-
-                        Activate( self.activations.BEH_Eni_Pion_Milice_DetruireEmbuscade, GetMotivation( "MOT_ManoeuvrerSurEnis" ), setmetatable( { self.eCurrentPhase, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                        Activate( self.activations.BEH_Mission_Pion_Milice_DetruireEmbuscade, self.rAct * GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
-                        _continue = false
                     end
+
+                    Activate( self.activations.BEH_Eni_Pion_Milice_DetruireEmbuscade, GetMotivation( "MOT_ManoeuvrerSurEnis" ), setmetatable( { self.eCurrentPhase, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Mission_Pion_Milice_DetruireEmbuscade, self.rAct * GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eCurrentPhase = v else rawset( t, k, v ) end end } ) )
+                    _continue = false
                 --[[// Decrocher sur ordre ou non
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eRompreContact then

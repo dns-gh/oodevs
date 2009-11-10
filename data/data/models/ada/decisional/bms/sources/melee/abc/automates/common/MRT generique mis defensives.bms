@@ -115,25 +115,23 @@ elseif switch_2 == "SectionInfanterie"
 ]]
                     end
 
-                        if _continue then
-                        if( DIA_IsListEmpty( self.selABC_PEcl ) and DIA_IsListEmpty( self.selABC_Blindes ) ) then
-                            do
-                                DEC_Trace( "No adapted units to perform the mission" )
-                                self.ePhase = eMRT_MissionImpossible
-                                                                do return end
+                    if( DIA_IsListEmpty( self.selABC_PEcl ) and DIA_IsListEmpty( self.selABC_Blindes ) ) then
+                        do
+                            DEC_Trace( "No adapted units to perform the mission" )
+                            self.ePhase = eMRT_MissionImpossible
+                                                        do return end
 
-                            end
                         end
-
-                        if( #( self.selABC_Blindes ) > 0 ) then
-                            self.ePhase = eMRT_DeterminerEchelonsLocals
-                        else
-                            --[[// que de l'éclairage --> on peut qd même faire certaines missions
-]]self.ePhase = eMRT_AssignerMissions
-                        end
-
-                        _continue = false
                     end
+
+                    if( #( self.selABC_Blindes ) > 0 ) then
+                        self.ePhase = eMRT_DeterminerEchelonsLocals
+                    else
+                        --[[// que de l'éclairage --> on peut qd même faire certaines missions
+]]self.ePhase = eMRT_AssignerMissions
+                    end
+
+                    _continue = false
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Determination des unités de premier échelon et de deuxième échelon
 ]]--[[//-----------------------------------------------------------------------------
@@ -363,9 +361,7 @@ elseif switch_2 == "T_Mission_Automate_ABC_OrganiserAccueilColonneRefugies" then
                             end
                         end
 
-                        if _continue then
-                        _continue = false
-                    end
+                    _continue = false
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Mission impossible
 ]]--[[//-----------------------------------------------------------------------------

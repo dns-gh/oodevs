@@ -312,11 +312,9 @@ elseif switch_1 == etypeAttentat_destructionComposanteMajeure then
                         end
                     end
 
-                    if _continue then
-                                        self.params.__returnValue = self.eAction
-                    do return end
+                                self.params.__returnValue = self.eAction
+                do return end
 
-                end
             end
         else
             self.params.__returnValue = eActionImpossible

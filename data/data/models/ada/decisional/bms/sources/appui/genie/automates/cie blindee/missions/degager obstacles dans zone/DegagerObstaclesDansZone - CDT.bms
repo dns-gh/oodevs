@@ -225,7 +225,7 @@ node "BEH_Misc_Automate_GEN_GererReductionDesObstacles"
         for _,pion in pairs( listePionsGenie or {} ) do
         local _continue = true
 do
-                local objetADegager = 0
+                local objetADegager = nil
                 --[[//-------------------------------------------------------------------------
 ]]--[[// ...On traite les objets dans l'ordre dans lequel ils ont été rentrés 
 ]]--[[// dans l'interface 
@@ -235,7 +235,7 @@ do
                     objetADegager = DEC_UserTypeList_GetAt( self.listeObjetsADegager, 0 )
                 end
 
-                if( ( objetADegager ~= 0 and objetADegager ~= nil ) ) then
+                if( objetADegager ~= nil ) then
                     do
                         Activate( self.activations.BEH_Mission_Automate_Gen_AssignerDegagerObjetA, 1, { pion, objetADegager, } )
                         --[[// T_ConnaissanceObjet traité

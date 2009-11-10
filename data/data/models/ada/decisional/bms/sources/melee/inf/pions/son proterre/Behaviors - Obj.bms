@@ -114,7 +114,7 @@ node "BEH_Obj_Pion_VAB_InstallerCheckPoint"
         self.eAction = self.eAction or eActionEnCours
         self.ePhase = self.ePhase or eInstallerDispositif
         self.locPtCheckPoint = self.locPtCheckPoint or nil
-        self.ksPosteControle = self.ksPosteControle or 0
+        self.ksPosteControle = self.ksPosteControle or nil
         if( ModuleBegins() ) then
             do
                 DEC_Trace( "  installation plan d'obstacle" )
@@ -191,7 +191,7 @@ node "BEH_Obj_Pion_VAB_NettoyerObstacle"
     activate = function( self )
         --[[// Pas d'objet trouve
 ]]self.eAction = self.eAction or eActionEnCours
-        self.repObj = self.repObj or 0
+        self.repObj = self.repObj or nil
         if( ModuleBegins() ) then
             do
                 --[[// le detruit

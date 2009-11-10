@@ -361,7 +361,7 @@ end
         select = function( self )
             self.point = self.point or nil
             if( not self.selected ) then
-                self.selected = false
+                self.selected = true
                 DEC_Trace( ">> Surveillance du secteur activée " )
                 self.point = DEC_Perception_ActiverReconnaissanceLocalisation( self._namedParams.zone )
             end
@@ -369,7 +369,7 @@ end
 
         deselect = function( self )
             DEC_Perception_DesactiverReconnaissanceLocalisation( self.point )
-            self.selected = true
+            self.selected = false
         end,
 
         destroy = function( self )

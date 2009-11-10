@@ -87,7 +87,7 @@ node "BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission"
         self.eAction = self.eAction or eActionEnCours
         --[[// Parametres de la mission
 ]]self.ptObjImplantation = self.ptObjImplantation or DEC_Geometrie_CreerPoint()
-        self.repObjImplantation = self.repObjImplantation or 0
+        self.repObjImplantation = self.repObjImplantation or nil
         self.bPresenceContreBatterie = self.bPresenceContreBatterie or false
         if( ModuleBegins() ) then
             do

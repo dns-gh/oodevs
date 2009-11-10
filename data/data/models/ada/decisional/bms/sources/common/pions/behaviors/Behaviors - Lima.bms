@@ -165,9 +165,7 @@ if( meleeInfPionsCommon() ) then
                                 end
                             end
 
-                            if _continue then
-                            Activate( self.activations.ACT_Limas_Suppression, 1, { pointLima, } )
-                        end
+                        Activate( self.activations.ACT_Limas_Suppression, 1, { pointLima, } )
                     end
                 end
 

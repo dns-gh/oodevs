@@ -150,20 +150,18 @@ elseif switch_2 == "T_Mission_Automate_INF_AppuyerUnFreinage" then
 --[[// 
 ]]--[[// L'execution de la mission necessite la presence d'un 1er ech
 ]]
-                        if _continue then
-                        if( ( self._namedParams.eTypeMission ~= "T_Mission_Automate_INF_RompreContact" and #( self.lstPionsAttaque ) == 0 or self._namedParams.eTypeMission ~= "T_Mission_Automate_INF_RompreContact" and #( self.lstPionsAttaque ) == nil ) ) then
-                            do
-                                DEC_Trace( "Pas de 1er echelon" )
-                                DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
-                                                                self.params.__returnValue = eActionImpossible
-                                Halt( self )
-                                do return end
+                    if( ( self._namedParams.eTypeMission ~= "T_Mission_Automate_INF_RompreContact" and #( self.lstPionsAttaque ) == 0 or self._namedParams.eTypeMission ~= "T_Mission_Automate_INF_RompreContact" and #( self.lstPionsAttaque ) == nil ) ) then
+                        do
+                            DEC_Trace( "Pas de 1er echelon" )
+                            DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
+                                                        self.params.__returnValue = eActionImpossible
+                            Halt( self )
+                            do return end
 
-                            end
                         end
-
-                        _continue = false
                     end
+
+                    _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eMRT_AffecterFuseaux then
                     --[[//-----------------------------------------------------------------------------
@@ -269,15 +267,13 @@ elseif switch_2 == "T_Mission_Automate_INF_AppuyerUnFreinage" then
                         end
 --[[// Donner une mission retrograde
 ]]
-                        if _continue then
-                        if( self._namedParams.eTypeMission ~= "T_Mission_Automate_INF_RompreContact" ) then
-                            Activate( self.activations.BEH_Medo_Automate_INF_AssignerMissionRetrograde_PC, 1, setmetatable( { self.lstPionsAttaque, self.lstPionsAppui, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
-                        end
-
-                        Activate( self.activations.BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier, 1, { self.selPions_INF_Mortier, } )
-                        Activate( self.activations.BEH_Medo_Automate_INF_InitialiseSE, 1, { self.lstPionsAppui, } )
-                        _continue = false
+                    if( self._namedParams.eTypeMission ~= "T_Mission_Automate_INF_RompreContact" ) then
+                        Activate( self.activations.BEH_Medo_Automate_INF_AssignerMissionRetrograde_PC, 1, setmetatable( { self.lstPionsAttaque, self.lstPionsAppui, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionMRT = v else rawset( t, k, v ) end end } ) )
                     end
+
+                    Activate( self.activations.BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier, 1, { self.selPions_INF_Mortier, } )
+                    Activate( self.activations.BEH_Medo_Automate_INF_InitialiseSE, 1, { self.lstPionsAppui, } )
+                    _continue = false
                                 cases_switch_1[3] = true
                 end
             end

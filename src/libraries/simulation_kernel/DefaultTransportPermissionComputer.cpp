@@ -18,7 +18,7 @@ namespace transport
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
 DefaultTransportPermissionComputer::DefaultTransportPermissionComputer() :
-    allow_(true)
+    allow_( true )
 {
 }
 
@@ -36,14 +36,14 @@ DefaultTransportPermissionComputer::~DefaultTransportPermissionComputer()
 // -----------------------------------------------------------------------------
 void DefaultTransportPermissionComputer::Reset()
 {
-    allow_ = false;
+    allow_ = true;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DefaultTransportPermissionComputerAllowLoading
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
-void DefaultTransportPermissionComputer::AllowLoading(bool doAllow)
+void DefaultTransportPermissionComputer::AllowLoading( bool doAllow )
 {
     allow_ &= doAllow;
 }

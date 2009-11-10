@@ -153,10 +153,8 @@ do
                     end
                 end
 
-                    if _continue then
-                    Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )
-                    Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
-                end
+                Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )
+                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
             end
         end
 

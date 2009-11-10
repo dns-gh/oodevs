@@ -158,10 +158,8 @@ do
 
                     end
 
-                        if _continue then
-                        self.ePhase = eMRT_AssignerMissions
-                        _continue = false
-                    end
+                    self.ePhase = eMRT_AssignerMissions
+                    _continue = false
                 --[[//---------------------------------------------------------------------
 ]]--[[// Assignation des missions
 ]]--[[//---------------------------------------------------------------------

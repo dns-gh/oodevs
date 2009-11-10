@@ -159,17 +159,13 @@ elseif switch_3 == "SectionInfanterie"
                                                 end
                                             end
 
-                                            if _continue then
-                                            _continue = false
-                                        end
+                                        _continue = false
                                                                         cases_switch_2[2] = true
                                     end
                                 end
 
-                                if _continue then
-                                F_Pion_SeteEtatEchelon( x_pion, eEtatEchelon_Second )
-                                _continue = false
-                            end
+                            F_Pion_SeteEtatEchelon( x_pion, eEtatEchelon_Second )
+                            _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == eEtatPhaseMission_ArriveSurLocalisation then
                             if( S_Misc_EstMissionAffectee_Pion( x_pion, "T_Mission_Pion_INF_Harceler" ) ) then

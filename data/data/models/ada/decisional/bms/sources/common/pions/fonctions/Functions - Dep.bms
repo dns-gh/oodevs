@@ -13,16 +13,14 @@ includedFiles["sources/common/pions/fonctions/Functions - Dep.bms"] = true
 ]]--[[// Calcule position de surete
 ]]--[[//-------------------------------------------------------------------------
 ]]function S_Dep_CalculerPositionSurete( repUnite, rDistance )
-    local _returnValue = {}
-    local eValidite = eRequeteInvalide
-    _returnValue = DEC_Geometrie_CalculerPositionSurete( repUnite, rDistance, eValidite )
-    return _returnValue
+    local _returnValue = nil
+    _returnValue = DEC_Geometrie_CalculerPositionSurete( repUnite, rDistance )
+    do return _returnValue end
 end
 
 function S_Dep_CalculerPositionSureteAvecObjectif( repUnite, rDistance, objectif )
-    local _returnValue = {}
-    local eValidite = eRequeteInvalide
-    _returnValue = DEC_Geometrie_CalculerPositionSureteAvecObjectif( repUnite, rDistance, objectif, eValidite )
-    return _returnValue
+    local _returnValue = nil
+    _returnValue = DEC_Geometrie_CalculerPositionSureteAvecObjectif( repUnite, rDistance, objectif )
+    do return _returnValue end
 end
 
