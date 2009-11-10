@@ -98,7 +98,10 @@ int DEC_PerceptionFunctions::EnableRecognitionPoint( DEC_Decision_ABC& callerAge
 {
     assert( pCenter );
 
-    return callerAgent.GetPion().GetRole< PHY_RoleInterface_Perceiver >().EnableRecoPoint( *pCenter, rSize, rGrowthSpeed, callerAgent );
+    const MT_Float rSimSize        = MIL_Tools::ConvertMeterToSim   ( rSize );
+    const MT_Float rSimGrowthSpeed = MIL_Tools::ConvertSpeedMosToSim( rGrowthSpeed );
+
+    return callerAgent.GetPion().GetRole< PHY_RoleInterface_Perceiver >().EnableRecoPoint( *pCenter, rSimSize, rSimGrowthSpeed, callerAgent );
 }
 
 // -----------------------------------------------------------------------------
