@@ -80,9 +80,10 @@
     ============================================================================
     -->
     <target name="libraries" description="build all libraries"
-            depends="library.tools,library.MT_Tools,library.ENT,library.game_asn,library.simulation_terrain,library.simulation_orders,library.simulation_kernel,
-                     library.clients_kernel,library.clients_gui,library.actions,library.actions_gui,library.gaming,library.preparation,
-                     library.bml_plugin,library.xmlia_plugin,library.hla_plugin,library.dis_plugin,library.tic_plugin,library.messenger_plugin,library.3a"/>
+            depends="library.tools,library.MT_Tools,library.ENT,library.game_asn,library.simulation_terrain,library.simulation_kernel,
+                     library.clients_kernel,library.clients_gui,library.actions,library.actions_static,library.actions_gui,library.gaming,library.preparation,
+                     library.bml_plugin,library.xmlia_plugin,library.crossbow_plugin,library.hla_plugin,library.dis_plugin,library.tic_plugin,
+                     library.messenger_plugin,library.3a"/>
 
     <target name="library.tools" description="build tools static library">
         <build-lib name="tools" depends="qt" pattern="lib${ant.project.name}_tools-${platform}-mt@{suffix}" suffix="-gd">
@@ -115,6 +116,7 @@
     <target name="library.dispatcher" description="build dispatcher static library" depends="library.MT_Tools,library.tools,library.game_asn">
         <build-lib name="dispatcher" pattern="lib${ant.project.name}_dispatcher-${platform}-mt@{suffix}" suffix="-gd" depends="qt">
             <includepath path="${include.dir}/masasn"/>
+            <defineset define="XML_LIBRARY,MT_AUTO_LINK"/> <!-- xerces static -->
         </build-lib>
     </target>
 
@@ -122,17 +124,17 @@
         <build-lib name="simulation_terrain" pattern="lib${ant.project.name}_simulation_terrain-${platform}-mt@{suffix}" suffix="-gd"/>
     </target>
 
-    <target name="library.simulation_orders" description="build simulation_orders static library" depends="library.tools,library.game_asn">
-        <build-lib name="simulation_orders" pattern="lib${ant.project.name}_simulation_orders-${platform}-mt@{suffix}" suffix="-gd">
-            <includepath path="${include.dir}/masasn"/>
-        </build-lib>
-    </target>
-
     <target name="library.simulation_kernel" description="build simulation_kernel static library" depends="library.tools,library.game_asn,library.simulation_terrain,library.simulation_orders">
         <build-lib name="simulation_kernel" pattern="lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/masasn"/>
             <includepath path="${libraries.dir}/simulation_kernel"/> <!-- pour MIL.h -->
             <defineset define="USE_DLL"/> <!-- folk use dll -->
+        </build-lib>
+    </target>
+
+    <target name="library.simulation_orders" description="build simulation_orders static library" depends="library.tools,library.game_asn">
+        <build-lib name="simulation_orders" pattern="lib${ant.project.name}_simulation_orders-${platform}-mt@{suffix}" suffix="-gd">
+            <includepath path="${include.dir}/masasn"/>
         </build-lib>
     </target>
 
@@ -149,9 +151,16 @@
         </zip>
     </target>
 
-    <target name="library.actions" description="build actions static library" depends="library.game_asn,library.clients_kernel">
+    <target name="library.actions" description="build actions library" depends="library.game_asn,library.clients_kernel">
         <build-lib name="actions" depends="qt" pattern="lib${ant.project.name}_actions-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/masasn"/>
+        </build-lib>
+    </target>
+
+    <target name="library.actions_static" description="build actions static library" depends="library.game_asn,library.clients_kernel">
+        <build-lib name="actions_static" depends="qt" pattern="lib${ant.project.name}_actions-static-${platform}-mt@{suffix}" input="actions" suffix="-gd">
+            <includepath path="${include.dir}/masasn"/>
+            <defineset define="XML_LIBRARY"/>  <!-- xerces static -->
         </build-lib>
     </target>
 
@@ -232,6 +241,7 @@
     <target name="library.messenger_plugin" description="build messenger_plugin static library" depends="library.dispatcher">
         <build-lib name="messenger_plugin" pattern="lib${ant.project.name}_messenger_plugin-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/masasn"/>
+            <defineset define="XML_LIBRARY"/>  <!-- xerces static -->
         </build-lib>
     </target>
 
@@ -253,7 +263,7 @@
 
     <target name="library.plugins" description="build all dispatcher plugins"
             depends="library.messenger_plugin,library.tic_plugin,library.dis_plugin,library.hla_plugin,library.3a,
-                     library.bml_plugin,library.crossbow_plugin,library.xmlia_plugin,library.script_plugin,library.score_plugin"/>
+                     library.bml_plugin,library.xmlia_plugin,library.crossbow_plugin,library.script_plugin,library.score_plugin"/>
 
     <!--
     ============================================================================
@@ -324,7 +334,7 @@
                          lib${ant.project.name}_indicators-${platform}-mt">
             <syslibset libs="dbghelp,psapi,iphlpapi,user32"/>
             <includepath path="${include.dir}/masasn"/>
-            <defineset define="DISPATCHER_DLL_EXPORTS,CROSSBOW_PLUGIN"/>
+            <defineset define="XML_LIBRARY,DISPATCHER_DLL_EXPORTS,CROSSBOW_PLUGIN"/>
             <linkerarg value="/FIXED:NO"/>
         </build-lib>
     </target>
@@ -610,7 +620,7 @@
                 <arg value="${adaptation_test.dir2}/physical.xml"/>
             </exec>
             <compare-dirs dir1="${adaptation_test.dir1}" dir2="${adaptation_test.dir2}"
-                excludes="**/Pathfind.xml,**/dis.xml,**/Fire.xml,**/MedicalTreatment.xml,**/templates.xml,**/ObjectNames.xml"
+                excludes="**/Pathfind.xml,**/dis.xml,**/HumanProtections.xml,**/Fire.xml,**/MedicalTreatment.xml,**/NBCAgents.xml,,**/templates.xml,**/ObjectNames.xml"
                           includes="**/*.xml" property="adaptation_test.is-different"/>
             <if>
                 <isset property="adaptation_test.is-different"/>
@@ -674,9 +684,9 @@
       package
     ============================================================================
     -->
-    <target name="package" description="package the installers" depends="package.standard,package.eval,package.france,package.stress"/>
+    <target name="package" description="package the installers" depends="package.defense,package.security,package.eval,package.france,package.stress"/>
 
-    <target name="package.standard" description="package the standard installer: worlwide, no license">
+    <target name="package.defense" description="package the standard installer: worlwide, no license">
         <nsis todir="${dist.dir}/current/${platform}" name="sword-ot" script="sword-ot.nsi">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
@@ -685,6 +695,15 @@
         </nsis>
     </target>
 
+    <target name="package.security" description="create the installer">
+        <nsis todir="${dist.dir}/current/${platform}" name="sword-security-server" script="sword-security-server.nsi">
+            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
+            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
+            <arg value="/DAPP_MODEL=worldwide"/>
+            <arg value="/X!include sword-security.nsh"/>
+        </nsis>
+    </target>
+    
     <target name="package.eval" description="package the standard installer: worlwide, 3 months license">
         <nsis todir="${dist.dir}/current/${platform}" name="sword-ot" script="sword-ot.nsi">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
@@ -781,6 +800,8 @@
         <update name="folk"/>
         <update name="mockpp"/>
         <update name="vcredist" package="vcredist"/>
+        <update name="turtle"/>
+        <update name="system"/>
         <update-database database="core-database" dir="${data.dir}/data/models/baseTestBM/decisional/models/core"/>
         <update-database database="generic-database" dir="${data.dir}/data/models/baseTestBM/decisional/models/base"/>
         <antcall target="generate-data"/>
