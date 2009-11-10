@@ -11,6 +11,7 @@
 #include "Application.h"
 #include "MainWindow.h"
 #include "ENT/ENT_Tr.h"
+#include "clients_gui/Tools.h"
 #include <qsettings.h>
 #include <qtextcodec.h>
 
@@ -19,7 +20,7 @@ namespace
     QString ReadLang()
     {
         QSettings settings;
-        settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD Officer Training" ) );
+        settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
         return settings.readEntry( "/Common/Language", QTextCodec::locale() );
     }
 }

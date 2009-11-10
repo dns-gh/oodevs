@@ -19,19 +19,6 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "DEC_FunctionsTools.h"
 
-/*
-namespace 
-{
-    template <typename Functor> 
-    bool HasCapacity( MIL_Object_ABC* pObject, Functor& functor )
-    {
-        if ( pObject )        
-            return (*pObject)().functor();
-        return false;
-    }
-}
-*/
-
 // -----------------------------------------------------------------------------
 // Name: template< typename T > static void DEC_ObjectFunctions::ActivateObject
 // Created: NLD 2005-07-26
@@ -43,10 +30,10 @@ bool DEC_ObjectFunctions::ActivateObject( const T& caller, boost::shared_ptr< DE
         return false;
 
     MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
-    if( !pObject || !(*pObject)().CanBeActivated() )
+    if( !pObject || !( *pObject )().CanBeActivated() )
         return false;
 
-    (*pObject)().Activate();
+    ( *pObject )().Activate();
     return true;
 }
 
@@ -71,7 +58,7 @@ void DEC_ObjectFunctions::MagicDestroyObject( const T& caller, boost::shared_ptr
     if( pKnowledge && pKnowledge->IsValid() )
     {
         MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
-        if( pObject && (*pObject)().CanBeDestroyed() )
-            (*pObject)().Destroy(); // AddObjectKnowledgeToForget done
+        if( pObject && ( *pObject )().CanBeDestroyed() )
+            ( *pObject )().Destroy(); // AddObjectKnowledgeToForget done
     }
 }

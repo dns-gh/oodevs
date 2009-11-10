@@ -88,11 +88,11 @@
 <context>
     <name>Application</name>
     <message>
-        <source>SWORD Officer Training</source>
-        <translation type="unfinished"></translation>
+        <source>SWORD</source>
+        <translation>SWORD</translation>
     </message>
     <message>
-        <source>sword-ot@masagroup.net</source>
+        <source>sword@masagroup.net</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -129,6 +129,33 @@
     <message>
         <source>The new exercise will be created in:
 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CrossbowPluginConfigPanel</name>
+    <message>
+        <source>Enable Crossbow export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Format for gdb: filename.{gdb|mdb}</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Format for sde connection: sde://user:password@host:port/db_name.sword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Geodatabase export:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Geodatabase population export:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Geodatabase order import:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -412,6 +439,10 @@ Description: %3</source>
     </message>
     <message>
         <source>DIS Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DB Export</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

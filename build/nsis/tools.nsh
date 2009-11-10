@@ -141,6 +141,21 @@
 !macroend
 
 ;------------------------------------------------------------------------------
+; Adds Population Section
+;------------------------------------------------------------------------------
+!macro OT.AddPopulation PopulationName SectionId
+
+    Section "${PopulationName}" ${SectionId}
+        ;SectionIn RO
+        SetOutPath "${INSTDATADIR}\data\population\${PopulationName}"
+        !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+        File /r /x ".svn" "${DATADIR}\data\population\${PopulationName}\*"
+        !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+    SectionEnd
+
+!macroend
+
+;------------------------------------------------------------------------------
 ; Checks dependency between two sections 
 ;------------------------------------------------------------------------------
 !macro OT.CheckDependency FromSection ToSection

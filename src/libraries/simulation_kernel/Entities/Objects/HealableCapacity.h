@@ -11,7 +11,8 @@
 #define __HealableCapacity_h_
 
 #include "ObjectCapacity_ABC.h"
-#include "Entities/Agents/Units/Humans/PHY_Human.h"
+#include "Entities/Agents/Units/Humans/PHY_InjuredHuman.h"
+#include "Entities/Objects/MedicalTreatmentAttribute.h"
 
 class MedicalTreatmentAttribute;
 
@@ -24,7 +25,7 @@ class MedicalTreatmentAttribute;
 class HealableCapacity : public ObjectCapacity_ABC
 {
 private:
-    typedef std::list< PHY_Human >           T_WaitingList;
+    typedef std::list< PHY_InjuredHuman >    T_WaitingList;
     typedef T_WaitingList::const_iterator    CIT_WaitingList;
     typedef T_WaitingList::iterator          IT_WaitingList;
 
@@ -47,19 +48,21 @@ public:
     virtual void Register( Object& object );
     virtual void Update( Object& object, float time );
 
-    const std::string GetFirstWaitingPatientInjuryName() const;
-    int   GetFirstWaitingPatientInjuryCategory() const;
-    bool  UpdateInitialState( MedicalTreatmentAttribute& attr, float time );
-    bool  UpdateState( MedicalTreatmentAttribute& attr );
-    void  DeactivateEmergencyPlan();
-    void  ActivateEmergencyPlan();
-    void  MakeDiagnosis( MedicalTreatmentAttribute& attr );
+    //! @name Operators
+    //@{
+    int                                             GetFirstWaitingPatientInjuryID() const;
+    MIL_MedicalTreatmentType::E_InjuryCategories    GetFirstWaitingPatientInjuryCategory() const;
+    bool                                            UpdateInitialState( MedicalTreatmentAttribute& attr, float time );
+    bool                                            UpdateState( MedicalTreatmentAttribute& attr );
+    void                                            DeactivateEmergencyPlan();
+    void                                            ActivateEmergencyPlan();
+    void                                            MakeDiagnosis( MedicalTreatmentAttribute& attr );
     //@}
 
     //! @name Decisional functions
     //@{
     void TransferPatient();
-    void ReceivePatient( const PHY_Human& injuredHuman );
+    void ReceivePatient( const PHY_InjuredHuman& injuredHuman );
     //@}
 
 private:
@@ -86,6 +89,8 @@ private:
     T_WaitingList careWaitingList_;
     T_WaitingList transferWaitingList_;
     T_WaitingList entranceWaitingList_;
+    T_WaitingList deadsList_;
+
     //@}
 };
 

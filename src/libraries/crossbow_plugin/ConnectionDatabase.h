@@ -36,10 +36,7 @@ public:
 
     //! @name 
     //@{
-    virtual Table_ABC&  OpenBufferedTable( const std::string& name, bool clear = true );
-    virtual Table_ABC*  OpenTable( const std::string& name );
-    virtual void        ClearTable( const std::string& name );
-    virtual void ReleaseTable( const std::string& name );
+    virtual std::string GetTableName( const std::string& name ) const;
     //@}
 
 private:
@@ -51,7 +48,6 @@ private:
 
     //! @name 
     //@{
-    std::string Decorate( const std::string& name );
     IPropertySetPtr CreateProperty( const std::string& url );
     //@}
 
@@ -60,6 +56,7 @@ private:
     //@{
     std::string database_;
     std::string protocol_;
+    std::string schema_;
     //@}
 };
 

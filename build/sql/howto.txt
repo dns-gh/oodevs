@@ -1,0 +1,16 @@
+Postgresql intallation
+service SecondaryLogon must be started
+
+1) Install
+
+ - if the database is new, run create-sword-user to have a "sword" user available
+ - install-sword-sde-db: create sword database & schema, add sde system tables, add an sde service and start it.
+   Run the command with two arguments: the expected database name, and the expected SDE service port
+ - register-sword-db: resgister sde tables
+   Run the command with two arguments: the database name, and the SDE service port
+ 
+2) Uninstall
+
+ -unregister-sword-db
+ -uninstall : delete database & stop service
+  

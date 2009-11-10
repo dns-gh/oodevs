@@ -105,3 +105,14 @@ bool MIL_AutomateType::IsRefugee() const
 {
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateType::IsRefugee
+// Created: NLD 2005-03-10
+// -----------------------------------------------------------------------------
+inline
+bool MIL_AutomateType::IsInjuredHuman() const
+{
+    return false;
+}
+

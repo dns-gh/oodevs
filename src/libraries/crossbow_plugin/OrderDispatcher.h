@@ -65,16 +65,23 @@ private:
 
     //! @name Helpers
     //@{
+    void Clean();
+    //@}
+
+    //! @name Mission Helpers
+    //@{
     void DispatchMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Agent& agent, const Row_ABC& row );
     void DispatchMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Automat& automat, const Row_ABC& row );
     void DispatchFragOrder( dispatcher::SimulationPublisher_ABC& publisher, unsigned long targetId, const Row_ABC& row );
+    //@}
 
+    //! @name Parameter Helpers
+    //@{
     unsigned long GetTargetId( const Row_ABC& row ) const;
     const kernel::OrderType* GetAgentMission( const Row_ABC& row ) const;
     const kernel::OrderType* GetAutomatMission( const Row_ABC& row ) const;
     void SetParameters( ASN1T_MissionParameters& parameters, unsigned long orderId, const kernel::OrderType& type );
     void SetParameter( ASN1T_MissionParameter& parameter, const Row_ABC& row, const kernel::OrderType& type );
-    void CleanParameters( ASN1T_MissionParameters& parameters );
     //@}
 
 private:

@@ -10,6 +10,8 @@
 #include "crossbow_plugin_pch.h"
 #include "FeatureClass.h"
 #include "FeatureRow.h"
+#include "DatabaseEditor_ABC.h"
+
 #include <boost/lexical_cast.hpp>
 
 using namespace plugins;
@@ -28,12 +30,11 @@ namespace
 // Name: FeatureClass constructor
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::FeatureClass::FeatureClass( IFeatureClassPtr featureClass, const std::string& name )
-    : Table( GetTable( featureClass ), name )
-    , name_( name )
+crossbow::FeatureClass::FeatureClass( IFeatureClassPtr featureClass, DatabaseEditor_ABC& editor )
+    : Table( GetTable( featureClass ), editor )
     , featureClass_( featureClass )
     , spatialReference_()
-    , feature_( 0 )
+    , feature_ ( 0 )
 {
     InitializeSpatialReference();
     feature_.reset( new FeatureRow( spatialReference_ ) );
@@ -71,30 +72,6 @@ void crossbow::FeatureClass::InitializeSpatialReference()
         geoDatasetSchemaEdit->AlterSpatialReference( spatialReference_ );
 }
 
-// -----------------------------------------------------------------------------
-// Name: FeatureClass::CreateRow
-// Created: SBO 2007-08-31
-// -----------------------------------------------------------------------------
-crossbow::Row_ABC& crossbow::FeatureClass::CreateRow()
-{
-    IFeaturePtr feature;
-    featureClass_->CreateFeature( &feature ); // $$$$ SBO 2007-08-30: check
-    feature_->BindFeature( feature ); // $$$$ SBO 2007-08-30: only allows one row to be edited...
-    return *feature_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: FeatureClass::UpdateRow
-// Created: SBO 2007-09-26
-// -----------------------------------------------------------------------------
-void crossbow::FeatureClass::UpdateRow( const Row_ABC& row )
-{
-    if( &row != feature_.get() )
-        return;
-    feature_->Commit( cursor_ != NULL ? cursor_ : NULL );
-    // feature_->Commit( InTransaction() ? cursor_ : NULL );
-}
-
 namespace
 {
     void ThrowError()
@@ -108,12 +85,63 @@ namespace
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: FeatureClass::CreateRow
+// Created: SBO 2007-08-31
+// -----------------------------------------------------------------------------
+crossbow::Row_ABC& crossbow::FeatureClass::CreateRow()
+{
+    IFeaturePtr feature;
+    editor_.StartEdit();
+    HRESULT res = featureClass_->CreateFeature( &feature ); // $$$$ SBO 2007-08-30: check
+    // HRESULT res = featureClass_->CreateFeatureBuffer( &feature ); // $$$$ SBO 2007-08-30: check
+    if( FAILED( res ) )
+        ThrowError();
+    long ids = 0;
+    IQueryFilterPtr filter;
+    featureClass_->FeatureCount( filter, &ids );
+    feature->put_Value( 0, CComVariant( ids ) );
+    feature_->BindFeature( feature, ids ); // $$$$ SBO 2007-08-30: only allows one row to be edited...
+    return *feature_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FeatureClass::UpdateRow
+// Created: SBO 2007-09-26
+// -----------------------------------------------------------------------------
+void crossbow::FeatureClass::UpdateRow( const Row_ABC& row )
+{
+    if( &row != feature_.get() )
+        return;
+    if ( cursor_ != NULL )
+    {
+        feature_->Commit( cursor_ );
+        cursor_->Flush();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Table::UpdateRow
+// Created: SBO 2007-09-26
+// -----------------------------------------------------------------------------
+void crossbow::FeatureClass::InsertRow( const Row_ABC& row )
+{
+    if( &row != feature_.get() )
+        return;
+    
+    IFeatureCursorPtr cursor;
+    HRESULT res = featureClass_->Insert( true, &cursor );
+    if( FAILED( res ) )
+        ThrowError();
+    feature_->Commit( cursor );
+    editor_.StopEdit();
+}
 
 // -----------------------------------------------------------------------------
 // Name: FeatureClass::Find
 // Created: SBO 2007-08-31
 // -----------------------------------------------------------------------------
-crossbow::Row_ABC* crossbow::FeatureClass::Find( const std::string& query )
+crossbow::Row_ABC* crossbow::FeatureClass::Find( const std::string& query, bool forceUpdate /*= false*/ )
 {
     IQueryFilterPtr filter;
 
@@ -122,7 +150,9 @@ crossbow::Row_ABC* crossbow::FeatureClass::Find( const std::string& query )
         filter.CreateInstance( CLSID_QueryFilter );
         filter->put_WhereClause( CComBSTR( query.c_str() ) );
     }    
-    HRESULT res = InTransaction() ? featureClass_->Update( filter, true, &cursor_ ) : featureClass_->Search( filter, true, &cursor_ );
+    HRESULT res = ( forceUpdate || editor_.InTransaction() )
+        ? featureClass_->Update( filter, false, &cursor_ ) 
+        : featureClass_->Search( filter, true, &cursor_ );
     if( FAILED( res ) )
     {
         ThrowError();
@@ -140,6 +170,8 @@ crossbow::Row_ABC* crossbow::FeatureClass::GetNextRow()
     IFeaturePtr feature;
     if( FAILED( cursor_->NextFeature( &feature ) ) || feature == NULL )
         return 0;
-    feature_->BindFeature( feature );
+    long oid;
+    feature->get_OID( &oid );
+    feature_->BindFeature( feature, oid );
     return feature_.get();
 }

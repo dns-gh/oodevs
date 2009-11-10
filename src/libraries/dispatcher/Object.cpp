@@ -24,6 +24,7 @@
 #include "ToxicCloudAttribute.h"
 #include "ClientPublisher_ABC.h"
 #include "ModelVisitor_ABC.h"
+#include "clients_kernel/ObjectType.h"
 
 #include <boost/bind.hpp>
 
@@ -35,7 +36,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 Object::Object( Model& model, const ASN1T_MsgObjectCreation& msg )
     : SimpleEntity< kernel::Object_ABC >( msg.oid, msg.name )
-    , type_                        ( msg.type )
+    , type_                        ( model.GetObjectTypes().Get( msg.type ) )
     , strName_                     ( msg.name  )
     , localisation_                ( msg.location )
     , side_                        ( model.sides_.Get( msg.team ) )
@@ -107,7 +108,7 @@ void Object::SendCreation( ClientPublisher_ABC& publisher ) const
     client::ObjectCreation asn;
 
     asn().oid  = GetId();
-    asn().type = type_.c_str();
+    asn().type = type_.GetType().c_str();
     asn().name = strName_.c_str();
     asn().team = side_.GetId();
 
@@ -179,5 +180,5 @@ void Object::Display( kernel::Displayer_ABC& ) const
 // -----------------------------------------------------------------------------
 const kernel::ObjectType& Object::GetType() const
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+	return type_;
 }

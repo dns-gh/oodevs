@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <fire-classes>
-	<class id="1" name="Class A" defaultheat="50" heatmax="200" tempthreshold="100" increaserate="10" decreaserate="5">
-    <extinguisher-agents>
-    	<agent nature="EauEnMasse" effect="30"/>
-    	<agent nature="EauEnPulvérisation" effect="30"/>
-    	<agent nature="Mousses" effect="15"/>
-    	<agent nature="Poudres" effect="30"/>
-    	<agent nature="CO2" effect="0"/>
-    	<agent nature="Solide" effect="0"/>
-    	<agent nature="HydrocarburesHalogenes" effect="0"/>
-    </extinguisher-agents>
+	<!-- fire-surface will define the surface of the fire in the simulation, the length will be used by the wind when we compute the propagation due to the speed factor-->
+	<fire-surface length="5" width="5"/>
+	
+	<!-- id and name are identifiers of the class of fire
+	default heat is the initial heat
+	heatmax, is the maximum heat the fire can reach
+	tempthreshold is the time during which the fire heat is increasing before decreasing
+	the increaserate sets how fast the fire heat is increasing
+	the decreaserate sets how fst the fire heat is decreasing
+	propagation-threshold sets how much energy(time*heat) the fire needs before to propagate-->
+	<class id="1" name="Class A" defaultheat="50" heatmax="200" tempthreshold="100s" increaserate="10" decreaserate="5" propagation-threshold="10000">
+        <extinguisher-agents>
+        	<!--the extinguisher agents are identificated by their nature
+        	effect sets how much the fire heat will decrease each time we use one unit of this extinguisher agent -->
+        	<agent nature="EauEnMasse" effect="30"/>
+        	<agent nature="EauEnPulvérisation" effect="30"/>
+        	<agent nature="Mousses" effect="15"/>
+        	<agent nature="Poudres" effect="30"/>
+        	<agent nature="CO2" effect="0"/>
+        	<agent nature="Solide" effect="0"/>
+        	<agent nature="HydrocarburesHalogenes" effect="0"/>
+        </extinguisher-agents>
    </class>
-   <class id="2" name="Class B" defaultheat="75" heatmax="250" tempthreshold="200" increaserate="20" decreaserate="10">
+   <class id="2" name="Class B" defaultheat="75" heatmax="250" tempthreshold="200s" increaserate="20" decreaserate="10" propagation-threshold="10000">
     <extinguisher-agents>
     	<agent nature="EauEnMasse" effect="0"/>
     	<agent nature="EauEnPulvérisation" effect="0"/>
@@ -21,8 +33,8 @@
     	<agent nature="Solide" effect="0"/>
     	<agent nature="HydrocarburesHalogenes" effect="30"/>
     </extinguisher-agents>
-   </class>
-   <class id="3" name="Class C" defaultheat="100" heatmax="300" tempthreshold="300" increaserate="30" decreaserate="15">
+   </class>   
+   <class id="3" name="Class C" defaultheat="100" heatmax="300" tempthreshold="300s" increaserate="30" decreaserate="15" propagation-threshold="10000">
     <extinguisher-agents>
     	<agent nature="EauEnMasse" effect="0"/>
     	<agent nature="EauEnPulvérisation" effect="0"/>
@@ -33,7 +45,7 @@
     	<agent nature="HydrocarburesHalogenes" effect="30"/>
     </extinguisher-agents>
    </class>
-   <class id="4" name="Class D" defaultheat="125" heatmax="350" tempthreshold="400" increaserate="40" decreaserate="20">
+   <class id="4" name="Class D" defaultheat="125" heatmax="350" tempthreshold="400s" increaserate="40" decreaserate="20" propagation-threshold="10000">
     <extinguisher-agents>
     	<agent nature="EauEnMasse" effect="0"/>
     	<agent nature="EauEnPulvérisation" effect="0"/>

@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __ObjectListener_h_
-#define __ObjectListener_h_
+#ifndef __crossbow_ObjectListener_h_
+#define __crossbow_ObjectListener_h_
 
 #include "Listener_ABC.h"
 
@@ -24,6 +24,7 @@ namespace crossbow
     class Database_ABC;
     class Row_ABC;
     class Table_ABC;
+    class WorkingSession;
 
 // =============================================================================
 /** @class  ObjectListener
@@ -37,13 +38,14 @@ class ObjectListener : public Listener_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectListener( Database_ABC& database, dispatcher::SimulationPublisher_ABC& publisher );
+             ObjectListener( Database_ABC& database, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession& session );
     virtual ~ObjectListener();
     //@}
 
     //! @name Operations
     //@{
     virtual void Listen();
+	        
     //@}
 
 private:
@@ -55,6 +57,7 @@ private:
 
     //! @name Helpers
     //@{
+    void Clean();
     void SendCreation( const Row_ABC& row );
     //@}
 
@@ -62,8 +65,9 @@ private:
     //! @name Member data
     //@{
     dispatcher::SimulationPublisher_ABC& publisher_;
-//    Table_ABC& table_;
     Database_ABC& database_;
+    std::auto_ptr< Table_ABC > table_;
+	const WorkingSession& session_;
     //@}
 };
 

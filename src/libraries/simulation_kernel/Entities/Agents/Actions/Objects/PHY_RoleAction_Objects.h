@@ -16,6 +16,7 @@
 
 class NET_ASN_MsgUnitAttributes;
 class DEC_Knowledge_Object;
+class DEC_Knowledge_Population;
 class MIL_Object_ABC;
 class MIL_ObjectType_ABC;
 class MIL_AgentPion;
@@ -58,17 +59,19 @@ public:
     int GetInitialReturnCode() const;
     int GetFinalReturnCode  () const;
 
-    int  Construct           ( MIL_Object_ABC* pObject, boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge );
-    int  ResumeWork          ( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge );
-    int  Destroy             ( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge ); 
-    int  Mine                ( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge ); 
-    int  Demine              ( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge ); 
-    int  Bypass              ( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge );
-    int  Extinguish          ( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge );
-    void StartAnimateObject  ( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge );
-    void StopAnimateObject   ( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge );
-    void StartOccupyingObject( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge );
-    void StopOccupyingObject ( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge );
+    int  Construct           ( MIL_Object_ABC* pObject, boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
+    int  ResumeWork          ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
+    int  Destroy             ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge ); 
+    int  Mine                ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge ); 
+    int  Demine              ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge ); 
+    int  Bypass              ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
+    int  Extinguish          ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
+    void StartAnimateObject  ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
+    void StopAnimateObject   ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
+    void StartOccupyingObject( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
+    void StopOccupyingObject ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
+    int  Supply              ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
+    int  Distribute          ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, boost::shared_ptr< DEC_Knowledge_Population >& populationKnowledge, uint quantity );
 
     void ResumeWorkSuspended();
     void ConstructSuspended ();

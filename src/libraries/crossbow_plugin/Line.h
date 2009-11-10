@@ -37,7 +37,8 @@ public:
 
     //! @name Operations
     //@{
-    void UpdateGeometry( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const;
+    void Serialize( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const;
+    void Serialize( std::ostream& geometry ) const;
     void Serialize( ASN1T_Location& asn ) const;
     //@}
 

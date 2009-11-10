@@ -26,8 +26,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>SWORD Officer Training</source>
-        <translation type="unfinished"></translation>
+        <source>SWORD</source>
+        <translation>SWORD</translation>
     </message>
     <message>
         <source>sword-ot@masagroup.net</source>

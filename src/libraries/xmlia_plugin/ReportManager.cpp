@@ -230,7 +230,7 @@ void ReportManager::DoUpdate( dispatcher::Agent& agent, dispatcher::Agent& detec
 // -----------------------------------------------------------------------------
 void ReportManager::DoUpdate( dispatcher::Agent& agent,  dispatcher::Object& detected )
 {
-  const std::string& type = detected.type_;
+  const std::string& type = detected.strName_;
 
   if( type == "rota area" || type == "nbc zone" || type == "nbc cloud" )
   {

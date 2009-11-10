@@ -20,6 +20,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationNature.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Weapons/PHY_WeaponType.h"
+#include "Entities/Agents/Units/Humans/PHY_HumanProtection.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarType.h"
@@ -176,6 +177,7 @@ PHY_ComposanteTypePion::PHY_ComposanteTypePion( const MIL_Time_ABC& time, const 
     if( rWeight_ <= 0 )
         xis.error( "element: weight <= 0" );
 
+    InitializeHumanProtections  ( xis );
     InitializeWeapons       ( xis );
     InitializeSensors       ( xis );
     InitializeRadars        ( xis );
@@ -318,6 +320,32 @@ void PHY_ComposanteTypePion::ReadWeaponSystem( xml::xistream& xis )
             xis.error( "Weapon type (" + strLauncher + ", " + strAmmunition + ") already initialized" );
             
         weaponTypes_[ pWeaponType ] = bMajor;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::InitializeWeapons
+// Created: NLD 2004-08-06
+// -----------------------------------------------------------------------------
+void PHY_ComposanteTypePion::InitializeHumanProtections( xml::xistream& xis )
+{
+	xis >> xml::optional() >> xml::start( "human-protections" )
+            >> xml::list( "human-protection", *this, &PHY_ComposanteTypePion::ReadHumanProtection )
+        >> xml::end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::ReadWeaponSystem
+// Created: ABL 2007-07-20
+// -----------------------------------------------------------------------------
+void PHY_ComposanteTypePion::ReadHumanProtection( xml::xistream& xis )
+{
+    std::string strProtectionName;
+    
+    xis >> xml::attribute( "name", strProtectionName );
+    const PHY_HumanProtection* pHumanProtection = PHY_HumanProtection::Find( strProtectionName );
+    if( !pHumanProtection )
+        xis.error( "Unknow human protection which name is " + strProtectionName );
+    humanProtections_.push_back( pHumanProtection );
 }
 
 // -----------------------------------------------------------------------------
@@ -780,6 +808,15 @@ void PHY_ComposanteTypePion::InstanciateSensors( std::back_insert_iterator < std
         const PHY_SensorType&  sensorType = *it->first;
         const MT_Float         rHeight    =  it->second;
         inserter = &sensorType.InstanciateSensor( rHeight );
+    }
+}
+
+void PHY_ComposanteTypePion::InstanciateProtections( std::back_insert_iterator < std::vector< PHY_HumanProtection* > > inserter ) const
+{
+    for( CIT_ListOfHumanProtection it = humanProtections_.begin(); it != humanProtections_.end(); ++it )
+    {
+        const PHY_HumanProtection&  humanProtection = *(*it);
+        inserter = &humanProtection.InstanciateHumanProtection();
     }
 }
 

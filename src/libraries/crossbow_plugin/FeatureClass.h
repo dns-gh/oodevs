@@ -18,6 +18,7 @@ namespace plugins
 namespace crossbow
 {
     class FeatureRow;
+    class DatabaseEditor_ABC;
 
 // =============================================================================
 /** @class  FeatureClass
@@ -31,7 +32,7 @@ class FeatureClass : public Table
 public:
     //! @name Constructors/Destructor
     //@{
-             FeatureClass( IFeatureClassPtr featureClass, const std::string& name );
+             FeatureClass( IFeatureClassPtr featureClass, DatabaseEditor_ABC& editor );
     virtual ~FeatureClass();
     //@}
 
@@ -39,7 +40,8 @@ public:
     //@{
     virtual Row_ABC& CreateRow();
     virtual void UpdateRow( const Row_ABC& row );
-    virtual Row_ABC* Find( const std::string& query );
+    virtual void InsertRow( const Row_ABC& row );
+    virtual Row_ABC* Find( const std::string& query, bool forceUpdate );
     virtual Row_ABC* GetNextRow();
     //@}
 

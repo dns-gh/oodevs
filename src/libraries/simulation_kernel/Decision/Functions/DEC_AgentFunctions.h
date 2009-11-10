@@ -44,10 +44,10 @@ public:
     static int  GetPosture                  ( const MIL_AgentPion& callerAgent );
         
     static bool CanConstructObject          ( const MIL_AgentPion& callerAgent, const std::string& type );
-    static bool CanBypassObject             ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > knowledgeId );
-    static bool CanDestroyObject            ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > knowledgeId );
-    static bool CanMineObject               ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > knowledgeId );
-    static bool CanActivateObject           ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > knowledgeId );
+    static bool CanBypassObject             ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
+    static bool CanDestroyObject            ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
+    static bool CanMineObject               ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
+    static bool CanActivateObject           ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
     
     static void EnableDiscreteMode          ( MIL_AgentPion& callerAgent );
     static void DisableDiscreteMode         ( MIL_AgentPion& callerAgent );

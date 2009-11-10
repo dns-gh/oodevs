@@ -29,14 +29,6 @@ class PHY_Weapon;
 class MIL_FireClass
 {
 public:	
-    enum E_FireClass{
-        eNoFire = 0,
-        eClassA,
-        eClassB,
-        eClassC,
-        eClassD
-    };
-
     enum E_FireExtinguisherAgent {
         eEauEnMasse = 0,
         eEauEnPulverisation,
@@ -69,12 +61,14 @@ public:
     unsigned int            GetID() const;
     const std::string&      GetName() const;
     int                     GetDefaultHeat() const;
-    const PHY_HumanWound&   GetRandomWound() const;
+    int                     GetPropagationThreshold() const;
+    static unsigned int     GetWidth();
+    static unsigned int     GetLength();
     //@}
 
     struct T_EvaluationResult
     {
-        T_EvaluationResult() : agent_(eEauEnMasse), score_(-1), range_(-1) {}
+        T_EvaluationResult() : agent_( eEauEnMasse ), score_( -1 ), range_( -1 ) {}
         E_FireExtinguisherAgent agent_;
         int score_; // Extinguisher agent effect on a specific fire
         int range_; // fire hose range
@@ -93,6 +87,7 @@ private:
     typedef std::map< std::string, const MIL_FireClass*, sCaseInsensitiveLess > T_FireClassMap;
     typedef T_FireClassMap::const_iterator                                      CIT_FireClassMap;
     
+    //The following map contains a extinguisher agent name and its effect on the fire
     typedef std::map< E_FireExtinguisherAgent, int >                            T_ExtinguisherAgentEffectMap;
     typedef T_ExtinguisherAgentEffectMap::const_iterator                        CIT_ExtinguisherAgentEffectMap;
     //@}
@@ -113,8 +108,11 @@ private:
     unsigned int                    increaseRate_;
     unsigned int                    decreaseRate_;
     T_ExtinguisherAgentEffectMap    extinguisherAgentEffect_;
+    unsigned int                    propagationThreshold_;
     
     static T_FireClassMap           classes_;
+    static unsigned int             length_;
+    static unsigned int             width_;
 };
 
 #endif // __MIL_FireClass_h_

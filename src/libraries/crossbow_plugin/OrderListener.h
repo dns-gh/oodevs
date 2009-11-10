@@ -27,6 +27,7 @@ namespace crossbow
     class Row_ABC;
     class OrderDispatcher;
     class OrderTypes;
+    class WorkingSession;
 
 // =============================================================================
 /** @class  OrderListener
@@ -40,7 +41,7 @@ class OrderListener : public Listener_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             OrderListener( Database_ABC& database, const dispatcher::Model& model, const OrderTypes& types, dispatcher::SimulationPublisher_ABC& publisher );
+             OrderListener( Database_ABC& database, const dispatcher::Model& model, const OrderTypes& types, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession& session );
     virtual ~OrderListener();
     //@}
 
@@ -57,9 +58,9 @@ private:
     //@}
 
     //! @name Helpers
-    //@{    
-    void MarkProcessed( Row_ABC& row ) const;
-    void Copy( Row_ABC& row );
+    //@{
+    void Clean();
+    void MarkProcessed( long orderid ) const;
     //@}
 
 private:
@@ -67,10 +68,10 @@ private:
     //@{
     dispatcher::SimulationPublisher_ABC& publisher_;
     std::auto_ptr< OrderDispatcher >     dispatcher_;
-//    Table_ABC&                           table_;
-    Table_ABC&                           validation_;
     long                                 ref_;
     Database_ABC&                        database_;
+	const WorkingSession&                session_;
+    std::auto_ptr< Table_ABC >           table_;
     //@}
 };
 

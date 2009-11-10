@@ -17,6 +17,7 @@
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 #include "Entities/Agents/Units/Weapons/PHY_AttritionData.h"
 #include "Entities/Agents/Units/Sensors/PHY_Sensor.h"
+#include "Entities/Agents/Units/Humans/PHY_HumanProtection.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationGroupContainer.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory_IndirectFire_ABC.h"
@@ -72,6 +73,7 @@ PHY_ComposantePion::PHY_ComposantePion( const MIL_Time_ABC& time, const PHY_Comp
 {
     pType_->InstanciateWeapons( std::back_inserter( weapons_ ) );   
     pType_->InstanciateSensors( std::back_inserter( sensors_ ) );
+    pType_->InstanciateProtections( std::back_inserter( protections_ ) );  
 
     pRole_->NotifyComposanteAdded( *this );
     assert( pHumans_->IsViable() ); //$$$ Pre-check in PHY_UnitType
@@ -92,6 +94,7 @@ PHY_ComposantePion::PHY_ComposantePion()
     , bUsedForLogistic_            ( false )
     , bCanBePartOfConvoy_          ( false )
     , weapons_                     ()
+    , protections_                 ()
     , sensors_                     () 
     , pHumans_                     ()
     , nAutoRepairTimeStep_         ()
@@ -112,6 +115,10 @@ PHY_ComposantePion::~PHY_ComposantePion()
     for( CIT_WeaponVector itWeapon = weapons_.begin(); itWeapon != weapons_.end(); ++itWeapon )
         delete *itWeapon;
     weapons_.clear();
+
+    for( CIT_HumanProtectionVector itHumanProtection = protections_.begin(); itHumanProtection != protections_.end(); ++itHumanProtection )
+        delete *itHumanProtection;
+    protections_.clear();
 
     for( CIT_SensorVector itSensor = sensors_.begin(); itSensor != sensors_.end(); ++itSensor )
         delete *itSensor;
@@ -147,6 +154,7 @@ void PHY_ComposantePion::load( MIL_CheckPointInArchive& file, const uint )
 
     pType_->InstanciateWeapons( std::back_inserter( weapons_ ) );   
     pType_->InstanciateSensors( std::back_inserter( sensors_ ) );
+    pType_->InstanciateProtections( std::back_inserter( protections_ ) );
 
     file >> const_cast< bool& >( bMajor_ )
          >> const_cast< bool& >( bLoadable_ )
@@ -415,6 +423,16 @@ void PHY_ComposantePion::ApplyPoisonous( const MIL_ToxicEffectManipulator& conta
 {
     assert( pHumans_ );
     pHumans_->ApplyPoisonous( contamination );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::ApplyInjury
+// Created: NLD 2004-10-13
+// -----------------------------------------------------------------------------
+void PHY_ComposantePion::ApplyInjury( MIL_Injury_ABC& injury )
+{
+    assert( pHumans_ );
+    pHumans_->ApplyInjury( injury );
 }
 
 // -----------------------------------------------------------------------------

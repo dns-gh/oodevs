@@ -27,9 +27,11 @@ namespace xml
 class MIL_MedicalTreatmentType
 {
 public:
-    enum E_Injuries{
-        eUA = 1,
-        eUR
+    enum E_InjuryCategories{
+        eNone = 0,
+        eUA,
+        eUR,
+        eDead,
     };
 
 public:	
@@ -54,8 +56,11 @@ public:
     //@{
     unsigned int       GetID() const;
     const std::string& GetName() const;
-    int                GetTreatmentTime( int injury ) const;
-    int                GetHospitalisationTime( int injury ) const;
+    unsigned int       GetDeathThreshold() const;
+    float              GetTreatmentTime( int injuryCategory ) const;
+    float              GetHospitalisationTime( int injuryCategory ) const;
+    float              GetLifeExpectancy( E_InjuryCategories injuryCategory ) const;
+    unsigned int       GetInjuryThreshold( E_InjuryCategories injuryCategory ) const;
     //@}
 
 private:
@@ -64,10 +69,16 @@ private:
     typedef std::map< std::string, const MIL_MedicalTreatmentType*, sCaseInsensitiveLess > T_MedicalTreatmentTypeMap;
     typedef T_MedicalTreatmentTypeMap::const_iterator                                      CIT_MedicalTreatmentTypeMap;
     
-    typedef std::pair< int, int >                                                          T_HealingTimes;
+    struct T_InjuryDescription {
+        T_InjuryDescription() : treatmentTime_( 0 ), hospitalisationTime_( 0 ), lifeExpectancy_( -1 ), injuryThreshold_( eNone ) {}
+        float             treatmentTime_;
+        float             hospitalisationTime_;
+        float             lifeExpectancy_;
+        unsigned int      injuryThreshold_;
+    };
 
-    typedef std::map< E_Injuries, T_HealingTimes >                                         T_MedicalTreatmentEffectMap;
-    typedef T_MedicalTreatmentEffectMap::const_iterator                                    CIT_MedicalTreatmentEffectMap;
+    typedef std::map< E_InjuryCategories, T_InjuryDescription > T_MedicalTreatmentEffectMap;
+    typedef T_MedicalTreatmentEffectMap::const_iterator         CIT_MedicalTreatmentEffectMap;
     //@}
 
 private:
@@ -78,9 +89,10 @@ private:
     //@}
 
 private:
-    const    std::string                strName_;
-    unsigned int                        nID_;
-    T_MedicalTreatmentEffectMap         medicalTreatmentEffect_;
+    const std::string           strName_;
+    unsigned int                nID_;
+    int                         deathThreshold_;
+    T_MedicalTreatmentEffectMap medicalTreatmentEffect_;
     
     static T_MedicalTreatmentTypeMap    types_;
 };

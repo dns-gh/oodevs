@@ -23,9 +23,7 @@ using namespace xml;
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
 MedicalTreatmentAttribute::MedicalTreatmentAttribute( kernel::PropertiesDictionary& dico )
-    : typeList_             ( 0 )
-    , nMedicalTreatmentType_( 0 )
-    , beds_                 ( 0 )
+    : beds_                 ( 0 )
     , availableBeds_        ( 0 )
     , doctors_              ( 0 )
     , availableDoctors_     ( 0 )
@@ -37,25 +35,16 @@ MedicalTreatmentAttribute::MedicalTreatmentAttribute( kernel::PropertiesDictiona
 // Name: MedicalTreatmentAttribute constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-MedicalTreatmentAttribute::MedicalTreatmentAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& MedicalTreatmentTypes, kernel::PropertiesDictionary& dico )
-    : typeList_             ( 0 )
-    , nMedicalTreatmentType_( 0 )
-    , beds_                 ( 0 )
+MedicalTreatmentAttribute::MedicalTreatmentAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& treatmentTypes, kernel::PropertiesDictionary& dictionary )
+    : beds_                 ( 0 )
     , availableBeds_        ( 0 )
     , doctors_              ( 0 )
     , availableDoctors_     ( 0 )
-{
-    std::string type;
-    xis >> content( "type", type )
-        >> content( "nMedicalTreatmentType", nMedicalTreatmentType_ )
-        >> content( "beds", beds_ )
-        >> content( "availableBeds", availableBeds_ )
-        >> content( "doctors", doctors_ )
-        >> content( "availableDoctors", availableDoctors_ );
-
-    typeList_.push_back( MedicalTreatmentTypes.Find( type ) );
-
-    CreateDictionary( dico );
+{    
+    xis >> attribute( "beds", beds_ ) >> attribute( "availableBeds", availableBeds_ )
+        >> attribute( "doctors", doctors_ ) >> attribute( "availableDoctors", availableDoctors_ );
+    xis >> list( "type", *this, &MedicalTreatmentAttribute::ReadTreatment, treatmentTypes );
+    CreateDictionary( dictionary );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,21 +57,26 @@ MedicalTreatmentAttribute::~MedicalTreatmentAttribute()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MedicalTreatmentAttribute::ReadTreatment
+// Created: JCR 2009-04-15
+// -----------------------------------------------------------------------------
+void MedicalTreatmentAttribute::ReadTreatment( xml::xistream& xis, const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& treatmentResolver )
+{
+    std::string type = content( xis, "type", std::string() );
+    const MedicalTreatmentType& treatment = treatmentResolver.Get( type );
+    AddMedicalTreatment( treatment );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MedicalTreatmentAttribute::Display
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::Display( Displayer_ABC& displayer ) const
 {
-    Displayer_ABC& sub = displayer.Group( tools::translate( "MedicalTreatment", "Medical Treatment services" ) )
-        .Item( tools::translate( "MedicalTreatment", "Medical Treatment type:" ) )
-                .Start( nMedicalTreatmentType_ );
-    
-    for ( CIT_MedicalTreatmentTypeList it = typeList_.begin(); it != typeList_.end(); ++it )
-        sub.Add( " " ).Add( (*it)->GetName() );
-    sub.End();
-
-    displayer.Group( tools::translate( "MedicalTreatment", "Medical Treatment capacity" ) )
-        .Display( tools::translate( "MedicalTreatment", "Number of available beds:" ), availableBeds_ ).Display( tools::translate( "MedicalTreatment", "" ), beds_ )
+    displayer.Group( tools::translate( "MedicalTreatment", "Medical Treatment" ) )
+        .Display( tools::translate( "MedicalTreatment", "Medical Treatment types:" ), treatmentTypes_ )
+        .Display( tools::translate( "MedicalTreatment", "Total number of beds:" ), beds_ )
+        .Display( tools::translate( "MedicalTreatment", "Number of available beds:" ), availableBeds_ )
         .Display( tools::translate( "MedicalTreatment", "Total number of doctors:" ), doctors_ )
         .Display( tools::translate( "MedicalTreatment", "Number of available doctors:" ), availableDoctors_ );
 }
@@ -104,9 +98,10 @@ void MedicalTreatmentAttribute::DisplayInTooltip( Displayer_ABC& displayer ) con
 // Name: MedicalTreatmentAttribute::SetAgent
 // Created: SBO 2006-09-15
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::SetData( const kernel::MedicalTreatmentType& type )
+void MedicalTreatmentAttribute::AddMedicalTreatment( const kernel::MedicalTreatmentType& type )
 {
-    typeList_.push_back( const_cast< kernel::MedicalTreatmentType* >( &type ) );
+    if ( std::find( treatmentTypes_.begin(), treatmentTypes_.end(), &type ) == treatmentTypes_.end() )
+        treatmentTypes_.push_back( &type );
 }
 
 // -----------------------------------------------------------------------------
@@ -115,18 +110,14 @@ void MedicalTreatmentAttribute::SetData( const kernel::MedicalTreatmentType& typ
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << start( "attributes" )
-            << start( "medical-treatment type" );
-
-    for( CIT_MedicalTreatmentTypeList it = typeList_.begin() ; it != typeList_.end() ; ++it )
-            xos << content( "type", (*it)->GetName() );
-
-            xos << content( "beds", beds_ )
-                << content( "availableBeds", availableBeds_ )
-                << content( "doctors", doctors_ )
-                << content( "availableDoctors", availableDoctors_ )
-            << end()
-        << end();
+    xos << start( "medical-treatment" );
+    xos << attribute( "beds", beds_ )
+        << attribute( "availableBeds", availableBeds_ )
+        << attribute( "doctors", doctors_ )
+        << attribute( "availableDoctors", availableDoctors_ );
+    for( T_MedicalTreatments::const_iterator it = treatmentTypes_.begin(); it != treatmentTypes_.end(); ++it )    
+        xos << content( "type", (*it)->GetName() );
+    xos << end();
 }
 
 // -----------------------------------------------------------------------------
@@ -135,8 +126,6 @@ void MedicalTreatmentAttribute::SerializeAttributes( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
 {
-    for( CIT_MedicalTreatmentTypeList it = typeList_.begin() ; it != typeList_.end() ; ++it )
-        dico.Register( *this, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Medical Treatment type" ), (*it)->GetName() );
     dico.Register( *this, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Medical Treatment type" ), beds_ );
     dico.Register( *this, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Medical Treatment type" ), availableBeds_ );
     dico.Register( *this, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Medical Treatment type" ), doctors_ );

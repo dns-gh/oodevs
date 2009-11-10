@@ -34,7 +34,8 @@ namespace kernel
     DECLARE_EXTENSION( SupplyRouteAttribute_ABC )
     DECLARE_EXTENSION( ToxicCloudAttribute_ABC )
     DECLARE_EXTENSION( FireAttribute_ABC )
-    DECLARE_EXTENSION( MedicalTreatmentAttribute_ABC )    
+    DECLARE_EXTENSION( MedicalTreatmentAttribute_ABC )
+    DECLARE_EXTENSION( StockAttribute_ABC )
 }
 
 #undef DECLARE_EXTENSION

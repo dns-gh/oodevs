@@ -13,6 +13,7 @@
 #include "PropagationCapacity_ABC.h"
 
 class MIL_PropagationManager;
+class FireAttribute;
 
 // =============================================================================
 /** @class  FirePropagationCapacity
@@ -50,9 +51,14 @@ private:
 
 	//! @name Helpers
     //@{
-    int  UpdateState( Object& object, uint time );
+    void InitializeUpdate( Object& object, const FireAttribute& attr );
+    int  UpdateState( Object& object, const FireAttribute& attr, unsigned int time );
 	void Propagate( Object& object );
 	void CheckPropagation( const MT_Vector2D& vOrigin, Object& object );
+    //@}
+	
+	//! @name Helpers
+    //@{
 	TER_Localisation GetLocalisation( const MT_Vector2D& pt ) const;
 	//@}
 
@@ -61,8 +67,9 @@ private:
     //@{
 	MIL_PropagationManager* pManager_;
     //Time of creation, and time of death of the fire
-    uint   timeOfCreation_;
-    uint   timeOfDeath_;
+    bool           needUpdate_;
+    unsigned int   timeOfCreation_;
+    unsigned int   timeOfDeath_;
     //@}
 };
 

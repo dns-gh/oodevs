@@ -7,14 +7,6 @@
 //
 // *****************************************************************************
 
-
-// -----------------------------------------------------------------------------
-// Created: RFT 24/04/2008
-// Name: MIL_FireClass.cpp
-// Modified: RFT 14/05/2008
-// -----------------------------------------------------------------------------
-
-
 #include "simulation_kernel_pch.h"
 #include "MIL_FireClass.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
@@ -25,8 +17,11 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationNature.h"
 
 #include <xeumeuleu/xml.h>
+#include "tools/xmlcodecs.h"
 
 MIL_FireClass::T_FireClassMap MIL_FireClass::classes_;
+unsigned int MIL_FireClass::length_;
+unsigned int MIL_FireClass::width_;
 
 // =============================================================================
 // FACTORY
@@ -62,7 +57,11 @@ void MIL_FireClass::Initialize( xml::xistream& xis )
     MT_LOG_INFO_MSG( "Initializing fire classes" );
     
     xis >> xml::start( "fire-classes" )
-			>> xml::list( "class", &ReadClass )
+            >> xml::start( "fire-surface" )
+                >> xml::attribute( "length", length_ )
+                >> xml::attribute( "width", width_ )
+            >> xml::end()
+            >> xml::list( "class", &ReadClass )
         >> xml::end();
 
     for( CIT_FireClassMap it = classes_.begin(); it != classes_.end(); ++it )
@@ -71,7 +70,7 @@ void MIL_FireClass::Initialize( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_DynmaicFireClass constructor
+// Name: MIL_FireClass constructor
 // Created: RFT 24/04/2008
 // Modified: RFT 14/05/2008
 // -----------------------------------------------------------------------------
@@ -83,16 +82,20 @@ MIL_FireClass::MIL_FireClass( const std::string& strName, xml::xistream& xis )
 	, heatMax_              ( 0 )
 	, increaseRate_         ( 0 )
 	, decreaseRate_         ( 0 )
+    , propagationThreshold_ ( 0 )
 {
-    xis >> xml::attribute( "id", nID_ )
-        >> xml::attribute( "defaultheat", defaultHeat_ )
-        >> xml::attribute( "heatmax", heatMax_ )
-        >> xml::attribute( "increaserate", increaseRate_ )
-        >> xml::attribute( "decreaserate", decreaseRate_ )
-        >> xml::attribute( "tempthreshold", tempThreshold_ )
+    tools::ReadTimeAttribute( xis , "tempthreshold" , tempThreshold_ );
+    tempThreshold_ = ( uint ) MIL_Tools::ConvertSecondsToSim( tempThreshold_ );
+
+    xis >> xml::attribute( "id"                     , nID_ )
+        >> xml::attribute( "defaultheat"            , defaultHeat_ )
+        >> xml::attribute( "heatmax"                , heatMax_ )
+        >> xml::attribute( "increaserate"           , increaseRate_ )
+        >> xml::attribute( "decreaserate"           , decreaseRate_ )
+        >> xml::attribute( "propagation-threshold"  , propagationThreshold_ )
         >> xml::start( "extinguisher-agents" )
             >> xml::list( "agent", *this, &MIL_FireClass::ReadExtinguisherAgentEffect )
-        >> xml::end();    
+        >> xml::end();   
 }
 
 namespace 
@@ -198,6 +201,26 @@ uint MIL_FireClass::GetID() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_FireClass::GetWidth
+// Created: RFT 19/05/2008
+// Modified: none
+// -----------------------------------------------------------------------------
+unsigned int MIL_FireClass::GetWidth()
+{
+    return width_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FireClass::GetLength
+// Created: RFT 19/05/2008
+// Modified: none
+// -----------------------------------------------------------------------------
+unsigned int MIL_FireClass::GetLength()
+{
+    return length_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_FireClass::GetID
 // Created: RFT 19/05/2008
 // Modified: none
@@ -217,6 +240,15 @@ int MIL_FireClass::GetDefaultHeat() const
     return defaultHeat_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: GetPropagationThreshold()
+// Created: RFT 22/05/2008
+// Modified: none
+// -----------------------------------------------------------------------------
+int MIL_FireClass::GetPropagationThreshold() const
+{
+    return propagationThreshold_;
+}
 
 // =============================================================================
 // HEAT EVOLUTION
@@ -272,20 +304,4 @@ MIL_FireClass::T_EvaluationResult MIL_FireClass::Evaluate( const PHY_Weapon& wea
         result.range_ = static_cast< int >( weapon.GetMaxRangeToIndirectFire() );
     }
     return result;
-}
-
-// =============================================================================
-// WOUND
-// Created: RFT 19/05/2008
-// Modified: none
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: GetRandomWound() const
-// Created: RFT 28/04/2008
-// Modified: RFT 14/05/2008
-// -----------------------------------------------------------------------------
-const PHY_HumanWound& MIL_FireClass::GetRandomWound() const
-{
-    return PHY_HumanWound::notWounded_;
 }

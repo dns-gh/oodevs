@@ -10,11 +10,12 @@
 #include "crossbow_plugin_pch.h"
 #include "ObjectListener.h"
 #include "Database_ABC.h"
+#include "QueryBuilder.h"
 #include "Table_ABC.h"
 #include "Row_ABC.h"
 #include "Line.h"
 #include "Point.h"
-#include "ScopeEditor.h"
+#include "WorkingSession.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "game_asn/SimulationSenders.h"
 
@@ -25,12 +26,13 @@ using namespace plugins::crossbow;
 // Name: ObjectListener constructor
 // Created: SBO 2007-09-23
 // -----------------------------------------------------------------------------
-ObjectListener::ObjectListener( Database_ABC& database, dispatcher::SimulationPublisher_ABC& publisher )
+ObjectListener::ObjectListener( Database_ABC& database, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession& session )
     : publisher_( publisher )
-//    , table_    ( database.OpenTable( "TacticalObjectPoint", false ) )
     , database_  ( database )
+	, session_ ( session )
 {
-    database_.ClearTable( "TacticalObjectPoint" ); // Clear table row data    
+    Clean();
+    table_.reset( database_.OpenTable( "Create_TacticalObject_Point" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,48 +45,45 @@ ObjectListener::~ObjectListener()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObjectListener::CleanSession
+// Created: MPT 2009-07-28
+// -----------------------------------------------------------------------------
+void ObjectListener::Clean()
+{
+	std::stringstream clause;
+    clause << "session_id=" << session_.GetId();
+	try
+    {
+		database_.Execute( DeleteQueryBuilder( database_.GetTableName( "TacticalObject_Point" ), clause.str() ) );
+    }
+    catch ( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "ObjectListener is not correctly loaded : " + std::string( e.what() ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObjectListener::Listen
 // Created: SBO 2007-09-23
 // -----------------------------------------------------------------------------
 void ObjectListener::Listen()
 {
-    static const std::string query = "Info <> ''";    
-    std::auto_ptr< Table_ABC > table( database_.OpenTable( "TacticalObjectPoint" ) );
+    std::stringstream query;
+    query << "info <> '' AND session_id=" << session_.GetId();
 
-    Row_ABC* row = table->Find( query );
+    Row_ABC* row = table_->Find( query.str() );
     bool bHasUpdates = row != 0;
     while( row )
     {
         SendCreation( *row );
-        row = table->GetNextRow();
+        row = table_->GetNextRow();
     }
     if ( bHasUpdates )
-    {
-        ScopeEditor editor( database_ );
-        table->DeleteRows( query );
-    }
+        table_->DeleteRows( query.str() );
 }
 
 namespace
 {
-    struct GeometrySerializer : public ShapeVisitor_ABC
-    {
-        GeometrySerializer( ASN1T_Location& asn )
-            : asn_( &asn )
-        {}
-        virtual void Visit( const crossbow::PointCollection& points )
-        {
-            points.Serialize( *asn_ );
-        }
-        virtual void Visit( const crossbow::Point& point )
-        {
-            point.Serialize( *asn_ );
-        }
-
-        ASN1T_Location* asn_;
-    };
-
-    
     // $$$$ SBO 2007-09-23: hard coded object list
     std::string GetType( const std::string& type )
     {
@@ -106,9 +105,8 @@ void ObjectListener::SendCreation( const Row_ABC& row )
     asn().action.t = T_MsgObjectMagicAction_action_create_object;
     ASN1T_MagicActionCreateObject*& creation = asn().action.u.create_object = new ASN1T_MagicActionCreateObject();
     creation->team = 1; // $$$$ SBO 2007-09-23: Hard coded !!
-    creation->type = (ASN1VisibleString)GetType( boost::get< std::string >( row.GetField( "Info" ) ) ).c_str();
+    creation->type = (ASN1VisibleString)GetType( boost::get< std::string >( row.GetField( "info" ) ) ).c_str();
     creation->name = "";
-    GeometrySerializer serializer( creation->location );
-    row.GetShape().Accept( serializer );
+    row.GetShape().Serialize( creation->location );
     asn.Send( publisher_ );
 }

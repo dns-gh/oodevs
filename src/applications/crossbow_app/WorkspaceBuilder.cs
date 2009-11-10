@@ -3,47 +3,61 @@ using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geodatabase;
-using ESRI.ArcGIS.MOLE;
 using ESRI.ArcGIS.DataSourcesGDB;
 using ESRI.ArcGIS.ArcGlobe;
+using ESRI.ArcGIS.DefenseSolutions;
 
 namespace Sword
 {
     namespace Crossbow
     {
-        public static class WorkspaceBuilder
+        public class WorkspaceBuilder
         {
-            public static void Build(WorkspaceConfiguration config)
+            IFeatureWorkspace m_workspace;
+            DocumentProxy m_document;
+            LayersConfiguration m_layers;
+
+            public WorkspaceBuilder(WorkspaceConfiguration config)
             {
-                DocumentProxy document = Tools.GetDocument();
-                document.EnableDynamicDisplay(true);
-
-                IWorkspaceFactory factory = new AccessWorkspaceFactoryClass();
-                IFeatureWorkspace workspace = (IFeatureWorkspace)factory.OpenFromFile(config.WorkspaceFile, 0);
-
-                document.AddLayer(BuildDynamicLayer(workspace, config.LayersConfiguration.Units));
-                document.AddLayer(BuildMoleTacticalLayer(workspace, config.LayersConfiguration.Limits));
-                document.AddLayer(BuildMoleTacticalLayer(workspace, config.LayersConfiguration.Limas));
-                document.AddLayer(BuildDynamicLayer(workspace, config.LayersConfiguration.TacticalObjectPoint));
-                document.AddLayer(BuildDynamicLayer(workspace, config.LayersConfiguration.KnowledgeUnits));
-                document.RefreshView();
+                m_document = Tools.GetDocument();
+                m_workspace = (IFeatureWorkspace)Tools.GetWorkspace(config.WorkspaceFile);
+                m_layers = config.LayersConfiguration;
             }
 
-            private static ILayer BuildDynamicLayer(IFeatureWorkspace workspace, string name)
+            public bool Build()
             {
-                IFeatureLayer featureLayer = (IGeoFeatureLayer)BuildFeatureLayer(workspace, name);
+                try
+                {
+                    m_document.EnableDynamicDisplay(true);
+
+                    m_document.AddLayer(BuildDynamicLayer(m_layers.Units));
+                    m_document.AddLayer(BuildDynamicLayer(m_layers.KnowledgeUnits));
+                    m_document.AddLayer(BuildMoleTacticalLayer(m_layers.Limits));
+                    m_document.AddLayer(BuildMoleTacticalLayer(m_layers.Limas));
+                    m_document.AddLayer(BuildDynamicLayer(m_layers.TacticalObjectPoint));
+                    // document.RefreshView();                    
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                }
+            }
+
+            private ILayer BuildDynamicLayer(string name)
+            {
+                IFeatureLayer featureLayer = (IGeoFeatureLayer)BuildFeatureLayer(name);
                 if (featureLayer == null)
                     return null;
-                DynamicMoleLayer dynamicLayer = new DynamicMoleLayer(Tools.GetCSwordExtension().SymbolFactory);
-                dynamicLayer.FeatureLayer = featureLayer;
+                DynamicLayer dynamicLayer = new DynamicLayer(Tools.GetExtension().SymbolFactory);
                 dynamicLayer.FeatureClass = featureLayer.FeatureClass;
                 dynamicLayer.Connect();
                 return MakeGroup(name, featureLayer, dynamicLayer);
             }
 
-            private static ILayer BuildMoleForceElementLayer(IFeatureWorkspace workspace, string name)
+            private ILayer BuildMoleForceElementLayer(string name)
             {
-                IFeatureLayer featureLayer = (IFeatureLayer)BuildFeatureLayer(workspace, name);
+                IFeatureLayer featureLayer = (IFeatureLayer)BuildFeatureLayer(name);
                 if (featureLayer == null)
                     return null;
                 ICachedGraphicFeatureLayer cgLayer = (ICachedGraphicFeatureLayer)new ForceElementLayerClass();
@@ -51,9 +65,9 @@ namespace Sword
                 return MakeGroup(name, featureLayer, cgLayer as ILayer);
             }
 
-            private static ILayer BuildMoleTacticalLayer(IFeatureWorkspace workspace, string name)
+            private ILayer BuildMoleTacticalLayer(string name)
             {
-                IFeatureLayer featureLayer = (IFeatureLayer)BuildFeatureLayer(workspace, name);
+                IFeatureLayer featureLayer = (IFeatureLayer)BuildFeatureLayer(name);
                 if (featureLayer == null)
                     return null;
                 ICachedGraphicFeatureLayer cgLayer = (ICachedGraphicFeatureLayer)new TacticalGraphicLayerClass();
@@ -69,9 +83,9 @@ namespace Sword
                 return MakeGroup(name, featureLayer, cgLayer as ILayer);
             }
 
-            private static ILayer BuildFeatureLayer(IFeatureWorkspace workspace, string name)
+            private ILayer BuildFeatureLayer(string name)
             {
-                IFeatureClass featureClass = workspace.OpenFeatureClass(name);
+                IFeatureClass featureClass = m_workspace.OpenFeatureClass(name);
                 if (featureClass == null)
                     return null;
                 IFeatureLayer layer = new FeatureLayerClass();

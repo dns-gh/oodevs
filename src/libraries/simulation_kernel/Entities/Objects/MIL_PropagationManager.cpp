@@ -39,16 +39,16 @@ MIL_PropagationManager::~MIL_PropagationManager()
 // Created: RFT 30/04/2008
 // Modified: RFT 05/05/2008
 // -----------------------------------------------------------------------------
-void MIL_PropagationManager::Flag( const MT_Vector2D& vOrigin )
+void MIL_PropagationManager::Flag( const MT_Vector2D& vOrigin , unsigned int length , unsigned int width )
 {
     //On récupère les coordonnées de l'origine du feu
     int coord_x = (int) (vOrigin.rX_);
     int coord_y = (int) (vOrigin.rY_);
 
-    coord_x = coord_x - coord_x%5;
-    coord_y = coord_y - coord_y%5;
+    coord_x = coord_x - coord_x % length;
+    coord_y = coord_y - coord_y % width;
     
-    dynamicFireSet_.insert( T_Coordonnees( coord_x, coord_y ) );
+    coordinatesSet_.insert( T_Coordinate( coord_x, coord_y ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,19 +56,19 @@ void MIL_PropagationManager::Flag( const MT_Vector2D& vOrigin )
 // Created: RFT 05/05/2008
 // Modified: none
 // -----------------------------------------------------------------------------
-void MIL_PropagationManager::RemoveFlag( const MT_Vector2D& vOrigin )
+void MIL_PropagationManager::RemoveFlag( const MT_Vector2D& vOrigin , unsigned int length , unsigned int width )
 {
     //On récupère les coordonnées de l'origine du feu
     int coord_x = (int) (vOrigin.rX_);
     int coord_y = (int) (vOrigin.rY_);
 
-    coord_x = coord_x - coord_x%5;
-    coord_y = coord_y - coord_y%5;
+    coord_x = coord_x - coord_x % length;
+    coord_y = coord_y - coord_y % width;
 
-    T_DynamicFireSet::iterator iter = dynamicFireSet_.find( T_Coordonnees( coord_x, coord_y ) );
+    T_CoordinatesSet::iterator iter = coordinatesSet_.find( T_Coordinate( coord_x, coord_y ) );
     
-    if ( iter != dynamicFireSet_.end() ) 
-        dynamicFireSet_.erase( iter );
+    if ( iter != coordinatesSet_.end() ) 
+        coordinatesSet_.erase( iter );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,16 +76,15 @@ void MIL_PropagationManager::RemoveFlag( const MT_Vector2D& vOrigin )
 // Created: RFT 05/05/2008
 // Modified: none
 // -----------------------------------------------------------------------------
-
-bool MIL_PropagationManager::IsFlagged( const TER_Localisation& localisation ) const
+bool MIL_PropagationManager::IsFlagged( const TER_Localisation& localisation , unsigned int length , unsigned int width ) const
 {
     //On récupère les coordonnées de la localisation ( qui sont celles d'un point)
     int coord_x = (int) ( localisation.ComputeBarycenter().rX_ );
     int coord_y = (int) ( localisation.ComputeBarycenter().rY_ );
     
     //Puis on on lui enlève son reste de la division par 5, car le maillage sera de 5 par 5 pour faire des cases de feu de 25m²
-    coord_x = coord_x - coord_x%5;
-    coord_y = coord_y - coord_y%5;
+    coord_x = coord_x - coord_x % length;
+    coord_y = coord_y - coord_y % width;
 
-    return dynamicFireSet_.find( T_Coordonnees( coord_x, coord_y ) ) != dynamicFireSet_.end();
+    return coordinatesSet_.find( T_Coordinate( coord_x, coord_y ) ) != coordinatesSet_.end();
 }

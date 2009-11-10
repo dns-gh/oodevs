@@ -70,7 +70,7 @@ ADN_MainWindow::ADN_MainWindow( ADN_Config& config )
 , strAdminPassword_ ( "" )
 {
     setMinimumSize( 640, 480 );
-    setCaption( tr( "Sword Officer Training Adaptation Tool - No Project" ) );
+    setCaption( tr( "Sword Adaptation Tool - No Project" ) );
 }
 
 
@@ -258,7 +258,7 @@ void ADN_MainWindow::SaveProject()
         return; // we were not able to save all the datas
 
     std::string szProject = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + workspace_.GetProject().GetFileInfos().GetFileName().GetData();
-    setCaption( tr( "Sword Officer Training Adaptation Tool - " ) + szProject.c_str() );
+    setCaption( tr( "Sword Adaptation Tool - " ) + szProject.c_str() );
 }
 
 
@@ -287,7 +287,7 @@ void ADN_MainWindow::SaveAsProject()
 
     QApplication::restoreOverrideCursor();	// restore original cursor
     
-    QString strCaption = tr( "Sword Officer Training Adaptation Tool - " ) + strFileName;
+    QString strCaption = tr( "Sword Adaptation Tool - " ) + strFileName;
     setCaption( strCaption );
 }
 
@@ -315,7 +315,7 @@ void ADN_MainWindow::NewProject()
 
     SetMenuEnabled(true);
     pTab_->show();
-    QString strCaption = tr( "Sword Officer Training Adaptation Tool - " ) + qfilename;
+    QString strCaption = tr( "Sword Adaptation Tool - " ) + qfilename;
     setCaption( strCaption );
 }
 
@@ -374,7 +374,7 @@ void ADN_MainWindow::OpenProject( const std::string& szFilename )
 
     QApplication::restoreOverrideCursor();	// restore original cursor
 
-    QString strCaption = tr( "Sword Officer Training Adaptation Tool - " ) + szFilename.c_str();
+    QString strCaption = tr( "Sword Adaptation Tool - " ) + szFilename.c_str();
     setCaption( strCaption );
 
     SetMenuEnabled(true);
@@ -468,7 +468,7 @@ extern const char* szVersionNumber;
 //-----------------------------------------------------------------------------
 void ADN_MainWindow::About()
 {
-    QMessageBox::about( this , tr( "Sword Officer Training Adaptation Tool" ), "Sword Officer Training Adaptation Tool - Copyright (c) MASA Group 2008" );
+    QMessageBox::about( this , tr( "Sword Adaptation Tool" ), "Sword Adaptation Tool - Copyright (c) MASA Group 2009" );
 }
 
 
@@ -505,11 +505,11 @@ void ADN_MainWindow::ChangeSaveState( bool bNoCommand )
     {
         std::string szProject = workspace_.GetProject().GetFileInfos().GetFileName().GetData();
         if( szProject == ADN_Project_Data::FileInfos::szUntitled_ )
-            setCaption( tr( "Sword Officer Training Adaptation Tool - No Project" ) );
+            setCaption( tr( "Sword Adaptation Tool - No Project" ) );
         else
         {
             szProject = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + szProject;
-            setCaption( tr( "Sword Officer Training Adaptation Tool - " ) + szProject.c_str() );
+            setCaption( tr( "Sword Adaptation Tool - " ) + szProject.c_str() );
         }
     }
 }
@@ -603,7 +603,7 @@ bool ADN_MainWindow::OfferToSave()
         return true;
 
     QString strMessage = tr( "Save changes to project %1?" ).arg( workspace_.GetProject().GetFileInfos().GetFileNameFull().c_str() );
-    int nResult = QMessageBox::information( this, tr( "Sword Officer Training Adaptation Tool" ), strMessage, QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel );
+    int nResult = QMessageBox::information( this, tr( "Sword Adaptation Tool" ), strMessage, QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel );
     switch( nResult )
     {
         case QMessageBox::Yes:

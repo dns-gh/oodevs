@@ -84,7 +84,7 @@ namespace Sword
                 if (nodes.Length == 0)
                 {
                     TreeNode node = m_ParameterTree.Nodes.Add(param.Name, param.Name);
-                    node.Checked = param.IsSet(param.Name);
+                    node.Checked = false;
                     node = node.Nodes.Add(param.Value);
                 }
                 else

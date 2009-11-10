@@ -23,6 +23,7 @@ class PHY_MedicalHumanState;
 class MIL_ToxicEffectManipulator;
 class MIL_AutomateLOG;
 class MIL_Time_ABC;
+class MIL_Injury_ABC;
 
 // =============================================================================
 // @class  PHY_HumansComposante
@@ -47,6 +48,7 @@ public:
 
     void ApplyContamination( const MIL_ToxicEffectManipulator& contamination );
     void ApplyPoisonous    ( const MIL_ToxicEffectManipulator& contamination );
+    void ApplyInjury       ( MIL_Injury_ABC& injury );
     void ApplyWounds       ( const PHY_ComposanteState& newCompState, PHY_FireDamages_Agent& fireDamages );
     uint WoundHumans       ( const PHY_HumanRank& rank, uint nNbrToChange, const PHY_HumanWound& newWound );
     uint HealHumans        ( const PHY_HumanRank& rank, uint nNbrToChange );

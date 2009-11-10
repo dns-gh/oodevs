@@ -14,6 +14,7 @@
 #include "GameConfigPanel.h"
 #include "HlaPluginConfigPanel.h"
 #include "DisPluginConfigPanel.h"
+#include "CrossbowPluginConfigPanel.h"
 #include "resources.h"
 #include "ActionsContext.h"
 #include "frontend/commands.h"
@@ -68,6 +69,9 @@ StartExercisePanel::StartExercisePanel( QWidgetStack* widget, QAction& action, c
 
     disConfigPanel_ = new DisPluginConfigPanel( tabs, config );
     tabs->addTab( disConfigPanel_, tr( "DIS Export" ) );
+
+    crossbowConfigPanel_ = new CrossbowPluginConfigPanel( tabs, config );
+    tabs->addTab( crossbowConfigPanel_, tr( "DB Export" ) );
 
     {
         QHBox* sessionBox = new QHBox( group );
@@ -128,7 +132,8 @@ void StartExercisePanel::StartExercise()
                               exerciseNumber_->value() );
         hlaConfigPanel_->Commit( list_->selectedItem()->text().ascii(), session_ );
         disConfigPanel_->Commit( list_->selectedItem()->text().ascii(), session_ );
-        Start( new ::StartExercise( config_, list_->selectedItem()->text(), session_.c_str() ) ) ;
+        crossbowConfigPanel_->Commit( list_->selectedItem()->text().ascii(), session_ );
+        Start( new ::StartExercise( config_, list_->selectedItem()->text(), session_.c_str(), crossbowConfigPanel_->IsChecked() ) ) ;
         context_.Save( "exercise", list_ );
         context_.Save( "session", session_.c_str() );
         Update();

@@ -29,11 +29,12 @@ namespace crossbow
     class Workspace_ABC;
     class Database_ABC;
     class ReportFactory;
-    class DatabaseUpdater;
+    class QueryDatabaseUpdater;
     class FolkUpdater;
     class Listener_ABC;
     class ExtensionFactory;
     class OrderTypes;
+    class WorkingSession;
 
 // =============================================================================
 /** @class  DatabasePublisher
@@ -97,11 +98,12 @@ private:
     T_Databases                         databases_;
     std::auto_ptr< ReportFactory >      reportFactory_; // $$$$ SBO 2007-09-27: nothing to do here, maybe create a "PluginModel"
     std::auto_ptr< OrderTypes >         orderTypes_;    // $$$$ SBO 2007-09-27: to put this stuff
-    std::auto_ptr< DatabaseUpdater >    databaseUpdater_;
+    std::auto_ptr< QueryDatabaseUpdater >    databaseUpdater_;
     std::auto_ptr< FolkUpdater >        folkUpdater_;
     T_Listeners                         listeners_;
     bool                                modelLoaded_;
     std::auto_ptr< ExtensionFactory >   factory_;
+    std::auto_ptr< WorkingSession >     session_;
     //@}
 };
 

@@ -12,7 +12,8 @@
 #include "Database_ABC.h"
 #include "Table_ABC.h"
 #include "Row_ABC.h"
-#include "ScopeEditor.h"
+#include "QueryBuilder.h"
+#include "WorkingSession.h"
 
 using namespace plugins;
 using namespace plugins::crossbow;
@@ -21,11 +22,21 @@ using namespace plugins::crossbow;
 // Name: FolkUpdater constructor
 // Created: JCR 2007-08-29
 // -----------------------------------------------------------------------------
-FolkUpdater::FolkUpdater( Database_ABC& database )
+FolkUpdater::FolkUpdater( Database_ABC& database, const WorkingSession& session )
     : database_ ( database )
     , updated_( 0 )
+	, session_( session )
 {
-    // NOTHING
+    UpdateQueryBuilder builder( database_.GetTableName( "Population" ) );
+
+    builder.SetField( "individuals", (long)0 );
+    builder.SetField( "road", (long)0 );
+    builder.SetField( "pavement", (long)0 );
+    builder.SetField( "office", (long)0 );
+    builder.SetField( "shop", (long)0 );
+    builder.SetField( "residential", (long)0 );
+	builder.SetField( "session_id" , session_.GetId() );
+    // Let previous state because of the delay : database_.Execute( builder );
 }
     
 // -----------------------------------------------------------------------------
@@ -35,24 +46,6 @@ FolkUpdater::FolkUpdater( Database_ABC& database )
 FolkUpdater::~FolkUpdater()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: FolkUpdater::Lock
-// Created: JCR 2008-01-11
-// -----------------------------------------------------------------------------
-void FolkUpdater::Lock()
-{
-    database_.Lock();
-}
-    
-// -----------------------------------------------------------------------------
-// Name: FolkUpdater::Unlock
-// Created: JCR 2008-01-11
-// -----------------------------------------------------------------------------
-void FolkUpdater::UnLock()
-{
-    database_.UnLock();
 }
 
 namespace
@@ -78,33 +71,16 @@ void FolkUpdater::Update( const ASN1T_MsgFolkCreation& msg )
     edges_.resize( msg.edge_number );
 }
 
-namespace 
-{
-    struct LockedScopeEditor
-    {
-        explicit LockedScopeEditor( Database_ABC& database ) 
-            : database_ ( &database )
-        {
-            database_->Lock();
-        }
-        ~LockedScopeEditor()
-        {
-            database_->UnLock();
-        }
-    private:
-        Database_ABC* database_;
-    };
-}
-
-
 // -----------------------------------------------------------------------------
 // Name: DatabaseUpdater::Update
 // Created: SBO 2007-09-27
 // -----------------------------------------------------------------------------
 void FolkUpdater::Update( const ASN1T_MsgFolkGraphUpdate& msg )
-{    
-    std::auto_ptr< Table_ABC > table( database_.OpenTable( "Population" ) );
-    Update( *table, msg );
+{
+    if( edges_.size() == 0 )
+        throw std::runtime_error( "Trying to update population graph before its creation." );    
+    for( unsigned int i = 0; i < msg.n; ++i )
+        Update( msg.elem[i] );
 }
 
 // -----------------------------------------------------------------------------
@@ -121,25 +97,14 @@ void FolkUpdater::Drop()
 // Name: FolkUpdater::Update
 // Created: SBO 2007-09-19
 // -----------------------------------------------------------------------------
-void FolkUpdater::Update( Table_ABC& table, const ASN1T_MsgFolkGraphUpdate& msg )
-{
-    if( edges_.size() == 0 )
-        throw std::runtime_error( "Trying to update population graph before its creation." );    
-    for( unsigned int i = 0; i < msg.n; ++i )
-        Update( table, msg.elem[i] );
-}
-
-// -----------------------------------------------------------------------------
-// Name: FolkUpdater::Update
-// Created: SBO 2007-09-19
-// -----------------------------------------------------------------------------
-void FolkUpdater::Update( Table_ABC& table, const ASN1T_MsgFolkGraphEdgeUpdate& msg )
+void FolkUpdater::Update( const ASN1T_MsgFolkGraphEdgeUpdate& msg )
 {
     Edge& edge = edges_[msg.shp_oid];
     Update( edge, msg );
     if( ++updated_ >= edges_.size() )
     {
-        Commit( table );
+        std::auto_ptr< Table_ABC > table( database_.OpenTable( "Population" ) );
+        Commit( *table );
         updated_ = 0;
     }
 }
@@ -150,18 +115,21 @@ void FolkUpdater::Update( Table_ABC& table, const ASN1T_MsgFolkGraphEdgeUpdate& 
 // -----------------------------------------------------------------------------
 void FolkUpdater::Commit( Table_ABC& table )
 {    
-    LockedScopeEditor   lock( database_ );
-    ScopeEditor         editor( database_ );
-    
-    table.BeginTransaction();
-    Row_ABC* row = table.Find( "" );
+    Row_ABC* row = table.Find( "", true );
+    int checkflush = 0;
     for( CIT_Edges it = edges_.begin(); it != edges_.end() && row; ++it )
     {
         CommitEdge( *row, *it );
-        table.UpdateRow( *row );
+        
+        if ( ++checkflush >= 500 )
+        {
+            table.UpdateRow( *row );
+            checkflush = 0;
+        }
+        
+        //table.UpdateRow( *row );
         row = table.GetNextRow();
     }
-    table.EndTransaction();
 }
 
 // -----------------------------------------------------------------------------
@@ -176,6 +144,7 @@ void FolkUpdater::CommitEdge( Row_ABC& row, const Edge& edge )
     row.SetField( "Office"     , FieldVariant( (long)edge.containers_[2] ) );
     row.SetField( "Residential", FieldVariant( (long)edge.containers_[3] ) );
     row.SetField( "Shop"       , FieldVariant( (long)edge.containers_[4] ) );
+    row.SetField( "session_id" , FieldVariant( (long)session_.GetId() ) );
 }
 
 // -----------------------------------------------------------------------------

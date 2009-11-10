@@ -25,6 +25,7 @@
 #include "Entities/Objects/BuildableCapacity.h"
 #include "Entities/Objects/WorkableCapacity.h"
 #include "Entities/Objects/OccupantAttribute.h"
+#include "Entities/Objects/StockAttribute.h"
 #include "Entities/Objects/FireAttribute.h"
 #include "Entities/Objects/MIL_FireFunctor.h"
 #include "Entities/Objects/ExtinguishableCapacity.h"
@@ -34,6 +35,7 @@
 #include "Knowledge/DEC_KS_ObjectInteraction.h"
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "PHY_RoleAction_Objects_DataComputer.h"
 #include "PHY_RoleAction_Objects_CapabilityComputer.h"
 
@@ -369,6 +371,81 @@ int PHY_RoleAction_Objects::Extinguish( boost::shared_ptr< DEC_Knowledge_Object 
     
     if( object.GetAttribute< FireAttribute >().GetHeat() <= 0 )
         return eFinished;
+    return eRunning;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects::Supply
+// Created: JCR 2009-06-04
+// -----------------------------------------------------------------------------
+int PHY_RoleAction_Objects::Supply( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge )
+{    
+    MIL_Object_ABC* pObject = GetObject( objectKnowledge );
+    if( !pObject || pObject->IsMarkedForDestruction() )
+        return eImpossible;
+
+    MIL_Object_ABC& object = *pObject;
+    StockAttribute* attribute = object.RetrieveAttribute< StockAttribute >(); 
+    if ( !attribute )    
+        return eImpossible;
+
+    pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
+
+    if( attribute->IsFull() )
+        return eFinished;
+
+    PHY_RoleAction_Objects_DataComputer dataComputer( pion_, PHY_RoleAction_Objects_DataComputerPionData::eConstruct, object );
+
+    const MT_Float rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
+    if( rDeltaPercentage == std::numeric_limits< MT_Float >::max() )
+        return eNoCapacity;
+
+    typedef std::vector< std::pair< const PHY_DotationCategory*, uint > > T_SelectionVector;
+    typedef T_SelectionVector::iterator IT_SelectionVector;
+    
+    T_SelectionVector selection; 
+    attribute->SelectDotations( selection, false );
+    for ( IT_SelectionVector it = selection.begin(); it != selection.end(); ++it )
+    { 
+        if ( dataComputer.HasDotations( *it->first, 1 ) )
+        {
+            dataComputer.ConsumeDotations( *it->first, attribute->Supply( *it->first, 1 ) );
+        }
+    }
+    if( attribute->IsFull() )
+        return eFinished;
+    return eRunning;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects::Distribute
+// Created: JCR 2009-06-04
+// -----------------------------------------------------------------------------
+int PHY_RoleAction_Objects::Distribute( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, boost::shared_ptr< DEC_Knowledge_Population >& populationKnowledge, uint quantity )
+{
+    MIL_Object_ABC* pObject = GetObject( objectKnowledge );
+    if( !pObject || pObject->IsMarkedForDestruction() )
+        return eImpossible;
+
+    MIL_Object_ABC& object = *pObject;
+    StockAttribute* attribute = object.RetrieveAttribute< StockAttribute >(); 
+    if ( !attribute )    
+        return eImpossible;
+
+    pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
+
+    typedef std::vector< std::pair< const PHY_DotationCategory*, uint > > T_SelectionVector;
+    typedef T_SelectionVector::iterator IT_SelectionVector;
+    
+    T_SelectionVector selection; 
+    PHY_RoleAction_Objects_DataComputer dataComputer( pion_, PHY_RoleAction_Objects_DataComputerPionData::eConstruct, object );
+
+    attribute->SelectDotations( selection, true );
+    for ( IT_SelectionVector it = selection.begin(); it != selection.end(); ++it )
+    { 
+        if ( dataComputer.HasDotations( *it->first, 0 ) )
+            uint distributed = attribute->Distribute( *it->first, quantity );
+    }
     return eRunning;
 }
 

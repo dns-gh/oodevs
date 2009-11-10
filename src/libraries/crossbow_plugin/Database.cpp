@@ -12,10 +12,12 @@
 #include "FeatureClass.h"
 #include "Table.h"
 #include "dispatcher/Config.h"
+#include "DatabaseEditor.h"
+#include "QueryBuilder_ABC.h"
+#include <boost/lexical_cast.hpp>
 
 using namespace plugins;
 using namespace plugins::crossbow;
-
 
 // -----------------------------------------------------------------------------
 // Name: Database::Database::Database
@@ -32,12 +34,7 @@ Database::Database()
 // -----------------------------------------------------------------------------
 Database::~Database()
 {
-    VARIANT_BOOL editing;
-    if( SUCCEEDED( workspaceEdit_->IsBeingEdited( &editing ) ) && editing == VARIANT_TRUE )
-    {
-        StopEdit();
-        UnLock();
-    }
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -46,138 +43,140 @@ Database::~Database()
 // -----------------------------------------------------------------------------
 void Database::Initialize( IWorkspacePtr spWorkspace )
 {
-    if( FAILED( spWorkspace->QueryInterface( IID_IFeatureWorkspace, (LPVOID*)&workspace_ ) ) || workspace_ == NULL )
-        throw std::runtime_error( "Cannot retrieve IFeatureWorkspace interface." );    
-    if( FAILED( spWorkspace->QueryInterface( IID_IWorkspaceEdit, (LPVOID*)&workspaceEdit_ ) ) || workspaceEdit_ == NULL )
-        throw std::runtime_error( "Cannot retrieve IWorkspaceEdit interface." );
+    workspace_ = spWorkspace;
+    if( spWorkspace == 0 || FAILED( spWorkspace->QueryInterface( IID_IFeatureWorkspace, (LPVOID*)&featureWorkspace_ ) ) || featureWorkspace_ == NULL )
+        throw std::runtime_error( "Cannot retrieve IFeatureWorkspace interface." );
+    std::cout << "Initialize workspace." << std::endl;
+    editor_.reset( new DatabaseEditor( spWorkspace ) );    
 }
 
 // -----------------------------------------------------------------------------
-// Name: Database::Lock
-// Created: SBO 2007-08-30
+// Name: Database::IsValid
+// Created: JCR 2009-05-27
 // -----------------------------------------------------------------------------
-void Database::Lock()
+bool Database::IsValid() const
 {
-    try
-    {
-        VARIANT_BOOL editing;
-        if( SUCCEEDED( workspaceEdit_->IsBeingEdited( &editing ) ) && editing == VARIANT_FALSE )
-            workspaceEdit_->StartEditing( VARIANT_FALSE );
-    }
-    catch( std::exception& e )
-    {
-        MT_LOG_INFO_MSG( e.what() );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Database::UnLock
-// Created: SBO 2007-08-30
-// -----------------------------------------------------------------------------
-void Database::UnLock()
-{
-    try
-    {
-        VARIANT_BOOL editing;
-        if( SUCCEEDED( workspaceEdit_->IsBeingEdited( &editing ) ) && editing == VARIANT_TRUE )
-            workspaceEdit_->StopEditing( VARIANT_TRUE );
-    }
-    catch( std::exception& e )
-    {
-        MT_LOG_INFO_MSG( e.what() );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Database::StartEdit
-// Created: JCR 2007-11-21
-// -----------------------------------------------------------------------------
-void Database::StartEdit()
-{
-    workspaceEdit_->StartEditOperation();
-}
-    
-// -----------------------------------------------------------------------------
-// Name: Database::StopEdit
-// Created: JCR 2007-11-21
-// -----------------------------------------------------------------------------
-void Database::StopEdit()
-{
-    workspaceEdit_->StopEditOperation();
+    return workspace_ != 0 && featureWorkspace_ != 0;
 }
 
 // -----------------------------------------------------------------------------
 // Name: Database::OpenTable
-// Created: SBO 2007-08-30
+// Created: JCR 2009-02-03
 // -----------------------------------------------------------------------------
 Table_ABC* Database::OpenTable( const std::string& name )
 {
-    Table_ABC* table = OpenWrappedTable( name );
+    Table_ABC* table = OpenWrappedTable( GetTableName( name ) );
     if( !table )
         throw std::runtime_error( "Unable to open table : " + name );
-
-    // if( table && clear )
-    //     table->Clear();    
-    
     return table;
 }
 
 // -----------------------------------------------------------------------------
 // Name: Database::OpenBufferedTable
-// Created: JCR 2008-07-28
+// Created: JCR 2009-02-03
 // -----------------------------------------------------------------------------
 Table_ABC& Database::OpenBufferedTable( const std::string& name, bool clear /*= true*/ )
 {
-    Table_ABC*& table = openedTables_[name];
+    T_TablePtr table = openedTables_[ name ];
     if( !table )
     {
-        table = OpenWrappedTable( name );
+        table.reset( OpenWrappedTable( GetTableName( name ) ) );
         if( table && clear )
             table->Clear();
     }
     if( !table )
-        throw std::runtime_error( "Unable to open table : " + name );
+        throw std::runtime_error( "Unable to open table : " + GetTableName( name ) );
     return *table;
 }
 
 // -----------------------------------------------------------------------------
 // Name: Database::ClearTable
-// Created: SBO 2007-08-30
+// Created: JCR 2009-02-03
 // -----------------------------------------------------------------------------
 void Database::ClearTable( const std::string& name )
 {
     ITablePtr table;
-    IQueryFilterPtr filter;
-    if( !SUCCEEDED( workspace_->OpenTable( CComBSTR( name.c_str() ), &table ) ) )
-        throw std::runtime_error( "Unable to open table : " + name );    
+    IQueryFilterPtr filter;    
+    if( ! IsValid() || !SUCCEEDED( featureWorkspace_->OpenTable( CComBSTR( GetTableName( name ).c_str() ), &table ) ) )
+        throw std::runtime_error( "Unable to open table : " + GetTableName( name ) );
     table->DeleteSearchedRows( filter );        
 }
 
 // -----------------------------------------------------------------------------
 // Name: Database::OpenWrappedTable
-// Created: SBO 2007-09-27
+// Created: JCR 2009-02-03
 // -----------------------------------------------------------------------------
 Table_ABC* Database::OpenWrappedTable( const std::string& name )
 {
     IFeatureClassPtr featureClass;
-    if( SUCCEEDED( workspace_->OpenFeatureClass( CComBSTR( name.c_str() ), &featureClass ) ) )
-        return new FeatureClass( featureClass, name );
+    if( IsValid() && SUCCEEDED( featureWorkspace_->OpenFeatureClass( CComBSTR( name.c_str() ), &featureClass ) ) )
+        return new FeatureClass( featureClass, *editor_ );
     ITablePtr table;
-    if( SUCCEEDED( workspace_->OpenTable( CComBSTR( name.c_str() ), &table ) ) )
-        return new Table( table, name );    
+    if( IsValid() && SUCCEEDED( featureWorkspace_->OpenTable( CComBSTR( name.c_str() ), &table ) ) )
+        return new Table( table, *editor_ );
     return 0;
 }
 
 // -----------------------------------------------------------------------------
 // Name: Database::ReleaseTable
-// Created: JCR 2007-11-21
+// Created: JCR 2009-02-03
 // -----------------------------------------------------------------------------
 void Database::ReleaseTable( const std::string& name )
 {
     IT_Tables it = openedTables_.find( name );
-    if ( it != openedTables_.end() && it->second )
+    if ( it != openedTables_.end() && it->second )    
+        openedTables_.erase( it );    
+}
+
+// -----------------------------------------------------------------------------
+// Name: Database::Flush
+// Created: JCR 2009-04-22
+// -----------------------------------------------------------------------------
+void Database::Flush()
+{
+    if( editor_.get() )    
+        editor_->UnLock();
+    openedTables_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Database::GetTableName
+// Created: JCR 2009-04-24
+// -----------------------------------------------------------------------------
+std::string Database::GetTableName( const std::string& name ) const
+{
+    return name;
+}
+
+namespace
+{
+    void ThrowError()
     {
-        delete it->second;
-        openedTables_.erase( it );
+        IErrorInfoPtr ipError;
+        BSTR strError;
+        ::GetErrorInfo( 0, &ipError );
+        ipError->GetDescription( &strError );
+        const std::string error = boost::lexical_cast< std::string >( _bstr_t( strError ) );
+        MT_LOG_ERROR_MSG( error ); // $$$$ SBO 2008-05-15: should throw
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Database::Execute
+// Created: JCR 2009-04-24
+// -----------------------------------------------------------------------------
+void Database::Execute( const QueryBuilder_ABC& builder )
+{
+    std::string message( "Try Execute Query: " );
+    if( IsValid() && builder.IsValid() )
+    {
+        const std::string query( builder.Create() );
+        message += query;
+        if( FAILED( workspace_->ExecuteSQL( CComBSTR( query.c_str() ) ) ) )
+            ThrowError();
+    }
+	else{
+		message += "Invalid query on table " + builder.GetTableName();
+	}
+    MT_LOG_MESSAGE_MSG( message );
 }

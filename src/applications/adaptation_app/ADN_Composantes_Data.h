@@ -409,6 +409,28 @@ public:
 
 
     //*****************************************************************************
+    class HumanProtectionInfos
+        : public ADN_Ref_ABC
+        , public ADN_DataTreeNode_ABC
+    {
+        MT_COPYNOTALLOWED( HumanProtectionInfos )
+
+    public:
+        HumanProtectionInfos();
+
+        virtual std::string GetNodeName();
+        std::string GetItemName();
+
+        void CopyFrom( HumanProtectionInfos& src );
+
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
+
+    public:
+        // ADN_TypePtr_InVector_ABC< ADN_Categories_Data::DotationNatureInfos > ptrDotationNature_;
+    };
+
+    //*****************************************************************************
     class CategoryInfos
         : public ADN_Ref_ABC
         , public ADN_DataTreeNode_ABC
@@ -624,6 +646,7 @@ public:
         T_ObjectInfos_Vector                                                      vObjects_;
         ConsumptionsInfos                                                         consumptions_;
         DotationInfos                                                             dotations_;
+        HumanProtectionInfos                                                      humanProtections_;
 
         BreakdownGroupInfos                                                       attritionBreakdowns_;
         BreakdownGroupInfos                                                       randomBreakdowns_;

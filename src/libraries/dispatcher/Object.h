@@ -17,6 +17,11 @@
 
 #include <boost/ptr_container/ptr_vector.hpp>
 
+namespace kernel
+{
+	class ObjectType;
+}
+
 namespace dispatcher
 {
     class Side;
@@ -73,7 +78,7 @@ private:
     //@}
 
 public:    
-    const std::string            type_; // TODO : XML reference - no resolved by dispatcher
+	const kernel::ObjectType&    type_;
 
     const std::string            strName_;
           Localisation           localisation_;

@@ -2,16 +2,16 @@
 <context>
     <name>@default</name>
     <message>
-        <source>SWORD Officer Training</source>
+        <source>SWORD</source>
         <comment>Application</comment>
-        <translation type="obsolete">SCALPED</translation>
+        <translation type="obsolete">SWORD</translation>
     </message>
 </context>
 <context>
     <name>Application</name>
     <message>
-        <source>SWORD Officer Training</source>
-        <translation>SWORD Officer Training</translation>
+        <source>SWORD</source>
+        <translation>SWORD</translation>
     </message>
     <message>
         <source>sword-ot@masagroup.net</source>
@@ -33,8 +33,8 @@
 <context>
     <name>Config</name>
     <message>
-        <source>SWORD Officer Training</source>
-        <translation type="obsolete">SCALPED</translation>
+        <source>SWORD</source>
+        <translation type="obsolete">SWORD</translation>
     </message>
 </context>
 </TS>

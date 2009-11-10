@@ -59,6 +59,7 @@ void ADN_Project_Data::DataInfos::ReadArchive( xml::xistream& input )
     ReadFile( input, "decisional", szDecisional_ );
     ReadFile( input, "volumes", szSizes_ );
     ReadFile( input, "protections", szArmors_ );
+    ReadFile( input, "human-protections", szHumanProtections_ );
     ReadFile( input, "dotation-natures", szDotationNatures_ );
     ReadFile( input, "objects", szObjects_ );
     ReadFile( input, "dotations", szEquipements_ );
@@ -98,6 +99,7 @@ void ADN_Project_Data::DataInfos::WriteArchive( xml::xostream& output )
     WriteFile( output, "decisional", szDecisional_ );
     WriteFile( output, "volumes", szSizes_ );
     WriteFile( output, "protections", szArmors_ );
+    WriteFile( output, "human-protections", szHumanProtections_ );
     WriteFile( output, "dotation-natures", szDotationNatures_ );
     WriteFile( output, "objects", szObjects_ );
     WriteFile( output, "dotations", szEquipements_ );

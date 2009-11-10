@@ -22,6 +22,7 @@
 #include "FireAttribute.h"
 #include "MedicalTreatmentAttribute.h"
 #include "ToxicCloudAttribute.h"
+#include "StockAttribute.h"
 #include "Explosions.h"
 #include "Model.h"
 #include "TeamsModel.h"
@@ -115,4 +116,7 @@ void ObjectFactory::Register( Object_ABC& result, const ASN1T_ObjectAttributes& 
 
     if( attributes.m.medical_treatmentPresent )
         result.Attach< MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( controllers_.controller_, static_.objectTypes_ ) );
+    
+    if( attributes.m.stockPresent )
+        result.Attach< StockAttribute_ABC >( *new StockAttribute( controllers_.controller_, static_.objectTypes_ ) );
 }

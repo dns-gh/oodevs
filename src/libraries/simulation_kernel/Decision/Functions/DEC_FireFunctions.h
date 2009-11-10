@@ -13,9 +13,9 @@
 #define __DEC_FireFunctions_h_
 
 #include "MIL.h"
+#include "Knowledge/DEC_Knowledge_Agent.h"
 
 class MIL_AgentPion;
-class DEC_Knowledge_Agent;
 
 // =============================================================================
 // Created: NLD 2004-03-31

@@ -56,8 +56,10 @@ private:                                                                 \
 class ASNMSG                                                             \
 {                                                                        \
 public:                                                                  \
+    typedef ASN1T_Msg##ASNMSG   T_AsnMsgType;                            \
+public:                                                                  \
     ASNMSG() {}                                                          \
-    ASNMSG(ASN1T_Msg##ASNMSG& asn):asnTmp(asn) {}                        \
+    ASNMSG(ASNMSG::T_AsnMsgType& asn):asnTmp(asn) {}                     \
     template< typename P >                                               \
     void Send( P& publisher, int context = 0 )                           \
     {                                                                    \
@@ -68,9 +70,9 @@ public:                                                                  \
         publisher.Send( asnMsg );                                        \
     }                                                                    \
                                                                          \
-    ASN1T_Msg##ASNMSG& operator()() { return asnTmp; }                   \
+    T_AsnMsgType& operator()() { return asnTmp; }                        \
 private:                                                                 \
-    ASN1T_Msg##ASNMSG asnTmp;                                            \
+    T_AsnMsgType asnTmp;                                                 \
                                                                          \
 };
 

@@ -34,6 +34,9 @@ LangString OT_SECTION_EXERCISES ${LANG_FRENCH} "Exercices"
 LangString OT_SECTION_TERRAINS ${LANG_ENGLISH} "Terrains"
 LangString OT_SECTION_TERRAINS ${LANG_FRENCH} "Terrains"
 
+LangString OT_SECTION_POPULATIONS ${LANG_ENGLISH} "Population models"
+LangString OT_SECTION_POPULATIONS ${LANG_FRENCH} "Modèles population"
+
 LangString OT_SECTION_DOCUMENTATION ${LANG_ENGLISH} "Documentation"
 LangString OT_SECTION_DOCUMENTATION ${LANG_FRENCH} "Documentation"
 
@@ -59,14 +62,14 @@ LangString OT_VERSION_UP_TO_DATE ${LANG_FRENCH} "Cette version de ${APP_NAME} es
 LangString OT_VERSION_MORE_RECENT ${LANG_ENGLISH} "A more recent version of ${APP_NAME} is already installed."
 LangString OT_VERSION_MORE_RECENT ${LANG_FRENCH} "Une version plus récente de ${APP_NAME} est déjà installée."
 
-LangString OT_FRONTEND ${LANG_ENGLISH} "Frontend"
-LangString OT_FRONTEND ${LANG_FRENCH} "SWORD Officer Training"
+LangString OT_FRONTEND ${LANG_ENGLISH} "${APP_NAME}"
+LangString OT_FRONTEND ${LANG_FRENCH} "${APP_NAME}"
 
 LangString OT_ADAPTATION ${LANG_ENGLISH} "Adaptation"
 LangString OT_ADAPTATION ${LANG_FRENCH} "Adaptation"
 
 LangString OT_SELF_TRAINING ${LANG_ENGLISH} "Self Training"
-LangString OT_SELF_TRAINING ${LANG_FRENCH} "Auto Entraînement"
+LangString OT_SELF_TRAINING ${LANG_FRENCH} "Auto Formation"
 
 LicenseLangString LICENSE ${LANG_ENGLISH} "license-english.txt"
 LicenseLangString LICENSE ${LANG_FRENCH} "license-french.txt"

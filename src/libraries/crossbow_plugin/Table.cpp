@@ -10,6 +10,8 @@
 #include "crossbow_plugin_pch.h"
 #include "Table.h"
 #include "Row.h"
+#include "DatabaseEditor_ABC.h"
+
 #include <boost/lexical_cast.hpp>
 
 using namespace plugins;
@@ -18,12 +20,11 @@ using namespace plugins;
 // Name: Table constructor
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::Table::Table( ITablePtr table, const std::string& name )
-    : name_( name )
-    , table_( table )
-    , cursor_()
-    , row_( new Row() )
-    , inTransaction_( false )
+crossbow::Table::Table( ITablePtr table, DatabaseEditor_ABC& editor )
+    : table_ ( table )
+    , cursor_ ()
+    , row_ ( new Row() )
+    , editor_ ( editor )
 {
     // NOTHING
 }
@@ -52,16 +53,41 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
+// Name: Table::BeginTransaction
+// Created: JCR 2009-04-22
+// -----------------------------------------------------------------------------
+void crossbow::Table::BeginTransaction()
+{
+    editor_.StartEdit();
+}
+    
+// -----------------------------------------------------------------------------
+// Name: Table::EndTransaction
+// Created: JCR 2009-04-22
+// -----------------------------------------------------------------------------
+void crossbow::Table::EndTransaction()
+{
+    editor_.StopEdit();
+    // check efficiency editor_.EndTransaction();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Table::CreateRow
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
 crossbow::Row_ABC& crossbow::Table::CreateRow()
 {
-    IRowPtr row;
-    HRESULT res = table_->CreateRow( &row ); // $$$$ SBO 2007-08-30: check
+    IRowBufferPtr row;
+
+    editor_.StartEdit();
+    HRESULT res = table_->CreateRowBuffer( &row ); // $$$$ SBO 2007-08-30: check
     if( FAILED( res ) )
         ThrowError();
-    row_->BindRow( row ); // $$$$ SBO 2007-08-30: only allows one row to be edited...
+    long ids = 0;
+    IQueryFilterPtr filter;
+    table_->RowCount( filter, &ids );
+    row->put_Value( 0, CComVariant( ids ) );
+    row_->BindRow( row, ids + 1 ); // $$$$ SBO 2007-08-30: only allows one row to be edited...
     return *row_;
 }
 
@@ -77,6 +103,7 @@ void crossbow::Table::DeleteRows( const std::string& query )
         filter.CreateInstance( CLSID_QueryFilter );
         filter->put_WhereClause( CComBSTR( query.c_str() ) );
     }
+    editor_.StartEdit();
     table_->DeleteSearchedRows( filter );
 }
 
@@ -97,14 +124,31 @@ void crossbow::Table::UpdateRow( const Row_ABC& row )
 {
     if( &row != row_.get() )
         return;
-    row_->Commit( InTransaction() ? cursor_ : NULL );
+    if( cursor_ != NULL )
+        cursor_->Flush();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Table::UpdateRow
+// Created: SBO 2007-09-26
+// -----------------------------------------------------------------------------
+void crossbow::Table::InsertRow( const Row_ABC& row )
+{
+    if( &row != row_.get() )
+        return;
+
+    ICursorPtr cursor;
+    HRESULT res = table_->Insert( true, &cursor );
+    if( FAILED( res ) )
+        ThrowError();
+    row_->Commit( cursor );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Table::Find
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::Row_ABC* crossbow::Table::Find( const std::string& query )
+crossbow::Row_ABC* crossbow::Table::Find( const std::string& query, bool forceUpdate /*= false*/ )
 {
     IQueryFilterPtr filter;
     
@@ -113,7 +157,9 @@ crossbow::Row_ABC* crossbow::Table::Find( const std::string& query )
         filter.CreateInstance( CLSID_QueryFilter );
         filter->put_WhereClause( CComBSTR( query.c_str() ) );
     }
-    HRESULT res = InTransaction() ? table_->Update( filter, false, &cursor_ ) : table_->Search( filter, false, &cursor_ );    
+    HRESULT res = ( forceUpdate || editor_.InTransaction() )
+            ? table_->Update( filter, false, &cursor_ ) 
+            : table_->Search( filter, false, &cursor_ );
     if( FAILED( res ) )
     {
         ThrowError();
@@ -131,34 +177,8 @@ crossbow::Row_ABC* crossbow::Table::GetNextRow()
     IRowPtr row;
     if( cursor_ != NULL && ( FAILED( cursor_->NextRow( &row ) ) || row == NULL ) )
         return 0;
-    row_->BindRow( row );
+    long oid = 0;
+    row->get_OID( &oid );
+    row_->BindRow( row, oid );
     return row_.get();
 }
-
-// -----------------------------------------------------------------------------
-// Name: Table::BeginTransaction
-// Created: SBO 2007-09-26
-// -----------------------------------------------------------------------------
-void crossbow::Table::BeginTransaction()
-{
-    inTransaction_ = true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Table::EndTransaction
-// Created: SBO 2007-09-26
-// -----------------------------------------------------------------------------
-void crossbow::Table::EndTransaction()
-{
-    inTransaction_ = false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Table::InTransaction
-// Created: SBO 2007-09-26
-// -----------------------------------------------------------------------------
-bool crossbow::Table::InTransaction() const
-{
-    return inTransaction_;
-}
-

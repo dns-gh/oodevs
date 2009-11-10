@@ -10,11 +10,13 @@
 #include "crossbow_plugin_pch.h"
 #include "OrderListener.h"
 #include "OrderDispatcher.h"
+#include "QueryBuilder.h"
 #include "Database_ABC.h"
 #include "Table_ABC.h"
 #include "Row_ABC.h"
-#include "ScopeEditor.h"
-#include <sstream>
+#include "QueryBuilder.h"
+#include "WorkingSession.h"
+#include <boost/lexical_cast.hpp>
 
 using namespace dispatcher;
 using namespace plugins;
@@ -24,14 +26,15 @@ using namespace plugins::crossbow;
 // Name: OrderListener constructor
 // Created: SBO 2007-05-30
 // -----------------------------------------------------------------------------
-OrderListener::OrderListener( Database_ABC& database, const dispatcher::Model& model, const OrderTypes& types, dispatcher::SimulationPublisher_ABC& publisher )
+OrderListener::OrderListener( Database_ABC& database, const dispatcher::Model& model, const OrderTypes& types, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession& session )
     : publisher_ ( publisher )
     , dispatcher_( new OrderDispatcher( database, types, model ) )
-    , validation_( *database.OpenTable( "OrdersValidation" ) )
     , database_  ( database )
     , ref_ ( 0 )
+	, session_ ( session )
 {
-    database_.ClearTable( "Orders" ); // Clear table row data    
+    Clean();
+    table_.reset( database_.OpenTable( "Orders" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,61 +47,78 @@ OrderListener::~OrderListener()
 }
 
 // -----------------------------------------------------------------------------
-// Name: OrderListener::Listen
-// Created: SBO 2007-05-30
+// Name: OrderListener::Orders
+// Created: MPT 2009-07-28
 // -----------------------------------------------------------------------------
-void OrderListener::Listen()
-{    
-    long ref = ref_;
+void OrderListener::Clean()
+{
+	try
     {
-        std::stringstream ss;
-        ss << "OBJECTID > " << ref_ << " AND Checked=-1";
-        std::auto_ptr< Table_ABC > table( database_.OpenTable( "Orders" ) );
-        Row_ABC* row = table->Find( ss.str() );
-        while( row != 0 )
-        {
-            Copy( *row );
-            ref_ = row->GetID();
-            row = table->GetNextRow();
-        }        
+        std::string clause( "session_id=" + boost::lexical_cast< std::string >( session_.GetId() ) );
+		database_.Execute( DeleteQueryBuilder( database_.GetTableName( "Orders" ), clause ) );
     }
-    if ( ref != ref_ )
-    {        
-        Row_ABC* row = validation_.Find( "Checked=0" );
-    //    Row_ABC* row = table_.Find( "[Orders].[OBJECTID] NOT IN ( SELECT [OrdersValidation].[OrderID] FROM OrdersValidation);" );     
-        while( row != 0 )
-        {
-            dispatcher_->Dispatch( publisher_, *row );
-            MarkProcessed( *row );            
-            row = validation_.GetNextRow();
-        }
+    catch ( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "OrderListener is not correctly loaded : " + std::string( e.what() ) );
+    }
+}
+
+namespace
+{
+    template< typename Type >
+    Type GetField( const Row_ABC& row, const std::string& name )
+    {
+        return boost::get< Type >( row.GetField( name ) );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: OrderListener::Copy
+// Name: OrderListener::Listen
 // Created: SBO 2007-05-30
 // -----------------------------------------------------------------------------
-void OrderListener::Copy( Row_ABC& row )
+void OrderListener::Listen()
 {
-    Row_ABC& created = validation_.CreateRow();
-    created.SetField( "OrderID", row.GetID() );
-    created.SetField( "Checked", FieldVariant( 0 ) );
-    created.SetField( "Name", row.GetField( "Name" ) );
-    created.SetField( "TargetID", row.GetField( "TargetID" ) );    
-    validation_.UpdateRow( created );    
+    try
+    {
+        std::stringstream ss;
+        ss << "id > " << ref_ << " AND checked=-1" << " AND session_id=" << session_.GetId(); // OBJECTID
+        long orderid = -1;
+        const Row_ABC* row = table_->Find( ss.str() );
+        while( row != 0 )
+        {
+            try
+            {
+                ref_ = row->GetID();
+                orderid = GetField< long >( *row, "id" );
+                dispatcher_->Dispatch( publisher_, *row );
+                MarkProcessed( orderid );
+            }
+            catch ( std::exception& ex )
+            {
+                if( orderid >= 0 )
+                    MarkProcessed( orderid );
+                MT_LOG_ERROR_MSG( "crossbow::Listen - unable to build order correctly: " << std::endl << ex.what() );
+            }
+            row = table_->GetNextRow();
+        }
+    }
+    catch ( std::exception& ex )
+    {
+        MT_LOG_ERROR_MSG( "crossbow::Listen : " + std::string( ex.what() ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: OrderListener::MarkProcessed
 // Created: SBO 2007-05-30
 // -----------------------------------------------------------------------------
-void OrderListener::MarkProcessed( Row_ABC& row ) const
+void OrderListener::MarkProcessed( long orderid ) const
 {
-//    Table_ABC& table = database_.OpenTable( "OrdersValidation" );
-//    Row_ABC& created = table.CreateRow();
-//    created.SetField( "OrderID", FieldVariant( row.GetID() ) );        
-    row.SetField( "Checked", FieldVariant( -1 ) );
-    validation_.UpdateRow( row );
-//    table.UpdateRow( created );    
+    std::stringstream ss;
+
+    ss << "id = " << orderid << " AND checked=-1" << " AND session_id=" << session_.GetId(); // OBJECTID
+    UpdateQueryBuilder builder( database_.GetTableName( "Orders" ) );
+    builder.SetField( "checked", 0 );
+    builder.SetClause( ss.str() );
+    database_.Execute( builder );
 }

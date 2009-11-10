@@ -35,13 +35,8 @@ public:
     
     //! @name Operations
     //@{
-    virtual void Accept( ShapeVisitor_ABC& visitor ) const;
     virtual void Serialize( ASN1T_Location& asn ) const;
-    //@}
-
-    //! @name 
-    //@{
-    virtual void UpdateGeometry( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const;    
+    virtual void Serialize( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const;
     //@}
 
 protected:
@@ -52,6 +47,11 @@ protected:
     explicit PointCollection( IGeometryPtr geometry );    
     //@}
     
+    //! @name 
+    //@{
+    virtual void Serialize( std::ostream& geometry ) const;
+    //@}
+
 private:
     //! @name Copy/Assignement
     //@{

@@ -2,15 +2,8 @@
 <context>
     <name>Application</name>
     <message>
-        <source>SWORD Officer Training</source>
-        <translation type="unfinished">SCALPED</translation>
-    </message>
-</context>
-<context>
-    <name>Config</name>
-    <message>
-        <source>SWORD Officer Training</source>
-        <translation type="obsolete">SCALPED</translation>
+        <source>SWORD</source>
+        <translation>SWORD</translation>
     </message>
 </context>
 <context>

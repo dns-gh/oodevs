@@ -71,10 +71,12 @@ void MIL_MedicalTreatmentType::Initialize( xml::xistream& xis )
 // Modified: RFT 14/05/2008
 // -----------------------------------------------------------------------------
 MIL_MedicalTreatmentType::MIL_MedicalTreatmentType( const std::string& strName, xml::xistream& xis )
-	: strName_              ( strName )
-	, nID_                  ( 0 )
+	: strName_               ( strName )
+	, nID_                   ( 0 )
+    , deathThreshold_        ( 0 )
 {
     xis >> xml::attribute( "id", nID_ )
+        >> xml::attribute( "death-threshold", deathThreshold_ )
         >> xml::start( "injuries" )
             >> xml::list( "injury", *this, &MIL_MedicalTreatmentType::ReadMedicalTreatmentEffect )
         >> xml::end();    
@@ -82,14 +84,18 @@ MIL_MedicalTreatmentType::MIL_MedicalTreatmentType( const std::string& strName, 
 
 namespace 
 {
-    MIL_MedicalTreatmentType::E_Injuries StringToE_Injuries( const std::string& category )
+    MIL_MedicalTreatmentType::E_InjuryCategories StringToE_InjuryCategories( const std::string& category )
     {
-        MIL_MedicalTreatmentType::E_Injuries injury = MIL_MedicalTreatmentType::eUA;
+        MIL_MedicalTreatmentType::E_InjuryCategories injury = MIL_MedicalTreatmentType::eUA;
 
         if( category == "UA" )
             injury = MIL_MedicalTreatmentType::eUA;
         else if( category == "UR" )
             injury = MIL_MedicalTreatmentType::eUR;
+        else if( category == "None" )
+            injury = MIL_MedicalTreatmentType::eNone;
+        else if( category == "Dead" )
+            injury = MIL_MedicalTreatmentType::eDead;
         return injury;
     }
 }
@@ -101,24 +107,28 @@ namespace
 // -----------------------------------------------------------------------------
 void MIL_MedicalTreatmentType::ReadMedicalTreatmentEffect( xml::xistream& xis )
 {
-    std::string category;
-    T_HealingTimes times;
-    E_Injuries injury;
+    std::string injuryCategory;
+    T_InjuryDescription injuryDescription;
+    
+    //ReadTimeAttribute already includes a the xml optional function
+    tools::ReadTimeAttribute( xis , "life-expectancy" , injuryDescription.lifeExpectancy_ );
+    //No test here to check if the life expectancy is negative because a non-deadly injury sets life expectancy to "-1"
+    injuryDescription.lifeExpectancy_ = MIL_Tools::ConvertSecondsToSim( injuryDescription.lifeExpectancy_ );
 
-    xis >> xml::attribute( "category" , category );
-    injury = StringToE_Injuries( category );
+    xis >> xml::attribute( "threshold", injuryDescription.injuryThreshold_ );
+    xis >> xml::attribute( "category" , injuryCategory );
 
-    tools::ReadTimeAttribute( xis , "treatment-time" , times.first );
-    if( times.first <= 0 )
+    tools::ReadTimeAttribute( xis , "treatment-time" , injuryDescription.treatmentTime_ );
+    if( injuryDescription.treatmentTime_ <= 0 )
         xis.error( "treatment-time <= 0" );
-    times.first = ( int ) MIL_Tools::ConvertSecondsToSim( times.first );
+    injuryDescription.treatmentTime_ = MIL_Tools::ConvertSecondsToSim( injuryDescription.treatmentTime_ );
 
-    tools::ReadTimeAttribute( xis , "hospitalisation-time" , times.second );
-    if( times.second <= 0 )
+    tools::ReadTimeAttribute( xis , "hospitalisation-time" , injuryDescription.hospitalisationTime_ );
+    if( injuryDescription.hospitalisationTime_ <= 0 )
         xis.error( "hospitalisation-time <= 0" );
-    times.second = ( int ) MIL_Tools::ConvertSecondsToSim( times.second );
+    injuryDescription.hospitalisationTime_ = MIL_Tools::ConvertSecondsToSim( injuryDescription.hospitalisationTime_ );
    
-    medicalTreatmentEffect_.insert( std::make_pair( injury, times ) );
+    medicalTreatmentEffect_.insert( std::make_pair( StringToE_InjuryCategories( injuryCategory ), injuryDescription ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -193,15 +203,25 @@ const std::string& MIL_MedicalTreatmentType::GetName() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_MedicalTreatmentType::GetDeathThreshold
+// Created: RFT 19/05/2008
+// Modified: none
+// -----------------------------------------------------------------------------
+unsigned int MIL_MedicalTreatmentType::GetDeathThreshold() const
+{
+    return deathThreshold_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_MedicalTreatmentType::GetTreatmentTime
 // Created: RFT 19/05/2008
 // Modified: none
 // -----------------------------------------------------------------------------
-int MIL_MedicalTreatmentType::GetTreatmentTime( int injury ) const
+float MIL_MedicalTreatmentType::GetTreatmentTime( int injuryCategory ) const
 {
-    CIT_MedicalTreatmentEffectMap iter = medicalTreatmentEffect_.find( ( E_Injuries )injury );
+    CIT_MedicalTreatmentEffectMap iter = medicalTreatmentEffect_.find( ( E_InjuryCategories )injuryCategory );
     if( iter != medicalTreatmentEffect_.end() )
-        return iter->second.first;
+        return iter->second.treatmentTime_;
     else
         return -1;//IF THERE IS AN ERROR
 }
@@ -211,11 +231,40 @@ int MIL_MedicalTreatmentType::GetTreatmentTime( int injury ) const
 // Created: RFT 19/05/2008
 // Modified: none
 // -----------------------------------------------------------------------------
-int MIL_MedicalTreatmentType::GetHospitalisationTime( int injury ) const
+float MIL_MedicalTreatmentType::GetHospitalisationTime( int injuryCategory ) const
 {
-    CIT_MedicalTreatmentEffectMap iter = medicalTreatmentEffect_.find( ( E_Injuries )injury );
+    CIT_MedicalTreatmentEffectMap iter = medicalTreatmentEffect_.find( ( E_InjuryCategories )injuryCategory );
     if( iter != medicalTreatmentEffect_.end() )
-        return iter->second.second;
+        return iter->second.hospitalisationTime_;
+    else
+        return -1;//IF THERE IS AN ERROR
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_MedicalTreatmentType::GetLifeExpectancy
+// Created: RFT 19/05/2008
+// Modified: none
+// -----------------------------------------------------------------------------
+float MIL_MedicalTreatmentType::GetLifeExpectancy( E_InjuryCategories injuryCategory ) const
+{
+    
+    CIT_MedicalTreatmentEffectMap iter = medicalTreatmentEffect_.find( injuryCategory );
+    if( iter != medicalTreatmentEffect_.end() )
+        return iter->second.lifeExpectancy_;
+    else
+        return -2;//IF THERE IS AN ERROR (not -1 because this means the injury isn't deadly)
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_MedicalTreatmentType::GetHospitalisationTime
+// Created: RFT 19/05/2008
+// Modified: none
+// -----------------------------------------------------------------------------
+unsigned int MIL_MedicalTreatmentType::GetInjuryThreshold( E_InjuryCategories injuryCategory ) const
+{
+    CIT_MedicalTreatmentEffectMap iter = medicalTreatmentEffect_.find( injuryCategory );
+    if( iter != medicalTreatmentEffect_.end() )
+        return iter->second.injuryThreshold_;
     else
         return -1;//IF THERE IS AN ERROR
 }

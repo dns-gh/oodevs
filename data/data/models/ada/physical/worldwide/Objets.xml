@@ -273,6 +273,14 @@
       </buildable>
     </constructor>
     <detection/>
+    <heuristic>
+      <terrain type="autoroute" value="1"/>
+      <terrain type="departementale" value="3"/>
+      <terrain type="carrefour" value="10"/>
+      <terrain type="nationale" value="2"/>
+      <terrain type="voie ferree" value="5"/>
+      <terrain type="pont" value="8"/>
+    </heuristic>
     <population-filter density="0.5"/>
     <workable max-animator="1"/>
   </object>
@@ -287,4 +295,5 @@
     <population-filter density="0.5"/>
   </object>
   <object geometry="point" name="Installation" symbol="S*GPI-----*****" type="installation"/>
+  <object geometry="point" name="Distribution point" symbol="G*SPPR----****X" type="distribution point"/>
 </objects>

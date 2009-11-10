@@ -22,7 +22,7 @@ int main( int argc, char* argv[] )
     std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( "sword", 1.0f ) );
 #endif
 
-    BugTrap::Setup( tools::translate( "Application", "SWORD Officer Training" ).ascii() )
+    BugTrap::Setup( tools::translate( "Application", "SWORD" ).ascii() )
             .SetEmail( tools::translate( "Application", "sword-ot@masagroup.net" ).ascii() )
             .SetVersion( QString( "%1 - " __TIMESTAMP__ ).arg( tools::AppVersion() ).ascii() );
     QApplication::setStyle( "windows" );

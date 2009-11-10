@@ -16,6 +16,7 @@
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Actions/PHY_FireDamages_Agent.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Units/Humans/MIL_Injury_ABC.h"
 
 #include "simulation_kernel/HumansActionsNotificationHandler_ABC.h"
 
@@ -180,7 +181,7 @@ void PHY_HumansComposante::ApplyWounds( const PHY_ComposanteState& newComposante
     {
         PHY_Human& human = **itCur;
         const PHY_HumanWound& oldWound = human.GetWound();
-        if( human.ApplyWound( PHY_HumanWound::killed_ ) )
+        if( human.ApplyWound( PHY_HumanWound::killed_ ) ) //return true only if newWound (here = killed_) > oldWound
             fireDamages.NotifyHumanWoundChanged( human, oldWound );
         ++ itCur;
     }
@@ -215,6 +216,28 @@ void PHY_HumansComposante::ApplyPoisonous( const MIL_ToxicEffectManipulator& con
     for( PHY_Human::CIT_HumanVector it = humans_.begin(); it != humans_.end(); ++it )
         (**it).ApplyPoisonous( contamination );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::ApplyInjury
+// Created: RFT
+// -----------------------------------------------------------------------------
+void PHY_HumansComposante::ApplyInjury( MIL_Injury_ABC& injury )
+{
+    assert( pComposante_ );
+    
+    for( PHY_Human::CIT_HumanVector it = humans_.begin(); it != humans_.end(); ++it )
+    {
+        if( injury.IsInjured( GetComposante() ) )
+        {
+            //on doit supprimer aussi le human du human vector et il va devenir un InjuredHuman
+            //qui doit avoir une existence propre (mise a jour, que les autres sachent qu ils existent, position, peut etre une faculte de deplacement, ...) 
+        }
+    }
+}
+
+// =============================================================================
+// COMPOSANTE NOTIFICATIONS
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_HumansComposante::NotifyComposanteHandledByMaintenance

@@ -1061,6 +1061,61 @@ void ADN_Composantes_Data::WeaponInfos::WriteArchive( xml::xostream& output )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::HumanProtectionInfos
+// Created: JCR 2009-05-17
+// -----------------------------------------------------------------------------
+ADN_Composantes_Data::HumanProtectionInfos::HumanProtectionInfos()
+{
+    // Nothing
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::GetNodeName
+// Created: JCR 2009-05-17
+// -----------------------------------------------------------------------------
+std::string ADN_Composantes_Data::HumanProtectionInfos::GetNodeName()
+{
+    return "human-protection";
+}
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::GetItemName
+// Created: JCR 2009-05-17
+// -----------------------------------------------------------------------------
+std::string ADN_Composantes_Data::HumanProtectionInfos::GetItemName()
+{
+    return "nothing";
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::CopyFrom
+// Created: JCR 2009-05-17
+// -----------------------------------------------------------------------------
+void ADN_Composantes_Data::HumanProtectionInfos::CopyFrom( HumanProtectionInfos& src )
+{
+
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::ReadArchive
+// Created: JCR 2009-05-17
+// -----------------------------------------------------------------------------
+void ADN_Composantes_Data::HumanProtectionInfos::ReadArchive( xml::xistream& input )
+{
+    input >> xml::optional() >> xml::start( "human-protections" ) 
+                             >> xml::end();
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::WriteArchive
+// Created: JCR 2009-05-17
+// -----------------------------------------------------------------------------
+void ADN_Composantes_Data::HumanProtectionInfos::WriteArchive( xml::xostream& output )
+{
+    output << xml::start( "human-protections" ) << xml::end();
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: CategoryInfos::CategoryInfos
 // Created: APE 2004-12-29
 // -----------------------------------------------------------------------------
@@ -1931,6 +1986,8 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output 
     for( IT_WeaponInfos_Vector itWeapon = vWeapons_.begin(); itWeapon != vWeapons_.end(); ++itWeapon )
         (*itWeapon)->WriteArchive( output );
     output << xml::end();
+
+    humanProtections_.WriteArchive( output );
 
     output << xml::start( "objects" );
     for( IT_ObjectInfos_Vector itObject = vObjects_.begin(); itObject != vObjects_.end(); ++itObject )

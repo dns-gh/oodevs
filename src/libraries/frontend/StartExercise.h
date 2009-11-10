@@ -29,13 +29,14 @@ class StartExercise : public SpawnCommand
 public:
     //! @name Constructors/Destructor
     //@{
-             StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, bool attach = false );
-             StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint, bool attach = false );
+             StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, bool dispatcher = false, bool attach = false );
+             StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint, bool dispatcher = false, bool attach = false );
     virtual ~StartExercise();
     //@}
 
     //! @name Operations
     //@{
+    virtual void Start();
     virtual bool Wait();
     virtual unsigned int GetPercentage() const;
     virtual std::string GetStartedExercise() const;
@@ -58,6 +59,7 @@ private:
     //@{
     std::string exercise_;
     std::string session_ ;
+    std::auto_ptr< SpawnCommand > dispatcher_;
     std::auto_ptr< ExerciseListener > listener_;
     std::auto_ptr< ConfigurationManipulator > configManipulator_;
     //@}

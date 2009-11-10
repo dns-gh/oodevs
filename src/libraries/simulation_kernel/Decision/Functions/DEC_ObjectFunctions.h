@@ -13,12 +13,12 @@
 #define __DEC_ObjectFunctions_h_
 
 #include "MIL.h"
+#include "Knowledge/DEC_Knowledge_Object.h"
 
 class MIL_AgentPion;
 class MIL_Automate;
 class DEC_Decision_ABC;
 class DEC_Gen_Object;
-class DEC_Knowledge_Object;
 
 // =============================================================================
 // Created: NLD 2004-03-31

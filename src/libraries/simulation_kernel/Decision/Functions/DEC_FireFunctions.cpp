@@ -17,7 +17,6 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_RoleAction_IndirectFiring.h"
 #include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
-#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Tools/MIL_Tools.h"

@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "HealableCapacity.h"
 #include "MedicalTreatmentAttribute.h"
-#include "Entities/Agents/Units/Humans/PHY_Human.h"
+#include "Entities/Agents/Units/Humans/PHY_InjuredHuman.h"
 #include "Object.h"
 #include <xeumeuleu/xml.h>
 
@@ -29,6 +29,7 @@ HealableCapacity::HealableCapacity( xml::xistream& xis )
     , careWaitingList_       ()
     , transferWaitingList_   ()
     , entranceWaitingList_   ()
+    , deadsList_             ()
 {
     InitializeData( xis );
 }
@@ -46,6 +47,7 @@ HealableCapacity::HealableCapacity()
     , careWaitingList_       ()
     , transferWaitingList_   ()
     , entranceWaitingList_   ()
+    , deadsList_             ()
 {
     //NOTHING
 }
@@ -124,7 +126,7 @@ void HealableCapacity::Update( Object& object, float time )
     //Take care of the patients in the careWaitingList
     while( bCanReceiveNewPatient_ && careWaitingList_.size() > 0 )
     {
-        attr.FlagPatient( time, GetFirstWaitingPatientInjuryName() , GetFirstWaitingPatientInjuryCategory() );
+        attr.FlagPatient( time, GetFirstWaitingPatientInjuryID() , GetFirstWaitingPatientInjuryCategory() );
         bCanReceiveNewPatient_ = UpdateState( attr );
         careWaitingList_.pop_front();
     }
@@ -184,7 +186,7 @@ void HealableCapacity::DeactivateEmergencyPlan()
 // Name: HealableCapacity::ReceivePatient
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
-void HealableCapacity::ReceivePatient( const PHY_Human& injuredHuman )
+void HealableCapacity::ReceivePatient( const PHY_InjuredHuman& injuredHuman )
 {
     entranceWaitingList_.push_back( injuredHuman );
 }
@@ -208,25 +210,39 @@ void HealableCapacity::MakeDiagnosis( MedicalTreatmentAttribute& attr )
     //It should also depend on the injury category : first UA then UR
     while( ! entranceWaitingList_.empty() )
     {
-        if( attr.CanTreatPatient( entranceWaitingList_.front().GetWound().GetName() ) )
-            careWaitingList_.push_back( entranceWaitingList_.front() );
+        if( entranceWaitingList_.front().IsAlive() )
+        {
+            if( attr.CanTreatPatient( entranceWaitingList_.front().GetInjuryID() ) )
+            {
+                careWaitingList_.push_back( entranceWaitingList_.front() );
+                entranceWaitingList_.front().TreatInjuredHuman();
+            }
+            else
+                transferWaitingList_.push_back( entranceWaitingList_.front() );
+        }
         else
-            transferWaitingList_.push_back( entranceWaitingList_.front() );
+            deadsList_.push_back( entranceWaitingList_.front() );
 
         entranceWaitingList_.pop_front();
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: HealableCapacity::Update
+// Name: HealableCapacity::GetFirstWaitingPatientInjuryName
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
-const std::string HealableCapacity::GetFirstWaitingPatientInjuryName() const
+int HealableCapacity::GetFirstWaitingPatientInjuryID() const
 {
-    return "Surgery";
+    //First patient to arrived, first patient to be treated
+    return careWaitingList_.front().GetInjuryID();
 }
 
-int HealableCapacity::GetFirstWaitingPatientInjuryCategory() const
+// -----------------------------------------------------------------------------
+// Name: HealableCapacity::GetFirstWaitingPatientInjuryCategory
+// Created: RFT 2008-05-22
+// -----------------------------------------------------------------------------
+MIL_MedicalTreatmentType::E_InjuryCategories HealableCapacity::GetFirstWaitingPatientInjuryCategory() const
 {
-    return 1;//UA
+    //First patient to arrived, first patient to be treated
+    return careWaitingList_.front().GetInjuryCategory();
 }

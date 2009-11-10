@@ -63,7 +63,7 @@ namespace frontend
 
         QStringList ListExercises( const tools::GeneralConfig& config, const std::string& subDirs )
         {
-            return ListDirectories( config.GetExercisesDir()+"/"+subDirs, &IsValidExercise );
+            return ListDirectories( config.GetExercisesDir() + "/" + subDirs, &IsValidExercise );
         }
 
         bool IsValidReplay( const bfs::path& session )

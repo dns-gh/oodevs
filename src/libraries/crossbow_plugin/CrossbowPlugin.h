@@ -73,13 +73,18 @@ private:
     CrossbowPlugin& operator=( const CrossbowPlugin& ); //!< Assignement operator
     //@}
 
+    //! @name Copy/Assignement
+    //@{
+    void OnReceiveMessengerToClient( const std::string& /*link*/, const ASN1T_MsgsMessengerToClient& message );
+    //@}
+
 private:
     //! @name Member data
     //@{
     std::auto_ptr< DatabasePublisher > databasePublisher_;
 	std::auto_ptr< tools::ClientNetworker > clientNetworker_;
 	std::auto_ptr< dispatcher::Plugin_ABC > messenger_;
-    //@}
+	//@}
 };
 
 }

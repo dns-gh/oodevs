@@ -25,6 +25,8 @@ FireAttribute::FireAttribute()
     : heat_		( 0 )
 	, pClass_	( 0 )
 	, timeOfLastUpdate_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
+    , width_            ( 0 )
+    , length_           ( 0 )
 {
     // NOTHING
 }
@@ -37,12 +39,13 @@ FireAttribute::FireAttribute( xml::xistream& xis )
     : heat_		( 0 )
 	, pClass_	( 0 )
 	, timeOfLastUpdate_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
+    , width_            ( MIL_FireClass::GetWidth() )
+    , length_           ( MIL_FireClass::GetLength() )
 {
     std::string className( xml::attribute( xis, "class", std::string() ) );
     pClass_ = MIL_FireClass::Find( className );
     if( !pClass_ )
         xis.error( "Unknown 'Fire class' '" + className + "' for fire object attribute" );
-	
 	heat_ = pClass_->GetDefaultHeat();
 	xis >> xml::optional() 
 		>> xml::attribute( "heat", heat_ );
@@ -55,12 +58,15 @@ FireAttribute::FireAttribute( xml::xistream& xis )
 FireAttribute::FireAttribute( const ASN1T_ObjectAttributes& asn )
     : heat_		( 0 )
 	, pClass_	( 0 )
+    , width_    ( MIL_FireClass::GetWidth() )
+    , length_   ( MIL_FireClass::GetLength() )
 	, timeOfLastUpdate_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
 {        
     pClass_ = MIL_FireClass::Find( asn.fire.class_id );
     if( !pClass_ )
         throw std::runtime_error( "Unknown 'Fire class' for fire object attribute" );	
 	heat_ = pClass_->GetDefaultHeat();
+//    asn.fire.heat
 }
 
 // -----------------------------------------------------------------------------
@@ -70,6 +76,8 @@ FireAttribute::FireAttribute( const ASN1T_ObjectAttributes& asn )
 FireAttribute::FireAttribute( const FireAttribute& attr )
     : pClass_	( attr.pClass_ )
     , heat_		( attr.pClass_->GetDefaultHeat() )
+    , width_    ( attr.width_ )
+    , length_   ( attr.length_ )
 	, timeOfLastUpdate_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
 {
     // NOTHING
@@ -93,6 +101,8 @@ FireAttribute& FireAttribute::operator=( const FireAttribute& rhs )
     timeOfLastUpdate_ = rhs.timeOfLastUpdate_;
 	heat_ = rhs.heat_;
     pClass_ = rhs.pClass_;
+    width_ = rhs.width_;
+    length_ = rhs.length_;
     NotifyAttributeUpdated( eOnCreation );
     return *this;
 }
@@ -129,7 +139,7 @@ void FireAttribute::save( MIL_CheckPointOutArchive& ar, const uint ) const
 // -----------------------------------------------------------------------------
 void FireAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach( *new DEC_Knowledge_ObjectAttributeFire() );
+    object.Attach( *new DEC_Knowledge_ObjectAttributeFire( *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -220,4 +230,22 @@ int FireAttribute::GetHeat() const
 const MIL_FireClass& FireAttribute::GetClass() const
 {
     return *pClass_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FireAttribute::GetWidth
+// Created: RFT 2008-06-09
+// -----------------------------------------------------------------------------
+unsigned int FireAttribute::GetWidth() const
+{
+    return width_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FireAttribute::GetLength
+// Created: RFT 2008-06-09
+// -----------------------------------------------------------------------------
+unsigned int FireAttribute::GetLength() const
+{
+    return length_;
 }

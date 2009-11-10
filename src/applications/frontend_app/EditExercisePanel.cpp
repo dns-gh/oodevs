@@ -82,6 +82,6 @@ void EditExercisePanel::EditExercise()
 void EditExercisePanel::Update()
 {
     list_->clear();
-    list_->insertStringList( commands::ListExercises( config_) );
+    list_->insertStringList( commands::ListExercises( config_ ) );
     context_.Load( "exercise", list_ );
 }

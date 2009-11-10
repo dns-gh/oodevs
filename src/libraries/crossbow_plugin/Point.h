@@ -39,10 +39,15 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Accept( ShapeVisitor_ABC& visitor ) const;
-    void UpdateGeometry( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const;
-    void Serialize( ASN1T_Location& asn ) const;
-    void Serialize( ASN1T_CoordLatLong& asn ) const;
+    virtual void Serialize( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const;
+    virtual void Serialize( std::ostream& geometry ) const;
+    virtual void Serialize( ASN1T_Location& asn ) const;
+    virtual void Serialize( ASN1T_CoordLatLong& asn ) const;
+    //@}
+
+    //! @name 
+    //@{    
+    std::ostream& SerializeCoordinates( std::ostream& geometry, char sep ) const;
     //@}
 
 private:

@@ -354,4 +354,14 @@
     <parameter type="Numeric"/>
   </report>
   <report id="258" message="carrying out bombing"/>
+  <report id="259" message="need technical backup"/>
+  <report id="260" message="need %1 firetrucks backup to fight fire of class %2">
+    <parameter type="Numeric"/>
+    <parameter type="Numeric"/>
+  </report>
+  <report id="261" message="fire of class %1 identified">
+    <parameter type="Numeric"/>
+  </report>
+  <report id="262" message="need police backup"/>
+  <report id="263" message="need medical backup"/>
 </reports>

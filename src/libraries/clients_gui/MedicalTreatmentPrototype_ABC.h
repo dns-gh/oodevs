@@ -14,6 +14,8 @@
 #include "tools/Resolver_ABC.h"
 #include "ValuedComboBox.h"
 
+class QListView;
+
 namespace kernel
 {
     class MedicalTreatmentType;
@@ -41,6 +43,8 @@ public:
     //! @name Operations
     //@{
     virtual bool CheckValidity() const;
+    virtual void Commit() = 0;
+    virtual void Clean() = 0;
     //@}
 
 private:
@@ -60,7 +64,7 @@ protected:
     //! @name Member data
     //@{
     const tools::Resolver_ABC< kernel::MedicalTreatmentType >& resolver_;
-    ValuedComboBox< const kernel::MedicalTreatmentType* >* type_;    
+    QListView*   treatmentTypes_;
     QSpinBox*    beds_;
     QSpinBox*    availableBeds_;
     QSpinBox*    doctors_;

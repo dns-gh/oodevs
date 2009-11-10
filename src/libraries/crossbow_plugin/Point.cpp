@@ -55,19 +55,10 @@ crossbow::Point::~Point()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Point::Accept
-// Created: SBO 2007-08-30
-// -----------------------------------------------------------------------------
-void crossbow::Point::Accept( ShapeVisitor_ABC& visitor ) const
-{
-    visitor.Visit( *this );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Point::UpdateGeometry
 // Created: SBO 2007-08-31
 // -----------------------------------------------------------------------------
-void crossbow::Point::UpdateGeometry( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const
+void crossbow::Point::Serialize( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const
 {
     if( geometry == NULL )
         geometry.CreateInstance( CLSID_Point );
@@ -75,12 +66,36 @@ void crossbow::Point::UpdateGeometry( IGeometryPtr geometry, ISpatialReferencePt
 
     IZAwarePtr zAwareness;
     geometry.QueryInterface( IID_IZAware, &zAwareness );
-    zAwareness->put_ZAware( VARIANT_TRUE );
+    zAwareness->put_ZAware( VARIANT_FALSE );
 
     IPointPtr point;
     geometry.QueryInterface( IID_IPoint, &point );
     point->PutCoords( x_, y_ );
     point->put_Z( 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Point::Serialize
+// Created: JCR 2009-04-27
+// -----------------------------------------------------------------------------
+void crossbow::Point::Serialize( std::ostream& geometry ) const
+{
+	const int srid = 0;
+    std::stringstream ss;
+    SerializeCoordinates( ss, ',' );
+    geometry << "st_point("
+                << ss.str() << ',' << srid
+             << ")"; 
+}
+
+// -----------------------------------------------------------------------------
+// Name: Point::SerializeCoordinates
+// Created: JCR 2009-04-27
+// -----------------------------------------------------------------------------
+std::ostream& crossbow::Point::SerializeCoordinates( std::ostream& geometry, char sep ) const
+{    
+    geometry << x_ << sep << y_;
+    return geometry;
 }
 
 // -----------------------------------------------------------------------------

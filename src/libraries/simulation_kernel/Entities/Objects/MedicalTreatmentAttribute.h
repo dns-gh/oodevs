@@ -30,7 +30,7 @@ public:
     typedef std::list< T_PatientDiagnosis >                                      T_PatientDiagnosisList;
     typedef T_PatientDiagnosisList::const_iterator                               CIT_PatientDiagnosisList;
     typedef T_PatientDiagnosisList::iterator                                     IT_PatientDiagnosisList;
-    typedef std::map< std::string, boost::shared_ptr< T_PatientDiagnosisList > > T_MedicalTreatmentMap;
+    typedef std::map< int, boost::shared_ptr< T_PatientDiagnosisList > > T_MedicalTreatmentMap;
     typedef T_MedicalTreatmentMap::const_iterator                                CIT_MedicalTreatmentMap;
     typedef T_MedicalTreatmentMap::iterator                                      IT_MedicalTreatmentMap;
     
@@ -83,10 +83,10 @@ public:
 
     //! @name Operators
     //@{
-    void FlagPatient( float time , const std::string injuryName , int injuryCategory );
+    void FlagPatient( float time , int injuryID , int injuryCategory );
     void FreeDoctors( float time );
     void FreeBeds( float time );
-    bool CanTreatPatient( const std::string injuryName );
+    bool CanTreatPatient( int injuryID );
     //@}
 
     //! @name Update Functions

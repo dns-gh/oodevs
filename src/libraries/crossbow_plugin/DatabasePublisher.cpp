@@ -12,16 +12,17 @@
 #include "Workspace.h"
 #include "DatabaseFactory.h"
 #include "Database_ABC.h"
-#include "DatabaseUpdater.h"
+#include "WorkingSession.h"
+#include "QueryDatabaseUpdater.h"
 #include "FolkUpdater.h"
 #include "ReportFactory.h"
 #include "OrderTypes.h"
 #include "OrderListener.h"
 #include "StatusListener.h"
 #include "ObjectListener.h"
-#include "ScopeEditor.h"
 #include "ExtensionFactory.h"
 #include "dispatcher/Model.h"
+#include "dispatcher/Config.h"
 
 using namespace plugins;
 using namespace plugins::crossbow;
@@ -40,16 +41,23 @@ DatabasePublisher::DatabasePublisher( const dispatcher::Config& config, dispatch
 {
     model.RegisterFactory( *factory_ );
 
+	// retrieve exercise and session name
+	// init databases
     Initialize( "geodatabase", config, xis );
     Initialize( "geodatabase-population", config, xis );
-    Initialize( "geodatabase-shared", config, xis );
+    databases_[ "geodatabase-shared" ] = databases_[ "geodatabase" ];
     
-    databaseUpdater_.reset  ( new DatabaseUpdater( *databases_[ "geodatabase" ], model, *reportFactory_ ) );
-    folkUpdater_.reset      ( new FolkUpdater( *databases_[ "geodatabase-population" ] ) );
+    session_.reset( new WorkingSession( config, *databases_[ "geodatabase" ] ) );
 
-    listeners_.push_back( T_SharedListener( new OrderListener ( *databases_[ "geodatabase-shared" ], model, *orderTypes_, publisher ) ) );
-    listeners_.push_back( T_SharedListener( new StatusListener( *databases_[ "geodatabase-shared" ], publisher ) ) );
-    listeners_.push_back( T_SharedListener( new ObjectListener( *databases_[ "geodatabase-shared" ], publisher ) ) );
+    databaseUpdater_.reset( new QueryDatabaseUpdater( *databases_[ "geodatabase" ], model, *reportFactory_, *session_ ) );
+	databaseUpdater_->Clean();
+
+	folkUpdater_.reset( new FolkUpdater( *databases_[ "geodatabase-population" ], *session_ ) );
+
+	// activate listeners
+    listeners_.push_back( T_SharedListener( new OrderListener( *databases_[ "geodatabase-shared" ], model, *orderTypes_, publisher, *session_ ) ) );
+    // listeners_.push_back( T_SharedListener( new StatusListener( *databases_[ "geodatabase-shared" ], publisher ) ) );
+    listeners_.push_back( T_SharedListener( new ObjectListener( *databases_[ "geodatabase-shared" ], publisher, *session_ ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,6 +98,8 @@ bool DatabasePublisher::IsRelevant( const ASN1T_MsgsSimToClient& asn ) const
     case T_MsgsSimToClient_msg_msg_object_destruction:
     case T_MsgsSimToClient_msg_msg_unit_knowledge_update:
     case T_MsgsSimToClient_msg_msg_unit_knowledge_destruction:
+    case T_MsgsSimToClient_msg_msg_object_knowledge_update:
+    case T_MsgsSimToClient_msg_msg_object_knowledge_destruction:
     case T_MsgsSimToClient_msg_msg_unit_destruction:
     case T_MsgsSimToClient_msg_msg_report:
     case T_MsgsSimToClient_msg_msg_folk_graph_update:
@@ -100,6 +110,7 @@ bool DatabasePublisher::IsRelevant( const ASN1T_MsgsSimToClient& asn ) const
     case T_MsgsSimToClient_msg_msg_formation_creation:
     case T_MsgsSimToClient_msg_msg_automat_creation:
     case T_MsgsSimToClient_msg_msg_unit_knowledge_creation:
+    case T_MsgsSimToClient_msg_msg_object_knowledge_creation:  
     case T_MsgsSimToClient_msg_msg_unit_creation:    
     case T_MsgsSimToClient_msg_msg_folk_creation:    
         return true;
@@ -131,6 +142,7 @@ bool DatabasePublisher::IsRelevant( const ASN1T_MsgsMessengerToClient& asn ) con
     return true;
 }
 
+
 // -----------------------------------------------------------------------------
 // Name: DatabasePublisher::Receive
 // Created: SBO 2007-09-27
@@ -157,6 +169,7 @@ void DatabasePublisher::Receive( const ASN1T_MsgsMessengerToClient& asn )
     UpdateDatabase( asn );
 }
 
+
 // -----------------------------------------------------------------------------
 // Name: DatabasePublisher::UpdateOnTick
 // Created: JCR 2008-01-11
@@ -167,18 +180,18 @@ void DatabasePublisher::UpdateOnTick( const ASN1T_MsgsSimToClient& asn )
     {
     case T_MsgsSimToClient_msg_msg_control_send_current_state_begin: modelLoaded_ = false; break;
     case T_MsgsSimToClient_msg_msg_control_send_current_state_end:   
-        databaseUpdater_->UnLock();
+        databaseUpdater_->Flush();
         modelLoaded_ = true;  break;
     case T_MsgsSimToClient_msg_msg_control_begin_tick:         
         MT_LOG_INFO_MSG( "tick " << asn.msg.u.msg_control_begin_tick->current_tick );        
         {
             UpdateListeners();
         }
-        databaseUpdater_->Lock();
+//        databaseUpdater_->Lock();
         break;
     case T_MsgsSimToClient_msg_msg_control_end_tick:
-        folkUpdater_->Drop();
-        databaseUpdater_->UnLock();
+        // folkUpdater_->Drop();
+        databaseUpdater_->Flush();
         break;
     }
 }
@@ -201,10 +214,14 @@ void DatabasePublisher::UpdateDatabase( const ASN1T_MsgsSimToClient& asn )
 
     case T_MsgsSimToClient_msg_msg_unit_knowledge_creation:     databaseUpdater_->Update( *asn.msg.u.msg_unit_knowledge_creation ); break;
     case T_MsgsSimToClient_msg_msg_unit_knowledge_update:       databaseUpdater_->Update( *asn.msg.u.msg_unit_knowledge_update ); break;
-    case T_MsgsSimToClient_msg_msg_unit_knowledge_destruction:  databaseUpdater_->Update( *asn.msg.u.msg_unit_knowledge_destruction );  break;
+    case T_MsgsSimToClient_msg_msg_unit_knowledge_destruction:  databaseUpdater_->DestroyUnitKnowledge( *asn.msg.u.msg_unit_knowledge_destruction );  break;
 
-    case T_MsgsSimToClient_msg_msg_object_creation:             databaseUpdater_->Update( *asn.msg.u.msg_object_creation ); break;
-//    case T_MsgsSimToClient_msg_msg_object_update:               databaseUpdater_->Update( *asn.msg.u.msg_object_update ); break;
+    case T_MsgsSimToClient_msg_msg_object_knowledge_creation:     databaseUpdater_->Update( *asn.msg.u.msg_object_knowledge_creation ); break;
+    case T_MsgsSimToClient_msg_msg_object_knowledge_update:       databaseUpdater_->Update( *asn.msg.u.msg_object_knowledge_update ); break;
+	case T_MsgsSimToClient_msg_msg_object_knowledge_destruction:  databaseUpdater_->DestroyObjectKnowledge( *asn.msg.u.msg_object_knowledge_destruction );  break;
+
+	case T_MsgsSimToClient_msg_msg_object_creation:             databaseUpdater_->Update( *asn.msg.u.msg_object_creation ); break;
+    // case T_MsgsSimToClient_msg_msg_object_update:               databaseUpdater_->Update( *asn.msg.u.msg_object_update ); break;
     case T_MsgsSimToClient_msg_msg_object_destruction:          databaseUpdater_->DestroyObject( asn.msg.u.msg_object_destruction ); break;
     case T_MsgsSimToClient_msg_msg_report:                      databaseUpdater_->Update( *asn.msg.u.msg_report ); break;
     }
@@ -241,25 +258,6 @@ void DatabasePublisher::UpdateFolkDatabase( const ASN1T_MsgsSimToClient& asn )
     }
 }
 
-namespace 
-{
-    class LockedScopeEditor
-    {
-    public: 
-        explicit LockedScopeEditor( Database_ABC& database ) 
-            : database_ ( database )
-        {
-            database_.Lock();
-        }
-        ~LockedScopeEditor()
-        {
-            database_.UnLock();
-        }
-    private:
-        Database_ABC& database_;
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: DatabasePublisher::UpdateListeners
 // Created: SBO 2007-09-27
@@ -268,8 +266,6 @@ void DatabasePublisher::UpdateListeners()
 {
     if( modelLoaded_ )
     {
-        // T_SharedDatabase    database( databases_[ "geodatabase-shared" ] );        
-        // LockedScopeEditor   lock( *database );
         for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
             (*it)->Listen();
     }

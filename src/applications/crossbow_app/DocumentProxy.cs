@@ -27,7 +27,7 @@ namespace Sword
             public void AddLayer(ILayer layer)
             {
                 if (m_mxDocument != null)
-                    m_mxDocument.AddLayer(layer);
+                    m_mxDocument.AddLayer(layer);                
                 else if (m_gmxDocument != null)
                     m_gmxDocument.AddLayer(layer);
             }
@@ -46,11 +46,15 @@ namespace Sword
                     return;
                 IDynamicMap map = m_mxDocument.FocusMap as IDynamicMap;
                 if (map == null)
-                    throw new System.Exception("Dynamic display not supported");
+                    throw new System.Exception("Dynamic display not supported");                
                 if (map.DynamicMapEnabled != enable)
                 {
-                    map.DynamicMapEnabled = enable;
-                    RefreshView();
+                    lock (map)
+                    {
+                        map.DynamicDrawRate = 15;
+                        map.DynamicMapEnabled = enable;
+                    }
+                    // RefreshView();
                 }
             }
 

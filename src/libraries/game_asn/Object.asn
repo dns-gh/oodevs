@@ -114,6 +114,13 @@ ObjectAttributeFire ::= SEQUENCE
     heat		INTEGER
 }
 
+ObjectAttributeNBCType ::= SEQUENCE
+{
+    agent-id				OID, -- Cf. Data/NBCType.xml
+    concentration			INTEGER,
+    source-life-duration	INTEGER
+}
+
 ObjectAttributeMedicalTreatment ::= SEQUENCE
 {
 	type-id			  ListOID, -- Cf. Data/MedicalTreatment.xml
@@ -121,6 +128,18 @@ ObjectAttributeMedicalTreatment ::= SEQUENCE
 	available-beds	  INTEGER,
 	doctors			  INTEGER,
 	available-doctors INTEGER
+}
+
+StockResource ::= SEQUENCE
+{    
+    dotation-type   DotationType,
+    current         INTEGER,
+    max             INTEGER OPTIONAL
+}
+StockResourceList ::= SEQUENCE OF StockResource
+ObjectAttributeStock ::= SEQUENCE
+{
+    resources       StockResourceList
 }
 
 ObjectAttributes ::= SEQUENCE
@@ -137,7 +156,9 @@ ObjectAttributes ::= SEQUENCE
     toxic-cloud			ObjectAttributeToxicCloud OPTIONAL,
     fire				ObjectAttributeFire OPTIONAL,
     medical-treatment	ObjectAttributeMedicalTreatment OPTIONAL,
-    interaction-height	ObjectAttributeInteractionHeight OPTIONAL
+    interaction-height	ObjectAttributeInteractionHeight OPTIONAL,
+    nbc-agent			ObjectAttributeNBCType OPTIONAL,
+    stock			    ObjectAttributeStock OPTIONAL
 }
 
 -- ObjectAttributes ::= SEQUENCE OF ObjectAttribute

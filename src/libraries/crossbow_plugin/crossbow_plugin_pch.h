@@ -17,8 +17,10 @@
 #include <map>
 #include <vector>
 #include <memory>
-
 #include <boost/shared_ptr.hpp>
+#include <xeumeuleu/xml.hpp>
+
 #include "MT/MT_Logger/MT_Logger_Lib.h"
+#include "ESRI.h"
 
 #endif // __crossbow_plugin_pch_h_

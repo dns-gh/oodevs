@@ -99,7 +99,6 @@ namespace
                    type.GetCapacity< ContaminationCapacity >() != 0 ||
                    type.GetCapacity< InterferenceCapacity >() != 0 ||
                    type.GetCapacity< AvoidanceCapacity >() != 0;
-                   
         }
     };
 }

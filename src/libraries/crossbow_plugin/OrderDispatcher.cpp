@@ -21,6 +21,8 @@
 #include "dispatcher/Agent.h"
 #include "dispatcher/Automat.h"
 
+#include <boost/lexical_cast.hpp>
+
 using namespace plugins;
 using namespace plugins::crossbow;
 
@@ -32,10 +34,31 @@ OrderDispatcher::OrderDispatcher( Database_ABC& database, const OrderTypes& type
     : types_( types )
     , model_( model )
     , database_ ( database )
-//    , paramTable_( database.OpenTable( "OrderParameters" ) )
     , serializer_( new OrderParameterSerializer( database, model ) )
 {
-    database.ClearTable( "OrderParameters" );
+    // Clean();
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderListener::Orders
+// Created: JCR 2009-08-14
+// -----------------------------------------------------------------------------
+void OrderDispatcher::Clean()
+{
+	try
+    {
+        /*
+        std::string clause( "session_id=" + boost::lexical_cast< std::string >( session_.GetId() ) );
+        database_.Execute( DeleteQueryBuilder( database_.GetTableName( "OrderParameters_Area" ), clause ) );
+        database_.Execute( DeleteQueryBuilder( database_.GetTableName( "OrderParameters_Line" ), clause ) );
+        database_.Execute( DeleteQueryBuilder( database_.GetTableName( "OrderParameters_Point" ), clause ) );
+        database_.Execute( DeleteQueryBuilder( database_.GetTableName( "OrderParameters" ), clause ) );
+        */
+    }
+    catch ( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "OrderListener is not correctly loaded : " + std::string( e.what() ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -69,10 +92,49 @@ namespace
     {
         return boost::get< Type >( row.GetField( name ) );
     }
+
+    std::string BuildError( const std::string& mission, int id )
+    {
+        std::stringstream ssError;
+        ssError << "Unable to serialize order " << mission
+                << " for [" << id << "]" << std::endl;
+        return ssError.str();
+    }
+
+    template< typename AsnType > 
+    class scoped_asn
+    {
+    public:
+        explicit scoped_asn( OrderParameterSerializer& serializer ) : serializer_ ( serializer ) {}
+        ~scoped_asn()
+        {
+            CleanParameters( asn_().parametres );
+        }
+        typename AsnType::T_AsnMsgType& operator()() 
+        {
+            return asn_();
+        }
+        
+        void Send( dispatcher::SimulationPublisher_ABC& publisher )
+        {
+            asn_.Send( publisher );
+        }
+
+    private:
+        void CleanParameters( ASN1T_MissionParameters& parameters )
+        {
+            for( unsigned int i = 0; i < parameters.n; ++i )
+                serializer_.Clean( parameters.elem[i] );
+        }
+    private:
+        OrderParameterSerializer& serializer_;
+        AsnType asn_;
+    };
 }
 
 // -----------------------------------------------------------------------------
 // Name: OrderDispatcher::DispatchMission
+// Updated: JCR
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
 void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Agent& agent, const Row_ABC& row )
@@ -89,19 +151,26 @@ void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publ
         // DispatchFragOrder( publisher, agent.GetId(), row );
         return;
     }
-
-    const long orderId = GetField< long >( row, "OrderID" );
-
-    simulation::UnitOrder asn;
-    asn().oid = agent.GetId();
-    asn().mission = type->GetId();
-    SetParameters( asn().parametres, orderId, *type );
-    asn.Send( publisher );
-    CleanParameters( asn().parametres );
+    
+    scoped_asn< simulation::UnitOrder > asn( *serializer_ );
+    try  
+    {
+        const long orderId = GetField< long >( row, "id" );
+        asn().oid = agent.GetId();
+        asn().mission = type->GetId();
+        SetParameters( asn().parametres, orderId, *type );
+        asn1Print_MsgUnitOrder( "DispatchMission", &asn() );
+        asn.Send( publisher );
+    }
+    catch ( std::exception& e )
+    {
+        throw std::runtime_error( BuildError( type->GetName(), agent.GetId() ) + e.what() );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: OrderDispatcher::DispatchMission
+// Updated: JCR
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
 void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Automat& automat, const Row_ABC& row )
@@ -113,21 +182,20 @@ void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publ
         return;
     }
 
-    const long orderId = GetField< long >( row, "OrderID" );
-    
-    simulation::AutomatOrder asn;
-    asn().oid = automat.GetId();
-    asn().mission = type->GetId();
-    try  
+    scoped_asn< simulation::AutomatOrder > asn( *serializer_ );
+    try
     {
+        const long orderId = GetField< long >( row, "id" );
+        asn().oid = automat.GetId();
+        asn().mission = type->GetId();
         SetParameters( asn().parametres, orderId, *type );
+        asn1Print_MsgAutomatOrder( "DispatchMission", &asn() );
         asn.Send( publisher );
     }
     catch ( std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Unable to resolve order target unit : " << e.what() );
+        throw std::runtime_error( BuildError( type->GetName(), automat.GetId() ) + e.what() );
     }
-    CleanParameters( asn().parametres );
 }
 
 // -----------------------------------------------------------------------------
@@ -153,7 +221,7 @@ void OrderDispatcher::DispatchFragOrder( dispatcher::SimulationPublisher_ABC& pu
 // -----------------------------------------------------------------------------
 unsigned long OrderDispatcher::GetTargetId( const Row_ABC& row ) const
 {
-    return GetField< long >( row, "TargetId" );
+    return GetField< long >( row, "unit_id" );
 }
 
 // -----------------------------------------------------------------------------
@@ -162,7 +230,7 @@ unsigned long OrderDispatcher::GetTargetId( const Row_ABC& row ) const
 // -----------------------------------------------------------------------------
 const kernel::OrderType* OrderDispatcher::GetAgentMission( const Row_ABC& row ) const
 {
-    const std::string name = GetField< std::string >( row, "Name" );
+    const std::string name = GetField< std::string >( row, "name" );
     const kernel::OrderType* order = types_.FindAgentMission( name );
     if( !order )
         MT_LOG_ERROR_MSG( "Unknown agent mission : " << name );
@@ -175,7 +243,7 @@ const kernel::OrderType* OrderDispatcher::GetAgentMission( const Row_ABC& row ) 
 // -----------------------------------------------------------------------------
 const kernel::OrderType* OrderDispatcher::GetAutomatMission( const Row_ABC& row ) const
 {
-    const std::string name = GetField< std::string >( row, "Name" );
+    const std::string name = GetField< std::string >( row, "name" );
     const kernel::OrderType* order = types_.FindAutomatMission( name );
     if( !order )
         MT_LOG_ERROR_MSG( "Unknown automat mission : " << name );
@@ -190,14 +258,10 @@ void OrderDispatcher::SetParameters( ASN1T_MissionParameters& parameters, unsign
 {
     std::auto_ptr< Table_ABC > params_( database_.OpenTable( "OrderParameters" ) );
 
+    Row_ABC* result = params_->Find( "order_id=" + boost::lexical_cast< std::string >( orderId ) );
     parameters.n = type.Count();
     parameters.elem = new ASN1T_MissionParameter[ parameters.n ];
-
-    std::stringstream ss;
-    ss << "OrderID=" << orderId;
-    Row_ABC* result = params_->Find( ss.str() );
-    unsigned int i ; 
-    for( i = 0; result != 0 && i < parameters.n; ++i )
+    for( unsigned int i = 0; result != 0 && i < parameters.n; ++i )
     {
         SetParameter( parameters.elem[i], *result, type );
         result = params_->GetNextRow();
@@ -222,24 +286,24 @@ namespace
 
 // -----------------------------------------------------------------------------
 // Name: OrderDispatcher::SetParameter
+// Updated: JCR
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
 void OrderDispatcher::SetParameter( ASN1T_MissionParameter& parameter, const Row_ABC& row, const kernel::OrderType& type )
 {
-    const std::string name = GetField< std::string >( row, "Name" );
-    long parameterId = GetField< long >( row, "OBJECTID" );
-    const kernel::OrderParameter* param = GetParameterByName( type, name );
-    parameter.null_value = param ? 0 : 1;
-    if( param )
-        serializer_->Serialize( parameter, *param, parameterId, GetField< std::string >( row, "Value" ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: OrderDispatcher::CleanParameters
-// Created: SBO 2007-05-31
-// -----------------------------------------------------------------------------
-void OrderDispatcher::CleanParameters( ASN1T_MissionParameters& parameters )
-{
-    for( unsigned int i = 0; i < parameters.n; ++i )
-        serializer_->Clean( parameters.elem[i] );
+    const std::string name( GetField< std::string >( row, "name" ) );
+    const long parameterId = GetField< long >( row, "id" ); // OBJECTID
+    try 
+    {
+        const kernel::OrderParameter* param = GetParameterByName( type, name );
+        parameter.null_value = param ? 0 : 1;
+        if( param )
+            serializer_->Serialize( parameter, *param, parameterId, GetField< std::string >( row, "value" ) );
+    }
+    catch ( std::exception& e )
+    {
+        std::stringstream ssError;
+        ssError << "Cannot serialize parameter : " << name << " [" << type.GetName() << "]" << std::endl << e.what();
+        throw std::runtime_error( ssError.str() );
+    }
 }

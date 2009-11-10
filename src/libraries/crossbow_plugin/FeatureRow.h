@@ -37,7 +37,7 @@ public:
     //@{
     virtual void SetShape( const Shape_ABC& value );
     virtual Shape_ABC& GetShape() const;
-    void BindFeature( IFeaturePtr feature );
+    void BindFeature( IFeaturePtr feature, long id );
     void Commit( IFeatureCursorPtr cursor = NULL );
     //@}
 
@@ -46,10 +46,6 @@ private:
     //@{
     FeatureRow( const FeatureRow& );            //!< Copy constructor
     FeatureRow& operator=( const FeatureRow& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:

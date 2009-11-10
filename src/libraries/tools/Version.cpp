@@ -31,7 +31,7 @@ namespace
     {
         Translation()
         {
-            qApp->translate( "Application", "SWORD Officer Training" );
+            qApp->translate( "Application", "SWORD" );
             qApp->translate( "Application", "sword-ot@masagroup.net" );
             qApp->translate( "Application", "© 2008 MASA Group" );
             qApp->translate( "Application", "www.masagroup.net" );

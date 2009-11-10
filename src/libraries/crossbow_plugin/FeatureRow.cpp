@@ -12,6 +12,7 @@
 #include "Point.h"
 #include "Line.h"
 #include "Area.h"
+#include <boost/lexical_cast.hpp>
 
 using namespace plugins;
 using namespace plugins::crossbow;
@@ -36,30 +37,6 @@ FeatureRow::~FeatureRow()
     // NOTHING
 }
 
-namespace
-{
-    class GeometryConverter : public ShapeVisitor_ABC
-    {
-    public:
-        GeometryConverter( IGeometryPtr geometry, ISpatialReferencePtr spatialReference )
-            : geometry_( geometry )
-            , spatialReference_( spatialReference )
-        {
-        }
-        virtual void Visit( const crossbow::PointCollection& points )
-        {
-            points.UpdateGeometry( geometry_, spatialReference_ );
-        }
-        virtual void Visit( const crossbow::Point& point )
-        {
-            point.UpdateGeometry( geometry_, spatialReference_ );
-        }
-    private:
-        IGeometryPtr geometry_;
-        ISpatialReferencePtr spatialReference_;
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: FeatureRow::SetShape
 // Created: SBO 2007-08-30
@@ -67,9 +44,8 @@ namespace
 void FeatureRow::SetShape( const Shape_ABC& value )
 {
     IGeometryPtr geometry;
-    feature_->get_Shape( &geometry );
-    GeometryConverter converter( geometry, spatialReference_ );
-    value.Accept( converter );
+    feature_->get_Shape( &geometry );    
+    value.Serialize( geometry, spatialReference_  );
     feature_->putref_Shape( geometry );
 }
 
@@ -101,13 +77,26 @@ Shape_ABC& FeatureRow::GetShape() const
 // Name: FeatureRow::BindFeature
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void FeatureRow::BindFeature( IFeaturePtr feature )
+void FeatureRow::BindFeature( IFeaturePtr feature, long id )
 {
     feature_ = feature;
     shape_.reset();
     IRowPtr row;
     feature.QueryInterface( IID_IRow, &row ); // $$$$ SBO 2007-08-30: check
-    crossbow::Row::BindRow( row );
+    crossbow::Row::BindRow( row, id );
+}
+
+namespace
+{
+    void ThrowError()
+    {
+        IErrorInfoPtr ipError;
+        BSTR strError;
+        ::GetErrorInfo( 0, &ipError );
+        ipError->GetDescription( &strError );
+        const std::string error = boost::lexical_cast< std::string >( _bstr_t( strError ) );
+        MT_LOG_ERROR_MSG( error ); // $$$$ SBO 2008-05-15: should throw
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -117,7 +106,11 @@ void FeatureRow::BindFeature( IFeaturePtr feature )
 void FeatureRow::Commit( IFeatureCursorPtr cursor /*= NULL*/ )
 {
     if( cursor != NULL )
-        cursor->UpdateFeature( feature_ );
-    else
-        feature_->Store();
+    {
+        CComVariant value;
+        // HRESULT res = cursor->InsertFeature( feature_, &value );
+        HRESULT res = cursor->UpdateFeature( feature_ );
+        if( FAILED( res ) )
+            ThrowError();
+    }
 }

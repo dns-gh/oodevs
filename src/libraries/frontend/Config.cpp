@@ -30,7 +30,7 @@ namespace
     QString ReadDataDirectory()
     {
         QSettings settings;
-        settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD Officer Training" ) );
+        settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
         return settings.readEntry( "/Common/DataDirectory", "" );
     }
 
@@ -50,7 +50,7 @@ namespace
 // Created: SBO 2008-03-14
 // -----------------------------------------------------------------------------
 Config::Config()
-    : GeneralConfig( GetDefaultRoot( tools::translate( "Application", "SWORD Officer Training" ).ascii() ) )
+    : GeneralConfig( GetDefaultRoot( tools::translate( "Application", "SWORD" ).ascii() ) )
 {
     po::options_description desc( "Frontend options" );
     desc.add_options()

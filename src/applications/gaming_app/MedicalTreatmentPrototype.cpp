@@ -42,7 +42,8 @@ MedicalTreatmentPrototype::~MedicalTreatmentPrototype()
 // -----------------------------------------------------------------------------
 void MedicalTreatmentPrototype::Commit()
 {
-    if( type_ != 0 )
+    /*
+    if( treatmentTypes_ != 0 )
     {
         msg_.attributes.m.medical_treatmentPresent          = 1;
         msg_.attributes.medical_treatment.beds              = beds_->value();
@@ -53,8 +54,9 @@ void MedicalTreatmentPrototype::Commit()
         msg_.attributes.medical_treatment.type_id.n         = 1;
         msg_.attributes.medical_treatment.type_id.elem      = new ASN1T_OID[ msg_.attributes.medical_treatment.type_id.n ];
         for( unsigned int i = 0 ; i < msg_.attributes.medical_treatment.type_id.n; i++)
-            msg_.attributes.medical_treatment.type_id.elem[ i ] = type_->GetValue()->GetId();
+            msg_.attributes.medical_treatment.type_id.elem[ i ] = treatmentTypes_->GetValue()->GetId();
     }
+    */
 }
 
 // -----------------------------------------------------------------------------

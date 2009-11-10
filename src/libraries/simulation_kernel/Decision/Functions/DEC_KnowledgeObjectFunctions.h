@@ -53,6 +53,7 @@ public:
     template< typename T > static bool IsRecon                          ( const T& caller, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
 
                            static int  EquipLogisticRoute               ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+                           static bool IsStockSupplied                  ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     //@}
 };
 

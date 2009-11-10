@@ -3,6 +3,7 @@
   <decisional file="Decisionnel.xml"/>
   <volumes file="Volumes.xml"/>
   <protections file="Protections.xml"/>
+  <human-protections file="HumanProtections.xml"/>
   <dotation-natures file="DotationNatures.xml"/>
   <objects file="Objets.xml"/>
   <dotations file="Dotations.xml"/>

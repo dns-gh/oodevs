@@ -60,7 +60,7 @@ Section "!${APP_NAME}"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File "${RUNDIR}\*.qm"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-    
+ 
     ; resources: documentation
     SetOutPath "$INSTDIR\applications\resources\help\en"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL

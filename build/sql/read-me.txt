@@ -1,0 +1,23 @@
+
+
+
+Here are installation instruction concerning ArcSDE for postgresql, which
+should be installed before running install-sword-sde-db.bat
+
+The install-sword-sde-db.bat scripts may replace ArcSDE Postinstall, since it:
+1) creates a database in pgsql
+2) add functions and table allowing to turn it into a geodatabase (relying on sde)
+3) creates an SDE Windows service
+
+It moreover performs the following steps for Sword Application:
+4) creates a schema for sword application (crossbow plugin)
+5) register sword tables as ArcSDE layers
+
+---------------------------------------------
+ArcSDE installation instructions here:
+http://resources.esri.com/help/9.3/geodatabase/pdf/install_gd_postgresql.pdf
+http://webhelp.esri.com/arcgisserver/9.3/dotNet/index.htm#geodatabases/instal-1427030965.htm
+
+---------------------------------------------
+Known issues:
+When trying to run the post installation: http://support.esri.com/index.cfm?fa=knowledgebase.techarticles.articleShow&d=35891

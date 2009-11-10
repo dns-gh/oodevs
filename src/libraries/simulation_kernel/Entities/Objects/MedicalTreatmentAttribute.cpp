@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MedicalTreatmentAttribute.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/DEC_Knowledge_ObjectAttributeMedicalTreatment.h"
 #include "MIL.h"
 #include "MIL_AgentServer.h"
 #include "MT_Tools/MT_Random.h"
@@ -50,7 +51,7 @@ MedicalTreatmentAttribute::MedicalTreatmentAttribute( xml::xistream& xis )
     const MIL_MedicalTreatmentType* pType = MIL_MedicalTreatmentType::Find( typeName );
     if( !pType )
         xis.error( "Unknown 'Medical treatment type' '" + typeName + "' for medical treatment attribute" );
-    medicalTreatmentMap_.insert( std::make_pair( pType->GetName(), new T_PatientDiagnosisList() ) );
+    medicalTreatmentMap_.insert( std::make_pair( pType->GetID(), new T_PatientDiagnosisList() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,7 +71,7 @@ MedicalTreatmentAttribute::MedicalTreatmentAttribute( const ASN1T_ObjectAttribut
         const MIL_MedicalTreatmentType* pType = MIL_MedicalTreatmentType::Find( asn.medical_treatment.type_id.elem[ i ] );
         if( !pType )
             throw std::runtime_error( "Unknown Medical treatment type for medical treatment attribute" );
-        medicalTreatmentMap_.insert( std::make_pair( pType->GetName(), new T_PatientDiagnosisList() ) );
+        medicalTreatmentMap_.insert( std::make_pair( pType->GetID(), new T_PatientDiagnosisList() ) );
     }
     InitializePatientDiagnosisList( beds_ - availableBeds_ , doctors_ - availableDoctors_ );
 }
@@ -88,8 +89,21 @@ MedicalTreatmentAttribute::~MedicalTreatmentAttribute()
 // Name: MedicalTreatmentAttribute InitializePatientDiagnosisList
 // Created: RFT 2008-05-30
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::InitializePatientDiagnosisList( int /*occupiedBeds*/ , int /*occupiedDoctors*/ )
+void MedicalTreatmentAttribute::InitializePatientDiagnosisList( int occupiedBeds , int occupiedDoctors )
 {
+    IT_MedicalTreatmentMap it           = medicalTreatmentMap_.begin();
+    IT_PatientDiagnosisList iter        = it->second->begin();
+    float time = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+
+    for( int i = 0 ; i < occupiedDoctors ; i++ )
+    {
+        it->second->push_back( std::make_pair( time - ( float ) randomGenerator_.rand_ii( 0 , MIL_MedicalTreatmentType::Find( it->first )->GetTreatmentTime( iter->second ) ) , ( int ) randomGenerator_.rand32_ii( 0 , 1 ) ) );
+    }
+
+    for( int i = 0 ; i < occupiedBeds - occupiedDoctors ; i++ )
+    {
+        it->second->push_back( std::make_pair( time - ( float ) randomGenerator_.rand_ii( 0 , MIL_MedicalTreatmentType::Find( it->first )->GetHospitalisationTime( iter->second ) ) , ( int ) randomGenerator_.rand32_ii( 0 , 1 ) ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -115,28 +129,28 @@ MedicalTreatmentAttribute& MedicalTreatmentAttribute::operator=( const MedicalTr
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::load( MIL_CheckPointInArchive& ar, const uint )
 {
-    std::string typeName;
+    int typeID;
     int sizeOfList, injuryCategory, sizeOfMap;
     float time;
-    ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
+    
     ar >> sizeOfMap;
     for ( int i = 0 ; i < sizeOfMap ; i++ )
     {
-        ar >> typeName;  
+        ar >> typeID;  
         ar >> sizeOfList;
 
         T_PatientDiagnosisList *list = new T_PatientDiagnosisList( sizeOfList );
 
-        const MIL_MedicalTreatmentType* pType = MIL_MedicalTreatmentType::Find( typeName );
+        const MIL_MedicalTreatmentType* pType = MIL_MedicalTreatmentType::Find( typeID );
         if( !pType )
-            throw std::runtime_error( "Unknown 'Medical treatment type' '" + typeName + "' for medical treatment attribute" );
+            throw std::runtime_error( "There is at least n unknown 'Medical treatment type' for medical treatment attribute" );
         for ( int j = 0 ; j < sizeOfList ; j ++ )
         {
             ar >> time;
             ar >> injuryCategory;
             list->push_back( std::make_pair( time, injuryCategory ) );
         }
-        medicalTreatmentMap_.insert( std::make_pair( typeName, list ) );
+        medicalTreatmentMap_.insert( std::make_pair( typeID, list ) );
     }
 }
     
@@ -167,8 +181,9 @@ void MedicalTreatmentAttribute::save( MIL_CheckPointOutArchive& ar, const uint )
 // Name: MedicalTreatmentAttribute::Instanciate
 // Created: RFT 2008-06-09
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::Instanciate( DEC_Knowledge_Object& /*object*/ ) const
+void MedicalTreatmentAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
+    object.Attach( *new DEC_Knowledge_ObjectAttributeMedicalTreatment() );
 }
 
 // -----------------------------------------------------------------------------
@@ -234,9 +249,9 @@ const MedicalTreatmentAttribute::T_MedicalTreatmentMap& MedicalTreatmentAttribut
 // Name: OccupancyAttribute::FlagPatient
 // Created: RFT 2008-06-09
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::FlagPatient( float time , const std::string injuryName , int injuryCategory )
+void MedicalTreatmentAttribute::FlagPatient( float time , int injuryID , int injuryCategory )
 {
-    IT_MedicalTreatmentMap it = medicalTreatmentMap_.find( injuryName );
+    IT_MedicalTreatmentMap it = medicalTreatmentMap_.find( injuryID );
     if( it != medicalTreatmentMap_.end() )
     {
         availableDoctors_ --;
@@ -249,9 +264,9 @@ void MedicalTreatmentAttribute::FlagPatient( float time , const std::string inju
 // Name: OccupancyAttribute::CanTreatPatient
 // Created: RFT 2008-06-09
 // -----------------------------------------------------------------------------
-bool MedicalTreatmentAttribute::CanTreatPatient( const std::string injuryName )
+bool MedicalTreatmentAttribute::CanTreatPatient( int injuryID )
 {
-    IT_MedicalTreatmentMap it = medicalTreatmentMap_.find( injuryName );
+    IT_MedicalTreatmentMap it = medicalTreatmentMap_.find( injuryID );
     if( it != medicalTreatmentMap_.end() )
         return true;
     else

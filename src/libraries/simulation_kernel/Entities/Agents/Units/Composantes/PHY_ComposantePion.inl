@@ -20,6 +20,17 @@ inline void PHY_ComposantePion::ApplyOnWeapons( T& functor ) const
         functor( *this, **itWeapon );
 }
 
+// -----------------------------------------------------------------------------
+// Name: template< typename T > void PHY_ComposantePion::FillFireData
+// Created: NLD 2006-08-07
+// -----------------------------------------------------------------------------
+template< typename T > 
+inline void PHY_ComposantePion::ApplyOnHumanProtection( T& functor ) const
+{
+    for( CIT_HumanProtectionVector it = protections_.begin(); it != protections_.end(); ++it )
+        functor( *this, **it );
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::ApplyOnSensors

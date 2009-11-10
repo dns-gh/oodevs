@@ -42,12 +42,8 @@
 <context>
     <name>Application</name>
     <message>
-        <source>Sword Officer Training</source>
-        <translation type="obsolete">SCALPED</translation>
-    </message>
-    <message>
-        <source>SWORD Officer Training</source>
-        <translation>SCALPED</translation>
+        <source>SWORD</source>
+        <translation>SWORD Security</translation>
     </message>
     <message>
         <source>sword-ot@masagroup.net</source>
@@ -56,10 +52,6 @@
     <message>
         <source>Unhandled error</source>
         <translation>Erreur irrécupérable</translation>
-    </message>
-    <message>
-        <source>SWORD Officer Training - Preparation</source>
-        <translation type="obsolete">SCALPED - Préparation</translation>
     </message>
     <message>
         <source>Preparation</source>

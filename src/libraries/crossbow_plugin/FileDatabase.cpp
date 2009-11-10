@@ -36,10 +36,11 @@ namespace
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
 FileDatabase::FileDatabase( const std::string& geodatabase )
+    : database_ ( geodatabase )
 {
     IWorkspaceFactoryPtr spWorkspaceFactory = GetWorkspaceFactory( geodatabase );
     if( spWorkspaceFactory == NULL )
-        throw std::runtime_error( "Unable to create Access workspace factory." );
+        throw std::runtime_error( "Unable to create workspace factory." );
     IWorkspacePtr spWorkspace;    
     if( FAILED( spWorkspaceFactory->OpenFromFile( CComBSTR( geodatabase.c_str() ), 0, &spWorkspace ) ) || spWorkspace == NULL )
         throw std::runtime_error( "Unable to connect to geodatabase: " + geodatabase );    

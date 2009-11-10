@@ -21,6 +21,8 @@
 #include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 #include "simulation_kernel/LoadingChangeNotificationHandler_ABC.h"
 
+class MIL_Injury_ABC;
+
 namespace xml
 {
     class xostream;
@@ -167,6 +169,8 @@ public:
     virtual MT_Float GetMinRangeToFireOnActualPosture( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
     virtual MT_Float GetMaxRangeToIndirectFire       ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
     virtual MT_Float GetMinRangeToIndirectFire       ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
+    virtual void     ApplyInjury                     ( MIL_Injury_ABC& injury );
+            MT_Float GetDangerosity                  ( const DEC_Knowledge_Agent& target ) const;
     //@}
 
     //! @name Perception / Knowledge

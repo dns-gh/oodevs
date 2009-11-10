@@ -9,6 +9,8 @@
 
 #include "crossbow_plugin_pch.h"
 #include "Row.h"
+#include <boost/lexical_cast.hpp>
+#include <boost/variant.hpp>
 
 using namespace plugins;
 
@@ -17,6 +19,7 @@ using namespace plugins;
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
 crossbow::Row::Row()
+    : id_( -1 )
 {
     // NOTHING
 }
@@ -56,6 +59,27 @@ namespace
     };
 }
 
+namespace
+{
+    crossbow::FieldVariant ConvertVariant( const CComVariant& value )
+    {
+        switch( value.vt )
+        {
+        case VT_NULL:
+            return crossbow::FieldVariant( std::string( "null" ) );
+        case VT_I2:
+            return crossbow::FieldVariant( (int)value.iVal );
+        case VT_I4:
+            return crossbow::FieldVariant( value.lVal );
+        case VT_BSTR:
+            return crossbow::FieldVariant( std::string( _bstr_t( value.bstrVal ) ) ); // $$$$ SBO 2007-05-31: !!
+        case VT_BOOL:
+            return crossbow::FieldVariant( value.bVal != 0 );
+        }
+        throw;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Row::SetField
 // Created: SBO 2007-08-30
@@ -75,25 +99,6 @@ void crossbow::Row::SetField( const std::string& name, const crossbow::FieldVari
 void crossbow::Row::SetShape( const Shape_ABC& /*value*/ )
 {
     throw std::runtime_error( "Trying to set shape for table." );
-}
-
-namespace
-{
-    crossbow::FieldVariant ConvertVariant( const CComVariant& value )
-    {
-        switch( value.vt )
-        {
-        case VT_I2:
-            return crossbow::FieldVariant( (int)value.iVal );
-        case VT_I4:
-            return crossbow::FieldVariant( value.lVal );
-        case VT_BSTR:
-            return crossbow::FieldVariant( std::string( _bstr_t( value.bstrVal ) ) ); // $$$$ SBO 2007-05-31: !!
-        case VT_BOOL:
-            return crossbow::FieldVariant( value.bVal != 0 );
-        }
-        throw;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -116,10 +121,7 @@ crossbow::FieldVariant crossbow::Row::GetField( const std::string& name ) const
 // -----------------------------------------------------------------------------
 long crossbow::Row::GetID() const
 {
-    long id;
-    
-    row_->get_OID( &id );
-    return id;
+    return id_;
 }
 
 // -----------------------------------------------------------------------------
@@ -131,25 +133,47 @@ crossbow::Shape_ABC& crossbow::Row::GetShape() const
     throw std::runtime_error( "Trying to get shape from a table" );
 }
 
+namespace
+{
+    void ThrowError()
+    {
+        IErrorInfoPtr ipError;
+        BSTR strError;
+        ::GetErrorInfo( 0, &ipError );
+        ipError->GetDescription( &strError );
+        const std::string error = boost::lexical_cast< std::string >( _bstr_t( strError ) );
+        MT_LOG_ERROR_MSG( error ); // $$$$ SBO 2008-05-15: should throw
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Row::Commit
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void crossbow::Row::Commit( ICursorPtr cursor /*=NULL*/)
+void crossbow::Row::Commit( ICursorPtr cursor /*=NULL*/ )
 {
-    if( cursor != NULL )
-        cursor->UpdateRow( row_ );
-    else
-        row_->Store();
+    if( cursor != NULL ) 
+    {
+        CComVariant value;
+        HRESULT res = cursor->InsertRow( row_, &value );
+        if( FAILED( res ) )
+            ThrowError();
+		else
+		{
+			id_ = boost::get< int >( ConvertVariant( value ) );
+		}
+    }
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: Row::BindRow
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void crossbow::Row::BindRow( IRowPtr row )
+void crossbow::Row::BindRow( IRowBufferPtr row, long id )
 {
     row_ = row;
+    id_ = id;
 }
 
 // -----------------------------------------------------------------------------

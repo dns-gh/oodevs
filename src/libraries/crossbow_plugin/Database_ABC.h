@@ -15,6 +15,7 @@ namespace plugins
 namespace crossbow
 {
     class Table_ABC;
+    class QueryBuilder_ABC;
 
 // =============================================================================
 /** @class  Database_ABC
@@ -32,16 +33,27 @@ public:
     virtual ~Database_ABC() {}
     //@}
 
-    //! @name Operations
+    //! @name 
     //@{
-    virtual void Lock() = 0;
-    virtual void UnLock() = 0;
-    virtual void StartEdit() = 0;
-    virtual void StopEdit() = 0;
+    virtual std::string GetTableName( const std::string& name ) const = 0;
+    //@}
+
+    //! @name Operations
+    //@{    
     virtual Table_ABC&  OpenBufferedTable( const std::string& name, bool clear = true ) = 0;
     virtual Table_ABC*  OpenTable( const std::string& name ) = 0;
     virtual void        ClearTable( const std::string& name ) = 0;
     // virtual void ReleaseTable( const std::string& name ) = 0;
+    //@}
+
+    //! @name 
+    //@{    
+    virtual void Execute( const QueryBuilder_ABC& builder ) = 0;
+    //@}
+
+    //! @name 
+    //@{
+    virtual void Flush() = 0;
     //@}
 };
 

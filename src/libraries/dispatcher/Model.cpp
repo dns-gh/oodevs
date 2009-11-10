@@ -36,6 +36,7 @@
 #include "UrbanObject.h"
 #include "SimulationModel.h"
 #include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/ObjectTypes.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 #include <boost/bind.hpp>
 
@@ -50,6 +51,7 @@ Model::Model( const tools::ExerciseConfig& config )
     , folk_( new FolkModel() )
     , compositeFactory_( new CompositeFactory() )
     , agentTypes_( new kernel::AgentTypes( config ) )
+	, objectTypes_( new kernel::ObjectTypes( config ) )
 {
     // NOTHING
 }
@@ -377,6 +379,15 @@ const tools::Resolver_ABC< kernel::MissionType >& Model::GetMissionTypes() const
 const tools::Resolver_ABC< kernel::FragOrderType >& Model::GetFragOrderTypes() const
 {
     return *agentTypes_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::GetFragOrderTypes
+// Created: AGE 2008-07-16
+// -----------------------------------------------------------------------------
+const tools::Resolver_ABC< kernel::ObjectType, std::string >& Model::GetObjectTypes() const
+{
+	return *objectTypes_;
 }
 
 // -----------------------------------------------------------------------------

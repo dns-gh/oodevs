@@ -12,6 +12,7 @@
 
 #include "game_asn/Simulation.h"
 #include "MessageHandler_ABC.h"
+#include "Model_ABC.h"
 #include "CompositeFactory.h"
 #include "EntityPublisher.h"
 #include "tools/Resolver.h"
@@ -23,6 +24,8 @@ namespace kernel
     class MissionType;
     class FragOrderType;
     class Entity_ABC;
+	class ObjectType;
+	class ObjectTypes;
 }
 
 namespace tools
@@ -114,6 +117,7 @@ public:
     const tools::Resolver_ABC< kernel::AgentType >& GetAgentTypes() const;
     const tools::Resolver_ABC< kernel::MissionType >& GetMissionTypes() const;
     const tools::Resolver_ABC< kernel::FragOrderType >& GetFragOrderTypes() const;
+	const tools::Resolver_ABC< kernel::ObjectType, std::string >& GetObjectTypes() const;
     //@}
 
 private:
@@ -143,6 +147,7 @@ private:
 
     std::auto_ptr< FolkModel >          folk_;
     std::auto_ptr< kernel::AgentTypes > agentTypes_;
+	std::auto_ptr< kernel::ObjectTypes > objectTypes_;
     //@}
 
 public:

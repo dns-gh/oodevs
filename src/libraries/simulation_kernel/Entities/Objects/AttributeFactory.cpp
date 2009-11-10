@@ -26,6 +26,7 @@
 #include "PopulationAttribute.h"
 #include "SupplyRouteAttribute.h"
 #include "TimeLimitedAttribute.h"
+#include "StockAttribute.h"
 
 #include "ImprovableCapacity.h"
 #include "BuildableCapacity.h"
@@ -96,6 +97,7 @@ AttributeFactory::AttributeFactory()
     Register( "medical-treatment", boost::bind( &AddBuilder< MedicalTreatmentAttribute >::Add, _1, _2 ) );
     Register( "interaction-height", boost::bind( &AddBuilder< InteractionHeightAttribute >::Add, _1, _2 ) );
     Register( "population-filter", boost::bind( &AddBuilder< PopulationAttribute >::Add, _1, _2 ) );
+    Register( "stock", boost::bind( &AddBuilder< StockAttribute >::Add, _1, _2 ) );
 }
 	
 // -----------------------------------------------------------------------------
@@ -154,5 +156,4 @@ void AttributeFactory::Create( Object& object, const ASN1T_ObjectAttributes& asn
     ASN_CREATE_ATTRIBUTE( fire, FireAttribute );
     ASN_CREATE_ATTRIBUTE( medical_treatment, MedicalTreatmentAttribute );
     ASN_CREATE_ATTRIBUTE( interaction_height, InteractionHeightAttribute );
-
 }

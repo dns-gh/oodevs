@@ -31,7 +31,6 @@ namespace crossbow
 // =============================================================================
 class FileDatabase : public Database
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -44,6 +43,12 @@ private:
     //@{
     FileDatabase( const FileDatabase& );            //!< Copy constructor
     FileDatabase& operator=( const FileDatabase& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name 
+    //@{
+    std::string database_;
     //@}
 };
 

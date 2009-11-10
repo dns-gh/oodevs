@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<nbc>
+	<!-- nbc-cell will define the surface of each nbc cell in the simulation, the length will be used by the wind when we compute the propagation due to the speed factor-->
+	<nbc-cell length="5" width="5"/>
+	<!-- propagation angle defines the angle of the propagation for an agent of type gaseous
+	concentration-increase-rate defines how fast the concentration will increase
+	concentration-decrease-rate defines how fast the concentration will decrease
+	edge-effects defines the percentage of the maximum concentration on the edges-->
+  <propagation propagation-angle="20" concentration-increase-rate="0.1" concentration-decrease-rate="0.05" edge-effects="0.5"/>
+  <agents>
+    <agent id="1" name="Air">
+      <effects poison="false" contaminate="false" type="liquid"/>
+    </agent>
+    <agent id="2" name="Gaz sarin">
+    <!-- the contaminate option sets a state " is contaminated" to things which are in contact of the NBC agent. This doesn't cause any damage( life isn't yet in danger ) But for example an infected unit can contaminate other units. This unit has to be decontaminated
+    the poison option causes damages to every unit in contact: life is in danger
+    we have either liquid (can't propagate) or gaseous(can propagate) option for the type-->
+    	<effects poison="true" contaminate="true" type="liquid"/>
+    	<effects poison="true" contaminate="true" type="gaseous"/>
+    </agent>
+    <agent id="3" name="H5N1">
+      <effects poison="true" contaminate="true" type="liquid"/>
+      <effects poison="true" contaminate="true" type="gaseous"/>
+    </agent>
+    <agent id="4" name="HCN">
+      <effects poison="true" contaminate="true" type="liquid"/>     
+      <effects poison="true" contaminate="true" type="gaseous"/>
+    </agent>
+    <agent id="5" name="Rayon gamma">
+      <effects poison="true" contaminate="true" type="liquid"/>        
+      <effects poison="true" contaminate="true" type="gaseous"/>       
+    </agent>
+    <agent id="6" name="Soman">
+      <effects poison="true" contaminate="true" type="liquid"/>
+    </agent>
+    <agent id="7" name="VX">
+      <effects poison="true" contaminate="true" type="liquid"/>
+      <effects poison="true" contaminate="false" type="gaseous"/>
+    </agent>
+    <agent id="8" name="Virus ebola">
+      <effects poison="true" contaminate="false" type="liquid"/>
+      <effects poison="true" contaminate="false" type="gaseous"/>
+    </agent>
+  </agents>
+</nbc>

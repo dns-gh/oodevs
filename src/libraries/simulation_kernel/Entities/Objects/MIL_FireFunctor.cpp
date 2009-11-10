@@ -27,6 +27,7 @@
 // -----------------------------------------------------------------------------
 MIL_FireFunctor::MIL_FireFunctor( const MIL_FireClass& fireClass )
     : fireClass_ ( fireClass )
+    , bestExtinguisherAgentandFireHoseRange_()
 {
     // NOTHING
 }

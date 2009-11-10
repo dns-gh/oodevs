@@ -18,6 +18,7 @@
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
+#include "Entities/Agents/Units/Humans/MIL_Injury_ABC.h"
 #include "Entities/Agents/Roles/Logistic/Maintenance/PHY_MaintenanceComposanteState.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_SmokeData.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
@@ -807,6 +808,20 @@ void PHY_RolePion_Composantes::ApplyPoisonous( const MIL_ToxicEffectManipulator&
         PHY_ComposantePion& composante = **it;
         if( composante.GetState().IsUsable() )
             composante.ApplyPoisonous( contamination );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::ApplyInjury
+// Created: NLD 2006-10-27
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::ApplyInjury( MIL_Injury_ABC& injury )
+{
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    {
+        PHY_ComposantePion& composante = **it;
+        if( composante.GetState().IsUsable() )
+            composante.ApplyInjury( injury );
     }
 }
 

@@ -988,4 +988,39 @@
     <reloading duration="10s" munition="1"/>
     <indirect-fire average-speed="50" max-range="50" min-range="0"/>
   </weapon-system>
+  <weapon-system launcher="FireHose" munition="agent extincteur Eau en masse">
+    <burst duration="1s" munition="1"/>
+    <reloading duration="1s" munition="1"/>
+    <indirect-fire average-speed="100" max-range="100" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="FireHose" munition="agent extincteur Eau en pulverisation">
+    <burst duration="1s" munition="1"/>
+    <reloading duration="1s" munition="1"/>
+    <indirect-fire average-speed="100" max-range="75" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="FireHose" munition="agent extincteur Mousse">
+    <burst duration="1s" munition="1"/>
+    <reloading duration="1s" munition="1"/>
+    <indirect-fire average-speed="100" max-range="50" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="FireHose" munition="agent extincteur Poudre">
+    <burst duration="1s" munition="1"/>
+    <reloading duration="1s" munition="1"/>
+    <indirect-fire average-speed="100" max-range="50" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="FireHose" munition="agent extincteur CO2">
+    <burst duration="1s" munition="1"/>
+    <reloading duration="1s" munition="1"/>
+    <indirect-fire average-speed="100" max-range="50" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="FireHose" munition="agent extincteur Sable">
+    <burst duration="1s" munition="1"/>
+    <reloading duration="1s" munition="1"/>
+    <indirect-fire average-speed="100" max-range="50" min-range="0"/>
+  </weapon-system>
+  <weapon-system launcher="FireHose" munition="agent extincteur Hydrocarbures Halogenes">
+    <burst duration="1s" munition="1"/>
+    <reloading duration="1s" munition="1"/>
+    <indirect-fire average-speed="100" max-range="50" min-range="0"/>
+  </weapon-system>
 </weapons>

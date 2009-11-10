@@ -287,23 +287,27 @@
 <context>
     <name>Application</name>
     <message>
-        <source>SWORD Officer Training</source>
-        <translation>SCALPED</translation>
+        <source>SWORD</source>
+        <translation>SWORD</translation>
     </message>
     <message>
         <source>sword-ot@masagroup.net</source>
-        <translation>support@scalped.fr</translation>
+        <translation type="obsolete">support@scalped.fr</translation>
     </message>
     <message>
         <source>Unhandled error</source>
         <translation>Erreur irrécupérable</translation>
     </message>
     <message>
-        <source>SWORD Officer Training - Gaming</source>
-        <translation type="obsolete">SCALPED - Gaming</translation>
+        <source>Gaming</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Gaming</source>
+        <source>SWORD Officer Training</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sword@masagroup.net</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

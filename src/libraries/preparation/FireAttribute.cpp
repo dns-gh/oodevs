@@ -35,7 +35,7 @@ FireAttribute::FireAttribute( kernel::PropertiesDictionary& dico )
 FireAttribute::FireAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::FireClass, std::string >& FireClasses, kernel::PropertiesDictionary& dico )
 {
     std::string type;
-    xis >> attribute( "type", type );
+    xis >> attribute( "class", type );
     fireClass_ = FireClasses.Find( type );
     CreateDictionary( dico );
 }
@@ -75,8 +75,8 @@ void FireAttribute::SetClass( const kernel::FireClass& fireClass )
 // -----------------------------------------------------------------------------
 void FireAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << start( "fire-class" )
-            << attribute( "type", fireClass_->GetName() )            
+    xos << start( "fire" )
+            << attribute( "class", fireClass_->GetName() )            
         << end();
 }
 

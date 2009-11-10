@@ -22,7 +22,7 @@
 #include "Entities/Specialisations/RENS/MIL_AgentTypePionRENS.h"
 #include "Entities/Specialisations/ASA/MIL_AgentTypePionASA.h"
 #include "Entities/Specialisations/NBC/MIL_AgentTypePionNBC.h"
-#include "Entities/Specialisations/CIRCULATION/MIL_AgentTypePionCIRCULATION.h"
+#include "Entities/Specialisations/CIRCULATION/MIL_AgentTypePionCirculation.h"
 #include "Entities/Specialisations/MILICE/MIL_AgentTypePionMILICE.h"
 #include "Entities/Specialisations/ASY/MIL_AgentTypePionASY.h"
 #include "Entities/Specialisations/REFUGIE/MIL_AgentTypePionREFUGIE.h"
@@ -36,6 +36,7 @@
 #include "Entities/Agents/Roles/Humans/PHY_RolePion_Humans.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
 #include "Entities/Agents/Roles/Network/NET_RolePion_Dotations.h"
+
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"    
 #include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
@@ -62,14 +63,14 @@
 
 #include "Decision/DEC_Representations.h"
 
+#include "Decision/Functions/DEC_DynamicFireFunctions.h"
+
 #include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
  
 #include "MIL_AgentServer.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.h>
-
-
 
 MIL_AgentTypePion::T_PionTypeAllocatorMap  MIL_AgentTypePion::pionTypeAllocators_;
 MIL_AgentTypePion::T_PionTypeMap           MIL_AgentTypePion::pionTypes_;
@@ -116,7 +117,7 @@ void MIL_AgentTypePion::Initialize( xml::xistream& xis )
     pionTypeAllocators_[ "Pion LOG BLT Maintenance"    ] = &MIL_AgentTypePionLOGMaintenance ::Create; 
     pionTypeAllocators_[ "Pion LOG BLT Ravitaillement" ] = &MIL_AgentTypePionLOGSupply      ::Create; 
     pionTypeAllocators_[ "Pion LOG Convoi"             ] = &MIL_AgentTypePionLOGConvoy      ::Create; 
-    pionTypeAllocators_[ "Pion CIRCULATION"            ] = &MIL_AgentTypePionCIRCULATION    ::Create; 
+    pionTypeAllocators_[ "Pion CIRCULATION"            ] = &MIL_AgentTypePionCirculation    ::Create; 
     pionTypeAllocators_[ "Pion JOINT"                  ] = &MIL_AgentTypePion               ::Create; 
     pionTypeAllocators_[ "Pion MILICE"                 ] = &MIL_AgentTypePionMILICE         ::Create; 
     pionTypeAllocators_[ "Pion ASY"                    ] = &MIL_AgentTypePionASY            ::Create;
@@ -283,7 +284,7 @@ void MIL_AgentTypePion::InitializeModel( xml::xistream& xis )
 
     pModel_ = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelPion( strModel );
     if( !pModel_ )
-        xis.error( "Unknown pawn model" );
+        xis.error( "Unknown pawn model " + strModel );
 }
 
 // -----------------------------------------------------------------------------

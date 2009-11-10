@@ -1,3 +1,5 @@
+
+using System.Collections;
 using ESRI.ArcGIS.ArcMapUI;
 using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Display;
@@ -6,7 +8,7 @@ using ESRI.ArcGIS.DataSourcesGDB;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geometry;
-using ESRI.ArcGIS.MilitaryAnalyst;
+using ESRI.ArcGIS.DefenseSolutions;
 using ESRI.ArcGIS.ArcGlobe;
 using ESRI.ArcGIS.Analyst3D;
 
@@ -18,6 +20,7 @@ namespace Sword
         {
             static private IApplication m_application;
             static private DocumentProxy m_document;
+            static private SwordExtension m_extension;
 
             #region "Initialization"
             public static void Initialize(IApplication application)
@@ -51,11 +54,13 @@ namespace Sword
             }
 
             #region "Get Sword Extension"
-            public static SwordExtension GetCSwordExtension()
+            public static SwordExtension GetExtension()
             {
                 if (m_application == null)
                     return null;
-                return (SwordExtension)m_application.FindExtensionByName("Sword.Crossbow.SwordExtension");
+                if (m_extension == null )
+                    m_extension = (SwordExtension)m_application.FindExtensionByName("Sword.Crossbow.SwordExtension");
+                return m_extension;
             }
             #endregion
 
@@ -110,10 +115,8 @@ namespace Sword
             #endregion
 
             #region "Get FeatureClass from Class Id"
-            public static IFeatureLayer GetFeatureClassFromId(int featureClassId)
+            public static IFeatureClass GetFeatureClassFromId(int featureClassId)
             {
-                if (featureClassId == -1)
-                    return null;
                 DocumentProxy layers = GetDocument();
                 for (int i = 0; i < layers.LayerCount; ++i)
                 {
@@ -122,7 +125,7 @@ namespace Sword
                     if (featureLayer != null)
                     {
                         if (featureLayer.FeatureClass.FeatureClassID == featureClassId)
-                            return featureLayer;
+                            return featureLayer.FeatureClass;
                     }
                     else
                     {
@@ -132,7 +135,7 @@ namespace Sword
                             {
                                 featureLayer = composite.get_Layer(j) as IFeatureLayer;
                                 if (featureLayer != null && featureLayer.FeatureClass != null && featureLayer.FeatureClass.FeatureClassID == featureClassId)
-                                    return featureLayer;
+                                    return featureLayer.FeatureClass;
                             }
                     }
                 }
@@ -161,23 +164,8 @@ namespace Sword
 
             public static IFeatureWorkspace GetWorkspace(string name)
             {
-                return RetrieveWorkspace(Tools.GetFeatureLayerByName(name));
-            }
-
-            ///<summary>
-            /// Open a valid workspace according to the database's extension
-            ///</summary>
-            ///<param name="file">Name of the workspace</param>
-            public static IWorkspace OpenWorkspace(string file)
-            {
-                IWorkspaceFactory factory = null;
-                string ext = file.Substring(file.LastIndexOf('.') + 1, 3);
-                if (ext == "mdb")
-                    factory = new AccessWorkspaceFactoryClass();
-                if (ext == "gdb")
-                    factory = new FileGDBWorkspaceFactoryClass();
-                if (factory != null)
-                    return factory.OpenFromFile(file, 0);
+                if( m_extension != null )
+                    return (IFeatureWorkspace)m_extension.DatabaseManager.GetWorkspace(name);
                 return null;
             }
             #endregion
@@ -185,30 +173,12 @@ namespace Sword
             #region "Data manipulation"
             public static void SetValue<T>(IRowBuffer row, string field, T value)
             {
-                try
-                {
-                    int id = row.Fields.FindField(field);
-                    if (id >= 0 && row.Fields.get_Field(id).Editable)
-                        row.set_Value(id, value);
-                }
-                catch (System.Exception e)
-                {
-                    System.Diagnostics.Trace.WriteLine(e.Message);
-                }
+                DatabaseManager.SetValue<T>(row, field, value);
             }
 
             public static void SetValue<T>(IRow row, string field, T value)
             {
-                try
-                {
-                    int id = row.Fields.FindField(field);
-                    if (id >= 0 && row.Fields.get_Field(id).Editable)
-                        row.set_Value(id, value);
-                }
-                catch (System.Exception e)
-                {
-                    System.Diagnostics.Trace.WriteLine(e.Message);
-                }
+                DatabaseManager.SetValue<T>(row, field, value);
             }
 
             /// <summary>
@@ -220,13 +190,7 @@ namespace Sword
             /// <returns>Value of the field</returns>
             public static T GetValue<T>(IRow row, string field)
             {
-                int id = row.Fields.FindField(field);
-                if (id >= 0)
-                {
-                    object elt = row.get_Value(id);                    
-                    return (T)elt;
-                }
-                return default(T);
+                return DatabaseManager.GetValue<T>(row, field);
             }
 
             /// <summary>
@@ -235,59 +199,28 @@ namespace Sword
             /// <param name="table">Name of the output table</param>
             /// <param name="value">Input geometry</param>
             /// <remarks>Input geometry should be zAwared according to the table</remarks>
-            /*
             public static void Store(string table, IGeometry value)
             {
-                try
-                {
-                    IFeatureWorkspace ws = (IFeatureWorkspace)OpenWorkspace(Tools.GetCSwordExtension().Config.SharedFile);
-
-                    IFeatureClass features = ws.OpenFeatureClass(table);
-                    ScopeLockEditor locker = new ScopeLockEditor((IDataset)features);
-                    locker.Lock();                    
-
-                    // IFeature feature = features.CreateFeature();
-                    // feature.Shape = value;
-                    // feature.Store();
-
-
-                    IFeatureBuffer feature = features.CreateFeatureBuffer();
-                    IFeatureCursor cursor = features.Insert(true);
-                    feature.Shape = value;
-                    cursor.InsertFeature(feature);
-                    cursor.Flush();
-
-                    locker.Unlock();
-
-                    System.Runtime.InteropServices.Marshal.ReleaseComObject(cursor);
-                }
-                catch (System.Exception e)
-                {
-                    System.Diagnostics.Trace.WriteLine(e.Message);
-                }
+                if( m_extension != null )
+                    m_extension.DatabaseManager.Store(m_extension.Config.SharedFile, table, value);
             }
-            */
 
             /// <summary>
             ///  Remove all features of the specified feature class
             /// </summary>
             /// <param name="workspace">Workspace</param>
             /// <param name="name">Feature class</param>
-            public static void ClearClass(string workspace, string name)
+            public static void ClearClass(IFeatureWorkspace workspace, string name)
             {
                 try
                 {
-                    IFeatureWorkspace ws = (IFeatureWorkspace)OpenWorkspace(workspace);
-                    if (ws == null)
+                    if (workspace == null)
                         return;
-                    IFeatureClass table = ws.OpenFeatureClass(name);
+                    ITable table = (ITable)workspace.OpenFeatureClass(name);
                     if (table != null)
                     {
-                        ScopeLockEditor locker = new ScopeLockEditor((IDataset)table);
-                        locker.Lock();    
                         IQueryFilter filter = null;
-                        ((ITable)table).DeleteSearchedRows(filter);
-                        locker.Unlock(); 
+                        table.DeleteSearchedRows(filter);
                     }
                 }
                 catch (System.Exception e)

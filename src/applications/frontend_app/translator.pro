@@ -4,6 +4,7 @@ SOURCES = Actions.cpp \
 AdvancedButton.cpp \
 Application.cpp \
 CreateExercisePanel.cpp \
+CrossbowPluginConfigPanel.cpp \
 DisPluginConfigPanel.cpp \
 EditExercisePanel.cpp \
 GameConfigPanel.cpp \

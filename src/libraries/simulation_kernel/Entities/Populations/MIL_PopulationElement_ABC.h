@@ -24,6 +24,7 @@ class AttritionCapacity;
 class PHY_Volume;
 class PHY_FireResults_Population;
 class PHY_FireResults_ABC;
+class MIL_Injury_ABC;
 
 // =============================================================================
 // Created: NLD 2005-09-28
@@ -71,6 +72,7 @@ public:
     void     ApplyFire        (       uint                nNbrAmmoFired  , PHY_FireResults_ABC& fireResult );
     void     ApplyIndirectFire( const MT_Circle&          attritionCircle, PHY_FireResults_ABC& fireResult );
     void     ApplyExplosion   ( const AttritionCapacity& capacity, PHY_FireResults_ABC& fireResult );
+    void     ApplyInjury      ( MIL_Injury_ABC& injury );
     //@}
 
     //! @name Accessors

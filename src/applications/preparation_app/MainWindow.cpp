@@ -349,7 +349,7 @@ bool MainWindow::Load()
     catch( xml::exception& e )
     {
         Close();
-        QMessageBox::critical( this, tools::translate( "Application", "SWORD Officer Training" )
+        QMessageBox::critical( this, tools::translate( "Application", "SWORD" )
                                    , ( tr( "Error reading xml file: " ) + e.what() ).ascii() );
         return false;
     }
@@ -384,7 +384,7 @@ void MainWindow::LoadExercise()
     }
     catch( std::exception& e )
     {
-        QMessageBox::critical( this, tools::translate( "Application", "SWORD Officer Training" )
+        QMessageBox::critical( this, tools::translate( "Application", "SWORD" )
                                    , ( tr( "Error loading exercise: " ) + e.what() ).ascii() );
     }
 }
@@ -401,13 +401,13 @@ namespace
 
         virtual bool Reject( const QString& reason )
         {
-            QMessageBox::critical( window_, tools::translate( "Application", "SWORD Officer Training" ), reason );
+            QMessageBox::critical( window_, tools::translate( "Application", "SWORD" ), reason );
             return false;
         }
 
         virtual bool Prompt( const QString& question )
         {
-            if( QMessageBox::question( window_, tools::translate( "Application", "SWORD Officer Training" )
+            if( QMessageBox::question( window_, tools::translate( "Application", "SWORD" )
                                      , question + tools::translate( "MainWindow", "\nDo you want to save anyway?" ), QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
                 return true;
             return false;
@@ -449,7 +449,7 @@ void MainWindow::closeEvent( QCloseEvent* pEvent )
 {
     if( needsSaving_ )
     {
-        int result = QMessageBox::question( this, tools::translate( "Application", "SWORD Officer Training" )
+        int result = QMessageBox::question( this, tools::translate( "Application", "SWORD" )
                                                 , tr( "Save modifications?" )
                                                 , QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel );
         if( ( result == QMessageBox::Yes && !Save() ) || result == QMessageBox::Cancel )
@@ -470,7 +470,7 @@ void MainWindow::closeEvent( QCloseEvent* pEvent )
 void MainWindow::WriteSettings()
 {
     Settings settings;
-    settings.setPath( "MASA Group", tools::translate( "Application", "SWORD Officer Training" ) );
+    settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
     settings.beginGroup( "/Preparation" );
 
     // Pannel configuration
@@ -489,7 +489,7 @@ void MainWindow::WriteSettings()
 void MainWindow::ReadSettings()
 {
     Settings settings;
-    settings.setPath( "MASA Group", tools::translate( "Application", "SWORD Officer Training" ) );
+    settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
     settings.beginGroup( "/Preparation" );
 
     // Pannel configuration
@@ -510,7 +510,7 @@ void MainWindow::ReadSettings()
 void MainWindow::WriteOptions()
 {
     Settings settings;
-    settings.setPath( "MASA Group", tools::translate( "Application", "SWORD Officer Training" ) );
+    settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
     settings.beginGroup( "/Preparation/Options" );
     controllers_.options_.Save( settings );
     settings.endGroup();
@@ -523,7 +523,7 @@ void MainWindow::WriteOptions()
 void MainWindow::ReadOptions()
 {
     Settings settings;
-    settings.setPath( "MASA Group", tools::translate( "Application", "SWORD Officer Training" ) );
+    settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
     settings.beginGroup( "/Preparation/Options" );
     controllers_.options_.Load( settings );
     settings.endGroup();

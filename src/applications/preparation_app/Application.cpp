@@ -27,7 +27,7 @@ namespace
     QString ReadLang()
     {
         QSettings settings;
-        settings.setPath( "MASA Group", tools::translate( "Application", "SWORD Officer Training" ) );
+        settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
         return settings.readEntry( "/Common/Language", QTextCodec::locale() );
     }
 }
@@ -85,7 +85,7 @@ void Application::Initialize()
     }
     catch( std::exception& e )
     {
-        QMessageBox::critical( 0, tools::translate( "Application", "SWORD Officer Training" ), e.what() );
+        QMessageBox::critical( 0, tools::translate( "Application", "SWORD" ), e.what() );
         throw CatchMeIfYouCan();
     }
 }

@@ -11,6 +11,7 @@
 #include "MedicalTreatmentPrototype_ABC.h"
 #include "clients_kernel/MedicalTreatmentType.h"
 #include "tools/Iterator.h"
+#include "clients_gui/ValuedListItem.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -25,7 +26,10 @@ MedicalTreatmentPrototype_ABC::MedicalTreatmentPrototype_ABC( QWidget* parent, c
     , resolver_( resolver )
 {
     new QLabel( tools::translate( "MedicalTreatmentPrototype_ABC", "MedicalTreatment Type:" ), this );
-    type_ = new ValuedComboBox< const MedicalTreatmentType* >( this );    
+    treatmentTypes_ = new QListView( this );
+    treatmentTypes_->setSelectionMode( QListView::Multi );    
+    treatmentTypes_->setMinimumHeight( 5 * treatmentTypes_->height() ); // 5 visible lines
+    treatmentTypes_->addColumn( tools::translate( "MedicalTreatmentPrototype_ABC", "Type" ) );
     FillTypes();
 
     new QLabel( tools::translate( "MedicalTreatmentPrototype_ABC", "Beds:" ), this );
@@ -39,10 +43,6 @@ MedicalTreatmentPrototype_ABC::MedicalTreatmentPrototype_ABC( QWidget* parent, c
 
     new QLabel( tools::translate( "MedicalTreatmentPrototype_ABC", "Initial available doctors:" ), this );
     availableDoctors_ = new QSpinBox( 0, 1000, 1, this );
-
-    // beds_->setSuffix( Units );
-//    beds_ = new QLineEdit( QString::number( 0. ), densityBox_ );
-//    density_->setValidator( new QDoubleValidator( 0, 5, 3, density_ ) );
 }
     
 // -----------------------------------------------------------------------------
@@ -60,12 +60,13 @@ MedicalTreatmentPrototype_ABC::~MedicalTreatmentPrototype_ABC()
 // -----------------------------------------------------------------------------
 void MedicalTreatmentPrototype_ABC::FillTypes()
 {
-    type_->Clear();
+    treatmentTypes_->clear();
     tools::Iterator< const MedicalTreatmentType& > it( resolver_.CreateIterator() );
     while( it.HasMoreElements() )
     {
         const MedicalTreatmentType& element = it.NextElement();
-        type_->AddItem( element.GetName(), &element );
+        ValuedListItem* item = new ValuedListItem( treatmentTypes_ );
+        item->SetNamed( element );
     }
 }
 
@@ -85,7 +86,6 @@ void MedicalTreatmentPrototype_ABC::showEvent( QShowEvent* e )
 // -----------------------------------------------------------------------------
 bool MedicalTreatmentPrototype_ABC::CheckValidity() const
 {
-    return type_->count() && type_->GetValue() &&
-           beds_->value() >= availableBeds_->value() &&
+    return beds_->value() >= availableBeds_->value() &&
            doctors_->value() >= availableDoctors_->value();
 }

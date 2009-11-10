@@ -41,7 +41,7 @@ int main( int argc, char** argv )
     QApplication::setStyle( "windowsxp" );
     Application app( argc, argv, expiration );
 
-    BugTrap::Setup( tools::translate( "Application", "SWORD Officer Training" ).ascii() )
+    BugTrap::Setup( tools::translate( "Application", "SWORD" ).ascii() )
             .SetEmail( tools::translate( "Application", "sword-ot@masagroup.net" ).ascii() )
             .SetVersion( QString( "%1 - " __TIMESTAMP__ ).arg( tools::AppVersion() ).ascii() );
     try

@@ -7,11 +7,16 @@
 //
 // *****************************************************************************
 
-#ifndef __Database_h_
-#define __Database_h_
+#ifndef __crossbow_Database_h_
+#define __crossbow_Database_h_
 
 #include "Database_ABC.h"
-#include "ESRI.h"
+#include <map>
+
+namespace boost 
+{
+    template<typename T> class shared_ptr;
+}
 
 namespace dispatcher
 {
@@ -22,6 +27,8 @@ namespace plugins
 {
 namespace crossbow
 {
+    class QueryBuilder_ABC;
+    class DatabaseEditor_ABC;
 
 // =============================================================================
 /** @class  Database
@@ -37,14 +44,6 @@ public:
     virtual ~Database();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual void Lock();
-    virtual void UnLock();
-    virtual void StartEdit();
-    virtual void StopEdit();
-    //@}
-
     //! @name 
     //@{
     virtual Table_ABC&  OpenBufferedTable( const std::string& name, bool clear = true );
@@ -53,10 +52,21 @@ public:
     virtual void ReleaseTable( const std::string& name );
     //@}
 
+    //! @name 
+    //@{
+    virtual std::string GetTableName( const std::string& name ) const;
+    virtual void Execute( const QueryBuilder_ABC& builder );
+    //@}
+
+    //! @name 
+    //@{
+    virtual void Flush();
+    //@}
+
 protected:
     //! @name Constructor
     //@{
-        Database();
+    Database();
     //@}
 
     //! @name Workspace builder
@@ -74,25 +84,28 @@ private:
     //! @name Helpers
     //@{
     Table_ABC* OpenWrappedTable( const std::string& name );
+    bool       IsValid() const;
     //@}
     
-
     //! @name Types
     //@{
-    typedef std::map< std::string, Table_ABC* > T_Tables;
+    typedef boost::shared_ptr< Table_ABC >      T_TablePtr;
+    typedef std::map< std::string, T_TablePtr > T_Tables;
     typedef T_Tables::iterator                  IT_Tables;
     //@}
 
 private:
     //! @name Member data
     //@{
-    IFeatureWorkspacePtr workspace_;
+    IWorkspacePtr        workspace_;
+    IFeatureWorkspacePtr featureWorkspace_;
     IWorkspaceEditPtr    workspaceEdit_;
     T_Tables             openedTables_;
+    std::auto_ptr< DatabaseEditor_ABC > editor_;
     //@}
 };
 
 }
 }
 
-#endif // __Database_h_
+#endif // __crossbow_Database_h_

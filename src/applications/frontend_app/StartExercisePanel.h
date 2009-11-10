@@ -21,6 +21,7 @@ class InfoBubble;
 class GameConfigPanel;
 class HlaPluginConfigPanel;
 class DisPluginConfigPanel;
+class CrossbowPluginConfigPanel;
 class QGroupBox;
 class QLineEdit;
 class QListBox;
@@ -75,6 +76,7 @@ protected:
     GameConfigPanel* configPanel_;
     HlaPluginConfigPanel* hlaConfigPanel_;
     DisPluginConfigPanel* disConfigPanel_;
+    CrossbowPluginConfigPanel* crossbowConfigPanel_;
     QLineEdit* sessionName_;
     QTextEdit* sessionComment_;
     QSpinBox* exerciseNumber_;

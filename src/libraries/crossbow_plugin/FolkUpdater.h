@@ -19,6 +19,7 @@ namespace crossbow
     class Table_ABC;
     class Row_ABC;
     class Database_ABC;
+    class WorkingSession;
 
 // =============================================================================
 /** @class  FolkUpdater
@@ -31,7 +32,7 @@ class FolkUpdater
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit FolkUpdater( Database_ABC& database );
+    explicit FolkUpdater( Database_ABC& database, const WorkingSession& session );
     virtual ~FolkUpdater();
     //@}
 
@@ -72,8 +73,7 @@ private:
     //@{
     void Commit( Table_ABC& table );
     void CommitEdge( Row_ABC& row, const Edge& edge );
-    void Update( Table_ABC& table, const ASN1T_MsgFolkGraphUpdate& msg );
-    void Update( Table_ABC& table, const ASN1T_MsgFolkGraphEdgeUpdate& msg );
+    void Update( const ASN1T_MsgFolkGraphEdgeUpdate& msg );
     void Update( Edge& edge, const ASN1T_MsgFolkGraphEdgeUpdate& msg ) const;
     //@}
 
@@ -89,6 +89,7 @@ private:
     //! @name Folk Database
     //@{
     Database_ABC& database_;
+    const WorkingSession& session_;
     //@}
 };
 

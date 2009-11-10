@@ -100,7 +100,7 @@
 #include "MT/MT_Qt/MT_Qt_lib.h"
 #include "MT_Tools/MT_Tools_Types.h"
 
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.h>
 #include "ADN_Type_ABC.h"
 
 namespace xml

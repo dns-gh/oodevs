@@ -10,8 +10,10 @@
 #ifndef __Workspace_h_
 #define __Workspace_h_
 
-#include "ESRI.h"
+// #include "ESRI.h"
 #include "Workspace_ABC.h"
+
+
 
 namespace plugins
 {
@@ -43,13 +45,13 @@ private:
 
     //! @name Helpers
     //@{
-    void InitializeLicence( esriLicenseProductCode product );
+    bool InitializeLicence( esriLicenseProductCode product );
     //@}
 
 private:
     //! @name Member data
     //@{
-    IAoInitializePtr license_;
+//    IAoInitializePtr license_;
     //@}
 };
 

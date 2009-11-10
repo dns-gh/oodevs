@@ -58,7 +58,7 @@ void Limit::Update( const ASN1T_MsgLimitUpdateRequest& message )
 // -----------------------------------------------------------------------------
 void Limit::SendCreation( dispatcher::ClientPublisher_ABC& client ) const
 {
-    ASN1T_MsgLimitCreation creation ;
+    ASN1T_MsgLimitCreation creation;
     creation.oid = GetID();
     TacticalLine_ABC::Send( creation.tactical_line );
     LimitCreation message( creation );

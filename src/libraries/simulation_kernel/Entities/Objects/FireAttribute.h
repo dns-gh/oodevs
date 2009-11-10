@@ -61,6 +61,8 @@ public:
     //@{
 	int				      GetHeat() const;
     const MIL_FireClass&  GetClass() const;
+    unsigned int          GetWidth() const;
+    unsigned int          GetLength() const;
 	//@}
 
     //! @name Operations
@@ -76,6 +78,8 @@ private:
     const MIL_FireClass*  pClass_;
     int                   heat_;
 	unsigned int		  timeOfLastUpdate_;
+    unsigned int          width_;
+    unsigned int          length_;
     //@}
 };
 

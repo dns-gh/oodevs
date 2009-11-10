@@ -30,14 +30,14 @@ namespace
 		{}
 		virtual ~DummyClientNetworker() {}
 
-		virtual void Send( const ASN1T_MsgsClientToSim& message ) {}
+		virtual void Send( const ASN1T_MsgsClientToSim& /*message*/ ) {}
 		virtual void Send( const ASN1T_MsgsClientToAuthentication& message )
 		{
 			MessageSender_ABC::Send( endpoint_, message );
 		}
-		virtual void Send( const ASN1T_MsgsClientToReplay& message ) {}
-		virtual void Send( const ASN1T_MsgsClientToAar& message ) {}
-		virtual void Send( const ASN1T_MsgsClientToMessenger& message ) {}
+		virtual void Send( const ASN1T_MsgsClientToReplay& /*message*/ ) {}
+		virtual void Send( const ASN1T_MsgsClientToAar& /*message*/ ) {}
+		virtual void Send( const ASN1T_MsgsClientToMessenger& /*message*/ ) {}
 
 	protected:
 		virtual void ConnectionSucceeded( const std::string& endpoint )
@@ -62,13 +62,12 @@ namespace
 // Created: JCR 2007-08-29
 // -----------------------------------------------------------------------------
 CrossbowPlugin::CrossbowPlugin( const dispatcher::Config& config, xml::xistream& xis, dispatcher::Model& model, 
-                                dispatcher::SimulationPublisher_ABC& publisher, dispatcher::ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& client, 
-                                dispatcher::LinkResolver_ABC& links, dispatcher::CompositeRegistrable& registrables )
+                                dispatcher::SimulationPublisher_ABC& publisher, dispatcher::ClientPublisher_ABC& /*clients*/, tools::MessageDispatcher_ABC& dispatcher, 
+                                dispatcher::LinkResolver_ABC& /*links*/, dispatcher::CompositeRegistrable& /*registrables*/ )
     : databasePublisher_( new DatabasePublisher( config, model, publisher, xis ) )
 	, clientNetworker_  ( new DummyClientNetworker() )
 {
-	std::cout << "CrossbowPlugin::CrossbowPlugin" << std::endl;
-	//clientNetworker_->Connect( "localhost:10001", false );
+    dispatcher.RegisterMessage( *this, &CrossbowPlugin::OnReceiveMessengerToClient );
 }
     
 // -----------------------------------------------------------------------------
@@ -89,7 +88,7 @@ void CrossbowPlugin::Update()
     static bool connect = false;
     if ( !connect )
     {
-        clientNetworker_->Connect( "localhost:10001", false );
+        // clientNetworker_->Connect( "localhost:10001", false );
         connect = true;
     }
 }
@@ -110,6 +109,15 @@ void CrossbowPlugin::Receive( const ASN1T_MsgsSimToClient& asnMsg )
 void CrossbowPlugin::Send( const ASN1T_MsgsMessengerToClient& asnMsg )
 {
     databasePublisher_->Receive( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CrossbowPlugin::OnReceiveClientToMessenger
+// Created: JCR 2009-06-27
+// -----------------------------------------------------------------------------
+void CrossbowPlugin::OnReceiveMessengerToClient( const std::string& /*link*/, const ASN1T_MsgsMessengerToClient& message )
+{
+    databasePublisher_->Receive( message );
 }
 
 // -----------------------------------------------------------------------------

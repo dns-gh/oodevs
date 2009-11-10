@@ -427,10 +427,31 @@
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
   </dotation>
-  <dotation category="Gasoil" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="35" name="carburant" nature="Gasoil" package-mass="1" package-size="1000" package-volume="1"/>
-  <dotation category="Gas" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="36" name="carburant" nature="Gasoil" package-mass="1" package-size="1000" package-volume="1"/>
-  <dotation category="Kerosene" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="37" name="carburant" nature="Kerosene" package-mass="1" package-size="1000" package-volume="1"/>
-  <dotation category="standard explosive" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="38" name="explosif" nature="Solid" package-mass="0.005" package-size="1" package-volume="0.005" type="Obus">
+  <dotation category="agent extincteur Eau en masse" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="35" name="munition" nature="Eau en masse" package-mass="1" package-size="1" package-volume="1" type="Obus">
+    <indirect-fire intervention-type="3" life-time="120000s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1500"/>
+  </dotation>
+  <dotation category="agent extincteur Eau en pulverisation" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="36" name="munition" nature="Eau en pulverisation" package-mass="1" package-size="1" package-volume="1" type="Obus">
+    <indirect-fire intervention-type="3" life-time="120000s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1500"/>
+  </dotation>
+  <dotation category="agent extincteur Mousse" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="37" name="munition" nature="Mousse" package-mass="1" package-size="1" package-volume="1" type="Obus">
+    <indirect-fire intervention-type="3" life-time="120000s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1500"/>
+  </dotation>
+  <dotation category="agent extincteur Poudre" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="38" name="munition" nature="Poudre" package-mass="1" package-size="1" package-volume="1" type="Obus">
+    <indirect-fire intervention-type="3" life-time="120000s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1500"/>
+  </dotation>
+  <dotation category="agent extincteur CO2" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="39" name="munition" nature="CO2" package-mass="1" package-size="1" package-volume="1" type="Obus">
+    <indirect-fire intervention-type="3" life-time="120000s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1500"/>
+  </dotation>
+  <dotation category="agent extincteur Sable" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="40" name="munition" nature="Sable" package-mass="1" package-size="1" package-volume="1" type="Obus">
+    <indirect-fire intervention-type="3" life-time="120000s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1500"/>
+  </dotation>
+  <dotation category="agent extincteur Hydrocarbures Halogenes" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="41" name="munition" nature="Hydocarbures Halogenes" package-mass="1" package-size="1" package-volume="1" type="Obus">
+    <indirect-fire intervention-type="3" life-time="120000s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1500"/>
+  </dotation>
+  <dotation category="Gasoil" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="42" name="carburant" nature="Gasoil" package-mass="1" package-size="1000" package-volume="1"/>
+  <dotation category="Gas" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="43" name="carburant" nature="Gasoil" package-mass="1" package-size="1000" package-volume="1"/>
+  <dotation category="Kerosene" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="44" name="carburant" nature="Kerosene" package-mass="1" package-size="1000" package-volume="1"/>
+  <dotation category="standard explosive" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="45" name="explosif" nature="Solid" package-mass="0.005" package-size="1" package-volume="0.005" type="Obus">
     <attritions>
       <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
       <attrition destruction="0.1" protection="MediumTank" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
@@ -441,7 +462,7 @@
       <attrition destruction="1" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
   </dotation>
-  <dotation category="standard landmine" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="39" name="mine" nature="Solid" package-mass="0.005" package-size="1" package-volume="0.005" type="Obus">
+  <dotation category="standard landmine" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="46" name="mine" nature="Solid" package-mass="0.005" package-size="1" package-volume="0.005" type="Obus">
     <attritions>
       <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
       <attrition destruction="0.1" protection="MediumTank" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
@@ -452,17 +473,17 @@
       <attrition destruction="1" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
   </dotation>
-  <dotation category="standard barbed wire" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="40" name="barbele" nature="Solid" package-mass="0.005" package-size="1" package-volume="0.005"/>
-  <dotation category="UR NTI1 MOB" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="41" name="piece" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <dotation category="UR NTI2 MOB" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="42" name="piece" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <dotation category="UR NTI3" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="43" name="piece" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <dotation category="UR NTI1 TCT" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="44" name="piece" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <dotation category="UR NTI2 TCT" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="45" name="piece" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <dotation category="UR NTI2 TRS" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="46" name="piece" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <dotation category="UR NTI2 COTAC" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="47" name="piece" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <dotation category="UR NTI2 DEM" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="48" name="piece" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <dotation category="UR AAC" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="49" name="piece" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <dotation category="UR NTI1 EA" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="50" name="piece" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <dotation category="Food" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="51" name="ration" nature="Solid" package-mass="0.015" package-size="10" package-volume="0.01"/>
-  <dotation category="Water" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="52" name="ration" nature="Solid" package-mass="1" package-size="1000" package-volume="1"/>
+  <dotation category="standard barbed wire" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="47" name="barbele" nature="Solid" package-mass="0.005" package-size="1" package-volume="0.005"/>
+  <dotation category="UR NTI1 MOB" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="48" name="piece" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <dotation category="UR NTI2 MOB" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="49" name="piece" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <dotation category="UR NTI3" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="50" name="piece" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <dotation category="UR NTI1 TCT" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="51" name="piece" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <dotation category="UR NTI2 TCT" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="52" name="piece" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <dotation category="UR NTI2 TRS" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="53" name="piece" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <dotation category="UR NTI2 COTAC" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="54" name="piece" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <dotation category="UR NTI2 DEM" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="55" name="piece" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <dotation category="UR AAC" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="56" name="piece" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <dotation category="UR NTI1 EA" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="57" name="piece" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <dotation category="Food" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="58" name="ration" nature="Solid" package-mass="0.015" package-size="10" package-volume="0.01"/>
+  <dotation category="Water" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="59" name="ration" nature="Solid" package-mass="1" package-size="1000" package-volume="1"/>
 </dotations>

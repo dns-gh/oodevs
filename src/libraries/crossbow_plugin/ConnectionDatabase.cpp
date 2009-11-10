@@ -22,9 +22,14 @@ namespace
         IErrorInfoPtr ipError;
         BSTR strError;
         ::GetErrorInfo( 0, &ipError );
-        ipError->GetDescription( &strError );
-        const std::string error = boost::lexical_cast< std::string >( _bstr_t( strError ) );
-        MT_LOG_ERROR_MSG( error ); // $$$$ SBO 2008-05-15: should throw
+        if ( ipError != NULL )
+        {
+            ipError->GetDescription( &strError );
+            const std::string error = boost::lexical_cast< std::string >( _bstr_t( strError ) );
+            MT_LOG_ERROR_MSG( error ); // $$$$ SBO 2008-05-15: should throw
+        }
+        else
+            MT_LOG_ERROR_MSG( "Unable to retrieve details" );
     }
 }
 
@@ -34,23 +39,23 @@ namespace
 // -----------------------------------------------------------------------------
 ConnectionDatabase::ConnectionDatabase( const std::string& url )
 {    
-    try
+    IWorkspaceFactoryPtr spWorkspaceFactory;
+    spWorkspaceFactory.CreateInstance( CLSID_SdeWorkspaceFactory );
+
+    if( spWorkspaceFactory == NULL )
+        throw std::runtime_error( "Unable to create sde workspace factory." );
+
+    IWorkspacePtr workspace;
+    if( FAILED( spWorkspaceFactory->Open( CreateProperty( url ), 0, &workspace ) ) )
     {
-        IWorkspaceFactoryPtr spWorkspaceFactory;
-        spWorkspaceFactory.CreateInstance( CLSID_SdeWorkspaceFactory );
-
-        if( spWorkspaceFactory == NULL )
-            throw std::runtime_error( "Unable to create sde workspace factory." );
-
-        IWorkspacePtr workspace;
-        if( SUCCEEDED( spWorkspaceFactory->Open( CreateProperty( url ), 0, &workspace ) ) )
-            Initialize( workspace );
-        else
-            ThrowError();
+        ThrowError();
+        MT_LOG_ERROR_MSG( "Unable to open database connection." );
+        throw std::runtime_error( "Unable to open database connection." );
     }
-    catch( std::exception& e )
+    else
     {
-        MT_LOG_INFO_MSG( e.what() );
+        Initialize( workspace );
+        MT_LOG_INFO_MSG( "Connected to " + url + "." );
     }    
 }
 
@@ -69,19 +74,21 @@ ConnectionDatabase::~ConnectionDatabase()
 // -----------------------------------------------------------------------------
 IPropertySetPtr ConnectionDatabase::CreateProperty( const std::string& url )
 {
-    // sde://user:pass@server:port/database
-    static boost::regex expression( "(sde):\\/\\/(\\w+):(\\w+)@(\\w+)(:(\\d+)){0,1}\\/(\\w*)" );
+    // sde://user:pass@server[:port]/database.schema
+    static boost::regex expression( "(sde):\\/\\/(\\w+):(\\w+)@([\\w\\-\\.]+)(:(\\d+)){0,1}\\/(\\w*).(\\w*)" );
     boost::cmatch matches;
     IPropertySetPtr spProperty;
 
     if ( boost::regex_match( url.c_str(), matches, expression ) )
     {            
         spProperty.CreateInstance( CLSID_PropertySet );
-        protocol_ = matches[ 1 ];
         database_ = matches[ 7 ];
-        std::string server( matches[ 4 ] );
+        schema_ = matches[ 8 ];
+
+        const std::string server( matches[ 4 ] );
+        const std::string protocol( matches[ 1 ] );
         spProperty->SetProperty( CComBSTR( "server" ), CComVariant( server.c_str() ) );
-        spProperty->SetProperty( CComBSTR( "instance" ), CComVariant( std::string( protocol_ + ":postgresql:" + server ).c_str() ) );
+        spProperty->SetProperty( CComBSTR( "instance" ), CComVariant( std::string( protocol + ":postgresql:" + server ).c_str() ) );
         spProperty->SetProperty( CComBSTR( "user" ), CComVariant( std::string( matches[ 2 ] ).c_str() ) );
         spProperty->SetProperty( CComBSTR( "password" ), CComVariant( std::string( matches[ 3 ] ).c_str() ) );
         if ( matches[ 6 ] != "" )
@@ -89,11 +96,11 @@ IPropertySetPtr ConnectionDatabase::CreateProperty( const std::string& url )
         spProperty->SetProperty( CComBSTR( "database" ),  CComVariant( database_.c_str() ) );
         spProperty->SetProperty( CComBSTR( "version" ),  CComVariant( "sde.DEFAULT" ) );
 
-        std::string msg = "server:" + server + ", " +
-            "instance:" + protocol_ + ":postgresql:" + server + ", " +
+        std::string msg = "server:" + server + ":" + matches[ 6 ] + ", " +
+            "instance:" + protocol + ":postgresql:" + server + ", " +
             "user:" + matches[ 2 ] + ", " +
             "password:" + matches[ 3 ] + ", " +
-            "database:" + database_ + ", " +
+            "database:" + database_ + "." + schema_ + ", " +
             "version:sde.DEFAULT";
         MT_LOG_INFO_MSG( msg );
     }
@@ -101,48 +108,12 @@ IPropertySetPtr ConnectionDatabase::CreateProperty( const std::string& url )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ConnectionDatabase::Decorate
-// Created: JCR 2009-02-11
+// Name: ConnectionDatabase::GetTableName
+// Created: JCR 2009-04-24
 // -----------------------------------------------------------------------------
-std::string ConnectionDatabase::Decorate( const std::string& name )
+std::string ConnectionDatabase::GetTableName( const std::string& name ) const
 {
-    if ( database_ != "" && protocol_ != "" )
-        return database_ + "." + protocol_ + "." + name;
+    if ( database_ != "" && schema_ != "" )
+        return database_ + "." + schema_ + "." + name;
     return name;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConnectionDatabase::OpenTable
-// Created: JCR 2009-02-11
-// -----------------------------------------------------------------------------
-Table_ABC* ConnectionDatabase::OpenTable( const std::string& name )
-{
-    return Database::OpenTable( Decorate( name ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConnectionDatabase::OpenBufferedTable
-// Created: JCR 2009-02-11
-// -----------------------------------------------------------------------------
-Table_ABC& ConnectionDatabase::OpenBufferedTable( const std::string& name, bool clear /*= true*/ )
-{
-    return Database::OpenBufferedTable( Decorate( name ), clear );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConnectionDatabase::ClearTable
-// Created: JCR 2009-02-11
-// -----------------------------------------------------------------------------
-void ConnectionDatabase::ClearTable( const std::string& name )
-{
-    Database::ClearTable( Decorate( name ) );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: ConnectionDatabase::ReleaseTable
-// Created: JCR 2009-02-11
-// -----------------------------------------------------------------------------
-void ConnectionDatabase::ReleaseTable( const std::string& name )
-{
-    Database::ReleaseTable( Decorate( name ) );
 }

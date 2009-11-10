@@ -13,7 +13,7 @@
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "tools/Resolver_ABC.h"
-#include <list>
+#include <set>
 
 namespace kernel
 {
@@ -36,16 +36,12 @@ namespace xml
 class MedicalTreatmentAttribute : public kernel::MedicalTreatmentAttribute_ABC
                     , public kernel::Serializable_ABC
 {
-private:
-    typedef std::list< const kernel::MedicalTreatmentType* > T_MedicalTreatmentTypeList;
-    typedef T_MedicalTreatmentTypeList::const_iterator       CIT_MedicalTreatmentTypeList;
-    typedef T_MedicalTreatmentTypeList::iterator             IT_MedicalTreatmentTypeList;
 
 public:
     //! @name Constructors/Destructor
     //@{
     explicit MedicalTreatmentAttribute( kernel::PropertiesDictionary& dico );
-             MedicalTreatmentAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& MedicalTreatmentTypes, kernel::PropertiesDictionary& dico );
+             MedicalTreatmentAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& treatmentTypes, kernel::PropertiesDictionary& dico );
     virtual ~MedicalTreatmentAttribute();
     //@}
 
@@ -58,7 +54,7 @@ public:
 
     //! @name Modifiers
     //@{
-    void SetData( const kernel::MedicalTreatmentType& type );
+    void AddMedicalTreatment( const kernel::MedicalTreatmentType& type );
     //@}
 
 private:
@@ -70,18 +66,24 @@ private:
 
     //! @name Helpers
     //@{
+    void ReadTreatment( xml::xistream& xis, const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& treatmentTypes );
     void CreateDictionary( kernel::PropertiesDictionary& dico );
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef std::vector< const kernel::MedicalTreatmentType* > T_MedicalTreatments;
     //@}
 
 public:
     //! @name Member data
     //@{
-    T_MedicalTreatmentTypeList    typeList_;
-    int                           nMedicalTreatmentType_;
-    int                           beds_;
-    int                           availableBeds_;
-    int                           doctors_;
-    int                           availableDoctors_;
+    T_MedicalTreatments     treatmentTypes_;
+    int                     beds_;
+    int                     availableBeds_;
+    int                     doctors_;
+    int                     availableDoctors_;
     //@}
 };
 

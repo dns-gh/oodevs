@@ -25,7 +25,7 @@ namespace Sword
         [ProgId("Sword.Crossbow.Orbat")]
         public partial class Orbat : UserControl, IDockableWindowDef
         {
-            private SymbolFactory m_pSymbolFactory = new SymbolFactory();
+            // private SymbolFactory m_pSymbolFactory;
             private IDisplay m_SimpleDisplay = new SimpleDisplayClass();
 
             #region COM Registration Function(s)
@@ -74,6 +74,7 @@ namespace Sword
 
             public Orbat()
             {
+                // m_pSymbolFactory = Tools.GetExtension().SymbolFactory;
                 InitializeComponent();
                 InitializeEvents();
             }
@@ -95,13 +96,12 @@ namespace Sword
 
             public void OnCreate(object hook)
             {
-                Tools.GetCSwordExtension().ModelLoaded += new EventHandler(OnModelLoadedHandler);
+                Tools.GetExtension().ModelLoaded += new EventHandler(OnModelLoadedHandler);
             }
 
             public void OnDestroy()
             {
                 m_SimpleDisplay = null;
-                m_pSymbolFactory = null;
             }
 
             public object UserData
@@ -113,7 +113,9 @@ namespace Sword
 
             private void OnModelLoadedHandler(object sender, EventArgs e)
             {
-                LoadLayer(Tools.GetCSwordExtension().Config.LayersConfiguration.Units);
+                SwordExtension extension = sender as SwordExtension;
+                if( sender != null )
+                    LoadLayer(extension.Config.LayersConfiguration.Units);
             }
         }
     }

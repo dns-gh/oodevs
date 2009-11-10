@@ -93,7 +93,7 @@ void MIL_Folk::SendStateToNewClient() const
 // -----------------------------------------------------------------------------
 void MIL_Folk::UpdateNetwork() const
 {
-    if ( !first_update_ && ( ++step_ % 10 ) == 0 )
+    if ( !first_update_ && ( ++step_ % 60 ) == 0 )
         SendUpdate();
 }
 

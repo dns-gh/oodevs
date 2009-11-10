@@ -3,4 +3,11 @@
   <nature type="Kerosene"/>
   <nature type="Gasoil"/>
   <nature type="Solid"/>
+  <nature type="Eau en masse"/>
+  <nature type="Eau en pulverisation"/>
+  <nature type="Mousse"/>
+  <nature type="Poudre"/>
+  <nature type="CO2"/>
+  <nature type="Sable"/>
+  <nature type="Hydocarbures Halogenes"/>
 </natures>

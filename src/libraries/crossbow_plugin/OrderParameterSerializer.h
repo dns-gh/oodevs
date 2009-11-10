@@ -22,11 +22,19 @@ namespace dispatcher
     class Model;
 }
 
+namespace boost
+{
+    template< typename T > class shared_ptr;
+}
+
 namespace plugins
 {
 namespace crossbow
 {
+    class OrderParameterTypeResolver;
     class Database_ABC;
+    class Row_ABC;
+    class Table_ABC;
 
 // =============================================================================
 /** @class  OrderParameterSerializer
@@ -59,16 +67,29 @@ private:
 
     //! @name Helpers
     //@{
-    void SerializeLimit( ASN1T_Line*& asn, unsigned long parameterId, const std::string& tablename ) const;
     void SerializePhaseLines( ASN1T_LimasOrder*& asn, unsigned long parameterId, const std::string& tablename ) const;
     void SerializePhaseLine( ASN1T_LimaOrder& asn, const std::string& value ) const;
     void SerializeDirection( ASN1T_Heading& asn, const std::string& value ) const;
     void SerializeIntelligenceList( ASN1T_IntelligenceList*& asn, const std::string& value ) const;
 
+    void SerializeUnit( ASN1T_Unit& asn, const std::string& value ) const;
     void SerializeAutomat( ASN1T_Automat& asn, const std::string& value ) const;
+    void SerializeUnitKnowledge( ASN1T_UnitKnowledge& asn, const std::string& value ) const;
+    void SerializeObjectKnowledge( ASN1T_ObjectKnowledge& asn, const std::string& value ) const;
     void SerializeBool( ASN1BOOL& asn, const std::string& value ) const;
-    void SerializeLocation( ASN1T_Location*& asn, unsigned long parameterId, const std::string& value ) const;
-    void CleanLocation( ASN1T_Location*& asn ) const;
+    void SerializeMissionObjective( ASN1T_MissionObjective*& asn, const std::string& value ) const;
+    void SerializeMissionObjectiveList( ASN1T_MissionObjectiveList*& asn, const std::string& value ) const;
+    template< typename T >
+    void SerializeLocation( T*& asn, unsigned long parameterId, const std::string& value ) const;
+    template< typename T >
+    void SerializeLocationList( T*& asn, unsigned long parameterId, const std::string& value ) const;
+    template< typename T >
+    void SerializeLocation( T*& asn, const Row_ABC* row ) const;
+    //@}
+
+    //! @name Helper
+    //@{
+    void FillLocationlist( std::vector< ASN1T_Location* >& locations, boost::shared_ptr< Table_ABC > table, unsigned long oid ) const;
     //@}
 
 private:
@@ -76,6 +97,7 @@ private:
     //@{
     const dispatcher::Model& model_;
     Database_ABC& database_;
+    std::auto_ptr< OrderParameterTypeResolver > types_;
     //@}
 };
 

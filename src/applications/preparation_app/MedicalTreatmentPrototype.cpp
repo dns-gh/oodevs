@@ -12,7 +12,9 @@
 #include "clients_kernel/MedicalTreatmentType.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/ValuedListItem.h"
 #include "preparation/MedicalTreatmentAttribute.h"
+#include "preparation/ObjectAttributesContainer.h"
 
 using namespace kernel;
 
@@ -46,8 +48,10 @@ void MedicalTreatmentPrototype::Commit()
     {
         PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
         MedicalTreatmentAttribute* attribute = new MedicalTreatmentAttribute( dico );
-                       attribute->SetData( *type_->GetValue() );
-        creation_->Attach< MedicalTreatmentAttribute_ABC >( *attribute );
+        for( QListViewItem* item = treatmentTypes_->firstChild(); item != 0; item = item->nextSibling() )
+            if( item->isSelected() )
+                attribute->AddMedicalTreatment( *static_cast< gui::ValuedListItem* >( item )->GetValue< const MedicalTreatmentType >() );        
+        creation_->Get< ObjectAttributesContainer >().Register( *attribute );
     }
 }
 

@@ -1307,8 +1307,8 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Sword Officer Training executable (*.exe)</source>
-        <translation type="unfinished"></translation>
+        <source>Sword executable (*.exe)</source>
+        <translation>Sword executable (*.exe)</translation>
     </message>
 </context>
 <context>
@@ -2103,16 +2103,16 @@ stance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Sword Officer Training Adaptation Tool - No Project</source>
-        <translation type="unfinished"></translation>
+        <source>Sword Adaptation Tool - No Project</source>
+        <translation>Sword Security Adaptation Tool - No Project</translation>
     </message>
     <message>
-        <source>Sword Officer Training Adaptation Tool - </source>
-        <translation type="unfinished"></translation>
+        <source>Sword Adaptation Tool - </source>
+        <translation>Sword Security Adaptation Tool - </translation>
     </message>
     <message>
-        <source>Sword Officer Training Adaptation Tool</source>
-        <translation type="unfinished"></translation>
+        <source>Sword Adaptation Tool</source>
+        <translation>Sword Security Adaptation Tool</translation>
     </message>
 </context>
 <context>
@@ -4666,8 +4666,8 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Sword Officer Training Adaptation Tool - Saving Errors</source>
-        <translation type="unfinished"></translation>
+        <source>Sword Adaptation Tool - Saving Errors</source>
+        <translation>Sword Security Adaptation Tool - Saving Errors</translation>
     </message>
     <message>
         <source>Unloading: %1...</source>

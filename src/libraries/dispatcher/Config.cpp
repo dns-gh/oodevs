@@ -14,7 +14,7 @@
 #pragma warning( disable: 4127 4244 )
 #include <boost/program_options.hpp>
 #pragma warning( pop )
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
 namespace po = boost::program_options;
 using namespace dispatcher;

@@ -102,7 +102,7 @@ namespace Sword
 
             void IDockableWindowDef.OnCreate(object hook)
             {
-                Tools.GetCSwordExtension().ModelLoaded += new EventHandler(OnModelLoadedHandler);
+                Tools.GetExtension().ModelLoaded += new EventHandler(OnModelLoadedHandler);
             }
 
             void IDockableWindowDef.OnDestroy()
@@ -116,8 +116,9 @@ namespace Sword
             {
                 if (m_selectionChangedEvent == null)
                 {
+                    SwordExtension extension = sender as SwordExtension;
                     // $$$$ SBO 2007-08-29: hard coded shit
-                    m_unitLayer = (IFeatureLayer)Tools.GetLayerByName(Tools.GetCSwordExtension().Config.LayersConfiguration.Units + " - Graphics");
+                    m_unitLayer = (IFeatureLayer)Tools.GetLayerByName(extension.Config.LayersConfiguration.Units + " - Graphics");
                     if (m_unitLayer == null)
                         return;
                     m_selection = (IEnumFeature)m_unitLayer;
@@ -146,7 +147,7 @@ namespace Sword
                 if (selected == null)
                     return;
                 IFeatureWorkspace workspace = Tools.RetrieveWorkspace(m_unitLayer);
-                ITable reportsTable = workspace.OpenTable(Tools.GetCSwordExtension().Config.LayersConfiguration.Reports);
+                ITable reportsTable = workspace.OpenTable(Tools.GetExtension().Config.LayersConfiguration.Reports);
                 reportsList.BeginUpdate();
                 IQueryFilter query = new QueryFilterClass();
                 query.WhereClause = "unit_id=" + Tools.GetValue<int>(selected, "Public_OID");

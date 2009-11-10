@@ -21,7 +21,7 @@ namespace
     QString ReadLang()
     {
         QSettings settings;
-        settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD Officer Training" ) );
+        settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
         return settings.readEntry( "/Common/Language", QTextCodec::locale() );
     }
 }
@@ -83,6 +83,6 @@ void OptionsPage::OnChangeLanguage( const QString& lang )
 void OptionsPage::Commit()
 {
     QSettings settings;
-    settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD Officer Training" ) );
+    settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
     settings.writeEntry( "/Common/Language", selectedLanguage_.c_str() );
 }

@@ -505,6 +505,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPositionWit
     {
         assert( pObjective );
 
+
         MT_Float     rMinDistance = MIL_Tools::ConvertMeterToSim( rMinMeterDistance );
 
         const MT_Vector2D& vEnnemiPos  = pKnowledgeEnnemy->GetPosition();

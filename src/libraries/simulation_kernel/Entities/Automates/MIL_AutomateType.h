@@ -76,6 +76,7 @@ public:
     //@{
     virtual bool IsLogistic() const;
     virtual bool IsRefugee () const;
+    virtual bool IsInjuredHuman() const;
     //@}
     
     //! @name Logistic

@@ -30,6 +30,7 @@ class MIL_PopulationType;
 class MIL_PopulationAttitude;
 class PHY_Sensor;
 class PHY_Weapon;
+class PHY_HumanProtection;
 class PHY_DotationGroupContainer;
 class MIL_Object_ABC;
 class AttritionCapacity;
@@ -43,6 +44,7 @@ class PHY_Human;
 class DEC_Knowledge_AgentComposante;
 class MIL_Time_ABC;
 class PHY_RoleInterface_Composantes;
+class MIL_Injury_ABC;
 
 namespace firing
 {
@@ -83,6 +85,7 @@ public:
     void TransferComposante( PHY_RoleInterface_Composantes& newRole );
 
     template< typename T > void ApplyOnWeapons( T& t ) const;
+    template< typename T > void ApplyOnHumanProtection( T& t ) const;
     //@}
 
     //! @name Logistic - Maintenance
@@ -143,6 +146,7 @@ public:
     void     ApplyExplosion                 ( const AttritionCapacity& capacity                                                         , PHY_FireDamages_Agent& fireDamages );
     void     ApplyContamination             ( const MIL_ToxicEffectManipulator& contamination );
     void     ApplyPoisonous                 ( const MIL_ToxicEffectManipulator& contamination );
+    void     ApplyInjury                    ( MIL_Injury_ABC& injury );
     uint     GetNeutralizationTime          () const;
     void     ApplyHumansWounds              ( const PHY_ComposanteState& composanteNewState, PHY_FireDamages_Agent& fireDamages );
     double   GetDangerosity                 ( const DEC_Knowledge_AgentComposante& compTarget, double rDistBtwFirerAndTarget ) const;
@@ -226,6 +230,9 @@ private:
     typedef std::vector< PHY_Weapon* >     T_WeaponVector;
     typedef T_WeaponVector::const_iterator CIT_WeaponVector;
 
+    typedef std::vector< PHY_HumanProtection* > T_HumanProtectionVector;
+    typedef T_HumanProtectionVector::const_iterator CIT_HumanProtectionVector;
+
     typedef std::vector< PHY_Sensor* >     T_SensorVector;
     typedef T_SensorVector::const_iterator CIT_SensorVector;
     //@}
@@ -240,17 +247,18 @@ private:
     //@}
 
 private:
-    const MIL_Time_ABC&                     time_;
-          PHY_RoleInterface_Composantes*    pRole_;
-    const PHY_ComposanteState*              pState_;
-    const PHY_ComposanteTypePion*           pType_;
-    const bool                              bMajor_;
-    const bool                              bLoadable_;
-    const bool                              bCanBePartOfConvoy_;
-          bool                              bUsedForLogistic_;
-          T_WeaponVector                    weapons_;
-          T_SensorVector                    sensors_;
-          PHY_HumansComposante*             pHumans_;
+    const MIL_Time_ABC&             time_;
+          PHY_RoleInterface_Composantes* pRole_;
+    const PHY_ComposanteState*      pState_;
+    const PHY_ComposanteTypePion*   pType_;
+    const bool                      bMajor_;
+    const bool                      bLoadable_;
+    const bool                      bCanBePartOfConvoy_;
+          bool                      bUsedForLogistic_;
+          T_WeaponVector            weapons_;
+          T_HumanProtectionVector   protections_;
+          T_SensorVector            sensors_;
+          PHY_HumansComposante*     pHumans_;
 
     // Breakdowns
           uint                            nAutoRepairTimeStep_;

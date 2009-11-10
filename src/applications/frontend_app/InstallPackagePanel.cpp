@@ -15,6 +15,7 @@
 #include "frontend/commands.h"
 #include "frontend/Config.h"
 #include "zipstream/zipstream.h"
+#include "clients_gui/Tools.h"
 #include <xeumeuleu/xml.h>
 
 #include <qaction.h>
@@ -184,7 +185,7 @@ void InstallPackagePanel::Update()
     else
     {
         okay_->setDisabled( true );
-        bubble_->ShowError( tr( "Selected file is not a valid %1 package." ).arg( qApp->translate( "Application", "SWORD Officer Training" ) ) );
+        bubble_->ShowError( tr( "Selected file is not a valid %1 package." ).arg( tools::translate( "Application", "SWORD" ) ) );
     }
 }
 

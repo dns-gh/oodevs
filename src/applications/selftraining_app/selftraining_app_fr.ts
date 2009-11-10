@@ -30,8 +30,8 @@
         <translation>SCALPED est déjà lancé. Fermer ? </translation>
     </message>
     <message>
-        <source>SWORD Officer Training</source>
-        <translation>SCALPED</translation>
+        <source>SWORD</source>
+        <translation>SWORD</translation>
     </message>
     <message>
         <source>sword-ot@masagroup.net</source>
@@ -182,10 +182,6 @@
 </context>
 <context>
     <name>MainWindow</name>
-    <message>
-        <source>SWORD Officer Training</source>
-        <translation type="obsolete">SCALPED</translation>
-    </message>
     <message>
         <source> - release </source>
         <translation> - version </translation>

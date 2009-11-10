@@ -2,7 +2,7 @@ using System;
 using ESRI.ArcGIS.Display;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
-using ESRI.ArcGIS.MOLE;
+using ESRI.ArcGIS.DefenseSolutions;
 
 namespace Sword
 {
@@ -42,7 +42,7 @@ namespace Sword
                 }
                 set
                 {
-                    m_glyph = value;                    
+                    m_glyph = value;
                     if (m_glyph != null)
                         m_glyph.QueryDimensions(ref m_width, ref m_height);
                 }

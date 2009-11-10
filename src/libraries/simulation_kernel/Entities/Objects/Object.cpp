@@ -390,7 +390,7 @@ void Object::SendMsgUpdate() const
     }
         
     unsigned int xAttr = *reinterpret_cast< unsigned int * >( &asn().attributes.m );
-    xAttr <<= 19; // $$$$ 32bits - 1bit * #attributes
+             xAttr <<= 20; // $$$$ 32bits - 1bit / attribute 
 
     if ( xAttr != 0 || asn().m.locationPresent )
         asn.Send();

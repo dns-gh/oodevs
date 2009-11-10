@@ -18,6 +18,7 @@ static const char* physicalXml =
 "  <decisional file=\"Decisionnel.xml\"/>\n"
 "  <volumes file=\"Volumes.xml\"/>\n"
 "  <protections file=\"Protections.xml\"/>\n"
+"  <human-protections file=\"HumanProtections.xml\"/>\n"
 "  <dotation-natures file=\"DotationNatures.xml\"/>\n"
 "  <objects file=\"Objets.xml\"/>\n"
 "  <dotations file=\"Dotations.xml\"/>\n"

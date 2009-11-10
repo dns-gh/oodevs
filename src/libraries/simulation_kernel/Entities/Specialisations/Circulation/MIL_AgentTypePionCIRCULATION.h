@@ -1,16 +1,16 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/Src/Entities/Specialisations/Circulation/MIL_AgentTypePionCIRCULATION.h $
+// $Archive: /MVW_v10/Build/SDK/MIL/Src/Entities/Specialisations/Circulation/MIL_AgentTypePionCirculation.h $
 // $Author: Nld $
 // $Modtime: 10/03/05 11:15 $
 // $Revision: 1 $
-// $Workfile: MIL_AgentTypePionCIRCULATION.h $
+// $Workfile: MIL_AgentTypePionCirculation.h $
 //
 // *****************************************************************************
 
-#ifndef __MIL_AgentTypePionCIRCULATION_h_
-#define __MIL_AgentTypePionCIRCULATION_h_
+#ifndef __MIL_AgentTypePionCirculation_h_
+#define __MIL_AgentTypePionCirculation_h_
 
 #include "Entities/Agents/MIL_AgentTypePion.h"
 
@@ -23,16 +23,16 @@ namespace xml
 // @class  MIL_AgentTypePionType
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_AgentTypePionCIRCULATION : public MIL_AgentTypePion
+class MIL_AgentTypePionCirculation : public MIL_AgentTypePion
 {
 
 public:
-             MIL_AgentTypePionCIRCULATION( const std::string& strName, xml::xistream& xis );
-    virtual ~MIL_AgentTypePionCIRCULATION();
+             MIL_AgentTypePionCirculation( const std::string& strName, xml::xistream& xis );
+    virtual ~MIL_AgentTypePionCirculation();
     
     virtual void RegisterFunctions( directia::Brain& brain, MIL_AgentPion& agent ) const;
 
     static const MIL_AgentTypePion* Create( const std::string& strName, xml::xistream& xis );
 };
 
-#endif // __MIL_AgentTypePionCIRCULATION_h_
+#endif // __MIL_AgentTypePionCirculation_h_

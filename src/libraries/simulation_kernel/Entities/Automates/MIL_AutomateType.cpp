@@ -23,6 +23,7 @@
 #include "Entities/Specialisations/ASA/MIL_AutomateTypeASA.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateTypeLOG.h"
 #include "Entities/Specialisations/REFUGIE/MIL_AutomateTypeREFUGIE.h"
+#include "Entities/Agents/Units/Humans/MIL_AutomateTypeInjuredHuman.h"
 #include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
@@ -81,6 +82,7 @@ void MIL_AutomateType::Initialize( xml::xistream& xis )
     automateTypeAllocators_[ "Automate MILICE"                 ] = &MIL_AutomateType       ::Create;
     automateTypeAllocators_[ "Automate ASY"                    ] = &MIL_AutomateType       ::Create;
     automateTypeAllocators_[ "Automate Emergency"              ] = &MIL_AutomateType       ::Create;
+    automateTypeAllocators_[ "Automate Injured Human"          ] = &MIL_AutomateTypeInjuredHuman::Create;
     
     LoadingWrapper loader;
 
@@ -293,6 +295,7 @@ MIL_Automate& MIL_AutomateType::InstanciateAutomate( uint nID, MIL_Automate& par
     return *new MIL_Automate( *this, nID, parent, xis, database );
 }
 
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateType::RegisterFunctions
 // Created: LDC 2009-04-23
@@ -309,6 +312,7 @@ void MIL_AutomateType::RegisterFunctions( directia::Brain& /*brain*/, MIL_Automa
 const MIL_AutomateType* MIL_AutomateType::FindAutomateType( const std::string& strName )
 {
     CIT_AutomateTypeMap it = automateTypes_.find( strName );
+
     
     return it == automateTypes_.end() ? 0 : it->second;
 }
@@ -386,6 +390,15 @@ bool MIL_AutomateType::IsLogistic() const
 // Created: NLD 2005-03-10
 // -----------------------------------------------------------------------------
 bool MIL_AutomateType::IsRefugee() const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateType::IsInjuredHuman
+// Created: RPD 2010-11-10
+// -----------------------------------------------------------------------------
+bool MIL_AutomateType::IsInjuredHuman() const
 {
     return false;
 }

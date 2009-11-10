@@ -1529,6 +1529,7 @@
         <mission name="Emergency - convoy population"/>
         <mission name="Emergency - escort demonstration"/>
         <mission name="Emergency - evacuate area"/>
+        <mission name="Emergency - organize distribution"/>
         <mission name="follow"/>
         <mission name="move"/>
         <mission name="park"/>
@@ -1560,6 +1561,7 @@
         <mission name="Emergency - organise shelter"/>
         <mission name="Emergency - provide first aid"/>
         <mission name="Emergency - soothe"/>
+        <mission name="Emergency - supply"/>
         <mission name="move"/>
         <mission name="park"/>
       </missions>
@@ -2304,6 +2306,7 @@
     <automat dia-type="HS_Police_HQ" file="Emergency\Automates\Police\Model.bms" name="HS - Police HQ">
       <missions>
         <mission name="Emergency - evacuate area"/>
+        <mission name="Emergency - alert"/>
         <mission name="move"/>
         <mission name="park"/>
       </missions>

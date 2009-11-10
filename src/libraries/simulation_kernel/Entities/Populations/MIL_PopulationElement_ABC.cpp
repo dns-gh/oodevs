@@ -32,6 +32,7 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/MIL_Army.h"
 #include "MIL_AgentServer.h"
+#include "Entities/Agents/Units/Humans/MIL_Injury_ABC.h"
 
 MT_Random MIL_PopulationElement_ABC::randomGenerator_;
 
@@ -179,6 +180,15 @@ void MIL_PopulationElement_ABC::ApplyExplosion( const AttritionCapacity& capacit
     rNbrAliveHumans_ -= nHit;
 
     fireResult.GetDamages( *pPopulation_ ).NotifyHumansKilled( nHit );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::ApplyExplosion
+// Created: NLD 2006-04-24
+// -----------------------------------------------------------------------------
+void MIL_PopulationElement_ABC::ApplyInjury( MIL_Injury_ABC& injury )
+{
+    injury.SetInjury( rNbrAliveHumans_ , rDensity_ );
 }
 
 // -----------------------------------------------------------------------------

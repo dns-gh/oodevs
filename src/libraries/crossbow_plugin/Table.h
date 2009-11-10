@@ -19,6 +19,7 @@ namespace crossbow
 {
     class Database;
     class Row;
+    class DatabaseEditor_ABC;
 
 // =============================================================================
 /** @class  Table
@@ -32,7 +33,7 @@ class Table : public Table_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Table( ITablePtr table, const std::string& name );
+    explicit Table( ITablePtr table, DatabaseEditor_ABC& editor );
     virtual ~Table();
     //@}
 
@@ -40,11 +41,16 @@ public:
     //@{
     virtual Row_ABC& CreateRow();
     virtual void DeleteRows( const std::string& query );
+    virtual void InsertRow( const Row_ABC& row );
     virtual void UpdateRow( const Row_ABC& row );
     virtual void Clear();
-    virtual Row_ABC* Find( const std::string& query );
+    virtual Row_ABC* Find( const std::string& query, bool forceUpdate );
     virtual Row_ABC* GetNextRow();
+    //@}
 
+
+    //! @name Transactions
+    //@{
     virtual void BeginTransaction();
     virtual void EndTransaction();
     //@}
@@ -52,7 +58,7 @@ public:
 protected:
     //! @name Helpers
     //@{
-    bool InTransaction() const;
+    DatabaseEditor_ABC& editor_;
     //@}
 
 private:
@@ -62,18 +68,12 @@ private:
     Table& operator=( const Table& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
-    //@{
-    const std::string name_;
+    //@{    
     ITablePtr table_;
     ICursorPtr cursor_;
-    std::auto_ptr< crossbow::Row > row_;
-    bool inTransaction_;
+    std::auto_ptr< crossbow::Row > row_;        
     //@}
 };
 

@@ -32,7 +32,7 @@ class Row : public Row_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Row();
+             Row( );
     virtual ~Row();
     //@}
 
@@ -44,7 +44,7 @@ public:
     virtual Shape_ABC& GetShape() const;
     virtual long GetID() const;
 
-    void BindRow( IRowPtr row );
+    void BindRow( IRowBufferPtr row, long id );
     void Commit( ICursorPtr cursor = NULL );
     //@}
 
@@ -63,7 +63,8 @@ private:
 private:
     //! @name Member data
     //@{
-    IRowPtr row_;
+    IRowBufferPtr row_;
+    long          id_;
     //@}
 };
 

@@ -41,8 +41,7 @@ public:
 
     //! @name 
     //@{
-    void Lock();
-    void UnLock();
+    void Flush();    
     //@}
 
     //! @name Operators

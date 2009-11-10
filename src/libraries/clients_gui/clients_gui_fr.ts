@@ -32,8 +32,8 @@
 <context>
     <name>Application</name>
     <message>
-        <source>SWORD Officer Training</source>
-        <translation type="unfinished"></translation>
+        <source>SWORD</source>
+        <translation>SWORD</translation>
     </message>
     <message>
         <source>&#xa9; 2008 MASA Group</source>
@@ -627,6 +627,10 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Initial available doctors:</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">Type</translation>
     </message>
 </context>
 <context>

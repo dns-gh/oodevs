@@ -38,19 +38,17 @@ public:
 
 	//! @name Methods
     //@{
-    void    Flag( const MT_Vector2D& vOrigin );
-    void    RemoveFlag( const MT_Vector2D& vOrigin );
-    bool    IsFlagged( const TER_Localisation& localisation ) const;
+    void    Flag( const MT_Vector2D& vOrigin , unsigned int length , unsigned int width );
+    void    RemoveFlag( const MT_Vector2D& vOrigin , unsigned int length , unsigned int width );
+    bool    IsFlagged( const TER_Localisation& localisation , unsigned int length , unsigned int width ) const;
 	//@}
 
 private:
-    typedef std::pair< int, int > T_Coordonnees;
-    //typedef std::map< T_Coordonnees, MIL_DynamicFire* > T_DynamicFireMap;
-    typedef std::set< T_Coordonnees > T_DynamicFireSet;
+    typedef std::pair< int, int > T_Coordinate;
+    typedef std::set< T_Coordinate > T_CoordinatesSet;
 
 private:
-    //T_DynamicFireMap dynamicFireMap_;
-    T_DynamicFireSet dynamicFireSet_;
+    T_CoordinatesSet coordinatesSet_;
 };
 
 #endif // __MIL_PropagationManager_h_

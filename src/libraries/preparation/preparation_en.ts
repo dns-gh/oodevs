@@ -212,18 +212,6 @@
 <context>
     <name>MedicalTreatment</name>
     <message>
-        <source>Medical Treatment services</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Medical Treatment type:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Medical Treatment capacity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Number of available beds:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -245,6 +233,10 @@
     </message>
     <message>
         <source>Total number of beds:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Medical Treatment types:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

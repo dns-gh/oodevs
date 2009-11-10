@@ -55,11 +55,25 @@ crossbow::Area::~Area()
 // Name: Area::UpdateGeometry
 // Created: JCR 2007-08-31
 // -----------------------------------------------------------------------------
-void crossbow::Area::UpdateGeometry( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const
+void crossbow::Area::Serialize( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const
 {
     if( geometry == NULL )
         geometry.CreateInstance( CLSID_Polygon );
-    PointCollection::UpdateGeometry( geometry, spatialReference );
+    PointCollection::Serialize( geometry, spatialReference );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Line::Serialize
+// Created: JCR 2009-04-27
+// -----------------------------------------------------------------------------
+void crossbow::Area::Serialize( std::ostream& geometry ) const
+{
+	const int srid = 0;
+    geometry << "st_polygon("
+             << "'polygon(";
+    PointCollection::Serialize( geometry );
+    geometry << ")'," << srid
+             << ")";
 }
 
 // -----------------------------------------------------------------------------

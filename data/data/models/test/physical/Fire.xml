@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <fire-classes>
-	<class id="1" name="Class A" defaultheat="50" heatmax="200" tempthreshold="100" increaserate="10" decreaserate="5">
+    <fire-surface length="5" width="5"/>
+	<class id="1" name="Class A" defaultheat="50" heatmax="200" tempthreshold="100" increaserate="10" decreaserate="5" propagation-threshold="10000">
     <extinguisher-agents>
     	<agent nature="EauEnMasse" effect="30"/>
     	<agent nature="EauEnPulvérisation" effect="30"/>
@@ -11,7 +12,7 @@
     	<agent nature="HydrocarburesHalogenes" effect="0"/>
     </extinguisher-agents>
    </class>
-   <class id="2" name="Class B" defaultheat="75" heatmax="250" tempthreshold="200" increaserate="20" decreaserate="10">
+   <class id="2" name="Class B" defaultheat="75" heatmax="250" tempthreshold="200" increaserate="20" decreaserate="10" propagation-threshold="10000">
     <extinguisher-agents>
     	<agent nature="EauEnMasse" effect="0"/>
     	<agent nature="EauEnPulvérisation" effect="0"/>
@@ -22,7 +23,7 @@
     	<agent nature="HydrocarburesHalogenes" effect="30"/>
     </extinguisher-agents>
    </class>
-   <class id="3" name="Class C" defaultheat="100" heatmax="300" tempthreshold="300" increaserate="30" decreaserate="15">
+   <class id="3" name="Class C" defaultheat="100" heatmax="300" tempthreshold="300" increaserate="30" decreaserate="15" propagation-threshold="10000">
     <extinguisher-agents>
     	<agent nature="EauEnMasse" effect="0"/>
     	<agent nature="EauEnPulvérisation" effect="0"/>
@@ -33,7 +34,7 @@
     	<agent nature="HydrocarburesHalogenes" effect="30"/>
     </extinguisher-agents>
    </class>
-   <class id="4" name="Class D" defaultheat="125" heatmax="350" tempthreshold="400" increaserate="40" decreaserate="20">
+   <class id="4" name="Class D" defaultheat="125" heatmax="350" tempthreshold="400" increaserate="40" decreaserate="20" propagation-threshold="10000">
     <extinguisher-agents>
     	<agent nature="EauEnMasse" effect="0"/>
     	<agent nature="EauEnPulvérisation" effect="0"/>

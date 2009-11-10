@@ -11,13 +11,13 @@
 #include "PointCollection.h"
 #include "Point.h"
 
-using namespace plugins;
+using namespace plugins::crossbow;
 
 // -----------------------------------------------------------------------------
 // Name: PointCollection constructor
 // Created: JCR 2007-09-26
 // -----------------------------------------------------------------------------
-crossbow::PointCollection::PointCollection()
+PointCollection::PointCollection()
 {
     // NOTHING
 }
@@ -26,7 +26,7 @@ crossbow::PointCollection::PointCollection()
 // Name: PointCollection constructor
 // Created: JCR 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::PointCollection::PointCollection( const ASN1T_CoordLatLongList& asn )
+PointCollection::PointCollection( const ASN1T_CoordLatLongList& asn )
 {
     for( unsigned int i = 0; i < asn.n; ++i )
         points_.push_back( crossbow::Point( asn.elem[i] ) );
@@ -36,7 +36,7 @@ crossbow::PointCollection::PointCollection( const ASN1T_CoordLatLongList& asn )
 // Name: PointCollection constructor
 // Created: JCR 2007-11-06
 // -----------------------------------------------------------------------------
-crossbow::PointCollection::PointCollection( IGeometryPtr geometry )
+PointCollection::PointCollection( IGeometryPtr geometry )
 {
     IPointCollectionPtr points;
     if( SUCCEEDED( geometry.QueryInterface( IID_IPointCollection, &points ) ) )
@@ -56,47 +56,55 @@ crossbow::PointCollection::PointCollection( IGeometryPtr geometry )
 // Name: PointCollection destructor
 // Created: JCR 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::PointCollection::~PointCollection()
+PointCollection::~PointCollection()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: PointCollection::Accept
-// Created: JCR 2007-08-30
-// -----------------------------------------------------------------------------
-void crossbow::PointCollection::Accept( ShapeVisitor_ABC& visitor ) const
-{
-    visitor.Visit( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PointCollection::UpdateGeometry
+// Name: PointCollection::Serialize
 // Created: JCR 2007-08-31
 // -----------------------------------------------------------------------------
-void crossbow::PointCollection::UpdateGeometry( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const
+void PointCollection::Serialize( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const
 {
     geometry->putref_SpatialReference( spatialReference );
     
     IZAwarePtr zAwareness;
     geometry.QueryInterface( IID_IZAware, &zAwareness );
-    zAwareness->put_ZAware( VARIANT_TRUE );
+    zAwareness->put_ZAware( VARIANT_FALSE );
 
     IPointCollectionPtr points;
     geometry.QueryInterface( IID_IPointCollection, &points );
     for( CIT_Points it = points_.begin(); it != points_.end(); ++it )
     {
         IPointPtr point( CLSID_Point );
-        it->UpdateGeometry( point, spatialReference );
+        it->Serialize( point, spatialReference );
         points->AddPoint( point );
     }
 }
 
 // -----------------------------------------------------------------------------
 // Name: PointCollection::Serialize
+// Created: JCR 2009-04-27
+// -----------------------------------------------------------------------------
+void PointCollection::Serialize( std::ostream& geometry ) const
+{
+    std::stringstream ss;
+    
+    for( CIT_Points it = points_.begin(); it != points_.end(); ++it )
+    {
+        it->SerializeCoordinates( ss, ' ' ); 
+        if( (it + 1) != points_.end() )
+            ss << ",";
+    }
+    geometry << "(" << ss.str() << ")";
+}
+
+// -----------------------------------------------------------------------------
+// Name: PointCollection::Serialize
 // Created: JCR 2007-09-26
 // -----------------------------------------------------------------------------
-void crossbow::PointCollection::Serialize( ASN1T_Location& asn ) const
+void PointCollection::Serialize( ASN1T_Location& asn ) const
 {
     asn.coordinates.n = points_.size();
     asn.coordinates.elem = new ASN1T_CoordLatLong[asn.coordinates.n];

@@ -50,7 +50,7 @@ void NBCObject::ReadPoint( xml::xistream& xis, std::vector< Point >& localisatio
 // -----------------------------------------------------------------------------
 NBCObject::NBCObject( dispatcher::Object& obj )
 : Entity_ABC()
-, type_( obj.type_ )
+, type_( obj.strName_ )
 , id_( obj.GetId() )
 {
   ASN1T_Location asn;
@@ -96,7 +96,7 @@ void NBCObject::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void NBCObject::Update( dispatcher::Object& obj )
 {
-  type_ = obj.type_;
+  type_ = obj.strName_;
   id_ =  obj.GetId();
 }
 

@@ -110,7 +110,7 @@ int main( uint nArgc, char** ppArgv )
                << "Message : " << exception.GetInfo()    << std::endl;
         
         if( !outputFile.empty() )
-            MessageBox( 0, strMsg.str().c_str(), "Sword Officer Training Adaptation Tool - Exception", MB_ICONERROR | MB_OK );
+            MessageBox( 0, strMsg.str().c_str(), "Sword Adaptation Tool - Exception", MB_ICONERROR | MB_OK );
         else
             MT_LOG_ERROR_MSG( strMsg.str().c_str() );            
         app.quit();

@@ -33,7 +33,7 @@ HlaPluginConfigPanel::HlaPluginConfigPanel( QWidget* parent, const tools::Genera
     }
     {
         new QLabel( tools::translate( "HlaPluginConfigPanel", "Federate name: " ), box_ );
-        name_ = new QLineEdit( tools::translate( "Application", "SWORD Officer Training" ), box_ );
+        name_ = new QLineEdit( tools::translate( "Application", "SWORD" ), box_ );
     }
 }
 

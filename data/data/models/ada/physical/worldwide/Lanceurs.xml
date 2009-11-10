@@ -1570,4 +1570,5 @@
       <ph-modifier target-posture="PostePrepareGenie" value="0.45"/>
     </ph-modifiers>
   </launcher>
+  <launcher indirect-fire="true" name="FireHose"/>
 </launchers>

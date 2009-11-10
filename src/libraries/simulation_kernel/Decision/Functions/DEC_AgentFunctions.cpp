@@ -237,36 +237,36 @@ bool DEC_AgentFunctions::CanConstructObject( const MIL_AgentPion& callerAgent, c
 // Name: DEC_AgentFunctions::CanBypassObject
 // Created: NLD 2004-05-07
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::CanBypassObject( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+bool DEC_AgentFunctions::CanBypassObject( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
 {
-    return pKnowledge && pKnowledge->IsValid() && callerAgent.GetRole< PHY_RoleAction_Objects >().CanBypassWithReinforcement( pKnowledge->GetType() );
+    return objectKnowledge && objectKnowledge->IsValid() && callerAgent.GetRole< PHY_RoleAction_Objects >().CanBypassWithReinforcement( objectKnowledge->GetType() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::CanDestroyObject
 // Created: NLD 2004-05-07
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::CanDestroyObject( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+bool DEC_AgentFunctions::CanDestroyObject( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
 {
-    return pKnowledge && pKnowledge->IsValid() && callerAgent.GetRole< PHY_RoleAction_Objects >().CanDestroyWithReinforcement( pKnowledge->GetType() );
+    return objectKnowledge && objectKnowledge->IsValid() && callerAgent.GetRole< PHY_RoleAction_Objects >().CanDestroyWithReinforcement( objectKnowledge->GetType() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::CanMineObject
 // Created: NLD 2005-09-08
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::CanMineObject( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+bool DEC_AgentFunctions::CanMineObject( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
 {
-    return pKnowledge && pKnowledge->IsValid() && callerAgent.GetRole< PHY_RoleAction_Objects >().CanMineWithReinforcement( pKnowledge->GetType() );
+    return objectKnowledge && objectKnowledge->IsValid() && callerAgent.GetRole< PHY_RoleAction_Objects >().CanMineWithReinforcement( objectKnowledge->GetType() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::CanActivateObject
 // Created: NLD 2005-09-08
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::CanActivateObject( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+bool DEC_AgentFunctions::CanActivateObject( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
 {
-    return pKnowledge && pKnowledge->IsValid() && pKnowledge->GetType().GetCapacity< ActivableCapacity >();
+    return objectKnowledge && objectKnowledge->IsValid() && objectKnowledge->GetType().GetCapacity< ActivableCapacity >();
 }
 
 //-----------------------------------------------------------------------------
