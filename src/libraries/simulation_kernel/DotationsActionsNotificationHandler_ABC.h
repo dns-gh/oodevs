@@ -22,8 +22,8 @@ namespace dotation {
 // =============================================================================
 class DotationsActionsNotificationHandler_ABC {
 public:
-	DotationsActionsNotificationHandler_ABC();
-	virtual ~DotationsActionsNotificationHandler_ABC();
+	         DotationsActionsNotificationHandler_ABC() {}
+	virtual ~DotationsActionsNotificationHandler_ABC() {}
 
     virtual void RegisterDotationsCapacities  ( const PHY_DotationCapacities& capacities ) = 0;
     virtual void UnregisterDotationsCapacities( const PHY_DotationCapacities& capacities ) = 0;

@@ -26,8 +26,8 @@ class DetectionComputer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DetectionComputer_ABC();
-    virtual ~DetectionComputer_ABC();
+             DetectionComputer_ABC() {}
+    virtual ~DetectionComputer_ABC() {}
     //@}
 
     //! @name Operations

@@ -20,8 +20,8 @@ namespace transport {
 // =============================================================================
 class LoadingChangeNotificationHandler_ABC {
 public:
-	LoadingChangeNotificationHandler_ABC();
-	virtual ~LoadingChangeNotificationHandler_ABC();
+	         LoadingChangeNotificationHandler_ABC() {}
+	virtual ~LoadingChangeNotificationHandler_ABC() {}
 
     virtual void NotifyIsLoadedInVab() = 0;
     virtual void NotifyIsUnLoadedInVab() = 0;

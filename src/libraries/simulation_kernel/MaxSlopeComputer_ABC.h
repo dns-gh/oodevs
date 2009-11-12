@@ -26,8 +26,8 @@ class MaxSlopeComputer_ABC : public OnComponentComputer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    MaxSlopeComputer_ABC();
-    virtual ~MaxSlopeComputer_ABC();
+             MaxSlopeComputer_ABC() {}
+    virtual ~MaxSlopeComputer_ABC() {}
     //@}
 
     //! @name Operations

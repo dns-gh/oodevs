@@ -25,8 +25,8 @@ class LocationComputer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LocationComputer_ABC();
-    virtual ~LocationComputer_ABC();
+             LocationComputer_ABC() {}
+    virtual ~LocationComputer_ABC() {}
     //@}
 
     //! @name Operations

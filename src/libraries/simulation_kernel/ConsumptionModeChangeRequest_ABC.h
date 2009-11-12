@@ -27,8 +27,8 @@ class ConsumptionModeChangeRequest_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    ConsumptionModeChangeRequest_ABC();
-    virtual ~ConsumptionModeChangeRequest_ABC();
+             ConsumptionModeChangeRequest_ABC() {}
+    virtual ~ConsumptionModeChangeRequest_ABC() {}
     //@}
 
     //! @name Operations

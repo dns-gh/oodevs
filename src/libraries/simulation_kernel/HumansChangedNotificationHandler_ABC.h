@@ -20,8 +20,8 @@ namespace human {
 // =============================================================================
 class HumansChangedNotificationHandler_ABC {
 public:
-    HumansChangedNotificationHandler_ABC();
-    virtual ~HumansChangedNotificationHandler_ABC();
+             HumansChangedNotificationHandler_ABC() {}
+    virtual ~HumansChangedNotificationHandler_ABC() {}
 
     virtual void NotifyHumanHasChanged() = 0;
 };

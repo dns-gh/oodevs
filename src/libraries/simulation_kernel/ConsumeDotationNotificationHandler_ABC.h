@@ -22,8 +22,8 @@ namespace dotation {
 // =============================================================================
 class ConsumeDotationNotificationHandler_ABC {
 public:
-	ConsumeDotationNotificationHandler_ABC();
-	virtual ~ConsumeDotationNotificationHandler_ABC();
+             ConsumeDotationNotificationHandler_ABC() {}
+    virtual ~ConsumeDotationNotificationHandler_ABC() {}
 
 	virtual void NotifyConsumeDotation( const PHY_DotationCategory& category, double rNbr ) = 0;
 };

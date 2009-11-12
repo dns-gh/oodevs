@@ -28,8 +28,8 @@ class DotationComputer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DotationComputer_ABC();
-    virtual ~DotationComputer_ABC();
+             DotationComputer_ABC() {}
+    virtual ~DotationComputer_ABC() {}
     //@}
 
     //! @name Operations

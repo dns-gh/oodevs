@@ -20,8 +20,8 @@ namespace component {
 // =============================================================================
 class ComponentsChangedNotificationHandler_ABC {
 public:
-	ComponentsChangedNotificationHandler_ABC();
-	virtual ~ComponentsChangedNotificationHandler_ABC();
+             ComponentsChangedNotificationHandler_ABC() {}
+    virtual ~ComponentsChangedNotificationHandler_ABC() {}
 
 	virtual void NotifyComponentHasChanged() = 0;
 };

@@ -25,8 +25,8 @@ class DotationComputerFactory_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             DotationComputerFactory_ABC();
-    virtual ~DotationComputerFactory_ABC();
+             DotationComputerFactory_ABC() {}
+    virtual ~DotationComputerFactory_ABC() {}
     //@}
 
     //! @name Operations

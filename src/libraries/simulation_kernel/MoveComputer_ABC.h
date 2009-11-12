@@ -25,8 +25,8 @@ class MoveComputer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MoveComputer_ABC();
-    virtual ~MoveComputer_ABC();
+             MoveComputer_ABC() {}
+    virtual ~MoveComputer_ABC() {}
     //@}
 
     //! @name Operations

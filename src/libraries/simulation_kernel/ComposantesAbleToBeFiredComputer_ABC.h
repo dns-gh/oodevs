@@ -31,8 +31,8 @@ class ComposantesAbleToBeFiredComputer_ABC : public OnComponentComputer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ComposantesAbleToBeFiredComputer_ABC();
-    virtual ~ComposantesAbleToBeFiredComputer_ABC();
+             ComposantesAbleToBeFiredComputer_ABC() {}
+    virtual ~ComposantesAbleToBeFiredComputer_ABC() {}
     //@}
 
     //! @name Operations

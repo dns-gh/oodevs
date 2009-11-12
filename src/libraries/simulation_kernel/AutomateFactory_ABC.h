@@ -33,7 +33,7 @@ class AutomateFactory_ABC : public tools::Resolver< MIL_Automate >
 public:
     //! @name Destructor
     //@{
-    virtual ~AutomateFactory_ABC();
+    virtual ~AutomateFactory_ABC() {}
     //@}
 
     //! @name Operations
@@ -50,7 +50,7 @@ public:
 protected:
     //! @name Constructor
     //@{
-    AutomateFactory_ABC();
+    AutomateFactory_ABC() {}
     //@}
 };
 

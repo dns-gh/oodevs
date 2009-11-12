@@ -24,8 +24,8 @@ class HumanLoadingTimeComputer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    HumanLoadingTimeComputer_ABC();
-    virtual ~HumanLoadingTimeComputer_ABC();
+             HumanLoadingTimeComputer_ABC() {}
+    virtual ~HumanLoadingTimeComputer_ABC() {}
     //@}
 
     //! @name Operations

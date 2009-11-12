@@ -27,8 +27,8 @@ class DetectionComputerFactory_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             DetectionComputerFactory_ABC();
-    virtual ~DetectionComputerFactory_ABC();
+             DetectionComputerFactory_ABC() {}
+    virtual ~DetectionComputerFactory_ABC() {}
     //@}
 
     //! @name Operations

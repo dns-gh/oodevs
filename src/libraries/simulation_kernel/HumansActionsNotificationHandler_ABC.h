@@ -24,8 +24,8 @@ namespace human {
 // =============================================================================
 class HumansActionsNotificationHandler_ABC {
 public:
-	HumansActionsNotificationHandler_ABC();
-	virtual ~HumansActionsNotificationHandler_ABC();
+	         HumansActionsNotificationHandler_ABC() {}
+	virtual ~HumansActionsNotificationHandler_ABC() {}
 
     virtual void NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 ) = 0;
     virtual void NotifyHumanWaitingForMedical    ( PHY_Human& human ) = 0;

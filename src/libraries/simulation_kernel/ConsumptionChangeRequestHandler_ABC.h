@@ -27,8 +27,8 @@ class ConsumptionChangeRequestHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    ConsumptionChangeRequestHandler_ABC();
-    virtual ~ConsumptionChangeRequestHandler_ABC();
+             ConsumptionChangeRequestHandler_ABC() {}
+    virtual ~ConsumptionChangeRequestHandler_ABC() {}
     //@}
 
     //! @name Operations

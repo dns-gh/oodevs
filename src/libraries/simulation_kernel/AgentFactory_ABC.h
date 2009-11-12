@@ -30,8 +30,8 @@ class AgentFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentFactory_ABC();
-    virtual ~AgentFactory_ABC();
+             AgentFactory_ABC() {}
+    virtual ~AgentFactory_ABC() {}
     //@}
 
     //! @name Operations

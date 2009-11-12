@@ -28,8 +28,8 @@ namespace firing
     public:
         //! @name Constructors/Destructor
         //@{
-                 FireData_ABC();
-        virtual ~FireData_ABC();
+                 FireData_ABC() {}
+        virtual ~FireData_ABC() {}
         //@}
 
         //! @name Operation

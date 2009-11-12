@@ -25,8 +25,8 @@ class ComposantesAbleToBeFiredComputerFactory_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             ComposantesAbleToBeFiredComputerFactory_ABC();
-    virtual ~ComposantesAbleToBeFiredComputerFactory_ABC();
+             ComposantesAbleToBeFiredComputerFactory_ABC() {}
+    virtual ~ComposantesAbleToBeFiredComputerFactory_ABC() {}
     //@}
 
     //! @name Operations

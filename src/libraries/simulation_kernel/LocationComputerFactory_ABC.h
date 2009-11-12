@@ -25,8 +25,8 @@ class LocationComputerFactory_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             LocationComputerFactory_ABC();
-    virtual ~LocationComputerFactory_ABC();
+             LocationComputerFactory_ABC() {}
+    virtual ~LocationComputerFactory_ABC() {}
     //@}
 
     //! @name Operations

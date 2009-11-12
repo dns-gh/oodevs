@@ -23,8 +23,8 @@ namespace location {
 // =============================================================================
 class LocationActionNotificationHandler_ABC {
 public:
-    LocationActionNotificationHandler_ABC();
-    virtual ~LocationActionNotificationHandler_ABC();
+             LocationActionNotificationHandler_ABC() {}
+    virtual ~LocationActionNotificationHandler_ABC() {}
 
     virtual void Hide     () = 0;
     virtual void Show     ( const MT_Vector2D& vNewPosition ) = 0;

@@ -25,8 +25,8 @@ class HealComputerFactory_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             HealComputerFactory_ABC();
-    virtual ~HealComputerFactory_ABC();
+             HealComputerFactory_ABC() {}
+    virtual ~HealComputerFactory_ABC() {}
     //@}
 
     //! @name Operations

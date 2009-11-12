@@ -20,8 +20,8 @@ namespace network {
 // =============================================================================
 class NetworkNotificationHandler_ABC {
 public:
-    NetworkNotificationHandler_ABC();
-    virtual ~NetworkNotificationHandler_ABC();
+             NetworkNotificationHandler_ABC() {}
+    virtual ~NetworkNotificationHandler_ABC() {}
 
     virtual void NotifyDataHasChanged() = 0;
 };

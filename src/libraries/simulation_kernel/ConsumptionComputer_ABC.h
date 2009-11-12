@@ -27,8 +27,8 @@ class ConsumptionComputer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ConsumptionComputer_ABC();
-    virtual ~ConsumptionComputer_ABC();
+             ConsumptionComputer_ABC() {}
+    virtual ~ConsumptionComputer_ABC() {}
     //@}
 
     //! @name Operations

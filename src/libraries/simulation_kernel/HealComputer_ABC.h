@@ -30,8 +30,8 @@ class HealComputer_ABC : public OnComponentComputer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             HealComputer_ABC();
-    virtual ~HealComputer_ABC();
+             HealComputer_ABC() {}
+    virtual ~HealComputer_ABC() {}
     //@}
 
     //! @name Operations

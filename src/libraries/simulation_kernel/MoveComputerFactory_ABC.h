@@ -28,8 +28,8 @@ class MoveComputerFactory_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             MoveComputerFactory_ABC();
-    virtual ~MoveComputerFactory_ABC();
+             MoveComputerFactory_ABC() {}
+    virtual ~MoveComputerFactory_ABC() {}
     //@}
 
     //! @name Operations

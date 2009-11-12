@@ -24,8 +24,8 @@ class LoadingComputerFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    LoadingComputerFactory_ABC();
-    virtual ~LoadingComputerFactory_ABC();
+             LoadingComputerFactory_ABC() {}
+    virtual ~LoadingComputerFactory_ABC() {}
     //@}
 
     //! @name Constructors/Destructor

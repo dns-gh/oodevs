@@ -28,8 +28,8 @@ class ConsumptionComputerFactory_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             ConsumptionComputerFactory_ABC();
-    virtual ~ConsumptionComputerFactory_ABC();
+             ConsumptionComputerFactory_ABC() {}
+    virtual ~ConsumptionComputerFactory_ABC() {}
     //@}
 
     //! @name Operations
