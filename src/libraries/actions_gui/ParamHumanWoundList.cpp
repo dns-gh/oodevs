@@ -154,3 +154,12 @@ bool ParamHumanWoundList::IsOptional() const
 {
     return parameter_.IsOptional();
 }
+
+// -----------------------------------------------------------------------------
+// Name: ParamHumanWoundList::CheckValidity
+// Created: LDC 2009-11-12
+// -----------------------------------------------------------------------------
+bool ParamHumanWoundList::CheckValidity()
+{
+    return IsOptional() || (0 != list_->childCount());
+}

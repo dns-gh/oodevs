@@ -39,6 +39,7 @@ public:
     //@{
     virtual void BuildInterface( QWidget* parent );
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
+    virtual bool CheckValidity();
     //@}
 
 private slots:

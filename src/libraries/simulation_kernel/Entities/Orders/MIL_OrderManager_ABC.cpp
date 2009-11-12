@@ -54,8 +54,19 @@ void MIL_OrderManager_ABC::Update()
         pMission_ = pNewMission;
         if( pNewMission )
         {
-            pMission_->Start();
-            bNewMissionStarted_ = true;   
+            try
+            {
+                pMission_->Start();
+                bNewMissionStarted_ = true;
+            }
+            catch( std::runtime_error& e )
+            {
+                pNextMission_ = 0;
+                pMission_ = 0;
+                delete pNewMission;
+                bNewMissionStarted_ = false;
+                throw e;
+            }
         }
     }
 }

@@ -360,7 +360,14 @@ void MIL_AgentPion::UpdateDecision( float duration )
 {
     if( IsDead() )
         orderManager_.ReplaceMission( 0 );
-    orderManager_.Update();
+    try
+    {
+        orderManager_.Update();
+    }
+    catch( std::runtime_error& e )
+    {        
+        MIL_Report::PostEvent( *this, MIL_Report::eReport_MissionImpossible_ );
+    }
     GetRole< DEC_Decision_ABC >().UpdateDecision( duration );
     GetRole< DEC_Decision_ABC >().GarbageCollect();
 }
