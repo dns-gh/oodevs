@@ -421,7 +421,7 @@ int PHY_RoleAction_Objects::Supply( boost::shared_ptr< DEC_Knowledge_Object >& o
 // Name: PHY_RoleAction_Objects::Distribute
 // Created: JCR 2009-06-04
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_Objects::Distribute( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, boost::shared_ptr< DEC_Knowledge_Population >& populationKnowledge, uint quantity )
+int PHY_RoleAction_Objects::Distribute( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, boost::shared_ptr< DEC_Knowledge_Population >& /*populationKnowledge*/, uint quantity )
 {
     MIL_Object_ABC* pObject = GetObject( objectKnowledge );
     if( !pObject || pObject->IsMarkedForDestruction() )
@@ -444,7 +444,7 @@ int PHY_RoleAction_Objects::Distribute( boost::shared_ptr< DEC_Knowledge_Object 
     for ( IT_SelectionVector it = selection.begin(); it != selection.end(); ++it )
     { 
         if ( dataComputer.HasDotations( *it->first, 0 ) )
-            uint distributed = attribute->Distribute( *it->first, quantity );
+            attribute->Distribute( *it->first, quantity );
     }
     return eRunning;
 }

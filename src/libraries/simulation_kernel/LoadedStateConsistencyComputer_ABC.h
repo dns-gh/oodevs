@@ -25,7 +25,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              LoadedStateConsistencyComputer_ABC() {}
-    virtual ~LoadedStateConsistencyComputer_ABC();
+    virtual ~LoadedStateConsistencyComputer_ABC() {}
     //@}
 
     //! @name Attributes
