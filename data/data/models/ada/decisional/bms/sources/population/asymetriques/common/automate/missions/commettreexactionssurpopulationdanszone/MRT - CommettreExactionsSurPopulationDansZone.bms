@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/population/asymetriques/common/automate/missions/commettreexactionssurpopulationdanszone/MRT - CommettreExactionsSurPopulationDansZone.bms"] = true
 
+
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_MRT_CommettreExactionsSurPopulationDansZone
 ]]--[[// 
@@ -53,7 +55,7 @@ includedFiles["sources/population/asymetriques/common/automate/missions/commettr
 
             end
 --[[//-----------------------------------------------------------------------------
-]]--[[// Assignation et vérification
+]]--[[// Assignation et vÃ©rification
 ]]--[[//-----------------------------------------------------------------------------
 ]]        end
 
@@ -160,7 +162,7 @@ node "ACT_Mission_Automate_AssignerCommettreExactionsDansZone"
     select = function( self )
         self.missionPion = self.missionPion or nil--[[//-----------------------------------------------------------------------------
 ]]--[[// Cree la Mission
-]]--[[//-----------------------------------------------------------------------------	
+]]--[[//-----------------------------------------------------------------------------
 ]]
         if( ModuleBegins() ) then
             do
@@ -192,7 +194,7 @@ elseif switch_1 == ePhase_CDT then
             do return end
         end
 
-        --[[//-----------------------------------------------------------------------------		
+        --[[//-----------------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
             DEC_Trace( "$$ Commettre Exactions Dans Zone : " .. DEC_GetSzName( self._namedParams.pPion ) .. " $$" )
         else
@@ -200,11 +202,11 @@ elseif switch_1 == ePhase_CDT then
             do return end
         end
 
-        --[[// Infos globales	    
+        --[[// Infos globales
 ]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
         --[[// zone
 ]]DEC_Copie_Localisation_Mission( self._namedParams.zone, self.missionPion, "zone_" )
-        --[[// Marquage échelon
+        --[[// Marquage Ã©chelon
 ]]F_Pion_SeteEtatEchelon( self._namedParams.pPion, eEtatEchelon_Premier )
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Envoie la mission si l'on se trouve dans la conduite
@@ -220,7 +222,7 @@ elseif switch_1 == ePhase_CDT then
 
 }
 
---[[//-----------------------------------------------------------------------------    
+--[[//-----------------------------------------------------------------------------
 ]]eventmanager_plugin = eventmanager_plugin or {}
 eventmanager_plugin.MIS_Automate_MRT_ASY_CommettreExactionsSurPopulationDansZone = { "mission" }
 connections = connections or {}

@@ -86,4 +86,86 @@ elseif switch_1 == ePhase_CDT then
 }
 
 --[[//-----------------------------------------------------------------------------
+]]--[[// ****************************************************************************
+]]--[[// ACT_Mission_Automate_GEN_AssignerRealiserTravauxA
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// ****************************************************************************
+]]node "ACT_Mission_Automate_Emergency_AssignerA_Alert"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.locations = self.params[3]
+    end,
+
+    select = function( self )
+        --[[//-------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_Trace( "Assigne mission 'Alert' a " .. DEC_GetSzName( self._namedParams.pion ) )
+        else
+            self.params.__returnValue = eActionEffectuee
+            do return end
+        end
+
+        self.missionPion = self.missionPion or nil--[[//-------------------------------------------------------------------------
+]]--[[// Cree la myself.mission_
+]]--[[//-------------------------------------------------------------------------
 ]]
+        if( ModuleBegins() ) then
+            do
+                 do
+                    local _continue = true
+                    local switch_1 = self._namedParams.ePhase
+                    local cases_switch_1 = {}
+                        if switch_1 == ePhase_MRT then
+                                                    local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_Emergency_Alert" )
+                            self.missionPion = misMRT
+                            _continue = false
+                                                cases_switch_1[1] = true
+elseif switch_1 == ePhase_CDT then
+                                                    local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_Emergency_Alert" )
+                            self.missionPion = misCDT
+                            _continue = false
+                                                cases_switch_1[2] = true
+
+                        else
+                            assert( false, "parametre invalide : ePhase" )
+                        end
+                    end
+
+            end
+        end
+
+        if( self.missionPion == nil ) then
+            self.params.__returnValue = eActionImpossible
+            do return end
+        end
+
+        --[[// Mission
+]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
+        for _,x in pairs( --[[// travaux etc.
+]]self._namedParams.locations or {} ) do
+        local _continue = true
+            DEC_UserTypeList_PushBack_Mission( self.missionPion, "zones_", x )
+
+        end
+
+        --[[//-------------------------------------------------------------------------
+]]--[[// Envoie la myself.mission_ si l'on se trouve dans la conduite
+]]--[[//-------------------------------------------------------------------------
+]]if( self._namedParams.ePhase == ePhase_CDT ) then
+            DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+        end
+
+                self.params.__returnValue = eActionEffectuee
+        do return end
+
+    end,
+
+}
+

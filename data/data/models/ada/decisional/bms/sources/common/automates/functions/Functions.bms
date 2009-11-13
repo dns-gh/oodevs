@@ -14,6 +14,9 @@ include "bit.lua"
 ]]--[[// Renvoie si l'agent est détruit physiquement
 ]]--[[//-------------------------------------------------------------------------
 ]]--[[//-------------------------------------------------------------------------
+]]--[[// Renvoie la position d'une Connaissance Eni ( T_ConnaissanceAgent )
+]]--[[//-------------------------------------------------------------------------
+]]--[[//-------------------------------------------------------------------------
 ]]--[[// Renvoie l'eni le plus proche de la position passée en paramètre
 ]]--[[//-------------------------------------------------------------------------
 ]]--[[// -----------------------------------------------------------------------------
@@ -63,6 +66,12 @@ end
 function S_Pion_EstDetruitPhysique( pion )
     local _returnValue = false
     _returnValue = ( F_Pion_GeteEtatDestruction( pion ) == eEtatDestruction_Total )
+    do return _returnValue end
+end
+
+function S_Eni_Position( repUnite )
+    local _returnValue = nil
+    _returnValue = DEC_ConnaissanceAgent_Position( repUnite )
     do return _returnValue end
 end
 

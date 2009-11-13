@@ -80,9 +80,8 @@ node "BEH_EsquiverLaPopulationIncontrolable"
         self.delai = self.delai or 0
         if( ModuleBegins() ) then
             do
-                local eValiditeRequete = nil
-                self.prevDomination = DEC_ConnaissancePopulation_Domination( self._namedParams.pop, eValiditeRequete )
-                eValiditeRequete = self.prevDomination.second
+                self.prevDomination = DEC_ConnaissancePopulation_Domination( self._namedParams.pop )
+                self._namedParams.pop = self.prevDomination.second
                 self.prevDomination = self.prevDomination.first
             end
 --[[//on checke les changements de ROE
@@ -100,9 +99,8 @@ node "BEH_EsquiverLaPopulationIncontrolable"
                 end
 
                 self.eROEPopulation = eRoe
-                local eValiditeRequete = nil
-                self.prevDomination = DEC_ConnaissancePopulation_Domination( self._namedParams.pop, eValiditeRequete )
-                eValiditeRequete = self.prevDomination.second
+                self.prevDomination = DEC_ConnaissancePopulation_Domination( self._namedParams.pop )
+                self._namedParams.pop = self.prevDomination.second
                 self.prevDomination = self.prevDomination.first
                                 Halt( self )
                 do return end
@@ -124,10 +122,9 @@ node "BEH_EsquiverLaPopulationIncontrolable"
             Activate( self.activations.ACT_Misc_Delai, 1, setmetatable( { BEH_EsquiverLaPopulationIncontrolable, self.delai, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatDelai = v else rawset( t, k, v ) end end } ) )
         else
 do
-                local eValiditeRequete = nil
                 local domination = 0
-                domination = DEC_ConnaissancePopulation_Domination( self._namedParams.pop, eValiditeRequete )
-                eValiditeRequete = domination.second
+                domination = DEC_ConnaissancePopulation_Domination( self._namedParams.pop )
+                self._namedParams.pop = domination.second
                 domination = domination.first
                 --[[//la domination doit avoir diminuée au moins de 20%
 ]]if( ( ( domination < ( self.prevDomination - 0.2 ) ) or domination == 0 or ( domination < ( self.prevDomination - 0.2 ) ) or domination == nil ) ) then
@@ -336,13 +333,12 @@ node "BEH_Pop_Pion_SecuriserPopulationDans"
 do
                 if( DEC_ConnaissancePopulation_EstDansZone( pop, self._namedParams.zone ) ) then
                     do
-                        local eValiditeRequete = nil
                         local danger = DEC_ConnaissancePopulation_Dangerosite( pop )
                         local domination = 0
-                        domination = DEC_ConnaissancePopulation_Domination( pop, eValiditeRequete )
-                        eValiditeRequete = domination.second
+                        domination = DEC_ConnaissancePopulation_Domination( pop )
+                        pop = domination.second
                         domination = domination.first
-                        if( ( ( domination == 0 or domination == nil ) ) and ( eValiditeRequete == eRequeteValide ) ) then
+                        if( ( domination == 0 or domination == nil ) ) then
                             danger = 0.1
                         end
 

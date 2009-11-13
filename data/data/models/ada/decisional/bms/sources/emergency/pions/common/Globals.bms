@@ -14,3 +14,13 @@ include "Common/Moteur/Functions/PionsEmergency.bms"
 
 include "Emergency/Pions/Common/Globals Poly.bms"
 
+--[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie l'objet proche de ptRef
+]]--[[//-----------------------------------------------------------------------------
+]]function S_Obj_Emergency_ObtenirObjetProche( ptRef, eTypeObject, distance )
+    local _returnValue = nil
+    local lstObjets = DEC_Connaissances_ObjetsDansCercle( ptRef, distance, S_TypeObject_ToString( eTypeObject ) )
+    _returnValue = S_Geometrie_PositionObjetPlusProche( lstObjets, ptRef )
+    do return _returnValue end
+end
+

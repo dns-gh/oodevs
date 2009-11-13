@@ -287,7 +287,6 @@ end
 
 function S_Force_DangerSur( repEni )
     local _returnValue = 0
-    local eValiditeRequete = nil
     local rForceDanger = DEC_ConnaissanceAgent_Dangerosite( repEni )
     if( ( rForceDanger == 0 or rForceDanger == nil ) ) then
         _returnValue = -1

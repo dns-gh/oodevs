@@ -4,4 +4,7 @@ includedFiles["sources/common/moteur/functions/PionsEmergency.bms"] = true
 --[[// *****************************************************************************
 ]]--[[// globals
 ]]--[[// *****************************************************************************
-]]--[[/*T_Action*//*E_EtatActionInfluence*//*Activity name*//*Influence*/]]--[[/*T_Action*//*E_EtatActionInfluence*//*Activity name*//*Influence*//*localisation*/]]--[[/*T_Action*//*E_EtatActionInfluence*//*Activity name*//*Influence*/]]--[[/*T_Action*//*E_EtatActionInfluence*//*Activity name*//*Influence*//*localisation*/]]--[[/*T_Action*//*E_EtatActionInfluence*//*Activity name*//*Influence*/]]
+]]--[[/*T_Action*//*E_EtatActionInfluence*//*Activity name*//*Influence*/]]--[[/*T_Action*//*E_EtatActionInfluence*//*Activity name*//*Influence*//*localisation*/]]--[[/*T_Action*//*E_EtatActionInfluence*//*Activity name*//*Influence*/]]--[[/*T_Action*//*E_EtatActionInfluence*//*Activity name*//*Influence*//*localisation*/]]--[[/*T_Action*//*E_EtatActionInfluence*//*Activity name*//*Influence*/]]--[[//Incendie
+]]--[[/*T_Action*//*E_EtatActionObjet*//*connaissance objet*/]]--[[/*T_ConnaissanceObjet*///If this functions returns a negative value, the fire doesn't exist
+]]--[[//Cette action va servir à analyser l'incendie: connaître sa classe, savoir si y a des fluides a couper
+]]--[[/*E_FireClass*//*connaissance objet*/]]

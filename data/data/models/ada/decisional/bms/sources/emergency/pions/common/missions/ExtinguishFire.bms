@@ -11,7 +11,14 @@ includedFiles["sources/emergency/pions/common/missions/ExtinguishFire.bms"] = tr
 ]]--[[// *****************************************************************************
 ]]
 --[[//------------------------------------------------------------------------------
-]]--[[//Rejoins une position et cree un site de deploiement
+]]--[[//Améliorations possibles:
+]]--[[// déterminer la portée de la lance à incendie pour éteindre le feu à distance (et ne jamais se trouver pris dans un incendie)=> une fonction décisionnelle a été implémentée
+]]--[[// demander des renforts selon la situation (si le nombre d'incendies dans l'aire à éteindre augmente->le feu n'est pas contrôlé, s'il faut couper les fluides, s'il faut évacuer des blessés, ...)
+]]--[[// pouvoir agir si le feu n'est pas sur une route
+]]--[[// mettre en place différents critéres de sélection du feu à éteindre (proximité, site à protéger absolument, ...)
+]]--[[// savoir battre en retraite s'il existe certains risques (peut-être selon la classe du feu)
+]]--[[// implémenter la phase de reconnaissance de l'incendie (détermination de la classe de l'incendie, ...)
+]]--[[// Faire des rapports réguliers et précis de la situation
 ]]--[[//------------------------------------------------------------------------------
 ]]node "MIS_Pion_Emergency_ExtinguishFire"
 {
@@ -21,7 +28,6 @@ includedFiles["sources/emergency/pions/common/missions/ExtinguishFire.bms"] = tr
         { "ACT_MAJ_EtatPhaseMission", {} },
         { "BEH_Dep_ProgressionVers", {} },
         { "ACT_RC", {} },
-        { "BEH_Pion_Emergency_ExtinguishFire", {} },
     },
 
     create = function( self )
@@ -31,7 +37,14 @@ includedFiles["sources/emergency/pions/common/missions/ExtinguishFire.bms"] = tr
 
     activate = function( self )
                 self.eAction = self.eAction or eActionEnCours
-        self.ePhase = self.ePhase or eRejoindre
+        self.ePhase = self.ePhase or eSelectionnerFeuAEteindre
+        self.firePosition = self.firePosition or nil
+        self.fireKnowledge = self.fireKnowledge or nil
+        self.actionID = self.actionID or nil
+        self.fireDistance = self.fireDistance or 0
+        self.zone = self.zone or DEC_Geometrie_CreerLocalisationCercle( self._namedParams.mission.position_, 500 )
+        local listFireInTheAreaToExtinguish = DEC_Connaissances_ObjetsDansZone( self.zone, S_TypeObject_ToString( eTypeObjectDynamicFire ) )
+        local numberOfFireInTheArea = #( listFireInTheAreaToExtinguish )
         if( ModuleBegins() ) then
             do
                 DEC_SetMission( myself, self._namedParams.mission )
@@ -48,30 +61,99 @@ includedFiles["sources/emergency/pions/common/missions/ExtinguishFire.bms"] = tr
                 self.eAction = eActionEnCours
                 self.eEtatOrdreFinMission = eActionEnCours
             end
+--[[//If there are no fire in the selected area, mission is aborted
+]]        end
+
+        if( ( numberOfFireInTheArea == 0 or numberOfFireInTheArea == nil ) ) then
+            do
+                DEC_Trace( "No fire in the area selected: mission is aborted" )
+                self.ePhase = eFinMission
+            end
         end
 
          do
             local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
-                if switch_1 == eRejoindre then
+                if switch_1 == eSelectionnerFeuAEteindre then
+                    for _,currentFireKnowledge in pairs( --[[//Selection of the fire on the distance criteria: the closest one will be extinguished
+]]listFireInTheAreaToExtinguish or {} ) do
+                    local _continue = true
+do
+                            --[[//Data acquisition
+]]DEC_Trace( "Select the fire to extinguish" )
+                            self.fireDistance = -1
+                            local currentFirePosition = S_Obj_Position( currentFireKnowledge )
+                            local currentFireDistance = DEC_Geometrie_Distance( currentFirePosition, myself:DEC_Agent_Position() )
+                            --[[//Initialization: the first fire in the list is selected
+]]if( self.fireDistance == -1 ) then
+                                do
+                                    self.fireDistance = currentFireDistance
+                                    self.firePosition = currentFirePosition
+                                    self.fireKnowledge = currentFireKnowledge
+                                end
+--[[//Selection on distance of the fire
+]]                            else
+do
+                                    if( self.fireDistance > currentFireDistance ) then
+                                        do
+                                            self.fireDistance = currentFireDistance
+                                            self.firePosition = currentFirePosition
+                                            self.fireKnowledge = currentFireKnowledge
+                                        end
+                                    end
+
+                                end
+                            end
+
+                        end
+
+                    end
+
+                    DEC_DebugAffichePoint( self.firePosition )
+                    self.ePhase = eRejoindrePosition
+                                cases_switch_1[1] = true
+                end
+                if cases_switch_1[1] or switch_1 == eRejoindrePosition then
                     if( self.eAction == eActionEnCours ) then
                         do
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                            Activate( self.activations.BEH_Dep_ProgressionVers, GetMotivation( "MOT_Mission" ), setmetatable( { self._namedParams.mission.position_, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                            DEC_Trace( "Move to the fire to extinguish" )
+                            Activate( self.activations.BEH_Dep_ProgressionVers, GetMotivation( "MOT_Mission" ), setmetatable( { self.firePosition, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
                                                         do return end
 
                         end
                     end
 
                     Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
-                    self.ePhase = eDeployer
-                                cases_switch_1[1] = true
-                end
-                if cases_switch_1[1] or switch_1 == eDeployer then
-                    Activate( self.activations.BEH_Pion_Emergency_ExtinguishFire, 1, {} )
-                    _continue = false
+                    self.ePhase = eEteindreIncendie
                                 cases_switch_1[2] = true
+                end
+                if cases_switch_1[2] or switch_1 == eEteindreIncendie then
+                    DEC_Trace( "Start extinguishing the fire" )
+                    self.actionID = DEC_StartEteindreObjet( self.fireKnowledge )
+                    actionCallbacks[ self.actionID ] = function( arg ) self.eAction = arg end
+
+                    if( DEC_Connaissances_ObjetLePlusProche( S_TypeObject_ToString( eTypeObjectDynamicFire ) ) ~= self.fireKnowledge ) then
+                        do
+                            if( ( #( listFireInTheAreaToExtinguish ) == 0 or #( listFireInTheAreaToExtinguish ) == nil ) ) then
+                                do
+                                    DEC_Trace( "No more fire in the area selected: mission is ended: let's go home!" )
+                                    self.ePhase = eFinMission
+                                end
+                            else
+do
+                                    DEC_Trace( "One fire in the area has been extiguished: mission is continued: let's extinguish the next one!" )
+                                    self.ePhase = eSelectionnerFeuAEteindre
+                                    self.eAction = eActionEnCours
+                                end
+                            end
+
+                        end
+                    end
+
+                    _continue = false
+                                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
@@ -85,20 +167,10 @@ elseif switch_1 == eFinMission then
                     end
 
                     _continue = false
-                                cases_switch_1[3] = true
+                                cases_switch_1[4] = true
                 end
             end
 
-    end,
-
-}
-
-node "BEH_Pion_Emergency_ExtinguishFire"
-{
-    create = function( self )
-    end,
-
-    activate = function( self )
     end,
 
 }
@@ -110,4 +182,3 @@ connections[ #connections + 1 ] = { nodes.MIS_Pion_Emergency_ExtinguishFire, "BE
 connections[ #connections + 1 ] = { nodes.MIS_Pion_Emergency_ExtinguishFire, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_Emergency_ExtinguishFire, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
 connections[ #connections + 1 ] = { nodes.MIS_Pion_Emergency_ExtinguishFire, "ACT_RC", nodes.ACT_RC }
-connections[ #connections + 1 ] = { nodes.MIS_Pion_Emergency_ExtinguishFire, "BEH_Pion_Emergency_ExtinguishFire", nodes.BEH_Pion_Emergency_ExtinguishFire }

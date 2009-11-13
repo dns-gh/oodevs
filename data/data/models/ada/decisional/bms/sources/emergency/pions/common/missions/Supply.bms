@@ -1,0 +1,161 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/emergency/pions/common/missions/Supply.bms"] = true
+
+include "bit.lua"
+
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// This file is part of a MASA library or program.
+]]--[[// Refer to the included end-user license agreement for restrictions.
+]]--[[//
+]]--[[// Copyright (c) 2009 Mathématiques Appliquées SA (MASA)
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[//------------------------------------------------------------------------------
+]]--[[//Rejoins une position et cree un site de deploiement
+]]--[[//------------------------------------------------------------------------------
+]]node "MIS_Pion_Emergency_Supply"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_Pion_Emergency_OrganiseSupply", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_RC", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+                self.eAction = self.eAction or eActionEnCours
+        self.ePhase = self.ePhase or eRejoindre
+        self.target = self.target or S_Geometrie_BarycentreZone( self._namedParams.mission.area_ )
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                myself.eEtatAmbiance_ = eEtatAmbiance_Vitesse
+                myself.eEtatEchelon_ = eEtatEchelon_Premier
+            end
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhase = eFinMission
+                self.eAction = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+         do
+            local _continue = true
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eRejoindre then
+                    if( DEC_Geometrie_EstPointDansLocalisation( DEC_Agent_Position(), self._namedParams.mission.area_ ) ) then
+                        Activate( self.activations.BEH_Pion_Emergency_OrganiseSupply, 1.1, { self._namedParams.mission.area_, } )
+                    end
+
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                    Activate( self.activations.BEH_Dep_ProgressionVers, GetMotivation( "MOT_Mission" ), setmetatable( { self.target, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
+                    _continue = false
+                                cases_switch_1[1] = true
+elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    if( myself.eEtatPhaseMission_ == eEtatPhaseMission_FinMission ) then
+                        do
+                            DEC_FinMission()
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt( self )
+                            do return end
+
+                        end
+                    end
+
+                    _continue = false
+                                cases_switch_1[2] = true
+                end
+            end
+
+    end,
+
+}
+
+node "BEH_Pion_Emergency_OrganiseSupply"
+{
+    activations =
+    {
+        { "BEH_Pion_Emergency_SupplyPoint", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.zone = self.params[1]
+    end,
+
+    activate = function( self )
+                local listSupplyPoint = DEC_Connaissances_ObjetsDansZone( self._namedParams.zone, S_TypeObject_ToString( eTypeObjectSupplyFacility ) )
+        for _,x_object in pairs( listSupplyPoint or {} ) do
+        local _continue = true
+do
+                if( not DEC_ConnaissanceObject_EstRavitaillee( x_object ) ) then
+                    Activate( self.activations.BEH_Pion_Emergency_SupplyPoint, S_Obj_ForceDistance( x_object ), { x_object, } )
+                end
+
+            end
+
+        end
+
+    end,
+
+}
+
+node "BEH_Pion_Emergency_SupplyPoint"
+{
+    instances =
+    {
+        max = 1,
+    },
+
+    activations =
+    {
+        { "BEH_Dep_ProgressionVers", {} },
+        { "ACT_Obj_Pion_Emergency_Supply", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.objet = self.params[1]
+    end,
+
+    activate = function( self )
+                self.eAction = self.eAction or eActionEnCours
+        self.position = self.position or S_Obj_Position( self._namedParams.objet )
+        if( self.eAction == eActionEnCours or DEC_Geometrie_Distance( self.position, DEC_Agent_Position() ) > 50 ) then
+            Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.position, eProgressionDefaut, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+        end
+
+        Activate( self.activations.ACT_Obj_Pion_Emergency_Supply, 1.1, { self._namedParams.objet, } )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_Emergency_Supply = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Pion_Emergency_OrganiseSupply, "BEH_Pion_Emergency_SupplyPoint", nodes.BEH_Pion_Emergency_SupplyPoint }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_Emergency_SupplyPoint, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_Emergency_SupplyPoint, "ACT_Obj_Pion_Emergency_Supply", nodes.ACT_Obj_Pion_Emergency_Supply }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Emergency_Supply, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Emergency_Supply, "BEH_Pion_Emergency_OrganiseSupply", nodes.BEH_Pion_Emergency_OrganiseSupply }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Emergency_Supply, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Emergency_Supply, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Emergency_Supply, "ACT_RC", nodes.ACT_RC }

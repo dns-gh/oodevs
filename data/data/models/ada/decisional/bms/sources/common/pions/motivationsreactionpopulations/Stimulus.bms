@@ -18,13 +18,12 @@ motivation_plugin.motivations = motivation_plugin.motivations or {}
 
 motivation_plugin.stimuli["STIM_PopulationDangereuse"] = function()
         local lstPops = DEC_Connaissances_Populations()
-        local eValidite = nil
         for _,pop in pairs( lstPops or {} ) do
         local _continue = true
 do
                 local domination = 0
-                domination = DEC_ConnaissancePopulation_Domination( pop, eValidite )
-                eValidite = domination.second
+                domination = DEC_ConnaissancePopulation_Domination( pop )
+                pop = domination.second
                 domination = domination.first
                 if( ( DEC_ConnaissancePopulation_Dangerosite( pop ) > 1 ) and ( domination > 0 ) ) then
                     do

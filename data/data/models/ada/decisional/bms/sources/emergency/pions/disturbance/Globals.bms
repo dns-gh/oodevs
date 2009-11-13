@@ -14,9 +14,9 @@ includedFiles["sources/emergency/pions/disturbance/Globals.bms"] = true
 --[[//-----------------------------------------------------------------------------
 ]]--[[// variables globales
 ]]--[[//-----------------------------------------------------------------------------
-]]include "Emergency/Pions/Common/Globals.bms"
+]]include "Common/Pions/Globals.bms"
 
-include "Common/Pions/Globals.bms"
+include "Emergency/Pions/Common/Globals.bms"
 
 
 --[[//=============================================================================

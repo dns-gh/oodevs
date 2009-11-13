@@ -26,8 +26,6 @@ include "bit.lua"
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission
-        self.ficelleDeVol = {}
-        DEC_Copie_ListePoints( self._namedParams.mission.ficelleDeVole_, self.ficelleDeVol )
     end,
 
     activate = function( self )
@@ -61,7 +59,7 @@ include "bit.lua"
 --[[// pour être sur de revenir au point de départ
 ]]                end
 
-            DEC_ListePoints_PushBack( self.ficelleDeVol, DEC_Agent_Position() )
+                DEC_ListePoints_PushBack( self._namedParams.mission.ficelleDeVole_, DEC_Agent_Position() )
             end
 --[[//=========================================================================
 ]]--[[// SQUELETTE DE LA MISSION
@@ -71,18 +69,22 @@ include "bit.lua"
 ]]--[[//=========================================================================
 ]]        end
 
-        switch_1 = self.ePhaseMission
+         do
+            local _continue = true
+            local switch_1 = self.ePhaseMission
+            local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
                     --[[//---------------------------------------------------------------------
 ]]--[[// Preparation de la mission
 ]]--[[//---------------------------------------------------------------------
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
                     self.ePhaseMission = eProgresser
-                    
+                    _continue = false
                 --[[//---------------------------------------------------------------------
 ]]--[[// Voler
 ]]--[[//---------------------------------------------------------------------
-            ]]elseif switch_1 == eProgresser then
+]]                cases_switch_1[1] = true
+elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
                     Activate( self.activations.ACT_Info_Trace, 1, { "---------LANCEMENT DU DRONE---------", } )
                     --[[//---------------------------------------------------------------------
@@ -100,31 +102,34 @@ include "bit.lua"
                             self.eEtat = eActionEnCours
                                                         do
                                 self.ePhaseMission = eFinMission
-                                                                return
+                                                                do return end
 
                             end
 
                         end
                     end
 
-        Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self.ficelleDeVol, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self._namedParams.mission.ficelleDeVole_, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     --[[// données doctrine 
 ]]Activate( self.activations.ACT_Dep_Pion_RENS_VolerA, 1, { 350, } )
-                    
+                    _continue = false
                 --[[//---------------------------------------------------------------------
 ]]--[[// Fin de la mission  //SPE CL 289
 ]]--[[//---------------------------------------------------------------------
-        ]]elseif switch_1 == eFinMission then
+]]                cases_switch_1[2] = true
+elseif switch_1 == eFinMission then
                     --[[// IMPORTANT POUR AUTOMATE  
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( not myself.bEnExploitation_ and not myself.bMiseEnOeuvre_ ) then
                         Activate( self.activations.ACT_Connaissance_Rens_ExtraireDonnees, 1, {} )
                     end
 
-                    
+                    _continue = false
+                                cases_switch_1[3] = true
 
                 else
                                 end
+            end
 
     end,
 

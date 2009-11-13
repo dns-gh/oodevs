@@ -50,6 +50,7 @@ eTypeObjectZoneInterditeTir = 34
 eTypeObjectZoneImplantationMortier = 35
 eTypeObjectPontFlottantDiscontinu = 36
 eTypeObjectInstallation = 37
-eTypeObjectFire = 38
+eTypeObjectDynamicFire = 38
 eTypeObjectEmergencyShelter = 39
+eTypeObjectSupplyFacility = 40
 

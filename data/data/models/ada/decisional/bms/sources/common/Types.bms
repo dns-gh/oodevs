@@ -166,6 +166,8 @@ eSeFaireRavitailler = 125
 eTransmettreInformations = 126
 eGererPionDetruit = 127
 eGererSecondEchelon = 128
+eSelectionnerFeuAEteindre = 129
+eEteindreIncendie = 130
 
 
 ePhase_MRT = 0
@@ -964,5 +966,6 @@ include "RENS\Automates\Rens - Auto - Types.bms"*/]]
 ]]
 --[[//-----------------------------------------------------------------------------
 ]]--[[/*include "Logistique\LOG - Types.bms"*/]]
+
 
 

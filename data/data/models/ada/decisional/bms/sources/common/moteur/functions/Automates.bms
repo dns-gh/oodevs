@@ -1,9 +1,6 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/common/moteur/functions/Automates.bms"] = true
 
-include "bit.lua"
-
-
 --[[// *****************************************************************************
 ]]--[[// globals
 ]]--[[// *****************************************************************************
@@ -15,8 +12,7 @@ include "bit.lua"
 ]]--[[/*T_Fuseau*/// Retourne le fuseau courant
 ]]--[[/*T_Lima*//*bFlag*/]]--[[/*T_Lima*/]]--[[/*T_Lima*//*bFlag*/]]--[[/*T_Lima*/]]--[[// Objets
 ]]--[[/*connaissance objet*/]]--[[// Connaissance                  
-]]--[[/*T_Automate*//*delai en minutes*/]]--[[/*T_Automate*//*centre du cercle de la zone*//*rayon du cercle de la zone*/]]--[[/*T_ListeConnaissancesObjet*//*T_Point centre du cercle*//*rayon*//*E_TypeObjects*/]]--[[/*T_ListeConnaissancesObjet*//*T_Localisation zone*//*E_TypeObjects*/]]--[[/*T_ListeConnaissancesObjet*//*E_TypeObjects*/]]--[[/*T_ListeConnaissancesAgent*//*T_Pion*/]]--[[/*T_ListeConnaissancesAgent*//*T_Localisation*/]]--[[/*T_ListeLocalisations*//*T_ListeLocalisations*/// Retourne liste moins ouvert -> plus ouvert
-]]--[[/*T_ListeLocalisations*//*T_ListeLocalisations*/// Retourne liste moins ouvert -> plus ouvert
+]]--[[/*T_Automate*//*delai en minutes*/]]--[[/*T_Automate*//*centre du cercle de la zone*//*rayon du cercle de la zone*/]]--[[/*T_ListeConnaissancesObjet*//*T_Point centre du cercle*//*rayon*//*E_TypeObjects*/]]--[[/*T_ListeConnaissancesObjet*//*T_Localisation zone*//*E_TypeObjects*/]]--[[/*T_ListeConnaissancesObjet*//*E_TypeObjects*/]]--[[/*T_ListeConnaissancesAgent*//*T_Pion*/]]--[[/*T_ListeConnaissancesAgent*//*T_Localisation*/]]--[[/*T_Fuseau ou T_Localisation*/]]--[[/*T_Fuseau ou T_Localisation*/]]--[[/*T_ListeFuseaux/Loc*//*T_ListeFuseaux ou T_ListeLocalisations*/]]--[[/*T_ListeFuseaux/Loc*//*T_ListeFuseaux ou T_ListeLocalisations*/// Retourne liste moins ouvert -> plus ouvert
 ]]--[[/*E_NiveauPerception*//*T_ConnaissanceAgent*/// Retourne le niveau de perception MAX d'une connaissance (le plus haut niveau ayant été associé à cette connaissance depuis sa création)    
 ]]--[[/*T_ConnaissanceAgent*/// Retourne une valeur entre 0 et 1
 ]]--[[/*T_ConnaissanceAgent*/]]--[[/*T_Point*//*T_ConnaissanceAgent*/]]--[[/*T_ConnaissanceAgent*/]]--[[/*T_ConnaissanceAgent*/]]--[[/*T_ConnaissanceAgent*/]]--[[/*T_ConnaissanceAgent*/]]--[[/*E_ValiditeRequete*//*T_ConnaissanceAgent*/]]--[[/*T_ConnaissanceAgent*/]]--[[/*T_ConnaissanceAgent*//*T_Pion*/// Retourne la dangerosité, entre 1 et 2
@@ -28,7 +24,7 @@ include "bit.lua"
 ]]--[[/*T_Pion*//*E_TypeObject*/]]--[[/*T_Pion*//*T_ConnaissanceObjet*/]]--[[/*T_Pion*//*T_ConnaissanceObjet*/]]--[[/*Objet type*//*localisation*/]]--[[/*T_ConnaissanceObjet*/]]--[[// Logistique
 ]]--[[/*T_Automate*/// ATTENTION : La valeur de retour peut être nulle     
 ]]--[[// Connaissance Populations
-]]--[[/*T_ConnaissancePopulation*//*E_ValiditeRequete&*/]]--[[/*T_ConnaissancePopulation*//*T_Localisation*/]]--[[/*T_ListeConnaissancesPopulation*/]]--[[// Renseignement eni
+]]--[[/*T_ConnaissancePopulation*/]]--[[/*T_ConnaissancePopulation*//*T_Localisation*/]]--[[/*T_ListeConnaissancesPopulation*/]]--[[// Renseignement eni
 ]]--[[/*T_Fuseau*/]]--[[/*T_Fuseau*/]]--[[/*T_Localisation*/]]--[[/*T_Localisation*/]]--[[/*T_ListeLocalisations*//*T_ListeLocalisations*/// Retourne liste moins ouvert -> plus ouvert 
 ]]--[[/*T_ListeFuseaux*//*T_ListeFuseaux*/// Retourne liste moins ouvert -> plus ouvert 
 ]]--[[/*T_ListeFuseaux*//*T_ListeFuseaux*/// Retourne liste moins ouvert -> plus ouvert

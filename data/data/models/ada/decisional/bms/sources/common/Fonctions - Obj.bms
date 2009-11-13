@@ -3,6 +3,10 @@ includedFiles["sources/common/Fonctions - Obj.bms"] = true
 
 
 --[[//-----------------------------------------------------------------------------
+]]--[[// Renvoie la localisation correspondant à l'objet
+]]--[[// Renvoie 0 si l'objet est invalide
+]]--[[// ----------------------------------------------------------------------------
+]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Renvoie la position d'un objet (barycentre de sa localisation)
 ]]--[[//
 ]]--[[// Si l'objet est dans le fuseau, on ne considère que sa localisation 
@@ -22,7 +26,13 @@ includedFiles["sources/common/Fonctions - Obj.bms"] = true
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Filtre sur la validité des objets de la liste
 ]]--[[//-----------------------------------------------------------------------------
-]]function S_Obj_Position( repObjet )
+]]function S_Obj_Localisation( objet )
+    local _returnValue = nil
+    _returnValue = DEC_ConnaissanceObjet_Localisation( objet )
+    do return _returnValue end
+end
+
+function S_Obj_Position( repObjet )
     local _returnValue = nil
     assert( ( repObjet ~= 0 and repObjet ~= nil ), "Pointeur Invalide" )
     local returnCode = nil

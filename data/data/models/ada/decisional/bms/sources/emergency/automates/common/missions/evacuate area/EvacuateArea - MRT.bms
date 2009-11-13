@@ -153,12 +153,9 @@ elseif switch_1 == eMRT_AssignerMissions then
                     if( self.eValidationMRT == eActionEffectuee ) then
                         do
                             self.eValidationMRT = eActionEnCours
-                                                        do
-                                                                self.params.__returnValue = eActionEffectuee
-                                Halt( self )
-                                do return end
-
-                            end
+                                                        self.params.__returnValue = eActionEffectuee
+                            Halt( self )
+                            do return end
 
                         end
                     end
@@ -190,7 +187,7 @@ elseif switch_1 == eMRT_AssignerMissions then
     end,
 
 --[[//-----------------------------------------------------------------------------
-]]--[[// Controler
+]]--[[// Evacuate Area
 ]]--[[//-----------------------------------------------------------------------------
 ]]}
 

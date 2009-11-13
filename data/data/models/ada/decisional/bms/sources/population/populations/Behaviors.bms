@@ -131,7 +131,7 @@ elseif switch_1 == "Rep_OrderConduite_Poursuivre" then
                             _continue = false
                                                 cases_switch_1[2] = true
 elseif switch_1 == "Rep_OrderConduite_Population_ChangerAttitude" then
-                            local ordreAtt = repOrdre
+                            local ordreAtt = ordre
                             S_ChangerAttitude( ordreAtt:GetorderConduitePopulationChangerAttitude_() )
                             _continue = false
                                                 cases_switch_1[3] = true

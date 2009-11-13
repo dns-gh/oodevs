@@ -58,4 +58,8 @@ include "Emergency/Pions/Common/Missions/ConvoyPopulation.bms"
 
 include "Emergency/Pions/Common/Missions/EscortDemonstration.bms"
 
+include "Emergency/Pions/Common/Missions/Alert.bms"
 
+include "Emergency/Pions/Common/Missions/OrganizeDistribution.bms"
+
+include "Emergency/Pions/Common/Missions/Supply.bms"

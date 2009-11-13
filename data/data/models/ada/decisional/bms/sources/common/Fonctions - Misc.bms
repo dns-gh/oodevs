@@ -40,6 +40,12 @@ includedFiles["sources/common/Fonctions - Misc.bms"] = true
     do return _returnValue end
 end
 
+function S_Eni_NiveauPerceptionGTIA( repEni )
+    local _returnValue = nil
+    _returnValue = DEC_ConnaissanceAgent_NiveauPerceptionMax( repEni )
+    do return _returnValue end
+end
+
 function S_ConnaissanceAgent_EstEnVol( connaissance )
     local _returnValue = false
     local bBuffer = false

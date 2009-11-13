@@ -482,11 +482,10 @@ node "ACT_Obj_Pion_Emergency_RealiserObjet"
                 end
 
                 DEC_Trace( "object construction: begin" )
-                self.actionID = DEC_StartCreerObjet( self.repObj, S_TypeObject_ToString( self._namedParams.eTypeObjet ), self._namedParams.locObjet )
+                self.actionID = DEC_StartCreateObjet( self.repObj, S_TypeObject_ToString( self._namedParams.eTypeObjet ), self._namedParams.locObjet )
                 actionCallbacks[ self.actionID ] = function( arg ) self.eEtatObjet = arg end
-                actionKnowledgeCallbacks[ self.actionID ] = function( arg ) self.repObj = arg end
 
-                DEC_Trace( "DEC_StartCreerObjet: OK" )
+                DEC_Trace( "DEC_StartCreateObjet: OK" )
                 do
                     if( not DEC_Agent_AutomateEstEmbraye() ) then
                         DEC_RC( eRC_DebutTravaux )
@@ -573,6 +572,170 @@ elseif switch_1 == eActionObjetTerminee then
     destroy = function( self )
                 DEC_Trace( "realisation arretee" )
         self.actionID = DEC_StopAction( self.actionID )
+    end,
+
+}
+
+node "ACT_Obj_Pion_Emergency_Supply"
+{
+    actuators =
+    {
+        deplacement = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.objet = self.params[1]
+    end,
+
+    select = function( self )
+                self.actionID = self.actionID or nil
+        self.eEtatObjet = self.eEtatObjet or eActionObjetEnCours
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            self.actionID = DEC_StartRavitaillerObjet( self._namedParams.objet )
+            actionCallbacks[ self.actionID ] = function( arg ) self.eEtatObjet = arg end
+
+        end
+
+        if( DEC_ConnaissanceObject_EstRavitaillee( self._namedParams.objet ) ) then
+            do
+                DEC_Trace( "object ravitaillement: end" )
+                                do
+                    if( not DEC_Agent_AutomateEstEmbraye() ) then
+                        DEC_RC( eRC_FinTravaux )
+                    else
+                        DEC_Message( eRC_FinTravaux )
+                    end
+
+                end
+
+                DEC_StopAction( self.actionID )
+                                self.params.__returnValue = eActionEffectuee
+                Halt( self )
+                do return end
+
+            end
+        end
+
+         do
+            local _continue = true
+            local switch_1 = self.eEtatObjet
+            local cases_switch_1 = {}
+                if switch_1 == eActionObjetEnCours then
+                    _continue = false
+                                cases_switch_1[1] = true
+elseif switch_1 == eActionObjetTerminee then
+                    DEC_Trace( "object supply: end" )
+                    do
+                        if( not DEC_Agent_AutomateEstEmbraye() ) then
+                            DEC_RC( eRC_FinTravaux )
+                        else
+                            DEC_Message( eRC_FinTravaux )
+                        end
+
+                    end
+
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt( self )
+                    do return end
+
+                    _continue = false
+                elseif switch_1 == eActionObjetPasDeCapacite
+                or switch_1 == eActionObjetManqueDotation
+                or switch_1 == eActionObjetImpossible then
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt( self )
+                    do return end
+
+                    _continue = false
+                                end
+            end
+
+    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                self.actionID = DEC_StopAction( self.actionID )
+    end,
+
+}
+
+node "ACT_Obj_Pion_Emergency_Distribute"
+{
+    actuators =
+    {
+        deplacement = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.objet = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.quantity = self.params[3]
+    end,
+
+    select = function( self )
+                self.actionID = self.actionID or nil
+        self.eEtatObjet = self.eEtatObjet or eActionObjetEnCours
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            self.actionID = DEC_StartDistributionObjet( self._namedParams.objet, self._namedParams.pion, self._namedParams.quantity )
+            actionCallbacks[ self.actionID ] = function( arg ) self.eEtatObjet = arg end
+
+        end
+
+         do
+            local _continue = true
+            local switch_1 = self.eEtatObjet
+            local cases_switch_1 = {}
+                if switch_1 == eActionObjetEnCours then
+                    _continue = false
+                                cases_switch_1[1] = true
+elseif switch_1 == eActionObjetTerminee then
+                    DEC_Trace( "object distribution: end" )
+                    do
+                        if( not DEC_Agent_AutomateEstEmbraye() ) then
+                            DEC_RC( eRC_FinTravaux )
+                        else
+                            DEC_Message( eRC_FinTravaux )
+                        end
+
+                    end
+
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt( self )
+                    do return end
+
+                    _continue = false
+                elseif switch_1 == eActionObjetPasDeCapacite
+                or switch_1 == eActionObjetManqueDotation
+                or switch_1 == eActionObjetImpossible then
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt( self )
+                    do return end
+
+                    _continue = false
+                                end
+            end
+
+    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                self.actionID = DEC_StopAction( self.actionID )
     end,
 
 }

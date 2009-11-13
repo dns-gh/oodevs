@@ -608,7 +608,6 @@ node "BEH_Info_Pion_RendreCompteSurPresencePop"
     end,
 
     activate = function( self )
-        local eValidite = nil
         for _,eniRendu in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Prisoniers
 ]]--[[//-----------------------------------------------------------------------------
