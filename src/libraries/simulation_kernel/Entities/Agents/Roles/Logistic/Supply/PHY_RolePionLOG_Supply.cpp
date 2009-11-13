@@ -301,11 +301,9 @@ void PHY_RolePionLOG_Supply::StopUsingForLogistic( PHY_ComposantePion& composant
 // Created: NLD 2005-01-21
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Supply::NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const
-{
-   
-    
+{   
     if( bNewNeed )
-        MIL_Report::PostEvent( pion_, MIL_Report::eReport_LogisticStockThresholdExceeded );
+        MIL_Report::PostEvent( pion_, MIL_Report::eReport_LogisticStockThresholdExceeded, dotationCategory );
 
     pion_.GetLogAutomate().NotifyStockSupplyNeeded( dotationCategory );
 }

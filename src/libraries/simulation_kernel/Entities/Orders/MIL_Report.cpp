@@ -177,6 +177,12 @@ MIL_Report::~MIL_Report()
 // -----------------------------------------------------------------------------
 bool MIL_Report::DoSend( uint nSenderID, E_Type nType, const DEC_KnowledgeResolver_ABC& knowledgeResolver, int /*reportId*/, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& params ) const
 {
+    if( params.size() != parameters_.size() )
+    {
+        MT_LOG_ERROR_MSG( "Report '" << strMessage_ << "' send failed (invalid DIA parameters)" );
+        return false;
+    }
+
     NET_ASN_MsgReport asn;
  
     asn().oid          = nSenderID;
@@ -206,4 +212,3 @@ bool MIL_Report::DoSend( uint nSenderID, E_Type nType, const DEC_KnowledgeResolv
 
     return true;
 }
-    
