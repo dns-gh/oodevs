@@ -90,6 +90,7 @@
             <includepath path="${include.dir}/masasn"/>
             <defineset>
                 <define name="APP_VERSION" value="${version.minor}"/>
+                <define name="XML_LIBRARY"/>  <!-- xerces static -->
             </defineset>
         </build-lib>
     </target>
@@ -141,6 +142,7 @@
     <target name="library.clients_kernel" description="build clients_kernel static library" depends="library.tools,library.ENT">
         <build-lib name="clients_kernel" depends="qt" pattern="lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/masasn"/>
+            <defineset define="XML_LIBRARY"/>  <!-- xerces static -->
         </build-lib>
     </target>
 
@@ -154,6 +156,7 @@
     <target name="library.actions" description="build actions library" depends="library.game_asn,library.clients_kernel">
         <build-lib name="actions" depends="qt" pattern="lib${ant.project.name}_actions-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/masasn"/>
+            <defineset define="XML_LIBRARY"/>  <!-- xerces static -->
         </build-lib>
     </target>
 
@@ -173,12 +176,14 @@
     <target name="library.indicators" description="build indicators static library" depends="library.clients_kernel">
         <build-lib name="indicators" depends="boost,qt,xerces" pattern="lib${ant.project.name}_indicators-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/masasn"/>
+            <defineset define="XML_LIBRARY"/>  <!-- xerces static -->
         </build-lib>
     </target>
 
     <target name="library.gaming" description="build gaming static library" depends="library.game_asn,library.clients_gui,library.actions,library.actions_gui,library.indicators">
         <build-lib name="gaming" depends="qt" pattern="lib${ant.project.name}_gaming-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/masasn"/>
+            <defineset define="XML_LIBRARY"/>  <!-- xerces static -->
         </build-lib>
     </target>
 
@@ -201,6 +206,7 @@
     <target name="library.bml_plugin" description="build BML dispatcher plugin static library" depends="library.dispatcher">
         <build-lib name="bml_plugin" pattern="lib${ant.project.name}_bml_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt">
             <includepath path="${include.dir}/masasn"/>
+            <defineset define="XML_LIBRARY"/>  <!-- xerces static -->
         </build-lib>
     </target>
 
@@ -208,6 +214,7 @@
         <build-lib name="xmlia_plugin" pattern="lib${ant.project.name}_xmlia_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt">
             <includepath path="${include.dir}/masasn"/>
             <defineset>
+              <define name="XML_LIBRARY"/>
               <define name="LDAP_UNICODE"/>
             </defineset>
         </build-lib>
@@ -223,18 +230,21 @@
     <target name="library.hla_plugin" description="build hla_plugin static library" depends="library.dispatcher">
         <build-lib name="hla_plugin" pattern="lib${ant.project.name}_hla_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt">
             <includepath path="${include.dir}/masasn"/>
+            <defineset define="XML_LIBRARY"/>  <!-- xerces static -->
         </build-lib>
     </target>
 
     <target name="library.dis_plugin" description="build dis_plugin static library" depends="library.dispatcher">
         <build-lib name="dis_plugin" pattern="lib${ant.project.name}_dis_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt">
             <includepath path="${include.dir}/masasn"/>
+            <defineset define="XML_LIBRARY"/>  <!-- xerces static -->
         </build-lib>
     </target>
 
     <target name="library.tic_plugin" description="build tic_plugin static library" depends="library.dispatcher">
         <build-lib name="tic_plugin" pattern="lib${ant.project.name}_tic_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt">
             <includepath path="${include.dir}/masasn"/>
+            <defineset define="XML_LIBRARY"/>  <!-- xerces static -->
         </build-lib>
     </target>
 
@@ -248,6 +258,7 @@
     <target name="library.script_plugin" description="build script_plugin static library" depends="library.dispatcher">
         <build-lib name="script_plugin" pattern="lib${ant.project.name}_script_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt">
             <includepath path="${include.dir}/masasn"/>
+            <defineset define="XML_LIBRARY"/>  <!-- xerces static -->
         </build-lib>
         <mkdir dir="${run.dir}/resources/scripts"/>
         <copy todir="${run.dir}/resources/scripts">
@@ -258,6 +269,7 @@
     <target name="library.score_plugin" description="build score_plugin static library" depends="library.dispatcher,library.3a,library.indicators">
         <build-lib name="score_plugin" depends="boost,qt" pattern="lib${ant.project.name}_score_plugin-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/masasn"/>
+            <defineset define="XML_LIBRARY"/>  <!-- xerces static -->
         </build-lib>
     </target>
 
@@ -285,35 +297,39 @@
     <target name="application.dispatcher_dll" description="build CSword Dispatcher dll" depends="library.dispatcher,library.ENT,library.plugins">
         <build-lib name="dispatcher_dll" outtype="shared" mode="release" depends="mt,din,boost,terrain,xerces,flexlm,qt"
                    pattern="dispatcher-${platform}-mt@{suffix}"
-                   libs="HLA,libFedTime,masalloc,tools,masasn,directia-${platform}-mt-4_5,
+                   libs="HLA,libFedTime,masalloc,tools,masasn,
+                         MT_Tools,MT_Logger,MT_Memory,MT_IO,MT_Thread,
+                         xerces-c_mt_static_2,Xerces-depdom_static_2,
+                         directia-${platform}-mt-4_5,
                          lib${ant.project.name}_actions-${platform}-mt,
-                         lib${ant.project.name}_tools-${platform}-mt,
                          lib${ant.project.name}_ENT-${platform}-mt,
-                         lib${ant.project.name}_MT_Tools-${platform}-mt,
                          lib${ant.project.name}_game_asn-${platform}-mt,
-                         lib${ant.project.name}_dispatcher-${platform}-mt,
                          lib${ant.project.name}_hla_plugin-${platform}-mt,
                          lib${ant.project.name}_dis_plugin-${platform}-mt,
                          lib${ant.project.name}_tic_plugin-${platform}-mt,
                          lib${ant.project.name}_bml_plugin-${platform}-mt,
-                         lib${ant.project.name}_xmlia_plugin-${platform}-mt,
                          lib${ant.project.name}_messenger_plugin-${platform}-mt,
                          lib${ant.project.name}_script_plugin-${platform}-mt,
                          lib${ant.project.name}_3a-${platform}-mt,
                          lib${ant.project.name}_score_plugin-${platform}-mt,
+                         lib${ant.project.name}_dispatcher-${platform}-mt,
                          lib${ant.project.name}_clients_kernel-${platform}-mt,
-                         lib${ant.project.name}_indicators-${platform}-mt">
-            <syslibset libs="dbghelp,psapi,iphlpapi,user32,Wldap32"/>
+                         lib${ant.project.name}_indicators-${platform}-mt,
+                         lib${ant.project.name}_MT_Tools-${platform}-mt,
+                         lib${ant.project.name}_tools-${platform}-mt,
+                         lib${ant.project.name}_xmlia_plugin-${platform}-mt">
+            <syslibset libs="dbghelp,psapi,iphlpapi,user32,advapi32,Wldap32"/>
             <includepath path="${include.dir}/masasn"/>
-            <defineset define="DISPATCHER_DLL_EXPORTS"/>
+            <defineset define="XML_LIBRARY,DISPATCHER_DLL_EXPORTS"/>
             <linkerarg value="/FIXED:NO"/>
         </build-lib>
     </target>
 
     <target name="application.dispatcher_dll.crossbowed" description="build CSword Dispatcher dll with crossbow" depends="library.dispatcher,library.ENT,library.plugins">
-        <build-lib name="dispatcher_dll_crossbowed" outtype="shared" mode="release" depends="mt,din,boost,terrain,xerces,flexlm,qt" input="dispatcher_dll"
+        <build-lib name="dispatcher_dll_crossbowed" outtype="shared" mode="release" depends="mt,din,boost,terrain,flexlm,qt" input="dispatcher_dll"
                    pattern="dispatcher_crossbowed-${platform}-mt@{suffix}"
                    libs="HLA,libFedTime,masalloc,tools,masasn,directia-${platform}-mt-4_5,
+                         xerces-c_mt_static_2,Xerces-depdom_static_2,
                          lib${ant.project.name}_actions-${platform}-mt,
                          lib${ant.project.name}_tools-${platform}-mt,
                          lib${ant.project.name}_ENT-${platform}-mt,
@@ -332,14 +348,14 @@
                          lib${ant.project.name}_crossbow_plugin-${platform}-mt,
                          lib${ant.project.name}_clients_kernel-${platform}-mt,
                          lib${ant.project.name}_indicators-${platform}-mt">
-            <syslibset libs="dbghelp,psapi,iphlpapi,user32"/>
+            <syslibset libs="dbghelp,psapi,iphlpapi,user32,advapi32"/>
             <includepath path="${include.dir}/masasn"/>
             <defineset define="XML_LIBRARY,DISPATCHER_DLL_EXPORTS,CROSSBOW_PLUGIN"/>
             <linkerarg value="/FIXED:NO"/>
         </build-lib>
     </target>
 
-    <target name="application.dispatcher_app" description="build CSword Dispatcher executable" depends="application.dispatcher_dll">
+    <target name="application.dispatcher_app" description="build Sword Dispatcher executable" depends="application.dispatcher_dll">
         <build-app name="dispatcher_app" subsystem="console" depends="mt,din,boost,terrain,xerces,flexlm"
                    libs="masalloc,tools,
                          dispatcher-${platform}-mt@{suffix},
@@ -348,7 +364,7 @@
         </build-app>
     </target>
 
-    <target name="application.simulation_app" description="build CSword Simulation executable" depends="library.dispatcher,library.simulation_kernel">
+    <target name="application.simulation_app" description="build Sword Simulation executable" depends="library.dispatcher,library.simulation_kernel">
         <build-app name="simulation_app" depends="mt,din,dia3,terrain,boost,xerces,flexlm"
                    libs="HLA,libFedTime,masalloc,tools,masasn,directia-${platform}-mt-4_5,library-${platform}-mt,
                          gdal_i,gdal_ogr,geodata,
@@ -364,15 +380,18 @@
             <syslibset libs="dbghelp,psapi,shell32,iphlpapi"/>
             <includepath path="${libraries.dir}/simulation_kernel"/>
             <includepath path="${include.dir}/masasn"/>
-            <defineset define="_WIN32_WINNT=0x0400"/> <!-- for 'IsDebuggerPresent()' -->
+            <defineset define="XML_LIBRARY,_WIN32_WINNT=0x0400"/> <!-- for 'IsDebuggerPresent()' -->
             <linkerarg value="/STACK:15000000"/>      <!-- Because of boost serialization -->
             <linkerarg value="/LARGEADDRESSAWARE"/>   <!-- Executable can access 3GiB instead of 2GiB -->
         </build-app>
     </target>
 
-    <target name="application.replayer_app" description="build CSword replayer executable" depends="library.dispatcher,library.3a,library.score_plugin">
-        <build-app name="replayer_app" depends="mt,din,dia3,terrain,boost,xerces,flexlm,qt"
+    <target name="application.replayer_app" description="build Sword replayer executable" depends="library.dispatcher,library.3a,library.score_plugin">
+        <!-- MT uses xerces dynamic lib by default -->
+        <build-app name="replayer_app" depends="dia3,terrain,boost,flexlm,qt"
                    libs="HLA,libFedTime,tools,masasn,directia-${platform}-mt-4_5,
+                         MT_Tools,MT_Logger,MT_Memory,MT_IO,MT_Thread,MT_Time,
+                         xerces-c_mt_static_2,Xerces-depdom_static_2,
                          dispatcher-${platform}-mt@{suffix},
                          lib${ant.project.name}_tools-${platform}-mt,
                          lib${ant.project.name}_ENT-${platform}-mt,
@@ -383,8 +402,9 @@
                          lib${ant.project.name}_clients_kernel-${platform}-mt,
                          lib${ant.project.name}_score_plugin-${platform}-mt,
                          lib${ant.project.name}_indicators-${platform}-mt">
-            <syslibset libs="dbghelp,psapi,iphlpapi,user32,shell32"/>
+            <syslibset libs="dbghelp,psapi,iphlpapi,user32,shell32,advapi32"/>
             <includepath path="${include.dir}/masasn"/>
+            <defineset define="XML_LIBRARY"/>
         </build-app>
     </target>
 
