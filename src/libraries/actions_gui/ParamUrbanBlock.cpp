@@ -9,16 +9,17 @@
 
 #include "actions_gui_pch.h"
 #include "ParamUrbanBlock.h"
+#include "moc_ParamUrbanBlock.cpp"
+
 #include "actions/Action_ABC.h"
-#include "actions/Location.h"
+#include "actions/UrbanBlock.h"
+
 #include "clients_kernel/ActionController.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Point.h"
-#include "clients_gui/LocationCreator.h"
 #include "clients_gui/ParametersLayer.h"
 #include "clients_gui/RichLabel.h"
-#include "clients_gui/Tools.h"
+#include "clients_gui/TerrainObjectProxy.h"
+
+#include "urban/TerrainObject_ABC.h"
 
 using namespace actions::gui;
 
@@ -26,14 +27,13 @@ using namespace actions::gui;
 // Name: ParamUrbanBlock constructor
 // Created: MGD 2009-11-03
 // -----------------------------------------------------------------------------
-ParamUrbanBlock::ParamUrbanBlock( const kernel::OrderParameter& parameter, ::gui::ParametersLayer& layer )
-: Param_ABC  ( parameter.GetName().c_str() )
+ParamUrbanBlock::ParamUrbanBlock( QObject* parent, const kernel::OrderParameter& parameter, ::gui::ParametersLayer& layer )
+: QObject( parent )
+, Param_ABC  ( parameter.GetName().c_str() )
 , parameter_ ( parameter )
 , layer_     ( layer )
-, controller_( 0 )
 , pLabel_    ( 0 )
 {
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +42,6 @@ ParamUrbanBlock::ParamUrbanBlock( const kernel::OrderParameter& parameter, ::gui
 // -----------------------------------------------------------------------------
 ParamUrbanBlock::~ParamUrbanBlock()
 {
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -54,30 +53,12 @@ void ParamUrbanBlock::BuildInterface( QWidget* parent )
     QHBox* box = new QHBox( parent );
     box->setSpacing( 5 );
     pLabel_ = new ::gui::RichLabel( GetName(), false, box );
-    pShapeLabel_ = new QLabel( "---", box );
-    pShapeLabel_->setMinimumWidth( 100 );
-    pShapeLabel_->setAlignment( Qt::AlignCenter );
-    pShapeLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
+    pBlockLabel_ = new QLabel( "---", box );
+    pBlockLabel_->setMinimumWidth( 100 );
+    pBlockLabel_->setAlignment( Qt::AlignCenter );
+    pBlockLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
 }
 
-// -----------------------------------------------------------------------------
-// Name: ParamUrbanBlock::RemoveFromController
-// Created: MGD 2009-11-03
-// -----------------------------------------------------------------------------
-void ParamUrbanBlock::RemoveFromController()
-{
-    Param_ABC::RemoveFromController();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamUrbanBlock::RegisterIn
-// Created: MGD 2009-11-03
-// -----------------------------------------------------------------------------
-void ParamUrbanBlock::RegisterIn( kernel::ActionController& controller )
-{
-    controller_ = &controller;
-    Param_ABC::RegisterIn( controller );
-}
 
 // -----------------------------------------------------------------------------
 // Name: ParamUrbanBlock::CheckValidity
@@ -99,6 +80,12 @@ bool ParamUrbanBlock::CheckValidity()
 // -----------------------------------------------------------------------------
 void ParamUrbanBlock::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
+    if( selected_ )
+    {
+        std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::UrbanBlock( parameter_, *(selected_->object_) ) );
+        param->Set( true );
+        action.AddParameter( *param.release() );
+    }   
 }
 
 // -----------------------------------------------------------------------------
@@ -117,4 +104,28 @@ void ParamUrbanBlock::Draw( const geometry::Point2f& , const kernel::Viewport_AB
 bool ParamUrbanBlock::IsOptional() const
 {
     return parameter_.IsOptional();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamUrbanBlock::NotifyContextMenu
+// Created: MGD 2009-11-04
+// -----------------------------------------------------------------------------
+void ParamUrbanBlock::NotifyContextMenu( const ::gui::TerrainObjectProxy& object, kernel::ContextMenu& menu )
+{
+    potential_ = &object;
+    if( pBlockLabel_->isShown() )
+        menu.InsertItem( "Parameter", GetName(), this, SLOT( MenuItemValidated() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamUrbanBlock::MenuItemValidated
+// Created: MGD 2009-11-05
+// -----------------------------------------------------------------------------
+void ParamUrbanBlock::MenuItemValidated()
+{
+    selected_ = potential_;
+    if( selected_ )
+        pBlockLabel_->setText(  selected_->object_->GetName().c_str() );
+    else
+        pBlockLabel_->setText(  "---" );
 }

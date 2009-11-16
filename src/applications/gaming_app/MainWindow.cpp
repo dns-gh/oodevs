@@ -398,14 +398,14 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     Layer_ABC& folkLayer            = *new ::FolkLayer( controllers_.controller_, staticModel_.coordinateConverter_, model_.folk_ );
     Layer_ABC& fogLayer             = *new FogLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     Layer_ABC& drawerLayer          = *new DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile );
-    Layer_ABC& urbanLayer           = *new UrbanLayer( controllers_.controller_, *glProxy_ );
+    Layer_ABC& urbanLayer           = *new UrbanLayer( controllers_, *glProxy_ );
 
     // ordre de dessin
     glProxy_->Register( defaultLayer );
     glProxy_->Register( elevation2d );              preferences.AddLayer( tr( "Elevation" ), elevation2d );         elevation2d         .SetPasses( "main,composition,miniviews" );
     glProxy_->Register( raster );                   preferences.AddLayer( tr( "Raster" ), raster );                 raster              .SetPasses( "main,composition,miniviews" );
     glProxy_->Register( terrain );                  preferences.AddLayer( tr( "Terrain" ), terrain );               terrain             .SetPasses( "main,composition,miniviews" );
-    glProxy_->Register( urbanLayer );               preferences.AddLayer( tr( "Urban" ), urbanLayer );              urbanLayer          .SetPasses( "main,composition,miniviews" );
+    glProxy_->Register( urbanLayer );               //preferences.AddLayer( tr( "Urban" ), urbanLayer );              urbanLayer          .SetPasses( "main,composition,miniviews" );
     glProxy_->Register( elevation3d );
     glProxy_->Register( grid );                                                                                     grid                .SetPasses( "main,miniviews" );
     glProxy_->Register( folkLayer );                preferences.AddLayer( tr( "Folk" ), folkLayer );                folkLayer           .SetPasses( "main,miniviews" );

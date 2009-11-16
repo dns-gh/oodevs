@@ -10,8 +10,9 @@
 #include "simulation_kernel_pch.h"
 #include "UrbanModel.h"
 #include "Urban/Model.h"
-#include "Urban/BlockModel.h"
-#include "Urban/TerrainObject_ABC.h"
+#include <Urban/BlockModel.h>
+#include <Urban/TerrainObject_ABC.h>
+#include <Urban/Block.h>
 #include "Urban/StaticModel.h"
 #include "Urban/WorldParameters.h"
 #include "Tools/MIL_Config.h"
@@ -121,4 +122,13 @@ void UrbanModel::SendCreation( urban::TerrainObject_ABC& object )
     
     asn.Send();
 
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::FindUrbanBlock
+// Created: SLG 2009-10-29
+// -----------------------------------------------------------------------------
+urban::Block* UrbanModel::FindUrbanBlock( unsigned id ) const
+{
+    return static_cast< Block* >( model_->blocks_.Find( id ) );
 }

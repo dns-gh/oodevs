@@ -25,6 +25,10 @@ function CreateKnowledge( strKnowledgeType, knowledgeSource, knowledgedPosition 
     kn = knowledges.create( net.masagroup.sword.military.world.Population, knowledgeSource )
     kn.sim_pos = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] }
     return kn
+  elseif( strKnowledgeType == "net.masagroup.sword.military.world.UrbanBlock" ) then
+    kn = knowledges.create( net.masagroup.sword.military.world.UrbanBlock, knowledgeSource )
+    kn.sim_pos = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] }
+    return kn
   else
     error( "Knowledge unknown : " .. strKnowledgeType )
   end

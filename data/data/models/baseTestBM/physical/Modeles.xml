@@ -15,6 +15,7 @@
         <mission name="MoveToAgentList"/>
         <mission name="MoveToAgentKnowledgeList"/>
         <mission name="MoveToObjectKnowledgeList"/>
+		<mission name="MoveToUrbanBlock"/>
       </missions>
     </unit>
   </units>

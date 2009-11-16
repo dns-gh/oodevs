@@ -578,6 +578,23 @@ bool MIL_BaseParameter::ToObjectiveList( std::vector< boost::shared_ptr< DEC_Obj
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_BaseParameter::ToUrbanBlock
+// Created: MGD 2009-11-04
+// -----------------------------------------------------------------------------
+bool MIL_BaseParameter::ToUrbanBlock( ASN1T_UrbanBlock& ) const
+{
+    return false;
+}
+// -----------------------------------------------------------------------------
+// Name: MIL_BaseParameter::ToUrbanBlock
+// Created: MGD 2009-11-04
+// -----------------------------------------------------------------------------
+bool MIL_BaseParameter::ToUrbanBlock( urban::Block*& ) const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_BaseParameter::Append
 // Created: LDC 2009-07-31
 // -----------------------------------------------------------------------------

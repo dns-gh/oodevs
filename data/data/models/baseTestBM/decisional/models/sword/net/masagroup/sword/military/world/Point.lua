@@ -16,13 +16,13 @@ return
         return integration.reachPriority( point )
     end,
     
-    observeIt = function( area )
+    observeIt = function( point )
         --TODO 
     end,
-    safeApproachIt = function( area )
+    safeApproachIt = function( point )
         --TODO
     end,
-    recce = function( area )
+    recce = function( point )
         --TODO
     end
 }

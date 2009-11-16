@@ -66,6 +66,7 @@ Automat                 ::= OID
 Population              ::= OID
 Team                    ::= OID
 Formation               ::= OID
+UrbanBlock              ::= OID
 KnowledgeGroup          ::= OID
 UnitKnowledge           ::= OID
 ObjectKnowledge         ::= OID

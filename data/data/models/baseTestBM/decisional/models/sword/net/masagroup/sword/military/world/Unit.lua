@@ -15,10 +15,7 @@ return
     safeApproachIt = function( unit )
         --TODO
     end,
-    recce = function( unit )
-        --TODO
-    end,
-    
+	
     computeDistance = function( element )
         return integration.magnitude( element, me )
     end,

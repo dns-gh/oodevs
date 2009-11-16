@@ -22,6 +22,7 @@ namespace urban
     class Model;
     class StaticModel;
     class TerrainObject_ABC;
+    class Block;
 }
 
 
@@ -49,6 +50,7 @@ public:
     void ReadUrbanModel      ( const MIL_Config& config );
     void SendStateToNewClient() const;
     static void SendCreation( urban::TerrainObject_ABC& UrbanBlock );
+    urban::Block* FindUrbanBlock( unsigned id ) const;
     //@}
 
     //! @name Network

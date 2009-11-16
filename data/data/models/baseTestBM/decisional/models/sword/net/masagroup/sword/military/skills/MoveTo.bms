@@ -6,6 +6,7 @@ rootnode
     };
 
     activate = function( self )
+	    BreakForDebug( "call root" )
 		for _, entity in pairs( self.params.entities ) do
     		Activate( skill.nodes.MoveToPosition, entity:reachPriority(), { position = entity, area = self.params.area[entity] } )
     	end

@@ -41,6 +41,7 @@
 #include "MIL_ParameterType_IndirectFire.h"
 #include "MIL_ParameterType_String.h"
 #include "MIL_ParameterType_ObjectiveList.h"
+#include "MIL_ParameterType_UrbanBlock.h"
 
 // =============================================================================
 // FACTORY
@@ -129,6 +130,8 @@ void MIL_ParameterType_ABC::Initialize()
     RegisterParameterType< MIL_ParameterType_IndirectFire          >();
     RegisterParameterType< MIL_ParameterType_String                >();
     RegisterParameterType< MIL_ParameterType_ObjectiveList         >();
+    RegisterParameterType< MIL_ParameterType_UrbanBlock            >(std::string("UrbanBlockBM") );
+
 }
 
 // =============================================================================

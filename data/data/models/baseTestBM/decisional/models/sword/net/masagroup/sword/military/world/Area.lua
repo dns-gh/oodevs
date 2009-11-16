@@ -9,7 +9,11 @@ return
     end,
     
     reachEfficiency = function( area, keypoint )
-        return integration.reachEfficiency( DEC_BMArea_Barycenter( area ), keypoint )
+        return integration.reachEfficiency( area, keypoint )
+    end,
+	
+	reachPriority = function( area )
+        return integration.reachPriority( area )
     end,
     
     observeIt = function( area )

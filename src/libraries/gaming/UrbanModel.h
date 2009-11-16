@@ -53,7 +53,7 @@ private:
     UrbanModel& operator=( const UrbanModel& ); //!< Assignement operator
     //@}
 
-private:
+public:
     //! @name Member data
     //@{
     urban::StaticModel& staticModel_;

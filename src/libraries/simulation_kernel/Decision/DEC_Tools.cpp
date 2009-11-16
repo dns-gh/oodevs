@@ -87,6 +87,8 @@ namespace directia
     void ReleasedByDIA( TER_Localisation* ) {}
     void UsedByDIA( PHY_Action_ABC* ) {}
     void ReleasedByDIA( PHY_Action_ABC* ) {}
+    void UsedByDIA( urban::Block* ) {}
+    void ReleasedByDIA( urban::Block* ) {}
 }
 
 // -----------------------------------------------------------------------------

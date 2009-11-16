@@ -21,6 +21,9 @@
 #include "Entities/Orders/MIL_MissionParameterVisitor_ABC.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
+#include "Urban/Block.h"
+#include "geometry/Point2.h"
+
 #include <boost/bind.hpp>
 
 // -----------------------------------------------------------------------------
@@ -466,6 +469,21 @@ void PopulationKnowledgeFunctionBM( directia::ScriptRef& knowledgeCreateFunction
     if( element.ToPopulationKnowledge( value ) && value )
         knowledgeCreateFunction( refMission, std::string( "net.masagroup.sword.military.world.Population" ), name, value, false );//@TODO MGD Add CompositeReachable for Population?
 }
+
+void UrbanBlockFunctionBM( directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+{
+    urban::Block* value = 0;
+    if( element.ToUrbanBlock( value ) && value )
+    {
+        const geometry::Point2f& point = value->GetFootprint()->Vertices().back();
+        std::vector< float > position;
+        position.push_back( point.X() );
+        position.push_back( point.Y() );
+        position.push_back( 0 );
+        knowledgeCreateFunction( refMission, std::string( "net.masagroup.sword.military.world.UrbanBlock" ), name, value, position, false );//@TODO MGD fix this ugly        
+    }
+}
+
 void DotationTypeFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     const PHY_DotationCategory* value = 0;
@@ -601,6 +619,7 @@ void InitFunctions()
         functorsBM[ "PopulationKnowledgeBM" ] = PopulationKnowledgeFunctionBM;
         functorsBM[ "GenObjectBM" ] = GenObjectFunctionBM;
         functorsBM[ "GenObjectListBM" ] = GenObjectListFunctionBM;
+        functorsBM[ "UrbanBlockBM" ] = UrbanBlockFunctionBM;
     }
 }
 

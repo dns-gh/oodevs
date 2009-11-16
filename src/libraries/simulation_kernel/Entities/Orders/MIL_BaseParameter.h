@@ -13,6 +13,11 @@
 #include "simulation_orders/MIL_MissionParameter_ABC.h"
 #include "game_asn/Simulation.h"
 
+namespace urban
+{
+    class Block;
+}
+
 // =============================================================================
 /** @class  MIL_BaseParameter
     @brief  MIL_BaseParameter
@@ -97,6 +102,8 @@ public:
     virtual bool ToMaintenancePriorities( T_MaintenancePriorityVector& ) const;
     virtual bool ToMedicalPriorities( T_MedicalPriorityVector& ) const;
     virtual bool ToObjectiveList( std::vector< boost::shared_ptr< DEC_Objective > >& ) const;
+    virtual bool ToUrbanBlock( ASN1T_UrbanBlock& ) const;
+    virtual bool ToUrbanBlock( urban::Block*& ) const;
     
     virtual void Append( boost::shared_ptr< TER_Localisation > pLocation );
     //@}

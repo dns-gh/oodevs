@@ -116,6 +116,8 @@ private:
     actions::gui::Param_ABC* BuildDotationTypeList     ( const kernel::OrderParameter& parameter ) const;
     actions::gui::Param_ABC* BuildIntelligenceList     ( const kernel::OrderParameter& parameter ) const;
 
+    actions::gui::Param_ABC* BuildUrbanBlock           ( const kernel::OrderParameter& parameter ) const;
+
     template < class T >
     actions::gui::ParamComboBox<T>& BuildVarList( const kernel::OrderParameter& parameter ) const
     {

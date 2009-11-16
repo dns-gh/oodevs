@@ -13,6 +13,11 @@
 #include <boost/shared_ptr.hpp>
 #include "game_asn/Simulation.h"
 
+namespace urban
+{
+    class Block;
+}
+
 class DEC_Decision_ABC;
 class DEC_Gen_Object;
 class DEC_Knowledge_Agent;
@@ -85,6 +90,7 @@ public:
     virtual bool ToPathList( ASN1T_PathList& asn ) const = 0;
     virtual bool ToPopulationKnowledge( ASN1T_PopulationKnowledge& asn ) const = 0;
     virtual bool ToString( ASN1VisibleString& asn ) const = 0;
+    virtual bool ToUrbanBlock( ASN1T_UrbanBlock& ) const = 0;
 
     virtual bool ToString( std::string& ) const = 0;
     // The lifecycle of pointers in all functions below must be handled by MIL_MissionParameter_ABC
@@ -115,6 +121,7 @@ public:
     virtual bool ToMaintenancePriorities( T_MaintenancePriorityVector& ) const = 0;
     virtual bool ToMedicalPriorities( T_MedicalPriorityVector& ) const = 0;
     virtual bool ToObjectiveList( std::vector< boost::shared_ptr< DEC_Objective > >& ) const = 0;
+    virtual bool ToUrbanBlock( urban::Block*& ) const = 0;
 
     virtual void Append( boost::shared_ptr< TER_Localisation > pLocation ) = 0;
     //@}

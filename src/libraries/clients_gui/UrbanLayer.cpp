@@ -13,7 +13,8 @@
 #include "clients_gui/View_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Controller.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/ActionController.h"
 #include "Urban/TerrainObject_ABC.h"
 #include "urban/Drawer_ABC.h"
 #include "clients_kernel/Location_ABC.h"
@@ -29,15 +30,16 @@ using namespace gui;
 // Name: EntityLayerBase::UrbanLayer
 // Created: SLG 2009-03-23
 // -----------------------------------------------------------------------------
-UrbanLayer::UrbanLayer( kernel::Controller& controller, const kernel::GlTools_ABC& tools/*, ColorStrategy_ABC& strategy, View_ABC& view */)
-: controller_   ( controller )
+UrbanLayer::UrbanLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools/*, ColorStrategy_ABC& strategy, View_ABC& view */)
+: controllers_   ( controllers )
 , tools_        ( tools )
 , urbanDrawer_  ( new UrbanDrawer( tools ) )
 , selectionArea_( 0 )
 , tooltiped_    ( std::numeric_limits< unsigned >::max() )
 , selectionMode_( false )
+, selectedObject_( 0 )
 {
-    controller_.Register( *this );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,7 +61,7 @@ void UrbanLayer::Paint( kernel::Viewport_ABC& viewport )
     for( IT_TerrainObjects it = objects_.begin(); it != objects_.end(); ++it )
     {
         const TerrainObjectProxy& object = (*it);
-        if( std::find( selectedObjects_.begin(), selectedObjects_.end(), object ) == selectedObjects_.end() )
+        if( selectedObject_ && object == *selectedObject_ )
             object.object_->Draw( *urbanDrawer_, false );
         else
         {
@@ -75,7 +77,7 @@ void UrbanLayer::Paint( kernel::Viewport_ABC& viewport )
 void UrbanLayer::Reset2d()
 {
     objects_.clear();
-    selectedObjects_.clear();
+    selectedObject_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -126,36 +128,18 @@ void UrbanLayer::NotifySelected( const TerrainObjectProxy* object )
 // -----------------------------------------------------------------------------
 bool UrbanLayer::HandleMousePress( QMouseEvent* input, const geometry::Point2f& point )
 {
-    if( input->button() == Qt::LeftButton && input->type() == QMouseEvent::MouseButtonRelease )
+    if( input->button() == Qt::RightButton )
     {
-        bool found ( false );
         for( IT_TerrainObjects it = objects_.begin(); it != objects_.end(); ++it )
         {
             const TerrainObjectProxy& object = (*it);
             if( object.object_->GetFootprint()->IsInside( point ) )
             {
-                found = true;
-                if ( input->state() != Qt::ControlButton )
-                {
-                    selectedObjects_.clear();
-                    selectedObjects_.push_back( object );
-                    return true;
-                }
-                else
-                {
-                    IT_TerrainObjects selectedObject = std::find( selectedObjects_.begin(), selectedObjects_.end(), *it );
-                    if ( selectedObject != selectedObjects_.end() )
-                        selectedObjects_.erase( selectedObject );
-                    else
-                    {
-                        selectedObjects_.push_back( object );
-                        return true;
-                    }
-                }
+                selectedObject_ = &object;
+                controllers_.actions_.ContextMenu( object, input->globalPos() );
+                return true;
             }
         }
-        if ( !found && input->state() != Qt::ControlButton && !selectionArea_ )
-            selectedObjects_.clear();
 
     }
     return false;
@@ -173,12 +157,7 @@ bool UrbanLayer::HandleKeyPress( QKeyEvent* input )
     case Qt::Key_Delete:
     case Qt::Key_Backspace:
         {
-            for( IT_TerrainObjects selected = selectedObjects_.begin(); selected != selectedObjects_.end(); ++selected )
-            {
-                //controller_.Delete( ( urban::TerrainObject_ABC* ) *selected );
-
-            }
-            selectedObjects_.clear();
+            selectedObject_ = 0;
             break;
         }
 

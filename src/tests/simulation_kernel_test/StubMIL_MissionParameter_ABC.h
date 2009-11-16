@@ -162,6 +162,10 @@ public:
     { throw; }
     virtual bool ToObjectiveList( std::vector< boost::shared_ptr< DEC_Objective > >& ) const
     { throw; }
+    virtual bool ToUrbanBlock( ASN1T_UrbanBlock& ) const
+    { throw; }
+    virtual bool ToUrbanBlock( float*& ) const
+    { throw; }
 
     virtual void Append( boost::shared_ptr< TER_Localisation > pLocation )
     { throw; }

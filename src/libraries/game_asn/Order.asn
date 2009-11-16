@@ -94,7 +94,8 @@ MissionParameter ::= SEQUENCE
         MissionObjectiveList,
         Line,
         LimasOrder,
-        IntelligenceList
+        IntelligenceList,
+        UrbanBlock
     }
 }
 

@@ -48,13 +48,14 @@ void UrbanModel::Create( const ASN1T_MsgUrbanCreation& asn )
     unsigned i= 0;
     geometry::Polygon2f footPrint;
     std::string name( asn.name );
+    unsigned long id = asn.oid;
     while ( i < asn.location.coordinates.n )
     {
         geometry::Point2f point( asn.location.coordinates.elem[i].latitude, asn.location.coordinates.elem[i].longitude );
         footPrint.Add( point );
         ++i;
     }
-    urban::TerrainObject_ABC* object = model_.GetFactory().CreateBlock( name, footPrint );
+    urban::TerrainObject_ABC* object = model_.GetFactory().CreateBlock( id, name, footPrint );
     controller_.Create( gui::TerrainObjectProxy( *object ) );
 }
 /*

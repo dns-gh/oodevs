@@ -23,7 +23,7 @@ namespace urban
 
 namespace kernel
 {
-    class Controller;
+    class Controllers;
     class GlTools_ABC;
     class Location_ABC;
     class Viewport_ABC;
@@ -48,7 +48,7 @@ class UrbanLayer : public Layer_ABC
 public:
     //! @name Constructors/Destructor
     //@{    
-    UrbanLayer( kernel::Controller& controller, const kernel::GlTools_ABC& tools );
+    UrbanLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools );
     virtual ~UrbanLayer();
     //@}    
 
@@ -95,13 +95,13 @@ private:
     //! @name Member data
     //@{
 
-    kernel::Controller& controller_;
+    kernel::Controllers& controllers_;
     const kernel::GlTools_ABC& tools_;
     urban::Drawer_ABC* urbanDrawer_;
     kernel::Location_ABC* selectionArea_;
     geometry::Point2f lastPoint_;
     T_TerrainObjects objects_;
-    T_TerrainObjects selectedObjects_;
+    const TerrainObjectProxy* selectedObject_;
     unsigned tooltiped_;
     bool selectionMode_;
     //@}

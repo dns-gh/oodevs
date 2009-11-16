@@ -40,7 +40,7 @@ public:
 public:
     //! @name Member data
     //@{
-    const urban::TerrainObject_ABC* object_;
+    urban::TerrainObject_ABC* object_;
     //@}
 
 public:
@@ -48,7 +48,7 @@ public:
     //@{
     TerrainObjectProxy( const TerrainObjectProxy& );            //!< Copy constructor
     TerrainObjectProxy& operator=( const TerrainObjectProxy& ); //!< Assignement operator
-    bool operator==( const TerrainObjectProxy& );
+    bool operator==( const TerrainObjectProxy& ) const;
     //@}
 };
 

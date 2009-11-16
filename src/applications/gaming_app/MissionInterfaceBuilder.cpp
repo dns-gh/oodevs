@@ -37,6 +37,7 @@
 #include "actions_gui/ParamEquipmentList.h"
 #include "actions_gui/ParamHumanWoundList.h"
 #include "actions_gui/ParamDotationDType.h"
+#include "actions_gui/ParamUrbanBlock.h"
 #include "actions_gui/LimitParameter.h"
 #include "actions_gui/ParamLimaList.h"
 #include "actions_gui/ParamMissionObjective.h"
@@ -130,6 +131,8 @@ MissionInterfaceBuilder::MissionInterfaceBuilder( Controllers& controllers, gui:
 
     builderFunctors_["dotationlist"]          = &MissionInterfaceBuilder::BuildDotationTypeList;
     builderFunctors_["intelligencelist"]      = &MissionInterfaceBuilder::BuildIntelligenceList;
+
+    builderFunctors_["urbanblockbm"]            = &MissionInterfaceBuilder::BuildUrbanBlock;
 }
 
 // -----------------------------------------------------------------------------
@@ -491,4 +494,13 @@ actions::gui::Param_ABC* MissionInterfaceBuilder::BuildDotationTypeList( const k
 actions::gui::Param_ABC* MissionInterfaceBuilder::BuildIntelligenceList( const kernel::OrderParameter& parameter ) const
 {
     return new actions::gui::ParamIntelligenceList( missionInterface_, parameter, converter_, controllers_.actions_, controllers_.controller_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterfaceBuilder::BuildUrbanBlock
+// Created: MGD 2009-11-04
+// -----------------------------------------------------------------------------
+actions::gui::Param_ABC* MissionInterfaceBuilder::BuildUrbanBlock( const kernel::OrderParameter& parameter ) const
+{
+    return new actions::gui::ParamUrbanBlock( missionInterface_, parameter, layer_ );
 }

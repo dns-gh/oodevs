@@ -48,6 +48,7 @@
 #include "MIL_RealParameter.h"
 #include "MIL_StringParameter.h"
 #include "MIL_TirIndirectParameter.h"
+#include "MIL_UrbanBlockParameter.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_MissionParameterFactory::Create
@@ -227,6 +228,11 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
             case T_MissionParameter_value_missionObjectiveList:
             {
                 ptr = new MIL_MissionObjectiveListParameter( *asn.value.u.missionObjectiveList );
+                break;
+            }
+            case T_MissionParameter_value_urbanBlock:
+            {
+                ptr = new MIL_UrbanBlockParameter( asn.value.u.urbanBlock, MIL_AgentServer::GetWorkspace() );
                 break;
             }
             case T_MissionParameter_value_line:

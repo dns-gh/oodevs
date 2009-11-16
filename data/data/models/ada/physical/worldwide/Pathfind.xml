@@ -23,9 +23,9 @@
         <population-cost attitude="agressive" contact-cost="50"/>
       </population-costs>
       <object-costs avoid="true">
-        <object-cost type="anti tank obstacle" value="10000"/>
-        <object-cost type="abattis" value="10000"/>
-        <object-cost type="barricade" value="10000"/>
+        <object-cost type="anti tank obstacle" value="200000"/>
+        <object-cost type="abattis" value="200000"/>
+        <object-cost type="barricade" value="200000"/>
         <object-cost type="mines" value="10000"/>
         <object-cost type="mined area (linear)" value="10000"/>
         <object-cost type="mined area (scattered)" value="10000"/>

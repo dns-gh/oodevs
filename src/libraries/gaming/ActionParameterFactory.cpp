@@ -42,17 +42,21 @@
 #include "actions/MedicalPriorities.h"
 #include "actions/IntelligenceList.h"
 #include "actions/DateTime.h"
+#include "actions/UrbanBlock.h"
 #include "Model.h"
 #include "StaticModel.h"
 #include "AgentsModel.h"
 #include "TeamsModel.h"
 #include "ObjectsModel.h"
+#include "UrbanModel.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "Tools.h"
+#include <urban/model.h>
+#include <urban/blockmodel.h>
 #include <xeumeuleu/xml.h>
 #pragma warning( push, 1 )
 #pragma warning( disable : 4512 )
@@ -170,6 +174,8 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const OrderPara
         return new actions::parameters::IntelligenceList( parameter, converter_, *asn.value.u.intelligenceList, model_.teams_, staticModel_.levels_, controller_ );
     case T_MissionParameter_value_dateTime:
         return new actions::parameters::DateTime( parameter, *asn.value.u.dateTime );
+    case T_MissionParameter_value_urbanBlock:
+        return new actions::parameters::UrbanBlock( parameter, asn.value.u.urbanBlock, model_.urbanObjects_.model_.blocks_ );
     }
     return 0;
 }
@@ -260,6 +266,8 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const OrderPara
         param.reset( new actions::parameters::MaintenancePriorities( parameter, staticModel_.objectTypes_, xis ) );
     else if( type == "datetime" )
         param.reset( new actions::parameters::DateTime( parameter, xis ) );
+    else if( type == "urbanblockbm" )
+        param.reset( new actions::parameters::UrbanBlock( parameter, xis, model_.urbanObjects_.model_.blocks_ ) );
     else
         throw std::runtime_error( "Unknown parameter type '" + type + "'" );
     param->Set( true ); // $$$$ SBO 2007-10-11: ...

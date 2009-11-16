@@ -54,7 +54,7 @@ TerrainObjectProxy& TerrainObjectProxy::operator=( const TerrainObjectProxy& obj
 // Name: TerrainObjectProxy operator==
 // Created: MGD 2009-11-2
 // -----------------------------------------------------------------------------
-bool TerrainObjectProxy::operator==( const TerrainObjectProxy& object )
+bool TerrainObjectProxy::operator==( const TerrainObjectProxy& object ) const
 {
     return object_ == object.object_;
 }

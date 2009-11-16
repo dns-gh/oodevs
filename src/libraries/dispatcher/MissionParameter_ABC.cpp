@@ -47,6 +47,7 @@
 #include "MissionParameter_Line.h"
 #include "MissionParameter_LimasOrder.h"
 #include "MissionParameter_IntelligenceList.h"
+#include "MissionParameter_UrbanBlock.h"
 
 using namespace dispatcher;
 
@@ -95,6 +96,7 @@ MissionParameter_ABC* MissionParameter_ABC::Create( const ASN1T_MissionParameter
         case T_MissionParameter_value_line                      : return new MissionParameter_Line                  ( asn );
         case T_MissionParameter_value_limasOrder                : return new MissionParameter_LimasOrder            ( asn );
         case T_MissionParameter_value_intelligenceList          : return new MissionParameter_IntelligenceList      ( asn );
+        case T_MissionParameter_value_urbanBlock                : return new MissionParameter_UrbanBlock            ( asn );
         default:
             throw std::runtime_error( "Invalid mission parameter type" );
     }
