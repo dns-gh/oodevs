@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<interface name="sword.net.masagroup.sword.military.knowledge.Buildable" xmlns="http://www.masagroup.net/directia/schemas/bm" extends="net.masagroup.sword.military.knowledge.Reachable">
+<interface name="net.masagroup.sword.military.knowledge.Buildable" xmlns="http://www.masagroup.net/directia/schemas/bm" extends="net.masagroup.military.generic.knowledge.Reachable">
 	<description>Represent an object that can be build</description>
 	<methods>
 		<method name="buildPriority">
 			<description>Indicate the capacity to build this object</description>
 			<return>
 				<type>
-					<simple name="numerical" />
+					<simple name="numeric" />
 				</type>
 			</return>
 		</method>
