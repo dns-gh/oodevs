@@ -22,10 +22,10 @@
         <population-cost attitude="excitee" contact-cost="50"/>
         <population-cost attitude="agressive" contact-cost="50"/>
       </population-costs>
-      <object-costs avoid="true">
-        <object-cost type="anti tank obstacle" value="200000"/>
-        <object-cost type="abattis" value="200000"/>
-        <object-cost type="barricade" value="200000"/>
+      <object-costs avoid="true" threshold="10000">
+        <object-cost type="anti tank obstacle" value="10000"/>
+        <object-cost type="abattis" value="10000"/>
+        <object-cost type="barricade" value="10000"/>
         <object-cost type="mines" value="10000"/>
         <object-cost type="mined area (linear)" value="10000"/>
         <object-cost type="mined area (scattered)" value="10000"/>
@@ -126,7 +126,7 @@
       <enemies cost-on-contact="100" cost-at-security-range="10"/>
     </rule>
     <rule type="minesweep" flying="false" autonomous="false" inherits="movement">
-      <object-costs avoid="false"/>
+      <object-costs avoid="false" threshold="10000"/>
     </rule>
     <rule type="logistic" flying="false" autonomous="false" inherits="movement">
       <automat-zone>
@@ -154,7 +154,7 @@
       </zone>
       <danger-direction base-cost-beyond="0" cost-per-meter="0"/>
       <enemies cost-on-contact="0" cost-at-security-range="0"/>
-      <object-costs avoid="true">
+      <object-costs avoid="true" threshold="0">
         <object-cost type="anti tank obstacle" value="10000"/>
         <object-cost type="abattis" value="10000"/>
         <object-cost type="barricade" value="10000"/>
@@ -247,7 +247,7 @@
       <enemies cost-on-contact="100" cost-at-security-range="10"/>
     </rule>
     <rule type="minesweep" flying="true" autonomous="false" inherits="base">
-      <object-costs avoid="false"/>
+      <object-costs avoid="false" threshold="0"/>
     </rule>
     <rule type="logistic" flying="true" autonomous="false" inherits="base"/>
     <rule type="base" flying="false" autonomous="true">

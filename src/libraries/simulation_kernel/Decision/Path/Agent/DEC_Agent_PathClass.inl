@@ -237,3 +237,13 @@ MT_Float DEC_Agent_PathClass::GetPopulationMaximumCost() const
     return rPopulationMaximumCost_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_Agent_PathClass::GetPopulationMaximumCost
+// Created: SBO 2006-02-23
+// -----------------------------------------------------------------------------
+inline
+MT_Float DEC_Agent_PathClass::GetThreshold() const
+{
+    return rObstructionThreshold_;
+}
+

@@ -193,6 +193,7 @@ DEC_Agent_PathClass::~DEC_Agent_PathClass()
 void DEC_Agent_PathClass::ReadObjectsCost( xml::xistream& xis )
 {
     xis >> xml::attribute( "avoid", bAvoidObjects_ )
+        >> xml::attribute( "threshold", rObstructionThreshold_ )
         >> xml::list( "object-cost", *this, &DEC_Agent_PathClass::ReadObject );
 }
 

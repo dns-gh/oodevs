@@ -16,7 +16,7 @@
       </automat-zone>
       <danger-direction base-cost-beyond="1" cost-per-meter="0.001"/>
       <enemies cost-on-contact="0" cost-at-security-range="0"/>
-      <object-costs avoid="true">
+      <object-costs avoid="true" threshold="10000">
       </object-costs>
       <population-costs security-range="50" maximum="100" outside-of-population="10">
       </population-costs>
@@ -70,7 +70,7 @@
       <enemies cost-on-contact="100" cost-at-security-range="10"/>
     </rule>
     <rule type="minesweep" flying="false" autonomous="false" inherits="movement">
-      <object-costs avoid="false"/>
+      <object-costs avoid="false" threshold="10000"/>
     </rule>
     <rule type="logistic" flying="false" autonomous="false" inherits="movement">
       <automat-zone>
@@ -91,7 +91,7 @@
       </automat-zone>
       <danger-direction base-cost-beyond="1" cost-per-meter="0.001"/>
       <enemies cost-on-contact="0" cost-at-security-range="0"/>
-      <object-costs avoid="true"/>
+      <object-costs avoid="true" threshold="10000"/>
     </rule>
     <rule type="movement" flying="true" autonomous="false" inherits="base">
       <avoided-terrains>
@@ -129,7 +129,7 @@
       <enemies cost-on-contact="100" cost-at-security-range="10"/>
     </rule>
     <rule type="minesweep" flying="true" autonomous="false" inherits="movement">
-      <object-costs avoid="false"/>
+      <object-costs avoid="false" threshold="0"/>
     </rule>
     <rule type="logistic" flying="true" autonomous="false" inherits="movement"/>
     <rule type="base" flying="false" autonomous="true">
@@ -145,7 +145,7 @@
       </automat-zone>
       <danger-direction base-cost-beyond="0" cost-per-meter="0"/>
       <enemies cost-on-contact="0" cost-at-security-range="0"/>
-      <object-costs avoid="false"/>
+      <object-costs avoid="false" threshold="10000"/>
     </rule>
     <rule type="base" flying="true" autonomous="true">
       <optimisation shortest="true"/>
@@ -160,7 +160,7 @@
       </automat-zone>
       <danger-direction base-cost-beyond="0" cost-per-meter="0"/>
       <enemies cost-on-contact="0" cost-at-security-range="0"/>
-      <object-costs avoid="false"/>
+      <object-costs avoid="false" threshold="0"/>
     </rule>
     <rule type="movement" flying="false" autonomous="true" inherits="base"/>
     <rule type="movement" flying="true" autonomous="true" inherits="base"/>

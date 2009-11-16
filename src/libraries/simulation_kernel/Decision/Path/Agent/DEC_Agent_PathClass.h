@@ -87,6 +87,7 @@ public:
           MT_Float     GetPopulationSecurityRange          () const;
           MT_Float     GetPopulationMaximumCost            () const;
           MT_Float     GetCostOutsideOfPopulation          () const;
+          MT_Float     GetThreshold                        () const;
 
           bool         IsShort                             () const;
     //@}
@@ -137,6 +138,7 @@ private:
     bool          bShort_;
 
     bool          bAvoidObjects_;
+    MT_Float      rObstructionThreshold_;
     T_ObjectCosts objectCosts_;
 
     MT_Float    rAltitudePreference_;

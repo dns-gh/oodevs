@@ -47,9 +47,10 @@ public:
 private:
     //! @name Member data
     //@{
-    TER_Localisation localisation_;
-    MT_Float         rCostIn_;
-    MT_Float         rCostOut_;
+    TER_Localisation            localisation_;
+    MT_Float                    rCostIn_;
+    MT_Float                    rCostOut_;
+    MT_Float                    rObstructionThreshold_;
     //@}
 };
 
