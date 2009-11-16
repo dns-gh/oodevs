@@ -4,7 +4,7 @@ defaultMethods
 }
 return
 {
-	moveToIt = function( unit )
+    moveToIt = function( unit )
         BreakForDebug( tostring( "moveToIt" ) )
         return integration.moveToIt( unit )
     end,
@@ -14,9 +14,8 @@ return
     end,
     safeApproachIt = function( unit )
         --TODO
-    end,
-	
-    computeDistance = function( element )
+    end,   
+        computeDistance = function( element )
         return integration.magnitude( element, me )
     end,
     
@@ -31,5 +30,30 @@ return
     accessibilityLevel = function()
         --TODO
         return 1
-    end
+    end,
+    --Abstract function from net.masagroup.military.generic.world.unit define in conceptual unit
+    destroy = function( target )
+      return integration.destroyIt( target )
+    end,
+    neutralize = function( target )
+      return integration.destroyIt( target )
+    end,
+    computeAggressiveness = function ( target )
+    	return 1
+    end,
+    identifyIt = function( target )
+    	--TODO
+    end,
+    getAttrition = function( target )
+    	--TODO
+    end,
+    getEstimateAttrition = function( target )
+    	--TODO
+    end,
+    respondToIt = function( target )
+    	--TODO
+    end,
+    getAttrition = function( target )
+    	--TODO
+    end  
 }

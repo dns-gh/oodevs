@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface name="sword.net.masagroup.sword.military.knowledge.Buildable" xmlns="http://www.masagroup.net/directia/schemas/bm" extends="net.masagroup.sword.military.knowledge.Reachable">
+	<description>Represent an object that can be build</description>
+	<methods>
+		<method name="buildPriority">
+			<description>Indicate the capacity to build this object</description>
+			<return>
+				<type>
+					<simple name="numerical" />
+				</type>
+			</return>
+		</method>
+		<method name="canBuildIt">
+			<description>Indicate the capacity to build this object</description>
+			<return>
+				<type>
+					<simple name="boolean" />
+				</type>
+			</return>
+		</method>
+		<method name="canValorizedIt">
+			<description>Indicate the capacity to build this object</description>
+			<return>
+				<type>
+					<simple name="boolean" />
+				</type>
+			</return>
+		</method>
+		<method name="isBuild">
+			<description>Indicate the capacity to build this object</description>
+			<return>
+				<type>
+					<simple name="boolean" />
+				</type>
+			</return>
+		</method>
+		<method name="isValorizable">
+			<description>Indicate the capacity to build this object</description>
+			<return>
+				<type>
+					<simple name="boolean" />
+				</type>
+			</return>
+		</method>
+		<method name="isValorized">
+			<description>Indicate the capacity to build this object</description>
+			<return>
+				<type>
+					<simple name="boolean" />
+				</type>
+			</return>
+		</method>
+		<method name="builtIt">
+			<description>Build</description>
+		</method>
+		<method name="valorizedIt">
+			<description>Build</description>
+		</method>
+	</methods>
+</interface>

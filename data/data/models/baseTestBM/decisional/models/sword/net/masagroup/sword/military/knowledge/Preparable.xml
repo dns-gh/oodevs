@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface name="sword.net.masagroup.sword.military.knowledge.Preparable" xmlns="http://www.masagroup.net/directia/schemas/bm" extends="net.masagroup.sword.military.knowledge.Reachable">
+	<description>Represent an object that can be prepare</description>
+	<methods>
+		<method name="canPrepareIt">
+			<description>Indicate the capacity to prepare this object</description>
+			<return>
+				<type>
+					<simple name="boolean" />
+				</type>
+			</return>
+		</method>
+		<method name="prepareIt">
+			<description>Prepare</description>
+		</method>
+	</methods>
+</interface>

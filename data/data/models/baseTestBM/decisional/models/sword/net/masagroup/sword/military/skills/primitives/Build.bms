@@ -1,0 +1,70 @@
+rootnode
+{
+    connections = { skill.nodes.BuildElement };
+
+    done = function( self, params, additionnalParams )
+        self.targets[ additionnalParams.buildEntity ] = nil
+        if not next( self.targets ) then
+            Feedback( self.feedbacks.done )
+        end
+    end;
+    
+    create = function( self )
+        self.targets = {}
+        for _, entity in ipairs( self.params.entities ) do 
+            self.targets[ entity ] = true
+        end
+    end,
+
+    activate = function( self ) 
+	    for _,entity in ipairs( self.params.entities ) do
+            Activate( skill.nodes.BuildElement, entity:buildPriority(), { entity = entity } )
+        end
+    end
+}
+
+node "BuildElement"
+{
+	connections = { skill.links.MoveAndTakePosition, skill.nodes.Build, skill.nodes.Valorize };
+	
+    feedbacks = { "done" }; 
+
+    activate = function( self )
+    	if self.params.entity:isBuild() and ( not params.entity:isValorizable() or self.params.entity::isValorized() ) then
+            Feedback( self.feedbacks.done, { buildEntity = self.params.entity } )
+        end   	
+    
+        if self.params.entity:canBeBuild() then
+            Activate( skill.nodes.Build, 1, { entity = entity } )
+        elseif self.params.entity:isValorizable() and self.params.entity:canBeValorized()
+        	Activate( skill.nodes.Valorized, 1, { entity = entity } )
+        else
+        	--TODO RC not possible to build, by feedback , by other way?
+        end
+              
+        -- Moving toward build position, no need for keypoint "building position" i think, move directly to destination
+        Activate( skill.links.moveAndTakePosition, 1, { entity = entity } )
+    end
+}
+
+node "Build"
+{
+    feedbacks = { "done" };
+
+    acquire = { [ skill.resources.buildEquipment ] = 1 };
+
+    select = function( self )
+    	self.param.entity:buildIt()
+    end
+}
+
+node "Valorize"
+{
+    feedbacks = { "done" };
+
+    acquire = { [ skill.resources.buildEquipment ] = 1 };
+
+    select = function( self )
+    	self.param.entity:valorizedIt()
+    end
+}
