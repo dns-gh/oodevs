@@ -324,7 +324,7 @@
 
         <target name="application.simulation_app" description="build Sword Simulation executable" depends="library.dispatcher,library.simulation_kernel">
         <build-app name="simulation_app" depends="mt,din,dia3,terrain,boost,xerces,flexlm"
-                   libs="HLA,libFedTime,masalloc,tools,masasn,directia-${platform}-mt-4_5,
+                   libs="HLA,libFedTime,masalloc,tools,masasn,directia-${platform}-mt-4_5,library-${platform}-mt,
                          gdal_i,gdal_ogr,geodata,
                          population-${platform}-mt@{suffix},
                          dispatcher-${platform}-mt@{suffix},
@@ -391,7 +391,7 @@
     <target name="application.simulation_app.crossbow" description="build Sword Simulation executable" depends="library.dispatcher,library.simulation_kernel">
         <build-app name="simulation_crossbow_app" depends="mt,din,dia3,terrain,boost,xerces,flexlm"
                    pattern="simulation_crossbow_app" input="simulation_app"
-                   libs="HLA,libFedTime,masalloc,tools,masasn,directia-${platform}-mt-4_5,
+                   libs="HLA,libFedTime,masalloc,tools,masasn,directia-${platform}-mt-4_5,library-${platform}-mt,
                          gdal_i,gdal_ogr,geodata,
                          population-${platform}-mt@{suffix},
                          dispatcher-crossbow-${platform}-mt@{suffix},
