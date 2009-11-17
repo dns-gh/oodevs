@@ -122,7 +122,7 @@ namespace xml
         friend xistream& operator>>( xistream& xis, const attribute_manipulator& m )
         {
             T value = m.value_.GetData();
-            xis.attribute( m.name_, value );
+            value = xis.attribute( m.name_, value );
             m.value_ = value;
             return xis;
         }
