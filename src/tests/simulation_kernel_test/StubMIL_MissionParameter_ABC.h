@@ -164,9 +164,8 @@ public:
     { throw; }
     virtual bool ToUrbanBlock( ASN1T_UrbanBlock& ) const
     { throw; }
-    virtual bool ToUrbanBlock( float*& ) const
+    virtual bool ToUrbanBlock( urban::Block*& ) const
     { throw; }
-
     virtual void Append( boost::shared_ptr< TER_Localisation > pLocation )
     { throw; }
     //@}
