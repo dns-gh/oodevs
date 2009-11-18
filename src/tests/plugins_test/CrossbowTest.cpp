@@ -29,7 +29,7 @@ MOCK_BASE_CLASS( MockDatabase, Database_ABC )     // defines a 'MockDatabase' cl
     MOCK_METHOD( Flush, 0 )
 };
 
-MOCK_BASE_CLASS( MockModel, dispatcher::Model_ABC )     // defines a 'MockDatabase' class implementing 'Database_ABC'
+MOCK_BASE_CLASS( MockModel, dispatcher::Model_ABC )     // defines a 'MockModel' class implementing 'Model_ABC'
 {
     MOCK_METHOD( sides, 0 )
     MOCK_METHOD( knowledgeGroups, 0 )
