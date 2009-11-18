@@ -686,7 +686,6 @@
     <target name="test-adaptation" description="load and save adaptation main data, check that output==input">
         <test-adaptation input="${data.dir}/data/models/ada/physical/worldwide"/>
         <test-adaptation input="${data.dir}/data/models/ada/physical/france"/>
-        <test-adaptation input="${data.dir}/data/models/test/physical"/>
     </target>
 
     <target name="application.simulation_kernel_test" description="build CSword Simulation kernel test executable" depends="library.simulation_kernel">
