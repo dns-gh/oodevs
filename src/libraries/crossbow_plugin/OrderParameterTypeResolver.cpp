@@ -10,7 +10,7 @@
 #include "crossbow_plugin_pch.h"
 #include "OrderParameterTypeResolver.h"
 
-using namespace plugins::crossbow;
+using namespace plugins::crossbow::tools;
 
 // -----------------------------------------------------------------------------
 // Name: OrderParameterTypeResolver::Register

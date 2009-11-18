@@ -35,7 +35,7 @@ using namespace plugins::crossbow;
 
 namespace 
 {
-    void MakeTypeRegistration( OrderParameterTypeResolver& resolver )
+    void MakeTypeRegistration( crossbow::tools::OrderParameterTypeResolver& resolver )
     {
         resolver.Register( "location", T_MissionParameter_value_location )
                 .Register( "locationlist", T_MissionParameter_value_locationList )
@@ -72,10 +72,10 @@ namespace
 // Name: OrderParameterSerializer constructor
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-OrderParameterSerializer::OrderParameterSerializer( Database_ABC& database, const dispatcher::Model& model )
+OrderParameterSerializer::OrderParameterSerializer( Database_ABC& database, const dispatcher::Model_ABC& model )
     : model_( model )
     , database_( database )
-    , types_ ( new OrderParameterTypeResolver() )
+    , types_ ( new tools::OrderParameterTypeResolver() )
 {
     MakeTypeRegistration( *types_ );
 }
@@ -361,7 +361,7 @@ void OrderParameterSerializer::SerializeDirection( ASN1T_Heading& asn, const std
 void OrderParameterSerializer::SerializeAutomat( ASN1T_Automat& asn, const std::string& value ) const
 {
     unsigned long id = boost::lexical_cast< unsigned long >( value );
-    if( const dispatcher::Agent* agent = model_.agents_.Find( id ) )
+    if( const dispatcher::Agent* agent = model_.agents().Find( id ) )
         asn = agent->automat_->GetId();
      // $$$$ SBO 2007-06-07: else...
     else
@@ -375,7 +375,7 @@ void OrderParameterSerializer::SerializeAutomat( ASN1T_Automat& asn, const std::
 void OrderParameterSerializer::SerializeUnit( ASN1T_Unit& asn, const std::string& value ) const
 {
     unsigned long id = boost::lexical_cast< unsigned long >( value );
-    if( ! model_.agents_.Find( id ) )
+    if( ! model_.agents().Find( id ) )
         throw std::runtime_error( "unknown agent [" + value + "]" );
     asn = id;
 }
@@ -556,7 +556,7 @@ void OrderParameterSerializer::SerializeIntelligenceList( ASN1T_IntelligenceList
 void OrderParameterSerializer::SerializeUnitKnowledge( ASN1T_UnitKnowledge& asn, const std::string& value ) const
 {
     unsigned long id = boost::lexical_cast< unsigned long >( value );
-    if( ! model_.agentKnowledges_.Find( id ) )
+    if( ! model_.agentKnowledges().Find( id ) )
         throw std::runtime_error( "unknown unit knowledge [" + value + "]" );
     asn = id;
 }
@@ -568,7 +568,7 @@ void OrderParameterSerializer::SerializeUnitKnowledge( ASN1T_UnitKnowledge& asn,
 void OrderParameterSerializer::SerializeObjectKnowledge( ASN1T_ObjectKnowledge& asn, const std::string& value ) const
 {
     unsigned long id = boost::lexical_cast< unsigned long >( value );
-    if( ! model_.objectKnowledges_.Find( id ) )
+    if( ! model_.objectKnowledges().Find( id ) )
         throw std::runtime_error( "unknown object knowledge [" + value + "]" );
     asn = id;
 }

@@ -19,7 +19,7 @@ namespace kernel
 
 namespace dispatcher
 {
-    class Model;
+    class Model_ABC;
 }
 
 namespace boost
@@ -31,7 +31,10 @@ namespace plugins
 {
 namespace crossbow
 {
-    class OrderParameterTypeResolver;
+    namespace tools
+    {
+        class OrderParameterTypeResolver;
+    }
     class Database_ABC;
     class Row_ABC;
     class Table_ABC;
@@ -48,7 +51,7 @@ class OrderParameterSerializer
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit OrderParameterSerializer( Database_ABC& database, const dispatcher::Model& model );
+    explicit OrderParameterSerializer( Database_ABC& database, const dispatcher::Model_ABC& model );
     virtual ~OrderParameterSerializer();
     //@}
 
@@ -95,9 +98,9 @@ private:
 private:
     //! @name Member data
     //@{
-    const dispatcher::Model& model_;
+    const dispatcher::Model_ABC& model_;
     Database_ABC& database_;
-    std::auto_ptr< OrderParameterTypeResolver > types_;
+    std::auto_ptr< tools::OrderParameterTypeResolver > types_;
     //@}
 };
 
