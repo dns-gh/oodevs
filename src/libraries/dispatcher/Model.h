@@ -170,6 +170,7 @@ public:
     virtual const tools::Resolver_ABC< PopulationFire >&        populationFires() const { return populationFires_; }
     virtual const tools::Resolver_ABC< FireEffect >&            fireEffects() const { return fireEffects_; }
     virtual const tools::Resolver_ABC< Report >&                reports() const { return reports_; }
+    virtual const tools::Resolver_ABC< UrbanObject >&           urbanBlocks() const { return urbanBlocks_; }
     //@}
         
 
@@ -192,6 +193,7 @@ public:
     tools::Resolver< PopulationFire >         populationFires_;
     tools::Resolver< FireEffect >             fireEffects_;
     tools::Resolver< Report >                 reports_;
+    tools::Resolver< UrbanObject >            urbanBlocks_;
     //@}
 };
 

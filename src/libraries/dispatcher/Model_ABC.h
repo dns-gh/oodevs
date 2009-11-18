@@ -51,6 +51,7 @@ namespace dispatcher
     class AgentKnowledge;
     class ObjectKnowledge;
     class PopulationKnowledge;
+    class UrbanObject;
 
 // =============================================================================
 /** @class  Model
@@ -87,6 +88,7 @@ public:
     virtual const tools::Resolver_ABC< PopulationFire >&        populationFires() const = 0;
     virtual const tools::Resolver_ABC< FireEffect >&            fireEffects() const = 0;
     virtual const tools::Resolver_ABC< Report >&                reports() const = 0;
+    virtual const tools::Resolver_ABC< UrbanObject >&           urbanBlocks() const = 0;
     //@}
 };
 
