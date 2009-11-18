@@ -67,7 +67,7 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Model : public MessageHandler_ABC
+class Model : public MessageHandler_ABC, public Model_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -153,6 +153,28 @@ private:
 public:
     //! @name Dynamic model
     //@{
+    virtual const tools::Resolver_ABC< Side >&                  sides() const { return sides_; }
+    virtual const tools::Resolver_ABC< KnowledgeGroup >&        knowledgeGroups() const { return knowledgeGroups_; }
+    virtual const tools::Resolver_ABC< Formation >&             formations() const { return formations_; }
+    virtual const tools::Resolver_ABC< Automat >&               automats() const { return automats_; }
+    virtual const tools::Resolver_ABC< Agent >&                 agents() const { return agents_; }
+    virtual const tools::Resolver_ABC< Object >&                objects() const { return objects_; }
+    virtual const tools::Resolver_ABC< Population >&            populations() const { return populations_; }
+    virtual const tools::Resolver_ABC< AgentKnowledge >&        agentKnowledges() const { return agentKnowledges_; }
+    virtual const tools::Resolver_ABC< ObjectKnowledge >&       objectKnowledges() const { return objectKnowledges_; }
+    virtual const tools::Resolver_ABC< PopulationKnowledge >&   populationKnowledges() const { return populationKnowledges_; }
+    virtual const tools::Resolver_ABC< LogConsignMaintenance >& logConsignsMaintenance() const { return logConsignsMaintenance_; }
+    virtual const tools::Resolver_ABC< LogConsignSupply >&      logConsignsSupply() const { return logConsignsSupply_; }
+    virtual const tools::Resolver_ABC< LogConsignMedical >&     logConsignsMedical() const { return logConsignsMedical_; }
+    virtual const tools::Resolver_ABC< Fire >&                  fires() const { return fires_; }
+    virtual const tools::Resolver_ABC< PopulationFire >&        populationFires() const { return populationFires_; }
+    virtual const tools::Resolver_ABC< FireEffect >&            fireEffects() const { return fireEffects_; }
+    virtual const tools::Resolver_ABC< Report >&                reports() const { return reports_; }
+    //@}
+        
+
+    //! @name Dynamic model
+    //@{
     tools::Resolver< Side >                   sides_;
     tools::Resolver< KnowledgeGroup >         knowledgeGroups_;
     tools::Resolver< Formation >              formations_;
@@ -170,7 +192,6 @@ public:
     tools::Resolver< PopulationFire >         populationFires_;
     tools::Resolver< FireEffect >             fireEffects_;
     tools::Resolver< Report >                 reports_;
-    tools::Resolver< UrbanObject >            urbanBlocks_;
     //@}
 };
 

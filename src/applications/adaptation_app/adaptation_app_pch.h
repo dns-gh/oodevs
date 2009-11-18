@@ -122,14 +122,14 @@ namespace xml
         friend xistream& operator>>( xistream& xis, const attribute_manipulator& m )
         {
             T value = m.value_.GetData();
-            value = xis.attribute( m.name_, value );
+            xis >> attribute( m.name_, value );
             m.value_ = value;
             return xis;
         }
         friend xostream& operator<<( xostream& xos, const attribute_manipulator& m )
         {
             T value = m.value_.GetData();
-            xos.attribute( m.name_, value );
+            xos << attribute( m.name_, value );
             return xos;
         }
         //@}
