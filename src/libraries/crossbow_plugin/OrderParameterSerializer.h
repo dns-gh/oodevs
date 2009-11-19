@@ -31,10 +31,7 @@ namespace plugins
 {
 namespace crossbow
 {
-    namespace tools
-    {
         class OrderParameterTypeResolver;
-    }
     class Database_ABC;
     class Row_ABC;
     class Table_ABC;
@@ -100,7 +97,7 @@ private:
     //@{
     const dispatcher::Model_ABC& model_;
     Database_ABC& database_;
-    std::auto_ptr< tools::OrderParameterTypeResolver > types_;
+    std::auto_ptr< OrderParameterTypeResolver > types_;
     //@}
 };
 

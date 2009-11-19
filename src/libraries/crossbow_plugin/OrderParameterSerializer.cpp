@@ -35,7 +35,7 @@ using namespace plugins::crossbow;
 
 namespace 
 {
-    void MakeTypeRegistration( crossbow::tools::OrderParameterTypeResolver& resolver )
+    void MakeTypeRegistration( OrderParameterTypeResolver& resolver )
     {
         resolver.Register( "location", T_MissionParameter_value_location )
                 .Register( "locationlist", T_MissionParameter_value_locationList )
@@ -75,7 +75,7 @@ namespace
 OrderParameterSerializer::OrderParameterSerializer( Database_ABC& database, const dispatcher::Model_ABC& model )
     : model_( model )
     , database_( database )
-    , types_ ( new tools::OrderParameterTypeResolver() )
+    , types_ ( new OrderParameterTypeResolver() )
 {
     MakeTypeRegistration( *types_ );
 }

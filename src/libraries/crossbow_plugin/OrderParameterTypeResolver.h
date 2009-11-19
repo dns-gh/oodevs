@@ -17,8 +17,6 @@ namespace plugins
 {
 namespace crossbow
 {
-namespace tools
-{
     class OrderParameterTypeResolver
     {
     public:
@@ -31,7 +29,6 @@ namespace tools
     private:
         T_TypeMap map_;
     };
-}
 }
 }
 
