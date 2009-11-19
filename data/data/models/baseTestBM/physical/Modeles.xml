@@ -17,7 +17,6 @@
         <mission name="MoveToObjectKnowledgeList"/>
         <mission name="MoveToUrbanBlock"/>
         <mission name="DestroyAgent"/>
-		<mission name="MoveToUrbanBlock"/>
       </missions>
     </unit>
   </units>

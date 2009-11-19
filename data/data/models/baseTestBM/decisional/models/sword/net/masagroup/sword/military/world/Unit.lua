@@ -11,11 +11,8 @@ return
     
     observeIt = function( unit )
         --TODO 
-    end,
-    safeApproachIt = function( unit )
-        --TODO
     end,   
-        computeDistance = function( element )
+    computeDistance = function( element )
         return integration.magnitude( element, me )
     end,
     
@@ -55,5 +52,5 @@ return
     end,
     getAttrition = function( target )
     	--TODO
-    end  
+    end
 }

@@ -36,6 +36,10 @@ local configTable = {   eventmanager_plugin =
                         {
                         } }
 
+local dummyClass = setmetatable( { "dummyClass" }, { __persist = function() end } )
+kBase.createKnowledgeImplementation { className = dummyClass }
+kBase:registerRole( kBase.create( dummyClass, {} ) )
+kBase.me.body = kBase.create( dummyClass, {} )
 brain "name" ( configTable )
 
 behavior_model = {}

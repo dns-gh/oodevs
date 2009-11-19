@@ -57,9 +57,10 @@ end
 
 function InitializeMe( strKnowledgeType, knowledgeSource, posx, posy ,posz )
   if( strKnowledgeType == "net.masagroup.sword.military.world.Agent" ) then
-    --default_engine.createMe( {}, x, y, z )
-    --knowledges.initializeMe( strKnowledgeType, knowledgeSource )
     knowledges.me.sim_pos = { x=posx, y=posy, z=posz }
+    if not kBase.me.body then
+      kBase.me.body = kBase.create( net.masagroup.sword.military.world.Agent, {} )
+    end
   else
     error( "Knowledge unknown : " .. strKnowledgeType )
   end
