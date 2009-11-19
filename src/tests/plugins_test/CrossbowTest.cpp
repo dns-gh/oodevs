@@ -48,6 +48,7 @@ MOCK_BASE_CLASS( MockModel, dispatcher::Model_ABC )     // defines a 'MockModel'
     MOCK_METHOD( populationFires, 0 )
     MOCK_METHOD( fireEffects, 0 )
     MOCK_METHOD( reports, 0 )
+    MOCK_METHOD( urbanBlocks, 0 )
 };
 
 
