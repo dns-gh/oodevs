@@ -14,8 +14,8 @@
 //struct ASN1T_ObjectAttributes;
 //struct ASN1T_Location;
 
-#include "simulation_kernel/Checkpoints/MIL_CheckPointInArchive.h"
-#include "simulation_kernel/Checkpoints/MIL_CheckPointOutArchive.h"
+#include "tools/CheckPointInArchive.h"
+#include "tools/CheckPointOutArchive.h"
 
 #include "simulation_kernel/Entities/Objects/MIL_ObjectLoader.h"
 #include "simulation_kernel/Entities/Objects/Object.h"
@@ -76,11 +76,11 @@ using namespace mockpp;
 //    knowledge.Update( PHY_PerceptionLevel::identified_ );
 //    std::stringstream stringstream;
 //    {
-//        MIL_CheckPointOutArchive outStream( stringstream );
+//        CheckPointOutArchive outStream( stringstream );
 //        outStream << knowledge;
 //    }
 //    {
-//        MIL_CheckPointInArchive inStream( stringstream );
+//        CheckPointInArchive inStream( stringstream );
 //        DEC_Knowledge_Object reloaded;
 //        inStream >> reloaded;
 //    }

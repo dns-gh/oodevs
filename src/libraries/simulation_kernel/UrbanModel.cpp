@@ -9,12 +9,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "UrbanModel.h"
-#include "Urban/Model.h"
+#include <Urban/Model.h>
 #include <Urban/BlockModel.h>
 #include <Urban/TerrainObject_ABC.h>
 #include <Urban/Block.h>
-#include "Urban/StaticModel.h"
-#include "Urban/WorldParameters.h"
+#include <Urban/StaticModel.h>
+#include <Urban/WorldParameters.h>
 #include "Tools/MIL_Config.h"
 #include <xeumeuleu/xml.h>
 #include <boost/filesystem/path.hpp>
@@ -22,9 +22,9 @@
 #include "Network/NET_ASN_Messages.h"
 #include <boost/bind.hpp>
 
-BOOST_CLASS_EXPORT_GUID( UrbanModel, "UrbanModel" )
-
 using namespace urban;
+
+BOOST_CLASS_EXPORT_GUID( UrbanModel, "UrbanModel" )
 
 // -----------------------------------------------------------------------------
 // Name: UrbanModel constructor

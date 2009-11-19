@@ -17,14 +17,6 @@ namespace xml
     class xistream;
 }
 
-namespace urban
-{
-    class Model;
-    class StaticModel;
-    class TerrainObject_ABC;
-    class Block;
-}
-
 
 class MIL_Config;
 class MIL_CheckPointInArchive;
@@ -34,6 +26,14 @@ class MIL_CheckPointOutArchive;
 // @class  UrbanModel
 // Created: SLG 2009-10-23
 // =============================================================================
+
+namespace urban
+{
+    class Model;
+    class StaticModel;
+    class TerrainObject_ABC;
+    class Block;
+
 class UrbanModel
 {
 
@@ -71,6 +71,8 @@ private:
     std::auto_ptr< urban::Model       > model_;
     std::auto_ptr< urban::StaticModel > staticModel_;
 };
+
+}
 
 #endif // __MIL_EntityManager_h_
 

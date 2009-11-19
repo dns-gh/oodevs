@@ -14,7 +14,7 @@
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "MIL_Folk.h"
-#include "Urban/UrbanModel.h"
+#include "UrbanModel.h"
 
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Network/NET_AgentServer.h"
@@ -66,7 +66,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , pFederate_               ( 0 )
     , pProcessMonitor_         ( new ProcessMonitor() )
     , pFolk_                   ( new MIL_Folk( config ) )
-    , pUrbanModel_             ( new UrbanModel() )
+    , pUrbanModel_             ( new urban::UrbanModel() )
 {
     assert( !pTheAgentServer_ );
     pTheAgentServer_ = this;

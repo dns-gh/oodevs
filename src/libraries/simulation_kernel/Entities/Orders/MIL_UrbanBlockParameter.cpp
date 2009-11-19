@@ -11,7 +11,7 @@
 #include "MIL_UrbanBlockParameter.h"
 #include "MIL_AgentServer.h"
 #include "simulation_orders/MIL_ParameterType_UrbanBlock.h"
-#include "Urban/UrbanModel.h"
+#include "UrbanModel.h"
 #include <urban/Model.h>
 #include <urban/BlockModel.h>
 #include <urban/Block.h>
