@@ -82,6 +82,8 @@ public:
     virtual void Update( bool bIsDead ) {};
     virtual void Clean () {};
 
+    virtual boost::shared_ptr<MT_Vector2D> GetSharedPosition() const { throw; };
+
     virtual void Hide     () {};
     virtual void Show     ( const MT_Vector2D& vNewPosition ) {};
     virtual void MagicMove( const MT_Vector2D& vNewPosition ) {};

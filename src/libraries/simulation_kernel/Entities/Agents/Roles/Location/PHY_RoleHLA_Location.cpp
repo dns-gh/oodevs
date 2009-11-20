@@ -25,7 +25,7 @@ using namespace hla;
 PHY_RoleHLA_Location::PHY_RoleHLA_Location( MIL_AgentHLA& pion )
     : pion_         ( pion )
     , vDirection_   ()
-    , vPosition_    ()
+    , pvPosition_   ( new MT_Vector2D() )
     , rHeight_      ( 0 )
     , rCurrentSpeed_( 0 )
 {
@@ -79,8 +79,8 @@ void PHY_RoleHLA_Location::Deserialize( const AttributeIdentifier& attributeID, 
     {
         static std::string strPos;
         deserializer >> strPos;
-        MIL_Tools::ConvertCoordMosToSim( strPos, vPosition_ );
-        TER_World::GetWorld().ClipPointInsideWorld( vPosition_ );
+        MIL_Tools::ConvertCoordMosToSim( strPos, *pvPosition_ );
+        TER_World::GetWorld().ClipPointInsideWorld( *pvPosition_ );
         if( IsValid() && pion_.IsValid() )
             UpdatePatch();
     }
@@ -107,7 +107,7 @@ MT_Float PHY_RoleHLA_Location::GetHeight() const
 // -----------------------------------------------------------------------------
 MT_Float PHY_RoleHLA_Location::GetAltitude() const
 {
-    return MIL_Tools::GetAltitude( vPosition_ ) + rHeight_;
+    return MIL_Tools::GetAltitude( *pvPosition_ ) + rHeight_;
 }
 
 // -----------------------------------------------------------------------------
@@ -116,7 +116,16 @@ MT_Float PHY_RoleHLA_Location::GetAltitude() const
 // -----------------------------------------------------------------------------
 const MT_Vector2D& PHY_RoleHLA_Location::GetPosition() const
 {
-    return vPosition_;
+    return *pvPosition_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr<MT_Vector2D> PHY_RoleHLA_Location::GetSharedPosition
+// Created: LDC 2009-11-17
+// -----------------------------------------------------------------------------
+boost::shared_ptr<MT_Vector2D> PHY_RoleHLA_Location::GetSharedPosition() const
+{
+    return pvPosition_;
 }
 
 // -----------------------------------------------------------------------------
@@ -161,7 +170,7 @@ bool PHY_RoleHLA_Location::HasDoneMagicMove() const
 // -----------------------------------------------------------------------------
 bool PHY_RoleHLA_Location::IsValid() const
 {
-    return ! vPosition_.IsZero();
+    return ! pvPosition_->IsZero();
 }
 
 // -----------------------------------------------------------------------------

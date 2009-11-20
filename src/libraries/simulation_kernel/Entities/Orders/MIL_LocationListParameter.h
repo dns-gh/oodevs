@@ -41,11 +41,6 @@ public:
     virtual bool ToLocationList( std::vector< boost::shared_ptr< TER_Localisation > >& ) const;
     //@}
 
-    //! @name Modifiers
-    //@{
-    virtual void Append( boost::shared_ptr< TER_Localisation > pLocation );
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{

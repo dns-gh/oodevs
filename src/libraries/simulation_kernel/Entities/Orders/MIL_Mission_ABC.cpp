@@ -13,6 +13,7 @@
 #include "MIL_MissionParameterFactory.h"
 #include "MIL_MissionParameterVisitor_ABC.h"
 #include "MIL_NullParameter.h"
+#include "MIL_PolygonListParameter.h"
 #include "simulation_orders/MIL_MissionParameter_ABC.h"
 
 namespace
@@ -203,7 +204,12 @@ void MIL_Mission_ABC::SetParameter( const std::string& name, boost::shared_ptr< 
 void MIL_Mission_ABC::AppendToParameter( const std::string& name, boost::shared_ptr< TER_Localisation > pLocation )
 {
     unsigned int index = type_.GetParameterIndex( name );
-    EnsureParameters( parameters_, index );
+    if( parameters_.size() <= index || !parameters_[index] )
+    {
+        EnsureParameters( parameters_, index );
+        boost::shared_ptr< MIL_MissionParameter_ABC > param( new MIL_PolygonListParameter() );
+        parameters_[index] = param;
+    }
     parameters_[index]->Append( pLocation );
 }
 

@@ -52,8 +52,8 @@ public:
     template< typename T > static void ShareKnowledgesWith      ( const T& caller, DEC_Decision_ABC* receiver, float minutes );
     template< typename T > static void ShareKnowledgesInZoneWith( const T& caller, DEC_Decision_ABC* receiver, const MT_Vector2D* center, float radius );
        
-    static boost::shared_ptr< DEC_Knowledge_Object > GetClosestObject      ( const MIL_AgentPion& callerAgent, const std::vector< std::string >& types );
-    static boost::shared_ptr< DEC_Knowledge_Object > GetClosestFriendObject( const MIL_AgentPion& callerAgent, const std::vector< std::string >& types );
+    static boost::shared_ptr< DEC_Knowledge_Object > GetClosestObject      ( const MIL_AgentPion& callerAgent, const std::string& type );
+    static boost::shared_ptr< DEC_Knowledge_Object > GetClosestFriendObject( const MIL_AgentPion& callerAgent, const std::string& type );
     static T_KnowledgeObjectDiaIDVector GetObjectsColliding( const MIL_AgentPion& callerAgent );
     template< typename T > static T_KnowledgeObjectDiaIDVector GetObjectsInCircle( const T& caller, const MT_Vector2D* pCenter, MT_Float rRadius, const std::vector< std::string >& filters );
     template< typename T > static T_KnowledgeObjectDiaIDVector GetObjectsInZone  ( const T& caller, const TER_Localisation* pLoc, const std::vector< std::string >& parameters );

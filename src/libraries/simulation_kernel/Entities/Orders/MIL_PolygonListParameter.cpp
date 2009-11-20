@@ -14,6 +14,15 @@
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PolygonListParameter constructor
+// Created: LDC 2009-11-18
+// -----------------------------------------------------------------------------
+MIL_PolygonListParameter::MIL_PolygonListParameter()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PolygonListParameter constructor
 // Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
 MIL_PolygonListParameter::MIL_PolygonListParameter( const ASN1T_PolygonList& asn )
@@ -49,6 +58,15 @@ MIL_PolygonListParameter::~MIL_PolygonListParameter()
 bool MIL_PolygonListParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
 {
     return( dynamic_cast<const MIL_ParameterType_PolygonList*>( &type ) != 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PolygonListParameter::Append
+// Created: LDC 2009-11-18
+// -----------------------------------------------------------------------------
+void MIL_PolygonListParameter::Append( boost::shared_ptr< TER_Localisation > pLocation )
+{
+    polygonList_.push_back( pLocation );
 }
 
 // -----------------------------------------------------------------------------

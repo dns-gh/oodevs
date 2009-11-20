@@ -58,6 +58,7 @@ public:
     virtual MT_Float            GetHeight           () const = 0;
     virtual MT_Float            GetAltitude         () const = 0;
     virtual const MT_Vector2D&  GetPosition         () const = 0;
+    virtual boost::shared_ptr<MT_Vector2D> GetSharedPosition() const = 0;
     virtual const MT_Vector2D&  GetDirection        () const = 0;
     virtual MIL_Agent_ABC&      GetAgent            () const = 0;
     virtual MT_Float            GetCurrentSpeed     () const = 0;

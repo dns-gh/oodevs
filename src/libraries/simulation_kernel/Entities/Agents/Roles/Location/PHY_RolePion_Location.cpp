@@ -57,7 +57,7 @@ void load_construct_data( Archive& archive, PHY_RolePion_Location* role, const u
 PHY_RolePion_Location::PHY_RolePion_Location( MIL_AgentPion& pion )
     : pion_                     ( pion    )
     , vDirection_               (  0.,  0. )
-    , vPosition_                ( -1., -1. )    //$$$ Devrait être 'NULL'
+    , pvPosition_               ( new MT_Vector2D ( -1., -1. ) )   //$$$ Devrait être 'NULL'
     , rHeight_                  ( -1.      )
     , rCurrentSpeed_            ( -1.      )
     , bHasDoneMagicMove_        ( false    )
@@ -88,11 +88,13 @@ PHY_RolePion_Location::~PHY_RolePion_Location()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::load( MIL_CheckPointInArchive& file, const uint )
 {
+    MT_Vector2D vPosition;
     file >> boost::serialization::base_object< PHY_RoleInterface_Location >( *this )
 		 >> vDirection_
-         >> vPosition_
+         >> vPosition
          >> bHasDoneMagicMove_
          >> bHasMove_;
+    pvPosition_.reset( new MT_Vector2D( vPosition ) );
          
     UpdatePatch();
 }
@@ -105,7 +107,7 @@ void PHY_RolePion_Location::save( MIL_CheckPointOutArchive& file, const uint ) c
 {
     file << boost::serialization::base_object< PHY_RoleInterface_Location >( *this )
          << vDirection_
-         << vPosition_
+         << *pvPosition_
          << bHasDoneMagicMove_
          << bHasMove_;
 }
@@ -129,7 +131,7 @@ MIL_Agent_ABC& PHY_RolePion_Location::GetAgent() const
 // -----------------------------------------------------------------------------
 MT_Float PHY_RolePion_Location::GetAltitude() const
 {
-    return MIL_Tools::GetAltitude( vPosition_ ) + rHeight_;
+    return MIL_Tools::GetAltitude( *pvPosition_ ) + rHeight_;
 }
 
 // =============================================================================
@@ -157,12 +159,12 @@ void PHY_RolePion_Location::SetHeight( MT_Float rHeight )
 inline
 void PHY_RolePion_Location::SetPosition( const MT_Vector2D& vPosition )
 {
-    if( vPosition == vPosition_ )
+    if( vPosition == *pvPosition_ )
         return;
 
     bPositionHasChanged_ = true;
-    vPosition_           = vPosition;
-    TER_World::GetWorld().ClipPointInsideWorld( vPosition_ );
+    *pvPosition_           = vPosition;
+    TER_World::GetWorld().ClipPointInsideWorld( *pvPosition_ );
 
     UpdatePatch();
 }
@@ -228,7 +230,7 @@ void PHY_RolePion_Location::Follow( const MIL_Agent_ABC& agent )
 void PHY_RolePion_Location::Hide()
 {
     TER_Object_ABC::T_ObjectVector objectsColliding;
-    TER_World::GetWorld().GetObjectManager().GetListAt( vPosition_, objectsColliding );
+    TER_World::GetWorld().GetObjectManager().GetListAt( *pvPosition_, objectsColliding );
     for( TER_Object_ABC::CIT_ObjectVector itObject = objectsColliding.begin(); itObject != objectsColliding.end(); ++itObject )
         NotifyPutOutsideObject( static_cast< MIL_Object_ABC& >( **itObject ) );
 
@@ -244,7 +246,7 @@ void PHY_RolePion_Location::Show( const MT_Vector2D& vPosition )
     Move( vPosition, vDirection_, 0. );
 
     TER_Object_ABC::T_ObjectVector objectsColliding;
-    TER_World::GetWorld().GetObjectManager().GetListAt( vPosition_, objectsColliding );
+    TER_World::GetWorld().GetObjectManager().GetListAt( *pvPosition_, objectsColliding );
     for( TER_Object_ABC::CIT_ObjectVector itObject = objectsColliding.begin(); itObject != objectsColliding.end(); ++itObject )
         NotifyPutInsideObject( static_cast< MIL_Object_ABC& >( **itObject ) );
     bHasDoneMagicMove_ = true;
@@ -294,7 +296,7 @@ void PHY_RolePion_Location::NotifyConcentrationCollision( MIL_PopulationConcentr
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::NotifyTerrainObjectCollision( MIL_Object_ABC& object )
 {
-    pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectCollision( object, vPosition_ );
+    pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectCollision( object, *pvPosition_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -346,7 +348,7 @@ void PHY_RolePion_Location::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) c
     if( bPositionHasChanged_ )
     {
         msg().m.positionPresent = 1;
-        NET_ASN_Tools::WritePoint( vPosition_, msg().position );
+        NET_ASN_Tools::WritePoint( *pvPosition_, msg().position );
     }
 
     if( bDirectionHasChanged_ )
@@ -363,7 +365,7 @@ void PHY_RolePion_Location::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) c
     if( bHeightHasChanged_ || bPositionHasChanged_ )
     {
         msg().m.altitudePresent = 1;
-        msg().altitude          = (uint)( rHeight_ + MIL_Tools::GetAltitude( vPosition_ ) );
+        msg().altitude          = (uint)( rHeight_ + MIL_Tools::GetAltitude( *pvPosition_ ) );
     }
 
     if( bCurrentSpeedHasChanged_ )
@@ -380,7 +382,7 @@ void PHY_RolePion_Location::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) c
 void PHY_RolePion_Location::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
 {
     msg().m.positionPresent = 1;
-    NET_ASN_Tools::WritePoint( vPosition_, msg().position );
+    NET_ASN_Tools::WritePoint( *pvPosition_, msg().position );
 
     msg().m.directionPresent = 1;
     NET_ASN_Tools::WriteDirection( vDirection_, msg().direction );
@@ -398,7 +400,7 @@ void PHY_RolePion_Location::SendFullState( NET_ASN_MsgUnitAttributes& msg ) cons
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::Serialize( HLA_UpdateFunctor& functor ) const
 {
-    functor.Serialize( "position" , bPositionHasChanged_    , MIL_Tools::ConvertCoordSimToMos( vPosition_ ) );
+    functor.Serialize( "position" , bPositionHasChanged_    , MIL_Tools::ConvertCoordSimToMos( *pvPosition_ ) );
     functor.Serialize( "hauteur"  , bHeightHasChanged_      , rHeight_       );
     functor.Serialize( "direction", bDirectionHasChanged_   , vDirection_    );
     functor.Serialize( "vitesse"  , bCurrentSpeedHasChanged_, rCurrentSpeed_ );
@@ -419,7 +421,16 @@ MT_Float PHY_RolePion_Location::GetHeight() const
 // -----------------------------------------------------------------------------
 const MT_Vector2D& PHY_RolePion_Location::GetPosition() const
 {
-    return vPosition_;
+    return *pvPosition_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr<MT_Vector2D> PHY_RolePion_Location::GetSharedPosition
+// Created: LDC 2009-11-17
+// -----------------------------------------------------------------------------
+boost::shared_ptr<MT_Vector2D> PHY_RolePion_Location::GetSharedPosition() const
+{
+    return pvPosition_;
 }
 
 // -----------------------------------------------------------------------------
@@ -457,7 +468,7 @@ void PHY_RolePion_Location::Update( bool bIsDead )
 {
     if( bIsDead || !bHasMove_ )
     {
-        Move( vPosition_, vDirection_, 0. );
+        Move( *pvPosition_, vDirection_, 0. );
     }
 
     SetHeight( pion_.Execute(pion_.GetAlgorithms().locationComputerFactory_->Create() ).GetHeight() );

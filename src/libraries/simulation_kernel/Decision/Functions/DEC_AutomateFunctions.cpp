@@ -258,7 +258,7 @@ bool DEC_AutomateFunctions::IsPointInPionFuseau( const MIL_Automate& callerAutom
 boost::shared_ptr< MT_Vector2D > DEC_AutomateFunctions::GetPionPosition( const DEC_Decision_ABC* pion )
 {
     assert( pion );
-    return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( pion->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition() ) );
+    return pion->GetPion().GetRole< PHY_RoleInterface_Location >().GetSharedPosition();
 }
 
 // -----------------------------------------------------------------------------

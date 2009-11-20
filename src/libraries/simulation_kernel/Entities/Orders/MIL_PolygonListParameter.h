@@ -24,6 +24,7 @@ class MIL_PolygonListParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
+             MIL_PolygonListParameter();
     explicit MIL_PolygonListParameter( const ASN1T_PolygonList& );
     virtual ~MIL_PolygonListParameter();
     //@}
@@ -37,6 +38,11 @@ public:
     //@{
     virtual bool ToPolygonList( ASN1T_PolygonList& ) const;
     virtual bool ToPolygonList( std::vector< boost::shared_ptr< TER_Localisation > >& ) const;
+    //@}
+
+    //! @name Modifiers
+    //@{
+    virtual void Append( boost::shared_ptr< TER_Localisation > pLocation );
     //@}
 
 private:

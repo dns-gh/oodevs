@@ -69,12 +69,3 @@ bool MIL_LocationListParameter::ToLocationList( std::vector< boost::shared_ptr< 
     value = locationList_;
     return true;
 }
-
-// -----------------------------------------------------------------------------
-// Name: MIL_LocationListParameter::Append
-// Created: LDC 2009-07-31
-// -----------------------------------------------------------------------------
-void MIL_LocationListParameter::Append( boost::shared_ptr< TER_Localisation > pLocation )
-{
-    locationList_.push_back( pLocation );
-}

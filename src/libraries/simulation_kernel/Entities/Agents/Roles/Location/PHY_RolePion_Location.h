@@ -79,6 +79,7 @@ public:
     virtual MT_Float            GetHeight         () const;
     virtual MT_Float            GetAltitude       () const;
     virtual const MT_Vector2D&  GetPosition       () const;
+    virtual boost::shared_ptr<MT_Vector2D> GetSharedPosition() const;
     virtual const MT_Vector2D&  GetDirection      () const;
     virtual MIL_Agent_ABC&      GetAgent          () const;
     virtual MT_Float            GetCurrentSpeed   () const;
@@ -110,7 +111,7 @@ private:
 private:
     MIL_AgentPion& pion_;
     MT_Vector2D    vDirection_;
-    MT_Vector2D    vPosition_;
+    boost::shared_ptr<MT_Vector2D> pvPosition_;
     MT_Float       rHeight_;
     MT_Float       rCurrentSpeed_;
     bool           bHasDoneMagicMove_;
