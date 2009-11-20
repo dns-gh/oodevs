@@ -21,6 +21,8 @@ namespace xml
     class xistream;
 }
 
+namespace kernel
+{
 // =============================================================================
 /** @class  KnowledgeGroupFactory_ABC
     @brief  KnowledgeGroupFactory_ABC
@@ -47,5 +49,7 @@ public:
 
     //@}
 };
+
+}
 
 #endif // __KnowledgeGroupFactory_ABC_h_

@@ -11,6 +11,7 @@
 #define __KnowledgeGroupsModel_h_
 
 #include "tools/Resolver.h"
+#include "clients_kernel/KnowledgeGroupFactory_ABC.h"
 
 namespace kernel
 {

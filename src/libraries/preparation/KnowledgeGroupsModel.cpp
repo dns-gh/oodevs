@@ -10,7 +10,6 @@
 #include "preparation_pch.h"
 #include "KnowledgeGroupsModel.h"
 #include "KnowledgeGroup.h"
-#include "clients_kernel/KnowledgeGroupFactory_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include <xeumeuleu/xml.h>
 
@@ -20,7 +19,7 @@ using namespace kernel;
 // Name: KnowledgeGroupsModel constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-KnowledgeGroupsModel::KnowledgeGroupsModel( kernel::Controllers& controllers, KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
+KnowledgeGroupsModel::KnowledgeGroupsModel( kernel::Controllers& controllers, kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
     : controllers_( controllers )
     , knowledgeGroupFactory_( knowledgeGroupFactory )
 {
