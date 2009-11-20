@@ -30,7 +30,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     //@TODO MGD rename and adapt MIL_ObjectManager
-    explicit ArmyFactory( AutomateFactory_ABC& automateFactory, FormationFactory_ABC& formationFactory, MIL_ObjectManager& objectFactory, PopulationFactory_ABC& populationFactory, KnowledgeGroupFactory_ABC& knowledgegroupFactory );
+    explicit ArmyFactory( AutomateFactory_ABC& automateFactory, FormationFactory_ABC& formationFactory, MIL_ObjectManager& objectFactory, PopulationFactory_ABC& populationFactory );
     virtual ~ArmyFactory();
     //@}
 
