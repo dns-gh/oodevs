@@ -16,6 +16,7 @@ class AutomateFactory_ABC;
 class FormationFactory_ABC;
 class MIL_ObjectManager;
 class PopulationFactory_ABC;
+class KnowledgeGroupFactory_ABC;
 
 // =============================================================================
 /** @class  ArmyFactory
@@ -45,6 +46,7 @@ private:
     FormationFactory_ABC& formationFactory_;
     MIL_ObjectManager& objectFactory_;
     PopulationFactory_ABC& populationFactory_;
+    KnowledgeGroupFactory_ABC& knowledgegroupFactory_;
     //@}
 
     //! @name CheckPoint

@@ -38,6 +38,7 @@ class MIL_Object_ABC;
 class MIL_ObjectManager;
 class PopulationFactory_ABC;
 struct ASN1T_MsgChangeDiplomacy;
+class KnowledgeGroupFactory_ABC;
 
 // =============================================================================
 // @class  MIL_Army
@@ -63,7 +64,7 @@ public:
 public:
     //! @name Constructor/Destructor
     //@{
-             MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory, MIL_ObjectManager& objectFactory, PopulationFactory_ABC& populationFactory );
+             MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory, MIL_ObjectManager& objectFactory, PopulationFactory_ABC& populationFactory, KnowledgeGroupFactory_ABC& knowledgegroupFactory );
     virtual ~MIL_Army();
      //@}
 
@@ -140,7 +141,7 @@ private:
     void ReadFormation          ( xml::xistream& xis, FormationFactory_ABC& formationFactory );
     void ReadObject             ( xml::xistream& xis, MIL_ObjectManager& objectFactory );
     void ReadPopulation         ( xml::xistream& xis, PopulationFactory_ABC& populationFactory );
-    void ReadLogistic           ( xml::xistream& xis );
+    void ReadLogistic           ( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgegroupFactory );
     void ReadAutomat            ( xml::xistream& xis, AutomateFactory_ABC& automateFactory );
     void ReadSubordinate        ( xml::xistream& xis, AutomateFactory_ABC& automateFactory, MIL_Automate* pSuperior );
     void ReadDiplomacy          ( xml::xistream& xis );

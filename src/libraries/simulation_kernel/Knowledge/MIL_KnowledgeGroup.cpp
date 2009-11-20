@@ -34,6 +34,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, uint
     , pArmy_               ( &army )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_KnowledgeGroup( *this ) )
     , automates_           ()
+    , knowledgegroups_     ()
 {
     pArmy_->RegisterKnowledgeGroup( *this );
     if( !ids_.insert( nID_ ).second )
@@ -50,6 +51,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
     , pArmy_               ( 0 )
     , pKnowledgeBlackBoard_( 0 )
     , automates_           ()
+    , knowledgegroups_     ()
 {
     // NOTHING
 }
@@ -78,7 +80,8 @@ void MIL_KnowledgeGroup::load( MIL_CheckPointInArchive& file, const uint )
     file >> const_cast< uint& >( nID_ )
          >> pArmy_
          >> pKnowledgeBlackBoard_
-         >> automates_;
+         >> automates_
+         >> knowledgegroups_;
          
     ids_.insert( nID_ );
 }
@@ -95,7 +98,8 @@ void MIL_KnowledgeGroup::save( MIL_CheckPointOutArchive& file, const uint ) cons
          << nID_
          << pArmy_
          << pKnowledgeBlackBoard_
-         << automates_;
+         << automates_
+         << knowledgegroups_;
 }
 
 // -----------------------------------------------------------------------------
@@ -120,6 +124,11 @@ void MIL_KnowledgeGroup::UpdateKnowledges()
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
         (**it).UpdateKnowledges();
 
+    // should we update sub knowledgegroups
+//    for( CIT_KnowledgeGroupVector it = knowledgegroups_.begin(); it != knowledgegroups_.end(); ++it )
+//        (**it).UpdateKnowledges();
+
+
     assert( pKnowledgeBlackBoard_ );
     pKnowledgeBlackBoard_->Update();
 }
@@ -134,6 +143,9 @@ void MIL_KnowledgeGroup::CleanKnowledges()
     pKnowledgeBlackBoard_->Clean();
 
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
+        (**it).CleanKnowledges();
+    // should we clean sub knowledgegroups
+    for( CIT_KnowledgeGroupVector it = knowledgegroups_.begin(); it != knowledgegroups_.end(); ++it )
         (**it).CleanKnowledges();
 }
 
@@ -260,6 +272,15 @@ MIL_Army& MIL_KnowledgeGroup::GetArmy() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::RegisterKnowledgeGroup
+// Created: FHD 2009-11-17
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::RegisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgegroup )
+{
+    assert( std::find( knowledgegroups_.begin(), knowledgegroups_.end(), &knowledgegroup ) == knowledgegroups_.end() );
+    knowledgegroups_.push_back( &knowledgegroup );
+}
+// -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::RegisterAutomate
 // Created: NLD 2004-09-01
 // -----------------------------------------------------------------------------
@@ -267,6 +288,17 @@ void MIL_KnowledgeGroup::RegisterAutomate( MIL_Automate& automate )
 {
     assert( std::find( automates_.begin(), automates_.end(), &automate ) == automates_.end() );
     automates_.push_back( &automate );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::UnregisterKnowledgeGroup
+// Created: FHD 2009-11-17
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::UnregisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgegroup )
+{
+    IT_KnowledgeGroupVector it = std::find( knowledgegroups_.begin(), knowledgegroups_.end(), &knowledgegroup );
+    assert( it != knowledgegroups_.end() );
+    knowledgegroups_.erase( it );
 }
 
 // -----------------------------------------------------------------------------
