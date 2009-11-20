@@ -91,7 +91,7 @@ void MIL_Army::Terminate()
 // Name: MIL_Army constructor
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory, MIL_ObjectManager& objectFactory, PopulationFactory_ABC& populationFactory, KnowledgeGroupFactory_ABC& knowledgegroupFactory )
+MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory, MIL_ObjectManager& objectFactory, PopulationFactory_ABC& populationFactory )
     : nID_                 ( xml::attribute< unsigned int >( xis, "id" ) )
     , strName_             ( xml::attribute< std::string>( xis, "name") )
     , nType_               ( eUnknown )
@@ -106,7 +106,7 @@ MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationF
     nType_ = diplomacyConverter_.Convert( strType );
 
     xis >> xml::start( "communication" )
-            >> xml::list( "knowledge-group", *this, &MIL_Army::ReadLogistic, knowledgegroupFactory )
+            >> xml::list( "knowledge-group", *this, &MIL_Army::ReadLogistic )
         >> xml::end()
         >> xml::start( "tactical" )
             >> xml::list( "formation", *this, &MIL_Army::ReadFormation, formationFactory )
@@ -331,7 +331,7 @@ void MIL_Army::ReadDiplomacy( xml::xistream& xis )
 // Name: MIL_Army::ReadLogistic
 // Created: ABL 2007-07-09
 // -----------------------------------------------------------------------------
-void MIL_Army::ReadLogistic( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgegroupFactory )
+void MIL_Army::ReadLogistic( xml::xistream& xis )
 {
     uint        id;
     std::string strType;
@@ -345,8 +345,6 @@ void MIL_Army::ReadLogistic( xml::xistream& xis, KnowledgeGroupFactory_ABC& know
     if( knowledgeGroups_.find( id ) != knowledgeGroups_.end() )
         xis.error( "Knowledge group id already defined" );
     pType->InstanciateKnowledgeGroup( id, *this ); // Auto-registration
-
-    xis >> xml::list( "knowledge-group", *this, &MIL_Army::ReadLogistic, knowledgegroupFactory );
 }
 
 // -----------------------------------------------------------------------------

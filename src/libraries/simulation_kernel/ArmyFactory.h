@@ -16,7 +16,6 @@ class AutomateFactory_ABC;
 class FormationFactory_ABC;
 class MIL_ObjectManager;
 class PopulationFactory_ABC;
-class KnowledgeGroupFactory_ABC;
 
 // =============================================================================
 /** @class  ArmyFactory
@@ -30,7 +29,8 @@ class ArmyFactory : public ArmyFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ArmyFactory( AutomateFactory_ABC& automateFactory, FormationFactory_ABC& formationFactory, MIL_ObjectManager& objectFactory, PopulationFactory_ABC& populationFactory );//@TODO MGD rename and adapt MIL_ObjectManager
+    //@TODO MGD rename and adapt MIL_ObjectManager
+    explicit ArmyFactory( AutomateFactory_ABC& automateFactory, FormationFactory_ABC& formationFactory, MIL_ObjectManager& objectFactory, PopulationFactory_ABC& populationFactory, KnowledgeGroupFactory_ABC& knowledgegroupFactory );
     virtual ~ArmyFactory();
     //@}
 
@@ -46,7 +46,6 @@ private:
     FormationFactory_ABC& formationFactory_;
     MIL_ObjectManager& objectFactory_;
     PopulationFactory_ABC& populationFactory_;
-    KnowledgeGroupFactory_ABC& knowledgegroupFactory_;
     //@}
 
     //! @name CheckPoint

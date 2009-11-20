@@ -41,10 +41,6 @@ public:
     typedef std::vector< MIL_Automate* >     T_AutomateVector;
     typedef T_AutomateVector::iterator       IT_AutomateVector;
     typedef T_AutomateVector::const_iterator CIT_AutomateVector;
-
-    typedef std::vector< MIL_KnowledgeGroup* >     T_KnowledgeGroupVector;
-    typedef T_KnowledgeGroupVector::iterator       IT_KnowledgeGroupVector;
-    typedef T_KnowledgeGroupVector::const_iterator CIT_KnowledgeGroupVector;
     //@}
 
 public:
@@ -66,8 +62,6 @@ public:
     //@{
     void RegisterAutomate  ( MIL_Automate& automate );
     void UnregisterAutomate( MIL_Automate& automate );
-    void RegisterKnowledgeGroup  ( MIL_KnowledgeGroup& knowledgegroup );
-    void UnregisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgegroup);
 
     void UpdateKnowledges();
     void CleanKnowledges ();
@@ -102,7 +96,6 @@ private:
     DEC_KnowledgeBlackBoard_KnowledgeGroup* pKnowledgeBlackBoard_;
 
     T_AutomateVector automates_;
-    T_KnowledgeGroupVector knowledgegroups_;
 
 private:
     static std::set< uint > ids_;
