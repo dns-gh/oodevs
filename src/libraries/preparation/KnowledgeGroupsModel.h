@@ -17,6 +17,7 @@ namespace kernel
     class Controllers;
     class Entity_ABC;
     class KnowledgeGroup_ABC;
+    class KnowledgeGroupFactory_ABC;
     class Team_ABC;
 }
 
@@ -26,7 +27,6 @@ namespace xml
     class xostream;
 }
 
-class KnowledgeGroupFactory_ABC;
 class Model;
 
 // =============================================================================
@@ -41,7 +41,7 @@ class KnowledgeGroupsModel : public tools::Resolver< kernel::KnowledgeGroup_ABC 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit KnowledgeGroupsModel( kernel::Controllers& controllers, KnowledgeGroupFactory_ABC& knowledgeGroupFactory );
+    explicit KnowledgeGroupsModel( kernel::Controllers& controllers, kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory );
     virtual ~KnowledgeGroupsModel();
     //@}
 
@@ -66,7 +66,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    KnowledgeGroupFactory_ABC& knowledgeGroupFactory_;
+    kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory_;
     //@}
 };
 

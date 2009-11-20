@@ -9,9 +9,8 @@
 
 #include "preparation_pch.h"
 #include "KnowledgeGroupsModel.h"
-//#include "TeamsModel.h"
 #include "KnowledgeGroup.h"
-#include "KnowledgeGroupFactory_ABC.h"
+#include "clients_kernel/KnowledgeGroupFactory_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include <xeumeuleu/xml.h>
 

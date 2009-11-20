@@ -10,12 +10,13 @@
 #ifndef __KnowledgeGroupFactory_h_
 #define __KnowledgeGroupFactory_h_
 
-#include "KnowledgeGroupFactory_ABC.h"
+#include "clients_kernel/KnowledgeGroupFactory_ABC.h"
 
 namespace kernel
 {
     class Controllers;
     class Entity_ABC;
+    class KnowledgeGroupFactory_ABC;
 }
 
 class StaticModel;
@@ -27,7 +28,7 @@ class IdManager;
 */
 // Created: FHD 2009-11-19
 // =============================================================================
-class KnowledgeGroupFactory : public KnowledgeGroupFactory_ABC
+class KnowledgeGroupFactory : public kernel::KnowledgeGroupFactory_ABC
 {
 
 public:

@@ -10,6 +10,7 @@
 #include "preparation_pch.h"
 #include "TeamCommunications.h"
 #include <xeumeuleu/xml.h>
+#include "KnowledgeGroup.h"
 
 using namespace xml;
 using namespace kernel;
@@ -54,6 +55,8 @@ void TeamCommunications::WriteKnowledgeGroup( xml::xostream& xos ) const
     while( it.HasMoreElements() )
     {
         xos << start( "knowledge-group" );
+
+        const kernel::Entity_ABC& element = it.NextElement();
         it.NextElement().Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
         // read inner knowledge groups
         bool bHasSubKnowledgeGroups = false;

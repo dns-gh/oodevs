@@ -11,7 +11,7 @@
 #define __TeamFactory_h_
 
 #include "TeamFactory_ABC.h"
-#include "KnowledgeGroupFactory_ABC.h"
+#include "clients_kernel/KnowledgeGroupFactory_ABC.h"
 #include "ObjectFactory_ABC.h"
 
 namespace tools
@@ -24,6 +24,7 @@ namespace kernel
     class Controllers;
     class PropertiesDictionary;    
     class Extension_ABC;
+    class KnowledgeGroupFactory_ABC;
 }
 
 class Model;
