@@ -18,6 +18,11 @@
 #include "Entities/Agents/Units/PHY_Speeds.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "Meteo/PHY_MeteoDataManager.h"
+#include "UrbanModel.h"
+#include <Urban/Model.h>
+#include <Urban/BlockModel.h>
+#include <Urban/TerrainObject_ABC.h>
+#include <Urban/Block.h>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Agent_PathfinderRule::InitializeFuseauData
@@ -152,6 +157,18 @@ MT_Float DEC_Agent_PathfinderRule::GetDangerDirectionCost( const MT_Vector2D& to
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Agent_PathfinderRule::GetUrbanBlockCost
+// Created: RPD 2009-11-20
+// -----------------------------------------------------------------------------
+MT_Float DEC_Agent_PathfinderRule::GetUrbanBlockCost( const MT_Vector2D& from, const MT_Vector2D& to ) const
+{
+    MT_Float rBlockCost = 0;
+    urban::UrbanModel& urban = MIL_AgentServer::GetWorkspace().GetUrbanModel();
+    //
+    return rBlockCost;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Agent_PathfinderRule::GetObjectsCost
 // Created: NLD 2006-01-31
 // -----------------------------------------------------------------------------
@@ -274,7 +291,7 @@ MT_Float DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Ve
     if( ! world_.IsValidPosition( to ) )
         return IMPOSSIBLE_DESTINATION( "Out of world" );
 
-    // vitesse
+    // speed
     const MT_Float rSpeed = path_.GetUnitSpeeds().GetMaxSpeed( nLinkTerrainType );
     if( rSpeed <= 0. )
         return IMPOSSIBLE_WAY( "Speeds on terrain" );
@@ -293,8 +310,7 @@ MT_Float DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Ve
             return IMPOSSIBLE_WAY( "Slope" );
     }
 
-    // Calcul du cout dû aux éléments dynamiques du terrain
-    // (ennemis, objets du génie, fuseaux, flot..)
+    // Cost computation taken various dynamic terrain items into account
     MT_Float rDynamicCost = 0.;
 
     // Altitude
@@ -306,11 +322,17 @@ MT_Float DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Ve
         return -1.;
     rDynamicCost += rFuseauxCost;
     
-    // types de terrain
+    // terrain type
     rDynamicCost += GetTerrainCost( nLinkTerrainType );
 
-    // direction dangereuse
+    // danger direction
     rDynamicCost += GetDangerDirectionCost( to );
+    
+    //urban blocks
+    const MT_Float rUrbanBlockCost = GetUrbanBlockCost( from, to );
+    if( rUrbanBlockCost < 0. )
+        return -1.;
+    rDynamicCost += rUrbanBlockCost;
 
     // objects
     const MT_Float rObjectsCost = GetObjectsCost( from, to, nToTerrainType, nLinkTerrainType );
@@ -318,7 +340,7 @@ MT_Float DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Ve
         return IMPOSSIBLE_WAY( "Objects" );
     rDynamicCost += rObjectsCost;
 
-    // ennemies
+    // enemies
     const MT_Float rEnemiesCost = GetEnemiesCost( from, to, nToTerrainType, nLinkTerrainType );
     if( rEnemiesCost < 0 )
         return IMPOSSIBLE_WAY( "Enemies" );
