@@ -25,9 +25,8 @@ using namespace kernel;
 // Name: Team constructor
 // Created: SBO 2006-08-29
 // -----------------------------------------------------------------------------
-Team::Team( Controller& controller, KnowledgeGroupFactory_ABC& kgFactory, ObjectFactory_ABC& objectFactory, IdManager& idManager )
+Team::Team( Controller& controller, /* KnowledgeGroupFactory_ABC& kgFactory, */ ObjectFactory_ABC& objectFactory, IdManager& idManager )
     : EntityImplementation< Team_ABC >( controller, idManager.GetNextId(), "" )
-    , kgFactory_( kgFactory )
     , objectFactory_( objectFactory )
 {
     name_ = tools::translate( "Preparation", "Army %1" ).arg( id_ );
@@ -49,9 +48,8 @@ namespace
 // Name: Team constructor
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-Team::Team( xml::xistream& xis, kernel::Controller& controller, KnowledgeGroupFactory_ABC& kgFactory, ObjectFactory_ABC& objectFactory, IdManager& idManager )
+Team::Team( xml::xistream& xis, kernel::Controller& controller, /* KnowledgeGroupFactory_ABC& kgFactory, */ ObjectFactory_ABC& objectFactory, IdManager& idManager )
     : EntityImplementation< Team_ABC >( controller, xml::attribute< unsigned long >( xis, "id" ), ReadName( xis ) )
-    , kgFactory_( kgFactory )
     , objectFactory_( objectFactory )
 {
     RegisterSelf( *this );
@@ -73,19 +71,19 @@ Team::~Team()
 // Name: Team::CreateKnowledgeGroup
 // Created: SBO 2006-08-30
 // -----------------------------------------------------------------------------
-void Team::CreateKnowledgeGroup()
-{
-    kgFactory_.CreateKnowledgeGroup( *this );
-}
+//void Team::CreateKnowledgeGroup()
+//{
+//    kgFactory_.Create( *this );
+//}
 
 // -----------------------------------------------------------------------------
 // Name: Team::CreateKnowledgeGroup
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-void Team::CreateKnowledgeGroup( xml::xistream& xis )
-{
-    kgFactory_.CreateKnowledgeGroup( xis, *this );
-}
+//void Team::CreateKnowledgeGroup( xml::xistream& xis )
+//{
+//    kgFactory_.Create( xis, *this );
+//}
 
 // -----------------------------------------------------------------------------
 // Name: Team::CreateObject

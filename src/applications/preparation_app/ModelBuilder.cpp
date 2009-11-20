@@ -14,6 +14,7 @@
 #include "preparation/TeamsModel.h"
 #include "preparation/AgentsModel.h"
 #include "preparation/FormationModel.h"
+#include "preparation/KnowledgeGroupsModel.h"
 #include "preparation/LimitsModel.h"
 #include "preparation/Team.h"
 #include "preparation/Formation.h"
@@ -82,7 +83,9 @@ void ModelBuilder::OnCreate()
 void ModelBuilder::OnCreateCommunication()
 {
     if( selectedTeam_ )
-        model_.teams_.CreateKnowledgeGroup( *selectedTeam_ );
+        model_.knowledgeGroups_.Create( *selectedTeam_.ConstCast() );
+    else if( selectedGroup_ )
+        model_.knowledgeGroups_.CreateSubKnowledgeGroup( *selectedGroup_.ConstCast() );
 }
 
 // -----------------------------------------------------------------------------

@@ -38,7 +38,6 @@ class ObjectAttributeFactory_ABC;
 // Created: AGE 2006-02-15
 // =============================================================================
 class TeamFactory : public TeamFactory_ABC
-                  , public KnowledgeGroupFactory_ABC
                   , public ObjectFactory_ABC
 {
 
@@ -58,9 +57,6 @@ public:
     //@{
     virtual kernel::Team_ABC* CreateTeam();
     virtual kernel::Team_ABC* CreateTeam( xml::xistream& xis );
-
-    virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( kernel::Team_ABC& team );
-    virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( xml::xistream& xis, kernel::Team_ABC& team );
 
     virtual kernel::Object_ABC* CreateObject( const kernel::ObjectType& type, kernel::Team_ABC& team, const QString& name, const kernel::Location_ABC& location );
     virtual kernel::Object_ABC* CreateObject( xml::xistream& xis, kernel::Team_ABC& team );

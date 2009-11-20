@@ -50,15 +50,13 @@ class Team : public kernel::EntityImplementation< kernel::Team_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Team( kernel::Controller& controller, KnowledgeGroupFactory_ABC& kgFactory, ObjectFactory_ABC& objectFactory, IdManager& idManager );
-             Team( xml::xistream& xis, kernel::Controller& controller, KnowledgeGroupFactory_ABC& factory, ObjectFactory_ABC& objectFactory, IdManager& idManager );
+             Team( kernel::Controller& controller, ObjectFactory_ABC& objectFactory, IdManager& idManager );
+             Team( xml::xistream& xis, kernel::Controller& controller, ObjectFactory_ABC& objectFactory, IdManager& idManager );
     virtual ~Team();
     //@}
 
     //! @name Operations
     //@{
-    void CreateKnowledgeGroup();
-    void CreateKnowledgeGroup( xml::xistream& xis );
     kernel::Object_ABC* CreateObject( const kernel::ObjectType& type, const QString& name, const kernel::Location_ABC& location );
     void CreateObject( xml::xistream& xis );
     void Rename( const QString& name );
@@ -80,7 +78,6 @@ private:
 private:
     //! @name Member data
     //@{
-    KnowledgeGroupFactory_ABC& kgFactory_;
     ObjectFactory_ABC& objectFactory_;
     //@}
 };

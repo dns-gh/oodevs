@@ -10,14 +10,24 @@
 #ifndef __KnowledgeGroupsModel_h_
 #define __KnowledgeGroupsModel_h_
 
-#include "tools/Resolver_ABC.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
+    class Controllers;
+    class Entity_ABC;
     class KnowledgeGroup_ABC;
+    class Team_ABC;
 }
 
-class TeamsModel;
+namespace xml
+{ 
+    class xistream;
+    class xostream;
+}
+
+class KnowledgeGroupFactory_ABC;
+class Model;
 
 // =============================================================================
 /** @class  KnowledgeGroupsModel
@@ -25,22 +35,24 @@ class TeamsModel;
 */
 // Created: AGE 2006-02-15
 // =============================================================================
-class KnowledgeGroupsModel : public tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >
+class KnowledgeGroupsModel : public tools::Resolver< kernel::KnowledgeGroup_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit KnowledgeGroupsModel( TeamsModel& teams );
+    explicit KnowledgeGroupsModel( kernel::Controllers& controllers, KnowledgeGroupFactory_ABC& knowledgeGroupFactory );
     virtual ~KnowledgeGroupsModel();
     //@}
 
     //! @name Operations
     //@{
     void Purge();
-    virtual kernel::KnowledgeGroup_ABC* Find( const unsigned long& identifier ) const;
-    virtual kernel::KnowledgeGroup_ABC& Get( const unsigned long& identifier ) const;
     virtual tools::Iterator< const kernel::KnowledgeGroup_ABC& > CreateIterator() const;
+        void Create( kernel::Team_ABC& parent );
+        void Create( xml::xistream& xis, kernel::Team_ABC& parent, Model& model );
+        void CreateSubKnowledgeGroup( kernel::KnowledgeGroup_ABC& parent );
+        void CreateSubKnowledgeGroup( xml::xistream& xis, kernel::KnowledgeGroup_ABC& parent, Model& model );
     //@}
 
 private:
@@ -53,7 +65,8 @@ private:
 private:
     //! @name Member data
     //@{
-    TeamsModel& teams_;
+    kernel::Controllers& controllers_;
+    KnowledgeGroupFactory_ABC& knowledgeGroupFactory_;
     //@}
 };
 

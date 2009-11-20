@@ -10,6 +10,7 @@
 #include "preparation_pch.h"
 #include "TeamsModel.h"
 #include "Team.h"
+#include "KnowledgeGroupsModel.h"
 #include "TeamFactory_ABC.h"
 #include "Model.h"
 #include "FormationModel.h"
@@ -65,16 +66,6 @@ void TeamsModel::CreateTeam()
 {
     Team_ABC* team = factory_.CreateTeam();
     Register( team->GetId(), *team );
-    CreateKnowledgeGroup( *team );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TeamsModel::CreateKnowledgeGroup
-// Created: SBO 2006-08-30
-// -----------------------------------------------------------------------------
-void TeamsModel::CreateKnowledgeGroup( const kernel::Team_ABC& team )
-{
-    static_cast< Team& >( Get( team.GetId() ) ).CreateKnowledgeGroup();
 }
 
 // -----------------------------------------------------------------------------
@@ -95,28 +86,6 @@ Team_ABC* TeamsModel::FindTeam( const QString& name ) const
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         if( it->second->GetName() == name )
             return it->second;
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: TeamsModel::FindKnowledgeGroup
-// Created: AGE 2006-02-15
-// -----------------------------------------------------------------------------
-KnowledgeGroup_ABC* TeamsModel::FindKnowledgeGroup( const unsigned long& id ) const
-{
-    for( tools::Resolver< Team_ABC >::CIT_Elements it = tools::Resolver< Team_ABC >::elements_.begin(); it != tools::Resolver< Team_ABC >::elements_.end(); ++it )
-    {
-        Team_ABC& team = *it->second;
-        const CommunicationHierarchies& hierarchies = team.Get< CommunicationHierarchies >();
-        tools::Iterator< const Entity_ABC& > subIt = hierarchies.CreateSubordinateIterator();
-        while( subIt.HasMoreElements() )
-        {
-            const Entity_ABC& kg = subIt.NextElement();
-            if( kg.GetId() == id )
-                // $$$$ AGE 2006-10-09: 
-                return const_cast< KnowledgeGroup_ABC* >( static_cast< const KnowledgeGroup_ABC* >( &kg ) );
-        };
-    }
     return 0;
 }
 
@@ -191,7 +160,7 @@ void TeamsModel::ReadTeam( xml::xistream& xis, Model& model )
 
     // $$$$ SBO 2006-10-05: forward to communications extension?
     xis >> start( "communication" )
-            >> list( "knowledge-group", static_cast< Team& >( *team ), &Team::CreateKnowledgeGroup )
+            >> list( "knowledge-group", model.knowledgeGroups_, &KnowledgeGroupsModel::Create, *team, model )
         >> end();
     xis >> start( "tactical" )
             >> list( "formation", model.formations_, &FormationModel::Create, *team, model )

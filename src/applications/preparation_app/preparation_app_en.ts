@@ -24,6 +24,10 @@
         <source>Create knowledge group</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Create sub knowledge group</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DotationsEditor</name>

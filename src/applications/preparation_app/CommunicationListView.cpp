@@ -81,6 +81,17 @@ void CommunicationListView::NotifyContextMenu( const Team_ABC&, ContextMenu& men
 }
 
 // -----------------------------------------------------------------------------
+// Name: CommunicationListView::NotifyContextMenu
+// Created: FHD 2009-11-19
+// -----------------------------------------------------------------------------
+void CommunicationListView::NotifyContextMenu( const kernel::KnowledgeGroup_ABC& knowledgegroup, kernel::ContextMenu& menu )
+{
+    if( !isVisible() )
+        return;
+    menu.InsertItem( "Creation", tools::translate( "CommunicationListView", "Create sub knowledge group" ), &modelBuilder_, SLOT( OnCreateCommunication() ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: CommunicationListView::Drop
 // Created: SBO 2006-09-26
 // -----------------------------------------------------------------------------

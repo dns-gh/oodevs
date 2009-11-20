@@ -171,7 +171,7 @@ void TeamFactory::Initialize()
 // -----------------------------------------------------------------------------
 Team_ABC* TeamFactory::CreateTeam()
 {
-    Team* result = new Team( controllers_.controller_, *this, *this, idManager_ );
+    Team* result = new Team( controllers_.controller_, *this, idManager_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< kernel::Diplomacies_ABC >( *new Diplomacies( controllers_.controller_, model_.teams_, *result, dico, staticModel_.teamKarmas_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new TeamHierarchies( controllers_.controller_, *result, 0 ) );
@@ -188,37 +188,13 @@ Team_ABC* TeamFactory::CreateTeam()
 // -----------------------------------------------------------------------------
 kernel::Team_ABC* TeamFactory::CreateTeam( xml::xistream& xis )
 {
-    Team* result = new Team( xis, controllers_.controller_, *this, *this, idManager_ );
+    Team* result = new Team( xis, controllers_.controller_, *this, idManager_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< kernel::Diplomacies_ABC >( *new Diplomacies( xis, controllers_.controller_, model_.teams_, *result, dico, staticModel_.teamKarmas_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new TeamHierarchies( controllers_.controller_, *result, 0 ) );
     result->Attach< kernel::CommunicationHierarchies >( *new TeamCommunications( controllers_.controller_, *result, 0 ) );
     result->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *result, 0 ) );
     result->Attach( *new Populations() );
-    result->Polish();
-    return result;
-}
-
-// -----------------------------------------------------------------------------
-// Name: TeamFactory::CreateKnowledgeGroup
-// Created: SBO 2006-08-30
-// -----------------------------------------------------------------------------
-kernel::KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( kernel::Team_ABC& team )
-{
-    KnowledgeGroup* result = new KnowledgeGroup( controllers_.controller_, idManager_, staticModel_.types_ );
-    result->Attach< kernel::CommunicationHierarchies >( *new EntityCommunications( controllers_.controller_, *result, &team ) );
-    result->Polish();
-    return result;
-}
-
-// -----------------------------------------------------------------------------
-// Name: TeamFactory::CreateKnowledgeGroup
-// Created: SBO 2006-10-05
-// -----------------------------------------------------------------------------
-kernel::KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( xml::xistream& xis, kernel::Team_ABC& team )
-{
-    KnowledgeGroup* result = new KnowledgeGroup( xis, controllers_.controller_, idManager_, staticModel_.types_ );
-    result->Attach< kernel::CommunicationHierarchies >( *new EntityCommunications( controllers_.controller_, *result, &team ) );
     result->Polish();
     return result;
 }

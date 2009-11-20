@@ -58,11 +58,9 @@ public:
     void Load( xml::xistream& xis, Model& model );
     void Purge();
     void CreateTeam();
-    void CreateKnowledgeGroup( const kernel::Team_ABC& team );
     kernel::Object_ABC* CreateObject( const kernel::Team_ABC& team, const kernel::ObjectType& type, const QString& name, const kernel::Location_ABC& location );
 
     kernel::Team_ABC* FindTeam( const QString& name ) const;
-    kernel::KnowledgeGroup_ABC* FindKnowledgeGroup( const unsigned long& id ) const;
 
     void Serialize( xml::xostream& xos ) const;
 

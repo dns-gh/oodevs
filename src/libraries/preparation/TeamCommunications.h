@@ -34,6 +34,7 @@ private:
     //! @name Operations
     //@{
     virtual void SerializeAttributes( xml::xostream& xos ) const;
+            void WriteKnowledgeGroup( xml::xostream& xos ) const;
     //@}
 };
 

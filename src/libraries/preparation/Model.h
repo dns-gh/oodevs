@@ -43,6 +43,7 @@ class AgentFactory_ABC;
 class FormationModel;
 class FormationFactory_ABC;
 class IdManager;
+class KnowledgeGroupFactory_ABC;
 class LimitsModel;
 class WeatherModel;
 class ProfilesModel;
@@ -92,6 +93,7 @@ private:
     IdManager& idManager_;
     kernel::Controllers& controllers_;
     TeamFactory_ABC& teamFactory_;
+    KnowledgeGroupFactory_ABC& knowledgeGroupFactory_;
     FormationFactory_ABC& formationFactory_;
     AgentFactory_ABC& agentFactory_;
     ProfileFactory_ABC& profileFactory_;

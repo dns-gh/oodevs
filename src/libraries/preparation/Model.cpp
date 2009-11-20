@@ -18,6 +18,7 @@
 #include "FormationFactory.h"
 #include "FormationModel.h"
 #include "IdManager.h"
+#include "KnowledgeGroupFactory.h"
 #include "LimitsModel.h"
 #include "WeatherModel.h"
 #include "ProfilesModel.h"
@@ -56,6 +57,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     : controllers_( controllers )
     , idManager_( *new IdManager() )
     , teamFactory_( *new TeamFactory( controllers, *this, staticModel, idManager_ ) )
+    , knowledgeGroupFactory_( *new KnowledgeGroupFactory( controllers, staticModel, idManager_ ) )
     , formationFactory_( *new FormationFactory( controllers, idManager_ ) )
     , agentFactory_( *new AgentFactory( controllers, *this, staticModel, idManager_ ) )
     , profileFactory_( *new ProfileFactory( controllers.controller_, *this ) )
@@ -63,7 +65,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , successFactorFactory_( *new SuccessFactorFactory( controllers_, *this, staticModel.successFactorActionTypes_ ) )
     , drawingFactory_( *new gui::DrawerFactory( controllers.controller_, staticModel.drawings_ ) ) 
     , teams_( *new TeamsModel( controllers, teamFactory_ ) )
-    , knowledgeGroups_( *new KnowledgeGroupsModel( teams_ ) )
+    , knowledgeGroups_( *new KnowledgeGroupsModel( controllers, knowledgeGroupFactory_ ) )
     , formations_( *new FormationModel( controllers, formationFactory_ ) )
     , agents_( *new AgentsModel( controllers, agentFactory_ ) )
     , limits_( *new LimitsModel( controllers, staticModel.coordinateConverter_, idManager_ ) )

@@ -16,6 +16,7 @@
 namespace kernel
 {
     class ModelLoaded;
+    class KnowledgeGroup_ABC;
 }
 
 class ModelBuilder;
@@ -30,6 +31,7 @@ class CommunicationListView : public gui::HierarchyListView< kernel::Communicati
                             , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                             , public tools::ElementObserver_ABC< kernel::Entity_ABC >
                             , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
+                            , public kernel::ContextMenuObserver_ABC< kernel::KnowledgeGroup_ABC >
 {
 
 public:
@@ -56,6 +58,8 @@ private:
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
     virtual void NotifyUpdated( const kernel::Entity_ABC& );
     virtual void NotifyContextMenu( const kernel::Team_ABC& agent, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::KnowledgeGroup_ABC& knowledgegroup, kernel::ContextMenu& menu );
+
     virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
     virtual void keyPressEvent( QKeyEvent* event );
    //@}

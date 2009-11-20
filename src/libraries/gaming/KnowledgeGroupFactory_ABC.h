@@ -35,6 +35,7 @@ public:
     //! @name Operations
     //@{
     virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( unsigned long id, kernel::Team_ABC& team ) = 0;
+    //virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( unsigned long id, kernel::KnowledgeGroup_ABC& team ) = 0;
     //@}
 };
 
