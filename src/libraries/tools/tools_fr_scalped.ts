@@ -10,7 +10,7 @@
 <context>
     <name>Application</name>
     <message>
-        <source>SWORD Officer Training</source>
+        <source>SWORD</source>
         <translation>SCALPED</translation>
     </message>
     <message>

@@ -93,7 +93,7 @@
     </message>
     <message>
         <source>SWORD</source>
-        <translation>SWORD Security</translation>
+        <translation>SWORD Officer Training</translation>
     </message>
     <message>
         <source>sword@masagroup.net</source>

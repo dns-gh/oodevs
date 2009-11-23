@@ -680,9 +680,11 @@ function DEC_CreerDIAThing( thingType )
     result.GetType = function() return thingType end
     local function wrapGetOrSet( table, name )
         if string.sub( name, 1, 3 ) == "Get" then 
-            return rawget( table, string.sub( name, 4 ) )
+            return function( self )
+                return rawget( table, string.sub( name, 4 ) )
+            end
         elseif string.sub( name, 1, 3 ) == "Set" then
-            return function( value )
+            return function( self, value )
                 rawset( table, string.sub( name, 4 ), value )
             end
         else

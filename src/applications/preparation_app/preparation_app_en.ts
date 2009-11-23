@@ -3,7 +3,7 @@
     <name>Application</name>
     <message>
         <source>SWORD</source>
-        <translation>SWORD</translation>
+        <translation>SWORD Officer Training</translation>
     </message>
     <message>
         <source>sword-ot@masagroup.net</source>

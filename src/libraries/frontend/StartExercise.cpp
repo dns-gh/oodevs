@@ -25,7 +25,7 @@ namespace
     {
     public:
         StartDispatcher( const tools::GeneralConfig& config, const QString& exercise, const QString& session, bool attach )
-            : SpawnCommand( config, "./bin/dispatcher_app.exe", attach )
+            : SpawnCommand( config, "dispatcher_app.exe", attach )
         {
          //   SetWorkingDirectory( "./bin/" );
             AddRootDirArgument();
@@ -34,7 +34,7 @@ namespace
         }
 
         StartDispatcher( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint, bool attach )
-            : SpawnCommand( config, "./bin/dispatcher_app.exe", attach )
+            : SpawnCommand( config, "dispatcher_app.exe", attach )
         {
            // SetWorkingDirectory( "./bin/" );
             AddRootDirArgument();
