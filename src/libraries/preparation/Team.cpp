@@ -10,12 +10,12 @@
 #include "preparation_pch.h"
 #include "Team.h"
 #include "KnowledgeGroup.h"
-#include "KnowledgeGroupFactory_ABC.h"
 #include "IdManager.h"
 #include "Object.h"
 #include "ObjectFactory_ABC.h"
 #include "Tools.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/KnowledgeGroupFactory_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include <xeumeuleu/xml.h>
 
