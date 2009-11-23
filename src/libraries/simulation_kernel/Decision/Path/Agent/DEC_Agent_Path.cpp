@@ -200,6 +200,16 @@ void DEC_Agent_Path::Initialize( const T_PointVector& points )
     }
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Agent_Path::GetUnitMaxSlope
+// Created: RPD 2009-11-23
+// -----------------------------------------------------------------------------
+MT_Float DEC_Agent_Path::GetUnitMajorWeight() const
+{
+    return queryMaker_.GetMajorComponentWeight();
+}
+
 // -----------------------------------------------------------------------------
 // Name: IsObjectInsidePathPoint
 // Created: NLD 2005-07-21
@@ -612,5 +622,3 @@ void DEC_Agent_Path::Execute( TerrainPathfinder& pathfind )
                             ", Result : " << stream.str() );
     }
 }
-
-

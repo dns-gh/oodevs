@@ -1485,6 +1485,22 @@ const PHY_ComposantePion* PHY_RolePion_Composantes::GetMajorComposante() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::GetMajorComponentWeight
+// Created: RPD 2009-11-23
+// -----------------------------------------------------------------------------
+MT_Float PHY_RolePion_Composantes::GetMajorComponentWeight() const
+{
+    MT_Float weight ( 0 );
+    const PHY_ComposantePion* majorComponent = GetMajorComposante();
+    if ( majorComponent )
+    {
+        weight = ( MT_Float ) majorComponent->GetWeight();
+    }
+    return weight;
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::GetOperationalState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------

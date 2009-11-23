@@ -328,6 +328,15 @@ bool MIL_AgentPion::IsNeutralized() const
     return GetRole< PHY_RolePion_Composantes >().IsNeutralized();
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::GetMajorWeight
+// Created: RPD 2009-08-19
+// -----------------------------------------------------------------------------
+MT_Float MIL_AgentPion::GetMajorComponentWeight() const
+{
+    return GetRole< PHY_RolePion_Composantes >().GetMajorComponentWeight();
+}
+
 // =============================================================================
 // UPDATES
 // =============================================================================

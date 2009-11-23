@@ -83,6 +83,7 @@ public:
     virtual bool                      IsDead             () const;
     virtual bool                      IsNeutralized      () const;
     virtual bool                      IsPC               () const;
+    virtual MT_Float                  GetMajorComponentWeight   () const;
 
     virtual bool BelongsTo( const MIL_KnowledgeGroup& group ) const;
 

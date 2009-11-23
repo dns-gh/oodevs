@@ -179,6 +179,7 @@ public:
     virtual       void                 GetVisibleVolumes        ( T_ComposanteVolumeSet& volumes         ) const;
     virtual       void                 BuildKnowledgeComposantes( T_KnowledgeComposanteVector& knowledge ) const;
     virtual const PHY_ComposantePion*  GetMajorComposante       () const;
+    virtual       MT_Float             GetMajorComponentWeight  () const;
     //@}
 
     //! @name Load / unload / transport

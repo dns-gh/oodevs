@@ -132,3 +132,13 @@ urban::Block* UrbanModel::FindUrbanBlock( unsigned id ) const
 {
     return static_cast< Block* >( model_->blocks_.Find( id ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::FindUrbanBlock
+// Created: RPD 2009-11-23
+// -----------------------------------------------------------------------------
+MT_Float UrbanModel::GetUrbanBlockCost( MT_Float weight, const MT_Vector2D& start, const MT_Vector2D& end ) const
+{
+    geometry::Point2f from ( start.rX_, start.rY_ ), to ( end.rX_, end.rY_ );
+    return model_->GetUrbanBlockCost( ( float ) weight, from, to );
+}

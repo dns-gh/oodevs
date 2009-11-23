@@ -20,9 +20,6 @@
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "UrbanModel.h"
 #include <Urban/Model.h>
-#include <Urban/BlockModel.h>
-#include <Urban/TerrainObject_ABC.h>
-#include <Urban/Block.h>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Agent_PathfinderRule::InitializeFuseauData
@@ -162,10 +159,7 @@ MT_Float DEC_Agent_PathfinderRule::GetDangerDirectionCost( const MT_Vector2D& to
 // -----------------------------------------------------------------------------
 MT_Float DEC_Agent_PathfinderRule::GetUrbanBlockCost( const MT_Vector2D& from, const MT_Vector2D& to ) const
 {
-    MT_Float rBlockCost = 0;
-    urban::UrbanModel& urban = MIL_AgentServer::GetWorkspace().GetUrbanModel();
-    //
-    return rBlockCost;
+    return MIL_AgentServer::GetWorkspace().GetUrbanModel().GetUrbanBlockCost( path_.GetUnitMajorWeight(), from, to );
 }
 
 // -----------------------------------------------------------------------------

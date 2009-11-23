@@ -79,7 +79,8 @@ public:
     const T_PathKnowledgeAgentVector&         GetPathKnowledgeAgents      () const;
     const T_PathKnowledgePopulationVector&    GetPathKnowledgePopulations () const;
     const DEC_PathType&                       GetPathType                 () const;
-    const DEC_Agent_PathClass&                GetPathClass                () const;         
+    const DEC_Agent_PathClass&                GetPathClass                () const;
+          MT_Float                            GetUnitMajorWeight          () const;
     //@}
     
     //! @name Tools

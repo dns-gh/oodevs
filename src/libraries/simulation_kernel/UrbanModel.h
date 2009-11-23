@@ -47,10 +47,11 @@ public:
 
     //! @name Operations
     //@{
-    void ReadUrbanModel      ( const MIL_Config& config );
-    void SendStateToNewClient() const;
-    static void SendCreation( urban::TerrainObject_ABC& UrbanBlock );
-    urban::Block* FindUrbanBlock( unsigned id ) const;
+    void            ReadUrbanModel          ( const MIL_Config& config );
+    void            SendStateToNewClient    () const;
+    static void     SendCreation            ( urban::TerrainObject_ABC& UrbanBlock );
+    urban::Block*   FindUrbanBlock          ( unsigned id ) const;
+    MT_Float        GetUrbanBlockCost       ( MT_Float weight, const MT_Vector2D& from, const MT_Vector2D& to ) const;
     //@}
 
     //! @name Network
