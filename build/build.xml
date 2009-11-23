@@ -737,10 +737,10 @@
                 file="../data/exercises/@{exercise}/sessions/@{session}/session.xml" failonerror="true" 
                 warn="true"/>
             <exec executable="${out.dir}/release/applications/@{simulation}/@{simulation}.exe" dir="${run.dir}" failonerror="true">
-                <arg value="-root-dir=../../data"/>
-                <arg value="-exercise=@{exercise}"/>
-                <arg value="-session=@{session}"/>
-                <arg value="-test"/>
+                <arg value="--root-dir=../../data"/>
+                <arg value="--exercise=@{exercise}"/>
+                <arg value="--session=@{session}"/>
+                <arg value="--test"/>
             </exec>
         </sequential>
     </macrodef>
