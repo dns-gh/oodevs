@@ -274,7 +274,7 @@
             depends="applications.simulation,applications.clients,applications.frontends"/>
 
     <target name="applications.simulation" description="build CSword Simulation executables"
-            depends="application.dispatcher_app.crossbow,application.simulation_app.crossbow,application.dispatcher_app,application.simulation_app,application.replayer_app,application.AGR" />
+            depends="application.dispatcher_app.crossbow,application.simulation_app.crossbow,application.simulation_app,application.dispatcher_app,application.replayer_app,application.AGR" />
 
     <target name="applications.clients" description="build CSword Client executables"
             depends="application.gaming_app,application.preparation_app,application.adaptation_app,application.loadtester_app"/>
@@ -285,7 +285,7 @@
     <target name="application.dispatcher_dll" description="build Sword Dispatcher dll with crossbow" 
             depends="library.dispatcher,library.actions_static,library.clients_kernel,library.ENT,library.plugins">
         <build-lib name="dispatcher_dll" outtype="shared" mode="release" depends="boost,terrain,qt"
-                   pattern="dispatcher-${platform}-mt@{suffix}"
+                   pattern="dispatcher-${platform}-mt@{suffix}" input="dispatcher_dll"
                    libs="HLA,libFedTime,masalloc,tools,masasn,
                          xerces-c_mt_static_2,Xerces-depdom_static_2,
                          MT_Tools,MT_Logger,MT_Memory,MT_IO,MT_Thread,
@@ -306,9 +306,9 @@
                          lib${ant.project.name}_indicators-${platform}-mt,
                          lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                          lib${ant.project.name}_tools-${platform}-mt@{suffix}">
-            <syslibset libs="dbghelp,psapi,iphlpapi,user32"/>
+            <syslibset libs="dbghelp,psapi,iphlpapi,user32,advapi32"/>
             <includepath path="${include.dir}/masasn"/>
-            <defineset define="DISPATCHER_DLL_EXPORTS"/>
+            <defineset define="XML_LIBRARY,DISPATCHER_DLL_EXPORTS"/>
             <linkerarg value="/FIXED:NO"/>
         </build-lib>
     </target>
@@ -318,7 +318,7 @@
                    libs="masalloc,tools,
                          dispatcher-${platform}-mt@{suffix},
                          lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}">
-            <syslibset libs="dbghelp,psapi,iphlpapi,user32"/>
+            <syslibset libs="dbghelp,psapi,iphlpapi,user32,advapi32"/>
         </build-app>
     </target>
 
@@ -335,7 +335,7 @@
             lib${ant.project.name}_simulation_terrain-${platform}-mt@{suffix},
             lib${ant.project.name}_simulation_orders-${platform}-mt@{suffix},
             lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix}">
-            <syslibset libs="dbghelp,winmm,psapi,shell32,iphlpapi"/>
+            <syslibset libs="dbghelp,winmm,psapi,shell32,iphlpapi,advapi32"/>
             <includepath path="${libraries.dir}/simulation_kernel"/>
             <includepath path="${include.dir}/masasn"/>
             <defineset define="_WIN32_WINNT=0x0400"/> <!-- for 'IsDebuggerPresent()' -->
@@ -370,7 +370,7 @@
             lib${ant.project.name}_indicators-${platform}-mt,
             lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
             lib${ant.project.name}_tools-${platform}-mt@{suffix}">
-            <syslibset libs="dbghelp,psapi,iphlpapi,user32"/>
+            <syslibset libs="dbghelp,psapi,iphlpapi,user32,advapi32"/>
             <includepath path="${include.dir}/masasn"/>
             <defineset define="XML_LIBRARY,DISPATCHER_DLL_EXPORTS,CROSSBOW_PLUGIN"/>
             <linkerarg value="/FIXED:NO"/>
@@ -383,7 +383,7 @@
             libs="masalloc,tools,
             dispatcher-crossbow-${platform}-mt@{suffix},
             lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}">
-            <syslibset libs="dbghelp,psapi,iphlpapi,user32"/>
+            <syslibset libs="dbghelp,psapi,iphlpapi,user32,advapi32"/>
             <defineset define="XML_LIBRARY"/>
         </build-app>
     </target>
@@ -402,7 +402,7 @@
             lib${ant.project.name}_simulation_terrain-${platform}-mt@{suffix},
             lib${ant.project.name}_simulation_orders-${platform}-mt@{suffix},
             lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix}">
-            <syslibset libs="dbghelp,psapi,shell32,iphlpapi"/>
+            <syslibset libs="dbghelp,psapi,shell32,iphlpapi,advapi32"/>
             <includepath path="${libraries.dir}/simulation_kernel"/>
             <includepath path="${include.dir}/masasn"/>
             <defineset define="XML_LIBRARY,_WIN32_WINNT=0x0400"/> <!-- for 'IsDebuggerPresent()' -->
@@ -413,490 +413,491 @@
 
     <!-- </crossbowed-applications> -->
 
-<target name="application.replayer_app" description="build Sword replayer executable" depends="application.dispatcher_dll.crossbow,library.dispatcher,library.3a,library.score_plugin">
-    <!-- MT uses xerces dynamic lib by default -->
-    <build-app name="replayer_app" depends="terrain,boost,flexlm,qt"
-        libs="HLA,libFedTime,tools,masasn,directia-${platform}-mt-4_5,
-        MT_Tools,MT_Logger,MT_Memory,MT_IO,MT_Thread,MT_Time,
-        xerces-c_mt_static_2,Xerces-depdom_static_2,
-        dispatcher-${platform}-mt@{suffix},
-        lib${ant.project.name}_tools-${platform}-mt,
-        lib${ant.project.name}_ENT-${platform}-mt,
-        lib${ant.project.name}_MT_Tools-${platform}-mt,
-        lib${ant.project.name}_game_asn-${platform}-mt,
-        lib${ant.project.name}_3a-${platform}-mt,
-        lib${ant.project.name}_dispatcher-${platform}-mt,
-        lib${ant.project.name}_clients_kernel-${platform}-mt,
-        lib${ant.project.name}_score_plugin-${platform}-mt,
-        lib${ant.project.name}_indicators-${platform}-mt">
-        <syslibset libs="dbghelp,psapi,iphlpapi,user32,shell32"/>
-        <includepath path="${include.dir}/masasn"/>
-        <defineset define="XML_LIBRARY"/>
-    </build-app>
-</target>
+    <target name="application.replayer_app" description="build Sword replayer executable" depends="application.dispatcher_dll.crossbow,library.dispatcher,library.3a,library.score_plugin">
+        <!-- MT uses xerces dynamic lib by default -->
+        <build-app name="replayer_app" depends="terrain,boost,flexlm,qt"
+            libs="HLA,libFedTime,tools,masasn,directia-${platform}-mt-4_5,
+            MT_Tools,MT_Logger,MT_Memory,MT_IO,MT_Thread,MT_Time,
+            xerces-c_mt_static_2,Xerces-depdom_static_2,
+            dispatcher-${platform}-mt@{suffix},
+            lib${ant.project.name}_tools-${platform}-mt,
+            lib${ant.project.name}_ENT-${platform}-mt,
+            lib${ant.project.name}_MT_Tools-${platform}-mt,
+            lib${ant.project.name}_game_asn-${platform}-mt,
+            lib${ant.project.name}_3a-${platform}-mt,
+            lib${ant.project.name}_dispatcher-${platform}-mt,
+            lib${ant.project.name}_clients_kernel-${platform}-mt,
+            lib${ant.project.name}_score_plugin-${platform}-mt,
+            lib${ant.project.name}_indicators-${platform}-mt">
+            <syslibset libs="dbghelp,psapi,iphlpapi,user32,shell32,advapi32"/>
+            <includepath path="${include.dir}/masasn"/>
+            <defineset define="XML_LIBRARY"/>
+        </build-app>
+    </target>
 
-<target name="application.adaptation_app" description="build CSword Adaptation executable" depends="library.ENT,library.clients_gui">
-    <build-app name="adaptation_app" depends="mt,qt,xerces,boost" excludes="**/XmlResources.cpp"
-        libs="lib${ant.project.name}_ENT-${platform}-mt,
-        lib${ant.project.name}_clients_gui-${platform}-mt,
-        lib${ant.project.name}_clients_kernel-${platform}-mt
-        lib${ant.project.name}_tools-${platform}-mt" pch-excludes="qtundo.cpp">
-        <syslibset libs="advapi32,user32,shell32"/>
-    </build-app>
-</target>
+    <target name="application.adaptation_app" description="build CSword Adaptation executable" depends="library.ENT,library.clients_gui">
+        <build-app name="adaptation_app" depends="mt,qt,xerces,boost" excludes="**/XmlResources.cpp"
+            libs="lib${ant.project.name}_ENT-${platform}-mt,
+            lib${ant.project.name}_clients_gui-${platform}-mt,
+            lib${ant.project.name}_clients_kernel-${platform}-mt
+            lib${ant.project.name}_tools-${platform}-mt" pch-excludes="qtundo.cpp">
+            <syslibset libs="advapi32,user32,shell32,advapi32"/>
+        </build-app>
+    </target>
 
-<target name="application.gaming_app" description="build CSword Gaming executable" depends="library.gaming">
-    <build-app name="gaming_app" depends="terrain,xerces,qt,boost,flexlm"
-        libs="masasn,svgl,zipstream,zlib1,bugtrap,shapelib,
-        lib${ant.project.name}_actions-${platform}-mt,
-        lib${ant.project.name}_actions_gui-${platform}-mt,
-        lib${ant.project.name}_clients_gui-${platform}-mt,
-        lib${ant.project.name}_clients_kernel-${platform}-mt,
-        lib${ant.project.name}_ENT-${platform}-mt,
-        lib${ant.project.name}_game_asn-${platform}-mt,
-        lib${ant.project.name}_gaming-${platform}-mt,
-        lib${ant.project.name}_indicators-${platform}-mt,
-        lib${ant.project.name}_tools-${platform}-mt">
-        <includepath path="${include.dir}/masasn"/>
-        <syslibset libs="gdi32,psapi,dbghelp,htmlhelp"/>
-    </build-app>
-</target>
+    <target name="application.gaming_app" description="build CSword Gaming executable" depends="library.gaming">
+        <build-app name="gaming_app" depends="terrain,xerces,qt,boost,flexlm"
+            libs="masasn,svgl,zipstream,zlib1,bugtrap,shapelib,
+            lib${ant.project.name}_actions-${platform}-mt,
+            lib${ant.project.name}_actions_gui-${platform}-mt,
+            lib${ant.project.name}_clients_gui-${platform}-mt,
+            lib${ant.project.name}_clients_kernel-${platform}-mt,
+            lib${ant.project.name}_ENT-${platform}-mt,
+            lib${ant.project.name}_game_asn-${platform}-mt,
+            lib${ant.project.name}_gaming-${platform}-mt,
+            lib${ant.project.name}_indicators-${platform}-mt,
+            lib${ant.project.name}_tools-${platform}-mt">
+            <includepath path="${include.dir}/masasn"/>
+            <syslibset libs="gdi32,psapi,dbghelp,htmlhelp,advapi32"/>
+        </build-app>
+    </target>
 
-<target name="application.loadtester_app" description="build CSword load testing executable" depends="library.game_asn,library.tools">
-    <build-app name="loadtester_app" subsystem="console" depends="boost"
-        libs="masasn,
-        lib${ant.project.name}_game_asn-${platform}-mt,
-        lib${ant.project.name}_tools-${platform}-mt">
-        <includepath path="${include.dir}/masasn"/>
-        <syslibset libs="gdi32,psapi,dbghelp,htmlhelp"/>
-    </build-app>
-</target>
+    <target name="application.loadtester_app" description="build CSword load testing executable" depends="library.game_asn,library.tools">
+        <build-app name="loadtester_app" subsystem="console" depends="boost"
+            libs="masasn,
+            lib${ant.project.name}_game_asn-${platform}-mt,
+            lib${ant.project.name}_tools-${platform}-mt">
+            <includepath path="${include.dir}/masasn"/>
+            <syslibset libs="gdi32,psapi,dbghelp,htmlhelp,advapi32"/>
+        </build-app>
+    </target>
 
-<target name="application.preparation_app" description="build CSword Gaming executable" depends="library.preparation">
-    <build-app name="preparation_app" excludes="**/**_Gen.*" depends="terrain,xerces,xalan,qt,boost,flexlm"
-        libs="svgl,zipstream,zlib1,bugtrap,
-        lib${ant.project.name}_actions-${platform}-mt,
-        lib${ant.project.name}_actions_gui-${platform}-mt,
-        lib${ant.project.name}_clients_gui-${platform}-mt,
-        lib${ant.project.name}_clients_kernel-${platform}-mt,
-        lib${ant.project.name}_ENT-${platform}-mt,
-        lib${ant.project.name}_game_asn-${platform}-mt,
-        lib${ant.project.name}_indicators-${platform}-mt,
-        lib${ant.project.name}_preparation-${platform}-mt,
-        lib${ant.project.name}_tools-${platform}-mt">
-        <includepath path="${include.dir}/masasn"/>
-        <syslibset libs="gdi32,psapi,dbghelp,htmlhelp"/>
-    </build-app>
-</target>
+    <target name="application.preparation_app" description="build CSword Gaming executable" depends="library.preparation">
+        <build-app name="preparation_app" excludes="**/**_Gen.*" depends="terrain,xerces,xalan,qt,boost,flexlm"
+            libs="svgl,zipstream,zlib1,bugtrap,
+            lib${ant.project.name}_actions-${platform}-mt,
+            lib${ant.project.name}_actions_gui-${platform}-mt,
+            lib${ant.project.name}_clients_gui-${platform}-mt,
+            lib${ant.project.name}_clients_kernel-${platform}-mt,
+            lib${ant.project.name}_ENT-${platform}-mt,
+            lib${ant.project.name}_game_asn-${platform}-mt,
+            lib${ant.project.name}_indicators-${platform}-mt,
+            lib${ant.project.name}_preparation-${platform}-mt,
+            lib${ant.project.name}_tools-${platform}-mt">
+            <includepath path="${include.dir}/masasn"/>
+            <syslibset libs="gdi32,psapi,dbghelp,htmlhelp,advapi32"/>
+        </build-app>
+    </target>
 
-<target name="application.frontend_app" description="build CSword Frontend executable" depends="library.frontend">
-    <build-app name="frontend_app" depends="qt,boost,xerces,flexlm"
-        libs="bugtrap,zipstream,zlib1,tools,
-        lib${ant.project.name}_tools-${platform}-mt,
-        lib${ant.project.name}_ENT-${platform}-mt,
-        lib${ant.project.name}_frontend-${platform}-mt,
-        lib${ant.project.name}_clients_gui-${platform}-mt,
-        lib${ant.project.name}_clients_kernel-${platform}-mt">
-        <syslibset libs="gdi32,shell32,htmlhelp"/>
-    </build-app>
-</target>
+    <target name="application.frontend_app" description="build CSword Frontend executable" depends="library.frontend">
+        <build-app name="frontend_app" depends="qt,boost,xerces,flexlm"
+            libs="bugtrap,zipstream,zlib1,tools,
+            lib${ant.project.name}_tools-${platform}-mt,
+            lib${ant.project.name}_ENT-${platform}-mt,
+            lib${ant.project.name}_frontend-${platform}-mt,
+            lib${ant.project.name}_clients_gui-${platform}-mt,
+            lib${ant.project.name}_clients_kernel-${platform}-mt">
+            <syslibset libs="gdi32,shell32,htmlhelp,advapi32"/>
+        </build-app>
+    </target>
 
-<target name="application.selftraining_app" description="build CSword Self-training executable" depends="library.frontend">
-    <build-app name="selftraining_app" depends="qt,boost,xerces,flexlm"
-        libs="bugtrap,zipstream,zlib1,tools,
-        lib${ant.project.name}_tools-${platform}-mt,
-        lib${ant.project.name}_ENT-${platform}-mt,
-        lib${ant.project.name}_frontend-${platform}-mt,
-        lib${ant.project.name}_clients_gui-${platform}-mt,
-        lib${ant.project.name}_clients_kernel-${platform}-mt">
-        <syslibset libs="gdi32,shell32,htmlhelp"/>
-    </build-app>
-</target>
+    <target name="application.selftraining_app" description="build CSword Self-training executable" depends="library.frontend">
+        <build-app name="selftraining_app" depends="qt,boost,xerces,flexlm"
+            libs="bugtrap,zipstream,zlib1,tools,
+            lib${ant.project.name}_tools-${platform}-mt,
+            lib${ant.project.name}_ENT-${platform}-mt,
+            lib${ant.project.name}_frontend-${platform}-mt,
+            lib${ant.project.name}_clients_gui-${platform}-mt,
+            lib${ant.project.name}_clients_kernel-${platform}-mt">
+            <syslibset libs="gdi32,shell32,htmlhelp,advapi32"/>
+        </build-app>
+    </target>
 
-<target name="application.package_app" description="build CSword Package deployment executable">
-    <build-app name="package_app" depends="boost" subsystem="console">
-        <syslibset libs="user32"/>
-    </build-app>
-</target>
+    <target name="application.package_app" description="build CSword Package deployment executable">
+        <build-app name="package_app" depends="boost" subsystem="console">
+            <syslibset libs="user32"/>
+        </build-app>
+    </target>
 
-<target name="application.AGR" description="build AGR executable">
-    <build-app name="AGR" subsystem="console" excludes="**/*_Skeleton.*" depends="mt,boost,xerces">
-        <syslibset libs="user32"/>
-    </build-app>
-</target>
+    <target name="application.AGR" description="build AGR executable">
+        <build-app name="AGR" subsystem="console" excludes="**/*_Skeleton.*" depends="mt,boost,xerces">
+            <syslibset libs="user32"/>
+        </build-app>
+    </target>
 
-<!--
-============================================================================
-data
-============================================================================
--->
+    <!--
+    ============================================================================
+    data
+    ============================================================================
+    -->
 
-<macrodef name="bmc">
-    <attribute name="dir"/>
-    <attribute name="core"/>
-    <sequential>
-        <java taskname="bmc" classname="net.masagroup.sword.bm.tools.bmc.Tool"
-            fork="true" failonerror="true" outputproperty="" logerror="true">
-            <classpath>
-                <fileset dir="${bin.dir}" includes="*.jar"/>
-            </classpath>
-            <arg value="-rootpath"/>
-            <arg value="@{core};@{dir}"/>
-            <arg value="@{dir}"/>
-        </java>
-    </sequential>
-</macrodef>
+    <macrodef name="bmc">
+        <attribute name="dir"/>
+        <attribute name="core"/>
+        <sequential>
+            <java taskname="bmc" classname="net.masagroup.sword.bm.tools.bmc.Tool"
+                fork="true" failonerror="true" outputproperty="" logerror="true">
+                <classpath>
+                    <fileset dir="${bin.dir}" includes="*.jar"/>
+                </classpath>
+                <arg value="-rootpath"/>
+                <arg value="@{core};@{dir}"/>
+                <arg value="@{dir}"/>
+            </java>
+        </sequential>
+    </macrodef>
 
-<macrodef name="update-database">
-    <attribute name="database"/>
-    <attribute name="dir"/>
-    <sequential>
-        <delete dir="@{dir}"/>
-        <update name="BM" package="@{database}" todir="@{dir}"/>
-    </sequential>
-</macrodef>
+    <macrodef name="update-database">
+        <attribute name="database"/>
+        <attribute name="dir"/>
+        <sequential>
+            <delete dir="@{dir}"/>
+            <update name="BM" package="@{database}" todir="@{dir}"/>
+        </sequential>
+    </macrodef>
 
-<target name="generate-database" description="compile behavior model database">
-    <bmc dir="${data.dir}/data/models/baseTestBM/decisional/models/core" core="${data.dir}/data/models/baseTestBM/decisional/models/core"/>
-    <bmc dir="${data.dir}/data/models/baseTestBM/decisional/models/base" core="${data.dir}/data/models/baseTestBM/decisional/models/core"/>
-    <delete>
-        <fileset dir="${data.dir}/data/models/baseTestBM/decisional/models/sword" includes="**/*.bmt,**/*.bmk,**/*.bmr"/>
-        <fileset dir="${data.dir}/data/models/baseTestBM/decisional/models/integration" includes="**/*.bmt,**/*.bmk,**/*.bmr"/>
-    </delete>
-    <bmc dir="${data.dir}/data/models/baseTestBM/decisional/models/sword" core="${data.dir}/data/models/baseTestBM/decisional/models/core;${data.dir}/data/models/baseTestBM/decisional/models/base"/>
-    <bmc dir="${data.dir}/data/models/baseTestBM/decisional/models/integration" core="${data.dir}/data/models/baseTestBM/decisional/models/core;${data.dir}/data/models/baseTestBM/decisional/models/base;${data.dir}/data/models/baseTestBM/decisional/models/sword"/>
-</target>
+    <target name="generate-database" description="compile behavior model database">
+        <bmc dir="${data.dir}/data/models/baseTestBM/decisional/models/core" core="${data.dir}/data/models/baseTestBM/decisional/models/core"/>
+        <bmc dir="${data.dir}/data/models/baseTestBM/decisional/models/base" core="${data.dir}/data/models/baseTestBM/decisional/models/core"/>
+        <delete>
+            <fileset dir="${data.dir}/data/models/baseTestBM/decisional/models/sword" includes="**/*.bmt,**/*.bmk,**/*.bmr"/>
+            <fileset dir="${data.dir}/data/models/baseTestBM/decisional/models/integration" includes="**/*.bmt,**/*.bmk,**/*.bmr"/>
+        </delete>
+        <bmc dir="${data.dir}/data/models/baseTestBM/decisional/models/sword" core="${data.dir}/data/models/baseTestBM/decisional/models/core;${data.dir}/data/models/baseTestBM/decisional/models/base"/>
+        <bmc dir="${data.dir}/data/models/baseTestBM/decisional/models/integration" core="${data.dir}/data/models/baseTestBM/decisional/models/core;${data.dir}/data/models/baseTestBM/decisional/models/base;${data.dir}/data/models/baseTestBM/decisional/models/sword"/>
+    </target>
 
-<target name="generate-data" depends="generate-database" description="generate data"/>
+    <target name="generate-data" depends="generate-database" description="generate data"/>
 
-<!--
-============================================================================
-clean
-============================================================================
--->
-<target name="clean" description="clean intermediate build artifacts">
-    <delete dir="${out.dir}"/>
-</target>
+    <!--
+    ============================================================================
+    clean
+    ============================================================================
+    -->
+    <target name="clean" description="clean intermediate build artifacts">
+        <delete dir="${out.dir}"/>
+    </target>
 
-<!--
-============================================================================
-license
-============================================================================
--->
-<target name="generate-license" description="generate license file in run directory">
-    <flexlm feature="sword" vendor="bkmasa"/>
-</target>
+    <!--
+    ============================================================================
+    license
+    ============================================================================
+    -->
+    <target name="generate-license" description="generate license file in run directory">
+        <flexlm feature="sword" vendor="bkmasa"/>
+    </target>
 
-<!--
-============================================================================
-tests
-============================================================================
--->
-<target name="test" depends="generate-license,test-scripts,test-exercises,test-adaptation,3a_test,plugins_test,clients_test,test-simulation_kernel_test" description="run all tests"/>
+    <!--
+    ============================================================================
+    tests
+    ============================================================================
+    -->
+    <target name="test" depends="generate-license,test-scripts,test-exercises,test-adaptation,3a_test,plugins_test,clients_test,test-simulation_kernel_test" description="run all tests"/>
 
-<target name="3a_test" depends="library.3a">
-    <build-test name="3a" depends="xerces,terrain,boost" libs="lib${ant.project.name}_3a-${platform}-mt@{suffix}">
-        <includepath path="${include.dir}/masasn"/>
-    </build-test>
-</target>
+    <target name="3a_test" depends="library.3a">
+        <build-test name="3a" depends="xerces,terrain,boost" libs="lib${ant.project.name}_3a-${platform}-mt@{suffix}">
+            <includepath path="${include.dir}/masasn"/>
+        </build-test>
+    </target>
 
-<target name="plugins_test" depends="library.hla_plugin,library.tic_plugin,library.bml_plugin,library.xmlia_plugin,library.crossbow_plugin">
-    <build-test name="plugins" depends="terrain,boost,xerces"
-        libs="directia-${platform}-mt-4_5,
-        lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
-        lib${ant.project.name}_hla_plugin-${platform}-mt@{suffix},
-        lib${ant.project.name}_tic_plugin-${platform}-mt@{suffix},
-        lib${ant.project.name}_bml_plugin-${platform}-mt@{suffix},
-        lib${ant.project.name}_xmlia_plugin-${platform}-mt@{suffix},
-        lib${ant.project.name}_script_plugin-${platform}-mt@{suffix},
-        lib${ant.project.name}_crossbow_plugin-${platform}-mt@{suffix}">
-        <includepath path="${include.dir}/masasn"/>
-    </build-test>
-</target>
+    <target name="plugins_test" depends="library.hla_plugin,library.tic_plugin,library.bml_plugin,library.xmlia_plugin,library.crossbow_plugin">
+        <build-test name="plugins" depends="terrain,boost,xerces"
+            libs="directia-${platform}-mt-4_5,
+            lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
+            lib${ant.project.name}_hla_plugin-${platform}-mt@{suffix},
+            lib${ant.project.name}_tic_plugin-${platform}-mt@{suffix},
+            lib${ant.project.name}_bml_plugin-${platform}-mt@{suffix},
+            lib${ant.project.name}_xmlia_plugin-${platform}-mt@{suffix},
+            lib${ant.project.name}_script_plugin-${platform}-mt@{suffix},
+            lib${ant.project.name}_crossbow_plugin-${platform}-mt@{suffix}">
+            <includepath path="${include.dir}/masasn"/>
+        </build-test>
+    </target>
 
-<target name="clients_test" depends="library.indicators">
-    <build-test name="clients" depends="boost,qt,xerces"
-        libs="lib${ant.project.name}_tools-${platform}-mt,
-        lib${ant.project.name}_ENT-${platform}-mt,
-        lib${ant.project.name}_indicators-${platform}-mt,
-        lib${ant.project.name}_clients_gui-${platform}-mt,
-        lib${ant.project.name}_clients_kernel-${platform}-mt">
-    </build-test>
-</target>
+    <target name="clients_test" depends="library.indicators">
+        <build-test name="clients" depends="boost,qt,xerces"
+            libs="lib${ant.project.name}_tools-${platform}-mt,
+            lib${ant.project.name}_ENT-${platform}-mt,
+            lib${ant.project.name}_indicators-${platform}-mt,
+            lib${ant.project.name}_clients_gui-${platform}-mt,
+            lib${ant.project.name}_clients_kernel-${platform}-mt">
+        </build-test>
+    </target>
 
-<macrodef name="test-scripts">
-    <attribute name="dataset"/>
-    <attribute name="physical"/>
-    <sequential>
-        <delete dir="${data.dir}/exercises/test-scripts"/>
-        <mkdir dir="${data.dir}/exercises/test-scripts"/>
-        <mkdir dir="${data.dir}/exercises/test-scripts/sessions"/>
-        <mkdir dir="${data.dir}/exercises/test-scripts/sessions/test-session"/>
-        <copy file="test-scripts/session.xml" todir="${data.dir}/exercises/test-scripts/sessions/test-session"/>
-        <copy file="test-scripts/orbat.xml" todir="${data.dir}/exercises/test-scripts"/>
-        <copy file="test-scripts/profiles.xml" todir="${data.dir}/exercises/test-scripts"/>
-        <copy file="test-scripts/weather.xml" todir="${data.dir}/exercises/test-scripts"/>
-        <copy file="test-scripts/exercise.xml.tmpl" tofile="${data.dir}/exercises/test-scripts/exercise.xml" overwrite="true">
-            <filterset>
-                <filter token="DATASET" value="@{dataset}"/>
-                <filter token="PHYSICAL" value="@{physical}"/>
-            </filterset>
-        </copy>
-        <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true">
-            <arg value="--root-dir=../../data"/>
-            <arg value="--exercise=test-scripts"/>
-            <arg value="--session=test-session"/>
-            <arg value="--test"/>
+    <macrodef name="test-scripts">
+        <attribute name="dataset"/>
+        <attribute name="physical"/>
+        <sequential>
+            <delete dir="${data.dir}/exercises/test-scripts"/>
+            <mkdir dir="${data.dir}/exercises/test-scripts"/>
+            <mkdir dir="${data.dir}/exercises/test-scripts/sessions"/>
+            <mkdir dir="${data.dir}/exercises/test-scripts/sessions/test-session"/>
+            <copy file="test-scripts/session.xml" todir="${data.dir}/exercises/test-scripts/sessions/test-session"/>
+            <copy file="test-scripts/orbat.xml" todir="${data.dir}/exercises/test-scripts"/>
+            <copy file="test-scripts/profiles.xml" todir="${data.dir}/exercises/test-scripts"/>
+            <copy file="test-scripts/weather.xml" todir="${data.dir}/exercises/test-scripts"/>
+            <copy file="test-scripts/exercise.xml.tmpl" tofile="${data.dir}/exercises/test-scripts/exercise.xml" overwrite="true">
+                <filterset>
+                    <filter token="DATASET" value="@{dataset}"/>
+                    <filter token="PHYSICAL" value="@{physical}"/>
+                </filterset>
+            </copy>
+            <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true">
+                <arg value="--root-dir=../../data"/>
+                <arg value="--exercise=test-scripts"/>
+                <arg value="--session=test-session"/>
+                <arg value="--test"/>
+            </exec>
+            <delete dir="${data.dir}/exercises/test-scripts"/>
+        </sequential>
+    </macrodef>
+
+    <target name="test-scripts" description="run all tests" depends="application.simulation_app">
+        <test-scripts dataset="ada" physical="france"/>
+        <test-scripts dataset="ada" physical="worldwide"/>
+    </target>
+
+    <macrodef name="test-adaptation">
+        <attribute name="input"/>
+        <sequential>
+            <property name="adaptation_test.dir2" value="${run.dir}/adaptation_test/main"/>
+            <echo>Testing models: @{input}</echo>
+            <delete dir="${adaptation_test.dir2}"/>
+            <exec executable="${out.dir}/release/applications/adaptation_app/adaptation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
+                <arg value="-i"/>
+                <arg value="@{input}/physical.xml"/>
+                <arg value="-o"/>
+                <arg value="${adaptation_test.dir2}/physical.xml"/>
+            </exec>
+            <compare-dirs dir1="@{input}" dir2="${adaptation_test.dir2}"
+                excludes="**/Pathfind.xml,**/dis.xml,**/HumanProtections.xml,**/Fire.xml,**/MedicalTreatment.xml,**/NBCAgents.xml,,**/templates.xml,**/ObjectNames.xml"
+                includes="**/*.xml" property="adaptation_test.is-different"/>
+            <if>
+                <isset property="adaptation_test.is-different"/>
+                <then>
+                    <echo>"ERROR: the following files differ :</echo>
+                    <echo-files files="${adaptation_test.is-different}"/>
+                    <fail message="saved data differs from loaded data."/>
+                </then>
+            </if>
+        </sequential>
+    </macrodef>
+
+    <target name="test-adaptation" description="load and save adaptation main data, check that output==input">
+        <test-adaptation input="${data.dir}/data/models/ada/physical/worldwide"/>
+        <test-adaptation input="${data.dir}/data/models/ada/physical/france"/>
+    </target>
+
+    <target name="application.simulation_kernel_test" description="build CSword Simulation kernel test executable" depends="library.simulation_kernel">
+        <build-test name="simulation_kernel"
+            libs="HLA,libFedTime,masalloc,tools,masasn,directia-${platform}-mt-4_5,library-${platform}-mt,
+            gdal_i,gdal_ogr,geodata,
+            population-${platform}-mt@{suffix},
+            dispatcher-${platform}-mt@{suffix},
+            lib${ant.project.name}_tools-${platform}-mt@{suffix},
+            lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
+            lib${ant.project.name}_game_asn-${platform}-mt@{suffix},
+            lib${ant.project.name}_simulation_terrain-${platform}-mt@{suffix},
+            lib${ant.project.name}_simulation_orders-${platform}-mt@{suffix},
+            lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix}"
+            depends="mt,din,dia3,terrain,boost,xerces">
+            <syslibset libs="dbghelp,psapi,shell32,iphlpapi,advapi32"/>
+            <includepath path="${libraries.dir}/simulation_kernel"/>
+            <includepath path="${include.dir}/masasn"/>
+            <linkerarg value="/STACK:15000000"/>      <!-- Because of boost serialization -->
+        </build-test>
+    </target>
+
+    <target name="test-simulation_kernel_test" description="simulation kernel unit tests" depends="application.simulation_kernel_test">
+        <exec executable="${out.dir}/release/tests/simulation_kernel_test/simulation_kernel_test.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
+            <arg value="--result_code=no"/>
+            <arg value="--report_level=no"/>
+            <arg value="--log_level=messages"/>
         </exec>
-        <delete dir="${data.dir}/exercises/test-scripts"/>
-    </sequential>
-</macrodef>
+    </target>
 
-<target name="test-scripts" description="run all tests" depends="application.simulation_app">
-    <test-scripts dataset="ada" physical="france"/>
-    <test-scripts dataset="ada" physical="worldwide"/>
-</target>
+    <macrodef name="test-exercise">
+        <attribute name="exercise"/>
+        <attribute name="session" default="default"/>
+        <attribute name="simulation" default="simulation_app"/>
+        <sequential>
+            <schemavalidate noNamespaceFile="${run.dir}/resources/schemas/exercise/exercise.xsd" 
+                file="../data/exercises/@{exercise}/exercise.xml" failonerror="true" 
+                warn="true"/>
+            <schemavalidate noNamespaceFile="${run.dir}/resources/schemas/exercise/orbat.xsd" 
+                file="../data/exercises/@{exercise}/orbat.xml" failonerror="true" 
+                warn="true"/>
+            <schemavalidate noNamespaceFile="${run.dir}/resources/schemas/exercise/profiles.xsd" 
+                file="../data/exercises/@{exercise}/profiles.xml" failonerror="true" 
+                warn="true"/>
+            <schemavalidate noNamespaceFile="${run.dir}/resources/schemas/exercise/weather.xsd" 
+                file="../data/exercises/@{exercise}/weather.xml" failonerror="true" 
+                warn="true"/>
+            <schemavalidate noNamespaceFile="${run.dir}/resources/schemas/exercise/session.xsd" 
+                file="../data/exercises/@{exercise}/sessions/@{session}/session.xml" failonerror="true" 
+                warn="true"/>
+            <exec executable="${out.dir}/release/applications/@{simulation}/@{simulation}.exe" dir="${run.dir}" failonerror="true">
+                <arg value="-root-dir=../../data"/>
+                <arg value="-exercise=@{exercise}"/>
+                <arg value="-session=@{session}"/>
+                <arg value="-test"/>
+            </exec>
+        </sequential>
+    </macrodef>
 
-<macrodef name="test-adaptation">
-    <attribute name="input"/>
-    <sequential>
-        <property name="adaptation_test.dir2" value="${run.dir}/adaptation_test/main"/>
-        <echo>Testing models: @{input}</echo>
-        <delete dir="${adaptation_test.dir2}"/>
-        <exec executable="${out.dir}/release/applications/adaptation_app/adaptation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
-            <arg value="-i"/>
-            <arg value="@{input}/physical.xml"/>
-            <arg value="-o"/>
-            <arg value="${adaptation_test.dir2}/physical.xml"/>
-        </exec>
-        <compare-dirs dir1="@{input}" dir2="${adaptation_test.dir2}"
-            excludes="**/Pathfind.xml,**/dis.xml,**/HumanProtections.xml,**/Fire.xml,**/MedicalTreatment.xml,**/NBCAgents.xml,,**/templates.xml,**/ObjectNames.xml"
-            includes="**/*.xml" property="adaptation_test.is-different"/>
-        <if>
-            <isset property="adaptation_test.is-different"/>
-            <then>
-                <echo>"ERROR: the following files differ :</echo>
-                <echo-files files="${adaptation_test.is-different}"/>
-                <fail message="saved data differs from loaded data."/>
-            </then>
-        </if>
-    </sequential>
-</macrodef>
-
-<target name="test-adaptation" description="load and save adaptation main data, check that output==input">
-    <test-adaptation input="${data.dir}/data/models/ada/physical/worldwide"/>
-    <test-adaptation input="${data.dir}/data/models/ada/physical/france"/>
-</target>
-
-<target name="application.simulation_kernel_test" description="build CSword Simulation kernel test executable" depends="library.simulation_kernel">
-    <build-test name="simulation_kernel"
-        libs="HLA,libFedTime,masalloc,tools,masasn,directia-${platform}-mt-4_5,library-${platform}-mt,
-        gdal_i,gdal_ogr,geodata,
-        population-${platform}-mt@{suffix},
-        dispatcher-${platform}-mt@{suffix},
-        lib${ant.project.name}_tools-${platform}-mt@{suffix},
-        lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
-        lib${ant.project.name}_game_asn-${platform}-mt@{suffix},
-        lib${ant.project.name}_simulation_terrain-${platform}-mt@{suffix},
-        lib${ant.project.name}_simulation_orders-${platform}-mt@{suffix},
-        lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix}"
-        depends="mt,din,dia3,terrain,boost,xerces">
-        <syslibset libs="dbghelp,psapi,shell32,iphlpapi"/>
-        <includepath path="${libraries.dir}/simulation_kernel"/>
-        <includepath path="${include.dir}/masasn"/>
-        <linkerarg value="/STACK:15000000"/>      <!-- Because of boost serialization -->
-    </build-test>
-</target>
-
-<target name="test-simulation_kernel_test" description="simulation kernel unit tests" depends="application.simulation_kernel_test">
-    <exec executable="${out.dir}/release/tests/simulation_kernel_test/simulation_kernel_test.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
-        <arg value="--result_code=no"/>
-        <arg value="--report_level=no"/>
-        <arg value="--log_level=messages"/>
-    </exec>
-</target>
+    <target name="test-exercises" description="validates some significant exercises">
+        <test-exercise exercise="Egypt"/>
+        <test-exercise exercise="Cabourg"/>
+    </target>
 
 
-<!--
-============================================================================
-documentation
-============================================================================
--->
-<target name="documentation" description="generate the documentation">
-    <setproxy proxyhost="proxy" proxyport="3128"/>
-    <docbook location="file:////install/Masa/common/dev/common/docbook/docbook-xsl" input="${root.dir}/doc" outdir="${root.dir}/out/documentation"/>
-    <htmlhelp input="${root.dir}/out/documentation"/>
-</target>
 
-<!--
-============================================================================
-package
-============================================================================
--->
-<target name="package" description="package the installers" depends="package.defense,package.security,package.eval,package.france,package.stress"/>
+    <!--
+    ============================================================================
+    documentation
+    ============================================================================
+    -->
+    <target name="documentation" description="generate the documentation">
+        <setproxy proxyhost="proxy" proxyport="3128"/>
+        <docbook location="file:////install/Masa/common/dev/common/docbook/docbook-xsl" input="${root.dir}/doc" outdir="${root.dir}/out/documentation"/>
+        <htmlhelp input="${root.dir}/out/documentation"/>
+    </target>
 
-<target name="package.defense" description="package the standard installer: worlwide, no license">
-    <nsis todir="${dist.dir}/current/${platform}" name="sword-ot" script="sword-ot.nsi">
-        <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
-        <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
-        <arg value="/DAPP_MODEL=worldwide"/>
-        <arg value="/X!include sword-ot.nsh"/>
-    </nsis>
-</target>
+    <!--
+    ============================================================================
+    package
+    ============================================================================
+    -->
+    <target name="package" description="package the installers" depends="package.defense,package.security,package.eval,package.france,package.stress"/>
 
-<target name="package.security" description="create the installer">
-    <nsis todir="${dist.dir}/current/${platform}" name="sword-security-server" script="sword-security-server.nsi">
-        <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
-        <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
-        <arg value="/DAPP_MODEL=worldwide"/>
-        <arg value="/X!include sword-security.nsh"/>
-    </nsis>
-</target>
+    <target name="package.defense" description="package the standard installer: worlwide, no license">
+        <nsis todir="${dist.dir}/current/${platform}" name="sword-ot" script="sword-ot.nsi">
+            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
+            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
+            <arg value="/DAPP_MODEL=worldwide"/>
+            <arg value="/X!include sword-ot.nsh"/>
+        </nsis>
+    </target>
 
-<target name="package.eval" description="package the standard installer: worlwide, 3 months license">
-    <nsis todir="${dist.dir}/current/${platform}" name="sword-ot" script="sword-ot.nsi">
-        <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
-        <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
-        <arg value="/DEVALUATION=1"/>
-        <arg value="/DAPP_MODEL=worldwide"/>
-        <arg value="/X!include sword-ot.nsh"/>
-    </nsis>
-</target>
+    <target name="package.security" description="create the installer">
+        <nsis todir="${dist.dir}/current/${platform}" name="sword-security-server" script="sword-security-server.nsi">
+            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
+            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
+            <arg value="/DAPP_MODEL=worldwide"/>
+            <arg value="/X!include sword-security.nsh"/>
+        </nsis>
+    </target>
 
-<target name="package.stress" description="package the french version of installer for stress test: france, 3 months license">
-    <nsis todir="${dist.dir}/current/${platform}/france" name="sword-ot" script="sword-ot.nsi">
-        <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
-        <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
-        <arg value="/DEVALUATION=1"/>
-        <arg value="/DAPP_MODEL=france"/>
-        <arg value="/DSTRESS=1"/>
-        <arg value="/X!include sword-ot.nsh"/>
-    </nsis>
-</target>
+    <target name="package.eval" description="package the standard installer: worlwide, 3 months license">
+        <nsis todir="${dist.dir}/current/${platform}" name="sword-ot" script="sword-ot.nsi">
+            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
+            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
+            <arg value="/DEVALUATION=1"/>
+            <arg value="/DAPP_MODEL=worldwide"/>
+            <arg value="/X!include sword-ot.nsh"/>
+        </nsis>
+    </target>
 
-<target name="package.france" description="package the french version of installer: france, no license">
-    <nsis todir="${dist.dir}/current/${platform}/france" name="sword-ot" script="sword-ot.nsi">
-        <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
-        <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
-        <arg value="/DAPP_MODEL=france"/>
-        <arg value="/X!include sword-ot.nsh"/>
-    </nsis>
-</target>
+    <target name="package.stress" description="package the french version of installer for stress test: france, 3 months license">
+        <nsis todir="${dist.dir}/current/${platform}/france" name="sword-ot" script="sword-ot.nsi">
+            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
+            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
+            <arg value="/DEVALUATION=1"/>
+            <arg value="/DAPP_MODEL=france"/>
+            <arg value="/DSTRESS=1"/>
+            <arg value="/X!include sword-ot.nsh"/>
+        </nsis>
+    </target>
 
-<target name="package.ncco" description="package the NCCO installer">
-    <nsis todir="${dist.dir}/current/${platform}/ncco" name="ncco" script="ncco.nsi">
-        <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
-        <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
-        <arg value="/X!include sword-ot.nsh"/>
-    </nsis>
-</target>
+    <target name="package.france" description="package the french version of installer: france, no license">
+        <nsis todir="${dist.dir}/current/${platform}/france" name="sword-ot" script="sword-ot.nsi">
+            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
+            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
+            <arg value="/DAPP_MODEL=france"/>
+            <arg value="/X!include sword-ot.nsh"/>
+        </nsis>
+    </target>
 
-<target name="package.patch" description="create a patch installer">
-    <nsis todir="${dist.dir}/current/${platform}" name="sword-ot-scalped-patch" script="sword-ot-scalped-patch.nsi" license="true">
-        <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
-        <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
-        <arg value="/X!include sword-ot.nsh"/>
-    </nsis>
-</target>
+    <target name="package.ncco" description="package the NCCO installer">
+        <nsis todir="${dist.dir}/current/${platform}/ncco" name="ncco" script="ncco.nsi">
+            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
+            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
+            <arg value="/X!include sword-ot.nsh"/>
+        </nsis>
+    </target>
 
-<target name="package.arcmap" description="create the crossbow installer">
-    <nsis todir="${dist.dir}/current" name="crossbow_install" script="crossbow.nsi"/>
-    <!-- <exec executable="${bin.dir}/RegAsm.exe">
-        <arg value="../out/applications/crossbow_app/vc80/Release/Crossbow.dll"/>
-        <arg value="/codebase"/>
-        <arg value="/regfile:SwordCrossbow.reg"/>
-    </exec> -->
-    <!--<nsis todir="${dist.dir}/current" name="crossbow_installer" script="crossbow_installer.nsi"/>-->
-</target>
+    <target name="package.patch" description="create a patch installer">
+        <nsis todir="${dist.dir}/current/${platform}" name="sword-ot-scalped-patch" script="sword-ot-scalped-patch.nsi" license="true">
+            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
+            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
+            <arg value="/X!include sword-ot.nsh"/>
+        </nsis>
+    </target>
 
-<macrodef name="test-exercise">
-    <attribute name="exercise"/>
-    <attribute name="session" default="default"/>
-    <attribute name="simulation" default="simulation_app"/>
-    <sequential>
-        <schemavalidate noNamespaceFile="${run.dir}/resources/schemas/exercise/exercise.xsd" 
-            file="../data/exercises/@{exercise}/exercise.xml" failonerror="true" 
-            warn="true"/>
-        <schemavalidate noNamespaceFile="${run.dir}/resources/schemas/exercise/orbat.xsd" 
-            file="../data/exercises/@{exercise}/orbat.xml" failonerror="true" 
-            warn="true"/>
-        <schemavalidate noNamespaceFile="${run.dir}/resources/schemas/exercise/profiles.xsd" 
-            file="../data/exercises/@{exercise}/profiles.xml" failonerror="true" 
-            warn="true"/>
-        <schemavalidate noNamespaceFile="${run.dir}/resources/schemas/exercise/weather.xsd" 
-            file="../data/exercises/@{exercise}/weather.xml" failonerror="true" 
-            warn="true"/>
-        <schemavalidate noNamespaceFile="${run.dir}/resources/schemas/exercise/session.xsd" 
-            file="../data/exercises/@{exercise}/sessions/@{session}/session.xml" failonerror="true" 
-            warn="true"/>
-        <exec executable="${out.dir}/release/applications/@{simulation}/@{simulation}.exe" dir="${run.dir}" failonerror="true">
-            <arg value="-root-dir=../../data"/>
-            <arg value="-exercise=@{exercise}"/>
-            <arg value="-session=@{session}"/>
-            <arg value="-test"/>
-        </exec>
-    </sequential>
-</macrodef>
+    <target name="package.arcmap" description="create the crossbow installer">
+        <nsis todir="${dist.dir}/current" name="crossbow_install" script="crossbow.nsi"/>
+        <!-- <exec executable="${bin.dir}/RegAsm.exe">
+            <arg value="../out/applications/crossbow_app/vc80/Release/Crossbow.dll"/>
+            <arg value="/codebase"/>
+            <arg value="/regfile:SwordCrossbow.reg"/>
+        </exec> -->
+        <!--<nsis todir="${dist.dir}/current" name="crossbow_installer" script="crossbow_installer.nsi"/>-->
+    </target>
 
-<target name="test-exercises" description="validates some significant exercises">
-    <test-exercise exercise="Egypt"/>
-    <test-exercise exercise="Cabourg"/>
-</target>
+    <!--
+    ============================================================================
+    configure
+    ============================================================================
+    -->
+    <target name="configure" description="initialize local project structure with libraries">
+        <update name="geometry"/>
+        <update name="geocoord"/>
+        <update name="terrain" modules="terrain,graphics,pathfind,vmap,geodata,gdal_ogr" version="2.0"/>
+        <update name="terrain" modules="urban"/>
+        <update name="terrain" package="generation_app_${platform}" version="2.0"/>
+        <update name="terrain" package="SWORD Terrain Generation_${platform}.exe" version="2.0"/>
+        <update name="MT" modules="MT_Tools,MT_Memory,MT_IO,MT_Archive,MT_Patterns,MT_Profiler,MT_Time,MT_Thread,MT_Logger,MT_XmlTools,MT_Qt"/>
+        <update name="qt" version="3.3.8"/>
+        <update name="DIN"/>
+        <update name="boost"/>
+        <update name="rti"/>
+        <update name="DIA" version="3.5"/>
+        <update name="DIA" version="3.5" package="DIA_Tool_DebugGUI_${platform}"/>
+        <update name="BM" />
+        <update name="BM" package="bmc" todir="${bin.dir}"/>
+        <update name="BM" package="directia4_${platform}_plugins" todir="${run.dir}"/>
+        <update name="cgal"/> <!-- MGD For mpfr dll use in BM terrain analyse -->
+        <update name="hla"/>
+        <update name="tools"/>
+        <update name="flexlm"/>
+        <update name="xerces-c"/>
+        <update name="xeumeuleu"/>
+        <update name="xalan-c"/>
+        <update name="xeuseuleu"/>
+        <update name="svgl"/>
+        <update name="zipstream"/>
+        <update name="zlib"/>
+        <update name="bugtrap"/>
+        <update name="shapelib"/>
+        <update name="gdal" version="1.6.a"/>
+        <update name="esri" version="9.2"/>
+        <update name="folk"/>
+        <update name="mockpp"/>
+        <update name="vcredist" package="vcredist"/>
+        <update name="turtle"/>
+        <update name="system"/>
+        <update-database database="core-database" dir="${data.dir}/data/models/baseTestBM/decisional/models/core"/>
+        <update-database database="generic-database" dir="${data.dir}/data/models/baseTestBM/decisional/models/base"/>
+        <antcall target="generate-data"/>
+    </target>
 
-<!--
-============================================================================
-configure
-============================================================================
--->
-<target name="configure" description="initialize local project structure with libraries">
-    <update name="geometry"/>
-    <update name="geocoord"/>
-    <update name="terrain" modules="terrain,graphics,pathfind,vmap,geodata,gdal_ogr" version="2.0"/>
-    <update name="terrain" modules="urban"/>
-    <update name="terrain" package="generation_app_${platform}" version="2.0"/>
-    <update name="terrain" package="SWORD Terrain Generation_${platform}.exe" version="2.0"/>
-    <update name="MT" modules="MT_Tools,MT_Memory,MT_IO,MT_Archive,MT_Patterns,MT_Profiler,MT_Time,MT_Thread,MT_Logger,MT_XmlTools,MT_Qt"/>
-    <update name="qt" version="3.3.8"/>
-    <update name="DIN"/>
-    <update name="boost"/>
-    <update name="rti"/>
-    <update name="DIA" version="3.5"/>
-    <update name="DIA" version="3.5" package="DIA_Tool_DebugGUI_${platform}"/>
-    <update name="BM" />
-    <update name="BM" package="bmc" todir="${bin.dir}"/>
-    <update name="BM" package="directia4_${platform}_plugins" todir="${run.dir}"/>
-    <update name="cgal"/> <!-- MGD For mpfr dll use in BM terrain analyse -->
-    <update name="hla"/>
-    <update name="tools"/>
-    <update name="flexlm"/>
-    <update name="xerces-c"/>
-    <update name="xeumeuleu"/>
-    <update name="xalan-c"/>
-    <update name="xeuseuleu"/>
-    <update name="svgl"/>
-    <update name="zipstream"/>
-    <update name="zlib"/>
-    <update name="bugtrap"/>
-    <update name="shapelib"/>
-    <update name="gdal" version="1.6.a"/>
-    <update name="esri" version="9.2"/>
-    <update name="folk"/>
-    <update name="mockpp"/>
-    <update name="vcredist" package="vcredist"/>
-    <update name="turtle"/>
-    <update name="system"/>
-    <update-database database="core-database" dir="${data.dir}/data/models/baseTestBM/decisional/models/core"/>
-    <update-database database="generic-database" dir="${data.dir}/data/models/baseTestBM/decisional/models/base"/>
-    <antcall target="generate-data"/>
-</target>
+    <!--
+    ============================================================================
+    main
+    ============================================================================
+    -->
+    <target name="build" depends="libraries,applications"/>
 
-<!--
-============================================================================
-main
-============================================================================
--->
-<target name="build" depends="libraries,applications"/>
-
-<target name="all" depends="configure,build,test,documentation,package" description="build and package distribution"/>
+    <target name="all" depends="configure,build,test,documentation,package" description="build and package distribution"/>
 
 </project>
