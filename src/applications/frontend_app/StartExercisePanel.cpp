@@ -133,7 +133,7 @@ void StartExercisePanel::StartExercise()
         hlaConfigPanel_->Commit( list_->selectedItem()->text().ascii(), session_ );
         disConfigPanel_->Commit( list_->selectedItem()->text().ascii(), session_ );
         crossbowConfigPanel_->Commit( list_->selectedItem()->text().ascii(), session_ );
-        Start( new ::StartExercise( config_, list_->selectedItem()->text(), session_.c_str(), crossbowConfigPanel_->IsChecked() ) ) ;
+        Start( new ::StartExercise( config_, list_->selectedItem()->text(), session_.c_str(), crossbowConfigPanel_->IsChecked(), false ) ) ;
         context_.Save( "exercise", list_ );
         context_.Save( "session", session_.c_str() );
         Update();

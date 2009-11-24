@@ -148,7 +148,7 @@ void TutorialPage::OnStart()
     const std::string target = ReadTargetApplication( config_, exercise_ );
     if( target == "gaming" )
     {
-        boost::shared_ptr< frontend::SpawnCommand > command1( new frontend::StartExercise( config_, exercise_, "default", true ) );
+        boost::shared_ptr< frontend::SpawnCommand > command1( new frontend::StartExercise( config_, exercise_, "default", false, true ) );
         boost::shared_ptr< frontend::SpawnCommand > command2( new frontend::JoinExercise( config_, exercise_, "default", true ) );
         boost::shared_ptr< frontend::Process_ABC >  process( new CompositeProcessWrapper( controllers_.controller_, command1, command2 ) );
         progressPage_->Attach( process );

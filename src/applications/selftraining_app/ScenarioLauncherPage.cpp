@@ -85,7 +85,7 @@ void ScenarioLauncherPage::OnStart()
         return;
     const QString session = BuildSessionName().c_str();
     CreateSession( exercise_, session );
-    boost::shared_ptr< frontend::SpawnCommand > simulation( new frontend::StartExercise( config_, exercise_, session, true ) );
+    boost::shared_ptr< frontend::SpawnCommand > simulation( new frontend::StartExercise( config_, exercise_, session, false, true ) );
     boost::shared_ptr< frontend::SpawnCommand > client;
     client.reset( new frontend::JoinExercise( config_, exercise_, session, profile_, true ) );
     boost::shared_ptr< frontend::Process_ABC > process( new CompositeProcessWrapper( controllers_.controller_, simulation, client ) );

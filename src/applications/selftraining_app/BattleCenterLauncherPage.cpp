@@ -76,7 +76,7 @@ void BattleCenterLauncherPage::StartExercise()
         action.SetOption( "session/config/simulation/debug/@networklogger", true );
         action.SetOption( "session/config/simulation/debug/@networkloggerport", 20000 );
     }
-    boost::shared_ptr< frontend::SpawnCommand > command1( new frontend::StartExercise( config_, exercise_, MULTIPLAYER_SESSION.c_str(), true ) );
+    boost::shared_ptr< frontend::SpawnCommand > command1( new frontend::StartExercise( config_, exercise_, MULTIPLAYER_SESSION.c_str(), false, true ) );
     // $$$$ SBO 2008-10-15: launch client optionally...
     boost::shared_ptr< frontend::SpawnCommand > command2( new frontend::JoinExercise( config_, exercise_, MULTIPLAYER_SESSION.c_str(), profile_, true ) );
     boost::shared_ptr< frontend::Process_ABC >  process( new CompositeProcessWrapper( controllers_.controller_, command1, command2 ) );
