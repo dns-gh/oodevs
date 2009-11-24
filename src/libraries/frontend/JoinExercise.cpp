@@ -41,6 +41,7 @@ JoinExercise::JoinExercise( const tools::GeneralConfig& config, const QString& e
     AddSessionArgument ( session );
     if( !profile.isEmpty() )
         addArgument( "--login=\"" + profile +"\"" );
+    addArgument( "--prompt=false" );
 }
 
 // -----------------------------------------------------------------------------

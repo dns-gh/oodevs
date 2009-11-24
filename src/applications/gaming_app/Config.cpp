@@ -23,11 +23,13 @@ namespace po  = boost::program_options;
 // Created: NLD 2007-01-12
 // -----------------------------------------------------------------------------
 Config::Config( int argc, char** argv )
+: needLogin_( true )
 {
     po::options_description desc( "Replayer options" );
     desc.add_options()
         ( "host", po::value< std::string >( &host_ ), "specify host to join" )
         ( "login", po::value< std::string >( &login_ ), "specify login" )
+        ( "prompt", po::value< bool >( &needLogin_ ), "don't prompt for login" )
     ;
     AddOptions( desc );
 
@@ -89,4 +91,13 @@ void Config::LoadSession( Network& network ) const
 std::string Config::GetLogin() const
 {
     return login_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::NeedLogin
+// Created: LDC 2009-11-24
+// -----------------------------------------------------------------------------
+bool Config::NeedLogin() const
+{
+    return needLogin_;
 }

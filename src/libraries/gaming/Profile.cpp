@@ -35,13 +35,14 @@ using namespace kernel;
 // Name: Profile constructor
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
-Profile::Profile( Controllers& controllers, Publisher_ABC& publisher, const std::string& profile )
+Profile::Profile( Controllers& controllers, Publisher_ABC& publisher, const std::string& profile, bool needLogin )
     : controller_ ( controllers.controller_ )
     , publisher_  ( publisher )
     , login_      ( profile )
     , loggedIn_   ( false )
     , supervision_( false )
     , simulation_ ( true )
+    , needLogin_  ( needLogin )
 {
     controller_.Register( *this );
 }
@@ -61,10 +62,15 @@ Profile::~Profile()
 // -----------------------------------------------------------------------------
 void Profile::Login() const
 {
-    authentication::AuthenticationRequest asnMsg;
-    asnMsg().login    = login_.c_str();
-    asnMsg().password = password_.c_str();
-    asnMsg.Send( publisher_ );
+    if( !needLogin_ )
+    {
+        authentication::AuthenticationRequest asnMsg;
+        asnMsg().login    = login_.c_str();
+        asnMsg().password = password_.c_str();
+        asnMsg.Send( publisher_ );
+    }
+    else
+        controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,6 +79,7 @@ void Profile::Login() const
 // -----------------------------------------------------------------------------
 void Profile::Login( const std::string& login, const std::string& password ) const
 {
+    needLogin_ = false;
     login_    = login;
     password_ = password;
     Login();
@@ -129,6 +136,7 @@ void Profile::Update( const Model& model, const ASN1T_MsgProfileUpdate& message 
 // -----------------------------------------------------------------------------
 void Profile::Update( const ASN1T_Profile& profile )
 {
+    needLogin_ = false;
     login_ = profile.login;
     if( profile.m.passwordPresent )
         password_ = profile.password;
@@ -388,6 +396,7 @@ void Profile::Remove( const Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void Profile::Clean()
 {
+    needLogin_ = true;
     login_ = "";
     password_ = "";
     supervision_ = false;
