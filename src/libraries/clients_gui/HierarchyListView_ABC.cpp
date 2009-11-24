@@ -245,6 +245,11 @@ void HierarchyListView_ABC::dragEnterEvent( QDragEnterEvent* pEvent )
     pEvent->accept( ValuedDragObject::Provides< const Entity_ABC >( pEvent ) );
 }
 
+void HierarchyListView_ABC::dragMoveEvent( QDragMoveEvent *pEvent )
+{
+    pEvent->accept( ValuedDragObject::Provides< const Entity_ABC >( pEvent ) );
+}
+
 // -----------------------------------------------------------------------------
 // Name: HierarchyListView_ABC::dropEvent
 // Created: SBO 2006-04-18

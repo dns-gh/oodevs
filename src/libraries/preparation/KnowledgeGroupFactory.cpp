@@ -10,19 +10,17 @@
 #include "preparation_pch.h"
 #include "EntityCommunications.h"
 #include "KnowledgeGroup.h"
+#include "KnowledgeGroupCommunications.h"
 #include "KnowledgeGroupFactory.h"
 #include "KnowledgeGroupsModel.h"
 #include "StaticModel.h"
-
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/KnowledgeGroupType.h"
 #include "clients_kernel/Team_ABC.h"
-
-#include <xeumeuleu/xml.h>
-
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: FormationFactory constructor
@@ -51,7 +49,7 @@ KnowledgeGroupFactory::~KnowledgeGroupFactory()
 kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::Create( kernel::Team_ABC& team )
 {
     KnowledgeGroup* result = new KnowledgeGroup( controllers_.controller_, idManager_, staticModel_.types_ );
-    result->Attach< kernel::CommunicationHierarchies >( *new EntityCommunications( controllers_.controller_, *result, static_cast< kernel::Entity_ABC* >( &team ) ) );
+    result->Attach< kernel::CommunicationHierarchies >( *new KnowledgeGroupCommunications( controllers_.controller_, *result, &team ) );
     result->Polish();
     return result;
 }
@@ -63,9 +61,8 @@ kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::Create( kernel::Team_ABC& tea
 kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::Create( xml::xistream& xis, kernel::Team_ABC& team )
 {
     KnowledgeGroup* result = new KnowledgeGroup( xis, controllers_.controller_, idManager_, staticModel_.types_ );
-    result->Attach< kernel::CommunicationHierarchies >( *new EntityCommunications( controllers_.controller_, *result, static_cast< kernel::Entity_ABC* >( &team ) ) );
+    result->Attach< kernel::CommunicationHierarchies >( *new KnowledgeGroupCommunications( controllers_.controller_, *result, &team ) );
     result->Polish();
-
     return result;
 }
 
@@ -76,7 +73,7 @@ kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::Create( xml::xistream& xis, k
 kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::Create( kernel::KnowledgeGroup_ABC& kgparent )
 {
     KnowledgeGroup* result = new KnowledgeGroup( controllers_.controller_, idManager_, staticModel_.types_ );
-    result->Attach< kernel::CommunicationHierarchies >( *new EntityCommunications( controllers_.controller_, *result, static_cast< kernel::Entity_ABC* >( &kgparent ) ) );
+    result->Attach< kernel::CommunicationHierarchies >( *new KnowledgeGroupCommunications( controllers_.controller_, *result, &kgparent ) );
     result->Polish();
     return result;
 }
@@ -88,7 +85,7 @@ kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::Create( kernel::KnowledgeGrou
 kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::Create( xml::xistream& xis, kernel::KnowledgeGroup_ABC& kgparent )
 {
     KnowledgeGroup* result = new KnowledgeGroup( xis, controllers_.controller_, idManager_, staticModel_.types_ );
-    result->Attach< kernel::CommunicationHierarchies >( *new EntityCommunications( controllers_.controller_, *result, static_cast< kernel::Entity_ABC* >( &kgparent ) ) );
+    result->Attach< kernel::CommunicationHierarchies >( *new KnowledgeGroupCommunications( controllers_.controller_, *result, &kgparent ) );
     result->Polish();
     return result;
 }

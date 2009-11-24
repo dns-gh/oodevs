@@ -40,7 +40,7 @@ KnowledgeGroupsModel::~KnowledgeGroupsModel()
 // -----------------------------------------------------------------------------
 void KnowledgeGroupsModel::Purge()
 {
-    DeleteAll();
+    // NOTHING 
 }
 
 // -----------------------------------------------------------------------------
@@ -90,6 +90,6 @@ void KnowledgeGroupsModel::CreateSubKnowledgeGroup( kernel::KnowledgeGroup_ABC& 
 void KnowledgeGroupsModel::CreateSubKnowledgeGroup( xml::xistream& xis, kernel::KnowledgeGroup_ABC& parent, Model& model )
 {
     KnowledgeGroup_ABC* knowledgegroup = knowledgeGroupFactory_.Create( xis, parent );
-    Register( knowledgegroup->GetId(), *knowledgegroup );
     xis >> xml::list( "knowledge-group", *this, &KnowledgeGroupsModel::CreateSubKnowledgeGroup, *knowledgegroup, model );
+    Register( knowledgegroup->GetId(), *knowledgegroup );
 }

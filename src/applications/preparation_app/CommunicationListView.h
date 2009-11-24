@@ -17,6 +17,7 @@ namespace kernel
 {
     class ModelLoaded;
     class KnowledgeGroup_ABC;
+    class Team_ABC;
 }
 
 class ModelBuilder;
@@ -62,6 +63,7 @@ private:
 
     virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
     virtual void keyPressEvent( QKeyEvent* event );
+    virtual void dragMoveEvent( QDragMoveEvent *pEvent );
    //@}
 
 private:

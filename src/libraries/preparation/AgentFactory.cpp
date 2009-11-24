@@ -52,11 +52,12 @@ using namespace kernel;
 // Name: AgentFactory constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-AgentFactory::AgentFactory( Controllers& controllers, Model& model, const StaticModel& staticModel, IdManager& idManager )
+AgentFactory::AgentFactory( Controllers& controllers, Model& model, const StaticModel& staticModel, IdManager& idManager, kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
     : controllers_( controllers )
     , model_( model )
     , static_( staticModel )
     , idManager_( idManager )
+    , knowledgeGroupFactory_( knowledgeGroupFactory )
 {
     // NOTHING
 }
@@ -103,7 +104,7 @@ kernel::Automat_ABC* AgentFactory::Create( Entity_ABC& parent, const AutomatType
     result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, *result ) );
 
-    Entity_ABC* kg = FindKnowledgeGroup( parent );
+    Entity_ABC* kg = FindorCreateKnowledgeGroup( parent );
     result->Attach< CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, kg ) );
     result->Attach< TC2Hierarchies >( *new Tc2States( controllers_.controller_, *result, dico ) );
     if( type.IsLogisticMaintenance() )
@@ -144,7 +145,7 @@ kernel::Population_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const 
 // Name: AgentFactory::FindKnowledgeGroup
 // Created: AGE 2006-10-10
 // -----------------------------------------------------------------------------
-Entity_ABC* AgentFactory::FindKnowledgeGroup( const kernel::Entity_ABC& parent )
+Entity_ABC* AgentFactory::FindorCreateKnowledgeGroup( const kernel::Entity_ABC& parent )
 {
     const Entity_ABC& team = parent.Get< kernel::TacticalHierarchies >().GetTop();
     const CommunicationHierarchies& teamHierarchy = team.Get< CommunicationHierarchies >();
@@ -155,6 +156,9 @@ Entity_ABC* AgentFactory::FindKnowledgeGroup( const kernel::Entity_ABC& parent )
         if( dynamic_cast< const KnowledgeGroup_ABC* >( entity ) )
             return const_cast< Entity_ABC* >( entity );
     }
+    Team_ABC* teamtop = dynamic_cast< Team_ABC* >( const_cast< Entity_ABC* >(&team) );
+    if ( teamtop )
+        return knowledgeGroupFactory_.Create( *teamtop );
     return const_cast< Entity_ABC* >( &team );
 }
 

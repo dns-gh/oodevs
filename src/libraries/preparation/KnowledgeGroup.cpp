@@ -86,7 +86,7 @@ void KnowledgeGroup::Rename( const QString& name )
 }
 
 // -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::DoSerialize
+// Name: KnowledgeGroup::SerializeAttributes
 // Created: SBO 2006-09-06
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::SerializeAttributes( xml::xostream& xos ) const

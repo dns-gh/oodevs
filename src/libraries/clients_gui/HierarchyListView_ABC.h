@@ -107,6 +107,7 @@ private:
     virtual QDragObject* dragObject();
     virtual void dropEvent( QDropEvent* pEvent );
     virtual void dragEnterEvent( QDragEnterEvent* pEvent );
+    virtual void dragMoveEvent( QDragMoveEvent *pEvent );
 
     bool Drop( const kernel::Entity_ABC& entity, ValuedListItem& target );
     virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );

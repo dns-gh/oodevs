@@ -10,12 +10,12 @@
 #include "preparation_pch.h"
 #include "Team.h"
 #include "KnowledgeGroup.h"
+#include "clients_kernel/KnowledgeGroupFactory_ABC.h"
 #include "IdManager.h"
 #include "Object.h"
 #include "ObjectFactory_ABC.h"
 #include "Tools.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/KnowledgeGroupFactory_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include <xeumeuleu/xml.h>
 
@@ -66,24 +66,6 @@ Team::~Team()
     tools::Resolver< Object_ABC >::DeleteAll();
     Destroy();
 }
-
-// -----------------------------------------------------------------------------
-// Name: Team::CreateKnowledgeGroup
-// Created: SBO 2006-08-30
-// -----------------------------------------------------------------------------
-//void Team::CreateKnowledgeGroup()
-//{
-//    kgFactory_.Create( *this );
-//}
-
-// -----------------------------------------------------------------------------
-// Name: Team::CreateKnowledgeGroup
-// Created: SBO 2006-10-05
-// -----------------------------------------------------------------------------
-//void Team::CreateKnowledgeGroup( xml::xistream& xis )
-//{
-//    kgFactory_.Create( xis, *this );
-//}
 
 // -----------------------------------------------------------------------------
 // Name: Team::CreateObject
