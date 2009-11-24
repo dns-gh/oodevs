@@ -14,6 +14,7 @@
 #include "ClientPublisher_ABC.h"
 #include "ModelVisitor_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
+#include <boost/bind.hpp>
 
 using namespace dispatcher;
 
@@ -24,8 +25,12 @@ using namespace dispatcher;
 KnowledgeGroup::KnowledgeGroup( Model& model, const ASN1T_MsgKnowledgeGroupCreation& msg )
     : SimpleEntity< kernel::KnowledgeGroup_ABC >( msg.oid )
     , team_( model.sides_.Get( msg.oid_camp ) )
+    , parent_( msg.m.oid_knowledgegroup_parentePresent ? &model.knowledgeGroups_.Get( msg.oid_knowledgegroup_parente ) : 0 )
 {
-    team_.knowledgeGroups_.Register( msg.oid, *this );
+    if( parent_ )
+        parent_->knowledgeGroups_.Register( msg.oid, *this );
+    else
+        team_.knowledgeGroups_.Register( msg.oid, *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -34,7 +39,11 @@ KnowledgeGroup::KnowledgeGroup( Model& model, const ASN1T_MsgKnowledgeGroupCreat
 // -----------------------------------------------------------------------------
 KnowledgeGroup::~KnowledgeGroup()
 {
-    team_.knowledgeGroups_.Remove( GetId() );
+    // $$$ RDS : completement invalide si la formation parente a déja été detruite !!! 
+    if( parent_ )
+        parent_->knowledgeGroups_.Remove( GetId() );
+    else
+        team_.knowledgeGroups_.Remove( GetId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,7 +56,11 @@ void KnowledgeGroup::SendCreation( ClientPublisher_ABC& publisher ) const
     
     asn().oid      = GetId();
     asn().oid_camp = team_.GetId();
-
+    if( parent_ )
+    {
+        asn().m.oid_knowledgegroup_parentePresent = 1;
+        asn().oid_knowledgegroup_parente = parent_->GetId();
+    }
     asn.Send( publisher );
 }
 
@@ -76,4 +89,5 @@ void KnowledgeGroup::SendDestruction( ClientPublisher_ABC& ) const
 void KnowledgeGroup::Accept( ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
+    knowledgeGroups_.Apply( boost::bind( &KnowledgeGroup::Accept, _1, boost::ref( visitor ) ) );
 }

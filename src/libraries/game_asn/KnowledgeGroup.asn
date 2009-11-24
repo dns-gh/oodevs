@@ -14,8 +14,9 @@ KnowledgeGroupExports  ::= NULL
 
 MsgKnowledgeGroupCreation ::= SEQUENCE
 {
-    oid         KnowledgeGroup,
-    oid-camp    Team
+    oid                         KnowledgeGroup,
+    oid-camp                    Team,
+    oid-knowledgegroup-parente  KnowledgeGroup OPTIONAL
 }
 
 END -- KnowledgeGroup

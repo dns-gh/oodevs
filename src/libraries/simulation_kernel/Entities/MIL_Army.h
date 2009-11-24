@@ -37,6 +37,7 @@ class MIL_Population;
 class MIL_Object_ABC;
 class MIL_ObjectManager;
 class PopulationFactory_ABC;
+class KnowledgeGroupFactory_ABC;
 struct ASN1T_MsgChangeDiplomacy;
 
 // =============================================================================
@@ -55,6 +56,7 @@ public:
     //@{
     typedef std::map< uint, MIL_KnowledgeGroup* > T_KnowledgeGroupMap;
     typedef T_KnowledgeGroupMap::const_iterator   CIT_KnowledgeGroupMap;
+    typedef T_KnowledgeGroupMap::iterator         IT_KnowledgeGroupMap;
 
     typedef std::map< const MIL_Army_ABC*, E_Diplomacy > T_DiplomacyMap;
     typedef T_DiplomacyMap::const_iterator           CIT_DiplomacyMap;
@@ -63,7 +65,7 @@ public:
 public:
     //! @name Constructor/Destructor
     //@{
-             MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory, MIL_ObjectManager& objectFactory, PopulationFactory_ABC& populationFactory );
+             MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory, MIL_ObjectManager& objectFactory, PopulationFactory_ABC& populationFactory, KnowledgeGroupFactory_ABC& knowledgegroupFactory );
     virtual ~MIL_Army();
      //@}
 
@@ -140,7 +142,7 @@ private:
     void ReadFormation          ( xml::xistream& xis, FormationFactory_ABC& formationFactory );
     void ReadObject             ( xml::xistream& xis, MIL_ObjectManager& objectFactory );
     void ReadPopulation         ( xml::xistream& xis, PopulationFactory_ABC& populationFactory );
-    void ReadLogistic           ( xml::xistream& xis );
+    void ReadLogistic           ( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgegroupFactory );
     void ReadAutomat            ( xml::xistream& xis, AutomateFactory_ABC& automateFactory );
     void ReadSubordinate        ( xml::xistream& xis, AutomateFactory_ABC& automateFactory, MIL_Automate* pSuperior );
     void ReadDiplomacy          ( xml::xistream& xis );

@@ -29,6 +29,7 @@ class AgentFactory_ABC;
 class AutomateFactory_ABC;
 class DEC_DataBase;
 class FormationFactory_ABC;
+class KnowledgeGroupFactory_ABC;
 class MIL_EffectManager;
 class MIL_ObjectManager;
 class MIL_Army;
@@ -231,6 +232,7 @@ private:
     std::auto_ptr< AgentFactory_ABC >  agentFactory_;
     std::auto_ptr< AutomateFactory_ABC > automateFactory_;
     std::auto_ptr< FormationFactory_ABC > formationFactory_;
+    std::auto_ptr< KnowledgeGroupFactory_ABC > knowledgeGroupFactory_;
     std::auto_ptr< ArmyFactory_ABC > armyFactory_;
 
 

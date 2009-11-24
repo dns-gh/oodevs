@@ -14,6 +14,7 @@
 #include "simulation_kernel/Entities/Objects/MIL_ObjectManager.h"
 #include "simulation_kernel/FormationFactory_ABC.h"
 #include "simulation_kernel/PopulationFactory_ABC.h"
+#include "simulation_kernel/knowledge/KnowledgeGroupFactory_ABC.h"
 
 
 #include <xeumeuleu/xml.h>
@@ -31,6 +32,7 @@ void save_construct_data( Archive& archive, const ArmyFactory* factory, const un
     const FormationFactory_ABC* const formationFactory = &factory->formationFactory_;
     const MIL_ObjectManager* const objectFactory = &factory->objectFactory_;
     const PopulationFactory_ABC* const populationFactory = &factory->populationFactory_;
+    const KnowledgeGroupFactory_ABC* const knowledgeGroupFactory = &factory->knowledgeGroupFactory_;
     archive << automateFactory
             << formationFactory
             << objectFactory
@@ -47,22 +49,25 @@ void load_construct_data( Archive& archive, ArmyFactory* factory, const unsigned
     FormationFactory_ABC* formationFactory;
     MIL_ObjectManager* objectFactory;
     PopulationFactory_ABC* populationFactory;
+    KnowledgeGroupFactory_ABC* knowledgeGroupFactory;
     archive >> automateFactory
             >> formationFactory
             >> objectFactory
-            >> populationFactory;
-    ::new( factory )ArmyFactory( *automateFactory, *formationFactory, *objectFactory, *populationFactory );
+            >> populationFactory
+            >> knowledgeGroupFactory;
+    ::new( factory )ArmyFactory( *automateFactory, *formationFactory, *objectFactory, *populationFactory, *knowledgeGroupFactory );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ArmyFactory constructor
 // Created: MGD 2009-10-24
 // -----------------------------------------------------------------------------
-ArmyFactory::ArmyFactory( AutomateFactory_ABC& automateFactory, FormationFactory_ABC& formationFactory, MIL_ObjectManager& objectFactory, PopulationFactory_ABC& populationFactory )
+ArmyFactory::ArmyFactory( AutomateFactory_ABC& automateFactory, FormationFactory_ABC& formationFactory, MIL_ObjectManager& objectFactory, PopulationFactory_ABC& populationFactory, KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
     : automateFactory_( automateFactory )
     , formationFactory_( formationFactory )
     , objectFactory_( objectFactory )
     , populationFactory_( populationFactory )
+    , knowledgeGroupFactory_( knowledgeGroupFactory )
 {
     // NOTHING
 }
@@ -82,7 +87,7 @@ ArmyFactory::~ArmyFactory()
 // -----------------------------------------------------------------------------
 MIL_Army* ArmyFactory::Create( xml::xistream& xis )
 {
-    MIL_Army* Army = new MIL_Army( xis, *this, formationFactory_, automateFactory_, objectFactory_, populationFactory_ );
+    MIL_Army* Army = new MIL_Army( xis, *this, formationFactory_, automateFactory_, objectFactory_, populationFactory_, knowledgeGroupFactory_ );
     Register( Army->GetID(), *Army );
     return Army;
 }

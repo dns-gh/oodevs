@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_KnowledgeGroup.h"
+#include "KnowledgeGroupFactory_ABC.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -42,6 +43,30 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, uint
 
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup constructor
+// Created: SLG 2009-11-11
+// -----------------------------------------------------------------------------
+MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army& army, MIL_KnowledgeGroup* pParent, KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
+    : nID_                  ( 0 )
+    , pArmy_                ( &army )
+    , pParent_              ( pParent )
+    , pKnowledgeBlackBoard_ ( new DEC_KnowledgeBlackBoard_KnowledgeGroup( *this ) )
+    , automates_            ()
+{
+    std::string strType;
+    xis >> xml::attribute( "id", nID_ )
+        >> xml::attribute( "type", strType );
+    pType_ = MIL_KnowledgeGroupType::FindType( strType );
+
+    if( pParent_ )
+        pParent_->RegisterKnowledgeGroup( *this );
+    else
+        pArmy_->RegisterKnowledgeGroup( *this );
+
+    xis >> xml::list( "knowledge-group", *this, &MIL_KnowledgeGroup::InitializeKnowledgeGroup, knowledgeGroupFactory );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup constructor
 // Created: JVT 2005-03-15
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup::MIL_KnowledgeGroup()
@@ -63,6 +88,15 @@ MIL_KnowledgeGroup::~MIL_KnowledgeGroup()
     pArmy_->UnregisterKnowledgeGroup( *this );
     delete pKnowledgeBlackBoard_;
     ids_.erase( nID_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::InitializeKnowledgeGroup
+// Created: SLG 2009-11-11
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::InitializeKnowledgeGroup( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
+{
+    knowledgeGroupFactory.Create( xis, *pArmy_, this );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,6 +128,7 @@ void MIL_KnowledgeGroup::save( MIL_CheckPointOutArchive& file, const uint ) cons
     file << type
          << nID_
          << pArmy_
+         << pParent_
          << pKnowledgeBlackBoard_
          << automates_;
 }
@@ -109,6 +144,8 @@ void MIL_KnowledgeGroup::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "id", nID_ )
             << xml::attribute( "type", pType_->GetName() )
         << xml::end();
+
+    tools::Resolver< MIL_KnowledgeGroup >::Apply( boost::bind( &MIL_KnowledgeGroup::WriteODB, _1, boost::ref(xos) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -178,16 +215,23 @@ void MIL_KnowledgeGroup::SendCreation() const
     NET_ASN_MsgKnowledgeGroupCreation asn;   
     asn().oid      = nID_;
     asn().oid_camp = pArmy_->GetID();
+
+    if( pParent_ )
+    {
+        asn().m.oid_knowledgegroup_parentePresent = 1;
+        asn().oid_knowledgegroup_parente = pParent_->GetID();
+    }
     asn.Send();
+    tools::Resolver< MIL_KnowledgeGroup >::Apply( boost::bind( &MIL_KnowledgeGroup::SendCreation, _1 ) );//SLG : @TODO MGD Move to factory
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::SendFullState
-// Created: NLD 2006-10-13
+// Created: SLG 2009-11-13
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::SendFullState() const
 {
-    // NOTHING
+    tools::Resolver< MIL_KnowledgeGroup >::Apply( boost::bind( &MIL_KnowledgeGroup::SendFullState, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -260,6 +304,15 @@ MIL_Army& MIL_KnowledgeGroup::GetArmy() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::RegisterFormation
+// Created: NLD 2006-10-13
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::RegisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup )
+{
+    tools::Resolver< MIL_KnowledgeGroup >::Register( knowledgeGroup.GetID(), knowledgeGroup );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::RegisterAutomate
 // Created: NLD 2004-09-01
 // -----------------------------------------------------------------------------
@@ -289,3 +342,18 @@ const MIL_KnowledgeGroupType& MIL_KnowledgeGroup::GetType() const
     assert( pType_ );
     return *pType_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::FindKnowledgeGroup
+// Created: SLG 2009-11-30
+// -----------------------------------------------------------------------------
+MIL_KnowledgeGroup* MIL_KnowledgeGroup::FindKnowledgeGroup( uint nID ) const
+{
+     MIL_KnowledgeGroup* knowledgeGroup = Resolver< MIL_KnowledgeGroup >::Find( nID );
+     if( knowledgeGroup == 0 )
+     {
+         tools::Resolver< MIL_KnowledgeGroup >::Apply( boost::bind( &MIL_KnowledgeGroup::FindKnowledgeGroup, _1, nID ) );
+     }
+     return knowledgeGroup;
+}
+

@@ -64,6 +64,7 @@
 #include "simulation_kernel/AutomateFactory.h"
 #include "simulation_kernel/FormationFactory.h"
 #include "simulation_kernel/PopulationFactory.h"
+#include "simulation_kernel/Knowledge/KnowledgeGroupFactory.h"
 
 
 #include "Tools/MIL_IDManager.h"
@@ -190,7 +191,8 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , agentFactory_                 ( new AgentFactory( *idManager_, database ) )
     , automateFactory_              ( new AutomateFactory( *idManager_, database ) )
     , formationFactory_             ( new FormationFactory( *automateFactory_ ) )
-    , armyFactory_                  ( new ArmyFactory( *automateFactory_, *formationFactory_, *pObjectManager_, *populationFactory_) )
+    , knowledgeGroupFactory_        ( new KnowledgeGroupFactory() )
+    , armyFactory_                  ( new ArmyFactory( *automateFactory_, *formationFactory_, *pObjectManager_, *populationFactory_, *knowledgeGroupFactory_ ) )
 {
     if( !singleton_ )
         singleton_ = this;

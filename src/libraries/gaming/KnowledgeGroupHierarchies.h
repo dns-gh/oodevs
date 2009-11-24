@@ -15,7 +15,7 @@
 
 namespace kernel
 {
-    class Team_ABC;
+    class Entity_ABC;
     class KnowledgeGroup_ABC;
 }
 
@@ -31,7 +31,7 @@ class KnowledgeGroupHierarchies : public kernel::EntityHierarchies< kernel::Comm
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroupHierarchies( kernel::Controller& controller, kernel::Team_ABC& team, kernel::KnowledgeGroup_ABC& holder );
+             KnowledgeGroupHierarchies( kernel::Controller& controller, kernel::Entity_ABC* superior, kernel::KnowledgeGroup_ABC& holder );
     virtual ~KnowledgeGroupHierarchies();
     //@}
 

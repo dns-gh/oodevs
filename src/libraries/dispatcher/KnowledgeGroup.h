@@ -61,6 +61,8 @@ public:
     //! @name Member data
     //@{
     Side& team_;
+    KnowledgeGroup*      parent_;
+    tools::Resolver< KnowledgeGroup > knowledgeGroups_;
     tools::Resolver< kernel::Automat_ABC > automats_;
     //@}
 };

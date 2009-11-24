@@ -105,12 +105,16 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const ASN1T_MsgFormationCre
 // Name: TeamFactory::CreateKnowledgeGroup
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( unsigned long id, Team_ABC& team  )
+KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( const ASN1T_MsgKnowledgeGroupCreation& asnMsg, Team_ABC& team  )
 {
-    KnowledgeGroup* result = new KnowledgeGroup( id, controllers_.controller_ );
+    Entity_ABC* superior = asnMsg.m.oid_knowledgegroup_parentePresent ? 
+        (Entity_ABC*) &model_.knowledgeGroups_.Resolver< KnowledgeGroup_ABC >::Get( asnMsg.oid_knowledgegroup_parente ) :
+        (Entity_ABC*) &model_.teams_.Resolver< Team_ABC >::Get( asnMsg.oid_camp );
+
+    KnowledgeGroup* result = new KnowledgeGroup( asnMsg.oid, controllers_.controller_ );
     result->Attach( *new AgentKnowledges( controllers_.controller_, *result, model_.agentsKnowledgeFactory_ ) );
     result->Attach( *new PopulationKnowledges( controllers_.controller_, *result, model_.agentsKnowledgeFactory_ ) );
-    result->Attach< CommunicationHierarchies >( *new KnowledgeGroupHierarchies( controllers_.controller_, team, *result ) );
+    result->Attach< CommunicationHierarchies >( *new KnowledgeGroupHierarchies( controllers_.controller_, superior, *result ) );
     result->Polish();
 
     // $$$$ AGE 2006-10-24: 

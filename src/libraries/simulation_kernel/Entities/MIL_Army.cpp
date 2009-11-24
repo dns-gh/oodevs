@@ -32,6 +32,7 @@
 #include "simulation_kernel/AutomateFactory_ABC.h"
 #include "simulation_kernel/FormationFactory_ABC.h"
 #include "simulation_kernel/PopulationFactory_ABC.h"
+#include "simulation_kernel/Knowledge/KnowledgeGroupFactory_ABC.h"
 
 #include <xeumeuleu/xml.h>
 
@@ -91,7 +92,7 @@ void MIL_Army::Terminate()
 // Name: MIL_Army constructor
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory, MIL_ObjectManager& objectFactory, PopulationFactory_ABC& populationFactory )
+MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory, MIL_ObjectManager& objectFactory, PopulationFactory_ABC& populationFactory, KnowledgeGroupFactory_ABC& knowledgegroupFactory )
     : nID_                 ( xml::attribute< unsigned int >( xis, "id" ) )
     , strName_             ( xml::attribute< std::string>( xis, "name") )
     , nType_               ( eUnknown )
@@ -106,7 +107,7 @@ MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationF
     nType_ = diplomacyConverter_.Convert( strType );
 
     xis >> xml::start( "communication" )
-            >> xml::list( "knowledge-group", *this, &MIL_Army::ReadLogistic )
+            >> xml::list( "knowledge-group", *this, &MIL_Army::ReadLogistic, knowledgegroupFactory )
         >> xml::end()
         >> xml::start( "tactical" )
             >> xml::list( "formation", *this, &MIL_Army::ReadFormation, formationFactory )
@@ -331,20 +332,9 @@ void MIL_Army::ReadDiplomacy( xml::xistream& xis )
 // Name: MIL_Army::ReadLogistic
 // Created: ABL 2007-07-09
 // -----------------------------------------------------------------------------
-void MIL_Army::ReadLogistic( xml::xistream& xis )
+void MIL_Army::ReadLogistic( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
 {
-    uint        id;
-    std::string strType;
-    xis >> xml::attribute( "id", id )
-        >> xml::attribute( "type", strType );
-
-    const MIL_KnowledgeGroupType* pType = MIL_KnowledgeGroupType::FindType( strType );
-    if( !pType )
-        xis.error( "Knowledge group type doesn't exist" );
-
-    if( knowledgeGroups_.find( id ) != knowledgeGroups_.end() )
-        xis.error( "Knowledge group id already defined" );
-    pType->InstanciateKnowledgeGroup( id, *this ); // Auto-registration
+    MIL_KnowledgeGroup& formation = knowledgeGroupFactory.Create( xis, *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -670,7 +660,11 @@ MIL_KnowledgeGroup* MIL_Army::FindKnowledgeGroup( uint nID ) const
 {
     CIT_KnowledgeGroupMap it = knowledgeGroups_.find( nID );
     if( it == knowledgeGroups_.end() )
+    {
+        for( CIT_KnowledgeGroupMap itBis = knowledgeGroups_.begin(); itBis != knowledgeGroups_.end(); ++itBis )
+            return itBis->second->FindKnowledgeGroup( nID );
         return 0;
+    }
     return it->second;
 }
 

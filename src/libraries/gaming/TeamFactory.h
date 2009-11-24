@@ -41,7 +41,7 @@ public:
     //@{
     virtual kernel::Team_ABC* CreateTeam( const ASN1T_MsgTeamCreation& asnMsg );
     virtual kernel::Formation_ABC* CreateFormation( const ASN1T_MsgFormationCreation& asnMsg );
-    virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( unsigned long id, kernel::Team_ABC& team );
+    virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( const ASN1T_MsgKnowledgeGroupCreation& asnMsg, kernel::Team_ABC& team );
     //@}
 
 private:

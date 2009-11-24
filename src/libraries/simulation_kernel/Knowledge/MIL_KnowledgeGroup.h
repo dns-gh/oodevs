@@ -13,6 +13,7 @@
 #define __MIL_KnowledgeGroup_h_
 
 #include "MIL.h"
+#include "tools/Resolver.h"
 
 namespace xml
 {
@@ -26,6 +27,9 @@ class DEC_Knowledge_Agent;
 class MIL_Army;
 class MIL_Automate;
 
+class KnowledgeGroupFactory_ABC;
+class MIL_KnowledgeGroup;
+
 #include "MIL_KnowledgeGroupType.h"
 
 // =============================================================================
@@ -33,6 +37,7 @@ class MIL_Automate;
 // Created: JVT 2004-08-03
 // =============================================================================
 class MIL_KnowledgeGroup : private boost::noncopyable
+                         , public tools::Resolver< MIL_KnowledgeGroup >
 {
 
 public:
@@ -45,6 +50,7 @@ public:
 
 public:
      MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, uint nID, MIL_Army& army );
+     MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army& army, MIL_KnowledgeGroup* pParent, KnowledgeGroupFactory_ABC& knowledgeGroupFactory );
      MIL_KnowledgeGroup();
     ~MIL_KnowledgeGroup();
 
@@ -60,8 +66,11 @@ public:
 
     //! @name Operations
     //@{
+    void InitializeKnowledgeGroup( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgeGroupFactory );
+    void RegisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup );
     void RegisterAutomate  ( MIL_Automate& automate );
     void UnregisterAutomate( MIL_Automate& automate );
+    MIL_KnowledgeGroup* FindKnowledgeGroup ( uint nID ) const;
 
     void UpdateKnowledges();
     void CleanKnowledges ();
@@ -90,8 +99,9 @@ public:
     
 private:
     const MIL_KnowledgeGroupType* pType_;
-    const uint                    nID_;
+          uint                    nID_;
           MIL_Army*               pArmy_;
+          MIL_KnowledgeGroup*     pParent_;
 
     DEC_KnowledgeBlackBoard_KnowledgeGroup* pKnowledgeBlackBoard_;
 
