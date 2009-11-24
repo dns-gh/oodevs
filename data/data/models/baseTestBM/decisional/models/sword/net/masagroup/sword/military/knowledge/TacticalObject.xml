@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<interface name="sword.net.masagroup.sword.military.knowledge.TacticalObject" xmlns="http://www.masagroup.net/directia/schemas/bm">
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.knowledge.TacticalObject">
 	<description>Represent an object that can be prepare</description>
-	<realizes>net.masagroup.military.sword.knowledge.Buildable</realizes>
-	<realizes>net.masagroup.military.sword.knowledge.Preparable</realizes>
-</interface>
+	<methods/>
+</class>
