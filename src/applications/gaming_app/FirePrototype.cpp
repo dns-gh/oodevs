@@ -53,5 +53,5 @@ void FirePrototype::Commit()
 // -----------------------------------------------------------------------------
 void FirePrototype::Clean()
 {
-    fireClass_ = 0;
+    msg_.attributes.m.firePresent = 0;
 }
