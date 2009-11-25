@@ -13,8 +13,12 @@
 #include "ADN_Data_ABC.h"
 #include "ADN_Types.h"
 #include "ADN_Enums.h"
+#include "IdentifierFactory.h"
 
-class xml::xistream;
+namespace xml
+{
+    class xistream;
+}
 
 // =============================================================================
 /** @class  ADN_Missions_Data
@@ -90,6 +94,7 @@ public:
         MT_COPYNOTALLOWED( Mission )
     public:
         explicit Mission( bool isAutomat = false );
+        explicit Mission( unsigned int id, bool isAutomat = false );
         virtual ~Mission();
 
         std::string GetItemName();
@@ -97,9 +102,10 @@ public:
 
         void ReadArchive ( xml::xistream& input );
         void ReadParameter( xml::xistream& input );
-        void WriteArchive( xml::xostream& output, const std::string& type, unsigned long id );
+        void WriteArchive( xml::xostream& output, const std::string& type );
 
     public:
+        ADN_Type_Int              id_;
         ADN_Type_String           strName_;
         ADN_Type_Bool             isAutomat_;
         T_MissionParameter_Vector parameters_;
@@ -125,6 +131,7 @@ public:
         MT_COPYNOTALLOWED( FragOrder )
     public:
                  FragOrder();
+        explicit FragOrder( unsigned int id );
         virtual ~FragOrder();
 
         std::string GetItemName();
@@ -132,9 +139,10 @@ public:
 
         void ReadArchive ( xml::xistream& input );
         void ReadParameter( xml::xistream& input );
-        void WriteArchive( xml::xostream& output, unsigned long id );
+        void WriteArchive( xml::xostream& output );
 
     public:
+        ADN_Type_Int              id_;
         ADN_Type_String           strName_;
         T_MissionParameter_Vector parameters_;
         ADN_Type_String           diaType_;
@@ -185,8 +193,10 @@ public:
     T_Mission_Vector            automatMissions_;
     T_MissionParameter_Vector   populationContext_;
     T_Mission_Vector            populationMissions_;
-    T_FragOrder_Vector fragOrders_;
+    T_FragOrder_Vector          fragOrders_;
 
+private:
+    static IdentifierFactory idFactory_;
 };
 
 #endif // __ADN_Missions_Data_h_
