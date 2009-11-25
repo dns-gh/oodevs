@@ -13,6 +13,7 @@
 
 
 #include "MockFormationFactory.h"
+#include "MockKnowledgeGroupFactory.h"
 #include "MockAutomateFactory.h"
 #include "MockPopulationFactory.h"
 #include "MockObjectManager.h"
@@ -29,8 +30,9 @@ BOOST_AUTO_TEST_CASE( FactoriesTest_ArmyFactory )
     MockFormationFactory formationFactory;
     MockPopulationFactory populationFactory;
     MockObjectManager objetFactory;
+    MockKnowledgeGroupFactory knowledgeGroupFactory;
 
-    ArmyFactory armyFactory( automateFactory, formationFactory, objetFactory, populationFactory );
+    ArmyFactory armyFactory( automateFactory, formationFactory, objetFactory, populationFactory, knowledgeGroupFactory );
 
 
     MOCKPP_CHAINER_FOR( MockFormationFactory, CreateFormationShadow ) ( &formationFactory ).expects( mockpp::once() );
