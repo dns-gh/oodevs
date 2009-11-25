@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class name="net.masagroup.sword.military.tasks.knowledge.MoveTo" extends="directia.core.model.Task" xmlns="http://www.masagroup.net/directia/schemas/bm">
-	<interface/>
+	<description>Connaissance de la tache move</description>
+     <methods/>
 </class>

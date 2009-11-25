@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill name="sword.net.masagroup.sword.military.skills.primitives.Prepare" xmlns="http://www.masagroup.net/directia/schemas/bm">
-	<parameters/>
-	<levers/>
+	<description>Prepare objects</description>
+    <parameters>
+        <parameter name="entities">
+            <description>elements to prepare</description>
+            <type>
+                <list>
+                	<class name="net.masagroup.sword.military.knowledge.Preparable" />
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <goal>
+        <description>The skill's goal is to prepare the tactical object</description>
+    </goal>
+    <modifiers></modifiers>
+    <links>
+        <link name="moveAndTakePosition" skill="net.masagroup.military.generic.skills.primitives.MoveAndTakePosition"></link>
+    </links>
+    <!--
+    <resources>
+        <resource variable="builderEquipment" name="net.masagroup.military.sword.resources.BuilderEquipment"/>
+    </resources>-->
+
 </skill>

@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill name="sword.net.masagroup.sword.military.skills.RealizeTacticalObject" xmlns="http://www.masagroup.net/directia/schemas/bm">
-	<parameters/>
-	<levers/>
+	<description>Build Tactical object</description>
+	<parameters>
+		<parameter name="entities">
+			<description>Objects to build</description>
+			<type>
+				<list>
+					<class name="net.masagroup.sword.military.knowledge.Buildable" />
+				</list>
+			</type>
+		</parameter>
+		<parameter name="area">
+			<description>Zone dans laquelle l'entité peut se déplacer pour identifier l'élément.</description>
+			<type>
+				<list>
+					<class name="net.masagroup.military.generic.knowledge.Reaching" />
+				</list>
+			</type>
+		</parameter>
+	</parameters>
+<modifiers></modifiers>
 </skill>
