@@ -18,8 +18,6 @@
 #include "Entities/Agents/Units/PHY_Speeds.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "Meteo/PHY_MeteoDataManager.h"
-#include "UrbanModel.h"
-#include <Urban/Model.h>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Agent_PathfinderRule::InitializeFuseauData
@@ -151,15 +149,6 @@ MT_Float DEC_Agent_PathfinderRule::GetDangerDirectionCost( const MT_Vector2D& to
             return ( rDangerDirectionBaseCost_ + dp * rDangerDirectionLinearCost_ );
     }
     return 0.;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Agent_PathfinderRule::GetUrbanBlockCost
-// Created: RPD 2009-11-20
-// -----------------------------------------------------------------------------
-MT_Float DEC_Agent_PathfinderRule::GetUrbanBlockCost( const MT_Vector2D& from, const MT_Vector2D& to ) const
-{
-    return MIL_AgentServer::GetWorkspace().GetUrbanModel().GetUrbanBlockCost( path_.GetUnitMajorWeight(), from, to );
 }
 
 // -----------------------------------------------------------------------------
@@ -322,12 +311,6 @@ MT_Float DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Ve
     // danger direction
     rDynamicCost += GetDangerDirectionCost( to );
     
-    //urban blocks
-    const MT_Float rUrbanBlockCost = GetUrbanBlockCost( from, to );
-    if( rUrbanBlockCost < 0. )
-        return -1.;
-    rDynamicCost += rUrbanBlockCost;
-
     // objects
     const MT_Float rObjectsCost = GetObjectsCost( from, to, nToTerrainType, nLinkTerrainType );
     if( rObjectsCost < 0 )

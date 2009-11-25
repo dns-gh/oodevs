@@ -69,7 +69,6 @@ private:
     MT_Float GetDangerDirectionCost( const MT_Vector2D& to ) const;
     MT_Float GetAltitudeCost       ( MT_Float rAltitudeTo ) const;
     MT_Float GetFuseauxCost        ( const MT_Vector2D& from, const MT_Vector2D& to ) const;
-    MT_Float GetUrbanBlockCost     ( const MT_Vector2D& from, const MT_Vector2D& to ) const;
     MT_Float GetObjectsCost        ( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
     MT_Float GetEnemiesCost        ( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
     MT_Float GetPopulationsCost    ( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
