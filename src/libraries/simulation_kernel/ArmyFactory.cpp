@@ -36,7 +36,8 @@ void save_construct_data( Archive& archive, const ArmyFactory* factory, const un
     archive << automateFactory
             << formationFactory
             << objectFactory
-            << populationFactory;
+            << populationFactory
+            << knowledgeGroupFactory;
 }
 // -----------------------------------------------------------------------------
 // Name: ArmyFactory::save_construct_data
