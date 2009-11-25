@@ -157,6 +157,8 @@ void MIL_KnowledgeGroup::UpdateKnowledges()
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
         (**it).UpdateKnowledges();
 
+    tools::Resolver< MIL_KnowledgeGroup >::Apply( boost::bind( &MIL_KnowledgeGroup::UpdateKnowledges, _1 ) );
+
     assert( pKnowledgeBlackBoard_ );
     pKnowledgeBlackBoard_->Update();
 }
@@ -169,6 +171,8 @@ void MIL_KnowledgeGroup::CleanKnowledges()
 {
     assert( pKnowledgeBlackBoard_ );
     pKnowledgeBlackBoard_->Clean();
+
+    tools::Resolver< MIL_KnowledgeGroup >::Apply( boost::bind( &MIL_KnowledgeGroup::CleanKnowledges, _1 ) );
 
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
         (**it).CleanKnowledges();
@@ -245,6 +249,8 @@ void MIL_KnowledgeGroup::SendKnowledge() const
 
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
         (**it).SendKnowledge();
+
+    tools::Resolver< MIL_KnowledgeGroup >::Apply( boost::bind( &MIL_KnowledgeGroup::SendKnowledge, _1 ) );// SLG TEST : to diffuse in the tree
 }
 
 // -----------------------------------------------------------------------------
