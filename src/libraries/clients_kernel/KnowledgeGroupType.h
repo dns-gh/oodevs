@@ -36,7 +36,8 @@ public:
 
     //! @name Operations
     //@{
-    const std::string& GetName() const;
+    const std::string&    GetName() const;
+    double  GetCommunicationDelay() const;
     //@}
 
 private:
@@ -50,6 +51,7 @@ private:
     //! @name Member data
     //@{
     std::string name_;
+    double      rCommunicationDelay_;
     //@}
 };
 
