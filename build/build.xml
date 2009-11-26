@@ -282,7 +282,7 @@
     <target name="applications.frontends" description="build CSword Frontend executables"
             depends="application.selftraining_app,application.frontend_app,application.package_app"/>
 
-    <target name="application.dispatcher_dll" description="build Sword Dispatcher dll with crossbow" 
+    <target name="application.dispatcher_dll" description="build Sword Dispatcher dll with crossbow"
             depends="library.dispatcher,library.actions_static,library.clients_kernel,library.ENT,library.plugins">
         <build-lib name="dispatcher_dll" outtype="shared" mode="release" depends="boost,terrain,qt"
                    pattern="dispatcher-${platform}-mt@{suffix}" input="dispatcher_dll"
@@ -342,10 +342,10 @@
             <linkerarg value="/STACK:15000000"/>     <!-- Because of boost serialization -->
             <linkerarg value="/LARGEADDRESSAWARE"/>   <!-- Executable can access 3GiB instead of 2GiB -->
         </build-app>
-    </target> 
-    <!-- </not-crossbowed-applications> --> 
+    </target>
+    <!-- </not-crossbowed-applications> -->
 
-<!-- <crossbowed-applications> -->
+    <!-- <crossbowed-applications> -->
     <target name="application.dispatcher_dll.crossbow" description="build Sword Dispatcher dll with crossbow" depends="library.dispatcher,library.actions_static,library.clients_kernel,library.ENT,library.plugins">
         <build-lib name="dispatcher_crossbow_dll" outtype="shared" mode="release" depends="boost,terrain,qt"
             pattern="dispatcher-crossbow-${platform}-mt" input="dispatcher_dll"
@@ -592,7 +592,7 @@
     tests
     ============================================================================
     -->
-    <target name="test" depends="generate-license,test-scripts,test-adaptation,3a_test,plugins_test,clients_test,test-simulation_kernel_test" description="run all tests"/>
+    <target name="test" depends="generate-license,test-scripts,test-adaptation,3a_test,plugins_test,clients_test" description="run all tests"/>
 
     <target name="3a_test" depends="library.3a">
         <build-test name="3a" depends="xerces,terrain,boost" libs="lib${ant.project.name}_3a-${platform}-mt@{suffix}">
@@ -642,7 +642,7 @@
                     <filter token="PHYSICAL" value="@{physical}"/>
                 </filterset>
             </copy>
-            <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true">
+            <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
                 <arg value="--root-dir=../../data"/>
                 <arg value="--exercise=test-scripts"/>
                 <arg value="--session=test-session"/>
@@ -663,7 +663,7 @@
             <property name="adaptation_test.dir2" value="${run.dir}/adaptation_test/main"/>
             <echo>Testing models: @{input}</echo>
             <delete dir="${adaptation_test.dir2}"/>
-            <exec executable="${out.dir}/release/applications/adaptation_app/adaptation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
+            <exec executable="${out.dir}/release/applications/adaptation_app/adaptation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false" timeout="600000">
                 <arg value="-i"/>
                 <arg value="@{input}/physical.xml"/>
                 <arg value="-o"/>
@@ -708,35 +708,27 @@
         </build-test>
     </target>
 
-    <target name="test-simulation_kernel_test" description="simulation kernel unit tests" depends="application.simulation_kernel_test">
-        <exec executable="${out.dir}/release/tests/simulation_kernel_test/simulation_kernel_test.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
-            <arg value="--result_code=no"/>
-            <arg value="--report_level=no"/>
-            <arg value="--log_level=messages"/>
-        </exec>
-    </target>
-
     <macrodef name="test-exercise">
         <attribute name="exercise"/>
         <attribute name="session" default="default"/>
         <attribute name="simulation" default="simulation_app"/>
         <sequential>
-            <schemavalidate noNamespaceFile="${run.dir}/resources/schemas/exercise/exercise.xsd" 
-                file="../data/exercises/@{exercise}/exercise.xml" failonerror="true" 
+            <schemavalidate noNamespaceFile="${run.dir}/resources/schemas/exercise/exercise.xsd"
+                file="../data/exercises/@{exercise}/exercise.xml" failonerror="true"
                 warn="true"/>
-            <schemavalidate noNamespaceFile="${run.dir}/resources/schemas/exercise/orbat.xsd" 
-                file="../data/exercises/@{exercise}/orbat.xml" failonerror="true" 
+            <schemavalidate noNamespaceFile="${run.dir}/resources/schemas/exercise/orbat.xsd"
+                file="../data/exercises/@{exercise}/orbat.xml" failonerror="true"
                 warn="true"/>
-            <schemavalidate noNamespaceFile="${run.dir}/resources/schemas/exercise/profiles.xsd" 
-                file="../data/exercises/@{exercise}/profiles.xml" failonerror="true" 
+            <schemavalidate noNamespaceFile="${run.dir}/resources/schemas/exercise/profiles.xsd"
+                file="../data/exercises/@{exercise}/profiles.xml" failonerror="true"
                 warn="true"/>
-            <schemavalidate noNamespaceFile="${run.dir}/resources/schemas/exercise/weather.xsd" 
-                file="../data/exercises/@{exercise}/weather.xml" failonerror="true" 
+            <schemavalidate noNamespaceFile="${run.dir}/resources/schemas/exercise/weather.xsd"
+                file="../data/exercises/@{exercise}/weather.xml" failonerror="true"
                 warn="true"/>
-            <schemavalidate noNamespaceFile="${run.dir}/resources/schemas/exercise/session.xsd" 
-                file="../data/exercises/@{exercise}/sessions/@{session}/session.xml" failonerror="true" 
+            <schemavalidate noNamespaceFile="${run.dir}/resources/schemas/exercise/session.xsd"
+                file="../data/exercises/@{exercise}/sessions/@{session}/session.xml" failonerror="true"
                 warn="true"/>
-            <exec executable="${out.dir}/release/applications/@{simulation}/@{simulation}.exe" dir="${run.dir}" failonerror="true">
+            <exec executable="${out.dir}/release/applications/@{simulation}/@{simulation}.exe" dir="${run.dir}" failonerror="true" timeout="900000">
                 <arg value="--root-dir=../../data"/>
                 <arg value="--exercise=@{exercise}"/>
                 <arg value="--session=@{session}"/>
@@ -749,8 +741,6 @@
         <test-exercise exercise="Egypt"/>
         <test-exercise exercise="Cabourg"/>
     </target>
-
-
 
     <!--
     ============================================================================
