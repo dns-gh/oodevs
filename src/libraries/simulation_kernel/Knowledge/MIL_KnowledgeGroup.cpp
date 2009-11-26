@@ -358,8 +358,14 @@ MIL_KnowledgeGroup* MIL_KnowledgeGroup::FindKnowledgeGroup( uint nID ) const
      MIL_KnowledgeGroup* knowledgeGroup = Resolver< MIL_KnowledgeGroup >::Find( nID );
      if( knowledgeGroup == 0 )
      {
-         tools::Resolver< MIL_KnowledgeGroup >::Apply( boost::bind( &MIL_KnowledgeGroup::FindKnowledgeGroup, _1, nID ) );
+         tools::Iterator< const MIL_KnowledgeGroup& > it = CreateIterator();
+         while (it.HasMoreElements() )
+         {
+            knowledgeGroup = it.NextElement().FindKnowledgeGroup( nID );
+            if ( knowledgeGroup )
+                return knowledgeGroup;         
+         }
+         return 0;
      }
      return knowledgeGroup;
 }
-
