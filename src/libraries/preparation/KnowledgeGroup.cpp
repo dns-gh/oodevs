@@ -10,17 +10,21 @@
 #include "preparation_pch.h"
 #include "KnowledgeGroup.h"
 #include "IdManager.h"
-#include "clients_kernel/KnowledgeGroupType.h"
-#include "clients_kernel/Controller.h"
-#include "clients_kernel/Team_ABC.h"
+#include "Tools.h"
+
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/KnowledgeGroupType.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "Tools.h"
+#include "clients_kernel/Team_ABC.h"
+
 #include <xeumeuleu/xml.h>
+#include <boost/lexical_cast.hpp>
 
 using namespace kernel;
 using namespace xml;
+
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup constructor
@@ -29,7 +33,9 @@ using namespace xml;
 KnowledgeGroup::KnowledgeGroup( Controller& controller, IdManager& idManager, tools::Resolver_ABC< KnowledgeGroupType, std::string >& types )
     : EntityImplementation< KnowledgeGroup_ABC >( controller, idManager.GetNextId(), "" )
     , type_( types.Find( "Standard" ) ) // $$$$ SBO 2006-11-17: Hard coded default
+    , strCommunicationDelay_()
 {
+    UpdateCommunicationDelay();
     name_ = tools::translate( "KnowledgeGroup", "Knowledge group [%1]" ).arg( id_ );
     RegisterSelf( *this );
     CreateDictionary( controller );
@@ -41,11 +47,13 @@ KnowledgeGroup::KnowledgeGroup( Controller& controller, IdManager& idManager, to
 // -----------------------------------------------------------------------------
 KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, tools::Resolver_ABC< KnowledgeGroupType, std::string >& types )
     : EntityImplementation< KnowledgeGroup_ABC >( controller, xml::attribute< unsigned int >( xis, "id" ), "" )
+    , strCommunicationDelay_()
 {
     std::string type, name;
     xis >> attribute( "type", type )
         >> optional() >> attribute( "name", name );
     type_ = &types.Get( type );
+    UpdateCommunicationDelay();
     name_ = name.empty() ? tools::translate( "KnowledgeGroup", "Knowledge group [%1]" ).arg( id_ ) : name.c_str();
     idManager.Lock( id_ );
 
@@ -71,8 +79,39 @@ void KnowledgeGroup::CreateDictionary( kernel::Controller& controller )
     PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
     Attach( dictionary );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "KnowledgeGroup", "Info/Identifier" ), (const unsigned long)id_ );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "KnowledgeGroup", "Info/Name" ), name_ );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "KnowledgeGroup", "Info/Type" ), type_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "KnowledgeGroup", "Info/Name" ), name_, *this, &KnowledgeGroup::Rename );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "KnowledgeGroup", "Type/Name" ), type_, *this, &KnowledgeGroup::SetType );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "KnowledgeGroup", "Type/Delay" ), ((const KnowledgeGroup*)this)->strCommunicationDelay_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::UpdateCommunicationDelay
+// Created: SYD 2009-11-23
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::UpdateCommunicationDelay()
+{
+    // $$$$ SYD 2009-11-23: TODO kernel::UnitedValue should be able to represent a duration,
+    //                      a duration in hh:mm:ss format where hh and ss are not displayed
+    //                      when not necessary => custom formater + custom editor
+
+    int communicationDelayHours = 0;
+    int communicationDelayMins = 0;
+    int communicationDelaySecs = 0;
+    if( type_ )
+    {
+        double rCommunicationDelay = type_->GetCommunicationDelay();
+        communicationDelayHours = (int)( ( rCommunicationDelay + 190 ) / 360. );
+        rCommunicationDelay -= communicationDelayHours * 360.;
+        communicationDelayMins = (int)( ( rCommunicationDelay + 30 ) / 60. );
+        rCommunicationDelay -= communicationDelayMins * 60.;
+        communicationDelaySecs = (int)( rCommunicationDelay );
+    }
+
+    strCommunicationDelay_.clear();
+    if( communicationDelayHours > 0 )
+        strCommunicationDelay_ = boost::lexical_cast<std::string>( communicationDelayHours ) + "h";
+    strCommunicationDelay_ += boost::lexical_cast<std::string>( communicationDelayMins ) + "m";
+    strCommunicationDelay_ += boost::lexical_cast<std::string>( communicationDelaySecs ) + "s";
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +120,24 @@ void KnowledgeGroup::CreateDictionary( kernel::Controller& controller )
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::Rename( const QString& name )
 {
+    if( name == name_ )
+        return;
+
     name_ = name;
+    Touch();
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::SetType
+// Created: SYD 2009-11-20
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::SetType( kernel::KnowledgeGroupType* const& type )
+{
+    if( type == type_ )
+        return;
+
+    type_ = type;
+    UpdateCommunicationDelay();
     Touch();
 }
 

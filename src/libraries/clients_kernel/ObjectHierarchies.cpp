@@ -6,26 +6,24 @@
 // Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-
-#include "gaming_pch.h"
+#include "clients_kernel_pch.h"
 #include "ObjectHierarchies.h"
-#include "clients_kernel/Team_ABC.h"
 
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: ObjectHierarchies constructor
-// Created: AGE 2006-10-16
+// Created: SBO 2006-10-19
 // -----------------------------------------------------------------------------
-ObjectHierarchies::ObjectHierarchies( Entity_ABC& entity, const Team_ABC& superior )
-    : SimpleHierarchies< TacticalHierarchies >( entity, &superior )
+ObjectHierarchies::ObjectHierarchies( kernel::Entity_ABC& holder, kernel::Entity_ABC* superior )
+    : kernel::SimpleHierarchies< kernel::TacticalHierarchies >( holder, superior )
 {
     // NOTHING
 }
-
+    
 // -----------------------------------------------------------------------------
 // Name: ObjectHierarchies destructor
-// Created: AGE 2006-10-16
+// Created: SBO 2006-10-19
 // -----------------------------------------------------------------------------
 ObjectHierarchies::~ObjectHierarchies()
 {

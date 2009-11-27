@@ -159,11 +159,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Info/Type</source>
+        <source>Knowledge group [%1]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Knowledge group [%1]</source>
+        <source>Type/Delay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type/Name</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

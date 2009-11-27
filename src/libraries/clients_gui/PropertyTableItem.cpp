@@ -65,6 +65,9 @@ void PropertyTableItem::setContentFromEditor( QWidget* w )
     property_.Display( displayer_ );
     table()->adjustRow( row() );
     table()->updateGeometry();
+// $$$$ >>>> MODIF SYD 2009-11-23 Plan a table repaint because other table values can be affected
+    table()->updateContents();
+// $$$$ <<<< MODIF SYD 2009-11-23
 }
 
 // -----------------------------------------------------------------------------

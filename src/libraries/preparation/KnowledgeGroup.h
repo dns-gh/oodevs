@@ -48,6 +48,7 @@ public:
     //! @name Operations
     //@{
     void Rename( const QString& name );
+    void SetType( kernel::KnowledgeGroupType* const& );
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     //@}
 
@@ -61,12 +62,14 @@ private:
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::Controller& controller );
+    void UpdateCommunicationDelay();
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::KnowledgeGroupType* type_;
+    std::string strCommunicationDelay_;
     //@}
 };
 

@@ -10,8 +10,11 @@
 #ifndef __ObjectHierarchies_h_
 #define __ObjectHierarchies_h_
 
-#include "clients_kernel/SimpleHierarchies.h"
-#include "clients_kernel/TacticalHierarchies.h"
+#include "SimpleHierarchies.h"
+#include "TacticalHierarchies.h"
+
+namespace kernel
+{
 
 // =============================================================================
 /** @class  ObjectHierarchies
@@ -36,5 +39,7 @@ private:
     ObjectHierarchies& operator=( const ObjectHierarchies& ); //!< Assignement operator
     //@}
 };
+
+}
 
 #endif // __ObjectHierarchies_h_

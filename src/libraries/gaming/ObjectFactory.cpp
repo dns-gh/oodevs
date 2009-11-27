@@ -27,12 +27,14 @@
 #include "Model.h"
 #include "TeamsModel.h"
 #include "AgentsModel.h"
-#include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/Controllers.h"
 #include "ObjectPositions.h"
-#include "ObjectHierarchies.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "StaticModel.h"
+
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/ObjectHierarchies.h"
+#include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/Team_ABC.h"
 
 using namespace kernel;
 
@@ -66,7 +68,7 @@ Object_ABC* ObjectFactory::Create( const ASN1T_MsgObjectCreation& message )
     Object* result = new Object( message, controllers_.controller_, static_.coordinateConverter_, static_.objectTypes_ );
     result->Attach( *new Explosions( controllers_.controller_, model_.fireResultsFactory_ ) );
     result->Attach< Positions >( *new ObjectPositions( result->GetType(), static_.coordinateConverter_ ) );
-    result->Attach< TacticalHierarchies >( *new ObjectHierarchies( *result, model_.teams_.GetTeam( message.team ) ) );
+    result->Attach< TacticalHierarchies >( *new ObjectHierarchies( *result, &model_.teams_.GetTeam( message.team ) ) );
     
     Register( *result, message.attributes );
     

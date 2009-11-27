@@ -35,7 +35,6 @@
 #include "SupplyRouteAttribute.h"
 
 #include "ObjectAttributesContainer.h"
-#include "ObjectHierarchies.h"
 #include "Populations.h"
 #include "EntityIntelligences.h"
 #include "clients_kernel/Controllers.h"
@@ -43,6 +42,9 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/AgentTypes.h"
 #include "ObjectAttributeFactory_ABC.h"
+
+#include "clients_kernel/ObjectHierarchies.h"
+
 #include <xeumeuleu/xml.h>
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
