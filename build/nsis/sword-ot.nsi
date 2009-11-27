@@ -8,7 +8,7 @@
 ; ------------------------------------------------------------------------------
 
 ;..................................................................................................
-!define APP_NAME "SWORD Officer Training"
+!define APP_NAME "SWORD"
 !define COMPANY_NAME "MASA Group"
 
 ;........................................
@@ -112,6 +112,7 @@ Section "!${APP_NAME}"
     File "${RUNDIR}\zlib1.dll"
     File "${RUNDIR}\bugtrap.dll"
     File "${RUNDIR}\shapelib.dll"
+    File "${RUNDIR}\library-${PLATFORM}-mt.dll"
     File "${RUNDIR}\population-${PLATFORM}-mt.dll"
     File "${RUNDIR}\dispatcher-${PLATFORM}-mt.dll"
     File "${RUNDIR}\directia-${PLATFORM}-mt-4_5.dll"

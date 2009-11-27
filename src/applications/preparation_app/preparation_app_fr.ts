@@ -43,7 +43,7 @@
     <name>Application</name>
     <message>
         <source>SWORD</source>
-        <translation>SWORD Officer Training</translation>
+        <translation>SWORD</translation>
     </message>
     <message>
         <source>sword-ot@masagroup.net</source>
