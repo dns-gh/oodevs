@@ -54,6 +54,7 @@ public:
     DEC_KS_Sharing&                               GetKsSharing                   () const;
     DEC_BlackBoard_CanContainKnowledgeAgent&      GetKnowledgeAgentContainer     () const;
     DEC_BlackBoard_CanContainKnowledgePopulation& GetKnowledgePopulationContainer() const;
+    DEC_KS_AgentKnowledgeSynthetizer&             GetKnowledgeAgentSynthetizer   () const { return *pKsAgentKnowledgeSynthetizer_; } 
     //@}
 
     //! @name Network

@@ -54,9 +54,11 @@ public:
 private:
     //! @name Tools
     //@{
-    void                 CleanKnowledgeAgent                ( DEC_Knowledge_Agent& knowledge );
-    void                 UpdateKnowledgesFromAgentPerception( const DEC_Knowledge_AgentPerception& perception );
-    DEC_Knowledge_Agent& GetKnowledgeToUpdate               ( MIL_Agent_ABC& agentKnown ) const;
+    void                 CleanKnowledgeAgent                        ( DEC_Knowledge_Agent& knowledge );
+    void                 UpdateKnowledgesFromAgentPerception        ( const DEC_Knowledge_AgentPerception& perception );
+    void                 UpdateKnowledgesFromKnowledgeAgent         ( const DEC_Knowledge_Agent& agentKnowledge );
+    void                 UpdateKnowledgesFromParentKnowledgeGroup   ( const DEC_Knowledge_Agent& agentKnowledge );
+    DEC_Knowledge_Agent& GetKnowledgeToUpdate                       ( MIL_Agent_ABC& agentKnown ) const;
     //@}
 
 private:

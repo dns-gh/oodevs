@@ -127,7 +127,9 @@ std::string ADN_KnowledgeGroups_Data::GroupInfo::GetItemName()
 // -----------------------------------------------------------------------------
 void ADN_KnowledgeGroups_Data::GroupInfo::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "name", strName_ );
+    input >> xml::attribute( "name", strName_ )
+          >> xml::optional() >> xml::attribute( "communication-delay", communicationDelay_ );
+
     agentInfos_     .ReadArchive( input );
     populationInfos_.ReadArchive( input );
 }
@@ -139,7 +141,9 @@ void ADN_KnowledgeGroups_Data::GroupInfo::ReadArchive( xml::xistream& input )
 void ADN_KnowledgeGroups_Data::GroupInfo::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "knowledge-group" )
-            << xml::attribute( "name", strName_ );
+           << xml::attribute( "name", strName_ );
+    if ( communicationDelay_.GetData() != "" )
+        output << xml::attribute( "communication-delay", communicationDelay_ );
     agentInfos_     .WriteArchive( output );
     populationInfos_.WriteArchive( output );
     output << xml::end();

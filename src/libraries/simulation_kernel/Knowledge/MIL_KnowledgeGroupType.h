@@ -51,6 +51,7 @@ public:
           MT_Float     GetKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit() const;
           MT_Float     GetKnowledgeAgentExtrapolationTime             () const;
           MT_Float     GetKnowledgePopulationMaxLifeTime              () const;
+          MT_Float     GetKnowledgeCommunicationDelay                 () const;
     const std::string& GetName                                        () const;
           uint         GetID                                          () const;
     //@}
@@ -76,6 +77,7 @@ private:
           MT_Float    rKnowledgeAgentExtrapolationTime_;
 
           MT_Float    rKnowledgePopulationMaxLifeTime_;
+          MT_Float    rCommunicationDelay_;
 
 private:
     static T_KnowledgeGroupTypeMap knowledgeGroupTypes_;

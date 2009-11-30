@@ -33,6 +33,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, uint
     : pType_               ( &type )
     , nID_                 ( nID )
     , pArmy_               ( &army )
+    , pParent_             ( 0 )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_KnowledgeGroup( *this ) )
     , automates_           ()
 {
@@ -51,12 +52,13 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army& army, MIL_
     , pParent_              ( pParent )
     , pKnowledgeBlackBoard_ ( new DEC_KnowledgeBlackBoard_KnowledgeGroup( *this ) )
     , automates_            ()
+    , timeToDiffuse_         ( 0 )
 {
     std::string strType;
     xis >> xml::attribute( "id", nID_ )
         >> xml::attribute( "type", strType );
     pType_ = MIL_KnowledgeGroupType::FindType( strType );
-
+    timeToDiffuse_ = pType_->GetKnowledgeCommunicationDelay();
     if( pParent_ )
         pParent_->RegisterKnowledgeGroup( *this );
     else
@@ -73,6 +75,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
     : pType_               ( 0 )
     , nID_                 ( 0 )
     , pArmy_               ( 0 )
+    , pParent_             ( 0 )
     , pKnowledgeBlackBoard_( 0 )
     , automates_           ()
 {
@@ -309,6 +312,16 @@ MIL_Army& MIL_KnowledgeGroup::GetArmy() const
     return *pArmy_;
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::GetParent
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+MIL_KnowledgeGroup* MIL_KnowledgeGroup::GetParent() const
+{
+    return pParent_;
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::RegisterFormation
 // Created: NLD 2006-10-13
@@ -350,7 +363,7 @@ const MIL_KnowledgeGroupType& MIL_KnowledgeGroup::GetType() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Army::FindKnowledgeGroup
+// Name: MIL_KnowledgeGroup::FindKnowledgeGroup
 // Created: SLG 2009-11-30
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup* MIL_KnowledgeGroup::FindKnowledgeGroup( uint nID ) const
@@ -368,4 +381,22 @@ MIL_KnowledgeGroup* MIL_KnowledgeGroup::FindKnowledgeGroup( uint nID ) const
          return 0;
      }
      return knowledgeGroup;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::GetTimeToDiffuseToKnowledgeGroup
+// Created: SLG 2009-11-30
+// -----------------------------------------------------------------------------
+MT_Float MIL_KnowledgeGroup::GetTimeToDiffuseToKnowledgeGroup() const
+{
+    return timeToDiffuse_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::RefreshTimeToDiffuseToKnowledgeGroup
+// Created: SLG 2009-11-30
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::RefreshTimeToDiffuseToKnowledgeGroup()
+{
+    timeToDiffuse_ += pType_->GetKnowledgeCommunicationDelay();
 }

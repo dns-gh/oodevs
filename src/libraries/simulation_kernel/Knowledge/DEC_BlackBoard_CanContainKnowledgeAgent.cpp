@@ -330,3 +330,4 @@ const T_KnowledgeAgentVector& DEC_BlackBoard_CanContainKnowledgeAgent::GetSurren
     UpdateQueriesCache();
     return surrenderedAgentsContainer_;
 }
+

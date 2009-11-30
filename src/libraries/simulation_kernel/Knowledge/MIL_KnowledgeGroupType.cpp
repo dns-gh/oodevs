@@ -49,8 +49,10 @@ void MIL_KnowledgeGroupType::ReadKnowledgeGroup( xml::xistream& xis )
 {
     std::string strName;
     std::string strType;
+    
 
     xis >> xml::attribute( "name", strName );
+    
 
     const MIL_KnowledgeGroupType*& pType = knowledgeGroupTypes_[ strName ];
     if( pType )
@@ -80,7 +82,13 @@ MIL_KnowledgeGroupType::MIL_KnowledgeGroupType( const std::string& strName, xml:
     , rKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit_( 0. )
     , rKnowledgeAgentExtrapolationTime_             ( 0. )
     , rKnowledgePopulationMaxLifeTime_              ( 0. )
+    , rCommunicationDelay_                          ( 0. )
 {
+    tools::ReadTimeAttribute( xis, "communication-delay", rCommunicationDelay_ );
+    if( rCommunicationDelay_ < 0 )
+        xis.error( "unit-knowledge: max-lifetime <= 0" );
+    rCommunicationDelay_ = MIL_Tools::ConvertSecondsToSim( rCommunicationDelay_ );
+
     // Connaissances agent
     xis >> xml::start( "unit-knowledge" );
 
@@ -199,6 +207,15 @@ MT_Float MIL_KnowledgeGroupType::GetKnowledgeAgentExtrapolationTime() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroupType::GetKnowledgeCommunicationDelay
+// Created: SLG 2009-11-29
+// -----------------------------------------------------------------------------
+MT_Float MIL_KnowledgeGroupType::GetKnowledgeCommunicationDelay() const
+{
+    return rCommunicationDelay_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: mil_knowledgegrouptype::GetName
 // Created: JVT 2005-03-01
 // -----------------------------------------------------------------------------
@@ -206,3 +223,5 @@ const std::string& MIL_KnowledgeGroupType::GetName() const
 {
     return strName_;
 }
+
+

@@ -76,6 +76,7 @@ public:
     void CleanKnowledges ();
     bool IsPerceived     ( const DEC_Knowledge_Object& knowledge ) const;
     bool IsPerceived     ( const DEC_Knowledge_Agent&  knowledge ) const;
+    void RefreshTimeToDiffuseToKnowledgeGroup();
 
     bool operator==( const MIL_KnowledgeGroup& rhs ) const;
     bool operator!=( const MIL_KnowledgeGroup& rhs ) const;
@@ -88,6 +89,8 @@ public:
           MIL_Army&                               GetArmy     () const;
     const T_AutomateVector&                       GetAutomates() const;
     const DEC_KnowledgeBlackBoard_KnowledgeGroup& GetKnowledge() const;
+          MIL_KnowledgeGroup*                     GetParent   () const;
+          MT_Float                                GetTimeToDiffuseToKnowledgeGroup() const;
     //@}
 
     //! @name Network
@@ -106,6 +109,7 @@ private:
     DEC_KnowledgeBlackBoard_KnowledgeGroup* pKnowledgeBlackBoard_;
 
     T_AutomateVector automates_;
+    MT_Float timeToDiffuse_;
 
 private:
     static std::set< uint > ids_;
