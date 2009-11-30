@@ -82,7 +82,7 @@
     <target name="libraries" description="build all libraries"
             depends="library.tools,library.MT_Tools,library.ENT,library.game_asn,library.simulation_terrain,library.simulation_kernel,
                      library.clients_kernel,library.clients_gui,library.actions,library.actions_static,library.actions_gui,library.gaming,library.preparation,
-                     library.bml_plugin,library.xmlia_plugin,library.crossbow_plugin,library.hla_plugin,library.dis_plugin,library.tic_plugin,
+                     library.bml_plugin,library.crossbow_plugin,library.hla_plugin,library.dis_plugin,library.tic_plugin,
                      library.messenger_plugin,library.3a"/>
 
     <target name="library.tools" description="build tools static library">
@@ -204,15 +204,6 @@
         </build-lib>
     </target>
 
-    <target name="library.xmlia_plugin" description="build XMLIA dispatcher plugin static library" depends="library.dispatcher">
-        <build-lib name="xmlia_plugin" pattern="lib${ant.project.name}_xmlia_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt">
-            <includepath path="${include.dir}/masasn"/>
-            <defineset>
-              <define name="LDAP_UNICODE"/>
-            </defineset>
-        </build-lib>
-    </target>
-
     <target name="library.crossbow_plugin" description="build crossbow dispatcher plugin static library" depends="library.MT_Tools,library.tools,library.game_asn">
         <build-lib name="crossbow_plugin" pattern="lib${ant.project.name}_crossbow_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt">
             <includepath path="${include.dir}/masasn"/>
@@ -263,7 +254,7 @@
 
     <target name="library.plugins" description="build all dispatcher plugins"
             depends="library.messenger_plugin,library.tic_plugin,library.dis_plugin,library.hla_plugin,library.3a,
-                     library.bml_plugin,library.xmlia_plugin,library.crossbow_plugin,library.script_plugin,library.score_plugin"/>
+                     library.bml_plugin,library.crossbow_plugin,library.script_plugin,library.score_plugin"/>
 
     <!--
     ============================================================================
@@ -600,14 +591,13 @@
         </build-test>
     </target>
 
-    <target name="plugins_test" depends="library.hla_plugin,library.tic_plugin,library.bml_plugin,library.xmlia_plugin,library.crossbow_plugin">
+    <target name="plugins_test" depends="library.hla_plugin,library.tic_plugin,library.bml_plugin,library.crossbow_plugin">
         <build-test name="plugins" depends="terrain,boost,xerces"
             libs="directia-${platform}-mt-4_5,
             lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
             lib${ant.project.name}_hla_plugin-${platform}-mt@{suffix},
             lib${ant.project.name}_tic_plugin-${platform}-mt@{suffix},
             lib${ant.project.name}_bml_plugin-${platform}-mt@{suffix},
-            lib${ant.project.name}_xmlia_plugin-${platform}-mt@{suffix},
             lib${ant.project.name}_script_plugin-${platform}-mt@{suffix},
             lib${ant.project.name}_crossbow_plugin-${platform}-mt@{suffix}">
             <includepath path="${include.dir}/masasn"/>

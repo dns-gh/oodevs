@@ -18,10 +18,6 @@
 #   include "crossbow_plugin/CrossbowPluginFactory.h"
 #endif
 
-#ifdef XMLIA_PLUGIN
-    #include "xmlia_plugin/xmliaPluginFactory.h"
-#endif
-
 #include "MT/MT_Logger/MT_Logger_lib.h"
 
 using namespace plugins;
@@ -46,9 +42,6 @@ DispatcherFacade::DispatcherFacade( int argc, char** argv )
         dispatcher_->RegisterPluginFactory( *new bml::BmlPluginFactory() );
 #ifdef CROSSBOW_PLUGIN
         dispatcher_->RegisterPluginFactory( *new crossbow::CrossbowPluginFactory() );
-#endif
-#ifdef XMLIA_PLUGIN
-        dispatcher_->RegisterPluginFactory( *new xmlia::XmliaPluginFactory() );
 #endif
 
         dispatcher_->CreatePlugins();

@@ -269,9 +269,6 @@ private:
     void OnReceiveMsgAarResult     ( const ASN1T_MsgPlotResult& asnMsg );
     void OnReceiveMsgAarIndicator  ( const ASN1T_MsgIndicator& asnMsg );
 
-    // Plugin
-    void OnReceiveMsgPluginTextMessage  ( const ASN1T_MsgPluginTextMessage& asnMsg );
-
     // Urban
     void OnReceiveMsgUrbanCreation( const ASN1T_MsgUrbanCreation& asnMsg );
     //@}

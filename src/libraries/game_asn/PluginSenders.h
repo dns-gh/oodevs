@@ -25,4 +25,4 @@ GENERATE_ASN_MSG_SENDER( PluginToClient, IntelligenceCreation, intelligence_crea
 
 DECLARE_ASN_CONTROLLER( MsgsPluginToClient )
 
-#endif // __XmliaMessages_h_
+#endif // __PluginMessages_h_

@@ -1468,15 +1468,6 @@ void AgentServerMsgMgr::OnReceiveMsgTextMessage( const ASN1T_MsgTextMessage& mes
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgXmliaTextMessage
-// Created: RPD 2009-07-12
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPluginTextMessage  ( const ASN1T_MsgPluginTextMessage& message )
-{
-    commands_.Receive( "xmlia", message.destinataire, message.message );
-}
-
-// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgFolkCreation
 // Created: SLG 2009-10-24
 // -----------------------------------------------------------------------------
@@ -1770,7 +1761,6 @@ void AgentServerMsgMgr::OnReceiveMsgPluginToClient( const std::string& , const A
 {
     switch( message.msg.t )
     {
-    case T_MsgsPluginToClient_msg_plugin_text_message:             OnReceiveMsgPluginTextMessage( *message.msg.u.plugin_text_message ); break;
     case T_MsgsPluginToClient_msg_plugin_intelligence_creation:    OnReceiveMsgIntelligenceCreation( *message.msg.u.plugin_intelligence_creation ); break;
     case T_MsgsPluginToClient_msg_plugin_intelligence_update:      OnReceiveMsgIntelligenceUpdate( *message.msg.u.plugin_intelligence_update ); break;
     case T_MsgsPluginToClient_msg_plugin_intelligence_destruction: OnReceiveMsgIntelligenceDestruction( *message.msg.u.plugin_intelligence_destruction ); break;
