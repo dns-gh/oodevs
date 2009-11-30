@@ -38,6 +38,7 @@ public:
     //@{
     const std::string&    GetName() const;
     double  GetCommunicationDelay() const;
+    const std::string ShowCommunicationDelay() const;
     //@}
 
 private:

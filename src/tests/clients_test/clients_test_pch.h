@@ -24,6 +24,26 @@
 #include <mockpp/chaining/CountedChainableMethod.h>
 #include <mockpp/chaining/ChainingMockObjectSupport.h>
 
+#pragma warning( push, 1 )
+#pragma warning( disable : 4505 )
+#include <turtle/mock.hpp>
+#pragma warning( pop )
+
 std::string BOOST_RESOLVE( const std::string& filename );
+
+#ifndef uint
+# define uint unsigned int
+#endif
+
+#pragma warning( push, 0 )
+#include <qapplication.h>
+#include <qdatetime.h>
+#include <qfont.h>
+#include <qgl.h>
+#include <qpopupmenu.h>
+#include <qstring.h>
+#include <qstringlist.h>
+#include <qwidget.h>
+#pragma warning( pop )
 
 #endif // __clients_test_pch_h_

@@ -20,7 +20,6 @@
 #include "clients_kernel/Team_ABC.h"
 
 #include <xeumeuleu/xml.h>
-#include <boost/lexical_cast.hpp>
 
 using namespace kernel;
 using namespace xml;
@@ -90,28 +89,7 @@ void KnowledgeGroup::CreateDictionary( kernel::Controller& controller )
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::UpdateCommunicationDelay()
 {
-    // $$$$ SYD 2009-11-23: TODO kernel::UnitedValue should be able to represent a duration,
-    //                      a duration in hh:mm:ss format where hh and ss are not displayed
-    //                      when not necessary => custom formater + custom editor
-
-    int communicationDelayHours = 0;
-    int communicationDelayMins = 0;
-    int communicationDelaySecs = 0;
-    if( type_ )
-    {
-        double rCommunicationDelay = type_->GetCommunicationDelay();
-        communicationDelayHours = (int)( ( rCommunicationDelay + 190 ) / 360. );
-        rCommunicationDelay -= communicationDelayHours * 360.;
-        communicationDelayMins = (int)( ( rCommunicationDelay + 30 ) / 60. );
-        rCommunicationDelay -= communicationDelayMins * 60.;
-        communicationDelaySecs = (int)( rCommunicationDelay );
-    }
-
-    strCommunicationDelay_.clear();
-    if( communicationDelayHours > 0 )
-        strCommunicationDelay_ = boost::lexical_cast<std::string>( communicationDelayHours ) + "h";
-    strCommunicationDelay_ += boost::lexical_cast<std::string>( communicationDelayMins ) + "m";
-    strCommunicationDelay_ += boost::lexical_cast<std::string>( communicationDelaySecs ) + "s";
+    strCommunicationDelay_ = type_ ? type_->ShowCommunicationDelay() : "0m0s";
 }
 
 // -----------------------------------------------------------------------------
