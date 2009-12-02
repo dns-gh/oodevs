@@ -10,6 +10,7 @@
 #include "actions_pch.h"
 #include "UrbanBlock.h"
 #include "urban/TerrainObject_ABC.h"
+#include "urban/Block.h"
 #include <xeumeuleu/xml.h>
 
 using namespace kernel;
@@ -31,7 +32,7 @@ UrbanBlock::UrbanBlock( const kernel::OrderParameter& parameter, urban::TerrainO
 // Name: UrbanBlock constructor
 // Created: MGD 2009-11-05
 // -----------------------------------------------------------------------------
-UrbanBlock::UrbanBlock( const kernel::OrderParameter& parameter, const ASN1T_UrbanBlock& asn, Resolver< urban::TerrainObject_ABC >& resolver )
+UrbanBlock::UrbanBlock( const kernel::OrderParameter& parameter, const ASN1T_UrbanBlock& asn, Resolver< urban::Block >& resolver )
 : Parameter< urban::TerrainObject_ABC* >( parameter, &resolver.Get( asn ) )
 {
     // NOTHING
@@ -41,7 +42,7 @@ UrbanBlock::UrbanBlock( const kernel::OrderParameter& parameter, const ASN1T_Urb
 // Name: UrbanBlock constructor
 // Created: MGD 2009-11-05
 // -----------------------------------------------------------------------------
-UrbanBlock::UrbanBlock( const OrderParameter& parameter, xml::xistream& xis, Resolver< urban::TerrainObject_ABC >& resolver )
+UrbanBlock::UrbanBlock( const OrderParameter& parameter, xml::xistream& xis, Resolver< urban::Block >& resolver )
 : Parameter< urban::TerrainObject_ABC* >( parameter, &resolver.Get( attribute< unsigned long >( xis, "value" ) ) )
 {
     // NOTHING

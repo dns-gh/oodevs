@@ -142,3 +142,12 @@ MT_Float UrbanModel::GetUrbanBlockCost( MT_Float weight, const MT_Vector2D& star
     geometry::Point2f from ( start.rX_, start.rY_ ), to ( end.rX_, end.rY_ );
     return model_->GetUrbanBlockCost( ( float ) weight, from, to );
 }
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::GetModel
+// Created: RPD 2009-12-01
+// -----------------------------------------------------------------------------
+urban::Model& UrbanModel::GetModel() const
+{
+    return *model_;
+}

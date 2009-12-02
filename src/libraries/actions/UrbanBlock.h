@@ -16,6 +16,7 @@
 namespace urban
 {
     class TerrainObject_ABC;
+    class Block;
 }
 
 namespace actions {
@@ -35,8 +36,8 @@ public:
     //! @name Constructors/Destructor
     //@{
     UrbanBlock( const kernel::OrderParameter& parameter, urban::TerrainObject_ABC& value );
-    UrbanBlock( const kernel::OrderParameter& parameter, const ASN1T_UrbanBlock& asn, Resolver< urban::TerrainObject_ABC >& resolver );
-    UrbanBlock( const kernel::OrderParameter& parameter, xml::xistream& xis, Resolver< urban::TerrainObject_ABC >& resolver );
+    UrbanBlock( const kernel::OrderParameter& parameter, const ASN1T_UrbanBlock& asn, Resolver< urban::Block >& resolver );
+    UrbanBlock( const kernel::OrderParameter& parameter, xml::xistream& xis, Resolver< urban::Block >& resolver );
     virtual ~UrbanBlock();
     //@}
 
