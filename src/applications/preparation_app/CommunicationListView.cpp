@@ -117,8 +117,10 @@ bool CommunicationListView::CanDrop( const Entity_ABC* draggedEntity, QPoint dro
     //--- check destination of drag n drop
     const Entity_ABC* dstEntity = dynamic_cast< const Entity_ABC* >( targetItem->GetValue< const Entity_ABC >() );
     const KnowledgeGroup_ABC* dstKnowledgeGroup = dynamic_cast< const KnowledgeGroup_ABC* >( dstEntity );
-    const kernel::CommunicationHierarchies& dstHierarchies = dstEntity->Get< kernel::CommunicationHierarchies >();
-    const Entity_ABC* dstTeam = &dstHierarchies.GetTop();
+    const Entity_ABC* dstTeam = 0;
+    if( const kernel::CommunicationHierarchies* dstHierarchies = dstEntity->Retrieve< kernel::CommunicationHierarchies >() )
+        dstTeam = &dstHierarchies->GetTop();
+
     if( !dstKnowledgeGroup && !dstTeam )
         return false; // can drop only on knowledge group or team
 
@@ -126,9 +128,14 @@ bool CommunicationListView::CanDrop( const Entity_ABC* draggedEntity, QPoint dro
     if( draggedEntity == dstEntity )
         return false; // cannot drop an item on itself
 
-    const kernel::CommunicationHierarchies& srcHierarchies = draggedEntity->Get< kernel::CommunicationHierarchies >();
-    const Entity_ABC* srcSuperior = srcHierarchies.GetSuperior();
-    const Entity_ABC* srcTeam = &srcHierarchies.GetTop();
+    const Entity_ABC* srcTeam = 0;
+    const Entity_ABC* srcSuperior = 0;
+    if( const kernel::CommunicationHierarchies* srcHierarchies = draggedEntity->Retrieve< kernel::CommunicationHierarchies >() )
+    {
+        srcTeam = &srcHierarchies->GetTop();
+        srcSuperior = srcHierarchies->GetSuperior();
+    }
+
     if( srcSuperior == dstEntity )
         return false; // cannot drop an item on his parent
 
