@@ -604,7 +604,7 @@
         </build-test>
     </target>
 
-    <target name="clients_test" depends="library.indicators">
+    <target name="clients_test" depends="library.indicators, library.preparation">
         <build-test name="clients" depends="boost,qt,xerces"
             libs="lib${ant.project.name}_tools-${platform}-mt,
             lib${ant.project.name}_ENT-${platform}-mt,
