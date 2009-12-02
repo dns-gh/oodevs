@@ -61,7 +61,8 @@ private:
     virtual void NotifyContextMenu( const kernel::Team_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::KnowledgeGroup_ABC& knowledgegroup, kernel::ContextMenu& menu );
 
-    virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
+    virtual bool CanDrop( const kernel::Entity_ABC* draggedEntity, QPoint dropPosition ) const;
+    virtual bool Drop( const kernel::Entity_ABC& draggedEntity, const kernel::Entity_ABC& target );
     virtual void keyPressEvent( QKeyEvent* event );
     virtual void dragMoveEvent( QDragMoveEvent *pEvent );
    //@}
