@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface name="sword.net.masagroup.sword.military.tasks.knowledge.Reconnoitrable" xmlns="http://www.masagroup.net/directia/schemas/bm">
+	<methods/>
+</interface>

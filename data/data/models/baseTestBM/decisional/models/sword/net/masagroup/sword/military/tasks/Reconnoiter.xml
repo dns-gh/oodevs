@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.tasks.Reconnoiter" knowledge-class="net.masagroup.sword.military.tasks.knowledge.Reconnoiter">
+  <description>
+        Reconnaitre un objectif.
+
+        L'effet principal est l'obtention de nouvelles informations
+        concernant l'objectif. Détection de nouvelles entités ennemies,
+        obtention d'informations pertinentes sur les caractéristiques
+        des éléments du terrains (niveau d'occupation des points clés,
+        hostilité d'un batiment ou d'un carrefour, état opérationnels
+        des éléments, etc.)
+    </description>
+  <parameters>
+    <parameter name="objectives">
+      <description>Les objectifs à reconnaitre.</description>
+      <type>
+        <list>
+          <class name="net.masagroup.sword.military.Reconnoitrable"/>
+        </list>
+      </type>
+    </parameter>
+  </parameters>
+  <goal>
+    <description>Se déplacer tactiquement vers les éléments et les reconnaître.</description>
+  </goal>
+  <stages>
+    <stage label="Reconnaissance" permanent="true">
+      <description>Mouvement tactique et reonnaissance des objectifs. Détection des ennemis, prise de contact si possible.</description>
+      <goal>
+        <description>Obtenir des informations sur les objectifs avec agressivité.</description>
+      </goal>
+      <skills>
+        <skill name="net.masagroup.sword.military.skills.MoveAndReconnoiter" priority="0.9">
+          <parameter name="entities">
+            <value>
+              <parameter>objectives</parameter>
+            </value>
+          </parameter>
+          <parameter name="positions">
+            <value>
+				<call
+					method="net.masagroup.sword.military.queries.getCrossroads">
+					<parameter name="objectives">
+							<value>
+								<parameter>objectives</parameter>
+							</value>
+					</parameter>
+				</call>
+            </value>
+          </parameter>
+        </skill>
+      </skills>
+    </stage>
+  </stages>
+</task>

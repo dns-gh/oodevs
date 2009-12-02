@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.skills.MoveAndReconnoiter">
+  <description>Se déplacer tactiquement vers les éléments à reconnaître et les reconnaître.</description>
+  <parameters>
+    <parameter name="entities">
+      <description>Les entités à reconnaître.</description>
+      <type>
+        <list>
+          <class name="net.masagroup.sword.military.knowledge.Reconnoitrable"/>
+        </list>
+      </type>
+    </parameter>
+    <parameter name="positions">
+      <description>Positions pour la reconnaissance.</description>
+      <type>
+        <list>
+          <class name="net.masagroup.sword.military.knowledge.Reconnoitring"/>
+        </list>
+      </type>
+    </parameter>
+  </parameters>
+  <goal>
+    <description>Reconnaître les objectifs.</description>
+  </goal>
+  <modifiers/>
+  <links>
+   <!--  <link name="moveTactically" skill="net.masagroup.military.generic.combatant.skills.MoveTactically">
+        <description>Lien vers le skill MoveTactically</description>
+        </link>
+    <link name="reconnoitre" skill="net.masagroup.military.generic.combatant.skills.primitives.Reconnoitre">
+        <description>Lien vers le skill Reconnoitre</description>
+    </link> -->
+  </links>
+  <resources/>
+</skill>
