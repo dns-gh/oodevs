@@ -29,5 +29,5 @@ IntelligenceKarmas::IntelligenceKarmas()
 // -----------------------------------------------------------------------------
 IntelligenceKarmas::~IntelligenceKarmas()
 {
-    DeleteAll();
+     // NOTHING
 }
