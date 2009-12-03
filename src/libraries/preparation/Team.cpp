@@ -25,7 +25,7 @@ using namespace kernel;
 // Name: Team constructor
 // Created: SBO 2006-08-29
 // -----------------------------------------------------------------------------
-Team::Team( Controller& controller, /* KnowledgeGroupFactory_ABC& kgFactory, */ ObjectFactory_ABC& objectFactory, IdManager& idManager )
+Team::Team( Controller& controller, ObjectFactory_ABC& objectFactory, IdManager& idManager )
     : EntityImplementation< Team_ABC >( controller, idManager.GetNextId(), "" )
     , objectFactory_( objectFactory )
 {
@@ -48,7 +48,7 @@ namespace
 // Name: Team constructor
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-Team::Team( xml::xistream& xis, kernel::Controller& controller, /* KnowledgeGroupFactory_ABC& kgFactory, */ ObjectFactory_ABC& objectFactory, IdManager& idManager )
+Team::Team( xml::xistream& xis, kernel::Controller& controller, ObjectFactory_ABC& objectFactory, IdManager& idManager )
     : EntityImplementation< Team_ABC >( controller, xml::attribute< unsigned long >( xis, "id" ), ReadName( xis ) )
     , objectFactory_( objectFactory )
 {
