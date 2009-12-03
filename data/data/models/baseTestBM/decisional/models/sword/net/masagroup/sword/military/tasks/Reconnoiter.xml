@@ -15,7 +15,7 @@
       <description>Les objectifs à reconnaitre.</description>
       <type>
         <list>
-          <class name="net.masagroup.sword.military.Reconnoitrable"/>
+          <class name="net.masagroup.military.generic.knowledge.Reconnoitrable"/>
         </list>
       </type>
     </parameter>

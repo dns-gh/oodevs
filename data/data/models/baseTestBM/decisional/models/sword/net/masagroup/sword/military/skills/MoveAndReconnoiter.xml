@@ -6,7 +6,7 @@
       <description>Les entités à reconnaître.</description>
       <type>
         <list>
-          <class name="net.masagroup.sword.military.knowledge.Reconnoitrable"/>
+          <class name="net.masagroup.military.generic.knowledge.Reconnoitrable"/>
         </list>
       </type>
     </parameter>
@@ -14,7 +14,7 @@
       <description>Positions pour la reconnaissance.</description>
       <type>
         <list>
-          <class name="net.masagroup.sword.military.knowledge.Reconnoitring"/>
+          <class name="net.masagroup.military.generic.knowledge.Reaching"/>
         </list>
       </type>
     </parameter>
