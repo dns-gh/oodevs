@@ -557,6 +557,11 @@
         <bmc dir="${data.dir}/data/models/baseTestBM/decisional/models/sword" core="${data.dir}/data/models/baseTestBM/decisional/models/core;${data.dir}/data/models/baseTestBM/decisional/models/base"/>
         <bmc dir="${data.dir}/data/models/baseTestBM/decisional/models/integration" core="${data.dir}/data/models/baseTestBM/decisional/models/core;${data.dir}/data/models/baseTestBM/decisional/models/base;${data.dir}/data/models/baseTestBM/decisional/models/sword"/>
     </target>
+    
+     <target name="compile-database" description="compile just new file in behavior model database">
+        <bmc dir="${data.dir}/data/models/baseTestBM/decisional/models/sword" core="${data.dir}/data/models/baseTestBM/decisional/models/core;${data.dir}/data/models/baseTestBM/decisional/models/base"/>
+        <bmc dir="${data.dir}/data/models/baseTestBM/decisional/models/integration" core="${data.dir}/data/models/baseTestBM/decisional/models/core;${data.dir}/data/models/baseTestBM/decisional/models/base;${data.dir}/data/models/baseTestBM/decisional/models/sword"/>
+    </target>
 
     <target name="generate-data" depends="generate-database" description="generate data"/>
 
