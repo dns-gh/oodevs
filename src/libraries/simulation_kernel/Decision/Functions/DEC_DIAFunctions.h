@@ -50,6 +50,7 @@ public:
     static void CopyPointToListPointMission   ( boost::shared_ptr< MT_Vector2D > pPosSource, MIL_Mission_ABC* pMission, const std::string& parameter );
     static void CopyLocalisation              ( const TER_Localisation* pLocSource, TER_Localisation* pLocDest );
     static void CopyLocalisationMission       ( boost::shared_ptr< TER_Localisation > pLocation, MIL_Mission_ABC* pMission, const std::string& parameter );
+    static void CopyLocalisationListMission   ( const std::vector< boost::shared_ptr< TER_Localisation > >& locSource, MIL_Mission_ABC* pMission, const std::string& parameter );
     static void CopyLocalisationToLocationListMission( boost::shared_ptr< TER_Localisation > pLocSource, MIL_Mission_ABC* pMission, const std::string& parameter );
 };
 

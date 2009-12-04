@@ -1598,7 +1598,7 @@ bool DEC_RolePion_Decision::IsContaminated() const
 // -----------------------------------------------------------------------------
 const MT_Vector2D* DEC_RolePion_Decision::GetPosition() const
 {
-    return DEC_AgentFunctions::GetPosition( GetPion() );
+    return DEC_AgentFunctions::GetPosition( GetPion() ).get();
 }
 
 // -----------------------------------------------------------------------------

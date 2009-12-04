@@ -210,9 +210,9 @@ MT_Float DEC_AgentFunctions::GetMajorOperationalState( const MIL_AgentPion& call
 // Name: DEC_AgentFunctions::GetPosition
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
-const MT_Vector2D* DEC_AgentFunctions::GetPosition( const MIL_AgentPion& callerAgent )
+boost::shared_ptr< MT_Vector2D > DEC_AgentFunctions::GetPosition( const MIL_AgentPion& callerAgent )
 {
-    return &callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition();
+    return callerAgent.GetRole< PHY_RoleInterface_Location >().GetSharedPosition();
 }
 
 // -----------------------------------------------------------------------------

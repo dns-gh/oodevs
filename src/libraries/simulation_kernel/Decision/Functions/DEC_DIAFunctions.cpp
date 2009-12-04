@@ -77,6 +77,15 @@ void DEC_DIAFunctions::CopyLocalisationToLocationListMission( boost::shared_ptr<
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_DIAFunctions::CopyLocalisationListMission
+// Created: LDC 2009-12-04
+// -----------------------------------------------------------------------------
+void DEC_DIAFunctions::CopyLocalisationListMission( const std::vector< boost::shared_ptr< TER_Localisation > >& locSource, MIL_Mission_ABC* pMission, const std::string& parameter )
+{
+    MIL_MissionParameterFactory::SetPolygonListParameter( pMission, parameter, locSource );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_DIAFunctions::CopyPathMission
 // Created: LDC 2009-07-08
 // -----------------------------------------------------------------------------

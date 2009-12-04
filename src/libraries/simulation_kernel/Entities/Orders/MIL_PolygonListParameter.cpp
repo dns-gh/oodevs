@@ -43,6 +43,16 @@ MIL_PolygonListParameter::MIL_PolygonListParameter( const ASN1T_PolygonList& asn
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PolygonListParameter constructor
+// Created: LDC 2009-12-04
+// -----------------------------------------------------------------------------
+MIL_PolygonListParameter::MIL_PolygonListParameter( const std::vector< boost::shared_ptr< TER_Localisation > >& polygonList )
+: polygonList_( polygonList )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PolygonListParameter destructor
 // Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------

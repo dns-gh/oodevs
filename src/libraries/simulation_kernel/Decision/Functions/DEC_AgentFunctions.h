@@ -37,7 +37,7 @@ public:
     static bool IsNeutralized               ( const MIL_AgentPion& callerAgent );            
     static MT_Float GetOperationalState     ( const MIL_AgentPion& callerAgent );
     static MT_Float GetMajorOperationalState( const MIL_AgentPion& callerAgent );
-    static const MT_Vector2D* GetPosition   ( const MIL_AgentPion& callerAgent );
+    static boost::shared_ptr< MT_Vector2D > GetPosition   ( const MIL_AgentPion& callerAgent );
     static const MT_Vector2D* GetDirection  ( const MIL_AgentPion& callerAgent );
     static void ActivateBlackout            ( MIL_AgentPion& callerAgent );
     static void DeactivateBlackout          ( MIL_AgentPion& callerAgent );

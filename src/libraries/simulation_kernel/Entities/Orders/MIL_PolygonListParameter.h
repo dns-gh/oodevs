@@ -26,6 +26,7 @@ public:
     //@{
              MIL_PolygonListParameter();
     explicit MIL_PolygonListParameter( const ASN1T_PolygonList& );
+    explicit MIL_PolygonListParameter( const std::vector< boost::shared_ptr< TER_Localisation > >& );
     virtual ~MIL_PolygonListParameter();
     //@}
 
