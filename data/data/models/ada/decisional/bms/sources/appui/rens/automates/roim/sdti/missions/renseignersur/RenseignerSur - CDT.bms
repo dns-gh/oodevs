@@ -61,7 +61,7 @@ node "BEH_Conduite_Automate_RENS_ROIM_SDTI_GererMiseEnOeuvre"
 
     activate = function( self )
         self.bLancementEffectue = self.bLancementEffectue or false
-        local pionDrone = S_Dispositif_Automate_RENS_ObtenirPionDroneMiseEnOeuvre( Drone_SDTI )
+        local pionDrone = S_Dispositif_Automate_RENS_ObtenirPionDroneMiseEnOeuvre( "Drone_SDTI" )
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Si pas de drone disponible, attendre
 ]]--[[//----------------------------------------------------------------------------- 
