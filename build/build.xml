@@ -79,10 +79,16 @@
       libraries
     ============================================================================
     -->
-    <target name="libraries" description="build all libraries"
+    <target name="libraries.crossbow" description="build all libraries"
             depends="library.tools,library.MT_Tools,library.ENT,library.game_asn,library.simulation_terrain,library.simulation_kernel,
                      library.clients_kernel,library.clients_gui,library.actions,library.actions_static,library.actions_gui,library.gaming,library.preparation,
                      library.bml_plugin,library.crossbow_plugin,library.hla_plugin,library.dis_plugin,library.tic_plugin,
+                     library.messenger_plugin,library.3a"/>
+
+    <target name="libraries.nocrossbow" description="build all libraries"
+            depends="library.tools,library.MT_Tools,library.ENT,library.game_asn,library.simulation_terrain,library.simulation_kernel,
+                     library.clients_kernel,library.clients_gui,library.actions,library.actions_static,library.actions_gui,library.gaming,library.preparation,
+                     library.bml_plugin,library.hla_plugin,library.dis_plugin,library.tic_plugin,
                      library.messenger_plugin,library.3a"/>
 
     <target name="library.tools" description="build tools static library">
@@ -252,20 +258,30 @@
         </build-lib>
     </target>
 
-    <target name="library.plugins" description="build all dispatcher plugins"
+    <target name="library.plugins.crossbow" description="build all dispatcher plugins"
             depends="library.messenger_plugin,library.tic_plugin,library.dis_plugin,library.hla_plugin,library.3a,
                      library.bml_plugin,library.crossbow_plugin,library.script_plugin,library.score_plugin"/>
+
+    <target name="library.plugins.nocrossbow" description="build all dispatcher plugins"
+            depends="library.messenger_plugin,library.tic_plugin,library.dis_plugin,library.hla_plugin,library.3a,
+                     library.bml_plugin,library.script_plugin,library.score_plugin"/>
 
     <!--
     ============================================================================
      applications
     ============================================================================
     -->
-    <target name="applications" description="build CSword executables"
-            depends="applications.simulation,applications.clients,applications.frontends"/>
+    <target name="applications.crossbow" description="build CSword executables"
+            depends="applications.simulation.crossbow,applications.clients,applications.frontends"/>
 
-    <target name="applications.simulation" description="build CSword Simulation executables"
-            depends="application.dispatcher_app.crossbow,application.simulation_app.crossbow,application.simulation_app,application.dispatcher_app,application.replayer_app,application.AGR" />
+    <target name="applications.nocrossbow" description="build CSword executables"
+            depends="applications.simulation.nocrossbow,applications.clients,applications.frontends"/>
+
+    <target name="applications.simulation.crossbow" description="build CSword Simulation executables"
+            depends="application.dispatcher_app.crossbow,application.simulation_app.crossbow,application.replayer_app.crossbow,application.AGR" />
+
+    <target name="applications.simulation.nocrossbow" description="build CSword Simulation executables"
+            depends="application.simulation_app.nocrossbow,application.dispatcher_app.nocrossbow,application.replayer_app.nocrossbow,application.AGR" />
 
     <target name="applications.clients" description="build CSword Client executables"
             depends="application.gaming_app,application.preparation_app,application.adaptation_app,application.loadtester_app"/>
@@ -273,8 +289,8 @@
     <target name="applications.frontends" description="build CSword Frontend executables"
             depends="application.selftraining_app,application.frontend_app,application.package_app"/>
 
-    <target name="application.dispatcher_dll" description="build Sword Dispatcher dll with crossbow"
-            depends="library.dispatcher,library.actions_static,library.clients_kernel,library.ENT,library.plugins">
+    <target name="application.dispatcher_dll.nocrossbow" description="build Sword Dispatcher dll without crossbow"
+            depends="library.dispatcher,library.actions_static,library.clients_kernel,library.ENT,library.plugins.nocrossbow">
         <build-lib name="dispatcher_dll" outtype="shared" mode="release" depends="boost,terrain,qt"
                    pattern="dispatcher-${platform}-mt@{suffix}" input="dispatcher_dll"
                    libs="HLA,libFedTime,masalloc,tools,masasn,
@@ -304,7 +320,7 @@
         </build-lib>
     </target>
 
-    <target name="application.dispatcher_app" description="build Sword Dispatcher executable" depends="application.dispatcher_dll">
+    <target name="application.dispatcher_app.nocrossbow" description="build Sword Dispatcher executable without crossbow" depends="application.dispatcher_dll.nocrossbow">
         <build-app name="dispatcher_app" subsystem="console" mode="release" depends="mt,boost,terrain,flexlm"
                    libs="masalloc,tools,
                          dispatcher-${platform}-mt@{suffix},
@@ -313,7 +329,7 @@
         </build-app>
     </target>
 
-    <target name="application.simulation_app" description="build Sword Simulation executable" depends="library.dispatcher,library.simulation_kernel,application.dispatcher_dll">
+    <target name="application.simulation_app.nocrossbow" description="build Sword Simulation executable without crossbow" depends="library.dispatcher,library.simulation_kernel,application.dispatcher_dll.nocrossbow">
         <build-app name="simulation_app" depends="mt,din,dia3,terrain,boost,xerces,flexlm"
             libs="HLA,libFedTime,masalloc,tools,masasn,directia-${platform}-mt-4_5,library-${platform}-mt,
             gdal_i,gdal_ogr,geodata,
@@ -334,10 +350,33 @@
             <linkerarg value="/LARGEADDRESSAWARE"/>   <!-- Executable can access 3GiB instead of 2GiB -->
         </build-app>
     </target>
+    
+    <target name="application.replayer_app.nocrossbow" description="build Sword replayer executable without crossbow" depends="application.dispatcher_dll.nocrossbow,library.dispatcher,library.3a,library.score_plugin">
+        <!-- MT uses xerces dynamic lib by default -->
+        <build-app name="replayer_app" depends="terrain,boost,flexlm,qt"
+            libs="HLA,libFedTime,tools,masasn,directia-${platform}-mt-4_5,
+            MT_Tools,MT_Logger,MT_Memory,MT_IO,MT_Thread,MT_Time,
+            xerces-c_mt_static_2,Xerces-depdom_static_2,
+            dispatcher-${platform}-mt@{suffix},
+            lib${ant.project.name}_tools-${platform}-mt,
+            lib${ant.project.name}_ENT-${platform}-mt,
+            lib${ant.project.name}_MT_Tools-${platform}-mt,
+            lib${ant.project.name}_game_asn-${platform}-mt,
+            lib${ant.project.name}_3a-${platform}-mt,
+            lib${ant.project.name}_dispatcher-${platform}-mt,
+            lib${ant.project.name}_clients_kernel-${platform}-mt,
+            lib${ant.project.name}_score_plugin-${platform}-mt,
+            lib${ant.project.name}_indicators-${platform}-mt">
+            <syslibset libs="dbghelp,psapi,iphlpapi,user32,shell32,advapi32"/>
+            <includepath path="${include.dir}/masasn"/>
+            <defineset define="XML_LIBRARY"/>
+        </build-app>
+    </target>
+
     <!-- </not-crossbowed-applications> -->
 
     <!-- <crossbowed-applications> -->
-    <target name="application.dispatcher_dll.crossbow" description="build Sword Dispatcher dll with crossbow" depends="library.dispatcher,library.actions_static,library.clients_kernel,library.ENT,library.plugins">
+    <target name="application.dispatcher_dll.crossbow" description="build Sword Dispatcher dll with crossbow" depends="library.dispatcher,library.actions_static,library.clients_kernel,library.ENT,library.plugins.crossbow">
         <build-lib name="dispatcher_crossbow_dll" outtype="shared" mode="release" depends="boost,terrain,qt"
             pattern="dispatcher-crossbow-${platform}-mt" input="dispatcher_dll"
             libs="HLA,libFedTime,masalloc,tools,masasn,
@@ -404,13 +443,14 @@
 
     <!-- </crossbowed-applications> -->
 
-    <target name="application.replayer_app" description="build Sword replayer executable" depends="application.dispatcher_dll.crossbow,library.dispatcher,library.3a,library.score_plugin">
+    <target name="application.replayer_app.crossbow" description="build Sword replayer executable with crossbow" depends="application.dispatcher_dll.crossbow,library.dispatcher,library.3a,library.score_plugin">
         <!-- MT uses xerces dynamic lib by default -->
-        <build-app name="replayer_app" depends="terrain,boost,flexlm,qt"
+        <build-app name="replayer_crossbow_app" depends="terrain,boost,flexlm,qt"
+            pattern="replayer_crossbow_app" input="replayer_app"
             libs="HLA,libFedTime,tools,masasn,directia-${platform}-mt-4_5,
             MT_Tools,MT_Logger,MT_Memory,MT_IO,MT_Thread,MT_Time,
             xerces-c_mt_static_2,Xerces-depdom_static_2,
-            dispatcher-${platform}-mt@{suffix},
+            dispatcher-crossbow-${platform}-mt@{suffix},
             lib${ant.project.name}_tools-${platform}-mt,
             lib${ant.project.name}_ENT-${platform}-mt,
             lib${ant.project.name}_MT_Tools-${platform}-mt,
@@ -588,7 +628,7 @@
     tests
     ============================================================================
     -->
-    <target name="test" depends="generate-license,test-scripts,test-adaptation,3a_test,plugins_test,clients_test,application.simulation_kernel_test" description="run all tests"/>
+    <target name="test" depends="generate-license,test-scripts.nocrossbow,test-adaptation,3a_test,plugins_test,clients_test,application.simulation_kernel_test" description="run all tests"/>
 
     <target name="3a_test" depends="library.3a">
         <build-test name="3a" depends="xerces,terrain,boost" libs="lib${ant.project.name}_3a-${platform}-mt@{suffix}">
@@ -650,7 +690,7 @@
         </sequential>
     </macrodef>
 
-    <target name="test-scripts" description="run all tests" depends="application.simulation_app">
+    <target name="test-scripts.nocrossbow" description="run all tests" depends="application.simulation_app.nocrossbow">
         <test-scripts dataset="ada" physical="france"/>
         <test-scripts dataset="ada" physical="worldwide"/>
     </target>
@@ -768,7 +808,7 @@
     </target>
 
     <target name="package.security" description="create the installer">
-        <nsis todir="${dist.dir}/current/${platform}" name="sword-security-server" script="sword-security-server.nsi">
+        <nsis todir="${dist.dir}/current/${platform}" name="sword-security" script="sword-security.nsi">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
             <arg value="/DAPP_MODEL=worldwide"/>
@@ -884,7 +924,11 @@
     main
     ============================================================================
     -->
-    <target name="build" depends="libraries,applications"/>
+    <target name="build" depends="build.crossbow,build.nocrossbow"/>
+
+    <target name="build.crossbow" depends="libraries.crossbow,applications.crossbow"/>
+
+    <target name="build.nocrossbow" depends="libraries.nocrossbow,applications.nocrossbow"/>
 
     <target name="all" depends="configure,build,test,documentation,package" description="build and package distribution"/>
 

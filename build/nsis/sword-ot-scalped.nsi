@@ -10,6 +10,7 @@
 ;..................................................................................................
 !define APP_NAME "SCALPED"
 !define COMPANY_NAME "MASA Group"
+!define PRODUCT_NAME "SWORD"
 
 ;........................................
 ; defined from ant call

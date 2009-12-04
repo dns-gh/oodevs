@@ -10,6 +10,7 @@
 ;...............................................................................
 !define APP_NAME "SWORD Security"
 !define COMPANY_NAME "MASA Group"
+!define PRODUCT_NAME "SWORD"
 
 ;........................................
 ; defined from ant call
@@ -27,7 +28,7 @@
 !endif
 
 !ifndef BUILDDIR
-    !define BUILDDIR "../"
+    !define BUILDDIR ".."
 !endif
 
 ;........................................
@@ -67,7 +68,7 @@ Section "!${APP_NAME}"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File "${RUNDIR}\*.qm"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-    
+  
     ; resources: documentation
     SetOutPath "$INSTDIR\applications\resources\help\en"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
@@ -87,17 +88,17 @@ Section "!${APP_NAME}"
 
     SetOutPath "$INSTDIR\applications"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File "${OUTDIR}\release\applications\adaptation_app\*.exe"
-    File "${OUTDIR}\release\applications\gaming_app\*.exe"
-    File "${OUTDIR}\release\applications\preparation_app\*.exe"
-    File "${OUTDIR}\release\applications\simulation_app\*.exe"
-    File "${OUTDIR}\release\applications\replayer_app\*.exe"
+    File "${OUTDIR}\release\applications\adaptation_app\adaptation_app.exe"
+    File "${OUTDIR}\release\applications\gaming_app\gaming_app.exe"
+    File "${OUTDIR}\release\applications\preparation_app\preparation_app.exe"
+    File /oname=simulation_app.exe "${OUTDIR}\release\applications\simulation_crossbow_app\simulation_crossbow_app.exe"
+    File /oname=replayer_app.exe "${OUTDIR}\release\applications\replayer_crossbow_app\replayer_crossbow_app.exe"
     File "${OUTDIR}\release\applications\frontend_app\*.exe"
     ; File "${OUTDIR}\release\applications\selftraining_app\*.exe"
     File "${OUTDIR}\release\applications\package_app\*.exe"
 
     SetOutPath "$INSTDIR\applications\bin"
-    File "${OUTDIR}\release\applications\dispatcher_app\*.exe"
+    File /oname=dispatcher_app.exe "${OUTDIR}\release\applications\dispatcher_crossbow_app\dispatcher_crossbow_app.exe"
 
     SetOutPath "$INSTDIR\applications"
     File "${OUTDIR}\generation_app\*.exe"
@@ -172,10 +173,7 @@ Section "!${APP_NAME}"
     !insertmacro OT.AddUninstallEntry
     !insertmacro OT.AddFileAssoc
     !insertmacro OT.AddCommonConfig
-    
-    WriteRegStr ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\SWORD Officer Training\Common" "Language" "$(OT_LANG)"
-    WriteRegStr ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\SWORD Officer Training\Common" "DataDirectory" "${INSTDATADIR}"
-    
+        
 SectionEnd
 
 SectionGroup "Additional components"

@@ -195,8 +195,8 @@
 ;------------------------------------------------------------------------------
 !macro OT.AddCommonConfig
 
-    WriteRegStr ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${APP_NAME}\Common" "Language" "$(OT_LANG)"
-    WriteRegStr ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${APP_NAME}\Common" "DataDirectory" "${INSTDATADIR}"
+    WriteRegStr ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}\Common" "Language" "$(OT_LANG)"
+    WriteRegStr ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}\Common" "DataDirectory" "${INSTDATADIR}"
 
 !macroend
 
