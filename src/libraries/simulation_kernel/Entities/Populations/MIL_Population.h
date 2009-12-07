@@ -14,6 +14,7 @@
 #include "Entities/MIL_Entity_ABC.h"
 #include "Entities/MIL_VisitableEntity_ABC.h"
 #include "Entities/Orders/MIL_PopulationOrderManager.h"
+#include "Network/NET_ASN_Messages.h"
 
 namespace xml
 {

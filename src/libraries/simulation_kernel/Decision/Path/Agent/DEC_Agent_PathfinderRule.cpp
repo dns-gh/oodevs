@@ -25,7 +25,6 @@
 // Name: DEC_Agent_PathfinderRule::InitializeFuseauData
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
-inline
 void DEC_Agent_PathfinderRule::InitializeFuseauData( const MT_Vector2D& from, const MT_Vector2D& to )
 {
     assert( pFuseau_ == 0 );
@@ -49,7 +48,6 @@ void DEC_Agent_PathfinderRule::InitializeFuseauData( const MT_Vector2D& from, co
 // Name: DEC_Agent_PathfinderRule::InitializeAutomateFuseauData
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
-inline
 void DEC_Agent_PathfinderRule::InitializeAutomateFuseauData( const MT_Vector2D& from )
 {
     assert( pAutomateFuseau_ == 0 );

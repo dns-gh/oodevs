@@ -20,11 +20,8 @@
 #define __DEC_Agent_PathfinderRule_h_
 
 #include "pathfind/TerrainRule_ABC.h"
-#include "DEC_Path_KnowledgeAgent.h"
-#include "DEC_Path_KnowledgeObject.h"
 
 class MIL_Fuseau;
-class PHY_Speeds;
 class DEC_Agent_Path;
 class PHY_RawVisionData;
 

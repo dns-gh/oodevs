@@ -15,7 +15,6 @@
 
 class DEC_Agent_PathClass;
 class DEC_Knowledge_Population;
-class MIL_AgentPion;
 class MIL_PopulationAttitude;
 class TER_Localisation;
 

@@ -32,7 +32,6 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
-#include "Tools/MIL_Tools.h"
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Agent_Path::Initialize

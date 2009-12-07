@@ -10,7 +10,6 @@
 #ifndef __DEC_PathFactory_h_
 #define __DEC_PathFactory_h_
 
-#include "MIL.h"
 
 namespace xml
 {

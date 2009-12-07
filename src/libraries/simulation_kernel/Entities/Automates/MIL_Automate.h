@@ -15,6 +15,7 @@
 #include "MIL.h"
 #include "Entities/MIL_Entity_ABC.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
+#include "Network/NET_ASN_Messages.h"
 
 #include "tools/Resolver.h"
 

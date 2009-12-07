@@ -10,7 +10,6 @@
 #ifndef __DEC_Population_Path_Channeler_h_
 #define __DEC_Population_Path_Channeler_h_
 
-#include "MIL.h"
 
 class TER_Localisation;
 class DEC_Population_PathClass;

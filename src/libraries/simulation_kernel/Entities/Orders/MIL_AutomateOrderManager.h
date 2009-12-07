@@ -14,6 +14,7 @@
 
 #include "MIL_OrderManager_ABC.h"
 #include "MIL_AutomateMRT.h"
+#include "Network/NET_ASN_Messages.h"
 
 class MIL_AutomateMission;
 class MIL_MissionType_ABC;

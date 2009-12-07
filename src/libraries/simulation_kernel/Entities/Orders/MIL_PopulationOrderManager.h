@@ -13,6 +13,7 @@
 #include "MIL.h"
 
 #include "MIL_OrderManager_ABC.h"
+#include "Network/NET_ASN_Messages.h"
 
 class MIL_Population;
 class MIL_MissionType_ABC;

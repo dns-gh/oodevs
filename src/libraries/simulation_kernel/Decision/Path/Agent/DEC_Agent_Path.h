@@ -20,7 +20,6 @@
 #include "Decision/Path/DEC_PathResult.h"
 #include "Entities/Agents/Units/PHY_Speeds.h"
 #include "Entities/Orders/MIL_Fuseau.h"
-#include "game_asn/Simulation.h"
 #include "MT_Tools/MT_Profiler.h"
 #include <boost/shared_ptr.hpp>
 

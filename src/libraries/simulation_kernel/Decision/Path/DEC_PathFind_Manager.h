@@ -18,11 +18,6 @@
 #include <boost/thread/condition.hpp>
 #include <boost/shared_ptr.hpp>
 
-namespace xml
-{
-    class xistream;
-}
-
 class DEC_Path_ABC;
 class TER_PathFinderThread;
 class MIL_Config;

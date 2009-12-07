@@ -10,15 +10,12 @@
 #ifndef __DEC_Population_PathClass_h_
 #define __DEC_Population_PathClass_h_
 
-#include "MIL.h"
 
 namespace xml
 {
     class xistream;
 }
 
-class DEC_PathType;
-class MIL_Population;
 
 // =============================================================================
 /** @class  DEC_Population_PathClass

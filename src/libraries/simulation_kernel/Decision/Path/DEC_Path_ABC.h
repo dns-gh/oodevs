@@ -15,7 +15,6 @@
 #include "MIL.h"
 #include "simulation_terrain/TER_PathFindRequest_ABC.h"
 
-class TER_PathFindReplay;
 class DEC_PathSection_ABC;
 
 // =============================================================================

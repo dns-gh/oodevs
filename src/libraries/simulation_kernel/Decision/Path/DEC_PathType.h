@@ -14,8 +14,6 @@
 
 #include "MIL.h"
 
-class TerrainRule_ABC;
-class DEC_Agent_PathClass;
 
 //*****************************************************************************
 // Created: JDY 03-04-10
