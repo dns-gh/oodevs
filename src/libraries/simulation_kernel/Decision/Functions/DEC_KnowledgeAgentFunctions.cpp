@@ -12,18 +12,13 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgeAgentFunctions.h"
 
-#include "DEC_FunctionsTools.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Units/Categories/PHY_NatureAtlas.h"
-#include "Entities/MIL_Army.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
-#include "Knowledge/MIL_KnowledgeGroup.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
-#include "Decision/DEC_Tools.h"
 #include "MT_Tools/MT_Sector.h"
 #include "Tools/MIL_Tools.h"
 

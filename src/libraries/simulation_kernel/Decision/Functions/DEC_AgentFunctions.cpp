@@ -21,10 +21,7 @@
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
-#include "Entities/Agents/Roles/Humans/PHY_RoleInterface_Humans.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
-#include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
-#include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
@@ -32,11 +29,9 @@
 #include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h"
-#include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Morale.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Experience.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Tiredness.h"
-#include "Entities/Automates/DEC_AutomateDecision.h"
 
 #include "Entities/Objects/ActivableCapacity.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
@@ -44,20 +39,14 @@
 
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
-#include "Network/NET_AgentServer.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
-#include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Decision/DEC_Decision_ABC.h"
-#include "Decision/DEC_Tools.h"
 #include "Tools/MIL_Tools.h"
 #include "DEC_AutomateFunctions.h"
 #include "DEC_GeometryFunctions.h"
-#include "DEC_FunctionsTools.h"
 
 //-----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::IsNeutralized

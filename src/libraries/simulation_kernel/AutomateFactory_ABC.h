@@ -11,8 +11,8 @@
 #define __AutomateFactory_ABC_h_
 
 #include "tools/Resolver.h"
+#include "Entities/Automates/MIL_Automate.h"
 
-class MIL_Automate;
 class MIL_AutomateType;
 class MIL_Formation;
 

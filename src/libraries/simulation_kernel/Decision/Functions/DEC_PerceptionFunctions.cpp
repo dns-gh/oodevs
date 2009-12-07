@@ -19,7 +19,6 @@
 #include "Entities/Agents/Units/Radars/PHY_RadarClass.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Tools/MIL_Tools.h"
-#include "Decision/DEC_Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PerceptionFunctions::SetStealthFactor

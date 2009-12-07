@@ -12,6 +12,7 @@
 
 #include "game_asn/Simulation.h"
 #include "SimpleEntity.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "tools/Resolver.h"
 

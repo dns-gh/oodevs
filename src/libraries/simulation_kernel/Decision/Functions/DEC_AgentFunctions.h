@@ -14,7 +14,6 @@
 
 #include "MIL.h"
 
-class DEC_AutomateDecision;
 class DEC_Decision_ABC;
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;

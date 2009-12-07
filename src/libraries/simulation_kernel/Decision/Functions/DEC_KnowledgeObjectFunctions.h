@@ -13,11 +13,9 @@
 #define __DEC_KnowledgeObjectFunctions_h_
 
 #include "MIL.h"
-#include "DEC_FunctionsTools.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_ObjectAttributeCrossingSite.h"
-#include "Knowledge/DEC_Knowledge_ObjectAttributeSupplyRoute.h"
 
 class MIL_AgentPion;
 class DEC_Knowledge_Object;

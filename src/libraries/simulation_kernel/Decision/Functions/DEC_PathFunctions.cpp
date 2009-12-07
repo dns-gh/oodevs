@@ -23,10 +23,8 @@
 #include "Entities/MIL_Army.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
-#include "DEC_FunctionsTools.h"
 #include "MIL_AgentServer.h"
 #include "Tools/MIL_Tools.h"
-#include "Decision/DEC_Tools.h"
 #include "Decision/Knowledge/DEC_Rep_PathPoint.h"
 #include "Decision/Knowledge/DEC_Rep_PathPoint_Front.h"
 #include "Decision/Knowledge/DEC_Rep_PathPoint_Lima.h"
@@ -36,7 +34,7 @@
 // Name: DEC_PathFunctions::CreatePathToPoint
 // Created: MGD 2009-10-31
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPointBM( MIL_AgentPion& callerAgent, float x, float y, float z, int pathType )
+boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPointBM( MIL_AgentPion& callerAgent, float x, float y, float /*z*/, int pathType )
 {
     MT_Vector2D end( x, y );
     return CreatePathToPoint( callerAgent, &end, pathType );

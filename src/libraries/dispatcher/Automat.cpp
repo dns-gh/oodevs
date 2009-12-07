@@ -9,16 +9,17 @@
 
 #include "dispatcher_pch.h"
 #include "Automat.h"
-#include "Side.h"
-#include "Formation.h"
-#include "Model.h"
-#include "KnowledgeGroup.h"
-#include "ClientPublisher_ABC.h"
+
 #include "Agent.h"
-#include "DotationQuota.h"
-#include "ModelVisitor_ABC.h"
 #include "AutomatOrder.h"
+#include "ClientPublisher_ABC.h"
+#include "DotationQuota.h"
+#include "Formation.h"
+#include "KnowledgeGroup.h"
+#include "Model.h"
+#include "ModelVisitor_ABC.h"
 #include "Report.h"
+#include "Side.h"
 #include <boost/bind.hpp>
 
 using namespace dispatcher;

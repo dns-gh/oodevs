@@ -12,12 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_FunctionsTools.h"
 
-#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
-#include "Knowledge/MIL_KnowledgeGroup.h"
-#include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
-#include "Decision/DEC_Tools.h"
 #include "MIL_AgentServer.h"
 
 // =============================================================================

@@ -12,7 +12,6 @@
 #include "ClientPublisher_ABC.h"
 #include "Model.h"
 #include "Side.h"
-#include "Automat.h"
 #include "ModelVisitor_ABC.h"
 #include <boost/bind.hpp>
 

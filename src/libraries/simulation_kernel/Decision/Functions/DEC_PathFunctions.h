@@ -16,14 +16,10 @@
 #include <boost/shared_ptr.hpp>
 
 class MIL_AgentPion;
-class MIL_Automate;
 class MT_Vector2D;
-class DEC_Agent_Path;
 class DEC_Knowledge_Object;
-class DEC_PathResult;
 class DEC_Path_ABC;
 class DEC_PathPoint;
-class DEC_PathType;
 
 // =============================================================================
 // Created: NLD 2004-03-31

@@ -29,7 +29,6 @@
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Orders/MIL_Report.h"
-#include "Decision/DEC_Tools.h"
 
 using namespace human;
 // =============================================================================

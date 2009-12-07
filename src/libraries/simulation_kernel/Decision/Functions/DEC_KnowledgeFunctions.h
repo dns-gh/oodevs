@@ -17,8 +17,6 @@
 
 class DEC_Decision_ABC;
 class MIL_AgentPion;
-class MIL_Automate;
-class MIL_Fuseau;
 
 // =============================================================================
 // Created: NLD 2004-03-31

@@ -11,9 +11,7 @@
 #define __PopulationFactory_ABC_h_
 
 #include "tools/Resolver.h"
-
-class MIL_Population;
-class MIL_Population;
+#include "Entities/Populations/MIL_Population.h"
 
 namespace xml
 {

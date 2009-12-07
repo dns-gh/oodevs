@@ -13,10 +13,6 @@
 
 #include "MIL_EntityManager.h"
 
-#include "Effects/MIL_EffectManager.h"
-#include "Objects/MIL_ObjectManager.h"
-#include "Objects/MIL_ObjectFactory.h"
-#include "Objects/MIL_Object_ABC.h"
 #include "Agents/Units/Categories/PHY_NatureLevel.h"
 #include "Agents/Units/Categories/PHY_NatureAtlas.h"
 #include "Agents/Units/Categories/PHY_RoePopulation.h"
@@ -57,35 +53,35 @@
 #include "Agents/MIL_AgentPion.h"
 #include "Automates/MIL_AutomateType.h"
 #include "Automates/MIL_Automate.h"
+#include "Effects/MIL_EffectManager.h"
+#include "HLA/HLA_Federate.h"
+#include "Knowledge/MIL_KnowledgeGroupType.h"
+#include "MIL_Army.h"
+#include "MIL_Formation.h"
+#include "MIL_Singletons.h"
+#include "Network/NET_AsnException.h"
+#include "Network/NET_ASN_Messages.h"
+#include "Objects/MIL_FireClass.h"
+#include "Objects/MIL_MedicalTreatmentType.h"
+#include "Objects/MIL_NbcAgentType.h"
+#include "Objects/MIL_ObjectManager.h"
+#include "Objects/MIL_ObjectFactory.h"
+#include "Objects/MIL_Object_ABC.h"
+#include "Orders/MIL_LimaFunction.h"
+#include "Orders/MIL_Report.h"
+#include "Populations/MIL_PopulationType.h"
+#include "Populations/MIL_PopulationAttitude.h"
+#include "Populations/MIL_Population.h"
 #include "simulation_kernel/Decision/DEC_Workspace.h"
-
 #include "simulation_kernel/AgentFactory.h"
 #include "simulation_kernel/ArmyFactory.h"
 #include "simulation_kernel/AutomateFactory.h"
 #include "simulation_kernel/FormationFactory.h"
 #include "simulation_kernel/PopulationFactory.h"
 #include "simulation_kernel/Knowledge/KnowledgeGroupFactory.h"
-
-
 #include "Tools/MIL_IDManager.h"
-
-#include "Objects/MIL_FireClass.h"
-#include "Objects/MIL_NbcAgentType.h"
-#include "Objects/MIL_MedicalTreatmentType.h"
-
-#include "Populations/MIL_PopulationType.h"
-#include "Populations/MIL_PopulationAttitude.h"
-#include "Populations/MIL_Population.h"
-#include "Knowledge/MIL_KnowledgeGroupType.h"
-#include "Orders/MIL_LimaFunction.h"
-#include "Orders/MIL_Report.h"
 #include "Tools/MIL_ProfilerMgr.h"
-#include "MIL_Army.h"
-#include "MIL_Formation.h"
-#include "Network/NET_ASN_Messages.h"
-#include "HLA/HLA_Federate.h"
-#include "Network/NET_AsnException.h"
-#include "MIL_Singletons.h"
+
 #include <xeumeuleu/xml.h>
 
 

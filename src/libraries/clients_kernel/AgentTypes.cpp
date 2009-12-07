@@ -9,20 +9,21 @@
 
 #include "clients_kernel_pch.h"
 #include "AgentTypes.h"
+
 #include "AgentType.h"
+#include "AutomatType.h"
 #include "ComponentType.h"
 #include "DecisionalModel.h"
-#include "SensorType.h"
-#include "AutomatType.h"
-#include "PopulationType.h"
 #include "DotationType.h"
-#include "MissionFactory.h"
-#include "SymbolFactory.h"
-#include "KnowledgeGroupType.h"
-#include "MissionType.h"
-#include "FragOrderType.h"
-#include "OrderContext.h"
 #include "FileLoader.h"
+#include "FragOrderType.h"
+#include "KnowledgeGroupType.h"
+#include "MissionFactory.h"
+#include "MissionType.h"
+#include "OrderContext.h"
+#include "PopulationType.h"
+#include "SensorType.h"
+#include "SymbolFactory.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.h>
 

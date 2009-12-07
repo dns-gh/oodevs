@@ -14,12 +14,10 @@
 
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Decision/DEC_Tools.h"
 #include "Entities/MIL_Army.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
-#include "Knowledge/MIL_KnowledgeGroup.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgePopulationFunctions::Recon

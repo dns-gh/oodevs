@@ -12,18 +12,13 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_MiscFunctions.h"
 
-#include "MIL_AgentServer.h"
 #include "Entities/MIL_Entity_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Reinforcement/PHY_RoleInterface_Reinforcement.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Orders/MIL_Mission_ABC.h"
-#include "Entities/Orders/MIL_AutomateMission.h"
-#include "Entities/Orders/MIL_PionMission.h"
-#include "Decision/DEC_Tools.h"
 #include "Decision/DEC_Representations.h"
-#include "simulation_terrain/TER_World.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_MiscFunctions::SetCurrentSpeedModificator

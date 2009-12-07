@@ -11,9 +11,7 @@
 #define __ArmyFactory_ABC_h_
 
 #include "tools/Resolver.h"
-
-class MIL_Army;
-class MIL_Army;
+#include "Entities/MIL_Army.h"
 
 namespace xml
 {

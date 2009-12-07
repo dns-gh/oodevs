@@ -16,6 +16,7 @@
 #include "MIL_Agent_ABC.h"
 #include "MIL_AgentTypePion.h"
 #include "Entities/Orders/MIL_PionOrderManager.h"
+#include "Network/NET_ASN_Messages.h"
 
 #include "tools/Resolver.h"
 

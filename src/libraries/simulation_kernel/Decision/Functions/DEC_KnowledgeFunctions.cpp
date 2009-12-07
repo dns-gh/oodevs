@@ -12,15 +12,11 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgeFunctions.h"
 
-#include "DEC_FunctionsTools.h"
-#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Automates/MIL_Automate.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Orders/MIL_Fuseau.h"
-#include "Decision/DEC_Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetDetectedAgentsInFuseau

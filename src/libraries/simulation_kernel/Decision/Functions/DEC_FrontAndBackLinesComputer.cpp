@@ -13,12 +13,10 @@
 
 #include "DEC_FrontAndBackLinesComputer.h"
 #include "MIL_AgentServer.h"
-#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Automates/MIL_Automate.h"
-#include "Entities/Automates/DEC_AutomateDecision.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Orders/MIL_Fuseau.h"
-#include "Decision/DEC_Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_FrontAndBackLinesComputer constructor

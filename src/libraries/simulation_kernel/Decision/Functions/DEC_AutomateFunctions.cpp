@@ -14,26 +14,16 @@
 
 #include "DEC_GeometryFunctions.h"
 #include "Decision/DEC_Decision_ABC.h"
-#include "Decision/DEC_Tools.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
-#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects.h"
-#include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
-#include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h"
-#include "Entities/Agents/Roles/Transported/PHY_RolePion_Transported.h"
-#include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/MIL_Army.h"
-#include "Entities/MIL_EntityManager.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
-#include "DEC_FunctionsTools.h"
     
 
 // -----------------------------------------------------------------------------

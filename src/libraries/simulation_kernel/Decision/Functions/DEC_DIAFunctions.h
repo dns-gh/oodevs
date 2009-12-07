@@ -14,10 +14,7 @@
 
 #include "MIL.h"
 class MIL_Mission_ABC;
-class DEC_RolePion_Decision;
-class DEC_AutomateDecision;
 class DEC_Path_ABC;
-class DEC_PathPoint;
 
 //=============================================================================
 // Created: NLD 2002-12-24

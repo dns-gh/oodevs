@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_CommunicationFunctions.h"
-#include "Decision/DEC_Tools.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"

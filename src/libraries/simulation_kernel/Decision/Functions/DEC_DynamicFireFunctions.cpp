@@ -15,17 +15,12 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Reinforcement/PHY_RolePion_Reinforcement.h"
 #include "Entities/Objects/MIL_FireFunctor.h"
-#include "Entities/Objects/MIL_FireClass.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
-#include "Entities/MIL_Army.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Entities/Objects/FireAttribute.h"
 #include "Knowledge/DEC_KS_ObjectInteraction.h"
-#include "Decision/DEC_Tools.h"
 
 namespace
 {

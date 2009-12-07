@@ -11,6 +11,7 @@
 #define __MIL_LimaOrder_h_
 
 class MIL_LimaFunction;
+struct ASN1T_LimaOrder;
 
 // =============================================================================
 /** @class  MIL_LimaOrder

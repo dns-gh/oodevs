@@ -10,7 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_TelepathyFunctions.h"
 #include "Decision/DEC_Decision_ABC.h"
-#include "Decision/DEC_Tools.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include <directia/Brain.h>
 

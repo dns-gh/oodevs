@@ -9,10 +9,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_IntelligenceFunctions.h"
-#include "Decision/DEC_Tools.h"
 #include "Entities/Orders/MIL_IntelligenceOrder.h"
 #include "Entities/Orders/MIL_IntelligenceOrdersVisitor_ABC.h"
-#include "Entities/Orders/MIL_OrderManager_ABC.h"
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "Entities/Automates/MIL_Automate.h"
 

@@ -9,13 +9,14 @@
 
 #include "dispatcher_pch.h"
 #include "Side.h"
+
 #include "ClientPublisher_ABC.h"
-#include "Model.h"
 #include "Formation.h"
 #include "KnowledgeGroup.h"
+#include "Model.h"
+#include "ModelVisitor_ABC.h"
 #include "Object.h"
 #include "Population.h"
-#include "ModelVisitor_ABC.h"
 #include <boost/bind.hpp>
 
 using namespace dispatcher;

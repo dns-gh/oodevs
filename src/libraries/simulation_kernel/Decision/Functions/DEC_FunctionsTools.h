@@ -14,12 +14,7 @@
 
 #include "MIL.h"
 
-class MIL_KnowledgeGroup;
-class MIL_Army_ABC;
-class MIL_AgentPion;
 class MIL_Object_ABC;
-class DEC_Knowledge_Agent;
-class DEC_Knowledge_Population;
 
 // =============================================================================
 // Created: NLD 2004-03-31

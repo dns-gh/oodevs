@@ -16,6 +16,8 @@
 
 class MIL_AgentPion;
 class MIL_MissionType_ABC;
+struct ASN1T_MsgFragOrder;
+struct ASN1T_MsgUnitOrder;
 
 //=============================================================================
 // Created: NLD 2003-01-10

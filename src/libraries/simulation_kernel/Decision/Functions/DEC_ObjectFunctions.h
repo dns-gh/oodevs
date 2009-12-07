@@ -15,8 +15,6 @@
 #include "MIL.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 
-class MIL_AgentPion;
-class MIL_Automate;
 class DEC_Decision_ABC;
 class DEC_Gen_Object;
 

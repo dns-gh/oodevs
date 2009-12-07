@@ -12,18 +12,11 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_NbcFunctions.h"
 
-#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Agents/Roles/Reinforcement/PHY_RolePion_Reinforcement.h"
-#include "Entities/Objects/MIL_NBCType.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
-#include "Entities/MIL_Army.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
-#include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Entities/Objects/NBCTypeAttribute.h"
 #include "Knowledge/DEC_KS_ObjectInteraction.h"
-#include "Decision/DEC_Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_NbcFunctions::AnalyzeNbcAgent

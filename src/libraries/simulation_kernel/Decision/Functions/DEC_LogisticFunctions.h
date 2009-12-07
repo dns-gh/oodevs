@@ -22,7 +22,6 @@ class MIL_Automate;
 class PHY_ComposanteTypePion;
 class PHY_ComposantePion;
 class PHY_HumanWound;
-class PHY_DotationType;
 
 namespace
 {

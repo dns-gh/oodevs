@@ -23,11 +23,9 @@
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
-#include "Entities/Populations/DEC_PopulationKnowledge.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
-#include "Tools/MIL_Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::DecisionalState

@@ -13,7 +13,6 @@
 #include "Model.h"
 #include "ClientPublisher_ABC.h"
 #include "ModelVisitor_ABC.h"
-#include "clients_kernel/Automat_ABC.h"
 #include <boost/bind.hpp>
 
 using namespace dispatcher;

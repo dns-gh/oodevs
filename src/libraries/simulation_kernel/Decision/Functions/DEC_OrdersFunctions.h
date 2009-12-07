@@ -13,13 +13,11 @@
 #define __DEC_OrdersFunctions_h_
 
 #include "MIL.h"
-#include "MT_Tools/MT_Random.h"
 
 class DEC_Decision_ABC;
 class MIL_AgentPion;
 class MIL_Automate;
 class MIL_Mission_ABC;
-class MIL_PionMission;
 class MIL_AutomateMission;
 class MIL_Fuseau;
 class MT_Vector2D;

@@ -11,6 +11,7 @@
 #define __Formation_h_
 
 #include "game_asn/Simulation.h"
+#include "Automat.h"
 #include "SimpleEntity.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "tools/Resolver.h"

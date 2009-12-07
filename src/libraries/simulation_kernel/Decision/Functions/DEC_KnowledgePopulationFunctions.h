@@ -15,7 +15,6 @@
 #include "MIL.h"
 
 class MIL_AgentPion;
-class DEC_Knowledge_Object;
 
 // =============================================================================
 // Created: NLD 2004-03-31

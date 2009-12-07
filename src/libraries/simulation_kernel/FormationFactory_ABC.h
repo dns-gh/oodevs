@@ -11,9 +11,9 @@
 #define __FormationFactory_ABC_h_
 
 #include "tools/Resolver.h"
+#include "Entities/MIL_Formation.h"
 
 class MIL_Army;
-class MIL_Formation;
 
 namespace xml
 {

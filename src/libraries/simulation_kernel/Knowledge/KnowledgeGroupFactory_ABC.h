@@ -11,9 +11,9 @@
 #define __KnowledgeGroupFactory_ABC_h_
 
 #include "tools/Resolver.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
 
 class MIL_Army;
-class MIL_KnowledgeGroup;
 
 namespace xml
 {

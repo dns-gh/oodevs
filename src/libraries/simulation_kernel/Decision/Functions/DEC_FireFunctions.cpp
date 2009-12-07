@@ -12,15 +12,11 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_FireFunctions.h"
 
-#include "DEC_FunctionsTools.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_RoleAction_IndirectFiring.h"
 #include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
-#include "Knowledge/MIL_KnowledgeGroup.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Tools/MIL_Tools.h"
-#include "Decision/DEC_Tools.h"
 
 using namespace firing;
 // -----------------------------------------------------------------------------

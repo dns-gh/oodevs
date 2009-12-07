@@ -13,12 +13,8 @@
 #define __DEC_MiscFunctions_h_
 
 #include "MIL.h"
-#include "MT_Tools/MT_Random.h"
 #include <boost/shared_ptr.hpp>
 
-#include "simulation_orders/MIL_MissionParameter_ABC.h"
-#include "Entities/Orders/MIL_Report.h"
-#include "Entities/Orders/MIL_MissionParameterFactory.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Network/NET_ASN_Tools.h"
 #include "game_asn/ASN_Delete.h"
@@ -26,7 +22,6 @@
 class DEC_Decision_ABC;
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
-class DEC_Knowledge_Population;
 class DEC_PathPoint;
 class MIL_AgentPion;
 class MIL_Entity_ABC;
