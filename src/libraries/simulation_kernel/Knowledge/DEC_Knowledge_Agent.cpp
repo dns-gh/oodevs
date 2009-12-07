@@ -108,13 +108,13 @@ namespace boost
     namespace serialization
     {
         template< typename Archive >
-        inline void serialize( Archive& file, DEC_Knowledge_Agent::T_PerceptionSourceMap& map, const uint nVersion )
+        inline void serialize( Archive& file, DEC_Knowledge_Agent::T_PerceptionSourceMap& map, const unsigned int nVersion )
         {
             split_free( file, map, nVersion); 
         }
 
         template < typename Archive >
-        void save( Archive& file, const DEC_Knowledge_Agent::T_PerceptionSourceMap& map, const uint )
+        void save( Archive& file, const DEC_Knowledge_Agent::T_PerceptionSourceMap& map, const unsigned int )
         {
             unsigned size = map.size();
             file << size;
@@ -128,9 +128,9 @@ namespace boost
         }
         
         template < typename Archive >
-        void load( Archive& file, DEC_Knowledge_Agent::T_PerceptionSourceMap& g, const uint )
+        void load( Archive& file, DEC_Knowledge_Agent::T_PerceptionSourceMap& g, const unsigned int )
         {
-            uint nNbr;
+            unsigned int nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {
@@ -138,7 +138,7 @@ namespace boost
                 const PHY_PerceptionLevel* pLevel;
                 
                 file >> pAutomate;
-                uint nID;
+                unsigned int nID;
                 file >> nID;
                 pLevel = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
                 
@@ -152,18 +152,18 @@ namespace boost
 // Name: DEC_Knowledge_Agent::load
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Agent::load( MIL_CheckPointInArchive& file, const uint )
+void DEC_Knowledge_Agent::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
          >> const_cast< MIL_KnowledgeGroup*& >( pKnowledgeGroup_ )
          >> pAgentKnown_
-         >> const_cast< uint& >( nID_ )
+         >> const_cast< unsigned int& >( nID_ )
          >> dataDetection_
          >> dataRecognition_
          >> dataIdentification_
          >> nTimeLastUpdate_;
     
-    uint nID;
+    unsigned int nID;
     file >> nID;
     pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
     
@@ -187,7 +187,7 @@ void DEC_Knowledge_Agent::load( MIL_CheckPointInArchive& file, const uint )
 // Name: DEC_Knowledge_Agent::save
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Agent::save( MIL_CheckPointOutArchive& file, const uint ) const
+void DEC_Knowledge_Agent::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     unsigned current  = pCurrentPerceptionLevel_->GetID(),
              previous = pPreviousPerceptionLevel_->GetID(),
@@ -247,7 +247,7 @@ void DEC_Knowledge_Agent::Prepare()
 void DEC_Knowledge_Agent::Extrapolate()
 {
     assert( pAgentKnown_ );
-    const uint nCurrentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    const unsigned int nCurrentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     if( nTimeExtrapolationEnd_ > nCurrentTimeStep || bLocked_ )
     {
         ChangeRelevance( 1. );
@@ -311,7 +311,7 @@ void DEC_Knowledge_Agent::Update( const DEC_Knowledge_AgentPerception& perceptio
     dataIdentification_.Update( perception.GetIdentificationData() );
 
     UpdatePerceptionSources( perception );
-    nTimeExtrapolationEnd_ = nTimeLastUpdate_ + ( uint ) pKnowledgeGroup_->GetType().GetKnowledgeAgentExtrapolationTime();
+    nTimeExtrapolationEnd_ = nTimeLastUpdate_ + ( unsigned int ) pKnowledgeGroup_->GetType().GetKnowledgeAgentExtrapolationTime();
 }   
 
 // -----------------------------------------------------------------------------
@@ -409,7 +409,7 @@ void DEC_Knowledge_Agent::WriteMsgPerceptionSources( ASN1T_MsgUnitKnowledgeUpdat
     if( !perceptionLevelPerAutomateMap_.empty() )
     {
         ASN1T_AutomatPerception* pPerceptions = new ASN1T_AutomatPerception[ perceptionLevelPerAutomateMap_.size() ]; //$$ RAM
-        uint i = 0;
+        unsigned int i = 0;
         for( CIT_PerceptionSourceMap it = perceptionLevelPerAutomateMap_.begin(); it != perceptionLevelPerAutomateMap_.end(); ++it )
         {
             pPerceptions[i].oid_compagnie        = it->first->GetID();
@@ -636,8 +636,8 @@ MT_Float DEC_Knowledge_Agent::GetDangerosity( const MIL_AgentPion& target ) cons
     /*MT_Float rMajorWeight    = 0;
     MT_Float rNonMajorWeight = 0;
     
-    uint nNbrInitialMajorComposantes    = target.GetUnitType().GetNbrInitialMajorComposantes();
-    uint nNbrInitialNonMajorComposantes = target.GetUnitType().GetNbrInitialComposantes() - target.GetUnitType().GetNbrInitialMajorComposantes();
+    unsigned int nNbrInitialMajorComposantes    = target.GetUnitType().GetNbrInitialMajorComposantes();
+    unsigned int nNbrInitialNonMajorComposantes = target.GetUnitType().GetNbrInitialComposantes() - target.GetUnitType().GetNbrInitialMajorComposantes();
 
     if( nNbrInitialMajorComposantes && nNbrInitialNonMajorComposantes )
     {
@@ -748,7 +748,7 @@ MT_Float DEC_Knowledge_Agent::GetMaxRangeToFireOn( const MIL_AgentPion& target, 
 const DEC_Knowledge_AgentComposante* DEC_Knowledge_Agent::GetMajorComposante() const
 {
     const DEC_Knowledge_AgentComposante* pMajorComposante = 0; 
-    uint nMajorScore = 0;
+    unsigned int nMajorScore = 0;
     const T_KnowledgeComposanteVector& composantes = dataRecognition_.GetComposantes();
     for( CIT_KnowledgeComposanteVector it = composantes.begin(); it != composantes.end(); ++it )
     {
@@ -879,7 +879,7 @@ E_Tristate DEC_Knowledge_Agent::IsAFriend( const MIL_Army_ABC& army ) const
 // Name: DEC_Knowledge_Agent::GetID
 // Created: NLD 2004-03-24
 // -----------------------------------------------------------------------------
-uint DEC_Knowledge_Agent::GetID() const
+unsigned int DEC_Knowledge_Agent::GetID() const
 {
     return nID_;    
 }

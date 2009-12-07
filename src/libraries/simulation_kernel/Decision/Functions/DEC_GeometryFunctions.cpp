@@ -594,7 +594,6 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePo
             return result;
     }
 
-    assert( positionCount >= 2 && !( positionCount % 2 ) );
     result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( vCenter + vSupport1 ) ) );
     result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( vCenter + vSupport2 ) ) );
     for( positionCount -= 2; positionCount; positionCount -= 2 )
@@ -865,16 +864,14 @@ std::vector< boost::shared_ptr< TER_Localisation > > DEC_GeometryFunctions::Spli
         localisation.GetPointsClippedBetweenTwoLines( backBound, frontBound, points );
 
         if( points.empty() )
-            break;
+            return splitLocVector;
 
         splitLocVector.push_back( boost::shared_ptr< TER_Localisation >( new TER_Localisation( TER_Localisation::ePolygon, points ) ) );
 
         vOrigin += vTranslation;
         backBound  = frontBound;
         frontBound.MT_Droite::MT_Droite( vOrigin, vOrigin + vLineDirection );
-    };
-
-    return splitLocVector;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -926,7 +923,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeKnowledgeAgentBar
 {
     boost::shared_ptr< MT_Vector2D > pResult( new MT_Vector2D( 0., 0. ) );
 
-    uint nNbr = 0;
+    unsigned int nNbr = 0;
     for( std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >::const_iterator it = vKnowledges.begin(); it != vKnowledges.end(); ++it )
     {
         boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = *it;
@@ -1191,7 +1188,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::SplitList
             result.reserve( nNbrParts + 1 );
             const MT_Float rPartSize = polyLine.Magnitude() / nNbrParts;
             MT_Float rDist = 0.;
-            for( uint i = 0; i < nNbrParts + 1; ++i, rDist+= rPartSize )
+            for( unsigned int i = 0; i < nNbrParts + 1; ++i, rDist+= rPartSize )
             {
                 boost::shared_ptr< MT_Vector2D > point( new MT_Vector2D( polyLine.GetPointAt( rDist ) ) );
                 result.push_back( point );
@@ -1205,7 +1202,7 @@ namespace
 {
     float ComputeClosedTerrainRatio( const TER_Localisation& location )
     {
-        uint nForestSurface = 0, nEmptySurface  = 0, nUrbanSurface  = 0;
+        unsigned int nForestSurface = 0, nEmptySurface  = 0, nUrbanSurface  = 0;
         MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetVisionObjectsInSurface( location, nEmptySurface, nForestSurface, nUrbanSurface );
         return float( nForestSurface + nUrbanSurface ) / float( nForestSurface + nUrbanSurface + nEmptySurface );
     }
@@ -1306,11 +1303,11 @@ boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::ConvertFuseauToLoca
 MT_Vector2D DEC_GeometryFunctions::_ComputeAutomatesBarycenter( const std::vector< DEC_Decision_ABC* >& automates )
 {
     MT_Vector2D barycenter;
-    uint nNbrElt = 0;
+    unsigned int nNbrElt = 0;
     for( std::vector< DEC_Decision_ABC* >::const_iterator it = automates.begin(); it != automates.end(); ++it )
     {
         MT_Vector2D tmp;
-        if( reinterpret_cast< DEC_Decision_ABC& >( **it ).GetAutomate().GetAlivePionsBarycenter( tmp ) )// $$$$ LDC: Remove DIA_TypedObjects
+        if( ( **it ).GetAutomate().GetAlivePionsBarycenter( tmp ) )
         {
             barycenter += tmp;
             ++ nNbrElt;

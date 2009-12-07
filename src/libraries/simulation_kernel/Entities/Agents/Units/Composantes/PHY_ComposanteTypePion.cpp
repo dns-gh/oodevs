@@ -96,7 +96,7 @@ void PHY_ComposanteTypePion::Initialize( const MIL_Time_ABC& time, xml::xistream
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::ReadElement( xml::xistream& xis, const MIL_Time_ABC& time )
 {
-    std::set< uint > ids_;
+    std::set< unsigned int > ids_;
     std::string strComposanteType;
     xis >> xml::attribute( "name", strComposanteType );
     PHY_ComposanteTypePion*& pComposanteType = composantesTypes_[ strComposanteType ];
@@ -580,7 +580,7 @@ void PHY_ComposanteTypePion::ReadRepairing( xml::xistream& xis )
     {
         if( rTime <= 0 )
             xis.error( "category: max-reparation-time <= 0" );
-        ntiCapability.nMaxTime_ = (uint)MIL_Tools::ConvertSecondsToSim( rTime );
+        ntiCapability.nMaxTime_ = (unsigned int)MIL_Tools::ConvertSecondsToSim( rTime );
     }
     
     if( !ntiCapability.bMobility_ && !ntiCapability.bElectronic_ )
@@ -778,7 +778,7 @@ void PHY_ComposanteTypePion::ReadLogistic( xml::xistream& xis )
 // Name: PHY_ComposanteTypePion::InstanciateComposante
 // Created: NLD 2004-08-12
 // -----------------------------------------------------------------------------
-PHY_ComposantePion& PHY_ComposanteTypePion::InstanciateComposante( PHY_RolePion_Composantes& role, uint nNbrHumanInCrew, bool bMajor, bool bLoadable, bool bCanBePartOfConvoy ) const
+PHY_ComposantePion& PHY_ComposanteTypePion::InstanciateComposante( PHY_RolePion_Composantes& role, unsigned int nNbrHumanInCrew, bool bMajor, bool bLoadable, bool bCanBePartOfConvoy ) const
 {
     return *new PHY_ComposantePion( time_, *this, role, nNbrHumanInCrew, bMajor, bLoadable, bCanBePartOfConvoy );
 }
@@ -1205,7 +1205,7 @@ bool PHY_ComposanteTypePion::CanHealHuman( const PHY_Human& human ) const
 // Name: PHY_ComposanteTypePion::GetHealingTime
 // Created: NLD 2005-01-12
 // -----------------------------------------------------------------------------
-uint PHY_ComposanteTypePion::GetHealingTime( const PHY_Human& human ) const
+unsigned int PHY_ComposanteTypePion::GetHealingTime( const PHY_Human& human ) const
 {
     if( human.IsContaminated() )
     {
@@ -1225,18 +1225,18 @@ uint PHY_ComposanteTypePion::GetHealingTime( const PHY_Human& human ) const
         return PHY_HumanWound::GetMentalDiseaseHealingTime();
     }
     assert( false );
-    return std::numeric_limits< uint >::max();
+    return std::numeric_limits< unsigned int >::max();
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::Heal
 // Created: NLD 2005-01-12
 // -----------------------------------------------------------------------------
-uint PHY_ComposanteTypePion::Heal( PHY_Human& human ) const
+unsigned int PHY_ComposanteTypePion::Heal( PHY_Human& human ) const
 {
     if( human.IsContaminated() )
     {
-        assert( bCanHealContaminated_  );
+        assert( bCanHealContaminated_ );
         human.HealContamination();
         return PHY_HumanWound::GetContaminatedRestingTime();
     }
@@ -1244,7 +1244,7 @@ uint PHY_ComposanteTypePion::Heal( PHY_Human& human ) const
     if( human.IsWounded() )
     {
         assert( woundHealingCapabilities_[ human.GetWound().GetID() ] );
-        const uint nRestingTime = human.GetWound().GetRestingTime();
+        const unsigned int nRestingTime = human.GetWound().GetRestingTime();
         human.HealWound();
         return nRestingTime;
     }

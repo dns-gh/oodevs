@@ -144,7 +144,6 @@ DEC_PopulationDecision& MIL_Population::GetDecision()
     return GetRole< DEC_PopulationDecision>();
 }
 
-
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================

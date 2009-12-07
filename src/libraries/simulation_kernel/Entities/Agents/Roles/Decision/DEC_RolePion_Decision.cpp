@@ -185,10 +185,7 @@ void DEC_RolePion_Decision::load( MIL_CheckPointInArchive& file, const uint )
     try
     {
         SetModel( model );
-        
-        std::string strName;
-        file >> strName;
-//        GetVariable( nDIANameIdx_    ).SetValue( strName ); // $$$$LDC: FIXME Set member data
+        file >> name_;
         
         DEC_AutomateDecision* pDecision;
         file >> pDecision;

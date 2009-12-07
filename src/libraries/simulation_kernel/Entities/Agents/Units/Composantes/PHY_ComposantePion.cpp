@@ -279,7 +279,6 @@ void PHY_ComposantePion::ReinitializeState( const PHY_ComposanteState& tmpState 
 double   PHY_ComposantePion::GetMaxSpeed( const TerrainData& data ) const
 {
     assert( pType_ );
-    
     return CanMove() ? pType_->GetMaxSpeed( data ) : 0.;
 }
 

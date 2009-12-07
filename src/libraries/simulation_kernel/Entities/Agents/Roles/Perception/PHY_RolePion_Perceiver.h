@@ -198,6 +198,8 @@ private:
     void ComputeMainPerceptionDirection( MT_Vector2D& vMainPerceptionDirection ) const;
 
     MT_Float    GetMaxObjectPerceptionDistance() const;
+    
+    void EnsurePerceptionRecoLocalisation();
     //@}
 
 private:

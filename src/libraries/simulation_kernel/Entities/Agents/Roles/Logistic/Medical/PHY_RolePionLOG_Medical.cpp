@@ -99,13 +99,13 @@ namespace boost
         // =============================================================================
         template< typename Archive >
         inline
-        void serialize( Archive& file, T_MedicalPriorityVector& vector, const uint nVersion )
+        void serialize( Archive& file, T_MedicalPriorityVector& vector, const unsigned int nVersion )
         {
             split_free( file, vector, nVersion );
         }
 
         template< typename Archive >
-        void save( Archive& file, const T_MedicalPriorityVector& vector, const uint )
+        void save( Archive& file, const T_MedicalPriorityVector& vector, const unsigned int )
         {
             unsigned size = vector.size();
             file << size;
@@ -117,14 +117,14 @@ namespace boost
         }
 
         template< typename Archive >
-        void load( Archive& file, T_MedicalPriorityVector& vector, const uint )
+        void load( Archive& file, T_MedicalPriorityVector& vector, const unsigned int )
         {
-            uint nNbr;
+            unsigned int nNbr;
             file >> nNbr;
             vector.reserve( nNbr );
             while ( nNbr-- )
             {
-                uint nID;
+                unsigned int nID;
                 file >> nID;
                 vector.push_back( PHY_HumanWound::Find( nID ) );
             }
@@ -135,13 +135,13 @@ namespace boost
         // =============================================================================
         template< typename Archive >
         inline
-        void serialize( Archive& file, T_AutomateVector& vector, const uint nVersion )
+        void serialize( Archive& file, T_AutomateVector& vector, const unsigned int nVersion )
         {
             split_free( file, vector, nVersion );
         }
         
         template< typename Archive >
-        void save( Archive& file, const T_AutomateVector& vector, const uint )
+        void save( Archive& file, const T_AutomateVector& vector, const unsigned int )
         {
             unsigned size = vector.size();
             file << size;
@@ -150,9 +150,9 @@ namespace boost
         }
         
         template< typename Archive >
-        void load( Archive& file, T_AutomateVector& vector, const uint )
+        void load( Archive& file, T_AutomateVector& vector, const unsigned int )
         {
-            uint nNbr;
+            unsigned int nNbr;
             file >> nNbr;
             vector.reserve( nNbr );
             while ( nNbr-- )
@@ -168,13 +168,13 @@ namespace boost
         // =============================================================================
         template< typename Archive >
         inline
-        void serialize( Archive& file, PHY_RolePionLOG_Medical::T_EvacuationAmbulancesMMap& mmap, const uint nVersion )
+        void serialize( Archive& file, PHY_RolePionLOG_Medical::T_EvacuationAmbulancesMMap& mmap, const unsigned int nVersion )
         {
             split_free( file, mmap, nVersion );
         }
         
         template< typename Archive >
-        void save( Archive& file, const PHY_RolePionLOG_Medical::T_EvacuationAmbulancesMMap& mmap, const uint )
+        void save( Archive& file, const PHY_RolePionLOG_Medical::T_EvacuationAmbulancesMMap& mmap, const unsigned int )
         {
             unsigned size = mmap.size();
             file << size;
@@ -186,9 +186,9 @@ namespace boost
         }
         
         template< typename Archive >
-        void load( Archive& file, PHY_RolePionLOG_Medical::T_EvacuationAmbulancesMMap& mmap, const uint )
+        void load( Archive& file, PHY_RolePionLOG_Medical::T_EvacuationAmbulancesMMap& mmap, const unsigned int )
         {
-            uint nNbr;
+            unsigned int nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {
@@ -207,13 +207,13 @@ namespace boost
         // =============================================================================
         template< typename Archive >
         inline
-        void serialize( Archive& file, PHY_RolePionLOG_Medical::T_CollectionAmbulancesSet& set, const uint nVersion )
+        void serialize( Archive& file, PHY_RolePionLOG_Medical::T_CollectionAmbulancesSet& set, const unsigned int nVersion )
         {
             split_free( file, set, nVersion );
         }
         
         template< typename Archive >
-        void save( Archive& file, const PHY_RolePionLOG_Medical::T_CollectionAmbulancesSet& set, const uint )
+        void save( Archive& file, const PHY_RolePionLOG_Medical::T_CollectionAmbulancesSet& set, const unsigned int )
         {
             unsigned size = set.size();
             file << size;
@@ -222,9 +222,9 @@ namespace boost
         }
         
         template< typename Archive >
-        void load( Archive& file, PHY_RolePionLOG_Medical::T_CollectionAmbulancesSet& set, const uint )
+        void load( Archive& file, PHY_RolePionLOG_Medical::T_CollectionAmbulancesSet& set, const unsigned int )
         {
-            uint nNbr;
+            unsigned int nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {
@@ -241,7 +241,7 @@ namespace boost
 // Name: PHY_RolePionLOG_Medical::load
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Medical::load( MIL_CheckPointInArchive& file, const uint )
+void PHY_RolePionLOG_Medical::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< PHY_RoleInterface_Medical >( *this )
 		 >> bSystemEnabled_
@@ -253,7 +253,7 @@ void PHY_RolePionLOG_Medical::load( MIL_CheckPointInArchive& file, const uint )
          >> collectionAmbulances_
          >> reservations_;
 
-    uint nNbr;
+    unsigned int nNbr;
     file >> nNbr;
     consigns_.reserve( nNbr );
     while ( nNbr-- )
@@ -272,7 +272,7 @@ void PHY_RolePionLOG_Medical::load( MIL_CheckPointInArchive& file, const uint )
 // Name: PHY_RolePionLOG_Medical::save
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Medical::save( MIL_CheckPointOutArchive& file, const uint ) const
+void PHY_RolePionLOG_Medical::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< PHY_RoleInterface_Medical >( *this )
 		 << bSystemEnabled_
@@ -353,7 +353,6 @@ PHY_MedicalCollectionAmbulance* PHY_RolePionLOG_Medical::GetAvailableCollectionA
             return &ambulance;
     }
 
-
     PHY_ComposantePredicate1< PHY_Human > predicate( &PHY_ComposantePion::CanCollectCasualty, consign.GetHumanState().GetHuman() );
     GetComponentFunctor functor( predicate );
     pion_.Execute( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
@@ -374,7 +373,6 @@ PHY_MedicalCollectionAmbulance* PHY_RolePionLOG_Medical::GetAvailableCollectionA
 // -----------------------------------------------------------------------------
 PHY_ComposantePion* PHY_RolePionLOG_Medical::GetAvailableDoctorForDiagnosing() const
 {
-
     PHY_ComposantePredicate predicate( &PHY_ComposantePion::CanDiagnoseHumans );
     GetComponentFunctor functor( predicate );
     pion_.Execute( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
@@ -399,7 +397,6 @@ PHY_ComposantePion* PHY_RolePionLOG_Medical::GetAvailableDoctorForSorting() cons
 // -----------------------------------------------------------------------------
 PHY_ComposantePion* PHY_RolePionLOG_Medical::GetAvailableDoctorForHealing( const PHY_Human& human ) const
 {
-
     PHY_ComposantePredicate1< PHY_Human > predicate( &PHY_ComposantePion::CanHealHuman, human );
     GetComponentFunctor functor( predicate );
     pion_.Execute( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
@@ -424,7 +421,6 @@ bool PHY_RolePionLOG_Medical::HasUsableEvacuationAmbulance( const PHY_Human& hum
 // -----------------------------------------------------------------------------
 bool PHY_RolePionLOG_Medical::HasUsableCollectionAmbulance( const PHY_Human& human ) const
 {
-
     PHY_ComposanteTypePredicate1< PHY_Human > predicate( &PHY_ComposanteTypePion::CanCollectCasualty, human );
     HasUsableComponentFunctor functor( predicate );
     pion_.Execute( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
@@ -437,7 +433,6 @@ bool PHY_RolePionLOG_Medical::HasUsableCollectionAmbulance( const PHY_Human& hum
 // -----------------------------------------------------------------------------
 bool PHY_RolePionLOG_Medical::HasUsableDoctorForSorting() const
 {
-
     PHY_ComposanteTypePredicate predicate( &PHY_ComposanteTypePion::CanSortHumans );
     HasUsableComponentFunctor functor( predicate );
     pion_.Execute( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
@@ -453,7 +448,6 @@ bool PHY_RolePionLOG_Medical::HasUsableDoctorForHealing( const PHY_Human& human,
     if( !bBypassPriorities && human.IsWounded() && std::find( priorities_.begin(), priorities_.end(), &human.GetWound() ) == priorities_.end() )
         return false;
 
-
     PHY_ComposanteTypePredicate1< PHY_Human > predicate( &PHY_ComposanteTypePion::CanHealHuman, human );        
     HasUsableComponentFunctor functor( predicate );
     pion_.Execute( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
@@ -466,7 +460,6 @@ bool PHY_RolePionLOG_Medical::HasUsableDoctorForHealing( const PHY_Human& human,
 // -----------------------------------------------------------------------------
 MIL_AutomateLOG& PHY_RolePionLOG_Medical::GetAutomate() const
 {
-
     return pion_.GetLogAutomate();
 }
 
@@ -607,7 +600,6 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForEvacuation( const PHY_Human&
     if( !bSystemEnabled_ || !HasUsableEvacuationAmbulance( human ) )
         return std::numeric_limits< int >::min();
 
-
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate1< PHY_Human > predicate( &PHY_ComposantePion::CanEvacuateCasualty, &PHY_ComposanteTypePion::CanEvacuateCasualty, human );
     GetComponentUseFunctor functorOnComponent( predicate, composanteUse );
@@ -615,7 +607,7 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForEvacuation( const PHY_Human&
     GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
     pion_.Execute( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
 
-    uint nNbrAvailableAllowedToWork = 0;
+    unsigned int nNbrAvailableAllowedToWork = 0;
     for( PHY_Composante_ABC::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
         nNbrAvailableAllowedToWork += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
 
@@ -645,7 +637,6 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForCollection( const PHY_Medica
     if( !bSystemEnabled_ || !HasUsableCollectionAmbulance( humanState.GetHuman() ) )
         return std::numeric_limits< int >::min();
 
-
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate1< PHY_Human > predicate( &PHY_ComposantePion::CanCollectCasualty, &PHY_ComposanteTypePion::CanCollectCasualty, humanState.GetHuman() );
     GetComponentUseFunctor functorOnComponent( predicate, composanteUse );
@@ -653,7 +644,7 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForCollection( const PHY_Medica
     GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
     pion_.Execute( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) ); 
 
-    uint nNbrAvailableAllowedToWork = 0;
+    unsigned int nNbrAvailableAllowedToWork = 0;
     for( PHY_Composante_ABC::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
         nNbrAvailableAllowedToWork += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
 
@@ -682,14 +673,13 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForSorting( const PHY_MedicalCo
 
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
 
-
     PHY_ComposanteUsePredicate predicate( &PHY_ComposantePion::CanSortHumans, &PHY_ComposanteTypePion::CanSortHumans );
     GetComponentUseFunctor functorOnComponent( predicate, composanteUse );
     pion_.Execute( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functorOnComponent ) );
     GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
     pion_.Execute( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
 
-    uint nNbrDoctorsAvailable = 0;
+    unsigned int nNbrDoctorsAvailable = 0;
     for( PHY_Composante_ABC::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
         nNbrDoctorsAvailable += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
 
@@ -723,7 +713,6 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForHealing( const PHY_MedicalHu
     if( !bSystemEnabled_ || !bHealingFunctionEnabled_ || !HasUsableDoctorForHealing( humanState.GetHuman() ) )
         return std::numeric_limits< int >::min();
 
-
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate1< PHY_Human > predicate( &PHY_ComposantePion::CanHealHuman, &PHY_ComposanteTypePion::CanHealHuman, humanState.GetHuman() );
     GetComponentUseFunctor functorOnComponent( predicate, composanteUse );
@@ -731,7 +720,7 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForHealing( const PHY_MedicalHu
     GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
     pion_.Execute( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
 
-    uint nNbrAllowedToWork = 0;
+    unsigned int nNbrAllowedToWork = 0;
     for( PHY_Composante_ABC::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
         nNbrAllowedToWork += ( it->second.nNbrAvailable_  - it->second.nNbrUsed_ );
     return nNbrAllowedToWork;
@@ -811,15 +800,14 @@ void PHY_RolePionLOG_Medical::Clean()
 // -----------------------------------------------------------------------------
 MT_Float PHY_RolePionLOG_Medical::GetAvailabilityRatio( PHY_ComposanteUsePredicate& predicate ) const
 {
-
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     GetComponentUseFunctor functorOnComponent( predicate, composanteUse );
     pion_.Execute( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functorOnComponent ) );
     GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
     pion_.Execute( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
 
-    uint nNbrTotal                  = 0;
-    uint nNbrAvailableAllowedToWork = 0;
+    unsigned int nNbrTotal                  = 0;
+    unsigned int nNbrAvailableAllowedToWork = 0;
     for( PHY_Composante_ABC::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
     {
         nNbrTotal                  += it->second.nNbrTotal_;
@@ -882,7 +870,7 @@ void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, ASN1
         return;
 
     ASN1T_LogMedicalEquipmentAvailability* pData = new ASN1T_LogMedicalEquipmentAvailability[ data.size() ];
-    uint i = 0;
+    unsigned int i = 0;
     for( PHY_Composante_ABC::CIT_ComposanteUseMap itData = data.begin(); itData != data.end(); ++itData )
     {
         ASN1T_LogMedicalEquipmentAvailability& data = pData[ i++ ];
@@ -914,7 +902,6 @@ void PHY_RolePionLOG_Medical::SendFullState( NET_ASN_MsgUnitAttributes& asnUnit 
     asn().m.disponibilites_ambulances_relevePresent    = 1;
     asn().m.disponibilites_medecinsPresent             = 1;
 
-
     asn().oid_pion        = pion_.GetID();
     asn().chaine_activee  = bSystemEnabled_;
 
@@ -922,7 +909,7 @@ void PHY_RolePionLOG_Medical::SendFullState( NET_ASN_MsgUnitAttributes& asnUnit 
     if( !priorities_.empty() )
     {
         ASN1T_EnumHumanWound* pAsnPriorities = new ASN1T_EnumHumanWound[ priorities_.size() ];
-        uint i = 0 ;
+        unsigned int i = 0 ;
         for( CIT_MedicalPriorityVector itPriority = priorities_.begin(); itPriority != priorities_.end(); ++itPriority )
             pAsnPriorities[ i++ ] = (**itPriority).GetAsnID();
         asn().priorites.elem = pAsnPriorities;
@@ -932,7 +919,7 @@ void PHY_RolePionLOG_Medical::SendFullState( NET_ASN_MsgUnitAttributes& asnUnit 
     if( !tacticalPriorities_.empty() )
     {
         ASN1T_Automat* pAsnPriorities = new ASN1T_Automat[ tacticalPriorities_.size() ];
-        uint i = 0 ;
+        unsigned int i = 0 ;
         for( CIT_AutomateVector itPriority = tacticalPriorities_.begin(); itPriority != tacticalPriorities_.end(); ++itPriority )
             pAsnPriorities[ i++ ] = (**itPriority).GetID();
         asn().priorites_tactiques.elem = pAsnPriorities;
@@ -1004,7 +991,6 @@ void PHY_RolePionLOG_Medical::NotifyComponentHasChanged()
 // -----------------------------------------------------------------------------
 const MIL_AgentPionLOG_ABC& PHY_RolePionLOG_Medical::GetPion() const
 {
-
     return pion_;
 }
 

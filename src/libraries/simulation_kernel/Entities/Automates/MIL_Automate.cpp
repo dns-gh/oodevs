@@ -82,7 +82,7 @@ void load_construct_data( Archive& archive, MIL_Automate* automat, const unsigne
 // Name: MIL_Automate constructor
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database )
+MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database )
     : MIL_Entity_ABC                     ( xis ) 
     , pType_                             ( &type )
     , nID_                               ( nID )
@@ -113,7 +113,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Formatio
 // Name: MIL_Automate constructor
 // Created: NLD 2007-03-29
 // -----------------------------------------------------------------------------
-MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Automate& parent, xml::xistream& xis, DEC_DataBase& database )
+MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Automate& parent, xml::xistream& xis, DEC_DataBase& database )
     : MIL_Entity_ABC                     ( xis ) 
     , pType_                             ( &type )
     , nID_                               ( nID )
@@ -216,13 +216,13 @@ namespace boost
     {
         template< typename Archive >
         inline
-        void serialize( Archive& file, MIL_Automate::T_SupplyDotationStateMap& map, const uint nVersion )
+        void serialize( Archive& file, MIL_Automate::T_SupplyDotationStateMap& map, const unsigned int nVersion )
         {
             split_free( file, map, nVersion );
         }
 
         template< typename Archive >
-        void save( Archive& file, const MIL_Automate::T_SupplyDotationStateMap& map, const uint )
+        void save( Archive& file, const MIL_Automate::T_SupplyDotationStateMap& map, const unsigned int )
         {
             unsigned size = map.size();
             file << size;
@@ -234,9 +234,9 @@ namespace boost
         }
 
         template< typename Archive >
-        void load( Archive& file, MIL_Automate::T_SupplyDotationStateMap& map, const uint )
+        void load( Archive& file, MIL_Automate::T_SupplyDotationStateMap& map, const unsigned int )
         {
-            uint nNbr;
+            unsigned int nNbr;
 
             file >> nNbr;
             while ( nNbr-- )
@@ -253,13 +253,13 @@ namespace boost
 // Name: MIL_Automate::load
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
-void MIL_Automate::load( MIL_CheckPointInArchive& file, const uint )
+void MIL_Automate::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< MIL_Entity_ABC >( *this )  
          >> pTC2_
          >> pNominalTC2_;
 
-    file >> const_cast< uint& >( nID_ )
+    file >> const_cast< unsigned int& >( nID_ )
          >> pParentFormation_
          >> pParentAutomate_
          >> bEngaged_
@@ -287,12 +287,12 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const uint )
 // Name: MIL_Automate::save
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
-void MIL_Automate::save( MIL_CheckPointOutArchive& file, const uint ) const
+void MIL_Automate::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< MIL_Entity_ABC >( *this ) 
          << pTC2_
          << pNominalTC2_
-         << const_cast< uint& >( nID_ )
+         << const_cast< unsigned int& >( nID_ )
          << pParentFormation_
          << pParentAutomate_
          << bEngaged_
@@ -320,7 +320,7 @@ void MIL_Automate::Initialize( xml::xistream& xis, DEC_DataBase& database )
 {
     xis >> xml::optional() >> xml::attribute( "engaged", bEngaged_ ); 
 
-    uint nKnowledgeGroup;
+    unsigned int nKnowledgeGroup;
     xis >> xml::attribute( "knowledge-group", nKnowledgeGroup );
     pKnowledgeGroup_ = GetArmy().FindKnowledgeGroup( nKnowledgeGroup );
     if( !pKnowledgeGroup_ )
@@ -606,7 +606,7 @@ void MIL_Automate::NotifyDotationSupplyNeeded( const PHY_DotationCategory& dotat
     bDotationSupplyNeeded_ = true;
 
     // Pas de RC si log non branchée ou si RC envoyé au tick précédent
-    const uint nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    const unsigned int nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     if( GetTC2() && ( nCurrentTick > ( nTickRcDotationSupplyQuerySent_ + 1 ) || nTickRcDotationSupplyQuerySent_ == 0 ) )
         MIL_Report::PostEvent( *this, MIL_Report::eReport_DotationSupplyRequest );
 
@@ -845,7 +845,7 @@ MT_Float MIL_Automate::GetAlivePionsMaxSpeed() const
 bool MIL_Automate::GetAlivePionsBarycenter( MT_Vector2D& barycenter ) const
 {
     barycenter.Reset();
-    uint nTmp = 0;
+    unsigned int nTmp = 0;
     for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
     {
         if( !(**itPion).IsDead() )

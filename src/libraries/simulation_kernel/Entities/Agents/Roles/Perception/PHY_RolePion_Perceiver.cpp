@@ -60,7 +60,7 @@
 
 using namespace detection;
 
-const uint PHY_RolePion_Perceiver::nNbrStepsBetweenPeriphericalVision_ = 12; //$$$ En dur ...
+const unsigned int PHY_RolePion_Perceiver::nNbrStepsBetweenPeriphericalVision_ = 12; //$$$ En dur ...
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Perceiver, "PHY_RolePion_Perceiver" )
 
@@ -108,7 +108,7 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_AgentPion& pion )
     , pPerceptionRecoObjects_      ( 0 )
     , pPerceptionFlyingShell_      ( 0 )
 {
-    static uint nNbr = 0;
+    static unsigned int nNbr = 0;
     nNextPeriphericalVisionStep_ = ++nNbr % nNbrStepsBetweenPeriphericalVision_;
 
     pPerceptionView_ = new PHY_PerceptionView( *this );
@@ -148,13 +148,13 @@ namespace boost
         // =============================================================================
         template< typename Archive >
         inline
-        void serialize( Archive& file, PHY_RolePion_Perceiver::T_SurfaceAgentKeyPair& pair, const uint nVersion )
+        void serialize( Archive& file, PHY_RolePion_Perceiver::T_SurfaceAgentKeyPair& pair, const unsigned int nVersion )
         {
             split_free( file, pair, nVersion );
         }
         
         template< typename Archive >
-        void save( Archive& file, const PHY_RolePion_Perceiver::T_SurfaceAgentKeyPair& pair, const uint )
+        void save( Archive& file, const PHY_RolePion_Perceiver::T_SurfaceAgentKeyPair& pair, const unsigned int )
         {
             assert( pair.first );
             unsigned id = pair.first->GetType().GetID();
@@ -163,9 +163,9 @@ namespace boost
         }
         
         template< typename Archive >
-        void load( Archive& file, PHY_RolePion_Perceiver::T_SurfaceAgentKeyPair& pair, const uint )
+        void load( Archive& file, PHY_RolePion_Perceiver::T_SurfaceAgentKeyPair& pair, const unsigned int )
         {
-            uint nID;
+            unsigned int nID;
             
             file >> nID;
             assert( PHY_SensorType::FindSensorType( nID ) );
@@ -179,13 +179,13 @@ namespace boost
         // =============================================================================
         template< typename Archive >
         inline
-        void serialize( Archive& file, PHY_RolePion_Perceiver::T_SurfaceObjectKeyPair& pair, const uint nVersion )
+        void serialize( Archive& file, PHY_RolePion_Perceiver::T_SurfaceObjectKeyPair& pair, const unsigned int nVersion )
         {
             split_free( file, pair, nVersion );
         }
         
         template< typename Archive >
-        void save( Archive& file, const PHY_RolePion_Perceiver::T_SurfaceObjectKeyPair& pair, const uint )
+        void save( Archive& file, const PHY_RolePion_Perceiver::T_SurfaceObjectKeyPair& pair, const unsigned int )
         {
             assert( pair.first );
             unsigned id = pair.first->GetType().GetID();
@@ -194,9 +194,9 @@ namespace boost
         }
         
         template< typename Archive >
-        void load( Archive& file, PHY_RolePion_Perceiver::T_SurfaceObjectKeyPair& pair, const uint )
+        void load( Archive& file, PHY_RolePion_Perceiver::T_SurfaceObjectKeyPair& pair, const unsigned int )
         {
-            uint nID;
+            unsigned int nID;
             
             file >> nID;
             assert( PHY_SensorType::FindSensorType( nID ) );
@@ -212,7 +212,7 @@ namespace boost
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PHY_RolePion_Perceiver::serialize( Archive& file, const uint )
+void PHY_RolePion_Perceiver::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_RoleInterface_Perceiver >( *this )
 		 & bPeriphericalVisionEnabled_
@@ -404,17 +404,25 @@ void PHY_RolePion_Perceiver::DisableRecoObjects( int id )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::EnableRecoLocalisation
-// Created: JVT 2004-10-22
+// Name: PHY_RolePion_Perceiver::EnsurePerceptionRecoLocalisation
+// Created: LDC 2009-12-04
 // -----------------------------------------------------------------------------
-int PHY_RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& localisation, MT_Float rRadius )
+void PHY_RolePion_Perceiver::EnsurePerceptionRecoLocalisation()
 {
     if ( !pPerceptionRecoLocalisation_ )
     {
         pPerceptionRecoLocalisation_ = new PHY_PerceptionRecoLocalisation( *this );
         activePerceptions_.push_back( pPerceptionRecoLocalisation_ );
     }
+}
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::EnableRecoLocalisation
+// Created: JVT 2004-10-22
+// -----------------------------------------------------------------------------
+int PHY_RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& localisation, MT_Float rRadius )
+{
+    EnsurePerceptionRecoLocalisation();
     return pPerceptionRecoLocalisation_->AddLocalisationWithRadius( localisation, rRadius );
 }
 
@@ -423,13 +431,8 @@ int PHY_RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& loca
 // Created: JVT 2004-10-22
 // -----------------------------------------------------------------------------
 int PHY_RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& localisation )
-{
-    if ( !pPerceptionRecoLocalisation_ )
-    {
-        pPerceptionRecoLocalisation_ = new PHY_PerceptionRecoLocalisation( *this );
-        activePerceptions_.push_back( pPerceptionRecoLocalisation_ );
-    }
-
+{    
+    EnsurePerceptionRecoLocalisation();
     return pPerceptionRecoLocalisation_->AddLocalisationWithDefaultRadius( localisation );    
 }
 
@@ -439,15 +442,9 @@ int PHY_RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& loca
 // -----------------------------------------------------------------------------
 int PHY_RolePion_Perceiver::EnableControlLocalisation( const TER_Localisation& localisation )
 {
-    if ( !pPerceptionRecoLocalisation_ )
-    {
-        pPerceptionRecoLocalisation_ = new PHY_PerceptionRecoLocalisation( *this );
-        activePerceptions_.push_back( pPerceptionRecoLocalisation_ );
-    }
-
+    EnsurePerceptionRecoLocalisation();
     return pPerceptionRecoLocalisation_->AddLocalisationWithoutRadius( localisation );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::DisableRecoLocalisation
@@ -832,58 +829,52 @@ void PHY_RolePion_Perceiver::PrepareRadarData()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::DisableAllPerceptions()
 {
+    activePerceptions_.clear();
+    activePerceptions_.push_back( pPerceptionView_ );
     if( pPerceptionCoupDeSonde_ )
     {
-        activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionCoupDeSonde_ ) );
         delete pPerceptionCoupDeSonde_;
         pPerceptionCoupDeSonde_ = 0;
     }
 
     if( pPerceptionRecoPoint_ )
     {
-        activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionRecoPoint_ ) );
         delete pPerceptionRecoPoint_;
         pPerceptionRecoPoint_ = 0;
     }
 
     if( pPerceptionRecoLocalisation_ )
     {
-        activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionRecoLocalisation_ ) );
         delete pPerceptionRecoLocalisation_;
         pPerceptionRecoLocalisation_ = 0;
     }
 
     if( pPerceptionRecoObjects_ )
     {
-        activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionRecoObjects_ ) );
         delete pPerceptionRecoObjects_;
         pPerceptionRecoObjects_ = 0;
     }
 
     if( pPerceptionSurveillance_ )
     {
-        activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionSurveillance_ ) );
         delete pPerceptionSurveillance_;
         pPerceptionSurveillance_ = 0;
     }
 
     if( pPerceptionRadar_ )
     {
-        activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionRadar_ ) );
         delete pPerceptionRadar_;
         pPerceptionRadar_ = 0;
     }
 
     if( pPerceptionAlat_ )
     {
-        activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionAlat_ ) );
         delete pPerceptionAlat_;
         pPerceptionAlat_ = 0;
     }
 
     if( pPerceptionFlyingShell_ )
     {
-        activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionFlyingShell_ ) );
         delete pPerceptionFlyingShell_;
         pPerceptionFlyingShell_ = 0;
     }
@@ -899,7 +890,6 @@ void PHY_RolePion_Perceiver::DisableAllPerceptions()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::ExecutePerceptions() 
 {
-
     if( CanPerceive() )
     {
         CIT_PerceptionVector itPerception;
@@ -925,7 +915,6 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
             (**itPerception).Execute( perceivableFlows );
     }
-
 
     NotifyPerception( pion_, PHY_PerceptionLevel::identified_, false );
 }
@@ -1048,7 +1037,6 @@ void PHY_RolePion_Perceiver::Update( bool /*bIsDead*/ )
 // -----------------------------------------------------------------------------
 const MIL_KnowledgeGroup& PHY_RolePion_Perceiver::GetKnowledgeGroup() const
 {
-
     return pion_.GetKnowledgeGroup();
 }
 
@@ -1058,7 +1046,6 @@ const MIL_KnowledgeGroup& PHY_RolePion_Perceiver::GetKnowledgeGroup() const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Perceiver::IsKnown( const MIL_Agent_ABC& agent ) const
 {
-
     return pion_.GetKnowledgeGroup().GetKnowledge().IsKnown( agent );
 }
 
@@ -1068,7 +1055,6 @@ bool PHY_RolePion_Perceiver::IsKnown( const MIL_Agent_ABC& agent ) const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Perceiver::IsIdentified( const MIL_Agent_ABC& agent ) const
 {
-
     return pion_.GetKnowledge().IsIdentified( agent );
 }
 
@@ -1078,7 +1064,6 @@ bool PHY_RolePion_Perceiver::IsIdentified( const MIL_Agent_ABC& agent ) const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Perceiver::IsKnown( const MIL_Object_ABC& object ) const
 {
-
     return pion_.GetArmy().GetKnowledge().IsKnown( object );
 }
 
@@ -1088,7 +1073,6 @@ bool PHY_RolePion_Perceiver::IsKnown( const MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Perceiver::IsIdentified( const MIL_Object_ABC& object ) const
 {
-
     return pion_.GetKnowledge().IsIdentified( object );
 }
 
@@ -1098,7 +1082,6 @@ bool PHY_RolePion_Perceiver::IsIdentified( const MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Perceiver::IsIdentified( const MIL_PopulationConcentration& concentration ) const
 {
-
     return pion_.GetKnowledge().IsIdentified( concentration );
 }
 
@@ -1108,7 +1091,6 @@ bool PHY_RolePion_Perceiver::IsIdentified( const MIL_PopulationConcentration& co
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::NotifyPerception( const MIL_Effect_IndirectFire& flyingShell ) const
 {
-
     MIL_Report::PostEvent( pion_, MIL_Report::eReport_IndirectFireObservation, flyingShell );
 }
 
@@ -1118,7 +1100,6 @@ void PHY_RolePion_Perceiver::NotifyPerception( const MIL_Effect_IndirectFire& fl
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::NotifyPerception( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& level, bool bPerceptionRecorded )
 {
-
     pion_.GetKnowledge().GetKsPerception().NotifyPerception( agent, level, bPerceptionRecorded );
 }
 
@@ -1128,7 +1109,6 @@ void PHY_RolePion_Perceiver::NotifyPerception( MIL_Agent_ABC& agent, const PHY_P
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::NotifyPerception( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& level )
 {
-
     pion_.GetKnowledge().GetKsPerception().NotifyPerception( agent, level, bRecordModeEnabled_ );
 }
 
@@ -1138,7 +1118,6 @@ void PHY_RolePion_Perceiver::NotifyPerception( MIL_Agent_ABC& agent, const PHY_P
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::NotifyPerception( MIL_Object_ABC& object, const PHY_PerceptionLevel& level )
 {
-
     pion_.GetKnowledge().GetKsPerception().NotifyPerception( object, level, bRecordModeEnabled_ );
 }
 
@@ -1148,7 +1127,6 @@ void PHY_RolePion_Perceiver::NotifyPerception( MIL_Object_ABC& object, const PHY
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::NotifyPerception( MIL_PopulationConcentration& concentration, const PHY_PerceptionLevel& level )
 {
-
     pion_.GetKnowledge().GetKsPerception().NotifyPerception( concentration, level, bRecordModeEnabled_ );
 }
 
@@ -1158,7 +1136,6 @@ void PHY_RolePion_Perceiver::NotifyPerception( MIL_PopulationConcentration& conc
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::NotifyPerception( MIL_PopulationFlow& flow, const PHY_PerceptionLevel& level, const T_PointVector& shape )
 {
-
     pion_.GetKnowledge().GetKsPerception().NotifyPerception( flow, level, shape, bRecordModeEnabled_ );
 }
 
@@ -1168,7 +1145,6 @@ void PHY_RolePion_Perceiver::NotifyPerception( MIL_PopulationFlow& flow, const P
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::NotifyExternalPerception( MIL_Agent_ABC& agent , const PHY_PerceptionLevel& level )
 {
-
     pion_.GetKnowledge().GetKsPerception().NotifyExternalPerception( agent, level );
 }
 
@@ -1188,8 +1164,6 @@ void PHY_RolePion_Perceiver::EnableRecordMode()
 void PHY_RolePion_Perceiver::DisableRecordMode()
 {
     bRecordModeEnabled_ = false;
-    
-
     pion_.GetKnowledge().GetKsPerception().MakePerceptionsAvailable();
 }
 
@@ -1199,7 +1173,6 @@ void PHY_RolePion_Perceiver::DisableRecordMode()
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Perceiver::HasDelayedPerceptions() const
 {
-
     return pion_.GetKnowledge().GetKsPerception().HasDelayedPerceptions();
 }
 
@@ -1263,7 +1236,6 @@ bool PHY_RolePion_Perceiver::IsPeriphericalVisionEnabled() const
 // -----------------------------------------------------------------------------
 MIL_AgentPion& PHY_RolePion_Perceiver::GetPion() const
 {
-
     return pion_;
 }
 
