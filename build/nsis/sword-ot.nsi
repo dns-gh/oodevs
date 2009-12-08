@@ -184,6 +184,7 @@ SectionGroup "Exercises" s_exo
         !insertmacro OT.AddExercise "Scripting demo" "test" "s_exo3"
         !insertmacro OT.AddExercise "9_cases" "Angers_x9" "s_exo4"
         !insertmacro OT.AddExercise "Musoria Border Defense" "Paris_Est" "s_exo5"
+        !insertmacro OT.AddExercise "Drosoville" "Drosoville" "s_exo6"
     !else if "${APP_MODEL}" == "france"
         !insertmacro OT.AddExercise "esag" "Angers" "s_exo1"
         !insertmacro OT.AddExercise "CENTORSEM" "Paris_Est" "s_exo2"
