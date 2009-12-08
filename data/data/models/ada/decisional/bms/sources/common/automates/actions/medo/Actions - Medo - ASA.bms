@@ -60,7 +60,7 @@ elseif switch_1 == ePhase_CDT then
                 DEC_Copie_Localisation_Mission( self._namedParams.zone, self.missionPion, "zone_" )
                 --[[//Modification de la direction dangereuse
 ]]--[[//La direction dangereuse va du centre de la zone au point de dislocation
-]]local pointCentreLocalisation = S_Geometrie_BarycentreZone_Mission( self.missionPion, "zone_" )
+]]local pointCentreLocalisation = S_Geometrie_BarycentreZone( self._namedParams.zone )
                 if( ( pointCentreLocalisation == 0 or pointCentreLocalisation == nil ) ) then
                     do
                         DEC_Trace( "La localisation n'est pas située dans le fuseau" )
@@ -148,7 +148,7 @@ elseif switch_1 == ePhase_CDT then
                 DEC_Copie_Localisation_Mission( self._namedParams.zone, self.missionPion, "zone_" )
                 --[[//Modification de la direction dangereuse
 ]]--[[//La direction dangereuse va du centre de la zone au point de dislocation
-]]local pointCentreLocalisation = S_Geometrie_BarycentreZone_Mission( self.missionPion, "zone_" )
+]]local pointCentreLocalisation = S_Geometrie_BarycentreZone( self._namedParams.zone )
                 if( ( pointCentreLocalisation == 0 or pointCentreLocalisation == nil ) ) then
                     do
                         DEC_Trace( "La localisation n'est pas située dans le fuseau" )
@@ -236,7 +236,7 @@ elseif switch_1 == ePhase_CDT then
                 DEC_Copie_Localisation_Mission( self._namedParams.site, self.missionPion, "site_" )
                 --[[//Modification de la direction dangereuse
 ]]--[[//La direction dangereuse va du centre de la zone au point de dislocation
-]]local pointCentreLocalisation = S_Geometrie_BarycentreZone_Mission( self.missionPion, "site_" )
+]]local pointCentreLocalisation = S_Geometrie_BarycentreZone( self._namedParams.site )
                 if( ( pointCentreLocalisation == 0 or pointCentreLocalisation == nil ) ) then
                     do
                         DEC_Trace( "La localisation n'est pas située dans le fuseau" )
@@ -323,7 +323,7 @@ elseif switch_1 == ePhase_CDT then
                 DEC_Copie_Localisation_Mission( self._namedParams.site, self.missionPion, "site_" )
                 --[[//Modification de la direction dangereuse
 ]]--[[//La direction dangereuse va du centre de la zone au point de dislocation
-]]local pointCentreLocalisation = S_Geometrie_BarycentreZone_Mission( self.missionPion, "site_" )
+]]local pointCentreLocalisation = S_Geometrie_BarycentreZone( self._namedParams.site )
                 if( ( pointCentreLocalisation == 0 or pointCentreLocalisation == nil ) ) then
                     do
                         DEC_Trace( "La localisation n'est pas située dans le fuseau" )

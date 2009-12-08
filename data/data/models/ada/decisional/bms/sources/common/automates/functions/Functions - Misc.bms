@@ -152,10 +152,10 @@ function S_Misc_EstMissionAffectee_Pion( pion, typeMission )
     do return _returnValue end
 end
 
-function S_Misc_Copie_MissionPion( misSrc, misDst )
+function S_Misc_Copie_MissionPion( misSrc, missionPion )
     local directionEnnemi = DEC_GetDirectionEnnemi( misSrc )
     if( ( directionEnnemi ~= 0 and directionEnnemi ~= nil ) ) then
-        DEC_Copie_DirectionDanger( directionEnnemi, misDst )
+        DEC_Copie_DirectionDanger_Mission( directionEnnemi, missionPion )
     end
 
 end

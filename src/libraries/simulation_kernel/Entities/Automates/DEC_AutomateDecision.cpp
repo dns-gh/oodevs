@@ -449,7 +449,7 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_GetSzName",             &DEC_MiscFunctions::GetName             );
     brain.RegisterFunction( "DEC_GetAutomate",           &DEC_MiscFunctions::GetAutomate         );
     brain.RegisterFunction( "DEC_GetDirectionEnnemi",    &DEC_MiscFunctions::GetDirectionEnnemi  );
-    brain.RegisterFunction( "DEC_Copie_DirectionDanger", &DEC_MiscFunctions::CopyDirectionDanger );
+    brain.RegisterFunction( "DEC_Copie_DirectionDanger_Mission", &DEC_MiscFunctions::CopyDirectionDanger );
 
     DEC_CommunicationFunctions::Register( brain );
 
