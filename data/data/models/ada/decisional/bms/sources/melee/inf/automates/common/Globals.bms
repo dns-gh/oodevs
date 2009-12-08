@@ -587,7 +587,7 @@ do
                     if( S_Misc_EstMissionAffectee_Pion( pion, "T_Mission_Pion_INF_ControlerSecteur" ) ) then
                         do
                             local misControler = DEC_GetMission( pion )
-                            locZone_Intervention = misControler:Getsecteur_()
+                            locZone_Intervention = misControler.zone_
                         end
                     end
 
