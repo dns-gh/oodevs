@@ -60,15 +60,6 @@ MIL_PopulationMissionType::~MIL_PopulationMissionType()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationMissionType::IsAvailableForModel
-// Created: NLD 2006-11-21
-// -----------------------------------------------------------------------------
-bool MIL_PopulationMissionType::IsAvailableForModel( const DIA_Model& model ) const
-{
-    return IsMissionAvailableForModel( model, strDIABehavior_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_AutomateMissionType::Find
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------

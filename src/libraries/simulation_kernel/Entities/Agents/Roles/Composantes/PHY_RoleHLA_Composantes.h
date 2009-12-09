@@ -66,15 +66,15 @@ public:
     virtual void ApplyDirectFire            ( PHY_Composante_ABC& compTarget, const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result );
     virtual void ApplyIndirectFire          ( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result );
     virtual void ApplyExplosion             ( const AttritionCapacity& objectType        , PHY_FireResults_ABC& result );
-    virtual void ApplyContamination         ( const MIL_ToxicEffectManipulator& contamination ) {};
-    virtual void ApplyPoisonous             ( const MIL_ToxicEffectManipulator& contamination ) {};
-    virtual MT_Float GetOnlyLoadableMaxRangeToFireOn ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const {return 0; };
-    virtual MT_Float GetMaxRangeToFireOn             ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const {return 0; };
-    virtual MT_Float GetMinRangeToFireOn             ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const {return 0; };
-    virtual MT_Float GetMaxRangeToFireOnActualPosture( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const {return 0; };
-    virtual MT_Float GetMinRangeToFireOnActualPosture( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const {return 0; };
-    virtual MT_Float GetMaxRangeToIndirectFire       ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const {return 0; };
-    virtual MT_Float GetMinRangeToIndirectFire       ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const {return 0; };
+    virtual void ApplyContamination         ( const MIL_ToxicEffectManipulator& /*contamination*/ ) {};
+    virtual void ApplyPoisonous             ( const MIL_ToxicEffectManipulator& /*contamination*/ ) {};
+    virtual MT_Float GetOnlyLoadableMaxRangeToFireOn ( const DEC_Knowledge_Agent& /*target*/, MT_Float /*rWantedPH*/ ) const {return 0; };
+    virtual MT_Float GetMaxRangeToFireOn             ( const DEC_Knowledge_Agent& /*target*/, MT_Float /*rWantedPH*/ ) const {return 0; };
+    virtual MT_Float GetMinRangeToFireOn             ( const DEC_Knowledge_Agent& /*target*/, MT_Float /*rWantedPH*/ ) const {return 0; };
+    virtual MT_Float GetMaxRangeToFireOnActualPosture( const DEC_Knowledge_Agent& /*target*/, MT_Float /*rWantedPH*/ ) const {return 0; };
+    virtual MT_Float GetMinRangeToFireOnActualPosture( const DEC_Knowledge_Agent& /*target*/, MT_Float /*rWantedPH*/ ) const {return 0; };
+    virtual MT_Float GetMaxRangeToIndirectFire       ( const PHY_DotationCategory& /*dotationCategory*/, bool /*bCheckDotationsAvailability*/ ) const {return 0; };
+    virtual MT_Float GetMinRangeToIndirectFire       ( const PHY_DotationCategory& /*dotationCategory*/, bool /*bCheckDotationsAvailability*/ ) const {return 0; };
     virtual void ApplyInjury                ( MIL_Injury_ABC& injury );
     //@}
 
@@ -103,25 +103,25 @@ public:
     //@}
 
     // Actions on the composante owner
-    virtual void LendComposante        ( PHY_RoleInterface_Composantes& borrower, PHY_ComposantePion& composante ) {};
-    virtual void RetrieveLentComposante( PHY_RoleInterface_Composantes& borrower, PHY_ComposantePion& composante ) {};
+    virtual void LendComposante        ( PHY_RoleInterface_Composantes& /*borrower*/, PHY_ComposantePion& /*composante*/ ) {};
+    virtual void RetrieveLentComposante( PHY_RoleInterface_Composantes& /*borrower*/, PHY_ComposantePion& /*composante*/ ) {};
 
     // Notification for the beneficary
-    virtual void NotifyLentComposanteReceived( PHY_RoleInterface_Composantes& lender, PHY_ComposantePion& composante ) {}; 
-    virtual void NotifyLentComposanteReturned( PHY_RoleInterface_Composantes& lender, PHY_ComposantePion& composante ) {};
+    virtual void NotifyLentComposanteReceived( PHY_RoleInterface_Composantes& /*lender*/, PHY_ComposantePion& /*composante*/ ) {}; 
+    virtual void NotifyLentComposanteReturned( PHY_RoleInterface_Composantes& /*lender*/, PHY_ComposantePion& /*composante*/ ) {};
     //@}
 
     //$$$ Toute la partie logistique GetXXXUse() devrait être externalisée
 
     //! @name Logistic - maintenance
     //@{
-    virtual void                            PreprocessRandomBreakdowns           ( uint nEndDayTimeStep ) const {};
+    virtual void                            PreprocessRandomBreakdowns           ( unsigned int /*nEndDayTimeStep*/ ) const {};
 
-    virtual PHY_MaintenanceComposanteState* NotifyComposanteWaitingForMaintenance( PHY_ComposantePion& composante ) { return NULL; };
-    virtual void                            NotifyComposanteBackFromMaintenance  ( PHY_MaintenanceComposanteState& composanteState ) {};
+    virtual PHY_MaintenanceComposanteState* NotifyComposanteWaitingForMaintenance( PHY_ComposantePion& /*composante*/ ) { return NULL; };
+    virtual void                            NotifyComposanteBackFromMaintenance  ( PHY_MaintenanceComposanteState& /*composanteState*/ ) {};
 
     //$$$$ a deplacer (functor)
-    virtual PHY_ComposantePion*             GetAvailableHauler                   ( const PHY_ComposanteTypePion& composanteType ) const { return NULL; };
+    virtual PHY_ComposantePion*             GetAvailableHauler                   ( const PHY_ComposanteTypePion& /*composanteType*/ ) const { return NULL; };
     //@}
 
     //! @name Prisoners
@@ -132,14 +132,14 @@ public:
 
     //! @name Load / unload / transport
     //@{
-    virtual void DamageTransported( MT_Float rWeight, const PHY_ComposanteState& state, bool bTransportOnlyLoadable ) const {};
+    virtual void DamageTransported( MT_Float /*rWeight*/, const PHY_ComposanteState& /*state*/, bool /*bTransportOnlyLoadable*/ ) const {};
     //@}
 
     //! @name Notifications (internal)
     //@{
-    virtual void NotifyComposanteAdded   ( PHY_ComposantePion& composante ) {};
-    virtual void NotifyComposanteRemoved ( PHY_ComposantePion& composante ) {};
-    virtual void NotifyComposanteChanged ( PHY_ComposantePion& composante, const PHY_ComposanteState& oldState ) {};
+    virtual void NotifyComposanteAdded   ( PHY_ComposantePion& /*composante*/ ) {};
+    virtual void NotifyComposanteRemoved ( PHY_ComposantePion& /*composante*/ ) {};
+    virtual void NotifyComposanteChanged ( PHY_ComposantePion& /*composante*/, const PHY_ComposanteState& /*oldState*/ ) {};
     virtual void NotifyComposanteRepaired() {};
     //@}
 
@@ -152,12 +152,12 @@ public:
 
     //! @name HLA
     //@{
-    virtual void Serialize( HLA_UpdateFunctor& functor ) const {};
+    virtual void Serialize( HLA_UpdateFunctor& /*functor*/ ) const {};
     //@}
 
     //! @name Composante reserved
     //@{
-    virtual void WoundLoadedHumans( const PHY_ComposantePion& composanteChanged, const PHY_ComposanteState& newState, PHY_FireDamages_Agent& fireDamages ) {};
+    virtual void WoundLoadedHumans( const PHY_ComposantePion& /*composanteChanged*/, const PHY_ComposanteState& /*newState*/, PHY_FireDamages_Agent& /*fireDamages*/ ) {};
     //@}
 
 private:

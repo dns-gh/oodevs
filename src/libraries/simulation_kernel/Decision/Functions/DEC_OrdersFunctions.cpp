@@ -130,7 +130,6 @@ void DEC_OrdersFunctions::CDT_GivePionMission( MIL_Automate& callerAutomate, MIL
 // -----------------------------------------------------------------------------
 MIL_Mission_ABC* DEC_OrdersFunctions::CreateAutomateMission( MIL_Automate& callerAutomate, DEC_Decision_ABC* pAutomate, const std::string& mission   )
 {
-   // DEC_AutomateDecision* pAutomate = reinterpret_cast< DEC_AutomateDecision* >( call.GetParameter( 0 ).ToObject() );// $$$$ LDC: Remove DIA_TypedObjects
     assert( pAutomate );
 
     const MIL_MissionType_ABC* pMissionType = MIL_AutomateMissionType::FindFromDiaID( mission );

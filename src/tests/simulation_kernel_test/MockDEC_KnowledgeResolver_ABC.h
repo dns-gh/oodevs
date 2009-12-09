@@ -36,8 +36,6 @@ public:
     { 
         return ResolveKnowledgeAgent_mocker.forward( &asn );
     }
-    virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent ( const DIA_Variable_ABC&      dia ) const
-    { throw; }
     virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent (       uint                   nID ) const
     { throw; }
 
@@ -45,8 +43,6 @@ public:
     { 
         return ResolveKnowledgeObject_mocker.forward( &asn );
     }
-    virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const DIA_Variable_ABC&      dia ) const
-    { throw; }
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject(       uint                   nID ) const
     { throw; }
 
@@ -54,8 +50,6 @@ public:
     { 
         return ResolveKnowledgePopulation_mocker.forward( &asn );
     }
-    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const DIA_Variable_ABC&          dia ) const
-    { throw; }
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation(       uint                       nID ) const
     { throw; }
 

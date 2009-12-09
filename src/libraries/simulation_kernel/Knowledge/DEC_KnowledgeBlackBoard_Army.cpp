@@ -448,15 +448,6 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_Army::ResolveKn
 // Name: DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeAgent
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeAgent( const DIA_Variable_ABC& /*dia*/ ) const
-{
-    return boost::shared_ptr< DEC_Knowledge_Agent >();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeAgent
-// Created: NLD 2006-11-22
-// -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeAgent( uint /*nID*/ ) const
 {
     return boost::shared_ptr< DEC_Knowledge_Agent >();
@@ -475,15 +466,6 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Army::ResolveK
 // Name: DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeObject
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeObject( const DIA_Variable_ABC& /*dia*/ ) const
-{
-    return boost::shared_ptr< DEC_Knowledge_Object >();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeObject
-// Created: NLD 2006-11-22
-// -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeObject( uint /*nID*/ ) const
 {
     return boost::shared_ptr< DEC_Knowledge_Object >();
@@ -494,15 +476,6 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Army::ResolveK
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_Army::ResolveKnowledgePopulation( const ASN1T_PopulationKnowledge& /*asn*/ ) const
-{
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeBlackBoard_Army::ResolveKnowledgePopulation
-// Created: NLD 2006-11-22
-// -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_Army::ResolveKnowledgePopulation( const DIA_Variable_ABC& /*dia*/ ) const
 {
     return 0;
 }

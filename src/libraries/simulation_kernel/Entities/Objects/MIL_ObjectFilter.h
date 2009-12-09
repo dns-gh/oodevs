@@ -28,7 +28,6 @@ class MIL_ObjectFilter : private boost::noncopyable
 public:
               MIL_ObjectFilter();
      explicit MIL_ObjectFilter( const std::vector< std::string >& params ); 
-              MIL_ObjectFilter( DIA_Parameters& diaParameters, uint nFirstDiaParam );     
              ~MIL_ObjectFilter();
 
     //! @name 

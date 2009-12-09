@@ -22,13 +22,6 @@ namespace urban
     class Block;
 }
 
-class DIA_FunctionCall;
-class DIA_Instance;
-class DIA_Instruction_ABC;
-class DIA_Type;
-class DIA_TypeDef;
-class DIA_TypedObject;
-
 class DEC_Decision_ABC;
 
 class DEC_FrontAndBackLinesComputer;
@@ -55,8 +48,6 @@ class TER_Localisation;
 
 namespace directia
 {
-    void UsedByDIA( DIA_TypedObject* );
-    void ReleasedByDIA( DIA_TypedObject* );
     void UsedByDIA( DEC_Decision_ABC* );
     void ReleasedByDIA( DEC_Decision_ABC* );
     void UsedByDIA( DEC_FrontAndBackLinesComputer* );
@@ -98,57 +89,6 @@ namespace directia
     void UsedByDIA( urban::Block* );
     void ReleasedByDIA( urban::Block* );
 }
-
-// =============================================================================
-// @class  DEC_Tools
-// Created: NLD 2004-03-11
-// =============================================================================
-class DEC_Tools
-{
-public:
-    //! @name Tools
-    //@{
-    static const DIA_TypeDef& GetDIAType        ( const std::string& strTypeName );
-    static int                InitializeDIAField( const std::string& strFieldName, const DIA_TypeDef& diaType );
-    static void               ManageDeletion    ( void* pPtr, const DIA_Type* pType );
-    static void               DisplayDiaStack   ( const DIA_Instance* pInstance, const DIA_Instruction_ABC* pInstruction );
-    //@}
-};
-
-//! @name DIA Functions registration tools
-//@{
-template< class FunctionCall, class CallerType >
-struct DEC_DIACallFunctor
-{
-    FunctionCall function_;
-
-    DEC_DIACallFunctor( FunctionCall function ) : function_( function ) {}
-
-    void operator()( DIA_FunctionCall& parameters ) const
-    {
-        CallerType& executer = static_cast< DIA_FunctionCaller< CallerType >* >( parameters.GetFunctionCaller() )->GetCalledObject();
-        (*function_)( parameters, executer );
-    }
-};
-
-template< class FunctionCall, class CallerType >
-struct DEC_DIACallFunctorWithProfiling
-{
-    FunctionCall function_;
-
-    DEC_DIACallFunctorWithProfiling( FunctionCall function ) : function_( function ) {}
-
-    void operator()( DIA_FunctionCall& parameters ) const
-    {
-        CallerType& executer = static_cast< DIA_FunctionCaller< CallerType >* >( parameters.GetFunctionCaller() )->GetCalledObject();
-
-        MT_Profiler profiler;
-        profiler.Start();
-        (*function_)( parameters, executer );
-        MIL_AgentServer::GetWorkspace().GetProfilerManager().NotifyDecFunctionCalled( executer, parameters.GetName(), profiler.Stop() );
-    }
-};
-//@}
 
 #include "DEC_Tools.inl"
 

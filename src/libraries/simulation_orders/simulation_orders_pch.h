@@ -22,12 +22,6 @@
 
 #include "game_asn/Simulation.h"
 
-#include "DIA/DIA_Tool_Script_lib.h"
-#include "DIA/DIA_Kernel_lib.h"
-#include "DIA/DIA_ToolManager_lib.h"
-#include "DIA/DIA_DebugInfo_Generator_lib.h"
-#include "DIA/DIA_Debuger_lib.h"
-
 #endif // __simulation_orders_pch_h_
 
 

@@ -40,12 +40,6 @@
 #include "MT/MT_Time/MT_Time_lib.h"
 //#include "MT/MT_XmlTools/MT_XmlTools_lib.h"
 
-#include "DIA/DIA_Tool_Script_lib.h"
-#include "DIA/DIA_Kernel_lib.h"
-#include "DIA/DIA_ToolManager_lib.h"
-#include "DIA/DIA_DebugInfo_Generator_lib.h"
-#include "DIA/DIA_Debuger_lib.h"
-
 #include "MT_Tools/MT_Assert.h"
 #include "MT_Tools/MT_Scipio_enum.h"
 #include "MT_Tools/MT_Vector2D.h"

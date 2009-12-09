@@ -1,9 +1,6 @@
 
 #include "simulation_kernel_test_pch.h"
 
-#include <DIA/DIA_Tool_Script_lib.h>
-#include <DIA/DIA_Model.h>
-
 #include "Tools/MIL_Config.h"
 #include "Decision/DEC_Workspace.h"
 #include "Decision/DEC_Model.h"
@@ -99,14 +96,7 @@ public:
         , pOther_     ( pOther )
     {
         const DEC_Model_ABC& model = population.GetType().GetModel();
-        try
-        {
-            SetModel( model );
-        }
-        catch( DIA_Internal_Exception& e )
-        {
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, e.GetExceptionMessage() );
-        }
+        SetModel( model );
         StartDefaultBehavior();
     }
 

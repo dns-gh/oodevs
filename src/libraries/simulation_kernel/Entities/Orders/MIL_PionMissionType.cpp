@@ -65,15 +65,6 @@ MIL_PionMissionType::~MIL_PionMissionType()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PionMissionType::IsAvailableForModel
-// Created: NLD 2006-11-21
-// -----------------------------------------------------------------------------
-bool MIL_PionMissionType::IsAvailableForModel( const DIA_Model& model ) const
-{
-    return IsMissionAvailableForModel( model, strDIABehavior_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_PionMissionType::Find
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------

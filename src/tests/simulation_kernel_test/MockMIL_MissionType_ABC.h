@@ -13,7 +13,6 @@ public:
         , GetDIABehavior_mocker( "GetDIABehavior", this )
     {}
 
-    virtual bool IsAvailableForModel( const DIA_Model& model ) const { throw; }
     virtual const std::string& GetDIABehavior( MIL_MissionType_ABC::Phase phase ) const
     {
        return *GetDIABehavior_mocker.forward( phase );

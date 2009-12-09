@@ -76,8 +76,6 @@ struct ASN1T_MsgLogSupplyPushFlow;
 
 class ASN1T_EnumObjectType;
 
-class DIA_Parameters;
-
 // =============================================================================
 // @class  MIL_EntityManager
 // Created: JVT 2004-08-03

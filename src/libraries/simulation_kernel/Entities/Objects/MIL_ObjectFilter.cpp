@@ -33,17 +33,6 @@ MIL_ObjectFilter::MIL_ObjectFilter( const std::vector< std::string >& params )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_ObjectFilter constructor
-// Created: NLD 2004-10-22
-// -----------------------------------------------------------------------------
-MIL_ObjectFilter::MIL_ObjectFilter( DIA_Parameters& diaParameters, uint nFirstDiaParam )
-{
-    uint nNbrParams = diaParameters.GetParameters().size();
-    for( uint i = nFirstDiaParam; i < nNbrParams; ++i )
-        Set( diaParameters.GetParameter( i ).ToString() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_ObjectFilter destructor
 // Created: NLD 2004-10-22
 // -----------------------------------------------------------------------------

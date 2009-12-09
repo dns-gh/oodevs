@@ -662,6 +662,16 @@ std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > DEC_Decision<T>::GetList
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Decision::SetListeEnisTirAutorise
+// Created: LDC 2009-12-09
+// -----------------------------------------------------------------------------
+template <class T>
+void DEC_Decision<T>::SetListeEnisTirAutorise( const std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >& list )
+{
+    SetVariable( "myself.listeEnisTirAutorise_", list );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Decision::GetListePionsCoordination(
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------

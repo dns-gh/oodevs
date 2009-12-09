@@ -62,8 +62,6 @@ void PHY_DotationCategory_IndirectMineFire::ApplyEffect( const MIL_AgentPion& fi
     vFireDirection        *= ( rInterventionTypeFired * rDispersionX_ );
     vRotatedFireDirection *= ( rInterventionTypeFired * rDispersionY_ );
 
-    const uint nNbrMines = (uint)( nNbrObjects_ * rInterventionTypeFired );
-
     T_PointVector points; points.reserve( 3 );
     points.push_back( vTargetPosition                         );
     points.push_back( vTargetPosition + vFireDirection        );

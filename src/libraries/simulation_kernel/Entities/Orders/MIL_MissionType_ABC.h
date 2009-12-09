@@ -40,7 +40,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool IsAvailableForModel( const DIA_Model& model ) const = 0;
     virtual const std::string& GetDIABehavior( Phase phase = eNoPhase ) const = 0;
     //@}
     
@@ -63,7 +62,6 @@ protected:
     //! @name Helpers
     //@{
     template<typename T> static void ReadMission( xml::xistream& xis, T_MissionIDMap& missionIDs, T_MissionNameMap* pMissionDiaIDs, T_MissionNameMap& missionNames );
-    bool IsMissionAvailableForModel( const DIA_Model& model, const std::string& strBehavior ) const;
     //@}
 };
 

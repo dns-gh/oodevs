@@ -63,15 +63,6 @@ MIL_AutomateMissionType::~MIL_AutomateMissionType()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateMissionType::IsAvailableForModel
-// Created: NLD 2006-11-21
-// -----------------------------------------------------------------------------
-bool MIL_AutomateMissionType::IsAvailableForModel( const DIA_Model& model ) const
-{
-    return IsMissionAvailableForModel( model, strDIAMrtBehavior_ ) && IsMissionAvailableForModel( model, strDIACdtBehavior_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_AutomateMissionType::Find
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------

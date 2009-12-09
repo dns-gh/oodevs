@@ -15,7 +15,6 @@
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
 class DEC_Knowledge_Population;
-class DIA_Variable_ABC;
 
 // =============================================================================
 /** @class  DEC_KnowledgeResolver_ABC

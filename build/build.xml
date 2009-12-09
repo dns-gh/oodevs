@@ -330,7 +330,7 @@
     </target>
 
     <target name="application.simulation_app.nocrossbow" description="build Sword Simulation executable without crossbow" depends="library.dispatcher,library.simulation_kernel,application.dispatcher_dll.nocrossbow">
-        <build-app name="simulation_app" depends="mt,din,dia3,terrain,boost,xerces,flexlm"
+        <build-app name="simulation_app" depends="mt,din,terrain,boost,xerces,flexlm"
             libs="HLA,libFedTime,masalloc,tools,masasn,directia-${platform}-mt-4_5,library-${platform}-mt,
             gdal_i,gdal_ogr,geodata,
             population-${platform}-mt@{suffix},
@@ -419,7 +419,7 @@
     </target>
 
     <target name="application.simulation_app.crossbow" description="build Sword Simulation executable" depends="library.dispatcher,library.simulation_kernel,application.dispatcher_dll.crossbow">
-        <build-app name="simulation_crossbow_app" depends="mt,din,dia3,terrain,boost,xerces,flexlm"
+        <build-app name="simulation_crossbow_app" depends="mt,din,terrain,boost,xerces,flexlm"
             pattern="simulation_crossbow_app" input="simulation_app"
             libs="HLA,libFedTime,masalloc,tools,masasn,directia-${platform}-mt-4_5,library-${platform}-mt,
             gdal_i,gdal_ogr,geodata,
@@ -738,7 +738,7 @@
             lib${ant.project.name}_simulation_terrain-${platform}-mt@{suffix},
             lib${ant.project.name}_simulation_orders-${platform}-mt@{suffix},
             lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix}"
-            depends="mt,din,dia3,terrain,boost,xerces">
+            depends="mt,din,terrain,boost,xerces">
             <syslibset libs="dbghelp,psapi,shell32,iphlpapi,advapi32"/>
             <includepath path="${libraries.dir}/simulation_kernel"/>
             <includepath path="${include.dir}/masasn"/>
@@ -889,8 +889,6 @@
         <update name="DIN"/>
         <update name="boost"/>
         <update name="rti"/>
-        <update name="DIA" version="3.5"/>
-        <update name="DIA" version="3.5" package="DIA_Tool_DebugGUI_${platform}"/>
         <update name="BM" />
         <update name="BM" package="bmc" todir="${bin.dir}"/>
         <update name="BM" package="directia4_${platform}_plugins" todir="${run.dir}"/>

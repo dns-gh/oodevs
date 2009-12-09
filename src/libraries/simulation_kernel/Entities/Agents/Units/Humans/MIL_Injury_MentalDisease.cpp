@@ -162,7 +162,7 @@ bool  MIL_Injury_MentalDisease::CanInjuryBeDeadly()
 // Name: MIL_Injury_MentalDisease::CanInjuryBeDeadly
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
-void MIL_Injury_MentalDisease::UpdateLifeExpectancy( float time )
+void MIL_Injury_MentalDisease::UpdateLifeExpectancy( float /*time*/ )
 {
     //NOTHING
 }
@@ -180,7 +180,7 @@ void MIL_Injury_MentalDisease::UpdateInjuryCategory()
 // Name: MIL_Injury_MentalDisease::SetInjury
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
-bool MIL_Injury_MentalDisease::IsInjured( const PHY_ComposantePion& pComposante )
+bool MIL_Injury_MentalDisease::IsInjured( const PHY_ComposantePion& /*pComposante*/ )
 {
     return false;
 }
@@ -189,7 +189,7 @@ bool MIL_Injury_MentalDisease::IsInjured( const PHY_ComposantePion& pComposante 
 // Name: MIL_Injury_MentalDisease::SetInjury
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
-void MIL_Injury_MentalDisease::SetInjury( MT_Float rNbrAliveHumans , MT_Float rDensity )
+void MIL_Injury_MentalDisease::SetInjury( MT_Float /*rNbrAliveHumans*/ , MT_Float /*rDensity*/ )
 {
     
 }

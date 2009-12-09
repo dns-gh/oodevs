@@ -22,8 +22,6 @@
 #include "Entities/Orders/MIL_Report.h"
 #include "MT_Tools/MT_CrashHandler.h"
 #include "Network/NET_ASN_Messages.h"
-#include "DIA/DIA_Script_Exception.h"
-#include "DIA/DIA_Internal_Exception.h"
 
 #include "Decision/Functions/DEC_PopulationFunctions.h"
 #include "Decision/Functions/DEC_ActionFunctions.h"
@@ -46,15 +44,8 @@ DEC_PopulationDecision::DEC_PopulationDecision( MIL_Population& population, DEC_
     , bStateHasChanged_        ( true )
 {
     const DEC_Model_ABC& model = population.GetType().GetModel();
-    try
-    {
-        SetModel( model );
-        //GetVariable( nDIANameIdx_    ).SetValue( population.GetName() ); // $$$$ LDC: FIXME Use member data
-    }
-    catch( DIA_Internal_Exception& e )
-    {
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, e.GetExceptionMessage() );
-    }
+    SetModel( model );
+    //GetVariable( nDIANameIdx_    ).SetValue( population.GetName() ); // $$$$ LDC: FIXME Use member data
 
     StartDefaultBehavior();
 }
@@ -84,14 +75,7 @@ void DEC_PopulationDecision::load( MIL_CheckPointInArchive& file, const uint )
    
     const DEC_Model_ABC& model = pEntity_->GetType().GetModel();
     
-    try
-    {
-        SetModel( model );
-    }
-    catch( DIA_Internal_Exception& e )
-    {
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, e.GetExceptionMessage() );
-    }
+    SetModel( model );
 
     StartDefaultBehavior();
 }

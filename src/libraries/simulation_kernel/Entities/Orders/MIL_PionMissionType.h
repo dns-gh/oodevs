@@ -40,11 +40,6 @@ public:
     const std::string& GetDIABehavior( Phase ) const;
     //@}
 
-    //! @name Operations
-    //@{
-    virtual bool IsAvailableForModel( const DIA_Model& model ) const;
-    //@}
-
 private:
     friend class MIL_MissionType_ABC;
     //! @name Constructors/Destructor

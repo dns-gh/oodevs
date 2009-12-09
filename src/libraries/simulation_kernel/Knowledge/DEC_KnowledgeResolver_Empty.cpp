@@ -45,15 +45,6 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeResolver_Empty::ResolveKno
 // Name: DEC_KnowledgeResolver_Empty::ResolveKnowledgeAgent
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeResolver_Empty::ResolveKnowledgeAgent( const DIA_Variable_ABC& /*dia*/ ) const
-{
-    return boost::shared_ptr< DEC_Knowledge_Agent >();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeResolver_Empty::ResolveKnowledgeAgent
-// Created: NLD 2006-11-22
-// -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeResolver_Empty::ResolveKnowledgeAgent( uint /*nID*/ ) const
 {
     return boost::shared_ptr< DEC_Knowledge_Agent >();
@@ -72,15 +63,6 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeResolver_Empty::ResolveKn
 // Name: DEC_KnowledgeResolver_Empty::ResolveKnowledgeObject
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeResolver_Empty::ResolveKnowledgeObject( const DIA_Variable_ABC& /*dia*/ ) const
-{
-    return boost::shared_ptr< DEC_Knowledge_Object >();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeResolver_Empty::ResolveKnowledgeObject
-// Created: NLD 2006-11-22
-// -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeResolver_Empty::ResolveKnowledgeObject( uint /*nID*/ ) const
 {
     return boost::shared_ptr< DEC_Knowledge_Object >();
@@ -91,15 +73,6 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeResolver_Empty::ResolveKn
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Population* DEC_KnowledgeResolver_Empty::ResolveKnowledgePopulation( const ASN1T_PopulationKnowledge& /*asn*/ ) const
-{
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeResolver_Empty::ResolveKnowledgePopulation
-// Created: NLD 2006-11-22
-// -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_KnowledgeResolver_Empty::ResolveKnowledgePopulation( const DIA_Variable_ABC& /*dia*/ ) const
 {
     return 0;
 }

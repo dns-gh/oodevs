@@ -192,6 +192,7 @@ void RegisterCommonUserFunctions( directia::Brain& brain, unsigned int id )
     brain.RegisterFunction( "SetbMiseEnOeuvre_", &DEC_Decision_ABC::SetMiseEnOeuvre );
     brain.RegisterFunction( "GeteEtatFeu_", &DEC_Decision_ABC::GetEtatFeu );
     brain.RegisterFunction( "GetlisteEnisTirAutorise_", &DEC_Decision_ABC::GetListeEnisTirAutorise );
+    brain.RegisterFunction( "SetlisteEnisTirAutorise_", &DEC_Decision_ABC::SetListeEnisTirAutorise );
     brain.RegisterFunction( "GetlistePionsCoordination_", &DEC_Decision_ABC::GetListePionsCoordination );
     brain.RegisterFunction( "GetobjMisEnCours_", &DEC_Decision_ABC::GetObjMisEnCours );
     brain.RegisterFunction( "SetobjMisEnCours_", &DEC_Decision_ABC::SetObjMisEnCours );

@@ -284,34 +284,6 @@ float DEC_Workspace::GetTime() const
     return (float)MIL_AgentServer::GetWorkspace().GetSimTime();
 }
 
-//-----------------------------------------------------------------------------
-// Name: GetDIAType
-// Created: AGN 03-07-17
-//-----------------------------------------------------------------------------
-//extern
-const DIA_TypeDef& GetDIAType( const std::string& strTypeName )
-{
-    const DIA_TypeDef* pType = static_cast< const DIA_TypeDef* >( DIA_TypeManager::Instance().GetType( strTypeName ) );
-    if( pType == 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, std::string( "Type '" ) + strTypeName + "' is not an existing DirectIA type." );
-
-    return *pType;
-}
-
-//-----------------------------------------------------------------------------
-// Name: InitializeDIAField
-// Created: AGN 03-07-17
-//-----------------------------------------------------------------------------
-//extern
-int InitializeDIAField( const std::string& strFieldName, const DIA_TypeDef& diaType )
-{
-    int nResult = DIA_TypeManager::Instance().GetFieldIdx( strFieldName, diaType );
-    if( nResult == -1 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, std::string( "Field '" ) + strFieldName + "' is not member of DirectIA type " + diaType.GetName() );
-
-    return nResult;
-}
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Workspace::InitializeObjectNames
 // Created: LDC 2009-05-25

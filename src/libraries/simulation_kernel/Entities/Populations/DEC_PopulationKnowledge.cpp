@@ -155,15 +155,6 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_PopulationKnowledge::ResolveKnowled
 // Name: DEC_PopulationKnowledge::ResolveKnowledgeAgent
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Agent > DEC_PopulationKnowledge::ResolveKnowledgeAgent( const DIA_Variable_ABC& /*dia*/ ) const
-{
-    return boost::shared_ptr< DEC_Knowledge_Agent >();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PopulationKnowledge::ResolveKnowledgeAgent
-// Created: NLD 2006-11-23
-// -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Agent > DEC_PopulationKnowledge::ResolveKnowledgeAgent( uint /*nID*/ ) const
 {
     return boost::shared_ptr< DEC_Knowledge_Agent >();
@@ -182,15 +173,6 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowle
 // Name: DEC_PopulationKnowledge::ResolveKnowledgeObject
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowledgeObject( const DIA_Variable_ABC& /*dia*/ ) const
-{
-    return boost::shared_ptr< DEC_Knowledge_Object >();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PopulationKnowledge::ResolveKnowledgeObject
-// Created: NLD 2006-11-23
-// -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowledgeObject( uint /*nID*/ ) const
 {
     return boost::shared_ptr< DEC_Knowledge_Object >();
@@ -201,15 +183,6 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowle
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Population* DEC_PopulationKnowledge::ResolveKnowledgePopulation( const ASN1T_PopulationKnowledge& /*asn*/ ) const
-{
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PopulationKnowledge::ResolveKnowledgePopulation
-// Created: NLD 2006-11-23
-// -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_PopulationKnowledge::ResolveKnowledgePopulation( const DIA_Variable_ABC& /*dia*/ ) const
 {
     return 0;
 }

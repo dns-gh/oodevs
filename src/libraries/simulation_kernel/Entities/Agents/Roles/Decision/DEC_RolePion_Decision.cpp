@@ -957,6 +957,7 @@ void DEC_RolePion_Decision::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) c
 void DEC_RolePion_Decision::RegisterSelf( directia::Brain& brain )
 {
     brain.RegisterObject( "myself", (DEC_Decision_ABC*)this );
+    brain.RegisterObject( "myself.listeEnisTirAutorise_", std::vector<int>() );
 }
 
 // -----------------------------------------------------------------------------
