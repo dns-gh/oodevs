@@ -52,5 +52,26 @@ return
     end,
     getAttrition = function( target )
     	--TODO
+    end,
+    computeSupportCapability = function( target )
+    	--TODO
+    end,
+    computeEstimateDestroyAttritionOnEnemy = function( target )
+    	--TODO
+    end,
+    computeEstimateNeutralizeAttritionOnEnemy = function( target )
+    	--TODO
+    end,
+     computeEstimateAttritionOnMe = function( target )
+    	--TODO
+    end,
+    setFront = function( target )
+    	--TODO
+    end,
+    setSupport = function( target )
+    	--TODO
+    end,
+    computeReconnaissanceCapability = function( target )
+    	--TODO
     end
 }

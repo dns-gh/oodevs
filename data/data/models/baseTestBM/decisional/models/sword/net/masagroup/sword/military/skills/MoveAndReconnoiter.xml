@@ -14,7 +14,7 @@
       <description>Positions pour la reconnaissance.</description>
       <type>
         <list>
-          <class name="net.masagroup.military.generic.knowledge.Reaching"/>
+          <class name="net.masagroup.military.generic.knowledge.Reconnoitring"/>
         </list>
       </type>
     </parameter>
@@ -24,10 +24,13 @@
   </goal>
   <modifiers/>
   <links>
-   <!--  <link name="moveTactically" skill="net.masagroup.military.generic.combatant.skills.MoveTactically">
-        <description>Lien vers le skill MoveTactically</description>
+     <link name="moveTo" skill="net.masagroup.sword.military.skills.MoveTo">
+        <description>Lien vers le skill MoveTo</description>
         </link>
-    <link name="reconnoitre" skill="net.masagroup.military.generic.combatant.skills.primitives.Reconnoitre">
+        
+  	
+				
+  <!--  <link name="reconnoitre" skill="net.masagroup.military.generic.combatant.skills.primitives.Reconnoitre">
         <description>Lien vers le skill Reconnoitre</description>
     </link> -->
   </links>

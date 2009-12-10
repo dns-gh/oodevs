@@ -20,6 +20,9 @@ role "EntityTest" {
     [net.masagroup.sword.military.skills.TestParam] = {
       ["modifiers"] = {};
     };
+    [net.masagroup.sword.military.skills.MoveAndReconnoiter] = {
+      ["modifiers"] = {};
+    };
   };
   ["resources"] = {
     [net.masagroup.military.generic.resources.Move] = {

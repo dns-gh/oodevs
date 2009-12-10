@@ -12,6 +12,10 @@ return
         return integration.reachEfficiency( point, keypoint )
     end,
     
+    proximityLevel = function( point )
+        return integration.reachPriority( point )
+    end,
+    
     reachPriority = function( point )
         return integration.reachPriority( point )
     end,
@@ -24,5 +28,14 @@ return
     end,
     recce = function( point )
         --TODO
+    end,
+    getReconnaissanceState = function( area )
+        --TODO
+    end,
+    isSafety = function( area )
+        --TODO
+    end,
+    canReconnoitreIt = function( point )
+      return integration.magnitude( point, knowledges.me ) < 200
     end
 }

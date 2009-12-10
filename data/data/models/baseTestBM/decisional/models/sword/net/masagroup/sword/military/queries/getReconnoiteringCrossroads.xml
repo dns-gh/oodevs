@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query name="sword.net.masagroup.sword.military.queries.getReconnoiteringCrossroads" xmlns="http://www.masagroup.net/directia/schemas/bm">
+	<description>Retourne les carrefours qui sont Reconnoitring</description>
+	<parameters>
+		<parameter name="objectives" >
+        <type>
+        	<list>
+              <class name="net.masagroup.military.generic.knowledge.Reconnoitrable"></class>
+            </list>
+         </type>     
+        </parameter>
+	</parameters>
+		<target name="k">
+				<type>
+					<class name="net.masagroup.military.generic.knowledge.Reconnoitring" />
+				</type>
+		</target>
+</query>

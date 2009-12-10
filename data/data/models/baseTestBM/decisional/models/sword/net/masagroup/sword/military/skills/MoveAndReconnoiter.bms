@@ -1,0 +1,46 @@
+-- **************************************************************************** 
+-- MoveAndReconnoiter elements.
+-- self.params.entities: the reconnoitrable elements
+-- self.params.positions: the reconnoitring elements
+-- ****************************************************************************
+rootnode
+{
+    connections = { skill.links.moveTo },
+
+    -- -------------------------------------------------------------------------------- 
+    -- Node begins: store each objective in a table
+    -- --------------------------------------------------------------------------------
+    create = function( self )
+        -- work only on unrecognized elements
+        self.unRecognizedEntities = {}
+        for _, entity in ipairs( self.params.entities ) do
+            self.unRecognizedEntities[ entity ] = true
+        end
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Reconnoiter the nearest unrecognized element 
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        if not next( self.unRecognizedEntities ) then Feedback( self.feedbacks.done ) return end
+
+        -- select the nearest element in unrecognized elements
+        local nearest = next( self.unRecognizedEntities )
+        for entity in pairs( self.unRecognizedEntities ) do
+              BreakForDebug( tostring( entity.sim_pos ) )
+              nearest = entity:proximityLevel() > nearest:proximityLevel() and entity or nearest
+        end
+        BreakForDebug( tostring( "ok proximity level" ) )
+        -- the selected elements is recognized
+        if nearest:isRecognized() then self.unRecognizedEntities[ nearest ] = nil return end
+        BreakForDebug(tostring(nearest))
+		BreakForDebug( tostring( "params.positions: " ).. tostring(self.params.positions) )
+        -- if is possible, reconnoiter the nearest element else advance toward it. 
+        if nearest:canReconnoitreIt() then
+        	BreakForDebug("Je reconnais!")
+            --Activate( skill.links.reconnoitre, 1, { entities = { nearest }, positions = self.params.positions } )
+        else -- tactical movement
+            Activate( skill.links.moveTo, 1, { entities = { nearest }, area = self.params.positions} )
+        end 
+    end
+}

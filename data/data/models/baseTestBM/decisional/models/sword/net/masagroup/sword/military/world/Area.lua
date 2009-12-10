@@ -24,5 +24,12 @@ return
     end,
     recce = function( area )
         --TODO
+    end,
+    getReconnaissanceState = function( area )
+        --TODO
+    end,
+    isSafety = function( area )
+        --TODO
     end
+    
 }

@@ -39,7 +39,7 @@
           <parameter name="positions">
             <value>
 				<call
-					method="net.masagroup.sword.military.queries.getCrossroads">
+					method="net.masagroup.sword.military.queries.getReconnoiteringCrossroads">
 					<parameter name="objectives">
 							<value>
 								<parameter>objectives</parameter>

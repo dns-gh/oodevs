@@ -24,5 +24,11 @@ return
     end,
     recce = function( urbanBlock )
         --TODO
+    end,
+    getReconnaissanceState = function( area )
+        --TODO
+    end,
+    isSafety = function( area )
+        --TODO
     end
 }
