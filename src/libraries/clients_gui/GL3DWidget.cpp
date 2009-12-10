@@ -411,7 +411,7 @@ void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where
 // Name: Gl3dWidget::DrawTacticalGraphics
 // Created: SBO 2009-05-29
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, bool overlined ) const
+void Gl3dWidget::DrawTacticalGraphics( const std::string& /*symbol*/, const kernel::Location_ABC& /*location*/, bool /*overlined*/ ) const
 {
     // $$$$ SBO 2009-05-29: TODO
 }
@@ -420,7 +420,7 @@ void Gl3dWidget::DrawTacticalGraphics( const std::string& symbol, const kernel::
 // Name: Gl3dWidget::DrawIcon
 // Created: AGE 2006-04-07
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawIcon( const char** xpm, const Point2f& where, float size /*= -1.f*/, E_Unit unit /*= meters*/ ) const
+void Gl3dWidget::DrawIcon( const char** /*xpm*/, const Point2f& /*where*/, float /*size*/ /*= -1.f*/, E_Unit /*unit*/ /*= meters*/ ) const
 {
     // $$$$ AGE 2006-05-16: ca va dégager de toute facon...
 }
@@ -496,7 +496,7 @@ void Gl3dWidget::CenterOn( const Point2f& point )
 // Name: Gl3dWidget::Zoom
 // Created: SBO 2008-07-07
 // -----------------------------------------------------------------------------
-void Gl3dWidget::Zoom( float width )
+void Gl3dWidget::Zoom( float /*width*/ )
 {
     // $$$$ SBO 2008-07-07: TODO
 }

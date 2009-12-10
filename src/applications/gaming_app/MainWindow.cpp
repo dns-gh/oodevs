@@ -166,11 +166,11 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     strategy_->Add( std::auto_ptr< ColorModifier_ABC >( new HighlightColorModifier( controllers ) ) );
 
     selector_ = new GlSelector( this, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_ );
-    selector_->AddIcon( xpm_cadenas        , -200, 270 );
+    selector_->AddIcon( xpm_cadenas        , -260, 360 );
     selector_->AddIcon( xpm_radars_on      ,  200, 270 );
     selector_->AddIcon( xpm_brouillage     ,  200, 50 );
     selector_->AddIcon( xpm_talkie_interdit,  100, 50 );
-    selector_->AddIcon( xpm_gas            , -200, 170 );
+    selector_->AddIcon( xpm_gas            , -280, 160 );
     selector_->AddIcon( xpm_ammo           , -200, 100 );
     selector_->AddIcon( xpm_nbc            , -200, 25 );
     selector_->AddIcon( xpm_construction   ,  200, 150 );

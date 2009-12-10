@@ -133,6 +133,7 @@ private:
     virtual void resizeGL( int w, int h );
     virtual void updateGL();
     unsigned int GenerateCircle();
+    float GetZoomFactorAttenuation() const;
 
     void RenderPass( GlRenderPass_ABC& pass );
     //@}

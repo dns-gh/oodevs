@@ -78,6 +78,7 @@ void GlWidget::initializeGL()
     circle_ = GenerateCircle();
     glEnableClientState( GL_VERTEX_ARRAY );
     gl::Initialize();
+    glShadeModel( GL_SMOOTH );
 }
 
 // -----------------------------------------------------------------------------
@@ -232,6 +233,24 @@ unsigned int GlWidget::GenerateCircle()
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlWidget::GetZoomFactorAttenuation
+// Created: RPD 2009-12-04
+// -----------------------------------------------------------------------------
+float GlWidget::GetZoomFactorAttenuation() const
+{
+    float zoom = rZoom_;
+    float pixels = Pixels();
+    if ( zoom <= .00024f )
+        return 1;
+    else if ( zoom <= .002f )
+    {
+        return pixels / 15;
+    }
+    else
+        return 0.12f;
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlWidget::Pixels
 // Created: AGE 2007-04-05
 // -----------------------------------------------------------------------------
@@ -263,11 +282,13 @@ unsigned short GlWidget::StipplePattern( int factor /*= 1*/ ) const
 // -----------------------------------------------------------------------------
 void GlWidget::DrawCross( const Point2f& at, float size /*= -1.f*/, E_Unit unit /*= meters*/ ) const
 {
+    size *= GetZoomFactorAttenuation();
     if( size < 0 )
         size = 10.f * Pixels();
     else if( unit == pixels )
-        size*=Pixels();
+        size *= Pixels();
 
+    glEnable( GL_LINE_SMOOTH );
     glBegin( GL_LINES );
         glVertex2f( at.X() - size, at.Y() - size );
         glVertex2f( at.X() + size, at.Y() + size );
@@ -282,6 +303,7 @@ void GlWidget::DrawCross( const Point2f& at, float size /*= -1.f*/, E_Unit unit 
 // -----------------------------------------------------------------------------
 void GlWidget::DrawLine( const Point2f& from, const Point2f& to ) const
 {
+    glEnable( GL_LINE_SMOOTH );
     glBegin( GL_LINES );
         glVertex2f(  from.X(), from.Y() );
         glVertex2f(  to.X()  , to.Y() );
@@ -296,6 +318,7 @@ void GlWidget::DrawLines( const T_PointVector& points ) const
 {
     if( !points.empty() )
     {
+        glEnable( GL_LINE_SMOOTH );
         glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points.front()) );
         glDrawArrays( GL_LINE_STRIP, 0, points.size() );
     }
@@ -307,6 +330,7 @@ void GlWidget::DrawLines( const T_PointVector& points ) const
 // -----------------------------------------------------------------------------
 void GlWidget::DrawConvexPolygon( const T_PointVector& points ) const
 {
+    glEnable( GL_LINE_SMOOTH );
     glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points.front()) );
     glPushAttrib( GL_CURRENT_BIT );
         float color[4];
@@ -334,6 +358,7 @@ void GlWidget::DrawArrow( const Point2f& from, const Point2f& to, float size /*=
     const Point2f left  = to - u + v;
     const Point2f right = to - u - v;
 
+    glEnable( GL_LINE_SMOOTH );
     glBegin( GL_LINES );
         glVertex2f( to.X(), to.Y() );
         glVertex2f( left.X(), left.Y() );
@@ -367,6 +392,7 @@ void GlWidget::DrawArc( const geometry::Point2f& center, const geometry::Point2f
 
     const float deltaAngle = ( maxAngle - minAngle ) / 24.f + 1e-6f;
     glMatrixMode(GL_MODELVIEW);
+    glEnable( GL_LINE_SMOOTH );
     glPushMatrix();
         glTranslatef( center.X(), center.Y(), 0.f );
         glScalef    ( radius, radius, 1.f );
@@ -411,6 +437,7 @@ void GlWidget::DrawCircle( const Point2f& center, float radius /*= -1.f*/, E_Uni
     else if( unit == pixels )
         radius *= Pixels();
 
+    glEnable( GL_LINE_SMOOTH );
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
         glTranslatef( center.X(), center.Y(), 0.f );
@@ -432,6 +459,7 @@ void GlWidget::DrawDisc( const Point2f& center, float radius /*= -1.f*/, E_Unit 
     else if( unit == pixels )
         radius *= Pixels();
 
+    glEnable( GL_LINE_SMOOTH );
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
         glTranslatef( center.X(), center.Y(), 0.f );
@@ -450,30 +478,32 @@ void GlWidget::DrawDisc( const Point2f& center, float radius /*= -1.f*/, E_Unit 
 void GlWidget::DrawLife( const Point2f& where, float h, float factor /*= 1.f*/ ) const
 {
     // $$$$ AGE 2006-04-10: hard coded voodoo numbers
+    factor *= GetZoomFactorAttenuation();
     const float halfWidth   = factor * 600.f * 0.5f * 0.92f;
     const float deltaHeight = factor * 600.f * 0.062f;
 
     const float y = where.Y() - deltaHeight;
     const float x = where.X();
     const float ydelta = factor * 20.f; // $$$$ SBO 2007-05-04: hard coded again
-    const float xdelta = h * halfWidth;
+    const float xdelta = h * halfWidth * 2;
+    glEnable( GL_LINE_SMOOTH );
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
         glLineWidth( 1 );
-        glColor3f( 0.8f, 0.8f, 0.8f );
+        glColor3f( 0.8f, 0.8f, 0.8f );  // light gray
         glBegin( GL_QUADS );
-            glVertex2f( x - halfWidth, y - ydelta );
+            glVertex2f( x - halfWidth + xdelta, y - ydelta );
             glVertex2f( x + halfWidth, y - ydelta );
             glVertex2f( x + halfWidth, y + ydelta );
+            glVertex2f( x - halfWidth + xdelta, y + ydelta );
+        glEnd();
+        glColor3f( 1 - h, h*h*h, 0.f ); // gradiation from green (full) to red (dead)
+        glBegin( GL_QUADS );
+            glVertex2f( x - halfWidth, y - ydelta );
+            glVertex2f( x - halfWidth + xdelta, y - ydelta );
+            glVertex2f( x - halfWidth + xdelta, y + ydelta );
             glVertex2f( x - halfWidth, y + ydelta );
         glEnd();
-        glColor3f( 1 - h, h, 0.1f ); // $$$$ AGE 2006-09-11:
-        glBegin( GL_QUADS );
-            glVertex2f( x - xdelta, y - ydelta );
-            glVertex2f( x + xdelta, y - ydelta );
-            glVertex2f( x + xdelta, y + ydelta );
-            glVertex2f( x - xdelta, y + ydelta );
-        glEnd();
-        glColor3f( 0, 0, 0 );
+        glColor3f( 0.1f, 0.1f, 0.1f );   // almost black
         glBegin( GL_LINE_LOOP );
             glVertex2f( x - halfWidth, y - ydelta );
             glVertex2f( x + halfWidth, y - ydelta );
@@ -553,13 +583,14 @@ void GlWidget::DrawApp6Symbol( const std::string& symbol, const std::string& sty
     const float svgDeltaX = -20;
     const float svgDeltaY = -80;
     const float svgWidth = 360;
-    const float expectedWidth  = 600.f * factor;
+    const float expectedWidth  = 600.f * factor * GetZoomFactorAttenuation();
     const float expectedHeight = expectedWidth * 0.660f;
     const Point2f center = Point2f( where.X() - expectedWidth * 0.5f, where.Y() + expectedHeight );
 
-    const float scaleRatio = expectedWidth / svgWidth;
+    const float scaleRatio = ( expectedWidth / svgWidth );
 
     gl::Initialize();
+    glEnable( GL_LINE_SMOOTH );
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
     glMatrixMode( GL_MODELVIEW );
     glPushMatrix();
@@ -591,12 +622,14 @@ void GlWidget::DrawIcon( const char** xpm, const Point2f& where, float size /*= 
     else if( unit == pixels )
         size *= Pixels();
 
-    size *= 0.5f;
+    size *= 0.7f;
+    float factor = GetZoomFactorAttenuation();
+    size *= factor;
     glPushMatrix();
     glPushAttrib( GL_TEXTURE_BIT );
     Base().BindIcon( xpm );
     const Point2f iconTranslation = iconLayout_.IconLocation( xpm );
-    glTranslatef( where.X() + iconTranslation.X(), where.Y() + iconTranslation.Y(), 0.f );
+    glTranslatef( where.X()+ iconTranslation.X()*factor, where.Y() + iconTranslation.Y()*factor, 0.f );
     glScalef( size, size, size );
     Base().DrawBillboardRect();
     glPopMatrix();
