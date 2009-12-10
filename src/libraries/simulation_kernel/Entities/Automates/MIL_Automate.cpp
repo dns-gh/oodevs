@@ -496,13 +496,13 @@ void MIL_Automate::UpdateDecision( float duration )
     try
     {
         orderManager_.Update();
+        GetRole< DEC_Decision_ABC >().UpdateDecision( duration );
     }
     catch( std::runtime_error& /*e*/ )
     {
         orderManager_.ReplaceMission();
         MT_LOG_ERROR_MSG( "Entity " << GetID() << "('" << GetName() << "') : Mission impossible" );
     }
-    GetRole< DEC_Decision_ABC >().UpdateDecision( duration );
     GetRole< DEC_Decision_ABC >().GarbageCollect();
 }
 

@@ -112,6 +112,7 @@ public:
     void SetVariableInt( const std::string& name, int value );
     template< typename T > void SetVariable( const std::string& name, T value );
     template< typename T > T GetVariable( const std::string& name );
+    template< typename T > T GetScalarVariable( const std::string& name );
 
     virtual std::vector< DEC_Decision_ABC* > GetPionsWithPC() = 0;
     virtual bool IsNeutralized() const = 0;
@@ -139,9 +140,6 @@ public:
 		ar & boost::serialization::base_object< tools::Role_ABC >( *this );
 	}
 	//@}
-
-    directia::ScriptRef& GetScriptVariableRef( const std::string& name );
-    //@}
 
 private:
     //! @name Helpers

@@ -120,7 +120,7 @@ do
                                                                         cases_switch_1[4] = true
 elseif switch_1 == deploiementDoubleRideau then
                                         self.listeSectionMistralPourMissionDefendreSite = self.listeSectionMistral
-                                        self.listePoints = DEC_Geometrie_PosDeploiementDoubleRideau( #( self.listeSectionMistralPourMissionDefendreSite ), self.barycentreZone, M_POLY_DOCTRINE_DISTANCE_POINT_A_DEFENDRE(), M_POLY_DOCTRINE_DISTANCE_ENTRE_RIDEAUX(), M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS(), self._namedParams.mission.directionEnnemi_ )
+                                        self.listePoints = DEC_Geometrie_PosDeploiementDoubleRideau( #( self.listeSectionMistralPourMissionDefendreSite ), self.barycentreZone, M_POLY_DOCTRINE_DISTANCE_POINT_A_DEFENDRE(), M_POLY_DOCTRINE_DISTANCE_ENTRE_RIDEAUX(), M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS(), DEC_GetDirectionEnnemi( self._namedParams.mission ) )
                                         _continue = false
                                                                         cases_switch_1[5] = true
 elseif switch_1 == deploiementSimpleRideau then

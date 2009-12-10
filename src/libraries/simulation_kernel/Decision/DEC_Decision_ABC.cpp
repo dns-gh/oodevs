@@ -31,14 +31,3 @@ DEC_Decision_ABC::~DEC_Decision_ABC()
 {
     // NOTHING
 }
-
-
-// -----------------------------------------------------------------------------
-// Name: template< typename T > T DEC_Decision_ABC::GetScriptVariableRef
-// Created: MGD 2009-08-04
-// -----------------------------------------------------------------------------
-directia::ScriptRef& DEC_Decision_ABC::GetScriptVariableRef( const std::string& name )
-{
-    return GetBrain().GetScriptVariable( name );
-}
-

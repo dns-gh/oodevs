@@ -332,5 +332,5 @@ BOOST_AUTO_TEST_CASE( DEC_Decision_GetterTest )
     DEC_TestPopulationDecision decision( population, 0 );
 
     decision.SetVariable( "myself.AValue", 42 );
-    BOOST_CHECK_EQUAL( 42, decision.GetVariable<int>( "myself.AValue" ) );
+    BOOST_CHECK_EQUAL( 42, decision.GetScalarVariable<int>( "myself.AValue" ) );
 }

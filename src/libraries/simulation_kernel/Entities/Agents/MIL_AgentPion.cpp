@@ -372,12 +372,12 @@ void MIL_AgentPion::UpdateDecision( float duration )
     try
     {
         orderManager_.Update();
+        GetRole< DEC_Decision_ABC >().UpdateDecision( duration );
     }
-    catch( std::runtime_error& e )
+    catch( std::runtime_error& /*e*/ )
     {        
         MIL_Report::PostEvent( *this, MIL_Report::eReport_MissionImpossible_ );
     }
-    GetRole< DEC_Decision_ABC >().UpdateDecision( duration );
     GetRole< DEC_Decision_ABC >().GarbageCollect();
 }
 
