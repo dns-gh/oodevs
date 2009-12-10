@@ -24,8 +24,42 @@ EnumUrbanErrorCode ::= ENUMERATED
     error-invalid-specific-attributes(6)
 }
 
+ObjectAttributeVegetation ::= SEQUENCE
+{
+    type                VisibleString       ,
+    height              INTEGER             ,
+    density             REAL                
+}
+
+ObjectAttributeSoil ::= SEQUENCE
+{
+    occupation          REAL                ,
+    trafficability      REAL                ,
+    multiple            BOOLEAN             ,
+    compoundClearing    VisibleString       
+}   
+
+ObjectAttributeArchitecture ::= SEQUENCE
+{
+    height              REAL                ,
+    floorNumber         INTEGER             ,
+    basementLevelNumber INTEGER             ,
+    roofShape           VisibleString       ,
+    material            VisibleString       ,
+    innerCluttering     REAL                ,
+    facadeOpacity       REAL                
+}
+    
+
+UrbanAttributes ::= SEQUENCE
+{
+    vegetation		ObjectAttributeVegetation OPTIONAL,
+    soil			ObjectAttributeSoil OPTIONAL,
+    architecture    ObjectAttributeArchitecture OPTIONAL    
+}
 
 -- UrbanAttributes ::= SEQUENCE OF UrbantAttribute
+
  
 ---------------------------
 -- Objet réel
@@ -35,15 +69,15 @@ MsgUrbanCreation ::= SEQUENCE
 {
     oid         OID,
     name        VisibleString,
-    location    Location
-    -- attributes  UrbanAttributes
+    location    Location,
+    attributes  UrbanAttributes
 }
 
 MsgUrbanUpdate ::= SEQUENCE
 {
     oid             OID,
-    location        Location OPTIONAL
-    -- attributes      UrbanAttributes
+    location        Location OPTIONAL,
+    attributes      UrbanAttributes
 }
 
 MsgUrbanDestruction ::= OID

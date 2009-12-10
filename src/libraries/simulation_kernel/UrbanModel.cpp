@@ -13,8 +13,12 @@
 #include <Urban/BlockModel.h>
 #include <Urban/TerrainObject_ABC.h>
 #include <Urban/Block.h>
+#include <Urban/PhysicalFeature_ABC.h>
 #include <Urban/StaticModel.h>
 #include <Urban/WorldParameters.h>
+#include <Urban/Architecture.h>
+#include <Urban/Soil.h>
+#include <Urban/Vegetation.h>
 #include "Tools/MIL_Config.h"
 #include <xeumeuleu/xml.h>
 #include <boost/filesystem/path.hpp>
@@ -58,7 +62,14 @@ void UrbanModel::ReadUrbanModel( const MIL_Config& config )
     MT_LOG_STARTUP_MESSAGE( "--------------------------------" );
 
     std::string directoryPath = boost::filesystem::path( config.GetTerrainFile() ).branch_path().string();
-    model_->Load( directoryPath, urban::WorldParameters( directoryPath ) );
+    try
+    {
+         model_->Load( directoryPath, urban::WorldParameters( directoryPath ) );
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "Exception caught : " << e.what() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -101,7 +112,7 @@ void UrbanModel::WriteUrbanModel( xml::xostream& xos ) const
 // Name: UrbanModel::WriteUrbanModel
 // Created: SLG 2009-10-29
 // -----------------------------------------------------------------------------
-void UrbanModel::SendCreation( urban::TerrainObject_ABC& object )
+void UrbanModel::SendCreation( urban::Block& object )
 {
     NET_ASN_MsgUrbanCreation asn;
     int i = 0;
@@ -119,9 +130,39 @@ void UrbanModel::SendCreation( urban::TerrainObject_ABC& object )
         asn().location.coordinates.elem[ i ].longitude = (*it).Y();
         ++i;
     }
-    
-    asn.Send();
 
+    const Architecture* architecture = object.RetrievePhysicalFeature< Architecture >();
+    if ( architecture != 0 )
+    {       
+        asn().attributes.m.architecturePresent              = 1;
+        asn().attributes.architecture.height                = architecture->GetHeight();
+        asn().attributes.architecture.floorNumber           = architecture->GetFloorNumber();
+        asn().attributes.architecture.basementLevelNumber   = architecture->GetBasement();
+        asn().attributes.architecture.roofShape             = architecture->GetRoofShape().c_str();
+        asn().attributes.architecture.material              = architecture->GetMaterial().c_str();
+        asn().attributes.architecture.innerCluttering       = architecture->GetInnerCluttering();
+        asn().attributes.architecture.facadeOpacity         = architecture->GetFacadeOpacity();
+    }
+
+    const Soil* soil = object.RetrievePhysicalFeature< Soil >();
+    if ( soil != 0 )
+    {
+        asn().attributes.m.soilPresent          = 1;
+        asn().attributes.soil.occupation        = soil->GetOccupation();
+        asn().attributes.soil.trafficability    = soil->GetTrafficability();
+        asn().attributes.soil.multiple          = soil->GetMultiplicity();
+        asn().attributes.soil.compoundClearing  = soil->GetCompoundClearing().c_str();
+    }
+
+    const Vegetation* vegetation = object.RetrievePhysicalFeature< Vegetation >();
+    if ( vegetation != 0 )
+    {
+        asn().attributes.m.vegetationPresent    = 1;
+        asn().attributes.vegetation.type        = vegetation->GetType().c_str();
+        asn().attributes.vegetation.height      = vegetation->GetHeight();
+        asn().attributes.vegetation.density     = vegetation->GetDensity();
+    }
+    asn.Send();
 }
 
 // -----------------------------------------------------------------------------

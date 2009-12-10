@@ -58,9 +58,12 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army& army, MIL_
     xis >> xml::attribute( "id", nID_ )
         >> xml::attribute( "type", strType );
     pType_ = MIL_KnowledgeGroupType::FindType( strType );
-    timeToDiffuse_ = pType_->GetKnowledgeCommunicationDelay();
     if( pParent_ )
+    {
         pParent_->RegisterKnowledgeGroup( *this );
+        const MT_Float nCurrentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+        timeToDiffuse_ = pParent_->GetType().GetKnowledgeCommunicationDelay() + nCurrentTimeStep;
+    }
     else
         pArmy_->RegisterKnowledgeGroup( *this );
 
@@ -398,5 +401,6 @@ MT_Float MIL_KnowledgeGroup::GetTimeToDiffuseToKnowledgeGroup() const
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::RefreshTimeToDiffuseToKnowledgeGroup()
 {
-    timeToDiffuse_ += pType_->GetKnowledgeCommunicationDelay();
+    if ( pParent_ )
+        timeToDiffuse_ += pParent_->GetType().GetKnowledgeCommunicationDelay();
 }

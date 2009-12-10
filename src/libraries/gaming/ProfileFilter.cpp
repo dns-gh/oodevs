@@ -170,3 +170,30 @@ bool ProfileFilter::IsChildSubordinateOf( const D& down, const U& /*up*/ ) const
     }
     return false;
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: ProfileFilter::IsInSameKnowledgeGroup
+// Created: AGE 2006-11-29
+// -----------------------------------------------------------------------------
+bool ProfileFilter::IsInSameKnowledgeGroup( const kernel::Entity_ABC& entity ) const  // $$$$ _RC_ SLG 2009-12-02: ULTRA MOCHE
+{
+    if( ! entity_ || entity_ == &entity )
+        return true;
+
+    const TacticalHierarchies*      t = entity.Retrieve< TacticalHierarchies >();
+    const CommunicationHierarchies* c = entity.Retrieve< CommunicationHierarchies >();
+    const IntelligenceHierarchies*  i = entity.Retrieve< IntelligenceHierarchies >();
+
+    if( ( tHierarchies_ && tHierarchies_->IsSubordinateOf( entity ) )
+        || ( iHierarchies_ && iHierarchies_->IsSubordinateOf( entity ) ) )
+        return true;
+
+      if( ! t && tHierarchies_ )
+          return ( c && IsChildSubordinateOf( *c, *tHierarchies_ ) ) || ( i && IsChildSubordinateOf( *i, *tHierarchies_ ) );
+      if( ! c && cHierarchies_ )
+          return ( t && IsChildSubordinateOf( *t, *cHierarchies_ ) ) || ( i && IsChildSubordinateOf( *i, *cHierarchies_ ) );
+      if( ! i && iHierarchies_ )
+         return ( t && IsChildSubordinateOf( *t, *iHierarchies_ ) ) || ( c && IsChildSubordinateOf( *c, *iHierarchies_ ) );
+     return false;
+}

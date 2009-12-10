@@ -223,5 +223,3 @@ const std::string& MIL_KnowledgeGroupType::GetName() const
 {
     return strName_;
 }
-
-

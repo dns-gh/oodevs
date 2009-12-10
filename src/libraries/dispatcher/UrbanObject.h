@@ -10,25 +10,22 @@
 #ifndef __UrbanObject_h_
 #define __UrbanObject_h_
 
-#include "game_asn/Simulation.h"
 #include "Localisation.h"
-#include "clients_kernel/Object_ABC.h"
 #include "SimpleEntity.h"
-
 #include <boost/ptr_container/ptr_vector.hpp>
 
 namespace dispatcher
 {
 class Model;
-class ObjectAttribute_ABC;
+class UrbanObjectAttribute_ABC;
 class ModelVisitor_ABC;
 class ClientPublisher_ABC;
 
 // =============================================================================
-/** @class  Object
-@brief  Object
+/** @class  UrbanObject
+@brief  UrbanObject
 */
-// Created: NLD 2006-09-19
+// Created: SLG 2009-12-03
 // =============================================================================
 class UrbanObject : public SimpleEntity<>
 {
@@ -45,9 +42,7 @@ public:
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
     void Accept( ModelVisitor_ABC& visitor ) const;
-
     void Update             ( const ASN1T_MsgUrbanCreation& msg  );
-    virtual void Display    ( kernel::Displayer_ABC& displayer  ) const;
     //@}
 
 private:
@@ -57,15 +52,27 @@ private:
     UrbanObject& operator=( const UrbanObject& ); //!< Assignement operator
     //@}
 
+    //! @name Attributes
+    //@{
+    void Initialize( Model& model, const ASN1T_UrbanAttributes& attributes );
+    void AddAttribute( UrbanObjectAttribute_ABC* attribute );
+    //@}
+
+    //! @name Types
+    //@{   
+    typedef boost::ptr_vector< UrbanObjectAttribute_ABC > T_UrbanObjectAttributes;
+    //@}
+
 public:    
 
-    Model&                 model_;
-    const std::string      strName_;
-    Localisation           localisation_;
-    unsigned long          id_;
+    Model&                      model_;
+    const std::string           strName_;
+    Localisation                localisation_;
+    unsigned long               id_;
+    T_UrbanObjectAttributes     attributes_;
 
 };
 
 }
 
-#endif // __Object_h_
+#endif // __UrbanObject_h_

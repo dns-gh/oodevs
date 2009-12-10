@@ -48,6 +48,8 @@ UrbanLayer::UrbanLayer( kernel::Controllers& controllers, const kernel::GlTools_
 // -----------------------------------------------------------------------------
 UrbanLayer::~UrbanLayer()
 {
+    controllers_.Unregister( *this );
+    objects_.clear();
     delete selectionArea_;
     delete urbanDrawer_;
 }
@@ -60,12 +62,12 @@ void UrbanLayer::Paint( kernel::Viewport_ABC& viewport )
 {      
     for( IT_TerrainObjects it = objects_.begin(); it != objects_.end(); ++it )
     {
-        const TerrainObjectProxy& object = (*it);
-        if( selectedObject_ && object == *selectedObject_ )
-            object.object_->Draw( *urbanDrawer_, false );
+        const TerrainObjectProxy* object = (*it);
+        if( selectedObject_ && object == selectedObject_ )
+            object->object_->Draw( *urbanDrawer_, false );
         else
         {
-            object.object_->Draw( *urbanDrawer_, true );
+            object->object_->Draw( *urbanDrawer_, true );
         }
     }
 }
@@ -86,8 +88,8 @@ void UrbanLayer::Reset2d()
 // -----------------------------------------------------------------------------
 void UrbanLayer::NotifyCreated( const TerrainObjectProxy& object )
 {
-    if( std::find( objects_.begin(), objects_.end(), object ) == objects_.end() )
-        objects_.push_back( object );
+    if( std::find( objects_.begin(), objects_.end(), &object ) == objects_.end() )
+        objects_.push_back( &object );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,7 +98,7 @@ void UrbanLayer::NotifyCreated( const TerrainObjectProxy& object )
 // -----------------------------------------------------------------------------
 void UrbanLayer::NotifyDeleted( const TerrainObjectProxy& object )
 {
-    IT_TerrainObjects it = std::find( objects_.begin(), objects_.end(), object );
+    IT_TerrainObjects it = std::find( objects_.begin(), objects_.end(), &object );
     if ( it != objects_.end() )
         objects_.erase( it );
 }
@@ -132,11 +134,26 @@ bool UrbanLayer::HandleMousePress( QMouseEvent* input, const geometry::Point2f& 
     {
         for( IT_TerrainObjects it = objects_.begin(); it != objects_.end(); ++it )
         {
-            const TerrainObjectProxy& object = (*it);
-            if( object.object_->GetFootprint()->IsInside( point ) )
+            const TerrainObjectProxy* object = (*it);
+            if( object->object_->GetFootprint()->IsInside( point ) )
             {
-                selectedObject_ = &object;
+                selectedObject_ = object;
                 controllers_.actions_.ContextMenu( object, input->globalPos() );
+                return true;
+            }
+        }
+
+    }
+
+    if( input->button() == Qt::LeftButton )
+    {
+        for( IT_TerrainObjects it = objects_.begin(); it != objects_.end(); ++it )
+        {
+            const TerrainObjectProxy* object = (*it);
+            if( object->object_->GetFootprint()->IsInside( point ) )
+            {
+                selectedObject_ = object;
+                controllers_.actions_.Select( *static_cast< const kernel::Entity_ABC* >( object ) );
                 return true;
             }
         }

@@ -59,7 +59,9 @@ public:
         : controller_( controller )
         , owner_( owner )
         , data_( &value )
-        , setter_( setter ) {}
+        , setter_( setter ) {
+
+    }
     virtual ~Property() {};
 
     virtual void Display( Displayer_ABC& displayer )

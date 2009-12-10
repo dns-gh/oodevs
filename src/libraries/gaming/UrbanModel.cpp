@@ -15,6 +15,8 @@
 #include "urban/BlockModel.h"
 #include "clients_gui/TerrainObjectProxy.h"
 #include "clients_kernel/Controller.h"
+#include "gaming/UrbanBlockDeserializer.h"
+#include <Urban/UrbanObjectDeserializer_ABC.h>
 
 #include "geometry/Types.h"
 
@@ -36,7 +38,7 @@ UrbanModel::UrbanModel( kernel::Controller& controller, urban::StaticModel& stat
 // -----------------------------------------------------------------------------
 UrbanModel::~UrbanModel()
 {
-    delete &model_;
+    Purge();
 }
 
 // -----------------------------------------------------------------------------
@@ -56,7 +58,12 @@ void UrbanModel::Create( const ASN1T_MsgUrbanCreation& asn )
         ++i;
     }
     urban::TerrainObject_ABC* object = model_.GetFactory().CreateBlock( id, name, footPrint );
-    controller_.Create( gui::TerrainObjectProxy( *object ) );
+    urban::UrbanObjectDeserializer_ABC* urbanBlockDeserializer = new UrbanBlockDeserializer( asn );
+    object->Accept( *urbanBlockDeserializer );
+    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( asn, controller_, *object ); 
+    controller_.Create( *pTerrainObject );
+    if( !Resolver< kernel::Entity_ABC >::Find( id ) )
+        tools::Resolver< kernel::Entity_ABC >::Register( id, *pTerrainObject );
 }
 /*
 // -----------------------------------------------------------------------------
@@ -84,5 +91,6 @@ void DrawingsModel::Delete( const ASN1T_MsgUrbanDestruction& asn )
 // -----------------------------------------------------------------------------
 void UrbanModel::Purge()
 {
+    tools::Resolver< kernel::Entity_ABC >::DeleteAll();
     model_.blocks_.Purge();
 }

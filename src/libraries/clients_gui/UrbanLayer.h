@@ -86,7 +86,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::vector< const TerrainObjectProxy >  T_TerrainObjects;
+    typedef std::vector< const TerrainObjectProxy* >         T_TerrainObjects;
     typedef T_TerrainObjects::iterator                      IT_TerrainObjects;
     typedef T_TerrainObjects::const_iterator                CIT_TerrainObjects;
     //@}

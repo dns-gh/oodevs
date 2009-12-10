@@ -12,6 +12,7 @@
 
 #include "game_asn/Simulation.h"
 #include "tools/Resolver.h"
+#include "clients_kernel/Entity_ABC.h"
 
 namespace urban
 {
@@ -30,7 +31,7 @@ namespace kernel
 */
 // Created: SLG 2009-02-10
 // =============================================================================
-class UrbanModel
+class UrbanModel : public tools::Resolver< kernel::Entity_ABC >
 {
 
 public:

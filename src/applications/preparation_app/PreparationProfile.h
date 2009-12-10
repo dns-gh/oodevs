@@ -31,6 +31,7 @@ public:
     //@{
     virtual QString GetLogin() const;
     virtual bool IsVisible   ( const kernel::Entity_ABC& entity ) const;
+    virtual bool IsInSameKnowledgeGroup( const kernel::Entity_ABC& entity ) const { return true; };
     virtual bool CanBeOrdered( const kernel::Entity_ABC& entity ) const;
     virtual bool CanDoMagic  ( const kernel::Entity_ABC& entity ) const;
     virtual bool IsSupervision() const;

@@ -99,9 +99,9 @@ bool Agent::IsCommandPost() const
 // -----------------------------------------------------------------------------
 void Agent::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
-    displayer.Item( "" ).Start( Styles::bold )
-                .Add( (Agent_ABC*)this )
-             .End();
+     displayer.Item( "" ).Start( Styles::bold )
+                 .Add( (Agent_ABC*)this )
+              .End();
 }
 
 // -----------------------------------------------------------------------------

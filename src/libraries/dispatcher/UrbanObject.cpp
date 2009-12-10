@@ -12,6 +12,9 @@
 #include "Model.h"
 #include "ClientPublisher_ABC.h"
 #include "ModelVisitor_ABC.h"
+#include "VegetationAttribute.h"
+#include "SoilAttribute.h"
+#include "ArchitectureAttribute.h"
 
 #include <boost/bind.hpp>
 
@@ -27,6 +30,7 @@ UrbanObject::UrbanObject( Model& model, const ASN1T_MsgUrbanCreation& msg )
 , strName_                     ( msg.name  )
 , localisation_                ( msg.location )
 {
+    Initialize( model, msg.attributes );
   //  model_.Register( msg.oid, *this );
 }
 
@@ -39,10 +43,30 @@ UrbanObject::~UrbanObject()
    // model_.urbanObjects_.Remove( GetId() );
 }
 
-/*#define MSG_ASN_CREATION( ASN, CLASS ) \
+#define MSG_ASN_CREATION( ASN, CLASS ) \
     if ( attributes.m.##ASN##Present ) \
     AddAttribute( new CLASS( model, attributes ) )
-*/
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObject::Initialize
+// Created: SLG 2009-09-26
+// -----------------------------------------------------------------------------
+void UrbanObject::Initialize( Model& model, const ASN1T_UrbanAttributes& attributes )
+{
+    MSG_ASN_CREATION( vegetation    , VegetationAttribute );
+    MSG_ASN_CREATION( soil          , SoilAttribute );
+    MSG_ASN_CREATION( architecture  , ArchitectureAttribute );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObject::AddAttribute
+// Created: SLG 2009-09-26
+// -----------------------------------------------------------------------------
+void UrbanObject::AddAttribute( UrbanObjectAttribute_ABC* attribute )
+{
+    attributes_.push_back( attribute );
+}
+
 // -----------------------------------------------------------------------------
 // Name: UrbanObject::SendCreation
 // Created: SLG 2009-09-27
@@ -54,6 +78,9 @@ void UrbanObject::SendCreation( ClientPublisher_ABC& publisher ) const
     asn().oid  = GetId(); 
     asn().name = strName_.c_str();
     localisation_.Send( asn().location );
+
+    std::for_each( attributes_.begin(), attributes_.end(),
+        boost::bind( &UrbanObjectAttribute_ABC::Send, _1, boost::ref( asn().attributes ) ) );
 
     asn.Send( publisher );
 }
@@ -92,13 +119,4 @@ void UrbanObject::Update( const ASN1T_MsgUrbanCreation& msg )
 void UrbanObject::Accept( ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanObject::Display
-// Created: SLG 2009-06-20
-// -----------------------------------------------------------------------------
-void UrbanObject::Display( kernel::Displayer_ABC& ) const
-{
-    // NOTHING
 }
