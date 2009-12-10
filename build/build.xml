@@ -151,7 +151,9 @@
     </target>
 
     <target name="library.clients_gui" description="build clients_gui static library" depends="library.clients_kernel">
-        <build-lib name="clients_gui" excludes="**/font/*" depends="qt" pattern="lib${ant.project.name}_clients_gui-${platform}-mt@{suffix}" suffix="-gd"/>
+        <build-lib name="clients_gui" excludes="**/font/*" depends="qt" pattern="lib${ant.project.name}_clients_gui-${platform}-mt@{suffix}" suffix="-gd">
+			<includepath path="${include.dir}/masasn"/>
+        </build-lib>
         <zip destfile="${run.dir}/resources/symbols.pak">
             <fileset dir="${libraries.dir}/clients_gui/svg" includes="**/*"/>
         </zip>
