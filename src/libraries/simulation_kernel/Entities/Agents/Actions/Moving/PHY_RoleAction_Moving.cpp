@@ -421,7 +421,7 @@ void PHY_RoleAction_Moving::NotifyMovingInsideObject( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Moving::NotifyMovingOutsideObject( MIL_Object_ABC& object )
 {
-    pion_.Apply(&terrain::ObjectCollisionNotificationHandler_ABC::NotifyMovingInsideObject, object );
+    pion_.Apply(&terrain::ObjectCollisionNotificationHandler_ABC::NotifyMovingOutsideObject, object );
 }
 
 // -----------------------------------------------------------------------------
