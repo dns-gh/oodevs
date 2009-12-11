@@ -56,10 +56,10 @@ void Agent::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& vi
     {
         if( symbol_.empty() )
             InitializeSymbol();
-        tools.DrawApp6Symbol( symbol_, where );
-        tools.DrawApp6Symbol( type_.GetLevelSymbol(), where );
+        tools.DrawApp6Symbol( symbol_, where, -1.f );
+        tools.DrawApp6Symbol( type_.GetLevelSymbol(), where, -1.f );
         if( isPc_ )
-            tools.DrawApp6Symbol( type_.GetHQSymbol(), where );
+            tools.DrawApp6Symbol( type_.GetHQSymbol(), where, -1.f );
     }
 }
 

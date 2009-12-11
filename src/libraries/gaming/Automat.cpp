@@ -77,7 +77,7 @@ void Automat::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& 
     if( viewport.IsHotpointVisible() )
     {
         InitializeSymbol();
-        tools.DrawApp6Symbol( symbol_, where, 2 );
+        tools.DrawApp6Symbol( symbol_, where, -2 );
     }
 }
 

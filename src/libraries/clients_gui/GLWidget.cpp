@@ -583,7 +583,9 @@ void GlWidget::DrawApp6Symbol( const std::string& symbol, const std::string& sty
     const float svgDeltaX = -20;
     const float svgDeltaY = -80;
     const float svgWidth = 360;
-    const float expectedWidth  = 600.f * factor * GetZoomFactorAttenuation();
+    if ( factor < 0 )   //zoom-adaptive view
+        factor = - factor * GetZoomFactorAttenuation();
+    const float expectedWidth  = 600.f * factor;
     const float expectedHeight = expectedWidth * 0.660f;
     const Point2f center = Point2f( where.X() - expectedWidth * 0.5f, where.Y() + expectedHeight );
 
