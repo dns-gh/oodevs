@@ -60,7 +60,7 @@ typedef struct T_Mission_Pion_NBC_Barrer : T_Mission_Pion
 typedef struct T_Mission_Pion_NBC_ControlerZone : T_Mission_Pion
 {
     T_Point        pointRegroupement_;
-    T_Localisation secteur_;
+    T_Localisation zone_;
 };
 
 // Surveiller un secteur

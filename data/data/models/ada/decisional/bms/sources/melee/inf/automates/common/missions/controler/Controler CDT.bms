@@ -94,7 +94,7 @@ do
 ]]local misControler = DEC_GetMission( pionAppuye )
                         --[[// On cherche a appuye un pion en reduction et n'ayant pas le rapfor
 ]]--[[// favorable					
-]]local ksEni_Zone = S_Cherche_Automate_INF_EniDangereux_DansZone( pionAppuye, misControler:Getzone_() )
+]]local ksEni_Zone = S_Cherche_Automate_INF_EniDangereux_DansZone( pionAppuye, misControler.zone_ )
                         if( ( ksEni_Zone ~= 0 and ksEni_Zone ~= nil ) ) then
                             Activate( self.activations.BEH_Conduite_Automate_INF_GererReductionSur, 1, { pAppui, ksEni_Zone, } )
                         end

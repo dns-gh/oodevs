@@ -356,7 +356,7 @@
       <parameter dia-name="ennemi_" name="Ennemi" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_ControlerSecteur" dia-type="T_Mission_Pion_INF_ControlerSecteur" id="86" name="INF Controler Secteur">
-      <parameter dia-name="secteur_" name="Secteur" optional="false" type="Polygon"/>
+      <parameter dia-name="zone_" name="Secteur" optional="false" type="Polygon"/>
       <parameter dia-name="preparerTerrain_" name="Preparer terrain" optional="false" type="Bool"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_SurveillerSecteur" dia-type="T_Mission_Pion_INF_SurveillerSecteur" id="87" name="INF Surveiller Secteur">
@@ -446,7 +446,7 @@
       <parameter dia-name="pointInstallation_" name="Point installation" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_Harceler" dia-type="T_Mission_Pion_INF_Harceler" id="100" name="INF Harceler">
-      <parameter dia-name="secteur_" name="Secteur" optional="false" type="Polygon"/>
+      <parameter dia-name="zone_" name="Secteur" optional="false" type="Polygon"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
       <parameter dia-name="natureObjectif_" name="Nature objectif" optional="false" type="Enumeration">
         <value id="0" name="elements_terrain"/>

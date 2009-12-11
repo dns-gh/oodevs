@@ -94,7 +94,7 @@ node "MIS_Pion_INF_ControlerSecteur"
                         end
                     end
 
-                    Activate( self.activations.BEH_Eni_Pion_VAB_Controler_Traiter, 1, { self._namedParams.mission.secteur_, } )
+                    Activate( self.activations.BEH_Eni_Pion_VAB_Controler_Traiter, 1, { self._namedParams.mission.zone_, } )
                     Activate( self.activations.BEH_Mission_Pion_VAB_ControlerSecteur, GetMotivation( "MOT_Mission" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.ePhaseMission = v else rawset( t, k, v ) end end } ) )
                     _continue = false
                 --[[// Rejoins la position de replis
@@ -179,7 +179,7 @@ node "BEH_Mission_Pion_VAB_ControlerSecteur"
         if( ModuleBegins() ) then
             do
                 --[[// Determine la position dans le secteur d'arrive			
-]]self.ptMission = S_Geometrie_BarycentreZone( self.mission.secteur_ )
+]]self.ptMission = S_Geometrie_BarycentreZone( self.mission.zone_ )
                 --[[// Verifie que l'on est bien dans son fuseau
 ]]StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
             end
@@ -233,7 +233,7 @@ node "BEH_Mission_Pion_VAB_ControlerSecteur"
 elseif switch_1 == eInstallerDispositif then
                     Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
-                    StartActivateOverride( self, self.activations.BEH_Obs_Pion_INF_SurveillerSecteur, 1, { self.mission.secteur_, } )
+                    StartActivateOverride( self, self.activations.BEH_Obs_Pion_INF_SurveillerSecteur, 1, { self.mission.zone_, } )
                     StartActivateOverride( self, self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1.1, { self.ptMission, self.mission.preparerTerrain_, } )
                     if( self.eAction == eActionEffectuee ) then
                         do
@@ -256,7 +256,7 @@ elseif switch_1 == eInstallerDispositif then
 elseif switch_1 == eSurveiller then
                     --[[// Surveille secteur			
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnControleZone, } )
-                    Activate( self.activations.ACT_Pion_VAB_ControleZone, 1, { self.mission.secteur_, M_CAPACITE_SURVEILLANCE(), F_Pion_GeteConsigneTir( myself ) == eEtatROE_TirLibre, } )
+                    Activate( self.activations.ACT_Pion_VAB_ControleZone, 1, { self.mission.zone_, M_CAPACITE_SURVEILLANCE(), F_Pion_GeteConsigneTir( myself ) == eEtatROE_TirLibre, } )
                     _continue = false
                                 cases_switch_1[3] = true
 

@@ -34,7 +34,7 @@ typedef struct T_Mission_Automate_NBC_ContreAttaquer  : T_Mission_Automate
 
 typedef struct T_Mission_Automate_NBC_Controler  : T_Mission_Automate
 {
-    T_Localisation  secteur_;
+    T_Localisation  zone_;
     T_Localisation  pointRegroupement_;
 };
 

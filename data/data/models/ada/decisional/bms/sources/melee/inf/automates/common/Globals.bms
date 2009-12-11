@@ -491,7 +491,7 @@ do
             if( S_Misc_EstMissionAffectee_Pion( pion, "T_Mission_Pion_ABC_Reduire" ) ) then
                 do
                     local misABC = DEC_GetMission( pion )
-                    if( ksEni == misABC:GetuniteAReduire_() ) then
+                    if( ksEni == misABC.uniteAReduire_ ) then
                                                 _returnValue = _returnValue + 1
                     end
 
@@ -587,7 +587,7 @@ do
                     if( S_Misc_EstMissionAffectee_Pion( pion, "T_Mission_Pion_INF_ControlerSecteur" ) ) then
                         do
                             local misControler = DEC_GetMission( pion )
-                            locZone_Intervention = misControler:Getzone_()
+                            locZone_Intervention = misControler.zone_
                         end
                     end
 

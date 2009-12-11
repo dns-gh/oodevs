@@ -52,7 +52,7 @@ node "BEH_Mission_Pion_INF_Harceler"
         if( ModuleBegins() ) then
             do
                 --[[// Determine la position dans le secteur d'arrive			
-]]self.ptMission = S_Geometrie_BarycentreZone( self.mission.secteur_ )
+]]self.ptMission = S_Geometrie_BarycentreZone( self.mission.zone_ )
                 --[[// Verifie que l'on est bien dans son fuseau
 ]]StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
             end
@@ -129,7 +129,7 @@ do
                     Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
                     --[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
-]]StartActivateOverride( self, self.activations.BEH_Obs_Pion_INF_SurveillerSecteur, 1, { self.mission.secteur_, } )
+]]StartActivateOverride( self, self.activations.BEH_Obs_Pion_INF_SurveillerSecteur, 1, { self.mission.zone_, } )
                     StartActivateOverride( self, self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1.1, { self.ptMission, false, } )
                     Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )
                     if( self.eAction == eActionEffectuee ) then
@@ -156,8 +156,8 @@ do
                     --[[// Surveille secteur			
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnControleZone, } )
                     Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )
-                    --[[// action ACT_Pion_VAB_ControleZone( mission.secteur_, M_CAPACITE_SURVEILLANCE(), false );				
-]]Activate( self.activations.BEH_Pion_INF_Detruire_Harceler, 2, { self.mission.secteur_, self.mission.natureObjectif_, } )
+                    --[[// action ACT_Pion_VAB_ControleZone( mission.zone_, M_CAPACITE_SURVEILLANCE(), false );				
+]]Activate( self.activations.BEH_Pion_INF_Detruire_Harceler, 2, { self.mission.zone_, self.mission.natureObjectif_, } )
                     _continue = false
                                 cases_switch_1[4] = true
 

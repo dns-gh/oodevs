@@ -548,7 +548,7 @@ overwhelming force.]]></doctrine>
         <doctrine><![CDATA[A tactical task in which a force moves onto an objective, key terrain, or other manmade or natural terrain area and controls that entire area. The commander maintains physical influence over a specified area to prevent its use by an enemy.]]></doctrine>
         <usage><![CDATA[Unit moves towards the area to control and monitors the area. If possible, Unit lays mines on the main access to the area, and then controls the area, ie. detects and reduces any enemy present in the area. A unit controlling an area as a tactical advantage over its enemy units in this area.]]></usage>
       </descriptions>
-      <parameter dia-name="secteur_" name="Area" optional="false" type="Polygon"/>
+      <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
       <parameter dia-name="preparerTerrain_" name="Obstacle erection" optional="false" type="Bool"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_SurveillerSecteur" dia-type="T_Mission_Pion_INF_SurveillerSecteur" id="90" name="Infantry - monitor">
@@ -686,7 +686,7 @@ overwhelming force.]]></doctrine>
         <doctrine><![CDATA[Tactical task designed to disturb the rest of the enemy troops, to curtail movement, and, by threat of losses, to lower morale.]]></doctrine>
         <usage><![CDATA[Unit moves to the meeting point, then infiltrates the area to harass. At night,Unit will attack, preferably the specified type of target. Only one attack can occur per day and per unit.]]></usage>
       </descriptions>
-      <parameter dia-name="secteur_" name="Area" optional="false" type="Polygon"/>
+      <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="natureObjectif_" name="Destruction type" optional="false" type="Enumeration">
         <value id="0" name="ground"/>

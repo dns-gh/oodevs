@@ -407,7 +407,7 @@ elseif switch_1 == ePhase_CDT then
 
         S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
         --[[// Inscription du secteur
-]]DEC_Copie_Localisation_Mission( self._namedParams.locZone, self.missionPion, "secteur_" )
+]]DEC_Copie_Localisation_Mission( self._namedParams.locZone, self.missionPion, "zone_" )
         --[[// Preparation du terrain : Minage ?
 ]]DEC_AssignMissionParameter( self.missionPion, "preparerTerrain_", self._namedParams.bPreparerTerrain )
         --[[// MAJ par defaut le type de mission { PE | SE }
@@ -500,7 +500,7 @@ elseif switch_1 == ePhase_CDT then
 --[[// Inscription du secteur
 ]]        end
 
-        DEC_Copie_Localisation_Mission( self._namedParams.locZone, self.missionPion, "secteur_" )
+        DEC_Copie_Localisation_Mission( self._namedParams.locZone, self.missionPion, "zone_" )
         DEC_Copie_Point_Mission( self.ptRegroupement, self.missionPion, "pointRegroupement_" )
         --[[// Preparation du terrain : Minage ?
 ]]DEC_AssignMissionParameter( self.missionPion, "natureObjectif_", self._namedParams.natureObjectif )
