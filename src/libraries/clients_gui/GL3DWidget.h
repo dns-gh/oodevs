@@ -53,8 +53,10 @@ public:
     //@{
     void Register( Layer_ABC& layer );
 
-    virtual unsigned short StipplePattern( int factor = 1 ) const;
-    virtual float Pixels( const geometry::Point2f& at = geometry::Point2f() ) const;
+    virtual unsigned short  StipplePattern( int factor = 1 ) const;
+    virtual float           Pixels( const geometry::Point2f& at = geometry::Point2f() ) const;
+    virtual float           Zoom() const;
+    virtual float           GetAdaptiveZoomFactor() const;
 
     virtual void DrawCross        ( const geometry::Point2f& at, float size = -1.f, E_Unit unit = meters ) const;
     virtual void DrawLine         ( const geometry::Point2f& from, const geometry::Point2f& to ) const;

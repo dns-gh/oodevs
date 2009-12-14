@@ -70,8 +70,8 @@ public:
     //@}
 
 private:
-    std::auto_ptr< urban::Model       > model_;
     std::auto_ptr< urban::StaticModel > staticModel_;
+    std::auto_ptr< urban::Model       > model_;
 };
 
 }

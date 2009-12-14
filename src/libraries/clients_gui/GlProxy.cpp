@@ -163,6 +163,24 @@ float GlProxy::Pixels( const geometry::Point2f& at /*= geometry::Point2f()*/ ) c
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlProxy::Zoom
+// Created: RPD 2009-12-14
+// -----------------------------------------------------------------------------
+float GlProxy::Zoom() const
+{
+    return tools_->Zoom();
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::GetAdaptiveZoomFactor
+// Created: RPD 2009-12-14
+// -----------------------------------------------------------------------------
+float GlProxy::GetAdaptiveZoomFactor() const
+{
+    return tools_->GetAdaptiveZoomFactor();
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlProxy::StipplePattern
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------

@@ -375,6 +375,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     Layer_ABC& raster               = *new RasterLayer( controllers_.controller_ );
     Layer_ABC& terrain              = *new TerrainLayer( controllers_, *glProxy_, preferences.GetPreferences() );
     Layer_ABC& elevation3d          = *new Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
+    Layer_ABC& urbanLayer           = *new UrbanLayer( controllers_, *glProxy_ );
     Layer_ABC& grid                 = *new GridLayer( controllers_, *glProxy_ );
     Layer_ABC& metrics              = *new MetricsLayer( *glProxy_ );
     Layer_ABC& intelligences        = *new ::IntelligencesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.intelligenceFactory_ );
@@ -391,14 +392,13 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     Layer_ABC& folkLayer            = *new ::FolkLayer( controllers_.controller_, staticModel_.coordinateConverter_, model_.folk_ );
     Layer_ABC& fogLayer             = *new FogLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     Layer_ABC& drawerLayer          = *new DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile );
-    Layer_ABC& urbanLayer           = *new UrbanLayer( controllers_, *glProxy_ );
 
     // ordre de dessin
     glProxy_->Register( defaultLayer );
     glProxy_->Register( elevation2d );              preferences.AddLayer( tr( "Elevation" ), elevation2d );         elevation2d         .SetPasses( "main,composition,miniviews" );
     glProxy_->Register( raster );                   preferences.AddLayer( tr( "Raster" ), raster );                 raster              .SetPasses( "main,composition,miniviews" );
     glProxy_->Register( terrain );                  preferences.AddLayer( tr( "Terrain" ), terrain );               terrain             .SetPasses( "main,composition,miniviews" );
-    glProxy_->Register( urbanLayer );               /*preferences.AddLayer( tr( "Urban" ), urbanLayer );*/          urbanLayer          .SetPasses( "main,composition,miniviews" );
+    glProxy_->Register( urbanLayer );               /*preferences.AddLayer( tr( "Urban" ), urbanLayer );*/          urbanLayer          .SetPasses( "main,miniviews" );
     glProxy_->Register( elevation3d );
     glProxy_->Register( grid );                                                                                     grid                .SetPasses( "main,miniviews" );
     glProxy_->Register( folkLayer );                preferences.AddLayer( tr( "Folk" ), folkLayer );                folkLayer           .SetPasses( "main,miniviews" );
@@ -424,6 +424,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     glProxy_->Register( logoLayer );                preferences.AddLayer( tr( "Logo" ), logoLayer );                logoLayer           .SetPasses( "main" );
     
     // ordre des evenements
+  
     forward_->Register( parameters );
     forward_->Register( agents );
     forward_->Register( automats );
@@ -434,10 +435,10 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     forward_->Register( populationKnowledges );
     forward_->Register( objectKnowledges );
     forward_->Register( limits );
+    forward_->Register( urbanLayer );
     forward_->Register( drawerLayer );
     forward_->Register( metrics );
     forward_->Register( elevation3d );
-    forward_->Register( urbanLayer );
     forward_->SetDefault( defaultLayer );
 }
 

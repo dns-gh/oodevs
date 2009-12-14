@@ -50,8 +50,9 @@ public:
     void Register( Layer_ABC& layer );
     void Register( TooltipsLayer_ABC& layer );
 
-    virtual void CenterOn( const geometry::Point2f& point );
-    virtual void Zoom( float width );
+    virtual void    CenterOn( const geometry::Point2f& point );
+    virtual void    Zoom( float width );
+    virtual float   GetAdaptiveZoomFactor() const;
 
     virtual std::pair< bool, bool > UnSelect() const; 
     virtual void Select( bool, bool ) const;
@@ -61,6 +62,7 @@ public:
 
     virtual unsigned short StipplePattern( int factor = 1 ) const;
     virtual float Pixels( const geometry::Point2f& at = geometry::Point2f() ) const;
+    virtual float Zoom() const;
     virtual void SetCurrentColor  ( float r, float g, float b, float a = 1 );
     virtual void SetCurrentCursor ( const QCursor& cursor );
     virtual std::auto_ptr< kernel::GlTooltip_ABC > CreateTooltip() const;

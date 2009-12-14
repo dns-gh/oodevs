@@ -215,7 +215,7 @@ bool EntityLayerBase::DisplayTooltip( const Entity_ABC& entity, Displayer_ABC& d
 // -----------------------------------------------------------------------------
 bool EntityLayerBase::IsInSelection( const Entity_ABC& entity, const geometry::Point2f& point ) const
 {
-    return entity.Get< Positions >().IsAt( point, 5.f * tools_.Pixels( point ) );
+    return entity.Get< Positions >().IsAt( point, 5.f * tools_.Pixels( point ), tools_.GetAdaptiveZoomFactor() );
 }
 
 // -----------------------------------------------------------------------------

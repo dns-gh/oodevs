@@ -51,9 +51,9 @@ float PopulationPartPositionsProxy::GetHeight() const
 // Name: PopulationPartPositionsProxy::IsAt
 // Created: SBO 2008-08-12
 // -----------------------------------------------------------------------------
-bool PopulationPartPositionsProxy::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/ ) const
+bool PopulationPartPositionsProxy::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/, float adaptiveFactor /*= 1*/ ) const
 {
-    return positions_.IsAt( pos, precision );
+    return positions_.IsAt( pos, precision, adaptiveFactor );
 }
 
 // -----------------------------------------------------------------------------

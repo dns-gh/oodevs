@@ -202,7 +202,7 @@ geometry::Point2f PopulationFlow::GetPosition() const
 // Name: PopulationFlow::IsAt
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-bool PopulationFlow::IsAt( const geometry::Point2f& point, float precision /*= 100.f*/ ) const
+bool PopulationFlow::IsAt( const geometry::Point2f& point, float precision /*= 100.f*/, float /*adaptiveFactor*/ ) const
 {
     // $$$$ AGE 2006-04-10: Factoriser ce basard
     if( flow_.empty() )

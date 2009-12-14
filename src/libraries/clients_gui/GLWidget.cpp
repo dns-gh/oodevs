@@ -233,12 +233,12 @@ unsigned int GlWidget::GenerateCircle()
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlWidget::GetZoomFactorAttenuation
+// Name: GlWidget::GetAdaptiveZoomFactor
 // Created: RPD 2009-12-04
 // -----------------------------------------------------------------------------
-float GlWidget::GetZoomFactorAttenuation() const
+float GlWidget::GetAdaptiveZoomFactor() const
 {
-    float zoom = rZoom_;
+    float zoom = Zoom();
     float pixels = Pixels();
     if ( zoom <= .00024f )
         return 1;
@@ -262,6 +262,15 @@ float GlWidget::Pixels( const geometry::Point2f& ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlWidget::Zoom
+// Created: RPD 2009-12-14
+// -----------------------------------------------------------------------------
+float GlWidget::Zoom() const
+{
+    return rZoom_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlWidget::StipplePattern
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
@@ -282,7 +291,7 @@ unsigned short GlWidget::StipplePattern( int factor /*= 1*/ ) const
 // -----------------------------------------------------------------------------
 void GlWidget::DrawCross( const Point2f& at, float size /*= -1.f*/, E_Unit unit /*= meters*/ ) const
 {
-    size *= GetZoomFactorAttenuation();
+    size *= GetAdaptiveZoomFactor();
     if( size < 0 )
         size = 10.f * Pixels();
     else if( unit == pixels )
@@ -506,7 +515,7 @@ void GlWidget::DrawDisc( const Point2f& center, float radius /*= -1.f*/, E_Unit 
 void GlWidget::DrawLife( const Point2f& where, float h, float factor /*= 1.f*/ ) const
 {
     // $$$$ AGE 2006-04-10: hard coded voodoo numbers
-    factor *= GetZoomFactorAttenuation();
+    factor *= GetAdaptiveZoomFactor();
     const float halfWidth   = factor * 600.f * 0.5f * 0.92f;
     const float deltaHeight = factor * 600.f * 0.062f;
 
@@ -611,8 +620,14 @@ void GlWidget::DrawApp6Symbol( const std::string& symbol, const std::string& sty
     const float svgDeltaX = -20;
     const float svgDeltaY = -80;
     const float svgWidth = 360;
+    float adaptiveFactor ( 1 );
     if ( factor < 0 )   //zoom-adaptive view
-        factor = - factor * GetZoomFactorAttenuation();
+    {
+        adaptiveFactor = GetAdaptiveZoomFactor();
+        factor = - factor;
+    }
+    factor *= adaptiveFactor;
+    thickness *= adaptiveFactor;
     const float expectedWidth  = 600.f * factor;
     const float expectedHeight = expectedWidth * 0.660f;
     const Point2f center = Point2f( where.X() - expectedWidth * 0.5f, where.Y() + expectedHeight );
@@ -653,7 +668,7 @@ void GlWidget::DrawIcon( const char** xpm, const Point2f& where, float size /*= 
         size *= Pixels();
 
     size *= 0.7f;
-    float factor = GetZoomFactorAttenuation();
+    float factor = GetAdaptiveZoomFactor();
     size *= factor;
     glPushMatrix();
     glPushAttrib( GL_TEXTURE_BIT );

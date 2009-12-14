@@ -86,7 +86,7 @@ float AutomatPositions::GetHeight() const
 // Name: AutomatPositions::IsAt
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-bool AutomatPositions::IsAt( const Point2f& pos, float precision /*= 100.f*/ ) const
+bool AutomatPositions::IsAt( const Point2f& pos, float precision /*= 100.f*/, float adaptiveFactor /*= 1.f*/ ) const
 {
     // $$$$ AGE 2006-10-06: CP de AgentPositions...
     const float halfSizeX = 500.f * 0.5f * 2.f; // $$$$ SBO 2006-03-21: use font size?

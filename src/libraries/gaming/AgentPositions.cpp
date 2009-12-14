@@ -83,13 +83,13 @@ void AgentPositions::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 // Name: AgentPositions::IsAt
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-bool AgentPositions::IsAt( const Point2f& pos, float precision /*= 100.f*/ ) const
+bool AgentPositions::IsAt( const Point2f& pos, float precision /*= 100.f*/, float adaptiveFactor /*=1.f*/ ) const
 {
     const float halfSizeX = 500.f * 0.5f * ( aggregated_ ? 2.f : 1.f ); // $$$$ SBO 2006-03-21: use font size?
     const float sizeY     = 400.f * ( aggregated_ ? 2.f : 1.f );
     const Point2f position = GetPosition();
-    const Rectangle2f agentBBox( position.X() - halfSizeX - precision, position.Y() - precision,
-                                 position.X() + halfSizeX + precision, position.Y() + sizeY + precision);
+    const Rectangle2f agentBBox( position.X() - halfSizeX * adaptiveFactor - precision, position.Y() - precision,
+                                 position.X() + halfSizeX * adaptiveFactor + precision, position.Y() + sizeY * adaptiveFactor + precision);
     return agentBBox.IsInside( pos );
 }
 

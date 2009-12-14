@@ -53,12 +53,14 @@ float AgentKnowledgePositions::GetHeight() const
 // Name: AgentKnowledgePositions::IsAt
 // Created: AGE 2006-05-17
 // -----------------------------------------------------------------------------
-bool AgentKnowledgePositions::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/ ) const
+bool AgentKnowledgePositions::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/, float adaptiveFactor /*= 1.f*/ ) const
 {
     const float halfSizeX = 250.f;
     const float sizeY     = 400.f;
-    const geometry::Rectangle2f bBox( position_.X() - halfSizeX - precision, position_.Y() - precision,
-                                      position_.X() + halfSizeX + precision, position_.Y() + sizeY + precision);
+    const geometry::Rectangle2f bBox(   position_.X() - halfSizeX * adaptiveFactor - precision,
+                                        position_.Y() - precision,
+                                        position_.X() + halfSizeX * adaptiveFactor + precision,
+                                        position_.Y() + sizeY * adaptiveFactor + precision);
     return bBox.IsInside( pos );
 }
     

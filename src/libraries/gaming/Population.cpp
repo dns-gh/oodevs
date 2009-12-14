@@ -254,7 +254,7 @@ float Population::GetHeight() const
 // Name: Population::IsAt
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-bool Population::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/ ) const
+bool Population::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/, float /*adaptiveFactor*/ ) const
 {
     {
         tools::Iterator< const PopulationConcentration_ABC& > it = tools::Resolver< PopulationConcentration_ABC >::CreateIterator();
