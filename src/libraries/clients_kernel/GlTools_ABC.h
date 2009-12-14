@@ -76,6 +76,7 @@ public:
     virtual void DrawLine         ( const geometry::Point2f& from, const geometry::Point2f& to ) const = 0;
     virtual void DrawLines        ( const T_PointVector& points ) const = 0;
     virtual void DrawConvexPolygon( const T_PointVector& points ) const = 0;
+    virtual void DrawConvexPolygon( const T_PointVector& points, bool selected ) const = 0;
     virtual void DrawArrow        ( const geometry::Point2f& from, const geometry::Point2f& to, float size = -1.f, E_Unit unit = meters ) const = 0;
     virtual void DrawCurvedArrow  ( const geometry::Point2f& from, const geometry::Point2f& to, float curveRatio = 0.2f, float size = -1.f, E_Unit unit = meters ) const = 0;
     virtual void DrawArc          ( const geometry::Point2f& center, const geometry::Point2f& from, const geometry::Point2f& to ) const = 0;

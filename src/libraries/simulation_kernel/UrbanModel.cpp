@@ -64,11 +64,12 @@ void UrbanModel::ReadUrbanModel( const MIL_Config& config )
     std::string directoryPath = boost::filesystem::path( config.GetTerrainFile() ).branch_path().string();
     try
     {
+         MT_LOG_INFO_MSG( MT_FormatString( "Loading Urban Model from path '%s'", directoryPath.c_str() ) )
          model_->Load( directoryPath, urban::WorldParameters( directoryPath ) );
     }
     catch( std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Exception caught : " << e.what() );
+        MT_LOG_ERROR_MSG( "Exception in loading Urban Model caught : " << e.what() );
     }
 }
 

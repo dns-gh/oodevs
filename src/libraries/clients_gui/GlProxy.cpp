@@ -227,6 +227,15 @@ void GlProxy::DrawConvexPolygon( const T_PointVector& points ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlProxy::DrawConvexPolygon
+// Created: SLG 2009-12-14
+// -----------------------------------------------------------------------------
+void GlProxy::DrawConvexPolygon( const T_PointVector& points, bool selected ) const
+{
+    tools_->DrawConvexPolygon( points, selected );
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlProxy::DrawArrow
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------

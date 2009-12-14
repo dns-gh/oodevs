@@ -46,8 +46,7 @@ UrbanDrawer::~UrbanDrawer()
 // -----------------------------------------------------------------------------
 void UrbanDrawer::Draw( const urban::Block& object, bool selected ) const
 {
-    UNREFERENCED_PARAMETER( selected );
-    toolbox_.DrawConvexPolygon( object.GetFootprint()->Vertices() );
+    toolbox_.DrawConvexPolygon( object.GetFootprint()->Vertices(), selected );
 }
 
 // -----------------------------------------------------------------------------
