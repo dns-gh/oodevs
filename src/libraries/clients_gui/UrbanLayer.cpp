@@ -144,7 +144,6 @@ bool UrbanLayer::HandleMousePress( QMouseEvent* input, const geometry::Point2f& 
         }
 
     }
-
     if( input->button() == Qt::LeftButton )
     {
         for( IT_TerrainObjects it = objects_.begin(); it != objects_.end(); ++it )
@@ -159,6 +158,7 @@ bool UrbanLayer::HandleMousePress( QMouseEvent* input, const geometry::Point2f& 
         }
 
     }
+    selectedObject_ = 0;
     return false;
 
 }
