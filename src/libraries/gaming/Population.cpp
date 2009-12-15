@@ -254,14 +254,14 @@ float Population::GetHeight() const
 // Name: Population::IsAt
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-bool Population::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/, float /*adaptiveFactor*/ ) const
+bool Population::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/, float adaptiveFactor ) const
 {
     {
         tools::Iterator< const PopulationConcentration_ABC& > it = tools::Resolver< PopulationConcentration_ABC >::CreateIterator();
         while( it.HasMoreElements() )
         {
             const PopulationConcentration& concreteEntity = static_cast< const PopulationConcentration& >( it.NextElement() );
-            if( concreteEntity.IsAt( pos, precision ) )
+            if( concreteEntity.IsAt( pos, precision, adaptiveFactor ) )
                 return true;
         }
     }
@@ -270,7 +270,7 @@ bool Population::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/
         while( it.HasMoreElements() )
         {
             const PopulationFlow& concreteEntity = static_cast< const PopulationFlow& >( it.NextElement() );
-            if( concreteEntity.IsAt( pos, precision ) )
+            if( concreteEntity.IsAt( pos, precision, adaptiveFactor ) )
                 return true;
         }
     }

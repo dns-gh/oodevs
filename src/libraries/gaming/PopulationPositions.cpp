@@ -44,9 +44,9 @@ geometry::Point2f PopulationPositions::GetPosition() const
 // Name: PopulationPositions::IsAt
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-bool PopulationPositions::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/, float /*adaptiveFactor*/ ) const
+bool PopulationPositions::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/, float adaptiveFactor ) const
 {
-    return population_.IsAt( pos, precision );
+    return population_.IsAt( pos, precision, adaptiveFactor );
 }
 
 // -----------------------------------------------------------------------------
