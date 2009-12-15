@@ -58,7 +58,7 @@ UrbanLayer::~UrbanLayer()
 // Name: UrbanLayer::Paint
 // Created: SLG 2006-03-23
 // -----------------------------------------------------------------------------
-void UrbanLayer::Paint( kernel::Viewport_ABC& viewport )
+void UrbanLayer::Paint( kernel::Viewport_ABC& /*viewport*/ )
 {      
     for( IT_TerrainObjects it = objects_.begin(); it != objects_.end(); ++it )
     {
@@ -107,7 +107,7 @@ void UrbanLayer::NotifyDeleted( const TerrainObjectProxy& object )
 // Name: EntityLayer::NotifyActivated
 // Created: SLG 2009-03-23
 // -----------------------------------------------------------------------------
-void UrbanLayer::NotifyActivated( const TerrainObjectProxy& object )
+void UrbanLayer::NotifyActivated( const TerrainObjectProxy& /*object*/ )
 {
     //view_.CenterOn( entity.Get< Positions >().GetPosition() );
 }
@@ -116,7 +116,7 @@ void UrbanLayer::NotifyActivated( const TerrainObjectProxy& object )
 // Name: EntityLayer::NotifySelected
 // Created: SLG 2009-03-23
 // -----------------------------------------------------------------------------
-void UrbanLayer::NotifySelected( const TerrainObjectProxy* object )
+void UrbanLayer::NotifySelected( const TerrainObjectProxy* /*object*/ )
 {
     /*IT_TerrainObjects it = std::find( *objects_.begin(), *objects_.end(), object );
     if( it != objects_.end() )
@@ -166,10 +166,6 @@ bool UrbanLayer::HandleMousePress( QMouseEvent* input, const geometry::Point2f& 
                 selectedObject_ = object;
                 controllers_.actions_.Select( *static_cast< const kernel::Entity_ABC* >( object ) );
                 return true;
-            }
-            else 
-            {   
-                selectedObject_ = 0;
             }
         }
     }
