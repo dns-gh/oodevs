@@ -263,7 +263,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_StartTirDirectTransporteurs",
             boost::function< PHY_Action_ABC*( boost::shared_ptr< DEC_Knowledge_Agent >, MT_Float, int ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionDirectFirePionUsingOnlyCarrier, boost::shared_ptr< DEC_Knowledge_Agent >, MT_Float, int >, boost::ref( GetPion() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC__StartTirDirectSurComposantesMajeures",
-            boost::function< PHY_Action_ABC*( boost::shared_ptr< DEC_Knowledge_Agent >, MT_Float, int, int ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionDirectFirePionOnMajorComposantes, boost::shared_ptr< DEC_Knowledge_Agent >, MT_Float, int, int >, boost::ref( GetPion() ), _1, _2, _3, _4 ) ) );
+            boost::function< PHY_Action_ABC*( int, boost::shared_ptr< DEC_Knowledge_Agent >, MT_Float, int ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionDirectFirePionOnMajorComposantes, int, boost::shared_ptr< DEC_Knowledge_Agent >, MT_Float, int >, boost::ref( GetPion() ), _1, _2, _3, _4 ) ) );
     brain.RegisterFunction( "DEC_StartTirIndirectSurPosition",
             boost::function< PHY_Action_ABC* ( const PHY_DotationCategory*, float, MT_Vector2D* ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionIndirectFire_Position, const PHY_DotationCategory*, float, MT_Vector2D* >, boost::ref( GetPion() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_StartTirIndirectSurConnaissance",

@@ -25,7 +25,7 @@ class PHY_ActionDirectFirePionOnMajorComposantes : public PHY_ActionDirectFirePi
     MT_COPYNOTALLOWED( PHY_ActionDirectFirePionOnMajorComposantes )
 
 public:
-             PHY_ActionDirectFirePionOnMajorComposantes( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Agent > pEnemy, MT_Float percentage, int firingMode, int ammoDotationClass );
+             PHY_ActionDirectFirePionOnMajorComposantes( MIL_AgentPion& pion, int ammoDotationClass, boost::shared_ptr< DEC_Knowledge_Agent > pEnemy, MT_Float percentage, int firingMode );
     virtual ~PHY_ActionDirectFirePionOnMajorComposantes();
 };
 
