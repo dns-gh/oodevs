@@ -106,7 +106,7 @@ float PopulationPositions::GetHeight() const
 // Name: PopulationPositions::IsAt
 // Created: SBO 2006-11-08
 // -----------------------------------------------------------------------------
-bool PopulationPositions::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/ ) const
+bool PopulationPositions::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/, float /*adaptiveFactor = 1.f*/ ) const
 {
     return pos.Distance( center_ ) < radius_ + precision;
 }

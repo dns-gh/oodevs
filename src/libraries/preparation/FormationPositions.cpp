@@ -71,7 +71,7 @@ float FormationPositions::GetHeight() const
 // Name: FormationPositions::IsAt
 // Created: SBO 2009-02-02
 // -----------------------------------------------------------------------------
-bool FormationPositions::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/ ) const
+bool FormationPositions::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/, float /*adaptiveFactor = 1.f*/ ) const
 {
     // $$$$ SBO 2009-02-02: Aggregated symbol position
     const float halfSizeX = 500.f * 0.5f * 2.f; // $$$$ SBO 2006-03-21: use font size?
