@@ -146,7 +146,7 @@ bool UrbanLayer::HandleMousePress( QMouseEvent* input, const geometry::Point2f& 
                     return false;
                 }
                 selectedObject_ = object;
-                controllers_.actions_.ContextMenu( object, input->globalPos() );
+                controllers_.actions_.ContextMenu( *object, input->globalPos() );
                 return true;
             }
         }
