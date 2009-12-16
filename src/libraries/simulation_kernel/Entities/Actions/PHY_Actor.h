@@ -12,6 +12,8 @@
 #ifndef __PHY_Actor_h_
 #define __PHY_Actor_h_
 
+#include <set>
+
 class PHY_Action_ABC;
 
 // =============================================================================

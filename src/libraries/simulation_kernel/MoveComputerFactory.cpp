@@ -21,9 +21,9 @@ namespace moving
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
 MoveComputerFactory::MoveComputerFactory() :
-		pMoveComputer_( new DefaultMoveComputer() ),
+		pMoveComputer_ ( new DefaultMoveComputer() ),
 		pSpeedComputer_( new DefaultSpeedComputer()),
-		pSlopeComputer_ (new DefaultMaxSlopeComputer())
+		pSlopeComputer_( new DefaultMaxSlopeComputer() )
 {
 }
 

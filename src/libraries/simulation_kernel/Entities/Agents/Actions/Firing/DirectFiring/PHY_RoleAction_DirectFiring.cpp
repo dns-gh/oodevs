@@ -189,7 +189,7 @@ int PHY_RoleAction_DirectFiring::FirePion( boost::shared_ptr< DEC_Knowledge_Agen
     const bool bFireOnlyOnMajorComposantes = ( nComposanteFiredType == PHY_DirectFireData::eFireOnlyOnMajorComposantes );
 
     ComposantesAbleToBeFiredComputer_ABC& componentAbleToBeFiredComputer = pion_.GetAlgorithms().composantesAbleToBeFiredComputerFactory_->Create( bFireOnlyOnMajorComposantes );
-    pTarget->Execute( static_cast< OnComponentComputer_ABC& >( componentAbleToBeFiredComputer ) );
+    pTarget->Execute< OnComponentComputer_ABC >( componentAbleToBeFiredComputer );
     PHY_Composante_ABC::T_ComposanteVector& targets = componentAbleToBeFiredComputer.ResultLimited( nNbrWeaponsUsable );
 
     if( targets.empty() )

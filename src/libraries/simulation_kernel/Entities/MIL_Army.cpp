@@ -279,7 +279,7 @@ void MIL_Army::InitializeDiplomacy( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_Army::ReadFormation( xml::xistream& xis, FormationFactory_ABC& formationFactory )
 {
-    MIL_Formation& formation = formationFactory.Create( xis, *this );
+    formationFactory.Create( xis, *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -288,7 +288,7 @@ void MIL_Army::ReadFormation( xml::xistream& xis, FormationFactory_ABC& formatio
 // -----------------------------------------------------------------------------
 void MIL_Army::ReadObject( xml::xistream& xis, MIL_ObjectManager& objectFactory )
 {
-    MIL_Object_ABC& object = objectFactory.CreateObject( xis, *this );
+    objectFactory.CreateObject( xis, *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -297,7 +297,7 @@ void MIL_Army::ReadObject( xml::xistream& xis, MIL_ObjectManager& objectFactory 
 // -----------------------------------------------------------------------------
 void MIL_Army::ReadPopulation( xml::xistream& xis, PopulationFactory_ABC& populationFactory )
 {
-    MIL_Population& population = populationFactory.Create( xis, *this );
+    populationFactory.Create( xis, *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -334,7 +334,7 @@ void MIL_Army::ReadDiplomacy( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_Army::ReadLogistic( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
 {
-    MIL_KnowledgeGroup& formation = knowledgeGroupFactory.Create( xis, *this );
+    knowledgeGroupFactory.Create( xis, *this );
 }
 
 // -----------------------------------------------------------------------------

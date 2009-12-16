@@ -41,7 +41,7 @@ void DefaultMaxSlopeComputer::ApplyOnComponent( PHY_ComposantePion& component )
 {
      if( component.CanMove() )
     {
-         hasUsableComponent_ = true;
+        hasUsableComponent_ = true;
         maxSlope_ = std::min( maxSlope_, component.GetType().GetMaxSlope() );
     }
 }

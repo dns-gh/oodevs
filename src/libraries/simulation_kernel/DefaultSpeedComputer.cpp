@@ -11,6 +11,7 @@
 
 #include "DefaultSpeedComputer.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
+#include "Entities/Agents/Actions/Moving/SpeedStrategy_ABC.h"
 
 namespace moving
 {
@@ -39,7 +40,7 @@ DefaultSpeedComputer::~DefaultSpeedComputer()
 // Name: DefaultSpeedComputer::Reset
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
-void DefaultSpeedComputer::Reset( const SpeedStrategy_ABC* strategy )
+void DefaultSpeedComputer::Reset( const moving::SpeedStrategy_ABC* strategy )
 {
     strategy_ = strategy;
     speed_ = std::numeric_limits<double>::max();
@@ -65,7 +66,7 @@ void DefaultSpeedComputer::ApplyOnComponent( const PHY_ComposantePion& component
 // Name: DefaultSpeedComputer::ApplyOnReinforcement
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
-void DefaultSpeedComputer::ApplyOnReinforcement( MIL_AgentPion& reinforcement)
+void DefaultSpeedComputer::ApplyOnReinforcement( MIL_Agent_ABC& reinforcement)
 {
     assert( strategy_ );
     speed_ = std::min( speed_, strategy_->ApplyOnReinforcement( reinforcement ) );

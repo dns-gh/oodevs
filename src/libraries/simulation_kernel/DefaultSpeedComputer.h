@@ -15,6 +15,8 @@
 namespace moving
 {
 
+class SpeedStrategy_ABC;
+
 // =============================================================================
 /** @class  DefaultSpeedComputer
     @brief  DefaultSpeedComputer
@@ -33,7 +35,7 @@ public:
     //@{
     virtual void Reset( const SpeedStrategy_ABC* strategy );
     virtual void ApplyOnComponent( const PHY_ComposantePion& );
-    virtual void ApplyOnReinforcement( MIL_AgentPion& );
+    virtual void ApplyOnReinforcement( MIL_Agent_ABC& );
     virtual void ApplyOnPopulation( const DEC_Knowledge_PopulationCollision& );
     virtual void AddModifier( double ratio, bool isMax=true );
     virtual double GetSpeed() const;

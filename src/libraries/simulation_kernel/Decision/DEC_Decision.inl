@@ -238,7 +238,8 @@ void DEC_Decision<T>::ActivateOrder( const std::string& strBehavior, MIL_Mission
     pMission_ = &mission;
     // Register mission parameters in the brain...
     directia::ScriptRef refMission = pBrain_->RegisterObject( pMission_ );
-    DEC_DecisionImpl::RegisterMissionParameters( pBrain_->GetScriptFunction( "InitTaskParameter" ), refMission, *pMission_ );
+    directia::ScriptRef refFunction = pBrain_->GetScriptFunction( "InitTaskParameter" );
+    DEC_DecisionImpl::RegisterMissionParameters( refFunction, refMission, *pMission_ );
     pRefs_->startEvent_( strBehavior, pMission_ );
 }
 
