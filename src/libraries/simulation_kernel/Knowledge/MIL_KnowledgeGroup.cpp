@@ -91,7 +91,8 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup::~MIL_KnowledgeGroup()
 {
-    pArmy_->UnregisterKnowledgeGroup( *this );
+    if( pArmy_ )
+        pArmy_->UnregisterKnowledgeGroup( *this );
     delete pKnowledgeBlackBoard_;
     ids_.erase( nID_ );
 }

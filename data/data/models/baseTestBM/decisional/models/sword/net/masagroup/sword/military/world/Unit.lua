@@ -71,6 +71,9 @@ return
     setSupport = function( target )
     	--TODO
     end,
+    selfProtect = function( target )
+      --TODO
+    end,
     computeReconnaissanceCapability = function( target )
     	--TODO
     end

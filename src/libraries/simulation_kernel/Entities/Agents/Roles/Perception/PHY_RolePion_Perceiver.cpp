@@ -58,6 +58,10 @@
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
 
+#include "UrbanModel.h"
+#include "urban/model.h"
+#include "urban/TerrainObject_ABC.h"
+
 using namespace detection;
 
 const unsigned int PHY_RolePion_Perceiver::nNbrStepsBetweenPeriphericalVision_ = 12; //$$$ En dur ...
@@ -905,6 +909,11 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
             (**itPerception).Execute( perceivableObjects );
 
+        std::vector< const urban::TerrainObject_ABC* > perceivableUrbanBlock;
+        MIL_AgentServer::GetWorkspace().GetUrbanModel().GetModel().GetListWithinCircle( geometry::Point2f(perceiverPosition_->rX_, perceiverPosition_->rY_ ), GetMaxObjectPerceptionDistance(), perceivableUrbanBlock );
+        for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
+            (**itPerception).Execute( perceivableUrbanBlock );
+
         TER_PopulationConcentration_ABC::T_PopulationConcentrationVector perceivableConcentrations;
         TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinCircle( *perceiverPosition_, GetMaxAgentPerceptionDistance(), perceivableConcentrations );
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
@@ -951,6 +960,25 @@ const PHY_PerceptionLevel& PHY_RolePion_Perceiver::ComputePerception( const DEC_
     for( CIT_PerceptionVector itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
     {
         pBestPerceptionLevel_ = &(**itPerception).Compute( knowledge );
+        if( pBestPerceptionLevel_->IsBestLevel() )
+            return *pBestPerceptionLevel_;
+    }
+    return *pBestPerceptionLevel_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::ComputePerception
+// Created: MGD 2009-11-20
+// -----------------------------------------------------------------------------
+const PHY_PerceptionLevel& PHY_RolePion_Perceiver::ComputePerception ( const urban::Block& block ) const
+{
+    if( !CanPerceive() )
+        return PHY_PerceptionLevel::notSeen_;
+
+    const PHY_PerceptionLevel* pBestPerceptionLevel_ = &PHY_PerceptionLevel::notSeen_;
+    for( CIT_PerceptionVector itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
+    {
+        pBestPerceptionLevel_ = &(**itPerception).Compute( block );
         if( pBestPerceptionLevel_->IsBestLevel() )
             return *pBestPerceptionLevel_;
     }
@@ -1086,6 +1114,15 @@ bool PHY_RolePion_Perceiver::IsIdentified( const MIL_PopulationConcentration& co
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::IsIdentified
+// Created: MGD 2009-11-25
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Perceiver::IsIdentified( const urban::TerrainObject_ABC& object ) const
+{
+    return pion_.GetKnowledge().IsIdentified( object );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::NotifyPerception
 // Created: NLD 2005-02-21
 // -----------------------------------------------------------------------------
@@ -1137,6 +1174,15 @@ void PHY_RolePion_Perceiver::NotifyPerception( MIL_PopulationConcentration& conc
 void PHY_RolePion_Perceiver::NotifyPerception( MIL_PopulationFlow& flow, const PHY_PerceptionLevel& level, const T_PointVector& shape )
 {
     pion_.GetKnowledge().GetKsPerception().NotifyPerception( flow, level, shape, bRecordModeEnabled_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::NotifyPerception
+// Created: MGD 2009-11-20
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::NotifyPerception( const urban::TerrainObject_ABC& object, const PHY_PerceptionLevel& level ) const
+{
+    pion_.GetKnowledge().GetKsPerception().NotifyPerception( object, level );
 }
 
 // -----------------------------------------------------------------------------

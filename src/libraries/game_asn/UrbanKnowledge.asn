@@ -1,0 +1,46 @@
+--
+-- file name : UrbanKnowledge.asn
+--
+-- Messages de gestion des connaissances des éléments urbains
+--
+
+UrbanKnowledge DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+-- BEGIN includes
+IMPORTS BaseExports   FROM Base
+        UrbanExports FROM Urban;
+UrbanKnowledgeIncludes ::= SEQUENCE { BaseExports, UrbanExports }
+UrbanKnowledgeExports  ::= NULL
+-- END includes
+
+---------------------------
+-- Connaissance urban
+---------------------------
+
+-- SIM -> MOS
+MsgUrbanKnowledgeCreation ::= SEQUENCE
+{
+    oid                          UrbanKnowledge, 
+    team                         Team, 
+    real-urban                   OID -- id de l'élément urbain réel pointé par la connaissance   
+}
+
+MsgUrbanKnowledgeUpdate ::= SEQUENCE
+{
+    oid                             UrbanKnowledge,
+    team                            Team,
+    real-urban                      OID							OPTIONAL, -- id de l'élément urbain réel pointé par la connaissance
+    relevance                       INTEGER( 0..100 )			OPTIONAL,
+    identification-level            EnumUnitIdentificationLevel OPTIONAL,
+    progress                        INTEGER( 0..100 )			OPTIONAL,
+    perceived                       BOOLEAN            OPTIONAL,    
+    automat-perception              ListOID            OPTIONAL -- Liste des compagnies percevant l'élément urbain
+}
+
+MsgUrbanKnowledgeDestruction ::= SEQUENCE
+{
+    oid    UrbanKnowledge,    
+    team   Team     
+}
+
+END -- UrbanKnowledge

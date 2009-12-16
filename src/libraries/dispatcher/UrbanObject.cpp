@@ -31,7 +31,6 @@ UrbanObject::UrbanObject( Model& model, const ASN1T_MsgUrbanCreation& msg )
 , localisation_                ( msg.location )
 {
     Initialize( model, msg.attributes );
-  //  model_.Register( msg.oid, *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,8 +39,8 @@ UrbanObject::UrbanObject( Model& model, const ASN1T_MsgUrbanCreation& msg )
 // -----------------------------------------------------------------------------
 UrbanObject::~UrbanObject()
 {
-   // model_.urbanObjects_.Remove( GetId() );
 }
+
 
 #define MSG_ASN_CREATION( ASN, CLASS ) \
     if ( attributes.m.##ASN##Present ) \

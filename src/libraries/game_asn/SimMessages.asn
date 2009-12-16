@@ -26,13 +26,14 @@ IMPORTS BaseExports                   FROM Base
         ArmyExports                   FROM Army
         AuthExports                   FROM Auth
         FolkExports                   FROM Folk
-        UrbanExports                  FROM Urban;
+        UrbanExports                  FROM Urban
+        UrbanKnowledgeExports         FROM UrbanKnowledge;
 
 SimMessagesIncludes ::= SEQUENCE
 { BaseExports, OrderExports, ControlExports, KnowledgeGroupExports,
   FormationExports, FireExports, UnitExports, UnitKnowledgeExports, ObjectExports,
   ObjectKnowledgeExports, PopulationExports, PopulationKnowledgeExports, LogMaintenanceExports,
-  LogRavitaillementExports, LogSanteExports, AutomateExports, ArmyExports, AuthExports, FolkExports, UrbanExports}
+  LogRavitaillementExports, LogSanteExports, AutomateExports, ArmyExports, AuthExports, FolkExports, UrbanExports, UrbanKnowledgeExports}
 SimMessagesExports  ::= NULL
 -- END includes
 
@@ -124,6 +125,7 @@ MsgsSimToClient ::= SEQUENCE
         msg-unit-vision-cones                                   MsgUnitVisionCones,
         msg-unit-detection                                      MsgUnitDetection,
         msg-object-detection                                    MsgObjectDetection,
+        msg-urban-detection                                     MsgUrbanDetection,
         msg-population-concentration-detection                  MsgPopulationConcentrationDetection,
         msg-population-flow-detection                           MsgPopulationFlowDetection,
 
@@ -176,7 +178,11 @@ MsgsSimToClient ::= SEQUENCE
         msg-folk-creation                                       MsgFolkCreation,
         msg-folk-graph-update                                   MsgFolkGraphUpdate,
         
-        msg-urban-creation                                      MsgUrbanCreation
+        msg-urban-creation                                      MsgUrbanCreation,
+        
+        msg-urban-knowledge-creation                            MsgUrbanKnowledgeCreation,
+        msg-urban-knowledge-update                              MsgUrbanKnowledgeUpdate,
+        msg-urban-knowledge-destruction                         MsgUrbanKnowledgeDestruction
     }
 }
 

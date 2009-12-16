@@ -16,6 +16,11 @@ class MIL_PopulationConcentration;
 class MIL_PopulationFlow;
 class DEC_Knowledge_Agent;
 
+namespace urban
+{
+    class TerrainObject_ABC;
+}
+
 //*****************************************************************************
 // Created: DFT 02-02-26
 // Last modified: JVT 03-09-01
@@ -43,6 +48,7 @@ public:
     const PHY_PerceptionLevel& ComputePerception        ( const PHY_RoleInterface_Perceiver& perceiver, const MIL_PopulationConcentration& target ) const;
     const PHY_PerceptionLevel& ComputePerception        ( const PHY_RoleInterface_Perceiver& perceiver, const MIL_PopulationFlow&          target, T_PointVector& shape ) const;
           MT_Float             ComputePerceptionAccuracy( const PHY_RoleInterface_Perceiver& perceiver, const MIL_PopulationFlow& target ) const;
+    const PHY_PerceptionLevel& ComputePerception        ( const PHY_RoleInterface_Perceiver& perceiver, const urban::TerrainObject_ABC& block ) const;
 
           void                 AddDirection     ( const MT_Vector2D& vDir );
     //@}

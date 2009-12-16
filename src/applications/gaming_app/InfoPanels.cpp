@@ -16,6 +16,7 @@
 #include "PopulationKnowledgePanel.h"
 #include "ObjectPanel.h"
 #include "clients_gui/PopulationPanel.h"
+#include "UrbanKnowledgePanel.h"
 
 using namespace kernel;
 using namespace gui;
@@ -33,6 +34,7 @@ InfoPanels::InfoPanels( QWidget* parent, Controllers& controllers, ItemFactory_A
     AddPanel( new ::ObjectPanel           ( this, *this, controllers, factory, publisher ) );
     AddPanel( new ObjectReportPanel       ( this, *this, controllers, factory ) );
     AddPanel( new ObjectKnowledgePanel    ( this, *this, controllers, factory ) );
+    AddPanel( new UrbanKnowledgePanel     ( this, *this, controllers, factory ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -34,6 +34,7 @@
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ObjectTypes.h"
+#include "UrbanKnowledges.h"
 
 using namespace kernel;
 
@@ -66,6 +67,7 @@ Team_ABC* TeamFactory::CreateTeam( const ASN1T_MsgTeamCreation& asnMsg )
     Team* result = new Team( asnMsg, controllers_.controller_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach( *new ObjectKnowledges( *result, controllers_.controller_, model_.objectKnowledgeFactory_ ) );
+    result->Attach( *new UrbanKnowledges( *result, controllers_.controller_, model_.urbanKnowledgeFactory_ ) );
     result->Attach< kernel::Diplomacies_ABC >( *new Diplomacies( controllers_.controller_, model_.teams_ ) );
     result->Attach< CommunicationHierarchies >( *new TeamHierarchies        ( controllers_.controller_, *result, *this ) );
     result->Attach< TacticalHierarchies >     ( *new TeamTacticalHierarchies( controllers_.controller_, *result ) );

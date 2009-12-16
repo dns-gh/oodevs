@@ -306,6 +306,10 @@ void ObjectKnowledgePanel::OnSelectionChanged( QListViewItem* i )
             UpdateExtension< NBCAttribute_ABC >( *subSelected_ );
             UpdateExtension< ActivityTimeAttribute_ABC >( *subSelected_ );
             UpdateExtension< MineAttribute_ABC >( *subSelected_ );
+
+            const ObjectPerceptions* perceptions = subSelected_->Retrieve< ObjectPerceptions >();
+            if( perceptions )
+                NotifyUpdated( *perceptions );
         }
     }
 }

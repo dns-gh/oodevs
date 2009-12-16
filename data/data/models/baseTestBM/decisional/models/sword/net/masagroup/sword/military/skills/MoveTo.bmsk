@@ -32,7 +32,9 @@ skill "MoveTo" {
   };
   ["modifiers"] = {};
   ["links"] = {};
-  ["resources"] = {};
+  ["resources"] = {
+    ["move"] = net.masagroup.military.generic.resources.Move;
+  };
   ["valid"] = true;
 }
 --

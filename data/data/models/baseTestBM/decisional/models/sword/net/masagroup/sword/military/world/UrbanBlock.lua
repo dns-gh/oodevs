@@ -11,8 +11,12 @@ return
     reachEfficiency = function( urbanBlock, keypoint )
         return integration.reachEfficiency( urbanBlock, keypoint )
     end,
+    
+    proximityLevel = function( urbanBlock )
+        return integration.reachPriority( urbanBlock )
+    end,
 	
-	reachPriority = function( point )
+	  reachPriority = function( point )
         return integration.reachPriority( point )
     end,
     
@@ -30,5 +34,15 @@ return
     end,
     isSafety = function( area )
         --TODO
+    end,
+    canReconnoitreIt = function( point )
+      return integration.magnitude( point, knowledges.me ) < 200
+    end,
+    isRecognized = function( urbanBlock )
+      if not tick then --TODO MGD remove hack
+        tick = 0
+      end
+      tick = tick + 1
+      return tick > 40 --DEC_Urban_IsRecognized( urbanBlock.source )
     end
 }

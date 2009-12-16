@@ -12,7 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgeBlackBoard_AgentPion.h"
 
-#include "DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "DEC_KnowledgeBlackBoard_Army.h"
 #include "DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "DEC_BlackBoard_CanContainKnowledgeAgentPerception.h"
@@ -20,6 +19,7 @@
 #include "DEC_BlackBoard_CanContainKnowledgeObjectPerception.h"
 #include "DEC_BlackBoard_CanContainKnowledgePopulationPerception.h"
 #include "DEC_BlackBoard_CanContainKnowledgePopulationCollision.h"
+#include "DEC_BlackBoard_CanContainKnowledgeUrbanPerception.h"
 #include "DEC_KS_ObjectInteraction.h"
 #include "DEC_KS_PopulationInteraction.h"
 #include "DEC_KS_Fire.h"
@@ -32,6 +32,7 @@
 #include "DEC_Knowledge_PopulationPerception.h"
 #include "DEC_Knowledge_PopulationCollision.h"
 #include "DEC_Knowledge_Population.h"
+#include "DEC_Knowledge_UrbanPerception.h"
 #include "MIL_KnowledgeGroup.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/MIL_Army.h"
@@ -47,6 +48,7 @@ BOOST_CLASS_EXPORT_GUID( DEC_KnowledgeBlackBoard_AgentPion, "DEC_KnowledgeBlackB
 DEC_KnowledgeBlackBoard_AgentPion::DEC_KnowledgeBlackBoard_AgentPion( MIL_AgentPion& pion )
     : pPion_                                    ( &pion )
     , pKnowledgeAgentPerceptionContainer_       ( new DEC_BlackBoard_CanContainKnowledgeAgentPerception     () )
+    , pKnowledgeUrbanPerceptionContainer_       ( new DEC_BlackBoard_CanContainKnowledgeUrbanPerception     () )
     , pKnowledgeObjectCollisionContainer_       ( new DEC_BlackBoard_CanContainKnowledgeObjectCollision     () )
     , pKnowledgeObjectPerceptionContainer_      ( new DEC_BlackBoard_CanContainKnowledgeObjectPerception    () )
     , pKnowledgePopulationPerceptionContainer_  ( new DEC_BlackBoard_CanContainKnowledgePopulationPerception() )
@@ -66,6 +68,7 @@ DEC_KnowledgeBlackBoard_AgentPion::DEC_KnowledgeBlackBoard_AgentPion( MIL_AgentP
 DEC_KnowledgeBlackBoard_AgentPion::DEC_KnowledgeBlackBoard_AgentPion()
     : pPion_                                    ( 0 )
     , pKnowledgeAgentPerceptionContainer_       ( 0 )
+    , pKnowledgeUrbanPerceptionContainer_       ( 0 )
     , pKnowledgeObjectCollisionContainer_       ( 0 )
     , pKnowledgeObjectPerceptionContainer_      ( 0 )
     , pKnowledgePopulationPerceptionContainer_  ( 0 )
@@ -137,6 +140,7 @@ void DEC_KnowledgeBlackBoard_AgentPion::SendFullState() const
     pKnowledgeAgentPerceptionContainer_     ->ApplyOnKnowledgesAgentPerception     ( std::mem_fun_ref( & DEC_Knowledge_AgentPerception     ::SendStateToNewClient ) );
     pKnowledgeObjectPerceptionContainer_    ->ApplyOnKnowledgesObjectPerception    ( std::mem_fun_ref( & DEC_Knowledge_ObjectPerception    ::SendStateToNewClient ) );
     pKnowledgePopulationPerceptionContainer_->ApplyOnKnowledgesPopulationPerception( std::mem_fun_ref( & DEC_Knowledge_PopulationPerception::SendStateToNewClient ) );
+    pKnowledgeUrbanPerceptionContainer_    ->ApplyOnKnowledgesUrbanPerception    ( std::mem_fun_ref( & DEC_Knowledge_UrbanPerception    ::SendStateToNewClient ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -672,4 +676,32 @@ DEC_KS_PopulationInteraction& DEC_KnowledgeBlackBoard_AgentPion::GetKsPopulation
 {
     assert( pKsPopulationInteraction_ );
     return *pKsPopulationInteraction_;
+}
+
+// =============================================================================
+// URBAN
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_AgentPion::IsIdentified
+// Created: MGD 2009-11-26
+// -----------------------------------------------------------------------------
+DEC_BlackBoard_CanContainKnowledgeUrbanPerception& DEC_KnowledgeBlackBoard_AgentPion::GetKnowledgeUrbanPerceptionContainer() const
+{
+    assert( pKnowledgeUrbanPerceptionContainer_ );
+    return *pKnowledgeUrbanPerceptionContainer_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_AgentPion::IsIdentified
+// Created: MGD 2009-11-26
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgeBlackBoard_AgentPion::IsIdentified( const urban::TerrainObject_ABC& object ) const
+{
+    assert( pKnowledgeUrbanPerceptionContainer_ );
+
+    boost::shared_ptr< DEC_Knowledge_UrbanPerception > pKnowledge = pKnowledgeUrbanPerceptionContainer_->GetKnowledgeUrbanPerception( object );
+    if ( pKnowledge )
+        return pKnowledge->GetCurrentPerceptionLevel() == PHY_PerceptionLevel::identified_;
+    return false;
 }

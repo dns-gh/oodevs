@@ -77,7 +77,8 @@ public:
     void NotifyPerception( MIL_Object_ABC&              object       , const PHY_PerceptionLevel& level );
     void NotifyPerception( MIL_PopulationConcentration& concentration, const PHY_PerceptionLevel& level );
     void NotifyPerception( MIL_PopulationFlow&          flow         , const PHY_PerceptionLevel& level, const T_PointVector& shape );
-    void NotifyPerception( const MIL_Effect_IndirectFire& flyingShell ) const;    
+    void NotifyPerception( const MIL_Effect_IndirectFire& flyingShell ) const;
+    void NotifyPerception( const urban::TerrainObject_ABC& block, const PHY_PerceptionLevel& level ) const;    
     //@}
 
     //! @name Operations
@@ -88,6 +89,7 @@ public:
     const PHY_PerceptionLevel& ComputePerception ( const MT_Vector2D& vPoint             ) const;
     const PHY_PerceptionLevel& ComputePerception ( const DEC_Knowledge_Object& knowledge ) const;
     const PHY_PerceptionLevel& ComputePerception ( const DEC_Knowledge_Agent & knowledge ) const;
+    const PHY_PerceptionLevel& ComputePerception ( const urban::Block& block ) const;
 
     void SetVisionModeNormal   ();
     void SetVisionModeDirection( const MT_Vector2D& vDirection );
@@ -162,6 +164,7 @@ public:
     bool IsKnown                    ( const MIL_Object_ABC&              object        ) const;
     bool IsIdentified               ( const MIL_Object_ABC&              object        ) const;
     bool IsIdentified               ( const MIL_PopulationConcentration& concentration ) const;
+    bool IsIdentified               ( const urban::TerrainObject_ABC&    object        ) const;
     //@}
 
     //! @name Network

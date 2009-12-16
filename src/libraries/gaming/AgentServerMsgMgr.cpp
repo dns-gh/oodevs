@@ -1476,6 +1476,42 @@ void AgentServerMsgMgr::OnReceiveMsgUrbanCreation( const ASN1T_MsgUrbanCreation&
     GetModel().urbanObjects_.Create( asnMsg );
 }
 
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgUrbanDetection
+// Created: MGD 2009-12-10
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgUrbanDetection( const ASN1T_MsgUrbanDetection& asnMsg )
+{
+    GetModel().agents_.GetAgent( asnMsg.oid ).Update( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgUrbanKnowledgeCreation
+// Created: MGD 2009-12-10
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgUrbanKnowledgeCreation( const ASN1T_MsgUrbanKnowledgeCreation& asnMsg )
+{
+    GetModel().teams_.GetTeam( asnMsg.team ).Update( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgUrbanKnowledgeUpdate
+// Created: MGD 2009-12-10
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgUrbanKnowledgeUpdate( const ASN1T_MsgUrbanKnowledgeUpdate& asnMsg )
+{
+    GetModel().teams_.GetTeam( asnMsg.team ).Update( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgFolkCreation
+// Created: MGD 2009-12-10
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgUrbanKnowledgeDestruction( const ASN1T_MsgUrbanKnowledgeDestruction& asnMsg )
+{
+    GetModel().teams_.GetTeam( asnMsg.team ).Update( asnMsg );
+}
+
 
 namespace
 {
@@ -1626,7 +1662,12 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const ASN1
         case T_MsgsSimToClient_msg_msg_folk_graph_update                              : OnReceiveMsgFolkGraphUpdate ( *message.msg.u.msg_folk_graph_update ); break;
 
         case T_MsgsSimToClient_msg_msg_urban_creation                                 : OnReceiveMsgUrbanCreation   ( *message.msg.u.msg_urban_creation ); break;
-   
+        
+        case T_MsgsSimToClient_msg_msg_urban_detection                                : OnReceiveMsgUrbanDetection              ( *message.msg.u.msg_urban_detection ); break;
+        case T_MsgsSimToClient_msg_msg_urban_knowledge_creation                       : OnReceiveMsgUrbanKnowledgeCreation      ( *message.msg.u.msg_urban_knowledge_creation ); break;
+        case T_MsgsSimToClient_msg_msg_urban_knowledge_update                         : OnReceiveMsgUrbanKnowledgeUpdate        ( *message.msg.u.msg_urban_knowledge_update ); break;
+        case T_MsgsSimToClient_msg_msg_urban_knowledge_destruction                    : OnReceiveMsgUrbanKnowledgeDestruction   ( *message.msg.u.msg_urban_knowledge_destruction ); break;
+
         default:
             UnhandledMessage( message.msg.t );
     };

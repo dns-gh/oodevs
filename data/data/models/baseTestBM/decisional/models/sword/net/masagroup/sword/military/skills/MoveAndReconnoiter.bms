@@ -32,9 +32,17 @@ rootnode
         end
         BreakForDebug( tostring( "ok proximity level" ) )
         -- the selected elements is recognized
-        if nearest:isRecognized() then self.unRecognizedEntities[ nearest ] = nil return end
-        BreakForDebug(tostring(nearest))
-		BreakForDebug( tostring( "params.positions: " ).. tostring(self.params.positions) )
+        if nearest:isRecognized() then
+          if not RC_Done then
+            DEC_RC1( 1, 166 )
+            RC_Done = true;
+          end
+          temp = {};
+          temp[ nearest] = { nearest }
+          Activate( skill.links.moveTo, 1, { entities = { nearest }, area = temp } )
+          --self.unRecognizedEntities[ nearest ] = nil 
+          return
+        end
         -- if is possible, reconnoiter the nearest element else advance toward it. 
         if nearest:canReconnoitreIt() then
         	BreakForDebug("Je reconnais!")

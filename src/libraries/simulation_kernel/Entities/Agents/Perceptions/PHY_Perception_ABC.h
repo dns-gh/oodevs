@@ -19,6 +19,11 @@ class MIL_PopulationFlow;
 class PHY_PerceptionLevel;
 class PHY_RoleInterface_Perceiver;
 
+namespace urban
+{
+    class TerrainObject_ABC;
+    class Block;
+}
 namespace detection
 {
     class DetectionComputerFactory_ABC;
@@ -45,6 +50,9 @@ public:
     virtual void                       Execute( const TER_Object_ABC::T_ObjectVector& perceivableObjects );
     virtual const PHY_PerceptionLevel& Compute( const DEC_Knowledge_Object& knowledge ) const;
     virtual const PHY_PerceptionLevel& Compute( const MIL_Object_ABC&   object ) const;
+
+    virtual void                       Execute( const std::vector< const urban::TerrainObject_ABC* >& perceivables );
+    virtual const PHY_PerceptionLevel& Compute( const urban::Block& block ) const;
 
     virtual void                       Execute( const TER_PopulationFlow_ABC::T_PopulationFlowVector& perceivableFlows );
 

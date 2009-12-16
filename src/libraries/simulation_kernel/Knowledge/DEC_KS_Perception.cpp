@@ -15,9 +15,11 @@
 #include "DEC_Knowledge_AgentPerception.h"
 #include "DEC_Knowledge_ObjectPerception.h"
 #include "DEC_Knowledge_PopulationPerception.h"
+#include "DEC_Knowledge_UrbanPerception.h"
 #include "DEC_BlackBoard_CanContainKnowledgeAgentPerception.h"
 #include "DEC_BlackBoard_CanContainKnowledgeObjectPerception.h"
 #include "DEC_BlackBoard_CanContainKnowledgePopulationPerception.h"
+#include "DEC_BlackBoard_CanContainKnowledgeUrbanPerception.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
@@ -268,6 +270,25 @@ void DEC_KS_Perception::NotifyPerception( MIL_PopulationFlow& flowPerceived, con
         pKnowledge = &pBlackBoard_->GetKnowledgePopulationPerceptionContainer().CreateKnowledgePopulationPerception( pBlackBoard_->GetPion(), flowPerceived.GetPopulation() );
 
     pKnowledge->Update( flowPerceived, level, shape );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_Perception::NotifyPerception
+// Created: MGD 2009-11-30
+// -----------------------------------------------------------------------------
+void DEC_KS_Perception::NotifyPerception( const urban::TerrainObject_ABC& object, const PHY_PerceptionLevel& level )
+{
+    if( level == PHY_PerceptionLevel::notSeen_ )
+        return;
+
+    assert( pBlackBoard_ );
+
+    boost::shared_ptr< DEC_Knowledge_UrbanPerception > pKnowledge = pBlackBoard_->GetKnowledgeUrbanPerceptionContainer().GetKnowledgeUrbanPerception( object );
+    if ( !pKnowledge )
+        pKnowledge = pBlackBoard_->GetKnowledgeUrbanPerceptionContainer().CreateKnowledgeUrbanPerception( pBlackBoard_->GetPion(), object );
+
+    pKnowledge->Update( level );
 }
 
 // =============================================================================

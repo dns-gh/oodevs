@@ -60,6 +60,7 @@ class DrawingsModel;
 class ScoreModel;
 class ActionFactory_ABC;
 class ParameterFactory_ABC;
+class UrbanKnowledgeFactory;;
 class UrbanModel;
 
 // =============================================================================
@@ -91,6 +92,7 @@ public:
 
     AgentKnowledgeFactory& agentsKnowledgeFactory_;
     ObjectKnowledgeFactory& objectKnowledgeFactory_; // $$$$ AGE 2006-02-15: ABC
+    UrbanKnowledgeFactory& urbanKnowledgeFactory_;
     kernel::AgentKnowledgeConverter_ABC& agentKnowledgeConverter_;
     kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter_;
 

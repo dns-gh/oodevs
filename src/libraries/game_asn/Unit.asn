@@ -368,6 +368,13 @@ MsgObjectDetection ::= SEQUENCE
     visibility EnumUnitVisibility
 }
 
+MsgUrbanDetection ::= SEQUENCE
+{
+    oid        Unit,
+    urban-oid  OID,
+    visibility EnumUnitVisibility
+}
+
 MsgPopulationConcentrationDetection ::= SEQUENCE
 {
     oid                 Unit,

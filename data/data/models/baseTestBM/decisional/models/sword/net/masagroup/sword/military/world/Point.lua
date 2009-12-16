@@ -7,7 +7,13 @@ return
     moveToIt = function( point )
         return integration.moveToIt( point )
     end,
-    
+    canTakePosition = function( point )
+        return integration.magnitude( point, knowledges.me ) < 100
+    end,
+    takeUpPosition = function( point )
+        --NOTHING
+    end,
+ 
     reachEfficiency = function( point, keypoint )
         return integration.reachEfficiency( point, keypoint )
     end,

@@ -23,4 +23,9 @@
 		</parameter>
 	</parameters>
 <modifiers></modifiers>
+<resources>
+    <resource name="net.masagroup.military.generic.resources.Move" variable="move">
+      <description>La mise en oeuvre des capacités de mouvement.</description>
+    </resource>
+  </resources>
 </skill>

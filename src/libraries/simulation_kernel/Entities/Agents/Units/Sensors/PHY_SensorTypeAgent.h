@@ -31,6 +31,11 @@ class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
 class PHY_SensorType;
 
+namespace urban
+{
+    class TerrainObject_ABC;
+}
+
 // =============================================================================
 // @class  PHY_SensorTypeAgent
 // Created: JVT 2004-08-03
@@ -61,6 +66,7 @@ public:
     const PHY_PerceptionLevel& ComputePerception        ( const MIL_AgentPion& perceiver, const MIL_PopulationConcentration& target, MT_Float rSensorHeight ) const;    
     const PHY_PerceptionLevel& ComputePerception        ( const MIL_AgentPion& perceiver, const MIL_PopulationFlow&          target, MT_Float rSensorHeight, T_PointVector& shape ) const;
           MT_Float             ComputePerceptionAccuracy( const MIL_AgentPion& perceiver, const MIL_PopulationFlow&          target, MT_Float rSensorHeight ) const;
+    const PHY_PerceptionLevel& ComputePerception        ( const MIL_AgentPion& perceiver, const urban::TerrainObject_ABC& target, MT_Float rSensorHeight ) const;
     //@}
 
 public:
@@ -87,6 +93,7 @@ private:
     MT_Float                   ComputeEnvironementFactor( PHY_RawVisionData::envBits nEnv ) const;
     MT_Float                   ComputeExtinction        ( const PHY_RawVisionDataIterator& env, MT_Float rDistanceModificator, MT_Float rInitialCoef ) const;
     const PHY_PerceptionLevel& InterpreteExtinction     ( MT_Float rExtinction ) const;
+    const PHY_PerceptionLevel& InterpreteTerrainObjectExtinction( MT_Float rExtinction ) const;
 
     MT_Float GetSourceFactor( const MIL_AgentPion&       source ) const;
     MT_Float GetTargetFactor( const MIL_Agent_ABC&       target ) const;

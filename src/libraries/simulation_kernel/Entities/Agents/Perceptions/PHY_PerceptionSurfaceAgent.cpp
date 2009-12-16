@@ -170,6 +170,15 @@ const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const 
     return pSensorType_->ComputePerception( perceiver.GetPion(), target, rHeight_, shape );
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionSurfaceAgent::ComputePerception
+// Created: MGD 2009-11-25
+// -----------------------------------------------------------------------------
+const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const PHY_RoleInterface_Perceiver& perceiver, const urban::TerrainObject_ABC& block ) const
+{
+    return pSensorType_->ComputePerception( perceiver.GetPion(), block, rHeight_ );  
+}
+
 
 // =============================================================================
 // NETWORK

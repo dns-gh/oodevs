@@ -15,6 +15,11 @@
 #include "Displayer_ABC.h"
 #include "Types.h"
 
+namespace urban
+{
+    class TerrainObject_ABC;
+}
+
 namespace kernel
 {
 
@@ -174,6 +179,20 @@ struct Formatter< Unit >
 {
     void operator()( const Unit& element, Displayer_ABC& displayer ) const;
 };
+
+
+// =============================================================================
+/** @class  Formatter
+    @brief  Urban
+*/
+// Created: MGD 2009-12-11
+// =============================================================================
+template< >
+struct Formatter< urban::TerrainObject_ABC >
+{
+    void operator()( const urban::TerrainObject_ABC& value, Displayer_ABC& displayer ) const;
+};
+
 
 // =============================================================================
 /** @class  Formatter

@@ -12,9 +12,12 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgeBlackBoard_Army.h"
 #include "DEC_BlackBoard_CanContainKnowledgeObject.h"
+#include "DEC_BlackBoard_CanContainKnowledgeUrban.h"
 #include "DEC_KS_ObjectKnowledgeSynthetizer.h"
+#include "DEC_KS_UrbanKnowledgeSynthetizer.h"
 #include "DEC_Knowledge_Object.h"
 #include "DEC_Knowledge_ObjectCollision.h"
+#include "DEC_Knowledge_Urban.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 
@@ -28,7 +31,9 @@ DEC_KnowledgeBlackBoard_Army::DEC_KnowledgeBlackBoard_Army( MIL_Army& army )
     : DEC_KnowledgeBlackBoard_ABC   ()
     , pArmy_                        ( &army )
     , pKnowledgeObjectContainer_    ( new DEC_BlackBoard_CanContainKnowledgeObject() )
+    , pKnowledgeUrbanContainer_     ( new DEC_BlackBoard_CanContainKnowledgeUrban( army ) )
     , pKsObjectKnowledgeSynthetizer_( new DEC_KS_ObjectKnowledgeSynthetizer( *this ) )
+    , pKsUrbanKnowledgeSynthetizer_( new DEC_KS_UrbanKnowledgeSynthetizer( *this ) )
 {
     // NOTHING
 }
@@ -41,7 +46,9 @@ DEC_KnowledgeBlackBoard_Army::DEC_KnowledgeBlackBoard_Army()
     : DEC_KnowledgeBlackBoard_ABC   ()
     , pArmy_                        ( 0 )
     , pKnowledgeObjectContainer_    ( 0 )
+    , pKnowledgeUrbanContainer_     ( 0 )
     , pKsObjectKnowledgeSynthetizer_( 0 )
+    , pKsUrbanKnowledgeSynthetizer_( 0 )
 {
     // NOTHING
 }
@@ -53,7 +60,9 @@ DEC_KnowledgeBlackBoard_Army::DEC_KnowledgeBlackBoard_Army()
 DEC_KnowledgeBlackBoard_Army::~DEC_KnowledgeBlackBoard_Army()
 {
     delete pKnowledgeObjectContainer_;
+    delete pKnowledgeUrbanContainer_;
     delete pKsObjectKnowledgeSynthetizer_;
+    delete pKsUrbanKnowledgeSynthetizer_;
 }
 
 // -----------------------------------------------------------------------------
@@ -66,7 +75,9 @@ void DEC_KnowledgeBlackBoard_Army::serialize( Archive& archive, const uint )
     archive & boost::serialization::base_object< DEC_KnowledgeBlackBoard_ABC >( *this )
             & pArmy_
             & pKnowledgeObjectContainer_
+            & pKnowledgeUrbanContainer_
             & pKsObjectKnowledgeSynthetizer_;
+            & pKsUrbanKnowledgeSynthetizer_;
 }
 
 // -----------------------------------------------------------------------------
@@ -76,6 +87,7 @@ void DEC_KnowledgeBlackBoard_Army::serialize( Archive& archive, const uint )
 void DEC_KnowledgeBlackBoard_Army::SendFullState() const
 {
     pKnowledgeObjectContainer_->ApplyOnKnowledgesObjectRef( std::mem_fun_ref( & DEC_Knowledge_Object::SendStateToNewClient ) );
+    pKnowledgeUrbanContainer_->ApplyOnKnowledgesUrbanRef( std::mem_fun_ref( & DEC_Knowledge_Urban::SendStateToNewClient ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,6 +97,7 @@ void DEC_KnowledgeBlackBoard_Army::SendFullState() const
 void DEC_KnowledgeBlackBoard_Army::SendChangedState() const
 {
     pKnowledgeObjectContainer_->ApplyOnKnowledgesObjectRef( std::mem_fun_ref( & DEC_Knowledge_Object::UpdateOnNetwork ) );
+    pKnowledgeUrbanContainer_->ApplyOnKnowledgesUrbanRef( std::mem_fun_ref( & DEC_Knowledge_Urban::UpdateOnNetwork ) );
 }
 
 
@@ -500,6 +513,16 @@ DEC_BlackBoard_CanContainKnowledgeObject& DEC_KnowledgeBlackBoard_Army::GetKnowl
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Army::GetKnowledgeUrbanContainer
+// Created: MGD 2009-12-02
+// -----------------------------------------------------------------------------
+DEC_BlackBoard_CanContainKnowledgeUrban& DEC_KnowledgeBlackBoard_Army::GetKnowledgeUrbanContainer() const
+{
+    assert( pKnowledgeUrbanContainer_ );
+    return *pKnowledgeUrbanContainer_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_Army::GetArmy
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
@@ -517,4 +540,14 @@ DEC_KS_ObjectKnowledgeSynthetizer& DEC_KnowledgeBlackBoard_Army::GetKsObjectKnow
 {
     assert( pKsObjectKnowledgeSynthetizer_ );
     return *pKsObjectKnowledgeSynthetizer_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Army::GetKSUrbanKnowledgeSynthetizer
+// Created: MGD 2009-12-02
+// -----------------------------------------------------------------------------
+DEC_KS_UrbanKnowledgeSynthetizer& DEC_KnowledgeBlackBoard_Army::GetKsUrbanKnowledgeSynthetizer() const
+{
+    assert( pKsUrbanKnowledgeSynthetizer_ );
+    return *pKsUrbanKnowledgeSynthetizer_;
 }

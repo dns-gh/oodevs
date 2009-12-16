@@ -34,6 +34,7 @@
 #include "Side.h"
 #include "SimulationModel.h"
 #include "Synchroniser.h"
+#include "UrbanKnowledge.h"
 #include "UrbanObject.h"
 #include "Visitors.h"
 #include "clients_kernel/AgentTypes.h"
@@ -233,6 +234,10 @@ void Model::Update( const ASN1T_MsgsSimToClient& asn )
         case T_MsgsSimToClient_msg_msg_folk_creation                                  : folk_->Update( *asn.msg.u.msg_folk_creation ); break;
 
         case T_MsgsSimToClient_msg_msg_urban_creation                                 : CreateUpdate( urbanBlocks_, *asn.msg.u.msg_urban_creation ); break;
+        case T_MsgsSimToClient_msg_msg_urban_knowledge_creation                       : CreateUpdate( urbanKnowledges_, asn.msg.u.msg_urban_knowledge_creation->oid, *asn.msg.u.msg_urban_knowledge_creation ); break;
+        case T_MsgsSimToClient_msg_msg_urban_knowledge_update                         : urbanKnowledges_.Get( asn.msg.u.msg_urban_knowledge_update->oid ).Update( *asn.msg.u.msg_urban_knowledge_update ); break;
+        case T_MsgsSimToClient_msg_msg_urban_knowledge_destruction                    : Destroy( urbanKnowledges_, asn.msg.u.msg_urban_knowledge_destruction->oid ); break;
+
 //        default:
 //            assert( false );//@TODO restore an exception, some messages aren't linked
     }
@@ -353,6 +358,7 @@ void Model::Accept( ModelVisitor_ABC& visitor ) const
     fireEffects_           .Apply( boost::bind( &FireEffect::Accept, _1, boost::ref( visitor ) ) );
     reports_               .Apply( boost::bind( &Report::Accept, _1, boost::ref( visitor ) ) );
     urbanBlocks_           .Apply( boost::bind( &UrbanObject::Accept, _1, boost::ref( visitor ) ) );
+    urbanKnowledges_       .Apply( boost::bind( &UrbanKnowledge::Accept, _1, boost::ref( visitor ) ) );
 }
 
 // -----------------------------------------------------------------------------

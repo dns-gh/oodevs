@@ -3,6 +3,7 @@ queryImplementation "getCrossroads" { ["execute"] = function ( params )
     for _, objective in pairs( params.objectives ) do
         local res = {}
         DEC_Crossroads( objective.sim_pos.x, objective.sim_pos.y, objective.sim_pos.z, 10000, res )
+        res[ #res + 1 ] = objective -- add objectif itself
         allRes[ objective ] = res
     end
     return allRes

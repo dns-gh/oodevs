@@ -324,7 +324,7 @@
 
     <target name="application.dispatcher_app.nocrossbow" description="build Sword Dispatcher executable without crossbow" depends="application.dispatcher_dll.nocrossbow">
         <build-app name="dispatcher_app" subsystem="console" mode="release" depends="mt,boost,terrain,flexlm"
-                   libs="masalloc,tools,
+                   libs="masalloc,tools,urban
                          dispatcher-${platform}-mt@{suffix},
                          lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}">
             <syslibset libs="dbghelp,psapi,iphlpapi,user32,advapi32"/>
@@ -630,7 +630,7 @@
     tests
     ============================================================================
     -->
-    <target name="test" depends="generate-license,test-scripts.nocrossbow,test-adaptation,3a_test,plugins_test,clients_test,application.simulation_kernel_test" description="run all tests"/>
+    <target name="test" depends="generate-license,test-scripts.nocrossbow,test-adaptation,3a_test,plugins_test,clients_test,dispatcher_test,application.simulation_kernel_test" description="run all tests"/>
 
     <target name="3a_test" depends="library.3a">
         <build-test name="3a" depends="xerces,terrain,boost" libs="lib${ant.project.name}_3a-${platform}-mt@{suffix}">
@@ -661,6 +661,13 @@
             lib${ant.project.name}_clients_kernel-${platform}-mt
             lib${ant.project.name}_preparation-${platform}-mt">
             <syslibset libs="gdi32"/>
+        </build-test>
+    </target>
+    
+    <target name="dispatcher_test"><!-- depends="library.indicators, library.preparation"-->
+        <build-test name="dispatcher" depends="boost"
+            libs="lib${ant.project.name}_clients_kernel-${platform}-mt
+            lib${ant.project.name}_dispatcher-${platform}-mt">
         </build-test>
     </target>
 

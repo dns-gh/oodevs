@@ -323,9 +323,9 @@ void MIL_AgentServer::SendMsgEndTick() const
 // -----------------------------------------------------------------------------
 void MIL_AgentServer::SendStateToNewClient() const
 {    
+    pUrbanModel_->SendStateToNewClient();
     pEntityManager_->SendStateToNewClient();
     pFolk_->SendStateToNewClient();
-    pUrbanModel_->SendStateToNewClient();
 }
 
 // =============================================================================

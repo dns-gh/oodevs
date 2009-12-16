@@ -20,6 +20,7 @@ class DEC_BlackBoard_CanContainKnowledgeObjectCollision;
 class DEC_BlackBoard_CanContainKnowledgeObjectPerception;
 class DEC_BlackBoard_CanContainKnowledgePopulationPerception;
 class DEC_BlackBoard_CanContainKnowledgePopulationCollision;
+class DEC_BlackBoard_CanContainKnowledgeUrbanPerception;
 class DEC_Knowledge_RapForLocal;
 class DEC_KS_ObjectInteraction; 
 class DEC_KS_PopulationInteraction;
@@ -28,6 +29,11 @@ class DEC_KS_Perception;
 class MIL_Object_ABC;
 class MIL_PopulationConcentration;
 class MIL_Population;
+
+namespace urban
+{
+    class TerrainObject_ABC;
+}
 
 // =============================================================================
 /** @class  DEC_KnowledgeBlackBoard_AgentPion
@@ -65,6 +71,7 @@ public:
     DEC_BlackBoard_CanContainKnowledgeObjectPerception&     GetKnowledgeObjectPerceptionContainer    () const;
     DEC_BlackBoard_CanContainKnowledgePopulationPerception& GetKnowledgePopulationPerceptionContainer() const;
     DEC_BlackBoard_CanContainKnowledgePopulationCollision&  GetKnowledgePopulationCollisionContainer () const;
+    DEC_BlackBoard_CanContainKnowledgeUrbanPerception&      GetKnowledgeUrbanPerceptionContainer() const;
     //@}
 
     //! @name Network
@@ -110,6 +117,9 @@ public:
     void GetPopulationsColliding( T_KnowledgePopulationCollisionVector& container ) const;
     void GetPopulationsColliding( T_KnowledgePopulationDiaIDVector&     container ) const;
     void GetPopulationsAttacking( T_KnowledgePopulationDiaIDVector&     container ) const;
+
+    //Urban
+    bool IsIdentified( const urban::TerrainObject_ABC& object ) const;
     //@}   
 
 private:
@@ -121,6 +131,7 @@ private:
     DEC_BlackBoard_CanContainKnowledgeObjectPerception*     pKnowledgeObjectPerceptionContainer_;
     DEC_BlackBoard_CanContainKnowledgePopulationPerception* pKnowledgePopulationPerceptionContainer_;
     DEC_BlackBoard_CanContainKnowledgePopulationCollision*  pKnowledgePopulationCollisionContainer_;
+    DEC_BlackBoard_CanContainKnowledgeUrbanPerception*      pKnowledgeUrbanPerceptionContainer_;
     DEC_Knowledge_RapForLocal*                              pKnowledgeRapForLocal_;
 
     // Knowledge sources

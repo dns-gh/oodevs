@@ -33,6 +33,7 @@
 #include "generated/PopulationKnowledge.h"
 #include "generated/Folk.h"
 #include "generated/Urban.h"
+#include "generated/UrbanKnowledge.h"
 
 #pragma warning( pop ) 
 

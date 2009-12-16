@@ -111,6 +111,7 @@ GENERATE_ASN_MSG_SENDER      ( SimToClient, UnitEnvironmentType             , un
 GENERATE_ASN_MSG_SENDER      ( SimToClient, UnitVisionCones                 , unit_vision_cones     )
 GENERATE_ASN_MSG_SENDER      ( SimToClient, UnitDetection                   , unit_detection        )
 GENERATE_ASN_MSG_SENDER      ( SimToClient, ObjectDetection                 , object_detection      )
+GENERATE_ASN_MSG_SENDER      ( SimToClient, UrbanDetection                  , urban_detection       )
 GENERATE_ASN_MSG_SENDER      ( SimToClient, PopulationConcentrationDetection, population_concentration_detection      )
 GENERATE_ASN_MSG_SENDER      ( SimToClient, PopulationFlowDetection,          population_flow_detection      )
 
@@ -227,6 +228,9 @@ GENERATE_ASN_MSG_SENDER( SimToClient, FolkGraphUpdate, folk_graph_update )
 
 // Urban
 GENERATE_ASN_MSG_SENDER( SimToClient, UrbanCreation  , urban_creation    )
+GENERATE_ASN_MSG_SENDER( SimToClient, UrbanKnowledgeCreation  , urban_knowledge_creation )
+GENERATE_ASN_MSG_SENDER( SimToClient, UrbanKnowledgeUpdate  , urban_knowledge_update )
+GENERATE_ASN_MSG_SENDER( SimToClient, UrbanKnowledgeDestruction  , urban_knowledge_destruction )
 
 #endif // __NET_ASN_Messages_h_
 

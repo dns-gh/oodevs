@@ -44,7 +44,7 @@
 #include "UrbanModel.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/FormationLevels.h"
-//#include "urban/Model.h"
+#include "UrbanKnowledgeFactory.h"
 #include "urban/StaticModel.h"
 
 #pragma warning( disable : 4355 )
@@ -60,6 +60,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , static_( staticModel )
     , agentsKnowledgeFactory_( *new AgentKnowledgeFactory( controllers, *this, staticModel.coordinateConverter_ ) )
     , objectKnowledgeFactory_( *new ObjectKnowledgeFactory( controllers, *this, staticModel ) )
+    , urbanKnowledgeFactory_( *new UrbanKnowledgeFactory( controllers, *this, staticModel ) )
     , agentKnowledgeConverter_( *new AgentKnowledgeConverter( controllers ) )
     , objectKnowledgeConverter_( *new ObjectKnowledgeConverter( controllers ) )
     , teamFactory_( *new TeamFactory( controllers, *this ) )

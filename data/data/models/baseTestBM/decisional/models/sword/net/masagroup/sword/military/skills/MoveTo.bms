@@ -5,12 +5,8 @@ rootnode
         skill.nodes.MoveToPosition
     };
 
-    activate = function( self )
-	    BreakForDebug( "call root" )
-	    BreakForDebug( tostring(self.params.area) )
-	    
+    activate = function( self )   
 		for _, entity in pairs( self.params.entities ) do
-    		BreakForDebug( tostring(self.params.area[entity]) )
     		Activate( skill.nodes.MoveToPosition, entity:reachPriority(), { position = entity, area = self.params.area[entity] } )
     	end
     end
@@ -19,22 +15,54 @@ rootnode
 node "MoveToPosition"
 {
 	connections =
-    {
-        skill.nodes.MoveToNode
-    };
+  {
+      skill.nodes.MoveToNode
+  };
 
 	activate = function( self )
-        BreakForDebug( "moveto" )
+        --BreakForDebug( "moveto" )
 		for _, keypoint in pairs( self.params.area ) do
-			Activate( skill.nodes.MoveToNode, keypoint:reachEfficiency( self.params.position ), { position = keypoint } )
+			Activate( skill.nodes.MoveToNode, keypoint:reachEfficiency( self.params.position ), { entity = keypoint } )
 		end
 	end
 }
 
 node "MoveToNode"
 {
+    connections = { skill.nodes.MoveTo, skill.nodes.TakePosition };
+    
+    activate = function( self )
+        if self.params.entity:canTakePosition() then
+            BreakForDebug( "enter" )
+            Activate( skill.nodes.TakePosition, 1, { position = self.params.entity } )
+        else
+            Activate( skill.nodes.MoveTo, 1, { position = self.params.entity } )
+        end
+    end
+}
+
+node "MoveTo"
+{
+    feedbacks = { "done" };
+
+    acquire = { [ skill.resources.move ] = 1 };
+
     select = function( self )
-        BreakForDebug( "call move to it" )
-        self.params.position:moveToIt()
+        if self.params.position:moveToIt() then
+            Feedback( self.feedbacks.done, { position = self.params.position, state = "arrived" } )
+        end
+    end
+}
+
+node "TakePosition"
+{
+    feedbacks = { "done" }; 
+
+    acquire = { [ skill.resources.move ] = 1 };
+
+    select = function( self )
+        if self.params.position:takeUpPosition() then
+            Feedback( self.feedbacks.done, { position = self.params.position, state = "posted" } )
+        end
     end
 }

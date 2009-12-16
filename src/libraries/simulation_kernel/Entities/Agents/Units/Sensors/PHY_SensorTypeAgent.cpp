@@ -31,6 +31,8 @@
 #include "DetectionComputerFactory_ABC.h"
 #include "PerceptionDistanceComputer_ABC.h"
 
+#include "urban/TerrainObject_ABC.h"
+
 #include <xeumeuleu/xml.h>
 
 namespace
@@ -378,6 +380,18 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::InterpreteExtinction( MT_Float r
     return PHY_PerceptionLevel::notSeen_;
 }
 
+//-----------------------------------------------------------------------------
+// Name: PHY_SensorTypeAgent::InterpreteExtinction
+// Created: JVT 02-07-12
+// Last modified: JVT 03-01-27
+//-----------------------------------------------------------------------------
+inline
+const PHY_PerceptionLevel& PHY_SensorTypeAgent::InterpreteTerrainObjectExtinction( MT_Float rExtinction ) const
+{
+    //@TODO MGD replace by true management , test for the moment
+    return PHY_PerceptionLevel::identified_;
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeAgent::RayTrace
 // Created: NLD 2004-10-14
@@ -396,7 +410,7 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::RayTrace( const MT_Vector2D& vSo
     while ( rVisionNRJ > 0 && !(++it).End() )
         rVisionNRJ = ComputeExtinction( it, rDistanceMaxModificator, rVisionNRJ );
 
-    return InterpreteExtinction( rVisionNRJ );
+    return InterpreteTerrainObjectExtinction( rVisionNRJ );
 }
 
 // -----------------------------------------------------------------------------
@@ -507,6 +521,25 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
     if( !target.Intersect2DWithCircle( vSourcePos, rDetectionDist_ * rDistanceMaxModificator, shape ) )
         return PHY_PerceptionLevel::notSeen_;
     return PHY_PerceptionLevel::identified_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeAgent::ComputePerception
+// Created: MGD 2009-11-25
+// -----------------------------------------------------------------------------
+const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_AgentPion& perceiver, const urban::TerrainObject_ABC& target, MT_Float rSensorHeight ) const
+{
+    geometry::Point2f barycenter = target.GetFootprint()->Barycenter();
+    const MT_Vector2D vTargetPos( barycenter.X(), barycenter.Y() );
+
+    MT_Float rDistanceMaxModificator  = GetFactor( *PHY_Volume::FindVolume( 0 ) );//@TODO MGD find a rule
+    rDistanceMaxModificator *= GetSourceFactor( perceiver );
+
+    const MT_Vector2D& vSourcePos      = perceiver.GetRole< PHY_RoleInterface_Location >().GetPosition();
+    const MT_Float     rSourceAltitude = perceiver.GetRole< PHY_RoleInterface_Location >().GetAltitude() + rSensorHeight;
+    const MT_Float     rTargetAltitude = MIL_Tools::GetAltitude( vTargetPos );//@TODO MGD Add height notion
+
+    return RayTrace( vSourcePos, rSourceAltitude, vTargetPos, rTargetAltitude, rDistanceMaxModificator );
 }
 
 // -----------------------------------------------------------------------------

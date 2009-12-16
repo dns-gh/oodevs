@@ -70,6 +70,7 @@ UrbanBlock              ::= OID
 KnowledgeGroup          ::= OID
 UnitKnowledge           ::= OID
 ObjectKnowledge         ::= OID
+UrbanKnowledge          ::= OID
 PopulationKnowledge     ::= OID
 AutomatList             ::= SEQUENCE OF Automat 
 UnitList                ::= SEQUENCE OF Unit

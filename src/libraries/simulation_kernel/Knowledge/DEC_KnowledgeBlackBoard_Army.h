@@ -15,7 +15,9 @@
 #include "DEC_KnowledgeBlackBoard_ABC.h"
 
 class DEC_BlackBoard_CanContainKnowledgeObject;
+class DEC_BlackBoard_CanContainKnowledgeUrban;
 class DEC_KS_ObjectKnowledgeSynthetizer;
+class DEC_KS_UrbanKnowledgeSynthetizer;
 class MIL_Army;
 class MIL_Object_ABC;
 class MIL_ObjectFilter;
@@ -46,7 +48,9 @@ public:
     //@{
     MIL_Army&                                 GetArmy                        () const;
     DEC_BlackBoard_CanContainKnowledgeObject& GetKnowledgeObjectContainer    () const;
+    DEC_BlackBoard_CanContainKnowledgeUrban&  GetKnowledgeUrbanContainer    () const;
     DEC_KS_ObjectKnowledgeSynthetizer&        GetKsObjectKnowledgeSynthetizer() const;
+    DEC_KS_UrbanKnowledgeSynthetizer&         GetKsUrbanKnowledgeSynthetizer() const;
     //@}
 
     //! @name Network
@@ -91,9 +95,11 @@ private:
 
     // Containers
     DEC_BlackBoard_CanContainKnowledgeObject* pKnowledgeObjectContainer_;
+    DEC_BlackBoard_CanContainKnowledgeUrban* pKnowledgeUrbanContainer_;
 
     // Knowledge sources
     DEC_KS_ObjectKnowledgeSynthetizer* pKsObjectKnowledgeSynthetizer_;
+    DEC_KS_UrbanKnowledgeSynthetizer* pKsUrbanKnowledgeSynthetizer_;
 };
 
 #endif // __DEC_KnowledgeBlackBoard_Army_h_

@@ -271,6 +271,10 @@ private:
 
     // Urban
     void OnReceiveMsgUrbanCreation( const ASN1T_MsgUrbanCreation& asnMsg );
+    void OnReceiveMsgUrbanDetection( const ASN1T_MsgUrbanDetection& asnMsg );
+    void OnReceiveMsgUrbanKnowledgeCreation( const ASN1T_MsgUrbanKnowledgeCreation& asnMsg );
+    void OnReceiveMsgUrbanKnowledgeUpdate( const ASN1T_MsgUrbanKnowledgeUpdate& asnMsg );
+    void OnReceiveMsgUrbanKnowledgeDestruction( const ASN1T_MsgUrbanKnowledgeDestruction& asnMsg );
     //@}
 
     //! @name Helpers

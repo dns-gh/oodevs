@@ -477,7 +477,7 @@ void UrbanBlockFunctionBM( directia::ScriptRef& knowledgeCreateFunction, const d
     urban::Block* value = 0;
     if( element.ToUrbanBlock( value ) && value )
     {
-        const geometry::Point2f& point = value->GetFootprint()->Vertices().back();
+        const geometry::Point2f& point = value->GetFootprint()->Barycenter();
         std::vector< float > position;
         position.push_back( point.X() );
         position.push_back( point.Y() );
