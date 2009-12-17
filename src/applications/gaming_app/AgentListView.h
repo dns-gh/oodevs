@@ -58,6 +58,7 @@ private:
     virtual bool Drop( const kernel::Agent_ABC& item,  const kernel::Agent_ABC& target );
     virtual bool Drop( const kernel::Agent_ABC& item,  const kernel::Automat_ABC& target );
     virtual bool Drop( const kernel::Automat_ABC& item,  const kernel::KnowledgeGroup_ABC& target );
+    virtual bool Drop( const kernel::KnowledgeGroup_ABC& item,  const kernel::KnowledgeGroup_ABC& target );
     //@}
 
 private:

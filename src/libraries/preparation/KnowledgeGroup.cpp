@@ -66,7 +66,7 @@ KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, kernel::Controller& controll
 // -----------------------------------------------------------------------------
 KnowledgeGroup::~KnowledgeGroup()
 {
-    Destroy();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

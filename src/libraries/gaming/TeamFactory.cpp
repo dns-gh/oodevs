@@ -109,8 +109,8 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const ASN1T_MsgFormationCre
 // -----------------------------------------------------------------------------
 KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( const ASN1T_MsgKnowledgeGroupCreation& asnMsg, Team_ABC& team  )
 {
-    Entity_ABC* superior = asnMsg.m.oid_knowledgegroup_parentePresent ? 
-        (Entity_ABC*) &model_.knowledgeGroups_.Resolver< KnowledgeGroup_ABC >::Get( asnMsg.oid_knowledgegroup_parente ) :
+    Entity_ABC* superior = asnMsg.m.oid_knowledgegroup_parentPresent ? 
+        (Entity_ABC*) &model_.knowledgeGroups_.Resolver< KnowledgeGroup_ABC >::Get( asnMsg.oid_knowledgegroup_parent ) :
         (Entity_ABC*) &model_.teams_.Resolver< Team_ABC >::Get( asnMsg.oid_camp );
 
     KnowledgeGroup* result = new KnowledgeGroup( asnMsg.oid, controllers_.controller_ );

@@ -11,6 +11,7 @@
 #define __KnowledgeGroupsModel_h_
 
 #include "tools/Resolver.h"
+#include "game_asn/Simulation.h"
 
 namespace kernel
 {
@@ -37,6 +38,9 @@ public:
 
     //! @name Operations
     //@{
+    void Update( const ASN1T_MsgKnowledgeGroupChangeSuperior& asn );
+    void Delete( const ASN1T_MsgKnowledgeGroupDelete& asn );
+    void SetType( const ASN1T_MsgKnowledgeGroupSetType& asn );
     void Purge();
     //@}
 

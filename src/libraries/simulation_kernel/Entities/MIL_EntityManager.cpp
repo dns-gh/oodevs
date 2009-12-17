@@ -1195,6 +1195,80 @@ void MIL_EntityManager::OnReceiveMsgLogSupplyPushFlow( const ASN1T_MsgLogSupplyP
     ack.Send( nCtx );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::OnReceiveMsgKnowledgeGroupChangeSuperior
+// Created: FHD 2009-12-15: 
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::OnReceiveMsgKnowledgeGroupChangeSuperior( const ASN1T_MsgKnowledgeGroupChangeSuperior& msg, uint nCtx )
+{
+    NET_ASN_MsgKnowledgeGroupChangeSuperiorAck ack;
+    ack().oid        = msg.oid;
+    ack().error_code = EnumKnowledgeGroupErrorCode::no_error;
+
+    try
+    {
+        MIL_KnowledgeGroup* pMovedKnowledgeGroup = FindKnowledgeGroup( msg.oid );
+        if( !pMovedKnowledgeGroup )
+            throw NET_AsnException< ASN1T_EnumKnowledgeGroupErrorCode >( EnumKnowledgeGroupErrorCode::error_invalid_knowledgegroup );
+        MIL_KnowledgeGroup* pNewParentKnowledgeGroup = FindKnowledgeGroup( msg.oid_knowledgegroup_parent );
+        if( !pNewParentKnowledgeGroup )
+            throw NET_AsnException< ASN1T_EnumKnowledgeGroupErrorCode >( EnumKnowledgeGroupErrorCode::error_invalid_superior );
+        pMovedKnowledgeGroup->OnReceiveMsgKnowledgeGroupChangeSuperior( msg, *armyFactory_ );
+    }
+    catch( NET_AsnException< ASN1T_EnumKnowledgeGroupErrorCode >& e )
+    {
+        ack().error_code = e.GetErrorID();
+    }
+    ack.Send( nCtx );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::OnReceiveMsgKnowledgeGroupDelete
+// Created: FHD 2009-12-15: 
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::OnReceiveMsgKnowledgeGroupDelete( const ASN1T_MsgKnowledgeGroupDelete& msg, uint nCtx )
+{
+    NET_ASN_MsgKnowledgeGroupDeleteAck ack;
+    ack().oid        = msg.oid;
+    ack().error_code = EnumKnowledgeGroupErrorCode::no_error;
+
+    try
+    {
+        MIL_KnowledgeGroup* pReceiver = FindKnowledgeGroup( msg.oid );
+        if( !pReceiver )
+            throw NET_AsnException< ASN1T_EnumKnowledgeGroupErrorCode >( EnumKnowledgeGroupErrorCode::error_invalid_knowledgegroup );
+        pReceiver->OnReceiveMsgKnowledgeGroupDelete( msg );
+    }
+    catch( NET_AsnException< ASN1T_EnumKnowledgeGroupErrorCode >& e )
+    {
+        ack().error_code = e.GetErrorID();
+    }
+    ack.Send( nCtx );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::OnReceiveMsgKnowledgeGroupSetType
+// Created: FHD 2009-12-15: 
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::OnReceiveMsgKnowledgeGroupSetType( const ASN1T_MsgKnowledgeGroupSetType& msg, uint nCtx )
+{
+    NET_ASN_MsgKnowledgeGroupSetTypeAck ack;
+    ack().oid        = msg.oid;
+    ack().error_code = EnumKnowledgeGroupErrorCode::no_error;
+
+    try
+    {
+        MIL_KnowledgeGroup* pReceiver = FindKnowledgeGroup( msg.oid );
+        if( !pReceiver )
+            throw NET_AsnException< ASN1T_EnumKnowledgeGroupErrorCode >( EnumKnowledgeGroupErrorCode::error_invalid_type );
+        pReceiver->OnReceiveMsgKnowledgeGroupSetType( msg );
+    }
+    catch( NET_AsnException< ASN1T_EnumKnowledgeGroupErrorCode >& e )
+    {
+        ack().error_code = e.GetErrorID();
+    }
+    ack.Send( nCtx );
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::ChannelPopulations
@@ -1307,6 +1381,15 @@ MIL_Automate* MIL_EntityManager::FindAutomate( unsigned int nID ) const
 MIL_AgentPion* MIL_EntityManager::FindAgentPion( unsigned int nID ) const
 {
     return tools::Resolver< MIL_AgentPion >::Find( nID );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::FindAutomate
+// Created: NLD 2004-08-30
+// -----------------------------------------------------------------------------
+MIL_KnowledgeGroup* MIL_EntityManager::FindKnowledgeGroup( unsigned int nID ) const
+{
+    return knowledgeGroupFactory_->Find( nID );
 }
 
 // -----------------------------------------------------------------------------

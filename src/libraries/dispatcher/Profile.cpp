@@ -229,6 +229,10 @@ bool Profile::CheckRights( const ASN1T_MsgsClientToSim& msg ) const
         case T_MsgsClientToSim_msg_msg_unit_change_superior          : return true;
         case T_MsgsClientToSim_msg_msg_log_supply_push_flow          : return true;
         case T_MsgsClientToSim_msg_msg_log_supply_change_quotas      : return true;
+        
+        case T_MsgsClientToSim_msg_msg_knowledge_group_change_superior  : return true;
+        case T_MsgsClientToSim_msg_msg_knowledge_group_delete           : return true;
+        case T_MsgsClientToSim_msg_msg_knowledge_group_set_type         : return true;
 
         default:
             return false;

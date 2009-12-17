@@ -100,6 +100,11 @@ GENERATE_ASN_MSG_SENDER      ( SimToClient, PopulationFlowKnowledgeDestruction  
 GENERATE_ASN_MSG_SENDER      ( SimToClient, PopulationFlowKnowledgeUpdate                 , population_flow_knowledge_update                  );
 GENERATE_ASN_MSG_SENDER      ( SimToClient, FolkCreation                                  , folk_creation                                     );
 GENERATE_ASN_MSG_SENDER      ( SimToClient, UrbanCreation                                 , urban_creation                                    );
+
+GENERATE_ASN_MSG_SENDER      ( SimToClient, KnowledgeGroupChangeSuperior                  , knowledge_group_change_superior                   );
+GENERATE_ASN_MSG_SENDER      ( SimToClient, KnowledgeGroupDelete                          , knowledge_group_delete                            );
+GENERATE_ASN_MSG_SENDER      ( SimToClient, KnowledgeGroupSetType                         , knowledge_group_set_type                          );
+
 GENERATE_ASN_MSG_SENDER      ( SimToClient, UrbanKnowledgeCreation                        , urban_knowledge_creation                          );
 GENERATE_ASN_MSG_SENDER      ( SimToClient, UrbanKnowledgeUpdate                          , urban_knowledge_update                            );
 GENERATE_ASN_MSG_SENDER      ( SimToClient, UrbanKnowledgeDestruction                     , urban_knowledge_destruction                       );

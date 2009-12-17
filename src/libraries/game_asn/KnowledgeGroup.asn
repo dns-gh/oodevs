@@ -16,7 +16,59 @@ MsgKnowledgeGroupCreation ::= SEQUENCE
 {
     oid                         KnowledgeGroup,
     oid-camp                    Team,
-    oid-knowledgegroup-parente  KnowledgeGroup OPTIONAL
+    oid-knowledgegroup-parent   KnowledgeGroup OPTIONAL
+}
+
+MsgKnowledgeGroupDelete ::= SEQUENCE
+{
+    oid                         KnowledgeGroup
+}
+
+MsgKnowledgeGroupEnable ::= SEQUENCE
+{
+    oid                         KnowledgeGroup,
+    enabled                     BOOLEAN                                 
+}
+
+MsgKnowledgeGroupSetType ::= SEQUENCE
+{
+    oid                         KnowledgeGroup,
+    type                        KnowledgeGroupType
+}
+
+MsgKnowledgeGroupChangeSuperior ::= SEQUENCE
+{
+    oid                         KnowledgeGroup,
+    oid-camp                    Team,
+    oid-knowledgegroup-parent   KnowledgeGroup
+}
+
+EnumKnowledgeGroupErrorCode ::= ENUMERATED
+{
+    no-error                          (0),
+    error-invalid-unit                (1),
+    error-invalid-superior            (2),
+    error-invalid-camp                (3),
+    error-invalid-knowledgegroup      (4),
+    error-invalid-type                (5)
+}
+
+MsgKnowledgeGroupChangeSuperiorAck ::= SEQUENCE
+{
+    oid         OID,
+    error-code  EnumKnowledgeGroupErrorCode
+}
+
+MsgKnowledgeGroupDeleteAck ::= SEQUENCE
+{
+    oid         OID,
+    error-code  EnumKnowledgeGroupErrorCode
+}
+
+MsgKnowledgeGroupSetTypeAck ::= SEQUENCE
+{
+    oid         OID,
+    error-code  EnumKnowledgeGroupErrorCode
 }
 
 END -- KnowledgeGroup

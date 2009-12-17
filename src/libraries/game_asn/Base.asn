@@ -85,6 +85,7 @@ BreakdownType           ::= OID
 UnitType                ::= OID
 AutomatType             ::= OID
 PopulationType          ::= OID
+KnowledgeGroupType      ::= OID
 Percentage              ::= INTEGER(0..100)
 FreePercentage          ::= INTEGER
 Height                  ::= INTEGER

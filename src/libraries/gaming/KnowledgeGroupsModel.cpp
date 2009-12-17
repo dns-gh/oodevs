@@ -40,3 +40,32 @@ void KnowledgeGroupsModel::Purge()
 {
     tools::Resolver< KnowledgeGroup_ABC >::DeleteAll();
 }
+
+void KnowledgeGroupsModel::Update( const ASN1T_MsgKnowledgeGroupChangeSuperior& asn )
+{
+    kernel::KnowledgeGroup_ABC* pCurrentKnowledgegroup = Find( asn.oid );
+    kernel::KnowledgeGroup_ABC* pKnowledgegroupParent = Find( asn.oid_knowledgegroup_parent );
+    if( pCurrentKnowledgegroup )
+    {
+//        kernel::KnowledgeGroup_ABC* pOldKnowledgegroup = Find( pCurrentKnowledgegroup->GetParent()->GetId() );
+//        if( pOldKnowledgegroup && pKnowledgegroupParent && pCurrentKnowledgegroup )
+//        {
+//            pOldKnowledgegroup->UnregisterKnowledgeGroup( pCurrentKnowledgegroup );
+//            pKnowledgegroupParent->Register( pCurrentKnowledgegroup->GetId(), pCurrentKnowledgegroup );
+//        }
+    }
+}
+
+void KnowledgeGroupsModel::Delete( const ASN1T_MsgKnowledgeGroupDelete& asn )
+{
+    KnowledgeGroup_ABC* pCurrentKnowledgegroup = Find( asn.oid );
+//    kernel::KnowledgeGroup_ABC* pParentKnowledgegroup = Find( asn.oid_knowledgegroup_parente );
+//    if( pParentKnowledgegroup )
+//        pParentKnowledgegroup->UnregisterKnowledgeGroup( pCurrentKnowledgegroup );
+}
+
+void KnowledgeGroupsModel::SetType( const ASN1T_MsgKnowledgeGroupSetType& asn )
+{
+    kernel::KnowledgeGroup_ABC* pCurrentKnowledgegroup = Find( asn.oid );
+    //kernel::KnowledgeGroupType* pKnowledgeGroupType = Find( asn.type );
+}

@@ -1477,12 +1477,50 @@ void AgentServerMsgMgr::OnReceiveMsgUrbanCreation( const ASN1T_MsgUrbanCreation&
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupChangeSuperior
+// Created: FHD 2009-12-16: 
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupChangeSuperior( const ASN1T_MsgKnowledgeGroupChangeSuperior& asnMsg )
+{
+    GetModel().knowledgeGroups_.Update( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgUrbanDetection
 // Created: MGD 2009-12-10
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUrbanDetection( const ASN1T_MsgUrbanDetection& asnMsg )
 {
     GetModel().agents_.GetAgent( asnMsg.oid ).Update( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupChangeSuperiorAck
+// Created: FHD 2009-12-16: 
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupChangeSuperiorAck( const ASN1T_MsgKnowledgeGroupChangeSuperiorAck& message, unsigned long nCtx  )
+{
+    CheckAcknowledge( logger_, message, "KnowledgeGroupChangeSuperiorAck" );
+}
+
+void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupDelete( const ASN1T_MsgKnowledgeGroupDelete& asnMsg )
+{
+    GetModel().knowledgeGroups_.Delete( asnMsg );
+}
+
+void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupDeleteAck( const ASN1T_MsgKnowledgeGroupDeleteAck& asnMsg, unsigned long nCtx )
+{
+    CheckAcknowledge( logger_, asnMsg, "KnowledgeGroupDeleteAck" );
+}
+
+void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupSetType( const ASN1T_MsgKnowledgeGroupSetType& asnMsg )
+{
+    GetModel().knowledgeGroups_.SetType( asnMsg );
+}
+
+void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupSetTypeAck( const ASN1T_MsgKnowledgeGroupSetTypeAck& asnMsg, unsigned long nCtx )
+{
+    CheckAcknowledge( logger_, asnMsg, "KnowledgeGroupSetTypeAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1511,7 +1549,6 @@ void AgentServerMsgMgr::OnReceiveMsgUrbanKnowledgeDestruction( const ASN1T_MsgUr
 {
     GetModel().teams_.GetTeam( asnMsg.team ).Update( asnMsg );
 }
-
 
 namespace
 {
@@ -1551,7 +1588,6 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const ASN1
         case T_MsgsSimToClient_msg_msg_log_supply_change_quotas_ack:           OnReceiveMsgLogRavitaillementChangeQuotaAck    (  message.msg.u.msg_log_supply_change_quotas_ack            , message.context ); break;
         case T_MsgsSimToClient_msg_msg_population_magic_action_ack:            OnReceiveMsgPopulationMagicActionAck           ( *message.msg.u.msg_population_magic_action_ack             , message.context ); break;
         case T_MsgsSimToClient_msg_msg_population_order_ack:                   OnReceiveMsgPopulationOrderAck                 ( *message.msg.u.msg_population_order_ack                    , message.context ); break;
-
         case T_MsgsSimToClient_msg_msg_control_information:                     OnReceiveMsgControlInformation           ( *message.msg.u.msg_control_information                    ); break;
         case T_MsgsSimToClient_msg_msg_control_profiling_information:           OnReceiveMsgProfilingValues              ( *message.msg.u.msg_control_profiling_information          ); break;
         case T_MsgsSimToClient_msg_msg_control_begin_tick:                      OnReceiveMsgControlBeginTick             ( *message.msg.u.msg_control_begin_tick                     ); break;
@@ -1662,12 +1698,18 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const ASN1
         case T_MsgsSimToClient_msg_msg_folk_graph_update                              : OnReceiveMsgFolkGraphUpdate ( *message.msg.u.msg_folk_graph_update ); break;
 
         case T_MsgsSimToClient_msg_msg_urban_creation                                 : OnReceiveMsgUrbanCreation   ( *message.msg.u.msg_urban_creation ); break;
-        
         case T_MsgsSimToClient_msg_msg_urban_detection                                : OnReceiveMsgUrbanDetection              ( *message.msg.u.msg_urban_detection ); break;
         case T_MsgsSimToClient_msg_msg_urban_knowledge_creation                       : OnReceiveMsgUrbanKnowledgeCreation      ( *message.msg.u.msg_urban_knowledge_creation ); break;
         case T_MsgsSimToClient_msg_msg_urban_knowledge_update                         : OnReceiveMsgUrbanKnowledgeUpdate        ( *message.msg.u.msg_urban_knowledge_update ); break;
         case T_MsgsSimToClient_msg_msg_urban_knowledge_destruction                    : OnReceiveMsgUrbanKnowledgeDestruction   ( *message.msg.u.msg_urban_knowledge_destruction ); break;
 
+        case T_MsgsSimToClient_msg_msg_knowledge_group_change_superior                : OnReceiveMsgKnowledgeGroupChangeSuperior ( *message.msg.u.msg_knowledge_group_change_superior ); break;
+        case T_MsgsSimToClient_msg_msg_knowledge_group_change_superior_ack            : OnReceiveMsgKnowledgeGroupChangeSuperiorAck( *message.msg.u.msg_knowledge_group_change_superior_ack, message.context ); break;
+        case T_MsgsSimToClient_msg_msg_knowledge_group_delete                         : OnReceiveMsgKnowledgeGroupDelete ( *message.msg.u.msg_knowledge_group_delete ); break;
+        case T_MsgsSimToClient_msg_msg_knowledge_group_delete_ack                     : OnReceiveMsgKnowledgeGroupDeleteAck( *message.msg.u.msg_knowledge_group_delete_ack, message.context ); break;
+        case T_MsgsSimToClient_msg_msg_knowledge_group_set_type                       : OnReceiveMsgKnowledgeGroupSetType ( *message.msg.u.msg_knowledge_group_set_type ); break;
+        case T_MsgsSimToClient_msg_msg_knowledge_group_set_type_ack                   : OnReceiveMsgKnowledgeGroupSetTypeAck( *message.msg.u.msg_knowledge_group_set_type_ack, message.context ); break;
+   
         default:
             UnhandledMessage( message.msg.t );
     };

@@ -28,7 +28,8 @@ EntityCommunications::EntityCommunications( Controller& controller, Entity_ABC& 
 // -----------------------------------------------------------------------------
 EntityCommunications::~EntityCommunications()
 {
-    DeleteAll();
+    //DeleteAll();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

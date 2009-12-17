@@ -275,6 +275,14 @@ private:
     void OnReceiveMsgUrbanKnowledgeCreation( const ASN1T_MsgUrbanKnowledgeCreation& asnMsg );
     void OnReceiveMsgUrbanKnowledgeUpdate( const ASN1T_MsgUrbanKnowledgeUpdate& asnMsg );
     void OnReceiveMsgUrbanKnowledgeDestruction( const ASN1T_MsgUrbanKnowledgeDestruction& asnMsg );
+
+    //knowledgegroup
+    void OnReceiveMsgKnowledgeGroupChangeSuperior( const ASN1T_MsgKnowledgeGroupChangeSuperior& asnMsg );
+    void OnReceiveMsgKnowledgeGroupChangeSuperiorAck( const ASN1T_MsgKnowledgeGroupChangeSuperiorAck& asnMsg, unsigned long nCtx );
+    void OnReceiveMsgKnowledgeGroupDelete( const ASN1T_MsgKnowledgeGroupDelete& asnMsg );
+    void OnReceiveMsgKnowledgeGroupDeleteAck( const ASN1T_MsgKnowledgeGroupDeleteAck& asnMsg, unsigned long nCtx );
+    void OnReceiveMsgKnowledgeGroupSetType( const ASN1T_MsgKnowledgeGroupSetType& asnMsg );
+    void OnReceiveMsgKnowledgeGroupSetTypeAck( const ASN1T_MsgKnowledgeGroupSetTypeAck& asnMsg, unsigned long nCtx );
     //@}
 
     //! @name Helpers

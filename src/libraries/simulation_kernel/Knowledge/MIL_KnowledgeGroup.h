@@ -14,6 +14,7 @@
 
 #include "MIL.h"
 #include "tools/Resolver.h"
+#include "Network/NET_ASN_Messages.h"
 
 namespace xml
 {
@@ -68,9 +69,14 @@ public:
     //@{
     void InitializeKnowledgeGroup( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgeGroupFactory );
     void RegisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup );
+    void UnregisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup );
     void RegisterAutomate  ( MIL_Automate& automate );
     void UnregisterAutomate( MIL_Automate& automate );
     MIL_KnowledgeGroup* FindKnowledgeGroup ( uint nID ) const;
+
+    void OnReceiveMsgKnowledgeGroupChangeSuperior( const ASN1T_MsgKnowledgeGroupChangeSuperior& msg, const tools::Resolver< MIL_Army >& armies );
+    void OnReceiveMsgKnowledgeGroupDelete( const ASN1T_MsgKnowledgeGroupDelete& msg );
+    void OnReceiveMsgKnowledgeGroupSetType( const ASN1T_MsgKnowledgeGroupSetType& msg );
 
     void UpdateKnowledges();
     void CleanKnowledges ();

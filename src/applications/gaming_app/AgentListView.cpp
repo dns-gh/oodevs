@@ -112,6 +112,13 @@ bool AgentListView::Drop( const kernel::Entity_ABC& item, const kernel::Entity_A
         const KnowledgeGroup_ABC* group = dynamic_cast< const KnowledgeGroup_ABC* >( &target );
         return group && Drop( *automat, *group );
     }
+
+    const KnowledgeGroup_ABC* knowledgeGroup = dynamic_cast< const KnowledgeGroup_ABC* >( &item );
+    if( knowledgeGroup )
+    {
+        const KnowledgeGroup_ABC* groupParent = dynamic_cast< const KnowledgeGroup_ABC* >( &target );
+        return groupParent && Drop( *knowledgeGroup, *groupParent );
+    }
     return false;
 }
 
@@ -139,7 +146,7 @@ bool AgentListView::Drop( const Agent_ABC& item, const Automat_ABC& target )
     asnMsg.Send( publisher_ );
     return true;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: AgentListView::Drop
 // Created: SBO 2006-08-09
@@ -150,6 +157,20 @@ bool AgentListView::Drop( const Automat_ABC& item, const KnowledgeGroup_ABC& tar
     asnMsg().oid                     = item.GetId();
     asnMsg().oid_camp                = target.Get< CommunicationHierarchies >().GetTop().GetId();
     asnMsg().oid_groupe_connaissance = target.GetId();
+    asnMsg.Send( publisher_ );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentListView::Drop
+// Created: SBO 2006-08-09
+// -----------------------------------------------------------------------------
+bool AgentListView::Drop( const KnowledgeGroup_ABC& item, const KnowledgeGroup_ABC& target )
+{
+    simulation::KnowledgeGroupChangeSuperior asnMsg;
+    asnMsg().oid                     = item.GetId();
+    asnMsg().oid_camp                = target.Get< CommunicationHierarchies >().GetTop().GetId();
+    asnMsg().oid_knowledgegroup_parent = target.GetId();
     asnMsg.Send( publisher_ );
     return true;
 }

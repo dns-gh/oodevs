@@ -49,6 +49,7 @@ public:
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
     void Accept         ( ModelVisitor_ABC& visitor ) const;
+//    void SendChangeParent( ClientPublisher_ABC& publisher ) const;
     //@}
 
 private:

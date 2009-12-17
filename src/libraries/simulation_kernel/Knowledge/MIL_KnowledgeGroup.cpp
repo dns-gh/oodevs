@@ -13,6 +13,7 @@
 #include "MIL_KnowledgeGroup.h"
 #include "KnowledgeGroupFactory_ABC.h"
 #include "Network/NET_ASN_Messages.h"
+#include "Network/NET_AsnException.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Automates/MIL_Automate.h"
@@ -229,8 +230,8 @@ void MIL_KnowledgeGroup::SendCreation() const
 
     if( pParent_ )
     {
-        asn().m.oid_knowledgegroup_parentePresent = 1;
-        asn().oid_knowledgegroup_parente = pParent_->GetID();
+        asn().m.oid_knowledgegroup_parentPresent = 1;
+        asn().oid_knowledgegroup_parent = pParent_->GetID();
     }
     asn.Send();
     tools::Resolver< MIL_KnowledgeGroup >::Apply( boost::bind( &MIL_KnowledgeGroup::SendCreation, _1 ) );//SLG : @TODO MGD Move to factory
@@ -327,12 +328,21 @@ MIL_KnowledgeGroup* MIL_KnowledgeGroup::GetParent() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_KnowledgeGroup::RegisterFormation
+// Name: MIL_KnowledgeGroup::RegisterKnowledgeGroup
 // Created: NLD 2006-10-13
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::RegisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup )
 {
     tools::Resolver< MIL_KnowledgeGroup >::Register( knowledgeGroup.GetID(), knowledgeGroup );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::UnregisterKnowledgeGroup
+// Created: FHD 2009-12-16: 
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::UnregisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup )
+{
+    tools::Resolver< MIL_KnowledgeGroup >::Remove( knowledgeGroup.GetID() );
 }
 
 // -----------------------------------------------------------------------------
@@ -404,4 +414,60 @@ void MIL_KnowledgeGroup::RefreshTimeToDiffuseToKnowledgeGroup()
 {
     if ( pParent_ )
         timeToDiffuse_ += pParent_->GetType().GetKnowledgeCommunicationDelay();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupChangeSuperior
+// Created: FHD 2009-12-17: 
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupChangeSuperior( const ASN1T_MsgKnowledgeGroupChangeSuperior& msg, const tools::Resolver< MIL_Army >& armies )
+{
+    MIL_Army* pTargetArmy = armies.Find( msg.oid_camp );
+    if( !pTargetArmy || *pTargetArmy != GetArmy() )
+        throw NET_AsnException< ASN1T_EnumKnowledgeGroupErrorCode >( EnumKnowledgeGroupErrorCode::error_invalid_camp );
+
+    MIL_KnowledgeGroup* pNewKnowledgeGroup = pTargetArmy->FindKnowledgeGroup( msg.oid_knowledgegroup_parent );
+    if( !pNewKnowledgeGroup )
+        throw NET_AsnException< ASN1T_EnumKnowledgeGroupErrorCode >( EnumKnowledgeGroupErrorCode::error_invalid_superior );
+
+    if( pNewKnowledgeGroup != NULL )        
+    {
+        MIL_KnowledgeGroup* pParent = GetParent();
+        if( pParent != NULL && pParent != pNewKnowledgeGroup )
+        {
+            pParent->UnregisterKnowledgeGroup( *this );
+            pNewKnowledgeGroup->RegisterKnowledgeGroup( *this );
+        }
+        else if( pParent == NULL )
+        {
+            GetArmy().UnregisterKnowledgeGroup( *this );
+            pNewKnowledgeGroup->RegisterKnowledgeGroup( *this );
+        }
+
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupDelete
+// Created: FHD 2009-12-17: 
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupDelete( const ASN1T_MsgKnowledgeGroupDelete& msg )
+{
+    if( pParent_ )
+        pParent_->UnregisterKnowledgeGroup( *this );
+    else
+        GetArmy().UnregisterKnowledgeGroup( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupSetType
+// Created: FHD 2009-12-17: 
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupSetType( const ASN1T_MsgKnowledgeGroupSetType& msg )
+{
+//    KnowledgeGroupType *pType = FindKnowledgeGroupType( msg.type );
+//    if( *pType != GetType() )
+//    {
+//
+//    }
 }

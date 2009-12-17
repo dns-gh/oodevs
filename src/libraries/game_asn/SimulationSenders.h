@@ -47,6 +47,8 @@ GENERATE_ASN_MSG_SENDER      ( ClientToSim, AutomatChangeLogisticLinks,     auto
 GENERATE_ASN_MSG_SENDER      ( ClientToSim, LogSupplyPushFlow,              log_supply_push_flow )
 GENERATE_ASN_MSG_SENDER      ( ClientToSim, LogSupplyChangeQuotas,          log_supply_change_quotas )
 
+GENERATE_ASN_MSG_SENDER      ( ClientToSim, KnowledgeGroupChangeSuperior,   knowledge_group_change_superior )
+
 }
 
 

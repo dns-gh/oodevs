@@ -24,7 +24,7 @@ using namespace dispatcher;
 KnowledgeGroup::KnowledgeGroup( Model& model, const ASN1T_MsgKnowledgeGroupCreation& msg )
     : SimpleEntity< kernel::KnowledgeGroup_ABC >( msg.oid )
     , team_( model.sides_.Get( msg.oid_camp ) )
-    , parent_( msg.m.oid_knowledgegroup_parentePresent ? &model.knowledgeGroups_.Get( msg.oid_knowledgegroup_parente ) : 0 )
+    , parent_( msg.m.oid_knowledgegroup_parentPresent ? &model.knowledgeGroups_.Get( msg.oid_knowledgegroup_parent ) : 0 )
 {
     if( parent_ )
         parent_->knowledgeGroups_.Register( msg.oid, *this );
@@ -57,8 +57,8 @@ void KnowledgeGroup::SendCreation( ClientPublisher_ABC& publisher ) const
     asn().oid_camp = team_.GetId();
     if( parent_ )
     {
-        asn().m.oid_knowledgegroup_parentePresent = 1;
-        asn().oid_knowledgegroup_parente = parent_->GetId();
+        asn().m.oid_knowledgegroup_parentPresent = 1;
+        asn().oid_knowledgegroup_parent = parent_->GetId();
     }
     asn.Send( publisher );
 }
@@ -90,3 +90,17 @@ void KnowledgeGroup::Accept( ModelVisitor_ABC& visitor ) const
     visitor.Visit( *this );
     knowledgeGroups_.Apply( boost::bind( &KnowledgeGroup::Accept, _1, boost::ref( visitor ) ) );
 }
+
+//void KnowledgeGroup::SendChangeParent( ClientPublisher_ABC& publisher ) const
+//{
+//    client::KnowledgeGroupChangeSuperior asn;
+//    
+//    asn().oid      = GetId();
+//    asn().oid_camp = team_.GetId();
+//    if( parent_ )
+//    {
+//        asn().m.oid_knowledgegroup_parentPresent = 1;
+//        asn().oid_knowledgegroup_parent = parent_->GetId();
+//    }
+//    asn.Send( publisher );
+//}
