@@ -152,56 +152,57 @@ EXTERN void asn1Print_SimMessagesExports (ASN1ConstCharPtr name);
 #define T_MsgsSimToClient_msg_msg_unit_vision_cones 67
 #define T_MsgsSimToClient_msg_msg_unit_detection 68
 #define T_MsgsSimToClient_msg_msg_object_detection 69
-#define T_MsgsSimToClient_msg_msg_population_concentration_detection 70
-#define T_MsgsSimToClient_msg_msg_population_flow_detection 71
-#define T_MsgsSimToClient_msg_msg_unit_order 72
-#define T_MsgsSimToClient_msg_msg_automat_order 73
-#define T_MsgsSimToClient_msg_msg_population_order 74
-#define T_MsgsSimToClient_msg_msg_object_creation 75
-#define T_MsgsSimToClient_msg_msg_object_destruction 76
-#define T_MsgsSimToClient_msg_msg_object_update 77
-#define T_MsgsSimToClient_msg_msg_object_knowledge_creation 78
-#define T_MsgsSimToClient_msg_msg_object_knowledge_update 79
-#define T_MsgsSimToClient_msg_msg_object_knowledge_destruction 80
-#define T_MsgsSimToClient_msg_msg_log_medical_handling_creation 81
-#define T_MsgsSimToClient_msg_msg_log_medical_handling_update 82
-#define T_MsgsSimToClient_msg_msg_log_medical_handling_destruction 83
-#define T_MsgsSimToClient_msg_msg_log_medical_state 84
-#define T_MsgsSimToClient_msg_msg_log_maintenance_handling_creation 85
-#define T_MsgsSimToClient_msg_msg_log_maintenance_handling_update 86
-#define T_MsgsSimToClient_msg_msg_log_maintenance_handling_destruction 87
-#define T_MsgsSimToClient_msg_msg_log_maintenance_state 88
-#define T_MsgsSimToClient_msg_msg_log_supply_handling_creation 89
-#define T_MsgsSimToClient_msg_msg_log_supply_handling_update 90
-#define T_MsgsSimToClient_msg_msg_log_supply_handling_destruction 91
-#define T_MsgsSimToClient_msg_msg_log_supply_state 92
-#define T_MsgsSimToClient_msg_msg_log_supply_quotas 93
-#define T_MsgsSimToClient_msg_msg_population_creation 94
-#define T_MsgsSimToClient_msg_msg_population_update 95
-#define T_MsgsSimToClient_msg_msg_population_concentration_creation 96
-#define T_MsgsSimToClient_msg_msg_population_concentration_destruction 97
-#define T_MsgsSimToClient_msg_msg_population_concentration_update 98
-#define T_MsgsSimToClient_msg_msg_population_flow_creation 99
-#define T_MsgsSimToClient_msg_msg_population_flow_destruction 100
-#define T_MsgsSimToClient_msg_msg_population_flow_update 101
-#define T_MsgsSimToClient_msg_msg_population_knowledge_creation 102
-#define T_MsgsSimToClient_msg_msg_population_knowledge_update 103
-#define T_MsgsSimToClient_msg_msg_population_knowledge_destruction 104
-#define T_MsgsSimToClient_msg_msg_population_concentration_knowledge_creation 105
-#define T_MsgsSimToClient_msg_msg_population_concentration_knowledge_destruction 106
-#define T_MsgsSimToClient_msg_msg_population_concentration_knowledge_update 107
-#define T_MsgsSimToClient_msg_msg_population_flow_knowledge_creation 108
-#define T_MsgsSimToClient_msg_msg_population_flow_knowledge_destruction 109
-#define T_MsgsSimToClient_msg_msg_population_flow_knowledge_update 110
-#define T_MsgsSimToClient_msg_msg_folk_creation 111
-#define T_MsgsSimToClient_msg_msg_folk_graph_update 112
-#define T_MsgsSimToClient_msg_msg_urban_creation 113
-#define T_MsgsSimToClient_msg_msg_urban_knowledge_creation 114
-#define T_MsgsSimToClient_msg_msg_urban_knowledge_update 115
-#define T_MsgsSimToClient_msg_msg_urban_knowledge_destruction 116
-#define T_MsgsSimToClient_msg_msg_knowledge_group_change_superior 117
-#define T_MsgsSimToClient_msg_msg_knowledge_group_delete 118
-#define T_MsgsSimToClient_msg_msg_knowledge_group_set_type 119
+#define T_MsgsSimToClient_msg_msg_urban_detection 70
+#define T_MsgsSimToClient_msg_msg_population_concentration_detection 71
+#define T_MsgsSimToClient_msg_msg_population_flow_detection 72
+#define T_MsgsSimToClient_msg_msg_unit_order 73
+#define T_MsgsSimToClient_msg_msg_automat_order 74
+#define T_MsgsSimToClient_msg_msg_population_order 75
+#define T_MsgsSimToClient_msg_msg_object_creation 76
+#define T_MsgsSimToClient_msg_msg_object_destruction 77
+#define T_MsgsSimToClient_msg_msg_object_update 78
+#define T_MsgsSimToClient_msg_msg_object_knowledge_creation 79
+#define T_MsgsSimToClient_msg_msg_object_knowledge_update 80
+#define T_MsgsSimToClient_msg_msg_object_knowledge_destruction 81
+#define T_MsgsSimToClient_msg_msg_log_medical_handling_creation 82
+#define T_MsgsSimToClient_msg_msg_log_medical_handling_update 83
+#define T_MsgsSimToClient_msg_msg_log_medical_handling_destruction 84
+#define T_MsgsSimToClient_msg_msg_log_medical_state 85
+#define T_MsgsSimToClient_msg_msg_log_maintenance_handling_creation 86
+#define T_MsgsSimToClient_msg_msg_log_maintenance_handling_update 87
+#define T_MsgsSimToClient_msg_msg_log_maintenance_handling_destruction 88
+#define T_MsgsSimToClient_msg_msg_log_maintenance_state 89
+#define T_MsgsSimToClient_msg_msg_log_supply_handling_creation 90
+#define T_MsgsSimToClient_msg_msg_log_supply_handling_update 91
+#define T_MsgsSimToClient_msg_msg_log_supply_handling_destruction 92
+#define T_MsgsSimToClient_msg_msg_log_supply_state 93
+#define T_MsgsSimToClient_msg_msg_log_supply_quotas 94
+#define T_MsgsSimToClient_msg_msg_population_creation 95
+#define T_MsgsSimToClient_msg_msg_population_update 96
+#define T_MsgsSimToClient_msg_msg_population_concentration_creation 97
+#define T_MsgsSimToClient_msg_msg_population_concentration_destruction 98
+#define T_MsgsSimToClient_msg_msg_population_concentration_update 99
+#define T_MsgsSimToClient_msg_msg_population_flow_creation 100
+#define T_MsgsSimToClient_msg_msg_population_flow_destruction 101
+#define T_MsgsSimToClient_msg_msg_population_flow_update 102
+#define T_MsgsSimToClient_msg_msg_population_knowledge_creation 103
+#define T_MsgsSimToClient_msg_msg_population_knowledge_update 104
+#define T_MsgsSimToClient_msg_msg_population_knowledge_destruction 105
+#define T_MsgsSimToClient_msg_msg_population_concentration_knowledge_creation 106
+#define T_MsgsSimToClient_msg_msg_population_concentration_knowledge_destruction 107
+#define T_MsgsSimToClient_msg_msg_population_concentration_knowledge_update 108
+#define T_MsgsSimToClient_msg_msg_population_flow_knowledge_creation 109
+#define T_MsgsSimToClient_msg_msg_population_flow_knowledge_destruction 110
+#define T_MsgsSimToClient_msg_msg_population_flow_knowledge_update 111
+#define T_MsgsSimToClient_msg_msg_folk_creation 112
+#define T_MsgsSimToClient_msg_msg_folk_graph_update 113
+#define T_MsgsSimToClient_msg_msg_urban_creation 114
+#define T_MsgsSimToClient_msg_msg_urban_knowledge_creation 115
+#define T_MsgsSimToClient_msg_msg_urban_knowledge_update 116
+#define T_MsgsSimToClient_msg_msg_urban_knowledge_destruction 117
+#define T_MsgsSimToClient_msg_msg_knowledge_group_change_superior 118
+#define T_MsgsSimToClient_msg_msg_knowledge_group_delete 119
+#define T_MsgsSimToClient_msg_msg_knowledge_group_set_type 120
 
 typedef struct EXTERN ASN1T_MsgsSimToClient_msg {
    int t;
@@ -338,104 +339,106 @@ typedef struct EXTERN ASN1T_MsgsSimToClient_msg {
       /* t = 69 */
       ASN1T_MsgObjectDetection *msg_object_detection;
       /* t = 70 */
-      ASN1T_MsgPopulationConcentrationDetection *msg_population_concentration_detection;
+      ASN1T_MsgUrbanDetection *msg_urban_detection;
       /* t = 71 */
-      ASN1T_MsgPopulationFlowDetection *msg_population_flow_detection;
+      ASN1T_MsgPopulationConcentrationDetection *msg_population_concentration_detection;
       /* t = 72 */
-      ASN1T_MsgUnitOrder *msg_unit_order;
+      ASN1T_MsgPopulationFlowDetection *msg_population_flow_detection;
       /* t = 73 */
-      ASN1T_MsgAutomatOrder *msg_automat_order;
+      ASN1T_MsgUnitOrder *msg_unit_order;
       /* t = 74 */
-      ASN1T_MsgPopulationOrder *msg_population_order;
+      ASN1T_MsgAutomatOrder *msg_automat_order;
       /* t = 75 */
-      ASN1T_MsgObjectCreation *msg_object_creation;
+      ASN1T_MsgPopulationOrder *msg_population_order;
       /* t = 76 */
-      ASN1T_MsgObjectDestruction  msg_object_destruction;
+      ASN1T_MsgObjectCreation *msg_object_creation;
       /* t = 77 */
-      ASN1T_MsgObjectUpdate *msg_object_update;
+      ASN1T_MsgObjectDestruction  msg_object_destruction;
       /* t = 78 */
-      ASN1T_MsgObjectKnowledgeCreation *msg_object_knowledge_creation;
+      ASN1T_MsgObjectUpdate *msg_object_update;
       /* t = 79 */
-      ASN1T_MsgObjectKnowledgeUpdate *msg_object_knowledge_update;
+      ASN1T_MsgObjectKnowledgeCreation *msg_object_knowledge_creation;
       /* t = 80 */
-      ASN1T_MsgObjectKnowledgeDestruction *msg_object_knowledge_destruction;
+      ASN1T_MsgObjectKnowledgeUpdate *msg_object_knowledge_update;
       /* t = 81 */
-      ASN1T_MsgLogMedicalHandlingCreation *msg_log_medical_handling_creation;
+      ASN1T_MsgObjectKnowledgeDestruction *msg_object_knowledge_destruction;
       /* t = 82 */
-      ASN1T_MsgLogMedicalHandlingUpdate *msg_log_medical_handling_update;
+      ASN1T_MsgLogMedicalHandlingCreation *msg_log_medical_handling_creation;
       /* t = 83 */
-      ASN1T_MsgLogMedicalHandlingDestruction *msg_log_medical_handling_destruction;
+      ASN1T_MsgLogMedicalHandlingUpdate *msg_log_medical_handling_update;
       /* t = 84 */
-      ASN1T_MsgLogMedicalState *msg_log_medical_state;
+      ASN1T_MsgLogMedicalHandlingDestruction *msg_log_medical_handling_destruction;
       /* t = 85 */
-      ASN1T_MsgLogMaintenanceHandlingCreation *msg_log_maintenance_handling_creation;
+      ASN1T_MsgLogMedicalState *msg_log_medical_state;
       /* t = 86 */
-      ASN1T_MsgLogMaintenanceHandlingUpdate *msg_log_maintenance_handling_update;
+      ASN1T_MsgLogMaintenanceHandlingCreation *msg_log_maintenance_handling_creation;
       /* t = 87 */
-      ASN1T_MsgLogMaintenanceHandlingDestruction *msg_log_maintenance_handling_destruction;
+      ASN1T_MsgLogMaintenanceHandlingUpdate *msg_log_maintenance_handling_update;
       /* t = 88 */
-      ASN1T_MsgLogMaintenanceState *msg_log_maintenance_state;
+      ASN1T_MsgLogMaintenanceHandlingDestruction *msg_log_maintenance_handling_destruction;
       /* t = 89 */
-      ASN1T_MsgLogSupplyHandlingCreation *msg_log_supply_handling_creation;
+      ASN1T_MsgLogMaintenanceState *msg_log_maintenance_state;
       /* t = 90 */
-      ASN1T_MsgLogSupplyHandlingUpdate *msg_log_supply_handling_update;
+      ASN1T_MsgLogSupplyHandlingCreation *msg_log_supply_handling_creation;
       /* t = 91 */
-      ASN1T_MsgLogSupplyHandlingDestruction *msg_log_supply_handling_destruction;
+      ASN1T_MsgLogSupplyHandlingUpdate *msg_log_supply_handling_update;
       /* t = 92 */
-      ASN1T_MsgLogSupplyState *msg_log_supply_state;
+      ASN1T_MsgLogSupplyHandlingDestruction *msg_log_supply_handling_destruction;
       /* t = 93 */
-      ASN1T_MsgLogSupplyQuotas *msg_log_supply_quotas;
+      ASN1T_MsgLogSupplyState *msg_log_supply_state;
       /* t = 94 */
-      ASN1T_MsgPopulationCreation *msg_population_creation;
+      ASN1T_MsgLogSupplyQuotas *msg_log_supply_quotas;
       /* t = 95 */
-      ASN1T_MsgPopulationUpdate *msg_population_update;
+      ASN1T_MsgPopulationCreation *msg_population_creation;
       /* t = 96 */
-      ASN1T_MsgPopulationConcentrationCreation *msg_population_concentration_creation;
+      ASN1T_MsgPopulationUpdate *msg_population_update;
       /* t = 97 */
-      ASN1T_MsgPopulationConcentrationDestruction *msg_population_concentration_destruction;
+      ASN1T_MsgPopulationConcentrationCreation *msg_population_concentration_creation;
       /* t = 98 */
-      ASN1T_MsgPopulationConcentrationUpdate *msg_population_concentration_update;
+      ASN1T_MsgPopulationConcentrationDestruction *msg_population_concentration_destruction;
       /* t = 99 */
-      ASN1T_MsgPopulationFlowCreation *msg_population_flow_creation;
+      ASN1T_MsgPopulationConcentrationUpdate *msg_population_concentration_update;
       /* t = 100 */
-      ASN1T_MsgPopulationFlowDestruction *msg_population_flow_destruction;
+      ASN1T_MsgPopulationFlowCreation *msg_population_flow_creation;
       /* t = 101 */
-      ASN1T_MsgPopulationFlowUpdate *msg_population_flow_update;
+      ASN1T_MsgPopulationFlowDestruction *msg_population_flow_destruction;
       /* t = 102 */
-      ASN1T_MsgPopulationKnowledgeCreation *msg_population_knowledge_creation;
+      ASN1T_MsgPopulationFlowUpdate *msg_population_flow_update;
       /* t = 103 */
-      ASN1T_MsgPopulationKnowledgeUpdate *msg_population_knowledge_update;
+      ASN1T_MsgPopulationKnowledgeCreation *msg_population_knowledge_creation;
       /* t = 104 */
-      ASN1T_MsgPopulationKnowledgeDestruction *msg_population_knowledge_destruction;
+      ASN1T_MsgPopulationKnowledgeUpdate *msg_population_knowledge_update;
       /* t = 105 */
-      ASN1T_MsgPopulationConcentrationKnowledgeCreation *msg_population_concentration_knowledge_creation;
+      ASN1T_MsgPopulationKnowledgeDestruction *msg_population_knowledge_destruction;
       /* t = 106 */
-      ASN1T_MsgPopulationConcentrationKnowledgeDestruction *msg_population_concentration_knowledge_destruction;
+      ASN1T_MsgPopulationConcentrationKnowledgeCreation *msg_population_concentration_knowledge_creation;
       /* t = 107 */
-      ASN1T_MsgPopulationConcentrationKnowledgeUpdate *msg_population_concentration_knowledge_update;
+      ASN1T_MsgPopulationConcentrationKnowledgeDestruction *msg_population_concentration_knowledge_destruction;
       /* t = 108 */
-      ASN1T_MsgPopulationFlowKnowledgeCreation *msg_population_flow_knowledge_creation;
+      ASN1T_MsgPopulationConcentrationKnowledgeUpdate *msg_population_concentration_knowledge_update;
       /* t = 109 */
-      ASN1T_MsgPopulationFlowKnowledgeDestruction *msg_population_flow_knowledge_destruction;
+      ASN1T_MsgPopulationFlowKnowledgeCreation *msg_population_flow_knowledge_creation;
       /* t = 110 */
-      ASN1T_MsgPopulationFlowKnowledgeUpdate *msg_population_flow_knowledge_update;
+      ASN1T_MsgPopulationFlowKnowledgeDestruction *msg_population_flow_knowledge_destruction;
       /* t = 111 */
-      ASN1T_MsgFolkCreation *msg_folk_creation;
+      ASN1T_MsgPopulationFlowKnowledgeUpdate *msg_population_flow_knowledge_update;
       /* t = 112 */
-      ASN1T_MsgFolkGraphUpdate *msg_folk_graph_update;
+      ASN1T_MsgFolkCreation *msg_folk_creation;
       /* t = 113 */
-      ASN1T_MsgUrbanCreation *msg_urban_creation;
+      ASN1T_MsgFolkGraphUpdate *msg_folk_graph_update;
       /* t = 114 */
-      ASN1T_MsgUrbanKnowledgeCreation *msg_urban_knowledge_creation;
+      ASN1T_MsgUrbanCreation *msg_urban_creation;
       /* t = 115 */
-      ASN1T_MsgUrbanKnowledgeUpdate *msg_urban_knowledge_update;
+      ASN1T_MsgUrbanKnowledgeCreation *msg_urban_knowledge_creation;
       /* t = 116 */
-      ASN1T_MsgUrbanKnowledgeDestruction *msg_urban_knowledge_destruction;
+      ASN1T_MsgUrbanKnowledgeUpdate *msg_urban_knowledge_update;
       /* t = 117 */
-      ASN1T_MsgKnowledgeGroupChangeSuperior *msg_knowledge_group_change_superior;
+      ASN1T_MsgUrbanKnowledgeDestruction *msg_urban_knowledge_destruction;
       /* t = 118 */
-      ASN1T_MsgKnowledgeGroupDelete *msg_knowledge_group_delete;
+      ASN1T_MsgKnowledgeGroupChangeSuperior *msg_knowledge_group_change_superior;
       /* t = 119 */
+      ASN1T_MsgKnowledgeGroupDelete *msg_knowledge_group_delete;
+      /* t = 120 */
       ASN1T_MsgKnowledgeGroupSetType *msg_knowledge_group_set_type;
    } u;
 } ASN1T_MsgsSimToClient_msg;

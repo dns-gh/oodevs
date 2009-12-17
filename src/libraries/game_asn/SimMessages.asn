@@ -128,6 +128,7 @@ MsgsSimToClient ::= SEQUENCE
         msg-unit-vision-cones                                   MsgUnitVisionCones,
         msg-unit-detection                                      MsgUnitDetection,
         msg-object-detection                                    MsgObjectDetection,
+        msg-urban-detection                                     MsgUrbanDetection,
         msg-population-concentration-detection                  MsgPopulationConcentrationDetection,
         msg-population-flow-detection                           MsgPopulationFlowDetection,
 
