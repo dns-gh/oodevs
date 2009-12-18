@@ -9,12 +9,9 @@
 BOOST_AUTO_TEST_CASE( TestDefaultTransportPermissionComputer )
 {
     transport::DefaultTransportPermissionComputer computer;
-    computer.Reset();
     BOOST_CHECK_EQUAL( true, computer.CanBeLoaded() );
     computer.AllowLoading( true );
     BOOST_CHECK_EQUAL( true, computer.CanBeLoaded() );
     computer.AllowLoading( false );
-    BOOST_CHECK_EQUAL( false, computer.CanBeLoaded() );
-    computer.Reset();
-    BOOST_CHECK_EQUAL( true, computer.CanBeLoaded() );        
+    BOOST_CHECK_EQUAL( false, computer.CanBeLoaded() );      
 }
