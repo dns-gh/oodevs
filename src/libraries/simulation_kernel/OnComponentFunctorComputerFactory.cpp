@@ -34,9 +34,9 @@ OnComponentFunctorComputerFactory::~OnComponentFunctorComputerFactory()
 // Name: DotationComputerFactory Create
 // Created: MGD 2009-08-24
 // -----------------------------------------------------------------------------
-std::auto_ptr< OnComponentFunctorComputer_ABC > OnComponentFunctorComputerFactory::Create( OnComponentFunctor_ABC& componentOperator ) const
+std::auto_ptr< OnComponentComputer_ABC > OnComponentFunctorComputerFactory::Create( OnComponentFunctor_ABC& componentOperator ) const
 {//@TODO $$$$ MGD NEED This factory?
-    std::auto_ptr< OnComponentFunctorComputer_ABC > pDotationComputer( new DefaultComponentFunctorComputer( componentOperator ) );
+    std::auto_ptr< OnComponentComputer_ABC > pDotationComputer( new DefaultComponentFunctorComputer( componentOperator ) );
     return pDotationComputer;
 }
 

@@ -357,7 +357,7 @@ void PHY_DotationStockContainer::CheckStockCapacities()
     assert( pRoleSupply_ );//@TODO MGD stock pion and not role
     MIL_AgentPionLOG_ABC& pion = const_cast< MIL_AgentPionLOG_ABC& >( pRoleSupply_->GetPion() );
     
-    std::auto_ptr< OnComponentFunctorComputer_ABC > componentComputer( pion.GetAlgorithms().onComponentFunctorComputerFactory_->Create( stockChecker ) );
+    std::auto_ptr< OnComponentComputer_ABC > componentComputer( pion.GetAlgorithms().onComponentFunctorComputerFactory_->Create( stockChecker ) );
     pion.Execute( *componentComputer );
 
     for( CIT_NatureStockData it = stocksByNatures.begin(); it != stocksByNatures.end(); ++it )

@@ -469,7 +469,7 @@ void PHY_RolePionLOG_Supply::SendFullState( NET_ASN_MsgUnitAttributes& asnUnit )
   
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     ConvoyTransportersUseFunctor functor( composanteUse );
-    std::auto_ptr< OnComponentFunctorComputer_ABC > componentComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+    std::auto_ptr< OnComponentComputer_ABC > componentComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
     pion_.Execute( *componentComputer );
     ConvoyLendedTransportersUseFunctor functor2( composanteUse );
     std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functor2 ) );

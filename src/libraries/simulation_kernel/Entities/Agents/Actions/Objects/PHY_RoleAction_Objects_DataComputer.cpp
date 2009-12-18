@@ -58,7 +58,7 @@ void PHY_RoleAction_Objects_DataComputer::CollectData( MIL_AgentPion& pion )
 {
     pionsData_.push_back( PHY_RoleAction_Objects_DataComputerPionData( pion, operation_, object_ ) );
 
-    std::auto_ptr< OnComponentFunctorComputer_ABC > componentComputer( pion.GetAlgorithms().onComponentFunctorComputerFactory_->Create( *this ) );
+    std::auto_ptr< OnComponentComputer_ABC > componentComputer( pion.GetAlgorithms().onComponentFunctorComputerFactory_->Create( *this ) );
     pion.Execute( *componentComputer );
     const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pion.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
     for( PHY_RoleInterface_Reinforcement::CIT_PionSet itReinforcement = reinforcements.begin(); itReinforcement != reinforcements.end(); ++itReinforcement )

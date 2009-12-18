@@ -808,11 +808,11 @@ void PHY_RolePion_Perceiver::PreparePerceptionData()
     rMaxObjectPerceptionDistance_ = 0;
 
     sPerceptionRotation rotation;
-    std::auto_ptr< OnComponentFunctorComputer_ABC > componentComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( rotation ) );
+    std::auto_ptr< OnComponentComputer_ABC > componentComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( rotation ) );
     pion_.Execute( *componentComputer );
 
     sPerceptionDataComposantes dataFunctor( surfacesAgent_, surfacesObject_, *perceiverPosition_, *perceiverDirection_ , vMainPerceptionDirection, rotation.GetAngle() , rMaxAgentPerceptionDistance_, rMaxObjectPerceptionDistance_ );
-    std::auto_ptr< OnComponentFunctorComputer_ABC > dataComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
+    std::auto_ptr< OnComponentComputer_ABC > dataComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
     pion_.Execute( *dataComputer );
 }
 
@@ -828,7 +828,7 @@ void PHY_RolePion_Perceiver::PrepareRadarData()
     radars_.clear();
 
     sRadarDataComposantes dataFunctor( radars_ );
-    std::auto_ptr< OnComponentFunctorComputer_ABC > componentComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
+    std::auto_ptr< OnComponentComputer_ABC > componentComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
     pion_.Execute( *componentComputer );
 }
 

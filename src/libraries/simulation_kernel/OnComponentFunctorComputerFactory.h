@@ -33,7 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< OnComponentFunctorComputer_ABC > Create( OnComponentFunctor_ABC& componentOperator ) const;
+    virtual std::auto_ptr< OnComponentComputer_ABC > Create( OnComponentFunctor_ABC& componentOperator ) const;
     //@}
 };
 
