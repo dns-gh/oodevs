@@ -44,6 +44,10 @@ public:
     {
         return *FindObjectType_mocker.forward( type );
     }
+    virtual MIL_KnowledgeGroup* FindKnowledgeGroup( unsigned int nID ) const
+    {
+        throw;
+    }
 
     mockpp::ChainableMockMethod< MIL_AgentPion*, unsigned int > FindAgentPion_mocker;
     mockpp::ChainableMockMethod< MIL_Automate*, unsigned int > FindAutomate_mocker;
