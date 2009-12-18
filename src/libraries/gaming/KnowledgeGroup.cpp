@@ -19,6 +19,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 KnowledgeGroup::KnowledgeGroup( unsigned long nId, Controller& controller )
     : EntityImplementation< KnowledgeGroup_ABC >( controller, nId, QString( tools::translate( "KnowledgeGroup", "Group %1" ) ).arg( nId ) )
+    , isActivated_ ( true )
 {
     // NOTHING
 }
@@ -30,4 +31,13 @@ KnowledgeGroup::KnowledgeGroup( unsigned long nId, Controller& controller )
 KnowledgeGroup::~KnowledgeGroup()
 {
     Destroy();
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup Desactivate
+// Created: NLD 2004-03-18
+// -----------------------------------------------------------------------------
+bool KnowledgeGroup::IsActivated() const
+{
+    return isActivated_;
 }

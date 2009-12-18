@@ -17,6 +17,7 @@
 #include "clients_gui/AutomatsLayer.h"
 #include "gaming/ProfileFilter.h"
 #include "gaming/Simulation.h"
+#include "gaming/KnowledgeGroup.h"
 
 // -----------------------------------------------------------------------------
 // Name: OrbatToolbar constructor
@@ -80,6 +81,17 @@ void OrbatToolbar::OnSetFilter()
 {
     if( entity_ )
         filter_.SetFilter( *entity_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrbatToolbar::OnActivateCommunication
+// Created: SLG 2009-12-16
+// -----------------------------------------------------------------------------
+void OrbatToolbar::OnActivateCommunication()
+{
+    if( entity_ )
+        ;
+        //const_cast< KnowledgeGroup* >( entity_ )->Desactivate();
 }
 
 // -----------------------------------------------------------------------------

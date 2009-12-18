@@ -43,6 +43,7 @@ MsgKnowledgeGroupChangeSuperior ::= SEQUENCE
     oid-knowledgegroup-parent   KnowledgeGroup
 }
 
+
 EnumKnowledgeGroupErrorCode ::= ENUMERATED
 {
     no-error                          (0),

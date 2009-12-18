@@ -74,6 +74,7 @@ struct ASN1T_MsgAutomatChangeLogisticLinks;
 struct ASN1T_MsgUnitChangeSuperior;
 struct ASN1T_MsgLogSupplyChangeQuotas;
 struct ASN1T_MsgLogSupplyPushFlow;
+struct ASN1T_MsgKnowledgeGroupEnable;
 
 class ASN1T_EnumObjectType;
 
@@ -110,8 +111,8 @@ public:
 
     //! @name Accessors
     //@{
-    virtual       MIL_KnowledgeGroup* FindKnowledgeGroup( uint nID ) const;
     virtual       MIL_Automate*       FindAutomate  ( uint nID ) const;
+    virtual       MIL_KnowledgeGroup* FindKnowledgeGroup( uint nID ) const;
     virtual       MIL_AgentPion*      FindAgentPion ( uint nID ) const;
                   MIL_Object_ABC*     FindObject    ( uint nID ) const;
     virtual const MIL_ObjectType_ABC& FindObjectType( const std::string& type ) const;
@@ -159,7 +160,9 @@ public:
     void OnReceiveMsgUnitChangeSuperior          ( const ASN1T_MsgUnitChangeSuperior&               msg, uint nCtx );
     void OnReceiveMsgLogSupplyChangeQuotas       ( const ASN1T_MsgLogSupplyChangeQuotas&            msg, uint nCtx );
     void OnReceiveMsgLogSupplyPushFlow           ( const ASN1T_MsgLogSupplyPushFlow&                msg, uint nCtx );
+    void OnReceiveMsgKnowledgeGroupEnable        ( const ASN1T_MsgKnowledgeGroupEnable&             msg, uint nCtx );
     void OnReceiveMsgKnowledgeGroupChangeSuperior( const ASN1T_MsgKnowledgeGroupChangeSuperior&     msg, uint nCtx );
+
     void OnReceiveMsgKnowledgeGroupDelete        ( const ASN1T_MsgKnowledgeGroupDelete&             msg, uint nCtx );
     void OnReceiveMsgKnowledgeGroupSetType       ( const ASN1T_MsgKnowledgeGroupSetType&            msg, uint nCtx );
     //@}

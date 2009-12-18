@@ -88,6 +88,12 @@ public:
     bool operator!=( const MIL_KnowledgeGroup& rhs ) const;
     //@}
 
+    //! @name Operations
+    //@{
+    void OnReceiveMsgKnowledgeGroupEnable( const ASN1T_MsgKnowledgeGroupEnable& asnMsg );
+    //@}
+
+
     //! @name Accessors
     //@{
           uint                                    GetID       () const;
@@ -97,6 +103,7 @@ public:
     const DEC_KnowledgeBlackBoard_KnowledgeGroup& GetKnowledge() const;
           MIL_KnowledgeGroup*                     GetParent   () const;
           MT_Float                                GetTimeToDiffuseToKnowledgeGroup() const;
+          bool                                    IsEnabled() const;
     //@}
 
     //! @name Network
@@ -114,8 +121,9 @@ private:
 
     DEC_KnowledgeBlackBoard_KnowledgeGroup* pKnowledgeBlackBoard_;
 
-    T_AutomateVector automates_;
-    MT_Float timeToDiffuse_;
+    T_AutomateVector    automates_;
+    MT_Float            timeToDiffuse_;
+    bool                isActivated_;
 
 private:
     static std::set< uint > ids_;

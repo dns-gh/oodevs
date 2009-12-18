@@ -23,6 +23,7 @@
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
+#include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 

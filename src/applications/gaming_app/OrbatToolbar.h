@@ -56,6 +56,7 @@ private slots:
     //@{
     void OnSetFilter();
     void OnClearFilter();
+    void OnActivateCommunication();
 
     void AggregateAll();
     void DisaggregateAll();

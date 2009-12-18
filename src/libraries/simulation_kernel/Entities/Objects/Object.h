@@ -27,7 +27,7 @@ class MIL_ObjectBuilder_ABC;
 // Created: JCR 2008-04-18
 // =============================================================================
 class Object : public MIL_Object_ABC
- {
+{
 public:
 	//! @name Constructors/Destructor
     //@{

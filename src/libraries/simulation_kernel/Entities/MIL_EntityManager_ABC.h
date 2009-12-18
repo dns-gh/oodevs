@@ -13,6 +13,7 @@
 class MIL_AgentPion;
 class MIL_Automate;
 class MIL_ObjectType_ABC;
+class MIL_KnowledgeGroup;
 
 // =============================================================================
 /** @class  MIL_EntityManager_ABC
@@ -34,6 +35,7 @@ public:
     //@{
     virtual       MIL_AgentPion*      FindAgentPion ( unsigned int nID ) const = 0;
     virtual       MIL_Automate*       FindAutomate  ( unsigned int nID ) const = 0;
+    virtual       MIL_KnowledgeGroup* FindKnowledgeGroup( unsigned int nID ) const = 0;
     virtual const MIL_ObjectType_ABC& FindObjectType( const std::string& type ) const = 0;
     //@}
 };

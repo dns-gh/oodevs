@@ -53,7 +53,8 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army& army, MIL_
     , pParent_              ( pParent )
     , pKnowledgeBlackBoard_ ( new DEC_KnowledgeBlackBoard_KnowledgeGroup( *this ) )
     , automates_            ()
-    , timeToDiffuse_         ( 0 )
+    , timeToDiffuse_        ( 0 )
+    , isActivated_          ( true )
 {
     std::string strType;
     xis >> xml::attribute( "id", nID_ )
@@ -82,6 +83,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
     , pParent_             ( 0 )
     , pKnowledgeBlackBoard_( 0 )
     , automates_           ()
+    , isActivated_         ( true )
 {
     // NOTHING
 }
@@ -225,8 +227,8 @@ void MIL_KnowledgeGroup::SendCreation() const
     assert( pArmy_ );
 
     NET_ASN_MsgKnowledgeGroupCreation asn;   
-    asn().oid      = nID_;
-    asn().oid_camp = pArmy_->GetID();
+    asn().oid       = nID_;
+    asn().oid_camp  = pArmy_->GetID();
 
     if( pParent_ )
     {
@@ -377,6 +379,15 @@ const MIL_KnowledgeGroupType& MIL_KnowledgeGroup::GetType() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::IsEnabled
+// Created: SLG 2009-12-17
+// -----------------------------------------------------------------------------
+bool MIL_KnowledgeGroup::IsEnabled() const
+{
+    return isActivated_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::FindKnowledgeGroup
 // Created: SLG 2009-11-30
 // -----------------------------------------------------------------------------
@@ -414,6 +425,15 @@ void MIL_KnowledgeGroup::RefreshTimeToDiffuseToKnowledgeGroup()
 {
     if ( pParent_ )
         timeToDiffuse_ += pParent_->GetType().GetKnowledgeCommunicationDelay();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupEnable
+// Created: SLG 2009-12-17
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupEnable( const ASN1T_MsgKnowledgeGroupEnable& asnMsg )
+{
+    isActivated_ = asnMsg.enabled;
 }
 
 // -----------------------------------------------------------------------------
@@ -471,3 +491,4 @@ void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupSetType( const ASN1T_MsgKnowl
 //
 //    }
 }
+

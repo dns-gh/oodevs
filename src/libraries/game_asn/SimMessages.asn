@@ -230,7 +230,8 @@ MsgsClientToSim ::= SEQUENCE
         msg-log-supply-change-quotas            MsgLogSupplyChangeQuotas,
         msg-knowledge-group-change-superior     MsgKnowledgeGroupChangeSuperior,
         msg-knowledge-group-delete              MsgKnowledgeGroupDelete,
-        msg-knowledge-group-set_type            MsgKnowledgeGroupSetType
+        msg-knowledge-group-set_type            MsgKnowledgeGroupSetType,
+        msg-knowledge-group-enable              MsgKnowledgeGroupEnable
     }
 }
 

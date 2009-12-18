@@ -22,6 +22,7 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "simulation_kernel/MIL_AgentServer.h"
+#include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h"
  
 BOOST_CLASS_EXPORT_GUID( DEC_KS_AgentKnowledgeSynthetizer, "DEC_KS_AgentKnowledgeSynthetizer" )
 
@@ -100,7 +101,7 @@ void DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromAgentPerception( cons
 inline
 void DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromKnowledgeAgent( const DEC_Knowledge_Agent& agentKnowledge )
 {
-    if( agentKnowledge.IsValid() )
+    if( agentKnowledge.IsValid() /*&& agentKnowledge.GetAgentKnown().GetRole< PHY_RolePion_Communications >().CanCommunicate()*/ )
         GetKnowledgeToUpdate( agentKnowledge.GetAgentKnown() ).Update( agentKnowledge );
 }
 
@@ -111,7 +112,7 @@ void DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromKnowledgeAgent( const
 inline
 void DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromParentKnowledgeGroup( const DEC_Knowledge_Agent& agentKnowledge )
 {
-    if( agentKnowledge.IsValid() )
+    if( agentKnowledge.IsValid() /*&& agentKnowledge.GetAgentKnown().GetRole< PHY_RolePion_Communications >().CanCommunicate()*/ )
         GetKnowledgeToUpdate( agentKnowledge.GetAgentKnown() ).Update( agentKnowledge );
 }
 
@@ -134,8 +135,8 @@ void DEC_KS_AgentKnowledgeSynthetizer::Talk()
         for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
         {
             MIL_AgentPion& pion = **itPion;
-            pion.GetKnowledge().GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( method );
-       
+            //if ( pion.GetRole< PHY_RolePion_Communications >().CanCommunicate() )
+                pion.GetKnowledge().GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( method );
         }
     }
 

@@ -28,11 +28,21 @@ public:
     virtual ~KnowledgeGroup();
     //@}
 
+    //! @name Accessors
+    //@{
+    bool IsActivated() const;
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
     KnowledgeGroup( const KnowledgeGroup& );
     KnowledgeGroup& operator=( const KnowledgeGroup& );
+    //@}
+
+    //! @name Member data
+    //@{
+    bool isActivated_;
     //@}
 };
 

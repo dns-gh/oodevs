@@ -1196,6 +1196,28 @@ void MIL_EntityManager::OnReceiveMsgLogSupplyPushFlow( const ASN1T_MsgLogSupplyP
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::OnReceiveMsgKnowledgeGroupEnable
+// Created: SLG 2009-12-17
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::OnReceiveMsgKnowledgeGroupEnable( const ASN1T_MsgKnowledgeGroupEnable& asnMsg, unsigned int nCtx )
+{
+    //NET_ASN_MsgKnowledgeGroupEnable ack;
+    //ack() = MsgKnowledgeGroupEnable::no_error;
+    try
+    {
+        MIL_KnowledgeGroup* pReceiver = FindKnowledgeGroup( asnMsg.oid );
+        //if( !pReceiver )
+        //throw NET_AsnException< ASN1T_MsgLogSupplyPushFlowAck >( MsgLogSupplyPushFlowAck::error_invalid_receveur );
+        pReceiver->OnReceiveMsgKnowledgeGroupEnable( asnMsg );
+    }
+    catch( NET_AsnException< ASN1T_MsgLogSupplyPushFlowAck >& e )
+    {
+        //    ack() = e.GetErrorID();
+    }
+    //ack.Send( nCtx );*/
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnReceiveMsgKnowledgeGroupChangeSuperior
 // Created: FHD 2009-12-15: 
 // -----------------------------------------------------------------------------
@@ -1204,7 +1226,6 @@ void MIL_EntityManager::OnReceiveMsgKnowledgeGroupChangeSuperior( const ASN1T_Ms
     NET_ASN_MsgKnowledgeGroupChangeSuperiorAck ack;
     ack().oid        = msg.oid;
     ack().error_code = EnumKnowledgeGroupErrorCode::no_error;
-
     try
     {
         MIL_KnowledgeGroup* pMovedKnowledgeGroup = FindKnowledgeGroup( msg.oid );
@@ -1375,6 +1396,15 @@ MIL_Automate* MIL_EntityManager::FindAutomate( unsigned int nID ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::FindKnowledgeGroup
+// Created: SLG 2009-12-17
+// -----------------------------------------------------------------------------
+MIL_KnowledgeGroup* MIL_EntityManager::FindKnowledgeGroup( unsigned int nID ) const
+{//@TODO MGD Remove
+    return knowledgeGroupFactory_->Find( nID );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::FindAgentPion
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
@@ -1383,14 +1413,6 @@ MIL_AgentPion* MIL_EntityManager::FindAgentPion( unsigned int nID ) const
     return tools::Resolver< MIL_AgentPion >::Find( nID );
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::FindAutomate
-// Created: NLD 2004-08-30
-// -----------------------------------------------------------------------------
-MIL_KnowledgeGroup* MIL_EntityManager::FindKnowledgeGroup( unsigned int nID ) const
-{
-    return knowledgeGroupFactory_->Find( nID );
-}
 
 // -----------------------------------------------------------------------------
 // -----------------------------------------------------------------------------

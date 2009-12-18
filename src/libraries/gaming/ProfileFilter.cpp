@@ -176,7 +176,7 @@ bool ProfileFilter::IsChildSubordinateOf( const D& down, const U& /*up*/ ) const
 // Name: ProfileFilter::IsInSameKnowledgeGroup
 // Created: AGE 2006-11-29
 // -----------------------------------------------------------------------------
-bool ProfileFilter::IsInSameKnowledgeGroup( const kernel::Entity_ABC& entity ) const  // $$$$ _RC_ SLG 2009-12-02: ULTRA MOCHE
+bool ProfileFilter::IsInSameKnowledgeGroup( const kernel::Entity_ABC& entity ) const  // $$$$ _RC_ SLG 2009-12-02: ULTRA MOCHE duplication de code pour faire fonctionner la vue filtrer dans gaming au niveau des knowledgeGroup
 {
     if( ! entity_ || entity_ == &entity )
         return true;
