@@ -18,10 +18,11 @@ namespace dotation
 // Name: DefaultConsumptionModeChangeRequest constructor
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
-DefaultConsumptionModeChangeRequest::DefaultConsumptionModeChangeRequest() :
-    newMode_(0),
-    failed_(false)
+DefaultConsumptionModeChangeRequest::DefaultConsumptionModeChangeRequest( const PHY_ConsumptionType& newMode ) :
+    newMode_( &newMode ),
+    failed_ ( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -30,17 +31,7 @@ DefaultConsumptionModeChangeRequest::DefaultConsumptionModeChangeRequest() :
 // -----------------------------------------------------------------------------
 DefaultConsumptionModeChangeRequest::~DefaultConsumptionModeChangeRequest()
 {
-}
-
-// -----------------------------------------------------------------------------
-// Name: DefaultConsumptionModeChangeRequest::Reset
-// Created: AHC 2009-10-01
-// -----------------------------------------------------------------------------
-void DefaultConsumptionModeChangeRequest::Reset(const PHY_ConsumptionType& newMode)
-{
-    newMode_ = &newMode;
-    failed_=false;
-    changedDotations_.clear();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -87,6 +78,6 @@ bool DefaultConsumptionModeChangeRequest::AllChanged() const
 // -----------------------------------------------------------------------------
 void DefaultConsumptionModeChangeRequest::Rollback()
 {
-    std::for_each(changedDotations_.begin(),changedDotations_.end(), std::mem_fun(&PHY_RoleInterface_Dotations::RollbackConsumptionMode));
+    std::for_each( changedDotations_.begin(), changedDotations_.end(), std::mem_fun( &PHY_RoleInterface_Dotations::RollbackConsumptionMode ) );
 }
 }

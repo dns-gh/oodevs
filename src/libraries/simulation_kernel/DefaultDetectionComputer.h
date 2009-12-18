@@ -27,13 +27,12 @@ class DefaultDetectionComputer : public DetectionComputer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DefaultDetectionComputer();
+    explicit DefaultDetectionComputer( MIL_Agent_ABC& target );
     virtual ~DefaultDetectionComputer();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Reset( MIL_Agent_ABC& target );
     virtual const MIL_Agent_ABC& GetTarget();
 
     virtual void AlreadyPerceived();

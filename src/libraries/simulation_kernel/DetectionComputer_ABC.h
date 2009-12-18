@@ -32,7 +32,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Reset( MIL_Agent_ABC& target ) = 0;
     virtual const MIL_Agent_ABC& GetTarget() = 0;
 
     virtual void AlreadyPerceived() = 0;

@@ -213,7 +213,8 @@ bool PHY_RolePion_Transported::HasHumanTransportersReady() const
 {
 
     sTransporterComposantePresent func;
-    pion_.Execute( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( func ) );
+    std::auto_ptr< OnComponentComputer_ABC > computer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( func ) );
+    pion_.Execute( *computer );
     
     return vHumanTransporterPosition_.IsZero() && func.bComposantePresent_;
 }

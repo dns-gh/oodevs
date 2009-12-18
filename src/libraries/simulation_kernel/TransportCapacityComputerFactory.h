@@ -36,16 +36,9 @@ public:
     
     //! @name Operations
     //@{
-    TransportCapacityComputer_ABC& CreateCapacityComputer( ) const ;
-    TransportWeightComputer_ABC& CreateWeightComputer(const TransportStrategy_ABC*) const;
-    TransportPermissionComputer_ABC& CreatePermissionComputer() const;
-    //@}
-private:
-    //! @name Attributes
-    //@{
-    std::auto_ptr< TransportCapacityComputer_ABC > capacityComputer_;
-    std::auto_ptr<TransportWeightComputer_ABC> weightComputer_;
-    std::auto_ptr<TransportPermissionComputer_ABC> permissionComputer_;
+    virtual std::auto_ptr< TransportCapacityComputer_ABC > CreateCapacityComputer() const ;
+    virtual std::auto_ptr< TransportWeightComputer_ABC > CreateWeightComputer( const TransportStrategy_ABC* ) const;
+    virtual std::auto_ptr< TransportPermissionComputer_ABC > CreatePermissionComputer() const;
     //@}
 };
 

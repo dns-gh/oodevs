@@ -34,15 +34,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual ConsumptionComputer_ABC& CreateConsumptionComputer() const;
-    virtual ConsumptionModeChangeRequest_ABC& CreateConsumptionModeChangeRequest(const PHY_ConsumptionType&) const;
-    //@}
-
-private:
-    //! @name Operations
-    //@{
-    std::auto_ptr< ConsumptionComputer_ABC > pConsumptionComputer_;
-    std::auto_ptr< ConsumptionModeChangeRequest_ABC> pConsumptionModeChangeRequest_;
+    virtual std::auto_ptr< ConsumptionComputer_ABC > CreateConsumptionComputer() const;
+    virtual std::auto_ptr< ConsumptionModeChangeRequest_ABC > CreateConsumptionModeChangeRequest( const PHY_ConsumptionType& ) const;
     //@}
 };
 

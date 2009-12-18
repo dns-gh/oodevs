@@ -33,13 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual WeaponAvailabilityComputer_ABC& Create( FireData_ABC& firerWeapons ) const;
-    //@}
-
-private:
-    //! @name Attribute
-    //@{
-    std::auto_ptr< WeaponAvailabilityComputer_ABC > pWeaponAvailabilityComputer_;
+    virtual std::auto_ptr< WeaponAvailabilityComputer_ABC > Create( FireData_ABC& firerWeapons ) const;
     //@}
 };
 

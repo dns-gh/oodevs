@@ -33,7 +33,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Reset(const PHY_ConsumptionType& newMode) =0;
     // Used in execute to know the new mode
     virtual const PHY_ConsumptionType& GetType() const =0;
     // Used in Execute to specify whether change is ok

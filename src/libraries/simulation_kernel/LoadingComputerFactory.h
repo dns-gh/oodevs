@@ -32,14 +32,8 @@ public:
 
     //! @name Operations
     //@{
-    HumanLoadingTimeComputer_ABC& CreateHumanLoadingTimeComputer();
-    LoadedStateConsistencyComputer_ABC& CreateLoadedStateConsistencyComputer();
-    //@}
-private:
-    //! @name Attributes
-    //@{
-    std::auto_ptr<HumanLoadingTimeComputer_ABC> humanLoadingTimeComputer_;
-    std::auto_ptr<LoadedStateConsistencyComputer_ABC> loadedStateConsistencyComputer_;
+    virtual std::auto_ptr< HumanLoadingTimeComputer_ABC > CreateHumanLoadingTimeComputer();
+    virtual std::auto_ptr< LoadedStateConsistencyComputer_ABC > CreateLoadedStateConsistencyComputer();
     //@}
 };
 

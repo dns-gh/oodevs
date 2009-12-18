@@ -16,9 +16,10 @@
 // Name: DefaultDotationComputer::DefaultDotationComputer
 // Created: MGD 2009-09-24
 // -----------------------------------------------------------------------------
-DefaultComponentLendedFunctorComputer::DefaultComponentLendedFunctorComputer()
+DefaultComponentLendedFunctorComputer::DefaultComponentLendedFunctorComputer( OnComponentFunctor_ABC& componentOperator )
+    : componentOperator_( componentOperator )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -27,16 +28,7 @@ DefaultComponentLendedFunctorComputer::DefaultComponentLendedFunctorComputer()
 // -----------------------------------------------------------------------------
 DefaultComponentLendedFunctorComputer::~DefaultComponentLendedFunctorComputer()
 {
-
-}
-
-// -----------------------------------------------------------------------------
-// Name: DefaultDotationComputer::ApplyOnConpenent
-// Created: MGD 2009-09-24
-// -----------------------------------------------------------------------------
-void DefaultComponentLendedFunctorComputer::Reset( OnComponentFunctor_ABC& componentOperator )
-{
-    pComponentOperator = &componentOperator;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -45,5 +37,5 @@ void DefaultComponentLendedFunctorComputer::Reset( OnComponentFunctor_ABC& compo
 // -----------------------------------------------------------------------------
 void DefaultComponentLendedFunctorComputer::ApplyOnLendedComponent( PHY_ComposantePion& component )
 {
-    (*pComponentOperator)( component );
+    componentOperator_( component );
 }

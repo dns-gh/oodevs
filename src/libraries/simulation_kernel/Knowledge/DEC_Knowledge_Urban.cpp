@@ -132,7 +132,7 @@ void DEC_Knowledge_Urban::Update( const DEC_Knowledge_UrbanPerception& perceptio
     const PHY_PerceptionLevel& level = perception.GetCurrentPerceptionLevel();
     
     float area = object_.GetFootprint()->ComputeArea();
-    float progress = level.GetID() * 100 / object_.GetFootprint()->ComputeArea();//@TODO MGD Add true physical in ADN
+    float progress = level.GetID() * 100 / area;//@TODO MGD Add true physical in ADN
     rProgressPercent_ = rProgressPercent_ + progress;
     if( rProgressPercent_ > 1.0 )
     {

@@ -28,12 +28,11 @@ class DefaultSpeedComputer : public SpeedComputer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    DefaultSpeedComputer();
+             DefaultSpeedComputer( const SpeedStrategy_ABC& strategy );
     virtual ~DefaultSpeedComputer();
 
     //! @name Operations
     //@{
-    virtual void Reset( const SpeedStrategy_ABC* strategy );
     virtual void ApplyOnComponent( const PHY_ComposantePion& );
     virtual void ApplyOnReinforcement( MIL_Agent_ABC& );
     virtual void ApplyOnPopulation( const DEC_Knowledge_PopulationCollision& );
@@ -43,7 +42,7 @@ public:
 private:
     //! @name Attributes
     //@{
-    const SpeedStrategy_ABC* strategy_;
+    const SpeedStrategy_ABC& strategy_;
     double speed_;
     bool hasUsableComponent_;
     double speedRatio_;

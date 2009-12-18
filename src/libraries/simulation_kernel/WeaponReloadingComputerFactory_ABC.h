@@ -31,7 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual WeaponReloadingComputer_ABC& Create( double duration ) const = 0;
+    virtual std::auto_ptr< WeaponReloadingComputer_ABC > Create( double duration ) const = 0;
     //@}
 };
 

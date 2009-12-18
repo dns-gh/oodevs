@@ -589,7 +589,8 @@ void PHY_RolePion_Perceiver::DisableFlyingShellDetection( int id )
 // -----------------------------------------------------------------------------
 MT_Float PHY_RolePion_Perceiver::GetMaxAgentPerceptionDistance() const
 {
-    return rMaxAgentPerceptionDistance_ * pion_.Execute( pion_.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer() ).GetFactor();
+    std::auto_ptr< PerceptionDistanceComputer_ABC > computer( pion_.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer() );
+    return rMaxAgentPerceptionDistance_ * pion_.Execute( *computer ).GetFactor();
 }
 
 // -----------------------------------------------------------------------------
@@ -599,7 +600,8 @@ MT_Float PHY_RolePion_Perceiver::GetMaxAgentPerceptionDistance() const
 inline
 MT_Float PHY_RolePion_Perceiver::GetMaxObjectPerceptionDistance() const
 {
-    return rMaxObjectPerceptionDistance_ * pion_.Execute( pion_.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer() ).GetFactor();
+    std::auto_ptr< PerceptionDistanceComputer_ABC > computer( pion_.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer() );
+    return rMaxObjectPerceptionDistance_ * pion_.Execute( *computer ).GetFactor();
 }
 
 // -----------------------------------------------------------------------------
@@ -806,10 +808,12 @@ void PHY_RolePion_Perceiver::PreparePerceptionData()
     rMaxObjectPerceptionDistance_ = 0;
 
     sPerceptionRotation rotation;
-    pion_.Execute( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( rotation ) );
+    std::auto_ptr< OnComponentFunctorComputer_ABC > componentComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( rotation ) );
+    pion_.Execute( *componentComputer );
 
     sPerceptionDataComposantes dataFunctor( surfacesAgent_, surfacesObject_, *perceiverPosition_, *perceiverDirection_ , vMainPerceptionDirection, rotation.GetAngle() , rMaxAgentPerceptionDistance_, rMaxObjectPerceptionDistance_ );
-    pion_.Execute( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
+    std::auto_ptr< OnComponentFunctorComputer_ABC > dataComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
+    pion_.Execute( *dataComputer );
 }
 
 // -----------------------------------------------------------------------------
@@ -824,7 +828,8 @@ void PHY_RolePion_Perceiver::PrepareRadarData()
     radars_.clear();
 
     sRadarDataComposantes dataFunctor( radars_ );
-    pion_.Execute( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
+    std::auto_ptr< OnComponentFunctorComputer_ABC > componentComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
+    pion_.Execute( *componentComputer );
 }
 
 // -----------------------------------------------------------------------------
@@ -1234,7 +1239,8 @@ void PHY_RolePion_Perceiver::SendDebugState() const
 {
     NET_ASN_MsgUnitVisionCones asn;
     asn().oid = pion_.GetID();
-    asn().elongation = pion_.Execute( pion_.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer() ).GetElongationFactor(); //@TODO MGD share
+    std::auto_ptr< PerceptionDistanceComputer_ABC > computer( pion_.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer() );
+    asn().elongation = pion_.Execute( *computer ).GetElongationFactor(); //@TODO MGD share
     asn().cones.n = surfacesAgent_.size();
     asn().cones.elem = asn().cones.n ? new ASN1T_VisionCone[ asn().cones.n ] : 0;
     unsigned i = 0;

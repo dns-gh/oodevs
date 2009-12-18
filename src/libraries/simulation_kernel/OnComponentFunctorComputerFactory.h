@@ -33,11 +33,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual OnComponentComputer_ABC& Create( OnComponentFunctor_ABC& componentOperator ) const;
+    virtual std::auto_ptr< OnComponentFunctorComputer_ABC > Create( OnComponentFunctor_ABC& componentOperator ) const;
     //@}
-
-private:
-    std::auto_ptr< OnComponentFunctorComputer_ABC > pDotationComputer_;
 };
 
 #endif // __OnComponentFunctorComputerFactory_h_

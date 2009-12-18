@@ -37,7 +37,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Reset( bool bFireOnlyOnMajorComposantes ) = 0;
     virtual void ApplyOnComponent( PHY_ComposantePion& fired ) = 0;
     virtual PHY_Composante_ABC::T_ComposanteVector& ResultAll() = 0;
     virtual PHY_Composante_ABC::T_ComposanteVector& ResultLimited( unsigned int nNbrWeaponsUsable ) = 0;

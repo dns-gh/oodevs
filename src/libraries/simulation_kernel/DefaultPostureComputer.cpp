@@ -19,14 +19,15 @@ using namespace posture;
 // Name: DefaultPostureComputer::DefaultPostureComputer
 // Created: MGD 2009-09-21
 // -----------------------------------------------------------------------------
-DefaultPostureComputer::DefaultPostureComputer( MT_Random& random )
-: params_( 0 )
-, bForceMovement_( false )
-, bForceStop_( false )
-, bIsLoaded_( false )
-, random_( random )
+DefaultPostureComputer::DefaultPostureComputer( MT_Random& random, Parameters& params )
+    : params_( &params )
+    , bForceMovement_( false )
+    , bForceStop_( false )
+    , bIsLoaded_( false )
+    , results_( params.rCompletionPercentage_ )
+    , random_( random )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -35,25 +36,7 @@ DefaultPostureComputer::DefaultPostureComputer( MT_Random& random )
 // -----------------------------------------------------------------------------
 DefaultPostureComputer::~DefaultPostureComputer()
 {
-
-}
-
-// -----------------------------------------------------------------------------
-// Name: DefaultPostureComputer::~DefaultPostureComputer
-// Created: MGD 2009-09-21
-// -----------------------------------------------------------------------------
-void DefaultPostureComputer::Reset( PostureComputer_ABC::Parameters& param )
-{
-    params_ = &param;
-    
-    coefficientsModifier_.clear();
-    bForceMovement_ = false;
-    bForceStop_ = false;
-    bIsLoaded_ = false;
-
-    results_.newPosture_ = 0;
-    results_.postureCompletionPercentage_= param.rCompletionPercentage_;
-    results_.bIsStealth_ = false;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

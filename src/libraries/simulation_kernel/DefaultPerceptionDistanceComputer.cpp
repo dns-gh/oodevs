@@ -20,8 +20,9 @@ namespace detection
 // Created: MGD 2009-10-05
 // -----------------------------------------------------------------------------
 DefaultPerceptionDistanceComputer::DefaultPerceptionDistanceComputer()
+    : elongation_( 0 )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -30,17 +31,7 @@ DefaultPerceptionDistanceComputer::DefaultPerceptionDistanceComputer()
 // -----------------------------------------------------------------------------
 DefaultPerceptionDistanceComputer::~DefaultPerceptionDistanceComputer()
 {
-
-}
-
-// -----------------------------------------------------------------------------
-// Name: DefaultPerceptionDistanceComputer::Reset
-// Created: MGD 2009-10-05
-// -----------------------------------------------------------------------------
-void DefaultPerceptionDistanceComputer::Reset()
-{
-    modifiers_.clear();
-    elongation_ = 0;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

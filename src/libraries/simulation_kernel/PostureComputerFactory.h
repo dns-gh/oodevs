@@ -33,19 +33,13 @@ public:
 
     //! @name Operations
     //@{
-    virtual PostureComputer_ABC& Create( PostureComputer_ABC::Parameters& params ) const;
+    virtual std::auto_ptr< PostureComputer_ABC > Create( PostureComputer_ABC::Parameters& params ) const;
     //@}
 
 private:
     //! @name Attribute
     //@{
-    std::auto_ptr< PostureComputer_ABC > pPostureComputer_;
-    //@}
-
-private:
-    //! @name Attribute
-    //@{
-    MT_Random random_;
+    mutable MT_Random random_;
     //@}
 };
 

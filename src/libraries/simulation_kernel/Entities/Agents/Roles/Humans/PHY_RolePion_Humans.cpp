@@ -164,13 +164,13 @@ void PHY_RolePion_Humans::ChangeHumansAvailability( const PHY_HumanRank& rank, u
     const T_HumanData& humanData = humansData_[ rank.GetID() ];
     nNewNbrFullyAliveHumans = std::min( nNewNbrFullyAliveHumans, humanData.nNbrTotal_ );
 
-    HealComputer_ABC& healComputer = pion_.GetAlgorithms().healComputerFactory_->Create();
-    pion_.Execute( static_cast< OnComponentComputer_ABC& >( healComputer ) );
+    std::auto_ptr< HealComputer_ABC > healComputer( pion_.GetAlgorithms().healComputerFactory_->Create() );
+    pion_.Execute< OnComponentComputer_ABC >( *healComputer );
 
     if( nNewNbrFullyAliveHumans > humanData.nNbrOperational_ )
-        healComputer.Heal( rank, nNewNbrFullyAliveHumans - humanData.nNbrOperational_ );
+        healComputer->Heal( rank, nNewNbrFullyAliveHumans - humanData.nNbrOperational_ );
     else if( nNewNbrFullyAliveHumans < humanData.nNbrOperational_ )
-        healComputer.Wound( rank, humanData.nNbrOperational_ - nNewNbrFullyAliveHumans );
+        healComputer->Wound( rank, humanData.nNbrOperational_ - nNewNbrFullyAliveHumans );
 }
 
 // -----------------------------------------------------------------------------
@@ -179,9 +179,9 @@ void PHY_RolePion_Humans::ChangeHumansAvailability( const PHY_HumanRank& rank, u
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::HealAllHumans()
 {
-    HealComputer_ABC& healComputer = pion_.GetAlgorithms().healComputerFactory_->Create();
-    pion_.Execute( static_cast< OnComponentComputer_ABC& >( healComputer ) );
-    healComputer.HealAll();
+    std::auto_ptr< HealComputer_ABC > healComputer( pion_.GetAlgorithms().healComputerFactory_->Create() );
+    pion_.Execute< OnComponentComputer_ABC >( *healComputer );
+    healComputer->HealAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -393,9 +393,9 @@ void PHY_RolePion_Humans::NotifyHumanChanged( PHY_Human& human, const PHY_Human&
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2 ) const
 {
-    HealComputer_ABC& healComputer = pion_.GetAlgorithms().healComputerFactory_->Create();
-    pion_.Execute( static_cast< OnComponentComputer_ABC& >( healComputer ) );
-    healComputer.EvacuateWoundedHumans( destinationTC2 );
+    std::auto_ptr< HealComputer_ABC > healComputer( pion_.GetAlgorithms().healComputerFactory_->Create() );
+    pion_.Execute< OnComponentComputer_ABC >( *healComputer );
+    healComputer->EvacuateWoundedHumans( destinationTC2 );
 }
 
 // -----------------------------------------------------------------------------
@@ -404,9 +404,9 @@ void PHY_RolePion_Humans::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Humans::HasWoundedHumansToEvacuate() const
 {
-    HealComputer_ABC& healComputer = pion_.GetAlgorithms().healComputerFactory_->Create();
-    pion_.Execute( static_cast< OnComponentComputer_ABC& >( healComputer ) );
-    return healComputer.HasWoundedHumansToEvacuate();
+    std::auto_ptr< HealComputer_ABC > healComputer( pion_.GetAlgorithms().healComputerFactory_->Create() );
+    pion_.Execute< OnComponentComputer_ABC >( *healComputer );
+    return healComputer->HasWoundedHumansToEvacuate();
 }
 
 // -----------------------------------------------------------------------------

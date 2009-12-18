@@ -31,7 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual ComposantesAbleToBeFiredComputer_ABC& Create( bool bFireOnlyOnMajorComposantes = false ) const = 0;
+    virtual std::auto_ptr< ComposantesAbleToBeFiredComputer_ABC > Create( bool bFireOnlyOnMajorComposantes = false ) const = 0;
     //@}
 };
 

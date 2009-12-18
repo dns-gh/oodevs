@@ -137,7 +137,7 @@ void DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateAttributes( bool bRecognize
 // Name: DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateSpecificAttributes
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateOnPerceptionLevel( const PHY_PerceptionLevel& currentPerceptionLevel )
+void DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateOnPerceptionLevel( const PHY_PerceptionLevel& /*currentPerceptionLevel*/ )
 {
     UpdateAttributes( false );
 }
@@ -146,7 +146,7 @@ void DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateOnPerceptionLevel( const PH
 // Name: DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateSpecificAttributes
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateOnPerception( const DEC_Knowledge_ObjectPerception& perception )
+void DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateOnPerception( const DEC_Knowledge_ObjectPerception& /*perception*/ )
 {
 //    UpdateAttributes( perception.GetObjectPerceived().IsReconBy( perception.GetAgentPerceiving().GetType() ) );    
 }
@@ -155,7 +155,7 @@ void DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateOnPerception( const DEC_Kno
 // Name: DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateSpecificAttributes
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateOnCollision( const DEC_Knowledge_ObjectCollision& collision )
+void DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateOnCollision( const DEC_Knowledge_ObjectCollision& /*collision*/ )
 {
 //    UpdateAttributes( collision.GetObject().IsReconBy( collision.GetAgentColliding().GetType() ) );    
 }

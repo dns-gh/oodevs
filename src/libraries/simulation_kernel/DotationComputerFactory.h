@@ -33,13 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual DotationComputer_ABC& Create() const;
-    //@}
-
-private:
-    //! @name Operations
-    //@{
-    std::auto_ptr< DotationComputer_ABC > pDotationComputer_;
+    virtual std::auto_ptr< DotationComputer_ABC > Create() const;
     //@}
 };
 

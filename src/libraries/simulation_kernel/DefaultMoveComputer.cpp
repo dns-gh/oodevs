@@ -34,16 +34,6 @@ DefaultMoveComputer::~DefaultMoveComputer()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DefaultMoveComputer::Reset
-// Created: MGD 2009-09-21
-// -----------------------------------------------------------------------------
-void DefaultMoveComputer::Reset()
-{
-    bCanMove_ = true;
-    isSurrendered_ = false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DefaultMoveComputer::NotifyReinforcing
 // Created: MGD 2009-09-21
 // -----------------------------------------------------------------------------

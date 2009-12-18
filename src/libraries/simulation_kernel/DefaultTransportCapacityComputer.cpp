@@ -20,8 +20,8 @@ namespace transport {
 // Name: DefaultTransportCapacityComputer constructor
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
-DefaultTransportCapacityComputer::DefaultTransportCapacityComputer() :
-    rWeightCapacity_                ( 0. )
+DefaultTransportCapacityComputer::DefaultTransportCapacityComputer()
+    : rWeightCapacity_                ( 0. )
     , rWeightLoadedPerTimeStep_       ( 0. )
     , rWeightUnloadedPerTimeStep_     ( 0. )
     , rMaxComposanteTransportedWeight_( 0. )
@@ -36,18 +36,6 @@ DefaultTransportCapacityComputer::DefaultTransportCapacityComputer() :
 // -----------------------------------------------------------------------------
 DefaultTransportCapacityComputer::~DefaultTransportCapacityComputer()
 {
-}
-
-// -----------------------------------------------------------------------------
-// Name: DefaultTransportCapacityComputer::Reset
-// Created: AHC 2009-10-01
-// -----------------------------------------------------------------------------
-void DefaultTransportCapacityComputer::Reset()
-{
-    rWeightCapacity_=
-        rWeightLoadedPerTimeStep_       =
-        rWeightUnloadedPerTimeStep_     =
-        rMaxComposanteTransportedWeight_ = 0. ;
 }
 
 // -----------------------------------------------------------------------------

@@ -33,13 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual LocationComputer_ABC& Create() const;
-    //@}
-
-private:
-    //! @name Operations
-    //@{
-    std::auto_ptr< LocationComputer_ABC > pLocationComputer_;
+    virtual std::auto_ptr< LocationComputer_ABC > Create() const;
     //@}
 };
 

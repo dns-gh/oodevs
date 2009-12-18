@@ -33,10 +33,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual ComposantesAbleToBeFiredComputer_ABC& Create( bool bFireOnlyOnMajorComposantes = false ) const;
+    virtual std::auto_ptr< ComposantesAbleToBeFiredComputer_ABC > Create( bool bFireOnlyOnMajorComposantes ) const;
     //@}
-private:
-    std::auto_ptr< ComposantesAbleToBeFiredComputer_ABC > pComputer_;
 };
 
 }

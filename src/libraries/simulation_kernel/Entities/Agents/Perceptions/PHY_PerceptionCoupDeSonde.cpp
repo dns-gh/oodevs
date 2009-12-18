@@ -104,12 +104,11 @@ void PHY_PerceptionCoupDeSonde::Execute( const TER_Agent_ABC::T_AgentPtrVector& 
     {
         MIL_Agent_ABC& agent = static_cast< PHY_RoleInterface_Location& >( **itAgent ).GetAgent();
 
-        detection::DetectionComputer_ABC& detectionComputer = detectionComputerFactory.Create( agent );
-        perceiver_.GetPion().Execute( detectionComputer );
-        agent.Execute( detectionComputer );
+        std::auto_ptr< detection::DetectionComputer_ABC > detectionComputer = detectionComputerFactory.Create( agent );
+        perceiver_.GetPion().Execute( *detectionComputer );
+        agent.Execute( *detectionComputer );
 
-
-        if( detectionComputer.CanBeSeen() )
+        if( detectionComputer->CanBeSeen() )
             perceiver_.NotifyPerception( agent, Compute( agent ) );
     }
 }

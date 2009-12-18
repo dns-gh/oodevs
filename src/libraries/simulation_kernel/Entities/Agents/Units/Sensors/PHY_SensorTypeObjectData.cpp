@@ -148,7 +148,8 @@ MT_Float PHY_SensorTypeObjectData::GetSourceFactor( const MIL_AgentPion& source 
                             * ( postureSourceFactors_[ nCurPostureIdx ] - postureSourceFactors_[ nOldPostureIdx ] );
 
     MIL_AgentPion& tempSource = const_cast< MIL_AgentPion& >( source );//@TODO MGD FIND A BETTER WAY
-    rModificator *= tempSource.Execute( tempSource.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer() ).GetFactor();
+    std::auto_ptr< detection::PerceptionDistanceComputer_ABC > computer( tempSource.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer() );
+    rModificator *= tempSource.Execute( *computer ).GetFactor();
 
     // Population
     const MT_Float rPopulationDensity = source.GetRole< PHY_RoleInterface_Population >().GetCollidingPopulationDensity();

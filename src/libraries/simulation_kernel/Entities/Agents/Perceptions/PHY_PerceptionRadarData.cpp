@@ -81,11 +81,11 @@ void PHY_PerceptionRadarData::AcquireTargets( PHY_RoleInterface_Perceiver& perce
     for( TER_Agent_ABC::CIT_AgentPtrVector it = targets.begin(); it != targets.end(); ++it )
     {       
         MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();  
-        detection::DetectionComputer_ABC& detectionComputer = detectionComputerFactory.Create( target );
-        perceiver.GetPion().Execute( detectionComputer );
-        target.Execute( detectionComputer );
+        std::auto_ptr< detection::DetectionComputer_ABC > detectionComputer = detectionComputerFactory.Create( target );
+        perceiver.GetPion().Execute( *detectionComputer );
+        target.Execute( *detectionComputer );
 
-        if( detectionComputer.CanBeSeen() && pRadarType_->CanAcquire( perceiver.GetPion(), target ) )
+        if( detectionComputer->CanBeSeen() && pRadarType_->CanAcquire( perceiver.GetPion(), target ) )
         {
             sAcquisitionData& agentData = acquisitionData_[ &target ];
             agentData.bUpdated_ = true; 

@@ -30,8 +30,8 @@ public:
 
     //! @name Constructors/Destructor
     //@{
-    virtual HumanLoadingTimeComputer_ABC& CreateHumanLoadingTimeComputer() =0;
-    virtual LoadedStateConsistencyComputer_ABC& CreateLoadedStateConsistencyComputer() =0;
+    virtual std::auto_ptr< HumanLoadingTimeComputer_ABC > CreateHumanLoadingTimeComputer() = 0;
+    virtual std::auto_ptr< LoadedStateConsistencyComputer_ABC > CreateLoadedStateConsistencyComputer() = 0;
     //@}
 };
 

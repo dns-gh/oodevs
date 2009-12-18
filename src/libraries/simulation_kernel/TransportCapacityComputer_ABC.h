@@ -33,7 +33,6 @@ public:
 public:
     //! @name Operations
     //@{
-    virtual void Reset() = 0;
     virtual void ApplyOnComposante( PHY_ComposantePion& comp ) = 0;
     virtual double WeightCapacity() const = 0;
     virtual double WeightLoadedPerTimeStep() const = 0;

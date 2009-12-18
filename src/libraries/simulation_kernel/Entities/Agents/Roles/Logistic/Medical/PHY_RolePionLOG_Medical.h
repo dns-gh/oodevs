@@ -17,7 +17,9 @@
 #include "PHY_RoleInterface_Medical.h"
 #include "ComponentsChangedNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
+#include "Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
 
+class ComposanteUsePredicate_ABC;
 class MIL_AgentPionLOG_ABC;
 class MIL_AutomateLOG;
 class MIL_Automate;
@@ -147,6 +149,7 @@ private:
     bool HasUsableDoctorForSorting   () const;
 
     MT_Float GetAvailabilityRatio( PHY_ComposanteUsePredicate& predicate ) const;
+    void ExecuteOnComponentsAndLendedComponents( ComposanteUsePredicate_ABC& predicate, PHY_Composante_ABC::T_ComposanteUseMap& result ) const;
     //@}    
 
 private:

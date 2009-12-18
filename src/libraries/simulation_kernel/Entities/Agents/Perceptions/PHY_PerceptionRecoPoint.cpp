@@ -119,11 +119,11 @@ void PHY_PerceptionRecoPoint::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*
         for ( TER_Agent_ABC::CIT_AgentPtrVector it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
-            detection::DetectionComputer_ABC& detectionComputer = detectionComputerFactory.Create( target );
-            perceiver_.GetPion().Execute( detectionComputer );
-            target.Execute( detectionComputer );
+            std::auto_ptr< detection::DetectionComputer_ABC > detectionComputer( detectionComputerFactory.Create( target ) );
+            perceiver_.GetPion().Execute( *detectionComputer );
+            target.Execute( *detectionComputer );
 
-            if( detectionComputer.CanBeSeen() )
+            if( detectionComputer->CanBeSeen() )
                 perceiver_.NotifyPerception( target, PHY_PerceptionLevel::recognized_ );
         }
     }

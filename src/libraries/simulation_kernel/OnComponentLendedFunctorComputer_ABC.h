@@ -24,13 +24,12 @@ class OnComponentLendedFunctorComputer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    OnComponentLendedFunctorComputer_ABC();
-    virtual ~OnComponentLendedFunctorComputer_ABC();
+             OnComponentLendedFunctorComputer_ABC() {}
+    virtual ~OnComponentLendedFunctorComputer_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void Reset( OnComponentFunctor_ABC& componentOperator ) = 0;
     virtual void ApplyOnLendedComponent( PHY_ComposantePion& component ) = 0;
     //@}
 };

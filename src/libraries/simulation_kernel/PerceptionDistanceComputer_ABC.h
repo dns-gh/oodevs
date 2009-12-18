@@ -31,7 +31,6 @@ class PerceptionDistanceComputer_ABC
 public:
     //! @name Operations
     //@{
-    virtual void Reset() = 0;
     virtual void AddModifier( double modifier ) = 0;
     virtual void AddElongationFactor( double modifier ) = 0;
     virtual double GetElongationFactor() const = 0;

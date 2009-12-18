@@ -117,10 +117,11 @@ void PHY_RoleAction_Loading::SetUnloadedState()
 // -----------------------------------------------------------------------------
 MT_Float PHY_RoleAction_Loading::ComputeLoadingTime() const
 {
-    const HumanLoadingTimeComputer_ABC& loadingTimeComputer = pion_.Execute( pion_.GetAlgorithms().loadingComputerFactory_->CreateHumanLoadingTimeComputer());
-    if( loadingTimeComputer.GetHumansLoadedPerTimeStep() == 0. )
+    std::auto_ptr< HumanLoadingTimeComputer_ABC > loadingTimeComputer = pion_.GetAlgorithms().loadingComputerFactory_->CreateHumanLoadingTimeComputer();
+    pion_.Execute( *loadingTimeComputer );
+    if( loadingTimeComputer->GetHumansLoadedPerTimeStep() == 0. )
         return std::numeric_limits< MT_Float >::max();
-    return loadingTimeComputer.GetHumansCount() / loadingTimeComputer.GetHumansLoadedPerTimeStep();
+    return loadingTimeComputer->GetHumansCount() / loadingTimeComputer->GetHumansLoadedPerTimeStep();
 }
 
 // -----------------------------------------------------------------------------
@@ -129,10 +130,11 @@ MT_Float PHY_RoleAction_Loading::ComputeLoadingTime() const
 // -----------------------------------------------------------------------------
 MT_Float PHY_RoleAction_Loading::ComputeUnloadingTime() const
 {
-    const HumanLoadingTimeComputer_ABC& loadingTimeComputer = pion_.Execute( pion_.GetAlgorithms().loadingComputerFactory_->CreateHumanLoadingTimeComputer());
-    if( loadingTimeComputer.GetHumansUnloadedPerTimeStep() == 0. )
+    std::auto_ptr< HumanLoadingTimeComputer_ABC > loadingTimeComputer = pion_.GetAlgorithms().loadingComputerFactory_->CreateHumanLoadingTimeComputer();
+    pion_.Execute( loadingTimeComputer );
+    if( loadingTimeComputer->GetHumansUnloadedPerTimeStep() == 0. )
         return std::numeric_limits< MT_Float >::max();
-    return loadingTimeComputer.GetHumansCount() / loadingTimeComputer.GetHumansUnloadedPerTimeStep();
+    return loadingTimeComputer->GetHumansCount() / loadingTimeComputer->GetHumansUnloadedPerTimeStep();
 }
 
 // -----------------------------------------------------------------------------
@@ -211,16 +213,17 @@ int PHY_RoleAction_Loading::Unload()
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Loading::CheckConsistency()
 {
-	const LoadedStateConsistencyComputer_ABC& comp = pion_.Execute( pion_.GetAlgorithms().loadingComputerFactory_->CreateLoadedStateConsistencyComputer());
+    std::auto_ptr< LoadedStateConsistencyComputer_ABC > comp = pion_.GetAlgorithms().loadingComputerFactory_->CreateLoadedStateConsistencyComputer();
+	pion_.Execute( *comp );
 
     if( bIsLoaded_ )
     {
-        if( !comp.HasValidCarrier() && comp.HasValidLoadable() )
+        if( !comp->HasValidCarrier() && comp->HasValidLoadable() )
             SetUnloadedState();
     }
     else
     {
-        if( !comp.HasValidLoadable() )
+        if( !comp->HasValidLoadable() )
             SetLoadedState();
     }
 }

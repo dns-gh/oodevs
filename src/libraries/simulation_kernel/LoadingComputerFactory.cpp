@@ -19,10 +19,9 @@ namespace transport
 // Name: LoadingComputerFactory constructor
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
-LoadingComputerFactory::LoadingComputerFactory() :
-    humanLoadingTimeComputer_(new DefaultHumanLoadingTimeComputer()),
-    loadedStateConsistencyComputer_(new DefaultLoadedStateConsistencyComputer())
+LoadingComputerFactory::LoadingComputerFactory() 
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -31,26 +30,27 @@ LoadingComputerFactory::LoadingComputerFactory() :
 // -----------------------------------------------------------------------------
 LoadingComputerFactory::~LoadingComputerFactory()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: LoadingComputerFactory::CreateHumanLoadingTimeComputer
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
-HumanLoadingTimeComputer_ABC& LoadingComputerFactory::CreateHumanLoadingTimeComputer()
+std::auto_ptr< HumanLoadingTimeComputer_ABC > LoadingComputerFactory::CreateHumanLoadingTimeComputer()
 {
-    humanLoadingTimeComputer_->Reset();
-    return *humanLoadingTimeComputer_;
+    std::auto_ptr< HumanLoadingTimeComputer_ABC > humanLoadingTimeComputer( new DefaultHumanLoadingTimeComputer() );
+    return humanLoadingTimeComputer;
 }
 
 // -----------------------------------------------------------------------------
 // Name: LoadingComputerFactory::CreateLoadedStateConsistencyComputer
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
-LoadedStateConsistencyComputer_ABC& LoadingComputerFactory::CreateLoadedStateConsistencyComputer()
+std::auto_ptr< LoadedStateConsistencyComputer_ABC > LoadingComputerFactory::CreateLoadedStateConsistencyComputer()
 {
-    loadedStateConsistencyComputer_->Reset();
-    return *loadedStateConsistencyComputer_;
+    std::auto_ptr< LoadedStateConsistencyComputer_ABC > loadedStateConsistencyComputer( new DefaultLoadedStateConsistencyComputer() );
+    return loadedStateConsistencyComputer;
 }
 
 }

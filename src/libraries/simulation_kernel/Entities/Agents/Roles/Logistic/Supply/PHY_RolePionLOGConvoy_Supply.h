@@ -64,7 +64,7 @@ public:
     //! @name Events
     //@{
     virtual void NotifyComposanteChanged( PHY_ComposantePion& composante );
-    virtual void NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const {};
+    virtual void NotifySupplyNeeded( const PHY_DotationCategory& /*dotationCategory*/, bool /*bNewNeed*/ ) const {};
     //@}
 
 private:

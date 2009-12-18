@@ -18,9 +18,12 @@ using namespace detection;
 // Name: DefaultDetectionComputer::DefaultDetectionComputer
 // Created: MGD 2009-09-21
 // -----------------------------------------------------------------------------
-DefaultDetectionComputer::DefaultDetectionComputer()
+DefaultDetectionComputer::DefaultDetectionComputer( MIL_Agent_ABC& target )
+    : pTarget_     ( &target )
+    , bAlreadySeen_( false )
+    , bIsStealth_  ( false )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -29,19 +32,7 @@ DefaultDetectionComputer::DefaultDetectionComputer()
 // -----------------------------------------------------------------------------
 DefaultDetectionComputer::~DefaultDetectionComputer()
 {
-
-}
-
-// -----------------------------------------------------------------------------
-// Name: DefaultDetectionComputer::Reset
-// Created: MGD 2009-09-23
-// -----------------------------------------------------------------------------
-void DefaultDetectionComputer::Reset( MIL_Agent_ABC& target )
-{
-    pTarget_ = &target;
-
-    bAlreadySeen_ = false;
-    bIsStealth_ = false;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

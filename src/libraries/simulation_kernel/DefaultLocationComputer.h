@@ -33,7 +33,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Reset();
     virtual void SetHeight( double height );
     virtual double GetHeight() const;
     //@}
@@ -43,7 +42,6 @@ private:
     //@{
     double height_;
     //@}
-
 };
 
 } // namespace firing

@@ -18,10 +18,9 @@ using namespace dotation;
 // Name: ConsumptionComputerFactory constructor
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-ConsumptionComputerFactory::ConsumptionComputerFactory() :
-    pConsumptionComputer_( new DefaultConsumptionComputer() ),
-	pConsumptionModeChangeRequest_ ( new DefaultConsumptionModeChangeRequest())
+ConsumptionComputerFactory::ConsumptionComputerFactory()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -37,18 +36,18 @@ ConsumptionComputerFactory::~ConsumptionComputerFactory()
 // Name: ConsumptionComputerFactory destructor
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-ConsumptionComputer_ABC& ConsumptionComputerFactory::CreateConsumptionComputer() const
+std::auto_ptr< ConsumptionComputer_ABC > ConsumptionComputerFactory::CreateConsumptionComputer() const
 {
-    pConsumptionComputer_->Reset();
-    return *pConsumptionComputer_;
+    std::auto_ptr< ConsumptionComputer_ABC > pConsumptionComputer( new DefaultConsumptionComputer() );
+    return pConsumptionComputer;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ConsumptionComputerFactory destructor
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-ConsumptionModeChangeRequest_ABC& ConsumptionComputerFactory::CreateConsumptionModeChangeRequest(const PHY_ConsumptionType& newMode) const
+std::auto_ptr< ConsumptionModeChangeRequest_ABC > ConsumptionComputerFactory::CreateConsumptionModeChangeRequest( const PHY_ConsumptionType& newMode ) const
 {
-	pConsumptionModeChangeRequest_->Reset(newMode);
-	return *pConsumptionModeChangeRequest_;
+    std::auto_ptr< ConsumptionModeChangeRequest_ABC > pConsumptionModeChangeRequest( new DefaultConsumptionModeChangeRequest( newMode ) );
+    return pConsumptionModeChangeRequest;
 }

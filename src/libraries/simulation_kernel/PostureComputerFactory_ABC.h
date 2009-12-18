@@ -33,7 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual PostureComputer_ABC& Create( PostureComputer_ABC::Parameters& params ) const = 0;
+    virtual std::auto_ptr< PostureComputer_ABC > Create( PostureComputer_ABC::Parameters& params ) const = 0;
     //@}
 };
 

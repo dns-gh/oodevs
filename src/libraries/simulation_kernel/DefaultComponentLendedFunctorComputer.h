@@ -24,20 +24,19 @@ class DefaultComponentLendedFunctorComputer : public OnComponentLendedFunctorCom
 public:
     //! @name Constructors/Destructor
     //@{
-             DefaultComponentLendedFunctorComputer();
+    explicit DefaultComponentLendedFunctorComputer( OnComponentFunctor_ABC& componentOperator );
     virtual ~DefaultComponentLendedFunctorComputer();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Reset( OnComponentFunctor_ABC& componentOperator );
     virtual void ApplyOnLendedComponent( PHY_ComposantePion& component );
     //@}
 
 private:
     //! @name Member data
     //@{
-    OnComponentFunctor_ABC* pComponentOperator;
+    OnComponentFunctor_ABC& componentOperator_;
     //@}
 };
 

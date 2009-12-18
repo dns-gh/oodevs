@@ -30,7 +30,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Reset() =0;
     virtual void AllowLoading(bool doAllow) =0;
     virtual bool CanBeLoaded() const = 0;
     //@}

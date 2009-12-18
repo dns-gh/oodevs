@@ -24,13 +24,13 @@ class OnComponentLendedFunctorComputerFactory_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             OnComponentLendedFunctorComputerFactory_ABC();
-    virtual ~OnComponentLendedFunctorComputerFactory_ABC();
+             OnComponentLendedFunctorComputerFactory_ABC() {}
+    virtual ~OnComponentLendedFunctorComputerFactory_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual OnComponentLendedFunctorComputer_ABC& Create( OnComponentFunctor_ABC& componentOperator ) const = 0;
+    virtual std::auto_ptr< OnComponentLendedFunctorComputer_ABC > Create( OnComponentFunctor_ABC& componentOperator ) const = 0;
     //@}
 };
 

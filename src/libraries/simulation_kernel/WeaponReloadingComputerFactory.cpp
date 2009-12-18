@@ -18,7 +18,6 @@ using namespace firing;
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
 WeaponReloadingComputerFactory::WeaponReloadingComputerFactory()
-: pComputer_( new DefaultWeaponReloadingComputer() )
 {
     //NOTHING
 }
@@ -36,8 +35,8 @@ WeaponReloadingComputerFactory::~WeaponReloadingComputerFactory()
 // Name: WeaponReloadingComputerFactory destructor
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-WeaponReloadingComputer_ABC& WeaponReloadingComputerFactory::Create( double duration ) const
+std::auto_ptr< WeaponReloadingComputer_ABC > WeaponReloadingComputerFactory::Create( double duration ) const
 {
-    pComputer_->Reset( duration );
-    return *pComputer_;
+    std::auto_ptr< WeaponReloadingComputer_ABC > pComputer( new DefaultWeaponReloadingComputer( duration ) );
+    return pComputer;
 }

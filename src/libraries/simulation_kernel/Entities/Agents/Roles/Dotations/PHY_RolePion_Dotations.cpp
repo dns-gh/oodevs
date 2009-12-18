@@ -266,8 +266,8 @@ bool PHY_RolePion_Dotations::SetConsumptionMode( const PHY_ConsumptionType& cons
     pDotations_->CancelConsumptionReservations();
 
     sConsumptionReservation func( consumptionMode, *pDotations_ );
-    OnComponentComputer_ABC& dotationComputer = pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( func );
-    pion_.Execute( dotationComputer );
+    std::auto_ptr< OnComponentComputer_ABC > dotationComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( func ) );
+    pion_.Execute( *dotationComputer );
 
     if( func.bReservationOK_ )
     {
@@ -281,8 +281,8 @@ bool PHY_RolePion_Dotations::SetConsumptionMode( const PHY_ConsumptionType& cons
     if( pCurrentConsumptionMode_ )
     {
         sConsumptionReservation funcRollback( *pCurrentConsumptionMode_, *pDotations_ );
-        OnComponentComputer_ABC& dotationComputer = pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( funcRollback );
-        pion_.Execute( dotationComputer );
+        std::auto_ptr< OnComponentComputer_ABC > dotationComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( funcRollback ) );
+        pion_.Execute( *dotationComputer );
         assert( funcRollback.bReservationOK_ );
     }
     return false;
@@ -355,7 +355,7 @@ MT_Float PHY_RolePion_Dotations::GetMaxTimeForConsumption( const PHY_Consumption
 {
     assert( pDotations_ );
     sConsumptionTimeExpectancy func( mode );
-    OnComponentComputer_ABC& dotationComputer = pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( func );
+    std::auto_ptr< OnComponentComputer_ABC > dotationComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( func ) );
     pion_.Execute( dotationComputer );
     return func.GetNbrTicksForConsumption( *pDotations_ );
 }
@@ -416,9 +416,9 @@ void PHY_RolePion_Dotations::Update( bool bIsDead )
 
     assert( pDotations_ );
     
-    ConsumptionComputer_ABC& consumptionComputer = pion_.GetAlgorithms().consumptionComputerFactory_->CreateConsumptionComputer();
-    pion_.Execute( consumptionComputer );
-    SetConsumptionMode( consumptionComputer.Result() );
+    std::auto_ptr< ConsumptionComputer_ABC > consumptionComputer = pion_.GetAlgorithms().consumptionComputerFactory_->CreateConsumptionComputer();
+    pion_.Execute( *consumptionComputer );
+    SetConsumptionMode( consumptionComputer->Result() );
 
     pDotations_->ConsumeConsumptionReservations();
     pPreviousConsumptionMode_ = pCurrentConsumptionMode_;

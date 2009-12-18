@@ -26,13 +26,12 @@ class DefaultTransportWeightComputer : public TransportWeightComputer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    DefaultTransportWeightComputer();
+    explicit DefaultTransportWeightComputer( const TransportStrategy_ABC* );
     virtual ~DefaultTransportWeightComputer();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Reset(const TransportStrategy_ABC*);
     virtual void AddTransportedWeight(double weight, bool canBeLoaded) ;
     virtual double TotalTransportedWeight() const ;
     virtual double HeaviestTransportedWeight() const ;

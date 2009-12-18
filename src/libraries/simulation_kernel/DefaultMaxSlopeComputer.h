@@ -32,9 +32,8 @@ public:
 
     //! @name Operations
     //@{
-    void ApplyOnComponent( PHY_ComposantePion& component );
-    void Reset();
-    double GetMaxSlope() const;
+    virtual void ApplyOnComponent( PHY_ComposantePion& component );
+    virtual double GetMaxSlope() const;
     //@}
 private:
     //! @name Attributes

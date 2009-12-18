@@ -18,9 +18,10 @@ using namespace firing;
 // Name: DefaultWeaponReloadingComputer::DefaultWeaponReloadingComputer
 // Created: MGD 2009-10-05
 // -----------------------------------------------------------------------------
-DefaultWeaponReloadingComputer::DefaultWeaponReloadingComputer()
+DefaultWeaponReloadingComputer::DefaultWeaponReloadingComputer( double initialDuration )
+    : initialDuration_( initialDuration )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -29,17 +30,7 @@ DefaultWeaponReloadingComputer::DefaultWeaponReloadingComputer()
 // -----------------------------------------------------------------------------
 DefaultWeaponReloadingComputer::~DefaultWeaponReloadingComputer()
 {
-
-}
-
-// -----------------------------------------------------------------------------
-// Name: DefaultWeaponReloadingComputer::Reset
-// Created: MGD 2009-10-05
-// -----------------------------------------------------------------------------
-void DefaultWeaponReloadingComputer::Reset( double initialDuration )
-{
-    modifiers_.clear();
-    initialDuration_ = initialDuration;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

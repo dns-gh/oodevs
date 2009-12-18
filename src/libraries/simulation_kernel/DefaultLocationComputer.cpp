@@ -21,7 +21,7 @@ using namespace location;
 DefaultLocationComputer::DefaultLocationComputer()
 : height_( 0 )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -30,16 +30,7 @@ DefaultLocationComputer::DefaultLocationComputer()
 // -----------------------------------------------------------------------------
 DefaultLocationComputer::~DefaultLocationComputer()
 {
-
-}
-
-// -----------------------------------------------------------------------------
-// Name: DefaultLocationComputer::Reset
-// Created: MGD 2009-09-21
-// -----------------------------------------------------------------------------
-void DefaultLocationComputer::Reset()
-{
-    height_ = 0;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

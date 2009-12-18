@@ -18,12 +18,12 @@ namespace transport
 // Name: DefaultTransportWeightComputer constructor
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
-DefaultTransportWeightComputer::DefaultTransportWeightComputer() :
-  totalTransportedWeight_(0.),
-  heaviestTransportedWeight_(0.),
-  strategy_(0)
+DefaultTransportWeightComputer::DefaultTransportWeightComputer( const TransportStrategy_ABC* strategy )
+    : totalTransportedWeight_   ( 0. )
+    , heaviestTransportedWeight_( 0. )
+    , strategy_                 ( strategy )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -32,17 +32,7 @@ DefaultTransportWeightComputer::DefaultTransportWeightComputer() :
 // -----------------------------------------------------------------------------
 DefaultTransportWeightComputer::~DefaultTransportWeightComputer()
 {
-
-}
-
-// -----------------------------------------------------------------------------
-// Name: DefaultTransportWeightComputer::Reset
-// Created: AHC 2009-10-01
-// -----------------------------------------------------------------------------
-void DefaultTransportWeightComputer::Reset(const TransportStrategy_ABC* st)
-{
-  totalTransportedWeight_ = heaviestTransportedWeight_ = 0.;
-  strategy_ = st;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -51,10 +41,10 @@ void DefaultTransportWeightComputer::Reset(const TransportStrategy_ABC* st)
 // -----------------------------------------------------------------------------
 void DefaultTransportWeightComputer::AddTransportedWeight(double weight, bool canBeLoaded)
 {
-    if(!strategy_ || (strategy_ && strategy_->Autorize(canBeLoaded) ) )
+    if( !strategy_ || (strategy_ && strategy_->Authorize( canBeLoaded ) ) )
     {
         totalTransportedWeight_ += weight;
-        heaviestTransportedWeight_ = std::max(heaviestTransportedWeight_, weight);
+        heaviestTransportedWeight_ = std::max( heaviestTransportedWeight_, weight );
     }
 }
 

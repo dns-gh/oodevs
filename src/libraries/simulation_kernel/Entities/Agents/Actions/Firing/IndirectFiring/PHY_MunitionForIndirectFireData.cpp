@@ -68,10 +68,10 @@ void PHY_MunitionForIndirectFireData::operator()( const PHY_ComposantePion& comp
     if( pChoosenMunition_ && weapon.GetDotationCategory() == *pChoosenMunition_ )
         return;
 
-    dotation::DotationComputer_ABC& dotationComputer = firer_.GetAlgorithms().dotationComputerFactory_->Create();
-    firer_.Execute( dotationComputer );
+    std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( firer_.GetAlgorithms().dotationComputerFactory_->Create() );
+    firer_.Execute( *dotationComputer );
 
-    if( !pChoosenMunition_ || dotationComputer.GetDotationValue( *pChoosenMunition_ ) < dotationComputer.GetDotationValue( weapon.GetDotationCategory() ) )
+    if( !pChoosenMunition_ || dotationComputer->GetDotationValue( *pChoosenMunition_ ) < dotationComputer->GetDotationValue( weapon.GetDotationCategory() ) )
         pChoosenMunition_ = &weapon.GetDotationCategory();
 }
 

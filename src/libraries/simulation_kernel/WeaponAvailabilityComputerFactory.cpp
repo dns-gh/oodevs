@@ -18,7 +18,6 @@ using namespace firing;
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
 WeaponAvailabilityComputerFactory::WeaponAvailabilityComputerFactory()
-    : pWeaponAvailabilityComputer_( new DefaultWeaponAvailabilityComputer() )
 {
     //NOTHING
 }
@@ -36,8 +35,8 @@ WeaponAvailabilityComputerFactory::~WeaponAvailabilityComputerFactory()
 // Name: WeaponAvailabilityComputerFactory destructor
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-WeaponAvailabilityComputer_ABC& WeaponAvailabilityComputerFactory::Create( FireData_ABC& firerWeapons ) const
+std::auto_ptr< WeaponAvailabilityComputer_ABC > WeaponAvailabilityComputerFactory::Create( FireData_ABC& firerWeapons ) const
 {
-    pWeaponAvailabilityComputer_->Reset( firerWeapons );
-    return *pWeaponAvailabilityComputer_;
+    std::auto_ptr< WeaponAvailabilityComputer_ABC > pWeaponAvailabilityComputer( new DefaultWeaponAvailabilityComputer( firerWeapons ) );
+    return pWeaponAvailabilityComputer;
 }

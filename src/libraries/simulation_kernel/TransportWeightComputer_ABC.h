@@ -29,7 +29,7 @@ public:
     //@}
     //! @name Operations
     //@{
-    virtual bool Autorize (bool canBeLoaded) const =0;
+    virtual bool Authorize( bool canBeLoaded ) const = 0;
     //@}
 };
 
@@ -50,7 +50,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Reset(const TransportStrategy_ABC* ) =0;
     virtual void AddTransportedWeight(double weight, bool canBeLoaded=false) =0;
     virtual double TotalTransportedWeight() const =0;
     virtual double HeaviestTransportedWeight() const =0;

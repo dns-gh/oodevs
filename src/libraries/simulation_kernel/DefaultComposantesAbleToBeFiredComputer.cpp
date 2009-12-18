@@ -18,9 +18,10 @@ using namespace firing;
 // Name: DefaultComposantesAbleToBeFiredComputer::DefaultComposantesAbleToBeFiredComputer
 // Created: MGD 2009-09-15
 // -----------------------------------------------------------------------------
-DefaultComposantesAbleToBeFiredComputer::DefaultComposantesAbleToBeFiredComputer()
+DefaultComposantesAbleToBeFiredComputer::DefaultComposantesAbleToBeFiredComputer( bool bFireOnlyOnMajorComposantes )
+    : bFireOnlyOnMajorComposantes_( bFireOnlyOnMajorComposantes )
 {
-
+    //NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -29,18 +30,7 @@ DefaultComposantesAbleToBeFiredComputer::DefaultComposantesAbleToBeFiredComputer
 // -----------------------------------------------------------------------------
 DefaultComposantesAbleToBeFiredComputer::~DefaultComposantesAbleToBeFiredComputer()
 {
-
-}
-
-// -----------------------------------------------------------------------------
-// Name: DefaultComposantesAbleToBeFiredComputer::~DefaultComposantesAbleToBeFiredComputer
-// Created: MGD 2009-09-15
-// -----------------------------------------------------------------------------
-void DefaultComposantesAbleToBeFiredComputer::Reset( bool bFireOnlyOnMajorComposantes )
-{
-    bFireOnlyOnMajorComposantes_ = bFireOnlyOnMajorComposantes;
-    availableTargets_.clear();
-    targets_.clear();
+    //NOTHING
 }
 
 // -----------------------------------------------------------------------------

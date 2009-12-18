@@ -20,8 +20,8 @@ namespace moving
 // Name: DefaultSpeedComputer constructor
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
-DefaultSpeedComputer::DefaultSpeedComputer() :
-        strategy_          ( 0 ),
+DefaultSpeedComputer::DefaultSpeedComputer( const SpeedStrategy_ABC& strategy ) :
+        strategy_          ( strategy ),
         speed_             ( std::numeric_limits<double>::max() ),
         hasUsableComponent_( false ),
         speedRatio_        ( 1. )
@@ -37,27 +37,14 @@ DefaultSpeedComputer::~DefaultSpeedComputer()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DefaultSpeedComputer::Reset
-// Created: AHC 2009-10-01
-// -----------------------------------------------------------------------------
-void DefaultSpeedComputer::Reset( const moving::SpeedStrategy_ABC* strategy )
-{
-    strategy_ = strategy;
-    speed_ = std::numeric_limits<double>::max();
-    hasUsableComponent_ = false;
-    speedRatio_ = 1.;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DefaultSpeedComputer::ApplyOnComponent
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
 void DefaultSpeedComputer::ApplyOnComponent( const PHY_ComposantePion& component )
 {
-    assert( strategy_ );
     if( component.CanMove() )
     {
-        speed_ = std::min( speed_, strategy_->ApplyOnComponent( component ) );
+        speed_ = std::min( speed_, strategy_.ApplyOnComponent( component ) );
         hasUsableComponent_ = true;
     }
 }
@@ -68,8 +55,7 @@ void DefaultSpeedComputer::ApplyOnComponent( const PHY_ComposantePion& component
 // -----------------------------------------------------------------------------
 void DefaultSpeedComputer::ApplyOnReinforcement( MIL_Agent_ABC& reinforcement)
 {
-    assert( strategy_ );
-    speed_ = std::min( speed_, strategy_->ApplyOnReinforcement( reinforcement ) );
+    speed_ = std::min( speed_, strategy_.ApplyOnReinforcement( reinforcement ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,8 +64,7 @@ void DefaultSpeedComputer::ApplyOnReinforcement( MIL_Agent_ABC& reinforcement)
 // -----------------------------------------------------------------------------
 void DefaultSpeedComputer::ApplyOnPopulation( const DEC_Knowledge_PopulationCollision& population)
 {
-    assert( strategy_ );
-    speed_ = std::min( speed_, strategy_->ApplyOnPopulation( population ) );
+    speed_ = std::min( speed_, strategy_.ApplyOnPopulation( population ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,7 +82,7 @@ double DefaultSpeedComputer::GetSpeed() const
 // -----------------------------------------------------------------------------
 void DefaultSpeedComputer::AddModifier( double ratio, bool isMax )
 {
-    speedRatio_ *= strategy_->AddModifier( ratio, isMax );
+    speedRatio_ *= strategy_.AddModifier( ratio, isMax );
 }
 
 }

@@ -24,20 +24,19 @@ class DefaultComponentFunctorComputer : public OnComponentFunctorComputer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DefaultComponentFunctorComputer();
+    explicit DefaultComponentFunctorComputer( OnComponentFunctor_ABC& componentOperator );
     virtual ~DefaultComponentFunctorComputer();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Reset( OnComponentFunctor_ABC& componentOperator );
     virtual void ApplyOnComponent( PHY_ComposantePion& component );
     //@}
 
 private:
     //! @name Member data
     //@{
-    OnComponentFunctor_ABC* pComponentOperator;
+    OnComponentFunctor_ABC& componentOperator_;
     //@}
 };
 

@@ -33,7 +33,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Reset();
     virtual void NotifyReinforcing();
     virtual void NotifyTransported();
     virtual void NotifySurrendered();

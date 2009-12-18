@@ -32,7 +32,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual WeaponAvailabilityComputer_ABC& Create( FireData_ABC& firerWeapons ) const = 0;
+    virtual std::auto_ptr< WeaponAvailabilityComputer_ABC > Create( FireData_ABC& firerWeapons ) const = 0;
     //@}
 };
 

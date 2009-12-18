@@ -337,11 +337,15 @@ namespace
     int GetBestExtinguisher( const MIL_AgentPion* pPion, MIL_FireFunctor& functor )
     {
         MIL_AgentPion* pion = const_cast< MIL_AgentPion* >( pPion );
-        pion->Execute( pion->GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+        std::auto_ptr< OnComponentFunctorComputer_ABC > componentComputer( pion->GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+        pion->Execute( *componentComputer );
 
         const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pPion->GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
         for( PHY_RoleInterface_Reinforcement::CIT_PionSet itReinforcement = reinforcements.begin(); itReinforcement != reinforcements.end(); ++itReinforcement )
-            (*itReinforcement)->Execute( (*itReinforcement)->GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+        {
+            std::auto_ptr< OnComponentFunctorComputer_ABC > componentComputer( (*itReinforcement)->GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+            (*itReinforcement)->Execute( *componentComputer );
+        }
     
         return functor.GetNumberOfTheExtinguisherAgent();
     }

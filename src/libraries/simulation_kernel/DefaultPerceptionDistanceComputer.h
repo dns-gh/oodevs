@@ -33,7 +33,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Reset();
     virtual void AddModifier( double modifier );
     virtual void AddElongationFactor( double modifier );
     virtual double GetElongationFactor() const;

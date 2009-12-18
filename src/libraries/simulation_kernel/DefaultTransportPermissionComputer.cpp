@@ -17,9 +17,10 @@ namespace transport
 // Name: DefaultTransportPermissionComputer constructor
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
-DefaultTransportPermissionComputer::DefaultTransportPermissionComputer() :
-    allow_( true )
+DefaultTransportPermissionComputer::DefaultTransportPermissionComputer()
+    : allow_( true )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -28,15 +29,7 @@ DefaultTransportPermissionComputer::DefaultTransportPermissionComputer() :
 // -----------------------------------------------------------------------------
 DefaultTransportPermissionComputer::~DefaultTransportPermissionComputer()
 {
-}
-
-// -----------------------------------------------------------------------------
-// Name: DefaultTransportPermissionComputer::Reset
-// Created: AHC 2009-10-01
-// -----------------------------------------------------------------------------
-void DefaultTransportPermissionComputer::Reset()
-{
-    allow_ = true;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

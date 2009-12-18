@@ -32,8 +32,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Reset() =0;
-    virtual double GetMaxSlope() const =0;
+    virtual double GetMaxSlope() const = 0;
     //@}
 };
 

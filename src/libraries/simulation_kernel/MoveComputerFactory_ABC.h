@@ -34,9 +34,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual MoveComputer_ABC& CreateMoveComputer() const = 0;
-    virtual SpeedComputer_ABC& CreateSpeedComputer(const SpeedStrategy_ABC& strategy) const =0;
-    virtual MaxSlopeComputer_ABC& CreateMaxSlopeComputer() const =0;
+    virtual std::auto_ptr< MoveComputer_ABC > CreateMoveComputer() const = 0;
+    virtual std::auto_ptr< SpeedComputer_ABC > CreateSpeedComputer( const SpeedStrategy_ABC& strategy ) const = 0;
+    virtual std::auto_ptr< MaxSlopeComputer_ABC > CreateMaxSlopeComputer() const = 0;
     //@}
 };
 

@@ -31,7 +31,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Reset() = 0;
     virtual void SetHeight( double height ) = 0;
     virtual double GetHeight() const = 0;
     //@}

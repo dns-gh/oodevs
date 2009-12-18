@@ -148,7 +148,8 @@ PHY_ComposantePion* PHY_RolePionLOG_Supply::GetAvailableConvoyTransporter( const
         return 0;
 
     AvailableConvoyFunctor functor( dotationCategory );
-    pion_.Execute( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+    std::auto_ptr< OnComponentComputer_ABC > computer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+    pion_.Execute( *computer );
     return functor.pSelectedConvoy_;
 }
 
@@ -251,9 +252,11 @@ MT_Float PHY_RolePionLOG_Supply::GetConvoyTransportersAvailabilityRatio() const
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
 
     ConvoyTransportersUseFunctor functor( composanteUse );
-    pion_.Execute( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+    std::auto_ptr< OnComponentComputer_ABC > componentComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+    pion_.Execute( *componentComputer );
     ConvoyLendedTransportersUseFunctor functor2( composanteUse );
-    pion_.Execute( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functor2 ) );
+    std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functor2 ) );
+    pion_.Execute( *lendedComputer );
 
     uint nNbrTotal                  = 0;
     uint nNbrAvailableAllowedToWork = 0;
@@ -466,9 +469,11 @@ void PHY_RolePionLOG_Supply::SendFullState( NET_ASN_MsgUnitAttributes& asnUnit )
   
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     ConvoyTransportersUseFunctor functor( composanteUse );
-    pion_.Execute( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+    std::auto_ptr< OnComponentFunctorComputer_ABC > componentComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+    pion_.Execute( *componentComputer );
     ConvoyLendedTransportersUseFunctor functor2( composanteUse );
-    pion_.Execute( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functor2 ) );
+    std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functor2 ) );
+    pion_.Execute( lendedComputer );
 
     SendComposanteUse( composanteUse, asn().disponibilites_transporteurs_convois  );
 
@@ -508,9 +513,11 @@ void PHY_RolePionLOG_Supply::SendChangedState( NET_ASN_MsgUnitAttributes& asnUni
       
         PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
         ConvoyTransportersUseFunctor functor( composanteUse );
-        pion_.Execute( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+        std::auto_ptr< OnComponentComputer_ABC > transportedComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+        pion_.Execute( *transportedComputer );
         ConvoyLendedTransportersUseFunctor functor2( composanteUse );
-        pion_.Execute( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functor2 ) );
+        std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functor2 ) );
+        pion_.Execute( *lendedComputer );
 
         SendComposanteUse( composanteUse, asn().disponibilites_transporteurs_convois );
     }

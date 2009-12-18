@@ -33,8 +33,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual DetectionComputer_ABC& Create( MIL_Agent_ABC& target ) const = 0;
-    virtual PerceptionDistanceComputer_ABC& CreateDistanceComputer() const = 0;
+    virtual std::auto_ptr< DetectionComputer_ABC > Create( MIL_Agent_ABC& target ) const = 0;
+    virtual std::auto_ptr< PerceptionDistanceComputer_ABC > CreateDistanceComputer() const = 0;
     //@}
 };
 

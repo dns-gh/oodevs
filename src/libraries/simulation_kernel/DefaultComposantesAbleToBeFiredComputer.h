@@ -27,13 +27,12 @@ class DefaultComposantesAbleToBeFiredComputer : public ComposantesAbleToBeFiredC
 public:
     //! @name Constructors/Destructor
     //@{
-             DefaultComposantesAbleToBeFiredComputer();
+    explicit DefaultComposantesAbleToBeFiredComputer( bool bFireOnlyOnMajorComposantes );
     virtual ~DefaultComposantesAbleToBeFiredComputer();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Reset( bool bFireOnlyOnMajorComposantes );
     virtual void ApplyOnComponent( PHY_ComposantePion& fired );
     virtual PHY_Composante_ABC::T_ComposanteVector& ResultAll();
     virtual PHY_Composante_ABC::T_ComposanteVector& ResultLimited( unsigned int nNbrWeaponsUsable );

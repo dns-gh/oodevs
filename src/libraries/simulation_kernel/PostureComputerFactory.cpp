@@ -13,13 +13,14 @@
 #include "simulation_kernel/DefaultPostureComputer.h"
 
 using namespace posture;
+
 // -----------------------------------------------------------------------------
 // Name: PostureComputerFactory constructor
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-PostureComputerFactory::PostureComputerFactory() 
-: pPostureComputer_( new DefaultPostureComputer( random_ ) )
+PostureComputerFactory::PostureComputerFactory()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -35,8 +36,8 @@ PostureComputerFactory::~PostureComputerFactory()
 // Name: PostureComputerFactory destructor
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-PostureComputer_ABC& PostureComputerFactory::Create( PostureComputer_ABC::Parameters& params ) const
+std::auto_ptr< PostureComputer_ABC > PostureComputerFactory::Create( PostureComputer_ABC::Parameters& params ) const
 {
-    pPostureComputer_->Reset( params );
-    return *pPostureComputer_;
+    std::auto_ptr< PostureComputer_ABC > pPostureComputer( new DefaultPostureComputer( random_, params ) );
+    return pPostureComputer;
 }

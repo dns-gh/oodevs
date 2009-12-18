@@ -31,7 +31,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Reset() = 0;
     virtual void NotifyReinforcing() =0;
     virtual void NotifyTransported() =0;
     virtual void NotifySurrendered() =0;

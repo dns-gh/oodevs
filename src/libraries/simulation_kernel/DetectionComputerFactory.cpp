@@ -18,10 +18,9 @@ using namespace detection;
 // Name: DetectionComputerFactory constructor
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-DetectionComputerFactory::DetectionComputerFactory() 
-: pDetectionComputer_( new DefaultDetectionComputer() )
-, pDistanceComputer_( new DefaultPerceptionDistanceComputer() )
+DetectionComputerFactory::DetectionComputerFactory()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -37,18 +36,18 @@ DetectionComputerFactory::~DetectionComputerFactory()
 // Name: DetectionComputerFactory Create
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-DetectionComputer_ABC& DetectionComputerFactory::Create( MIL_Agent_ABC& target ) const
+std::auto_ptr< DetectionComputer_ABC > DetectionComputerFactory::Create( MIL_Agent_ABC& target ) const
 {
-    pDetectionComputer_->Reset( target );
-    return *pDetectionComputer_;
+    std::auto_ptr< DetectionComputer_ABC > pDetectionComputer( new DefaultDetectionComputer( target ) );
+    return pDetectionComputer;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DetectionComputerFactory Create
 // Created: MGD 2009-10-06
 // -----------------------------------------------------------------------------
-PerceptionDistanceComputer_ABC& DetectionComputerFactory::CreateDistanceComputer() const
+std::auto_ptr< PerceptionDistanceComputer_ABC > DetectionComputerFactory::CreateDistanceComputer() const
 {
-    pDistanceComputer_->Reset();
-    return *pDistanceComputer_;
+    std::auto_ptr< PerceptionDistanceComputer_ABC > pDistanceComputer( new DefaultPerceptionDistanceComputer() );
+    return pDistanceComputer;
 }

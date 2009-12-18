@@ -132,10 +132,10 @@ uint PHY_RoleAction_Objects_DataComputerPionData::GetDotationValue( const PHY_Do
 {
     assert( pPion_ );
 
-    dotation::DotationComputer_ABC& dotationComputer = pPion_->GetAlgorithms().dotationComputerFactory_->Create();
-    pPion_->Execute( dotationComputer );
+    std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( pPion_->GetAlgorithms().dotationComputerFactory_->Create() );
+    pPion_->Execute( *dotationComputer );
 
-    return ( uint ) dotationComputer.GetDotationValue( category ); 
+    return ( unsigned int ) dotationComputer->GetDotationValue( category ); 
 }
 
 // -----------------------------------------------------------------------------

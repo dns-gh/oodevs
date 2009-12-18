@@ -18,9 +18,10 @@ using namespace firing;
 // Name: DefaultWeaponAvailabilityComputer::DefaultWeaponAvailabilityComputer
 // Created: MGD 2009-09-15
 // -----------------------------------------------------------------------------
-DefaultWeaponAvailabilityComputer::DefaultWeaponAvailabilityComputer()
+DefaultWeaponAvailabilityComputer::DefaultWeaponAvailabilityComputer( FireData_ABC& firerWeapons )
+:   pFirerWeapons_( &firerWeapons )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -29,17 +30,7 @@ DefaultWeaponAvailabilityComputer::DefaultWeaponAvailabilityComputer()
 // -----------------------------------------------------------------------------
 DefaultWeaponAvailabilityComputer::~DefaultWeaponAvailabilityComputer()
 {
-
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: DefaultWeaponAvailabilityComputer::Reset
-// Created: MGD 2009-10-05
-// -----------------------------------------------------------------------------
-void DefaultWeaponAvailabilityComputer::Reset( FireData_ABC& firerWeapons )
-{
-    pFirerWeapons_ = &firerWeapons;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

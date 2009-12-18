@@ -99,12 +99,12 @@ public:
 };
 
 template< typename Archive >
-void save_construct_data( Archive& archive, const AlgorithmsFactories* role, const unsigned int /*version*/ )
+void save_construct_data( Archive& /*archive*/, const AlgorithmsFactories* /*role*/, const unsigned int /*version*/ )
 {
     //NOTHING
 }
 template< typename Archive >
-void load_construct_data( Archive& archive, AlgorithmsFactories* factories, const unsigned int /*version*/ )
+void load_construct_data( Archive& /*archive*/, AlgorithmsFactories* factories, const unsigned int /*version*/ )
 {
     ::new( factories )AlgorithmsFactories();
 }

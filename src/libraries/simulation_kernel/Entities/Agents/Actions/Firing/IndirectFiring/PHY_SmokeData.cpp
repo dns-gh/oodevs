@@ -58,9 +58,9 @@ void PHY_SmokeData::operator()( const PHY_ComposantePion& compFirer, PHY_Weapon&
     if( !pIndirectFireData || pIndirectFireData->GetIndirectFireDotationCategory() != indirectWeaponCategory_ )
         return;
 
-    dotation::DotationComputer_ABC& dotationComputer = firer_.GetAlgorithms().dotationComputerFactory_->Create();
-    firer_.Execute( dotationComputer );
-    if( dotationComputer.GetDotationValue( weapon.GetDotationCategory() ) < nNbrAmmo_ )
+    std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( firer_.GetAlgorithms().dotationComputerFactory_->Create() );
+    firer_.Execute( *dotationComputer );
+    if( dotationComputer->GetDotationValue( weapon.GetDotationCategory() ) < nNbrAmmo_ )
         return;
     pWeapon_ = &weapon;
 }

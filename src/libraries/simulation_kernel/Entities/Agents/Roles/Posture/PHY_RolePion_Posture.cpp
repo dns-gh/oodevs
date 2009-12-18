@@ -185,9 +185,9 @@ void PHY_RolePion_Posture::Update( bool bIsDead )
     params.rStealthFactor_ = rStealthFactor_;
     params.rTimingFactor_ = rTimingFactor_;
 
-    PostureComputer_ABC& computer = pion_.GetAlgorithms().postureComputerFactory_->Create( params );
-    pion_.Execute( computer );
-    PostureComputer_ABC::Results& result = computer.Result(); 
+    std::auto_ptr< PostureComputer_ABC > computer( pion_.GetAlgorithms().postureComputerFactory_->Create( params ) );
+    pion_.Execute( *computer );
+    PostureComputer_ABC::Results& result = computer->Result(); 
     if( result.newPosture_ )
         ChangePosture( *result.newPosture_ );
     ChangePostureCompletionPercentage( result.postureCompletionPercentage_ );

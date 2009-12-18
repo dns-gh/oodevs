@@ -27,13 +27,12 @@ class DefaultPostureComputer : public PostureComputer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DefaultPostureComputer( MT_Random& random );
+             DefaultPostureComputer( MT_Random& random, Parameters& param );
     virtual ~DefaultPostureComputer();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Reset( Parameters& param );
     virtual void SetPostureMovement();
     virtual void UnsetPostureMovement();
     virtual void AddCoefficientModifier( double coef );

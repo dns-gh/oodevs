@@ -32,7 +32,6 @@ public:
 
     //! @name Operations
     //@{
-    void Reset();
     void AllowLoading(bool doAllow);
     bool CanBeLoaded() const;
     //@}

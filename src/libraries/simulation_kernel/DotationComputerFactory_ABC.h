@@ -31,7 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual DotationComputer_ABC& Create() const = 0;
+    virtual std::auto_ptr< DotationComputer_ABC > Create() const = 0;
     //@}
 };
 

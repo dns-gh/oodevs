@@ -19,9 +19,9 @@ namespace human
 // Name: HealableComputerFactory constructor
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-HealComputerFactory::HealComputerFactory() 
-: pHealableComputer_( new DefaultHealComputer() )
+HealComputerFactory::HealComputerFactory()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -37,10 +37,10 @@ HealComputerFactory::~HealComputerFactory()
 // Name: HealableComputerFactory destructor
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-HealComputer_ABC& HealComputerFactory::Create() const
+std::auto_ptr< HealComputer_ABC > HealComputerFactory::Create() const
 {
-    pHealableComputer_->Reset();
-    return *pHealableComputer_;
+    std::auto_ptr< HealComputer_ABC > pHealableComputer( new DefaultHealComputer() );
+    return pHealableComputer;
 }
 
 } // namespace human

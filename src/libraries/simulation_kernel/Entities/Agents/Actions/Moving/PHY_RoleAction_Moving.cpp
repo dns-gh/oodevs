@@ -125,12 +125,10 @@ double PHY_RoleAction_Moving::ApplySpeedModificators( double rSpeed ) const
 // -----------------------------------------------------------------------------
 double PHY_RoleAction_Moving::GetMaxSpeed( const MIL_Object_ABC& object ) const
 {
-    SpeedComputerStrategy strategy(true,false,object);
-    const moving::SpeedComputer_ABC& computer =
-            pion_.Execute(
-                    pion_.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy ) );
-
-    return computer.GetSpeed();
+    SpeedComputerStrategy strategy( true, false, object );
+    std::auto_ptr< SpeedComputer_ABC > computer = pion_.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
+    pion_.Execute( *computer );
+    return computer->GetSpeed();
 }
 
 // -----------------------------------------------------------------------------
@@ -139,12 +137,10 @@ double PHY_RoleAction_Moving::GetMaxSpeed( const MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 double PHY_RoleAction_Moving::GetMaxSpeed( const TerrainData& environment ) const
 {
-    SpeedComputerStrategy strategy(true,false,&environment);
-    const moving::SpeedComputer_ABC& computer =
-            pion_.Execute(
-                    pion_.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy ) );
-
-    return computer.GetSpeed();
+    SpeedComputerStrategy strategy( true, false, &environment );
+    std::auto_ptr< SpeedComputer_ABC > computer = pion_.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
+    pion_.Execute( *computer );
+    return computer->GetSpeed();
 }
 
 // -----------------------------------------------------------------------------
@@ -153,12 +149,10 @@ double PHY_RoleAction_Moving::GetMaxSpeed( const TerrainData& environment ) cons
 // -----------------------------------------------------------------------------
 double PHY_RoleAction_Moving::GetMaxSpeed() const
 {
-    SpeedComputerStrategy strategy(true,false,0);
-    const moving::SpeedComputer_ABC& computer =
-            pion_.Execute(
-                    pion_.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy ) );
-
-    return computer.GetSpeed();
+    SpeedComputerStrategy strategy( true, false, 0 );
+    std::auto_ptr< SpeedComputer_ABC > computer = pion_.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
+    pion_.Execute( *computer );
+    return computer->GetSpeed();
 }
 
 // -----------------------------------------------------------------------------
@@ -167,11 +161,11 @@ double PHY_RoleAction_Moving::GetMaxSpeed() const
 // -----------------------------------------------------------------------------
 double PHY_RoleAction_Moving::GetMaxSlope() const
 {
-    moving::MaxSlopeComputer_ABC& computer =
+    std::auto_ptr< moving::MaxSlopeComputer_ABC > computer =
             pion_.GetAlgorithms().moveComputerFactory_->CreateMaxSlopeComputer();
-    pion_.Execute((OnComponentComputer_ABC&)computer);
+    pion_.Execute< OnComponentComputer_ABC >( *computer );
 
-    return computer.GetMaxSlope();
+    return computer->GetMaxSlope();
 }
 
 // -----------------------------------------------------------------------------
@@ -180,12 +174,10 @@ double PHY_RoleAction_Moving::GetMaxSlope() const
 // -----------------------------------------------------------------------------
 double PHY_RoleAction_Moving::GetMaxSpeedWithReinforcement() const
 {
-    SpeedComputerStrategy strategy(true,true,0);
-    const moving::SpeedComputer_ABC& computer =
-                pion_.Execute(
-                        pion_.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy ) );
-    double rSpeed = computer.GetSpeed();
-    return ApplyMaxSpeedModificators( rSpeed );
+    SpeedComputerStrategy strategy( true, true, 0 );
+    std::auto_ptr< SpeedComputer_ABC > computer = pion_.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
+    pion_.Execute( *computer );
+    return computer->GetSpeed();
 }
 
 // -----------------------------------------------------------------------------
@@ -194,11 +186,10 @@ double PHY_RoleAction_Moving::GetMaxSpeedWithReinforcement() const
 // -----------------------------------------------------------------------------
 double PHY_RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& environment ) const
 {
-    SpeedComputerStrategy strategy(false,true,&environment);
-    const moving::SpeedComputer_ABC& computer =
-                pion_.Execute(
-                        pion_.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy ) );
-    double rSpeed = computer.GetSpeed();
+    SpeedComputerStrategy strategy( false, true, &environment );
+    std::auto_ptr< SpeedComputer_ABC > computer = pion_.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
+    pion_.Execute( *computer );
+    double rSpeed = computer->GetSpeed();
     rSpeed = std::min( rSpeed, GetMaxSpeedWithReinforcement() );
     return rSpeed;
 }
@@ -213,10 +204,9 @@ double PHY_RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& envi
         return std::numeric_limits< double >::max();
 
     SpeedComputerStrategy strategy(false,true,object);
-    const moving::SpeedComputer_ABC& computer =
-                    pion_.Execute(
-                            pion_.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy ) );
-    double rObjectSpeed = computer.GetSpeed();
+    std::auto_ptr< SpeedComputer_ABC > computer = pion_.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
+    pion_.Execute( *computer );
+    double rObjectSpeed = computer->GetSpeed();
 
     const double rCurrentMaxSpeed = GetMaxSpeed();
     const double rCurrentEnvSpeed = GetSpeedWithReinforcement( environment );
@@ -367,10 +357,10 @@ void PHY_RoleAction_Moving::NotifyMovingOutsideObject( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Moving::CanMove() const
 {
-    moving::MoveComputer_ABC& moveComputer = pion_.GetAlgorithms().moveComputerFactory_->CreateMoveComputer();
-    pion_.Execute(moveComputer);
+    std::auto_ptr< moving::MoveComputer_ABC > moveComputer = pion_.GetAlgorithms().moveComputerFactory_->CreateMoveComputer();
+    pion_.Execute( *moveComputer );
 
-    return moveComputer.CanMoveOverride() || moveComputer.CanMove();
+    return moveComputer->CanMoveOverride() || moveComputer->CanMove();
 }
 
 // -----------------------------------------------------------------------------
@@ -388,17 +378,17 @@ bool PHY_RoleAction_Moving::CanObjectInteractWith( const MIL_Object_ABC& object 
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Moving::HasResources()
 {
-    moving::MoveComputer_ABC& moveComputer = pion_.GetAlgorithms().moveComputerFactory_->CreateMoveComputer();
-        pion_.Execute(moveComputer);
+    std::auto_ptr< moving::MoveComputer_ABC > moveComputer = pion_.GetAlgorithms().moveComputerFactory_->CreateMoveComputer();
+    pion_.Execute( *moveComputer );
 
-    if (moveComputer.CanMoveOverride())
+    if ( moveComputer->CanMoveOverride() )
         return true;
     
-    dotation::ConsumptionModeChangeRequest_ABC& request =
+    std::auto_ptr< dotation::ConsumptionModeChangeRequest_ABC > request =
             pion_.GetAlgorithms().consumptionComputerFactory_->CreateConsumptionModeChangeRequest(PHY_ConsumptionType::moving_);
-    pion_.Apply(&dotation::ConsumptionChangeRequestHandler_ABC::ChangeConsumptionMode,request); // automatic rollback
+    pion_.Apply( &dotation::ConsumptionChangeRequestHandler_ABC::ChangeConsumptionMode, *request ); // automatic rollback
 
-    return request.AllChanged();
+    return request->AllChanged();
 }
 
 // -----------------------------------------------------------------------------

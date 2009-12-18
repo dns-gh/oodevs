@@ -97,9 +97,9 @@ void PHY_IndirectFireData::operator() ( const PHY_ComposantePion& compFirer, PHY
     if( !compFirer.CanFire() || !effect_.CanWeaponBeUsed( weapon ) ) 
         return;
 
-    dotation::DotationComputer_ABC& dotationComputer = firer_.GetAlgorithms().dotationComputerFactory_->Create();
-    firer_.Execute( dotationComputer );
-    if( !dotationComputer.HasDotation( weapon.GetDotationCategory() ) )
+    std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer = firer_.GetAlgorithms().dotationComputerFactory_->Create();
+    firer_.Execute( *dotationComputer );
+    if( !dotationComputer->HasDotation( weapon.GetDotationCategory() ) )
         bHasWeaponsAndNoAmmo_ = true;
     else
     {

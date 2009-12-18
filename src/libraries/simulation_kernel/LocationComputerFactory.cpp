@@ -17,9 +17,9 @@ using namespace location;
 // Name: LocationComputerFactory constructor
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-LocationComputerFactory::LocationComputerFactory() 
-: pLocationComputer_( new DefaultLocationComputer() )
+LocationComputerFactory::LocationComputerFactory()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -35,8 +35,8 @@ LocationComputerFactory::~LocationComputerFactory()
 // Name: LocationComputerFactory destructor
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-LocationComputer_ABC& LocationComputerFactory::Create() const
+std::auto_ptr< LocationComputer_ABC > LocationComputerFactory::Create() const
 {
-    pLocationComputer_->Reset();
-    return *pLocationComputer_;
+    std::auto_ptr< LocationComputer_ABC > pLocationComputer( new DefaultLocationComputer() );
+    return pLocationComputer;
 }

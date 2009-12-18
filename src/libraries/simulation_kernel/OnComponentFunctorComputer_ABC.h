@@ -25,13 +25,12 @@ class OnComponentFunctorComputer_ABC : public OnComponentComputer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    OnComponentFunctorComputer_ABC();
-    virtual ~OnComponentFunctorComputer_ABC();
+             OnComponentFunctorComputer_ABC() {}
+    virtual ~OnComponentFunctorComputer_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void Reset( OnComponentFunctor_ABC& componentOperator ) = 0;
     virtual void ApplyOnComponent( PHY_ComposantePion& component ) = 0;
     //@}
 };

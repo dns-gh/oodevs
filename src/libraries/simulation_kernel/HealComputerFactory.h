@@ -32,13 +32,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual HealComputer_ABC& Create() const;
-    //@}
-
-private:
-    //! @name Operations
-    //@{
-    std::auto_ptr< HealComputer_ABC > pHealableComputer_;
+    virtual std::auto_ptr< HealComputer_ABC > Create() const;
     //@}
 };
 

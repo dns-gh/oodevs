@@ -34,7 +34,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Reset() = 0;
     virtual void SetDotationContainer( PHY_DotationGroupContainer& container ) = 0;
     
     virtual bool HasDotation( const PHY_DotationCategory& category ) const = 0;

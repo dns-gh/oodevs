@@ -31,7 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual HealComputer_ABC& Create() const = 0;
+    virtual std::auto_ptr< HealComputer_ABC > Create() const = 0;
     //@}
 };
 

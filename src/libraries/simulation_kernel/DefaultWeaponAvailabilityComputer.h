@@ -26,13 +26,12 @@ class DefaultWeaponAvailabilityComputer : public WeaponAvailabilityComputer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DefaultWeaponAvailabilityComputer();
+             DefaultWeaponAvailabilityComputer( FireData_ABC& firerWeapons );
     virtual ~DefaultWeaponAvailabilityComputer();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Reset( FireData_ABC& firerWeapons );
     virtual void ApplyOnWeapon( const PHY_ComposantePion& firer, PHY_Weapon& weapon );
     //@}
 

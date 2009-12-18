@@ -28,13 +28,12 @@ class WeaponAvailabilityComputer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             WeaponAvailabilityComputer_ABC();
-    virtual ~WeaponAvailabilityComputer_ABC();
+             WeaponAvailabilityComputer_ABC() {}
+    virtual ~WeaponAvailabilityComputer_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void Reset( FireData_ABC& firerWeapons ) = 0;
     virtual void ApplyOnWeapon( const PHY_ComposantePion& firer, PHY_Weapon& weapon ) = 0;
     //@}
 };

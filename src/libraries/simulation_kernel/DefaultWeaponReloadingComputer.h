@@ -27,13 +27,12 @@ class DefaultWeaponReloadingComputer : public WeaponReloadingComputer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DefaultWeaponReloadingComputer();
+    explicit DefaultWeaponReloadingComputer( double initialDuration );
     virtual ~DefaultWeaponReloadingComputer();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Reset( double initialDuration );
     virtual void AddModifier( double modifier );
     virtual double GetDuration() const;
     //@}

@@ -28,20 +28,20 @@ class TransportComputerFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    TransportComputerFactory_ABC();
-    virtual ~TransportComputerFactory_ABC();
+    TransportComputerFactory_ABC() {}
+    virtual ~TransportComputerFactory_ABC() {}
     //@}
 
     //! @name Serialization
     //@{
-    template< typename Archive > void serialize( Archive&, const uint ) {}
+    template< typename Archive > void serialize( Archive&, const unsigned int ) {}
     //@}
         
     //! @name Operations
     //@{
-    virtual TransportCapacityComputer_ABC& CreateCapacityComputer( ) const = 0;
-    virtual TransportWeightComputer_ABC& CreateWeightComputer(const TransportStrategy_ABC*) const =0;
-    virtual TransportPermissionComputer_ABC& CreatePermissionComputer() const = 0;
+    virtual std::auto_ptr< TransportCapacityComputer_ABC > CreateCapacityComputer( ) const = 0;
+    virtual std::auto_ptr< TransportWeightComputer_ABC > CreateWeightComputer( const TransportStrategy_ABC* ) const = 0;
+    virtual std::auto_ptr< TransportPermissionComputer_ABC > CreatePermissionComputer() const = 0;
     //@}
 };
 

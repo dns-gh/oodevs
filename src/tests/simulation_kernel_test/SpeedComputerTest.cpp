@@ -28,8 +28,7 @@ class ReentrantRole
         {
             {
                 moving::SpeedComputerStrategy strategy( true, false, 0 );
-                // Must comment the following line until code is made reentrant:
-                //factory_.CreateSpeedComputer( strategy );
+                factory_.CreateSpeedComputer( strategy );
             }
             MockAgent stubby;
             algorithm.ApplyOnReinforcement( stubby );
@@ -43,7 +42,7 @@ BOOST_AUTO_TEST_CASE( DefaultSpeedComputerTest )
     moving::MoveComputerFactory moveComputerFactory;
     ReentrantRole role( moveComputerFactory );
     moving::SpeedComputerStrategy strategy( true, false, 0 );
-    moving::SpeedComputer_ABC& computer = moveComputerFactory.CreateSpeedComputer( strategy );
-    role.Execute( computer );
-    double rSpeed = computer.GetSpeed();
+    std::auto_ptr< moving::SpeedComputer_ABC > computer = moveComputerFactory.CreateSpeedComputer( strategy );
+    role.Execute( *computer );
+    BOOST_CHECK_EQUAL( 0., computer->GetSpeed() );
 }

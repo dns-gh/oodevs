@@ -258,10 +258,10 @@ void PHY_RolePion_Location::Show( const MT_Vector2D& vPosition )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::MagicMove( const MT_Vector2D& vPosition )
 {
-    moving::MoveComputer_ABC& moveComputer = pion_.GetAlgorithms().moveComputerFactory_->CreateMoveComputer();
-    pion_.Execute(moveComputer);
+    std::auto_ptr< moving::MoveComputer_ABC > moveComputer = pion_.GetAlgorithms().moveComputerFactory_->CreateMoveComputer();
+    pion_.Execute( *moveComputer );
 
-    if(!moveComputer.CanMove() && !moveComputer.CanMoveOverride())
+    if( !moveComputer->CanMove() && !moveComputer->CanMoveOverride() )
         return;
 
     Hide();
@@ -467,11 +467,10 @@ bool PHY_RolePion_Location::HasDoneMagicMove() const
 void PHY_RolePion_Location::Update( bool bIsDead )
 {
     if( bIsDead || !bHasMove_ )
-    {
         Move( *pvPosition_, vDirection_, 0. );
-    }
 
-    SetHeight( pion_.Execute(pion_.GetAlgorithms().locationComputerFactory_->Create() ).GetHeight() );
+    std::auto_ptr< LocationComputer_ABC > computer( pion_.GetAlgorithms().locationComputerFactory_->Create() );
+    SetHeight( pion_.Execute( *computer ).GetHeight() );
 
     if( HasLocationChanged() )
         pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );

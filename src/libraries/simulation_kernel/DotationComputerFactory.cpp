@@ -13,13 +13,14 @@
 #include "simulation_kernel/DefaultDotationComputer.h"
 
 using namespace dotation;
+
 // -----------------------------------------------------------------------------
 // Name: DotationComputerFactory constructor
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-DotationComputerFactory::DotationComputerFactory() 
-: pDotationComputer_( new DefaultDotationComputer() )
+DotationComputerFactory::DotationComputerFactory()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -35,8 +36,8 @@ DotationComputerFactory::~DotationComputerFactory()
 // Name: DotationComputerFactory destructor
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-DotationComputer_ABC& DotationComputerFactory::Create() const
+std::auto_ptr< DotationComputer_ABC > DotationComputerFactory::Create() const
 {
-    pDotationComputer_->Reset();
-    return *pDotationComputer_;
+    std::auto_ptr< DotationComputer_ABC > pDotationComputer( new DefaultDotationComputer() );
+    return pDotationComputer;
 }

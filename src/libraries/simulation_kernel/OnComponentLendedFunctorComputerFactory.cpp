@@ -17,7 +17,6 @@
 // Created: MGD 2009-08-24
 // -----------------------------------------------------------------------------
 OnComponentLendedFunctorComputerFactory::OnComponentLendedFunctorComputerFactory()
-: pDotationComputer_( new DefaultComponentLendedFunctorComputer() )
 {
     //NOTHING
 }
@@ -35,10 +34,10 @@ OnComponentLendedFunctorComputerFactory::~OnComponentLendedFunctorComputerFactor
 // Name: DotationComputerFactory Create
 // Created: MGD 2009-08-24
 // -----------------------------------------------------------------------------
-OnComponentLendedFunctorComputer_ABC& OnComponentLendedFunctorComputerFactory::Create( OnComponentFunctor_ABC& componentOperator ) const
+std::auto_ptr< OnComponentLendedFunctorComputer_ABC > OnComponentLendedFunctorComputerFactory::Create( OnComponentFunctor_ABC& componentOperator ) const
 {
-    pDotationComputer_->Reset( componentOperator );
-    return *pDotationComputer_;
+    std::auto_ptr< OnComponentLendedFunctorComputer_ABC > pDotationComputer( new DefaultComponentLendedFunctorComputer( componentOperator ) );
+    return pDotationComputer;
 }
 
-//@TODO MGD Replace create by an Apply( Container& container ) to correctly execute
+//@TODO $$$$ MGD Replace create by an Apply( Container& container ) to correctly execute

@@ -44,6 +44,8 @@ public:
         const PHY_Posture* newPosture_;
         double postureCompletionPercentage_;
         bool bIsStealth_;
+
+        explicit Results( double completion = 0. );
     };
 
     //! @name Constructors/Destructor
@@ -54,7 +56,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Reset( Parameters& param ) = 0;
     virtual void SetPostureMovement() = 0;
     virtual void UnsetPostureMovement() = 0;
     virtual void AddCoefficientModifier( double coef ) = 0;

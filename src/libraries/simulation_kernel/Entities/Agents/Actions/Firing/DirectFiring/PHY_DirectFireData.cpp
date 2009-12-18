@@ -143,9 +143,9 @@ void PHY_DirectFireData::operator() ( const PHY_ComposantePion& compFirer, PHY_W
     if( pAmmoDotationClass_ && ( !weapon.GetDotationCategory().GetAmmoDotationClass() || *weapon.GetDotationCategory().GetAmmoDotationClass() != *pAmmoDotationClass_ ) )
         return;
 
-    dotation::DotationComputer_ABC& dotationComputer = firer_.GetAlgorithms().dotationComputerFactory_->Create();
-    firer_.Execute( dotationComputer );
-    if( !dotationComputer.HasDotation( weapon.GetDotationCategory() ) )
+    std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( firer_.GetAlgorithms().dotationComputerFactory_->Create() );
+    firer_.Execute( *dotationComputer );
+    if( !dotationComputer->HasDotation( weapon.GetDotationCategory() ) )
         bHasWeaponsAndNoAmmo_ = true;
     else
     {

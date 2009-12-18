@@ -20,8 +20,8 @@ namespace moving
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
 DefaultMaxSlopeComputer::DefaultMaxSlopeComputer() :
-        maxSlope_ (std::numeric_limits<double>::max()),
-        hasUsableComponent_(false)
+        maxSlope_          ( std::numeric_limits<double>::max() ),
+        hasUsableComponent_( false )
 {
 }
 
@@ -44,16 +44,6 @@ void DefaultMaxSlopeComputer::ApplyOnComponent( PHY_ComposantePion& component )
         hasUsableComponent_ = true;
         maxSlope_ = std::min( maxSlope_, component.GetType().GetMaxSlope() );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: DefaultMaxSlopeComputer::Reset
-// Created: AHC 2009-10-01
-// -----------------------------------------------------------------------------
-void DefaultMaxSlopeComputer::Reset()
-{
-    maxSlope_ = std::numeric_limits<double>::max();
-    hasUsableComponent_ = false;
 }
 
 // -----------------------------------------------------------------------------

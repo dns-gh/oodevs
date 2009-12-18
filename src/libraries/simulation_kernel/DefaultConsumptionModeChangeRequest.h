@@ -27,13 +27,12 @@ class DefaultConsumptionModeChangeRequest : public ConsumptionModeChangeRequest_
 public:
     //! @name Constructors/Destructor
     //@{
-    DefaultConsumptionModeChangeRequest();
+    explicit DefaultConsumptionModeChangeRequest( const PHY_ConsumptionType& newMode );
     virtual ~DefaultConsumptionModeChangeRequest();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Reset(const PHY_ConsumptionType& newMode) ;
     virtual const PHY_ConsumptionType& GetType() const;
     virtual void ConsumptionModeChanged(bool changed, PHY_RoleInterface_Dotations* const dotation);
     virtual bool AllChanged() const;

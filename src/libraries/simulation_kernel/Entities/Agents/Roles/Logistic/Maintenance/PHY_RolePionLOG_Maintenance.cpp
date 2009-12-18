@@ -226,9 +226,11 @@ MT_Float PHY_RolePionLOG_Maintenance::GetAvailabilityRatio( PHY_ComposanteUsePre
 
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     GetComponentUseFunctor functorOnComponent( predicate, composanteUse );
-    pion_.Execute( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functorOnComponent ) );
+    std::auto_ptr< OnComponentFunctorComputer_ABC > componentComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functorOnComponent ) );
+    pion_.Execute( *componentComputer );
     GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
-    pion_.Execute( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
+    std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComponent( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
+    pion_.Execute( *lendedComponent );
 
     uint nNbrTotal                  = 0;
     uint nNbrAvailableAllowedToWork = 0;
@@ -319,9 +321,10 @@ public:
 // -----------------------------------------------------------------------------
 PHY_ComposantePion* PHY_RolePionLOG_Maintenance::GetAvailableHauler( const PHY_ComposanteTypePion& composanteType ) const
 {
-    AvailableHaulerComputer computer( composanteType );
-    pion_.Execute( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( computer ) );
-    return computer.pSelectedHauler_;
+    AvailableHaulerComputer functor( composanteType );
+    std::auto_ptr< OnComponentFunctorComputer_ABC > componentComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+    pion_.Execute( *componentComputer );
+    return functor.pSelectedHauler_;
 }
 
 // -----------------------------------------------------------------------------
@@ -331,7 +334,8 @@ bool PHY_RolePionLOG_Maintenance::HasUsableHauler( const PHY_ComposanteTypePion&
 {
     PHY_ComposanteTypePredicate1< PHY_ComposanteTypePion > predicate( &PHY_ComposanteTypePion::CanHaul, composanteType );
     HasUsableComponentFunctor functor( predicate );
-    pion_.Execute( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+    std::auto_ptr< OnComponentFunctorComputer_ABC > computer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+    pion_.Execute( *computer );
     return functor.result_;
 }
 
@@ -345,9 +349,11 @@ uint PHY_RolePionLOG_Maintenance::GetNbrAvailableRepairersAllowedToWork( const P
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate1< PHY_Breakdown > predicate( &PHY_ComposantePion::CanRepair, &PHY_ComposanteTypePion::CanRepair, breakdown );
     GetComponentUseFunctor functorOnComponent( predicate, composanteUse );
-    pion_.Execute( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functorOnComponent ) );
+    std::auto_ptr< OnComponentFunctorComputer_ABC > componentComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functorOnComponent ) );
+    pion_.Execute( *componentComputer );
     GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
-    pion_.Execute( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );   
+    std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
+    pion_.Execute( *lendedComputer );   
 
     uint nNbrAvailableAllowedToWork = 0;
     assert( pWorkRate_ );
@@ -370,7 +376,8 @@ PHY_ComposantePion* PHY_RolePionLOG_Maintenance::GetAvailableRepairer( const PHY
 
     PHY_ComposantePredicate1< PHY_Breakdown > predicate( &PHY_ComposantePion::CanRepair, breakdown );
     GetComponentFunctor functor( predicate );
-    pion_.Execute( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+    std::auto_ptr< OnComponentFunctorComputer_ABC > computer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+    pion_.Execute( *computer );
     PHY_ComposantePion* pRepairer = functor.result_;
     if( pRepairer && GetNbrAvailableRepairersAllowedToWork( breakdown ) > 0 )
         return pRepairer;
@@ -385,7 +392,8 @@ bool PHY_RolePionLOG_Maintenance::HasUsableRepairer( const PHY_Breakdown& breakd
 {
     PHY_ComposanteTypePredicate1< PHY_Breakdown > predicate( &PHY_ComposanteTypePion::CanRepair, breakdown );
     HasUsableComponentFunctor functor( predicate );
-    pion_.Execute( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+    std::auto_ptr< OnComponentFunctorComputer_ABC > computer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+    pion_.Execute( *computer );
     return functor.result_;
 }
 
@@ -395,13 +403,13 @@ bool PHY_RolePionLOG_Maintenance::HasUsableRepairer( const PHY_Breakdown& breakd
 // -----------------------------------------------------------------------------
 bool PHY_RolePionLOG_Maintenance::ConsumePartsForBreakdown( const PHY_Breakdown& breakdown )
 {
-    dotation::DotationComputer_ABC& dotationComputer = pion_.GetAlgorithms().dotationComputerFactory_->Create();
-    pion_.Execute( dotationComputer );//@TODO MGD move execute for all computer in factories create
+    std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( pion_.GetAlgorithms().dotationComputerFactory_->Create() );
+    pion_.Execute( *dotationComputer );//@TODO MGD move execute for all computer in factories create
 
     const PHY_BreakdownType::T_PartMap& parts = breakdown.GetNeededParts();
     for( PHY_BreakdownType::CIT_PartMap it = parts.begin(); it != parts.end(); ++it )
     {
-        if( dotationComputer.GetDotationValue( *it->first ) < it->second )
+        if( dotationComputer->GetDotationValue( *it->first ) < it->second )
             return false;
     }
 
@@ -577,9 +585,11 @@ int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForTransport( const PHY_Com
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate1< PHY_ComposanteTypePion > predicate( &PHY_ComposantePion::CanHaul, &PHY_ComposanteTypePion::CanHaul, composante.GetType() );
     GetComponentUseFunctor functorOnComponent( predicate, composanteUse );
-    pion_.Execute( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functorOnComponent ) );
+    std::auto_ptr< OnComponentFunctorComputer_ABC > componentComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functorOnComponent ) );
+    pion_.Execute( *componentComputer );
     GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
-    pion_.Execute( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
+    std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
+    pion_.Execute( *lendedComputer );
 
     uint nNbrHaulersAvailable = 0;
     for( PHY_Composante_ABC::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
@@ -615,17 +625,17 @@ int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForRepair( PHY_MaintenanceC
     MT_Float rRatioPartsAvailable = 0.;
 
 
-    dotation::DotationComputer_ABC& dotationComputer = pion_.GetAlgorithms().dotationComputerFactory_->Create();
-    pion_.Execute( dotationComputer );
+    std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( pion_.GetAlgorithms().dotationComputerFactory_->Create() );
+    pion_.Execute( *dotationComputer );
 
     const PHY_BreakdownType::T_PartMap& parts = composanteState.GetComposanteBreakdown().GetNeededParts();
     for( PHY_BreakdownType::CIT_PartMap it = parts.begin(); it != parts.end(); ++it )
     {
         // Parts never available ...
-        if( dotationComputer.GetDotationCapacity( *it->first ) <= 0. )
+        if( dotationComputer->GetDotationCapacity( *it->first ) <= 0. )
             return std::numeric_limits< int >::min();
 
-        rRatioPartsAvailable += ( dotationComputer.GetDotationValue( *it->first ) / it->second );
+        rRatioPartsAvailable += ( dotationComputer->GetDotationValue( *it->first ) / it->second );
     }
     if( parts.empty() )
         rRatioPartsAvailable = 1.;
@@ -768,9 +778,11 @@ void PHY_RolePionLOG_Maintenance::SendFullState( NET_ASN_MsgUnitAttributes& asnU
         PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
         PHY_ComposanteUsePredicate predicate( &PHY_ComposantePion::CanHaul, &PHY_ComposanteTypePion::CanHaul );
         GetComponentUseFunctor functorOnComponent( predicate, composanteUse );
-        pion_.Execute( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functorOnComponent ) );
+        std::auto_ptr< OnComponentFunctorComputer_ABC > componentComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functorOnComponent ) );
+        pion_.Execute( *componentComputer );
         GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
-        pion_.Execute( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
+        std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
+        pion_.Execute( *lendedComputer );
 
         SendComposanteUse( composanteUse, asn().disponibilites_remorqueurs, 0 );
     }
@@ -779,9 +791,11 @@ void PHY_RolePionLOG_Maintenance::SendFullState( NET_ASN_MsgUnitAttributes& asnU
         PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
         PHY_ComposanteUsePredicate predicate( &PHY_ComposantePion::CanRepair, &PHY_ComposanteTypePion::CanRepair );
         GetComponentUseFunctor functorOnComponent( predicate, composanteUse );
-        pion_.Execute( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functorOnComponent ) );
+        std::auto_ptr< OnComponentFunctorComputer_ABC > componentComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functorOnComponent ) );
+        pion_.Execute( *componentComputer );
         GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
-        pion_.Execute( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
+        std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
+        pion_.Execute( *lendedComputer );
 
         SendComposanteUse( composanteUse, asn().disponibilites_reparateurs, pWorkRate_ );
     }

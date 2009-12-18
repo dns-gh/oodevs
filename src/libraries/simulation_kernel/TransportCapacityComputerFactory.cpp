@@ -20,12 +20,9 @@ namespace transport {
 // Name: TransportComputerFactory constructor
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
-TransportComputerFactory::TransportComputerFactory() :
-    capacityComputer_(new DefaultTransportCapacityComputer()),
-    weightComputer_(new DefaultTransportWeightComputer()),
-    permissionComputer_(new DefaultTransportPermissionComputer())
+TransportComputerFactory::TransportComputerFactory()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -34,36 +31,37 @@ TransportComputerFactory::TransportComputerFactory() :
 // -----------------------------------------------------------------------------
 TransportComputerFactory::~TransportComputerFactory()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: TransportComputerFactory::CreateCapacityComputer
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
-TransportCapacityComputer_ABC& TransportComputerFactory::CreateCapacityComputer( ) const
+std::auto_ptr< TransportCapacityComputer_ABC > TransportComputerFactory::CreateCapacityComputer( ) const
 {
-    capacityComputer_->Reset();
-    return *capacityComputer_;
+    std::auto_ptr< TransportCapacityComputer_ABC > capacityComputer( new DefaultTransportCapacityComputer() );
+    return capacityComputer;
 }
 
 // -----------------------------------------------------------------------------
 // Name: TransportComputerFactory::CreateWeightComputer
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
-TransportWeightComputer_ABC& TransportComputerFactory::CreateWeightComputer(const TransportStrategy_ABC* st) const
-{
-    weightComputer_->Reset(st);
-    return *weightComputer_;
+std::auto_ptr< TransportWeightComputer_ABC > TransportComputerFactory::CreateWeightComputer( const TransportStrategy_ABC* strategy ) const
+{    
+    std::auto_ptr< TransportWeightComputer_ABC > weightComputer( new DefaultTransportWeightComputer( strategy ) );
+    return weightComputer;
 }
 
 // -----------------------------------------------------------------------------
 // Name: TransportComputerFactory::CreatePermissionComputer
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
-TransportPermissionComputer_ABC& TransportComputerFactory::CreatePermissionComputer() const
+std::auto_ptr< TransportPermissionComputer_ABC > TransportComputerFactory::CreatePermissionComputer() const
 {
-    permissionComputer_->Reset();
-    return *permissionComputer_;
+    std::auto_ptr< TransportPermissionComputer_ABC > permissionComputer( new DefaultTransportPermissionComputer() );
+    return permissionComputer;
 }
 
 }

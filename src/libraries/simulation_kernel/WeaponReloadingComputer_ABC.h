@@ -31,7 +31,6 @@ class WeaponReloadingComputer_ABC
 public:
     //! @name Operations
     //@{
-    virtual void Reset( double initialDuration ) = 0;
     virtual void AddModifier( double modifier ) = 0;
     virtual double GetDuration() const = 0;
     //@}

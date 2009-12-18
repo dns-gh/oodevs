@@ -148,8 +148,9 @@ MT_Float PHY_Weapon::GetMinRangeToIndirectFire() const
 inline
 double PHY_Weapon::ModifyReloadingDuration( MIL_AgentPion& firer, double rDuration ) const
 {
-    const firing::WeaponReloadingComputer_ABC& computer = firer.Execute( firer.GetAlgorithms().weaponReloadingComputerFactory_->Create( rDuration ) );
-    return computer.GetDuration();
+    std::auto_ptr< firing::WeaponReloadingComputer_ABC > computer( firer.GetAlgorithms().weaponReloadingComputerFactory_->Create( rDuration ) );
+    firer.Execute( *computer );
+    return computer->GetDuration();
 }
 
 // -----------------------------------------------------------------------------

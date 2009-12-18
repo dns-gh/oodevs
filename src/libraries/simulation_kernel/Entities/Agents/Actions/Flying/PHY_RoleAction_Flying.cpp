@@ -135,15 +135,12 @@ void PHY_RoleAction_Flying::Fly()
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Flying::Apply( double rHeight )
 {
-    dotation::ConsumptionModeChangeRequest_ABC& request =
-    		entity_.GetAlgorithms().consumptionComputerFactory_->CreateConsumptionModeChangeRequest(PHY_ConsumptionType::moving_);
-    entity_.Apply(&dotation::ConsumptionChangeRequestHandler_ABC::ChangeConsumptionMode,request); // automatic rollback
+    std::auto_ptr< dotation::ConsumptionModeChangeRequest_ABC > request =
+    		entity_.GetAlgorithms().consumptionComputerFactory_->CreateConsumptionModeChangeRequest( PHY_ConsumptionType::moving_ );
+    entity_.Apply( &dotation::ConsumptionChangeRequestHandler_ABC::ChangeConsumptionMode, *request ); // automatic rollback
 
-
-    if ( !request.AllChanged() || rHeight <= 0. )
-    {
+    if ( !request->AllChanged() || rHeight <= 0. )
         Land();
-    }
     else
         rHeight_ = rHeight;
 }

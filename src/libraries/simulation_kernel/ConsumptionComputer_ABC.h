@@ -33,7 +33,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Reset() = 0;
     virtual bool SetConsumptionMode( const PHY_ConsumptionType& mode ) = 0;
     virtual const PHY_ConsumptionType& Result() const = 0;
     //@}
