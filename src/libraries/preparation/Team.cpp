@@ -9,6 +9,9 @@
 
 #include "preparation_pch.h"
 #include "Team.h"
+
+#include "clients_kernel/Karma.h"
+#include "Diplomacies.h"
 #include "KnowledgeGroup.h"
 #include "clients_kernel/KnowledgeGroupFactory_ABC.h"
 #include "IdManager.h"
@@ -127,4 +130,86 @@ void Team::CreateDictionary( kernel::Controller& controller )
     Attach( dictionary );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Team", "Info/Identifier" ), (const unsigned long)id_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Team", "Info/Name" ), name_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::GetKarma
+// Created: MGD 2009-12-18
+// -----------------------------------------------------------------------------
+const kernel::Karma& Team::GetKarma() const
+{
+    return Get< Diplomacies >().GetKarma();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::CreateDictionary
+// Created: MGD 2009-12-18
+// -----------------------------------------------------------------------------
+void Team::Register( Formation_ABC& /*formation*/ )
+{
+    //NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::CreateDictionary
+// Created: MGD 2009-12-18
+// -----------------------------------------------------------------------------
+void Team::Remove( Formation_ABC& /*formation*/ )
+{
+    //NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::CreateDictionary
+// Created: MGD 2009-12-18
+// -----------------------------------------------------------------------------
+void Team::Register( Population_ABC& /*population*/ )
+{
+    //NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::CreateDictionary
+// Created: MGD 2009-12-18
+// -----------------------------------------------------------------------------
+void Team::Remove( Population_ABC& /*population*/ )
+{
+    //NOTHING
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: Team::CreateDictionary
+// Created: MGD 2009-12-18
+// -----------------------------------------------------------------------------
+void Team::Register( Object_ABC& object )
+{
+    tools::Resolver< kernel::Object_ABC >::Register( object.GetId(), object );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::CreateDictionary
+// Created: MGD 2009-12-18
+// -----------------------------------------------------------------------------
+void Team::Remove( Object_ABC& object )
+{
+    tools::Resolver< kernel::Object_ABC >::Remove( object.GetId() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::CreateDictionary
+// Created: MGD 2009-12-18
+// -----------------------------------------------------------------------------
+void Team::Register( KnowledgeGroup_ABC& /*knGroup*/ )
+{
+    //NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::CreateDictionary
+// Created: MGD 2009-12-18
+// -----------------------------------------------------------------------------
+void Team::Remove( KnowledgeGroup_ABC& /*knGroup*/ )
+{
+    //NOTHING
 }

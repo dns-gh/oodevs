@@ -75,7 +75,7 @@ std::string AgentManipulator::GetName() const
 // -----------------------------------------------------------------------------
 std::string AgentManipulator::GetTeam() const
 {
-    return agent_.automat_->team_.name_;
+    return std::string( agent_.automat_->team_.GetName() );
 }
 
 // -----------------------------------------------------------------------------

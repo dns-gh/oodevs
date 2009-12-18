@@ -33,7 +33,7 @@ Population::Population( Model& model, const ASN1T_MsgPopulationCreation& msg )
     , nDominationState_( 0 )
     , order_           ( 0 )
 {
-    side_.populations_.Register( msg.oid, *this );
+    side_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +42,7 @@ Population::Population( Model& model, const ASN1T_MsgPopulationCreation& msg )
 // -----------------------------------------------------------------------------
 Population::~Population()
 {
-    side_.populations_.Remove( GetId() );
+    side_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------

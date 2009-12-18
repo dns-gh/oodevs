@@ -11,11 +11,14 @@
 #define __Team_ABC_h_
 
 #include "Entity_ABC.h"
-#include "tools/Resolver.h"
 
 namespace kernel
 {
+    class Formation_ABC;
+    class Karma;
     class KnowledgeGroup_ABC;
+    class Object_ABC;
+    class Population_ABC;
 
 // =============================================================================
 /** @class  Team_ABC
@@ -44,6 +47,15 @@ public:
     virtual void Select( ActionController& controller ) const;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
     virtual void Activate( ActionController& controller ) const;
+    virtual const kernel::Karma& GetKarma() const = 0;
+    virtual void Register( Formation_ABC& formation ) = 0;
+    virtual void Remove( Formation_ABC& formation ) = 0;
+    virtual void Register( Population_ABC& population ) = 0;
+    virtual void Remove( Population_ABC& population ) = 0;
+    virtual void Register( Object_ABC& object ) = 0;
+    virtual void Remove( Object_ABC& object ) = 0;
+    virtual void Register( KnowledgeGroup_ABC& knGroup ) = 0;
+    virtual void Remove( KnowledgeGroup_ABC& knGroup ) = 0;
     //@}
 };
 

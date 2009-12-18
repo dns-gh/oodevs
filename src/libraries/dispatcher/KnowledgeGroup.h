@@ -19,6 +19,7 @@
 namespace kernel
 {
     class Automat_ABC;
+    class Team_ABC;
 }
 
 namespace dispatcher
@@ -26,7 +27,6 @@ namespace dispatcher
     class Model;
     class ModelVisitor_ABC;
     class ClientPublisher_ABC;
-    class Side;
 
 // =============================================================================
 /** @class  KnowledgeGroup
@@ -62,7 +62,7 @@ private:
 public:
     //! @name Member data
     //@{
-    Side& team_;
+    kernel::Team_ABC& team_;
     KnowledgeGroup*      parent_;
     tools::Resolver< KnowledgeGroup > knowledgeGroups_;
     tools::Resolver< kernel::Automat_ABC > automats_;

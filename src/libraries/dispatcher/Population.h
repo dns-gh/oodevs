@@ -15,10 +15,14 @@
 #include "clients_kernel/Population_ABC.h"
 #include "DecisionalState.h"
 
+namespace kernel
+{
+    class Team_ABC;
+}
+
 namespace dispatcher
 {
     class Model;
-    class Side;
     class PopulationConcentration;
     class PopulationFlow;
     class PopulationOrder;
@@ -76,7 +80,7 @@ private:
           Model&        model_;
     const unsigned long nType_;
     const std::string   strName_;
-          Side&         side_;
+    kernel::Team_ABC&   side_;
     
     unsigned int        nDominationState_;
     std::auto_ptr< PopulationOrder > order_;

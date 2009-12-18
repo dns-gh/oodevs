@@ -10,10 +10,12 @@
 #ifndef __Model_ABC_h_
 #define __Model_ABC_h_
 
+#include "clients_kernel/Team_ABC.h"
 #include "game_asn/Simulation.h"
 #include "MessageHandler_ABC.h"
 #include "CompositeFactory.h"
 #include "EntityPublisher.h"
+#include "Sendable.h"
 #include "tools/Resolver.h"
 
 namespace kernel
@@ -60,7 +62,7 @@ namespace dispatcher
 // Created: NLD 2006-09-19
 // =============================================================================
 
-    class Model_ABC
+class Model_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -71,7 +73,7 @@ public:
 
     //! @name data accessor
     //@{
-    virtual const tools::Resolver_ABC< Side >&                  sides() const = 0;
+    virtual const tools::Resolver_ABC< Sendable< kernel::Team_ABC > >& sides() const = 0;
     virtual const tools::Resolver_ABC< KnowledgeGroup >&        knowledgeGroups() const = 0;
     virtual const tools::Resolver_ABC< Formation >&             formations() const = 0;
     virtual const tools::Resolver_ABC< Automat >&               automats() const = 0;

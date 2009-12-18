@@ -23,6 +23,15 @@ Team::Team( const ASN1T_MsgTeamCreation& asnMsg, Controller& controller )
 {
     if( name_.isEmpty() )
         name_ = QString( tools::translate( "Team", "Army %1" ) ).arg( asnMsg.oid );
+    
+    switch( asnMsg.type )
+    {
+        case EnumDiplomacy::inconnu : karma_ = kernel::Karma::unknown_; break;
+        case EnumDiplomacy::ami :     karma_ = kernel::Karma::friend_; break;
+        case EnumDiplomacy::ennemi :  karma_ = kernel::Karma::enemy_; break;
+        case EnumDiplomacy::neutre :  karma_ = kernel::Karma::neutral_; break;
+    }
+
     CreateDictionary( controller );
 }
 
@@ -46,4 +55,87 @@ void Team::CreateDictionary( kernel::Controller& controller )
     const Team& self = *this;
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Team", "Info/Identifier" ), self.id_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Team", "Info/Name" ), self.name_ );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: Team::GetKarma
+// Created: MGD 2009-12-18
+// -----------------------------------------------------------------------------
+const kernel::Karma& Team::GetKarma() const
+{
+    return karma_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::CreateDictionary
+// Created: MGD 2009-12-18
+// -----------------------------------------------------------------------------
+void Team::Register( Formation_ABC& /*formation*/ )
+{
+    //NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::CreateDictionary
+// Created: MGD 2009-12-18
+// -----------------------------------------------------------------------------
+void Team::Remove( Formation_ABC& /*formation*/ )
+{
+    //NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::CreateDictionary
+// Created: MGD 2009-12-18
+// -----------------------------------------------------------------------------
+void Team::Register( Population_ABC& /*population*/ )
+{
+    //NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::CreateDictionary
+// Created: MGD 2009-12-18
+// -----------------------------------------------------------------------------
+void Team::Remove( Population_ABC& /*population*/ )
+{
+    //NOTHING
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: Team::CreateDictionary
+// Created: MGD 2009-12-18
+// -----------------------------------------------------------------------------
+void Team::Register( Object_ABC& /*object*/ )
+{
+    //NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::CreateDictionary
+// Created: MGD 2009-12-18
+// -----------------------------------------------------------------------------
+void Team::Remove( Object_ABC& /*object*/ )
+{
+    //NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::CreateDictionary
+// Created: MGD 2009-12-18
+// -----------------------------------------------------------------------------
+void Team::Register( KnowledgeGroup_ABC& /*knGroup*/ )
+{
+    //NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::CreateDictionary
+// Created: MGD 2009-12-18
+// -----------------------------------------------------------------------------
+void Team::Remove( KnowledgeGroup_ABC& /*knGroup*/ )
+{
+    //NOTHING
 }

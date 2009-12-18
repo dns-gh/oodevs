@@ -42,7 +42,7 @@ Object::Object( Model& model, const ASN1T_MsgObjectCreation& msg )
     , side_                        ( model.sides_.Get( msg.team ) )
 {
     Initialize( model, msg.attributes );
-	side_.objects_.Register( msg.oid, *this );
+	side_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,7 +51,7 @@ Object::Object( Model& model, const ASN1T_MsgObjectCreation& msg )
 // -----------------------------------------------------------------------------
 Object::~Object()
 {
-	side_.objects_.Remove( GetId() );
+	side_.Remove( *this );
 }
 
 #define MSG_ASN_CREATION( ASN, CLASS ) \

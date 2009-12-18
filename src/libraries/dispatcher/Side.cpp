@@ -26,12 +26,18 @@ using namespace dispatcher;
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
 Side::Side( const Model& model, const ASN1T_MsgTeamCreation& msg )
-    : SimpleEntity< kernel::Team_ABC >( msg.oid, msg.nom )
+    : Sendable< kernel::Team_ABC >( msg.oid, msg.nom )
     , model_( model )
     , name_( msg.nom )
     , nType_( msg.type )
 {
-    // NOTHING
+    switch( nType_ )
+    {
+        case EnumDiplomacy::inconnu : karma_ = kernel::Karma::unknown_; break;
+        case EnumDiplomacy::ami :     karma_ = kernel::Karma::friend_; break;
+        case EnumDiplomacy::ennemi :  karma_ = kernel::Karma::enemy_; break;
+        case EnumDiplomacy::neutre :  karma_ = kernel::Karma::neutral_; break;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -121,4 +127,79 @@ void Side::Accept( ModelVisitor_ABC& visitor ) const
     formations_.Apply( boost::bind( &Formation::Accept, _1, boost::ref( visitor ) ) );
     objects_.Apply( boost::bind( &Object::Accept, _1, boost::ref( visitor ) ) );
     populations_.Apply( boost::bind( &Population::Accept, _1, boost::ref( visitor ) ) );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: Side::GetKarma
+// Created: MGD 2009-12-17
+// -----------------------------------------------------------------------------
+const kernel::Karma& Side::GetKarma() const
+{
+    return karma_;
+}
+// -----------------------------------------------------------------------------
+// Name: Side::Register
+// Created: MGD 2009-12-17
+// -----------------------------------------------------------------------------
+void Side::Register( kernel::Formation_ABC& formation )
+{
+    //@TODO MGD Remove temp cast with next refactor step
+    formations_.Register( formation.GetId(), (dispatcher::Formation&)formation );
+}
+// -----------------------------------------------------------------------------
+// Name: Side::Remove
+// Created: MGD 2009-12-17
+// -----------------------------------------------------------------------------
+void Side::Remove( kernel::Formation_ABC& formation )
+{
+    formations_.Remove( formation.GetId() );
+}
+// -----------------------------------------------------------------------------
+// Name: Side::Register
+// Created: MGD 2009-12-17
+// -----------------------------------------------------------------------------
+void Side::Register( kernel::Population_ABC& population )
+{
+    populations_.Register( population.GetId(), (dispatcher::Population&)population );
+}
+// -----------------------------------------------------------------------------
+// Name: Side::Remove
+// Created: MGD 2009-12-17
+// -----------------------------------------------------------------------------
+void Side::Remove( kernel::Population_ABC& population )
+{
+    populations_.Remove( population.GetId() );
+}
+// -----------------------------------------------------------------------------
+// Name: Side::Register
+// Created: MGD 2009-12-17
+// -----------------------------------------------------------------------------
+void Side::Register( kernel::Object_ABC& object )
+{
+    objects_.Register( object.GetId(), (dispatcher::Object&)object );
+}
+// -----------------------------------------------------------------------------
+// Name: Side::Remove
+// Created: MGD 2009-12-17
+// -----------------------------------------------------------------------------
+void Side::Remove( kernel::Object_ABC& object )
+{
+    objects_.Remove( object.GetId() );
+}
+// -----------------------------------------------------------------------------
+// Name: Side::Register
+// Created: MGD 2009-12-17
+// -----------------------------------------------------------------------------
+void Side::Register( kernel::KnowledgeGroup_ABC& knGroup )
+{
+    knowledgeGroups_.Register( knGroup.GetId(), (dispatcher::KnowledgeGroup&)knGroup );
+}
+// -----------------------------------------------------------------------------
+// Name: Side::Remove
+// Created: MGD 2009-12-17
+// -----------------------------------------------------------------------------
+void Side::Remove( kernel::KnowledgeGroup_ABC& knGroup )
+{
+    knowledgeGroups_.Remove( knGroup.GetId() );
 }

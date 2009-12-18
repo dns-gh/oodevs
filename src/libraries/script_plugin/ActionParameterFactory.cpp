@@ -27,6 +27,7 @@
 #include "dispatcher/AgentKnowledge.h"
 #include "dispatcher/PopulationKnowledge.h"
 #include "dispatcher/ObjectKnowledge.h"
+#include "dispatcher/Sendable.h"
 
 #include "actions/Limit.h"
 #include "actions/LimaList.h"
@@ -86,7 +87,7 @@ struct ActionParameterFactory::Adapters
     kernel::ResolverAdapter< dispatcher::Agent,      kernel::Agent_ABC   >      agents_;
     kernel::ResolverAdapter< dispatcher::Automat,    kernel::Automat_ABC >      automats_;
     kernel::ResolverAdapter< dispatcher::Formation,  kernel::Formation_ABC >    formations_;
-    kernel::ResolverAdapter< dispatcher::Side,       kernel::Team_ABC >         teams_;
+    kernel::ResolverAdapter< dispatcher::Sendable< kernel::Team_ABC >,       kernel::Team_ABC >         teams_;
     kernel::ResolverAdapter< dispatcher::Population, kernel::Population_ABC >   populations_;
     kernel::ResolverAdapter< dispatcher::Object,     kernel::Object_ABC >       objects_;
 };

@@ -29,7 +29,7 @@ KnowledgeGroup::KnowledgeGroup( Model& model, const ASN1T_MsgKnowledgeGroupCreat
     if( parent_ )
         parent_->knowledgeGroups_.Register( msg.oid, *this );
     else
-        team_.knowledgeGroups_.Register( msg.oid, *this );
+        team_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +42,7 @@ KnowledgeGroup::~KnowledgeGroup()
     if( parent_ )
         parent_->knowledgeGroups_.Remove( GetId() );
     else
-        team_.knowledgeGroups_.Remove( GetId() );
+        team_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------

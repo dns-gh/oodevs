@@ -31,6 +31,16 @@ public:
     virtual ~Team();
     //@}
 
+    virtual const kernel::Karma& GetKarma() const;
+    virtual void Register( kernel::Formation_ABC& formation );
+    virtual void Remove( kernel::Formation_ABC& formation );
+    virtual void Register( kernel::Population_ABC& population );
+    virtual void Remove( kernel::Population_ABC& population );
+    virtual void Register( kernel::Object_ABC& object );
+    virtual void Remove( kernel::Object_ABC& object );
+    virtual void Register( kernel::KnowledgeGroup_ABC& knGroup );
+    virtual void Remove( kernel::KnowledgeGroup_ABC& knGroup );
+
 private:
     //! @name Copy / Assignement
     //@{
@@ -42,6 +52,12 @@ private:
     //@{
     void CreateDictionary( kernel::Controller& controller );
     //@}
+private:
+    //! @name Attributes
+    //@{
+    kernel::Karma karma_;
+    //@}
+
 };
 
 #endif // __Team_h_

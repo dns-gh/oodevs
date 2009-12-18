@@ -11,8 +11,9 @@
 #define __Side_h_
 
 #include "game_asn/Simulation.h"
-#include "SimpleEntity.h"
+#include "Sendable.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Karma.h"
 #include "tools/Resolver.h"
 
 namespace dispatcher
@@ -31,7 +32,7 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Side : public SimpleEntity< kernel::Team_ABC >
+class Side : public Sendable< kernel::Team_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -45,11 +46,21 @@ public:
     using kernel::Entity_ABC::Update;
     void Update( const ASN1T_MsgChangeDiplomacy&    asnMsg );
     void Update( const ASN1T_MsgChangeDiplomacyAck& asnMsg );
-    void SendCreation   ( ClientPublisher_ABC& publisher ) const;
-    void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
-    void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
 
-    void Accept( ModelVisitor_ABC& visitor ) const;
+    virtual void Accept( ModelVisitor_ABC& visitor ) const;
+
+    virtual const kernel::Karma& GetKarma() const;
+    virtual void Register( kernel::Formation_ABC& formation );
+    virtual void Remove( kernel::Formation_ABC& formation );
+    virtual void Register( kernel::Population_ABC& population );
+    virtual void Remove( kernel::Population_ABC& population );
+    virtual void Register( kernel::Object_ABC& object );
+    virtual void Remove( kernel::Object_ABC& object );
+    virtual void Register( kernel::KnowledgeGroup_ABC& knGroup );
+    virtual void Remove( kernel::KnowledgeGroup_ABC& knGroup );
     //@}
 
 private:
@@ -72,6 +83,7 @@ private:
 public:
     const std::string   name_;
     ASN1T_EnumDiplomacy nType_;
+    kernel::Karma karma_;
     T_Diplomacies       diplomacies_;
     tools::Resolver< KnowledgeGroup > knowledgeGroups_;
     tools::Resolver< Formation >      formations_;

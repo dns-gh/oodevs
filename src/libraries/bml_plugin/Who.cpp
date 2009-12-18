@@ -14,6 +14,7 @@
 #include "dispatcher/Side.h"
 #include "dispatcher/Equipment.h"
 #include "dispatcher/Humans.h"
+#include "clients_kernel/Karma.h"
 #include <xeumeuleu/xml.h>
 #include <boost/bind.hpp>
 
@@ -197,15 +198,15 @@ namespace
 {
     std::string Hostility( const dispatcher::Automat& entity )
     {
-        const ASN1T_EnumDiplomacy karma = entity.team_.nType_;
-        switch( karma )
-        {
-        case EnumDiplomacy::ami:    return "FR";
-        case EnumDiplomacy::ennemi: return "HO";
-        case EnumDiplomacy::neutre: return "NEUTRL";
-        default: break;
-        }
-        return "UNK";
+        const kernel::Karma& karma = entity.team_.GetKarma();
+        if( karma == kernel::Karma::friend_ )
+            return "FR";
+        else if( karma == kernel::Karma::enemy_ )
+            return "HO";
+        else if( karma == kernel::Karma::neutral_ )
+            return "NEUTRL";
+        else
+            return "UNK";
     }
 
     std::string OperationalState( const ASN1T_EnumOperationalStatus& status )

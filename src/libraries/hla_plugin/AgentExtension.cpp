@@ -18,6 +18,7 @@
 #include "dispatcher/Automat.h"
 #include "dispatcher/Side.h"
 #include "dispatcher/Equipment.h"
+#include "clients_kernel/Karma.h"
 #include <hla/UpdateFunctor_ABC.h>
 #include <hla/AttributeIdentifier.h>
 #include <boost/bind.hpp>
@@ -160,13 +161,13 @@ void AgentExtension::UpdateAggregateState( UpdateFunctor_ABC& functor ) const
 void AgentExtension::UpdateForceIdentifier( UpdateFunctor_ABC& functor ) const
 {
     unsigned char force = 0; // Other
-    const dispatcher::Side& side = holder_.automat_->team_;
-    switch( side.nType_ )
-    {
-    case EnumDiplomacy::ami:    force = 1; break;
-    case EnumDiplomacy::ennemi: force = 2; break;
-    case EnumDiplomacy::neutre: force = 3; break;
-    }
+    const kernel::Karma& karma = holder_.automat_->team_.GetKarma();
+    if( karma == kernel::Karma::friend_ )
+        force = 1;
+    else if( karma == kernel::Karma::enemy_ )
+        force = 2;
+    else if( karma == kernel::Karma::neutral_ )
+        force = 3;
 
     Serializer archive;
     archive << force;

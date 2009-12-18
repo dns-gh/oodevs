@@ -61,6 +61,15 @@ public:
     void CreateObject( xml::xistream& xis );
     void Rename( const QString& name );
     virtual void SerializeAttributes( xml::xostream& xos ) const;
+    virtual const kernel::Karma& GetKarma() const;
+    virtual void Register( kernel::Formation_ABC& formation );
+    virtual void Remove( kernel::Formation_ABC& formation );
+    virtual void Register( kernel::Population_ABC& population );
+    virtual void Remove( kernel::Population_ABC& population );
+    virtual void Register( kernel::Object_ABC& object );
+    virtual void Remove( kernel::Object_ABC& object );
+    virtual void Register( kernel::KnowledgeGroup_ABC& knGroup );
+    virtual void Remove( kernel::KnowledgeGroup_ABC& knGroup );
     //@}
 
 private:

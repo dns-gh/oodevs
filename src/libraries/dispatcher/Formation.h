@@ -16,6 +16,10 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "tools/Resolver.h"
 
+namespace kernel
+{
+    class Team_ABC;
+}
 namespace dispatcher
 {
     class Model;
@@ -64,7 +68,7 @@ private:
     const std::string           name_;
 
 public:
-    Side&           team_;
+    kernel::Team_ABC&           team_;
     const ASN1T_EnumNatureLevel level_;
     Formation*      parent_;
     tools::Resolver< Formation > formations_;

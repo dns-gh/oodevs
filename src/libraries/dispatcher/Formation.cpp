@@ -32,7 +32,7 @@ Formation::Formation( const Model& model, const ASN1T_MsgFormationCreation& msg 
     if( parent_ )
         parent_->formations_.Register( msg.oid, *this );
     else
-        team_.formations_.Register( msg.oid, *this );
+        team_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,7 +45,7 @@ Formation::~Formation()
     if( parent_ )
         parent_->formations_.Remove( GetId() );
     else
-        team_.formations_.Remove( GetId() );
+        team_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------

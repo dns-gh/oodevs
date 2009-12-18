@@ -16,6 +16,10 @@
 #include "SimpleEntity.h"
 #include "DecisionalState.h"
 
+namespace kernel
+{
+    class Team_ABC;
+}
 namespace dispatcher
 {
     class Model;
@@ -26,7 +30,6 @@ namespace dispatcher
     class Agent;
     class Automat;
     class KnowledgeGroup;
-    class Side;
 
 // =============================================================================
 /** @class  Automat
@@ -86,7 +89,7 @@ public:
     Model&              model_;
     const unsigned long type_; // XML reference - no resolved by dispatcher
     const std::string   name_;
-    Side&               team_;
+    kernel::Team_ABC&   team_;
     Formation*          parentFormation_;
     Automat*            parentAutomat_;
     KnowledgeGroup*     knowledgeGroup_;

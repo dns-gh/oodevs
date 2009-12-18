@@ -20,11 +20,11 @@
 namespace kernel
 {
 	class ObjectType;
+    class Team_ABC;
 }
 
 namespace dispatcher
 {
-    class Side;
     class Model;
     class ObjectAttribute_ABC;
     class ModelVisitor_ABC;
@@ -82,7 +82,7 @@ public:
 
     const std::string            strName_;
           Localisation           localisation_;
-          Side&                  side_;
+          kernel::Team_ABC&      side_;
     
     T_ObjectAttributes           attributes_;
 };

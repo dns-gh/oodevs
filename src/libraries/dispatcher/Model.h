@@ -49,7 +49,6 @@ namespace dispatcher
     class CompositeFactory;
     class Factory_ABC;
 
-    class Side;
     class KnowledgeGroup;
     class Formation;
     class Automat;
@@ -130,9 +129,9 @@ private:
 
     //! @name Helpers
     //@{
-    template< typename T, typename P >
+    template< typename T, typename C, typename P >
     void CreateUpdate( tools::Resolver< T >& resolver, const P& parameter );
-    template< typename T, typename P >
+    template< typename T, typename C, typename P >
     void CreateUpdate( tools::Resolver< T >& resolver, unsigned id, const P& parameter );
     template< typename T >
     void UpdateAnyAgent( unsigned id, const T& message );
@@ -154,7 +153,7 @@ private:
 public:
     //! @name Dynamic model
     //@{
-    virtual const tools::Resolver_ABC< Side >&                  sides() const { return sides_; }
+    virtual const tools::Resolver_ABC< Sendable< kernel::Team_ABC > >& sides() const { return sides_; }
     virtual const tools::Resolver_ABC< KnowledgeGroup >&        knowledgeGroups() const { return knowledgeGroups_; }
     virtual const tools::Resolver_ABC< Formation >&             formations() const { return formations_; }
     virtual const tools::Resolver_ABC< Automat >&               automats() const { return automats_; }
@@ -177,7 +176,7 @@ public:
 
     //! @name Dynamic model
     //@{
-    tools::Resolver< Side >                   sides_;
+    tools::Resolver< Sendable< kernel::Team_ABC > > sides_;
     tools::Resolver< KnowledgeGroup >         knowledgeGroups_;
     tools::Resolver< Formation >              formations_;
     tools::Resolver< Automat >                automats_;
