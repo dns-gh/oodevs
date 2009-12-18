@@ -38,6 +38,7 @@ public:
     //! @name Operations
     //@{
     std::string GetId() const;
+    unsigned int GetUId() const;
     QString GetName() const;
 
     const Karma& RelativeTo( const Karma& rhs ) const;
@@ -53,12 +54,13 @@ public:
 private:
     //! @name Helpers
     //@{
-    Karma( const std::string& identifier, const QString& name );
+    Karma( const unsigned int id, const std::string& identifier, const QString& name );
     //@}
 
 private:
     //! @name Member data
     //@{
+    unsigned int uId_;
     std::string identifier_;
     QString name_;
     //@}

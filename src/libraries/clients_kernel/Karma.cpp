@@ -14,17 +14,18 @@
 
 using namespace kernel;
 
-Karma Karma::friend_ ( "friend" , tools::translate( "Karma", "Friend" ) );  // f
-Karma Karma::enemy_  ( "enemy"  , tools::translate( "Karma", "Enemy" ) );   // h
-Karma Karma::neutral_( "neutral", tools::translate( "Karma", "Neutral" ) ); // n
-Karma Karma::unknown_( "unknown", tools::translate( "Karma", "Unknown" ) ); // u
+Karma Karma::friend_ ( 1, "friend" , tools::translate( "Karma", "Friend" ) );  // f
+Karma Karma::enemy_  ( 2, "enemy"  , tools::translate( "Karma", "Enemy" ) );   // h
+Karma Karma::neutral_( 3, "neutral", tools::translate( "Karma", "Neutral" ) ); // n
+Karma Karma::unknown_( 0, "unknown", tools::translate( "Karma", "Unknown" ) ); // u
 
 // -----------------------------------------------------------------------------
 // Name: Karma constructor
 // Created: SBO 2007-02-26
 // -----------------------------------------------------------------------------
 Karma::Karma()
-    : identifier_( unknown_.identifier_ )
+    : uId_( unknown_.uId_ )
+    , identifier_( unknown_.identifier_ )
     , name_( unknown_.name_ )
 {
     // NOTHING
@@ -34,8 +35,9 @@ Karma::Karma()
 // Name: Karma constructor
 // Created: SBO 2007-02-26
 // -----------------------------------------------------------------------------
-Karma::Karma( const std::string& identifier, const QString& name )
-    : identifier_( identifier )
+Karma::Karma( const unsigned int id, const std::string& identifier, const QString& name )
+    : uId_( id )
+    , identifier_( identifier )
     , name_( name )
 {
     // NOTHING
@@ -57,6 +59,14 @@ Karma::~Karma()
 std::string Karma::GetId() const
 {
     return identifier_;
+}
+// -----------------------------------------------------------------------------
+// Name: Karma::GetUid
+// Created: MGD 2009-12-18
+// -----------------------------------------------------------------------------
+unsigned int Karma::GetUId() const
+{
+    return uId_;
 }
 
 // -----------------------------------------------------------------------------

@@ -195,7 +195,7 @@ void QueryDatabaseUpdater::Update( const ASN1T_MsgObjectKnowledgeCreation& msg )
 	
 	if( const dispatcher::KnowledgeGroup* knowledgeGroup = model_.knowledgeGroups_.Find( msg.team ) )
 	{
-		tools::app6::SetAffiliation( symbol, (unsigned int) knowledgeGroup->team_.nType_ );
+		tools::app6::SetAffiliation( symbol, (unsigned int) knowledgeGroup->team_.GetKarma().GetUId() );
         builder.SetField( "observer_affiliation", tools::app6::GetAffiliation( symbol ) );
 	}
 	else
@@ -302,7 +302,7 @@ void QueryDatabaseUpdater::Update( const ASN1T_MsgObjectKnowledgeUpdate& msg )
 
 	if( const dispatcher::KnowledgeGroup* knowledgeGroup = model_.knowledgeGroups_.Find( msg.team ) )
 	{
-		tools::app6::SetAffiliation( symbol, (unsigned int) knowledgeGroup->team_.nType_ );
+		tools::app6::SetAffiliation( symbol, (unsigned int) knowledgeGroup->team_.GetKarma().GetUId() );
         builder.SetField( "observer_affiliation", tools::app6::GetAffiliation( symbol ) );
 	}
 	else
