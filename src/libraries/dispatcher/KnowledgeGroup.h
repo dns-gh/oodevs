@@ -25,7 +25,7 @@ namespace kernel
 
 namespace dispatcher
 {
-    class Model;
+    class Model_ABC;
     class ClientPublisher_ABC;
 
 // =============================================================================
@@ -39,7 +39,7 @@ class KnowledgeGroup : public SimpleEntity< kernel::KnowledgeGroup_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroup( Model& model, const ASN1T_MsgKnowledgeGroupCreation& msg );
+             KnowledgeGroup( Model_ABC& model, const ASN1T_MsgKnowledgeGroupCreation& msg );
     virtual ~KnowledgeGroup();
     //@}
 
@@ -49,6 +49,8 @@ public:
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
     void Accept         ( kernel::ModelVisitor_ABC& visitor ) const;
+    virtual void Register( KnowledgeGroup_ABC& knowledgeGroup );
+    virtual void Remove( KnowledgeGroup_ABC& knowledgeGroup );
 //    void SendChangeParent( ClientPublisher_ABC& publisher ) const;
     //@}
 
@@ -63,8 +65,8 @@ public:
     //! @name Member data
     //@{
     kernel::Team_ABC& team_;
-    KnowledgeGroup*      parent_;
-    tools::Resolver< KnowledgeGroup > knowledgeGroups_;
+    kernel::KnowledgeGroup_ABC*      parent_;
+    tools::Resolver< kernel::KnowledgeGroup_ABC > knowledgeGroups_;
     tools::Resolver< kernel::Automat_ABC > automats_;
     //@}
 };

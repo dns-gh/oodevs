@@ -51,6 +51,8 @@ public:
     void SetType( kernel::KnowledgeGroupType* const& );
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
+    virtual void Register( KnowledgeGroup_ABC& knowledgeGroup );
+    virtual void Remove( KnowledgeGroup_ABC& knowledgeGroup );
     //@}
 
 private:

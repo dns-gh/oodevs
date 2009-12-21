@@ -46,6 +46,8 @@ namespace
         MOCK_METHOD( ContextMenu, 2 );
         MOCK_METHOD( Activate, 1 );
         MOCK_METHOD( Accept, 1 );
+        MOCK_METHOD( Register, 1 );
+        MOCK_METHOD( Remove, 1 );
     };
 
     MOCK_BASE_CLASS( MockKnowledgeGroupsModel, KnowledgeGroupsModel )

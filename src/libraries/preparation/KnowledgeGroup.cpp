@@ -14,6 +14,7 @@
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/KnowledgeGroupType.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
@@ -138,4 +139,22 @@ void KnowledgeGroup::SerializeAttributes( xml::xostream& xos ) const
 void KnowledgeGroup::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::Accept
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::Register( KnowledgeGroup_ABC& knowledgeGroup )
+{
+    Get< kernel::CommunicationHierarchies >().RegisterSubordinate( knowledgeGroup );
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::Accept
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::Remove( KnowledgeGroup_ABC& knowledgeGroup )
+{
+    Get< kernel::CommunicationHierarchies >().UnregisterSubordinate( knowledgeGroup );
 }

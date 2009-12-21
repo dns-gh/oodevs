@@ -51,3 +51,21 @@ void KnowledgeGroup::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::Accept
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::Register( KnowledgeGroup_ABC& knowledgeGroup )
+{
+    //NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::Accept
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::Remove( KnowledgeGroup_ABC& knowledgeGroup )
+{
+    //NOTHING
+}

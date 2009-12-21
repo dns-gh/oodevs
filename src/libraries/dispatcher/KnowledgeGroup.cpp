@@ -21,13 +21,13 @@ using namespace dispatcher;
 // Name: KnowledgeGroup constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( Model& model, const ASN1T_MsgKnowledgeGroupCreation& msg )
+KnowledgeGroup::KnowledgeGroup( Model_ABC& model, const ASN1T_MsgKnowledgeGroupCreation& msg )
     : SimpleEntity< kernel::KnowledgeGroup_ABC >( msg.oid )
-    , team_( model.sides_.Get( msg.oid_camp ) )
-    , parent_( msg.m.oid_knowledgegroup_parentPresent ? &model.knowledgeGroups_.Get( msg.oid_knowledgegroup_parent ) : 0 )
+    , team_( model.Sides().Get( msg.oid_camp ) )
+    , parent_( msg.m.oid_knowledgegroup_parentPresent ? &model.KnowledgeGroups().Get( msg.oid_knowledgegroup_parent ) : 0 )
 {
     if( parent_ )
-        parent_->knowledgeGroups_.Register( msg.oid, *this );
+        parent_->Register( *this );
     else
         team_.Register( *this );
 }
@@ -40,7 +40,7 @@ KnowledgeGroup::~KnowledgeGroup()
 {
     // $$$ RDS : completement invalide si la formation parente a déja été detruite !!! 
     if( parent_ )
-        parent_->knowledgeGroups_.Remove( GetId() );
+        parent_->Remove( *this );
     else
         team_.Remove( *this );
 }
@@ -88,7 +88,16 @@ void KnowledgeGroup::SendDestruction( ClientPublisher_ABC& ) const
 void KnowledgeGroup::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
-    knowledgeGroups_.Apply( boost::bind( &KnowledgeGroup::Accept, _1, boost::ref( visitor ) ) );
+    knowledgeGroups_.Apply( boost::bind( &KnowledgeGroup_ABC::Accept, _1, boost::ref( visitor ) ) );
+}
+
+void KnowledgeGroup::Register( KnowledgeGroup_ABC& knowledgeGroup )
+{
+    knowledgeGroups_.Register( knowledgeGroup.GetId(), *this );
+}
+void KnowledgeGroup::Remove( KnowledgeGroup_ABC& knowledgeGroup )
+{
+    knowledgeGroups_.Remove( knowledgeGroup.GetId() );
 }
 
 //void KnowledgeGroup::SendChangeParent( ClientPublisher_ABC& publisher ) const

@@ -31,6 +31,8 @@ public:
     //! @name Operation
     //@{
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
+    virtual void Register( KnowledgeGroup_ABC& knowledgeGroup );
+    virtual void Remove( KnowledgeGroup_ABC& knowledgeGroup );
     //@}
 
     //! @name Accessors
