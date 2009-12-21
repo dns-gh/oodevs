@@ -659,10 +659,11 @@
         </build-test>
     </target>
     
-    <target name="dispatcher_test"><!-- depends="library.indicators, library.preparation"-->
+    <target name="dispatcher_test">
         <build-test name="dispatcher" depends="boost"
             libs="lib${ant.project.name}_clients_kernel-${platform}-mt
             lib${ant.project.name}_dispatcher-${platform}-mt">
+            <includepath path="${include.dir}/masasn"/>
         </build-test>
     </target>
 
