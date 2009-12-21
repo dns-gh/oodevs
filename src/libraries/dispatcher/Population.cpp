@@ -14,7 +14,7 @@
 #include "ClientPublisher_ABC.h"
 #include "PopulationConcentration.h"
 #include "PopulationFlow.h"
-#include "ModelVisitor_ABC.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "PopulationOrder.h"
 #include <boost/bind.hpp>
 
@@ -219,7 +219,7 @@ void Population::SendDestruction( ClientPublisher_ABC& ) const
 // Name: Population::Accept
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Population::Accept( ModelVisitor_ABC& visitor ) const
+void Population::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
     concentrations_.Apply( boost::bind( &PopulationConcentration::Accept, _1, boost::ref( visitor ) ) );

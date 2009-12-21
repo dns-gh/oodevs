@@ -16,6 +16,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/KnowledgeGroupType.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Team_ABC.h"
 
@@ -128,4 +129,13 @@ void KnowledgeGroup::SerializeAttributes( xml::xostream& xos ) const
     xos << attribute( "id", long( id_ ) )
         << attribute( "type", type_->GetName() )
         << attribute( "name", name_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::Accept
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::Accept( kernel::ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

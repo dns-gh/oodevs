@@ -73,24 +73,24 @@ public:
 
     //! @name data accessor
     //@{
-    virtual const tools::Resolver_ABC< Sendable< kernel::Team_ABC > >& sides() const = 0;
-    virtual const tools::Resolver_ABC< KnowledgeGroup >&        knowledgeGroups() const = 0;
-    virtual const tools::Resolver_ABC< Formation >&             formations() const = 0;
-    virtual const tools::Resolver_ABC< Automat >&               automats() const = 0;
-    virtual const tools::Resolver_ABC< Agent >&                 agents() const = 0;
-    virtual const tools::Resolver_ABC< Object >&                objects() const = 0;
-    virtual const tools::Resolver_ABC< Population >&            populations() const = 0;
-    virtual const tools::Resolver_ABC< AgentKnowledge >&        agentKnowledges() const = 0;
-    virtual const tools::Resolver_ABC< ObjectKnowledge >&       objectKnowledges() const = 0;
-    virtual const tools::Resolver_ABC< PopulationKnowledge >&   populationKnowledges() const = 0;
-    virtual const tools::Resolver_ABC< LogConsignMaintenance >& logConsignsMaintenance() const = 0;
-    virtual const tools::Resolver_ABC< LogConsignSupply >&      logConsignsSupply() const = 0;
-    virtual const tools::Resolver_ABC< LogConsignMedical >&     logConsignsMedical() const = 0;
-    virtual const tools::Resolver_ABC< Fire >&                  fires() const = 0;
-    virtual const tools::Resolver_ABC< PopulationFire >&        populationFires() const = 0;
-    virtual const tools::Resolver_ABC< FireEffect >&            fireEffects() const = 0;
-    virtual const tools::Resolver_ABC< Report >&                reports() const = 0;
-    virtual const tools::Resolver_ABC< UrbanObject >&           urbanBlocks() const = 0;
+    virtual const tools::Resolver_ABC< Sendable< kernel::Team_ABC > >& Sides() const = 0;
+    virtual const tools::Resolver_ABC< KnowledgeGroup >&        KnowledgeGroups() const = 0;
+    virtual const tools::Resolver_ABC< Formation >&             Formations() const = 0;
+    virtual const tools::Resolver_ABC< Automat >&               Automats() const = 0;
+    virtual const tools::Resolver_ABC< Agent >&                 Agents() const = 0;
+    virtual const tools::Resolver_ABC< Object >&                Objects() const = 0;
+    virtual const tools::Resolver_ABC< Population >&            Populations() const = 0;
+    virtual const tools::Resolver_ABC< AgentKnowledge >&        AgentKnowledges() const = 0;
+    virtual const tools::Resolver_ABC< ObjectKnowledge >&       ObjectKnowledges() const = 0;
+    virtual const tools::Resolver_ABC< PopulationKnowledge >&   PopulationKnowledges() const = 0;
+    virtual const tools::Resolver_ABC< LogConsignMaintenance >& LogConsignsMaintenance() const = 0;
+    virtual const tools::Resolver_ABC< LogConsignSupply >&      LogConsignsSupply() const = 0;
+    virtual const tools::Resolver_ABC< LogConsignMedical >&     LogConsignsMedical() const = 0;
+    virtual const tools::Resolver_ABC< Fire >&                  Fires() const = 0;
+    virtual const tools::Resolver_ABC< PopulationFire >&        PopulationFires() const = 0;
+    virtual const tools::Resolver_ABC< FireEffect >&            FireEffects() const = 0;
+    virtual const tools::Resolver_ABC< Report >&                Reports() const = 0;
+    virtual const tools::Resolver_ABC< UrbanObject >&           UrbanBlocks() const = 0;
     //@}
 };
 

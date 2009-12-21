@@ -18,6 +18,7 @@
 
 namespace kernel
 {
+    class ModelVisitor_ABC;
     class Team_ABC;
 }
 namespace dispatcher
@@ -25,7 +26,6 @@ namespace dispatcher
     class Model;
     class DotationQuota;
     class AutomatOrder;
-    class ModelVisitor_ABC;
     class Formation;
     class Agent;
     class Automat;
@@ -50,7 +50,7 @@ public:
     //@{
     virtual const kernel::AutomatType& GetType() const;
     bool IsEngaged() const;
-    void Accept( ModelVisitor_ABC& visitor ) const;
+    void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
 
     //! @name Operations

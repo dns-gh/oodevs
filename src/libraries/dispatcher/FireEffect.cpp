@@ -10,7 +10,7 @@
 #include "dispatcher_pch.h"
 #include "FireEffect.h"
 #include "ClientPublisher_ABC.h"
-#include "ModelVisitor_ABC.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -73,7 +73,7 @@ void FireEffect::SendDestruction( ClientPublisher_ABC& publisher ) const
 // Name: FireEffect::Accept
 // Created: AGE 2008-06-20
 // -----------------------------------------------------------------------------
-void FireEffect::Accept( ModelVisitor_ABC& visitor ) const
+void FireEffect::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
 }

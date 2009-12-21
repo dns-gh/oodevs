@@ -50,6 +50,9 @@ public:
     virtual void Select( ActionController& controller ) const;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
     virtual void Activate( ActionController& controller ) const;
+
+    virtual void Register( Formation_ABC& formation ) = 0;
+    virtual void Remove( Formation_ABC& formation ) = 0;
     //@}
 };
 

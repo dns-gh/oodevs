@@ -16,10 +16,13 @@
 #include "clients_kernel/Karma.h"
 #include "tools/Resolver.h"
 
+namespace kernel
+{
+    class ModelVisitor_ABC;
+}
 namespace dispatcher
 {
     class Model;
-    class ModelVisitor_ABC;
     class ClientPublisher_ABC;
     class KnowledgeGroup;
     class Formation;
@@ -50,7 +53,7 @@ public:
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
 
-    virtual void Accept( ModelVisitor_ABC& visitor ) const;
+    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
 
     virtual const kernel::Karma& GetKarma() const;
     virtual void Register( kernel::Formation_ABC& formation );

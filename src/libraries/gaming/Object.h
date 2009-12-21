@@ -54,6 +54,7 @@ public:
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
+    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
 
     //! @name Accessors

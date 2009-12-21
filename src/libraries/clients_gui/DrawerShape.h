@@ -75,6 +75,7 @@ public:
     virtual void Serialize( xml::xostream& xos ) const;
 
     virtual const kernel::Location_ABC& GetLocation() const;
+    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
 
 protected:

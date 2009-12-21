@@ -57,6 +57,7 @@ public:
     //@{
     virtual const kernel::AutomatType& GetType() const;
     void Rename( const QString& name );
+    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
 
     //! @name Extensions

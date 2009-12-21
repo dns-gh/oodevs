@@ -17,6 +17,7 @@
 
 namespace kernel
 {
+    class ModelVisitor_ABC;
     class Team_ABC;
 }
 
@@ -26,7 +27,6 @@ namespace dispatcher
     class PopulationConcentration;
     class PopulationFlow;
     class PopulationOrder;
-    class ModelVisitor_ABC;
 
 // =============================================================================
 /** @class  Population
@@ -60,7 +60,7 @@ public:
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
 
-    void Accept( ModelVisitor_ABC& visitor ) const;
+    void Accept( kernel::ModelVisitor_ABC& visitor ) const;
 
     virtual const kernel::PopulationType& GetType() const;
     virtual unsigned int GetLivingHumans() const;

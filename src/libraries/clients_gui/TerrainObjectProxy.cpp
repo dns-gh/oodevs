@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "TerrainObjectProxy.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "Tools.h"
 #include <urban/TerrainObject_ABC.h>
@@ -130,4 +131,13 @@ void TerrainObjectProxy::AddDictionaryForSoil( kernel::PropertiesDictionary& dic
         dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Soil/isMultiple" ), soil->GetMultiplicity() );
         dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Soil/compoundClearing" ), soil->GetCompoundClearing() );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainObjectProxy::Accept
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void TerrainObjectProxy::Accept( kernel::ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

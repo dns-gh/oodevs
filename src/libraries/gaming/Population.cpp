@@ -15,6 +15,7 @@
 #include "Tools.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/PopulationType.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Styles.h"
@@ -351,4 +352,13 @@ void Population::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
     displayer.Display( tools::translate( "Population", "Alive:" ), GetLivingHumans() )
              .Display( tools::translate( "Population", "Dead:" ), GetDeadHumans() )
              .Display( tools::translate( "Population", "Domination:" ), nDomination_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::Accept
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void Population::Accept( kernel::ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

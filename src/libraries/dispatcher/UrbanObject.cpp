@@ -11,7 +11,7 @@
 #include "UrbanObject.h"
 #include "Model.h"
 #include "ClientPublisher_ABC.h"
-#include "ModelVisitor_ABC.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "VegetationAttribute.h"
 #include "SoilAttribute.h"
 #include "ArchitectureAttribute.h"
@@ -115,7 +115,7 @@ void UrbanObject::Update( const ASN1T_MsgUrbanCreation& msg )
 // Name: UrbanObject::Accept
 // Created: SLG 2009-06-20
 // -----------------------------------------------------------------------------
-void UrbanObject::Accept( ModelVisitor_ABC& visitor ) const
+void UrbanObject::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
 }

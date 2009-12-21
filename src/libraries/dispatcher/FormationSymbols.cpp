@@ -40,11 +40,11 @@ namespace
 {
     struct SymbolAggregator
     {
-        void AddAutomat( const dispatcher::Automat& automat )
+        void AddAutomat( const kernel::Automat_ABC& automat )
         {
             symbol_ = tools::app6::FilterSymbol( automat.Get< EntitySymbols_ABC >().BuildSymbol( false ), symbol_ );
         }
-        void AddFormation( const dispatcher::Formation& formation )
+        void AddFormation( const kernel::Formation_ABC& formation )
         {
             symbol_ = tools::app6::FilterSymbol( formation.Get< EntitySymbols_ABC >().BuildSymbol( false ), symbol_ );
         }
@@ -60,7 +60,7 @@ std::string FormationSymbols::BuildSymbol( bool up /*= true*/ ) const
 {
     SymbolAggregator aggregator;
     holder_.automats_.Apply( boost::bind( &SymbolAggregator::AddAutomat, boost::ref( aggregator ), _1 ) );
-    holder_.formations_.Apply( boost::bind( &SymbolAggregator::AddFormation, boost::ref( aggregator ), _1 ) );
+    holder_.formations_.Apply( boost::bind( &SymbolAggregator::AddFormation, boost::ref( aggregator ), _1 ) );//@TODO URGENT MGD RESTORE
     if( up )
     {
         const EntitySymbols_ABC* symbols;

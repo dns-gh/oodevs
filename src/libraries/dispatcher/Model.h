@@ -21,9 +21,10 @@ namespace kernel
 {
     class AgentTypes;
     class AgentType;
-    class MissionType;
-    class FragOrderType;
     class Entity_ABC;
+    class FragOrderType;
+    class MissionType;
+    class ModelVisitor_ABC;
 	class ObjectType;
 	class ObjectTypes;
 }
@@ -35,7 +36,6 @@ namespace tools
 
 namespace dispatcher
 {
-    class ModelVisitor_ABC;
     class LogConsignMaintenance;
     class LogConsignSupply;
     class LogConsignMedical;
@@ -113,7 +113,7 @@ public:
 
     //! @name Accessors
     //@{
-    void Accept( ModelVisitor_ABC& visitor ) const;
+    void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     const tools::Resolver_ABC< kernel::AgentType >& GetAgentTypes() const;
     const tools::Resolver_ABC< kernel::MissionType >& GetMissionTypes() const;
     const tools::Resolver_ABC< kernel::FragOrderType >& GetFragOrderTypes() const;
@@ -153,24 +153,24 @@ private:
 public:
     //! @name Dynamic model
     //@{
-    virtual const tools::Resolver_ABC< Sendable< kernel::Team_ABC > >& sides() const { return sides_; }
-    virtual const tools::Resolver_ABC< KnowledgeGroup >&        knowledgeGroups() const { return knowledgeGroups_; }
-    virtual const tools::Resolver_ABC< Formation >&             formations() const { return formations_; }
-    virtual const tools::Resolver_ABC< Automat >&               automats() const { return automats_; }
-    virtual const tools::Resolver_ABC< Agent >&                 agents() const { return agents_; }
-    virtual const tools::Resolver_ABC< Object >&                objects() const { return objects_; }
-    virtual const tools::Resolver_ABC< Population >&            populations() const { return populations_; }
-    virtual const tools::Resolver_ABC< AgentKnowledge >&        agentKnowledges() const { return agentKnowledges_; }
-    virtual const tools::Resolver_ABC< ObjectKnowledge >&       objectKnowledges() const { return objectKnowledges_; }
-    virtual const tools::Resolver_ABC< PopulationKnowledge >&   populationKnowledges() const { return populationKnowledges_; }
-    virtual const tools::Resolver_ABC< LogConsignMaintenance >& logConsignsMaintenance() const { return logConsignsMaintenance_; }
-    virtual const tools::Resolver_ABC< LogConsignSupply >&      logConsignsSupply() const { return logConsignsSupply_; }
-    virtual const tools::Resolver_ABC< LogConsignMedical >&     logConsignsMedical() const { return logConsignsMedical_; }
-    virtual const tools::Resolver_ABC< Fire >&                  fires() const { return fires_; }
-    virtual const tools::Resolver_ABC< PopulationFire >&        populationFires() const { return populationFires_; }
-    virtual const tools::Resolver_ABC< FireEffect >&            fireEffects() const { return fireEffects_; }
-    virtual const tools::Resolver_ABC< Report >&                reports() const { return reports_; }
-    virtual const tools::Resolver_ABC< UrbanObject >&           urbanBlocks() const { return urbanBlocks_; }
+    virtual const tools::Resolver_ABC< Sendable< kernel::Team_ABC > >& Sides() const { return sides_; }
+    virtual const tools::Resolver_ABC< KnowledgeGroup >&        KnowledgeGroups() const { return knowledgeGroups_; }
+    virtual const tools::Resolver_ABC< Formation >&             Formations() const { return formations_; }
+    virtual const tools::Resolver_ABC< Automat >&               Automats() const { return automats_; }
+    virtual const tools::Resolver_ABC< Agent >&                 Agents() const { return agents_; }
+    virtual const tools::Resolver_ABC< Object >&                Objects() const { return objects_; }
+    virtual const tools::Resolver_ABC< Population >&            Populations() const { return populations_; }
+    virtual const tools::Resolver_ABC< AgentKnowledge >&        AgentKnowledges() const { return agentKnowledges_; }
+    virtual const tools::Resolver_ABC< ObjectKnowledge >&       ObjectKnowledges() const { return objectKnowledges_; }
+    virtual const tools::Resolver_ABC< PopulationKnowledge >&   PopulationKnowledges() const { return populationKnowledges_; }
+    virtual const tools::Resolver_ABC< LogConsignMaintenance >& LogConsignsMaintenance() const { return logConsignsMaintenance_; }
+    virtual const tools::Resolver_ABC< LogConsignSupply >&      LogConsignsSupply() const { return logConsignsSupply_; }
+    virtual const tools::Resolver_ABC< LogConsignMedical >&     LogConsignsMedical() const { return logConsignsMedical_; }
+    virtual const tools::Resolver_ABC< Fire >&                  Fires() const { return fires_; }
+    virtual const tools::Resolver_ABC< PopulationFire >&        PopulationFires() const { return populationFires_; }
+    virtual const tools::Resolver_ABC< FireEffect >&            FireEffects() const { return fireEffects_; }
+    virtual const tools::Resolver_ABC< Report >&                Reports() const { return reports_; }
+    virtual const tools::Resolver_ABC< UrbanObject >&           UrbanBlocks() const { return urbanBlocks_; }
     //@}
         
 

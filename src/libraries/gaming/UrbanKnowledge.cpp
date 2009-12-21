@@ -9,14 +9,15 @@
 
 #include "gaming_pch.h"
 #include "UrbanKnowledge.h"
-#include "clients_kernel/Controller.h"
 #include "clients_kernel/ActionController.h"
-#include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/Units.h"
+#include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Units.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "Tools.h"
 #include "statusicons.h"
@@ -154,4 +155,13 @@ const Entity_ABC* UrbanKnowledge::GetRecognizedEntity() const
 const Team_ABC& UrbanKnowledge::GetOwner() const
 {
     return owner_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanKnowledge::Accept
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void UrbanKnowledge::Accept( kernel::ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

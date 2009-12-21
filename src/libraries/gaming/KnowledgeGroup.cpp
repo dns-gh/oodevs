@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "KnowledgeGroup.h"
 #include "Tools.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 
 using namespace kernel;
 
@@ -40,4 +41,13 @@ KnowledgeGroup::~KnowledgeGroup()
 bool KnowledgeGroup::IsActivated() const
 {
     return isActivated_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::Accept
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::Accept( kernel::ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

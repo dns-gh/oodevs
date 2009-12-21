@@ -13,7 +13,7 @@
 #include "Automat.h"
 #include "Agent.h"
 #include "ClientPublisher_ABC.h"
-#include "ModelVisitor_ABC.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "LogSupplyDotation.h"
 
 using namespace dispatcher;
@@ -150,7 +150,7 @@ void LogConsignSupply::SendDestruction( ClientPublisher_ABC& publisher ) const
 // Name: LogConsignSupply::Accept
 // Created: AGE 2008-06-20
 // -----------------------------------------------------------------------------
-void LogConsignSupply::Accept( ModelVisitor_ABC& visitor ) const
+void LogConsignSupply::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
 }

@@ -12,10 +12,13 @@
 
 #include "SimpleEntity.h"
 
+namespace kernel
+{
+    class ModelVisitor_ABC;
+}
 namespace dispatcher
 {
     class ClientPublisher_ABC;
-    class ModelVisitor_ABC;
 
 template< typename B = kernel::Entity_ABC >
 class Sendable : public SimpleEntity< B >
@@ -32,7 +35,7 @@ class Sendable : public SimpleEntity< B >
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const = 0;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const = 0;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const = 0;
-    virtual void Accept( ModelVisitor_ABC& visitor ) const = 0;
+    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const = 0;
     //@}
 };
 

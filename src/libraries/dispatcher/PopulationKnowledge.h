@@ -20,6 +20,7 @@ namespace kernel
     class KnowledgeGroup_ABC;
     class Team_ABC;
     class Population_ABC;
+    class ModelVisitor_ABC;
 }
 
 namespace dispatcher
@@ -28,7 +29,6 @@ namespace dispatcher
     class PopulationConcentrationKnowledge;
     class PopulationFlowKnowledge;
     class ClientPublisher_ABC;
-    class ModelVisitor_ABC;
 
 // =============================================================================
 /** @class  PopulationKnowledge
@@ -59,7 +59,7 @@ public:
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
-    virtual void Accept ( ModelVisitor_ABC& visitor ) const;
+    virtual void Accept ( kernel::ModelVisitor_ABC& visitor ) const;
 
     virtual const kernel::Entity_ABC* GetRecognizedEntity() const;
     virtual const kernel::Population_ABC*     GetEntity() const;

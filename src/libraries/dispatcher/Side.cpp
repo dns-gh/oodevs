@@ -14,7 +14,7 @@
 #include "Formation.h"
 #include "KnowledgeGroup.h"
 #include "Model.h"
-#include "ModelVisitor_ABC.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "Object.h"
 #include "Population.h"
 #include <boost/bind.hpp>
@@ -110,7 +110,7 @@ void Side::SendDestruction( ClientPublisher_ABC& ) const
 namespace
 {
     template< typename C >
-    void VisitorAdapter( ModelVisitor_ABC& visitor, kernel::Entity_ABC& entity )
+    void VisitorAdapter( kernel::ModelVisitor_ABC& visitor, kernel::Entity_ABC& entity )
     {
         static_cast< C& >( entity ).Accept( visitor );
     }
@@ -120,7 +120,7 @@ namespace
 // Name: Side::Accept
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Side::Accept( ModelVisitor_ABC& visitor ) const
+void Side::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
     knowledgeGroups_.Apply( boost::bind( &KnowledgeGroup::Accept, _1, boost::ref( visitor ) ) );

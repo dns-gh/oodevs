@@ -54,6 +54,7 @@ public:
     virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
 
     //! @name Accessors

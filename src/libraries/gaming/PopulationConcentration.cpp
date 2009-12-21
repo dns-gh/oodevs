@@ -13,6 +13,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "tools.h"
 
 using namespace kernel;
@@ -205,4 +206,13 @@ geometry::Rectangle2f PopulationConcentration::GetBoundingBox() const
 void PopulationConcentration::Accept( kernel::LocationVisitor_ABC& visitor ) const
 {
     visitor.VisitCircle( position_, radius_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentration::Accept
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void PopulationConcentration::Accept( kernel::ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

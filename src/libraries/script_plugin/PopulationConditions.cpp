@@ -9,16 +9,17 @@
 
 #include "script_plugin_pch.h"
 #include "PopulationConditions.h"
-#include "SimpleEntityCondition.h"
+
 #include "AgentEvents.h"
-#include "PopulationManipulator.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "directia/Brain.h"
 #include "dispatcher/Population.h"
 #include "dispatcher/PopulationConcentration.h"
 #include "dispatcher/PopulationFlow.h"
-#include "dispatcher/ModelVisitor_ABC.h"
-#include "clients_kernel/Controller.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
+#include "PopulationManipulator.h"
+#include "SimpleEntityCondition.h"
 
 using namespace plugins::script;
 using namespace dispatcher;
@@ -61,7 +62,7 @@ namespace directia
 
 namespace
 {
-    struct PositionComputer : public dispatcher::ModelVisitor_ABC
+    struct PositionComputer : public kernel::ModelVisitor_ABC
     {
         explicit PositionComputer( const kernel::CoordinateConverter_ABC& converter )
             : converter_( &converter )

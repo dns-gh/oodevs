@@ -10,8 +10,9 @@
 #include "gaming_pch.h"
 #include "Limit.h"
 #include "game_asn/MessengerSenders.h"
-#include "clients_kernel/Controller.h"
 #include "clients_kernel/ActionController.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "Tools.h"
 
 // -----------------------------------------------------------------------------
@@ -117,4 +118,13 @@ void Limit::Activate( kernel::ActionController& actions ) const
 bool Limit::IsLimit() const
 {
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Limit::Accept
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void Limit::Accept( kernel::ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

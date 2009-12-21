@@ -14,8 +14,9 @@
 #include "DrawingCategory.h"
 #include "DrawingTemplate.h"
 #include "ParametersLayer.h"
-#include "clients_kernel/LocationProxy.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/LocationProxy.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/Positions.h"
 #include <svgl/svgl.h>
 #include <xeumeuleu/xml.h>
@@ -246,4 +247,13 @@ void DrawerShape::Edit( ParametersLayer& parameters )
 const kernel::Location_ABC& DrawerShape::GetLocation() const
 {
     return location_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerShape::Accept
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void DrawerShape::Accept( kernel::ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

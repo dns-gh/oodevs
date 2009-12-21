@@ -10,7 +10,7 @@
 #include "dispatcher_pch.h"
 #include "Fire.h"
 #include "ClientPublisher_ABC.h"
-#include "ModelVisitor_ABC.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -93,7 +93,7 @@ void Fire::SendDestruction( ClientPublisher_ABC& publisher ) const
 // Name: Fire::Accept
 // Created: AGE 2008-06-20
 // -----------------------------------------------------------------------------
-void Fire::Accept( ModelVisitor_ABC& visitor ) const
+void Fire::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
 }

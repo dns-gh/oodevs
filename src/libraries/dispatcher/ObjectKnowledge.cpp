@@ -21,7 +21,7 @@
 #include "LogisticAttribute.h"
 #include "FireAttribute.h"
 #include "MedicalTreatmentAttribute.h"
-#include "ModelVisitor_ABC.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "Side.h"
 #include "Automat.h"
 #include "Object.h"
@@ -225,7 +225,7 @@ void ObjectKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) const
 // Name: ObjectKnowledge::Accept
 // Created: AGE 2008-06-20
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::Accept( ModelVisitor_ABC& visitor ) const
+void ObjectKnowledge::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
 }

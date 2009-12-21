@@ -19,6 +19,7 @@
 namespace kernel
 {
     class AgentType;
+    class ModelVisitor_ABC;
     class Team_ABC;
 }
 
@@ -34,7 +35,6 @@ namespace dispatcher
     class AgentLogMaintenance;
     class AgentLogSupply;
     class AgentOrder;
-    class ModelVisitor_ABC;
 
 // =============================================================================
 /** @class  Agent
@@ -66,7 +66,7 @@ public:
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
-    void Accept( ModelVisitor_ABC& visitor ) const;
+    void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
 
     //! @name Accessors

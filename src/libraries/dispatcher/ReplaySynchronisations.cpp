@@ -124,6 +124,7 @@ DO_UPDATE( ASN1T_MsgLogSupplyHandlingCreation );
 DO_UPDATE( ASN1T_MsgStartUnitFire );
 DO_UPDATE( ASN1T_MsgStartFireEffect );
 DO_UPDATE( ASN1T_MsgStartPopulationFire );
+DO_UPDATE( ASN1T_MsgUrbanKnowledgeCreation );
 
 // -----------------------------------------------------------------------------
 // Name: ReplaySynchronisations::DoUpdate

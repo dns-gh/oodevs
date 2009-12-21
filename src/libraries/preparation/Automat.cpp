@@ -21,6 +21,7 @@
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/App6Symbol.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include <xeumeuleu/xml.h>
 
 using namespace kernel;
@@ -161,4 +162,13 @@ void Automat::SerializeAttributes( xml::xostream& xos ) const
 void Automat::SerializeLogistics( xml::xostream& xos ) const
 {
     xos << attribute( "id", long( id_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::Accept
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void Automat::Accept( kernel::ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

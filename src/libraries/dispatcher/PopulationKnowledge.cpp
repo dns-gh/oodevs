@@ -13,7 +13,7 @@
 #include "ClientPublisher_ABC.h"
 #include "PopulationConcentrationKnowledge.h"
 #include "PopulationFlowKnowledge.h"
-#include "ModelVisitor_ABC.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "KnowledgeGroup.h"
 #include "Population.h"
 #include "Side.h"
@@ -163,7 +163,7 @@ void PopulationKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 // Name: PopulationKnowledge::Accept
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::Accept( ModelVisitor_ABC& visitor ) const
+void PopulationKnowledge::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
     concentrations_.Apply( boost::bind( &PopulationConcentrationKnowledge::Accept, _1, boost::ref( visitor ) ) );

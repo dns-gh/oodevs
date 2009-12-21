@@ -40,6 +40,7 @@ public:
     virtual void ContextMenu( kernel::ActionController& actions, const QPoint& point ) const;
     virtual void Activate( kernel::ActionController& controller ) const;
     virtual bool IsLimit() const;
+    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
 
 private:

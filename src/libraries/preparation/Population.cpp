@@ -13,6 +13,7 @@
 #include "clients_kernel/PopulationType.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "Tools.h"
 #include <xeumeuleu/xml.h>
 
@@ -111,4 +112,13 @@ void Population::SerializeAttributes( xml::xostream& xos ) const
         << attribute( "type", type_.GetName() )
         << attribute( "humans", long( livingHumans_ ) )
         << attribute( "attitude", attitude_.ToXml() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::Accept
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void Population::Accept( kernel::ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

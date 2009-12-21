@@ -11,22 +11,21 @@
 #define __Formation_h_
 
 #include "game_asn/Simulation.h"
-#include "Automat.h"
 #include "SimpleEntity.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "tools/Resolver.h"
 
 namespace kernel
 {
+    class Automat_ABC;
+    class ModelVisitor_ABC;
     class Team_ABC;
 }
 namespace dispatcher
 {
-    class Model;
-    class ModelVisitor_ABC;
+    class Model_ABC;
     class ClientPublisher_ABC;
-    class Side;
-    class Automat;
+    class Team_ABC;
 
 // =============================================================================
 /** @class  Formation
@@ -39,7 +38,7 @@ class Formation : public SimpleEntity< kernel::Formation_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Formation( const Model& model, const ASN1T_MsgFormationCreation& msg );
+             Formation( const Model_ABC& model, const ASN1T_MsgFormationCreation& msg );
     virtual ~Formation();
     //@}
 
@@ -49,9 +48,12 @@ public:
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
 
-    void Accept( ModelVisitor_ABC& visitor ) const;
+    void Accept( kernel::ModelVisitor_ABC& visitor ) const;
 
     virtual const kernel::HierarchyLevel_ABC& GetLevel() const;
+
+    virtual void Register( Formation_ABC& formation );
+    virtual void Remove( Formation_ABC& formation );
     //@}
 
 private:
@@ -64,15 +66,15 @@ private:
 private:
     //! @name Member data
     //@{
-    const Model&                model_;
+    const Model_ABC&                model_;
     const std::string           name_;
 
 public:
     kernel::Team_ABC&           team_;
     const ASN1T_EnumNatureLevel level_;
-    Formation*      parent_;
-    tools::Resolver< Formation > formations_;
-    tools::Resolver< Automat > automats_;
+    kernel::Formation_ABC*      parent_;
+    tools::Resolver< kernel::Formation_ABC > formations_;
+    tools::Resolver< kernel::Automat_ABC > automats_;
     //@}
 };
 

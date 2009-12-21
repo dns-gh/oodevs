@@ -40,6 +40,7 @@ public:
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
+    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
 
 private:

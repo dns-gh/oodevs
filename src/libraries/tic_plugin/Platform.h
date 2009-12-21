@@ -50,6 +50,7 @@ public:
     void Spread( ASN1T_EquipmentDotations& updateMessage );
     virtual void Move( const geometry::Point2f& to );
     virtual void Stop();
+    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
 
     //! @name Accessors

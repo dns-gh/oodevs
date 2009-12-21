@@ -12,7 +12,7 @@
 #include "Side.h"
 #include "Model.h"
 #include "ClientPublisher_ABC.h"
-#include "ModelVisitor_ABC.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include <boost/bind.hpp>
 
 using namespace dispatcher;
@@ -85,7 +85,7 @@ void KnowledgeGroup::SendDestruction( ClientPublisher_ABC& ) const
 // Name: KnowledgeGroup::Accept
 // Created: AGE 2008-06-20
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::Accept( ModelVisitor_ABC& visitor ) const
+void KnowledgeGroup::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
     knowledgeGroups_.Apply( boost::bind( &KnowledgeGroup::Accept, _1, boost::ref( visitor ) ) );

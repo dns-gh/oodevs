@@ -19,6 +19,7 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/IntelligenceHierarchies.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/Styles.h"
 #include "game_asn/MessengerSenders.h"
 #include "Tools.h"
@@ -213,4 +214,13 @@ void Intelligence::DoUpdate( const ASN1T_MsgIntelligenceUpdate& message )
         mounted_ = message.embarked ? true : false;
 //    if( message.m.formationPresent ) // $$$$ SBO 2007-10-23: someday if needed maybe...
 //        formation_ = formations_.Find( message.formation );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Intelligence::Accept
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void Intelligence::Accept( kernel::ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

@@ -14,12 +14,15 @@
 #include "SimpleEntity.h"
 #include <boost/ptr_container/ptr_vector.hpp>
 
+namespace kernel
+{
+    class ModelVisitor_ABC;
+}
 namespace dispatcher
 {
-class Model;
-class UrbanObjectAttribute_ABC;
-class ModelVisitor_ABC;
-class ClientPublisher_ABC;
+    class Model;
+    class UrbanObjectAttribute_ABC;
+    class ClientPublisher_ABC;
 
 // =============================================================================
 /** @class  UrbanObject
@@ -41,7 +44,7 @@ public:
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
-    void Accept( ModelVisitor_ABC& visitor ) const;
+    void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     void Update             ( const ASN1T_MsgUrbanCreation& msg  );
     //@}
 

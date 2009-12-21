@@ -54,6 +54,13 @@ public:
     void Rename( const QString& name );
     //@}
 
+    //! @name Operations
+    //@{
+    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
+    virtual void Register( Formation_ABC& formation );
+    virtual void Remove( Formation_ABC& formation );
+    //@}
+
 private:
     //! @name Copy/Assignement
     //@{

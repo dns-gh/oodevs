@@ -344,7 +344,7 @@ void Model::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks,
 // Name: Model::Accept
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Model::Accept( ModelVisitor_ABC& visitor ) const
+void Model::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     sides_                 .Apply( boost::bind( &Sendable< kernel::Team_ABC >::Accept, _1, boost::ref( visitor ) ) );
     agentKnowledges_       .Apply( boost::bind( &AgentKnowledge::Accept, _1, boost::ref( visitor ) ) );

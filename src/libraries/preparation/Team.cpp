@@ -14,6 +14,7 @@
 #include "Diplomacies.h"
 #include "KnowledgeGroup.h"
 #include "clients_kernel/KnowledgeGroupFactory_ABC.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "IdManager.h"
 #include "Object.h"
 #include "ObjectFactory_ABC.h"
@@ -212,4 +213,13 @@ void Team::Register( KnowledgeGroup_ABC& /*knGroup*/ )
 void Team::Remove( KnowledgeGroup_ABC& /*knGroup*/ )
 {
     //NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::Accept
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void Team::Accept( kernel::ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

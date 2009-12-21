@@ -11,7 +11,7 @@
 #include "LogConsignMaintenance.h"
 #include "Model.h"
 #include "ClientPublisher_ABC.h"
-#include "ModelVisitor_ABC.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "Agent.h"
 
 using namespace dispatcher;
@@ -111,7 +111,7 @@ void LogConsignMaintenance::SendDestruction( ClientPublisher_ABC& publisher ) co
 // Name: LogConsignMaintenance::Accept
 // Created: AGE 2008-06-20
 // -----------------------------------------------------------------------------
-void LogConsignMaintenance::Accept( ModelVisitor_ABC& visitor ) const
+void LogConsignMaintenance::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
 }

@@ -22,7 +22,7 @@
 #include "AgentOrder.h"
 #include "ClientPublisher_ABC.h"
 #include "clients_kernel/AgentType.h"
-#include "ModelVisitor_ABC.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -571,7 +571,7 @@ void Agent::SendDestruction( ClientPublisher_ABC& publisher ) const
 // Name: Agent::Accept
 // Created: AGE 2008-06-20
 // -----------------------------------------------------------------------------
-void Agent::Accept( ModelVisitor_ABC& visitor ) const
+void Agent::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
 }

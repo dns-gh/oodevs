@@ -55,6 +55,7 @@ public:
 
     virtual unsigned int GetLivingHumans() const;
     virtual unsigned int GetDeadHumans() const;
+    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
 
 private:

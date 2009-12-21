@@ -17,6 +17,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "Tools.h"
 #include <xeumeuleu/xml.h>
 
@@ -113,4 +114,31 @@ void Formation::CreateDictionary( kernel::Controller& controller )
     Attach( dictionary );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/Identifier" ), (const unsigned long)id_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/Name" ), name_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::Accept
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void Formation::Accept( kernel::ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::Register
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void Formation::Register( Formation_ABC& formation )
+{
+    //NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::Remove
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void Formation::Remove( Formation_ABC& formation )
+{
+    //NOTHING
 }

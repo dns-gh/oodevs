@@ -14,9 +14,12 @@
 #include "game_asn/Simulation.h"
 #include "Localisation.h"
 
-namespace dispatcher
+namespace kernel
 {
     class ModelVisitor_ABC;
+}
+namespace dispatcher
+{
     class ClientPublisher_ABC;
 
 // =============================================================================
@@ -41,7 +44,7 @@ public:
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
 
-    void Accept( ModelVisitor_ABC& visitor ) const;
+    void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
 
 private:

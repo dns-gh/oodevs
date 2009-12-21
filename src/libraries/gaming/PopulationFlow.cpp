@@ -12,6 +12,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "tools.h"
 
 using namespace geometry;
@@ -247,4 +248,13 @@ geometry::Rectangle2f PopulationFlow::GetBoundingBox() const
 void PopulationFlow::Accept( kernel::LocationVisitor_ABC& visitor ) const
 {
     visitor.VisitLines( flow_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFlow::Accept
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void PopulationFlow::Accept( kernel::ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

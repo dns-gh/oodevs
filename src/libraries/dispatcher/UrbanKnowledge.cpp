@@ -13,7 +13,7 @@
 #include "Automat.h"
 #include "ClientPublisher_ABC.h"
 #include "Model_ABC.h"
-#include "ModelVisitor_ABC.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "Side.h"
 #include "UrbanObject.h"
 
@@ -29,8 +29,8 @@ namespace dispatcher
 UrbanKnowledge::UrbanKnowledge( const Model_ABC& model, const ASN1T_MsgUrbanKnowledgeCreation& asnMsg )
     : SimpleEntity< kernel::UrbanKnowledge_ABC >( asnMsg.oid )
     , model_                        ( model )
-    , team_                         ( model.sides().Get( asnMsg.team ) )
-    , pUrban_                       ( model.urbanBlocks().Find( asnMsg.real_urban ) )
+    , team_                         ( model.Sides().Get( asnMsg.team ) )
+    , pUrban_                       ( model.UrbanBlocks().Find( asnMsg.real_urban ) )
     , bPerceived_                   ( false )
     , automatPerceptions_           ()    
 {
@@ -58,7 +58,7 @@ void UrbanKnowledge::Update( const ASN1T_MsgUrbanKnowledgeCreation& message )
     bool realUrbanChanged = ( message.real_urban && ! pUrban_ )
                           || ( pUrban_ && pUrban_->GetId() != message.real_urban );
     if( realUrbanChanged )
-        pUrban_ = model_.urbanBlocks().Find( message.real_urban );
+        pUrban_ = model_.UrbanBlocks().Find( message.real_urban );
 
     ApplyUpdate( message );
 }
@@ -74,11 +74,11 @@ void UrbanKnowledge::Update( const ASN1T_MsgUrbanKnowledgeUpdate& asnMsg )
         optionals_.automat_perceptionPresent = 1;
         automatPerceptions_.clear();
         for( unsigned int i = 0; i < asnMsg.automat_perception.n; ++i )
-            automatPerceptions_.push_back( &model_.automats().Get( asnMsg.automat_perception.elem[ i ]) );
+            automatPerceptions_.push_back( &model_.Automats().Get( asnMsg.automat_perception.elem[ i ]) );
     }
 
     if( asnMsg.m.real_urbanPresent )
-        pUrban_ = model_.urbanBlocks().Find( asnMsg.real_urban );
+        pUrban_ = model_.UrbanBlocks().Find( asnMsg.real_urban );
 
     if( asnMsg.m.perceivedPresent )
     {
@@ -184,7 +184,7 @@ void UrbanKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) const
 // Name: UrbanKnowledge::Accept
 // Created: MGD 2009-12-11
 // -----------------------------------------------------------------------------
-void UrbanKnowledge::Accept( ModelVisitor_ABC& visitor ) const
+void UrbanKnowledge::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
 }

@@ -10,7 +10,7 @@
 #include "dispatcher_pch.h"
 #include "PopulationFire.h"
 #include "ClientPublisher_ABC.h"
-#include "ModelVisitor_ABC.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 
 using namespace dispatcher;
 
@@ -71,7 +71,7 @@ void PopulationFire::SendDestruction( ClientPublisher_ABC& publisher ) const
 // Name: PopulationFire::Accept
 // Created: AGE 2008-06-20
 // -----------------------------------------------------------------------------
-void PopulationFire::Accept( ModelVisitor_ABC& visitor ) const
+void PopulationFire::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
 }

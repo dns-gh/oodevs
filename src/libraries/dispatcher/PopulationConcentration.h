@@ -14,10 +14,13 @@
 #include "SimpleEntity.h"
 #include "clients_kernel/PopulationConcentration_ABC.h"
 
+namespace kernel
+{
+    class ModelVisitor_ABC;
+}
 namespace dispatcher
 {
     class Population;
-    class ModelVisitor_ABC;
     class ClientPublisher_ABC;
 
 // =============================================================================
@@ -48,7 +51,7 @@ public:
     virtual unsigned int GetDensity() const;
     virtual QString      GetAttitude() const;
 
-    void Accept( ModelVisitor_ABC& visitor ) const;
+    void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
 
 private:

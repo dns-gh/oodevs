@@ -18,12 +18,12 @@
 namespace kernel
 {
     class Automat_ABC;
+    class ModelVisitor_ABC;
 }
 
 namespace dispatcher
 {
     class Model_ABC;
-    class ModelVisitor_ABC;
     class ClientPublisher_ABC;
 
 // =============================================================================
@@ -49,7 +49,7 @@ public:
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
-    void Accept( ModelVisitor_ABC& visitor ) const;
+    void Accept( kernel::ModelVisitor_ABC& visitor ) const;
 
     virtual const kernel::Entity_ABC* GetRecognizedEntity() const;
     virtual const UrbanObject* GetEntity() const;

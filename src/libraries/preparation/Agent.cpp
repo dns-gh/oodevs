@@ -19,6 +19,7 @@
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Karma.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include <xeumeuleu/xml.h>
@@ -153,4 +154,14 @@ void Agent::SerializeAttributes( xml::xostream& xos ) const
         << xml::attribute( "type", type_->GetName() )
         << xml::attribute( "name", name_.ascii() )
         << xml::attribute( "command-post", commandPost_ );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: Agent::Accept
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void Agent::Accept( kernel::ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

@@ -28,6 +28,11 @@ public:
     virtual ~KnowledgeGroup();
     //@}
 
+    //! @name Operation
+    //@{
+    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
+    //@}
+
     //! @name Accessors
     //@{
     bool IsActivated() const;

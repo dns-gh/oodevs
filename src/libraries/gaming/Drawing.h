@@ -49,6 +49,7 @@ public:
     //! @name Operations
     //@{
     virtual void DoUpdate( const ASN1T_MsgShapeUpdate& message );
+    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
 
 private:

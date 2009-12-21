@@ -23,7 +23,7 @@
 #include "LogisticAttribute.h"
 #include "ToxicCloudAttribute.h"
 #include "ClientPublisher_ABC.h"
-#include "ModelVisitor_ABC.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/ObjectType.h"
 
 #include <boost/bind.hpp>
@@ -160,7 +160,7 @@ void Object::SendDestruction( ClientPublisher_ABC& publisher ) const
 // Name: Object::Accept
 // Created: AGE 2008-06-20
 // -----------------------------------------------------------------------------
-void Object::Accept( ModelVisitor_ABC& visitor ) const
+void Object::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
 }

@@ -12,7 +12,7 @@
 #include "Population.h"
 #include "PopulationFlow.h"
 #include "ClientPublisher_ABC.h"
-#include "ModelVisitor_ABC.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "EntityPublisher.h"
 #include "clients_kernel/PopulationKnowledge_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
@@ -195,7 +195,7 @@ void PopulationFlowKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) 
 // Name: PopulationFlowKnowledge::Accept
 // Created: AGE 2008-06-20
 // -----------------------------------------------------------------------------
-void PopulationFlowKnowledge::Accept( ModelVisitor_ABC& visitor ) const
+void PopulationFlowKnowledge::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
 }

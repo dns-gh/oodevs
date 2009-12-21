@@ -10,6 +10,7 @@
 #include "tic_plugin_pch.h"
 #include "Platform.h"
 #include "clients_kernel/ComponentType.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 
 using namespace plugins::tic;
 
@@ -217,4 +218,13 @@ float Platform::GetHeading() const
 Platform::E_State Platform::GetState() const
 {
     return state_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Platform::Accept
+// Created: MGD 2009-12-18
+// -----------------------------------------------------------------------------
+void Platform::Accept( kernel::ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

@@ -13,10 +13,6 @@
 namespace kernel
 {
     class Entity_ABC;
-}
-
-namespace dispatcher
-{
 
 // =============================================================================
 /** @class  ModelVisitor_ABC

@@ -9,8 +9,9 @@
 
 #include "preparation_pch.h"
 #include "Lima.h"
-#include "clients_kernel/Controller.h"
 #include "clients_kernel/ActionController.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "Tools.h"
 #include <xeumeuleu/xml.h>
 
@@ -82,4 +83,13 @@ void Lima::Activate( ActionController& actions ) const
 bool Lima::IsLimit() const
 {
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Lima::Accept
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void Lima::Accept( kernel::ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

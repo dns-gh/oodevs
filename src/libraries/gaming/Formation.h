@@ -34,6 +34,9 @@ public:
     //! @name Operations
     //@{
     virtual const kernel::HierarchyLevel_ABC& GetLevel() const;
+    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
+    virtual void Register( Formation_ABC& formation );
+    virtual void Remove( Formation_ABC& formation );
     //@}
 
 private:

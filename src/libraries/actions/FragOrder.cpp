@@ -14,6 +14,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/FragOrderType.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include <xeumeuleu/xml.h>
 
 using namespace kernel;
@@ -100,3 +101,12 @@ void FragOrder::Publish( Publisher_ABC& publisher ) const
     asn.Send( publisher );
     Clean( asn().parametres );
 }
+// -----------------------------------------------------------------------------
+// Name: FragOrder::Accept
+// Created: MGD 2009-12-18
+// -----------------------------------------------------------------------------
+void FragOrder::Accept( kernel::ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
+}
+

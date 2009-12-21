@@ -10,7 +10,7 @@
 #include "dispatcher_pch.h"
 #include "AgentKnowledge.h"
 #include "Model.h"
-#include "ModelVisitor_ABC.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "ClientPublisher_ABC.h"
 #include "Agent.h"
 #include "KnowledgeGroup.h"
@@ -209,7 +209,7 @@ void AgentKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) const
 // Name: AgentKnowledge::Accept
 // Created: AGE 2008-06-20
 // -----------------------------------------------------------------------------
-void AgentKnowledge::Accept( ModelVisitor_ABC& visitor ) const
+void AgentKnowledge::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
 }

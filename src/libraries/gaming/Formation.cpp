@@ -11,6 +11,7 @@
 #include "Formation.h"
 #include "Tools.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 
 using namespace kernel;
@@ -57,4 +58,31 @@ void Formation::CreateDictionary( kernel::Controller& controller )
     const Formation& self = *this;
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/Identifier" ), self.id_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/Name" ), self.name_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::Accept
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void Formation::Accept( kernel::ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::Register
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void Formation::Register( Formation_ABC& formation )
+{
+    //NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::Remove
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void Formation::Remove( Formation_ABC& formation )
+{
+    //NOTHING
 }

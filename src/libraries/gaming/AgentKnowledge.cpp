@@ -24,6 +24,7 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/App6Symbol.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "Tools.h"
 #include "Diplomacies.h"
 
@@ -277,4 +278,13 @@ void AgentKnowledge::UpdateSymbol()
 
     if( nLevel_ == eNatureLevel_None && nMaxPerceptionLevel_.IsSet() && nMaxPerceptionLevel_ > eDetection )
         nLevel_ = tools::NatureLevelFromString( realAgent_.GetType().GetNature().GetLevel() ); // $$$$ AGE 2006-11-20: 
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::Accept
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void AgentKnowledge::Accept( kernel::ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

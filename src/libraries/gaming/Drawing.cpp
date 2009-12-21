@@ -16,6 +16,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/LocationProxy.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: Drawing constructor
@@ -193,4 +194,13 @@ void Drawing::CleanLocation( ASN1T_CoordLatLongList& list ) const
 {
     if( list.n )
         delete[] list.elem;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Drawing::Accept
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void Drawing::Accept( kernel::ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

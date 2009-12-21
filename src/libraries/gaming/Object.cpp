@@ -12,6 +12,7 @@
 #include "Tools.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Styles.h"
@@ -131,4 +132,13 @@ bool Object::IsReservedObstacleActivated() const
 // -----------------------------------------------------------------------------
 void Object::DisplayInSummary( kernel::Displayer_ABC& /*displayer*/ ) const
 {
+}
+
+// -----------------------------------------------------------------------------
+// Name: Object::Accept
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void Object::Accept( kernel::ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

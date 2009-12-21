@@ -48,6 +48,7 @@ public:
     virtual void Serialize( xml::xostream& xos ) const;
     virtual void Publish( Publisher_ABC& publisher ) const;
     virtual void Polish();
+    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
 
 private:

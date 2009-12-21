@@ -18,6 +18,7 @@ namespace kernel
 {
     class Automat_ABC;
     class Agent_ABC;
+    class ModelVisitor_ABC;
 }
 
 namespace dispatcher
@@ -25,7 +26,6 @@ namespace dispatcher
     class Agent;
     class Automat;
     class Model;
-    class ModelVisitor_ABC;
     class LogSupplyDotation;
     class ClientPublisher_ABC;
 
@@ -51,7 +51,7 @@ public:
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
-    void Accept( ModelVisitor_ABC& visitor ) const;
+    void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
 
 private:

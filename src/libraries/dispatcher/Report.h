@@ -13,11 +13,14 @@
 #include "game_asn/Simulation.h"
 #include "SimpleEntity.h"
 
+namespace kernel
+{
+    class ModelVisitor_ABC;
+}
 namespace dispatcher
 {
     class MissionParameter_ABC;
     class Model;
-    class ModelVisitor_ABC;
     class ClientPublisher_ABC;
 
 // =============================================================================
@@ -42,7 +45,7 @@ public:
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
 
-    void Accept( ModelVisitor_ABC& visitor ) const;
+    void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
 
 private:

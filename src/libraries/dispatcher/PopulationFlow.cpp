@@ -11,7 +11,7 @@
 #include "PopulationFlow.h"
 #include "Population.h"
 #include "ClientPublisher_ABC.h"
-#include "ModelVisitor_ABC.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "EntityPublisher.h"
 
 using namespace dispatcher;
@@ -130,7 +130,7 @@ void PopulationFlow::SendDestruction( ClientPublisher_ABC& publisher ) const
 // Name: PopulationFlow::Accept
 // Created: AGE 2008-06-20
 // -----------------------------------------------------------------------------
-void PopulationFlow::Accept( ModelVisitor_ABC& visitor ) const
+void PopulationFlow::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
 }

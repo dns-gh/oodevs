@@ -17,7 +17,7 @@
 #include "Formation.h"
 #include "KnowledgeGroup.h"
 #include "Model.h"
-#include "ModelVisitor_ABC.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "Report.h"
 #include "Side.h"
 #include <boost/bind.hpp>
@@ -335,7 +335,7 @@ void Automat::SendDestruction( ClientPublisher_ABC& ) const
 namespace
 {
     template< typename C >
-    void VisitorAdapter( ModelVisitor_ABC& visitor, kernel::Entity_ABC& entity )
+    void VisitorAdapter( kernel::ModelVisitor_ABC& visitor, kernel::Entity_ABC& entity )
     {
         static_cast< C& >( entity ).Accept( visitor );
     }
@@ -345,7 +345,7 @@ namespace
 // Name: Automat::Accept
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Automat::Accept( ModelVisitor_ABC& visitor ) const
+void Automat::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
     automats_.Apply( boost::bind( &Automat::Accept, _1, boost::ref( visitor ) ) );

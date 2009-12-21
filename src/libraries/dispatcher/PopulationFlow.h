@@ -15,10 +15,13 @@
 #include "SimpleEntity.h"
 #include "clients_kernel/PopulationFlow_ABC.h"
 
+namespace kernel
+{
+    class ModelVisitor_ABC;
+}
 namespace dispatcher
 {
     class Population;
-    class ModelVisitor_ABC;
     class ClientPublisher_ABC;
 
 // =============================================================================
@@ -43,7 +46,7 @@ public:
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
-    void Accept( ModelVisitor_ABC& visitor ) const;
+    void Accept( kernel::ModelVisitor_ABC& visitor ) const;
 
     virtual unsigned int GetDeadHumans() const;
     virtual unsigned int GetLivingHumans() const;

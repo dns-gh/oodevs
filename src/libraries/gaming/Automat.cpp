@@ -18,6 +18,7 @@
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Karma.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "Diplomacies.h"
 #include "Tools.h"
 
@@ -95,4 +96,13 @@ void Automat::InitializeSymbol() const
     const Entity_ABC& team = hierarchies.GetTop();
     const Diplomacies_ABC* diplo = team.Retrieve< Diplomacies_ABC >();
     App6Symbol::SetKarma( symbol_, diplo ? diplo->GetKarma() : Karma::unknown_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::Accept
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void Automat::Accept( kernel::ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

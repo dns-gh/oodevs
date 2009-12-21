@@ -9,6 +9,8 @@
 
 #include "dispatcher_pch.h"
 #include "FolkModel.h"
+
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "ClientPublisher_ABC.h"
 
 using namespace dispatcher;
@@ -96,4 +98,13 @@ void FolkModel::SendCreation( ClientPublisher_ABC& publisher ) const
 void FolkModel::SendDestruction( ClientPublisher_ABC& ) const
 {
     throw std::runtime_error( __FUNCTION__ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FolkModel::Accept
+// Created: MGD 2009-12-18
+// -----------------------------------------------------------------------------
+void FolkModel::Accept( kernel::ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

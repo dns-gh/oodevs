@@ -50,6 +50,7 @@ public:
     void Rename( const QString& name );
     void SetType( kernel::KnowledgeGroupType* const& );
     virtual void SerializeAttributes( xml::xostream& xos ) const;
+    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
 
 private:

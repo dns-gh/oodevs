@@ -11,7 +11,7 @@
 #include "PopulationConcentration.h"
 #include "Population.h"
 #include "ClientPublisher_ABC.h"
-#include "ModelVisitor_ABC.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 #include "EntityPublisher.h"
 
 using namespace dispatcher;
@@ -111,7 +111,7 @@ void PopulationConcentration::SendDestruction( ClientPublisher_ABC& publisher ) 
 // Name: PopulationConcentration::Accept
 // Created: AGE 2008-06-20
 // -----------------------------------------------------------------------------
-void PopulationConcentration::Accept( ModelVisitor_ABC& visitor ) const
+void PopulationConcentration::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
 }

@@ -9,11 +9,12 @@
 
 #include "dispatcher_pch.h"
 #include "SimulationDispatcher.h"
-#include "Model.h"
+
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
+#include "Model.h"
 #include "Synchroniser.h"
 #include "ReplaySynchronisations.h"
-#include "ModelVisitor_ABC.h"
 #include "ClientPublisher_ABC.h"
 
 using namespace dispatcher;
@@ -87,7 +88,7 @@ void SimulationDispatcher::Receive( const ASN1T_MsgsSimToClient& asnMsg )
 
 namespace
 {
-    class StartSynchVisitor : public ModelVisitor_ABC
+    class StartSynchVisitor : public kernel::ModelVisitor_ABC
     {
     public:
         virtual void Visit( const kernel::Entity_ABC& entity )
@@ -96,7 +97,7 @@ namespace
         }
     };
 
-    class EndSynchVisitor : public ModelVisitor_ABC
+    class EndSynchVisitor : public kernel::ModelVisitor_ABC
     {
     public:
         EndSynchVisitor( Synchroniser& model )

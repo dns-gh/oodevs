@@ -57,6 +57,7 @@ class ReplaySynchronisations : public kernel::Extension_ABC
                              , public kernel::Updatable_ABC< ASN1T_MsgStartPopulationFire >
                              , public kernel::Updatable_ABC< ASN1T_MsgChangeDiplomacy >
                              , public kernel::Updatable_ABC< ASN1T_MsgChangeDiplomacyAck >
+                             , public kernel::Updatable_ABC< ASN1T_MsgUrbanKnowledgeCreation >
 {
 
 public:
@@ -99,6 +100,7 @@ public:
 
     virtual void DoUpdate( const ASN1T_MsgChangeDiplomacy& msg );
     virtual void DoUpdate( const ASN1T_MsgChangeDiplomacyAck& msg );
+    virtual void DoUpdate( const ASN1T_MsgUrbanKnowledgeCreation& msg );
     //@}
 
 private:

@@ -12,6 +12,7 @@
 #include "game_asn/SimulationSenders.h"
 #include "clients_kernel/OrderType.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 
 using namespace kernel;
 using namespace actions;
@@ -57,4 +58,13 @@ void AutomatMission::Publish( Publisher_ABC& publisher ) const
     CommitTo( asn().parametres );
     asn.Send( publisher );
     Clean( asn().parametres );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatMission::Accept
+// Created: MGD 2009-12-18
+// -----------------------------------------------------------------------------
+void AutomatMission::Accept( kernel::ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

@@ -14,13 +14,16 @@
 #include "clients_kernel/AgentKnowledge_ABC.h"
 #include "SimpleEntity.h"
 
+namespace kernel
+{
+    class ModelVisitor_ABC;
+}
 namespace dispatcher
 {
     class Model;
     class KnowledgeGroup;
     class Agent;
     class Side;
-    class ModelVisitor_ABC;
     class ClientPublisher_ABC;
 
 // =============================================================================
@@ -45,7 +48,7 @@ public:
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
-    void Accept( ModelVisitor_ABC& visitor ) const;
+    void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
 
     //! @name Operations

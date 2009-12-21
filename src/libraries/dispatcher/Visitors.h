@@ -10,14 +10,14 @@
 #ifndef __Visitors_h_
 #define __Visitors_h_
 
-#include "ModelVisitor_ABC.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 
 namespace dispatcher
 {
     class ClientPublisher_ABC;
     class Synchroniser;
 
-    class FullUpdateVisitor : public ModelVisitor_ABC
+    class FullUpdateVisitor : public kernel::ModelVisitor_ABC
     {
     public:
         FullUpdateVisitor( ClientPublisher_ABC& publisher );
@@ -26,7 +26,7 @@ namespace dispatcher
         ClientPublisher_ABC* publisher_;
     };
 
-    class CreationVisitor : public ModelVisitor_ABC
+    class CreationVisitor : public kernel::ModelVisitor_ABC
     {
     public:
         CreationVisitor( ClientPublisher_ABC& publisher );

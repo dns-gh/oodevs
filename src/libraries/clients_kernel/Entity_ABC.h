@@ -30,6 +30,7 @@ namespace kernel
     class ActionController;
     class GlTools_ABC;
     class Drawer;
+    class ModelVisitor_ABC;
     class Viewport_ABC;
 
 // =============================================================================
@@ -67,6 +68,7 @@ public:
     virtual void Select( ActionController& controller ) const = 0;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const = 0;
     virtual void Activate( ActionController& controller ) const = 0;
+    virtual void Accept( ModelVisitor_ABC& visitor ) const = 0;
 
     template< typename T >
     void Update( const T& updateMessage ) 

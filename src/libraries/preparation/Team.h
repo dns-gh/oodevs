@@ -70,6 +70,7 @@ public:
     virtual void Remove( kernel::Object_ABC& object );
     virtual void Register( kernel::KnowledgeGroup_ABC& knGroup );
     virtual void Remove( kernel::KnowledgeGroup_ABC& knGroup );
+    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
 
 private:
