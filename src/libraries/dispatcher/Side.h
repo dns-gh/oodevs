@@ -18,16 +18,16 @@
 
 namespace kernel
 {
+    class Formation_ABC;
+    class KnowledgeGroup_ABC;
     class ModelVisitor_ABC;
+    class Object_ABC;
+    class Population_ABC;
 }
 namespace dispatcher
 {
-    class Model;
+    class Model_ABC;
     class ClientPublisher_ABC;
-    class KnowledgeGroup;
-    class Formation;
-    class Object;
-    class Population;
 
 // =============================================================================
 /** @class  Side
@@ -40,7 +40,7 @@ class Side : public Sendable< kernel::Team_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Side( const Model& model, const ASN1T_MsgTeamCreation& msg );
+             Side( const Model_ABC& model, const ASN1T_MsgTeamCreation& msg );
     virtual ~Side();
     //@}
 
@@ -81,17 +81,17 @@ private:
 private:
     //! @name Member data
     //@{
-    const Model&        model_;
+    const Model_ABC&        model_;
 
 public:
     const std::string   name_;
     ASN1T_EnumDiplomacy nType_;
     kernel::Karma karma_;
     T_Diplomacies       diplomacies_;
-    tools::Resolver< KnowledgeGroup > knowledgeGroups_;
-    tools::Resolver< Formation >      formations_;
-    tools::Resolver< Object >         objects_;
-    tools::Resolver< Population >     populations_;
+    tools::Resolver< kernel::KnowledgeGroup_ABC > knowledgeGroups_;
+    tools::Resolver< kernel::Formation_ABC >      formations_;
+    tools::Resolver< kernel::Object_ABC >         objects_;
+    tools::Resolver< kernel::Population_ABC >     populations_;
     //@}
 };
 

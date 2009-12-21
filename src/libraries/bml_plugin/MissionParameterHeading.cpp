@@ -25,7 +25,7 @@ MissionParameterHeading::MissionParameterHeading( xml::xistream& xis, const kern
     : MissionParameter_ABC( type )
     , angle_( 0 )
 {
-    const Point entityPosition( agent.position_.latitude, agent.position_.longitude );
+    const Point entityPosition( agent.position_.X(), agent.position_.Y() );
     const Point enemyPosition( xis, NS( "AbstractAbsolutePoint", "cbml" ) );
     angle_ = entityPosition.ComputeBearing( enemyPosition );
 }
@@ -34,22 +34,20 @@ namespace
 {
     struct PositionComputer
     {
-        PositionComputer() : latitude_( 0 ), longitude_( 0 ), count_( 0 ) {}
+        PositionComputer() : position_(), count_( 0 ) {}
 
-        void AddAgent( const dispatcher::Agent& entity )
+        void AddAgent( const kernel::Agent_ABC& entity )
         {
-            latitude_  += entity.position_.latitude;
-            longitude_ += entity.position_.longitude;
+            position_ += entity.GetPosition().ToVector();
             ++count_;
         }
-        void AddAutomat( const dispatcher::Automat& entity )
+        void AddAutomat( const kernel::Automat_ABC& entity )
         {
-            entity.automats_.Apply( boost::bind( &PositionComputer::AddAutomat, boost::ref( *this ), _1 ) );
-            entity.agents_.Apply( boost::bind( &PositionComputer::AddAgent, boost::ref( *this ), _1 ) );
+            entity.GetAutomats().Apply( boost::bind( &PositionComputer::AddAutomat, boost::ref( *this ), _1 ) );
+            entity.GetAgents().Apply( boost::bind( &PositionComputer::AddAgent, boost::ref( *this ), _1 ) );
         }
         
-        double latitude_;
-        double longitude_;
+        geometry::Point2d position_;
         unsigned int count_;
     };
 }
@@ -67,7 +65,7 @@ MissionParameterHeading::MissionParameterHeading( xml::xistream& xis, const kern
     automat.agents_.Apply( boost::bind( &PositionComputer::AddAgent, boost::ref( computer ), _1 ) );
     if( computer.count_ > 0 )
     {
-        const Point entityPosition( computer.latitude_ / computer.count_, computer.longitude_ / computer.count_ );
+        const Point entityPosition( computer.position_.X() / computer.count_, computer.position_.Y() / computer.count_ );
         const Point enemyPosition( xis, NS( "AbstractAbsolutePoint", "cbml" ) );
         angle_ = entityPosition.ComputeBearing( enemyPosition );
     }

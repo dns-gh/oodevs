@@ -64,7 +64,7 @@ unsigned int KnowledgeManipulator::GetIdentifier() const
 // -----------------------------------------------------------------------------
 Position KnowledgeManipulator::GetPosition() const
 {
-    return ToPosition( converter_.ConvertToXY( knowledge_.position_ ) );
+    return ToPosition( converter_.ConvertFromGeo( knowledge_.position_ ) );
 }
 
 // -----------------------------------------------------------------------------

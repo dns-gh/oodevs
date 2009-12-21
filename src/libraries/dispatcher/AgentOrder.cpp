@@ -18,7 +18,7 @@ using namespace dispatcher;
 // Name: AgentOrder constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-AgentOrder::AgentOrder( Model& model, Agent& agent, const ASN1T_MsgUnitOrder& asn )
+AgentOrder::AgentOrder( Model_ABC& model, Agent& agent, const ASN1T_MsgUnitOrder& asn )
     : Order_ABC( model, asn.mission, asn.parametres )
     , agent_   ( agent )
 {

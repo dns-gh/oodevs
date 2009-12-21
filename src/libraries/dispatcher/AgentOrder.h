@@ -31,7 +31,7 @@ class AgentOrder : public Order_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentOrder( Model& model, Agent& agent, const ASN1T_MsgUnitOrder& asn );
+             AgentOrder( Model_ABC& model, Agent& agent, const ASN1T_MsgUnitOrder& asn );
     virtual ~AgentOrder();
     //@}
 

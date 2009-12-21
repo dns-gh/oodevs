@@ -19,6 +19,7 @@
 namespace kernel
 {
     class AgentType;
+    class CoordinateConverter_ABC;
     class ModelVisitor_ABC;
     class Team_ABC;
 }
@@ -73,6 +74,7 @@ public:
     //@{
     virtual const kernel::AgentType& GetType() const;
     virtual bool IsCommandPost() const;
+    virtual const geometry::Point2d& GetPosition() const;
     //@}
 
 private:
@@ -94,7 +96,7 @@ public:
     Automat*                 automat_;
     const bool               bPC_;
 
-    ASN1T_CoordLatLong            position_;
+    geometry::Point2d             position_;
     unsigned int                  nDirection_;
     unsigned int                  nHeight_;
     unsigned int                  nAltitude_;

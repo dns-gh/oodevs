@@ -18,7 +18,7 @@ using namespace dispatcher;
 // Name: PopulationOrder constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-PopulationOrder::PopulationOrder( Model& model, Population& population, const ASN1T_MsgPopulationOrder& asn )
+PopulationOrder::PopulationOrder( Model_ABC& model, Population& population, const ASN1T_MsgPopulationOrder& asn )
     : Order_ABC  ( model, asn.mission, asn.parametres )
     , population_( population )
 {

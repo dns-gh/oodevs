@@ -22,6 +22,7 @@
 #include "AgentOrder.h"
 #include "ClientPublisher_ABC.h"
 #include "clients_kernel/AgentType.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 
 using namespace dispatcher;
@@ -132,7 +133,8 @@ void Agent::Update( const ASN1T_MsgUnitCreation& msg )
 // -----------------------------------------------------------------------------
 void Agent::Update( const ASN1T_MsgUnitAttributes& asnMsg )
 {
-    UPDATE_ASN_ATTRIBUTE( position , position_   );
+    if( asnMsg.m.positionPresent )
+        position_.Set( asnMsg.position.latitude, asnMsg.position.longitude );
     UPDATE_ASN_ATTRIBUTE( direction, nDirection_ );
     UPDATE_ASN_ATTRIBUTE( hauteur  , nHeight_    );
     UPDATE_ASN_ATTRIBUTE( altitude , nAltitude_  );
@@ -410,7 +412,9 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         asn().m.prisonnierPresent = 1;
         asn().m.refugie_pris_en_comptePresent = 1;
 
-        asn().position = position_;
+        asn().position.latitude = position_.X();
+        asn().position.longitude = position_.Y();
+
 
         asn().direction = nDirection_;
         asn().hauteur = nHeight_;
@@ -592,4 +596,13 @@ const kernel::AgentType& Agent::GetType() const
 bool Agent::IsCommandPost() const
 {
     return bPC_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::GetPosition
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+const geometry::Point2d& Agent::GetPosition() const
+{
+    return position_;
 }

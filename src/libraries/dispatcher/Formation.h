@@ -17,7 +17,6 @@
 
 namespace kernel
 {
-    class Automat_ABC;
     class ModelVisitor_ABC;
     class Team_ABC;
 }
@@ -52,8 +51,10 @@ public:
 
     virtual const kernel::HierarchyLevel_ABC& GetLevel() const;
 
-    virtual void Register( Formation_ABC& formation );
-    virtual void Remove( Formation_ABC& formation );
+    virtual void Register( kernel::Formation_ABC& formation );
+    virtual void Remove( kernel::Formation_ABC& formation );
+    virtual void Register( kernel::Automat_ABC& automat );
+    virtual void Remove( kernel::Automat_ABC& automat );
     //@}
 
 private:

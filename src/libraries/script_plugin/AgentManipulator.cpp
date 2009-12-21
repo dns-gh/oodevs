@@ -84,7 +84,7 @@ std::string AgentManipulator::GetTeam() const
 // -----------------------------------------------------------------------------
 Position AgentManipulator::GetPosition() const
 {
-    return ToPosition( converter_.ConvertToXY( agent_.position_ ) );
+    return ToPosition( converter_.ConvertFromGeo( agent_.position_ ) );
 }
 
 // -----------------------------------------------------------------------------

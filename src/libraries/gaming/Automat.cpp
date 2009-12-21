@@ -106,3 +106,52 @@ void Automat::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Automat::Register
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void Automat::Register( kernel::Automat_ABC& automat )
+{
+     throw std::exception( __FUNCTION__ " not implemented" );  
+}
+// -----------------------------------------------------------------------------
+// Name: Automat::Remove
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void Automat::Remove( kernel::Automat_ABC& automat )
+{
+     throw std::exception( __FUNCTION__ " not implemented" );  
+}
+// -----------------------------------------------------------------------------
+// Name: Automat::GetAutomats
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+const tools::Resolver< kernel::Automat_ABC >& Automat::GetAutomats() const
+{
+     throw std::exception( __FUNCTION__ " not implemented" );  
+}
+// -----------------------------------------------------------------------------
+// Name: Automat::Register
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void Automat::Register( kernel::Agent_ABC& automat )
+{
+     throw std::exception( __FUNCTION__ " not implemented" );  
+}
+// -----------------------------------------------------------------------------
+// Name: Automat::Remove
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void Automat::Remove( kernel::Agent_ABC& automat )
+{
+     throw std::exception( __FUNCTION__ " not implemented" );  
+}
+// -----------------------------------------------------------------------------
+// Name: Automat::GetAgents
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+const tools::Resolver< kernel::Agent_ABC >& Automat::GetAgents() const
+{
+    throw std::exception( __FUNCTION__ " not implemented" );  
+}

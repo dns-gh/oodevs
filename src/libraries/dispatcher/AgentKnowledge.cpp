@@ -85,7 +85,8 @@ void AgentKnowledge::Update( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg )
     UPDATE_ASN_ATTRIBUTE( max_identification_level , nMaxPerceptionLevel_   );
     UPDATE_ASN_ATTRIBUTE( etat_op                  , nOperationalState_     );
     UPDATE_ASN_ATTRIBUTE( mort                     , bDead_                 );
-    UPDATE_ASN_ATTRIBUTE( position                 , position_              );
+    if( asnMsg.m.positionPresent )
+        position_.Set( asnMsg.position.latitude, asnMsg.position.longitude );
     UPDATE_ASN_ATTRIBUTE( direction                , nDirection_            );
     UPDATE_ASN_ATTRIBUTE( speed                    , nSpeed_                );
 
@@ -155,7 +156,8 @@ void AgentKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     if( optionals_.positionPresent )
     {
         asn().m.positionPresent = 1;
-        asn().position = position_;
+        asn().position.latitude = position_.X();
+        asn().position.longitude = position_.Y();
     }
 
     SEND_ASN_ATTRIBUTE( direction, nDirection_ );

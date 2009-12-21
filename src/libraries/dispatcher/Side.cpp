@@ -25,7 +25,7 @@ using namespace dispatcher;
 // Name: Side constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-Side::Side( const Model& model, const ASN1T_MsgTeamCreation& msg )
+Side::Side( const Model_ABC& model, const ASN1T_MsgTeamCreation& msg )
     : Sendable< kernel::Team_ABC >( msg.oid, msg.nom )
     , model_( model )
     , name_( msg.nom )
@@ -55,7 +55,7 @@ Side::~Side()
 // -----------------------------------------------------------------------------
 void Side::Update( const ASN1T_MsgChangeDiplomacy& asnMsg )
 {
-    const kernel::Team_ABC& side = model_.sides_.Get( asnMsg.oid_camp2 );
+    const kernel::Team_ABC& side = model_.Sides().Get( asnMsg.oid_camp2 );
     diplomacies_[ &side ] = asnMsg.diplomatie;
 }
 
@@ -65,7 +65,7 @@ void Side::Update( const ASN1T_MsgChangeDiplomacy& asnMsg )
 // -----------------------------------------------------------------------------
 void Side::Update( const ASN1T_MsgChangeDiplomacyAck& asnMsg )
 {
-    const kernel::Team_ABC& side = model_.sides_.Get( asnMsg.oid_camp2 );   
+    const kernel::Team_ABC& side = model_.Sides().Get( asnMsg.oid_camp2 );   
     diplomacies_[ &side ] = asnMsg.diplomatie;
 }
 
@@ -123,10 +123,10 @@ namespace
 void Side::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
-    knowledgeGroups_.Apply( boost::bind( &KnowledgeGroup::Accept, _1, boost::ref( visitor ) ) );
-    formations_.Apply( boost::bind( &Formation::Accept, _1, boost::ref( visitor ) ) );
-    objects_.Apply( boost::bind( &Object::Accept, _1, boost::ref( visitor ) ) );
-    populations_.Apply( boost::bind( &Population::Accept, _1, boost::ref( visitor ) ) );
+    knowledgeGroups_.Apply( boost::bind( &kernel::KnowledgeGroup_ABC::Accept, _1, boost::ref( visitor ) ) );
+    formations_.Apply( boost::bind( &kernel::Formation_ABC::Accept, _1, boost::ref( visitor ) ) );
+    objects_.Apply( boost::bind( &kernel::Object_ABC::Accept, _1, boost::ref( visitor ) ) );
+    populations_.Apply( boost::bind( &kernel::Population_ABC::Accept, _1, boost::ref( visitor ) ) );
 }
 
 
@@ -144,8 +144,7 @@ const kernel::Karma& Side::GetKarma() const
 // -----------------------------------------------------------------------------
 void Side::Register( kernel::Formation_ABC& formation )
 {
-    //@TODO MGD Remove temp cast with next refactor step
-    formations_.Register( formation.GetId(), (dispatcher::Formation&)formation );
+    formations_.Register( formation.GetId(), formation );
 }
 // -----------------------------------------------------------------------------
 // Name: Side::Remove
@@ -161,7 +160,7 @@ void Side::Remove( kernel::Formation_ABC& formation )
 // -----------------------------------------------------------------------------
 void Side::Register( kernel::Population_ABC& population )
 {
-    populations_.Register( population.GetId(), (dispatcher::Population&)population );
+    populations_.Register( population.GetId(), population );
 }
 // -----------------------------------------------------------------------------
 // Name: Side::Remove
@@ -177,7 +176,7 @@ void Side::Remove( kernel::Population_ABC& population )
 // -----------------------------------------------------------------------------
 void Side::Register( kernel::Object_ABC& object )
 {
-    objects_.Register( object.GetId(), (dispatcher::Object&)object );
+    objects_.Register( object.GetId(), object );
 }
 // -----------------------------------------------------------------------------
 // Name: Side::Remove
@@ -193,7 +192,7 @@ void Side::Remove( kernel::Object_ABC& object )
 // -----------------------------------------------------------------------------
 void Side::Register( kernel::KnowledgeGroup_ABC& knGroup )
 {
-    knowledgeGroups_.Register( knGroup.GetId(), (dispatcher::KnowledgeGroup&)knGroup );
+    knowledgeGroups_.Register( knGroup.GetId(), knGroup );
 }
 // -----------------------------------------------------------------------------
 // Name: Side::Remove

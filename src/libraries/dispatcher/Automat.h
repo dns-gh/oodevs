@@ -11,25 +11,22 @@
 #define __Automat_h_
 
 #include "game_asn/Simulation.h"
-#include "tools/Resolver.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "SimpleEntity.h"
 #include "DecisionalState.h"
 
 namespace kernel
 {
+    class Formation_ABC;
+    class Knowledge_ABC;
     class ModelVisitor_ABC;
     class Team_ABC;
 }
 namespace dispatcher
 {
-    class Model;
+    class Model_ABC;
     class DotationQuota;
     class AutomatOrder;
-    class Formation;
-    class Agent;
-    class Automat;
-    class KnowledgeGroup;
 
 // =============================================================================
 /** @class  Automat
@@ -42,7 +39,7 @@ class Automat : public SimpleEntity< kernel::Automat_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Automat( Model& model, const ASN1T_MsgAutomatCreation& msg );
+             Automat( Model_ABC& model, const ASN1T_MsgAutomatCreation& msg );
     virtual ~Automat();
     //@}
 
@@ -67,6 +64,13 @@ public:
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
+
+    virtual void Register( kernel::Automat_ABC& automat );
+    virtual void Remove( kernel::Automat_ABC& automat );
+    virtual const tools::Resolver< kernel::Automat_ABC >& GetAutomats() const;
+    virtual void Register( kernel::Agent_ABC& automat );
+    virtual void Remove( kernel::Agent_ABC& automat );
+    virtual const tools::Resolver< kernel::Agent_ABC >& GetAgents() const;
     //@}
 
 private:
@@ -86,13 +90,13 @@ private:
 public:
     //! @name Member data
     //@{
-    Model&              model_;
+    Model_ABC&              model_;
     const unsigned long type_; // XML reference - no resolved by dispatcher
     const std::string   name_;
     kernel::Team_ABC&   team_;
-    Formation*          parentFormation_;
-    Automat*            parentAutomat_;
-    KnowledgeGroup*     knowledgeGroup_;
+    kernel::Formation_ABC* parentFormation_;
+    kernel::Automat_ABC*   parentAutomat_;
+    kernel::KnowledgeGroup_ABC* knowledgeGroup_;
     tools::Resolver< DotationQuota > quotas_;
 
     ASN1T_EnumAutomatMode             nAutomatState_;
@@ -110,8 +114,8 @@ public:
 
     DecisionalState decisionalInfos_;
 
-    tools::Resolver< Agent >   agents_;
-    tools::Resolver< Automat > automats_;
+    tools::Resolver< kernel::Agent_ABC >   agents_;
+    tools::Resolver< kernel::Automat_ABC > automats_;
     //@}
 };
 

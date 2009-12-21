@@ -41,6 +41,7 @@ public:
     //@{
     virtual const AgentType& GetType() const = 0;
     virtual bool IsCommandPost() const = 0;
+    virtual const geometry::Point2d& GetPosition() const = 0;
     //@}
 
     //! @name Operations

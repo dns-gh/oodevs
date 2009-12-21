@@ -97,7 +97,7 @@ public:
     ASN1T_EnumUnitIdentificationLevel   nMaxPerceptionLevel_;
     unsigned int                        nOperationalState_;
     bool                                bDead_;
-    ASN1T_CoordLatLong                  position_;
+    geometry::Point2d                   position_;
     unsigned int                        nDirection_;
     unsigned int                        nSpeed_;
     const kernel::Team_ABC*             team_;

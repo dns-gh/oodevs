@@ -18,7 +18,6 @@
 
 namespace kernel
 {
-    class Automat_ABC;
     class ModelVisitor_ABC;
     class Team_ABC;
 }
@@ -49,8 +48,10 @@ public:
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
     void Accept         ( kernel::ModelVisitor_ABC& visitor ) const;
-    virtual void Register( KnowledgeGroup_ABC& knowledgeGroup );
-    virtual void Remove( KnowledgeGroup_ABC& knowledgeGroup );
+    virtual void Register( kernel::KnowledgeGroup_ABC& knowledgeGroup );
+    virtual void Remove( kernel::KnowledgeGroup_ABC& knowledgeGroup );
+    virtual void Register( kernel::Automat_ABC& automat );
+    virtual void Remove( kernel::Automat_ABC& automat );
 //    void SendChangeParent( ClientPublisher_ABC& publisher ) const;
     //@}
 

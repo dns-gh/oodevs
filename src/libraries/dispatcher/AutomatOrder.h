@@ -17,8 +17,9 @@ struct ASN1T_MsgAutomatOrder;
 
 namespace dispatcher
 {
-    class ClientPublisher_ABC;
-    class Automat;
+     class Automat;
+     class ClientPublisher_ABC;
+
 
 // =============================================================================
 /** @class  AutomatOrder
@@ -32,7 +33,7 @@ class AutomatOrder : public Order_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomatOrder( Model& model, Automat& automat, const ASN1T_MsgAutomatOrder& asn );
+             AutomatOrder( Model_ABC& model, Automat& automat, const ASN1T_MsgAutomatOrder& asn );
     virtual ~AutomatOrder();
     //@}
 

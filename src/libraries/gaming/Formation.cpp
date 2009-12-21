@@ -73,7 +73,7 @@ void Formation::Accept( kernel::ModelVisitor_ABC& visitor ) const
 // Name: Formation::Register
 // Created: MGD 2009-12-21
 // -----------------------------------------------------------------------------
-void Formation::Register( Formation_ABC& formation )
+void Formation::Register( kernel::Formation_ABC& formation )
 {
     //NOTHING
 }
@@ -82,7 +82,25 @@ void Formation::Register( Formation_ABC& formation )
 // Name: Formation::Remove
 // Created: MGD 2009-12-21
 // -----------------------------------------------------------------------------
-void Formation::Remove( Formation_ABC& formation )
+void Formation::Remove( kernel::Formation_ABC& formation )
+{
+    //NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::Register
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void Formation::Register( kernel::Automat_ABC& automat )
+{
+    //NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::Remove
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void Formation::Remove( kernel::Automat_ABC& automat )
 {
     //NOTHING
 }

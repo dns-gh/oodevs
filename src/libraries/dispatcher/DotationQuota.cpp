@@ -17,7 +17,7 @@ using namespace dispatcher;
 // Name: DotationQuota constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-DotationQuota::DotationQuota( const Model& /*model*/, const ASN1T_DotationQuota& asnMsg )
+DotationQuota::DotationQuota( const Model_ABC& /*model*/, const ASN1T_DotationQuota& asnMsg )
    : nDotationType_( asnMsg.ressource_id )
    , nQuota_       ( asnMsg.quota_disponible )
 {

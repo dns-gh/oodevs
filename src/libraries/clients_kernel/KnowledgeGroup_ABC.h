@@ -48,6 +48,8 @@ public:
     virtual void Activate( ActionController& controller ) const;
     virtual void Register( KnowledgeGroup_ABC& knowledgeGroup ) = 0;
     virtual void Remove( KnowledgeGroup_ABC& knowledgeGroup ) = 0;
+    virtual void Register( Automat_ABC& automat ) = 0;
+    virtual void Remove( Automat_ABC& automat ) = 0;
     //@}
 };
 

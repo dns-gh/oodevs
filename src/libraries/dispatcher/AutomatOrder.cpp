@@ -18,7 +18,7 @@ using namespace dispatcher;
 // Name: AutomatOrder constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-AutomatOrder::AutomatOrder( Model& model, Automat& automat, const ASN1T_MsgAutomatOrder& asn )
+AutomatOrder::AutomatOrder( Model_ABC& model, Automat& automat, const ASN1T_MsgAutomatOrder& asn )
     : Order_ABC ( model, asn.mission, asn.parametres )
     , automat_  ( automat )
 {

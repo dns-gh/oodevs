@@ -14,7 +14,7 @@
 
 namespace dispatcher
 {
-    class Model;
+    class Model_ABC;
 
 // =============================================================================
 /** @class  DotationQuota
@@ -27,7 +27,7 @@ class DotationQuota
 public:
     //! @name Constructors/Destructor
     //@{
-     DotationQuota( const Model& model, const ASN1T_DotationQuota& asnMsg );
+     DotationQuota( const Model_ABC& model, const ASN1T_DotationQuota& asnMsg );
     ~DotationQuota();
     //@}
 

@@ -58,6 +58,12 @@ public:
     virtual const kernel::AutomatType& GetType() const;
     void Rename( const QString& name );
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
+    virtual void Register( kernel::Automat_ABC& automat );
+    virtual void Remove( kernel::Automat_ABC& automat );
+    virtual const tools::Resolver< kernel::Automat_ABC >& GetAutomats() const;
+    virtual void Register( kernel::Agent_ABC& automat );
+    virtual void Remove( kernel::Agent_ABC& automat );
+    virtual const tools::Resolver< kernel::Agent_ABC >& GetAgents() const;
     //@}
 
     //! @name Extensions

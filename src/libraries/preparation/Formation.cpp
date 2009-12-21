@@ -131,7 +131,7 @@ void Formation::Accept( kernel::ModelVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 void Formation::Register( Formation_ABC& formation )
 {
-    //NOTHING
+    throw std::exception( __FUNCTION__ " not implemented" ); 
 }
 
 // -----------------------------------------------------------------------------
@@ -140,5 +140,24 @@ void Formation::Register( Formation_ABC& formation )
 // -----------------------------------------------------------------------------
 void Formation::Remove( Formation_ABC& formation )
 {
-    //NOTHING
+    throw std::exception( __FUNCTION__ " not implemented" ); 
 }
+
+// -----------------------------------------------------------------------------
+// Name: Formation::Register
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void Formation::Register( Automat_ABC& automat )
+{
+    throw std::exception( __FUNCTION__ " not implemented" ); 
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::Remove
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void Formation::Remove( Automat_ABC& automat )
+{
+    throw std::exception( __FUNCTION__ " not implemented" ); 
+}
+

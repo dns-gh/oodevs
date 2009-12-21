@@ -15,7 +15,7 @@ struct ASN1T_MissionParameters;
 namespace dispatcher
 {
     class MissionParameter_ABC;
-    class Model;
+    class Model_ABC;
 
 // =============================================================================
 /** @class  Order_ABC
@@ -28,7 +28,7 @@ class Order_ABC
 protected:
     //! @name Constructors/Destructor
     //@{
-             Order_ABC( Model& model, unsigned int missionID, const ASN1T_MissionParameters& parameters );
+             Order_ABC( Model_ABC& model, unsigned int missionID, const ASN1T_MissionParameters& parameters );
     virtual ~Order_ABC();
     //@}
 
@@ -60,7 +60,7 @@ private:
 protected:
     //! @name Member data
     //@{
-    Model& model_;
+    Model_ABC& model_;
     unsigned int missionID_;
     T_Parameters parameters_;
     //@}

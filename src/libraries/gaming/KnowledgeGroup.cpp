@@ -69,3 +69,21 @@ void KnowledgeGroup::Remove( KnowledgeGroup_ABC& knowledgeGroup )
 {
     //NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::Accept
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::Register( Automat_ABC& automat )
+{
+    //NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::Accept
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::Remove( Automat_ABC& automat )
+{
+    //NOTHING
+}

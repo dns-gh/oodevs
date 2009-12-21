@@ -165,3 +165,12 @@ void Agent::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Agent::GetPosition
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+const geometry::Point2d& Agent::GetPosition() const
+{
+    throw std::exception( __FUNCTION__ " not implemented" ); 
+}

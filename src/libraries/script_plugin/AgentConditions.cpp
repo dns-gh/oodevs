@@ -81,7 +81,7 @@ namespace
 
         virtual void NotifyUpdated( const E& move )
         {
-            const geometry::Point2f position = converter_.ConvertToXY( move.entity.position_ );
+            const geometry::Point2f position = converter_.ConvertFromGeo( move.entity.position_ );
             if( box_.IsInside( position ) && zone_.IsInside( position ) )
                 Trigger( move.entity );
         }

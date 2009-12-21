@@ -60,6 +60,7 @@ public:
     virtual bool IsCommandPost() const;
     void Rename( const QString& name );
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
+    virtual const geometry::Point2d& GetPosition() const;
     //@}
 
 private:

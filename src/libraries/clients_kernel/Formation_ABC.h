@@ -14,6 +14,7 @@
 
 namespace kernel
 {
+    class Automat_ABC;
     class Team_ABC;
     class HierarchyLevel_ABC;
 
@@ -53,6 +54,8 @@ public:
 
     virtual void Register( Formation_ABC& formation ) = 0;
     virtual void Remove( Formation_ABC& formation ) = 0;
+    virtual void Register( Automat_ABC& automat ) = 0;
+    virtual void Remove( Automat_ABC& automat ) = 0;
     //@}
 };
 

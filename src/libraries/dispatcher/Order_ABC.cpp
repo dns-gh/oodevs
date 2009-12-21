@@ -18,7 +18,7 @@ using namespace dispatcher;
 // Name: Order_ABC constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-Order_ABC::Order_ABC( Model& model, unsigned int missionID, const ASN1T_MissionParameters& parameters )
+Order_ABC::Order_ABC( Model_ABC& model, unsigned int missionID, const ASN1T_MissionParameters& parameters )
     : model_( model )
     , missionID_ ( missionID )
     , parameters_()

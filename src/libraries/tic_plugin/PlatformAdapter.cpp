@@ -55,7 +55,7 @@ const ComponentType& PlatformAdapter::GetType() const
 // -----------------------------------------------------------------------------
 geometry::Point2f PlatformAdapter::GetPosition() const
 {
-    return converter_.ConvertToXY( agent_.position_ );
+    return converter_.ConvertFromGeo( agent_.position_ );
 }
 
 // -----------------------------------------------------------------------------

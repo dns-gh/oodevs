@@ -50,6 +50,7 @@ public:
     virtual const kernel::AgentType& GetType() const;
     virtual bool IsCommandPost() const;
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
+    virtual const geometry::Point2d& GetPosition() const;
     //@}
 
 private:

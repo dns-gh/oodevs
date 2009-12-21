@@ -33,6 +33,7 @@ ParamUrbanBlock::ParamUrbanBlock( QObject* parent, const kernel::OrderParameter&
 , parameter_ ( parameter )
 , layer_     ( layer )
 , pLabel_    ( 0 )
+, selected_  ( 0 )
 {
 }
 

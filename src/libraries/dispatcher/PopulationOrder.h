@@ -32,7 +32,7 @@ class PopulationOrder : public Order_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationOrder( Model& model, Population& population, const ASN1T_MsgPopulationOrder& asn );
+             PopulationOrder( Model_ABC& model, Population& population, const ASN1T_MsgPopulationOrder& asn );
     virtual ~PopulationOrder();
     //@}
 

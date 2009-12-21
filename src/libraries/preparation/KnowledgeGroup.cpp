@@ -145,7 +145,7 @@ void KnowledgeGroup::Accept( kernel::ModelVisitor_ABC& visitor ) const
 // Name: KnowledgeGroup::Accept
 // Created: MGD 2009-12-21
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::Register( KnowledgeGroup_ABC& knowledgeGroup )
+void KnowledgeGroup::Register( kernel::KnowledgeGroup_ABC& knowledgeGroup )
 {
     Get< kernel::CommunicationHierarchies >().RegisterSubordinate( knowledgeGroup );
 }
@@ -154,7 +154,25 @@ void KnowledgeGroup::Register( KnowledgeGroup_ABC& knowledgeGroup )
 // Name: KnowledgeGroup::Accept
 // Created: MGD 2009-12-21
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::Remove( KnowledgeGroup_ABC& knowledgeGroup )
+void KnowledgeGroup::Remove( kernel::KnowledgeGroup_ABC& knowledgeGroup )
 {
     Get< kernel::CommunicationHierarchies >().UnregisterSubordinate( knowledgeGroup );
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::Accept
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::Register( kernel::Automat_ABC& automat )
+{
+    throw std::exception( __FUNCTION__ " not implemented" ); 
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::Accept
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::Remove( kernel::Automat_ABC& automat )
+{
+    throw std::exception( __FUNCTION__ " not implemented" ); 
 }

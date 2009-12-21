@@ -28,15 +28,15 @@ using namespace dispatcher;
 // Name: Automat constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-Automat::Automat( Model& model, const ASN1T_MsgAutomatCreation& msg )
+Automat::Automat( Model_ABC& model, const ASN1T_MsgAutomatCreation& msg )
     : SimpleEntity< kernel::Automat_ABC >( msg.oid, msg.nom )
     , model_            ( model )
     , type_             ( msg.type_automate )
     , name_             ( msg.nom )
-    , team_             ( model.sides_.Get( msg.oid_camp ) )
-    , parentFormation_  ( msg.oid_parent.t == T_MsgAutomatCreation_oid_parent_formation ? static_cast< Formation* >( &model.formations_.Get( msg.oid_parent.u.formation ) ) : 0 )
-    , parentAutomat_    ( msg.oid_parent.t == T_MsgAutomatCreation_oid_parent_automate  ? static_cast< Automat* >( &model.automats_.Get( msg.oid_parent.u.automate ) ) : 0 )
-    , knowledgeGroup_   ( static_cast< KnowledgeGroup* >( &model.knowledgeGroups_.Get( msg.oid_groupe_connaissance ) ) )
+    , team_             ( model.Sides().Get( msg.oid_camp ) )
+    , parentFormation_  ( msg.oid_parent.t == T_MsgAutomatCreation_oid_parent_formation ? static_cast< Formation* >( &model.Formations().Get( msg.oid_parent.u.formation ) ) : 0 )
+    , parentAutomat_    ( msg.oid_parent.t == T_MsgAutomatCreation_oid_parent_automate  ? static_cast< Automat* >( &model.Automats().Get( msg.oid_parent.u.automate ) ) : 0 )
+    , knowledgeGroup_   ( static_cast< KnowledgeGroup* >( &model.KnowledgeGroups().Get( msg.oid_groupe_connaissance ) ) )
     , pTC2_             ( 0 )
     , pLogMaintenance_  ( 0 )
     , pLogMedical_      ( 0 )
@@ -50,11 +50,11 @@ Automat::Automat( Model& model, const ASN1T_MsgAutomatCreation& msg )
 {
     assert( parentFormation_ || parentAutomat_ );
 
-    knowledgeGroup_->automats_.Register( msg.oid, *this );
+    knowledgeGroup_->Register( *this );
     if( parentFormation_ )
-        parentFormation_->automats_.Register( msg.oid, *this );
+        parentFormation_->Register( *this );
     else if( parentAutomat_ )
-        parentAutomat_->automats_.Register( msg.oid, *this );
+        parentAutomat_->Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -65,10 +65,10 @@ Automat::~Automat()
 {
     quotas_.DeleteAll();
     if( parentFormation_ )
-        parentFormation_->automats_.Remove( GetId() );
+        parentFormation_->Remove( *this );
     else if( parentAutomat_ )
-        parentAutomat_->automats_.Remove( GetId() );
-    knowledgeGroup_->automats_.Remove( GetId() );
+        parentAutomat_->Remove( *this );
+    knowledgeGroup_->Remove( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -92,13 +92,13 @@ void Automat::Update( const ASN1T_MsgAutomatCreation& msg )
 void Automat::Update( const ASN1T_MsgAutomatChangeLogisticLinks& msg )
 {
     if( msg.m.oid_tc2Present )
-        pTC2_ = msg.oid_tc2 == 0 ? 0 : &model_.automats_.Get( msg.oid_tc2 );
+        pTC2_ = msg.oid_tc2 == 0 ? 0 : &model_.Automats().Get( msg.oid_tc2 );
     if( msg.m.oid_maintenancePresent )
-        pLogMaintenance_ = msg.oid_maintenance == 0 ? 0 : &model_.automats_.Get( msg.oid_maintenance );
+        pLogMaintenance_ = msg.oid_maintenance == 0 ? 0 : &model_.Automats().Get( msg.oid_maintenance );
     if( msg.m.oid_santePresent )
-        pLogMedical_ = msg.oid_sante == 0 ? 0 : &model_.automats_.Get( msg.oid_sante );
+        pLogMedical_ = msg.oid_sante == 0 ? 0 : &model_.Automats().Get( msg.oid_sante );
     if( msg.m.oid_ravitaillementPresent )
-        pLogSupply_ = msg.oid_ravitaillement == 0 ? 0 : &model_.automats_.Get( msg.oid_ravitaillement );
+        pLogSupply_ = msg.oid_ravitaillement == 0 ? 0 : &model_.Automats().Get( msg.oid_ravitaillement );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,9 +128,9 @@ void Automat::ChangeKnowledgeGroup( unsigned long id )
     if( knowledgeGroup_ && knowledgeGroup_->GetId() == id )
         return;
     if( knowledgeGroup_ )
-        knowledgeGroup_->automats_.Remove( GetId() );
-    knowledgeGroup_ = &model_.knowledgeGroups_.Get( id );
-    knowledgeGroup_->automats_.Register( GetId(), *this );
+        knowledgeGroup_->Remove( *this );
+    knowledgeGroup_ = &model_.KnowledgeGroups().Get( id );
+    knowledgeGroup_->Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -141,20 +141,20 @@ template< typename Superior >
 void Automat::ChangeSuperior( const Superior& superior )
 {
     if( parentFormation_ )
-        parentFormation_->automats_.Remove( GetId() );
+        parentFormation_->Remove( *this );
     if( parentAutomat_ )
-        parentAutomat_->automats_.Remove( GetId() );
+        parentAutomat_->Remove( *this );
     parentFormation_ = 0;
     parentAutomat_   = 0;
     if( superior.t == T_MsgAutomatChangeSuperior_oid_superior_formation )
     {
-        parentFormation_ = &model_.formations_.Get( superior.u.formation );
-        parentFormation_->automats_.Register( GetId(), *this );
+        parentFormation_ = &model_.Formations().Get( superior.u.formation );
+        parentFormation_->Register( *this );
     }
     else if( superior.t == T_MsgAutomatChangeSuperior_oid_superior_automate )
     {
-        parentAutomat_ = &model_.automats_.Get( superior.u.automate );
-        parentAutomat_->automats_.Register( GetId(), *this );
+        parentAutomat_ = &model_.Automats().Get( superior.u.automate );
+        parentAutomat_->Register( *this );
     }
 }
 
@@ -348,8 +348,8 @@ namespace
 void Automat::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
-    automats_.Apply( boost::bind( &Automat::Accept, _1, boost::ref( visitor ) ) );
-    agents_.Apply( boost::bind( &Agent::Accept, _1, boost::ref( visitor ) ) );
+    automats_.Apply( boost::bind( &kernel::Automat_ABC::Accept, _1, boost::ref( visitor ) ) );
+    agents_.Apply( boost::bind( &kernel::Agent_ABC::Accept, _1, boost::ref( visitor ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -368,4 +368,53 @@ const kernel::AutomatType& Automat::GetType() const
 bool Automat::IsEngaged() const
 {
     return nAutomatState_ == EnumAutomatMode::embraye;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::Register
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void Automat::Register( kernel::Automat_ABC& automat )
+{
+    automats_.Register( automat.GetId(), automat );
+}
+// -----------------------------------------------------------------------------
+// Name: Automat::Register
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void Automat::Remove( kernel::Automat_ABC& automat )
+{
+    automats_.Remove( automat.GetId() );
+}
+// -----------------------------------------------------------------------------
+// Name: Automat::Register
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+const tools::Resolver< kernel::Automat_ABC >& Automat::GetAutomats() const
+{
+    return automats_;
+}
+// -----------------------------------------------------------------------------
+// Name: Automat::Register
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void Automat::Register( kernel::Agent_ABC& automat )
+{
+    agents_.Register( automat.GetId(), automat );
+}
+// -----------------------------------------------------------------------------
+// Name: Automat::Register
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void Automat::Remove( kernel::Agent_ABC& automat )
+{
+    agents_.Remove( automat.GetId() );
+}
+// -----------------------------------------------------------------------------
+// Name: Automat::Register
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+const tools::Resolver< kernel::Agent_ABC >& Automat::GetAgents() const
+{
+    return agents_;
 }

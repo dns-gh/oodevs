@@ -91,13 +91,38 @@ void KnowledgeGroup::Accept( kernel::ModelVisitor_ABC& visitor ) const
     knowledgeGroups_.Apply( boost::bind( &KnowledgeGroup_ABC::Accept, _1, boost::ref( visitor ) ) );
 }
 
-void KnowledgeGroup::Register( KnowledgeGroup_ABC& knowledgeGroup )
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::Register
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::Register( kernel::KnowledgeGroup_ABC& knowledgeGroup )
 {
     knowledgeGroups_.Register( knowledgeGroup.GetId(), *this );
 }
-void KnowledgeGroup::Remove( KnowledgeGroup_ABC& knowledgeGroup )
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::Register
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::Remove( kernel::KnowledgeGroup_ABC& knowledgeGroup )
 {
     knowledgeGroups_.Remove( knowledgeGroup.GetId() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::Register
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::Register( kernel::Automat_ABC& automat )
+{
+    automats_.Register( automat.GetId(), automat );
+}
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::Register
+// Created: MGD 2009-12-21
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::Remove( kernel::Automat_ABC& automat )
+{
+    automats_.Remove( automat.GetId() );
 }
 
 //void KnowledgeGroup::SendChangeParent( ClientPublisher_ABC& publisher ) const
