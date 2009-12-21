@@ -361,7 +361,7 @@ void OrderParameterSerializer::SerializeDirection( ASN1T_Heading& asn, const std
 void OrderParameterSerializer::SerializeAutomat( ASN1T_Automat& asn, const std::string& value ) const
 {
     unsigned long id = boost::lexical_cast< unsigned long >( value );
-    if( const dispatcher::Agent* agent = model_.agents().Find( id ) )
+    if( const dispatcher::Agent* agent = model_.Agents().Find( id ) )
         asn = agent->automat_->GetId();
      // $$$$ SBO 2007-06-07: else...
     else
@@ -375,7 +375,7 @@ void OrderParameterSerializer::SerializeAutomat( ASN1T_Automat& asn, const std::
 void OrderParameterSerializer::SerializeUnit( ASN1T_Unit& asn, const std::string& value ) const
 {
     unsigned long id = boost::lexical_cast< unsigned long >( value );
-    if( ! model_.agents().Find( id ) )
+    if( ! model_.Agents().Find( id ) )
         throw std::runtime_error( "unknown agent [" + value + "]" );
     asn = id;
 }
@@ -556,7 +556,7 @@ void OrderParameterSerializer::SerializeIntelligenceList( ASN1T_IntelligenceList
 void OrderParameterSerializer::SerializeUnitKnowledge( ASN1T_UnitKnowledge& asn, const std::string& value ) const
 {
     unsigned long id = boost::lexical_cast< unsigned long >( value );
-    if( ! model_.agentKnowledges().Find( id ) )
+    if( ! model_.AgentKnowledges().Find( id ) )
         throw std::runtime_error( "unknown unit knowledge [" + value + "]" );
     asn = id;
 }
@@ -568,7 +568,7 @@ void OrderParameterSerializer::SerializeUnitKnowledge( ASN1T_UnitKnowledge& asn,
 void OrderParameterSerializer::SerializeObjectKnowledge( ASN1T_ObjectKnowledge& asn, const std::string& value ) const
 {
     unsigned long id = boost::lexical_cast< unsigned long >( value );
-    if( ! model_.objectKnowledges().Find( id ) )
+    if( ! model_.ObjectKnowledges().Find( id ) )
         throw std::runtime_error( "unknown object knowledge [" + value + "]" );
     asn = id;
 }
