@@ -17,8 +17,10 @@ using namespace kernel;
 // Name: KnowledgeGroupHierarchies constructor
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-KnowledgeGroupHierarchies::KnowledgeGroupHierarchies( Controller& controller, Entity_ABC* superior, KnowledgeGroup_ABC& holder )
+KnowledgeGroupHierarchies::KnowledgeGroupHierarchies( Controller& controller, Entity_ABC* superior, KnowledgeGroup_ABC& holder
+                                                    , tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& resolver )
     : EntityHierarchies< CommunicationHierarchies >( controller, holder, superior )
+    , resolver_( resolver )
 {
     // NOTHING   
 }
@@ -31,3 +33,14 @@ KnowledgeGroupHierarchies::~KnowledgeGroupHierarchies()
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroupHierarchies::DoUpdate
+// Created: FHD 2009-12-21
+// -----------------------------------------------------------------------------
+void KnowledgeGroupHierarchies::DoUpdate( const ASN1T_MsgKnowledgeGroupUpdate& message )
+{
+    if( message.m.oid_knowledgegroup_parentPresent )
+        ChangeSuperior( &resolver_.Get( message.oid_knowledgegroup_parent ) );
+}
+

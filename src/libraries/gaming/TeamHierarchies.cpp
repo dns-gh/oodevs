@@ -45,5 +45,13 @@ TeamHierarchies::~TeamHierarchies()
 void TeamHierarchies::DoUpdate( const ASN1T_MsgKnowledgeGroupCreation& message )
 {
     if( ! Find( message.oid ) )
-        (void)factory_.CreateKnowledgeGroup( message, holder_ );
+        factory_.CreateKnowledgeGroup( message, holder_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TeamHierarchies::DoUpdate
+// Created: AGE 2006-10-09
+// -----------------------------------------------------------------------------
+void TeamHierarchies::DoUpdate( const ASN1T_MsgKnowledgeGroupUpdate& message )
+{
 }

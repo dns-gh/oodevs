@@ -12,6 +12,9 @@
 
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/KnowledgeGroupType.h"
+#include "clients_kernel/Updatable_ABC.h"
+#include "game_asn/Simulation.h"
 
 // =============================================================================
 /** @class  KnowledgeGroup
@@ -20,11 +23,12 @@
 // Created: AGN 2003-12-22
 // =============================================================================
 class KnowledgeGroup : public kernel::EntityImplementation< kernel::KnowledgeGroup_ABC >
+                     , public kernel::Updatable_ABC< ASN1T_MsgKnowledgeGroupUpdate >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroup( unsigned long nId, kernel::Controller& controller );
+             KnowledgeGroup( unsigned long nId, kernel::Controller& controller, unsigned long nType); //, const tools::Resolver_ABC< kernel::KnowledgeGroupType >& types );
     virtual ~KnowledgeGroup();
     //@}
 
@@ -35,6 +39,7 @@ public:
     virtual void Remove( kernel::KnowledgeGroup_ABC& knowledgeGroup );
     virtual void Register( kernel::Automat_ABC& knowledgeGroup );
     virtual void Remove( kernel::Automat_ABC& knowledgeGroup );
+    virtual void DoUpdate( const ASN1T_MsgKnowledgeGroupUpdate& message );
     //@}
 
     //! @name Accessors
@@ -52,6 +57,8 @@ private:
     //! @name Member data
     //@{
     bool isActivated_;
+    unsigned long nType_;
+//    const tools::Resolver_ABC< kernel::KnowledgeGroupType >& types_;
     //@}
 };
 

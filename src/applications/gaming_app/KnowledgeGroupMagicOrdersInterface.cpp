@@ -59,6 +59,11 @@ void KnowledgeGroupMagicOrdersInterface::NotifyContextMenu( const KnowledgeGroup
         AddMagic( tr( "Desactivate KnowledgeGroup" ), SLOT( DesactivateKnowledgeGroup() ), magicMenu );  
     else
         AddMagic( tr( "Activate KnowledgeGroup" ), SLOT( ActivateKnowledgeGroup() ), magicMenu );
+    AddMagic( tr( "Delete KnowledgeGroup" ), SLOT( DeleteKnowledgeGroup() ), magicMenu );
+    QPopupMenu* typeMenu = menu.SubMenu( "Type", tr( "Change Type" ) );
+    AddMagic( tr( "toto" ), SLOT( ChangeTypeKnowledgeGroup() ), typeMenu );
+    AddMagic( tr( "tutu" ), SLOT( ChangeTypeKnowledgeGroup() ), typeMenu );
+    AddMagic( tr( "titi" ), SLOT( ChangeTypeKnowledgeGroup() ), typeMenu );
 }
 
 
@@ -69,11 +74,13 @@ void KnowledgeGroupMagicOrdersInterface::NotifyContextMenu( const KnowledgeGroup
 // -----------------------------------------------------------------------------
 void KnowledgeGroupMagicOrdersInterface::ActivateKnowledgeGroup()
 {
-    /*ASN1T_MagicActionUpdateObject asn;
-    asn.attributes.m.constructionPresent = 1;
-    asn.attributes.construction.m.percentagePresent = 1;
-    asn.attributes.construction.percentage = 100;
-    SendObjectMagic( asn );*/
+    simulation::KnowledgeGroupEnable asnMsg;
+    if( selectedEntity_ )
+    {
+        asnMsg().oid = selectedEntity_->GetId();
+        asnMsg().enabled = true;
+        asnMsg.Send( publisher_ );
+    }
 }
 
 
@@ -87,11 +94,39 @@ void KnowledgeGroupMagicOrdersInterface::DesactivateKnowledgeGroup()
     if( selectedEntity_ )
     {
         asnMsg().oid = selectedEntity_->GetId();
-        asnMsg().enabled = true;
+        asnMsg().enabled = false;
         asnMsg.Send( publisher_ );
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroupMagicOrdersInterface::DeleteKnowledgeGroup
+// Created: FHD 2009-12-22
+// -----------------------------------------------------------------------------
+void KnowledgeGroupMagicOrdersInterface::DeleteKnowledgeGroup()
+{
+    simulation::KnowledgeGroupDelete asnMsg;
+    if( selectedEntity_ )
+    {
+        asnMsg().oid = selectedEntity_->GetId();
+        asnMsg.Send( publisher_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroupMagicOrdersInterface::ChangeTypeKnowledgeGroup
+// Created: FHD 2009-12-22
+// -----------------------------------------------------------------------------
+void KnowledgeGroupMagicOrdersInterface::ChangeTypeKnowledgeGroup()
+{
+    simulation::KnowledgeGroupSetType asnMsg;
+    if( selectedEntity_ )
+    {
+        asnMsg().oid = selectedEntity_->GetId();
+        asnMsg().type = 0;
+        asnMsg.Send( publisher_ );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroupMagicOrdersInterface::AddMagic

@@ -744,6 +744,19 @@ void MIL_EntityManager::PreprocessRandomBreakdowns()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::UpdateKnowledgeGroups
+// Created:  FHD 2009-12-18: 
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::UpdateKnowledgeGroups()
+{
+    profiler_.Start();
+
+    knowledgeGroupFactory_->Apply( boost::bind( &MIL_KnowledgeGroup::UpdateKnowledgeGroup, _1 ) );
+
+    rStatesTime_ = profiler_.Stop();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::Update
 // Created: NLD 2004-08-19
 // -----------------------------------------------------------------------------
@@ -758,6 +771,7 @@ void MIL_EntityManager::Update()
     UpdateActions   ();
     UpdateEffects   ();
     UpdateStates    ();
+    UpdateKnowledgeGroups();
 };
 
 // -----------------------------------------------------------------------------

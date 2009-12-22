@@ -52,7 +52,6 @@ public:
     virtual void Remove( kernel::KnowledgeGroup_ABC& knowledgeGroup );
     virtual void Register( kernel::Automat_ABC& automat );
     virtual void Remove( kernel::Automat_ABC& automat );
-//    void SendChangeParent( ClientPublisher_ABC& publisher ) const;
     //@}
 
 private:
@@ -65,8 +64,9 @@ private:
 public:
     //! @name Member data
     //@{
-    kernel::Team_ABC& team_;
-    kernel::KnowledgeGroup_ABC*      parent_;
+    kernel::Team_ABC&   team_;
+    kernel::KnowledgeGroup_ABC*     parent_;
+    unsigned long       nType_;
     tools::Resolver< kernel::KnowledgeGroup_ABC > knowledgeGroups_;
     tools::Resolver< kernel::Automat_ABC > automats_;
     //@}

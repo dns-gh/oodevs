@@ -662,7 +662,11 @@ MIL_KnowledgeGroup* MIL_Army::FindKnowledgeGroup( uint nID ) const
     if( it == knowledgeGroups_.end() )
     {
         for( CIT_KnowledgeGroupMap itBis = knowledgeGroups_.begin(); itBis != knowledgeGroups_.end(); ++itBis )
-            return itBis->second->FindKnowledgeGroup( nID );
+        {
+            MIL_KnowledgeGroup* pkg = itBis->second->FindKnowledgeGroup( nID );
+            if( pkg )
+                return pkg;
+        }
         return 0;
     }
     return it->second;

@@ -1482,7 +1482,7 @@ void AgentServerMsgMgr::OnReceiveMsgUrbanCreation( const ASN1T_MsgUrbanCreation&
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupChangeSuperior( const ASN1T_MsgKnowledgeGroupChangeSuperior& asnMsg )
 {
-    GetModel().knowledgeGroups_.Update( asnMsg );
+//    GetModel().knowledgeGroups_.Get( asnMsg.iod ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1515,12 +1515,17 @@ void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupDeleteAck( const ASN1T_MsgKnow
 
 void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupSetType( const ASN1T_MsgKnowledgeGroupSetType& asnMsg )
 {
-    GetModel().knowledgeGroups_.SetType( asnMsg );
+//    GetModel().knowledgeGroups_.SetType( asnMsg );
 }
 
 void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupSetTypeAck( const ASN1T_MsgKnowledgeGroupSetTypeAck& asnMsg, unsigned long nCtx )
 {
     CheckAcknowledge( logger_, asnMsg, "KnowledgeGroupSetTypeAck" );
+}
+
+void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupUpdate( const ASN1T_MsgKnowledgeGroupUpdate& asnMsg )
+{
+    GetModel().knowledgeGroups_.Get( asnMsg.oid ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1703,12 +1708,13 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const ASN1
         case T_MsgsSimToClient_msg_msg_urban_knowledge_update                         : OnReceiveMsgUrbanKnowledgeUpdate        ( *message.msg.u.msg_urban_knowledge_update ); break;
         case T_MsgsSimToClient_msg_msg_urban_knowledge_destruction                    : OnReceiveMsgUrbanKnowledgeDestruction   ( *message.msg.u.msg_urban_knowledge_destruction ); break;
 
-        case T_MsgsSimToClient_msg_msg_knowledge_group_change_superior                : OnReceiveMsgKnowledgeGroupChangeSuperior ( *message.msg.u.msg_knowledge_group_change_superior ); break;
+        //case T_MsgsSimToClient_msg_msg_knowledge_group_change_superior                : OnReceiveMsgKnowledgeGroupChangeSuperior ( *message.msg.u.msg_knowledge_group_change_superior ); break;
         case T_MsgsSimToClient_msg_msg_knowledge_group_change_superior_ack            : OnReceiveMsgKnowledgeGroupChangeSuperiorAck( *message.msg.u.msg_knowledge_group_change_superior_ack, message.context ); break;
-        case T_MsgsSimToClient_msg_msg_knowledge_group_delete                         : OnReceiveMsgKnowledgeGroupDelete ( *message.msg.u.msg_knowledge_group_delete ); break;
+        //case T_MsgsSimToClient_msg_msg_knowledge_group_delete                         : OnReceiveMsgKnowledgeGroupDelete ( *message.msg.u.msg_knowledge_group_delete ); break;
         case T_MsgsSimToClient_msg_msg_knowledge_group_delete_ack                     : OnReceiveMsgKnowledgeGroupDeleteAck( *message.msg.u.msg_knowledge_group_delete_ack, message.context ); break;
-        case T_MsgsSimToClient_msg_msg_knowledge_group_set_type                       : OnReceiveMsgKnowledgeGroupSetType ( *message.msg.u.msg_knowledge_group_set_type ); break;
+        //case T_MsgsSimToClient_msg_msg_knowledge_group_set_type                       : OnReceiveMsgKnowledgeGroupSetType ( *message.msg.u.msg_knowledge_group_set_type ); break;
         case T_MsgsSimToClient_msg_msg_knowledge_group_set_type_ack                   : OnReceiveMsgKnowledgeGroupSetTypeAck( *message.msg.u.msg_knowledge_group_set_type_ack, message.context ); break;
+        case T_MsgsSimToClient_msg_msg_knowledge_group_update                         : OnReceiveMsgKnowledgeGroupUpdate( *message.msg.u.msg_knowledge_group_update ); break;
    
         default:
             UnhandledMessage( message.msg.t );

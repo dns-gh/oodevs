@@ -16,7 +16,16 @@ MsgKnowledgeGroupCreation ::= SEQUENCE
 {
     oid                         KnowledgeGroup,
     oid-camp                    Team,
-    oid-knowledgegroup-parent   KnowledgeGroup OPTIONAL
+    oid-knowledgegroup-parent   KnowledgeGroup OPTIONAL,
+    type                        KnowledgeGroupType
+}
+
+MsgKnowledgeGroupUpdate ::= SEQUENCE
+{
+    oid                         KnowledgeGroup,
+    oid-knowledgegroup-parent   KnowledgeGroup OPTIONAL,
+    enabled                     BOOLEAN,
+    type                        KnowledgeGroupType
 }
 
 MsgKnowledgeGroupDelete ::= SEQUENCE

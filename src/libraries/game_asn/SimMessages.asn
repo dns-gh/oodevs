@@ -186,9 +186,7 @@ MsgsSimToClient ::= SEQUENCE
         msg-urban-knowledge-update                              MsgUrbanKnowledgeUpdate,
         msg-urban-knowledge-destruction                         MsgUrbanKnowledgeDestruction,
         
-        msg-knowledge-group-change-superior                     MsgKnowledgeGroupChangeSuperior,
-        msg-knowledge-group-delete                              MsgKnowledgeGroupDelete,
-        msg-knowledge-group-set_type                            MsgKnowledgeGroupSetType
+        msg-knowledge-group-update                              MsgKnowledgeGroupUpdate
     }
 }
 

@@ -18,9 +18,11 @@ using namespace kernel;
 // Name: KnowledgeGroup constructor
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( unsigned long nId, Controller& controller )
+KnowledgeGroup::KnowledgeGroup( unsigned long nId, Controller& controller, unsigned long nType ) //, const tools::Resolver_ABC< kernel::KnowledgeGroupType >& types )
     : EntityImplementation< KnowledgeGroup_ABC >( controller, nId, QString( tools::translate( "KnowledgeGroup", "Group %1" ) ).arg( nId ) )
     , isActivated_ ( true )
+    , nType_( nType )
+    //, types_( types )
 {
     // NOTHING
 }
@@ -68,6 +70,24 @@ void KnowledgeGroup::Register( KnowledgeGroup_ABC& knowledgeGroup )
 void KnowledgeGroup::Remove( KnowledgeGroup_ABC& knowledgeGroup )
 {
     //NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::DoUpdate
+// Created: FHD 2009-12-21
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::DoUpdate( const ASN1T_MsgKnowledgeGroupUpdate& message )
+{
+    if( message.type )
+    {
+        if( message.type != nType_ ) // && types_.Find( message.type ) )
+             nType_ = message.type;
+    }
+    else 
+    {
+        if( message.enabled != isActivated_ )
+            isActivated_ = message.enabled;
+    }
 }
 
 // -----------------------------------------------------------------------------

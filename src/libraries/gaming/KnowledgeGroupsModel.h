@@ -32,15 +32,13 @@ class KnowledgeGroupsModel : public tools::Resolver< kernel::KnowledgeGroup_ABC 
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroupsModel();
+    explicit KnowledgeGroupsModel( kernel::Controller& controller );
     virtual ~KnowledgeGroupsModel();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const ASN1T_MsgKnowledgeGroupChangeSuperior& asn );
     void Delete( const ASN1T_MsgKnowledgeGroupDelete& asn );
-    void SetType( const ASN1T_MsgKnowledgeGroupSetType& asn );
     void Purge();
     //@}
 
@@ -49,6 +47,11 @@ private:
     //@{
     KnowledgeGroupsModel( const KnowledgeGroupsModel& );            //!< Copy constructor
     KnowledgeGroupsModel& operator=( const KnowledgeGroupsModel& ); //!< Assignement operator
+    //@}
+public:
+    //! @name Member data
+    //@{
+    kernel::Controller& controller_;
     //@}
 };
 

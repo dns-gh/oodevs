@@ -229,7 +229,7 @@ void MIL_KnowledgeGroup::SendCreation() const
     NET_ASN_MsgKnowledgeGroupCreation asn;   
     asn().oid       = nID_;
     asn().oid_camp  = pArmy_->GetID();
-
+    asn().type      = GetType().GetID();
     if( pParent_ )
     {
         asn().m.oid_knowledgegroup_parentPresent = 1;
@@ -246,6 +246,23 @@ void MIL_KnowledgeGroup::SendCreation() const
 void MIL_KnowledgeGroup::SendFullState() const
 {
     tools::Resolver< MIL_KnowledgeGroup >::Apply( boost::bind( &MIL_KnowledgeGroup::SendFullState, _1 ) );
+}
+
+void MIL_KnowledgeGroup::UpdateKnowledgeGroup() const
+{
+    NET_ASN_MsgKnowledgeGroupUpdate asn;
+    asn().oid = nID_;
+    MIL_KnowledgeGroup *pParent = GetParent();
+    if( pParent )
+    {
+        asn().m.oid_knowledgegroup_parentPresent = 1;
+        asn().oid_knowledgegroup_parent = pParent != NULL ? pParent->GetID(): 0;
+    }
+    asn().type = GetType().GetID();
+    asn().enabled = IsEnabled();
+    asn.Send();
+
+    tools::Resolver< MIL_KnowledgeGroup >::Apply( boost::bind( &MIL_KnowledgeGroup::UpdateKnowledgeGroup, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -327,6 +344,15 @@ MIL_Army& MIL_KnowledgeGroup::GetArmy() const
 MIL_KnowledgeGroup* MIL_KnowledgeGroup::GetParent() const
 {
     return pParent_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::SetParent
+// Created: FHD 2009-12-22
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::SetParent( MIL_KnowledgeGroup* pParent )
+{
+    pParent_ = pParent;
 }
 
 // -----------------------------------------------------------------------------
@@ -457,11 +483,15 @@ void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupChangeSuperior( const ASN1T_M
         {
             pParent->UnregisterKnowledgeGroup( *this );
             pNewKnowledgeGroup->RegisterKnowledgeGroup( *this );
+            SetParent( pNewKnowledgeGroup );
+            UpdateKnowledgeGroup();
         }
         else if( pParent == NULL )
         {
             GetArmy().UnregisterKnowledgeGroup( *this );
             pNewKnowledgeGroup->RegisterKnowledgeGroup( *this );
+            SetParent( pNewKnowledgeGroup );
+            UpdateKnowledgeGroup();
         }
 
     }

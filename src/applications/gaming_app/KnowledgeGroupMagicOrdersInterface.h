@@ -53,6 +53,8 @@ private slots:
     //@{
     void ActivateKnowledgeGroup();
     void DesactivateKnowledgeGroup();
+    void DeleteKnowledgeGroup();
+    void ChangeTypeKnowledgeGroup();
     //@}
 
 private:

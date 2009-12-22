@@ -78,7 +78,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , agents_( *new AgentsModel( agentFactory_ ) )
     , objects_( *new ObjectsModel( objectFactory_ ) )
     , teams_( *new TeamsModel( teamFactory_ ) )
-    , knowledgeGroups_( *new KnowledgeGroupsModel() )
+    , knowledgeGroups_( *new KnowledgeGroupsModel( controllers.controller_ ) )
     , logistics_( *new LogisticsModel( logisticFactory_ ) )
     , limits_( *new LimitsModel( tacticalLineFactory_  ) )
     , fires_( *new FiresModel( agents_, agents_ ) )

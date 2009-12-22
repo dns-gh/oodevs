@@ -34,7 +34,9 @@
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/AgentTypes.h"
 #include "UrbanKnowledges.h"
+#include "clients_kernel/KnowledgeGroupType.h"
 
 using namespace kernel;
 
@@ -113,10 +115,10 @@ KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( const ASN1T_MsgKnowledgeG
         (Entity_ABC*) &model_.knowledgeGroups_.Resolver< KnowledgeGroup_ABC >::Get( asnMsg.oid_knowledgegroup_parent ) :
         (Entity_ABC*) &model_.teams_.Resolver< Team_ABC >::Get( asnMsg.oid_camp );
 
-    KnowledgeGroup* result = new KnowledgeGroup( asnMsg.oid, controllers_.controller_ );
+    KnowledgeGroup* result = new KnowledgeGroup( asnMsg.oid, controllers_.controller_, asnMsg.type );
     result->Attach( *new AgentKnowledges( controllers_.controller_, *result, model_.agentsKnowledgeFactory_ ) );
     result->Attach( *new PopulationKnowledges( controllers_.controller_, *result, model_.agentsKnowledgeFactory_ ) );
-    result->Attach< CommunicationHierarchies >( *new KnowledgeGroupHierarchies( controllers_.controller_, superior, *result ) );
+    result->Attach< CommunicationHierarchies >( *new KnowledgeGroupHierarchies( controllers_.controller_, superior, *result, model_.knowledgeGroups_ ) );
     result->Polish();
 
     // $$$$ AGE 2006-10-24: 

@@ -104,6 +104,7 @@ public:
           MIL_KnowledgeGroup*                     GetParent   () const;
           MT_Float                                GetTimeToDiffuseToKnowledgeGroup() const;
           bool                                    IsEnabled() const;
+          void                                    SetParent( MIL_KnowledgeGroup* pParent );
     //@}
 
     //! @name Network
@@ -111,6 +112,7 @@ public:
     void SendCreation () const;
     void SendFullState() const;
     void SendKnowledge() const;
+    void UpdateKnowledgeGroup() const;
     //@}
     
 private:

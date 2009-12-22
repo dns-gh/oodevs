@@ -218,6 +218,7 @@ private:
     void UpdateActions   ();
     void UpdateEffects   ();
     void UpdateStates    ();
+    void UpdateKnowledgeGroups();
 
     void PreprocessRandomBreakdowns();
     //@}

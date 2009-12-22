@@ -137,7 +137,7 @@ void Model::Update( const ASN1T_MsgsSimToClient& asn )
         case T_MsgsSimToClient_msg_msg_automat_change_knowledge_group_ack:
         case T_MsgsSimToClient_msg_msg_automat_change_superior_ack:
         case T_MsgsSimToClient_msg_msg_unit_change_superior_ack:
-        //case T_MsgsSimToClient_msg_msg_knowledge_group_change_superior                : knowledgeGroups_.Get( asn.msg.u.msg_automat_change_superior->oid ).Update( *asn.msg.u.msg_knowledge_group_change_superior ); break;
+        case T_MsgsSimToClient_msg_msg_knowledge_group_update:                   knowledgeGroups_.Get( asn.msg.u.msg_knowledge_group_update->oid ).Update( *asn.msg.u.msg_knowledge_group_update ); break;
             break; // NOTHING
         case T_MsgsSimToClient_msg_msg_unit_change_superior:                     agents_.Get( asn.msg.u.msg_unit_change_superior->oid ).Update( *asn.msg.u.msg_unit_change_superior ); break;
         case T_MsgsSimToClient_msg_msg_log_supply_push_flow_ack:

@@ -279,6 +279,7 @@ private:
     //knowledgegroup
     void OnReceiveMsgKnowledgeGroupChangeSuperior( const ASN1T_MsgKnowledgeGroupChangeSuperior& asnMsg );
     void OnReceiveMsgKnowledgeGroupChangeSuperiorAck( const ASN1T_MsgKnowledgeGroupChangeSuperiorAck& asnMsg, unsigned long nCtx );
+    void OnReceiveMsgKnowledgeGroupUpdate( const ASN1T_MsgKnowledgeGroupUpdate& asnMsg );
     void OnReceiveMsgKnowledgeGroupDelete( const ASN1T_MsgKnowledgeGroupDelete& asnMsg );
     void OnReceiveMsgKnowledgeGroupDeleteAck( const ASN1T_MsgKnowledgeGroupDeleteAck& asnMsg, unsigned long nCtx );
     void OnReceiveMsgKnowledgeGroupSetType( const ASN1T_MsgKnowledgeGroupSetType& asnMsg );

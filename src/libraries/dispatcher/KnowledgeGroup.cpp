@@ -25,7 +25,10 @@ KnowledgeGroup::KnowledgeGroup( Model_ABC& model, const ASN1T_MsgKnowledgeGroupC
     : SimpleEntity< kernel::KnowledgeGroup_ABC >( msg.oid )
     , team_( model.Sides().Get( msg.oid_camp ) )
     , parent_( msg.m.oid_knowledgegroup_parentPresent ? &model.KnowledgeGroups().Get( msg.oid_knowledgegroup_parent ) : 0 )
+    , nType_( msg.type )
 {
+    if( parent_ == this )
+        throw std::runtime_error( __FUNCTION__ ": recursive hierarchy." );
     if( parent_ )
         parent_->Register( *this );
     else
@@ -55,6 +58,7 @@ void KnowledgeGroup::SendCreation( ClientPublisher_ABC& publisher ) const
     
     asn().oid      = GetId();
     asn().oid_camp = team_.GetId();
+    asn().type = nType_;
     if( parent_ )
     {
         asn().m.oid_knowledgegroup_parentPresent = 1;
@@ -97,7 +101,7 @@ void KnowledgeGroup::Accept( kernel::ModelVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::Register( kernel::KnowledgeGroup_ABC& knowledgeGroup )
 {
-    knowledgeGroups_.Register( knowledgeGroup.GetId(), *this );
+    knowledgeGroups_.Register( knowledgeGroup.GetId(), knowledgeGroup );
 }
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup::Register
