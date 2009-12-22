@@ -42,9 +42,45 @@ Formation::~Formation()
 // Name: Formation::GetLevel
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-const HierarchyLevel_ABC& Formation::GetLevel() const
+const kernel::HierarchyLevel_ABC& Formation::GetLevel() const
 {
     return level_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::GetParent
+// Created: MGD 2009-12-22
+// -----------------------------------------------------------------------------
+kernel::Formation_ABC* Formation::GetParent() const
+{
+    throw std::exception( __FUNCTION__ " not implemented" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::GetTeam
+// Created: MGD 2009-12-22
+// -----------------------------------------------------------------------------
+kernel::Team_ABC& Formation::GetTeam() const
+{
+    throw std::exception( __FUNCTION__ " not implemented" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::GetFormations
+// Created: MGD 2009-12-22
+// -----------------------------------------------------------------------------
+const tools::Resolver< kernel::Formation_ABC >& Formation::GetFormations() const
+{
+    throw std::exception( __FUNCTION__ " not implemented" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::GetAutomates
+// Created: MGD 2009-12-22
+// -----------------------------------------------------------------------------
+const tools::Resolver< kernel::Automat_ABC >& Formation::GetAutomates() const
+{
+    throw std::exception( __FUNCTION__ " not implemented" );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,34 +109,34 @@ void Formation::Accept( kernel::ModelVisitor_ABC& visitor ) const
 // Name: Formation::Register
 // Created: MGD 2009-12-21
 // -----------------------------------------------------------------------------
-void Formation::Register( kernel::Formation_ABC& formation )
+void Formation::Register( kernel::Formation_ABC& /*formation*/ )
 {
-    //NOTHING
+    throw std::exception( __FUNCTION__ " not implemented" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Formation::Remove
 // Created: MGD 2009-12-21
 // -----------------------------------------------------------------------------
-void Formation::Remove( kernel::Formation_ABC& formation )
+void Formation::Remove( kernel::Formation_ABC& /*formation*/ )
 {
-    //NOTHING
+    throw std::exception( __FUNCTION__ " not implemented" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Formation::Register
 // Created: MGD 2009-12-21
 // -----------------------------------------------------------------------------
-void Formation::Register( kernel::Automat_ABC& automat )
+void Formation::Register( kernel::Automat_ABC& /*automat*/ )
 {
-    //NOTHING
+    throw std::exception( __FUNCTION__ " not implemented" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Formation::Remove
 // Created: MGD 2009-12-21
 // -----------------------------------------------------------------------------
-void Formation::Remove( kernel::Automat_ABC& automat )
+void Formation::Remove( kernel::Automat_ABC& /*automat*/ )
 {
-    //NOTHING
+     throw std::exception( __FUNCTION__ " not implemented" );
 }

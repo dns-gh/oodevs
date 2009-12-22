@@ -51,6 +51,10 @@ public:
     //@{
     virtual QString GetName() const;
     virtual const kernel::HierarchyLevel_ABC& GetLevel() const;
+    virtual kernel::Formation_ABC* GetParent() const;
+    virtual kernel::Team_ABC& GetTeam() const;
+    virtual const tools::Resolver< kernel::Formation_ABC >& GetFormations() const;
+    virtual const tools::Resolver< kernel::Automat_ABC >& GetAutomates() const;
     void Rename( const QString& name );
     //@}
 

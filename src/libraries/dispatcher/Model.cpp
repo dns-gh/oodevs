@@ -14,6 +14,7 @@
 #include "Agent.h"
 #include "AgentKnowledge.h"
 #include "Automat.h"
+#include "clients_kernel/FormationLevels.h"
 #include "ClientPublisher_ABC.h"
 #include "Fire.h"
 #include "FireEffect.h"
@@ -54,6 +55,7 @@ Model::Model( const tools::ExerciseConfig& config )
     , compositeFactory_( new CompositeFactory() )
     , agentTypes_( new kernel::AgentTypes( config ) )
 	, objectTypes_( new kernel::ObjectTypes( config ) )
+    , levels_( new kernel::FormationLevels() )
 {
     // NOTHING
 }
@@ -163,7 +165,7 @@ void Model::Update( const ASN1T_MsgsSimToClient& asn )
         case T_MsgsSimToClient_msg_msg_unit_knowledge_destruction:           Destroy( agentKnowledges_, asn.msg.u.msg_unit_knowledge_destruction->oid ); break;
         case T_MsgsSimToClient_msg_msg_side_creation:                        CreateUpdate< Sendable< kernel::Team_ABC >, Side >( sides_, *asn.msg.u.msg_side_creation ); break;
         case T_MsgsSimToClient_msg_msg_knowledge_group_creation:             CreateUpdate< KnowledgeGroup, KnowledgeGroup >( knowledgeGroups_, *asn.msg.u.msg_knowledge_group_creation ); break;
-        case T_MsgsSimToClient_msg_msg_formation_creation:                   CreateUpdate< Formation, Formation >( formations_, *asn.msg.u.msg_formation_creation ); break;
+        case T_MsgsSimToClient_msg_msg_formation_creation:                   CreateUpdate2< Formation, Formation >( formations_, *levels_, *asn.msg.u.msg_formation_creation ); break;
         case T_MsgsSimToClient_msg_msg_unit_creation:                        CreateUpdate< Agent, Agent >( agents_, *asn.msg.u.msg_unit_creation ); break;
         case T_MsgsSimToClient_msg_msg_unit_environment_type:                agents_.Get( asn.msg.u.msg_unit_environment_type->oid ).Update( *asn.msg.u.msg_unit_environment_type ); break;
         case T_MsgsSimToClient_msg_msg_unit_destruction:                     Destroy( agents_, asn.msg.u.msg_unit_destruction ); break;
@@ -247,27 +249,43 @@ void Model::Update( const ASN1T_MsgsSimToClient& asn )
 // Name: Model::CreateUpdate
 // Created: SBO 2008-07-09
 // -----------------------------------------------------------------------------
-template< typename T, typename C, typename P >
-void Model::CreateUpdate( tools::Resolver< T >& resolver, const P& parameter )
+template< typename T, typename C, typename P_ASN >
+void Model::CreateUpdate( tools::Resolver< T >& resolver, const P_ASN& parameterAsn )
 {
-    CreateUpdate< T, C, P >( resolver, parameter.oid, parameter );
+    CreateUpdate< T, C, P_ASN >( resolver, parameterAsn.oid, parameterAsn );
 }
-
 // -----------------------------------------------------------------------------
 // Name: Model::CreateUpdate
-// Created: SBO 2008-07-09
+// Created: MGD 2009-12-22
 // -----------------------------------------------------------------------------
-template< typename T, typename C, typename P >
-void Model::CreateUpdate( tools::Resolver< T >& resolver, unsigned id, const P& parameter )
+template< typename T, typename C, typename P_ASN >
+void Model::CreateUpdate( tools::Resolver< T >& resolver, unsigned id, const P_ASN& parameterAsn )
 {
     T* pElement = resolver.Find( id );
     if( !pElement )
     {
-        pElement = new C( *this, parameter );
+        pElement = new C( *this, parameterAsn );
         AddExtensions( *pElement );
         resolver.Register( pElement->GetId(), *pElement );
     }
-    static_cast< C* >( pElement )->Update( parameter );
+    static_cast< C* >( pElement )->Update( parameterAsn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::CreateUpdate
+// Created: MGD 2009-12-22
+// -----------------------------------------------------------------------------
+template< typename T, typename C, typename P, typename P_ASN >
+void Model::CreateUpdate2( tools::Resolver< T >& resolver, const P& parameter, const P_ASN& parameterAsn )
+{
+    T* pElement = resolver.Find( parameterAsn.oid );
+    if( !pElement )
+    {
+        pElement = new C( *this, parameter, parameterAsn );
+        AddExtensions( *pElement );
+        resolver.Register( pElement->GetId(), *pElement );
+    }
+    static_cast< C* >( pElement )->Update( parameterAsn );
 }
 
 // -----------------------------------------------------------------------------

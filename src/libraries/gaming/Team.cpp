@@ -74,7 +74,7 @@ const kernel::Karma& Team::GetKarma() const
 // -----------------------------------------------------------------------------
 void Team::Register( Formation_ABC& /*formation*/ )
 {
-    //NOTHING
+     throw std::exception( __FUNCTION__ " not implemented" );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,7 +83,7 @@ void Team::Register( Formation_ABC& /*formation*/ )
 // -----------------------------------------------------------------------------
 void Team::Remove( Formation_ABC& /*formation*/ )
 {
-    //NOTHING
+     throw std::exception( __FUNCTION__ " not implemented" );
 }
 
 // -----------------------------------------------------------------------------
@@ -92,7 +92,7 @@ void Team::Remove( Formation_ABC& /*formation*/ )
 // -----------------------------------------------------------------------------
 void Team::Register( Population_ABC& /*population*/ )
 {
-    //NOTHING
+     throw std::exception( __FUNCTION__ " not implemented" );
 }
 
 // -----------------------------------------------------------------------------
@@ -101,7 +101,7 @@ void Team::Register( Population_ABC& /*population*/ )
 // -----------------------------------------------------------------------------
 void Team::Remove( Population_ABC& /*population*/ )
 {
-    //NOTHING
+     throw std::exception( __FUNCTION__ " not implemented" );
 }
 
 
@@ -111,7 +111,7 @@ void Team::Remove( Population_ABC& /*population*/ )
 // -----------------------------------------------------------------------------
 void Team::Register( Object_ABC& /*object*/ )
 {
-    //NOTHING
+     throw std::exception( __FUNCTION__ " not implemented" );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,7 +120,7 @@ void Team::Register( Object_ABC& /*object*/ )
 // -----------------------------------------------------------------------------
 void Team::Remove( Object_ABC& /*object*/ )
 {
-    //NOTHING
+     throw std::exception( __FUNCTION__ " not implemented" );
 }
 
 // -----------------------------------------------------------------------------
@@ -129,7 +129,7 @@ void Team::Remove( Object_ABC& /*object*/ )
 // -----------------------------------------------------------------------------
 void Team::Register( KnowledgeGroup_ABC& /*knGroup*/ )
 {
-    //NOTHING
+     throw std::exception( __FUNCTION__ " not implemented" );
 }
 
 // -----------------------------------------------------------------------------

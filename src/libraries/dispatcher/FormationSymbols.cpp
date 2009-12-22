@@ -9,11 +9,14 @@
 
 #include "dispatcher_pch.h"
 #include "FormationSymbols.h"
+
+#include "clients_kernel/HierarchyLevel_ABC.h"
 #include "Formation.h"
 #include "tools/App6Symbol.h"
 #include "dispatcher/Automat.h"
 #include "dispatcher/Side.h"
 #include <boost/bind.hpp>
+#include <boost/function.hpp>
 
 using namespace dispatcher;
 
@@ -59,17 +62,18 @@ namespace
 std::string FormationSymbols::BuildSymbol( bool up /*= true*/ ) const
 {
     SymbolAggregator aggregator;
-    holder_.automats_.Apply( boost::bind( &SymbolAggregator::AddAutomat, boost::ref( aggregator ), _1 ) );
-    holder_.formations_.Apply( boost::bind( &SymbolAggregator::AddFormation, boost::ref( aggregator ), _1 ) );//@TODO URGENT MGD RESTORE
+    holder_.GetAutomates().Apply( boost::bind( &SymbolAggregator::AddAutomat, boost::ref( aggregator ), _1 ) );
+    holder_.GetFormations().Apply( boost::bind( &SymbolAggregator::AddFormation, boost::ref( aggregator ), _1 ) );
     if( up )
     {
         const EntitySymbols_ABC* symbols;
-        if( holder_.parent_ )
-            symbols = &holder_.parent_->Get< EntitySymbols_ABC >();
+        kernel::Formation_ABC* parent = holder_.GetParent();
+        if( parent )
+            symbols = &parent->Get< EntitySymbols_ABC >();
         else
-            symbols = &holder_.team_.Get< EntitySymbols_ABC >();
+            symbols = &holder_.GetTeam().Get< EntitySymbols_ABC >();
         aggregator.symbol_ = tools::app6::MergeSymbol( symbols->BuildSymbol(), aggregator.symbol_ );
     }
-    tools::app6::SetLevel( aggregator.symbol_, (unsigned int)holder_.level_ );
+    tools::app6::SetLevel( aggregator.symbol_, holder_.GetLevel().GetId() );
     return aggregator.symbol_;
 }

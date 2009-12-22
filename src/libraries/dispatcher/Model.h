@@ -22,6 +22,7 @@ namespace kernel
     class AgentTypes;
     class AgentType;
     class Entity_ABC;
+    class FormationLevels;
     class FragOrderType;
     class MissionType;
     class ModelVisitor_ABC;
@@ -129,10 +130,12 @@ private:
 
     //! @name Helpers
     //@{
-    template< typename T, typename C, typename P >
-    void CreateUpdate( tools::Resolver< T >& resolver, const P& parameter );
-    template< typename T, typename C, typename P >
-    void CreateUpdate( tools::Resolver< T >& resolver, unsigned id, const P& parameter );
+    template< typename T, typename C, typename P_ASN >
+    void CreateUpdate( tools::Resolver< T >& resolver, const P_ASN& parameterAsn );
+    template< typename T, typename C, typename P_ASN >
+    void CreateUpdate( tools::Resolver< T >& resolver, unsigned id, const P_ASN& parameterAsn );
+    template< typename T, typename C, typename P, typename P_ASN >
+    void CreateUpdate2( tools::Resolver< T >& resolver, const P& parameter, const P_ASN& parameterAsn );
     template< typename T >
     void UpdateAnyAgent( unsigned id, const T& message );
     template< typename T >
@@ -195,6 +198,7 @@ public:
     tools::Resolver< Report >                 reports_;
     tools::Resolver< UrbanObject >            urbanBlocks_;
     tools::Resolver< UrbanKnowledge >         urbanKnowledges_;
+    std::auto_ptr< kernel::FormationLevels >  levels_;
     //@}
 };
 

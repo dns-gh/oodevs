@@ -13,10 +13,10 @@
 #include "game_asn/Simulation.h"
 #include "SimpleEntity.h"
 #include "clients_kernel/Formation_ABC.h"
-#include "tools/Resolver.h"
 
 namespace kernel
 {
+    class HierarchyLevel_ABC;
     class ModelVisitor_ABC;
     class Team_ABC;
 }
@@ -37,8 +37,17 @@ class Formation : public SimpleEntity< kernel::Formation_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Formation( const Model_ABC& model, const ASN1T_MsgFormationCreation& msg );
+    Formation( const Model_ABC& model, const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels, const ASN1T_MsgFormationCreation& msg );
     virtual ~Formation();
+    //@}
+
+    //! @name Accessors
+    //@{
+    virtual const kernel::HierarchyLevel_ABC& GetLevel() const;
+    virtual kernel::Formation_ABC* GetParent() const;
+    virtual kernel::Team_ABC& GetTeam() const;
+    virtual const tools::Resolver< kernel::Formation_ABC >& GetFormations() const;
+    virtual const tools::Resolver< kernel::Automat_ABC >& GetAutomates() const;
     //@}
 
     //! @name Operations
@@ -47,9 +56,7 @@ public:
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
 
-    void Accept( kernel::ModelVisitor_ABC& visitor ) const;
-
-    virtual const kernel::HierarchyLevel_ABC& GetLevel() const;
+    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
 
     virtual void Register( kernel::Formation_ABC& formation );
     virtual void Remove( kernel::Formation_ABC& formation );
@@ -69,10 +76,8 @@ private:
     //@{
     const Model_ABC&                model_;
     const std::string           name_;
-
-public:
     kernel::Team_ABC&           team_;
-    const ASN1T_EnumNatureLevel level_;
+    const kernel::HierarchyLevel_ABC& level_;
     kernel::Formation_ABC*      parent_;
     tools::Resolver< kernel::Formation_ABC > formations_;
     tools::Resolver< kernel::Automat_ABC > automats_;

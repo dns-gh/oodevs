@@ -82,8 +82,6 @@ private:
     //! @name Member data
     //@{
     const Model_ABC&        model_;
-
-public:
     const std::string   name_;
     ASN1T_EnumDiplomacy nType_;
     kernel::Karma karma_;

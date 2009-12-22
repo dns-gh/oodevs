@@ -83,6 +83,43 @@ const HierarchyLevel_ABC& Formation::GetLevel() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Formation::GetParent
+// Created: MGD 2009-12-22
+// -----------------------------------------------------------------------------
+kernel::Formation_ABC* Formation::GetParent() const
+{
+    throw std::exception( __FUNCTION__ " not implemented" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::GetTeam
+// Created: MGD 2009-12-22
+// -----------------------------------------------------------------------------
+kernel::Team_ABC& Formation::GetTeam() const
+{
+    throw std::exception( __FUNCTION__ " not implemented" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::GetFormations
+// Created: MGD 2009-12-22
+// -----------------------------------------------------------------------------
+const tools::Resolver< kernel::Formation_ABC >& Formation::GetFormations() const
+{
+    throw std::exception( __FUNCTION__ " not implemented" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::GetAutomates
+// Created: MGD 2009-12-22
+// -----------------------------------------------------------------------------
+const tools::Resolver< kernel::Automat_ABC >& Formation::GetAutomates() const
+{
+    throw std::exception( __FUNCTION__ " not implemented" );
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: Formation::Rename
 // Created: SBO 2006-10-10
 // -----------------------------------------------------------------------------

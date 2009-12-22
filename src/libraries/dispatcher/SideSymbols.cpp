@@ -40,6 +40,6 @@ SideSymbols::~SideSymbols()
 std::string SideSymbols::BuildSymbol( bool /*up = true*/ ) const
 {
     std::string symbol;
-    tools::app6::SetAffiliation( symbol, (unsigned int)holder_.nType_ ); // $$$$ SBO 2007-08-23: enumerate value... find something better
+    tools::app6::SetAffiliation( symbol, (unsigned int)holder_.GetKarma().GetUId() ); // $$$$ SBO 2007-08-23: enumerate value... find something better
     return symbol;
 }
