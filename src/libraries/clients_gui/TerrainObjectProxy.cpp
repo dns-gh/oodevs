@@ -89,7 +89,7 @@ void TerrainObjectProxy::CreateDictionary( kernel::Controller& controller )
 void TerrainObjectProxy::AddDictionaryForArchitecture( kernel::PropertiesDictionary& dictionary )
 {
     urban::Architecture* architecture = static_cast< urban::Block* >( object_ )->RetrievePhysicalFeature< urban::Architecture >();
-    if ( architecture != 0 )
+    if( architecture )
     {
         dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Architecture/Height" )               , architecture->GetHeight() );
         dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Architecture/floorNumber" )          , architecture->GetFloorNumber() );
@@ -99,7 +99,7 @@ void TerrainObjectProxy::AddDictionaryForArchitecture( kernel::PropertiesDiction
         dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Architecture/innerCluttering" )      , architecture->GetInnerCluttering() );
         dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Architecture/facadeOpacity" )        , architecture->GetFacadeOpacity() );
     }
-}    
+}
 
 // -----------------------------------------------------------------------------
 // Name: TerrainObjectProxy::AddDictionaryForVegetation
@@ -108,13 +108,12 @@ void TerrainObjectProxy::AddDictionaryForArchitecture( kernel::PropertiesDiction
 void TerrainObjectProxy::AddDictionaryForVegetation( kernel::PropertiesDictionary& dictionary )
 {
     urban::Vegetation* vegetation = static_cast< urban::Block* >( object_ )->RetrievePhysicalFeature< urban::Vegetation >();
-    if ( vegetation != 0 )
+    if ( vegetation )
     {
         dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Vegetation/type" ), vegetation->GetType() );
         dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Vegetation/height" ), vegetation->GetHeight() );
         dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Vegetation/density" ), vegetation->GetDensity() );
     }
-
 }
 
 // -----------------------------------------------------------------------------
@@ -124,7 +123,7 @@ void TerrainObjectProxy::AddDictionaryForVegetation( kernel::PropertiesDictionar
 void TerrainObjectProxy::AddDictionaryForSoil( kernel::PropertiesDictionary& dictionary )
 {
     urban::Soil* soil = static_cast< urban::Block* >( object_ )->RetrievePhysicalFeature< urban::Soil >();
-    if ( soil != 0 )
+    if ( soil )
     {
         dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Soil/occupation" ), soil->GetOccupation() );
         dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Soil/trafficability" ), soil->GetTrafficability() );

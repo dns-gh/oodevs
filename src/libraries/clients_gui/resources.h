@@ -72,6 +72,7 @@ DECLARE_ICON( smoke );
 DECLARE_ICON( plus );
 DECLARE_ICON( minus );
 DECLARE_ICON( lock );
+DECLARE_ICON( scisors );
 DECLARE_ICON( commandpost );
 DECLARE_ICON( cancel );
 DECLARE_ICON( option_general );

@@ -41,7 +41,7 @@ class TerrainObjectProxy : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit TerrainObjectProxy( const ASN1T_MsgUrbanCreation& asn, kernel::Controller& controller, urban::TerrainObject_ABC& object ); 
+             TerrainObjectProxy( const ASN1T_MsgUrbanCreation& asn, kernel::Controller& controller, urban::TerrainObject_ABC& object ); 
     virtual ~TerrainObjectProxy();
     //@}
 

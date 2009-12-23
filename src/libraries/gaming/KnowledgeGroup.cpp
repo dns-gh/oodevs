@@ -37,8 +37,8 @@ KnowledgeGroup::~KnowledgeGroup()
 }
 
 // -----------------------------------------------------------------------------
-// Name: KnowledgeGroup Desactivate
-// Created: NLD 2004-03-18
+// Name: KnowledgeGroup IsActivated
+// Created: SLG 2009-12-18
 // -----------------------------------------------------------------------------
 bool KnowledgeGroup::IsActivated() const
 {
@@ -78,16 +78,15 @@ void KnowledgeGroup::Remove( KnowledgeGroup_ABC& knowledgeGroup )
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::DoUpdate( const ASN1T_MsgKnowledgeGroupUpdate& message )
 {
-    if( message.type )
+    if( message.type != nType_ ) // && types_.Find( message.type ) )
+         nType_ = message.type;
+
+    if( message.enabled != isActivated_ )
     {
-        if( message.type != nType_ ) // && types_.Find( message.type ) )
-             nType_ = message.type;
+        isActivated_ = message.enabled;
+        //controller.Update( (KnowledgeGroup_ABC& )*this );
     }
-    else 
-    {
-        if( message.enabled != isActivated_ )
-            isActivated_ = message.enabled;
-    }
+    Touch();
 }
 
 // -----------------------------------------------------------------------------

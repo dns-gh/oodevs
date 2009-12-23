@@ -55,6 +55,7 @@ private:
     //! @name Member data
     //@{
     tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& resolver_;
+    kernel::Controller& controller_;
     //@}
 };
 

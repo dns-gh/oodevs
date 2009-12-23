@@ -15,6 +15,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/CommandPostAttributes.h"
 #include "gaming/AutomatDecisions.h"
+#include "gaming/KnowledgeGroupHierarchies.h"
 #include "game_asn/SimulationSenders.h"
 #include "icons.h"
 
@@ -28,7 +29,9 @@ AgentListView::AgentListView( QWidget* pParent, Controllers& controllers, Publis
     : gui::HierarchyListView< kernel::CommunicationHierarchies >( pParent, controllers, factory, profile, icons )
     , publisher_( publisher )
     , lock_( MAKE_PIXMAP( lock ) )
+    , scisors_( MAKE_PIXMAP( scisors ) )
     , commandPost_( MAKE_PIXMAP( commandpost ) )
+    , controllers_( controllers )
 {
     addColumn( "HiddenPuce", 15 );
     setColumnAlignment( 1, Qt::AlignCenter );
@@ -73,6 +76,10 @@ void AgentListView::Display( const Entity_ABC& entity, gui::ValuedListItem* item
         item->setPixmap( 1, decisions->IsEmbraye() ? lock_ : QPixmap() );
     else if( const kernel::CommandPostAttributes* commandPost = entity.Retrieve< kernel::CommandPostAttributes >() )
         item->setPixmap( 1, commandPost->IsCommandPost() ? commandPost_ : QPixmap() );
+
+    else if ( const kernel::KnowledgeGroup_ABC* kg = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &entity ) ) // $$$$ _RC_ SLG 2009-12-21: TEMP
+        item->setPixmap( 1, !kg->IsActivated() ? scisors_ : QPixmap() );
+
     gui::HierarchyListView< kernel::CommunicationHierarchies >::Display( entity, item );
 }
 
@@ -86,6 +93,18 @@ void AgentListView::NotifyUpdated( const AutomatDecisions& decisions )
     gui::ValuedListItem* item = gui::FindItem( agent, firstChild() );
     if( item )
         item->setPixmap( 1, decisions.IsEmbraye() ? lock_ : QPixmap() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentListView::NotifyUpdated
+// Created: SBO 2006-08-18
+// -----------------------------------------------------------------------------
+void AgentListView::NotifyUpdated( const KnowledgeGroup_ABC& knowledgeGroup )
+{
+    const kernel::Entity_ABC* agent = (const Entity_ABC*)&knowledgeGroup;
+    gui::ValuedListItem* item = gui::FindItem( agent, firstChild() );
+    if( item )
+        item->setPixmap( 1, !knowledgeGroup.IsActivated() ? scisors_ : QPixmap() );
 }
 
 // -----------------------------------------------------------------------------

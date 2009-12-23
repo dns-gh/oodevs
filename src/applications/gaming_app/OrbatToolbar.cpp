@@ -84,17 +84,6 @@ void OrbatToolbar::OnSetFilter()
 }
 
 // -----------------------------------------------------------------------------
-// Name: OrbatToolbar::OnActivateCommunication
-// Created: SLG 2009-12-16
-// -----------------------------------------------------------------------------
-void OrbatToolbar::OnActivateCommunication()
-{
-    if( entity_ )
-        ;
-        //const_cast< KnowledgeGroup* >( entity_ )->Desactivate();
-}
-
-// -----------------------------------------------------------------------------
 // Name: OrbatToolbar::OnClearFilter
 // Created: AGE 2006-12-13
 // -----------------------------------------------------------------------------

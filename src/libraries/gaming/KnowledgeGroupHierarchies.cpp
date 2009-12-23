@@ -21,6 +21,7 @@ KnowledgeGroupHierarchies::KnowledgeGroupHierarchies( Controller& controller, En
                                                     , tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& resolver )
     : EntityHierarchies< CommunicationHierarchies >( controller, holder, superior )
     , resolver_( resolver )
+    , controller_( controller )
 {
     // NOTHING   
 }

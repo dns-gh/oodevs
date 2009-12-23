@@ -46,6 +46,7 @@ public:
     virtual void Select( ActionController& controller ) const;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
     virtual void Activate( ActionController& controller ) const;
+    virtual bool IsActivated() const = 0;
     virtual void Register( KnowledgeGroup_ABC& knowledgeGroup ) = 0;
     virtual void Remove( KnowledgeGroup_ABC& knowledgeGroup ) = 0;
     virtual void Register( Automat_ABC& automat ) = 0;

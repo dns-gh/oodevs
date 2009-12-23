@@ -79,6 +79,7 @@
 #include "res/plus.xpm"
 #include "res/minus.xpm"
 #include "res/lock.xpm"
+#include "res/scisors.xpm"
 #include "res/commandpost.xpm"
 #include "res/cancel.xpm"
 #include "res/option_general.xpm"

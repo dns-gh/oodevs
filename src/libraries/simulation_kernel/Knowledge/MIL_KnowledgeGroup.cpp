@@ -248,6 +248,10 @@ void MIL_KnowledgeGroup::SendFullState() const
     tools::Resolver< MIL_KnowledgeGroup >::Apply( boost::bind( &MIL_KnowledgeGroup::SendFullState, _1 ) );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::UpdateKnowledgeGroup
+// Created: SLG 2009-12-23
+// -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::UpdateKnowledgeGroup() const
 {
     NET_ASN_MsgKnowledgeGroupUpdate asn;
@@ -460,6 +464,7 @@ void MIL_KnowledgeGroup::RefreshTimeToDiffuseToKnowledgeGroup()
 void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupEnable( const ASN1T_MsgKnowledgeGroupEnable& asnMsg )
 {
     isActivated_ = asnMsg.enabled;
+    UpdateKnowledgeGroup();
 }
 
 // -----------------------------------------------------------------------------

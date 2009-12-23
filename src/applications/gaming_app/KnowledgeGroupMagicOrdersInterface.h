@@ -51,10 +51,10 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void ActivateKnowledgeGroup();
-    void DesactivateKnowledgeGroup();
-    void DeleteKnowledgeGroup();
-    void ChangeTypeKnowledgeGroup();
+    void OnActivateKnowledgeGroup();
+    void OnDesactivateKnowledgeGroup();
+    void OnSetType();
+    void OnDeleteKnowledgeGroup();
     //@}
 
 private:

@@ -19,6 +19,7 @@ namespace kernel
     class Agent_ABC;
     class Automat_ABC;
     class KnowledgeGroup_ABC;
+    class Controllers;
 }
 
 class Publisher_ABC;
@@ -33,6 +34,7 @@ class AutomatDecisions;
 // =============================================================================
 class AgentListView : public gui::HierarchyListView< kernel::CommunicationHierarchies >
                     , public tools::ElementObserver_ABC< AutomatDecisions >
+                    , public tools::ElementObserver_ABC< kernel::KnowledgeGroup_ABC >
 {
 
 public:
@@ -54,6 +56,7 @@ private:
     virtual void setColumnWidth( int column, int w );
 
     virtual void NotifyUpdated( const AutomatDecisions& decisions );
+    virtual void NotifyUpdated( const kernel::KnowledgeGroup_ABC& knowledgeGroup );
     virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
     virtual bool Drop( const kernel::Agent_ABC& item,  const kernel::Agent_ABC& target );
     virtual bool Drop( const kernel::Agent_ABC& item,  const kernel::Automat_ABC& target );
@@ -65,7 +68,8 @@ private:
     //! @name Member data
     //@{
     Publisher_ABC& publisher_;
-    QPixmap lock_, commandPost_;
+    QPixmap lock_, commandPost_, scisors_;
+    kernel::Controllers& controllers_;
     //@}
 };
 

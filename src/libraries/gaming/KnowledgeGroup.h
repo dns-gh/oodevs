@@ -44,7 +44,7 @@ public:
 
     //! @name Accessors
     //@{
-    bool IsActivated() const;
+    virtual bool IsActivated() const;
     //@}
 
 private:

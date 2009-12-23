@@ -48,6 +48,8 @@ public:
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
     void Accept         ( kernel::ModelVisitor_ABC& visitor ) const;
+    virtual bool IsActivated() const { return true; };  // $$$$ _RC_ SLG 2009-12-21: TEMP 
+//    void SendChangeParent( ClientPublisher_ABC& publisher ) const;
     virtual void Register( kernel::KnowledgeGroup_ABC& knowledgeGroup );
     virtual void Remove( kernel::KnowledgeGroup_ABC& knowledgeGroup );
     virtual void Register( kernel::Automat_ABC& automat );
