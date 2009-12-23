@@ -36,7 +36,7 @@ Automat::Automat( Model_ABC& model, const ASN1T_MsgAutomatCreation& msg )
     , team_             ( model.Sides().Get( msg.oid_camp ) )
     , parentFormation_  ( msg.oid_parent.t == T_MsgAutomatCreation_oid_parent_formation ? static_cast< Formation* >( &model.Formations().Get( msg.oid_parent.u.formation ) ) : 0 )
     , parentAutomat_    ( msg.oid_parent.t == T_MsgAutomatCreation_oid_parent_automate  ? static_cast< Automat* >( &model.Automats().Get( msg.oid_parent.u.automate ) ) : 0 )
-    , knowledgeGroup_   ( static_cast< KnowledgeGroup* >( &model.KnowledgeGroups().Get( msg.oid_groupe_connaissance ) ) )
+    , knowledgeGroup_   ( &model.KnowledgeGroups().Get( msg.oid_groupe_connaissance ) )
     , pTC2_             ( 0 )
     , pLogMaintenance_  ( 0 )
     , pLogMedical_      ( 0 )
@@ -379,7 +379,7 @@ void Automat::Register( kernel::Automat_ABC& automat )
     automats_.Register( automat.GetId(), automat );
 }
 // -----------------------------------------------------------------------------
-// Name: Automat::Register
+// Name: Automat::Remove
 // Created: MGD 2009-12-21
 // -----------------------------------------------------------------------------
 void Automat::Remove( kernel::Automat_ABC& automat )
@@ -387,7 +387,7 @@ void Automat::Remove( kernel::Automat_ABC& automat )
     automats_.Remove( automat.GetId() );
 }
 // -----------------------------------------------------------------------------
-// Name: Automat::Register
+// Name: Automat::GetAutomats
 // Created: MGD 2009-12-21
 // -----------------------------------------------------------------------------
 const tools::Resolver< kernel::Automat_ABC >& Automat::GetAutomats() const
@@ -403,7 +403,7 @@ void Automat::Register( kernel::Agent_ABC& automat )
     agents_.Register( automat.GetId(), automat );
 }
 // -----------------------------------------------------------------------------
-// Name: Automat::Register
+// Name: Automat::Remove
 // Created: MGD 2009-12-21
 // -----------------------------------------------------------------------------
 void Automat::Remove( kernel::Agent_ABC& automat )
@@ -411,10 +411,45 @@ void Automat::Remove( kernel::Agent_ABC& automat )
     agents_.Remove( automat.GetId() );
 }
 // -----------------------------------------------------------------------------
-// Name: Automat::Register
+// Name: Automat::GetAgents
 // Created: MGD 2009-12-21
 // -----------------------------------------------------------------------------
 const tools::Resolver< kernel::Agent_ABC >& Automat::GetAgents() const
 {
     return agents_;
 }
+// -----------------------------------------------------------------------------
+// Name: Automat::GetParentAutomat
+// Created: MGD 2009-12-23
+// -----------------------------------------------------------------------------
+kernel::Automat_ABC* Automat::GetParentAutomat() const
+{
+    return parentAutomat_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::GetFormation
+// Created: MGD 2009-12-23
+// -----------------------------------------------------------------------------
+kernel::Formation_ABC* Automat::GetFormation() const
+{
+    return parentFormation_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::GetFormation
+// Created: MGD 2009-12-23
+// -----------------------------------------------------------------------------
+kernel::Team_ABC& Automat::GetTeam() const
+{
+    return team_;
+}
+// -----------------------------------------------------------------------------
+// Name: Automat::GetFormation
+// Created: MGD 2009-12-23
+// -----------------------------------------------------------------------------
+kernel::KnowledgeGroup_ABC& Automat::GetKnowledgeGroup() const
+{
+    assert( knowledgeGroup_ );
+    return *knowledgeGroup_;
+}  

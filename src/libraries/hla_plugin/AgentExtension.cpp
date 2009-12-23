@@ -161,7 +161,7 @@ void AgentExtension::UpdateAggregateState( UpdateFunctor_ABC& functor ) const
 void AgentExtension::UpdateForceIdentifier( UpdateFunctor_ABC& functor ) const
 {
     unsigned char force = 0; // Other
-    const kernel::Karma& karma = holder_.automat_->team_.GetKarma();
+    const kernel::Karma& karma = holder_.automat_->GetTeam().GetKarma();
     if( karma == kernel::Karma::friend_ )
         force = 1;
     else if( karma == kernel::Karma::enemy_ )

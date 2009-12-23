@@ -155,3 +155,40 @@ const tools::Resolver< kernel::Agent_ABC >& Automat::GetAgents() const
 {
     throw std::exception( __FUNCTION__ " not implemented" );  
 }
+
+// -----------------------------------------------------------------------------
+// Name: Automat::GetTeam
+// Created: MGD 2009-12-23
+// -----------------------------------------------------------------------------
+kernel::Team_ABC& Automat::GetTeam() const
+{
+    throw std::exception( __FUNCTION__ " not implemented" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::GetKnowledgeGroup
+// Created: MGD 2009-12-23
+// -----------------------------------------------------------------------------
+kernel::KnowledgeGroup_ABC& Automat::GetKnowledgeGroup() const
+{
+    throw std::exception( __FUNCTION__ " not implemented" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::GetParentAutomat
+// Created: MGD 2009-12-23
+// -----------------------------------------------------------------------------
+kernel::Automat_ABC* Automat::GetParentAutomat() const
+{
+    throw std::exception( __FUNCTION__ " not implemented" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::GetFormation
+// Created: MGD 2009-12-23
+// -----------------------------------------------------------------------------
+kernel::Formation_ABC* Automat::GetFormation() const
+{
+    throw std::exception( __FUNCTION__ " not implemented" );
+}
+

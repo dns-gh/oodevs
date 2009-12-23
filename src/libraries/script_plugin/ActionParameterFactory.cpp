@@ -149,9 +149,9 @@ private:
     const kernel::Entity_ABC& FindGroup( const kernel::Entity_ABC& owner )
     {
         if( const dispatcher::Automat* automat = dynamic_cast< const dispatcher::Automat* >( &owner ) )
-            return *automat->knowledgeGroup_;
+            return automat->GetKnowledgeGroup();
         else if( const dispatcher::Agent* agent = dynamic_cast< const dispatcher::Agent* >( &owner ) )
-            return *agent->automat_->knowledgeGroup_;
+            return agent->automat_->GetKnowledgeGroup();
         throw std::runtime_error( __FUNCTION__ );
     }
     //@}

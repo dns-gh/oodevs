@@ -34,7 +34,7 @@ namespace
 // -----------------------------------------------------------------------------
 ReportingData::ReportingData( const dispatcher::Agent& entity )
     : reportDatetime_( CurrentTime() )
-    , organisation_( entity.automat_->team_.GetName() )
+    , organisation_( entity.automat_->GetTeam().GetName() )
 {
     // NOTHING
 }
@@ -45,7 +45,7 @@ ReportingData::ReportingData( const dispatcher::Agent& entity )
 // -----------------------------------------------------------------------------
 ReportingData::ReportingData( const dispatcher::Automat& entity )
     : reportDatetime_( CurrentTime() )
-    , organisation_( entity.team_.GetName() )
+    , organisation_( entity.GetTeam().GetName() )
 {
     // NOTHING
 }

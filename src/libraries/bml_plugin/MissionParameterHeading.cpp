@@ -61,8 +61,8 @@ MissionParameterHeading::MissionParameterHeading( xml::xistream& xis, const kern
     , angle_( 0 )
 {
     PositionComputer computer;
-    automat.automats_.Apply( boost::bind( &PositionComputer::AddAutomat, boost::ref( computer ), _1 ) );
-    automat.agents_.Apply( boost::bind( &PositionComputer::AddAgent, boost::ref( computer ), _1 ) );
+    automat.GetAutomats().Apply( boost::bind( &PositionComputer::AddAutomat, boost::ref( computer ), _1 ) );
+    automat.GetAgents().Apply( boost::bind( &PositionComputer::AddAgent, boost::ref( computer ), _1 ) );
     if( computer.count_ > 0 )
     {
         const Point entityPosition( computer.position_.X() / computer.count_, computer.position_.Y() / computer.count_ );

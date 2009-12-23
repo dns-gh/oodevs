@@ -17,7 +17,9 @@ namespace kernel
 {
     class Agent_ABC;
     class AutomatType;
+    class Formation_ABC;
     class KnowledgeGroup_ABC;
+    class Team_ABC;
 
 // =============================================================================
 /** @class  Automat_ABC
@@ -48,12 +50,17 @@ public:
     virtual void Select( ActionController& controller ) const;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
     virtual void Activate( ActionController& controller ) const;
+
+    virtual Team_ABC& GetTeam() const = 0;
+    virtual KnowledgeGroup_ABC& GetKnowledgeGroup() const = 0;
     virtual void Register( Automat_ABC& automat ) = 0;
     virtual void Remove( Automat_ABC& automat ) = 0;
     virtual const tools::Resolver< Automat_ABC >& GetAutomats() const = 0;
     virtual void Register( Agent_ABC& automat ) = 0;
     virtual void Remove( Agent_ABC& automat ) = 0;
     virtual const tools::Resolver< Agent_ABC >& GetAgents() const = 0;
+    virtual Automat_ABC* GetParentAutomat() const = 0;
+    virtual Formation_ABC* GetFormation() const = 0;
     //@}
 };
 

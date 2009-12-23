@@ -65,12 +65,16 @@ public:
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
 
+    virtual kernel::Team_ABC& GetTeam() const;
+    virtual kernel::KnowledgeGroup_ABC& GetKnowledgeGroup() const;
     virtual void Register( kernel::Automat_ABC& automat );
     virtual void Remove( kernel::Automat_ABC& automat );
     virtual const tools::Resolver< kernel::Automat_ABC >& GetAutomats() const;
     virtual void Register( kernel::Agent_ABC& automat );
     virtual void Remove( kernel::Agent_ABC& automat );
     virtual const tools::Resolver< kernel::Agent_ABC >& GetAgents() const;
+    virtual kernel::Automat_ABC* GetParentAutomat() const;
+    virtual kernel::Formation_ABC* GetFormation() const;
     //@}
 
 private:
@@ -87,7 +91,7 @@ private:
     void ChangeSuperior( const Superior& superior );
     //@}
 
-public:
+private:
     //! @name Member data
     //@{
     Model_ABC&              model_;

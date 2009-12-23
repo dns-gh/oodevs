@@ -82,7 +82,7 @@ namespace
         explicit NameFinder( const std::string& name ) : name_( name ), result_( 0 ) {}
         void operator()( const Entity& entity ) const
         {
-            if( entity.name_ == name_ )
+            if( entity.GetName().ascii() == name_ )
                 result_ = &entity;
         }
         std::string name_;

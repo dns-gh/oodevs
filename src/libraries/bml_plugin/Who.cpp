@@ -102,7 +102,7 @@ xml::xostream& plugins::bml::operator<<( xml::xostream& xos, const Who& who )
     xos << xml::start( "C_BML_Who" )
             << xml::start( "WhoRef" )
                 << xml::start( "UnitRef" )
-                    << xml::content( "jc3iedm:OID", who.agent_ ? who.agent_->name_ : who.automat_->name_ );
+                    << xml::content( "jc3iedm:OID", who.agent_ ? who.agent_->name_ : who.automat_->GetName().ascii() );
     if( who.attributes_ )
         who.SendEquipmentStatus( xos );
     if( who.level_ != -1 )
@@ -198,7 +198,7 @@ namespace
 {
     std::string Hostility( const dispatcher::Automat& entity )
     {
-        const kernel::Karma& karma = entity.team_.GetKarma();
+        const kernel::Karma& karma = entity.GetTeam().GetKarma();
         if( karma == kernel::Karma::friend_ )
             return "FR";
         else if( karma == kernel::Karma::enemy_ )

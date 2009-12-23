@@ -82,7 +82,7 @@ Agent::Agent( Model& model, const ASN1T_MsgUnitCreation& msg )
     , pLogSupply_                   ()
     , order_                        ( 0 )
 {
-    automat_->agents_.Register( msg.oid, *this );
+    automat_->Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,7 +96,7 @@ Agent::~Agent()
     dotations_.DeleteAll();
     borrowings_.DeleteAll();
     lendings_.DeleteAll();
-    automat_->agents_.Remove( GetId() );
+    automat_->Remove( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,9 +106,9 @@ Agent::~Agent()
 void Agent::ChangeAutomat( unsigned long id )
 {
     if( automat_ )
-        automat_->agents_.Remove( GetId() );
-    automat_ = &model_.automats_.Get( id );
-    automat_->agents_.Register( GetId(), *this );
+        automat_->Remove( *this );
+    automat_ = &model_.Automats().Get( id );
+    automat_->Register( *this );
 }
 
 // -----------------------------------------------------------------------------

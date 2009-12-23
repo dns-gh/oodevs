@@ -46,12 +46,16 @@ public:
     //! @name Operations
     //@{
     virtual const kernel::AutomatType& GetType() const;
+    virtual kernel::Team_ABC& GetTeam() const;
+    virtual kernel::KnowledgeGroup_ABC& GetKnowledgeGroup() const;
     virtual void Register( kernel::Automat_ABC& automat );
     virtual void Remove( kernel::Automat_ABC& automat );
     virtual const tools::Resolver< kernel::Automat_ABC >& GetAutomats() const;
     virtual void Register( kernel::Agent_ABC& automat );
     virtual void Remove( kernel::Agent_ABC& automat );
     virtual const tools::Resolver< kernel::Agent_ABC >& GetAgents() const;
+    virtual kernel::Automat_ABC* GetParentAutomat() const;
+    virtual kernel::Formation_ABC* GetFormation() const;
     //@}
 
     //! @name Extensions

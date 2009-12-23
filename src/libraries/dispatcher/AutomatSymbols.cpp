@@ -59,14 +59,15 @@ namespace
 std::string AutomatSymbols::BuildSymbol( bool up /*= true*/ ) const
 {
     SymbolAggregator aggregator;
-    holder_.agents_.Apply( boost::bind( &SymbolAggregator::AddAgent, boost::ref( aggregator ), _1 ) );
+    holder_.GetAgents().Apply( boost::bind( &SymbolAggregator::AddAgent, boost::ref( aggregator ), _1 ) );
     if( up )
     {
         const EntitySymbols_ABC* symbols;
-        if( holder_.parentFormation_ )
-            symbols = &holder_.parentFormation_->Get< EntitySymbols_ABC >();
+        kernel::Formation_ABC* parentFormation = holder_.GetFormation();
+        if( parentFormation )
+            symbols = &parentFormation->Get< EntitySymbols_ABC >();
         else
-            symbols = &holder_.parentAutomat_->Get< EntitySymbols_ABC >();
+            symbols = &holder_.GetParentAutomat()->Get< EntitySymbols_ABC >();
         aggregator.symbol_ = tools::app6::MergeSymbol( symbols->BuildSymbol(), aggregator.symbol_ );
     }
     tools::app6::SetLevel( aggregator.symbol_, aggregator.level_ + 1 );
