@@ -101,7 +101,7 @@ void DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromAgentPerception( cons
 inline
 void DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromKnowledgeAgent( const DEC_Knowledge_Agent& agentKnowledge )
 {
-    if( agentKnowledge.IsValid() /*&& agentKnowledge.GetAgentKnown().GetRole< PHY_RolePion_Communications >().CanCommunicate()*/ )
+    if( agentKnowledge.IsValid() )
         GetKnowledgeToUpdate( agentKnowledge.GetAgentKnown() ).Update( agentKnowledge );
 }
 
@@ -112,7 +112,7 @@ void DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromKnowledgeAgent( const
 inline
 void DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromParentKnowledgeGroup( const DEC_Knowledge_Agent& agentKnowledge )
 {
-    if( agentKnowledge.IsValid() /*&& agentKnowledge.GetAgentKnown().GetRole< PHY_RolePion_Communications >().CanCommunicate()*/ )
+    if( agentKnowledge.IsValid() )
         GetKnowledgeToUpdate( agentKnowledge.GetAgentKnown() ).Update( agentKnowledge );
 }
 
@@ -147,7 +147,8 @@ void DEC_KS_AgentKnowledgeSynthetizer::Talk()
     while( it.HasMoreElements() )
     {
         const MIL_KnowledgeGroup& innerKg = it.NextElement();
-        innerKg.GetKnowledge().GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( method3 );
+        if ( innerKg.IsEnabled() && knowledgeGroup.IsEnabled() )
+            innerKg.GetKnowledge().GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( method3 );
     }
     //mis à jour des groupes de connaissances fils avec un délai
     class_mem_fun_void_const_t< DEC_KS_AgentKnowledgeSynthetizer, DEC_Knowledge_Agent> method4( & DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromParentKnowledgeGroup, *this );
@@ -155,7 +156,7 @@ void DEC_KS_AgentKnowledgeSynthetizer::Talk()
     
     if ( pBlackBoard_->GetKnowledgeGroup().GetTimeToDiffuseToKnowledgeGroup() < nCurrentTimeStep )
     {
-        if ( knowledgeGroup.GetParent() )
+        if ( knowledgeGroup.GetParent() && knowledgeGroup.GetParent()->IsEnabled() && knowledgeGroup.IsEnabled() )
             knowledgeGroup.GetParent()->GetKnowledge().GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( method4 );
 
         pBlackBoard_->GetKnowledgeGroup().RefreshTimeToDiffuseToKnowledgeGroup();

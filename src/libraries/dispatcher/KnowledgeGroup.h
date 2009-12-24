@@ -54,6 +54,7 @@ public:
     virtual void Remove( kernel::KnowledgeGroup_ABC& knowledgeGroup );
     virtual void Register( kernel::Automat_ABC& automat );
     virtual void Remove( kernel::Automat_ABC& automat );
+    virtual void DoUpdate( const ASN1T_MsgKnowledgeGroupUpdate& message ){};
     //@}
 
 private:

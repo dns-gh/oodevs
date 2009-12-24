@@ -43,5 +43,6 @@ void KnowledgeGroupHierarchies::DoUpdate( const ASN1T_MsgKnowledgeGroupUpdate& m
 {
     if( message.m.oid_knowledgegroup_parentPresent )
         ChangeSuperior( &resolver_.Get( message.oid_knowledgegroup_parent ) );
+    resolver_.Get( message.oid ).DoUpdate( message );
 }
 

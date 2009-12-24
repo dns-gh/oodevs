@@ -12,6 +12,8 @@
 
 #include "Entity_ABC.h"
 #include "tools/Resolver.h"
+#include "clients_kernel/Updatable_ABC.h"
+#include "game_asn/Simulation.h"
 
 namespace kernel
 {
@@ -25,6 +27,7 @@ namespace kernel
 // Created: SBO 2006-08-09
 // =============================================================================
 class KnowledgeGroup_ABC : public Entity_ABC
+                         , public kernel::Updatable_ABC< ASN1T_MsgKnowledgeGroupUpdate >
 {
 public:
     //! @name Static

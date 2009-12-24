@@ -23,7 +23,7 @@
 // Created: AGN 2003-12-22
 // =============================================================================
 class KnowledgeGroup : public kernel::EntityImplementation< kernel::KnowledgeGroup_ABC >
-                     , public kernel::Updatable_ABC< ASN1T_MsgKnowledgeGroupUpdate >
+                     //, public kernel::Updatable_ABC< ASN1T_MsgKnowledgeGroupUpdate >
 {
 public:
     //! @name Constructors/Destructor
