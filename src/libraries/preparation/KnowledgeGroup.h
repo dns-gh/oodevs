@@ -76,6 +76,7 @@ private:
     //@{
     kernel::KnowledgeGroupType* type_;
     std::string strCommunicationDelay_;
+    bool isActivated_;
     //@}
 };
 

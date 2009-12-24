@@ -35,6 +35,7 @@ KnowledgeGroup::KnowledgeGroup( Controller& controller, IdManager& idManager, to
     : EntityImplementation< KnowledgeGroup_ABC >( controller, idManager.GetNextId(), "" )
     , type_( types.Find( "Standard" ) ) // $$$$ SBO 2006-11-17: Hard coded default
     , strCommunicationDelay_()
+    , isActivated_( true )
 {
     UpdateCommunicationDelay();
     name_ = tools::translate( "KnowledgeGroup", "Knowledge group [%1]" ).arg( id_ );
