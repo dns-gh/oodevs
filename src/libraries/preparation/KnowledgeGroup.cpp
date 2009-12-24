@@ -176,3 +176,12 @@ void KnowledgeGroup::Remove( kernel::Automat_ABC& automat )
 {
     throw std::exception( __FUNCTION__ " not implemented" ); 
 }
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup IsActivated
+// Created: SLG 2009-12-18
+// -----------------------------------------------------------------------------
+bool KnowledgeGroup::IsActivated() const
+{
+    return isActivated_;
+}

@@ -55,6 +55,7 @@ public:
     virtual void Remove( kernel::KnowledgeGroup_ABC& knowledgeGroup );
     virtual void Register( kernel::Automat_ABC& automat );
     virtual void Remove( kernel::Automat_ABC& automat );
+    virtual bool IsActivated() const;
     //@}
 
 private:
