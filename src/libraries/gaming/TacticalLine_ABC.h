@@ -11,6 +11,7 @@
 #define __TacticalLine_ABC_h_
 
 #include "clients_kernel/TacticalLine_ABC.h"
+#include "clients_kernel/Updatable_ABC.h"
 #include "game_asn/Simulation.h"
 
 namespace kernel
@@ -19,6 +20,10 @@ namespace kernel
 }
 
 class Publisher_ABC;
+
+struct ASN1T_MsgLimaUpdate;
+struct ASN1T_MsgLimitUpdate;
+
 
 // =============================================================================
 /** @class  TacticalLine_ABC

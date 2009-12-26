@@ -11,7 +11,6 @@
 #define __ObjectPositions_h_
 
 #include "clients_kernel/Positions.h"
-#include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"

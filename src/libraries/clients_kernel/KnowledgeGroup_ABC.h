@@ -13,7 +13,8 @@
 #include "Entity_ABC.h"
 #include "tools/Resolver.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "game_asn/Simulation.h"
+
+struct ASN1T_MsgKnowledgeGroupUpdate;
 
 namespace kernel
 {
@@ -45,6 +46,8 @@ public:
     //! @name Operations
     //@{
     virtual QString GetTypeName() const;
+
+    virtual void DoUpdate( const ASN1T_MsgKnowledgeGroupUpdate& );
 
     virtual void Select( ActionController& controller ) const;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;

@@ -151,6 +151,10 @@
 <context>
     <name>KnowledgeGroup</name>
     <message>
+        <source>Knowledge group [%1]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Info/Identifier</source>
         <translation type="unfinished"></translation>
     </message>
@@ -159,15 +163,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Knowledge group [%1]</source>
+        <source>Type/Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Type/Delay</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Type/Name</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

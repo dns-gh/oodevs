@@ -12,6 +12,7 @@
 
 #include "clients_kernel/SimpleHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Updatable_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include "game_asn/Simulation.h"
 

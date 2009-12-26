@@ -13,7 +13,6 @@
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/KnowledgeGroupType.h"
-#include "clients_kernel/Updatable_ABC.h"
 #include "game_asn/Simulation.h"
 
 // =============================================================================
@@ -23,7 +22,6 @@
 // Created: AGN 2003-12-22
 // =============================================================================
 class KnowledgeGroup : public kernel::EntityImplementation< kernel::KnowledgeGroup_ABC >
-                     //, public kernel::Updatable_ABC< ASN1T_MsgKnowledgeGroupUpdate >
 {
 public:
     //! @name Constructors/Destructor
@@ -58,7 +56,6 @@ private:
     //@{
     bool isActivated_;
     unsigned long nType_;
-//    const tools::Resolver_ABC< kernel::KnowledgeGroupType >& types_;
     //@}
 };
 

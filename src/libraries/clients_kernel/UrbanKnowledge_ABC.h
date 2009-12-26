@@ -11,7 +11,6 @@
 #define __UrbanKnowledge_ABC_h_
 
 #include "Knowledge_ABC.h"
-//#include "Urban_ABC.h"
 #include "Team_ABC.h"
 
 namespace urban

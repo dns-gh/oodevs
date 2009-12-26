@@ -1,23 +1,36 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2009 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+
 #include "clients_test_pch.h"
-#include "XmlChecks.h"
-#include "clients_kernel/KnowledgeGroupType.h"
+
 #include "preparation/IdManager.h"
 #include "preparation/KnowledgeGroup.h"
-#include "MockResolver.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/KnowledgeGroupFactory_ABC.h"
-#include "preparation/StaticModel.h"
-#include "preparation/KnowledgeGroupsModel.h"
-
-#include "preparation/model.h"
 #include "preparation/KnowledgeGroupCommunications.h"
+#include "preparation/KnowledgeGroupsModel.h"
+#include "preparation/Model.h"
+#include "preparation/StaticModel.h"
 #include "preparation/TeamCommunications.h"
 
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/KnowledgeGroupFactory_ABC.h"
+#include "clients_kernel/KnowledgeGroupType.h"
 #include "clients_kernel/Team_ABC.h"
+
+#include "game_asn/generated/KnowledgeGroup.h"
+
+#include "XmlChecks.h"
+#include "MockResolver.h"
+
 #include <xeumeuleu/xml.hpp>
 
+#include <QApplication.h>
 
-#include "QApplication.h"
 
 namespace
 {
@@ -47,11 +60,14 @@ namespace
         MOCK_METHOD( Activate, 1 );
         MOCK_METHOD( Accept, 1 );
         MOCK_METHOD( IsActivated, 0 );
+        MOCK_METHOD( DoUpdate, 1 );
+
         MOCK_METHOD_EXT( Register, 1, void( kernel::KnowledgeGroup_ABC& ), Register1 );
         MOCK_METHOD_EXT( Remove, 1, void( kernel::KnowledgeGroup_ABC& ), Remove1 );
         MOCK_METHOD_EXT( Register, 1, void( kernel::Automat_ABC& ), Register2 );
         MOCK_METHOD_EXT( Remove, 1, void( kernel::Automat_ABC& ), Remove2 );
     };
+
 
     MOCK_BASE_CLASS( MockKnowledgeGroupsModel, KnowledgeGroupsModel )
     {

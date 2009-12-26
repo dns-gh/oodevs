@@ -12,7 +12,6 @@
 
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "tools/Resolver.h"
 

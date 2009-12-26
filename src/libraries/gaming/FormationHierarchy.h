@@ -11,7 +11,6 @@
 #define __FormationHierarchy_h_
 
 #include "clients_kernel/MergingTacticalHierarchies.h"
-#include "clients_kernel/Updatable_ABC.h"
 
 namespace kernel {
     class Formation_ABC;

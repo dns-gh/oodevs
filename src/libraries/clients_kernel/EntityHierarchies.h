@@ -12,7 +12,6 @@
 
 #include "Hierarchies.h"
 #include "tools/Resolver.h"
-#include "Updatable_ABC.h"
 #include "Creatable.h"
 
 namespace kernel

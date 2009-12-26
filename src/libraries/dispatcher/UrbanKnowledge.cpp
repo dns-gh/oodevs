@@ -17,7 +17,6 @@
 #include "Side.h"
 #include "UrbanObject.h"
 
-//#include <boost/bind.hpp>
 
 namespace dispatcher
 {

@@ -34,6 +34,15 @@ KnowledgeGroup_ABC::~KnowledgeGroup_ABC()
 }
 
 // -----------------------------------------------------------------------------
+// Name: KnowledgeGroup_ABC::DoUpdate
+// Created: SYD 2009-12-26
+// -----------------------------------------------------------------------------
+void KnowledgeGroup_ABC::DoUpdate( const ASN1T_MsgKnowledgeGroupUpdate& )
+{
+    throw std::exception( __FUNCTION__ " not implemented" ); 
+}
+
+// -----------------------------------------------------------------------------
 // Name: KnowledgeGroup_ABC::GetTypeName
 // Created: AGE 2008-07-16
 // -----------------------------------------------------------------------------

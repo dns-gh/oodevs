@@ -221,11 +221,11 @@
     <name>KnowledgeGroup</name>
     <message>
         <source>Info/Identifier</source>
-        <translation>Info/Identifiant</translation>
+        <translation type="unfinished">Info/Identifiant</translation>
     </message>
     <message>
         <source>Info/Name</source>
-        <translation>Info/Nom</translation>
+        <translation type="unfinished">Info/Nom</translation>
     </message>
     <message>
         <source>Info/Type</source>
@@ -233,14 +233,14 @@
     </message>
     <message>
         <source>Knowledge group [%1]</source>
-        <translation>Groupe de connaissance [%1]</translation>
-    </message>
-    <message>
-        <source>Type/Delay</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Groupe de connaissance [%1]</translation>
     </message>
     <message>
         <source>Type/Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type/Delay</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
