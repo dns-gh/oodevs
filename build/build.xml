@@ -655,9 +655,10 @@
             lib${ant.project.name}_clients_gui-${platform}-mt,
             lib${ant.project.name}_clients_kernel-${platform}-mt,
 			lib${ant.project.name}_preparation-${platform}-mt">
+        <includepath path="${include.dir}/masasn"/>
 			<syslibset libs="gdi32"/>
         </build-test>
-    </target>
+    </target>                              
     
     <target name="dispatcher_test">
         <build-test name="dispatcher" depends="boost"
