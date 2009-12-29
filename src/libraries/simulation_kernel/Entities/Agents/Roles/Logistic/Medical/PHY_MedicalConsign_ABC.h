@@ -13,11 +13,8 @@
 #define __PHY_MedicalConsign_ABC_h_
 
 class PHY_RoleInterface_Medical;
-class PHY_ComposantePion;
 class PHY_MedicalHumanState;
-class PHY_MedicalAmbulance;
 class NET_ASN_MsgLogMedicalHandlingUpdate;
-class MIL_Automate;
 
 // =============================================================================
 // @class  PHY_MedicalConsign_ABC

@@ -21,7 +21,6 @@ namespace firing
 
 class PHY_DotationCategory;
 class MIL_AgentPion;
-class DEC_Decision_ABC;
 
 // =============================================================================
 // @class  PHY_ActionIndirectFire_ABC

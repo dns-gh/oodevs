@@ -65,7 +65,7 @@ Object::Object( uint id, const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& arm
     builder.Build( *this );
     ObstacleAttribute* pObstacle = RetrieveAttribute< ObstacleAttribute >();
     if( pObstacle )
-        pObstacle->SetType( reserved? ASN1T_EnumDemolitionTargetType::reserved : ASN1T_EnumDemolitionTargetType::preliminary );
+        pObstacle->SetType( reserved ? ASN1T_EnumDemolitionTargetType::reserved : ASN1T_EnumDemolitionTargetType::preliminary );
 }
 
 // -----------------------------------------------------------------------------
@@ -426,8 +426,6 @@ void Object::SetHLAView( HLA_Object_ABC& view )
 // -----------------------------------------------------------------------------
 void Object::Deserialize( const AttributeIdentifier& attributeID, Deserializer deserializer )
 {
-    tools::Extendable< ObjectAttribute_ABC >& extensions = *this;
-
     if( attributeID == "coordonnees" )
     {
         TER_Localisation newLocalisation;

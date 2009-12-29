@@ -53,7 +53,6 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/MIL_Army.h"
-#include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_Representations.h"
 
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
@@ -61,18 +60,14 @@
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KS_Fire.h"
 
-#include "Network/NET_AgentServer.h"
-#include "Network/NET_Publisher_ABC.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_AsnException.h"
 
 #include "Hla/HLA_UpdateFunctor.h"
 
 #include "Tools/MIL_Tools.h"
-#include "Tools/MIL_IDManager.h"
 
 #include "simulation_kernel/AlgorithmsFactories.h"
-#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 
 #include <xeumeuleu/xml.h>
 

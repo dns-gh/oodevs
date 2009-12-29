@@ -28,7 +28,6 @@ class MIL_Agent_ABC;
 class MIL_PopulationConcentration;
 class MIL_PopulationFlow;
 class DEC_Knowledge_Agent;
-class DEC_Knowledge_Object;
 class PHY_SensorType;
 
 namespace urban
@@ -106,7 +105,6 @@ private:
     //@{
     void ReadDistance       ( xml::xistream& xis );
     void ReadTerrainModifier( xml::xistream& xis, unsigned int& visionObject );
-    friend class Loader;
     //@}
 
 private:

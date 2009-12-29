@@ -17,7 +17,6 @@
 
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 
-class NET_ASN_MsgUnitAttributes;
 class MIL_Agent_ABC;
 
 namespace firing

@@ -19,27 +19,21 @@
 #include "PHY_ComposanteState.h"
 #include "PHY_ComposanteTypePion.h"
 #include "Entities/Agents/Units/Humans/PHY_HumansComposante.h"
-#include "Entities/Agents/Units/Categories/PHY_Protection.h"
 
 #include "MT_Tools/MT_Random.h"
-#include "MT_Tools/AlgorithmModifier_ABC.h"
 
-class MIL_AgentPion;
 class MIL_AutomateLOG;
 class MIL_PopulationType;
 class MIL_PopulationAttitude;
 class PHY_Sensor;
 class PHY_Weapon;
 class PHY_HumanProtection;
-class PHY_DotationGroupContainer;
 class MIL_Object_ABC;
 class AttritionCapacity;
-class PHY_IndirectFireDotationClass;
 class PHY_FireDamages_Agent;
 class PHY_AttritionData;
 class PHY_Breakdown;
 class PHY_MaintenanceComposanteState;
-class PHY_MedicalHumanState;
 class PHY_Human;
 class DEC_Knowledge_AgentComposante;
 class MIL_Time_ABC;
@@ -49,9 +43,6 @@ class MIL_Injury_ABC;
 namespace firing
 {
     class WeaponAvailabilityComputer_ABC;
-    class PHY_DirectFireData;
-    class PHY_IndirectFireData;
-    class PHY_SmokeData;
 }
 
 // =============================================================================

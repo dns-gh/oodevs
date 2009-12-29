@@ -14,7 +14,6 @@
 #include "PHY_ActionControlZone.h"
 
 #include "PHY_RoleAction_DirectFiring.h"
-#include "Entities/MIL_Army.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Objects/MIL_ObjectBuilder_ABC.h"
@@ -23,7 +22,6 @@
 #include "Entities/Objects/ControlZoneCapacity.h"
 #include "Entities/Actions/PHY_FireResults_Default.h"
 #include "Entities/MIL_EntityManager.h"
-#include "Tools/MIL_Tools.h"
 #include "Decision/DEC_Tools.h"
 #include "MIL_AgentServer.h"
 #include "simulation_terrain/TER_Localisation.h"

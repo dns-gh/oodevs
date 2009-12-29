@@ -19,7 +19,6 @@
 
 class PHY_RoleInterface_Location;
 class MIL_AgentPion;
-class DEC_Knowledge_Object;
 class MIL_Object_ABC;
 
 namespace posture

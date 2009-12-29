@@ -13,13 +13,9 @@
 #define __NET_RolePion_Dotations_h_
 
 #include "NET_RoleInterface_Dotations.h"
-#include "game_asn/Simulation.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 
-class PHY_ComposanteTypePion;
-class PHY_Dotation;
 class MIL_AgentPion;
-class NET_ASN_MsgUnitDotations;
 class NET_ASN_MsgUnitAttributes;
 
 namespace network

@@ -15,8 +15,9 @@
 #include "MIL.h"
 #include "PHY_MedicalConsign_ABC.h"
 
-class PHY_RoleInterface_Medical;
+class PHY_ComposantePion;
 class PHY_MedicalHumanState;
+class PHY_RoleInterface_Medical;
 
 // =============================================================================
 // @class  PHY_MedicalHealingConsign

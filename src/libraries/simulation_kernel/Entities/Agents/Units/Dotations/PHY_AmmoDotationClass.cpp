@@ -11,9 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_AmmoDotationClass.h"
-#include "PHY_DotationCategory_IndirectFire.h"
-#include "PHY_DotationCategory_IndirectWeatherFire.h"
-#include "PHY_DotationCategory_IndirectMineFire.h"
 
 const PHY_AmmoDotationClass PHY_AmmoDotationClass::obus_      ( "Obus"      , eObus      , EnumAmmunitionFamily::obus        );
 const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileAir_( "MissileAir", eMissileAir, EnumAmmunitionFamily::missile_air );

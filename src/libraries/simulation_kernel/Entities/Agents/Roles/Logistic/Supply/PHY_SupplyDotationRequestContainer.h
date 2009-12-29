@@ -18,7 +18,6 @@
 class PHY_DotationCategory;
 class PHY_Dotation;
 class PHY_SupplyDotationRequest;
-class PHY_SupplyDotationState;
 class MIL_AutomateLOG;
 
 // =============================================================================

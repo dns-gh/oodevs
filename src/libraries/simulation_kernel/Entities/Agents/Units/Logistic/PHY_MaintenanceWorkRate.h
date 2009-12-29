@@ -12,7 +12,6 @@
 #ifndef __PHY_MaintenanceWorkRate_h_
 #define __PHY_MaintenanceWorkRate_h_
 
-#include "game_asn/Simulation.h"
 
 namespace xml
 {

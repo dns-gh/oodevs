@@ -15,7 +15,6 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Network/NET_ASN_Messages.h"
-#include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
 #include "simulation_kernel/LocationActionNotificationHandler_ABC.h"
 #include "simulation_kernel/MoveComputer_ABC.h"

@@ -12,14 +12,12 @@
 #ifndef __PHY_Experience_h_
 #define __PHY_Experience_h_
 
-#include "game_asn/Simulation.h"
 
 namespace xml
 {
     class xistream;
 }
 
-class PHY_ConsumptionType;
 
 // =============================================================================
 // @class  PHY_Experience

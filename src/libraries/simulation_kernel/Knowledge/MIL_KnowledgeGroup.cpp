@@ -506,7 +506,7 @@ void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupChangeSuperior( const ASN1T_M
 // Name: MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupDelete
 // Created: FHD 2009-12-17: 
 // -----------------------------------------------------------------------------
-void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupDelete( const ASN1T_MsgKnowledgeGroupDelete& msg )
+void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupDelete( const ASN1T_MsgKnowledgeGroupDelete& /*msg*/ )
 {
     if( pParent_ )
         pParent_->UnregisterKnowledgeGroup( *this );

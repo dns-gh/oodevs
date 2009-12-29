@@ -18,7 +18,6 @@ class PHY_RoleAction_Objects;
 class MIL_AgentPion;
 class MIL_Object_ABC;
 class TER_Localisation;
-class DEC_Decision_ABC;
 
 // =============================================================================
 // @class  PHY_ActionPrepareObject

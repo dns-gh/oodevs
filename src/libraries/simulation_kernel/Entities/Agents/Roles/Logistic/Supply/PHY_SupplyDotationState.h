@@ -16,7 +16,6 @@
 #include "PHY_SupplyDotationRequest.h"
 
 class MIL_Automate;
-class MIL_AutomateLOG;
 class PHY_SupplyConsign_ABC;
 
 // =============================================================================

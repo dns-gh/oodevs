@@ -15,7 +15,6 @@
 #include "MT_Tools/Role_ABC.h"
 
 class MIL_ToxicEffectManipulator;
-class NET_ASN_MsgUnitAttributes;
 
 namespace nbc
 {

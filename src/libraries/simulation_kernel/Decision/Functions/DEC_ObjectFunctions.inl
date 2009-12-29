@@ -20,24 +20,6 @@
 #include "DEC_FunctionsTools.h"
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T > static void DEC_ObjectFunctions::ActivateObject
-// Created: NLD 2005-07-26
-// -----------------------------------------------------------------------------
-template< typename T > 
-bool DEC_ObjectFunctions::ActivateObject( const T& caller, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
-{
-    if( !pKnowledge || !pKnowledge->IsValid() )
-        return false;
-
-    MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
-    if( !pObject || !( *pObject )().CanBeActivated() )
-        return false;
-
-    ( *pObject )().Activate();
-    return true;
-}
-
-// -----------------------------------------------------------------------------
 // Name: template< typename T > static void DEC_ObjectFunctions::MagicCreateObject
 // Created: NLD 2005-01-19
 // -----------------------------------------------------------------------------
@@ -46,19 +28,4 @@ void DEC_ObjectFunctions::MagicCreateObject( const T& caller, const std::string&
 {
     //$$$ A réencapsuler    
     MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( caller.GetArmy(), type, pLocalisation, EnumDemolitionTargetType::preliminary );
-}
-
-// -----------------------------------------------------------------------------
-// Name: template< typename T > static void DEC_ObjectFunctions::MagicDestroyObject
-// Created: NLD 2005-01-19
-// -----------------------------------------------------------------------------
-template< typename T > 
-void DEC_ObjectFunctions::MagicDestroyObject( const T& caller, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
-{
-    if( pKnowledge && pKnowledge->IsValid() )
-    {
-        MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
-        if( pObject && ( *pObject )().CanBeDestroyed() )
-            ( *pObject )().Destroy(); // AddObjectKnowledgeToForget done
-    }
 }

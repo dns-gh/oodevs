@@ -90,74 +90,74 @@ public:
     void ChangeStatus( const std::vector< std::string >& statuses );
     //@}
 
-    virtual void Update( bool bIsDead ) {};
-    virtual void Clean () {};
+    virtual void Update( bool /*bIsDead*/ ) {}
+    virtual void Clean () {}
     //@}
 
     //! @name Composantes management
     //@{
-    virtual void ChangeComposantesAvailability( const PHY_ComposanteTypePion& composanteType, uint nNbrAvailable ) {};
-    virtual void RepairAllComposantes         () {};
-    virtual void DestroyRandomComposante      () {};
-    virtual void DestroyAllComposantes        () {};
+    virtual void ChangeComposantesAvailability( const PHY_ComposanteTypePion& /*composanteType*/, unsigned int /*nNbrAvailable*/ ) {}
+    virtual void RepairAllComposantes         () {}
+    virtual void DestroyRandomComposante      () {}
+    virtual void DestroyAllComposantes        () {}
     //@}
 
     // Actions on the composante owner
-    virtual void LendComposante        ( PHY_RoleInterface_Composantes& /*borrower*/, PHY_ComposantePion& /*composante*/ ) {};
-    virtual void RetrieveLentComposante( PHY_RoleInterface_Composantes& /*borrower*/, PHY_ComposantePion& /*composante*/ ) {};
+    virtual void LendComposante        ( PHY_RoleInterface_Composantes& /*borrower*/, PHY_ComposantePion& /*composante*/ ) {}
+    virtual void RetrieveLentComposante( PHY_RoleInterface_Composantes& /*borrower*/, PHY_ComposantePion& /*composante*/ ) {}
 
     // Notification for the beneficary
-    virtual void NotifyLentComposanteReceived( PHY_RoleInterface_Composantes& /*lender*/, PHY_ComposantePion& /*composante*/ ) {}; 
-    virtual void NotifyLentComposanteReturned( PHY_RoleInterface_Composantes& /*lender*/, PHY_ComposantePion& /*composante*/ ) {};
+    virtual void NotifyLentComposanteReceived( PHY_RoleInterface_Composantes& /*lender*/, PHY_ComposantePion& /*composante*/ ) {} 
+    virtual void NotifyLentComposanteReturned( PHY_RoleInterface_Composantes& /*lender*/, PHY_ComposantePion& /*composante*/ ) {}
     //@}
 
     //$$$ Toute la partie logistique GetXXXUse() devrait être externalisée
 
     //! @name Logistic - maintenance
     //@{
-    virtual void                            PreprocessRandomBreakdowns           ( unsigned int /*nEndDayTimeStep*/ ) const {};
+    virtual void                            PreprocessRandomBreakdowns           ( unsigned int /*nEndDayTimeStep*/ ) const {}
 
-    virtual PHY_MaintenanceComposanteState* NotifyComposanteWaitingForMaintenance( PHY_ComposantePion& /*composante*/ ) { return NULL; };
-    virtual void                            NotifyComposanteBackFromMaintenance  ( PHY_MaintenanceComposanteState& /*composanteState*/ ) {};
+    virtual PHY_MaintenanceComposanteState* NotifyComposanteWaitingForMaintenance( PHY_ComposantePion& /*composante*/ ) { return NULL; }
+    virtual void                            NotifyComposanteBackFromMaintenance  ( PHY_MaintenanceComposanteState& /*composanteState*/ ) {}
 
     //$$$$ a deplacer (functor)
-    virtual PHY_ComposantePion*             GetAvailableHauler                   ( const PHY_ComposanteTypePion& /*composanteType*/ ) const { return NULL; };
+    virtual PHY_ComposantePion*             GetAvailableHauler                   ( const PHY_ComposanteTypePion& /*composanteType*/ ) const { return NULL; }
     //@}
 
     //! @name Prisoners
     //@{
-    virtual void NotifyCaptured() {};
-    virtual void NotifyReleased() {};
+    virtual void NotifyCaptured() {}
+    virtual void NotifyReleased() {}
     //@}
 
     //! @name Load / unload / transport
     //@{
-    virtual void DamageTransported( MT_Float /*rWeight*/, const PHY_ComposanteState& /*state*/, bool /*bTransportOnlyLoadable*/ ) const {};
+    virtual void DamageTransported( MT_Float /*rWeight*/, const PHY_ComposanteState& /*state*/, bool /*bTransportOnlyLoadable*/ ) const {}
     //@}
 
     //! @name Notifications (internal)
     //@{
-    virtual void NotifyComposanteAdded   ( PHY_ComposantePion& /*composante*/ ) {};
-    virtual void NotifyComposanteRemoved ( PHY_ComposantePion& /*composante*/ ) {};
-    virtual void NotifyComposanteChanged ( PHY_ComposantePion& /*composante*/, const PHY_ComposanteState& /*oldState*/ ) {};
-    virtual void NotifyComposanteRepaired() {};
+    virtual void NotifyComposanteAdded   ( PHY_ComposantePion& /*composante*/ ) {}
+    virtual void NotifyComposanteRemoved ( PHY_ComposantePion& /*composante*/ ) {}
+    virtual void NotifyComposanteChanged ( PHY_ComposantePion& /*composante*/, const PHY_ComposanteState& /*oldState*/ ) {}
+    virtual void NotifyComposanteRepaired() {}
     //@}
 
     //! @name Accessors
     //@{          
-    virtual       bool           HasChanged              () const { return false; };
-    virtual       bool           IsUsable                () const { return false; };                    
-    virtual const MIL_AgentPion& GetPion                 () const { return *pPion_; };    
+    virtual       bool           HasChanged              () const { return false; }
+    virtual       bool           IsUsable                () const { return false; }                    
+    virtual const MIL_AgentPion& GetPion                 () const { return *pPion_; }    
     //@}
 
     //! @name HLA
     //@{
-    virtual void Serialize( HLA_UpdateFunctor& /*functor*/ ) const {};
+    virtual void Serialize( HLA_UpdateFunctor& /*functor*/ ) const {}
     //@}
 
     //! @name Composante reserved
     //@{
-    virtual void WoundLoadedHumans( const PHY_ComposantePion& /*composanteChanged*/, const PHY_ComposanteState& /*newState*/, PHY_FireDamages_Agent& /*fireDamages*/ ) {};
+    virtual void WoundLoadedHumans( const PHY_ComposantePion& /*composanteChanged*/, const PHY_ComposanteState& /*newState*/, PHY_FireDamages_Agent& /*fireDamages*/ ) {}
     //@}
 
 private:

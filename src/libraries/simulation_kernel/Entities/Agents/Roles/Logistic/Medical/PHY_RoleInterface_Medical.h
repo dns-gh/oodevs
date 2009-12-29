@@ -22,13 +22,10 @@ class MIL_AgentPionLOG_ABC;
 class MIL_AutomateLOG;
 class MIL_Automate;
 class PHY_ComposantePion;
-class PHY_MedicalComposanteState;
-class PHY_MedicalConsign_ABC;
 class PHY_MedicalEvacuationConsign;
 class PHY_MedicalCollectionConsign;
 class PHY_MedicalEvacuationAmbulance;
 class PHY_MedicalCollectionAmbulance;
-class PHY_ComposanteUsePredicate;
 // =============================================================================
 // @class  PHY_RoleInterface_Medical
 // Created: JVT 2004-08-03

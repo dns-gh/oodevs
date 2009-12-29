@@ -15,9 +15,7 @@
 #include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 
 class PHY_RoleAction_Objects;
-class MIL_Object_ABC;
 class MIL_AgentPion;
-class DEC_Decision_ABC;
 class DEC_Knowledge_Object;
 
 // =============================================================================

@@ -15,7 +15,6 @@ class DEC_Knowledge_Agent;
 class MIL_Agent_ABC;
 class MIL_Object_ABC;
 class MIL_PopulationConcentration;
-class MIL_PopulationFlow;
 class PHY_PerceptionLevel;
 class PHY_RoleInterface_Perceiver;
 

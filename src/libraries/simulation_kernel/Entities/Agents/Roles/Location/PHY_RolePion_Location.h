@@ -16,7 +16,6 @@
 
 #include "PHY_RoleInterface_Location.h"
 
-#include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "simulation_kernel/PopulationCollisionNotificationHandler_ABC.h"
 #include "simulation_kernel/ObjectCollisionNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"

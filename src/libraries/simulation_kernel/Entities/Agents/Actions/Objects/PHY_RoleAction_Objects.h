@@ -14,15 +14,11 @@
 
 #include "MT_Tools/Role_ABC.h"
 
-class NET_ASN_MsgUnitAttributes;
 class DEC_Knowledge_Object;
 class DEC_Knowledge_Population;
 class MIL_Object_ABC;
 class MIL_ObjectType_ABC;
 class MIL_AgentPion;
-class PHY_DotationCategory;
-class PHY_RoleAction_Objects_DataComputer;
-class PHY_RoleAction_Objects_CapabilityComputer;
 
 // =============================================================================
 // @class  PHY_RoleAction_Objects

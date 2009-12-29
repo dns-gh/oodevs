@@ -15,12 +15,8 @@
 #include "MT_Tools/Role_ABC.h"
 
 class PHY_HumanRank;
-class PHY_HumanWound;
 class PHY_Human;
-class PHY_MedicalHumanState;
-class MIL_AgentPion;
 class MIL_AutomateLOG;
-class NET_ASN_MsgUnitAttributes;
 
 namespace human
 {

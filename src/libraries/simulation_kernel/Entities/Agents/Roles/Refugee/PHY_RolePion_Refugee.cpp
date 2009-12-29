@@ -15,7 +15,6 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Automates/MIL_Automate.h"
-#include "simulation_kernel/Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
 
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/TransportNotificationHandler_ABC.h"

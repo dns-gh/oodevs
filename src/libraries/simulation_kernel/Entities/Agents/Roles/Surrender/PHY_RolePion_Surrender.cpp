@@ -14,7 +14,6 @@
 #include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
-#include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/MIL_Army.h"
 #include "SurrenderNotificationHandler_ABC.h"

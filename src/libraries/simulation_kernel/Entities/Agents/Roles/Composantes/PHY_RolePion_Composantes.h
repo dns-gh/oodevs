@@ -16,6 +16,7 @@
 #include "Entities/Agents/Roles/NBC/ToxicEffectHandler_ABC.h"
 #include "TransportNotificationHandler_ABC.h"
 #include "SurrenderNotificationHandler_ABC.h"
+#include "MT_Tools/AlgorithmModifier_ABC.h"
 
 #include "simulation_kernel/HumansChangedNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"

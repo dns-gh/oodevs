@@ -14,7 +14,6 @@
 
 namespace hla 
 {
-    class ObjectIdenfifier;
 }
 
 class MIL_AgentPion;

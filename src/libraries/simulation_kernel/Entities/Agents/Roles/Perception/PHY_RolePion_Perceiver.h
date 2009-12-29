@@ -22,10 +22,22 @@
 #include "simulation_kernel/TransportChangeNotificationHandler_ABC.h"
 #include "simulation_kernel/LoadingChangeNotificationHandler_ABC.h"
 
+class PHY_Perception_ABC;
+class PHY_PerceptionView;
+class PHY_PerceptionCoupDeSonde;
+class PHY_PerceptionRecoPoint;
+class PHY_PerceptionRecoLocalisation;
+class PHY_PerceptionRecoObjects;
+class PHY_PerceptionRecoSurveillance;
+class PHY_PerceptionRadar;
+class PHY_PerceptionAlat;
+class PHY_PerceptionFlyingShell;
+
 namespace detection
 {
     class DetectionComputer_ABC;
 }
+
 // =============================================================================
 // @class  PHY_RolePion_Perceiver
 // Created: JVT 2004-08-03

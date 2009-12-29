@@ -15,7 +15,6 @@
 
 class MIL_Object_ABC;
 class MIL_Object_ABC;
-class MIL_RC;
 class DEC_PathResult;
 class TerrainData;
 

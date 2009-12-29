@@ -17,7 +17,6 @@
 class MIL_AgentPion;
 class MIL_Object_ABC;
 class MIL_Army;
-class NET_ASN_MsgUnitAttributes;
 
 namespace surrender
 {

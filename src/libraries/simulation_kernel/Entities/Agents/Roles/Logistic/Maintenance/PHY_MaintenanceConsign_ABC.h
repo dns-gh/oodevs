@@ -16,9 +16,7 @@ class PHY_MaintenanceComposanteState;
 class MIL_Agent_ABC;
 class PHY_RoleInterface_Maintenance;
 class PHY_ComposanteTypePion;
-class PHY_ComposantePion;
 class PHY_Breakdown;
-class MIL_AgentPionLOG_ABC;
 class NET_ASN_MsgLogMaintenanceHandlingUpdate;
 
 // =============================================================================

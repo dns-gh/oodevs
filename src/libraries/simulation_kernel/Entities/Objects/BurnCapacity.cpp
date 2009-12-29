@@ -38,6 +38,14 @@ BurnCapacity::BurnCapacity()
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: BurnCapacity destructor
+// Created: RFT 2008-05-22
+// -----------------------------------------------------------------------------
+BurnCapacity::~BurnCapacity()
+{
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: BurnCapacity constructor
@@ -46,15 +54,6 @@ BurnCapacity::BurnCapacity()
 BurnCapacity::BurnCapacity( const BurnCapacity& from )
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: BurnCapacity destructor
-// Created: RFT 2008-05-22
-// -----------------------------------------------------------------------------
-BurnCapacity::~BurnCapacity()
-{
-
 }
 
 // -----------------------------------------------------------------------------
@@ -98,7 +97,7 @@ void BurnCapacity::Instanciate( Object& object ) const
 // Name: BurnCapacity::Update
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
-void BurnCapacity::Update( Object& object, float time )
+void BurnCapacity::Update( Object& /*object*/, float /*time*/ )
 {
     // NOTHING
 }

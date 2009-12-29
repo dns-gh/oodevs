@@ -16,6 +16,7 @@
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Actions/PHY_FireDamages_Agent.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Agents/Units/Humans/MIL_Injury_ABC.h"
 
 #include "simulation_kernel/HumansActionsNotificationHandler_ABC.h"

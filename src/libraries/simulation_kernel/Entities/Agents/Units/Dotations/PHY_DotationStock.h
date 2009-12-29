@@ -14,7 +14,6 @@
 
 #include "MIL.h"
 
-class PHY_DotationCapacity;
 class PHY_DotationCategory;
 class PHY_DotationStockContainer;
 

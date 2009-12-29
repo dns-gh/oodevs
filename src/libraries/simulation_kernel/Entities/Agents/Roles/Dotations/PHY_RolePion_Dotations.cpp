@@ -14,7 +14,6 @@
 #include "PHY_RolePion_Dotations.h"
 
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Units/Dotations/PHY_Dotation.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
@@ -22,8 +21,6 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationConsumptions.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationGroupContainer.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
-#include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
-#include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include <xeumeuleu/xml.h>

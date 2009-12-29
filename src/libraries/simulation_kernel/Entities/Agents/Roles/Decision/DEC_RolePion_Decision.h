@@ -20,7 +20,6 @@
 class DEC_AutomateDecision;
 class DEC_Knowledge_Agent;
 class DEC_Path_ABC;
-class MIL_AgentTypePion;
 class MIL_Mission_ABC;
 class MT_Vector2D;
 class NET_ASN_MsgUnitAttributes;

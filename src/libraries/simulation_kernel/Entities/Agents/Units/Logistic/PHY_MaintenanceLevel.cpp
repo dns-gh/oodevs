@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_MaintenanceLevel.h"
-#include "PHY_BreakdownType.h"
 
 PHY_MaintenanceLevel::T_MaintenanceLevelMap PHY_MaintenanceLevel::maintenanceLevels_;
 

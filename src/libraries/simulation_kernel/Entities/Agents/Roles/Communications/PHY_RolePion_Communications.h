@@ -21,7 +21,6 @@ namespace xml
     class xistream;
 }
 
-class MIL_CommunicationsAgentType;
 class NET_ASN_MsgUnitAttributes;
 class MIL_Entity_ABC;
 

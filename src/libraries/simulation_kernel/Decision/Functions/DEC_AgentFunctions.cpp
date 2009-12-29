@@ -253,7 +253,7 @@ bool DEC_AgentFunctions::CanMineObject( const MIL_AgentPion& callerAgent, boost:
 // Name: DEC_AgentFunctions::CanActivateObject
 // Created: NLD 2005-09-08
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::CanActivateObject( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
+bool DEC_AgentFunctions::CanActivateObject( boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
 {
     return objectKnowledge && objectKnowledge->IsValid() && objectKnowledge->GetType().GetCapacity< ActivableCapacity >();
 }

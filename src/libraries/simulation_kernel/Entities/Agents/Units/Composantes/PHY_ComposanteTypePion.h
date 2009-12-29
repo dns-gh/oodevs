@@ -19,7 +19,6 @@
 #include "Entities/Agents/Units/PHY_Speeds.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCapacities.h"
 
-#include "game_asn/Simulation.h"
 
 namespace xml
 {
@@ -35,13 +34,11 @@ class PHY_RadarType;
 class PHY_ComposantePion;
 class PHY_ComposanteTypeObjectData;
 class PHY_ConsumptionType;
-class PHY_Posture;
 class PHY_Human;
 class PHY_DotationConsumptions;
 class PHY_DotationNature;
 class MIL_ObjectType_ABC;
 class MIL_Object_ABC;
-class PHY_RoleInterface_Dotations;
 class PHY_MaintenanceLevel;
 class PHY_Breakdown;
 class PHY_BreakdownType;

@@ -11,7 +11,6 @@
 #include "PHY_RoleHLA_Posture.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 
 #include "simulation_kernel/DetectionComputer_ABC.h"
 

@@ -14,7 +14,6 @@
 
 #include "MIL_Effect_ABC.h"
 
-class PHY_Composante_ABC;
 class PHY_DotationCategory_IndirectFire_ABC;
 class PHY_WeaponDataType_IndirectFire;
 class PHY_FireResults_Pion;

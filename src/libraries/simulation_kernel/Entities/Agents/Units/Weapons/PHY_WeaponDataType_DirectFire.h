@@ -22,10 +22,8 @@ namespace xml
 
 class PHY_Volume;
 class PHY_Posture;
-class PHY_Protection;
 class PHY_RoleInterface_Posture;
 class PHY_WeaponType;
-class PHY_DotationCategory;
 class MIL_AgentPion;
 class MIL_Agent_ABC;
 class PHY_Composante_ABC;

@@ -16,7 +16,6 @@
 
 #include "PHY_ActionDirectFirePion_ABC.h"
 
-class PHY_DirectFireResult;
 
 // =============================================================================
 // @class  PHY_ActionDirectFirePion

@@ -15,19 +15,15 @@
 
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
-#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 
 #include "Entities/Orders/MIL_Report.h"
-#include "Entities/MIL_Army.h"
 #include "Decision/DEC_Representations.h"
 #include "Decision/Path/DEC_PathPoint.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/DEC_Knowledge_PopulationCollision.h"
 #include "Network/NET_ASN_Messages.h"
 
 #include "simulation_kernel/PostureComputer_ABC.h"

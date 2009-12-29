@@ -13,8 +13,8 @@
 #define __PHY_RoleInterface_Composantes_h_
 
 #include "MT_Tools/Role_ABC.h"
-#include "Knowledge/DEC_Knowledge_Def.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
+#include "Knowledge/DEC_Knowledge_Def.h"
 
 class PHY_Composante_ABC;
 class PHY_SensorTypeAgent;
@@ -24,25 +24,17 @@ class PHY_DotationCategory;
 class AttritionCapacity;
 class MIL_PopulationType;
 class MIL_PopulationAttitude;
-class NET_ASN_MsgUnitAttributes;
 class MIL_AgentPion;
-class MIL_ToxicEffectManipulator;
-class MIL_AutomateLOG;
-class PHY_HumanRank;
-class PHY_HumanWound;
 class PHY_Human;
-class PHY_UnitType;
 class PHY_ComposanteState;
 class PHY_FireDamages_Agent;
 class PHY_MaintenanceComposanteState;
-class PHY_MedicalHumanState;
 class HLA_UpdateFunctor;
 class PHY_ComposanteTypePion;
 class MIL_Injury_ABC;
 
 namespace firing
 {
-    class PHY_SmokeData;
 }
 
 // =============================================================================

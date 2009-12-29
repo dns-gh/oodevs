@@ -14,7 +14,6 @@
 
 namespace xml
 {
-    class xostream;
 }
 
 class PHY_DotationCategory;

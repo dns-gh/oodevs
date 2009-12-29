@@ -45,7 +45,6 @@
 #include "Agents/Roles/Logistic/Medical/PHY_MedicalResourcesAlarms.h"
 #include "Agents/Roles/Logistic/Supply/PHY_SupplyResourcesAlarms.h"
 #include "Agents/Roles/Communications/PHY_RolePion_Communications.h"
-#include "Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Agents/Perceptions/PHY_PerceptionRecoSurveillance.h"
 #include "Agents/Perceptions/PHY_PerceptionFlyingShell.h"
 #include "Agents/Perceptions/PHY_PerceptionLevel.h"

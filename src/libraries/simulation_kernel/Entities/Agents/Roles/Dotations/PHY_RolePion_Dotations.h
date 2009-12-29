@@ -21,6 +21,9 @@
 #include "simulation_kernel/ConsumptionChangeRequestHandler_ABC.h"
 #include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
+class MIL_AgentPion;
+class PHY_DotationGroupContainer;
+
 namespace xml
 {
     class xostream;
@@ -30,10 +33,6 @@ namespace xml
 namespace dotation
 {
     class DotationComputer_ABC;
-}
-namespace moving
-{
-    class MoveComputer_ABC;
 }
 
 namespace dotation

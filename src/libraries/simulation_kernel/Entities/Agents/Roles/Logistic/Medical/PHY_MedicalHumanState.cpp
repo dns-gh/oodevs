@@ -18,7 +18,6 @@
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
-#include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 #include "Tools/MIL_IDManager.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_MedicalHumanState, "PHY_MedicalHumanState" )

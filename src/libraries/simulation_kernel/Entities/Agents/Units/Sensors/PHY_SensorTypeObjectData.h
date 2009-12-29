@@ -23,7 +23,6 @@ class MIL_Object_ABC;
 class DEC_Knowledge_Object;
 class MIL_AgentPion;
 class PHY_PerceptionLevel;
-class PHY_RoleInterface_Posture;
 
 // =============================================================================
 // @class  PHY_SensorTypeObjectData

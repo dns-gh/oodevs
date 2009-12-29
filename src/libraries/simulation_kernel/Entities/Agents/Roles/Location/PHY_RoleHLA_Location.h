@@ -45,12 +45,12 @@ public:
 
     void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
 
-    virtual void Update( bool bIsDead ) {};
-    virtual void Clean () {};
+    virtual void Update( bool /*bIsDead*/ ) {}
+    virtual void Clean () {}
 
-    virtual void MagicMove( const MT_Vector2D& vNewPosition ) {};
-    virtual void Move     ( const MT_Vector2D& vNewPosition, const MT_Vector2D& vNewDirection, MT_Float rNewSpeed ) {};
-    virtual void Fly      ( MT_Float rHeight ) {};
+    virtual void MagicMove( const MT_Vector2D& /*vNewPosition*/ ) {}
+    virtual void Move     ( const MT_Vector2D& /*vNewPosition*/, const MT_Vector2D& /*vNewDirection*/, MT_Float /*rNewSpeed*/ ) {}
+    virtual void Fly      ( MT_Float /*rHeight*/ ) {}
     //@}
 
     //! @name Accessors
@@ -74,7 +74,7 @@ public:
     virtual MT_Float GetCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, void* pParams ) const;
     //@}
 
-    virtual void Serialize( HLA_UpdateFunctor& functor ) const {};
+    virtual void Serialize( HLA_UpdateFunctor& /*functor*/ ) const {};
 
 private:
     //! @name Member data

@@ -12,7 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_DotationStockContainer.h"
 #include "PHY_DotationCategory.h"
-#include "PHY_DotationCapacity.h"
 #include "PHY_DotationStock.h"
 #include "PHY_DotationType.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"

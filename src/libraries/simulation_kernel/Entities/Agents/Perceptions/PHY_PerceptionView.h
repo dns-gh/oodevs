@@ -6,6 +6,7 @@
 #define __PHY_PerceptionView_h_
 
 #include "PHY_Perception_ABC.h"
+class MIL_PopulationFlow;
 
 //*****************************************************************************
 // Created: DFT 02-02-26

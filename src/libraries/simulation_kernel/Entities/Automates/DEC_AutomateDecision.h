@@ -15,7 +15,6 @@
 #include "Decision/DEC_Decision.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
-#include "MT_Tools/MT_Scipio_enum.h"
 
 class MIL_Mission_ABC;
 

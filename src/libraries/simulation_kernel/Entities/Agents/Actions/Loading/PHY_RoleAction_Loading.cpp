@@ -373,7 +373,7 @@ void PHY_RoleAction_Loading::Execute( posture::PostureComputer_ABC& algorithm ) 
 // Name: PHY_RoleAction_Loading::LoadForTransport
 // Created: AHC 2009-09-24
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Loading::LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable )
+void PHY_RoleAction_Loading::LoadForTransport   ( const MIL_Agent_ABC& /*transporter*/, bool /*bTransportOnlyLoadable*/ )
 {
 	ForceUnloadedState ();
 }
@@ -381,7 +381,7 @@ void PHY_RoleAction_Loading::LoadForTransport   ( const MIL_Agent_ABC& transport
 // Name: PHY_RoleAction_Loading::UnloadFromTransport
 // Created: AHC 2009-09-24
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Loading::UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable )
+void PHY_RoleAction_Loading::UnloadFromTransport( const MIL_Agent_ABC& /*transporter*/, bool /*bTransportOnlyLoadable*/ )
 {
 	ForceUnloadedState ();
 }

@@ -31,7 +31,6 @@ class DEC_DataBase;
 class DEC_Model_ABC;
 class MIL_Automate;
 class MIL_AgentPion;
-class MIL_RealObjectType;
 class PHY_UnitType;
 
 

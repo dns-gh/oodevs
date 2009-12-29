@@ -122,7 +122,7 @@ void PHY_Perception_ABC::Execute( const std::vector< const urban::TerrainObject_
 // Name: PHY_Perception_ABC::Compute
 // Created: MGD 2009-11-25
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_Perception_ABC::Compute( const urban::Block& block ) const
+const PHY_PerceptionLevel& PHY_Perception_ABC::Compute( const urban::Block& /*block*/ ) const
 {
     return PHY_PerceptionLevel::notSeen_;
 }

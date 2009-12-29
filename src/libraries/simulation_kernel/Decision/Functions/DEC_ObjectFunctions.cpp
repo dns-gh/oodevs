@@ -89,3 +89,34 @@ const TER_Localisation& DEC_ObjectFunctions::GetGenObjectLocalisation( boost::sh
 {
     return knowledgeId->GetLocalisation();
 }
+
+// -----------------------------------------------------------------------------
+// Name: static void DEC_ObjectFunctions::ActivateObject
+// Created: NLD 2005-07-26
+// -----------------------------------------------------------------------------
+bool DEC_ObjectFunctions::ActivateObject( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    if( !pKnowledge || !pKnowledge->IsValid() )
+        return false;
+
+    MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
+    if( !pObject || !( *pObject )().CanBeActivated() )
+        return false;
+
+    ( *pObject )().Activate();
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: template< typename T > static void DEC_ObjectFunctions::MagicDestroyObject
+// Created: NLD 2005-01-19
+// -----------------------------------------------------------------------------
+void DEC_ObjectFunctions::MagicDestroyObject( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    if( pKnowledge && pKnowledge->IsValid() )
+    {
+        MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
+        if( pObject && ( *pObject )().CanBeDestroyed() )
+            ( *pObject )().Destroy(); // AddObjectKnowledgeToForget done
+    }
+}

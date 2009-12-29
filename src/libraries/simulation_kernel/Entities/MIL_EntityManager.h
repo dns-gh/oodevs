@@ -43,13 +43,6 @@ class MIL_Object_ABC;
 class MIL_ObjectType_ABC;
 class MIL_ObjectBuilder_ABC;
 class MIL_Population;
-class MIL_PopulationType;
-class MIL_ObstacleType;
-class MIL_AutomateType;
-class MIL_NbcAgentType;
-class MIL_ControlZone;
-class MIL_NuageNBC;
-class MIL_ZoneMineeParDispersion;
 class TER_Localisation;
 class MIL_Config;
 class MIL_ProfilerMgr;
@@ -76,7 +69,6 @@ struct ASN1T_MsgLogSupplyChangeQuotas;
 struct ASN1T_MsgLogSupplyPushFlow;
 struct ASN1T_MsgKnowledgeGroupEnable;
 
-class ASN1T_EnumObjectType;
 
 // =============================================================================
 // @class  MIL_EntityManager

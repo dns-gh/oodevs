@@ -11,12 +11,9 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePionLOG_Supply.h"
-#include "PHY_SupplyDotationConsign.h"
 #include "PHY_SupplyDotationRequest.h"
-#include "PHY_SupplyDotationRequestContainer.h"
 #include "PHY_SupplyResourcesAlarms.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
-#include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationStockContainer.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"

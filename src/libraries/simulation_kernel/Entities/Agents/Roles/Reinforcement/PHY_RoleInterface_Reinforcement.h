@@ -15,7 +15,6 @@
 #include "MT_Tools/Role_ABC.h"
 
 class MIL_AgentPion;
-class NET_ASN_MsgUnitAttributes;
 
 // =============================================================================
 // @class  PHY_RoleInterface_Reinforcement

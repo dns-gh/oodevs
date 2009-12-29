@@ -25,7 +25,7 @@ std::pair< float, int > DEC_KnowledgePopulationFunctions::GetDominationState( co
     if( !pKnowledge )
         return std::pair< float, int >( 0.f, eQueryInvalid );
 
-    return std::pair< float, int >( pKnowledge->GetDominationState(), eQueryValid );
+    return std::pair< float, int >( float( pKnowledge->GetDominationState() ), eQueryValid );
 }
 
 // -----------------------------------------------------------------------------

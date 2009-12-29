@@ -20,8 +20,6 @@ namespace xml
 
 class MIL_Army;
 class PHY_NatureLevel;
-class MIL_EntityManager;
-class MIL_Intelligence;
 
 class FormationFactory_ABC;
 class AutomateFactory_ABC;

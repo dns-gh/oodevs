@@ -16,6 +16,8 @@
 #include "HumansActionsNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
+class MIL_AgentPion;
+
 namespace human
 {
 

@@ -29,11 +29,8 @@ namespace xml
 class MIL_Army;
 class MIL_AgentPion;
 class MIL_Automate;
-class MIL_Fuseau;
-class MIL_LimaFunction;
 class DEC_Decision_ABC;
 class DEC_KnowledgeBlackBoard_AgentPion;
-class DEC_KS_AgentQuerier;
 class HLA_UpdateFunctor;
 class MIL_EntityManager;
 

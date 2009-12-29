@@ -12,8 +12,8 @@
 #ifndef __PHY_ActionMove_h_
 #define __PHY_ActionMove_h_
 
-#include "Knowledge/DEC_Knowledge_Def.h"
 #include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
+#include "Knowledge/DEC_Knowledge_Def.h"
 #include <boost/shared_ptr.hpp>
 
 class MIL_AgentPion;
@@ -23,7 +23,6 @@ namespace moving
 }
 class DEC_Path_ABC;
 class DEC_Agent_Path;
-class DEC_Decision_ABC;
 
 // =============================================================================
 // @class  PHY_ActionMove

@@ -31,7 +31,6 @@ class DEC_Knowledge_Agent;
 class DEC_Knowledge_Population;
 class FormationFactory_ABC;
 class MIL_KnowledgeGroup;
-class MIL_EntityManager;
 class MIL_Formation;
 class MIL_Population;
 class MIL_Object_ABC;

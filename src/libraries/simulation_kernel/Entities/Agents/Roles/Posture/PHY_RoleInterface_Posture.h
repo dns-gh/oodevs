@@ -15,8 +15,6 @@
 #include "MT_Tools/Role_ABC.h"
 
 class PHY_Posture;
-class MIL_AgentPion;
-class NET_ASN_MsgUnitAttributes;
 class HLA_UpdateFunctor;
 
 // =============================================================================

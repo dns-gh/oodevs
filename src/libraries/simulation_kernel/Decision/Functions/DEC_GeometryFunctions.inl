@@ -214,7 +214,6 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeObstaclePosition(
             pResultPos.reset( new MT_Vector2D( costEvaluationFunctor.BestPosition() ) );
     }
     return pResultPos;
-    return pResultPos;
 }
 
 //-----------------------------------------------------------------------------

@@ -14,7 +14,6 @@
 
 #include "PHY_RoleInterface_Refugee.h"
 #include "simulation_kernel/RefugeeActionsNotificationHandler_ABC.h"
-#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
 class NET_ASN_MsgUnitAttributes;
 class MIL_AgentPion;

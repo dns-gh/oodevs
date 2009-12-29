@@ -21,8 +21,6 @@ class MIL_AgentPion;
 class PHY_MaintenanceWorkRate;
 class PHY_ComposanteTypePion;
 class PHY_Breakdown;
-class PHY_MaintenanceConsign_ABC;
-class PHY_ComposanteUsePredicate;
 class MIL_AgentPionLOG_ABC;
 class MIL_AutomateLOG;
 // =============================================================================

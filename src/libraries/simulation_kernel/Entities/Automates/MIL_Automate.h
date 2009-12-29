@@ -30,18 +30,15 @@ class DEC_DataBase;
 class DEC_Knowledge_Agent;
 class DEC_KnowledgeBlackBoard_Automate;
 class DEC_Knowledge_Object;
-class NET_ASN_MsgAutomatCreation;
 class MIL_Formation;
 class MIL_AutomateType;
 class MIL_AgentPion;
 class MIL_Army_ABC;
 class MIL_Army;
 class MIL_KnowledgeGroup;
-class MIL_Fuseau;
 class MIL_AutomateLOG;
 class MIL_Object_ABC;
 class MIL_AgentTypePion;
-class MIL_LimaFunction;
 class PHY_SupplyDotationState;
 class PHY_DotationCategory;
 

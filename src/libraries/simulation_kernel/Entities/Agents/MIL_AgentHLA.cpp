@@ -13,7 +13,6 @@
 #include "MIL_AgentHLA.h"
 #include "MIL_AgentServer.h"
 #include "Entities/MIL_Army.h"
-#include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Roles/Refugee/PHY_RoleHLA_Refugee.h"

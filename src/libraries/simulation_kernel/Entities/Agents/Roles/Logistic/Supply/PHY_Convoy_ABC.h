@@ -21,7 +21,6 @@ namespace xml
 
 class PHY_SupplyConsign_ABC;
 class PHY_ComposantePion;
-class MIL_AgentPion;
 class MIL_AgentTypePion;
 class MIL_MissionType_ABC;
 class MIL_Automate;

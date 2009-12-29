@@ -63,8 +63,6 @@
 
 #include "Decision/DEC_Representations.h"
 
-#include "Decision/Functions/DEC_DynamicFireFunctions.h"
-
 #include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
  
 #include "MIL_AgentServer.h"

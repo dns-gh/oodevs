@@ -12,7 +12,6 @@
 #ifndef __PHY_Posture_h_
 #define __PHY_Posture_h_
 
-#include "game_asn/Simulation.h"
 
 class PHY_ConsumptionType;
 

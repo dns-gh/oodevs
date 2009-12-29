@@ -16,7 +16,6 @@
 #include "PHY_DotationType.h"
 #include "PHY_DotationCapacity.h"
 #include "PHY_DotationGroupContainer.h"
-#include "PHY_DotationStockContainer.h"
 #include <xeumeuleu/xml.h>
 
 

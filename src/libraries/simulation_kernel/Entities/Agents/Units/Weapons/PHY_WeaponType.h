@@ -31,7 +31,6 @@ class MIL_PopulationElement_ABC;
 class PHY_ComposanteType_ABC;
 class PHY_Composante_ABC;
 class PHY_FireResults_ABC;
-class PHY_RoleInterface_Dotations;
 class MIL_Time_ABC;
 class MIL_EffectManager;
 

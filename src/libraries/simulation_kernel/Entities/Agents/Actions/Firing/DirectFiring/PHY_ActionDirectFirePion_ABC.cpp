@@ -17,7 +17,6 @@
 #include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
 #include "Entities/Agents/Actions/Firing/PHY_FireResults_Pion.h"
 #include "Decision/DEC_Tools.h"
-#include "Decision/DEC_Decision_ABC.h"
 
 using namespace firing;
 // -----------------------------------------------------------------------------

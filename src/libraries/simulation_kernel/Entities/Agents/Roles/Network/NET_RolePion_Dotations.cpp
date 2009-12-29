@@ -12,10 +12,8 @@
 #include "simulation_kernel_pch.h"
 #include "NET_RolePion_Dotations.h"
 
+#include "NetworkUnitMessageNotificationHandler_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Automates/DEC_AutomateDecision.h"
-
-
 #include "Network/NET_ASN_Messages.h"
 
 BOOST_CLASS_EXPORT_GUID( network::NET_RolePion_Dotations, "NET_RolePion_Dotations" )

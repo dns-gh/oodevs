@@ -201,3 +201,93 @@ bool DEC_KnowledgeObjectFunctions::IsStockSupplied( const MIL_AgentPion& /*calle
     }
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: static void DEC_KnowledgeObjectFunctions::IsKnowledgeValid
+// Created: NLD 2004-10-14
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgeObjectFunctions::IsKnowledgeValid( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    return( pKnowledge && pKnowledge->IsValid() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::IsReservedObstacleActivated
+// Created: NLD 2004-04-09
+// Modified: JVT 2004-12-17
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgeObjectFunctions::IsReservedObstacleActivated( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    if( pKnowledge && pKnowledge->IsValid() )
+        return pKnowledge->IsReservedObstacleActivated();
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::IsReservedObstacle
+// Created: NLD 2004-04-09
+// Modified: JVT 2004-12-17
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgeObjectFunctions::IsReservedObstacle( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    return pKnowledge && pKnowledge->IsValid() && pKnowledge->IsReservedObstacle();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::IsBypassed
+// Created: NLD 2004-04-09
+// Modified: JVT 2004-12-17
+// -----------------------------------------------------------------------------
+int DEC_KnowledgeObjectFunctions::IsBypassed( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    if( pKnowledge && pKnowledge->IsValid() )
+        return int( pKnowledge->IsBypassed() ? eTristate_True : eTristate_False );
+    return int( eTristate_DontKnow );
+}
+
+// -----------------------------------------------------------------------------
+// Name: template< typename T > static void DEC_KnowledgeObjectFunctions::GetLocalisation
+// Created: NLD 2004-10-14
+// -----------------------------------------------------------------------------
+const TER_Localisation* DEC_KnowledgeObjectFunctions::GetLocalisation( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    if( pKnowledge && pKnowledge->IsValid() )
+        return &pKnowledge->GetLocalisation();
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::GetType
+// Created: NLD 2004-04-09
+// Modified: JVT 2004-12-17
+// -----------------------------------------------------------------------------
+std::string DEC_KnowledgeObjectFunctions::GetType( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    if( pKnowledge && pKnowledge->IsValid() )
+        return pKnowledge->GetType().GetName();
+    return "";
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::GetSiteFranchissementWidth
+// Created: NLD 2004-05-13
+// Modified: JVT 2004-12-17
+// -----------------------------------------------------------------------------
+float DEC_KnowledgeObjectFunctions::GetSiteFranchissementWidth( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    if( pKnowledge && pKnowledge->IsValid() )
+        if( const DEC_Knowledge_ObjectAttributeCrossingSite* attribute = pKnowledge->Retrieve< DEC_Knowledge_ObjectAttributeCrossingSite >() )
+            return attribute->GetWidth();
+    return 0.f;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::IsRecon
+// Created: NLD 2005-01-26
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgeObjectFunctions::IsRecon( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    if( pKnowledge && pKnowledge->IsValid() )
+        return pKnowledge->IsRecon();
+    return false;
+}

@@ -12,9 +12,7 @@
 #ifndef __PHY_Morale_h_
 #define __PHY_Morale_h_
 
-#include "game_asn/Simulation.h"
 
-class PHY_ConsumptionType;
 
 // =============================================================================
 // @class  PHY_Morale

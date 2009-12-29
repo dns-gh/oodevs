@@ -14,17 +14,12 @@
 
 #include "MT_Tools/Role_ABC.h"
 
-class MIL_AgentPion;
-class PHY_DotationCapacities;
 class PHY_DotationCategory;
 class PHY_DotationType;
 class PHY_Dotation;
 class PHY_ConsumptionType;
-class PHY_SupplyState;
 class PHY_SupplyDotationRequestContainer;
-class PHY_DotationGroupContainer;
 class PHY_AmmoDotationClass;
-class NET_ASN_MsgUnitAttributes;
 
 namespace dotation
 {

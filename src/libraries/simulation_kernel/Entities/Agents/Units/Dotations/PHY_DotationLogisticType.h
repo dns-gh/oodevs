@@ -12,7 +12,6 @@
 #ifndef __PHY_DotationLogisticType_h_
 #define __PHY_DotationLogisticType_h_
 
-class PHY_DotationCategory;
 
 // =============================================================================
 // @class  PHY_DotationLogisticType

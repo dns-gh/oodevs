@@ -16,8 +16,6 @@
 
 #include "MT_Tools/Role_ABC.h"
 
-class MIL_Agent_ABC;
-class NET_ASN_MsgUnitAttributes;
 
 namespace transport
 {

@@ -10,7 +10,6 @@
 #ifndef __PHY_RoleAction_FolkInfluence_h_
 #define __PHY_RoleAction_FolkInfluence_h_
 
-#include "MIL.h"
 #include "MT_Tools/Role_ABC.h"
 
 namespace population
@@ -19,7 +18,6 @@ namespace population
     class Object_ABC;
 }
 
-class MIL_AgentPion;
 
 // =============================================================================
 /** @class  PHY_RoleAction_FolkInfluence

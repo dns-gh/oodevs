@@ -12,7 +12,6 @@
 #ifndef __PHY_NatureLevel_h_
 #define __PHY_NatureLevel_h_
 
-#include "game_asn/Simulation.h"
 
 // =============================================================================
 // @class  PHY_NatureLevel

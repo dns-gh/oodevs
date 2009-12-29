@@ -18,7 +18,6 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 
 class PHY_RoleAction_Objects;
-class MIL_Object_ABC;
 class MIL_AgentPion;
 
 // =============================================================================

@@ -14,8 +14,6 @@
 
 #include "MT_Tools/Role_ABC.h"
 
-class MIL_NbcAgentType;
-class NET_ASN_MsgUnitAttributes;
 class PHY_Morale;
 class PHY_Experience;
 class PHY_Tiredness;

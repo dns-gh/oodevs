@@ -16,7 +16,6 @@
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
-#include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Tools/MIL_IDManager.h"
 

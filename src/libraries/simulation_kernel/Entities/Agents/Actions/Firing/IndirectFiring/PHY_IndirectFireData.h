@@ -18,7 +18,6 @@ class MIL_AgentPion;
 class MIL_Effect_IndirectFire;
 class PHY_ComposantePion;
 class PHY_Weapon;
-class PHY_DotationCategory;
 
 namespace firing
 {

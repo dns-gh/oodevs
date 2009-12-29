@@ -17,7 +17,6 @@ namespace xml
     class xistream;
 }
 
-class PHY_DotationType;
 class PHY_DotationCategory;
 class PHY_DotationConsumption;
 class PHY_DotationGroupContainer;

@@ -312,7 +312,7 @@ void PHY_RoleHLA_Composantes::ApplyExplosion( const AttritionCapacity& /*capacit
 // Name: PHY_RoleHLA_Composantes::ApplyExplosion
 // Created: AGE 2004-11-08
 // -----------------------------------------------------------------------------
-void PHY_RoleHLA_Composantes::ApplyInjury( MIL_Injury_ABC& injury )
+void PHY_RoleHLA_Composantes::ApplyInjury( MIL_Injury_ABC& /*injury*/ )
 {
     // NOTHING
 }              

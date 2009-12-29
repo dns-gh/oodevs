@@ -24,7 +24,6 @@ class MIL_AgentPionLOG_ABC;
 class MIL_AutomateLOG;
 class MIL_Automate;
 class PHY_ComposantePion;
-class PHY_MedicalComposanteState;
 class PHY_MedicalConsign_ABC;
 class PHY_MedicalEvacuationConsign;
 class PHY_MedicalCollectionConsign;
