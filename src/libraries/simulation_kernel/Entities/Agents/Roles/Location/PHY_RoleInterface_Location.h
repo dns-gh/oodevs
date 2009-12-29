@@ -18,6 +18,9 @@
 class MIL_Agent_ABC;
 class MIL_Object_ABC;
 class MIL_Object_ABC;
+class MIL_PopulationFlow;
+class MIL_PopulationConcentration;
+class NET_ASN_MsgUnitAttributes;
 class HLA_UpdateFunctor;
 
 // =============================================================================

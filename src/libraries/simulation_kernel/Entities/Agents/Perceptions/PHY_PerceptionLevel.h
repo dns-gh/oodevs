@@ -12,6 +12,7 @@
 #ifndef __PHY_PerceptionLevel_h_
 #define __PHY_PerceptionLevel_h_
 
+#include "game_asn/Simulation.h"
 
 // =============================================================================
 // @class  PHY_PerceptionLevel

@@ -37,7 +37,6 @@ namespace detection
 {
     class DetectionComputer_ABC;
 }
-
 // =============================================================================
 // @class  PHY_RolePion_Perceiver
 // Created: JVT 2004-08-03
