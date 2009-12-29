@@ -175,7 +175,7 @@ void MIL_ObjectManipulator::ReleaseAnimator( const MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 bool MIL_ObjectManipulator::CanBeConstructed() const
 {
-    return !object_.IsMarkedForDestruction() && object_.Retrieve< BuildableCapacity >() != 0;
+    return !object_.IsMarkedForDestruction();
 }
     
 // -----------------------------------------------------------------------------
