@@ -21,6 +21,7 @@ namespace transport
 // =============================================================================
 class LoadedStateConsistencyComputer_ABC
 {
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -30,11 +31,11 @@ public:
 
     //! @name Attributes
     //@{
-    virtual void Reset() =0;
-    virtual void EnableCarrier(bool value) =0;
-    virtual void EnableLoadable(bool value) =0;
-    virtual bool HasValidCarrier() const =0;
-    virtual bool HasValidLoadable() const =0;
+    virtual void Reset() = 0;
+    virtual void EnableCarrier( bool value ) = 0;
+    virtual void EnableLoadable( bool value ) = 0;
+    virtual bool HasValidCarrier() const = 0;
+    virtual bool HasValidLoadable() const = 0;
     //@}
 };
 

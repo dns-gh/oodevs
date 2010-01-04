@@ -17,18 +17,25 @@ namespace location {
 
 // =============================================================================
 /** @class  LocationActionNotificationHandler_ABC
-@brief  LocationActionNotificationHandler_ABC
+    @brief  LocationActionNotificationHandler_ABC
 */
 // Created: MGD 2009-10-17
 // =============================================================================
-class LocationActionNotificationHandler_ABC {
+class LocationActionNotificationHandler_ABC
+{
 public:
+    //! @name Constructor/destructor
+    //@{
              LocationActionNotificationHandler_ABC() {}
     virtual ~LocationActionNotificationHandler_ABC() {}
+    //@}
 
-    virtual void Hide     () = 0;
-    virtual void Show     ( const MT_Vector2D& vNewPosition ) = 0;
-    virtual void Follow   ( const MIL_Agent_ABC& agent ) = 0;
+    //! @name Operations
+    //@{
+    virtual void Hide() = 0;
+    virtual void Show( const MT_Vector2D& vNewPosition ) = 0;
+    virtual void Follow( const MIL_Agent_ABC& agent ) = 0;
+    //@}
 };
 
 } // namespace location

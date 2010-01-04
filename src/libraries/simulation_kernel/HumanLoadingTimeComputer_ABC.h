@@ -21,6 +21,7 @@ namespace transport
 // =============================================================================
 class HumanLoadingTimeComputer_ABC
 {
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -30,12 +31,12 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Reset() =0;
-    virtual void AddHumans(int humansCount) =0;
-    virtual void AddTime(double loadingPerTimeStep, double unloadingPerTimeStep) =0;
-    virtual int GetHumansCount() const =0;
-    virtual double GetHumansLoadedPerTimeStep() const =0;
-    virtual double GetHumansUnloadedPerTimeStep() const =0;
+    virtual void Reset() = 0;
+    virtual void AddHumans( int humansCount ) = 0;
+    virtual void AddTime( double loadingPerTimeStep, double unloadingPerTimeStep ) = 0;
+    virtual int GetHumansCount() const = 0;
+    virtual double GetHumansLoadedPerTimeStep() const = 0;
+    virtual double GetHumansUnloadedPerTimeStep() const = 0;
     //@}
 };
 

@@ -60,7 +60,7 @@ MIL_AgentPion* MIL_AgentTypePionLOGSupply::InstanciatePion( uint nID, MIL_Automa
 void MIL_AgentTypePionLOGSupply::RegisterRoles( MIL_AgentPion& pion, DEC_DataBase& database ) const
 {
     MIL_AgentTypePion::RegisterRoles( pion, database );
-    pion.RegisterRole< PHY_RolePionLOG_Supply >( static_cast< MIL_AgentPionLOG_ABC& >( pion ) );//@TODO remove cast when AgentPionLOG will be deleted
+    pion.RegisterRole( *new PHY_RolePionLOG_Supply( static_cast< MIL_AgentPionLOG_ABC& >( pion ) ) );//@TODO remove cast when AgentPionLOG will be deleted
 }
 
 

@@ -53,62 +53,25 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/MIL_Army.h"
+#include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_Representations.h"
 
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KS_Fire.h"
-
+#include "Hla/HLA_UpdateFunctor.h"
+#include "Network/NET_AgentServer.h"
+#include "Network/NET_Publisher_ABC.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_AsnException.h"
-
-#include "Hla/HLA_UpdateFunctor.h"
-
-#include "Tools/MIL_Tools.h"
-
 #include "simulation_kernel/AlgorithmsFactories.h"
-
+#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+#include "Tools/MIL_Tools.h"
+#include "Tools/MIL_IDManager.h"
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( MIL_AgentPion, "MIL_AgentPion" )
-
-namespace
-{
-    template< typename R >
-    void SaveRole( const MIL_AgentPion& pion, MIL_CheckPointOutArchive& file )
-    {
-        const R* const role = & pion.GetRole< R >();
-        file << role;
-    }
-}
-
-template< typename Archive >
-void save_construct_data( Archive& archive, const MIL_AgentPion* pion, const unsigned int /*version*/ )
-{
-    unsigned int nTypeID = pion->GetType().GetID();
-    unsigned int nID = pion->GetID();
-    const AlgorithmsFactories* const algorithmFactories = &pion->algorithmFactories_;
-    archive << nTypeID
-        << nID
-        << pion->pAutomate_
-        << algorithmFactories;
-}
-
-template< typename Archive >
-void load_construct_data( Archive& archive, MIL_AgentPion* pion, const unsigned int /*version*/ )
-{
-    unsigned int nTypeID, nID;
-    MIL_Automate* pAutomate = 0;
-    AlgorithmsFactories* algorithmFactories = 0;
-    archive >> nTypeID
-        >> nID
-        >> pAutomate
-        >> algorithmFactories;
-    const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( nTypeID );
-    assert( pType );
-    ::new( pion )MIL_AgentPion( *pType, nID, *pAutomate, *algorithmFactories );
-}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion constructor
@@ -123,6 +86,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Autom
     , orderManager_            ( *new MIL_PionOrderManager( *this ) )
     , algorithmFactories_      ( algorithmFactories )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -138,6 +102,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Autom
     , orderManager_            ( *new MIL_PionOrderManager( *this ) )
     , algorithmFactories_      ( algorithmFactories )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -160,6 +125,54 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
 // CHECKPOINTS
 // =============================================================================
 
+namespace
+{
+    template< typename R >
+    R& LoadRole( MIL_CheckPointInArchive& archive, tools::RoleContainer& container )
+    {
+        R* role;
+        archive >> role;
+        if( !role )
+            throw std::runtime_error( __FUNCTION__ ": Failed to load role " + std::string( typeid( role ).name() ) );
+        container.RegisterRole( *role );
+        return *role;
+    }
+
+    template< typename R >
+    void SaveRole( const MIL_AgentPion& pion, MIL_CheckPointOutArchive& file )
+    {
+        const R* const role = & pion.GetRole< R >();
+        file << role;
+    }
+}
+
+template< typename Archive >
+void save_construct_data( Archive& archive, const MIL_AgentPion* pion, const unsigned int /*version*/ )
+{
+	unsigned int nTypeID = pion->GetType().GetID();
+    unsigned int nID = pion->GetID();
+    const AlgorithmsFactories* const algorithmFactories = &pion->algorithmFactories_;
+    archive << nTypeID
+            << nID
+            << pion->pAutomate_
+            << algorithmFactories;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, MIL_AgentPion* pion, const unsigned int /*version*/ )
+{
+	unsigned int nTypeID, nID;
+	MIL_Automate* pAutomate = 0;
+    AlgorithmsFactories* algorithmFactories = 0;
+    archive >> nTypeID
+            >> nID
+            >> pAutomate
+            >> algorithmFactories;
+    const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( nTypeID );
+    assert( pType );
+    ::new( pion )MIL_AgentPion( *pType, nID, *pAutomate, *algorithmFactories );
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::load
 // Created: JVT 2005-03-24
@@ -173,34 +186,34 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const uint )
       // >> actions_ // actions non sauvegardées
          >> pKnowledgeBlackBoard_;
            
-    { network::NET_RolePion_Dotations        * pRole; file >> pRole; RegisterRole( pRole ); } 
-    { PHY_RolePion_Reinforcement    * pRole; file >> pRole; RegisterRole( pRole ); } 
-    { PHY_RolePion_Posture          * pRole; file >> pRole; RegisterRole( pRole ); } 
-    { PHY_RolePion_Location         * pRole; file >> pRole; RegisterRole( pRole ); } 
-    { dotation::PHY_RolePion_Dotations        * pRole; file >> pRole; RegisterRole( pRole ); } 
-    { human::PHY_RolePion_Humans           * pRole; file >> pRole; RegisterRole( pRole ); } 
-    { PHY_RolePion_Composantes      * pRole; file >> pRole; RegisterRole( pRole ); } 
-    { PHY_RolePion_Perceiver        * pRole; file >> pRole; RegisterRole( pRole ); pRole->Initialization( GetRole< PHY_RoleInterface_Location >().GetPosition(), GetRole< PHY_RoleInterface_Location >().GetDirection() ); } 
-    { nbc::PHY_RolePion_NBC         * pRole; file >> pRole; RegisterRole( pRole ); }
-    { PHY_RolePion_Communications   * pRole; file >> pRole; RegisterRole( pRole ); } 
-    { PHY_RolePion_HumanFactors     * pRole; file >> pRole; RegisterRole( pRole ); } 
-    { transport::PHY_RolePion_Transported      * pRole; file >> pRole; RegisterRole( pRole ); }
-    //{ PHY_RoleInterface_Maintenance * pRole; file >> pRole; RegisterRole( pRole ); } //@TODO refactor with new save
-    //{ PHY_RoleInterface_Medical     * pRole; file >> pRole; RegisterRole( pRole ); } 
-    //{ PHY_RoleInterface_Supply      * pRole; file >> pRole; RegisterRole( pRole ); } 
-    { surrender::PHY_RolePion_Surrender        * pRole; file >> pRole; RegisterRole( pRole ); }
-    { refugee::PHY_RolePion_Refugee          * pRole; file >> pRole; RegisterRole( pRole ); }
-    { PHY_RolePion_Population       * pRole; file >> pRole; RegisterRole( pRole ); }
-    { transport::PHY_RoleAction_Loading        * pRole; file >> pRole; RegisterRole( pRole ); }
-    { transport::PHY_RoleAction_Transport      * pRole; file >> pRole; RegisterRole( pRole ); }
-    { moving::PHY_RoleAction_Moving         * pRole; file >> pRole; RegisterRole( pRole ); }
-    { PHY_RoleAction_Objects        * pRole; file >> pRole; RegisterRole( pRole ); } 
-    { firing::PHY_RoleAction_DirectFiring   * pRole; file >> pRole; RegisterRole( pRole ); } 
-    { firing::PHY_RoleAction_IndirectFiring * pRole; file >> pRole; RegisterRole( pRole ); } 
-    { DEC_RolePion_Decision         * pRole; file >> pRole; RegisterRole( pRole ); } 
-    { PHY_RoleAction_InterfaceFlying* pRole; file >> pRole; RegisterRole( pRole ); }
-    { PHY_RoleAction_FolkInfluence  * pRole; file >> pRole; RegisterRole( pRole ); }
-    RegisterRole( new DEC_Representations() );
+    LoadRole< network::NET_RolePion_Dotations >( file, *this );
+    LoadRole< PHY_RolePion_Reinforcement >( file, *this );
+    LoadRole< PHY_RolePion_Posture >( file, *this );
+    LoadRole< PHY_RolePion_Location >( file, *this );
+    LoadRole< dotation::PHY_RolePion_Dotations >( file, *this );
+    LoadRole< human::PHY_RolePion_Humans >( file, *this );
+    LoadRole< PHY_RolePion_Composantes >( file, *this );
+    LoadRole< PHY_RolePion_Perceiver >( file, *this ).Initialization( GetRole< PHY_RoleInterface_Location >().GetPosition(), GetRole< PHY_RoleInterface_Location >().GetDirection() );
+    LoadRole< nbc::PHY_RolePion_NBC >( file, *this );
+    LoadRole< PHY_RolePion_Communications >( file, *this );
+    LoadRole< PHY_RolePion_HumanFactors >( file, *this );
+    LoadRole< transport::PHY_RolePion_Transported >( file, *this );
+    //LoadRole< PHY_RoleInterface_Maintenance >( file, *this ); //@TODO refactor with new save
+    //LoadRole< PHY_RoleInterface_Medical >( file, *this );
+    //LoadRole< PHY_RoleInterface_Supply >( file, *this );
+    LoadRole< surrender::PHY_RolePion_Surrender >( file, *this );
+    LoadRole< refugee::PHY_RolePion_Refugee >( file, *this );
+    LoadRole< PHY_RolePion_Population >( file, *this );
+    LoadRole< transport::PHY_RoleAction_Loading >( file, *this );
+    LoadRole< transport::PHY_RoleAction_Transport >( file, *this );
+    LoadRole< moving::PHY_RoleAction_Moving >( file, *this );
+    LoadRole< PHY_RoleAction_Objects >( file, *this );
+    LoadRole< firing::PHY_RoleAction_DirectFiring >( file, *this );
+    LoadRole< firing::PHY_RoleAction_IndirectFiring >( file, *this );
+    LoadRole< DEC_RolePion_Decision >( file, *this );
+    LoadRole< PHY_RoleAction_InterfaceFlying >( file, *this );
+    LoadRole< PHY_RoleAction_FolkInfluence >( file, *this );
+    RegisterRole( *new DEC_Representations() );
 }
 
 // -----------------------------------------------------------------------------
@@ -217,27 +230,27 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const uint ) const
         // << actions_ // actions non sauvegardées
         << pKnowledgeBlackBoard_;
 
-    SaveRole< network::NET_RolePion_Dotations         >( *this, file );
+    SaveRole< network::NET_RolePion_Dotations >( *this, file );
     SaveRole< PHY_RolePion_Reinforcement     >( *this, file );
     SaveRole< PHY_RolePion_Posture           >( *this, file );
     SaveRole< PHY_RolePion_Location          >( *this, file );
-    SaveRole< dotation::PHY_RolePion_Dotations         >( *this, file );
-    SaveRole< human::PHY_RolePion_Humans            >( *this, file );
+    SaveRole< dotation::PHY_RolePion_Dotations >( *this, file );
+    SaveRole< human::PHY_RolePion_Humans     >( *this, file );
     SaveRole< PHY_RolePion_Composantes       >( *this, file );
     SaveRole< PHY_RolePion_Perceiver         >( *this, file );
     SaveRole< nbc::PHY_RolePion_NBC          >( *this, file );
     SaveRole< PHY_RolePion_Communications    >( *this, file );
     SaveRole< PHY_RolePion_HumanFactors      >( *this, file );
-    SaveRole< transport::PHY_RolePion_Transported       >( *this, file );
+    SaveRole< transport::PHY_RolePion_Transported >( *this, file );
     //SaveRole< PHY_RolePion_Maintenance       >( *this, file );//@TODO refactor with new save
     //SaveRole< PHY_RolePion_Medical           >( *this, file );
     //SaveRole< PHY_RolePion_Supply            >( *this, file );
-    SaveRole< surrender::PHY_RolePion_Surrender         >( *this, file );
-    SaveRole< refugee::PHY_RolePion_Refugee           >( *this, file );
-    SaveRole< PHY_RolePion_Population        >( *this, file );
-    SaveRole< transport::PHY_RoleAction_Loading         >( *this, file );
-    SaveRole< transport::PHY_RoleAction_Transport       >( *this, file );
-    SaveRole< moving::PHY_RoleAction_Moving          >( *this, file );
+    SaveRole< surrender::PHY_RolePion_Surrender >( *this, file );
+    SaveRole< refugee::PHY_RolePion_Refugee >( *this, file );
+    SaveRole< PHY_RolePion_Population >( *this, file );
+    SaveRole< transport::PHY_RoleAction_Loading >( *this, file );
+    SaveRole< transport::PHY_RoleAction_Transport >( *this, file );
+    SaveRole< moving::PHY_RoleAction_Moving  >( *this, file );
     SaveRole< PHY_RoleAction_Objects         >( *this, file );
     SaveRole< firing::PHY_RoleAction_DirectFiring    >( *this, file );
     SaveRole< firing::PHY_RoleAction_IndirectFiring  >( *this, file );

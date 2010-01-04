@@ -15,6 +15,7 @@
 namespace firing
 {
     class FireData_ABC;
+
 // =============================================================================
 /** @class  WeaponAvailabilityComputerFactory
     @brief  WeaponAvailabilityComputerFactory

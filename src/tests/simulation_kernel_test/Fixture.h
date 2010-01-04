@@ -21,8 +21,8 @@
 
 struct FixturePion
 {
-    FixturePion() :
-    		algorithmsFactories_( new AlgorithmsFactories())
+    FixturePion()
+        : algorithmsFactories_( new AlgorithmsFactories())
     {
         xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
         xis.start( "main" );
@@ -34,11 +34,8 @@ struct FixturePion
         pAutomat_.reset( new StubMIL_Automate( *pTypeAutomat_ ) );
         pPion_.reset( new StubMIL_AgentPion( *pType_, *pAutomat_, *algorithmsFactories_ ) );
     }
-    ~FixturePion()
-    {
-    }
 
-    std::auto_ptr< AlgorithmsFactories > 	   algorithmsFactories_;
+    std::auto_ptr< AlgorithmsFactories >   algorithmsFactories_;
     std::auto_ptr< DEC_Model >             pModel_;
     std::auto_ptr< StubMIL_AgentTypePion > pType_;
     std::auto_ptr< StubMIL_AutomateType >  pTypeAutomat_;
@@ -56,9 +53,6 @@ struct FixtureAutomate
         pModel_.reset( new DEC_Model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes ) );
         pType_.reset( new StubMIL_AutomateType( *pModel_ ) );
         pAutomat_.reset( new StubMIL_Automate( *pType_ ) );
-    }
-    ~FixtureAutomate()
-    {
     }
 
     std::auto_ptr< DEC_Model >            pModel_;

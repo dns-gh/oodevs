@@ -21,16 +21,17 @@ namespace transport
 // =============================================================================
 class TransportPermissionComputer_ABC
 {
+
 public:
     //! @name Constructors/Destructor
     //@{
-    TransportPermissionComputer_ABC();
-    virtual ~TransportPermissionComputer_ABC();
+             TransportPermissionComputer_ABC() {}
+    virtual ~TransportPermissionComputer_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void AllowLoading(bool doAllow) =0;
+    virtual void AllowLoading( bool doAllow ) = 0;
     virtual bool CanBeLoaded() const = 0;
     //@}
 };

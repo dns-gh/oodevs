@@ -12,8 +12,9 @@
 
 namespace firing
 {
-    class WeaponAvailabilityComputer_ABC;
     class FireData_ABC;
+    class WeaponAvailabilityComputer_ABC;
+
 // =============================================================================
 /** @class  WeaponAvailabilityComputerFactory_ABC
     @brief  WeaponAvailabilityComputerFactory_ABC
@@ -26,8 +27,8 @@ class WeaponAvailabilityComputerFactory_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    WeaponAvailabilityComputerFactory_ABC();
-    virtual ~WeaponAvailabilityComputerFactory_ABC();
+             WeaponAvailabilityComputerFactory_ABC() {}
+    virtual ~WeaponAvailabilityComputerFactory_ABC() {}
     //@}
 
     //! @name Operations

@@ -10,14 +10,15 @@
 #include "simulation_kernel_pch.h"
 #include "TransportNotificationHandler_ABC.h"
 
-namespace transport
-{
+using namespace transport;
+
 // -----------------------------------------------------------------------------
 // Name: TransportNotificationHandler_ABC constructor
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
 TransportNotificationHandler_ABC::TransportNotificationHandler_ABC()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -26,6 +27,7 @@ TransportNotificationHandler_ABC::TransportNotificationHandler_ABC()
 // -----------------------------------------------------------------------------
 TransportNotificationHandler_ABC::~TransportNotificationHandler_ABC()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -103,7 +105,5 @@ void TransportNotificationHandler_ABC::NotifyComposanteChanged( const PHY_Compos
 // -----------------------------------------------------------------------------
 void TransportNotificationHandler_ABC::CheckConsistency()
 {
-
-}
 
 }

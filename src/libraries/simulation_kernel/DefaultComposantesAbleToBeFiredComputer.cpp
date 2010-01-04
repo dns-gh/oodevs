@@ -21,7 +21,7 @@ using namespace firing;
 DefaultComposantesAbleToBeFiredComputer::DefaultComposantesAbleToBeFiredComputer( bool bFireOnlyOnMajorComposantes )
     : bFireOnlyOnMajorComposantes_( bFireOnlyOnMajorComposantes )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -30,7 +30,7 @@ DefaultComposantesAbleToBeFiredComputer::DefaultComposantesAbleToBeFiredComputer
 // -----------------------------------------------------------------------------
 DefaultComposantesAbleToBeFiredComputer::~DefaultComposantesAbleToBeFiredComputer()
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -54,8 +54,6 @@ PHY_Composante_ABC::T_ComposanteVector& DefaultComposantesAbleToBeFiredComputer:
 {
     if( availableTargets_.empty() )
         return availableTargets_;
-
-
     while( targets_.size() < nNbrWeaponsUsable )
     {
         std::random_shuffle( availableTargets_.begin(), availableTargets_.end() );
@@ -73,4 +71,3 @@ PHY_Composante_ABC::T_ComposanteVector& DefaultComposantesAbleToBeFiredComputer:
 {
    return availableTargets_;
 }
-

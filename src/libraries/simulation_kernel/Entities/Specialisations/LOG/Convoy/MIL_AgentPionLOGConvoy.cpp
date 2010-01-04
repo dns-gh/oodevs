@@ -63,6 +63,7 @@ MIL_AgentPionLOGConvoy::MIL_AgentPionLOGConvoy( const MIL_AgentTypePion& type, u
 MIL_AgentPionLOGConvoy::MIL_AgentPionLOGConvoy( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories )
     : MIL_AgentPionLOG_ABC( type, nID, automate, algorithmFactories )
 {
+    // NOTHING
 }
 
 
@@ -85,7 +86,7 @@ void MIL_AgentPionLOGConvoy::load( MIL_CheckPointInArchive& file, const uint )
     
     PHY_RolePionLOGConvoy_Supply *pRole;
     file >> pRole;
-    RegisterRole( pRole );
+    RegisterRole( *pRole );
 }
 
 // -----------------------------------------------------------------------------

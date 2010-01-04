@@ -17,7 +17,6 @@
 #include "MIL_AgentTypePion.h"
 #include "Entities/Orders/MIL_PionOrderManager.h"
 #include "Network/NET_ASN_Messages.h"
-
 #include "tools/Resolver.h"
 
 namespace xml
@@ -26,27 +25,33 @@ namespace xml
     class xistream;
 }
 
-class MIL_Army;
-class MIL_AgentPion;
-class MIL_Automate;
 class DEC_Decision_ABC;
 class DEC_KnowledgeBlackBoard_AgentPion;
-class HLA_UpdateFunctor;
+class DEC_KS_AgentQuerier;
+class MIL_AgentPion;
+class MIL_Army;
+class MIL_Automate;
 class MIL_EntityManager;
-
-class AlgorithmsFactories;
+class MIL_Fuseau;
+class MIL_LimaFunction;
+class HLA_UpdateFunctor;
 
 // =============================================================================
-// @class  MIL_AgentPion
+/** @class  MIL_AgentPion
+    @brief  MIL_AgentPion
+*/
 // Created: JVT 2004-08-03
 // =============================================================================
 class MIL_AgentPion : public MIL_Agent_ABC
 {
 
 public:
-             MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis );    // Pion dans ODB
-             MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories ); // Creation dynamique (convois, ...)
+    //! @name Constructors/Destructor
+    //@{
+             MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis );
+             MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories );
     virtual ~MIL_AgentPion();
+    //@}
 
     //! @name CheckPoints
     //@{
@@ -69,7 +74,7 @@ public:
     const   MIL_PionOrderManager&              GetOrderManager() const;
             MIL_PionOrderManager&              GetOrderManager();
     virtual DEC_Decision_ABC&                  GetDecision    (); //$$$ Dérolifier DEC_Decision_ABC
-    virtual const   DEC_Decision_ABC&                  GetDecision    () const; //$$$ Dérolifier DEC_Decision_ABC
+    virtual const DEC_Decision_ABC&            GetDecision    () const; //$$$ Dérolifier DEC_Decision_ABC
     virtual const AlgorithmsFactories& GetAlgorithms() const;
 
     virtual       MIL_Army_ABC&       GetArmy            () const;
@@ -159,20 +164,22 @@ private:
     void OnReceiveMsgRecoverHumansTransporters();
     //@}
 
+    //! @name Serialization
+    //@{
+    template< typename Archive > friend void save_construct_data( Archive& archive, const MIL_AgentPion* pion, const unsigned int version );
+  	template< typename Archive > friend void load_construct_data( Archive& archive, MIL_AgentPion* pion, const unsigned int version );
+    //@}
+
 private:
-    const MIL_AgentTypePion*  pType_;
-          bool                bIsPC_;
-          MIL_Automate*       pAutomate_;
-    
+    //! @name Member data
+    //@{
+    const MIL_AgentTypePion* pType_;
+    bool bIsPC_;
+    MIL_Automate* pAutomate_;
     const AlgorithmsFactories& algorithmFactories_;
-
-    // Knowledge
     DEC_KnowledgeBlackBoard_AgentPion* pKnowledgeBlackBoard_;
-
-    MIL_PionOrderManager&    orderManager_;
-
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_AgentPion* pion, const unsigned int /*version*/ );
-  	template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_AgentPion* pion, const unsigned int /*version*/ );
+    MIL_PionOrderManager& orderManager_;
+    //@}
 };
 
 #endif // __MIL_AgentPion_h_

@@ -35,14 +35,17 @@ namespace nbc
 // @class  PHY_RolePion_NBC
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RolePion_NBC : public PHY_RoleInterface_NBC,
-	public tools::AlgorithmModifier_ABC<moving::SpeedComputer_ABC>
+class PHY_RolePion_NBC : public PHY_RoleInterface_NBC
+                       , public tools::AlgorithmModifier_ABC<moving::SpeedComputer_ABC>
                        , public tools::AlgorithmModifier_ABC< firing::WeaponReloadingComputer_ABC >
 {
 
 public:
-             PHY_RolePion_NBC( MIL_AgentPion& pion );
+    //! @name Constructors/Destructor
+    //@{
+    explicit PHY_RolePion_NBC( MIL_AgentPion& pion );
     virtual ~PHY_RolePion_NBC();
+    //@}
 
     //! @name CheckPoints
     //@{

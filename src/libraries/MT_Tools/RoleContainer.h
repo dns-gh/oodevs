@@ -39,17 +39,9 @@ public:
     template< class Archive > void save( Archive& archive, const unsigned int version ) const;
     //@}
 
-    //! @name Role registration
-    //@{
-    template< typename Role >                                        typename Role::RoleInterface& RegisterRole();
-    template< typename Role, typename P1 >                           typename Role::RoleInterface& RegisterRole( P1& );
-    template< typename Role, typename P1, typename P2  >             typename Role::RoleInterface& RegisterRole( P1&, P2& );
-    template< typename Role, typename P1, typename P2, typename P3 > typename Role::RoleInterface& RegisterRole( P1&, P2&, P3& );
-    //@}
-
     //! @name Role accessors
     //@{
-    template< typename Role >       typename Role& GetRole()
+    template< typename Role > typename Role& GetRole()
     {
     	return static_cast< Role& >( Get<Role::RoleInterface>() );
     }
@@ -57,23 +49,22 @@ public:
     {
       	return static_cast< const Role& >( Get<Role::RoleInterface>() );
     }
-    template< typename Role >       typename Role* RetrieveRole()
+    template< typename Role > typename Role* RetrieveRole()
     {
         return static_cast< Role* >( Retrieve<Role::RoleInterface>() );
     }
-    template< typename Role >       typename const Role* RetrieveRole() const
+    template< typename Role > typename const Role* RetrieveRole() const
     {
         return static_cast< const Role* >( Retrieve<Role::RoleInterface>() );
     }
     //@}
-    template< typename Role > typename Role::RoleInterface& RegisterRole( Role* r);
+    template< typename Role > typename Role::RoleInterface& RegisterRole( Role& r );
 
     //! @name Operation
     //@{
     template< typename Algorithm > const Algorithm& Execute( Algorithm& algorithm );
     //@}
 };
-
 
 #include "RoleContainer.inl"
 

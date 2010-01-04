@@ -38,7 +38,7 @@ public:
     //@}
 
 private:
-    //! @name Attribute
+    //! @name Member data
     //@{
     double height_;
     //@}

@@ -8,9 +8,9 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "simulation_kernel/DefaultWeaponReloadingComputer.h"
 #include "simulation_kernel/Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
+#include <numeric>
 
 using namespace firing;
 
@@ -48,10 +48,5 @@ void DefaultWeaponReloadingComputer::AddModifier( double modifier )
 // -----------------------------------------------------------------------------
 double DefaultWeaponReloadingComputer::GetDuration() const
 {
-    double duration = initialDuration_;
-    for( std::vector< double >::const_iterator it = modifiers_.begin(); it != modifiers_.end(); it++ )
-    {
-        duration *= *it;
-    }
-    return duration;
+    return std::accumulate( modifiers_.begin(), modifiers_.end(), 1., std::multiplies< double >() );
 }

@@ -13,6 +13,7 @@
 namespace firing
 {
     class ComposantesAbleToBeFiredComputer_ABC;
+
 // =============================================================================
 /** @class  ComposantesAbleToBeFiredComputerFactory_ABC
     @brief  ComposantesAbleToBeFiredComputerFactory_ABC

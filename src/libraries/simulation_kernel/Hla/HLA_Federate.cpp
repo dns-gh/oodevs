@@ -180,9 +180,10 @@ void HLA_Federate::InitializeClasses()
 void HLA_Federate::Register( MIL_AgentPion& agent )
 {
     assert( pUnitClass_ );
-    HLA_RoleLocalPion& hlaRole = (HLA_RoleLocalPion &) agent.RegisterRole< HLA_RoleLocalPion >( agent );
-    const ObjectIdentifier objectId = pUnitClass_->Register( hlaRole );
-    hlaRole.SetId( objectId );
+    HLA_RoleLocalPion* hlaRole = new HLA_RoleLocalPion( agent );
+    agent.RegisterRole( *hlaRole );
+    const ObjectIdentifier objectId = pUnitClass_->Register( *hlaRole );
+    hlaRole->SetId( objectId );
     localAgents_[ objectId ] = &agent;
 }
 

@@ -13,6 +13,7 @@
 namespace firing
 {
     class WeaponReloadingComputer_ABC;
+
 // =============================================================================
 /** @class  WeaponReloadingComputerFactory_ABC
     @brief  WeaponReloadingComputerFactory_ABC
@@ -25,8 +26,8 @@ class WeaponReloadingComputerFactory_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             WeaponReloadingComputerFactory_ABC();
-    virtual ~WeaponReloadingComputerFactory_ABC();
+             WeaponReloadingComputerFactory_ABC() {}
+    virtual ~WeaponReloadingComputerFactory_ABC() {}
     //@}
 
     //! @name Operations

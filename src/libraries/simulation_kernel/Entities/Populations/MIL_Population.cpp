@@ -81,8 +81,8 @@ MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& ty
         xis.error( "Unknown attitude" );
 
     pKnowledge_ = new DEC_PopulationKnowledge();
-    RegisterRole( new DEC_PopulationDecision(*this, database ) ); 
-    RegisterRole( new DEC_Representations() );
+    RegisterRole( *new DEC_PopulationDecision( *this, database ) );
+    RegisterRole( *new DEC_Representations() );
 
     MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, xis );
     concentrations_.push_back( pConcentration );
@@ -176,8 +176,8 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const uint )
     {
         DEC_PopulationDecision* pRole;
         file >> pRole;
-        RegisterRole( pRole );
-        RegisterRole( new DEC_Representations() );
+        RegisterRole( *pRole );
+        RegisterRole( *new DEC_Representations() );
     }
 }
 

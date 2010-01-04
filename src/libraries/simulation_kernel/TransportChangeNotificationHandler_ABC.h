@@ -20,12 +20,19 @@ namespace transport {
 // =============================================================================
 class TransportChangeNotificationHandler_ABC 
 {
-public:
-	TransportChangeNotificationHandler_ABC();
-	virtual ~TransportChangeNotificationHandler_ABC();
 
+public:
+    //! @name Constructors/Destructor
+    //@{
+             TransportChangeNotificationHandler_ABC() {}
+    virtual ~TransportChangeNotificationHandler_ABC() {}
+    //@}
+
+    //! @name Operations
+    //@{
     virtual void NotifyIsLoadedForTransport() = 0;
     virtual void NotifyIsUnLoadedForTransport() = 0;
+    //@}
 };
 
 } // namespace transport

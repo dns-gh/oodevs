@@ -10,8 +10,6 @@
 #ifndef __moving_SpeedComputer_ABC_H__
 #define __moving_SpeedComputer_ABC_H__
 
-//#include "simulation_kernel/OnComponentComputer_ABC.h"
-
 class DEC_Knowledge_PopulationCollision;
 class MIL_Agent_ABC;
 class PHY_ComposantePion;
@@ -29,10 +27,11 @@ class SpeedStrategy_ABC;
 // =============================================================================
 class SpeedComputer_ABC
 {
+
 public:
     //! @name Constructors/Destructor
     //@{
-    SpeedComputer_ABC() {}
+             SpeedComputer_ABC() {}
     virtual ~SpeedComputer_ABC() {}
     //@}
 
@@ -40,7 +39,7 @@ public:
     //@{
     virtual void ApplyOnComponent( const PHY_ComposantePion& ) = 0;
     virtual void ApplyOnReinforcement( MIL_Agent_ABC& ) = 0;
-    virtual void AddModifier( double ratio, bool isMax=true ) = 0;
+    virtual void AddModifier( double ratio, bool isMax = true ) = 0;
     virtual void ApplyOnPopulation( const DEC_Knowledge_PopulationCollision& ) = 0;
     virtual double GetSpeed() const = 0;
     //@}

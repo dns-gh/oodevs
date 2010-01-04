@@ -806,7 +806,24 @@ BOOST_AUTO_TEST_CASE( Facade_TestTypeAdaptation )
     AarFacade facade( publisher, 42 );
     boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
 }
+/*
+BOOST_AUTO_TEST_CASE( Facade_TestBadLexicalCast )
+{
+    const std::string input =
+    "<indicator>"
+        "<extract function='maintenance-handling-unit' id='1'/>"
+        "<transform function='is-one-of' id='2' input='1' select='13,67,68,69,71,74,75,76,78,79,80,55,81,82,197,198,199,90,91,92,93,147,56,148,149,150,151,173,174,175,176,177,178,58,59,60,61,63,66' type='bool'/>"
+        "<extract function='maintenance-handling-unit' id='3'/>"
+        "<transform function='filter' id='4' input='2,3' type='unsigned long'/>"
+        "<reduce function='count' id='5' input='4' type='unsigned'/>"
+    "</indicator>";
+    xml::xistringstream xis( input );
 
+    MockPublisher publisher;
+    AarFacade facade( publisher, 42 );
+    boost::shared_ptr< Task > task( facade.CreateTask( UnWrap( xis ) ) );
+}
+*/
 BOOST_AUTO_TEST_CASE( Facade_TestConflicts )
 {
     const std::string input =

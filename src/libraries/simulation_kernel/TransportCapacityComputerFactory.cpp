@@ -14,7 +14,7 @@
 #include "DefaultTransportWeightComputer.h"
 #include "DefaultTransportPermissionComputer.h"
 
-namespace transport {
+using namespace transport;
 
 // -----------------------------------------------------------------------------
 // Name: TransportComputerFactory constructor
@@ -62,6 +62,4 @@ std::auto_ptr< TransportPermissionComputer_ABC > TransportComputerFactory::Creat
 {
     std::auto_ptr< TransportPermissionComputer_ABC > permissionComputer( new DefaultTransportPermissionComputer() );
     return permissionComputer;
-}
-
 }

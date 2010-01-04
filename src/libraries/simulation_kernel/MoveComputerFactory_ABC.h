@@ -16,6 +16,7 @@ namespace moving
     class SpeedComputer_ABC;
     class SpeedStrategy_ABC;
     class MaxSlopeComputer_ABC;
+
 // =============================================================================
 /** @class  MoveComputerFactory_ABC
     @brief  MoveComputerFactory_ABC

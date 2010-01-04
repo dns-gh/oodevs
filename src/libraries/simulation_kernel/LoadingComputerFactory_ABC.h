@@ -1,17 +1,19 @@
-/*
- * LoadingComputerFactory_ABC.h
- *
- *  Created on: 30 sept. 2009
- *      Author: ahc
- */
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2009 MASA Group
+//
+// *****************************************************************************
 
 #ifndef __transport_LoadingComputerFactory_ABC_H__
 #define __transport_LoadingComputerFactory_ABC_H__
 
 namespace transport
 {
-class HumanLoadingTimeComputer_ABC;
-class LoadedStateConsistencyComputer_ABC;
+    class HumanLoadingTimeComputer_ABC;
+    class LoadedStateConsistencyComputer_ABC;
 
 // =============================================================================
 /** @class  ConsumptionChangeRequestHandler_ABC
@@ -21,6 +23,7 @@ class LoadedStateConsistencyComputer_ABC;
 // =============================================================================
 class LoadingComputerFactory_ABC
 {
+
 public:
     //! @name Constructors/Destructor
     //@{

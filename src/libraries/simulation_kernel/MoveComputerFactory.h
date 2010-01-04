@@ -15,6 +15,7 @@
 
 namespace moving
 {
+
 // =============================================================================
 /** @class  MoveComputerFactory
     @brief  MoveComputerFactory

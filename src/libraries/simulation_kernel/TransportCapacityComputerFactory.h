@@ -12,7 +12,8 @@
 
 #include "TransportCapacityComputerFactory_ABC.h"
 
-namespace transport {
+namespace transport
+{
 
 // =============================================================================
 /** @class  TransportComputerFactory
@@ -22,10 +23,11 @@ namespace transport {
 // =============================================================================
 class TransportComputerFactory : public TransportComputerFactory_ABC
 {
+
 public:
     //! @name Constructors/Destructor
     //@{
-    TransportComputerFactory();
+             TransportComputerFactory();
     virtual ~TransportComputerFactory();
     //@}
     

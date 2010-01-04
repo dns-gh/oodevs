@@ -35,7 +35,7 @@ AgentFactory::AgentFactory( MIL_IDManager& idManager, DEC_DataBase& database )
     , algorithmsFactories_( new AlgorithmsFactories() )
     , database_( database )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

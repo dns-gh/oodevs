@@ -19,7 +19,7 @@ using namespace location;
 // Created: MGD 2009-09-21
 // -----------------------------------------------------------------------------
 DefaultLocationComputer::DefaultLocationComputer()
-: height_( 0 )
+    : height_( 0 )
 {
     // NOTHING
 }

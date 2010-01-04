@@ -13,6 +13,7 @@
 namespace location
 {
     class LocationComputer_ABC;
+
 // =============================================================================
 /** @class  LocationComputerFactory_ABC
     @brief  LocationComputerFactory_ABC

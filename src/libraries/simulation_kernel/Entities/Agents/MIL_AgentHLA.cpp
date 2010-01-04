@@ -42,17 +42,17 @@ MIL_AgentHLA::MIL_AgentHLA( uint nID, const ObjectIdentifier& objectId, HLA_Inte
     , pType_( 0 )
     , bPc_( false )
 {
-    RegisterRole< HLA_RoleDistantPion        >( *this, objectId );
-    RegisterRole< dotation::PHY_RoleHLA_Dotations      >( *this );
-    RegisterRole< PHY_RoleHLA_Location       >( *this );
-    RegisterRole< PHY_RoleHLA_Posture        >( *this );
-    RegisterRole< PHY_RoleHLA_Composantes    >( *this, interactionManager );
-    RegisterRole< PHY_RoleHLA_NBC            >();
-    RegisterRole< PHY_RoleHLA_Communications >();
-    RegisterRole< PHY_RoleHLA_Perceiver      >();
-    RegisterRole< surrender::PHY_RoleHLA_Surrender      >();
-    RegisterRole< PHY_RoleHLA_Refugee        >();
-    RegisterRole< PHY_RoleHLA_Population     >();
+    RegisterRole( *new HLA_RoleDistantPion( *this, objectId ) );
+    RegisterRole( *new dotation::PHY_RoleHLA_Dotations( *this ) );
+    RegisterRole( *new PHY_RoleHLA_Location( *this ) );
+    RegisterRole( *new PHY_RoleHLA_Posture( *this ) );
+    RegisterRole( *new PHY_RoleHLA_Composantes( *this, interactionManager ) );
+    RegisterRole( *new PHY_RoleHLA_NBC() );
+    RegisterRole( *new PHY_RoleHLA_Communications() );
+    RegisterRole( *new PHY_RoleHLA_Perceiver() );
+    RegisterRole( *new surrender::PHY_RoleHLA_Surrender() );
+    RegisterRole( *new PHY_RoleHLA_Refugee() );
+    RegisterRole( *new PHY_RoleHLA_Population() );
 }
 
 // -----------------------------------------------------------------------------

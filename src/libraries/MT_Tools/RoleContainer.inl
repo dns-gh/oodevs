@@ -14,55 +14,15 @@
 // Created: JVT 2005-04-05
 // -----------------------------------------------------------------------------
 template< typename Role >
-typename Role::RoleInterface& RoleContainer::RegisterRole( Role* pRole )
+typename Role::RoleInterface& RoleContainer::RegisterRole( Role& role )
 {
-	Attach( static_cast< Role::RoleInterface& >( *pRole ) );
-	InterfaceContainer<Role_ABC>::Register( *pRole ) ;
-	return static_cast< Role::RoleInterface& >( *pRole );
-}
-
-//-----------------------------------------------------------------------------
-// Name: RoleContainer::RegisterRole
-// Created: NLD/JVT 2004-08-03
-//-----------------------------------------------------------------------------
-template< typename Role > 
-typename Role::RoleInterface& RoleContainer::RegisterRole()
-{
-	return RegisterRole( new Role() );
+	Attach( static_cast< Role::RoleInterface& >( role ) );
+	InterfaceContainer<Role_ABC>::Register( role ) ;
+	return static_cast< Role::RoleInterface& >( role );
 }
 
 // -----------------------------------------------------------------------------
-// Name: 
-// Created: NLD 2004-08-12
-// -----------------------------------------------------------------------------
-template< typename Role, typename P1 > 
-typename Role::RoleInterface& RoleContainer::RegisterRole( P1& param1 )
-{
-	return RegisterRole( new Role( param1 ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: 
-// Created: NLD 2004-08-12
-// -----------------------------------------------------------------------------
-template< typename Role, typename P1, typename P2 >
-typename Role::RoleInterface& RoleContainer::RegisterRole( P1& param1, P2& param2 )
-{
-	return RegisterRole( new Role( param1, param2 ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: 
-// Created: NLD 2004-08-12
-// -----------------------------------------------------------------------------
-template< typename Role, typename P1, typename P2, typename P3 >
-typename Role::RoleInterface& RoleContainer::RegisterRole( P1& param1, P2& param2, P3& param3 )
-{
-	return RegisterRole( new Role( param1, param2, param3 ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: template< class Archive > void RoleContainer::load
+// Name: RoleContainer::load
 // Created: SBO 2009-08-14
 // -----------------------------------------------------------------------------
 template< class Archive >
@@ -73,7 +33,7 @@ void RoleContainer::load( Archive& archive, const unsigned int /*version*/ )
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< class Archive > void RoleContainer::save
+// Name: RoleContainer::save
 // Created: SBO 2009-08-14
 // -----------------------------------------------------------------------------
 template< class Archive >
@@ -83,7 +43,7 @@ void RoleContainer::save( Archive& archive, const unsigned int /*version*/ ) con
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename Algorithm > Algorithm Execute( Algorithm& algorithm )
+// Name: RoleContainer::Execute
 // Created: SBO 2009-08-14
 // -----------------------------------------------------------------------------
 template< typename Algorithm >
@@ -92,4 +52,3 @@ const Algorithm& RoleContainer::Execute( Algorithm& algorithm )
     Apply( & AlgorithmModifier_ABC< Algorithm >::Execute, algorithm );
     return algorithm;
 }
-

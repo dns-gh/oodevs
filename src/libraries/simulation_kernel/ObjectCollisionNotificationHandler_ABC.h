@@ -24,11 +24,12 @@ namespace terrain
 // =============================================================================
 class ObjectCollisionNotificationHandler_ABC
 {
+
 public:
     //! @name Constructors/Destructor
     //@{
-    ObjectCollisionNotificationHandler_ABC();
-    virtual ~ObjectCollisionNotificationHandler_ABC();
+             ObjectCollisionNotificationHandler_ABC() {}
+    virtual ~ObjectCollisionNotificationHandler_ABC() {}
     //@}
 
     //! @name Constructors/Destructor

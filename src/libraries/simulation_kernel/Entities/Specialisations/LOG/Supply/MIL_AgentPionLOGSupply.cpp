@@ -51,6 +51,7 @@ void load_construct_data( Archive& archive, MIL_AgentPionLOGSupply* pion, const 
 MIL_AgentPionLOGSupply::MIL_AgentPionLOGSupply( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis )
     : MIL_AgentPionLOG_ABC( type, nID, automate, algorithmFactories, xis )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -60,6 +61,7 @@ MIL_AgentPionLOGSupply::MIL_AgentPionLOGSupply( const MIL_AgentTypePion& type, u
 MIL_AgentPionLOGSupply::MIL_AgentPionLOGSupply( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories )
     : MIL_AgentPionLOG_ABC( type, nID, automate, algorithmFactories )
 {
+    // NOTHING
 }
 
 
@@ -82,7 +84,7 @@ void MIL_AgentPionLOGSupply::load( MIL_CheckPointInArchive& file, const uint )
     
     PHY_RolePionLOG_Supply* pRole;
     file >> pRole;
-    RegisterRole( pRole );
+    RegisterRole( *pRole );
 }
 
 // -----------------------------------------------------------------------------

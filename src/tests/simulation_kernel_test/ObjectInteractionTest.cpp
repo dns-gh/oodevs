@@ -102,13 +102,13 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NoNBC )
 
     MT_Vector2D position;
     MockAgent agent;
-    agent.RegisterRole< MockRoleLocation >();
+    agent.RegisterRole( *new MockRoleLocation() );
     {
         MOCKPP_CHAINER_FOR( MockRoleLocation, NotifyTerrainObjectCollision ) ( &agent.GetRole< MockRoleLocation >() ).expects( mockpp::once() );
         MOCKPP_CHAINER_FOR( MockRoleLocation, GetPositionShadow )     ( &agent.GetRole< MockRoleLocation >() )
             .expects( mockpp::once() ).will( returnValue( static_cast< const MT_Vector2D* >( &position ) ) );
     }
-    agent.RegisterRole< MockRoleNBC >();
+    agent.RegisterRole( *new MockRoleNBC() );
     {
         MOCKPP_CHAINER_FOR( MockRoleNBC, Contaminate ) ( &agent.GetRole< MockRoleNBC >() ).expects( mockpp::never() );
     }
@@ -178,13 +178,13 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NBC )
 
     MT_Vector2D position;
     MockAgent agent;
-    agent.RegisterRole< MockRoleLocation >();    
+    agent.RegisterRole( *new MockRoleLocation() );
     {
         MOCKPP_CHAINER_FOR( MockRoleLocation, NotifyTerrainObjectCollision ) ( &agent.GetRole< MockRoleLocation >() ).expects( mockpp::once() );
         MOCKPP_CHAINER_FOR( MockRoleLocation, GetPositionShadow )     ( &agent.GetRole< MockRoleLocation >() )
             .expects( mockpp::once() ).will( returnValue( static_cast< const MT_Vector2D* >( &position ) ) );
     }
-    agent.RegisterRole< MockRoleNBC >();
+    agent.RegisterRole( *new MockRoleNBC() );
     {
         // TODO : mockpp::once()
         MOCKPP_CHAINER_FOR( MockRoleNBC, Contaminate ) ( &agent.GetRole< MockRoleNBC >() ).expects( mockpp::never() );
@@ -229,13 +229,13 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Protection )
     //First add
     MT_Vector2D position;
     MockAgent agent;
-    agent.RegisterRole< MockRoleLocation >();    
+    agent.RegisterRole( *new MockRoleLocation() );
     {
         MOCKPP_CHAINER_FOR( MockRoleLocation, NotifyTerrainObjectCollision ) ( &agent.GetRole< MockRoleLocation >() ).expects( mockpp::once() );
         MOCKPP_CHAINER_FOR( MockRoleLocation, GetPositionShadow )     ( &agent.GetRole< MockRoleLocation >() )
             .expects( mockpp::once() ).will( returnValue( static_cast< const MT_Vector2D* >( &position ) ) );
     }
-    agent.RegisterRole< MockRoleInterface_Posture >();
+    agent.RegisterRole( *new MockRoleInterface_Posture() );
     {
         MOCKPP_CHAINER_FOR( MockRoleInterface_Posture, SetTimingFactor ) ( &agent.GetRole< MockRoleInterface_Posture >() ).expects( mockpp::once() );
     }
@@ -321,7 +321,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Supply )
     {
         MOCKPP_CHAINER_FOR( MockAgent, GetArmyShadow )( &agent ).expects( mockpp::once() );
     }
-    agent.RegisterRole< MockRoleLocation >();
+    agent.RegisterRole( *new MockRoleLocation() );
     {
         MOCKPP_CHAINER_FOR( MockRoleLocation, NotifyTerrainObjectCollision )( &agent.GetRole< MockRoleLocation >() ).expects( mockpp::once() );
         MOCKPP_CHAINER_FOR( MockRoleLocation, GetPositionShadow )    ( &agent.GetRole< MockRoleLocation >() )
@@ -396,7 +396,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Detection )
     BOOST_CHECK_NO_THROW( static_cast< Object& >( *object ).GetAttribute< AnimatorAttribute >() );
 
     MockAgent animator;
-    animator.RegisterRole< MockRolePerceiver >();
+    animator.RegisterRole( *new MockRolePerceiver() );
     static_cast< Object& >( *object ).GetAttribute< AnimatorAttribute >().AddAnimator( animator );
 
     MockAgent intruder;

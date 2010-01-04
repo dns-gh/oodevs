@@ -8,11 +8,11 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "simulation_kernel/WeaponReloadingComputerFactory.h"
 #include "simulation_kernel/DefaultWeaponReloadingComputer.h"
 
 using namespace firing;
+
 // -----------------------------------------------------------------------------
 // Name: WeaponReloadingComputerFactory constructor
 // Created: MGD 2009-08-13
@@ -32,7 +32,7 @@ WeaponReloadingComputerFactory::~WeaponReloadingComputerFactory()
 }
 
 // -----------------------------------------------------------------------------
-// Name: WeaponReloadingComputerFactory destructor
+// Name: WeaponReloadingComputerFactory::Create
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
 std::auto_ptr< WeaponReloadingComputer_ABC > WeaponReloadingComputerFactory::Create( double duration ) const
@@ -40,3 +40,4 @@ std::auto_ptr< WeaponReloadingComputer_ABC > WeaponReloadingComputerFactory::Cre
     std::auto_ptr< WeaponReloadingComputer_ABC > pComputer( new DefaultWeaponReloadingComputer( duration ) );
     return pComputer;
 }
+

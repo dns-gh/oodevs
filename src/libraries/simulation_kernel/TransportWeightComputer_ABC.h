@@ -21,12 +21,14 @@ namespace transport
 // =============================================================================
 class TransportStrategy_ABC
 {
+
 public:
     //! @name Constructors/Destructor
     //@{
-    TransportStrategy_ABC();
-    virtual ~TransportStrategy_ABC();
+             TransportStrategy_ABC() {}
+    virtual ~TransportStrategy_ABC() {}
     //@}
+
     //! @name Operations
     //@{
     virtual bool Authorize( bool canBeLoaded ) const = 0;
@@ -41,11 +43,12 @@ public:
 // =============================================================================
 class TransportWeightComputer_ABC
 {
+
 public:
     //! @name Constructors/Destructor
     //@{
-    TransportWeightComputer_ABC();
-    virtual ~TransportWeightComputer_ABC();
+             TransportWeightComputer_ABC() {}
+    virtual ~TransportWeightComputer_ABC() {}
     //@}
 
     //! @name Operations

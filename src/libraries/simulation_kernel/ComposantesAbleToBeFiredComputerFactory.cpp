@@ -8,11 +8,11 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "simulation_kernel/ComposantesAbleToBeFiredComputerFactory.h"
 #include "simulation_kernel/DefaultComposantesAbleToBeFiredComputer.h"
 
 using namespace firing;
+
 // -----------------------------------------------------------------------------
 // Name: ComposantesAbleToBeFiredComputerFactory constructor
 // Created: MGD 2009-08-13

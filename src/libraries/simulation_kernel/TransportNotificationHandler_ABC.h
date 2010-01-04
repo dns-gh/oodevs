@@ -11,11 +11,12 @@
 #define __transport_TransportNotificationHandler_ABC_H__
 
 class MIL_Agent_ABC;
-class PHY_ComposanteState;
 class PHY_ComposantePion;
+class PHY_ComposanteState;
 
 namespace transport
 {
+
 // =============================================================================
 /** @class  TransportNotificationHandler_ABC
     @brief  TransportNotificationHandler_ABC
@@ -27,8 +28,8 @@ class TransportNotificationHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    TransportNotificationHandler_ABC();
-    virtual  ~TransportNotificationHandler_ABC();
+             TransportNotificationHandler_ABC();
+    virtual ~TransportNotificationHandler_ABC();
     //@}
 
     //! @name Operations

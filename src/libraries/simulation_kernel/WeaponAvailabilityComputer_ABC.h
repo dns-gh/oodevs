@@ -16,6 +16,7 @@ class PHY_Weapon;
 namespace firing
 {
     class FireData_ABC;
+
 // =============================================================================
 /** @class  WeaponAvailabilitycomputer_ABC
     @brief  WeaponAvailabilitycomputer_ABC

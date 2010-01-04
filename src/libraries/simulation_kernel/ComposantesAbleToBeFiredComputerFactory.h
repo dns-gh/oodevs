@@ -25,7 +25,7 @@ class ComposantesAbleToBeFiredComputerFactory : public ComposantesAbleToBeFiredC
 {
 
 public:
-    //! @name ConstructorsDestructor
+    //! @name Constructors/Destructor
     //@{
              ComposantesAbleToBeFiredComputerFactory();
     virtual ~ComposantesAbleToBeFiredComputerFactory();

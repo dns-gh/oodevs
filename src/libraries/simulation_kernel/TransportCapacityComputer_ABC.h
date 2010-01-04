@@ -10,9 +10,7 @@
 #ifndef __transport_TransportCapacityComputer_ABC_H__
 #define __transport_TransportCapacityComputer_ABC_H__
 
-
 class PHY_ComposantePion;
-
 
 namespace transport {
 
@@ -22,15 +20,16 @@ namespace transport {
 */
 // Created: AHC 2009-10-01
 // =============================================================================
-class TransportCapacityComputer_ABC {
+class TransportCapacityComputer_ABC
+{
+
 public:
     //! @name Constructors/Destructor
     //@{
-    virtual ~TransportCapacityComputer_ABC();
-    TransportCapacityComputer_ABC();
+             TransportCapacityComputer_ABC() {}
+    virtual ~TransportCapacityComputer_ABC() {}
     //@}
 
-public:
     //! @name Operations
     //@{
     virtual void ApplyOnComposante( PHY_ComposantePion& comp ) = 0;

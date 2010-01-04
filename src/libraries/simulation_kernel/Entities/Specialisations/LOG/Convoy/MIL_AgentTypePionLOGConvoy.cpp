@@ -60,7 +60,7 @@ MIL_AgentPion* MIL_AgentTypePionLOGConvoy::InstanciatePion( uint nID, MIL_Automa
 void MIL_AgentTypePionLOGConvoy::RegisterRoles( MIL_AgentPion& pion, DEC_DataBase& database ) const
 {
     MIL_AgentTypePion::RegisterRoles( pion, database );
-    pion.RegisterRole< PHY_RolePionLOGConvoy_Supply >( pion );  
+    pion.RegisterRole( *new PHY_RolePionLOGConvoy_Supply( pion ) );
 }
 
 // -----------------------------------------------------------------------------

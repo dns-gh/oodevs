@@ -271,8 +271,8 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const unsigned int )
     {
         DEC_AutomateDecision* pRole;
         file >> pRole;
-        RegisterRole( pRole );
-        RegisterRole( new DEC_Representations() );
+        RegisterRole( *pRole );
+        RegisterRole( *new DEC_Representations() );
     }
 }
 
@@ -320,8 +320,8 @@ void MIL_Automate::Initialize( xml::xistream& xis, DEC_DataBase& database )
         xis.error( "Unknown knowledge group" );
     pKnowledgeGroup_->RegisterAutomate( *this );
       
-    RegisterRole( new DEC_AutomateDecision( *this, database ) ) ; 
-    RegisterRole( new DEC_Representations() );
+    RegisterRole( *new DEC_AutomateDecision( *this, database ) ) ; 
+    RegisterRole( *new DEC_Representations() );
     
     xis >> xml::list( "unit"    , *this, &MIL_Automate::ReadUnitSubordinate    )
         >> xml::list( "automat" , *this, &MIL_Automate::ReadAutomatSubordinate );

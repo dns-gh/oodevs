@@ -323,36 +323,36 @@ MIL_AgentPion* MIL_AgentTypePion::InstanciatePion( uint nID, MIL_Automate& autom
 void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, DEC_DataBase& database ) const
 {
     const bool bIsAutonomous = pion.IsAutonomous();
-    pion.RegisterRole< network::NET_RolePion_Dotations         >( pion );
-    pion.RegisterRole< PHY_RolePion_Reinforcement     >( pion );
-    pion.RegisterRole< PHY_RolePion_Posture           >( pion );
-    pion.RegisterRole< PHY_RolePion_Location          >( pion );
-    pion.RegisterRole< dotation::PHY_RolePion_Dotations >( pion );
-    pion.RegisterRole< human::PHY_RolePion_Humans     >( pion );
-    pion.RegisterRole< PHY_RolePion_Composantes       >( pion );
-    pion.RegisterRole< PHY_RolePion_Perceiver         >( pion );
-    pion.GetRole< PHY_RolePion_Perceiver >().Initialization( pion.GetRole< PHY_RoleInterface_Location >().GetPosition(),  pion.GetRole< PHY_RoleInterface_Location >().GetDirection() );
-    pion.RegisterRole< nbc::PHY_RolePion_NBC          >( pion );
-    pion.RegisterRole< PHY_RolePion_Communications    >( pion, bIsAutonomous );
-    pion.RegisterRole< PHY_RolePion_HumanFactors      >( pion );
-    pion.RegisterRole< transport::PHY_RolePion_Transported >( pion );
-    pion.RegisterRole< surrender::PHY_RolePion_Surrender >( pion );
-    pion.RegisterRole< refugee::PHY_RolePion_Refugee           >( pion );
-    pion.RegisterRole< PHY_RolePion_Population        >( pion );
-    pion.RegisterRole< transport::PHY_RoleAction_Loading >( pion);
-    pion.RegisterRole< transport::PHY_RoleAction_Transport >( pion );
-    pion.RegisterRole< moving::PHY_RoleAction_Moving          >( pion );
-    pion.RegisterRole< PHY_RoleAction_Objects         >( pion );
-    pion.RegisterRole< firing::PHY_RoleAction_DirectFiring    >( pion );
-    pion.RegisterRole< firing::PHY_RoleAction_IndirectFiring  >( pion );
-    pion.RegisterRole< DEC_RolePion_Decision          >( pion, database );
-    pion.RegisterRole< PHY_RoleAction_FolkInfluence   >();
-    pion.RegisterRole< DEC_Representations            >();
+    pion.RegisterRole( *new network::NET_RolePion_Dotations( pion ) );
+    pion.RegisterRole( *new PHY_RolePion_Reinforcement( pion ) );
+    pion.RegisterRole( *new PHY_RolePion_Posture( pion ) );
+    pion.RegisterRole( *new PHY_RolePion_Location( pion ) );
+    pion.RegisterRole( *new dotation::PHY_RolePion_Dotations( pion ) );
+    pion.RegisterRole( *new human::PHY_RolePion_Humans( pion ) );
+    pion.RegisterRole( *new PHY_RolePion_Composantes( pion ) );
+    pion.RegisterRole( *new PHY_RolePion_Perceiver( pion ) );
+    pion.GetRole< PHY_RolePion_Perceiver >().Initialization( pion.GetRole< PHY_RoleInterface_Location >().GetPosition(), pion.GetRole< PHY_RoleInterface_Location >().GetDirection() );
+    pion.RegisterRole( *new nbc::PHY_RolePion_NBC( pion ) );
+    pion.RegisterRole( *new PHY_RolePion_Communications( pion, bIsAutonomous ) );
+    pion.RegisterRole( *new PHY_RolePion_HumanFactors( pion ) );
+    pion.RegisterRole( *new transport::PHY_RolePion_Transported( pion ) );
+    pion.RegisterRole( *new surrender::PHY_RolePion_Surrender( pion ) );
+    pion.RegisterRole( *new refugee::PHY_RolePion_Refugee( pion ) );
+    pion.RegisterRole( *new PHY_RolePion_Population( pion ) );
+    pion.RegisterRole( *new transport::PHY_RoleAction_Loading( pion ) );
+    pion.RegisterRole( *new transport::PHY_RoleAction_Transport( pion ) );
+    pion.RegisterRole( *new moving::PHY_RoleAction_Moving( pion ) );
+    pion.RegisterRole( *new PHY_RoleAction_Objects( pion ) );
+    pion.RegisterRole( *new firing::PHY_RoleAction_DirectFiring( pion ) );
+    pion.RegisterRole( *new firing::PHY_RoleAction_IndirectFiring( pion ) );
+    pion.RegisterRole( *new DEC_RolePion_Decision( pion, database ) );
+    pion.RegisterRole( *new PHY_RoleAction_FolkInfluence() );
+    pion.RegisterRole( *new DEC_Representations() );
 
     if( pion.CanFly() )
-        pion.RegisterRole< PHY_RoleAction_Flying >( pion );
+        pion.RegisterRole( *new PHY_RoleAction_Flying( pion ) );
     else
-        pion.RegisterRole< PHY_RoleAction_InterfaceFlying >();
+        pion.RegisterRole( *new PHY_RoleAction_InterfaceFlying() );
 }
 
 // -----------------------------------------------------------------------------

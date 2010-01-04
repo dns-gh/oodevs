@@ -67,6 +67,7 @@ PHY_RolePion_Location::PHY_RolePion_Location( MIL_AgentPion& pion )
     , bCurrentSpeedHasChanged_  ( true     )
     , bHeightHasChanged_        ( true     )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -513,10 +514,10 @@ bool PHY_RolePion_Location::HasLocationChanged() const
 
 void PHY_RolePion_Location::NotifyTerrainPutInsideObject( MIL_Object_ABC& object )
 {
-    pion_.Apply(&terrain::ObjectCollisionNotificationHandler_ABC::NotifyPutInsideObject, object );
+    pion_.Apply( &terrain::ObjectCollisionNotificationHandler_ABC::NotifyPutInsideObject, object );
 }
 
 void PHY_RolePion_Location::NotifyTerrainPutOutsideObject( MIL_Object_ABC& object )
 {
-    pion_.Apply(&terrain::ObjectCollisionNotificationHandler_ABC::NotifyPutOutsideObject, object );
+    pion_.Apply( &terrain::ObjectCollisionNotificationHandler_ABC::NotifyPutOutsideObject, object );
 }

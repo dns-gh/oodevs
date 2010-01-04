@@ -10,14 +10,10 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_AgentType_ABC.h"
-
 #include "Entities/Agents/Units/Categories/PHY_NatureLevel.h"
 #include "Entities/Agents/Units/Categories/PHY_NatureAtlas.h"
 #include <xeumeuleu/xml.h>
-
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentType_ABC constructor

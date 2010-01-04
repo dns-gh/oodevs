@@ -107,7 +107,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentListParameter_ToASN )
     asnIn.elem[0] = 0;
     MockMIL_EntityManager_ABC entityManager;
     FixturePion fixture;
-    fixture.pPion_->RegisterRole< DEC_RolePion_Decision >( *fixture.pPion_, StubDEC_Database() );
+    fixture.pPion_->RegisterRole( *new DEC_RolePion_Decision( *fixture.pPion_, StubDEC_Database() ) );
     entityManager.FindAgentPion_mocker.expects( once() ).will( returnValue( static_cast< MIL_AgentPion* >( fixture.pPion_.get() ) ) );
     MIL_AgentListParameter param( asnIn, entityManager );
     delete[] asnIn.elem;
@@ -127,7 +127,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentParameter_ToASN )
     ASN1T_Unit asnIn = 0;
     MockMIL_EntityManager_ABC entityManager;
     FixturePion fixture;
-    fixture.pPion_->RegisterRole< DEC_RolePion_Decision >( *fixture.pPion_,  StubDEC_Database() );
+    fixture.pPion_->RegisterRole( *new DEC_RolePion_Decision( *fixture.pPion_,  StubDEC_Database() ) );
     entityManager.FindAgentPion_mocker.expects( once() ).will( returnValue( static_cast< MIL_AgentPion* >( fixture.pPion_.get() ) ) );
     MIL_AgentParameter param( asnIn, entityManager );
     ASN1T_Unit asnOut;
@@ -144,7 +144,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AutomatParameter_ToASN )
     ASN1T_Automat asnIn = 0;
     MockMIL_EntityManager_ABC entityManager;
     FixtureAutomate fixture;
-    //fixture.pAutomat_->RegisterRole< DEC_AutomateDecision >( *fixture.pAutomat_ );
+    //fixture.pAutomat_->RegisterRole( *new DEC_AutomateDecision( *fixture.pAutomat_ ) );
     entityManager.FindAutomate_mocker.expects( once() ).will( returnValue( static_cast< MIL_Automate* >( fixture.pAutomat_.get() ) ) );
     MIL_AutomatParameter param( asnIn, entityManager );
     ASN1T_Automat asnOut;
@@ -164,7 +164,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AutomatListParameter_ToASN )
     asnIn.elem[0] = 0;
     MockMIL_EntityManager_ABC entityManager;
     FixtureAutomate fixture;
-    //fixture.pAutomat_->RegisterRole< DEC_AutomateDecision >( *fixture.pAutomat_ );
+    //fixture.pAutomat_->RegisterRole( *new DEC_AutomateDecision( *fixture.pAutomat_ ) );
     entityManager.FindAutomate_mocker.expects( once() ).will( returnValue( static_cast< MIL_Automate* >( fixture.pAutomat_.get() ) ) );
     MIL_AutomatListParameter param( asnIn, entityManager );
     delete[] asnIn.elem;

@@ -14,8 +14,8 @@
 #include "simulation_kernel/DefaultSpeedComputer.h"
 #include "simulation_kernel/DefaultMaxSlopeComputer.h"
 
-namespace moving
-{
+using namespace moving;
+
 // -----------------------------------------------------------------------------
 // Name: MoveComputerFactory constructor
 // Created: MGD 2009-08-13
@@ -63,4 +63,3 @@ std::auto_ptr< MaxSlopeComputer_ABC > MoveComputerFactory::CreateMaxSlopeCompute
 	std::auto_ptr< MaxSlopeComputer_ABC > pSlopeComputer( new DefaultMaxSlopeComputer() );
 	return pSlopeComputer;
 }
-} // namespace moving

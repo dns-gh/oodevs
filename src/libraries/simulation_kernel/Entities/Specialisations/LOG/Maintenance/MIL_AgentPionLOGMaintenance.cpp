@@ -81,7 +81,7 @@ void MIL_AgentPionLOGMaintenance::load( MIL_CheckPointInArchive& file, const uin
     
     PHY_RolePionLOG_Maintenance* pRole;
     file >> pRole;
-    RegisterRole( pRole );
+    RegisterRole( *pRole );
 }
 
 // -----------------------------------------------------------------------------

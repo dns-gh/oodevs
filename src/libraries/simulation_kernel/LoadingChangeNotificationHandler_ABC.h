@@ -18,13 +18,21 @@ namespace transport {
 */
 // Created: MGD 2009-09-24
 // =============================================================================
-class LoadingChangeNotificationHandler_ABC {
-public:
-	         LoadingChangeNotificationHandler_ABC() {}
-	virtual ~LoadingChangeNotificationHandler_ABC() {}
+class LoadingChangeNotificationHandler_ABC
+{
 
+public:
+    //! @name Constructors/Destructor 
+    //@{
+             LoadingChangeNotificationHandler_ABC() {}
+    virtual ~LoadingChangeNotificationHandler_ABC() {}
+    //@}
+
+    //! @name Operations
+    //@{
     virtual void NotifyIsLoadedInVab() = 0;
     virtual void NotifyIsUnLoadedInVab() = 0;
+    //@}
 };
 
 } // namespace transport

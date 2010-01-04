@@ -18,18 +18,20 @@ namespace surrender {
 */
 // Created: AHC 2009-10-01
 // =============================================================================
-class SurrenderNotificationHandler_ABC {
+class SurrenderNotificationHandler_ABC
+{
+
 public:
     //! @name Constructors/Destructor
     //@{
-    SurrenderNotificationHandler_ABC();
-    virtual ~SurrenderNotificationHandler_ABC();
+             SurrenderNotificationHandler_ABC() {}
+    virtual ~SurrenderNotificationHandler_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void NotifyCaptured() =0;
-    virtual void NotifyReleased() =0;
+    virtual void NotifyCaptured() = 0;
+    virtual void NotifyReleased() = 0;
     //@}
 };
 

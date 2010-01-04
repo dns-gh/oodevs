@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "simulation_kernel/DefaultWeaponAvailabilityComputer.h"
 #include "simulation_kernel/FireData_ABC.h"
 
