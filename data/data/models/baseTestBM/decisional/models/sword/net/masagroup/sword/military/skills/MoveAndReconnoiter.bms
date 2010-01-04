@@ -27,10 +27,8 @@ rootnode
         -- select the nearest element in unrecognized elements
         local nearest = next( self.unRecognizedEntities )
         for entity in pairs( self.unRecognizedEntities ) do
-              BreakForDebug( tostring( entity.sim_pos ) )
-              nearest = entity:proximityLevel() > nearest:proximityLevel() and entity or nearest
+          nearest = entity:proximityLevel() > nearest:proximityLevel() and entity or nearest
         end
-        BreakForDebug( tostring( "ok proximity level" ) )
         -- the selected elements is recognized
         if nearest:isRecognized() then
           if not RC_Done then
@@ -45,7 +43,6 @@ rootnode
         end
         -- if is possible, reconnoiter the nearest element else advance toward it. 
         if nearest:canReconnoitreIt() then
-        	BreakForDebug("Je reconnais!")
             --Activate( skill.links.reconnoitre, 1, { entities = { nearest }, positions = self.params.positions } )
         else -- tactical movement
             Activate( skill.links.moveTo, 1, { entities = { nearest }, area = self.params.positions} )

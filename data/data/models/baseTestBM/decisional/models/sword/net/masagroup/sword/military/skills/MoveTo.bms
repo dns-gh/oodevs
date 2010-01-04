@@ -22,7 +22,6 @@ node "MoveToPosition"
 
   activate = function( self )
     BreakForDebug( "call move to position" )
-    BreakForDebug( "efficiency"..tostring( self.params.area[1]:reachEfficiency( self.params.position ) ) )
     for _, keypoint in pairs( self.params.area ) do
       Activate( skill.nodes.MoveToNode, keypoint:reachEfficiency( self.params.position ), { entity = keypoint } )
     end

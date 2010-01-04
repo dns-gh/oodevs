@@ -13,8 +13,8 @@ function CreateKnowledge( strKnowledgeType, knowledgeSource, knowledgedPosition 
     kn = knowledges.create( net.masagroup.sword.military.world.Object, knowledgeSource )
     kn.sim_pos = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] }
     return kn
-  elseif( strKnowledgeType == "net.masagroup.sword.military.world.Agent" ) then
-    kn = knowledges.create( net.masagroup.sword.military.world.Agent, knowledgeSource )
+  elseif( strKnowledgeType == "net.masagroup.sword.military.world.Section" ) then
+    kn = knowledges.create( net.masagroup.sword.military.world.Section, knowledgeSource )
     kn.sim_pos = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] }
     return kn
   elseif( strKnowledgeType == "net.masagroup.sword.military.world.Automat" ) then
@@ -56,9 +56,9 @@ function InitQueryReturn( params, strKnowledgeType, knowledgeSource, knowledgedP
 end
 
 function InitializeMe( strKnowledgeType, knowledgeSource, posx, posy ,posz )
-  if( strKnowledgeType == "net.masagroup.sword.military.world.Agent" ) then
+  if( strKnowledgeType == "net.masagroup.sword.military.world.Section" ) then
     if not kBase.me.body then
-      kBase.me.body = kBase.create( net.masagroup.sword.military.world.Agent, {} )
+      kBase.me.body = kBase.create( net.masagroup.sword.military.world.Section, {} )
     end
     kBase.me.body.sim_pos = { x=posx, y=posy, z=posz }
   else

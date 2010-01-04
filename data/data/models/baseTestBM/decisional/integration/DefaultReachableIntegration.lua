@@ -40,7 +40,7 @@ integration.moveToIt = function( reachable)
     actionCallbacks[ moveAction ] = function( arg ) etat = arg end
   elseif etat == eEtatActionDeplacement_Termine then
     moveAction = DEC_StopAction( moveAction )
-    --TODO MGD verify moveAction is Nil
+    moveAction = nil
     etat = nil
   elseif etat == eEtatActionDeplacement_Pause then
     DEC_ReprendAction( moveAction )

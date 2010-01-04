@@ -376,7 +376,7 @@ void AgentFunctionBM( directia::ScriptRef& knowledgeCreateFunction, const direct
 {
     DEC_Decision_ABC* value = 0; // $$$$ LDC: Parfois on se sert de champs dessus comme eniEnCours_...
     if( element.ToAgent( value ) )
-        knowledgeCreateFunction( refMission, std::string( "net.masagroup.sword.military.world.Agent" ), name, value, value->GetPosition()->ToStdVector(), false );
+        knowledgeCreateFunction( refMission, std::string( "net.masagroup.sword.military.world.Section" ), name, value, value->GetPosition()->ToStdVector(), false );
 }
 void AgentListFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -394,7 +394,7 @@ void AgentListFunctionBM( directia::ScriptRef& knowledgeCreateFunction, const di
         {
             positions.push_back( (*it)->GetPosition()->ToStdVector() );
         }
-        knowledgeCreateFunction( refMission, std::string( "net.masagroup.sword.military.world.Agent" ), name, value, positions, true );
+        knowledgeCreateFunction( refMission, std::string( "net.masagroup.sword.military.world.Section" ), name, value, positions, true );
     }
 }
 void AgentKnowledgeFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
@@ -407,7 +407,7 @@ void AgentKnowledgeFunctionBM( directia::ScriptRef& knowledgeCreateFunction, con
 {
     boost::shared_ptr< DEC_Knowledge_Agent > value;//@TODO SEE how to bind agent and knowledge agent with the same BM knowledge
     if( element.ToAgentKnowledge( value ) && value.get() )
-        knowledgeCreateFunction( refMission, std::string( "net.masagroup.sword.military.world.Agent" ), name, value, value->GetPosition().ToStdVector(), false );
+        knowledgeCreateFunction( refMission, std::string( "net.masagroup.sword.military.world.Section" ), name, value, value->GetPosition().ToStdVector(), false );
 }
 void AgentKnowledgeListFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -425,7 +425,7 @@ void AgentKnowledgeListFunctionBM( directia::ScriptRef& knowledgeCreateFunction,
         {
             positions.push_back( (*it)->GetPosition().ToStdVector() );
         }
-        knowledgeCreateFunction( refMission, std::string( "net.masagroup.sword.military.world.Agent" ), name, value, positions, true );
+        knowledgeCreateFunction( refMission, std::string( "net.masagroup.sword.military.world.Section" ), name, value, positions, true );
     }
 }
 void ObjectKnowledgeFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )

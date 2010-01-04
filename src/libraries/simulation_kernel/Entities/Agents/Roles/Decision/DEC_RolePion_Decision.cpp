@@ -951,7 +951,7 @@ void DEC_RolePion_Decision::RegisterSelf( directia::Brain& brain )
 void DEC_RolePion_Decision::UpdateMeKnowledge( directia::Brain& brain )
 {
     const MT_Vector2D*  pos = GetPosition();
-    brain.GetScriptFunction( "InitializeMe" )( std::string("net.masagroup.sword.military.world.Agent"), (DEC_Decision_ABC*)this, pos->rX_, pos->rY_, 0 );
+    brain.GetScriptFunction( "InitializeMe" )( std::string("net.masagroup.sword.military.world.Section"), (DEC_Decision_ABC*)this, pos->rX_, pos->rY_, 0 );
 }
 
 // -----------------------------------------------------------------------------
