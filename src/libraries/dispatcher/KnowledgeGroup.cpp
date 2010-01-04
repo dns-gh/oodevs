@@ -58,7 +58,7 @@ void KnowledgeGroup::SendCreation( ClientPublisher_ABC& publisher ) const
     
     asn().oid      = GetId();
     asn().oid_camp = team_.GetId();
-    asn().type = nType_;
+    asn().type = nType_.c_str();
     if( parent_ )
     {
         asn().m.oid_knowledgegroup_parentPresent = 1;

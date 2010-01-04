@@ -234,6 +234,7 @@ bool Profile::CheckRights( const ASN1T_MsgsClientToSim& msg ) const
         case T_MsgsClientToSim_msg_msg_knowledge_group_change_superior  : return true;
         case T_MsgsClientToSim_msg_msg_knowledge_group_delete           : return true;
         case T_MsgsClientToSim_msg_msg_knowledge_group_set_type         : return true;
+        case T_MsgsClientToSim_msg_msg_knowledge_group_creation         : return true;
 
         default:
             return false;

@@ -38,7 +38,7 @@ class MIL_KnowledgeGroup;
 // Created: JVT 2004-08-03
 // =============================================================================
 class MIL_KnowledgeGroup : private boost::noncopyable
-                         , public tools::Resolver< MIL_KnowledgeGroup >
+//                         , private tools::Resolver< MIL_KnowledgeGroup >
 {
 
 public:
@@ -47,10 +47,14 @@ public:
     typedef std::vector< MIL_Automate* >     T_AutomateVector;
     typedef T_AutomateVector::iterator       IT_AutomateVector;
     typedef T_AutomateVector::const_iterator CIT_AutomateVector;
+
+    typedef std::vector< MIL_KnowledgeGroup* >      T_KnowledgeGroupVector;
+    typedef T_KnowledgeGroupVector::iterator        IT_KnowledgeGroupVector;
+    typedef T_KnowledgeGroupVector::const_iterator  CIT_KnowledgeGroupVector;
     //@}
 
 public:
-     MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, uint nID, MIL_Army& army );
+     MIL_KnowledgeGroup( MIL_KnowledgeGroupType& type, uint nID, MIL_Army& army );
      MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army& army, MIL_KnowledgeGroup* pParent, KnowledgeGroupFactory_ABC& knowledgeGroupFactory );
      MIL_KnowledgeGroup();
     ~MIL_KnowledgeGroup();
@@ -69,14 +73,11 @@ public:
     //@{
     void InitializeKnowledgeGroup( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgeGroupFactory );
     void RegisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup );
-    void UnregisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup );
+    void UnregisterKnowledgeGroup( const MIL_KnowledgeGroup& knowledgeGroup );
     void RegisterAutomate  ( MIL_Automate& automate );
     void UnregisterAutomate( MIL_Automate& automate );
     MIL_KnowledgeGroup* FindKnowledgeGroup ( uint nID ) const;
-
-    void OnReceiveMsgKnowledgeGroupChangeSuperior( const ASN1T_MsgKnowledgeGroupChangeSuperior& msg, const tools::Resolver< MIL_Army >& armies );
-    void OnReceiveMsgKnowledgeGroupDelete( const ASN1T_MsgKnowledgeGroupDelete& msg );
-    void OnReceiveMsgKnowledgeGroupSetType( const ASN1T_MsgKnowledgeGroupSetType& msg );
+    void SetType( MIL_KnowledgeGroupType *pType ){ pType_ = pType; }
 
     void UpdateKnowledges();
     void CleanKnowledges ();
@@ -91,6 +92,10 @@ public:
     //! @name Operations
     //@{
     void OnReceiveMsgKnowledgeGroupEnable( const ASN1T_MsgKnowledgeGroupEnable& asnMsg );
+    void OnReceiveMsgKnowledgeGroupCreation( const ASN1T_MsgKnowledgeGroupCreation& msg );
+    void OnReceiveMsgKnowledgeGroupChangeSuperior( const ASN1T_MsgKnowledgeGroupChangeSuperior& msg, const tools::Resolver< MIL_Army >& armies );
+    void OnReceiveMsgKnowledgeGroupDelete( const ASN1T_MsgKnowledgeGroupDelete& msg );
+    void OnReceiveMsgKnowledgeGroupSetType( const ASN1T_MsgKnowledgeGroupSetType& msg );
     //@}
 
 
@@ -100,6 +105,7 @@ public:
     const MIL_KnowledgeGroupType&                 GetType     () const;
           MIL_Army&                               GetArmy     () const;
     const T_AutomateVector&                       GetAutomates() const;
+    const T_KnowledgeGroupVector&                 GetKnowledgeGroups() const;
     const DEC_KnowledgeBlackBoard_KnowledgeGroup& GetKnowledge() const;
           MIL_KnowledgeGroup*                     GetParent   () const;
           MT_Float                                GetTimeToDiffuseToKnowledgeGroup() const;
@@ -113,19 +119,24 @@ public:
     void SendFullState() const;
     void SendKnowledge() const;
     void UpdateKnowledgeGroup() const;
+    
+    void DeleteKnowledgeGroup();
+    void MoveKnowledgeGroup( MIL_KnowledgeGroup *pNewParent );
+
     //@}
     
 private:
-    const MIL_KnowledgeGroupType* pType_;
-          uint                    nID_;
-          MIL_Army*               pArmy_;
-          MIL_KnowledgeGroup*     pParent_;
+    MIL_KnowledgeGroupType* pType_;
+    uint                    nID_;
+    MIL_Army*               pArmy_;
+    MIL_KnowledgeGroup*     pParent_;
 
     DEC_KnowledgeBlackBoard_KnowledgeGroup* pKnowledgeBlackBoard_;
 
-    T_AutomateVector    automates_;
-    MT_Float            timeToDiffuse_;
-    bool                isActivated_;
+    T_AutomateVector        automates_;
+    T_KnowledgeGroupVector  knowledgeGroups_;
+    MT_Float                timeToDiffuse_;
+    bool                    isActivated_;
 
 private:
     static std::set< uint > ids_;

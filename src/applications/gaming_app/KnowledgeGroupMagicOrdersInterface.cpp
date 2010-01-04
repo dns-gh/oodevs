@@ -12,9 +12,11 @@
 #include "moc_KnowledgeGroupMagicOrdersInterface.cpp"
 
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "gaming/KnowledgeGroup.h"
+#include "gaming/StaticModel.h"
 #include "game_asn/SimulationSenders.h"
 
 using namespace kernel;
@@ -23,13 +25,14 @@ using namespace kernel;
 // Name: KnowledgeGroupMagicOrdersInterface constructor
 // Created: SLG 2009-12-16
 // -----------------------------------------------------------------------------
-KnowledgeGroupMagicOrdersInterface::KnowledgeGroupMagicOrdersInterface( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const Profile_ABC& profile )
-: QObject( parent )
-, controllers_( controllers )
-, publisher_( publisher )
-, profile_( profile )
-, selectedEntity_( controllers )
-{
+KnowledgeGroupMagicOrdersInterface::KnowledgeGroupMagicOrdersInterface( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const Profile_ABC& profile, const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types )
+    : QObject( parent )
+    , controllers_( controllers )
+    , publisher_( publisher )
+    , profile_( profile )
+    , selectedEntity_( controllers )
+    , knowledgeGroupTypes_( types )
+{    
     controllers_.Register( *this );
 }
 
@@ -55,13 +58,22 @@ void KnowledgeGroupMagicOrdersInterface::NotifyContextMenu( const KnowledgeGroup
     QPopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
 
     const KnowledgeGroup& knowledgeGroup = static_cast< const KnowledgeGroup& >( entity );
-    AddMagic( tr( "Set Type" ), SLOT( OnSetType() ), magicMenu );
     AddMagic( tr( "Delete" ), SLOT( OnDeleteKnowledgeGroup() ), magicMenu );
 
     if( knowledgeGroup.IsActivated() ) 
         AddMagic( tr( "Desactivate" ), SLOT( OnDesactivateKnowledgeGroup() ), magicMenu );  
     else
-        AddMagic( tr( "Activate" ), SLOT( OnActivateKnowledgeGroup() ), magicMenu );
+        AddMagic( tr( "Activate KnowledgeGroup" ), SLOT( OnActivateKnowledgeGroup() ), magicMenu );
+    AddMagic( tr( "Create child KnowledgeGroup" ), SLOT( OnCreateSubKnowledgeGroup() ), magicMenu );
+    
+    QPopupMenu* typeMenu = menu.SubMenu( "Type", tr( "Change Type" ) );
+    tools::Iterator< const kernel::KnowledgeGroupType& > it = knowledgeGroupTypes_.CreateIterator();
+    for( int id = 0; it.HasMoreElements(); ++id )
+    {
+        const KnowledgeGroupType& type = it.NextElement();
+        AddMagicTypeItem( tr( type.GetName().c_str() ), SLOT( OnSetType( int ) ), typeMenu, type, id );
+        typeMenu->setItemChecked( id, type.GetName() == knowledgeGroup.GetType() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +90,6 @@ void KnowledgeGroupMagicOrdersInterface::OnActivateKnowledgeGroup()
         asnMsg.Send( publisher_ );
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroupMagicOrdersInterface::OnDesactivateKnowledgeGroup
@@ -99,9 +110,19 @@ void KnowledgeGroupMagicOrdersInterface::OnDesactivateKnowledgeGroup()
 // Name: KnowledgeGroupMagicOrdersInterface::OnSetType
 // Created: SLG 2009-12-22
 // -----------------------------------------------------------------------------
-void KnowledgeGroupMagicOrdersInterface::OnSetType()
+void KnowledgeGroupMagicOrdersInterface::OnSetType( int id )
 {
-    //TODO
+    if( selectedEntity_ )
+    {
+        T_Items::const_iterator it = items_.find( id );
+        if( it != items_.end() )
+        {
+            simulation::KnowledgeGroupSetType asnMsg;
+            asnMsg().oid = selectedEntity_->GetId();
+            asnMsg().type = it->second->GetName().c_str();
+            asnMsg.Send( publisher_ );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -110,7 +131,29 @@ void KnowledgeGroupMagicOrdersInterface::OnSetType()
 // -----------------------------------------------------------------------------
 void KnowledgeGroupMagicOrdersInterface::OnDeleteKnowledgeGroup()
 {
-    //TODO
+    simulation::KnowledgeGroupDelete asnMsg;
+    if( selectedEntity_ )
+    {
+        asnMsg().oid = selectedEntity_->GetId();
+        asnMsg.Send( publisher_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroupMagicOrdersInterface::CreateSubKnowledgeGroup
+// Created: FHD 2009-12-23
+// -----------------------------------------------------------------------------
+void KnowledgeGroupMagicOrdersInterface::OnCreateSubKnowledgeGroup()
+{
+    simulation::KnowledgeGroupCreation asnMsg;
+    if( selectedEntity_ )
+    {
+        asnMsg().type = "Standard";
+        if( const kernel::CommunicationHierarchies* hierarchies = selectedEntity_->Retrieve< kernel::CommunicationHierarchies >() )
+            asnMsg().oid_camp = hierarchies->GetTop().GetId();
+        asnMsg().oid_knowledgegroup_parent = selectedEntity_->GetId();
+        asnMsg.Send( publisher_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -120,4 +163,14 @@ void KnowledgeGroupMagicOrdersInterface::OnDeleteKnowledgeGroup()
 int KnowledgeGroupMagicOrdersInterface::AddMagic( const QString& label, const char* slot, QPopupMenu* menu )
 {
     return menu->insertItem( label, this, slot );
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroupMagicOrdersInterface::AddMagicTypeItem
+// Created: SLG 2009-12-16
+// -----------------------------------------------------------------------------
+void KnowledgeGroupMagicOrdersInterface::AddMagicTypeItem( const QString& label, const char* slot, QPopupMenu* menu, const kernel::KnowledgeGroupType& type, int id )
+{
+    menu->insertItem( label, this, slot, 0, id );
+    items_[ id ] = &type;
 }

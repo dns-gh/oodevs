@@ -19,6 +19,7 @@ namespace kernel
     class Agent_ABC;
     class Automat_ABC;
     class KnowledgeGroup_ABC;
+    class Team_ABC;
     class Controllers;
 }
 
@@ -62,6 +63,7 @@ private:
     virtual bool Drop( const kernel::Agent_ABC& item,  const kernel::Automat_ABC& target );
     virtual bool Drop( const kernel::Automat_ABC& item,  const kernel::KnowledgeGroup_ABC& target );
     virtual bool Drop( const kernel::KnowledgeGroup_ABC& item,  const kernel::KnowledgeGroup_ABC& target );
+    virtual bool Drop( const kernel::KnowledgeGroup_ABC& item,  const kernel::Team_ABC& target );
     //@}
 
 private:

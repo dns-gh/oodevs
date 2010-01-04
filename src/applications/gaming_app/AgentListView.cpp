@@ -136,7 +136,11 @@ bool AgentListView::Drop( const kernel::Entity_ABC& item, const kernel::Entity_A
     if( knowledgeGroup )
     {
         const KnowledgeGroup_ABC* groupParent = dynamic_cast< const KnowledgeGroup_ABC* >( &target );
-        return groupParent && Drop( *knowledgeGroup, *groupParent );
+        if( groupParent )
+            return Drop( *knowledgeGroup, *groupParent );
+        const Team_ABC* teamParent = dynamic_cast< const Team_ABC* >( &target );
+        if( teamParent )
+            return Drop( *knowledgeGroup, *teamParent );
     }
     return false;
 }
@@ -182,7 +186,21 @@ bool AgentListView::Drop( const Automat_ABC& item, const KnowledgeGroup_ABC& tar
 
 // -----------------------------------------------------------------------------
 // Name: AgentListView::Drop
-// Created: SBO 2006-08-09
+// Created: FHD 2010-01-04: 
+// -----------------------------------------------------------------------------
+bool AgentListView::Drop( const KnowledgeGroup_ABC& item, const Team_ABC& target )
+{
+    simulation::KnowledgeGroupChangeSuperior asnMsg;
+    asnMsg().oid                     = item.GetId();
+    asnMsg().oid_camp                = target.Get< CommunicationHierarchies >().GetTop().GetId();
+    asnMsg().oid_knowledgegroup_parent = 0;
+    asnMsg.Send( publisher_ );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentListView::Drop
+// Created: FHD 2010-01-04: 
 // -----------------------------------------------------------------------------
 bool AgentListView::Drop( const KnowledgeGroup_ABC& item, const KnowledgeGroup_ABC& target )
 {

@@ -50,6 +50,7 @@ GENERATE_ASN_MSG_SENDER      ( ClientToSim, KnowledgeGroupEnable,           know
 GENERATE_ASN_MSG_SENDER      ( ClientToSim, KnowledgeGroupChangeSuperior,   knowledge_group_change_superior )
 GENERATE_ASN_MSG_SENDER      ( ClientToSim, KnowledgeGroupDelete,           knowledge_group_delete )
 GENERATE_ASN_MSG_SENDER      ( ClientToSim, KnowledgeGroupSetType,          knowledge_group_set_type )
+GENERATE_ASN_MSG_SENDER      ( ClientToSim, KnowledgeGroupCreation,         knowledge_group_creation )
 
 }
 

@@ -81,4 +81,10 @@ MsgKnowledgeGroupSetTypeAck ::= SEQUENCE
     error-code  EnumKnowledgeGroupErrorCode
 }
 
+MsgKnowledgeGroupCreationAck ::= SEQUENCE
+{
+    oid         OID,
+    error-code  EnumKnowledgeGroupErrorCode
+}
+
 END -- KnowledgeGroup

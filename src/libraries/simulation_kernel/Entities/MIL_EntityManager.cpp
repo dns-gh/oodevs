@@ -1245,7 +1245,7 @@ void MIL_EntityManager::OnReceiveMsgKnowledgeGroupChangeSuperior( const ASN1T_Ms
         if( !pMovedKnowledgeGroup )
             throw NET_AsnException< ASN1T_EnumKnowledgeGroupErrorCode >( EnumKnowledgeGroupErrorCode::error_invalid_knowledgegroup );
         MIL_KnowledgeGroup* pNewParentKnowledgeGroup = FindKnowledgeGroup( msg.oid_knowledgegroup_parent );
-        if( !pNewParentKnowledgeGroup )
+        if( !pNewParentKnowledgeGroup && msg.oid_knowledgegroup_parent != 0 )
             throw NET_AsnException< ASN1T_EnumKnowledgeGroupErrorCode >( EnumKnowledgeGroupErrorCode::error_invalid_superior );
         pMovedKnowledgeGroup->OnReceiveMsgKnowledgeGroupChangeSuperior( msg, *armyFactory_ );
     }
@@ -1303,6 +1303,31 @@ void MIL_EntityManager::OnReceiveMsgKnowledgeGroupSetType( const ASN1T_MsgKnowle
     }
     ack.Send( nCtx );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::OnReceiveMsgKnowledgeGroupCreation
+// Created: FHD 2009-12-15: 
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::OnReceiveMsgKnowledgeGroupCreation( const ASN1T_MsgKnowledgeGroupCreation& msg, uint nCtx )
+{
+    NET_ASN_MsgKnowledgeGroupCreationAck ack;
+    ack().oid        = msg.oid;
+    ack().error_code = EnumKnowledgeGroupErrorCode::no_error;
+
+    try
+    {
+        MIL_KnowledgeGroup* pReceiver = FindKnowledgeGroup( msg.oid );
+        if( !pReceiver )
+            throw NET_AsnException< ASN1T_EnumKnowledgeGroupErrorCode >( EnumKnowledgeGroupErrorCode::error_invalid_type );
+        pReceiver->OnReceiveMsgKnowledgeGroupCreation( msg );
+    }
+    catch( NET_AsnException< ASN1T_EnumKnowledgeGroupErrorCode >& e )
+    {
+        ack().error_code = e.GetErrorID();
+    }
+    ack.Send( nCtx );
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::ChannelPopulations

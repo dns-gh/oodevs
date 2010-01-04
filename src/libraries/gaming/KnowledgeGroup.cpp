@@ -18,11 +18,11 @@ using namespace kernel;
 // Name: KnowledgeGroup constructor
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( unsigned long nId, Controller& controller, unsigned long nType ) //, const tools::Resolver_ABC< kernel::KnowledgeGroupType >& types )
+KnowledgeGroup::KnowledgeGroup( unsigned long nId, Controller& controller, const std::string& type, tools::Resolver< kernel::KnowledgeGroupType, std::string >& types )
     : EntityImplementation< KnowledgeGroup_ABC >( controller, nId, QString( tools::translate( "KnowledgeGroup", "Group %1" ) ).arg( nId ) )
     , isActivated_ ( true )
-    , nType_( nType )
-    //, types_( types )
+    , type_( type )
+    , types_( types )
 {
     // NOTHING
 }
@@ -43,6 +43,15 @@ KnowledgeGroup::~KnowledgeGroup()
 bool KnowledgeGroup::IsActivated() const
 {
     return isActivated_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup Desactivate
+// Created: NLD 2004-03-18
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::SetActivated( bool activate )
+{
+    isActivated_ = activate;
 }
 
 // -----------------------------------------------------------------------------
@@ -78,14 +87,10 @@ void KnowledgeGroup::Remove( KnowledgeGroup_ABC& knowledgeGroup )
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::DoUpdate( const ASN1T_MsgKnowledgeGroupUpdate& message )
 {
-    if( message.type != nType_ ) // && types_.Find( message.type ) )
-         nType_ = message.type;
-
+    if( message.type != type_ )
+         type_ = message.type;
     if( message.enabled != isActivated_ )
-    {
         isActivated_ = message.enabled;
-        //controller.Update( (KnowledgeGroup_ABC& )*this );
-    }
     Touch();
 }
 

@@ -14,6 +14,7 @@
 
 class DEC_Knowledge_Object;
 class DEC_KnowledgeBlackBoard_Army;
+class MIL_KnowledgeGroup;
 
 // =============================================================================
 /** @class  MockArmy
@@ -54,7 +55,7 @@ public:
         return *GetKnowledgeShadow();
     }
 
-    MIL_KnowledgeGroup* FindKnowledgeGroup(unsigned int) const
+    MIL_KnowledgeGroup* FindKnowledgeGroup(uint) const
     {
         MOCKPP_NOT_IMPLEMENTED( __FUNCTION__ );
         throw;

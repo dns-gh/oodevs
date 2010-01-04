@@ -105,6 +105,7 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& from, const ASN
         case T_MsgsClientToSim_msg_msg_knowledge_group_change_superior    : workspace.GetEntityManager        ().OnReceiveMsgKnowledgeGroupChangeSuperior   ( *asnMsg.msg.u.msg_knowledge_group_change_superior    , nCtx ); break;
         case T_MsgsClientToSim_msg_msg_knowledge_group_delete             : workspace.GetEntityManager        ().OnReceiveMsgKnowledgeGroupDelete           ( *asnMsg.msg.u.msg_knowledge_group_delete             , nCtx ); break;
         case T_MsgsClientToSim_msg_msg_knowledge_group_set_type           : workspace.GetEntityManager        ().OnReceiveMsgKnowledgeGroupSetType          ( *asnMsg.msg.u.msg_knowledge_group_set_type           , nCtx ); break;
+        case T_MsgsClientToSim_msg_msg_knowledge_group_creation           : workspace.GetEntityManager        ().OnReceiveMsgKnowledgeGroupCreation         ( *asnMsg.msg.u.msg_knowledge_group_creation           , nCtx ); break;
 
         default:
             assert( false );

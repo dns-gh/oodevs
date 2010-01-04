@@ -26,7 +26,7 @@ class KnowledgeGroup : public kernel::EntityImplementation< kernel::KnowledgeGro
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroup( unsigned long nId, kernel::Controller& controller, unsigned long nType); //, const tools::Resolver_ABC< kernel::KnowledgeGroupType >& types );
+    KnowledgeGroup( unsigned long nId, kernel::Controller& controller, const std::string& sType, tools::Resolver< kernel::KnowledgeGroupType, std::string >& types );
     virtual ~KnowledgeGroup();
     //@}
 
@@ -43,6 +43,8 @@ public:
     //! @name Accessors
     //@{
     virtual bool IsActivated() const;
+    void SetActivated( bool activate );
+    const std::string& GetType( void ) const { return type_; }
     //@}
 
 private:
@@ -55,7 +57,8 @@ private:
     //! @name Member data
     //@{
     bool isActivated_;
-    unsigned long nType_;
+    std::string type_;    
+    tools::Resolver< kernel::KnowledgeGroupType, std::string >& types_;
     //@}
 };
 

@@ -67,7 +67,7 @@ public:
     //@{
     kernel::Team_ABC&   team_;
     kernel::KnowledgeGroup_ABC*     parent_;
-    unsigned long       nType_;
+    std::string nType_;
     tools::Resolver< kernel::KnowledgeGroup_ABC > knowledgeGroups_;
     tools::Resolver< kernel::Automat_ABC > automats_;
     //@}

@@ -284,6 +284,8 @@ private:
     void OnReceiveMsgKnowledgeGroupDeleteAck( const ASN1T_MsgKnowledgeGroupDeleteAck& asnMsg, unsigned long nCtx );
     void OnReceiveMsgKnowledgeGroupSetType( const ASN1T_MsgKnowledgeGroupSetType& asnMsg );
     void OnReceiveMsgKnowledgeGroupSetTypeAck( const ASN1T_MsgKnowledgeGroupSetTypeAck& asnMsg, unsigned long nCtx );
+    void OnReceiveMsgKnowledgeGroupCreation( const ASN1T_MsgKnowledgeGroupCreation& asnMsg );
+    void OnReceiveMsgKnowledgeGroupCreationAck( const ASN1T_MsgKnowledgeGroupCreationAck& asnMsg, unsigned long nCtx );
     //@}
 
     //! @name Helpers

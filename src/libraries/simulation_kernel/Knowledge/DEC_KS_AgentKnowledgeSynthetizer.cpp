@@ -143,10 +143,14 @@ void DEC_KS_AgentKnowledgeSynthetizer::Talk()
     // mis à jour des groupes de connaissances parents
     const MIL_KnowledgeGroup& knowledgeGroup = pBlackBoard_->GetKnowledgeGroup();
     class_mem_fun_void_const_t< DEC_KS_AgentKnowledgeSynthetizer, DEC_Knowledge_Agent> method3( & DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromKnowledgeAgent, *this );
-    tools::Iterator< const MIL_KnowledgeGroup& > it = knowledgeGroup.CreateIterator();
-    while( it.HasMoreElements() )
+    //tools::Iterator< const MIL_KnowledgeGroup& > it = knowledgeGroup.CreateIterator();
+    for( MIL_KnowledgeGroup::CIT_KnowledgeGroupVector itKG( knowledgeGroup.GetKnowledgeGroups().begin() ); itKG != knowledgeGroup.GetKnowledgeGroups().end(); ++itKG )
     {
-        const MIL_KnowledgeGroup& innerKg = it.NextElement();
+        //const MIL_KnowledgeGroup& innerKg = *itKG;
+        const MIL_KnowledgeGroup& innerKg = **itKG;
+//    while( it.HasMoreElements() )
+//    {
+//        const MIL_KnowledgeGroup& innerKg = it.NextElement();
         if ( innerKg.IsEnabled() && knowledgeGroup.IsEnabled() )
             innerKg.GetKnowledge().GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( method3 );
     }

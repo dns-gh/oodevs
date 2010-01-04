@@ -157,6 +157,7 @@ public:
 
     void OnReceiveMsgKnowledgeGroupDelete        ( const ASN1T_MsgKnowledgeGroupDelete&             msg, uint nCtx );
     void OnReceiveMsgKnowledgeGroupSetType       ( const ASN1T_MsgKnowledgeGroupSetType&            msg, uint nCtx );
+    void OnReceiveMsgKnowledgeGroupCreation      ( const ASN1T_MsgKnowledgeGroupCreation&           msg, uint nCtx );
     //@}
 
     //! @name Population channeling

@@ -1505,6 +1505,7 @@ void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupChangeSuperiorAck( const ASN1T
 
 void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupDelete( const ASN1T_MsgKnowledgeGroupDelete& asnMsg )
 {
+    GetModel().knowledgeGroups_.Get( asnMsg.oid ).Update( asnMsg );
     GetModel().knowledgeGroups_.Delete( asnMsg );
 }
 
@@ -1525,8 +1526,20 @@ void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupSetTypeAck( const ASN1T_MsgKno
 
 void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupUpdate( const ASN1T_MsgKnowledgeGroupUpdate& asnMsg )
 {
+    if( GetModel().knowledgeGroups_.Find( asnMsg.oid ) )
+        GetModel().knowledgeGroups_.Get( asnMsg.oid ).Update( asnMsg );
+}
+
+void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupCreationAck( const ASN1T_MsgKnowledgeGroupCreationAck& asnMsg, unsigned long nCtx )
+{
+    CheckAcknowledge( logger_, asnMsg, "KnowledgeGroupCreationAck" );
+}
+
+void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupCreation( const ASN1T_MsgKnowledgeGroupCreation& asnMsg )
+{
     GetModel().knowledgeGroups_.Get( asnMsg.oid ).Update( asnMsg );
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgUrbanKnowledgeCreation
@@ -1715,7 +1728,8 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const ASN1
         //case T_MsgsSimToClient_msg_msg_knowledge_group_set_type                       : OnReceiveMsgKnowledgeGroupSetType ( *message.msg.u.msg_knowledge_group_set_type ); break;
         case T_MsgsSimToClient_msg_msg_knowledge_group_set_type_ack                   : OnReceiveMsgKnowledgeGroupSetTypeAck( *message.msg.u.msg_knowledge_group_set_type_ack, message.context ); break;
         case T_MsgsSimToClient_msg_msg_knowledge_group_update                         : OnReceiveMsgKnowledgeGroupUpdate( *message.msg.u.msg_knowledge_group_update ); break;
-   
+        case T_MsgsSimToClient_msg_msg_knowledge_group_creation_ack                   : OnReceiveMsgKnowledgeGroupCreationAck( *message.msg.u.msg_knowledge_group_creation_ack, message.context ); break;
+        case T_MsgsSimToClient_msg_msg_knowledge_group_delete                         : OnReceiveMsgKnowledgeGroupDelete( *message.msg.u.msg_knowledge_group_delete ); break;
         default:
             UnhandledMessage( message.msg.t );
     };

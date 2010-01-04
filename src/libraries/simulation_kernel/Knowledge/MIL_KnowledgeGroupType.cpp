@@ -138,7 +138,7 @@ MIL_KnowledgeGroupType::~MIL_KnowledgeGroupType()
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup& MIL_KnowledgeGroupType::InstanciateKnowledgeGroup( uint nID, MIL_Army& army ) const
 {
-    return *new MIL_KnowledgeGroup( *this, nID, army );
+    return *new MIL_KnowledgeGroup( const_cast< MIL_KnowledgeGroupType& >( *this ), nID, army );
 }
 
 // -----------------------------------------------------------------------------

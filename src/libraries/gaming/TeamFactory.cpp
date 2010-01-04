@@ -37,6 +37,7 @@
 #include "clients_kernel/AgentTypes.h"
 #include "UrbanKnowledges.h"
 #include "clients_kernel/KnowledgeGroupType.h"
+#include "gaming/KnowledgeGroup.h"
 
 using namespace kernel;
 
@@ -115,7 +116,7 @@ KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( const ASN1T_MsgKnowledgeG
         (Entity_ABC*) &model_.knowledgeGroups_.Resolver< KnowledgeGroup_ABC >::Get( asnMsg.oid_knowledgegroup_parent ) :
         (Entity_ABC*) &model_.teams_.Resolver< Team_ABC >::Get( asnMsg.oid_camp );
 
-    KnowledgeGroup* result = new KnowledgeGroup( asnMsg.oid, controllers_.controller_, asnMsg.type );
+    KnowledgeGroup* result = new KnowledgeGroup( asnMsg.oid, controllers_.controller_, asnMsg.type, model_.static_.types_ );
     result->Attach( *new AgentKnowledges( controllers_.controller_, *result, model_.agentsKnowledgeFactory_ ) );
     result->Attach( *new PopulationKnowledges( controllers_.controller_, *result, model_.agentsKnowledgeFactory_ ) );
     result->Attach< CommunicationHierarchies >( *new KnowledgeGroupHierarchies( controllers_.controller_, superior, *result, model_.knowledgeGroups_ ) );

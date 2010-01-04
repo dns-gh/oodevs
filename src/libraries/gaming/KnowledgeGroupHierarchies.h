@@ -29,6 +29,7 @@ namespace kernel
 // =============================================================================
 class KnowledgeGroupHierarchies : public kernel::EntityHierarchies< kernel::CommunicationHierarchies >
                                 , public kernel::Updatable_ABC< ASN1T_MsgKnowledgeGroupUpdate >
+                                , public kernel::Updatable_ABC< ASN1T_MsgKnowledgeGroupDelete >
 {
 
 public:
@@ -42,6 +43,7 @@ public:
     //! @name Operations 
     //@{
     virtual void DoUpdate( const ASN1T_MsgKnowledgeGroupUpdate& updateMessage );
+    virtual void DoUpdate( const ASN1T_MsgKnowledgeGroupDelete& deleteMessage );
     //@}
 
 private:
