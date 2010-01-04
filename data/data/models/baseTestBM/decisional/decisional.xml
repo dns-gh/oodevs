@@ -17,7 +17,7 @@
         <Knowledge>net.masagroup.sword.military.world.Automat</Knowledge>
         <Knowledge>net.masagroup.sword.military.world.Object</Knowledge>
         <Knowledge>net.masagroup.sword.military.world.Point</Knowledge>
-		<Knowledge>net.masagroup.sword.military.world.UrbanBlock</Knowledge>
+        <Knowledge>net.masagroup.sword.military.world.UrbanBlock</Knowledge>
       </Knowledges>
     </BMDatabase>
 </decisional>

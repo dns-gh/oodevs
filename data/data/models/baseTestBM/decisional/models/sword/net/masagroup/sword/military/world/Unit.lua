@@ -13,7 +13,8 @@ return
         --TODO 
     end,   
     computeDistance = function( element )
-        return integration.magnitude( element, me )
+        BreakForDebug( tostring( "call agent compute distance" ) )
+        return integration.magnitude( element, kBase.me.body )
     end,
     
     hostilityLevel = function()
@@ -76,5 +77,8 @@ return
     end,
     computeReconnaissanceCapability = function( target )
     	--TODO
-    end
+    end,
+    getStressIncreaseRate = function( self )
+      --TODO
+    end,
 }

@@ -19,11 +19,17 @@ eEtatActionDeplacement_DejaEnDeplacement = 5
 eEtatActionDeplacement_ItineraireDoitEtreRejoint = 6
 
 integration.magnitude = function ( pos1, pos2 )
+    BreakForDebug( "pos1:"..tostring( pos1 ) )
+    BreakForDebug( "pos2:"..tostring( pos2 ) )
     return math.sqrt( ( pos1.sim_pos.x - pos2.sim_pos.x )^2 + (pos1.sim_pos.y - pos2.sim_pos.y )^2 + ( pos1.sim_pos.z - pos2.sim_pos.z )^2 )
 end
 
+integration.normalizedInversedDistance = function( pos1, pos2 )
+  return LinearInterpolation( 0, 100, 10, 10000, false, integration.magnitude( pos1, pos2 ) )
+end
+
 integration.reachPriority = function( reachable )
-	return LinearInterpolation( 0, 1, 200, 5000, false, integration.magnitude( reachable, knowledges.me ) )
+  return LinearInterpolation( 0, 1, 200, 5000, false, integration.magnitude( reachable, kBase.me.body ) )
 end
 
 integration.moveToIt = function( reachable)
@@ -34,6 +40,7 @@ integration.moveToIt = function( reachable)
     actionCallbacks[ moveAction ] = function( arg ) etat = arg end
   elseif etat == eEtatActionDeplacement_Termine then
     moveAction = DEC_StopAction( moveAction )
+    --TODO MGD verify moveAction is Nil
     etat = nil
   elseif etat == eEtatActionDeplacement_Pause then
     DEC_ReprendAction( moveAction )
@@ -48,22 +55,22 @@ integration.moveToIt = function( reachable)
 end
 
 integration.isNearby = function( point )
-	return DEC_Geometrie_Distance( point.source, self.source) < 500
+  return DEC_Geometrie_Distance( point.source, self.source) < 500
 end
 
 integration.isDistant = function( point )
-	return DEC_Geometrie_Distance( point.source, self.source) > 500
+  return DEC_Geometrie_Distance( point.source, self.source) > 500
 end
-	
+  
 integration.isFar = function( point )
-	return DEC_Geometrie_Distance( point.source, self.source) > 2000
+  return DEC_Geometrie_Distance( point.source, self.source) > 2000
 end
 
 integration.getProximityLevel = function( point )
-	return LinearInterpolation( 0, 1, 200, 5000, false, DEC_Geometrie_Distance( point.source, self.source) )
+  return LinearInterpolation( 0, 1, 200, 5000, false, DEC_Geometrie_Distance( point.source, self.source) )
 end
 
 integration.getAccessibilityLevel = function( point )
-	--TODO
-	return LinearInterpolation( 0, 1, 200, 5000, false, DEC_Geometrie_Distance( point.source, self.source) )
+  --TODO
+  return LinearInterpolation( 0, 1, 200, 5000, false, DEC_Geometrie_Distance( point.source, self.source) )
 end

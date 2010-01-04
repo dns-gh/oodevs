@@ -1,4 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class name="net.masagroup.sword.military.world.UrbanBlock" xmlns="http://www.masagroup.net/directia/schemas/bm"  extends="net.masagroup.military.generic.world.Keypoint">
-	<description>Urban Block</description>   
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.world.UrbanBlock">
+    <description>Un bloc urbain.</description>
+    <realizes>net.masagroup.military.generic.knowledge.Reconnoitrable</realizes>
+    <realizes>net.masagroup.military.generic.knowledge.Observable</realizes>
+    <realizes>net.masagroup.military.generic.knowledge.Reachable</realizes>
+    <realizes>net.masagroup.military.generic.knowledge.Reaching</realizes>
+    <methods>
+        <method name="computeMovementCapability">
+            <description>__INTEGRATION</description>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="computeRelation">
+            <description>__INTEGRATION</description>
+            <argument name="objective">
+                <description>L'unité avec laquelle on veut calculer sa relation de diplomatie</description>
+                <type>
+                    <class name="net.masagroup.military.generic.knowledge.Observable"/>
+                </type>
+            </argument>
+            <return>
+                <description>Retourne la valeur de la relation entre 0 et 100</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="computePerceptionCapability">
+            <description>__INTEGRATION</description>
+            <argument name="objective">
+                <description>L'élément à percevoir dont on veut calculer le niveau de perception</description>
+                <type>
+                    <class name="net.masagroup.military.generic.knowledge.Observable"/>
+                </type>
+            </argument>
+            <argument name="objectiveFrom">
+                <description>L'élément position à partir duquel on veut observer l'élément</description>
+                <type>
+                    <class name="net.masagroup.military.generic.knowledge.Observable"/>
+                </type>
+            </argument>
+            <return>
+                <description>Retourne la valeur de la perception d'un élément par l'unité entre 0 et 100</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="computeDistance">
+            <description>__INTEGRATION</description>
+            <argument name="objective">
+                <description>L'élément objectif</description>
+                <type>
+                    <class name="net.masagroup.military.generic.world.Element"/>
+                </type>
+            </argument>
+        </method>
+        <method name="getPerception">
+            <description>__INTEGRATION</description>
+            <return>
+                <description>Retourne la valeur de la perception de l'element par l'agent entre 0 et 100.</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="getReconnaissanceState">
+            <description>__INTEGRATION</description>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="recce">
+            <description>__INTEGRATION</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+    </methods>
 </class>

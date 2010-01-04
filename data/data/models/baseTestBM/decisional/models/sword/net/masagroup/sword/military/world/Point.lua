@@ -8,7 +8,7 @@ return
         return integration.moveToIt( point )
     end,
     canTakePosition = function( point )
-        return integration.magnitude( point, knowledges.me ) < 100
+        return integration.magnitude( point, kBase.me.body ) < 100
     end,
     takeUpPosition = function( point )
         --NOTHING
@@ -42,6 +42,6 @@ return
         --TODO
     end,
     canReconnoitreIt = function( point )
-      return integration.magnitude( point, knowledges.me ) < 200
+      return integration.magnitude( point, kBase.me.body ) < 200
     end
 }

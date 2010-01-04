@@ -29,7 +29,7 @@ integration.isInAOR = function( point )
   return true
 end
 
-getHostilityLevel = function( point )
+integration.getHostilityLevel = function( point )
   --TODO
   return 0
 end
