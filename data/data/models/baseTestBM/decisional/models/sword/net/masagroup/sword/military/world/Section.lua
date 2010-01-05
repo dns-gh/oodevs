@@ -51,5 +51,8 @@ return
     end,
     getPerception = function( self )
         return 0 -- TODO
+    end,
+    computeReconnaissanceCapability = function( target )
+    	return 42 --TODO
     end
 }

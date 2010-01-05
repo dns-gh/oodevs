@@ -29,15 +29,18 @@ rootnode
         for entity in pairs( self.unRecognizedEntities ) do
           nearest = entity:proximityLevel() > nearest:proximityLevel() and entity or nearest
         end
+        
         -- the selected elements is recognized
         if nearest:isRecognized() then
           if not RC_Done then
             DEC_RC1( 1, 166 )
             RC_Done = true;
           end
-          temp = {};
-          temp[ nearest] = { nearest }
+          local temp = {};
+          temp[ nearest ] = { nearest }
+          BreakForDebug("temp: ".. tostring(temp))
           Activate( skill.links.moveTo, 1, { entities = { nearest }, area = temp } )
+         
           --self.unRecognizedEntities[ nearest ] = nil 
           return
         end
@@ -45,6 +48,7 @@ rootnode
         if nearest:canReconnoitreIt() then
             --Activate( skill.links.reconnoitre, 1, { entities = { nearest }, positions = self.params.positions } )
         else -- tactical movement
+            BreakForDebug("self.params.positions: ".. tostring(self.params.positions))
             Activate( skill.links.moveTo, 1, { entities = { nearest }, area = self.params.positions} )
         end 
     end

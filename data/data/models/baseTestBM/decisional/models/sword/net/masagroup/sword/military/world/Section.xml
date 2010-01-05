@@ -67,5 +67,14 @@
                 </type>
             </return>
         </method>
+        <!-- DDA et LMT -->
+        <method name="computeReconnaissanceCapability">
+            <description>__INTEGRATION</description>
+            <argument name="objective">
+                <type>
+                    <class name="net.masagroup.military.generic.knowledge.Reconnoitrable"/>
+                </type>
+            </argument>
+        </method>
     </methods>
 </class>
