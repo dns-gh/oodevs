@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<class name="net.masagroup.world.concrete.Point" extends="net.masagroup.world.concrete.Entity" xmlns="http://www.masagroup.net/directia/schemas/bm" abstract="false">
-	
-	<realizes>net.masagroup.military.generic.knowledge.Positionable</realizes>
-    <realizes>net.masagroup.military.generic.knowledge.Reaching</realizes>
-    
-</class>

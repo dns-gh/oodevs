@@ -28,10 +28,6 @@ integration.normalizedInversedDistance = function( pos1, pos2 )
   return LinearInterpolation( 0, 100, 10, 10000, false, integration.magnitude( pos1, pos2 ) )
 end
 
-integration.reachPriority = function( reachable )
-  return LinearInterpolation( 0, 1, 200, 5000, false, integration.magnitude( reachable, kBase.me.body ) )
-end
-
 integration.moveToIt = function( reachable)
   moveAction = moveAction or nil
   if not moveAction then
@@ -52,25 +48,4 @@ integration.moveToIt = function( reachable)
     --TODO
   end
   return false
-end
-
-integration.isNearby = function( point )
-  return DEC_Geometrie_Distance( point.source, self.source) < 500
-end
-
-integration.isDistant = function( point )
-  return DEC_Geometrie_Distance( point.source, self.source) > 500
-end
-  
-integration.isFar = function( point )
-  return DEC_Geometrie_Distance( point.source, self.source) > 2000
-end
-
-integration.getProximityLevel = function( point )
-  return LinearInterpolation( 0, 1, 200, 5000, false, DEC_Geometrie_Distance( point.source, self.source) )
-end
-
-integration.getAccessibilityLevel = function( point )
-  --TODO
-  return LinearInterpolation( 0, 1, 200, 5000, false, DEC_Geometrie_Distance( point.source, self.source) )
 end

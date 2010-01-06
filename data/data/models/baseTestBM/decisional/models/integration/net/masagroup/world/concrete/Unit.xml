@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<class name="net.masagroup.world.concrete.Unit" xmlns="http://www.masagroup.net/directia/schemas/bm">
-	<realizes>net.masagroup.military.generic.knowledge.Destroyable</realizes>
-</class>
