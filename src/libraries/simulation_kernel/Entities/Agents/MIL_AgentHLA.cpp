@@ -76,6 +76,15 @@ MIL_Army_ABC& MIL_AgentHLA::GetArmy() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AgentHLA::GetKnowledgeGroup
+// Created: LDC 2009-12-30
+// -----------------------------------------------------------------------------
+MIL_KnowledgeGroup& MIL_AgentHLA::GetKnowledgeGroup() const
+{
+    throw std::exception( "knowledge group not set" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentHLA::GetType
 // Created: AGE 2004-11-09
 // -----------------------------------------------------------------------------
@@ -103,7 +112,7 @@ bool MIL_AgentHLA::IsNeutralized() const
 {
     return GetRole< PHY_RoleHLA_Composantes >().IsNeutralized();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentHLA::IsPC
 // Created: AGE 2004-11-09
@@ -249,4 +258,40 @@ DEC_KnowledgeBlackBoard_AgentPion& MIL_AgentHLA::GetKnowledge() const
 const AlgorithmsFactories& MIL_AgentHLA::GetAlgorithms() const
 {
     throw std::runtime_error( __FUNCTION__ " not available for HLA Agents" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentHLA::GetAutomate
+// Created: LDC 2009-12-31
+// -----------------------------------------------------------------------------
+const MIL_Automate& MIL_AgentHLA::GetAutomate() const
+{
+    throw std::runtime_error( "HLA Agent: Unexpected GetAutomate call" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentHLA::GetAutomate
+// Created: LDC 2009-12-31
+// -----------------------------------------------------------------------------
+MIL_Automate& MIL_AgentHLA::GetAutomate()
+{
+    throw std::runtime_error( "HLA Agent: Unexpected GetAutomate call" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentHLA::MagicMove
+// Created: LDC 2009-12-31
+// -----------------------------------------------------------------------------
+void MIL_AgentHLA::MagicMove( const MT_Vector2D& )
+{
+    throw std::runtime_error( "HLA Agent: Unexpected MagicMove call" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentHLA::IsAutonomous
+// Created: LDC 2009-12-31
+// -----------------------------------------------------------------------------
+bool MIL_AgentHLA::IsAutonomous() const
+{
+    throw std::runtime_error( "HLA Agent: Unexpected IsAutonomous call" );
 }

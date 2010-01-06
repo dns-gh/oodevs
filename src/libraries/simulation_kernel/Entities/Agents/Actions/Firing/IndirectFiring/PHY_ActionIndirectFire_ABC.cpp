@@ -21,7 +21,7 @@ using namespace firing;
 // Name: PHY_ActionIndirectFire_ABC constructor
 // Created: NLD 2004-10-08
 // -----------------------------------------------------------------------------
-PHY_ActionIndirectFire_ABC::PHY_ActionIndirectFire_ABC( MIL_AgentPion& pion, const PHY_DotationCategory* pDotationCategory, float rNbInterventionType )
+PHY_ActionIndirectFire_ABC::PHY_ActionIndirectFire_ABC( MIL_Agent_ABC& pion, const PHY_DotationCategory* pDotationCategory, float rNbInterventionType )
     : PHY_DecisionCallbackAction_ABC      ( pion )
     , role_               ( pion.GetRole< PHY_RoleAction_IndirectFiring >() )
     , pDotationCategory_  ( 0 ) 

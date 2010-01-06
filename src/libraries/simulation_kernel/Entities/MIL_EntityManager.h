@@ -16,6 +16,7 @@
 #include "MT_Tools/MT_Profiler.h"
 #include "MIL_EntityManager_ABC.h"
 
+#include "game_asn/Simulation.h"
 #include "tools/Resolver.h"
 
 namespace xml
@@ -84,7 +85,6 @@ public:
     virtual ~MIL_EntityManager();
 
     static void Initialize( MIL_Config& config, const MIL_Time_ABC& time, MIL_EffectManager& effects );
-    static MIL_EntityManager& GetSingleton();
 
     //! @name Factory
     //@{
@@ -247,12 +247,6 @@ private:
     MT_Float      rStatesTime_;
 
     uint          nRandomBreakdownsNextTimeStep_;
-
-private:
-    //! @name Singleton
-    //@{
-    static MIL_EntityManager* singleton_;
-    //@}
 };
 
 

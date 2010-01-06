@@ -304,7 +304,7 @@ void MIL_AutomateLOG::WriteLogisticLinksODB( xml::xostream& xos ) const
 // Name: MIL_AutomateLOG::MaintenanceHandleComposanteForTransport
 // Created: NLD 2004-12-28
 // -----------------------------------------------------------------------------
-PHY_MaintenanceComposanteState* MIL_AutomateLOG::MaintenanceHandleComposanteForTransport( MIL_AgentPion& pion, PHY_ComposantePion& composante )
+PHY_MaintenanceComposanteState* MIL_AutomateLOG::MaintenanceHandleComposanteForTransport( MIL_Agent_ABC& pion, PHY_ComposantePion& composante )
 {
     int nScore = std::numeric_limits< int >::min();
     PHY_RoleInterface_Maintenance* pSelectedRoleMaintenance = 0;

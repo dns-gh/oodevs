@@ -113,6 +113,9 @@ namespace
                 int result = 0;         
                 if( parameters[i]->ToId( result ) )
                     return result;
+                float realResult;
+                if( parameters[i]->ToNumeric( realResult ) )
+                    return static_cast< int >( realResult );
             }
         }
         throw std::runtime_error( std::string( "Unknown parameter: " ) + name );

@@ -47,9 +47,8 @@ MT_Random PHY_WeaponDataType_DirectFire::randomGenerator_;
 // Name: PHY_WeaponDataType_DirectFire constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_WeaponDataType_DirectFire::PHY_WeaponDataType_DirectFire( MIL_EffectManager& manager, const PHY_WeaponType& weaponType, xml::xistream& xis )
-    : manager_   ( manager )
-    , weaponType_( weaponType )
+PHY_WeaponDataType_DirectFire::PHY_WeaponDataType_DirectFire( const PHY_WeaponType& weaponType, xml::xistream& xis )
+    : weaponType_( weaponType )
     , phs_       ( PHY_Volume::GetVolumes().size(), MT_InterpolatedFunction< MT_Float >( 0., 0. ) )
 {
     xis >> xml::list( "hit-probabilities", *this, &PHY_WeaponDataType_DirectFire::InitializePH );
@@ -217,7 +216,7 @@ MT_Float PHY_WeaponDataType_DirectFire::GetMinRangeToFireOn( const PHY_Composant
 // Name: PHY_WeaponDataType_DirectFire::GetMaxRangeToFireOnWithPosture
 // Created: SBO 2006-01-10
 // -----------------------------------------------------------------------------
-MT_Float PHY_WeaponDataType_DirectFire::GetMaxRangeToFireOnWithPosture( const PHY_ComposanteType_ABC& targetComposanteType, const MIL_AgentPion& firer, const MIL_Agent_ABC& target, MT_Float rWantedPH ) const
+MT_Float PHY_WeaponDataType_DirectFire::GetMaxRangeToFireOnWithPosture( const PHY_ComposanteType_ABC& targetComposanteType, const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, MT_Float rWantedPH ) const
 {
     const PHY_RoleInterface_Posture&      firerPosture  = firer .GetRole< PHY_RoleInterface_Posture      >();
     const PHY_RoleInterface_Posture& targetPosture = target.GetRole< PHY_RoleInterface_Posture >();
@@ -229,7 +228,7 @@ MT_Float PHY_WeaponDataType_DirectFire::GetMaxRangeToFireOnWithPosture( const PH
 // Name: PHY_WeaponDataType_DirectFire::GetMinRangeToFireOnWithPosture
 // Created: SBO 2006-01-10
 // -----------------------------------------------------------------------------
-MT_Float PHY_WeaponDataType_DirectFire::GetMinRangeToFireOnWithPosture( const PHY_ComposanteType_ABC& targetComposanteType, const MIL_AgentPion& firer, const MIL_Agent_ABC& target, MT_Float rWantedPH ) const
+MT_Float PHY_WeaponDataType_DirectFire::GetMinRangeToFireOnWithPosture( const PHY_ComposanteType_ABC& targetComposanteType, const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, MT_Float rWantedPH ) const
 {
     const PHY_RoleInterface_Posture&      firerPosture  = firer .GetRole< PHY_RoleInterface_Posture      >();
     const PHY_RoleInterface_Posture& targetPosture = target.GetRole< PHY_RoleInterface_Posture >();
@@ -293,7 +292,7 @@ void PHY_WeaponDataType_DirectFire::Fire( MIL_AgentPion& firer, MIL_Agent_ABC& t
     }
 
     MIL_Effect_DirectFirePion* pEffect = new MIL_Effect_DirectFirePion( weaponType_.GetDotationCategory(), target, compTarget, fireResult );
-    manager_.Register( *pEffect );
+    MIL_EffectManager::GetEffectManager().Register( *pEffect );
 
 
     // handle direct-indirect fire on populations
@@ -308,7 +307,7 @@ void PHY_WeaponDataType_DirectFire::Fire( MIL_AgentPion& firer, MIL_Agent_ABC& t
     {
         MIL_PopulationConcentration* pElement = static_cast< MIL_PopulationConcentration* >( *itConcentration );
         MIL_Effect_DirectFirePopulation* pEffect = new MIL_Effect_DirectFirePopulation( *pElement, 1, fireResult );
-        manager_.Register( *pEffect );
+        MIL_EffectManager::GetEffectManager().Register( *pEffect );
     }
 
     TER_PopulationFlow_ABC::T_PopulationFlowVector flows;
@@ -318,7 +317,7 @@ void PHY_WeaponDataType_DirectFire::Fire( MIL_AgentPion& firer, MIL_Agent_ABC& t
     {
         MIL_PopulationFlow* pElement = static_cast< MIL_PopulationFlow* >( *itFlow );
         MIL_Effect_DirectFirePopulation* pEffect = new MIL_Effect_DirectFirePopulation( *pElement, 1, fireResult );
-        manager_.Register( *pEffect );
+        MIL_EffectManager::GetEffectManager().Register( *pEffect );
     }
 }
 
@@ -337,5 +336,5 @@ void PHY_WeaponDataType_DirectFire::Fire( MIL_AgentPion& firer, MIL_PopulationEl
             ++nHit;
 
     MIL_Effect_DirectFirePopulation* pEffect = new MIL_Effect_DirectFirePopulation( target, nHit, fireResult );
-    manager_.Register( *pEffect );
+    MIL_EffectManager::GetEffectManager().Register( *pEffect );
 }

@@ -16,7 +16,7 @@
 
 class PHY_IndirectFireDotationClass;
 class PHY_DotationCategory;
-class MIL_AgentPion;
+class MIL_Agent_ABC;
 class MIL_Effect_IndirectFire;
 
 namespace firing
@@ -36,7 +36,7 @@ public:
     //@}
 
 public:
-    explicit PHY_RoleAction_IndirectFiring( MIL_AgentPion& pion );
+    explicit PHY_RoleAction_IndirectFiring( MIL_Agent_ABC& pion );
     virtual ~PHY_RoleAction_IndirectFiring();
 
     //! @name CheckPoints
@@ -65,7 +65,6 @@ public:
     int GetFinalReturnCode  () const;
     //@}
 
-private:
     //! @name Types
     //@{
     enum E_ReturnCode
@@ -78,6 +77,7 @@ private:
     };
     //@}
 
+private:
     //! @name Tools
     //@{
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_IndirectFiring* role, const unsigned int /*version*/ );
@@ -87,7 +87,7 @@ private:
 private:
     //! @name Member data
     //@{
-    MIL_AgentPion& pion_;
+    MIL_Agent_ABC& pion_;
     //@}
 };
 

@@ -18,14 +18,14 @@
 #include "ComponentsChangedNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
+class MIL_AgentPionLOG_ABC;
+class MIL_AutomateLOG;
 class PHY_ComposantePion;
 class PHY_ComposanteTypePion;
 class PHY_Breakdown;
 class PHY_MaintenanceComposanteState;
 class PHY_MaintenanceConsign_ABC;
 class PHY_ComposanteUsePredicate;
-class MIL_AgentPionLOG_ABC;
-class MIL_AutomateLOG;
 
 // =============================================================================
 // @class  PHY_RolePionLOG_Maintenance
@@ -62,7 +62,7 @@ public:
     virtual void ChangePriorities( const T_AutomateVector&            priorities );
     virtual void ChangeWorkRate  ( const PHY_MaintenanceWorkRate&     workRate   );
     
-    virtual PHY_MaintenanceComposanteState* HandleComposanteForTransport    ( MIL_AgentPion& pion, PHY_ComposantePion& composante );
+    virtual PHY_MaintenanceComposanteState* HandleComposanteForTransport    ( MIL_Agent_ABC& pion, PHY_ComposantePion& composante );
     virtual bool                            HandleComposanteForTransport    ( PHY_MaintenanceComposanteState& composanteState );
     virtual int                             GetAvailabilityScoreForTransport( const PHY_ComposantePion& composante );
 

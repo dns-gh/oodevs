@@ -12,16 +12,18 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_IndirectFireDotationClass.h"
 #include "PHY_DotationCategory_IndirectFire.h"
-#include "PHY_DotationCategory_IndirectWeatherFire.h"
 #include "PHY_DotationCategory_IndirectMineFire.h"
+#include "PHY_DotationCategory_IndirectObjectCreationFire.h"
+#include "PHY_DotationCategory_IndirectWeatherFire.h"
 #include <xeumeuleu/xml.h>
 
-const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::explosif_ ( "Explosif" , eExplosif , /*NeedPH*/true , &PHY_DotationCategory_IndirectFire       ::Create );
-const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::grenade_  ( "Grenade"  , eGrenade  , /*NeedPH*/true , &PHY_DotationCategory_IndirectFire       ::Create );
-const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::aced_     ( "ACED"     , eACED     , /*NeedPH*/true , &PHY_DotationCategory_IndirectFire       ::Create );
-const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::fumigene_ ( "Fumigene" , eFumigene , /*NeedPH*/false, &PHY_DotationCategory_IndirectWeatherFire::Create );
-const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::eclairant_( "Eclairant", eEclairant, /*NeedPH*/false, &PHY_DotationCategory_IndirectWeatherFire::Create );
-const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::mine_     ( "Mine"     , eMine     , /*NeedPH*/false, &PHY_DotationCategory_IndirectMineFire   ::Create );
+const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::explosif_  ( "Explosif"  , eExplosif  , /*NeedPH*/true , &PHY_DotationCategory_IndirectFire              ::Create );
+const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::grenade_   ( "Grenade"   , eGrenade   , /*NeedPH*/true , &PHY_DotationCategory_IndirectFire              ::Create );
+const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::aced_      ( "ACED"      , eACED      , /*NeedPH*/true , &PHY_DotationCategory_IndirectFire              ::Create );
+const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::fumigene_  ( "Fumigene"  , eFumigene  , /*NeedPH*/false, &PHY_DotationCategory_IndirectWeatherFire       ::Create );
+const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::eclairant_ ( "Eclairant" , eEclairant , /*NeedPH*/false, &PHY_DotationCategory_IndirectWeatherFire       ::Create );
+const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::mine_      ( "Mine"      , eMine      , /*NeedPH*/false, &PHY_DotationCategory_IndirectMineFire          ::Create );
+const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::scrambling_( "Scrambling", eScrambling, /*NeedPH*/false, &PHY_DotationCategory_IndirectObjectCreationFire::Create );
 
 PHY_IndirectFireDotationClass::T_TypeMap PHY_IndirectFireDotationClass::types_;
 
@@ -32,12 +34,13 @@ PHY_IndirectFireDotationClass::T_TypeMap PHY_IndirectFireDotationClass::types_;
 void PHY_IndirectFireDotationClass::Initialize()
 {
     MT_LOG_INFO_MSG( "Initializing indirect ammo effects" );
-    types_[ explosif_ .GetID() ] = &explosif_;
-    types_[ grenade_  .GetID() ] = &grenade_;
-    types_[ aced_     .GetID() ] = &aced_;
-    types_[ fumigene_ .GetID() ] = &fumigene_;
-    types_[ eclairant_.GetID() ] = &eclairant_;
-    types_[ mine_     .GetID() ] = &mine_;
+    types_[ explosif_  .GetID() ] = &explosif_;
+    types_[ grenade_   .GetID() ] = &grenade_;
+    types_[ aced_      .GetID() ] = &aced_;
+    types_[ fumigene_  .GetID() ] = &fumigene_;
+    types_[ eclairant_ .GetID() ] = &eclairant_;
+    types_[ mine_      .GetID() ] = &mine_;
+    types_[ scrambling_.GetID() ] = &scrambling_;
 }
 
 // -----------------------------------------------------------------------------

@@ -14,7 +14,6 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationNature.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
-#include "simulation_terrain/TER_World.h"
 
 #include "Entities/Orders/MIL_AgentKnowledgeListParameter.h"
 #include "Entities/Orders/MIL_AgentKnowledgeParameter.h"
@@ -54,6 +53,8 @@
 #include "Knowledge/DEC_Knowledge_Population.h"
 
 #include "Network/NET_ASN_Tools.h"
+
+#include "simulation_terrain/TER_World.h"
 
 using namespace mockpp;
 
@@ -274,6 +275,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_DotationTypeParameter_ToASN )
     xml::xistringstream xis( "<dotations>"
         "<dotation category='Food' id='42' name='ration' nature='Solid' package-mass='0.015' package-size='10' package-volume='0.01'/>"
         "</dotations>" );
+    MockMIL_EntityManager_ABC entityManager;
     PHY_DotationType::Initialize( xis );
     ASN1T_DotationType asnIn = 42;
     MIL_DotationTypeParameter param( asnIn );

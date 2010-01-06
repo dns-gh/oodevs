@@ -12,7 +12,7 @@
 #ifndef __PHY_DotationCategory_IndirectMineFire_h_
 #define __PHY_DotationCategory_IndirectMineFire_h_
 
-#include "PHY_DotationCategory_IndirectFire_ABC.h"
+#include "PHY_DotationCategory_IndirectObjectCreationFire.h"
 
 namespace xml
 {
@@ -23,7 +23,7 @@ namespace xml
 // @class  PHY_DotationCategory_IndirectMineFire
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_DotationCategory_IndirectMineFire : public PHY_DotationCategory_IndirectFire_ABC
+class PHY_DotationCategory_IndirectMineFire : public PHY_DotationCategory_IndirectObjectCreationFire
 {
 
 public:
@@ -33,11 +33,6 @@ public:
     //! @name 
     //@{
     static PHY_DotationCategory_IndirectFire_ABC& Create( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis );
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void ApplyEffect( const MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const;
     //@}
 
 private:

@@ -14,7 +14,7 @@
 
 #include "simulation_kernel/FireData_ABC.h"
 
-class MIL_AgentPion;
+class MIL_Agent_ABC;
 class MIL_Effect_IndirectFire;
 class PHY_ComposantePion;
 class PHY_Weapon;
@@ -29,7 +29,7 @@ class PHY_IndirectFireData : public FireData_ABC
 {
 
 public:
-     PHY_IndirectFireData( MIL_AgentPion& firer, MIL_Effect_IndirectFire& effect );
+     PHY_IndirectFireData( MIL_Agent_ABC& firer, MIL_Effect_IndirectFire& effect );
     ~PHY_IndirectFireData();
 
     //! @name Operations
@@ -81,7 +81,7 @@ private:
     //@}
 
 private:
-    MIL_AgentPion&           firer_;
+    MIL_Agent_ABC&           firer_;
     MIL_Effect_IndirectFire& effect_;
     T_ComposanteWeaponsMap   composantesWeapons_;
     bool                     bHasWeaponsReady_;

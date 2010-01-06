@@ -14,15 +14,17 @@
 
 #include "simulation_kernel/Entities/MIL_Entity_ABC.h"
 
-class MIL_Army_ABC;
-class MIL_KnowledgeGroup;
-class MIL_AgentType_ABC;
-class MIL_AgentPion;
-class MIL_Population;
+class AlgorithmsFactories;
 class DEC_Decision_ABC;
 class DEC_Knowledge_Agent;
 class DEC_KnowledgeBlackBoard_AgentPion;
-class AlgorithmsFactories;
+class MIL_AgentPion;
+class MIL_AgentType_ABC;
+class MIL_Army_ABC;
+class MIL_Automate;
+class MIL_KnowledgeGroup;
+class MIL_Population;
+class MT_Vector2D;
 
 // =============================================================================
 // @class  MIL_Agent_ABC
@@ -43,12 +45,17 @@ public:
 
     //! @name Accessors
     //@{
-            uint                      GetID        () const;
-    virtual       MIL_Army_ABC&       GetArmy      () const = 0;
-    virtual const MIL_AgentType_ABC&  GetType      () const = 0;
-    virtual bool                      IsDead       () const = 0;
-    virtual bool                      IsNeutralized() const = 0;
-    virtual bool                      IsPC         () const = 0;
+            uint                      GetID              () const;
+    virtual       MIL_Army_ABC&       GetArmy            () const = 0;
+    virtual       MIL_KnowledgeGroup& GetKnowledgeGroup  () const = 0;
+    virtual const MIL_AgentType_ABC&  GetType            () const = 0;
+    virtual bool                      IsDead             () const = 0;
+    virtual bool                      IsNeutralized      () const = 0;
+    virtual bool                      IsPC               () const = 0;
+    virtual bool                      IsAutonomous       () const = 0;
+    
+    virtual const MIL_Automate&       GetAutomate        () const = 0;
+    virtual       MIL_Automate&       GetAutomate        () = 0;
     
     virtual       DEC_Decision_ABC& GetDecision() = 0;
     virtual const DEC_Decision_ABC& GetDecision() const = 0;
@@ -62,6 +69,7 @@ public:
     //@{
     virtual void NotifyAttackedBy( MIL_AgentPion& pion ) = 0;
     virtual void NotifyAttackedBy( MIL_Population& population ) = 0;
+    virtual void MagicMove( const MT_Vector2D& ) = 0;
     //@}
 
     //! @name Knowledge

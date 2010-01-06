@@ -33,6 +33,7 @@ public:
     template< typename ActionType, typename T1, typename T2 > static PHY_Action_ABC* StartAction  ( typename ActionType::ActorType& caller, T1 arg1, T2 arg2 );
     template< typename ActionType, typename T1, typename T2, typename T3 > static PHY_Action_ABC* StartAction  ( typename ActionType::ActorType& caller, T1 arg1, T2 arg2, T3 arg3 );
     template< typename ActionType, typename T1, typename T2, typename T3, typename T4 > static PHY_Action_ABC* StartAction  ( typename ActionType::ActorType& caller, T1 arg1, T2 arg2, T3 arg3, T4 arg4 );
+    template< typename ActionType, typename T1, typename T2, typename T3, typename T4, typename T5 > static PHY_Action_ABC* StartAction  ( typename ActionType::ActorType& caller, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5 );
     template< typename T >          static PHY_Action_ABC* StopAction   ( const T& caller, PHY_Action_ABC* pAction );
     template< typename T >          static void SuspendAction( const T& caller, PHY_Action_ABC* pAction );
     template< typename T >          static void ResumeAction ( const T& caller, PHY_Action_ABC* pAction );
@@ -50,7 +51,7 @@ public:
     static void Prisoners_CaptureAndLoad  ( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static void Prisoners_Unload          ( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static void Prisoners_UnloadInCamp    ( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, boost::shared_ptr< DEC_Knowledge_Object > campKnowledgeID );
-    static bool Prisoners_IsUnloadedInCamp( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, boost::shared_ptr< DEC_Knowledge_Object > campKnowledgeID );
+    static bool Prisoners_IsUnloadedInCamp( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, boost::shared_ptr< DEC_Knowledge_Object > campKnowledgeID );
 
     static void Refugees_OrientateAndLoad( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static void Refugees_Unload          ( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );

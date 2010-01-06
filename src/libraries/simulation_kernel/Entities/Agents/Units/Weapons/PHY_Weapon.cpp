@@ -146,7 +146,7 @@ MT_Float PHY_Weapon::GetMinRangeToIndirectFire() const
 // Created: NLD 2004-11-04
 // -----------------------------------------------------------------------------
 inline
-double PHY_Weapon::ModifyReloadingDuration( MIL_AgentPion& firer, double rDuration ) const
+double PHY_Weapon::ModifyReloadingDuration( MIL_Agent_ABC& firer, double rDuration ) const
 {
     std::auto_ptr< firing::WeaponReloadingComputer_ABC > computer( firer.GetAlgorithms().weaponReloadingComputerFactory_->Create( rDuration ) );
     firer.Execute( *computer );
@@ -230,7 +230,7 @@ bool PHY_Weapon::DirectFire( MIL_AgentPion& firer, MIL_PopulationElement_ABC& ta
 // Name: PHY_Weapon::IndirectFire
 // Created: NLD 2004-10-11
 // -----------------------------------------------------------------------------
-bool PHY_Weapon::IndirectFire( MIL_AgentPion& firer, MIL_Effect_IndirectFire& effect )
+bool PHY_Weapon::IndirectFire( MIL_Agent_ABC& firer, MIL_Effect_IndirectFire& effect )
 {
     assert( type_.CanIndirectFire() && IsReady() );
     assert( type_.GetDotationCategory() == effect.GetIndirectDotationCategory().GetDotationCategory() );
@@ -250,12 +250,12 @@ bool PHY_Weapon::IndirectFire( MIL_AgentPion& firer, MIL_Effect_IndirectFire& ef
         nNbrAmmoToFire = std::min( nNbrAmmoToFire, effect.GetNbrAmmoToCompleteInterventionType() );
         assert( nNbrAmmoToFire > 0 );
                
-        uint nNbrAmmoReserved = (uint)firer.GetRole< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( type_.GetDotationCategory(), nNbrAmmoToFire );
+        uint nNbrAmmoReserved = (unsigned int)firer.GetRole< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( type_.GetDotationCategory(), nNbrAmmoToFire );
         if( nNbrAmmoReserved )
         {
             nNbrAmmoFiredFromLoader_ += nNbrAmmoReserved;
 
-            type_.IndirectFire( firer, effect, nNbrAmmoReserved );
+            type_.IndirectFire( effect, nNbrAmmoReserved );
             bHasFired = true;
 
             rNextTimeStepToFire_ += type_.GetBurstDuration();
@@ -276,7 +276,7 @@ bool PHY_Weapon::IndirectFire( MIL_AgentPion& firer, MIL_Effect_IndirectFire& ef
 // Name: PHY_Weapon::ThrowSmoke
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
-void PHY_Weapon::ThrowSmoke( MIL_AgentPion& firer, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmo, PHY_FireResults_ABC& fireResult ) const
+void PHY_Weapon::ThrowSmoke( MIL_Agent_ABC& firer, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmo, PHY_FireResults_ABC& fireResult ) const
 {//@TODO MGD See with AHC if we remove this GetRole kind
     const MT_Vector2D& vSourcePosition = firer.GetRole< PHY_RoleInterface_Location >().GetPosition();
     unsigned int nNbrAmmoReserved = (unsigned int)firer.GetRole< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( type_.GetDotationCategory(), nNbrAmmo );

@@ -30,7 +30,6 @@ class PHY_Composante_ABC;
 class PHY_ComposanteType_ABC;
 class PHY_FireResults_ABC;
 class MIL_PopulationElement_ABC;
-class MIL_EffectManager;
 
 // =============================================================================
 // @class  PHY_WeaponDataType_DirectFire
@@ -40,7 +39,7 @@ class PHY_WeaponDataType_DirectFire : private boost::noncopyable
 {
 
 public:
-             PHY_WeaponDataType_DirectFire( MIL_EffectManager& manager, const PHY_WeaponType& weaponType, xml::xistream& xis );
+             PHY_WeaponDataType_DirectFire( const PHY_WeaponType& weaponType, xml::xistream& xis );
     virtual ~PHY_WeaponDataType_DirectFire();
 
     //! @name Operations
@@ -49,8 +48,8 @@ public:
     MT_Float GetDangerosity                ( const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rDistBtwFirerAndTarget ) const;
     MT_Float GetMaxRangeToFireOn           ( const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const;
     MT_Float GetMinRangeToFireOn           ( const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const;
-    MT_Float GetMaxRangeToFireOnWithPosture( const PHY_ComposanteType_ABC& targetComposanteType, const MIL_AgentPion& firer, const MIL_Agent_ABC& target, MT_Float rWantedPH ) const;
-    MT_Float GetMinRangeToFireOnWithPosture( const PHY_ComposanteType_ABC& targetComposanteType, const MIL_AgentPion& firer, const MIL_Agent_ABC& target, MT_Float rWantedPH ) const;
+    MT_Float GetMaxRangeToFireOnWithPosture( const PHY_ComposanteType_ABC& targetComposanteType, const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, MT_Float rWantedPH ) const;
+    MT_Float GetMinRangeToFireOnWithPosture( const PHY_ComposanteType_ABC& targetComposanteType, const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, MT_Float rWantedPH ) const;
     void     Fire                          ( MIL_AgentPion& firer, MIL_Agent_ABC& target, PHY_Composante_ABC& compTarget, PHY_FireResults_ABC& fireResult, bool bUsePH ) const;
     void     Fire                          ( MIL_AgentPion& firer, MIL_PopulationElement_ABC& target, uint nNbrAmmoReserved, PHY_FireResults_ABC& fireResult ) const;
     //@}
@@ -82,7 +81,6 @@ private:
 private:
     //! @name Member data
     //@{
-    MIL_EffectManager&    manager_;
     const PHY_WeaponType& weaponType_;
           T_PhVector      phs_;
     //@}

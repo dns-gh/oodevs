@@ -17,6 +17,7 @@ namespace xml
     class xistream;
 }
 
+class MIL_EntityManager_ABC;
 class PHY_DotationCategory;
 class PHY_DotationCategory_IndirectFire_ABC;
 
@@ -36,6 +37,7 @@ public:
     static const PHY_IndirectFireDotationClass fumigene_;
     static const PHY_IndirectFireDotationClass eclairant_;
     static const PHY_IndirectFireDotationClass mine_;
+    static const PHY_IndirectFireDotationClass scrambling_;
     //@}
 
 public:
@@ -70,6 +72,7 @@ private:
 
     typedef PHY_DotationCategory_IndirectFire_ABC& (*T_TypeInstancier)( const PHY_IndirectFireDotationClass&, const PHY_DotationCategory& dotationCategory, xml::xistream& );
 
+public:
     enum E_Type
     {
         eExplosif,
@@ -77,7 +80,8 @@ private:
         eACED,
         eFumigene,
         eEclairant,
-        eMine
+        eMine,
+        eScrambling
     };
     //@}
 

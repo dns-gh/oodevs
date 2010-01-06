@@ -13,13 +13,32 @@
 #include "MIL_EffectManager.h"
 #include "MIL_Effect_ABC.h"
 
+
+namespace
+{
+    MIL_EffectManager* pEffectManager_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EffectManager::GetEffectManager
+// Created: LDC 2010-01-04
+// -----------------------------------------------------------------------------
+MIL_EffectManager& MIL_EffectManager::GetEffectManager()
+{
+    if( !pEffectManager_ )
+        throw std::runtime_error( "Effect manager unset" );
+    return *pEffectManager_;
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_EffectManager constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 MIL_EffectManager::MIL_EffectManager()
 {
-    // NOTHING
+    if( pEffectManager_ )
+        throw std::runtime_error( "Effect manager already created" );
+    pEffectManager_ = this;
 }
 
 // -----------------------------------------------------------------------------
@@ -28,7 +47,7 @@ MIL_EffectManager::MIL_EffectManager()
 // -----------------------------------------------------------------------------
 MIL_EffectManager::~MIL_EffectManager()
 {
-    // NOTHING
+    pEffectManager_ = 0;
 }
 
 // -----------------------------------------------------------------------------

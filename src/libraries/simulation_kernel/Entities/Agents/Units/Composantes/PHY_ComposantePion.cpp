@@ -635,14 +635,21 @@ bool PHY_ComposantePion::CanBeUsed() const
 
     assert( pRole_ );
 
-    const transport::PHY_RoleInterface_Transported& roleTransported = pRole_->GetPion().GetRole< transport::PHY_RoleInterface_Transported >();
-    if( roleTransported.IsTransported() || pRole_->GetPion().GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered() )
+    // $$$$ LDC: All this should be rewritten with GetRole/RetrieveRole's but using Apply.
+    const transport::PHY_RoleInterface_Transported* roleTransported = pRole_->GetPion().RetrieveRole< transport::PHY_RoleInterface_Transported >();
+    if( roleTransported && roleTransported->IsTransported() )
+        return false;
+    const surrender::PHY_RoleInterface_Surrender* roleSurrendered = pRole_->GetPion().RetrieveRole< surrender::PHY_RoleInterface_Surrender >();
+    if( roleSurrendered && roleSurrendered->IsSurrendered() )
         return false;
 
     if( bLoadable_ )
-        return !pRole_->GetPion().GetRole< transport::PHY_RoleAction_Loading >().IsLoaded();
+    {
+        const transport::PHY_RoleAction_Loading* roleLoading = pRole_->GetPion().RetrieveRole< transport::PHY_RoleAction_Loading >();
+        return !roleLoading || !roleLoading->IsLoaded();
+    }
     else   
-        return !roleTransported.HasHumanTransportersToRecover();
+        return !roleTransported || !roleTransported->HasHumanTransportersToRecover();
 }
 
 // -----------------------------------------------------------------------------

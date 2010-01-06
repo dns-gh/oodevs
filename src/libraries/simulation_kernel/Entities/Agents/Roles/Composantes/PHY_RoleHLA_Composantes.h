@@ -146,8 +146,8 @@ public:
     //! @name Accessors
     //@{          
     virtual       bool           HasChanged              () const { return false; }
-    virtual       bool           IsUsable                () const { return false; }                    
-    virtual const MIL_AgentPion& GetPion                 () const { return *pPion_; }    
+    virtual       bool           IsUsable                () const { return false; }
+    virtual const MIL_Agent_ABC& GetPion                 () const { return *pPion_; }    
     //@}
 
     //! @name HLA
@@ -179,7 +179,7 @@ private:
     T_Composantes               composantes_;
     HLA_InteractionManager_ABC& interactionManager_;
     bool                        bNeutralized_;
-    MIL_AgentPion*         pPion_;
+    MIL_Agent_ABC*              pPion_;
     //@}
 };
 

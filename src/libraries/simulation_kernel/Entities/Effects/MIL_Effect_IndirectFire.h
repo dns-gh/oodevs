@@ -18,7 +18,7 @@ class PHY_DotationCategory_IndirectFire_ABC;
 class PHY_WeaponDataType_IndirectFire;
 class PHY_FireResults_Pion;
 class PHY_Weapon;
-class MIL_AgentPion;
+class MIL_Agent_ABC;
 
 // =============================================================================
 // @class  MIL_Effect_IndirectFire
@@ -28,8 +28,8 @@ class MIL_Effect_IndirectFire : public MIL_Effect_ABC
 {
 
 public:
-             MIL_Effect_IndirectFire( const MIL_AgentPion& firer, uint nTargetKnowledgeID           , const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory, MT_Float rInterventionTypeToFire );
-             MIL_Effect_IndirectFire( const MIL_AgentPion& firer, const MT_Vector2D& vTargetPosition, const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory, MT_Float rInterventionTypeToFire );
+             MIL_Effect_IndirectFire( const MIL_Agent_ABC& firer, uint nTargetKnowledgeID           , const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory, MT_Float rInterventionTypeToFire );
+             MIL_Effect_IndirectFire( const MIL_Agent_ABC& firer, const MT_Vector2D& vTargetPosition, const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory, MT_Float rInterventionTypeToFire );
     virtual ~MIL_Effect_IndirectFire();
 
     //! @name Accessors
@@ -66,7 +66,7 @@ private:
 
 private:
           uint                                   nNbrRefs_;
-    const MIL_AgentPion&                         firer_;
+    const MIL_Agent_ABC&                         firer_;
     const MT_Float                               rInterventionTypeToFire_;
     const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory_;                                                
     const MT_Vector2D                            vSourcePosition_;

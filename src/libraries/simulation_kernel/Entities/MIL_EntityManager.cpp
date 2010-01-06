@@ -87,7 +87,6 @@
 
 BOOST_CLASS_EXPORT_GUID( MIL_EntityManager, "MIL_EntityManager" )
 
-MIL_EntityManager* MIL_EntityManager::singleton_ = 0;
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_EntityManager* role, const unsigned int /*version*/ )
@@ -132,32 +131,32 @@ void MIL_EntityManager::Initialize( MIL_Config& config, const MIL_Time_ABC& time
     xml::xifstream xis( config.GetPhysicalFile() );
     xis >> xml::start( "physical" );
 
-    InitializeType< MIL_Report                     >( xis, config, "reports"             );
-    InitializeType< PHY_MaintenanceWorkRate        >( xis, config, "maintenance"         );
-    InitializeType< PHY_MaintenanceResourcesAlarms >( xis, config, "maintenance"         );
-    InitializeType< PHY_Experience                 >( xis, config, "human-factors"       );
-    InitializeType< PHY_Tiredness                  >( xis, config, "human-factors"       );    
-    InitializeType< PHY_Volume                     >( xis, config, "volumes"             );
-    InitializeType< PHY_Protection                 >( xis, config, "protections"         );
-    InitializeType< PHY_DotationNature             >( xis, config, "dotation-natures"    );
-    InitializeType< PHY_DotationType               >( xis, config, "dotations"           );
-    InitializeType< MIL_ObjectFactory              >( xis, config, "objects"             );
-    InitializeType< PHY_BreakdownType              >( xis, config, "breakdowns"          );
-    InitializeType< PHY_LauncherType               >( xis, config, "launchers"           );
+    InitializeType< MIL_Report                     >( xis, config, "reports"           );
+    InitializeType< PHY_MaintenanceWorkRate        >( xis, config, "maintenance"       );
+    InitializeType< PHY_MaintenanceResourcesAlarms >( xis, config, "maintenance"       );
+    InitializeType< PHY_Experience                 >( xis, config, "human-factors"     );
+    InitializeType< PHY_Tiredness                  >( xis, config, "human-factors"     );    
+    InitializeType< PHY_Volume                     >( xis, config, "volumes"           );
+    InitializeType< PHY_Protection                 >( xis, config, "protections"       );
+    InitializeType< PHY_DotationNature             >( xis, config, "dotation-natures"  );
+    InitializeType< PHY_DotationType               >( xis, config, "dotations"         );
+    InitializeType< MIL_ObjectFactory              >( xis, config, "objects"           );
+    InitializeType< PHY_BreakdownType              >( xis, config, "breakdowns"        );
+    InitializeType< PHY_LauncherType               >( xis, config, "launchers"         );
     InitializeWeapons    ( xis, config, time, effects );
     InitializeSensors    ( xis, config, time );
     InitializeComposantes( xis, config, time );
-    InitializeType< MIL_AgentTypePion              >( xis, config, "units"               );
-    InitializeType< MIL_AutomateType               >( xis, config, "automats"            );
-    InitializeType< MIL_KnowledgeGroupType         >( xis, config, "knowledge-groups"    );
-    InitializeType< MIL_NbcAgentType               >( xis, config, "nbc"                 );
-    InitializeType< MIL_FireClass                  >( xis, config, "fire"                );
-    InitializeType< MIL_MedicalTreatmentType       >( xis, config, "medical-treatment"   );
-    InitializeType< PHY_SupplyResourcesAlarms      >( xis, config, "supply"              );   
-    InitializeType< PHY_Convoy_ABC                 >( xis, config, "supply"              );
-    InitializeType< PHY_MedicalResourcesAlarms     >( xis, config, "health"              );
-    InitializeType< PHY_RolePion_Communications    >( xis, config, "communications"      );
-    InitializeType< MIL_PopulationType             >( xis, config, "populations"         );
+    InitializeType< MIL_AgentTypePion              >( xis, config, "units"             );
+    InitializeType< MIL_AutomateType               >( xis, config, "automats"          );
+    InitializeType< MIL_KnowledgeGroupType         >( xis, config, "knowledge-groups"  );
+    InitializeType< MIL_NbcAgentType               >( xis, config, "nbc"               );
+    InitializeType< MIL_FireClass                  >( xis, config, "fire"              );
+    InitializeType< MIL_MedicalTreatmentType       >( xis, config, "medical-treatment" );
+    InitializeType< PHY_SupplyResourcesAlarms      >( xis, config, "supply"            );   
+    InitializeType< PHY_Convoy_ABC                 >( xis, config, "supply"            );
+    InitializeType< PHY_MedicalResourcesAlarms     >( xis, config, "health"            );
+    InitializeType< PHY_RolePion_Communications    >( xis, config, "communications"    );
+    InitializeType< MIL_PopulationType             >( xis, config, "populations"       );
     InitializeMedical( xis, config );
 
     xis >> xml::end(); // physical  
@@ -189,19 +188,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , knowledgeGroupFactory_        ( new KnowledgeGroupFactory() )
     , armyFactory_                  ( new ArmyFactory( *automateFactory_, *formationFactory_, *pObjectManager_, *populationFactory_, *knowledgeGroupFactory_ ) )
 {
-    if( !singleton_ )
-        singleton_ = this;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::GetSingleton
-// Created: SBO 2007-11-06
-// -----------------------------------------------------------------------------
-MIL_EntityManager& MIL_EntityManager::GetSingleton()
-{
-    if( !singleton_ )
-        throw std::runtime_error( "Entity manager singleton not initialized." );
-    return *singleton_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -307,7 +294,7 @@ void MIL_EntityManager::InitializeWeapons( xml::xistream& xis, MIL_Config& confi
     xml::xifstream xisWeapons( strFile );
     config.AddFileToCRC( strFile );
 
-    PHY_WeaponType::Initialize( effects, time, xisWeapons );
+    PHY_WeaponType::Initialize( effects, time, xisWeapons, MIL_AgentServer::GetWorkspace().GetTimeStepDuration() );
 }
 
 // -----------------------------------------------------------------------------
@@ -364,9 +351,6 @@ MIL_EntityManager::~MIL_EntityManager()
     MIL_LimaFunction              ::Terminate();
 
     delete pObjectManager_;
-
-    if( this == singleton_ )
-        singleton_ = 0;
 }
 
 // =============================================================================

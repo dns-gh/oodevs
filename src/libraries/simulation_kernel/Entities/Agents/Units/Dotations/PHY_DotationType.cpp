@@ -10,6 +10,8 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
+#include "MIL_AgentServer.h"
+#include "Entities/MIL_EntityManager.h"
 #include "PHY_DotationType.h"
 #include "PHY_DotationCategory.h"
 #include "PHY_DotationLogisticType.h"

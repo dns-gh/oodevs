@@ -156,7 +156,7 @@ void PHY_Human::CancelLogisticRequest()
     if( pMedicalState_ )
     {
         PHY_Human oldHumanState( *this );
-        const_cast< MIL_AgentPion& >( pComposante_->GetComposante().GetRole().GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanBackFromMedical, *pMedicalState_ );
+        const_cast< MIL_Agent_ABC& >( pComposante_->GetComposante().GetRole().GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanBackFromMedical, *pMedicalState_ );
         if( pComposante_->GetComposante().GetState() == PHY_ComposanteState::maintenance_ )
             nLocation_ = eMaintenance;
         else 
@@ -175,7 +175,7 @@ void PHY_Human::CancelLogisticRequest()
 void PHY_Human::Evacuate( MIL_AutomateLOG& destinationTC2 )
 {
     if( NeedEvacuation() )
-        const_cast< MIL_AgentPion& >( pComposante_->GetComposante().GetRole().GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanEvacuatedByThirdParty, *this, destinationTC2 );
+        const_cast< MIL_Agent_ABC& >( pComposante_->GetComposante().GetRole().GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanEvacuatedByThirdParty, *this, destinationTC2 );
 }
 
 // -----------------------------------------------------------------------------
@@ -418,7 +418,7 @@ void PHY_Human::Update()
 
     // Demande santé
     if( NeedMedical() && !pMedicalState_ )
-        const_cast< MIL_AgentPion& >( pComposante_->GetComposante().GetRole().GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanWaitingForMedical, *this );
+        const_cast< MIL_Agent_ABC& >( pComposante_->GetComposante().GetRole().GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanWaitingForMedical, *this );
 }
 
 // -----------------------------------------------------------------------------

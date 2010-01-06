@@ -56,7 +56,7 @@ public:
     virtual void NotifySurrendered      () {};    
     virtual void NotifySurrenderCanceled() {};
 
-    virtual void Update    ( bool bIsDead ) {};
+    virtual void Update    ( bool /*bIsDead*/ ) {};
     virtual void Clean     () {};
     virtual bool HasChanged() const { return true; };
     //@}

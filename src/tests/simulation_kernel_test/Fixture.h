@@ -16,6 +16,7 @@
 #include "StubMIL_AutomateType.h"
 #include "Decision/DEC_Model.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Effects/MIL_EffectManager.h"
 #include "AlgorithmsFactories.h"
 #include <xeumeuleu/xml.h>
 
@@ -41,6 +42,7 @@ struct FixturePion
     std::auto_ptr< StubMIL_AutomateType >  pTypeAutomat_;
     std::auto_ptr< MIL_Automate >          pAutomat_;
     std::auto_ptr< StubMIL_AgentPion >     pPion_;
+    MIL_EffectManager                      effectManager_;
 };
 
 struct FixtureAutomate
@@ -58,6 +60,7 @@ struct FixtureAutomate
     std::auto_ptr< DEC_Model >            pModel_;
     std::auto_ptr< StubMIL_AutomateType > pType_;
     std::auto_ptr< MIL_Automate >         pAutomat_;
+    MIL_EffectManager                     effectManager_;
 };
 
 #endif // __Fixture_h_

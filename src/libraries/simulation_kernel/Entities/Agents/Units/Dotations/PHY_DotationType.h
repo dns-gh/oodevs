@@ -12,6 +12,9 @@
 #ifndef __PHY_DotationType_h_
 #define __PHY_DotationType_h_
 
+#include "game_asn/Simulation.h"
+
+class MIL_EntityManager_ABC;
 class PHY_DotationCategory;
 class PHY_DotationLogisticType;
 

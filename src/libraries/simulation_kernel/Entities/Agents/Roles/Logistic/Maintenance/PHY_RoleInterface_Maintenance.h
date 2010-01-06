@@ -17,7 +17,7 @@
 
 class PHY_MaintenanceComposanteState;
 class PHY_ComposantePion;
-class MIL_AgentPion;
+class MIL_Agent_ABC;
 class PHY_MaintenanceWorkRate;
 class PHY_ComposanteTypePion;
 class PHY_Breakdown;
@@ -57,7 +57,7 @@ public:
     virtual void ChangePriorities( const T_AutomateVector&            priorities ) = 0;
     virtual void ChangeWorkRate  ( const PHY_MaintenanceWorkRate&     workRate   ) = 0;
 
-    virtual PHY_MaintenanceComposanteState* HandleComposanteForTransport    ( MIL_AgentPion& pion, PHY_ComposantePion& composante ) = 0;
+    virtual PHY_MaintenanceComposanteState* HandleComposanteForTransport    ( MIL_Agent_ABC& pion, PHY_ComposantePion& composante ) = 0;
     virtual bool                            HandleComposanteForTransport    ( PHY_MaintenanceComposanteState& composanteState ) = 0;
     virtual int                             GetAvailabilityScoreForTransport( const PHY_ComposantePion& composante ) = 0;
 

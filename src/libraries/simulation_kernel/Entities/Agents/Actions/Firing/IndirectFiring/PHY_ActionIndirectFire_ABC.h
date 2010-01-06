@@ -20,7 +20,7 @@ namespace firing
 }
 
 class PHY_DotationCategory;
-class MIL_AgentPion;
+class MIL_Agent_ABC;
 
 // =============================================================================
 // @class  PHY_ActionIndirectFire_ABC
@@ -33,7 +33,7 @@ public:
     typedef MIL_AgentPion ActorType;        
 
 public:
-             PHY_ActionIndirectFire_ABC( MIL_AgentPion& pion, const PHY_DotationCategory* pDotationCategory, float rNbInterventionType );
+             PHY_ActionIndirectFire_ABC( MIL_Agent_ABC& pion, const PHY_DotationCategory* pDotationCategory, float rNbInterventionType );
     virtual ~PHY_ActionIndirectFire_ABC();
 
 protected:

@@ -126,6 +126,6 @@ void HLA_DirectFire::ApplyFire( const PHY_DotationCategory& ammunition, MIL_Agen
     if( ! typeTargets.empty() )
     {
         MIL_Effect_DirectFirePion* pFire = new MIL_Effect_DirectFirePion( ammunition, target, *typeTargets.front(), fireResult );
-        MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pFire );
+        MIL_EffectManager::GetEffectManager().Register( *pFire );
     }
 }

@@ -28,7 +28,7 @@ using namespace firing;
 // Name: PHY_MunitionForIndirectFireData constructor
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
-PHY_MunitionForIndirectFireData::PHY_MunitionForIndirectFireData( MIL_AgentPion& firer, const PHY_IndirectFireDotationClass& indirectWeaponCategory, const MT_Vector2D& vTargetPosition  )
+PHY_MunitionForIndirectFireData::PHY_MunitionForIndirectFireData( MIL_Agent_ABC& firer, const PHY_IndirectFireDotationClass& indirectWeaponCategory, const MT_Vector2D& vTargetPosition  )
     : firer_                 ( firer )
     , indirectWeaponCategory_( indirectWeaponCategory )
     , vTargetPosition_       ( vTargetPosition )

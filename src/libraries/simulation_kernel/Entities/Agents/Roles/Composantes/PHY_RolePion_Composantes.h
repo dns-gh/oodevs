@@ -48,6 +48,7 @@ namespace moving
 }
 class OnComponentComputer_ABC;
 class OnComponentLendedFunctorComputer_ABC;
+class MIL_AgentPion_ABC;
 
 // =============================================================================
 // @class  PHY_RolePion_Composantes
@@ -72,7 +73,7 @@ class PHY_RolePion_Composantes : public PHY_RoleInterface_Composantes
 
 
 public:
-    explicit PHY_RolePion_Composantes( MIL_AgentPion& pion );
+    explicit PHY_RolePion_Composantes( MIL_Agent_ABC& pion, bool initialise = true );
     virtual ~PHY_RolePion_Composantes();
 
     //! @name CheckPoints
@@ -201,7 +202,7 @@ public:
     virtual       MT_Float       GetOperationalState     () const;
     virtual       double       GetMajorOperationalState() const;
     virtual       bool           IsUsable                () const;                    
-    virtual const MIL_AgentPion& GetPion                 () const;    
+    virtual const MIL_Agent_ABC& GetPion                 () const;    
     //@}
 
     //! @name Network
@@ -284,7 +285,7 @@ private:
     //@}
 
 private:
-    MIL_AgentPion&         pion_;
+    MIL_Agent_ABC&         pion_;
     PHY_ComposantePion::T_ComposantePionVector composantes_;
     T_ComposanteTypeMap    composanteTypes_;
     uint                   nNbrComposanteChanged_;

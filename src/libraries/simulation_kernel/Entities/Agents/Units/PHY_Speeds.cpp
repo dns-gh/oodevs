@@ -18,7 +18,7 @@
 // Name: PHY_Speeds constructor
 // Created: AGE 2005-02-03
 // -----------------------------------------------------------------------------
-PHY_Speeds::PHY_Speeds( xml::xistream& xis )
+PHY_Speeds::PHY_Speeds( xml::xistream& xis, unsigned int timeStepDuration )
     : rMaxSpeed_                ( -1. )
     , rBaseSpeed_               ( -1. )
     , rAreaSpeeds_              ( new MT_Float[ 8  ] ) // $$$$ AGE 2005-02-03: Use a vector
@@ -35,9 +35,9 @@ PHY_Speeds::PHY_Speeds( xml::xistream& xis )
     std::fill( rLinearSpeeds_, rLinearSpeeds_ + 11, -1. );
 
     xis >> xml::optional()
-        >> xml::list( "speeds", *this, &PHY_Speeds::ReadSpeed );
+        >> xml::list( "speeds", *this, &PHY_Speeds::ReadSpeed, timeStepDuration );
 
-    CheckInitialization( xis );
+    CheckInitialization( xis, timeStepDuration );
     GenerateMasks();
 }
 
@@ -92,13 +92,13 @@ PHY_Speeds::~PHY_Speeds()
 // Name: PHY_Speeds::ReadSpeed
 // Created: ABL 2007-07-23
 // -----------------------------------------------------------------------------
-void PHY_Speeds::ReadSpeed( xml::xistream& xis )
+void PHY_Speeds::ReadSpeed( xml::xistream& xis, unsigned int timeStepDuration )
 {
     xis >> xml::attribute( "max", rMaxSpeed_ );
     if( rMaxSpeed_ <= 0 )
         xis.error( "speeds: max <= 0" );
 
-    rMaxSpeed_ = MIL_Tools::ConvertSpeedMosToSim( rMaxSpeed_ );
+    rMaxSpeed_ *= 1000. * timeStepDuration / 3600.;
     xis >> xml::list( "speed", *this, &PHY_Speeds::ReadTerrain );
 }
 
@@ -127,11 +127,19 @@ void PHY_Speeds::ReadTerrain( xml::xistream& xis )
     rMaxSpeed_ = std::max( rMaxSpeed_, speed );
 }
 
+namespace
+{
+    double ConvertSpeedToMOS( double speed, unsigned int timeStepDuration )
+    {
+        return speed * 3600. / timeStepDuration / 1000.;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_Speeds::CheckInitialization
 // Created: AGE 2005-02-03
 // -----------------------------------------------------------------------------
-void PHY_Speeds::CheckInitialization( xml::xistream& xis )
+void PHY_Speeds::CheckInitialization( xml::xistream& xis, unsigned int timeStepDuration )
 {
     for( unsigned nOffset = 0; nOffset < 8; ++nOffset )
     {
@@ -139,7 +147,7 @@ void PHY_Speeds::CheckInitialization( xml::xistream& xis )
         if( speed == -1 )
         {
             speed = 0;
-            MT_LOG_WARNING_MSG( "Speed for " << MIL_Tools::GetLandTypeName( TerrainData( (unsigned char)(1<<nOffset), 0, 0, 0 ) ) << " not initialized. Defaulted to " << MIL_Tools::ConvertSpeedSimToMos( speed ) << " km/h." );
+            MT_LOG_WARNING_MSG( "Speed for " << MIL_Tools::GetLandTypeName( TerrainData( (unsigned char)(1<<nOffset), 0, 0, 0 ) ) << " not initialized. Defaulted to 0 km/h." );
         }
     }
     for( unsigned nOffset = 0; nOffset < 8; ++nOffset )
@@ -148,7 +156,7 @@ void PHY_Speeds::CheckInitialization( xml::xistream& xis )
         if( speed == -1 )
         {
             speed = *( rAreaSpeeds_ + nOffset );
-            MT_LOG_WARNING_MSG( "Speed for " << MIL_Tools::GetLandTypeName( TerrainData( 0, (unsigned char)(1<<nOffset), 0, 0 ) ) << " not initialized. Defaulted to " << MIL_Tools::ConvertSpeedSimToMos( speed ) << " km/h." );
+            MT_LOG_WARNING_MSG( "Speed for " << MIL_Tools::GetLandTypeName( TerrainData( 0, (unsigned char)(1<<nOffset), 0, 0 ) ) << " not initialized. Defaulted to " << ConvertSpeedToMOS( speed, timeStepDuration ) << " km/h." );
         }
     }
     for( unsigned nOffset = 0; nOffset < 10; ++nOffset )
@@ -163,7 +171,7 @@ void PHY_Speeds::CheckInitialization( xml::xistream& xis )
     if( *( rLinearSpeeds_ + 10 ) == -1 )
     {
         *( rLinearSpeeds_ + 10 ) = SpeedFor( TerrainData::SmallRoad() );
-        MT_LOG_WARNING_MSG( "Speed for " << MIL_Tools::GetLandTypeName( TerrainData( 0, 0, 0, (unsigned short)(1<<10) ) ) << " not initialized. Defaulted to " <<  MIL_Tools::ConvertSpeedSimToMos( *( rLinearSpeeds_ + 10 ) ) << " km/h." );
+        MT_LOG_WARNING_MSG( "Speed for " << MIL_Tools::GetLandTypeName( TerrainData( 0, 0, 0, (unsigned short)(1<<10) ) ) << " not initialized. Defaulted to " <<  ConvertSpeedToMOS( *( rLinearSpeeds_ + 10 ), timeStepDuration ) << " km/h." );
         
     }
     if( rMaxSpeed_ == 0. )

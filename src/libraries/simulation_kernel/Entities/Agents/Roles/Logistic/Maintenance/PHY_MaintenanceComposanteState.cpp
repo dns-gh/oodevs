@@ -25,7 +25,7 @@ BOOST_CLASS_EXPORT_GUID( PHY_MaintenanceComposanteState, "PHY_MaintenanceComposa
 // Name: PHY_MaintenanceComposanteState constructor
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
-PHY_MaintenanceComposanteState::PHY_MaintenanceComposanteState( MIL_AgentPion& pion, PHY_ComposantePion& composante )
+PHY_MaintenanceComposanteState::PHY_MaintenanceComposanteState( MIL_Agent_ABC& pion, PHY_ComposantePion& composante )
     : nID_                ( MIL_IDManager::GetFreeId() )
     , nCreationTick_      ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
     , pPion_              ( &pion )

@@ -10315,4 +10315,34 @@
     <setup installation-time="2m" uninstallation-time="2m"/>
     <nbc decontamination-delay="2850s"/>
   </unit>
+  <unit decisional-model="SAM" id="424" name="Section Brouillage" type="Pion ASS">
+    <nature atlas-nature="Vehicule" level="ooo" nature="combat/field artillery"/>
+    <equipments>
+      <equipment count="2" crew="6" major="true" type="Equipe Brouillage"/>
+      <equipment count="3" crew="1" type="VAB 12.7 1pers"/>
+      <equipment count="1" crew="2" type="VTC P4"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="4" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="100" logistic-threshold="50" name="LTO Obus brouillage" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+  </unit>
 </units>

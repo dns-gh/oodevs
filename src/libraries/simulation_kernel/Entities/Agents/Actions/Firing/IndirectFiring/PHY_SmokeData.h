@@ -14,7 +14,7 @@
 
 #include "simulation_kernel/FireData_ABC.h"
 
-class MIL_AgentPion;
+class MIL_Agent_ABC;
 class PHY_Weapon;
 class PHY_ComposantePion;
 class PHY_IndirectFireDotationClass;
@@ -29,7 +29,7 @@ class PHY_SmokeData : public FireData_ABC
 {
 
 public:
-     PHY_SmokeData( MIL_AgentPion& firer, const PHY_IndirectFireDotationClass& indirectWeaponCategory, uint nNbrAmmo );
+     PHY_SmokeData( MIL_Agent_ABC& firer, const PHY_IndirectFireDotationClass& indirectWeaponCategory, uint nNbrAmmo );
     ~PHY_SmokeData();
 
     //! @name Operations
@@ -41,7 +41,7 @@ public:
 private:
     //! @name Member data
     //@{
-    MIL_AgentPion&                    firer_;
+    MIL_Agent_ABC&                    firer_;
     const PHY_IndirectFireDotationClass& indirectWeaponCategory_;
     const uint                              nNbrAmmo_;
           PHY_Weapon*                       pWeapon_;

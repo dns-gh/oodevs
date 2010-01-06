@@ -203,6 +203,9 @@ public:
 
         // For smoke
         ADN_Type_Int                                                          nMineNumber_;
+
+        // For scrambling
+        std::string                                                           objectType_;
     };
 
 // *****************************************************************************

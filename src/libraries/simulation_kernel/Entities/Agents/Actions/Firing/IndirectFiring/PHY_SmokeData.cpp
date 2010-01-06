@@ -27,7 +27,7 @@ using namespace firing;
 // Name: PHY_SmokeData constructor
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
-PHY_SmokeData::PHY_SmokeData( MIL_AgentPion& firer, const PHY_IndirectFireDotationClass& indirectWeaponCategory, uint nNbrAmmo )
+PHY_SmokeData::PHY_SmokeData( MIL_Agent_ABC& firer, const PHY_IndirectFireDotationClass& indirectWeaponCategory, uint nNbrAmmo )
     : firer_                 ( firer )
     , indirectWeaponCategory_( indirectWeaponCategory )
     , nNbrAmmo_              ( nNbrAmmo )

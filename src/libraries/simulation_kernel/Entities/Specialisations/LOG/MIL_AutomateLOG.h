@@ -21,6 +21,7 @@ namespace xml
 }
 
 class DEC_DataBase;
+class MIL_Agent_ABC;
 class MIL_AutomateTypeLOG;
 class PHY_MaintenanceComposanteState;
 class PHY_MedicalHumanState;
@@ -86,7 +87,7 @@ public:
 
     //! @name Maintenance
     //@{
-    PHY_MaintenanceComposanteState* MaintenanceHandleComposanteForTransport( MIL_AgentPion& pion, PHY_ComposantePion& composante );
+    PHY_MaintenanceComposanteState* MaintenanceHandleComposanteForTransport( MIL_Agent_ABC& pion, PHY_ComposantePion& composante );
     bool                            MaintenanceHandleComposanteForTransport( PHY_MaintenanceComposanteState& composanteState );
     bool                            MaintenanceHandleComposanteForRepair   ( PHY_MaintenanceComposanteState& composanteState );
     //@}

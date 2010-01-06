@@ -198,7 +198,7 @@ MT_Float PHY_DotationCategory::GetAttritionScore( const PHY_Protection& protecti
 // Name: PHY_DotationCategory::ApplyIndirectFireEffect
 // Created: NLD 2004-10-12
 // -----------------------------------------------------------------------------
-void PHY_DotationCategory::ApplyIndirectFireEffect( const MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const
+void PHY_DotationCategory::ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const
 {
     assert( pIndirectFireData_ );
     const MT_Float rInterventionTypeFired = pIndirectFireData_->ConvertToInterventionType( nNbrAmmoFired );

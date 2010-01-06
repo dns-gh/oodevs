@@ -19,8 +19,8 @@
 
 class MIL_Mission_ABC;
 
-class NET_ASN_MsgAutomatAttributes;
 class DEC_Decision_ABC;
+class NET_ASN_MsgAutomatAttributes;
 
 enum E_ForceRatioState;
 enum E_RulesOfEngagementState;
@@ -35,7 +35,7 @@ class DEC_AutomateDecision : public DEC_Decision< MIL_Automate >
 {
 
 public:
-    explicit DEC_AutomateDecision( MIL_Automate& automate, DEC_DataBase& database );
+             DEC_AutomateDecision( MIL_Automate& automate, DEC_DataBase& database );
     virtual ~DEC_AutomateDecision();
 
     //! @name CheckPoints

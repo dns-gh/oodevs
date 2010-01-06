@@ -11,7 +11,7 @@
 #define __MIL_Singletons_h_
 
 class MIL_Time_ABC;
-class MIL_EntityManager;
+class MIL_EntityManager_ABC;
 class HLA_Federate;
 class MIL_ProfilerMgr;
 class MIL_EffectManager;
@@ -28,11 +28,14 @@ class MIL_Singletons
 public:
     //! @name Operations
     //@{
-    static MIL_Time_ABC&      GetTime();
-    static MIL_EntityManager& GetEntityManager();
-    static HLA_Federate*      GetHla();
-    static MIL_ProfilerMgr&   GetProfiler();
-    static MIL_EffectManager& GetEffectManager();
+    static MIL_Time_ABC&          GetTime();
+    static MIL_EntityManager_ABC& GetEntityManager();
+    static HLA_Federate*          GetHla();
+    static MIL_ProfilerMgr&       GetProfiler();
+    static MIL_EffectManager&     GetEffectManager();
+
+    static void RegisterTime( MIL_Time_ABC& time );
+    static void UnregisterTime( MIL_Time_ABC& time );
     //@}
 };
 

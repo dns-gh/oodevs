@@ -3259,4 +3259,9 @@
     <reloading duration="5s" munition="1"/>
     <indirect-fire average-speed="1200" max-range="18500" min-range="1000"/>
   </weapon-system>
+  <weapon-system launcher="LTO Brouilleur" munition="LTO Obus brouillage">
+    <burst duration="1s" munition="1"/>
+    <reloading duration="1s" munition="1"/>
+    <indirect-fire average-speed="1200" max-range="50000" min-range="0"/>
+  </weapon-system>
 </weapons>

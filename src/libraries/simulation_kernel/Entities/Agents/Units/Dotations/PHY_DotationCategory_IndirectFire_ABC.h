@@ -16,11 +16,12 @@ namespace xml
 {
 }
 
-class PHY_DotationCategory;
-class PHY_IndirectFireDotationClass;
-class PHY_FireResults_ABC;
 class MIL_AgentPion;
 class MIL_Agent_ABC;
+class MIL_EntityManager_ABC;
+class PHY_DotationCategory;
+class PHY_FireResults_ABC;
+class PHY_IndirectFireDotationClass;
 
 // =============================================================================
 // @class  PHY_DotationCategory_IndirectFire_ABC
@@ -43,7 +44,7 @@ public:
     //@{
             MT_Float ConvertToInterventionType( uint nNbr ) const;
             MT_Float ConvertToNbrAmmo         ( MT_Float rNbrIT ) const;
-    virtual void     ApplyEffect              ( const MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const = 0;
+    virtual void     ApplyEffect              ( const MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const = 0;
     virtual bool     HasHit                   ( const MIL_Agent_ABC& target ) const;
     //@}
 

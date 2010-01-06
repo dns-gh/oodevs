@@ -42,7 +42,7 @@ class DEC_RolePion_Decision : public DEC_Decision< MIL_AgentPion >
 {
 
 public:
-    explicit DEC_RolePion_Decision( MIL_AgentPion& pion, DEC_DataBase& database );
+             DEC_RolePion_Decision( MIL_AgentPion& pion, DEC_DataBase& database );
     virtual ~DEC_RolePion_Decision();
 
     //! @name CheckPoints

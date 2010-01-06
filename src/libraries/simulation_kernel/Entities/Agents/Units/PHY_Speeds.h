@@ -33,7 +33,7 @@ class PHY_Speeds
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PHY_Speeds( xml::xistream& xis );
+             PHY_Speeds( xml::xistream& xis, unsigned int timeStepDuration );
     explicit PHY_Speeds( const moving::PHY_RoleAction_Moving& role );
     virtual ~PHY_Speeds();
     //@}
@@ -59,9 +59,9 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadSpeed          ( xml::xistream& xis );
+    void ReadSpeed          ( xml::xistream& xis, unsigned int timeStepDuration );
     void ReadTerrain        ( xml::xistream& xis );
-    void CheckInitialization( xml::xistream& xis );
+    void CheckInitialization( xml::xistream& xis, unsigned int timeStepDuration );
     MT_Float& SpeedFor( const TerrainData& data );
     void GenerateMasks();
     //@}

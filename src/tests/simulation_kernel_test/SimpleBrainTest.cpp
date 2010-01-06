@@ -113,10 +113,7 @@ public:
     {
         brain.RegisterObject( "myself", this );
     }
-    void UpdateMeKnowledge( directia::Brain& brain )
-    {
-
-    }
+    void UpdateMeKnowledge( directia::Brain& brain ) {}
 
     void UsedByDIA() {}
     void ReleasedByDIA () {}

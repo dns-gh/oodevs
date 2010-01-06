@@ -42,11 +42,16 @@ public:
     //! @name Operations
     //@{
     virtual       MIL_Army_ABC&       GetArmy          () const;
+    virtual       MIL_KnowledgeGroup& GetKnowledgeGroup() const;
     virtual const MIL_AgentType_ABC&  GetType          () const;
     virtual bool                      IsDead           () const;
     virtual bool                      IsNeutralized    () const;
     virtual bool                      IsPC             () const;
+    virtual bool                      IsAutonomous     () const;
     virtual const AlgorithmsFactories& GetAlgorithms() const;
+    
+    virtual const MIL_Automate&       GetAutomate() const;
+    virtual       MIL_Automate&       GetAutomate();
 
     virtual bool BelongsTo( const MIL_KnowledgeGroup& group ) const;
 
@@ -57,6 +62,7 @@ public:
     //@{
     virtual void NotifyAttackedBy( MIL_AgentPion& pion );
     virtual void NotifyAttackedBy( MIL_Population& population );
+    virtual void MagicMove( const MT_Vector2D& );
     //@}
 
     //! @name Knowledge

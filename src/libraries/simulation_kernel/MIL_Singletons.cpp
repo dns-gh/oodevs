@@ -11,6 +11,12 @@
 #include "MIL_Singletons.h"
 #include "MIL_AgentServer.h"
 #include "Entities/MIL_EntityManager.h"
+#include "Entities/Effects/MIL_EffectManager.h"
+
+namespace
+{
+    MIL_Time_ABC* pTime_;
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Singletons::GetTime
@@ -18,16 +24,38 @@
 // -----------------------------------------------------------------------------
 MIL_Time_ABC& MIL_Singletons::GetTime()
 {
-    return MIL_AgentServer::GetWorkspace();
+    return pTime_ ? *pTime_ : MIL_AgentServer::GetWorkspace();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Singletons::RegisterTime
+// Created: LDC 2010-01-04
+// -----------------------------------------------------------------------------
+void MIL_Singletons::RegisterTime( MIL_Time_ABC& time )
+{
+    if ( pTime_ )
+        throw std::runtime_error( "Time already registered" );
+    pTime_ = &time;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Singletons::UnregisterTime
+// Created: LDC 2010-01-04
+// -----------------------------------------------------------------------------
+void MIL_Singletons::UnregisterTime( MIL_Time_ABC& time )
+{
+    if ( &time != pTime_ )
+        throw std::runtime_error( "Unregistering wrong time" );
+    pTime_ = 0;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Singletons::GetEntityManager
 // Created: AGE 2007-08-13
 // -----------------------------------------------------------------------------
-MIL_EntityManager& MIL_Singletons::GetEntityManager()
+MIL_EntityManager_ABC& MIL_Singletons::GetEntityManager()
 {
-    return MIL_EntityManager::GetSingleton();
+    return MIL_EntityManager_ABC::GetSingleton();
 }
 
 // -----------------------------------------------------------------------------
@@ -54,6 +82,5 @@ MIL_ProfilerMgr& MIL_Singletons::GetProfiler()
 // -----------------------------------------------------------------------------
 MIL_EffectManager& MIL_Singletons::GetEffectManager()
 {
-    return MIL_AgentServer::GetWorkspace().GetEffectManager();
-    
+    return MIL_EffectManager::GetEffectManager();
 }

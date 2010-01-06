@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_Effect_IndirectFire.h"
 #include "MIL_AgentServer.h"
+#include "MIL_Singletons.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 #include "Entities/Agents/Units/Weapons/PHY_WeaponDataType_IndirectFire.h"
@@ -29,7 +30,7 @@
 // Name: MIL_Effect_IndirectFire constructor
 // Created: NLD 2004-10-11
 // -----------------------------------------------------------------------------
-MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_AgentPion& firer, uint nTargetKnowledgeID, const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory, MT_Float rInterventionTypeToFire )
+MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_Agent_ABC& firer, uint nTargetKnowledgeID, const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory, MT_Float rInterventionTypeToFire )
     : nNbrRefs_                ( 0 )
     , firer_                   ( firer )
     , rInterventionTypeToFire_ ( rInterventionTypeToFire )
@@ -51,7 +52,7 @@ MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_AgentPion& firer, ui
 // Name: MIL_Effect_IndirectFire constructor
 // Created: NLD 2004-10-11
 // -----------------------------------------------------------------------------
-MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_AgentPion& firer, const MT_Vector2D& vTargetPosition, const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory, MT_Float rInterventionTypeToFire )
+MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_Agent_ABC& firer, const MT_Vector2D& vTargetPosition, const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory, MT_Float rInterventionTypeToFire )
     : nNbrRefs_                ( 0 )
     , firer_                   ( firer )
     , rInterventionTypeToFire_ ( rInterventionTypeToFire )
@@ -126,7 +127,7 @@ void MIL_Effect_IndirectFire::NotifyAmmoFired( const PHY_WeaponDataType_Indirect
     UpdateTargetPositionFromKnowledge();
 
     const MT_Float rNewTimeBeforeImpact = vSourcePosition_.Distance( vTargetPosition_ ) / weaponType.GetAverageSpeed();
-    rImpactTimeStep_ = std::max( rImpactTimeStep_, rNewTimeBeforeImpact + MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() );
+    rImpactTimeStep_ = std::max( rImpactTimeStep_, rNewTimeBeforeImpact + MIL_Singletons::GetTime().GetCurrentTick() );
     
     nNbrAmmoFired_ += nNbrAmmoReserved;
     if( indirectDotationCategory_.ConvertToInterventionType( nNbrAmmoFired_ ) >= rInterventionTypeToFire_ )
@@ -149,7 +150,7 @@ bool MIL_Effect_IndirectFire::Execute()
     if( !bIsFlying_ )
         return true;
 
-    if( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() < rImpactTimeStep_ )
+    if( MIL_Singletons::GetTime().GetCurrentTick() < rImpactTimeStep_ )
         return true;
 
     if( nNbrAmmoFired_ > 0 )
@@ -176,7 +177,7 @@ void MIL_Effect_IndirectFire::StartFlying()
     if( !bIsFlying_ )
     {
         bIsFlying_ = true;
-        MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().RegisterFlyingShell( *this );
+        MIL_EffectManager::GetEffectManager().RegisterFlyingShell( *this );
     }
 }
 
@@ -189,7 +190,7 @@ void MIL_Effect_IndirectFire::StopFlying()
     if( bIsFlying_ )
     {
         bIsFlying_ = false;
-        MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().UnregisterFlyingShell( *this );
+        MIL_EffectManager::GetEffectManager().UnregisterFlyingShell( *this );
     }
 
     if( pFireResult_ )

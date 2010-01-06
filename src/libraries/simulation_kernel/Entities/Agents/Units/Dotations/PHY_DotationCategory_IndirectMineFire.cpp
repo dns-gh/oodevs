@@ -11,12 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_DotationCategory_IndirectMineFire.h"
-#include "MIL_AgentServer.h"
-#include "Entities/MIL_EntityManager.h"
-#include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Objects/MIL_Object_ABC.h"
-#include "Entities/Objects/ConstructionAttribute.h"
-#include "simulation_terrain/TER_Localisation.h"
 #include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
@@ -33,7 +27,7 @@ PHY_DotationCategory_IndirectFire_ABC& PHY_DotationCategory_IndirectMineFire::Cr
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
 PHY_DotationCategory_IndirectMineFire::PHY_DotationCategory_IndirectMineFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis )
-    : PHY_DotationCategory_IndirectFire_ABC( type, dotationCategory, xis )
+    : PHY_DotationCategory_IndirectObjectCreationFire( type, dotationCategory, xis, "zone minee par dispersion" )
 {
     xis >> xml::attribute( "mine-count", nNbrObjects_ );
 }
@@ -45,30 +39,4 @@ PHY_DotationCategory_IndirectMineFire::PHY_DotationCategory_IndirectMineFire( co
 PHY_DotationCategory_IndirectMineFire::~PHY_DotationCategory_IndirectMineFire()
 {
     // NOTHING
-}
-  
-// -----------------------------------------------------------------------------
-// Name: PHY_DotationCategory_IndirectMineFire::ApplyEffect
-// Created: NLD 2004-10-12
-// -----------------------------------------------------------------------------
-void PHY_DotationCategory_IndirectMineFire::ApplyEffect( const MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& /*fireResult*/ ) const
-{
-    MT_Vector2D vFireDirection( 0., 1. );
-    if( vTargetPosition != vSourcePosition )
-        vFireDirection = ( vTargetPosition - vSourcePosition ).Normalize();
-    MT_Vector2D vRotatedFireDirection = vFireDirection;
-    vRotatedFireDirection.Rotate90();
-
-    vFireDirection        *= ( rInterventionTypeFired * rDispersionX_ );
-    vRotatedFireDirection *= ( rInterventionTypeFired * rDispersionY_ );
-
-    T_PointVector points; points.reserve( 3 );
-    points.push_back( vTargetPosition                         );
-    points.push_back( vTargetPosition + vFireDirection        );
-    points.push_back( vTargetPosition + vRotatedFireDirection );
-    const TER_Localisation localisation( TER_Localisation::eEllipse, points );
-
-    MIL_Object_ABC* pObject = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( "zone minee par dispersion", firer.GetArmy(), localisation );
-    ConstructionAttribute* pAttribute = pObject->RetrieveAttribute< ConstructionAttribute >();
-    pAttribute->Build( 1. );
 }

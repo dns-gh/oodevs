@@ -327,6 +327,7 @@ void ADN_Equipement_Data::IndirectAmmoInfos::CopyFrom( ADN_Equipement_Data::Indi
     deployTime_ = ammoInfos.deployTime_.GetData();
     lifeTime_ = ammoInfos.lifeTime_.GetData();
     nMineNumber_ = ammoInfos.nMineNumber_.GetData();
+    objectType_ = ammoInfos.objectType_;
 }
 
 // -----------------------------------------------------------------------------
@@ -377,6 +378,9 @@ void ADN_Equipement_Data::IndirectAmmoInfos::ReadArchive( xml::xistream& input )
         case eTypeMunitionTirIndirect_Mine:
             input >> xml::attribute( "mine-count", nMineNumber_ );
             break;
+        case eTypeMunitionTirIndirect_Scrambling:
+            input >> xml::attribute( "object-type", objectType_ );
+            break;
     }
 }
 
@@ -410,6 +414,9 @@ void ADN_Equipement_Data::IndirectAmmoInfos::WriteArchive( xml::xostream& output
 
     case eTypeMunitionTirIndirect_Mine:
         output << xml::attribute( "mine-count", nMineNumber_ );
+        break;
+    case eTypeMunitionTirIndirect_Scrambling:
+        output << xml::attribute( "object-type", objectType_ );
         break;
     }
 

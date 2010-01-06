@@ -10,6 +10,7 @@
 #include "DEC_Model_ABC.h"
 #include "Decision/DEC_DataBase.h"
 #include "Decision/Functions/DEC_PathFunctions.h"
+#include "Entities/MIL_EntityManager.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "MT_Tools/MT_CrashHandler.h"
 
@@ -60,8 +61,6 @@ void DEC_Decision<T>::InitBrain( const std::string& brainFile, const std::string
     pBrain_.reset( new directia::Brain( includePath ) );
     pBrain_->GetScriptFunction( "include" )( ( brainFile ),(includePath) );
     database_.InitKnowledges( *pBrain_ );//@TODO MGD Find a better way to merge dia4/dia5
-
-    
 
     pRefs_.reset( new ScriptRefs( *pBrain_) );
     RegisterUserFunctions( *pBrain_ );
@@ -142,6 +141,7 @@ void DEC_Decision<T>::CleanStateAfterCrash()
     _clearfp();
 
 //    DEC_Tools::DisplayDiaStack( GetCurrentInstance(), GetCurrentDebugInfo() ); // $$$$ LDC: Is there a way to dump lua state?
+//    Reset();
 
     EndCleanStateAfterCrash();
 }

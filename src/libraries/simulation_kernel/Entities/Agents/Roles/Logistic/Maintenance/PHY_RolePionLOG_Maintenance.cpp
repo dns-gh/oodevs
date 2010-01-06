@@ -545,7 +545,7 @@ void PHY_RolePionLOG_Maintenance::InsertConsign( PHY_MaintenanceConsign_ABC& con
 // Name: PHY_RolePionLOG_Maintenance::HandleComposanteForTransport
 // Created: NLD 2004-12-28
 // -----------------------------------------------------------------------------
-PHY_MaintenanceComposanteState* PHY_RolePionLOG_Maintenance::HandleComposanteForTransport( MIL_AgentPion& pion, PHY_ComposantePion& composante )
+PHY_MaintenanceComposanteState* PHY_RolePionLOG_Maintenance::HandleComposanteForTransport( MIL_Agent_ABC& pion, PHY_ComposantePion& composante )
 {
     assert( composante.GetBreakdown() );
     

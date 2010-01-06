@@ -64,7 +64,7 @@ public:
 
     //! @name Accessors
     //@{
-    const PHY_UnitType&                       GetUnitType                      () const;
+    virtual const PHY_UnitType&               GetUnitType                      () const;
     const DEC_Model_ABC&                      GetModel                         () const;
           MT_Float                            GetDistanceAvantPoint            ( const TerrainData& nType ) const;
           MT_Float                            GetDistanceAvantLima             () const;

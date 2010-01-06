@@ -15,6 +15,7 @@
 #include "PHY_ActionIndirectFire_ABC.h"
 
 class MIL_Effect_IndirectFire;
+class MIL_EffectManager;
 
 // =============================================================================
 // @class  PHY_ActionIndirectFire_Knowledge

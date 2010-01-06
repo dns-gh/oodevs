@@ -16,22 +16,22 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Knowledge/DEC_Knowledge_Def.h"
 
+class AttritionCapacity;
+class HLA_UpdateFunctor;
+class MIL_Agent_ABC;
+class MIL_Injury_ABC;
+class MIL_PopulationAttitude;
+class MIL_PopulationType;
 class PHY_Composante_ABC;
+class PHY_ComposanteState;
+class PHY_ComposanteTypePion;
+class PHY_DotationCategory;
+class PHY_FireDamages_Agent;
+class PHY_FireResults_ABC;
+class PHY_Human;
+class PHY_MaintenanceComposanteState;
 class PHY_SensorTypeAgent;
 class PHY_Volume;
-class PHY_FireResults_ABC;
-class PHY_DotationCategory;
-class AttritionCapacity;
-class MIL_PopulationType;
-class MIL_PopulationAttitude;
-class MIL_AgentPion;
-class PHY_Human;
-class PHY_ComposanteState;
-class PHY_FireDamages_Agent;
-class PHY_MaintenanceComposanteState;
-class HLA_UpdateFunctor;
-class PHY_ComposanteTypePion;
-class MIL_Injury_ABC;
 
 namespace firing
 {
@@ -144,7 +144,7 @@ public:
     //@{          
     virtual       bool           HasChanged              () const = 0;//@TODO MGD CLEAN ALL hasChanged on interface and move private
     virtual       bool           IsUsable                () const = 0;                    
-    virtual const MIL_AgentPion& GetPion                 () const = 0;    
+    virtual const MIL_Agent_ABC& GetPion                 () const = 0;    
     //@}
 
     //! @name HLA

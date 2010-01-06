@@ -19,6 +19,8 @@ namespace xml
     class xistream;
 }
 
+class MIL_Agent_ABC;
+class MIL_EntityManager_ABC;
 class PHY_DotationType;
 class PHY_DotationNature;
 class PHY_DotationCategory_IndirectFire_ABC;
@@ -26,7 +28,6 @@ class PHY_AmmoDotationClass;
 class PHY_Protection;
 class PHY_DotationLogisticType;
 class PHY_FireResults_ABC;
-class MIL_AgentPion;
 
 // =============================================================================
 // @class  PHY_DotationCategory
@@ -59,7 +60,7 @@ public:
           MT_Float                               GetAttritionScore  ( const PHY_Protection& protectionTarget ) const;
     const PHY_DotationCategory_IndirectFire_ABC* GetIndirectFireData() const;
 
-    void ApplyIndirectFireEffect( const MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const;
+    void ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const;
     //@}
 
     //! @name Packaging

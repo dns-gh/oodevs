@@ -31,6 +31,7 @@ ADN_Tr::T_ConverterTypeMunitionTirIndirect ADN_Tr::munitionTirIndirectConverter_
     T_ConverterTypeMunitionTirIndirect( "fumigene", QT_TRANSLATE_NOOP( "ADN_Tr", "smoke" ), eTypeMunitionTirIndirect_Fumigene ),
     T_ConverterTypeMunitionTirIndirect( "eclairant", QT_TRANSLATE_NOOP( "ADN_Tr", "illumination shell" ), eTypeMunitionTirIndirect_Eclairant ),
     T_ConverterTypeMunitionTirIndirect( "mine", QT_TRANSLATE_NOOP( "ADN_Tr", "mine" ), eTypeMunitionTirIndirect_Mine ),
+    T_ConverterTypeMunitionTirIndirect( "scrambling", QT_TRANSLATE_NOOP( "ADN_Tr", "scrambling" ), eTypeMunitionTirIndirect_Scrambling ),
     T_ConverterTypeMunitionTirIndirect( "", "", (E_TypeMunitionTirIndirect)-1 )
 };
 

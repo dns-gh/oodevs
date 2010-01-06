@@ -46,6 +46,8 @@ public:
     const T_FlyingShellSet& GetFlyingShells      () const;
     //@}
 
+    static MIL_EffectManager& GetEffectManager();
+
 private:
     //! @name Types
     //@{

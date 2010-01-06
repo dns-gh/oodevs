@@ -62,29 +62,29 @@ public:
 
     //! @name Dotations management
     //@{
-    virtual MT_Float SupplyDotation     ( const PHY_DotationCategory& category, MT_Float rNbr ) = 0;
-    virtual void     ResupplyDotations  () = 0;
-    virtual void     ResupplyDotations  ( const PHY_AmmoDotationClass& ammoDotationClass, MT_Float rFactor ) = 0;
-    virtual void     ResupplyDotations  ( const PHY_DotationType&      type             , MT_Float rFactor ) = 0;
+    virtual double SupplyDotation     ( const PHY_DotationCategory& category, double rNbr ) = 0;
+    virtual void   ResupplyDotations  () = 0;
+    virtual void   ResupplyDotations  ( const PHY_AmmoDotationClass& ammoDotationClass, double rFactor ) = 0;
+    virtual void   ResupplyDotations  ( const PHY_DotationType&      type             , double rFactor ) = 0;
     //@}
 
     //! @name Consumption management
     //@{
     virtual bool                 SetConsumptionMode      ( const PHY_ConsumptionType& mode ) = 0;
     virtual void                 RollbackConsumptionMode () = 0;
-    virtual MT_Float             GetMaxTimeForConsumption( const PHY_ConsumptionType& mode ) const = 0;
+    virtual double             GetMaxTimeForConsumption( const PHY_ConsumptionType& mode ) const = 0;
     //@}
 
     //! @name Fire dotations
     //@{
-    virtual MT_Float AddFireReservation( const PHY_DotationCategory& category, MT_Float rNbr ) = 0;
+    virtual double AddFireReservation( const PHY_DotationCategory& category, double rNbr ) = 0;
     //@}
 
     //! @name Logistic - Supply
     //@{
     virtual void NotifySupplyNeeded          ( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const = 0; // Logistic
     virtual void FillSupplyRequest           ( PHY_SupplyDotationRequestContainer& supplyRequest ) const = 0;
-    virtual void ChangeDotationsValueUsingTC2( const PHY_DotationType& dotationType, const PHY_AmmoDotationClass* pAmmoDotationClass, MT_Float rCapacityFactor ) const = 0;
+    virtual void ChangeDotationsValueUsingTC2( const PHY_DotationType& dotationType, const PHY_AmmoDotationClass* pAmmoDotationClass, double rCapacityFactor ) const = 0;
     //@}
 private:
     //! @name Serialization

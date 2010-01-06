@@ -11,8 +11,10 @@
 #define __MockAgent_h_
 
 #include "simulation_kernel/Entities/Agents/MIL_Agent_ABC.h"
+#include "AlgorithmsFactories.h"
 
 class DEC_Decision_ABC;
+class MIL_OrderManager_ABC;
 
 // =============================================================================
 /** @class  MockAgent
@@ -30,13 +32,14 @@ public:
     //@{
     MockAgent() 
         : mockpp::ChainableMockObject( MOCKPP_PCHAR( "MockAgent" ) )
-		,MIL_Agent_ABC("",0)
+		, MIL_Agent_ABC("",0)
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetID )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( IsDead )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( IsNeutralized )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( IsPC )
-        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetTypeShadow )        
+        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetTypeShadow )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetArmyShadow )
+        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetKnowledgeGroupShadow )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( NotifyAttackedBy_Pion )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( NotifyAttackedBy_Population )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( BelongsTo )
@@ -56,6 +59,10 @@ public:
     {
         return *GetArmyShadow();
     }
+    virtual MIL_KnowledgeGroup& GetKnowledgeGroup() const
+    {
+        return *GetKnowledgeGroupShadow();
+    }
 
     virtual boost::shared_ptr< DEC_Knowledge_Agent > CreateKnowledge( const MIL_KnowledgeGroup& knowledgeGroup )
     {
@@ -66,18 +73,30 @@ public:
         throw;
     }
     
-    virtual       DEC_Decision_ABC& GetDecision   () { throw; }
-    virtual const DEC_Decision_ABC& GetDecision   () const { throw; }
+    virtual const MIL_Automate& GetAutomate() const { throw; }
+    virtual       MIL_Automate& GetAutomate() { throw; }
 
-    virtual const AlgorithmsFactories& GetAlgorithms() const { throw; }
+    virtual       DEC_Decision_ABC& GetDecision() { throw; }
+    virtual const DEC_Decision_ABC& GetDecision() const { throw; }
+    
+    virtual void MagicMove( const MT_Vector2D& ) { throw; }
+    virtual bool IsAutonomous() const { throw; }
 
-    MOCKPP_CONST_CHAINABLE0          ( MockAgent, uint, GetID );
+    virtual const AlgorithmsFactories& GetAlgorithms() const { return algorithmFacories_; }
+
+    MIL_OrderManager_ABC& GetOrderManager()
+    {
+        throw std::runtime_error( "Unexpected call to GetOrderManager" );
+    }
+
+    MOCKPP_CONST_CHAINABLE0          ( MockAgent, unsigned int, GetID );
     MOCKPP_CONST_CHAINABLE0          ( MockAgent, bool, IsDead );
     MOCKPP_CONST_CHAINABLE0          ( MockAgent, bool, IsNeutralized );
     MOCKPP_CONST_CHAINABLE0          ( MockAgent, bool, IsPC );
 
-    MOCKPP_CONST_CHAINABLE_EXT0      ( MockAgent, const MIL_AgentType_ABC*, GetTypeShadow, MIL_AgentType_ABC, );   
+    MOCKPP_CONST_CHAINABLE_EXT0      ( MockAgent, const MIL_AgentType_ABC*, GetTypeShadow, MIL_AgentType_ABC, );
     MOCKPP_CONST_CHAINABLE_EXT0      ( MockAgent, MIL_Army_ABC*, GetArmyShadow, MIL_Army_ABC, );   
+    MOCKPP_CONST_CHAINABLE_EXT0      ( MockAgent, MIL_KnowledgeGroup*, GetKnowledgeGroupShadow, MIL_KnowledgeGroup, );   
 
     MOCKPP_VOID_CHAINABLE_EXT1       ( MockAgent, NotifyAttackedBy, MIL_AgentPion&, _Pion, MIL_AgentPion );
     MOCKPP_VOID_CHAINABLE_EXT1       ( MockAgent, NotifyAttackedBy, MIL_Population&, _Population, MIL_Population );
@@ -85,6 +104,8 @@ public:
     MOCKPP_CONST_CHAINABLE_EXT1      ( MockAgent, bool, BelongsTo, const MIL_KnowledgeGroup&, bool, , MIL_KnowledgeGroup );
     MOCKPP_CONST_CHAINABLE_EXT1      ( MockAgent, bool, IsPerceived, const MIL_Agent_ABC&, bool, , MIL_Agent_ABC );
     MOCKPP_CHAINABLE_EXT1            ( MockAgent, boost::shared_ptr< DEC_Knowledge_Agent >, CreateKnowledgeShadow, const MIL_KnowledgeGroup&, DEC_Knowledge_Agent, , MIL_KnowledgeGroup );    
+
+    AlgorithmsFactories algorithmFacories_;
 };
 
 #endif // __MockAgent_h_

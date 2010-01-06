@@ -48,7 +48,7 @@ namespace
 // Created: MGD 2009-08-06
 // -----------------------------------------------------------------------------
 DEC_DataBase::DEC_DataBase( xml::xistream& xis, const std::string strPath )
-: directia5::Library( GetLibPaths( xis, strPath ) )
+    : directia5::Library( GetLibPaths( xis, strPath ) )
 {
     //@TODO MGD Change to aggregation for directia5::Library
     libPaths_ = GetLibPaths( xis, strPath );
@@ -63,12 +63,11 @@ DEC_DataBase::DEC_DataBase( xml::xistream& xis, const std::string strPath )
 // -----------------------------------------------------------------------------
 DEC_DataBase::DEC_DataBase( T_LibPaths libPaths, std::vector< const std::string >& knowledge )
     : directia5::Library( libPaths )
-    , libPaths_( libPaths )
+    , libPaths_  ( libPaths )
     , knowledges_( knowledge )
 {
-    
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_DataBase destructor

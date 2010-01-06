@@ -34,7 +34,7 @@ public:                                                          \
         ASN1T_Msgs##TARGET asnMsg;                               \
         asnMsg.context = context;                                \
         asnMsg.msg.t   = T_Msgs##TARGET##_msg_msg_##ASNVAR;      \
-        MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr().Send( asnMsg ); \
+        NET_Publisher_ABC::SendAsnMessage( asnMsg ); \
     }                                                            \
 };
 
@@ -50,7 +50,7 @@ public:                                                                   \
         asnMsg.context            = context;                              \
         asnMsg.msg.t              = T_Msgs##TARGET##_msg_msg_##ASNVAR;    \
         asnMsg.msg.u.msg_##ASNVAR = asnTmp;                               \
-        MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr().Send( asnMsg ); \
+        NET_Publisher_ABC::SendAsnMessage( asnMsg ); \
     }                                                                     \
                                                                           \
     ASN1T_Msg##ASNMSG& operator()() { return asnTmp; }                    \
@@ -71,7 +71,7 @@ public:                                                                   \
         asnMsg.context            = context;                              \
         asnMsg.msg.t              = T_Msgs##TARGET##_msg_msg_##ASNVAR;    \
         asnMsg.msg.u.msg_##ASNVAR = &asnTmp;                              \
-        MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr().Send( asnMsg ); \
+        NET_Publisher_ABC::SendAsnMessage( asnMsg ); \
     }                                                                     \
                                                                           \
     ASN1T_Msg##ASNMSG& operator()() { return asnTmp; }                    \

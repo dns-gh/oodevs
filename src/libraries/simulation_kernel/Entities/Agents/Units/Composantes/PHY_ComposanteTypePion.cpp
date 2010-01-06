@@ -132,7 +132,7 @@ void PHY_ComposanteTypePion::Terminate()
 PHY_ComposanteTypePion::PHY_ComposanteTypePion( const MIL_Time_ABC& time, const std::string& strName, xml::xistream& xis )
     : PHY_ComposanteType_ABC                     ( strName, xis )
     , time_                                      ( time )
-    , speeds_                                    ( xis )
+    , speeds_                                    ( xis, time.GetTickDuration() )
     , rMaxSlope_                                 ( 1. )
     , dotationCapacities_                        ( "composition", xis )
     , objectData_                                ( )
@@ -1053,7 +1053,7 @@ MT_Float PHY_ComposanteTypePion::GetMinRangeToFireOn( const MIL_Agent_ABC& firer
 // Name: PHY_ComposanteTypePion::GetMaxRangeToFireOnWithPosture
 // Created: SBO 2006-01-10
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposanteTypePion::GetMaxRangeToFireOnWithPosture( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const
+MT_Float PHY_ComposanteTypePion::GetMaxRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const
 {
     MT_Float rRange = 0;
     for( CIT_WeaponTypeMap itWeapon = weaponTypes_.begin(); itWeapon != weaponTypes_.end(); ++itWeapon )
@@ -1065,7 +1065,7 @@ MT_Float PHY_ComposanteTypePion::GetMaxRangeToFireOnWithPosture( const MIL_Agent
 // Name: PHY_ComposanteTypePion::GetMinRangeToFireOnWithPosture
 // Created: SBO 2006-01-10
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposanteTypePion::GetMinRangeToFireOnWithPosture( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const
+MT_Float PHY_ComposanteTypePion::GetMinRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const
 {
     MT_Float rRange = std::numeric_limits< MT_Float >::max();
     for ( CIT_WeaponTypeMap itWeapon = weaponTypes_.begin(); itWeapon != weaponTypes_.end(); ++itWeapon )

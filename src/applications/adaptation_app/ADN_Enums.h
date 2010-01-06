@@ -385,6 +385,7 @@ enum E_TypeMunitionTirIndirect
     eTypeMunitionTirIndirect_Fumigene,
     eTypeMunitionTirIndirect_Eclairant,
     eTypeMunitionTirIndirect_Mine,
+    eTypeMunitionTirIndirect_Scrambling,
     eNbrTypeMunitionTirIndirect
 };
 

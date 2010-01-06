@@ -17,7 +17,7 @@
 class PHY_ComposantePion;
 class PHY_MaintenanceConsign_ABC;
 class PHY_Breakdown;
-class MIL_AgentPion;
+class MIL_Agent_ABC;
 
 // =============================================================================
 // @class  PHY_MaintenanceComposanteState
@@ -27,7 +27,7 @@ class PHY_MaintenanceComposanteState : private boost::noncopyable
 {
 
 public:
-     PHY_MaintenanceComposanteState( MIL_AgentPion& pion, PHY_ComposantePion& composante );
+     PHY_MaintenanceComposanteState( MIL_Agent_ABC& pion, PHY_ComposantePion& composante );
      PHY_MaintenanceComposanteState();
     ~PHY_MaintenanceComposanteState();
 
@@ -81,7 +81,7 @@ private:
 private:
     const uint                        nID_;
     const uint                        nCreationTick_;
-          MIL_AgentPion*              pPion_;
+          MIL_Agent_ABC*              pPion_;
           PHY_ComposantePion*         pComposante_;
           PHY_MaintenanceConsign_ABC* pConsign_;
           MT_Vector2D                 vComposantePosition_; // Position de la composante lors de son traitement dans la chaine maintenance

@@ -315,4 +315,4 @@ void PHY_RoleHLA_Composantes::ApplyExplosion( const AttritionCapacity& /*capacit
 void PHY_RoleHLA_Composantes::ApplyInjury( MIL_Injury_ABC& /*injury*/ )
 {
     // NOTHING
-}              
+}

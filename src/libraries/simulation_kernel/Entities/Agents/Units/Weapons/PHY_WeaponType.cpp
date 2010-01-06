@@ -34,9 +34,9 @@ PHY_WeaponType::T_WeaponTypeMap PHY_WeaponType::weaponTypes_;
 
 struct PHY_WeaponType::LoadingWrapper
 {
-    void ReadWeapon( xml::xistream& xis, MIL_EffectManager& manager, const MIL_Time_ABC& time )
+    void ReadWeapon( xml::xistream& xis, MIL_EffectManager& manager, const MIL_Time_ABC& time, double timeFactor )
     {
-        PHY_WeaponType::ReadWeapon( xis, manager, time );
+        PHY_WeaponType::ReadWeapon( xis, manager, time, timeFactor );
     }
 };
 
@@ -44,7 +44,7 @@ struct PHY_WeaponType::LoadingWrapper
 // Name: PHY_WeaponType::Initialize
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-void PHY_WeaponType::Initialize( MIL_EffectManager& manager, const MIL_Time_ABC& time, xml::xistream& xis )
+void PHY_WeaponType::Initialize( MIL_EffectManager& manager, const MIL_Time_ABC& time, xml::xistream& xis, double timeFactor )
 {
     MT_LOG_INFO_MSG( "Initializing weapon types" );
 
@@ -52,7 +52,7 @@ void PHY_WeaponType::Initialize( MIL_EffectManager& manager, const MIL_Time_ABC&
 
     // Initialisation des composantes
     xis >> xml::start( "weapons" )
-            >> xml::list( "weapon-system", loader, &LoadingWrapper::ReadWeapon, manager, time )
+            >> xml::list( "weapon-system", loader, &LoadingWrapper::ReadWeapon, manager, time, timeFactor )
         >> xml::end();
 }
 
@@ -60,7 +60,7 @@ void PHY_WeaponType::Initialize( MIL_EffectManager& manager, const MIL_Time_ABC&
 // Name: PHY_WeaponType::ReadWeapon
 // Created: ABL 2007-07-20
 // -----------------------------------------------------------------------------
-void PHY_WeaponType::ReadWeapon( xml::xistream& xis, MIL_EffectManager& manager, const MIL_Time_ABC& time )
+void PHY_WeaponType::ReadWeapon( xml::xistream& xis, MIL_EffectManager& manager, const MIL_Time_ABC& time, double timeFactor )
 {
     std::string strLauncher;
     std::string strAmmunition;
@@ -71,7 +71,7 @@ void PHY_WeaponType::ReadWeapon( xml::xistream& xis, MIL_EffectManager& manager,
     const PHY_WeaponType*& pWeaponType = weaponTypes_[ std::make_pair( strLauncher, strAmmunition ) ];
     if ( pWeaponType )
         xis.error( "Weapon " + strLauncher + "/" + strAmmunition + " already registered" );
-    pWeaponType = new PHY_WeaponType( manager, time, strLauncher, strAmmunition, xis );
+    pWeaponType = new PHY_WeaponType( time, strLauncher, strAmmunition, xis, timeFactor );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,7 +89,7 @@ void PHY_WeaponType::Terminate()
 // Name: PHY_WeaponType constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_WeaponType::PHY_WeaponType( MIL_EffectManager& manager, const MIL_Time_ABC& time, const std::string& strLauncher, const std::string& strAmmunition, xml::xistream& xis )
+PHY_WeaponType::PHY_WeaponType( const MIL_Time_ABC& time, const std::string& strLauncher, const std::string& strAmmunition, xml::xistream& xis, double timeFactor )
     : time_               ( time )
     , pLauncherType_      ( PHY_LauncherType::FindLauncherType( strLauncher ) )
     , pDotationCategory_  ( PHY_DotationType::FindDotationCategory( strAmmunition ) )
@@ -118,8 +118,8 @@ PHY_WeaponType::PHY_WeaponType( MIL_EffectManager& manager, const MIL_Time_ABC& 
      || ! tools::DecodeTime( reloadingTime, rReloadingDuration_ ) )
         xis.error( "Invalid burst or reloading durations" );
 
-    rBurstDuration_      = MIL_Tools::ConvertSecondsToSim( rBurstDuration_     );
-    rReloadingDuration_  = MIL_Tools::ConvertSecondsToSim( rReloadingDuration_ );
+    rBurstDuration_     /= timeFactor;
+    rReloadingDuration_ /= timeFactor;
     
     if( nNbrAmmoPerBurst_ <= 0 )
         xis.error( "burst: munition <= 0" );
@@ -130,8 +130,8 @@ PHY_WeaponType::PHY_WeaponType( MIL_EffectManager& manager, const MIL_Time_ABC& 
     if( rReloadingDuration_ <= 0 )
         xis.error( "reloading: duration <= 0" );
 
-    InitializeDirectFireData  ( manager, xis );
-    InitializeIndirectFireData( xis );
+    InitializeDirectFireData  ( xis );
+    InitializeIndirectFireData( xis, timeFactor );
 
     strName_ = pLauncherType_->GetName() + "/" + pDotationCategory_->GetName();
 }
@@ -153,17 +153,17 @@ PHY_WeaponType::~PHY_WeaponType()
 // Name: PHY_WeaponType::InitializeDirectFireData
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-void PHY_WeaponType::InitializeDirectFireData( MIL_EffectManager& manager, xml::xistream& xis )
+void PHY_WeaponType::InitializeDirectFireData(  xml::xistream& xis )
 {
     pDirectFireData_ = 0;
-    xis >> xml::list( "direct-fire", *this, &PHY_WeaponType::ReadDirect, manager );
+    xis >> xml::list( "direct-fire", *this, &PHY_WeaponType::ReadDirect );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_WeaponType::ReadDirect
 // Created: ABL 2007-07-20
 // -----------------------------------------------------------------------------
-void PHY_WeaponType::ReadDirect( xml::xistream& xis, MIL_EffectManager& manager )
+void PHY_WeaponType::ReadDirect( xml::xistream& xis )
 {
     assert( pLauncherType_ );
     assert( pDotationCategory_ );
@@ -173,24 +173,24 @@ void PHY_WeaponType::ReadDirect( xml::xistream& xis, MIL_EffectManager& manager 
     if ( !pDotationCategory_->CanBeUsedForDirectFire() )
         xis.error( "Associated ammunition can not direct fire" );
 
-    pDirectFireData_ = new PHY_WeaponDataType_DirectFire( manager, *this, xis );
+    pDirectFireData_ = new PHY_WeaponDataType_DirectFire( *this, xis );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_WeaponType::InitializeIndirectFireData
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-void PHY_WeaponType::InitializeIndirectFireData( xml::xistream& xis )
+void PHY_WeaponType::InitializeIndirectFireData( xml::xistream& xis, double timeFactor )
 {
     pIndirectFireData_ = 0;
-    xis >> xml::list( "indirect-fire", *this, &PHY_WeaponType::ReadIndirect );
+    xis >> xml::list( "indirect-fire", *this, &PHY_WeaponType::ReadIndirect, timeFactor );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_WeaponType::ReadIndirect
 // Created: ABL 2007-07-20
 // -----------------------------------------------------------------------------
-void PHY_WeaponType::ReadIndirect( xml::xistream& xis )
+void PHY_WeaponType::ReadIndirect( xml::xistream& xis, double timeFactor )
 {
     assert( pLauncherType_ );
     assert( pDotationCategory_ );
@@ -200,7 +200,7 @@ void PHY_WeaponType::ReadIndirect( xml::xistream& xis )
     if ( !pDotationCategory_->CanBeUsedForIndirectFire() )
         xis.error( "Associated ammunition can not indirect fire" );
 
-    pIndirectFireData_ = new PHY_WeaponDataType_IndirectFire( *this, xis );
+    pIndirectFireData_ = new PHY_WeaponDataType_IndirectFire( *this, xis, timeFactor );
 }
 
 // -----------------------------------------------------------------------------
@@ -236,10 +236,10 @@ MT_Float PHY_WeaponType::GetPHModificator( const PHY_Posture& firerPosture, cons
 // Name: PHY_WeaponType::IndirectFire
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-void PHY_WeaponType::IndirectFire( MIL_AgentPion& firer, MIL_Effect_IndirectFire& effect, uint nNbrAmmoReserved ) const
+void PHY_WeaponType::IndirectFire( MIL_Effect_IndirectFire& effect, uint nNbrAmmoReserved ) const
 {
     assert( pIndirectFireData_ );
-    pIndirectFireData_->Fire( firer, effect, nNbrAmmoReserved );
+    pIndirectFireData_->Fire( effect, nNbrAmmoReserved );
 }
 
 // -----------------------------------------------------------------------------
@@ -266,7 +266,7 @@ void PHY_WeaponType::DirectFire( MIL_AgentPion& firer, MIL_PopulationElement_ABC
 // Name: PHY_WeaponType::ThrowSmoke
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
-void PHY_WeaponType::ThrowSmoke( MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmo, PHY_FireResults_ABC& fireResult ) const
+void PHY_WeaponType::ThrowSmoke( MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmo, PHY_FireResults_ABC& fireResult ) const
 {
     assert( pIndirectFireData_ );
     pIndirectFireData_->ThrowSmoke( firer, vSourcePosition, vTargetPosition, nNbrAmmo, fireResult );
@@ -344,12 +344,12 @@ MT_Float PHY_WeaponType::GetMinRangeToFireOn( const MIL_Agent_ABC& firer, const 
 // Name: PHY_WeaponType::GetMaxRangeToFireOnWithPosture
 // Created: SBO 2006-01-10
 // -----------------------------------------------------------------------------
-MT_Float PHY_WeaponType::GetMaxRangeToFireOnWithPosture( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const
+MT_Float PHY_WeaponType::GetMaxRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const
 {
     assert( pDotationCategory_ );
 
     std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer = firer.GetAlgorithms().dotationComputerFactory_->Create();
-    MIL_AgentPion& localFirer = const_cast< MIL_AgentPion& >( firer );
+    MIL_Agent_ABC& localFirer = const_cast< MIL_Agent_ABC& >( firer );
     localFirer.Execute( *dotationComputer );
 
     if( !pDirectFireData_ || !dotationComputer->HasDotation( *pDotationCategory_ ) )
@@ -361,12 +361,12 @@ MT_Float PHY_WeaponType::GetMaxRangeToFireOnWithPosture( const MIL_AgentPion& fi
 // Name: PHY_WeaponType::GetMinRangeToFireOnWithPosture
 // Created: SBO 2006-01-10
 // -----------------------------------------------------------------------------
-MT_Float PHY_WeaponType::GetMinRangeToFireOnWithPosture( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const
+MT_Float PHY_WeaponType::GetMinRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const
 {
     assert( pDotationCategory_ );
 
     std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( firer.GetAlgorithms().dotationComputerFactory_->Create() );
-    MIL_AgentPion& localFirer = const_cast< MIL_AgentPion& >( firer );
+    MIL_Agent_ABC& localFirer = const_cast< MIL_Agent_ABC& >( firer );
     localFirer.Execute( *dotationComputer );
 
     if( !pDirectFireData_ || !dotationComputer->HasDotation( *pDotationCategory_ ) )

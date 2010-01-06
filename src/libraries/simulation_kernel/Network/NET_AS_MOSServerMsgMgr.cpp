@@ -35,6 +35,7 @@ NET_AS_MOSServerMsgMgr::NET_AS_MOSServerMsgMgr( NET_AgentServer& agentServer, NE
 {
     agentServer.RegisterMessage( *this, & NET_AS_MOSServerMsgMgr::OnReceiveClient );
     agentServer.RegisterMessage( *this, & NET_AS_MOSServerMsgMgr::OnReceiveMiddle );
+    NET_Publisher_ABC::Register( *this );
 }
 
 //-----------------------------------------------------------------------------
@@ -43,7 +44,7 @@ NET_AS_MOSServerMsgMgr::NET_AS_MOSServerMsgMgr( NET_AgentServer& agentServer, NE
 //-----------------------------------------------------------------------------
 NET_AS_MOSServerMsgMgr::~NET_AS_MOSServerMsgMgr()
 {
-    // NOTHING
+    NET_Publisher_ABC::Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

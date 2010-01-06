@@ -16,10 +16,11 @@ namespace xml
 {
 }
 
-class PHY_WeaponType;
-class PHY_FireResults_ABC;
-class MIL_Effect_IndirectFire;
+class MIL_Agent_ABC;
 class MIL_AgentPion;
+class MIL_Effect_IndirectFire;
+class PHY_FireResults_ABC;
+class PHY_WeaponType;
 
 // =============================================================================
 // @class  PHY_WeaponDataType_IndirectFire
@@ -29,7 +30,7 @@ class PHY_WeaponDataType_IndirectFire : private boost::noncopyable
 {
 
 public:
-             PHY_WeaponDataType_IndirectFire( const PHY_WeaponType& weaponType, xml::xistream& xis );
+             PHY_WeaponDataType_IndirectFire( const PHY_WeaponType& weaponType, xml::xistream& xis, double timeFactor );
     virtual ~PHY_WeaponDataType_IndirectFire();
 
     //! @name Accessors
@@ -41,8 +42,8 @@ public:
 
     //! @name Operations
     //@{
-    void Fire      ( MIL_AgentPion& firer, MIL_Effect_IndirectFire& effect, uint nNbrAmmoReserved ) const;
-    void ThrowSmoke( MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmo, PHY_FireResults_ABC& fireResult ) const;
+    void Fire      ( MIL_Effect_IndirectFire& effect, uint nNbrAmmoReserved ) const;
+    void ThrowSmoke( MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmo, PHY_FireResults_ABC& fireResult ) const;
     //@}
 
 private:

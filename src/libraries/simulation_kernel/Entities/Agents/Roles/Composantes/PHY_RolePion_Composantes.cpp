@@ -85,7 +85,7 @@ void PHY_RolePion_Composantes::T_ComposanteTypeProperties::serialize( Archive& f
 // Name: PHY_RolePion_Composantes constructor
 // Created: NLD 2004-08-12
 // -----------------------------------------------------------------------------
-PHY_RolePion_Composantes::PHY_RolePion_Composantes( MIL_AgentPion& pion )
+PHY_RolePion_Composantes::PHY_RolePion_Composantes( MIL_Agent_ABC& pion, bool initialise )
     : pion_                        ( pion )
     , composantes_                 ()
     , lentComposantes_             ()
@@ -104,9 +104,11 @@ PHY_RolePion_Composantes::PHY_RolePion_Composantes( MIL_AgentPion& pion )
     , bIsSurrender_                ( false )
     , nTickRcMaintenanceQuerySent_ ( 0 )
 {
-
-    pion_.GetType().GetUnitType().InstanciateComposantes( *this );
-    DistributeCommanders ();
+    if( initialise ) // $$$$ LDC: Set to false for debug in order to avoid useless creation of crap.
+    {
+        pion_.GetType().GetUnitType().InstanciateComposantes( *this );
+        DistributeCommanders ();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -1005,7 +1007,7 @@ void PHY_RolePion_Composantes::SendLogisticFullState() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::SendLoans( NET_ASN_MsgUnitAttributes& asn ) const
 {
-    typedef std::pair< const MIL_AgentPion*, const PHY_ComposanteTypePion* > T_Key;
+    typedef std::pair< const MIL_Agent_ABC*, const PHY_ComposanteTypePion* > T_Key;
     typedef std::map < T_Key, unsigned int >                                 T_LoanCountMap;
     typedef T_LoanCountMap::const_iterator                                   CIT_LoanCountMap;
 
@@ -1014,7 +1016,7 @@ void PHY_RolePion_Composantes::SendLoans( NET_ASN_MsgUnitAttributes& asn ) const
         T_LoanCountMap loanData;
         for( CIT_LoanMap it = lentComposantes_.begin(); it != lentComposantes_.end(); ++it )
         {
-            const MIL_AgentPion&          pion        = it->first->GetPion();
+            const MIL_Agent_ABC&          pion        = it->first->GetPion();
             const PHY_ComposantePion::T_ComposantePionVector& composantes = it->second;
             for( PHY_ComposantePion::CIT_ComposantePionVector itComp = composantes.begin(); itComp != composantes.end(); ++itComp )
                 ++loanData[ T_Key( &pion, &(**itComp).GetType() ) ];
@@ -1044,7 +1046,7 @@ void PHY_RolePion_Composantes::SendLoans( NET_ASN_MsgUnitAttributes& asn ) const
         T_LoanCountMap loanData;
         for( CIT_LoanMap it = borrowedComposantes_.begin(); it != borrowedComposantes_.end(); ++it )
         {
-            const MIL_AgentPion&          pion        = it->first->GetPion();
+            const MIL_Agent_ABC&          pion        = it->first->GetPion();
             const PHY_ComposantePion::T_ComposantePionVector& composantes = it->second;
             for( PHY_ComposantePion::CIT_ComposantePionVector itComp = composantes.begin(); itComp != composantes.end(); ++itComp )
                 ++loanData[ T_Key( &pion, &(**itComp).GetType() ) ];
@@ -1440,7 +1442,7 @@ void PHY_RolePion_Composantes::NotifyReleased()
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Composantes::IsNeutralized() const
 {
-    return nNeutralizationEndTimeStep_ >= MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    return nNeutralizationEndTimeStep_ && nNeutralizationEndTimeStep_ >= MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
 }
 
 
@@ -1509,7 +1511,7 @@ MT_Float PHY_RolePion_Composantes::GetMajorOperationalState() const
 // Name: PHY_RolePion_Composantes::GetPion
 // Created: NLD 2005-01-04
 // -----------------------------------------------------------------------------
-const MIL_AgentPion& PHY_RolePion_Composantes::GetPion() const
+const MIL_Agent_ABC& PHY_RolePion_Composantes::GetPion() const
 {
 
     return pion_;

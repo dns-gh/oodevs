@@ -26,9 +26,11 @@ class MockMIL_EntityManager_ABC
 public:
              MockMIL_EntityManager_ABC()
                 : mockpp::ChainableMockObject( "MockMIL_EntityManager_ABC", 0 )
-                , FindAgentPion_mocker( "FindAgentPion", this )
-                , FindAutomate_mocker ( "FindAutomate", this )
+                , FindAgentPion_mocker ( "FindAgentPion", this )
+                , FindAutomate_mocker  ( "FindAutomate", this )
                 , FindObjectType_mocker( "FindObjectType", this )
+                , CreateObject_mocker  ( "CreateObject", this )
+                , CreateObject2_mocker ( "CreateObject2", this )
              {}
     virtual ~MockMIL_EntityManager_ABC() {}
     
@@ -48,10 +50,24 @@ public:
     {
         throw;
     }
+    virtual MIL_EffectManager& GetEffectManager() const
+    {
+        throw;
+    }
+    virtual MIL_Object_ABC* CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation )
+    {
+        return CreateObject_mocker.forward( type, &army, &localisation );
+    }
+    virtual MIL_Object_ABC* CreateObject( MIL_Army_ABC& army, const MIL_ObjectBuilder_ABC& builder )
+    {
+        return CreateObject2_mocker.forward( &army, &builder );
+    }
 
     mockpp::ChainableMockMethod< MIL_AgentPion*, unsigned int > FindAgentPion_mocker;
     mockpp::ChainableMockMethod< MIL_Automate*, unsigned int > FindAutomate_mocker;
     mockpp::ChainableMockMethod< MIL_ObjectType_ABC*, std::string > FindObjectType_mocker;
+    mockpp::ChainableMockMethod< MIL_Object_ABC*, const std::string, MIL_Army_ABC*, const TER_Localisation* > CreateObject_mocker;
+    mockpp::ChainableMockMethod< MIL_Object_ABC*, MIL_Army_ABC*, const MIL_ObjectBuilder_ABC* > CreateObject2_mocker;
 
 };
 

@@ -15,6 +15,7 @@
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/MIL_EntityManager.h"
 #include "MIL_AgentServer.h"
+#include "MIL_Singletons.h"
 #include <xeumeuleu/xml.h>
 #include "Tools/xmlcodecs.h"
 
@@ -57,7 +58,7 @@ PHY_DotationCategory_IndirectWeatherFire::~PHY_DotationCategory_IndirectWeatherF
 // Name: PHY_DotationCategory_IndirectWeatherFire::ApplyEffect
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
-void PHY_DotationCategory_IndirectWeatherFire::ApplyEffect( const MIL_AgentPion& /*firer*/, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& /*fireResult*/ ) const
+void PHY_DotationCategory_IndirectWeatherFire::ApplyEffect( const MIL_Agent_ABC& /*firer*/, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& /*fireResult*/ ) const
 {
     MT_Vector2D vFireDirection( 0., 1. );
     if( vTargetPosition != vSourcePosition )
@@ -70,5 +71,5 @@ void PHY_DotationCategory_IndirectWeatherFire::ApplyEffect( const MIL_AgentPion&
 
     const MT_Ellipse effectSurface( vTargetPosition, vTargetPosition + vFireDirection, vTargetPosition + vRotatedFireDirection );
     MIL_Effect_Weather* pEffect = new MIL_Effect_Weather( effectSurface, category_, rLifeDuration_, rDeploymentDuration_ );
-    MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pEffect );
+    MIL_Singletons::GetEffectManager().Register( *pEffect );
 }

@@ -15,7 +15,7 @@
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
-#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
 
 #include "simulation_kernel/AlgorithmsFactories.h"
@@ -65,7 +65,7 @@ void PHY_IndirectFireData::sComposanteWeapons::AddWeapon( PHY_Weapon& weapon )
 // Name: PHY_IndirectFireData constructor
 // Created: NLD 2004-10-11
 // -----------------------------------------------------------------------------
-PHY_IndirectFireData::PHY_IndirectFireData( MIL_AgentPion& firer, MIL_Effect_IndirectFire& effect )
+PHY_IndirectFireData::PHY_IndirectFireData( MIL_Agent_ABC& firer, MIL_Effect_IndirectFire& effect )
     : bHasWeaponsReady_     ( false )
     , bHasWeaponsNotReady_  ( false )
     , bHasWeaponsAndNoAmmo_ ( false )

@@ -22,7 +22,7 @@
 // Name: PHY_FireResults_Pion constructor
 // Created: NLD 2005-11-15
 // -----------------------------------------------------------------------------
-PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_AgentPion& firer, const MIL_Agent_ABC& target )
+PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target )
     : PHY_FireResults_ABC()
     , firer_             ( firer )
     , nID_               ( MIL_IDManager::GetFreeId() )
@@ -42,7 +42,7 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_AgentPion& firer, const MI
 // Name: PHY_FireResults_Pion constructor
 // Created: NLD 2005-11-16
 // -----------------------------------------------------------------------------
-PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_AgentPion& firer, const MIL_Population& target )
+PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MIL_Population& target )
     : PHY_FireResults_ABC()
     , firer_             ( firer )
     , nID_               ( MIL_IDManager::GetFreeId() )
@@ -62,7 +62,7 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_AgentPion& firer, const MI
 // Name: PHY_FireResults_Pion constructor
 // Created: NLD 2005-11-15
 // -----------------------------------------------------------------------------
-PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_AgentPion& firer, const MT_Vector2D& targetPosition, const PHY_DotationCategory& dotationCategory )
+PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MT_Vector2D& targetPosition, const PHY_DotationCategory& dotationCategory )
     : PHY_FireResults_ABC()
     , firer_             ( firer )
     , nID_               ( MIL_IDManager::GetFreeId() )

@@ -22,7 +22,7 @@
 // Name: PHY_WeaponDataType_IndirectFire constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_WeaponDataType_IndirectFire::PHY_WeaponDataType_IndirectFire( const PHY_WeaponType& weaponType, xml::xistream& xis )
+PHY_WeaponDataType_IndirectFire::PHY_WeaponDataType_IndirectFire( const PHY_WeaponType& weaponType, xml::xistream& xis, double timeFactor )
     : weaponType_( weaponType )
 {
     assert( weaponType_.GetDotationCategory().GetIndirectFireData() != 0 );
@@ -38,7 +38,7 @@ PHY_WeaponDataType_IndirectFire::PHY_WeaponDataType_IndirectFire( const PHY_Weap
     if( rMaxRange_ < rMinRange_ )
         xis.error( "indirect-fire: max-range < min-range" );
 
-    rAverageSpeed_ = MIL_Tools::ConvertSpeedMosToSim( rAverageSpeed_ * 3.6 /* m/s -> km/h */ ); //$$$$
+    rAverageSpeed_ = rAverageSpeed_ * timeFactor; /* m/s -> km/h */
     rMinRange_ = MIL_Tools::ConvertMeterToSim( rMinRange_ );
     rMaxRange_ = MIL_Tools::ConvertMeterToSim( rMaxRange_ );
 }
@@ -56,7 +56,7 @@ PHY_WeaponDataType_IndirectFire::~PHY_WeaponDataType_IndirectFire()
 // Name: PHY_WeaponDataType_IndirectFire::Fire
 // Created: NLD 2004-10-11
 // -----------------------------------------------------------------------------
-void PHY_WeaponDataType_IndirectFire::Fire( MIL_AgentPion& /*firer*/, MIL_Effect_IndirectFire& effect, uint nNbrAmmoReserved ) const
+void PHY_WeaponDataType_IndirectFire::Fire( MIL_Effect_IndirectFire& effect, uint nNbrAmmoReserved ) const
 {
     effect.NotifyAmmoFired( *this, nNbrAmmoReserved );
 }
@@ -65,7 +65,7 @@ void PHY_WeaponDataType_IndirectFire::Fire( MIL_AgentPion& /*firer*/, MIL_Effect
 // Name: PHY_WeaponDataType_IndirectFire::ThrowSmoke
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
-void PHY_WeaponDataType_IndirectFire::ThrowSmoke( MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmo, PHY_FireResults_ABC& fireResult ) const
+void PHY_WeaponDataType_IndirectFire::ThrowSmoke( MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmo, PHY_FireResults_ABC& fireResult ) const
 {
     weaponType_.GetDotationCategory().ApplyIndirectFireEffect( firer, vSourcePosition, vTargetPosition, nNbrAmmo, fireResult );
 }

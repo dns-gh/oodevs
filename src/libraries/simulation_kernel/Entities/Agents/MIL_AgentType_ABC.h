@@ -17,8 +17,9 @@ namespace xml
     class xistream;
 }
 
-class PHY_NatureLevel;
 class PHY_NatureAtlas;
+class PHY_NatureLevel;
+class PHY_UnitType;
 
 // =============================================================================
 // @class  MIL_AgentType_ABC
@@ -41,6 +42,8 @@ public:
     virtual bool           IsMilitia     () const;
     virtual bool           IsRefugee     () const;
     virtual bool           IsTerrorist   () const;
+
+    virtual const PHY_UnitType& GetUnitType() const = 0;
     //@}
 
 protected:

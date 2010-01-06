@@ -25,7 +25,7 @@ using namespace firing;
 // Name: PHY_ActionIndirectFire_Position constructor
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionIndirectFire_Position::PHY_ActionIndirectFire_Position( MIL_AgentPion& pion, const PHY_DotationCategory* pDotationCategory, float rNbInterventionType, MT_Vector2D* pTargetPosition )
+PHY_ActionIndirectFire_Position::PHY_ActionIndirectFire_Position( MIL_Agent_ABC& pion, const PHY_DotationCategory* pDotationCategory, float rNbInterventionType, const MT_Vector2D* pTargetPosition )
     : PHY_ActionIndirectFire_ABC( pion, pDotationCategory, rNbInterventionType )
     , pEffect_                  ( 0 )
 {
@@ -35,7 +35,7 @@ PHY_ActionIndirectFire_Position::PHY_ActionIndirectFire_Position( MIL_AgentPion&
     {
         pEffect_ = new MIL_Effect_IndirectFire( pion, *pTargetPosition, *pDotationCategory_->GetIndirectFireData(), rNbInterventionType_ );
         pEffect_->IncRef();
-        MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pEffect_ );
+        MIL_EffectManager::GetEffectManager().Register( *pEffect_ );
     }
 }
 

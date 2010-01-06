@@ -78,7 +78,7 @@ public:
     virtual const AlgorithmsFactories& GetAlgorithms() const;
 
     virtual       MIL_Army_ABC&       GetArmy            () const;
-                  MIL_KnowledgeGroup& GetKnowledgeGroup  () const;
+    virtual       MIL_KnowledgeGroup& GetKnowledgeGroup  () const;
                   int                 GetNumberOfFireHoses( int bestExtinguisherAgent );
     virtual const MIL_Automate&       GetAutomate        () const;
     virtual       MIL_Automate&       GetAutomate        ();
@@ -133,7 +133,7 @@ public:
 
     //! @name Misc operations
     //@{
-            void MagicMove       ( const MT_Vector2D& vNewPos );    
+    virtual void MagicMove       ( const MT_Vector2D& vNewPos );    
             void NotifyAttacking ( MIL_Agent_ABC& target ) const;
             void NotifyAttacking ( MIL_Population& target ) const;
     virtual void NotifyAttackedBy( MIL_AgentPion& pion );

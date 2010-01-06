@@ -34,14 +34,14 @@ using namespace firing;
 template< typename Archive >
 void firing::save_construct_data( Archive& archive, const PHY_RoleAction_IndirectFiring* role, const unsigned int /*version*/ )
 {
-    MIL_AgentPion* const pion = &role->pion_;
+    MIL_Agent_ABC* const pion = &role->pion_;
     archive << pion;
 }
 
 template< typename Archive >
 void firing::load_construct_data( Archive& archive, PHY_RoleAction_IndirectFiring* role, const unsigned int /*version*/ )
 {
-    MIL_AgentPion* pion;
+    MIL_Agent_ABC* pion;
     archive >> pion;
     ::new( role )PHY_RoleAction_IndirectFiring( *pion );
 }
@@ -50,7 +50,7 @@ void firing::load_construct_data( Archive& archive, PHY_RoleAction_IndirectFirin
 // Name: PHY_RoleAction_IndirectFiring constructor
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-PHY_RoleAction_IndirectFiring::PHY_RoleAction_IndirectFiring( MIL_AgentPion& pion )
+PHY_RoleAction_IndirectFiring::PHY_RoleAction_IndirectFiring( MIL_Agent_ABC& pion )
     : pion_     ( pion )
 {
     // NOTHING

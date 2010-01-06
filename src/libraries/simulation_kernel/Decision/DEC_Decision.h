@@ -41,7 +41,7 @@ class DEC_Decision : public DEC_Decision_ABC
 public:
     //! @name Constructor
     //@{
-    explicit DEC_Decision( T& entity, DEC_DataBase& database );
+             DEC_Decision( T& entity, DEC_DataBase& database );
     virtual ~DEC_Decision();
     //@}
 
@@ -144,6 +144,12 @@ protected:
 
     virtual void EndCleanStateAfterCrash  () = 0;
     virtual void RegisterUserFunctions( directia::Brain& brain ) = 0;
+
+    template< typename FunctionType >
+    void RegisterFunction( const std::string& strFunctionName, FunctionType function )
+    {
+        pBrain_->RegisterFunction( strFunctionName, function );
+    }
     //@}
     
 private://! @name Helpers

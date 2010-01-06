@@ -36,7 +36,7 @@ public:
     void ChangeStatus( const std::vector< std::string >& statuses );
     //@}
 
-    virtual void Update    ( bool bIsDead ) {};
+    virtual void Update    ( bool /*bIsDead*/ ) {};
     virtual void Clean     () {};
     //@}
 

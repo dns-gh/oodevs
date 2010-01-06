@@ -84,5 +84,5 @@ void HLA_IndirectFire::Execute() const
         return;
 
     MIL_Effect_HLAIndirectFire* pFire = new MIL_Effect_HLAIndirectFire( *pCategory, *pTarget );
-    MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pFire );
+    MIL_EffectManager::GetEffectManager().Register( *pFire );
 }

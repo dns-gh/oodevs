@@ -24,13 +24,17 @@ class NET_Publisher_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             NET_Publisher_ABC() {};
-    virtual ~NET_Publisher_ABC() {};
+             NET_Publisher_ABC();
+    virtual ~NET_Publisher_ABC();
     //@}
 
     //! @name Operations
     //@{
     virtual void Send( ASN1T_MsgsSimToClient& ) = 0;
+
+    static void Register( NET_Publisher_ABC& publisher );
+    static void Unregister( NET_Publisher_ABC& publisher );
+    static void SendAsnMessage( ASN1T_MsgsSimToClient& );
     //@}
 };
 
