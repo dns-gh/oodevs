@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class name="net.masagroup.sword.military.world.Unit" xmlns="http://www.masagroup.net/directia/schemas/bm"  extends="net.masagroup.military.generic.world.Unit">
-	<description>Unité</description>   
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.world.Unit" extends="net.masagroup.military.generic.world.Unit">
+	<description>Unité</description>
+	<methods/>
 </class>

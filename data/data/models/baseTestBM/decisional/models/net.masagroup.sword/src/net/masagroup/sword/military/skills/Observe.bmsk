@@ -7,10 +7,9 @@ skill "Observe" {
   ["parameters"] = {
     ["target"] = {
       ["type"] = {
-        ["tag"] = "list";
+        ["tag"] = "interfaces";
         ["value"] = {
-          ["tag"] = "?";
-          ["value"] = nil;
+          net.masagroup.military.generic.knowledge.Observable;
         };
       };
     };

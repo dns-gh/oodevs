@@ -10,8 +10,8 @@
 		<skill name="net.masagroup.sword.military.skills.MoveAndReconnoiter"></skill>
 	</skills>
 	<resources>
-		<resource name="net.masagroup.military.generic.resources.Move">1</resource>
-		<resource name="net.masagroup.military.generic.resources.Observe">1</resource>
-		<resource name="net.masagroup.military.generic.resources.Engage">1</resource>
+		<resource name="net.masagroup.military.generic.resources.Move"/>
+		<resource name="net.masagroup.military.generic.resources.Observe"/>
+		<resource name="net.masagroup.military.generic.resources.Engage"/>
 	</resources>
 </role>

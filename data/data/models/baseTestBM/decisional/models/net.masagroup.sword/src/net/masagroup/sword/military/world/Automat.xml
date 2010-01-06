@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class name="net.masagroup.sword.military.world.Automat" xmlns="http://www.masagroup.net/directia/schemas/bm"  extends="net.masagroup.sword.military.world.Unit">
-	<description>Automat</description>   
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.world.Automat" extends="net.masagroup.sword.military.world.Unit">
+	<description>Automat</description>
+	<methods/>
 </class>
