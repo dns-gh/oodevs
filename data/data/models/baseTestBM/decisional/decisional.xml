@@ -6,10 +6,9 @@
     <DIAWorkspace>Common/Moteur/Workspace.hal</DIAWorkspace>
     <BMDatabase>
       <RepertoiresBM>
-        <Repertoire>models/base</Repertoire>
-        <Repertoire>models/core</Repertoire>
-        <Repertoire>models/integration</Repertoire>
-        <Repertoire>models/sword</Repertoire>
+        <Repertoire>models/libs/base</Repertoire>
+        <Repertoire>models/libs/core</Repertoire>
+        <Repertoire>models/net.masagroup.sword</Repertoire>
       </RepertoiresBM>
       <Knowledges>
         <Knowledge>net.masagroup.sword.military.world.Area</Knowledge>

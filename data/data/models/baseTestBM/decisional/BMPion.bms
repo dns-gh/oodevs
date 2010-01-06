@@ -4,4 +4,4 @@ include "ToolsFunctions.lua"
 include "Integration.lua"
 
 libPath = select(1,...)
-behavior_model.LoadModel( "net.masagroup.sword.military.roles.Section", { libPath .. "/models/core", libPath .. "/models/base", libPath .. "/models/sword" } )
+behavior_model.LoadModel( "net.masagroup.sword.military.roles.Section", { libPath .. "/models/libs/core", libPath .. "/models/libs/base", libPath .. "/models/net.masagroup.sword/src" } )

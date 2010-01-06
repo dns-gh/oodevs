@@ -36,10 +36,7 @@ rootnode
             DEC_RC1( 1, 166 )
             RC_Done = true;
           end
-          local temp = {};
-          temp[ nearest ] = { nearest }
-          BreakForDebug("temp: ".. tostring(temp))
-          Activate( skill.links.moveTo, 1, { entities = { nearest }, area = temp } )
+          Activate( skill.links.moveTo, 1, { entities = { nearest }, area = { nearest } } )
          
           --self.unRecognizedEntities[ nearest ] = nil 
           return
