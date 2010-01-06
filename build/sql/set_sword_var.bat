@@ -22,7 +22,7 @@ SET COMMAND_SRV_DELETE=sc delete
 
 SET WINDOWS_SERVC_FILE="C:\WINDOWS\system32\drivers\etc\services"
 SET ARC_SDE_SERVC_FILE="%SDEHOME%\etc\services.sde"
-SET ARC_SDE_LICENSE_FILE="EDN431189245 - ArcGIS Server.ecp"
+SET ARC_SDE_LICENSE_FILE="EDN431307235_ArcGisServer.ecp"
 SET SQL_SCHEMA_FILE="create-sword-schema.sql"
 SET SQL_CONSTRAINT_FILE="create-sword-constraints.sql"
 SET SQL_USER_FILE="create-sword-user.sql"
