@@ -590,14 +590,12 @@
     </macrodef>
 
     <target name="generate-database" description="compile behavior model database">
-        <bmc dir="${data.dir}/data/models/baseTestBM/decisional/models/core" core="${data.dir}/data/models/baseTestBM/decisional/models/core"/>
-        <bmc dir="${data.dir}/data/models/baseTestBM/decisional/models/base" core="${data.dir}/data/models/baseTestBM/decisional/models/core"/>
+        <bmc dir="${data.dir}/data/models/baseTestBM/decisional/models/libs/core" core="${data.dir}/data/models/baseTestBM/decisional/models/libs/core"/>
+        <bmc dir="${data.dir}/data/models/baseTestBM/decisional/models/libs/base" core="${data.dir}/data/models/baseTestBM/decisional/models/libs/core"/>
         <delete>
-            <fileset dir="${data.dir}/data/models/baseTestBM/decisional/models/sword" includes="**/*.bmt,**/*.bmk,**/*.bmr"/>
-            <fileset dir="${data.dir}/data/models/baseTestBM/decisional/models/integration" includes="**/*.bmt,**/*.bmk,**/*.bmr"/>
+            <fileset dir="${data.dir}/data/models/baseTestBM/decisional/models/net.masagroup.sword/src" includes="**/*.bmt,**/*.bmk,**/*.bmr"/>
         </delete>
-        <bmc dir="${data.dir}/data/models/baseTestBM/decisional/models/sword" core="${data.dir}/data/models/baseTestBM/decisional/models/core;${data.dir}/data/models/baseTestBM/decisional/models/base"/>
-        <bmc dir="${data.dir}/data/models/baseTestBM/decisional/models/integration" core="${data.dir}/data/models/baseTestBM/decisional/models/core;${data.dir}/data/models/baseTestBM/decisional/models/base;${data.dir}/data/models/baseTestBM/decisional/models/sword"/>
+        <bmc dir="${data.dir}/data/models/baseTestBM/decisional/models/net.masagroup.sword/src" core="${data.dir}/data/models/baseTestBM/decisional/models/libs/core;${data.dir}/data/models/baseTestBM/decisional/models/libs/base"/>
     </target>
 
     <target name="generate-data" depends="generate-database" description="generate data"/>
@@ -918,8 +916,8 @@
         <update name="vcredist" package="vcredist"/>
         <update name="turtle"/>
         <update name="system"/>
-        <update-database database="core-database" dir="${data.dir}/data/models/baseTestBM/decisional/models/core"/>
-        <update-database database="generic-database" dir="${data.dir}/data/models/baseTestBM/decisional/models/base"/>
+        <update-database database="core-database" dir="${data.dir}/data/models/baseTestBM/decisional/models/libs/core"/>
+        <update-database database="generic-database" dir="${data.dir}/data/models/baseTestBM/decisional/models/libs/base"/>
         <antcall target="generate-data"/>
     </target>
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<query name="sword.net.masagroup.sword.military.queries.getReconnoiteringCrossroads" xmlns="http://www.masagroup.net/directia/schemas/bm">
+<query name="net.masagroup.sword.military.queries.getReconnoiteringCrossroads" xmlns="http://www.masagroup.net/directia/schemas/bm">
 	<description>Retourne les carrefours qui sont Reconnoitring</description>
 	<parameters>
 		<parameter name="objectives" >
