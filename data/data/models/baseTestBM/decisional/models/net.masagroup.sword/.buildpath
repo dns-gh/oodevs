@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<buildpath>
+	<buildpathentry kind="src" path="src"/>
+	<buildpathentry external="true" kind="lib" path="D:/projets/sword/trunk/data/data/models/baseTestBM/decisional/models/libs/base"/>
+	<buildpathentry external="true" kind="lib" path="D:/projets/sword/trunk/data/data/models/baseTestBM/decisional/models/libs/core"/>
+</buildpath>
