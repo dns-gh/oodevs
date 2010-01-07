@@ -8,12 +8,13 @@
 // *****************************************************************************
 
 #include "clients_gui_pch.h"
-#include "GlProxy.h"
 #include "Gl3dWidget.h"
+#include "GlProxy.h"
+#include "GlTooltip.h"
 #include "GlWidget.h"
 #include "Layer_ABC.h"
-#include "GlTooltip.h"
 #include "TooltipsLayer_ABC.h"
+#include "urban/UrbanDecoration.h"
 
 using namespace kernel;
 using namespace gui;
@@ -246,11 +247,29 @@ void GlProxy::DrawConvexPolygon( const T_PointVector& points ) const
 
 // -----------------------------------------------------------------------------
 // Name: GlProxy::DrawConvexPolygon
+// Created: RPD 2010-01-05
+// -----------------------------------------------------------------------------
+void GlProxy::DrawConvexPolygon( const geometry::Polygon2f& polygon ) const
+{
+    tools_->DrawConvexPolygon( polygon );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::DrawConvexPolygon
 // Created: SLG 2009-12-14
 // -----------------------------------------------------------------------------
 void GlProxy::DrawConvexPolygon( const T_PointVector& points, bool selected ) const
 {
     tools_->DrawConvexPolygon( points, selected );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::DrawDecoratedPolygon
+// Created: SLG 2009-12-14
+// -----------------------------------------------------------------------------
+void GlProxy::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const urban::UrbanDecoration* decoration ) const
+{
+    tools_->DrawDecoratedPolygon( polygon, decoration );
 }
 
 // -----------------------------------------------------------------------------

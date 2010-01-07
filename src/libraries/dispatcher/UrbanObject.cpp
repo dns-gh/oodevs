@@ -8,13 +8,14 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-#include "UrbanObject.h"
-#include "Model.h"
+#include "ArchitectureAttribute.h"
 #include "ClientPublisher_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
-#include "VegetationAttribute.h"
+#include "ColorAttribute.h"
+#include "Model.h"
 #include "SoilAttribute.h"
-#include "ArchitectureAttribute.h"
+#include "VegetationAttribute.h"
+#include "UrbanObject.h"
 
 #include <boost/bind.hpp>
 
@@ -52,6 +53,7 @@ UrbanObject::~UrbanObject()
 // -----------------------------------------------------------------------------
 void UrbanObject::Initialize( Model& model, const ASN1T_UrbanAttributes& attributes )
 {
+    MSG_ASN_CREATION( color    , ColorAttribute );
     MSG_ASN_CREATION( vegetation    , VegetationAttribute );
     MSG_ASN_CREATION( soil          , SoilAttribute );
     MSG_ASN_CREATION( architecture  , ArchitectureAttribute );

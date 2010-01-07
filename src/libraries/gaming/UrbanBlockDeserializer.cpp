@@ -9,8 +9,9 @@
 
 #include "gaming_pch.h"
 #include "UrbanBlockDeserializer.h"
-#include <urban/TerrainObject_ABC.h>
 #include <urban/Block.h>
+#include <urban/ColorRGBA.h>
+#include <urban/TerrainObject_ABC.h>
 
 using namespace urban;
 
@@ -35,8 +36,6 @@ UrbanBlockDeserializer::~UrbanBlockDeserializer()
 
 // -----------------------------------------------------------------------------
 // Name: UrbanBlockDeserializer::GetArchitectureHeight
-/** @return 
-*/
 // Created: SLG 2009-12-07
 // -----------------------------------------------------------------------------
 float UrbanBlockDeserializer::GetArchitectureHeight() const
@@ -47,8 +46,6 @@ float UrbanBlockDeserializer::GetArchitectureHeight() const
 
 // -----------------------------------------------------------------------------
 // Name: UrbanBlockDeserializer::GetArchitectureFloorNumber
-/** @return 
-*/
 // Created: SLG 2009-12-07
 // -----------------------------------------------------------------------------
 unsigned int UrbanBlockDeserializer::GetArchitectureFloorNumber() const
@@ -56,25 +53,23 @@ unsigned int UrbanBlockDeserializer::GetArchitectureFloorNumber() const
    // if ( message_.attributes.architecture.m.floorNumberPresent )
         return message_.attributes.architecture.floorNumber;
 }
+
 // -----------------------------------------------------------------------------
 // Name: UrbanBlockDeserializer::GetArchitectureBasementLevelNumber
-/** @return 
-*/
 // Created: SLG 2009-12-07
 // -----------------------------------------------------------------------------
 unsigned int UrbanBlockDeserializer::GetArchitectureBasementLevelNumber() const
 {
-   // if ( message_.attributes.architecture.m.basementLevelNumberPresent )
-        return message_.attributes.architecture.basementLevelNumber;
+    return message_.attributes.architecture.basementLevelNumber;
 }
+
 // -----------------------------------------------------------------------------
 // Name: UrbanBlockDeserializer::GetArchitectureRoofShape
 // Created: SLG 2009-12-07
 // -----------------------------------------------------------------------------
 std::string UrbanBlockDeserializer::GetArchitectureRoofShape() const
 {
-    //if ( message_.attributes.architecture.m.roofShapePresent )
-        return message_.attributes.architecture.roofShape;
+    return message_.attributes.architecture.roofShape;
 }
 
 // -----------------------------------------------------------------------------
@@ -83,8 +78,7 @@ std::string UrbanBlockDeserializer::GetArchitectureRoofShape() const
 // -----------------------------------------------------------------------------
 std::string UrbanBlockDeserializer::GetArchitectureMaterial() const
 {
-    //if ( message_.attributes.architecture.m.materialPresent )
-        return message_.attributes.architecture.material;
+    return message_.attributes.architecture.material;
 }
 
 // -----------------------------------------------------------------------------
@@ -93,8 +87,7 @@ std::string UrbanBlockDeserializer::GetArchitectureMaterial() const
 // -----------------------------------------------------------------------------
 float UrbanBlockDeserializer::GetArchitectureInnerCluttering() const
 {
-    //if ( message_.attributes.architecture.m.innerClutteringPresent )
-        return message_.attributes.architecture.innerCluttering;
+    return message_.attributes.architecture.innerCluttering;
 }
 
 // -----------------------------------------------------------------------------
@@ -103,8 +96,7 @@ float UrbanBlockDeserializer::GetArchitectureInnerCluttering() const
 // -----------------------------------------------------------------------------
 float UrbanBlockDeserializer::GetArchitectureFacadeOpacity() const
 {
-    //if ( message_.attributes.architecture.m.facadeOpacityPresent )
-        return message_.attributes.architecture.facadeOpacity;
+    return message_.attributes.architecture.facadeOpacity;
 }
 
 // -----------------------------------------------------------------------------
@@ -143,8 +135,7 @@ bool UrbanBlockDeserializer::GetSoilMultiplicity() const
 // -----------------------------------------------------------------------------
 std::string UrbanBlockDeserializer::GetSoilCompoundClearing() const
 {
-    //if ( asn().attributes.soil.occupationPresent )
-        return message_.attributes.soil.compoundClearing;
+    return message_.attributes.soil.compoundClearing;
 }
 
 // -----------------------------------------------------------------------------
@@ -153,8 +144,7 @@ std::string UrbanBlockDeserializer::GetSoilCompoundClearing() const
 // -----------------------------------------------------------------------------
 std::string UrbanBlockDeserializer::GetVegetationType() const
 {
-   // if ( message_.attributes.vegetation.m.typePresent )
-        return message_.attributes.vegetation.type;
+    return message_.attributes.vegetation.type;
 }
 
 // -----------------------------------------------------------------------------
@@ -163,8 +153,7 @@ std::string UrbanBlockDeserializer::GetVegetationType() const
 // -----------------------------------------------------------------------------
 unsigned int UrbanBlockDeserializer::GetVegetationHeight() const
 {
-    //if ( message_.attributes.vegetation.m.heightPresent )
-        return message_.attributes.vegetation.height;
+    return message_.attributes.vegetation.height;
 }
 
 // -----------------------------------------------------------------------------
@@ -173,8 +162,29 @@ unsigned int UrbanBlockDeserializer::GetVegetationHeight() const
 // -----------------------------------------------------------------------------
 float UrbanBlockDeserializer::GetVegetationDensity() const
 {
-    //if ( message_.attributes.vegetation.m.densityPresent )
         return message_.attributes.vegetation.density;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanBlockDeserializer::GetColor
+// Created: SLG 2009-12-07
+// -----------------------------------------------------------------------------
+std::auto_ptr< ColorRGBA > UrbanBlockDeserializer::GetColor() const
+{
+    std::auto_ptr< ColorRGBA > color ( new ColorRGBA(   message_.attributes.color.red,
+                                        message_.attributes.color.green,
+                                        message_.attributes.color.blue,
+                                        message_.attributes.color.alpha ) );
+     return color;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanBlockDeserializer::HasColor
+// Created: RPD 2010-01-06
+// -----------------------------------------------------------------------------
+bool UrbanBlockDeserializer::HasColor() const
+{
+    return ( bool ) message_.attributes.m.colorPresent;
 }
 
 // -----------------------------------------------------------------------------

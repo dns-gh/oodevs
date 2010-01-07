@@ -13,6 +13,7 @@
 #include <Urban/BlockModel.h>
 #include <Urban/TerrainObject_ABC.h>
 #include <Urban/Block.h>
+#include <Urban/ColorRGBA.h>
 #include <Urban/PhysicalFeature_ABC.h>
 #include <Urban/StaticModel.h>
 #include <Urban/WorldParameters.h>
@@ -116,7 +117,6 @@ void UrbanModel::WriteUrbanModel( xml::xostream& xos ) const
 void UrbanModel::SendCreation( urban::Block& object )
 {
     NET_ASN_MsgUrbanCreation asn;
-    int i = 0;
     geometry::Polygon2f::T_Vertices points = object.GetFootprint()->Vertices();
     asn().oid                       = object.GetId();
     asn().name                      = object.GetName().c_str();
@@ -125,11 +125,22 @@ void UrbanModel::SendCreation( urban::Block& object )
 
     asn().location.coordinates.elem = new ASN1T_CoordLatLong[ points.size() ];
 
+    int i ( 0 );
     for ( geometry::Polygon2f::IT_Vertices it = points.begin(); it != points.end(); ++it )
     {
         asn().location.coordinates.elem[ i ].latitude = (*it).X();
         asn().location.coordinates.elem[ i ].longitude = (*it).Y();
         ++i;
+    }
+
+    const ColorRGBA* color = object.GetColor();
+    if ( color != 0 )
+    {
+        asn().attributes.m.colorPresent = 1;
+        asn().attributes.color.red = color->Red();
+        asn().attributes.color.green = color->Green();
+        asn().attributes.color.blue = color->Blue();
+        asn().attributes.color.alpha = color->Alpha();
     }
 
     const Architecture* architecture = object.RetrievePhysicalFeature< Architecture >();

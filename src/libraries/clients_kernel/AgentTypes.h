@@ -31,6 +31,7 @@ namespace kernel
     class OrderContext;
     class MissionFactory;
     class FragOrderType;
+    class MagicOrderType;
     class SymbolFactory;
     class KnowledgeGroupType;
 
@@ -89,6 +90,7 @@ private:
     void ReadAgents( xml::xistream& xis );
     void ReadAutomats( xml::xistream& xis );
     void ReadOrderTypes( xml::xistream& xis );
+    void ReadMagicOrderTypes( xml::xistream& xis );
     void ReadModels( xml::xistream& xis );
     void ReadPopulations( xml::xistream& xis );
     void ReadKnowledgeGroups( xml::xistream& xis );

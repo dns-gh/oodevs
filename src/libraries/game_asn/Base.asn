@@ -32,6 +32,14 @@ CoordLatLong ::= SEQUENCE
     longitude REAL
 }
 
+ColorRGBA ::= SEQUENCE
+{
+	red INTEGER,
+	green INTEGER,
+	blue INTEGER,
+	alpha REAL
+}
+
 CoordLatLongList ::= SEQUENCE OF CoordLatLong
 
 Location ::= SEQUENCE 

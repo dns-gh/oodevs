@@ -27,6 +27,11 @@ namespace kernel
     class Controllers;
 }
 
+namespace urban
+{
+    class UrbanDecoration;
+}
+
 namespace gui
 {  
     class IconLayout;
@@ -78,7 +83,9 @@ public:
     virtual void DrawLine         ( const geometry::Point2f& from, const geometry::Point2f& to ) const;
     virtual void DrawLines        ( const T_PointVector& points ) const;
     virtual void DrawConvexPolygon( const T_PointVector& points ) const;
+    virtual void DrawConvexPolygon( const geometry::Polygon2f& polygon    ) const;
     virtual void DrawConvexPolygon( const T_PointVector& points, bool selected ) const;
+    virtual void DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const urban::UrbanDecoration* decoration ) const;
     virtual void DrawArrow        ( const geometry::Point2f& from, const geometry::Point2f& to, float size = -1.f, E_Unit unit = meters ) const;
     virtual void DrawCurvedArrow  ( const geometry::Point2f& from, const geometry::Point2f& to, float curveRatio = 0.2f, float size = -1.f, E_Unit unit = meters ) const;
     virtual void DrawArc          ( const geometry::Point2f& center, const geometry::Point2f& p1, const geometry::Point2f& p2 ) const;
@@ -131,11 +138,13 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void paintGL();
-    virtual void initializeGL();
-    virtual void resizeGL( int w, int h );
-    virtual void updateGL();
-    unsigned int GenerateCircle();
+    virtual void    paintGL();
+    virtual void    initializeGL();
+    virtual void    resizeGL( int w, int h );
+    virtual void    updateGL();
+    unsigned int    GenerateCircle();
+    void            UpdateStipple() const;
+    void            DrawTextLabel( const std::string& message, const geometry::Point2f& where, int baseSize = 12);
 
     void RenderPass( GlRenderPass_ABC& pass );
     //@}
@@ -155,8 +164,9 @@ private:
     T_RenderPasses passes_;
     std::string    currentPass_;
 
-    T_Fonts fonts_;
-    int     baseFont_;
+    T_Fonts     fonts_;
+    int         baseFont_;
+    QFont       currentFont_;
     //@}
 };
 

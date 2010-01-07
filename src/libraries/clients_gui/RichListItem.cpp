@@ -238,7 +238,7 @@ const QColor& RichListItem::GetBackgroundColor()
 // -----------------------------------------------------------------------------
 void RichListItem::paintCell( QPainter* pPainter, const QColorGroup& cg, int nColumn, int nWidth, int nAlign )
 {
-    if( nColumn >= (int)columns_.size() )
+    if(  nColumn < 0 || nColumn >= ( int ) columns_.size() )
         return;
 
     QColorGroup colorGroup( cg );
@@ -265,8 +265,8 @@ void RichListItem::paintCell( QPainter* pPainter, const QColorGroup& cg, int nCo
         brush.setColor( GetBackgroundColor() );
     }
 
-    SimplerRichText* pRichText = columns_[nColumn].rich;
-    const QPixmap& pm = columns_[nColumn].pixMap;
+    SimplerRichText* pRichText = columns_[ nColumn ].rich;
+    const QPixmap& pm = columns_[ nColumn ].pixMap;
     QRect rect( 0, 0, nWidth, height() );
 
     const int voffset = ( height() - pRichText->height() ) / 2;
@@ -293,10 +293,10 @@ int RichListItem::width( const QFontMetrics& /*fm*/, const QListView* /*lv*/, in
 // -----------------------------------------------------------------------------
 int RichListItem::Width( int nColumn ) const
 {
-    if( nColumn >= (int)columns_.size() )
+    if(  nColumn < 0 || nColumn >= ( int )columns_.size() )
         return 0;
-    const QPixmap& pm = columns_[nColumn].pixMap;
-    const int textWidth = columns_[nColumn].rich->widthUsed();
+    const QPixmap& pm = columns_[ nColumn ].pixMap;
+    const int textWidth = columns_[ nColumn ].rich->widthUsed();
     const int pixWidth  = pm.isNull() ? 0 : ( pm.width() + margin_ );
     return textWidth + pixWidth;
 }
@@ -309,7 +309,7 @@ void RichListItem::setText( int column, const QString& text )
 {
     if( column < 0 )
         return;
-    while( (int)columns_.size() <= column )
+    while( ( int )columns_.size() <= column )
         columns_.push_back( RichText( "", CreateRichText( "" ) ) );
     RichText& richText = columns_[ column ];
     if( richText.base != text )
@@ -329,7 +329,7 @@ void RichListItem::setPixmap( int column, const QPixmap & pm )
 {
     if( column < 0 )
         return;
-    while( (int)columns_.size() <= column )
+    while( ( int )columns_.size() <= column )
         columns_.push_back( RichText( "", CreateRichText( "" ) ) );
     RichText& richText = columns_[ column ];
     richText.pixMap = pm;
@@ -356,7 +356,7 @@ SimplerRichText* RichListItem::CreateRichText( const QString& label )
 // -----------------------------------------------------------------------------
 QString RichListItem::text( int column ) const
 {
-    if( column < 0 || column >= (int)columns_.size() )
+    if( column < 0 || column >= ( int ) columns_.size() )
         return "";
     return columns_[ column ].base;
 }
@@ -367,7 +367,7 @@ QString RichListItem::text( int column ) const
 // -----------------------------------------------------------------------------
 const QPixmap * RichListItem::pixmap( int column ) const
 {
-    if( column < 0 || column >= (int)columns_.size() )
+    if( column < 0 || column >= ( int ) columns_.size() )
         return 0;
     return & columns_[ column ].pixMap;
 }
@@ -387,7 +387,7 @@ int RichListItem::rtti() const
 // -----------------------------------------------------------------------------
 QString RichListItem::GetAnchorAt( const QPoint globalPos, int nColumn ) const
 {
-    if( nColumn >= (int)columns_.size() || ! columns_[nColumn].rich )
+    if(  nColumn < 0 || nColumn >= ( int ) columns_.size() || ! columns_[ nColumn ].rich )
         return QString::null;
 
     QListView* pListView = listView();
@@ -399,5 +399,5 @@ QString RichListItem::GetAnchorAt( const QPoint globalPos, int nColumn ) const
     for( int n = 0; n < nColumn; ++n )
         offset.setX( offset.x() - pListView->columnWidth( n ) );
 
-    return columns_[nColumn].rich->anchorAt( offset );
+    return columns_[ nColumn ].rich->anchorAt( offset );
 }

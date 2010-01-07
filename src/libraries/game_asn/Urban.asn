@@ -53,6 +53,7 @@ ObjectAttributeArchitecture ::= SEQUENCE
 
 UrbanAttributes ::= SEQUENCE
 {
+    color			ColorRGBA OPTIONAL,
     vegetation		ObjectAttributeVegetation OPTIONAL,
     soil			ObjectAttributeSoil OPTIONAL,
     architecture    ObjectAttributeArchitecture OPTIONAL    

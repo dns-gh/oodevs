@@ -63,12 +63,8 @@ void UrbanLayer::Paint( kernel::Viewport_ABC& /*viewport*/ )
     for( IT_TerrainObjects it = objects_.begin(); it != objects_.end(); ++it )
     {
         const TerrainObjectProxy* object = (*it);
-        if( selectedObject_ && object == selectedObject_ )
-            object->object_->Draw( *urbanDrawer_, true );
-        else
-        {
-            object->object_->Draw( *urbanDrawer_, false );
-        }
+        object->object_->SetSelected( object == selectedObject_ );
+        object->object_->Draw( *urbanDrawer_, false );
     }
 }
 
@@ -182,10 +178,10 @@ bool UrbanLayer::HandleKeyPress( QKeyEvent* input )
     {
     case Qt::Key_Delete:
     case Qt::Key_Backspace:
-        {
-            selectedObject_ = 0;
-            break;
-        }
+    {
+        selectedObject_ = 0;
+        break;
+    }
 
     default:
         break;

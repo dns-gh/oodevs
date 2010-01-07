@@ -33,7 +33,7 @@ SoilAttribute::SoilAttribute( const Model& model, const ASN1T_UrbanAttributes& a
 // -----------------------------------------------------------------------------
 SoilAttribute::~SoilAttribute()
 {
-
+    //NOTHING
 }  
 
 // -----------------------------------------------------------------------------
@@ -44,14 +44,10 @@ void SoilAttribute::Update( const ASN1T_UrbanAttributes& asnMsg )
 {
     if( asnMsg.m.soilPresent )
     {
-        //if ( asnMsg.soil.m.occupationPresent )
-            occupation_ = asnMsg.soil.occupation;
-        //if ( asnMsg.soil.m.trafficabilityPresent )
-            trafficability_ = asnMsg.soil.trafficability;
-        //if ( asnMsg.soil.m.multiplePresent )
-            isMultiple_ = asnMsg.soil.multiple;
-        //if ( asnMsg.soil.m.compoundClearingPresent )
-            compoundClearing_ = asnMsg.soil.compoundClearing;  
+        occupation_ = asnMsg.soil.occupation;
+        trafficability_ = asnMsg.soil.trafficability;
+        isMultiple_ = asnMsg.soil.multiple;
+        compoundClearing_ = asnMsg.soil.compoundClearing;  
     }
 }
 
@@ -63,16 +59,9 @@ void SoilAttribute::Send( ASN1T_UrbanAttributes& asnMsg ) const
 {
     asnMsg.m.soilPresent = 1;
 
-    //asnMsg.soil.m.occupationPresent = 1;
     asnMsg.soil.occupation = occupation_;
-
-    //asnMsg.soil.m.trafficabilityPresent = 1;
     asnMsg.soil.trafficability = trafficability_;
-
-    //asnMsg.soil.m.multiplePresent = 1;
     asnMsg.soil.multiple = isMultiple_;
-
-    //asnMsg.soil.m.compoundClearingPresent = 1;
     asnMsg.soil.compoundClearing = compoundClearing_.c_str();
 }
 
@@ -82,5 +71,5 @@ void SoilAttribute::Send( ASN1T_UrbanAttributes& asnMsg ) const
 // -----------------------------------------------------------------------------
 void SoilAttribute::AsnDelete( ASN1T_UrbanAttributes& /*asnMsg*/ ) const
 {
-    //    delete asnMsg.u.mine_jam;
+    //NOTHING
 }

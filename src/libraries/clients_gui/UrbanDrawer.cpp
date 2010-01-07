@@ -44,18 +44,17 @@ UrbanDrawer::~UrbanDrawer()
 // Name: UrbanDrawer::Draw
 // Created: SLG 2009-03-23
 // -----------------------------------------------------------------------------
-void UrbanDrawer::Draw( const urban::Block& object, bool selected ) const
+void UrbanDrawer::Draw( const urban::Block& object ) const
 {
-    toolbox_.DrawConvexPolygon( object.GetFootprint()->Vertices(), selected );
+    toolbox_.DrawDecoratedPolygon( *object.GetFootprint(), object.GetDecoration() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UrbanDrawer::Draw
 // Created: SLG 2009-03-23
 // -----------------------------------------------------------------------------
-void UrbanDrawer::Draw( const urban::City& object, bool selected ) const
+void UrbanDrawer::Draw( const urban::City& /*object*/ ) const
 {
-    UNREFERENCED_PARAMETER( selected );
     //TODO
 }
 
@@ -63,9 +62,8 @@ void UrbanDrawer::Draw( const urban::City& object, bool selected ) const
 // Name: UrbanDrawer::Draw
 // Created: SLG 2009-03-23
 // -----------------------------------------------------------------------------
-void UrbanDrawer::Draw( const urban::District& object, bool selected ) const
+void UrbanDrawer::Draw( const urban::District& /*object*/ ) const
 {
-    UNREFERENCED_PARAMETER( selected );
     //TODO
 }
 
@@ -73,9 +71,8 @@ void UrbanDrawer::Draw( const urban::District& object, bool selected ) const
 // Name: UrbanDrawer::Draw
 // Created: SLG 2009-03-23
 // -----------------------------------------------------------------------------
-void UrbanDrawer::Draw( const urban::ResourceNetwork& object, bool selected ) const
+void UrbanDrawer::Draw( const urban::ResourceNetwork& /*object*/ ) const
 {
-    UNREFERENCED_PARAMETER( selected );
     //TODO
 }
 
@@ -83,9 +80,8 @@ void UrbanDrawer::Draw( const urban::ResourceNetwork& object, bool selected ) co
 // Name: UrbanDrawer::Draw
 // Created: SLG 2009-03-23
 // -----------------------------------------------------------------------------
-void UrbanDrawer::Draw( const urban::UndergroundNetwork& object, bool selected ) const
+void UrbanDrawer::Draw( const urban::UndergroundNetwork& /*object*/ ) const
 {
-    UNREFERENCED_PARAMETER( selected );
     //TODO
 }
 
@@ -93,7 +89,7 @@ void UrbanDrawer::Draw( const urban::UndergroundNetwork& object, bool selected )
 // Name: UrbanDrawer::Draw
 // Created: SLG 2009-03-23
 // -----------------------------------------------------------------------------
-void UrbanDrawer::Draw( Location_ABC& location ) const
+void UrbanDrawer::Draw( Location_ABC& /*location*/ ) const
 {
     //TODO
 }

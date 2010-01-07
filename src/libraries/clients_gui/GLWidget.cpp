@@ -11,11 +11,14 @@
 #include "GlWidget.h"
 #include "graphics/MapLayer_ABC.h"
 #include "graphics/Scale.h"
-#include "IconLayout.h"
 #include "GlRenderPass_ABC.h"
 #include "graphics/extensions.h"
-#include <xeumeuleu/xml.h>
+#include "IconLayout.h"
 #include <qbitmap.h>
+#include <time.h>
+#include "urban/UrbanDecoration.h"
+#include "urban/ColorRGBA.h"
+#include <xeumeuleu/xml.h>
 
 using namespace geometry;
 using namespace kernel;
@@ -73,12 +76,14 @@ void GlWidget::initializeGL()
 {
     glEnable( GL_TEXTURE_2D );
     MapWidget::initializeGL();
-    glDisable( GL_DEPTH_TEST );
-    glShadeModel( GL_FLAT );
+    //glDisable( GL_DEPTH_TEST );
+    //glShadeModel( GL_FLAT );
     circle_ = GenerateCircle();
     glEnableClientState( GL_VERTEX_ARRAY );
     gl::Initialize();
     glShadeModel( GL_SMOOTH );
+    glEnable( GL_LINE_SMOOTH );
+    glEnable( GL_BLEND );
 }
 
 // -----------------------------------------------------------------------------
@@ -233,6 +238,60 @@ unsigned int GlWidget::GenerateCircle()
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlWidget::UpdateStipple
+// Created: RPD 2010-01-06
+// -----------------------------------------------------------------------------
+void GlWidget::UpdateStipple() const
+{
+    glEnable( GL_LINE_STIPPLE );
+    long time = clock();
+    unsigned short shift = ( unsigned short ) ( ( long ) ( time / 8 ) % 128 ) / 8;
+    glLineStipple( 1, 0x0FFF << shift | 0x0FFF >> ( 16-shift ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlWidget::DrawTextLabel
+// Created: RPD 2010-01-01
+// -----------------------------------------------------------------------------
+void GlWidget::DrawTextLabel( const std::string& content, const geometry::Point2f& where, int baseSize /*= 12*/)
+{
+    if ( Zoom() < 0.00015f )
+        return;
+    float adaptiveSize ( ( float ) baseSize );
+    if ( Zoom() <= 0.00052f )
+        adaptiveSize = ( float ) baseSize * Zoom() * 1600 ;
+
+    float witdh = content.length() * adaptiveSize * 0.67f;
+    float height = 2.2f * adaptiveSize;
+    QPoint point = CoordinatesToClient( where );
+    geometry::Point2f leftBottom = RetrieveCoordinates( point.x()-adaptiveSize * 0.67f, point.y() + height * 0.25f );
+    geometry::Point2f rightTop = RetrieveCoordinates( point.x() + witdh, point.y() - height * 0.75f );
+
+    float color[ 4 ];
+    color[ 0 ] = 1.f;
+    color[ 1 ] = 1.f;
+    color[ 2 ] = 0.67f;
+    color[ 3 ] = __min( 0.1f, Zoom() * 300 );
+    glColor4fv( color );
+    glBegin( GL_POLYGON );
+    glVertex3f( leftBottom.X(), leftBottom.Y(), 0 );
+    glVertex3f( leftBottom.X(), rightTop.Y(), 0 );
+    glVertex3f( rightTop.X(), rightTop.Y(), 0 );
+    glVertex3f( rightTop.X(), leftBottom.Y(), 0 );
+    glEnd();
+  
+    currentFont_.setPointSize( ( int ) adaptiveSize );
+    currentFont_.setItalic( true );
+    currentFont_.setStyleStrategy( QFont::PreferAntialias );
+    color[ 0 ] = 0.f;
+    color[ 1 ] = 0.f;
+    color[ 2 ] = 0.f;
+    color[ 3 ] = __min( 1, Zoom() * 1000 );
+    glColor4fv( color );
+    renderText( where.X(), where.Y(), 2, content.c_str(), currentFont_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlWidget::GetAdaptiveZoomFactor
 // Created: RPD 2009-12-04
 // -----------------------------------------------------------------------------
@@ -378,6 +437,109 @@ void GlWidget::DrawConvexPolygon( const T_PointVector& points, bool selected ) c
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: GlWidget::DrawConvexPolygon
+// Created: RPD 2009-10-05
+// -----------------------------------------------------------------------------
+void GlWidget::DrawConvexPolygon( const Polygon2f& polygon ) const
+{
+    const Polygon2f::T_Vertices& points = polygon.Vertices();
+    DrawConvexPolygon( points );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlWidget::DrawDecoratedPolygon
+// Created: RPD 2009-12-15
+// -----------------------------------------------------------------------------
+void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const urban::UrbanDecoration* decoration ) const
+{
+    float color[ 4 ];
+    color[ 0 ] = 0.8f;
+    color[ 1 ] = 0.8f;
+    color[ 2 ] = 0.8f;
+    float baseAlpha =  0.5f;
+    if ( decoration->HasColor() )
+    {
+        color[ 0 ] = decoration->Color().FloatRed();
+        color[ 1 ] = decoration->Color().FloatGreen();
+        color[ 2 ] = decoration->Color().FloatBlue();
+        if ( decoration->Color().TransparencyUsed() )
+        {
+            baseAlpha = decoration->Color().Alpha() * 0.9f;
+        }
+    }
+    color[ 3 ] = baseAlpha;
+    if ( decoration == 0 )
+    {
+        DrawConvexPolygon( polygon );
+        return;
+    }
+    float height = ( float ) decoration->Height();
+    const Polygon2f::T_Vertices& footprintPoints = polygon.Vertices();
+    Polygon2f roofPolygon ( polygon );
+    Vector2f shift ( height, height );
+    const Polygon2f::T_Vertices& roofPoints = roofPolygon.Vertices();
+    glMatrixMode(GL_MODELVIEW);
+    glLineWidth( 1 );
+    glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
+    color[ 3 ] = baseAlpha * 0.6f;
+    glColor4fv( color );
+    glVertexPointer( 2, GL_FLOAT, 0, ( const void* )( &footprintPoints.front() ) );
+    glDrawArrays( GL_LINE_LOOP, 0, footprintPoints.size() );
+    Polygon2f::T_Vertices face;
+
+    //calculating roof geometry:
+    for( unsigned int i = 0 ; i < roofPoints.size() ; ++i )
+    {
+        Point2f point = roofPoints[ i ];
+        double deltaX = ( point.X() - center_.X() ) * rZoom_ * height;
+        double deltaY = ( point.Y() - center_.Y() ) * rZoom_ * height;
+        point.Set( point.X() + deltaX, point.Y() + deltaY );
+        ( Point2f& ) roofPoints[ i ] = point;
+    }
+
+    //drawing faces:
+    for( unsigned int i = 0 ; i < roofPoints.size() ; ++i )
+    {
+        face.clear();
+        unsigned int next = i + 1;
+        if ( i == roofPoints.size() - 1 )
+            next = 0;
+        face.push_back( footprintPoints[ i ] );
+        face.push_back( roofPoints[ i ] );
+        face.push_back( roofPoints[ next ] );
+        face.push_back( footprintPoints[ next ] );
+        glVertexPointer( 2, GL_FLOAT, 0, ( const void* )( &face.front() ) );
+        glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
+        glDrawArrays( GL_POLYGON, 0, face.size() );
+        glPopAttrib();
+        glDrawArrays( GL_LINE_LOOP, 0, face.size() );
+    }
+    if( decoration->Selected() )
+        color[ 3 ] = __min ( 1, baseAlpha * 1.6f);
+    else
+        color[ 3 ] = baseAlpha;
+    glColor4fv( color );
+    glVertexPointer( 2, GL_FLOAT, 0, ( const void* )( &roofPoints.front() ) );
+    glDrawArrays( GL_POLYGON, 0, roofPoints.size() );
+    glPopAttrib();
+    
+    if( decoration->Selected() )
+    {
+        UpdateStipple();
+        glLineWidth( 1.5 );
+        color[ 0 ] = 1.f - color[ 0 ];
+        color[ 1 ] = 1.f - color[ 1 ];
+        color[ 2 ] = 1.f - color[ 2 ];
+        color[ 3 ] = 0.9f;
+    }
+    glColor4fv( color );
+    glDrawArrays( GL_LINE_LOOP, 0, roofPoints.size() );
+    glDisable (GL_LINE_STIPPLE);
+    glPopAttrib();
+    //if ( decoration->Name().length() > 0 )
+    //    ( ( GlWidget& ) ( *this ) ).DrawTextLabel( decoration->Name(), roofPolygon.BoundingBoxCenter(), 13 );
+}
 
 // -----------------------------------------------------------------------------
 // Name: GlWidget::DrawArrow

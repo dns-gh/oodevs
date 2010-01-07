@@ -209,6 +209,15 @@ void Gl3dWidget::DrawConvexPolygon( const T_PointVector& points ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Gl3dWidget::DrawConvexPolygon
+// Created: RPD 2009-10-05
+// -----------------------------------------------------------------------------
+void Gl3dWidget::DrawConvexPolygon( const Polygon2f& polygon ) const
+{
+    const Polygon2f::T_Vertices& points = polygon.Vertices();
+    DrawConvexPolygon( points );
+}
+// -----------------------------------------------------------------------------
 // Name: Gl3dWidget::DrawArrow
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------

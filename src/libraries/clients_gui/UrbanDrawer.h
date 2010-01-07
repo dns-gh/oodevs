@@ -43,11 +43,11 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Draw( const urban::Block& object, bool selected ) const;
-    virtual void Draw( const urban::City& object, bool selected ) const;
-    virtual void Draw( const urban::District& object, bool selected ) const;
-    virtual void Draw( const urban::ResourceNetwork& object, bool selected ) const;
-    virtual void Draw( const urban::UndergroundNetwork& object, bool selected ) const;
+    virtual void Draw( const urban::Block& object ) const;
+    virtual void Draw( const urban::City& object ) const;
+    virtual void Draw( const urban::District& object ) const;
+    virtual void Draw( const urban::ResourceNetwork& object ) const;
+    virtual void Draw( const urban::UndergroundNetwork& object ) const;
     virtual void Draw( Location_ABC& location ) const;
     //@}
 

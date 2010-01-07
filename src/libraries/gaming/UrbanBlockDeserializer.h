@@ -13,6 +13,7 @@
 #include <Urban/UrbanBlockDeserializer_ABC.h>
 #include "game_asn/Simulation.h"
 
+class ColorRGBA;
 namespace urban
 {
     class Block;
@@ -53,6 +54,9 @@ public:
     virtual unsigned int GetVegetationHeight                () const;
     virtual float        GetVegetationDensity               () const;
 
+    std::auto_ptr< ColorRGBA >  GetColor                    () const;
+
+    virtual bool HasColor()         const;
     virtual bool HasArchitecture()  const;
     virtual bool HasSoil()          const;
     virtual bool HasVegetation()    const;

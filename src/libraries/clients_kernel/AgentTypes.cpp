@@ -17,6 +17,7 @@
 #include "DotationType.h"
 #include "FileLoader.h"
 #include "FragOrderType.h"
+#include "MagicOrderType.h"
 #include "KnowledgeGroupType.h"
 #include "MissionFactory.h"
 #include "MissionType.h"
@@ -59,6 +60,7 @@ void AgentTypes::Load( const tools::ExerciseConfig& config )
     FileLoader( config )
         .Load( "components", boost::bind( &AgentTypes::ReadComponents, this, _1 ) )
         .Load( "missions", boost::bind( &AgentTypes::ReadOrderTypes, this, _1 ) )
+        //.Load( "magic-orders", boost::bind( &AgentTypes::ReadMagicOrderTypes, this, _1 ) )
         .Load( "models", boost::bind( &AgentTypes::ReadModels, this, _1 ) )
         .Load( "sensors", boost::bind( &AgentTypes::ReadSensors, this, _1 ) )
         .Load( "units", boost::bind( &AgentTypes::ReadAgents, this, _1 ) )

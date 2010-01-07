@@ -60,7 +60,8 @@ void UrbanModel::Create( const ASN1T_MsgUrbanCreation& asn )
     urban::TerrainObject_ABC* object = model_.GetFactory().CreateBlock( id, name, footPrint );
     urban::UrbanObjectDeserializer_ABC* urbanBlockDeserializer = new UrbanBlockDeserializer( asn );
     object->Accept( *urbanBlockDeserializer );
-    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( asn, controller_, *object ); 
+    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( asn, controller_, *object );
+    object->InstanciateDecoration();
     controller_.Create( *pTerrainObject );
     if( !Resolver< kernel::Entity_ABC >::Find( id ) )
         tools::Resolver< kernel::Entity_ABC >::Register( id, *pTerrainObject );
