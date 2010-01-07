@@ -64,7 +64,7 @@ void UrbanLayer::Paint( kernel::Viewport_ABC& /*viewport*/ )
     {
         const TerrainObjectProxy* object = (*it);
         object->object_->SetSelected( object == selectedObject_ );
-        object->object_->Draw( *urbanDrawer_, false );
+        object->object_->Draw( *urbanDrawer_ );
     }
 }
 

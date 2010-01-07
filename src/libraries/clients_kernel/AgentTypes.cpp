@@ -17,7 +17,6 @@
 #include "DotationType.h"
 #include "FileLoader.h"
 #include "FragOrderType.h"
-#include "MagicOrderType.h"
 #include "KnowledgeGroupType.h"
 #include "MissionFactory.h"
 #include "MissionType.h"
