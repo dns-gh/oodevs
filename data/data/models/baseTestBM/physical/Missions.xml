@@ -57,6 +57,9 @@
     <mission dia-behavior="net.masagroup.sword.military.tasks.Reconnoiter" dia-type="T_Mission_Pion_ReconnoiterUrbanBlock" id="16" name="ReconnoiterUrbanBlock">
       <parameter dia-name="objectives" name="destination" optional="false" type="UrbanBlockBM"/>
     </mission>
+    <mission dia-behavior="net.masagroup.sword.military.tasks.Follow" dia-type="T_Mission_Pion_Follow" id="17" name="Follow">
+      <parameter dia-name="objectives" name="objectives" optional="false" type="AgentBM"/>
+    </mission>
     <mission dia-behavior="net.masagroup.military.tasks.TestParam" dia-type="T_Mission_Pion_BM_TestReachable" id="100" name="BM TestReachable">
       <parameter dia-name="Point_" name="Point" optional="true" type="PointBM"/>
       <parameter dia-name="PointList_" name="PointList" optional="true" type="PointListBM"/>

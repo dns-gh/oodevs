@@ -22,8 +22,8 @@ using namespace parameters;
 // Name: UrbanBlock constructor
 // Created: MGD 2009-11-05
 // -----------------------------------------------------------------------------
-UrbanBlock::UrbanBlock( const kernel::OrderParameter& parameter, urban::TerrainObject_ABC& value )
-: Parameter< urban::TerrainObject_ABC* >( parameter, &value )
+UrbanBlock::UrbanBlock( const kernel::OrderParameter& parameter, unsigned long value )
+: Parameter< unsigned long >( parameter, value )
 {
     // NOTHING
 }
@@ -32,8 +32,8 @@ UrbanBlock::UrbanBlock( const kernel::OrderParameter& parameter, urban::TerrainO
 // Name: UrbanBlock constructor
 // Created: MGD 2009-11-05
 // -----------------------------------------------------------------------------
-UrbanBlock::UrbanBlock( const kernel::OrderParameter& parameter, const ASN1T_UrbanBlock& asn, Resolver< urban::Block >& resolver )
-: Parameter< urban::TerrainObject_ABC* >( parameter, &resolver.Get( asn ) )
+UrbanBlock::UrbanBlock( const kernel::OrderParameter& parameter, const ASN1T_UrbanBlock& asn )
+: Parameter< unsigned long >( parameter )
 {
     // NOTHING
 }
@@ -42,8 +42,8 @@ UrbanBlock::UrbanBlock( const kernel::OrderParameter& parameter, const ASN1T_Urb
 // Name: UrbanBlock constructor
 // Created: MGD 2009-11-05
 // -----------------------------------------------------------------------------
-UrbanBlock::UrbanBlock( const OrderParameter& parameter, xml::xistream& xis, Resolver< urban::Block >& resolver )
-: Parameter< urban::TerrainObject_ABC* >( parameter, &resolver.Get( attribute< unsigned long >( xis, "value" ) ) )
+UrbanBlock::UrbanBlock( const OrderParameter& parameter, xml::xistream& xis )
+: Parameter< unsigned long >( parameter, attribute< unsigned long >( xis, "value" ) )
 {
     // NOTHING
 }
@@ -66,7 +66,7 @@ void UrbanBlock::CommitTo(  ASN1T_MissionParameter& asn ) const
     asn.null_value = !IsSet();
     asn.value.t = T_MissionParameter_value_urbanBlock;
     if( IsSet() )
-        asn.value.u.urbanBlock = GetValue()->GetId();
+        asn.value.u.urbanBlock = GetValue();
 }
 
 // -----------------------------------------------------------------------------
@@ -75,8 +75,8 @@ void UrbanBlock::CommitTo(  ASN1T_MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void UrbanBlock::Serialize( xml::xostream& xos ) const
 {
-    Parameter< urban::TerrainObject_ABC* >::Serialize( xos );
-    xos << attribute( "value", GetValue()->GetId() );
+    Parameter< unsigned long >::Serialize( xos );
+    xos << attribute( "value", GetValue() );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,5 +86,5 @@ void UrbanBlock::Serialize( xml::xostream& xos ) const
 void UrbanBlock::Display( kernel::Displayer_ABC& displayer ) const
 {
     displayer.Item( tools::translate( "Parameter", "Action" ) ).Display( GetName() )
-        .Item( tools::translate( "Parameter", "Value" ) ).Display( GetValue()->GetName() ); // $$$$ MGD ask to -> SBO 2007-05-24: make a displayer
+        .Item( tools::translate( "Parameter", "Value" ) ).Display( GetValue() ); // $$$$ MGD ask to -> SBO 2007-05-24: make a displayer
 }

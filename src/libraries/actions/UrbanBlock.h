@@ -29,15 +29,15 @@ namespace parameters {
 */
 // Created: MGD 2009-11-05
 // =============================================================================
-class UrbanBlock : public Parameter< urban::TerrainObject_ABC* >
+class UrbanBlock : public Parameter< unsigned long >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    UrbanBlock( const kernel::OrderParameter& parameter, urban::TerrainObject_ABC& value );
-    UrbanBlock( const kernel::OrderParameter& parameter, const ASN1T_UrbanBlock& asn, Resolver< urban::Block >& resolver );
-    UrbanBlock( const kernel::OrderParameter& parameter, xml::xistream& xis, Resolver< urban::Block >& resolver );
+    UrbanBlock( const kernel::OrderParameter& parameter, unsigned long value );
+    UrbanBlock( const kernel::OrderParameter& parameter, const ASN1T_UrbanBlock& asn );
+    UrbanBlock( const kernel::OrderParameter& parameter, xml::xistream& xis );
     virtual ~UrbanBlock();
     //@}
 

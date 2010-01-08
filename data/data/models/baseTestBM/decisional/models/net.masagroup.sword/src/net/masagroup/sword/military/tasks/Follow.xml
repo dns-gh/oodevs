@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.tasks.Follow" knowledge-class="net.masagroup.military.generic.tasks.knowledge.MoveToward">
+	<description>Follow another unit.</description>
+	<parameters>
+		<parameter name="objectives">
+			<description>The unit to follow.</description>
+			<type>
+				<list>
+					<class name="net.masagroup.military.generic.knowledge.Reachable"/>
+				</list>
+			</type>
+		</parameter>
+	</parameters>
+	<stages>
+		<stage label="movement" permanent="true">
+			<skills>
+				<skill name="net.masagroup.military.generic.skills.primitives.StayClose" main="false" priority="10.0">
+					<parameter name="entities">
+						<value>
+							<parameter>objectives</parameter>
+						</value>
+					</parameter>
+					<parameter name="positions">
+						<value>
+							<call method="net.masagroup.sword.military.queries.getCrossroads">
+								<parameter name="objectives">
+									<value>
+										<parameter>objectives</parameter>
+									</value>
+								</parameter>
+							</call>
+						</value>
+					</parameter>
+				</skill>
+			</skills>
+		</stage>
+	</stages>
+</task>

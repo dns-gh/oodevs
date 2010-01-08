@@ -61,6 +61,7 @@
 #include "actions/MaintenancePriorities.h"
 #include "actions/MedicalPriorities.h"
 #include "actions/IntelligenceList.h"
+#include "actions/UrbanBlock.h"
 
 #include <xeumeuleu/xml.h>
 #pragma warning( push, 0 )
@@ -248,7 +249,11 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::O
         param.reset( new actions::parameters::Path( parameter, converter_, xis ) );
     else if( type == "point" )
         param.reset( new actions::parameters::Point( parameter, converter_, xis ) );
+	else if( type == "pointbm" )
+        param.reset( new actions::parameters::Point( parameter, converter_, xis ) );
     else if( type == "polygon" )
+        param.reset( new actions::parameters::Polygon( parameter, converter_, xis ) );
+    else if( type == "areabm" )
         param.reset( new actions::parameters::Polygon( parameter, converter_, xis ) );
     else if( type == "location" )
         param.reset( new actions::parameters::Location( parameter, converter_, xis ) );
@@ -256,7 +261,11 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::O
         param.reset( new actions::parameters::PathList( parameter, converter_, xis ) );
     else if( type == "pointlist" )
         param.reset( new actions::parameters::PointList( parameter, converter_, xis ) );
+    else if( type == "pointlistbm" )
+        param.reset( new actions::parameters::PointList( parameter, converter_, xis ) );
     else if( type == "polygonlist" )
+        param.reset( new actions::parameters::PolygonList( parameter, converter_, xis ) );
+    else if( type == "arealistbm" )
         param.reset( new actions::parameters::PolygonList( parameter, converter_, xis ) );
     else if( type == "locationlist" )
         param.reset( new actions::parameters::LocationList( parameter, converter_, xis ) );
@@ -274,9 +283,17 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::O
         param.reset( new actions::parameters::Agent( parameter, xis, adapters_->agents_, controller_ ) );
     else if( type == "automate" )
         param.reset( new actions::parameters::Automat( parameter, xis, adapters_->automats_, controller_ ) );
+	else if( type == "agentbm" )
+        param.reset( new actions::parameters::Agent( parameter, xis, adapters_->agents_, controller_ ) );
+    else if( type == "automatebm" )
+        param.reset( new actions::parameters::Automat( parameter, xis, adapters_->automats_, controller_ ) );
     else if( type == "agentlist" )
         param.reset( new actions::parameters::AgentList( parameter, xis, adapters_->agents_, controller_ ) );
     else if( type == "automatelist" )
+        param.reset( new actions::parameters::AutomatList( parameter, xis, adapters_->automats_, controller_ ) );
+    else if( type == "agentlistbm" )
+        param.reset( new actions::parameters::AgentList( parameter, xis, adapters_->agents_, controller_ ) );
+    else if( type == "automatelistbm" )
         param.reset( new actions::parameters::AutomatList( parameter, xis, adapters_->automats_, controller_ ) );
     else if( type == "dotationtype" )
         param.reset( new actions::parameters::DotationType( parameter, xis, *objects_ ) );
@@ -304,6 +321,8 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::O
         param.reset( new actions::parameters::MedicalPriorities( parameter, xis ) );
     else if( type == "maintenancepriorities" )
         param.reset( new actions::parameters::MaintenancePriorities( parameter, *objects_, xis ) );
+	else if( type == "urbanblockbm" )
+        param.reset( new actions::parameters::UrbanBlock( parameter, xis ) );
     else
         throw std::runtime_error( "Unknown parameter type '" + type + "'" );
     param->Set( true ); // $$$$ SBO 2007-10-11: ...

@@ -3,6 +3,7 @@
   <units>
     <unit dia-type="BMPion" file="BMPion.bms" name="BMPion">
       <missions>
+        <mission name="Follow"/>
         <mission name="MoveToPoint"/>
         <mission name="MoveToPolygon"/>
         <mission name="MoveToAutomate"/>
