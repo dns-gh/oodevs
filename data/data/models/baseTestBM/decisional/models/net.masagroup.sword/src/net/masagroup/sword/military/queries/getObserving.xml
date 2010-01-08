@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.queries.getObserving">
+	<description>Retourne les carrefours qui sont Observing</description>
+	<parameters>
+		<parameter name="objectives">
+			<type>
+				<list>
+					<class name="net.masagroup.military.generic.knowledge.Observable"/>
+				</list>
+			</type>
+		</parameter>
+	</parameters>
+	<target name="k">
+		<type>
+			<class name="net.masagroup.military.generic.knowledge.Observing"/>
+		</type>
+	</target>
+</query>
