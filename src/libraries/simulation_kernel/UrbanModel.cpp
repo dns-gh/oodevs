@@ -66,11 +66,12 @@ void UrbanModel::ReadUrbanModel( const MIL_Config& config )
     try
     {
          MT_LOG_INFO_MSG( MT_FormatString( "Loading Urban Model from path '%s'", directoryPath.c_str() ) )
-         model_->Load( directoryPath, urban::WorldParameters( directoryPath ) );
+         urban::WorldParameters world ( directoryPath );
+         model_->Load( directoryPath, world );
     }
     catch( std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Exception in loading Urban Model caught : " << e.what() );
+        MT_LOG_ERROR_MSG( "Exception in loading Urban Model caught : " << e.what() ); 
     }
 }
 
@@ -87,7 +88,7 @@ void UrbanModel::SendStateToNewClient() const
 // Name: UrbanModel::load
 // Created: SLG 2009-10-29
 // -----------------------------------------------------------------------------
-void UrbanModel::load( MIL_CheckPointInArchive& file, const uint )
+void UrbanModel::load( MIL_CheckPointInArchive& /*file*/, const unsigned int )
 {
     //TODO
 }
@@ -96,7 +97,7 @@ void UrbanModel::load( MIL_CheckPointInArchive& file, const uint )
 // Name: UrbanModel::save
 // Created: SLG 2009-10-29
 // -----------------------------------------------------------------------------
-void UrbanModel::save( MIL_CheckPointOutArchive& file, const uint ) const
+void UrbanModel::save( MIL_CheckPointOutArchive& /*file*/, const unsigned int ) const
 {
     //TODO
 }
@@ -105,7 +106,7 @@ void UrbanModel::save( MIL_CheckPointOutArchive& file, const uint ) const
 // Name: UrbanModel::WriteUrbanModel
 // Created: SLG 2009-10-29
 // -----------------------------------------------------------------------------
-void UrbanModel::WriteUrbanModel( xml::xostream& xos ) const
+void UrbanModel::WriteUrbanModel( xml::xostream& /*xos*/ ) const
 {
     //TODO
 }
@@ -192,7 +193,7 @@ urban::Block* UrbanModel::FindUrbanBlock( unsigned id ) const
 // -----------------------------------------------------------------------------
 MT_Float UrbanModel::GetUrbanBlockCost( MT_Float weight, const MT_Vector2D& start, const MT_Vector2D& end ) const
 {
-    geometry::Point2f from ( start.rX_, start.rY_ ), to ( end.rX_, end.rY_ );
+    geometry::Point2f from ( ( float ) start.rX_, ( float ) start.rY_ ), to ( ( float ) end.rX_, ( float ) end.rY_ );
     return model_->GetUrbanBlockCost( ( float ) weight, from, to );
 }
 
