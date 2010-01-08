@@ -103,4 +103,7 @@ return
         end
         return estimatedReconnaissanceLevels[ objective ][ self ]
     end,
+    isOccupied = function( self )
+        return true -- TODO
+    end,
 }

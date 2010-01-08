@@ -78,7 +78,5 @@ return
     computeReconnaissanceCapability = function( target )
     	--TODO
     end,
-    getStressIncreaseRate = function( self )
-      --TODO
-    end,
+    
 }
