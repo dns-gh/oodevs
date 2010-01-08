@@ -17,6 +17,7 @@
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "clients_kernel/Positions.h"
 #include "View_ABC.h"
 #include "GlTooltip.h"
 
@@ -57,8 +58,12 @@ void EntityLayerBase::Paint( kernel::Viewport_ABC& viewport )
 {
     strategy_.SetAlpha( GetAlpha() );       
     for( unsigned i = 0; i < entities_.size(); ++i )
+    {
+        const Positions& positions = ( *entities_[ i ] ).Get< Positions >();
+        const geometry::Point2f position = positions.GetPosition();
         if( i != selected_ )
             Draw( *entities_[ i ], viewport );
+    }
     if( selected_ < entities_.size() )
         Draw( *entities_[ selected_ ], viewport );
     if( tooltiped_ < entities_.size() )

@@ -86,7 +86,10 @@ void AgentKnowledge::Update( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg )
     UPDATE_ASN_ATTRIBUTE( etat_op                  , nOperationalState_     );
     UPDATE_ASN_ATTRIBUTE( mort                     , bDead_                 );
     if( asnMsg.m.positionPresent )
+    {
         position_.Set( asnMsg.position.latitude, asnMsg.position.longitude );
+        optionals_.positionPresent = 1;
+    }
     UPDATE_ASN_ATTRIBUTE( direction                , nDirection_            );
     UPDATE_ASN_ATTRIBUTE( speed                    , nSpeed_                );
 

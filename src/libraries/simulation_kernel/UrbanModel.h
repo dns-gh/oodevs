@@ -17,6 +17,14 @@ namespace xml
     class xistream;
 }
 
+namespace urban
+{
+    class Model;
+    class StaticModel;
+    class TerrainObject_ABC;
+    class Block;
+    class BlockPhModifier_ABC;
+}
 
 class MIL_Config;
 class MIL_CheckPointInArchive;
@@ -26,13 +34,6 @@ class MIL_CheckPointOutArchive;
 // @class  UrbanModel
 // Created: SLG 2009-10-23
 // =============================================================================
-
-namespace urban
-{
-    class Model;
-    class StaticModel;
-    class TerrainObject_ABC;
-    class Block;
 
 class UrbanModel
 {
@@ -52,7 +53,8 @@ public:
     static void     SendCreation            ( urban::Block& UrbanBlock );
     urban::Block*   FindUrbanBlock          ( unsigned id ) const;
     MT_Float        GetUrbanBlockCost       ( MT_Float weight, const MT_Vector2D& from, const MT_Vector2D& to ) const;
-    urban::Model&   GetModel() const;
+    MT_Float        ComputeUrbanPhModifier  ( urban::BlockPhModifier_ABC& phModifier, const MT_Vector2D& firerPosition ) const;
+    urban::Model&   GetModel                () const;
     //@}
 
     //! @name Network
@@ -74,7 +76,6 @@ private:
     std::auto_ptr< urban::Model       > model_;
 };
 
-}
 
-#endif // __MIL_EntityManager_h_
+#endif // __UrbanModel_h_
 

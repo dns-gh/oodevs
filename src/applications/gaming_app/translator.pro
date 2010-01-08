@@ -43,6 +43,7 @@ InfoStancesWidget.cpp \
 InfoStatusWidget.cpp \
 InfoSupplyDialog.cpp \
 InfoWidget.cpp \
+KnowledgeGroupMagicOrdersInterface.cpp \
 LendingsListView.cpp \
 LoginDialog.cpp \
 LogisticStatusWidgets.cpp \

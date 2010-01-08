@@ -66,7 +66,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , pFederate_               ( 0 )
     , pProcessMonitor_         ( new ProcessMonitor() )
     , pFolk_                   ( new MIL_Folk( config ) )
-    , pUrbanModel_             ( new urban::UrbanModel() )
+    , pUrbanModel_             ( new UrbanModel() )
 {
     assert( !pTheAgentServer_ );
     pTheAgentServer_ = this;

@@ -36,6 +36,9 @@
 #include "simulation_terrain/TER_PopulationFlow_ABC.h"
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_World.h"
+#include "simulation_kernel/UrbanModel.h"
+#include "simulation_kernel/BlockPhFirerModifier.h"
+#include "simulation_kernel/BlockPhTargetModifier.h"
 #include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.h>
 
@@ -155,11 +158,11 @@ MT_Float PHY_WeaponDataType_DirectFire::GetMinDistanceForPH( MT_Float rPH, const
 // Modified: JVT 2004-11-03
 // -----------------------------------------------------------------------------
 inline
-MT_Float PHY_WeaponDataType_DirectFire::GetPH( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_Volume& targetVolume, MT_Float rDistance ) const
+MT_Float PHY_WeaponDataType_DirectFire::GetPH( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_Volume& targetVolume, MT_Vector3D firerPosition, MT_Vector3D targetPosition ) const
 {
     const PHY_RoleInterface_Posture&      firerPosture  = firer .GetRole< PHY_RoleInterface_Posture      >();
     const PHY_RoleInterface_Posture& targetPosture = target.GetRole< PHY_RoleInterface_Posture >();
-
+    MT_Float rDistance = firerPosition.Distance( targetPosition );
     assert( phs_.size() > targetVolume.GetID() );
 
     assert( firerPosture.GetElongationFactor() > 0. );
@@ -169,7 +172,13 @@ MT_Float PHY_WeaponDataType_DirectFire::GetPH( const MIL_AgentPion& firer, const
     if( rPHModificator <= 0. )
         return 0.;
     rDistance /= rPHModificator;
+    
+    MT_Vector2D firer2DPosition = MT_Vector2D( firerPosition.rX_, firerPosition.rY_ );
+    const MT_Vector2D target2DPosition = MT_Vector2D( targetPosition.rX_, targetPosition.rY_ );
 
+    float rUrbanModificator = MIL_AgentServer::GetWorkspace().GetUrbanModel().ComputeUrbanPhModifier( *new BlockPhFirerModifier(),  firer2DPosition )
+                              * MIL_AgentServer::GetWorkspace().GetUrbanModel().ComputeUrbanPhModifier( *new BlockPhTargetModifier(),  target2DPosition );
+    rDistance /= rUrbanModificator;
     const MT_Float rPH = phs_[ targetVolume.GetID() ]( rDistance );
     return firer.GetRole< PHY_RoleInterface_HumanFactors >().ModifyPH( rPH );
 }
@@ -251,7 +260,7 @@ MT_Float PHY_WeaponDataType_DirectFire::GetDangerosity( const MIL_AgentPion& fir
     const PHY_RoleInterface_Location& targetLocation = target.GetRole< PHY_RoleInterface_Location >();
     const MT_Vector3D vTargetPosition( targetLocation.GetPosition().rX_, targetLocation.GetPosition().rY_, targetLocation.GetAltitude() );
     
-    MT_Float rDangerosity  = bUsePH ? GetPH( firer, target, targetVolume, vFirerPosition.Distance( vTargetPosition ) ) : 1.;
+    MT_Float rDangerosity  = bUsePH ? GetPH( firer, target, targetVolume, vFirerPosition, vTargetPosition ) : 1.;
              rDangerosity *= weaponType_.GetDotationCategory().GetAttritionScore( targetProtection );
     return rDangerosity;
 }
@@ -286,7 +295,7 @@ void PHY_WeaponDataType_DirectFire::Fire( MIL_AgentPion& firer, MIL_Agent_ABC& t
         const MT_Vector3D firerPosition( firerLocation.GetPosition().rX_, firerLocation.GetPosition().rY_, firerLocation.GetAltitude() );
         const MT_Vector3D targetPosition( targetLocation.GetPosition().rX_, targetLocation.GetPosition().rY_, targetLocation.GetAltitude() );
 
-        const MT_Float rPH = GetPH( firer, target, targetVolume, firerPosition.Distance( targetPosition ) );
+        const MT_Float rPH = GetPH( firer, target, targetVolume, firerPosition, targetPosition );
         if ( !( randomGenerator_.rand_oi() <= rPH ) ) 
             return;
     }

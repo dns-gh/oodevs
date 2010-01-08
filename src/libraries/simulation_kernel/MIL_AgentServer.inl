@@ -236,7 +236,7 @@ MIL_Folk& MIL_AgentServer::GetFolkManager() const
 // Created: SLG 2009-10-11
 // -----------------------------------------------------------------------------
 inline
-urban::UrbanModel& MIL_AgentServer::GetUrbanModel() const
+UrbanModel& MIL_AgentServer::GetUrbanModel() const
 {
     assert( pUrbanModel_ );
     return *pUrbanModel_;

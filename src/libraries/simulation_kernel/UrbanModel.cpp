@@ -13,6 +13,7 @@
 #include <Urban/BlockModel.h>
 #include <Urban/TerrainObject_ABC.h>
 #include <Urban/Block.h>
+#include <Urban/BlockPhModifier_ABC.h>
 #include <Urban/ColorRGBA.h>
 #include <Urban/PhysicalFeature_ABC.h>
 #include <Urban/StaticModel.h>
@@ -27,7 +28,7 @@
 #include "Network/NET_ASN_Messages.h"
 #include <boost/bind.hpp>
 
-using namespace urban;
+//using namespace urban;
 
 BOOST_CLASS_EXPORT_GUID( UrbanModel, "UrbanModel" )
 
@@ -36,8 +37,8 @@ BOOST_CLASS_EXPORT_GUID( UrbanModel, "UrbanModel" )
 // Created: SLG 2009-08-10
 // -----------------------------------------------------------------------------
 UrbanModel::UrbanModel()
-    : staticModel_( new StaticModel() )
-    , model_( new Model( *staticModel_ ) )
+    : staticModel_( new urban::StaticModel() )
+    , model_( new urban::Model( *staticModel_ ) )
 {
     //TODO
 }
@@ -144,7 +145,7 @@ void UrbanModel::SendCreation( urban::Block& object )
         asn().attributes.color.alpha = color->Alpha();
     }
 
-    const Architecture* architecture = object.RetrievePhysicalFeature< Architecture >();
+    const urban::Architecture* architecture = object.RetrievePhysicalFeature< urban::Architecture >();
     if ( architecture != 0 )
     {       
         asn().attributes.m.architecturePresent              = 1;
@@ -157,7 +158,7 @@ void UrbanModel::SendCreation( urban::Block& object )
         asn().attributes.architecture.facadeOpacity         = architecture->GetFacadeOpacity();
     }
 
-    const Soil* soil = object.RetrievePhysicalFeature< Soil >();
+    const urban::Soil* soil = object.RetrievePhysicalFeature< urban::Soil >();
     if ( soil != 0 )
     {
         asn().attributes.m.soilPresent          = 1;
@@ -167,7 +168,7 @@ void UrbanModel::SendCreation( urban::Block& object )
         asn().attributes.soil.compoundClearing  = soil->GetCompoundClearing().c_str();
     }
 
-    const Vegetation* vegetation = object.RetrievePhysicalFeature< Vegetation >();
+    const urban::Vegetation* vegetation = object.RetrievePhysicalFeature< urban::Vegetation >();
     if ( vegetation != 0 )
     {
         asn().attributes.m.vegetationPresent    = 1;
@@ -184,7 +185,7 @@ void UrbanModel::SendCreation( urban::Block& object )
 // -----------------------------------------------------------------------------
 urban::Block* UrbanModel::FindUrbanBlock( unsigned id ) const
 {
-    return static_cast< Block* >( model_->blocks_.Find( id ) );
+    return static_cast< urban::Block* >( model_->blocks_.Find( id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -195,6 +196,16 @@ MT_Float UrbanModel::GetUrbanBlockCost( MT_Float weight, const MT_Vector2D& star
 {
     geometry::Point2f from ( ( float ) start.rX_, ( float ) start.rY_ ), to ( ( float ) end.rX_, ( float ) end.rY_ );
     return model_->GetUrbanBlockCost( ( float ) weight, from, to );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::ComputeUrbanPhModifier
+// Created: SLG 2010-01-07
+// -----------------------------------------------------------------------------
+MT_Float UrbanModel::ComputeUrbanPhModifier( urban::BlockPhModifier_ABC& phModifier, const MT_Vector2D& firerPosition ) const
+{
+    geometry::Point2f position ( firerPosition.rX_, firerPosition.rY_ );
+    return model_->GetUrbanPhModifier( phModifier, position );
 }
 
 // -----------------------------------------------------------------------------

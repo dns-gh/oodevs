@@ -822,6 +822,33 @@
     </message>
 </context>
 <context>
+    <name>KnowledgeGroupMagicOrdersInterface</name>
+    <message>
+        <source>Magic orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Desactivate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activate KnowledgeGroup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create child KnowledgeGroup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LendingsListView</name>
     <message>
         <source>Borrower</source>

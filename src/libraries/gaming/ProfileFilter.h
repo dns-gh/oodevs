@@ -41,12 +41,12 @@ public:
 
     //! @name Operations
     //@{
-    virtual QString GetLogin() const;
-    virtual bool IsVisible   ( const kernel::Entity_ABC& entity ) const;
-    virtual bool CanBeOrdered( const kernel::Entity_ABC& entity ) const;
-    virtual bool CanDoMagic  ( const kernel::Entity_ABC& entity ) const;
-    virtual bool IsInSameKnowledgeGroup( const kernel::Entity_ABC& entity ) const;
-    virtual bool IsSupervision() const;
+    virtual QString GetLogin    () const;
+    virtual bool IsVisible      ( const kernel::Entity_ABC& entity ) const;
+    virtual bool CanBeOrdered   ( const kernel::Entity_ABC& entity ) const;
+    virtual bool CanDoMagic     ( const kernel::Entity_ABC& entity ) const;
+    virtual bool IsKnown        ( const kernel::Entity_ABC& entity ) const;
+    virtual bool IsSupervision  () const;
 
     void SetFilter( const kernel::Entity_ABC& entity );
     void RemoveFilter();

@@ -9,6 +9,8 @@
 
 #include "gaming_pch.h"
 #include "ProfileFilter.h"
+#include "AgentKnowledges.h"
+#include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/IntelligenceHierarchies.h"
@@ -128,6 +130,8 @@ const kernel::Entity_ABC* ProfileFilter::GetFilter() const
 // -----------------------------------------------------------------------------
 bool ProfileFilter::IsInHierarchy( const kernel::Entity_ABC& entity ) const
 {
+    QString name = entity.GetName();
+    unsigned long id = entity.GetId();
     if( ! entity_ || entity_ == &entity )
         return true;
 
@@ -173,10 +177,10 @@ bool ProfileFilter::IsChildSubordinateOf( const D& down, const U& /*up*/ ) const
 
 
 // -----------------------------------------------------------------------------
-// Name: ProfileFilter::IsInSameKnowledgeGroup
-// Created: AGE 2006-11-29
+// Name: ProfileFilter::IsKnown
+// Created: SLG 2009-11-29
 // -----------------------------------------------------------------------------
-bool ProfileFilter::IsInSameKnowledgeGroup( const kernel::Entity_ABC& entity ) const  // $$$$ _RC_ SLG 2009-12-02: ULTRA MOCHE duplication de code pour faire fonctionner la vue filtrer dans gaming au niveau des knowledgeGroup
+bool ProfileFilter::IsKnown( const kernel::Entity_ABC& entity ) const  // $$$$ _RC_ SLG 2009-12-02: ULTRA MOCHE duplication de code pour faire fonctionner la vue filtrer dans gaming au niveau des knowledgeGroup
 {
     if( ! entity_ || entity_ == &entity )
         return true;
@@ -196,4 +200,19 @@ bool ProfileFilter::IsInSameKnowledgeGroup( const kernel::Entity_ABC& entity ) c
       if( ! i && iHierarchies_ )
          return ( t && IsChildSubordinateOf( *t, *iHierarchies_ ) ) || ( c && IsChildSubordinateOf( *c, *iHierarchies_ ) );
      return false;
+
+    /*if( ! entity_ )
+        return true;
+
+    unsigned int id = entity.GetId();
+    const AgentKnowledges* k = entity_->Retrieve< AgentKnowledges >();
+    tools::Iterator< const AgentKnowledge_ABC& > itK = k->CreateIterator();
+    while( itK.HasMoreElements() )
+    {
+        const AgentKnowledge_ABC& agentKnowledge = itK.NextElement();
+        const kernel::Entity_ABC* realEntity =  agentKnowledge.GetEntity();
+        if ( realEntity == &entity )
+            return true;
+    }   
+    return false;*/
 }
