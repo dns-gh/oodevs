@@ -5,7 +5,7 @@
 -- ****************************************************************************
 rootnode
 {
-    connections = { skill.links.moveTo },
+    connections = { skill.links.moveTo, skill.links.reconnoitre, skill.links.observeToward },
 
     -- -------------------------------------------------------------------------------- 
     -- Node begins: store each objective in a table
@@ -23,30 +23,16 @@ rootnode
     -- --------------------------------------------------------------------------------
     activate = function( self )
         if not next( self.unRecognizedEntities ) then Feedback( self.feedbacks.done ) return end
-
-        -- select the nearest element in unrecognized elements
+        
         local nearest = next( self.unRecognizedEntities )
         for entity in pairs( self.unRecognizedEntities ) do
           nearest = entity:proximityLevel() > nearest:proximityLevel() and entity or nearest
         end
         
-        -- the selected elements is recognized
-        if nearest:isRecognized() then
-          if not RC_Done then
-            DEC_RC1( 1, 166 )
-            RC_Done = true;
-          end
-          Activate( skill.links.moveTo, 1, { entities = { nearest }, area = { nearest } } )
-         
-          --self.unRecognizedEntities[ nearest ] = nil 
-          return
+        if nearest:perceptionLevel() > 25 then
+            Activate( skill.links.reconnoitre, 1, { entities = { nearest }, positions = self.params.reconnoiteringPositions } )
+        else
+            Activate( skill.links.observeToward, 1, { entities = { nearest }, positions = self.params.observingPositions } )
         end
-        -- if is possible, reconnoiter the nearest element else advance toward it. 
-        if nearest:canReconnoitreIt() then
-            --Activate( skill.links.reconnoitre, 1, { entities = { nearest }, positions = self.params.positions } )
-        else -- tactical movement
-            BreakForDebug("self.params.positions: ".. tostring(self.params.positions))
-            Activate( skill.links.moveTo, 1, { entities = { nearest }, area = self.params.positions} )
-        end 
     end
 }

@@ -30,7 +30,11 @@ defaultMethods
     canTakePosition = function() return default_engine.methods.load( "canTakePosition" ) end,
     
     -- REACHING
-    reachEfficiency = function() return default_engine.methods.load( "reachEfficiency" ) end,   
+    reachEfficiency = function() return default_engine.methods.load( "reachEfficiency" ) end,
+    
+    -- RECONNOITRING
+    reconnaissanceEfficiency = function() return default_engine.methods.load( "reconnaissanceEfficiency" ) end,
+    isReconnoitringFor = function() return default_engine.predicates.load( "terrain_analysis_isReconnoitringFor" ) end,   
 }
 return
 {
@@ -53,7 +57,6 @@ return
     -- INTEGRATION METHODS
     -- reachable action
     moveToIt = function( self )
-        BreakForDebug( "urban move to it" )
         return integration.moveToIt( self )
     end,
     -- observable action
@@ -62,10 +65,6 @@ return
     end,
     -- Tactical analysis integration
     computeDistance = function( self, target )
-        BreakForDebug( "computeDistance" )
-        BreakForDebug( "self"..tostring( self.sim_pos ) )
-        BreakForDebug( "target"..tostring( target.sim_pos ) )
-        BreakForDebug( "normalized"..tostring( integration.normalizedInversedDistance( self, target ) ) )
         return integration.normalizedInversedDistance( self, target )
     end,
     computeRelation = function( self )
@@ -78,7 +77,12 @@ return
         return 100 -- TODO -- $$$ MIA: not used in skill yet... 
     end,
     getPerception = function( self )
-        return 0 -- TODO
+        if timer then
+            timer = timer + 1
+        else
+            timer = 0
+        end
+        return timer -- TODO MGD Replace by DEC_function
     end,
     getReconnaissanceState = function( self ) 
        return 0 -- TODO
@@ -99,10 +103,4 @@ return
         end
         return estimatedReconnaissanceLevels[ objective ][ self ]
     end,
-    -- TEMP : Remove when reachEfficiency will not use terrain analysis
-    -- reachEfficiency = function( self, keypoint )
-        -- BreakForDebug( "urban-efficiency-self"..tostring( self ) )
-        -- BreakForDebug( "urban-efficiency-keypoint"..tostring( keypoint ) )
-        -- return self:computeDistance( keypoint )
-    -- end,
 }

@@ -19,8 +19,6 @@ eEtatActionDeplacement_DejaEnDeplacement = 5
 eEtatActionDeplacement_ItineraireDoitEtreRejoint = 6
 
 integration.magnitude = function ( pos1, pos2 )
-    BreakForDebug( "pos1:"..tostring( pos1 ) )
-    BreakForDebug( "pos2:"..tostring( pos2 ) )
     return math.sqrt( ( pos1.sim_pos.x - pos2.sim_pos.x )^2 + (pos1.sim_pos.y - pos2.sim_pos.y )^2 + ( pos1.sim_pos.z - pos2.sim_pos.z )^2 )
 end
 

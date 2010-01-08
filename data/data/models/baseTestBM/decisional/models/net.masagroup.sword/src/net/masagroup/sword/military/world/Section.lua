@@ -43,8 +43,13 @@ return
     computeRelation = function( self )
         return 100 --TODO
     end,
-    computePerceptionCapability = function( self )
-     return 0 -- TODO
+    computePerceptionCapability = function( self, objective, keypoint )
+        if( integration.magnitude( keypoint, objective ) > 1000 ) then
+            return 0
+        else
+            --@TODO MGD Possible update : use true perception possibility
+            return integration.normalizedInversedDistance( objective, keypoint )
+        end
     end,
     computeMovementCapability = function( self )
         return 100 -- TODO -- $$$ MIA: not used in skill yet... 
@@ -52,7 +57,8 @@ return
     getPerception = function( self )
         return 0 -- TODO
     end,
-    computeReconnaissanceCapability = function( target )
-    	return 42 --TODO
+    computeReconnaissanceCapability = function(self, objective, keypoint )
+        BreakForDebug("computeReconnaissanceCapability")
+    	return integration.normalizedInversedDistance( objective, keypoint )
     end
 }

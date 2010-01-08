@@ -31,6 +31,14 @@ defaultMethods
     
     -- REACHING
     reachEfficiency = function() return default_engine.methods.load( "reachEfficiency" ) end,   
+    
+    -- RECONNOITRING
+    reconnaissanceEfficiency = function() return default_engine.methods.load( "reconnaissanceEfficiency" ) end,
+    isReconnoitringFor = function() return default_engine.predicates.load( "terrain_analysis_isReconnoitringFor" ) end,
+
+    -- OBSERVING
+    observationEfficiency = function() return default_engine.methods.load( "observationEfficiency" ) end,
+    isObservingFor = function() return default_engine.predicates.load( "terrain_analysis_isObservingFor" ) end,
 }
 return
 {
@@ -53,7 +61,6 @@ return
     -- INTEGRATION METHODS
     -- reachable action
     moveToIt = function( self )
-        BreakForDebug( "urban move to it" )
         return integration.moveToIt( self )
     end,
     -- observable action
@@ -62,10 +69,6 @@ return
     end,
     -- Tactical analysis integration
     computeDistance = function( self, target )
-        BreakForDebug( "computeDistance" )
-        BreakForDebug( "self"..tostring( self.sim_pos ) )
-        BreakForDebug( "target"..tostring( target.sim_pos ) )
-        BreakForDebug( "normalized"..tostring( integration.normalizedInversedDistance( self, target ) ) )
         return integration.normalizedInversedDistance( self, target )
     end,
     computeRelation = function( self )
@@ -88,6 +91,7 @@ return
     end,
     -- TEMP FUNCTIONS
     estimatedReconnaissanceLevel = function( self, objective )
+        BreakForDebug("good call to reconnaissance level")
         if not estimatedReconnaissanceLevels[ objective ] then
             local values = {}
             values[ self ] = kBase.me.body:computeReconnaissanceCapability( objective, self )

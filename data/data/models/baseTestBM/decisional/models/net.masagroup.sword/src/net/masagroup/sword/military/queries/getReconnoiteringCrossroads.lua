@@ -6,6 +6,7 @@ queryImplementation "getReconnoiteringCrossroads" { ["execute"] = function ( par
         if objective:isOfType( net.masagroup.military.generic.knowledge.Reconnoitring ) then
           res[ #res + 1 ] = objective -- add objectif itself
         end
+        allRes[ objective ] = res
     end
     return allRes
 end}
