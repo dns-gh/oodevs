@@ -131,11 +131,13 @@ bool UrbanLayer::HandleMousePress( QMouseEvent* input, const geometry::Point2f& 
         return false;
     if( button == Qt::RightButton )
     {
+        bool found ( false );
         for( IT_TerrainObjects it = objects_.begin(); it != objects_.end(); ++it )
         {
             const TerrainObjectProxy* object = (*it);
             if( object->object_->GetFootprint()->IsInside( point ) && input->state() )
             {
+                found = true;
                 if ( object == selectedObject_ )
                 {
                     selectedObject_ = 0;
@@ -164,6 +166,8 @@ bool UrbanLayer::HandleMousePress( QMouseEvent* input, const geometry::Point2f& 
                 return true;
             }
         }
+        if ( input->state() )
+            selectedObject_ = 0;
     }
     return false;
 }
