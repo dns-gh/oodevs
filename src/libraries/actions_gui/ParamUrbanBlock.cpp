@@ -83,7 +83,7 @@ void ParamUrbanBlock::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
     if( selected_ )
     {
-        std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::UrbanBlock( parameter_, *(selected_->object_) ) );
+        std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::UrbanBlock( parameter_, selected_->GetId() ) );
         param->Set( true );
         action.AddParameter( *param.release() );
     }   

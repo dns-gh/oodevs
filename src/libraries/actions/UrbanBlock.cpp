@@ -22,8 +22,8 @@ using namespace parameters;
 // Name: UrbanBlock constructor
 // Created: MGD 2009-11-05
 // -----------------------------------------------------------------------------
-UrbanBlock::UrbanBlock( const kernel::OrderParameter& parameter, unsigned long value )
-: Parameter< unsigned long >( parameter, value )
+UrbanBlock::UrbanBlock( const kernel::OrderParameter& parameter, unsigned long id )
+: Parameter< unsigned long >( parameter, id )
 {
     // NOTHING
 }

@@ -35,7 +35,7 @@ class UrbanBlock : public Parameter< unsigned long >
 public:
     //! @name Constructors/Destructor
     //@{
-    UrbanBlock( const kernel::OrderParameter& parameter, unsigned long value );
+    UrbanBlock( const kernel::OrderParameter& parameter, unsigned long id );
     UrbanBlock( const kernel::OrderParameter& parameter, const ASN1T_UrbanBlock& asn );
     UrbanBlock( const kernel::OrderParameter& parameter, xml::xistream& xis );
     virtual ~UrbanBlock();

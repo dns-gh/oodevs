@@ -175,7 +175,7 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const OrderPara
     case T_MissionParameter_value_dateTime:
         return new actions::parameters::DateTime( parameter, *asn.value.u.dateTime );
     case T_MissionParameter_value_urbanBlock:
-        return new actions::parameters::UrbanBlock( parameter, asn.value.u.urbanBlock, model_.urbanObjects_.model_.blocks_ );
+        return new actions::parameters::UrbanBlock( parameter, asn.value.u.urbanBlock );
     }
     return 0;
 }
@@ -267,7 +267,7 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const OrderPara
     else if( type == "datetime" )
         param.reset( new actions::parameters::DateTime( parameter, xis ) );
     else if( type == "urbanblockbm" )
-        param.reset( new actions::parameters::UrbanBlock( parameter, xis, model_.urbanObjects_.model_.blocks_ ) );
+        param.reset( new actions::parameters::UrbanBlock( parameter, xis ) );
     else
         throw std::runtime_error( "Unknown parameter type '" + type + "'" );
     param->Set( true ); // $$$$ SBO 2007-10-11: ...
