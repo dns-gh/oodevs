@@ -23,7 +23,6 @@ namespace urban
     class StaticModel;
     class TerrainObject_ABC;
     class Block;
-    class BlockPhModifier_ABC;
 }
 
 class MIL_Config;
@@ -53,7 +52,7 @@ public:
     static void     SendCreation            ( urban::Block& UrbanBlock );
     urban::Block*   FindUrbanBlock          ( unsigned id ) const;
     MT_Float        GetUrbanBlockCost       ( MT_Float weight, const MT_Vector2D& from, const MT_Vector2D& to ) const;
-    MT_Float        ComputeUrbanPhModifier  ( urban::BlockPhModifier_ABC& phModifier, const MT_Vector2D& firerPosition ) const;
+    MT_Float        GetUrbanPhModifier      ( const MT_Vector3D& targetPosition ) const;
     urban::Model&   GetModel                () const;
     //@}
 

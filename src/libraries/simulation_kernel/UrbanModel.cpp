@@ -13,7 +13,6 @@
 #include <Urban/BlockModel.h>
 #include <Urban/TerrainObject_ABC.h>
 #include <Urban/Block.h>
-#include <Urban/BlockPhModifier_ABC.h>
 #include <Urban/ColorRGBA.h>
 #include <Urban/PhysicalFeature_ABC.h>
 #include <Urban/StaticModel.h>
@@ -202,10 +201,10 @@ MT_Float UrbanModel::GetUrbanBlockCost( MT_Float weight, const MT_Vector2D& star
 // Name: UrbanModel::ComputeUrbanPhModifier
 // Created: SLG 2010-01-07
 // -----------------------------------------------------------------------------
-MT_Float UrbanModel::ComputeUrbanPhModifier( urban::BlockPhModifier_ABC& phModifier, const MT_Vector2D& firerPosition ) const
+MT_Float UrbanModel::GetUrbanPhModifier( const MT_Vector3D& targetPosition ) const
 {
-    geometry::Point2f position ( firerPosition.rX_, firerPosition.rY_ );
-    return model_->GetUrbanPhModifier( phModifier, position );
+    geometry::Point2f positionT ( targetPosition.rX_, targetPosition.rY_ );
+    return model_->GetUrbanPhModifier( positionT );
 }
 
 // -----------------------------------------------------------------------------
