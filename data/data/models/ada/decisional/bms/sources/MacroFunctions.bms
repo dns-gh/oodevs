@@ -706,6 +706,6 @@ do
 end
 
 behavior_model = {}
-behavior_model.StartTask = StartEvent
-behavior_model.StopTask = StopEvents
+behavior_model.startTask = StartEvent
+behavior_model.stopTask = StopEvents
 
