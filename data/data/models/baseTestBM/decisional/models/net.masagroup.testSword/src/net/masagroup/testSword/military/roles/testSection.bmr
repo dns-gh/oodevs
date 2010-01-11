@@ -1,0 +1,16 @@
+--
+-- DO NOT EDIT!
+--
+role "testSection" {
+  ["description"] = "hghgh";
+  ["abstract"] = false;
+  ["extends"] = {
+    net.masagroup.sword.military.roles.Section;
+  };
+  ["skills"] = {};
+  ["resources"] = {};
+  ["valid"] = true;
+}
+--
+-- END
+--

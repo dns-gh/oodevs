@@ -1,5 +1,5 @@
 -- **************************************************************************** 
--- MoveAndReconnoiter elements.
+-- ObserveAndReconnoiter elements.
 -- self.params.entities: the reconnoitrable elements
 -- self.params.positions: the reconnoitring elements
 -- ****************************************************************************
@@ -29,10 +29,13 @@ rootnode
           nearest = entity:proximityLevel() > nearest:proximityLevel() and entity or nearest
         end
         
+        -- TODO DDA change with nearest:IsPerceived() with hightest level of observation 
         if nearest:perceptionLevel() > 25 then
             Activate( skill.links.reconnoitre, 1, { entities = { nearest }, positions = self.params.reconnoiteringPositions } )
         else
             Activate( skill.links.observeToward, 1, { entities = { nearest }, positions = self.params.observingPositions } )
         end
+        
+        -- TODO DDA it works with only one objectif : delete each reconnoiter objectif from the list unRecognizedEntities
     end
 }

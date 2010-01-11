@@ -7,7 +7,7 @@
 		<skill name="net.masagroup.military.generic.skills.primitives.Observe"/>
 		<skill name="net.masagroup.sword.military.skills.MoveTo"/>
 		<skill name="net.masagroup.sword.military.skills.TestParam"/>
-		<skill name="net.masagroup.sword.military.skills.MoveAndReconnoiter"/>
+		<skill name="net.masagroup.sword.military.skills.ObserveAndReconnoiter"/>
 		<skill name="net.masagroup.military.generic.combatant.skills.primitives.Reconnoitre"/>
 		<skill name="net.masagroup.military.generic.skills.primitives.ObserveToward"/>
 	</skills>

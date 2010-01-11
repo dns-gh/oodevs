@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.tasks.Reconnoiter" knowledge-class="net.masagroup.sword.military.tasks.knowledge.Reconnoiter">
-	<description>&#xD;
-        Reconnaitre un objectif.&#xD;
-&#xD;
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.tasks.ObserveAndReconnoiter" knowledge-class="net.masagroup.sword.military.tasks.knowledge.ObserveAndReconnoiter">
+	<description>
+        Reconnaitre un objectif.
         L'effet principal est l'obtention de nouvelles informations&#xD;
         concernant l'objectif. Détection de nouvelles entités ennemies,&#xD;
         obtention d'informations pertinentes sur les caractéristiques&#xD;
@@ -29,7 +28,7 @@
 				<description>Obtenir des informations sur les objectifs avec agressivité.</description>
 			</goal>
 			<skills>
-				<skill name="net.masagroup.sword.military.skills.MoveAndReconnoiter" priority="1">
+				<skill name="net.masagroup.sword.military.skills.ObserveAndReconnoiter" priority="1">
 					<parameter name="entities">
 						<value>
 							<parameter>objectives</parameter>

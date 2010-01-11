@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.skills.MoveAndReconnoiter">
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.skills.ObserveAndReconnoiter">
 	<description>Se déplacer tactiquement vers les éléments à reconnaître et les reconnaître.</description>
 	<parameters>
 		<parameter name="entities">

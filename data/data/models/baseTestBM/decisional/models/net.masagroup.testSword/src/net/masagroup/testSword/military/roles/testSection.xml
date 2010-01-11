@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<role xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.testSword.military.roles.testSection" extends="net.masagroup.sword.military.roles.Section">
+	<description>hghgh</description>
+	<skills/>
+	<resources/>
+</role>

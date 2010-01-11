@@ -49,17 +49,25 @@
     </mission>
         <mission dia-behavior="net.masagroup.sword.military.tasks.DestroyCrossroad" dia-type="T_Mission_Pion_Destroy" id="14" name="DestroyAgent">
       <parameter dia-name="objectives" name="targets" optional="false" type="AgentKnowledgeListBM"/>
-    </mission>
-	 
-     <mission dia-behavior="net.masagroup.sword.military.tasks.Reconnoiter" dia-type="T_Mission_Pion_Reconnoiter" id="15" name="ReconnoiterPoint">
+    </mission>    
+     <mission dia-behavior="net.masagroup.sword.military.tasks.ObserveAndReconnoiter" dia-type="T_Mission_Pion_ObserveAndReconnoiter" id="15" name="ObserveAndReconnoiterPoint">
       <parameter dia-name="objectives" name="destination" optional="false" type="PointBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.military.tasks.Reconnoiter" dia-type="T_Mission_Pion_ReconnoiterUrbanBlock" id="16" name="ReconnoiterUrbanBlock">
+    <mission dia-behavior="net.masagroup.sword.military.tasks.ObserveAndReconnoiter" dia-type="T_Mission_Pion_ObserveAndReconnoiterUrbanBlock" id="16" name="ObserveAndReconnoiterUrbanBlock">
       <parameter dia-name="objectives" name="destination" optional="false" type="UrbanBlockBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.military.tasks.Follow" dia-type="T_Mission_Pion_Follow" id="17" name="Follow">
       <parameter dia-name="objectives" name="objectives" optional="false" type="AgentBM"/>
     </mission>
+  <mission dia-behavior="net.masagroup.testSword.military.tasks.Observe" dia-type="T_Mission_Pion_ObservePoint" id="18" name="ObservePoint">
+      <parameter dia-name="objectives" name="destination" optional="false" type="PointBM"/>
+    </mission>  
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.Observe" dia-type="T_Mission_Pion_ObserveUrbanBlock" id="19" name="ObserveUrbanBlock">
+      <parameter dia-name="objectives" name="destination" optional="false" type="UrbanBlockBM"/>
+    </mission>  
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.Reconnoiter" dia-type="T_Mission_Pion_Reconnoiter" id="21" name="ReconnoiterUrbanBlock">
+      <parameter dia-name="objectives" name="destination" optional="false" type="UrbanBlockBM"/>
+    </mission> 
     <mission dia-behavior="net.masagroup.military.tasks.TestParam" dia-type="T_Mission_Pion_BM_TestReachable" id="100" name="BM TestReachable">
       <parameter dia-name="Point_" name="Point" optional="true" type="PointBM"/>
       <parameter dia-name="PointList_" name="PointList" optional="true" type="PointListBM"/>

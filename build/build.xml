@@ -594,8 +594,10 @@
         <bmc dir="${data.dir}/data/models/baseTestBM/decisional/models/libs/base" core="${data.dir}/data/models/baseTestBM/decisional/models/libs/core"/>
         <delete>
             <fileset dir="${data.dir}/data/models/baseTestBM/decisional/models/net.masagroup.sword/src" includes="**/*.bmt,**/*.bmk,**/*.bmr"/>
+            <fileset dir="${data.dir}/data/models/baseTestBM/decisional/models/net.masagroup.testSword/src" includes="**/*.bmt,**/*.bmk,**/*.bmr"/>
         </delete>
         <bmc dir="${data.dir}/data/models/baseTestBM/decisional/models/net.masagroup.sword/src" core="${data.dir}/data/models/baseTestBM/decisional/models/libs/core;${data.dir}/data/models/baseTestBM/decisional/models/libs/base"/>
+        <bmc dir="${data.dir}/data/models/baseTestBM/decisional/models/net.masagroup.testSword/src" core="${data.dir}/data/models/baseTestBM/decisional/models/libs/core;${data.dir}/data/models/baseTestBM/decisional/models/libs/base;${data.dir}/data/models/baseTestBM/decisional/models/net.masagroup.sword/src;"/>
     </target>
 
     <target name="generate-data" depends="generate-database" description="generate data"/>

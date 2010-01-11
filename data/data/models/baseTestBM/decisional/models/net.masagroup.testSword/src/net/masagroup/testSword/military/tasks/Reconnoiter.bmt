@@ -1,0 +1,54 @@
+--
+-- DO NOT EDIT!
+--
+task "Reconnoiter" {
+  ["description"] = "Reconna\238tre les \233lements";
+  ["parameters"] = {
+    ["objectives"] = {
+      ["description"] = "Les objectifs \224 reconna\238tre. ";
+      ["type"] = {
+        ["tag"] = "list";
+        ["value"] = {
+          ["tag"] = "interfaces";
+          ["value"] = {
+            net.masagroup.military.generic.knowledge.Reconnoitrable;
+          };
+        };
+      };
+    };
+  };
+  ["lets"] = {};
+  ["stages"] = {
+    {
+      ["label"] = "Reconnaissance";
+      ["lets"] = {};
+      ["skills"] = {
+        [net.masagroup.military.generic.combatant.skills.primitives.Reconnoitre] = {
+          ["parameters"] = {
+            ["entities"] = {
+              ["tag"] = "parameter";
+              ["value"] = "objectives";
+            };
+            ["positions"] = {
+              ["tag"] = "methodcall";
+              ["value"] = {
+                ["name"] = net.masagroup.sword.military.queries.getReconnoiteringCrossroads;
+                ["parameters"] = {
+                  ["objectives"] = {
+                    ["tag"] = "parameter";
+                    ["value"] = "objectives";
+                  };
+                };
+              };
+            };
+          };
+          ["priority"] = 1.0;
+        };
+      };
+    },
+  };
+  ["valid"] = true;
+}
+--
+-- END
+--

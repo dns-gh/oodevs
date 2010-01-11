@@ -1,0 +1,53 @@
+--
+-- DO NOT EDIT!
+--
+task "Observe" {
+  ["parameters"] = {
+    ["objectives"] = {
+      ["description"] = "Les objectifs \224 observer";
+      ["type"] = {
+        ["tag"] = "list";
+        ["value"] = {
+          ["tag"] = "interfaces";
+          ["value"] = {
+            net.masagroup.military.generic.knowledge.Observable;
+          };
+        };
+      };
+    };
+  };
+  ["lets"] = {};
+  ["stages"] = {
+    {
+      ["label"] = "Observation";
+      ["lets"] = {};
+      ["skills"] = {
+        [net.masagroup.military.generic.skills.primitives.ObserveToward] = {
+          ["parameters"] = {
+            ["entities"] = {
+              ["tag"] = "parameter";
+              ["value"] = "objectives";
+            };
+            ["positions"] = {
+              ["tag"] = "methodcall";
+              ["value"] = {
+                ["name"] = net.masagroup.sword.military.queries.getObserving;
+                ["parameters"] = {
+                  ["objectives"] = {
+                    ["tag"] = "parameter";
+                    ["value"] = "objectives";
+                  };
+                };
+              };
+            };
+          };
+          ["priority"] = 1.0;
+        };
+      };
+    },
+  };
+  ["valid"] = true;
+}
+--
+-- END
+--
