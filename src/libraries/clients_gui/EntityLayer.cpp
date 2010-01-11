@@ -59,8 +59,6 @@ void EntityLayerBase::Paint( kernel::Viewport_ABC& viewport )
     strategy_.SetAlpha( GetAlpha() );       
     for( unsigned i = 0; i < entities_.size(); ++i )
     {
-        const Positions& positions = ( *entities_[ i ] ).Get< Positions >();
-        const geometry::Point2f position = positions.GetPosition();
         if( i != selected_ )
             Draw( *entities_[ i ], viewport );
     }
