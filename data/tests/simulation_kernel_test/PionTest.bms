@@ -37,5 +37,5 @@ kBase.me.body = kBase.create( dummyClass, {} )
 brain "name" ( pionTest )
 
 behavior_model = {}
-behavior_model.StartTask = StartEvent
-behavior_model.StopTask = StopEvents
+behavior_model.startTask = StartEvent
+behavior_model.stopTask = StopEvents
