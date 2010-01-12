@@ -37,6 +37,8 @@
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_World.h"
 #include "simulation_kernel/UrbanModel.h"
+#include "simulation_kernel/BlockPhFirerModifier.h"
+#include "simulation_kernel/BlockPhTargetModifier.h"
 #include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.h>
 
@@ -171,10 +173,9 @@ MT_Float PHY_WeaponDataType_DirectFire::GetPH( const MIL_AgentPion& firer, const
         return 0.;
     rDistance /= rPHModificator;
 
-    MT_Float rPH = phs_[ targetVolume.GetID() ]( rDistance );
-
-    rPH *= MIL_AgentServer::GetWorkspace().GetUrbanModel().GetUrbanPhModifier( targetPosition );
-
+    float rUrbanModificator = MIL_AgentServer::GetWorkspace().GetUrbanModel().ComputeUrbanPhModifier( firerPosition, targetPosition );
+    rDistance /= rUrbanModificator;
+    const MT_Float rPH = phs_[ targetVolume.GetID() ]( rDistance );
     return firer.GetRole< PHY_RoleInterface_HumanFactors >().ModifyPH( rPH );
 }
 

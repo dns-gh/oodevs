@@ -9,10 +9,14 @@
 
 #include "simulation_kernel_pch.h"
 #include "UrbanModel.h"
+
+#include "BlockPhFirerModifier.h"
+#include "BlockPhTargetModifier.h"
 #include <Urban/Model.h>
 #include <Urban/BlockModel.h>
 #include <Urban/TerrainObject_ABC.h>
 #include <Urban/Block.h>
+#include <Urban/BlockPhModifier_ABC.h>
 #include <Urban/ColorRGBA.h>
 #include <Urban/PhysicalFeature_ABC.h>
 #include <Urban/StaticModel.h>
@@ -27,8 +31,6 @@
 #include "Network/NET_ASN_Messages.h"
 #include <boost/bind.hpp>
 
-//using namespace urban;
-
 BOOST_CLASS_EXPORT_GUID( UrbanModel, "UrbanModel" )
 
 // -----------------------------------------------------------------------------
@@ -36,12 +38,13 @@ BOOST_CLASS_EXPORT_GUID( UrbanModel, "UrbanModel" )
 // Created: SLG 2009-08-10
 // -----------------------------------------------------------------------------
 UrbanModel::UrbanModel()
-    : staticModel_( new urban::StaticModel() )
-    , model_( new urban::Model( *staticModel_ ) )
+    : staticModel_      ( new urban::StaticModel() )
+    , model_            ( new urban::Model( *staticModel_ ) )
+    , phFirerModifier_  ( new BlockPhFirerModifier() )
+    , phTargetModifier_ ( new BlockPhFirerModifier() )
 {
     //TODO
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: UrbanModel destructor
@@ -201,10 +204,15 @@ MT_Float UrbanModel::GetUrbanBlockCost( MT_Float weight, const MT_Vector2D& star
 // Name: UrbanModel::ComputeUrbanPhModifier
 // Created: SLG 2010-01-07
 // -----------------------------------------------------------------------------
-MT_Float UrbanModel::GetUrbanPhModifier( const MT_Vector3D& targetPosition ) const
+MT_Float UrbanModel::ComputeUrbanPhModifier( const MT_Vector3D& firerPosition, const MT_Vector3D& targetPosition ) const
 {
+    geometry::Point2f positionF ( firerPosition.rX_, firerPosition.rY_ );
+    float firerModifier =  model_->GetUrbanPhModifier( *phFirerModifier_, positionF );
+
     geometry::Point2f positionT ( targetPosition.rX_, targetPosition.rY_ );
-    return model_->GetUrbanPhModifier( positionT );
+    float targetModifier = model_->GetUrbanPhModifier( *phTargetModifier_, positionT );
+
+    return firerModifier * targetModifier;
 }
 
 // -----------------------------------------------------------------------------
