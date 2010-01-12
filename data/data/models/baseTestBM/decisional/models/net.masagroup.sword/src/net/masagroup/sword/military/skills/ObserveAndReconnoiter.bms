@@ -29,8 +29,7 @@ rootnode
           nearest = entity:proximityLevel() > nearest:proximityLevel() and entity or nearest
         end
         
-        -- TODO DDA change with nearest:IsPerceived() with hightest level of observation 
-        if nearest:perceptionLevel() > 25 then
+        if nearest:isPartiallyPerceived() then
             Activate( skill.links.reconnoitre, 1, { entities = { nearest }, positions = self.params.reconnoiteringPositions } )
         else
             Activate( skill.links.observeToward, 1, { entities = { nearest }, positions = self.params.observingPositions } )

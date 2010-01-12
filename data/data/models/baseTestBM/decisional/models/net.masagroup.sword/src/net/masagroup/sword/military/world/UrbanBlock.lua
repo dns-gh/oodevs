@@ -39,8 +39,11 @@ defaultMethods
 return
 {
     -- $$$ MIA: temp, to move in default military implementation
-    isPerceived = function( self )
-        return self:perceptionLevel() > 0
+    isTotallyPerceived = function( self )
+        return self:perceptionLevel() == 100
+    end,
+    isPartiallyPerceived = function( self )
+    	return self:perceptionLevel() > 25
     end,
     takeUpPosition = function( point )
         --NOTHING
