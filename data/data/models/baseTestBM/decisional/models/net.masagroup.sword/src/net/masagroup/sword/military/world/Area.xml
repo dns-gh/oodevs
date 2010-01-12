@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.world.Area" extends="net.masagroup.military.generic.world.Keypoint">
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.world.Area">
 	<description>Une connaissance concrète représentant une zone à rejoindre.</description>
-	<methods/>
-  <realizes>net.masagroup.military.generic.knowledge.Reconnoitrable</realizes>
+	<realizes>net.masagroup.military.generic.knowledge.Reconnoitrable</realizes>
 	<realizes>net.masagroup.military.generic.knowledge.Observable</realizes>
 	<realizes>net.masagroup.military.generic.knowledge.Reachable</realizes>
 	<realizes>net.masagroup.military.generic.knowledge.Reaching</realizes>
