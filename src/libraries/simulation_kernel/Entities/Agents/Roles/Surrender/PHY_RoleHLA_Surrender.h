@@ -38,10 +38,10 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const MIL_Army* GetArmySurrenderedTo() const;
-    virtual       bool      IsSurrendered       () const;
-    virtual       bool      IsPrisoner          () const;
-    virtual       bool      IsImprisoned        ( const MIL_Object_ABC& camp );
+    virtual const MIL_Army_ABC* GetArmySurrenderedTo() const;
+    virtual       bool          IsSurrendered       () const;
+    virtual       bool          IsPrisoner          () const;
+    virtual       bool          IsImprisoned        ( const MIL_Object_ABC& camp );
     //@}
 
     //! @name Modifiers

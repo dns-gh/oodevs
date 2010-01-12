@@ -31,7 +31,7 @@ public:
 
     //! @name Serialization
     //@{
-    template< typename Archive > void serialize( Archive&, const uint ) {}
+    template< typename Archive > void serialize( Archive&, const unsigned ) {}
     //@}
 };
 

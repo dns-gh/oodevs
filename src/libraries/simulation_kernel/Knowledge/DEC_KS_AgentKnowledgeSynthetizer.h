@@ -42,7 +42,7 @@ public:
     //! @name Operations
     //@{
     virtual void Prepare();
-    virtual void Talk   ();
+    virtual void Talk   ( int currentTimeStep );
     virtual void Clean  ();
     //@}
 
@@ -55,9 +55,9 @@ private:
     //! @name Tools
     //@{
     void                 CleanKnowledgeAgent                        ( DEC_Knowledge_Agent& knowledge );
-    void                 UpdateKnowledgesFromAgentPerception        ( const DEC_Knowledge_AgentPerception& perception );
-    void                 UpdateKnowledgesFromKnowledgeAgent         ( const DEC_Knowledge_Agent& agentKnowledge );
-    void                 UpdateKnowledgesFromParentKnowledgeGroup   ( const DEC_Knowledge_Agent& agentKnowledge );
+    void                 UpdateKnowledgesFromAgentPerception        ( const DEC_Knowledge_AgentPerception& perception, int currentTimeStep );
+    void                 UpdateKnowledgesFromKnowledgeAgent         ( const DEC_Knowledge_Agent& agentKnowledge, int currentTimeStep );
+    void                 UpdateKnowledgesFromParentKnowledgeGroup   ( const DEC_Knowledge_Agent& agentKnowledge, int currentTimeStep );
     DEC_Knowledge_Agent& GetKnowledgeToUpdate                       ( MIL_Agent_ABC& agentKnown ) const;
     //@}
 

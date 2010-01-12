@@ -16,7 +16,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
-#include "Entities/MIL_Army.h"
+#include "Entities/MIL_Army_ABC.h"
 #include "DEC_Knowledge_AgentPerceptionDataDetection.h"
 #include "Tools/MIL_Tools.h"
 #include "Network/NET_ASN_Tools.h"
@@ -70,7 +70,7 @@ void DEC_Knowledge_AgentDataDetection::load( MIL_CheckPointInArchive& file, cons
          >> vDirection_
          >> rSpeed_
          >> rAltitude_
-         >> const_cast< MIL_Army*& >( pArmySurrenderedTo_ )
+         >> const_cast< MIL_Army_ABC*& >( pArmySurrenderedTo_ )
          >> bPrisoner_
          >> bRefugeeManaged_
          >> bDead_;
@@ -184,7 +184,7 @@ void DEC_Knowledge_AgentDataDetection::DoUpdate( const T& data )
         bSpeedUpdated_ = true;
     }
 
-    const MIL_Army* pNewArmySurrenderedTo = data.GetArmySurrenderedTo();
+    const MIL_Army_ABC* pNewArmySurrenderedTo = data.GetArmySurrenderedTo();
     if( pArmySurrenderedTo_ != pNewArmySurrenderedTo )
     {
         pArmySurrenderedTo_  = pNewArmySurrenderedTo;
@@ -353,7 +353,7 @@ bool DEC_Knowledge_AgentDataDetection::IsSurrendered() const
 // Name: DEC_Knowledge_AgentDataDetection::GetArmySurrenderedTo
 // Created: NLD 2007-02-14
 // -----------------------------------------------------------------------------
-const MIL_Army* DEC_Knowledge_AgentDataDetection::GetArmySurrenderedTo() const
+const MIL_Army_ABC* DEC_Knowledge_AgentDataDetection::GetArmySurrenderedTo() const
 {
     return pArmySurrenderedTo_;
 }

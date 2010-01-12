@@ -57,7 +57,7 @@ bool MIL_Automate::IsSurrendered() const
 // Created: NLD 2007-02-14
 // -----------------------------------------------------------------------------
 inline
-const MIL_Army* MIL_Automate::GetArmySurrenderedTo() const
+const MIL_Army_ABC* MIL_Automate::GetArmySurrenderedTo() const
 {
     return pArmySurrenderedTo_;
 }

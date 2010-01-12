@@ -111,7 +111,7 @@ DEC_Knowledge_ObjectCollision& DEC_KS_ObjectInteraction::GetKnowledgeObjectColli
 // Name: DEC_KS_ObjectInteraction::Talk
 // Created: NLD 2004-03-17
 // -----------------------------------------------------------------------------
-void DEC_KS_ObjectInteraction::Talk()
+void DEC_KS_ObjectInteraction::Talk( int currentTimeStep )
 {
     // Interaction with objects
     for( CIT_ObjectVector itInteraction = objectInteractions_.begin(); itInteraction != objectInteractions_.end(); ++itInteraction )

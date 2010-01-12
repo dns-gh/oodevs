@@ -109,7 +109,7 @@ bool PHY_RoleHLA_Surrender::IsPrisoner() const
 // Name: PHY_RoleHLA_Surrender::GetArmySurrenderedTo
 // Created: NLD 2007-02-14
 // -----------------------------------------------------------------------------
-const MIL_Army* PHY_RoleHLA_Surrender::GetArmySurrenderedTo() const
+const MIL_Army_ABC* PHY_RoleHLA_Surrender::GetArmySurrenderedTo() const
 {
     return 0;
 }

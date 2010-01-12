@@ -198,7 +198,7 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::UpdateQueriesCache()
     surrenderedAgentsContainer_.clear();
 
     assert( pKnowledgeGroup_ ); 
-    const MIL_Army& army = pKnowledgeGroup_->GetArmy();
+    const MIL_Army_ABC& army = pKnowledgeGroup_->GetArmy();
 
     for( CIT_KnowledgeAgentMap itKnowledge = realAgentMap_.begin(); itKnowledge != realAgentMap_.end(); ++itKnowledge )
     {

@@ -49,7 +49,7 @@ KnowledgeGroupFactory::~KnowledgeGroupFactory()
 // Name: FormationFactory::Create
 // Created: MGD 2009-10-22
 // -----------------------------------------------------------------------------
-MIL_KnowledgeGroup& KnowledgeGroupFactory::Create( xml::xistream& xis, MIL_Army& army, MIL_KnowledgeGroup* parent )
+MIL_KnowledgeGroup& KnowledgeGroupFactory::Create( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* parent )
 {
     MIL_KnowledgeGroup& knowledgeGroup = *new MIL_KnowledgeGroup( xis, army, parent, *this );
     Register( knowledgeGroup.GetID(), knowledgeGroup );

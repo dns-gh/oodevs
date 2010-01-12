@@ -65,7 +65,7 @@ public:
 
     //! @name Network
     //@{
-    void OnReceiveMsgObjectMagicAction( const ASN1T_MsgObjectMagicAction& asnMsg, uint nCtx, const tools::Resolver< MIL_Army >& armies );
+    void OnReceiveMsgObjectMagicAction( const ASN1T_MsgObjectMagicAction& asnMsg, uint nCtx, const tools::Resolver< MIL_Army_ABC >& armies );
     //@}
 
     //! @name 
@@ -84,7 +84,7 @@ private:
 private:
     //! @name Tools
     //@{
-    ASN1T_EnumObjectErrorCode CreateObject( const ASN1T_MagicActionCreateObject& asn, const tools::Resolver< MIL_Army >& armies );    
+    ASN1T_EnumObjectErrorCode CreateObject( const ASN1T_MagicActionCreateObject& asn, const tools::Resolver< MIL_Army_ABC >& armies );    
     //@}
 
 private:

@@ -40,7 +40,7 @@ public:
     //! @name Operations
     //@{
     virtual void Prepare();
-    virtual void Talk   ();
+    virtual void Talk   ( int currentTimeStep );
     virtual void Clean  ();
     //@}
 

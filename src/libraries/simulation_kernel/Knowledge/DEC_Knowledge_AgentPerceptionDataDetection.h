@@ -18,7 +18,7 @@
 class MIL_Agent_ABC;
 class PHY_PerceptionLevel;
 class PHY_Posture;
-class MIL_Army;
+class MIL_Army_ABC;
 
 // =============================================================================
 // Created: NLD 2004-03-11
@@ -55,7 +55,7 @@ public:
     const PHY_Posture&           GetLastPosture                () const;
     const PHY_Posture&           GetCurrentPosture             () const;
           MT_Float               GetPostureCompletionPercentage() const;
-    const MIL_Army*              GetArmySurrenderedTo          () const;
+    const MIL_Army_ABC*          GetArmySurrenderedTo          () const;
           bool                   IsPrisoner                    () const;
           bool                   IsRefugeeManaged              () const;
           bool                   IsDead                        () const;
@@ -70,7 +70,7 @@ private:
     MT_Float    rSpeed_;
     bool        bDead_;
 
-    const MIL_Army* pArmySurrenderedTo_;
+    const MIL_Army_ABC* pArmySurrenderedTo_;
           bool      bPrisoner_; 
           bool      bRefugeeManaged_;
     

@@ -37,7 +37,7 @@ MT_Float DEC_Knowledge_Agent::rMaxDangerosityDegradationByNeutralizedState_ = 0.
 // Name: DEC_Knowledge_Agent constructor
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent::DEC_Knowledge_Agent( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Agent_ABC& agentKnown )
+DEC_Knowledge_Agent::DEC_Knowledge_Agent( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Agent_ABC& agentKnown, MT_Float rRelevance )
     : DEC_Knowledge_ABC              ()
     , pKnowledgeGroup_               ( &knowledgeGroup )
     , pAgentKnown_                   ( &agentKnown )
@@ -46,8 +46,8 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent( const MIL_KnowledgeGroup& knowledgeGro
     , pPreviousPerceptionLevel_      ( &PHY_PerceptionLevel::notSeen_ )
     , pMaxPerceptionLevel_           ( &PHY_PerceptionLevel::notSeen_ )
     , nTimeLastUpdate_               ( 0 )
-    , rRelevance_                    ( -1. )
-    , nTimeExtrapolationEnd_         ( 0 )
+    , rRelevance_                    ( rRelevance )
+    , nTimeExtrapolationEnd_         ( -1 )
     , bLocked_                       ( false )
     , bValid_                        ( true )
     , bCreatedOnNetwork_             ( !pAgentKnown_->BelongsTo( *pKnowledgeGroup_ ) )
@@ -79,7 +79,7 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent()
     , perceptionLevelPerAutomateMap_        ()
     , previousPerceptionLevelPerAutomateMap_()
     , rRelevance_                           ()
-    , nTimeExtrapolationEnd_                ( 0 )
+    , nTimeExtrapolationEnd_                ( -1 )
     , bLocked_                              ( false )
     , bValid_                               ( true )
     , bCreatedOnNetwork_                    ( true )
@@ -238,6 +238,8 @@ void DEC_Knowledge_Agent::Prepare()
     dataDetection_     .Prepare();
     dataRecognition_   .Prepare();
     dataIdentification_.Prepare();
+    if( nTimeExtrapolationEnd_ > 0 )
+        --nTimeExtrapolationEnd_;
 }
 
 // -----------------------------------------------------------------------------
@@ -247,8 +249,7 @@ void DEC_Knowledge_Agent::Prepare()
 void DEC_Knowledge_Agent::Extrapolate()
 {
     assert( pAgentKnown_ );
-    const unsigned int nCurrentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
-    if( nTimeExtrapolationEnd_ > nCurrentTimeStep || bLocked_ )
+    if( nTimeExtrapolationEnd_ == 0 || bLocked_ )
     {
         ChangeRelevance( 1. );
         dataDetection_     .Extrapolate( *pAgentKnown_ );
@@ -285,9 +286,9 @@ void DEC_Knowledge_Agent::UpdatePerceptionSources( const DEC_Knowledge_AgentPerc
 // Name: DEC_Knowledge_Agent::Update
 // Created: NLD 2004-05-03
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Agent::Update( const DEC_Knowledge_AgentPerception& perception )
+void DEC_Knowledge_Agent::Update( const DEC_Knowledge_AgentPerception& perception, int currentTimeStep )
 {
-    nTimeLastUpdate_ = GetCurrentTimeStep();
+    nTimeLastUpdate_ = currentTimeStep;
     
     ChangeRelevance( 1. );
 
@@ -311,16 +312,16 @@ void DEC_Knowledge_Agent::Update( const DEC_Knowledge_AgentPerception& perceptio
     dataIdentification_.Update( perception.GetIdentificationData() );
 
     UpdatePerceptionSources( perception );
-    nTimeExtrapolationEnd_ = nTimeLastUpdate_ + ( unsigned int ) pKnowledgeGroup_->GetType().GetKnowledgeAgentExtrapolationTime();
+    nTimeExtrapolationEnd_ = ( int ) pKnowledgeGroup_->GetType().GetKnowledgeAgentExtrapolationTime();
 }   
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Agent::Update
 // Created: NLD 2004-11-08
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Agent::Update( const DEC_Knowledge_Agent& knowledge )
+void DEC_Knowledge_Agent::Update( const DEC_Knowledge_Agent& knowledge, int currentTimeStep )
 {
-    nTimeLastUpdate_ = GetCurrentTimeStep();
+    nTimeLastUpdate_ = currentTimeStep;
 
     dataDetection_     .Update( knowledge.dataDetection_      );
     dataRecognition_   .Update( knowledge.dataRecognition_    );
@@ -357,7 +358,7 @@ void DEC_Knowledge_Agent::ChangeRelevance( MT_Float rNewRelevance )
 // Name: DEC_Knowledge_Agent::UpdateRelevance
 // Created: NLD 2004-03-22
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Agent::UpdateRelevance()
+void DEC_Knowledge_Agent::UpdateRelevance(int currentTimeStep)
 {
     // L'agent est percu
     if( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ )
@@ -380,7 +381,7 @@ void DEC_Knowledge_Agent::UpdateRelevance()
     }
 
     // Degradation : effacement au bout de X minutes
-    const MT_Float rTimeRelevanceDegradation = ( GetCurrentTimeStep() - nTimeLastUpdate_ ) / pKnowledgeGroup_->GetType().GetKnowledgeAgentMaxLifeTime();
+    const MT_Float rTimeRelevanceDegradation = ( currentTimeStep - nTimeLastUpdate_ ) / pKnowledgeGroup_->GetType().GetKnowledgeAgentMaxLifeTime();
 
     // Degradation : effacement quand l'unité réelle et l'unité connnue sont distantes de X metres
     const MT_Float rDistanceBtwKnowledgeAndKnown = dataDetection_.GetPosition().Distance( pAgentKnown_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
@@ -388,7 +389,7 @@ void DEC_Knowledge_Agent::UpdateRelevance()
 
     ChangeRelevance( std::max( 0., rRelevance_ - rTimeRelevanceDegradation - rDistRelevanceDegradation ) );
 
-    nTimeLastUpdate_ = GetCurrentTimeStep();
+    nTimeLastUpdate_ = currentTimeStep;
 }
 
 // =============================================================================

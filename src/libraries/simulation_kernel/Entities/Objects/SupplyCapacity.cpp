@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "SupplyCapacity.h"
 #include "Object.h"
-#include "Entities/MIL_Army.h"
+#include "Entities/MIL_Army_ABC.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/MIL_AgentType_ABC.h"
@@ -106,7 +106,7 @@ void SupplyCapacity::ProcessAgentEntering( Object& object, MIL_Agent_ABC& agent 
             ASN1T_MsgUnitMagicAction asnMsg;
             asnMsg.action.t = T_MsgUnitMagicAction_action_recompletement_ressources;
             //@TODO MGD replace asn by action in general, temp hack with an empty resolver because this magic action dont't use armies
-            pion->OnReceiveMsgUnitMagicAction( asnMsg, tools::Resolver< MIL_Army >() );
+            pion->OnReceiveMsgUnitMagicAction( asnMsg, tools::Resolver< MIL_Army_ABC >() );
         }
     }
 }

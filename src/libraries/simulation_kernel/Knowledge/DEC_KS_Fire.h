@@ -42,7 +42,9 @@ public:
     
     //! @name Operations
     //@{
-    virtual void Talk();
+    virtual void Prepare();
+    virtual void Clean();
+    virtual void Talk( int currentTimeStep );
     //@}
 
     //! @name Events

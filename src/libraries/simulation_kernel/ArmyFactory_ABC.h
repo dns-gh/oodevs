@@ -11,7 +11,7 @@
 #define __ArmyFactory_ABC_h_
 
 #include "tools/Resolver.h"
-#include "Entities/MIL_Army.h"
+#include "Entities/MIL_Army_ABC.h"
 
 namespace xml
 {
@@ -23,7 +23,7 @@ namespace xml
 */
 // Created: MGD 2009-10-24 @TODO MGD add serialization for resolver and divide factory-resolver, pass resolver by ref in constructor
 // =============================================================================
-class ArmyFactory_ABC : public tools::Resolver< MIL_Army >
+class ArmyFactory_ABC : public tools::Resolver< MIL_Army_ABC >
                       , private boost::noncopyable
 {
 
@@ -35,7 +35,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual MIL_Army* Create( xml::xistream& xis ) = 0;
+    virtual MIL_Army_ABC* Create( xml::xistream& xis ) = 0;
     //@}
 
     //! @name CheckPoint

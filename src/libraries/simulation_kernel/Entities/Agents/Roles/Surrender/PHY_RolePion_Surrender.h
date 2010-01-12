@@ -18,7 +18,7 @@
 
 class NET_ASN_MsgUnitAttributes;
 class MIL_AgentPion;
-class MIL_Army;
+class MIL_Army_ABC;
 
 namespace moving
 {
@@ -62,11 +62,11 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const MIL_Army* GetArmySurrenderedTo() const;
-    virtual       bool      IsSurrendered       () const;
-    virtual       bool      IsPrisoner          () const;
-    virtual       bool      IsImprisoned        ( const MIL_Object_ABC& camp );
-    //@}
+    virtual const MIL_Army_ABC* GetArmySurrenderedTo() const;
+    virtual       bool          IsSurrendered       () const;
+    virtual       bool          IsPrisoner          () const;
+    virtual       bool          IsImprisoned        ( const MIL_Object_ABC& camp );
+    //@}    
 
     //! @name Network
     //@{

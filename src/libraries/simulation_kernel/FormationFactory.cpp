@@ -53,7 +53,7 @@ FormationFactory::~FormationFactory()
 // Name: FormationFactory::Create
 // Created: MGD 2009-10-22
 // -----------------------------------------------------------------------------
-MIL_Formation& FormationFactory::Create( xml::xistream& xis, MIL_Army& army, MIL_Formation* parent )
+MIL_Formation& FormationFactory::Create( xml::xistream& xis, MIL_Army_ABC& army, MIL_Formation* parent )
 {
     MIL_Formation& formation = *new MIL_Formation( xis, army, parent, *this, automateFactory_ );
     Register( formation.GetID(), formation );

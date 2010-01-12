@@ -95,6 +95,16 @@ void DEC_KS_Sharing::Prepare()
     // Nothing
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_Sharing::Clean
+// Created: HBD 2009-12-30
+// -----------------------------------------------------------------------------
+void DEC_KS_Sharing::Clean()
+{
+    // Nothing
+}
+
+
 namespace
 {
     // -----------------------------------------------------------------------------
@@ -111,7 +121,7 @@ namespace
         {
         }
 
-        void operator() ( DEC_Knowledge_Agent& knowledge )
+        void operator() ( DEC_Knowledge_Agent& knowledge, int currentTimeStep)
         {
             if( knowledge.GetPosition().Distance( shareSource_.vSharedCircleCenter_ ) > shareSource_.rSharedCircleRadius_ )
                 return;
@@ -121,7 +131,7 @@ namespace
             boost::shared_ptr< DEC_Knowledge_Agent > pNewKnowledge = blackBoard_.GetKnowledgeAgent( agentKnown );
             if( !pNewKnowledge.get() )
                 pNewKnowledge.reset( &blackBoard_.CreateKnowledgeAgent( knowledgeGroup_, agentKnown ) );
-            pNewKnowledge->Update( knowledge );
+            pNewKnowledge->Update( knowledge, currentTimeStep );
         }
 
     private:
@@ -135,15 +145,15 @@ namespace
 // Name: DEC_KS_Sharing::Talk
 // Created: NLD 2004-03-17
 // -----------------------------------------------------------------------------
-void DEC_KS_Sharing::Talk()
+void DEC_KS_Sharing::Talk( int currentTimeStep )
 {
     assert( pBlackBoard_ );
 
-    IT_ShareSourceMMap itShareSourceEnd = shareSources_.upper_bound( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() );
+    IT_ShareSourceMMap itShareSourceEnd = shareSources_.upper_bound( currentTimeStep );
     for( IT_ShareSourceMMap itShareSource = shareSources_.begin(); itShareSource != itShareSourceEnd; ++itShareSource )
     {
         sKnowledgeSharer func( pBlackBoard_->GetKnowledgeGroup(), pBlackBoard_->GetKnowledgeAgentContainer(), itShareSource->second );
-        itShareSource->second.pShareSource_->GetKnowledge().GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( func );
+        itShareSource->second.pShareSource_->GetKnowledge().GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( func, currentTimeStep );
     }
     shareSources_.erase( shareSources_.begin(), itShareSourceEnd );
 }

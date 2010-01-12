@@ -24,16 +24,12 @@
 #include "MIL_EntityManager.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_AsnException.h"
-
 #include "simulation_kernel/ArmyFactory_ABC.h"
 #include "simulation_kernel/AutomateFactory_ABC.h"
 #include "simulation_kernel/FormationFactory_ABC.h"
 #include "simulation_kernel/PopulationFactory_ABC.h"
 #include "simulation_kernel/Knowledge/KnowledgeGroupFactory_ABC.h"
-
 #include <xeumeuleu/xml.h>
-
-MT_Converter< std::string, MIL_Army_ABC::E_Diplomacy > MIL_Army::diplomacyConverter_( eUnknown );
 
 BOOST_CLASS_EXPORT_GUID( MIL_Army, "MIL_Army" )
 
@@ -45,7 +41,9 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_Army* army, const unsigned int /*version*/ )
 {
     const ArmyFactory_ABC* const armyFactory = &army->armyFactory_;
-    archive << armyFactory;
+    const MT_Converter< std::string, MIL_Army_ABC::E_Diplomacy >* const diplomacyConverter = &army->diplomacyConverter_;
+    archive << armyFactory
+            << diplomacyConverter;
 }
 // -----------------------------------------------------------------------------
 // Name: MIL_Army::load_construct_data
@@ -54,49 +52,25 @@ void save_construct_data( Archive& archive, const MIL_Army* army, const unsigned
 template< typename Archive >
 void load_construct_data( Archive& archive, MIL_Army* army, const unsigned int /*version*/ )
 {
-    ArmyFactory_ABC* armyFactory;
-    archive >> armyFactory;
-    ::new( army )MIL_Army( *armyFactory );
+    ArmyFactory_ABC* armyFactory = 0;
+    MT_Converter< std::string, MIL_Army_ABC::E_Diplomacy >* diplomacyConverter = 0;
+    archive >> armyFactory 
+            >> diplomacyConverter;
+    ::new( army )MIL_Army( *armyFactory, *diplomacyConverter );
 }
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Army::Initialize
-// Created: NLD 2004-08-11
-// -----------------------------------------------------------------------------
-void MIL_Army::Initialize()
-{
-    MT_LOG_INFO_MSG( "Initializing armies diplomacies" );
-    
-    diplomacyConverter_.Register( "enemy"  , eEnemy   );
-    diplomacyConverter_.Register( "friend" , eFriend  );
-    diplomacyConverter_.Register( "neutral", eNeutral );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Army::Terminate
-// Created: NLD 2004-08-11
-// -----------------------------------------------------------------------------
-void MIL_Army::Terminate()
-{
-    // NOTHING
-}
-
-// =============================================================================
-// 
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Army constructor
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory, MIL_ObjectManager& objectFactory, PopulationFactory_ABC& populationFactory, KnowledgeGroupFactory_ABC& knowledgegroupFactory )
+MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory, MIL_ObjectManager& objectFactory
+                  , PopulationFactory_ABC& populationFactory, KnowledgeGroupFactory_ABC& knowledgegroupFactory, const MT_Converter< std::string, E_Diplomacy >& diplomacyConverter )
     : nID_                 ( xml::attribute< unsigned int >( xis, "id" ) )
     , strName_             ( xml::attribute< std::string>( xis, "name") )
     , nType_               ( eUnknown )
-    , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_Army( *this ) )
     , armyFactory_         ( armyFactory )
-    , knowledgeGroups_     ()
-    , diplomacies_         ()
+    , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_Army( *this ) )
+    , diplomacyConverter_  ( diplomacyConverter )
 {
     std::string strType;
     xis >> xml::attribute( "type", strType );
@@ -124,11 +98,12 @@ MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationF
 // Name: MIL_Army constructor
 // Created: MGD 2009-10-24
 // -----------------------------------------------------------------------------
-MIL_Army::MIL_Army( ArmyFactory_ABC& armyFactory )
-    : armyFactory_( armyFactory )
-    , nID_( 0 )
+MIL_Army::MIL_Army( ArmyFactory_ABC& armyFactory, const MT_Converter< std::string, E_Diplomacy >& diplomacyConverter )
+    : nID_( 0 )
+    , armyFactory_( armyFactory )
+    , diplomacyConverter_( diplomacyConverter )
 {
-    
+    // NOTHING    
 }
 
 // -----------------------------------------------------------------------------
@@ -313,7 +288,7 @@ void MIL_Army::ReadDiplomacy( xml::xistream& xis )
     if( nDiplomacy == eUnknown )
         xis.error( "Unknown diplomacy relation between armies" );
 
-    MIL_Army* pArmy = armyFactory_.Find( nTeam );
+    MIL_Army_ABC* pArmy = armyFactory_.Find( nTeam );
     if( !pArmy )
         xis.error( "Unknown army" );
 
@@ -401,12 +376,12 @@ void MIL_Army::UnregisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup )
 // Name: MIL_Army::UpdateKnowledges
 // Created: NLD 2004-08-19
 // -----------------------------------------------------------------------------
-void MIL_Army::UpdateKnowledges()
+void MIL_Army::UpdateKnowledges(int currentTimeStep)
 {
     for( CIT_KnowledgeGroupMap itKnowledgeGroup = knowledgeGroups_.begin(); itKnowledgeGroup != knowledgeGroups_.end(); ++itKnowledgeGroup )
-        itKnowledgeGroup->second->UpdateKnowledges();
+        itKnowledgeGroup->second->UpdateKnowledges(currentTimeStep);
     assert( pKnowledgeBlackBoard_ );
-    pKnowledgeBlackBoard_->Update();
+    pKnowledgeBlackBoard_->Update( currentTimeStep );
 }
 
 // -----------------------------------------------------------------------------
@@ -579,7 +554,7 @@ void MIL_Army::SendKnowledge() const
 // -----------------------------------------------------------------------------
 void MIL_Army::OnReceiveMsgChangeDiplomacy( const ASN1T_MsgChangeDiplomacy& asnMsg )
 {
-    MIL_Army* pArmy2 = armyFactory_.Find( asnMsg.oid_camp2 );
+    MIL_Army_ABC* pArmy2 = armyFactory_.Find( asnMsg.oid_camp2 );
     if( !pArmy2 || *pArmy2 == *this )
         throw NET_AsnException< ASN1T_EnumChangeDiplomacyErrorCode >( EnumChangeDiplomacyErrorCode::error_invalid_camp );
 

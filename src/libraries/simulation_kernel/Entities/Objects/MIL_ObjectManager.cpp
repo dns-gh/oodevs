@@ -17,7 +17,7 @@
 #include "MIL_ObjectManipulator_ABC.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Hla/HLA_Federate.h"
-#include "Entities/MIL_Army.h"
+#include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
@@ -144,9 +144,10 @@ MIL_Object_ABC& MIL_ObjectManager::CreateObject( xml::xistream& xis, MIL_Army_AB
 // Name: MIL_ObjectManager::CreateObject
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-ASN1T_EnumObjectErrorCode MIL_ObjectManager::CreateObject( const ASN1T_MagicActionCreateObject& asn, const tools::Resolver< MIL_Army >& armies )
+ASN1T_EnumObjectErrorCode MIL_ObjectManager::CreateObject( const ASN1T_MagicActionCreateObject& asn, const tools::Resolver< MIL_Army_ABC >& armies )
 {  //@TODO MGD Try to externalize ASN when protobuff will be merged
-    MIL_Army* pArmy = armies.Find( asn.team );
+   //@HBD : Verify later that conversion from MIL_Army to MIL_Army_ABC was right
+    MIL_Army_ABC* pArmy = armies.Find( asn.team );
     if( !pArmy )
         return EnumObjectErrorCode::error_invalid_camp;
     return builder_->BuildObject( asn, *pArmy );
@@ -189,7 +190,7 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC& army, const MIL_O
 // Name: MIL_ObjectManager::OnReceiveMsgObjectMagicAction
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_ObjectManager::OnReceiveMsgObjectMagicAction( const ASN1T_MsgObjectMagicAction& asnMsg, uint nCtx, const tools::Resolver< MIL_Army >& armies )
+void MIL_ObjectManager::OnReceiveMsgObjectMagicAction( const ASN1T_MsgObjectMagicAction& asnMsg, uint nCtx, const tools::Resolver< MIL_Army_ABC >& armies )
 {
     ASN1T_EnumObjectErrorCode nErrorCode = EnumObjectErrorCode::no_error;
 

@@ -33,7 +33,7 @@ public:
     virtual ~MockFormationFactory() {}
     //@}
         
-    virtual MIL_Formation& Create( xml::xistream& xis, MIL_Army& army, MIL_Formation* parent = 0  )
+    virtual MIL_Formation& Create( xml::xistream& xis, MIL_Army_ABC& army, MIL_Formation* parent = 0  )
     {
         return *CreateFormationShadow();
     }

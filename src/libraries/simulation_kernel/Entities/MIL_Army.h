@@ -17,11 +17,6 @@
 
 #include "tools/Resolver.h"
 
-namespace xml
-{
-    class xostream;
-    class xistream;
-}
 
 class ArmyFactory_ABC;
 class AutomateFactory_ABC;
@@ -64,47 +59,42 @@ public:
 public:
     //! @name Constructor/Destructor
     //@{
-             MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory, MIL_ObjectManager& objectFactory, PopulationFactory_ABC& populationFactory, KnowledgeGroupFactory_ABC& knowledgegroupFactory );
+             MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory, MIL_ObjectManager& objectFactory
+                     , PopulationFactory_ABC& populationFactory, KnowledgeGroupFactory_ABC& knowledgegroupFactory, const MT_Converter< std::string, E_Diplomacy >& diplomacyConverter );
     virtual ~MIL_Army();
      //@}
 
     //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const uint );
-    void WriteODB         ( xml::xostream& xos ) const;
-    void WriteDiplomacyODB( xml::xostream& xos ) const;
-    //@}
-
-    //! @name Manager
-    //@{
-    static void Initialize();
-    static void Terminate ();
+    virtual void WriteODB         ( xml::xostream& xos ) const;
+    virtual void WriteDiplomacyODB( xml::xostream& xos ) const;
     //@}
 
     //! @name Init
     //@{
-    void InitializeDiplomacy( xml::xistream& xis );
+    virtual void InitializeDiplomacy( xml::xistream& xis );
     //@}
 
     //! @name Knowledge
     //@{
-    void UpdateKnowledges();
-    void CleanKnowledges ();
+    virtual void UpdateKnowledges(int currentTimeStep);
+    virtual void CleanKnowledges ();
     //@}
 
     //! @name Hierarchy
     //@{
-    void RegisterFormation  ( MIL_Formation& formation );
-    void UnregisterFormation( MIL_Formation& formation );
+    virtual void RegisterFormation  ( MIL_Formation& formation );
+    virtual void UnregisterFormation( MIL_Formation& formation );
     void RegisterObject  ( MIL_Object_ABC& object );
     void UnregisterObject( MIL_Object_ABC& object );
 
     void RegisterPopulation  ( MIL_Population& population );
     void UnregisterPopulation( MIL_Population& population );
 
-    MIL_KnowledgeGroup* FindKnowledgeGroup      ( uint nID ) const;
-    void                RegisterKnowledgeGroup  ( MIL_KnowledgeGroup& knowledgeGroup );
-    void                UnregisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup );
+    virtual MIL_KnowledgeGroup* FindKnowledgeGroup      ( uint nID ) const;
+    virtual void                RegisterKnowledgeGroup  ( MIL_KnowledgeGroup& knowledgeGroup );
+    virtual void                UnregisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup );
     //@}
 
     //! @name Operations
@@ -127,11 +117,11 @@ public:
 
     //! @name Network
     //@{
-    void SendCreation               () const;
-    void SendFullState              () const;
-    void SendKnowledge              () const;
+    virtual void SendCreation               () const;
+    virtual void SendFullState              () const;
+    virtual void SendKnowledge              () const;
 
-    void OnReceiveMsgChangeDiplomacy( const ASN1T_MsgChangeDiplomacy& msg );
+    virtual void OnReceiveMsgChangeDiplomacy( const ASN1T_MsgChangeDiplomacy& msg );
     //@}
 
 private:
@@ -149,7 +139,7 @@ private:
 
     //! @name CheckPoint
     //@{
-    explicit MIL_Army( ArmyFactory_ABC& armyFactory );
+    MIL_Army( ArmyFactory_ABC& armyFactory, const MT_Converter< std::string, E_Diplomacy >& diplomacyConverter );
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Army* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_Army* role, const unsigned int /*version*/ );
     //@}
@@ -165,8 +155,7 @@ private:
 
     DEC_KnowledgeBlackBoard_Army* pKnowledgeBlackBoard_;
 
-private:
-    static MT_Converter< std::string, E_Diplomacy > diplomacyConverter_;
+    const MT_Converter< std::string, E_Diplomacy >& diplomacyConverter_;
 };
 
 #endif // __MIL_Army_h_

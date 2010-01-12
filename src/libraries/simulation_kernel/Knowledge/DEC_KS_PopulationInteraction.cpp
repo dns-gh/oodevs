@@ -91,7 +91,7 @@ DEC_Knowledge_PopulationCollision& DEC_KS_PopulationInteraction::GetKnowledgePop
 // Name: DEC_KS_PopulationInteraction::Talk
 // Created: NLD 2004-03-17
 // -----------------------------------------------------------------------------
-void DEC_KS_PopulationInteraction::Talk()
+void DEC_KS_PopulationInteraction::Talk( int currentTimeStep )
 {       
     // Collisions
     for( CIT_PopulationFlowVector it = flowCollisions_.begin(); it != flowCollisions_.end(); ++it )

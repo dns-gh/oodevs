@@ -62,13 +62,23 @@ public:
     bool                 HasKnowledgeAgent      ( const MIL_Agent_ABC& agentKnown ) const;
 
     template < class UnaryFunction >
-    void ApplyOnKnowledgesAgent( UnaryFunction& fct ) const
+    void ApplyOnKnowledgesAgent( UnaryFunction fct ) const
     {
         for( CIT_KnowledgeAgentMap itKnowledge = realAgentMap_.begin(); itKnowledge != realAgentMap_.end(); )
         {
             DEC_Knowledge_Agent& knowledge = *itKnowledge->second;
             ++itKnowledge;
             fct( knowledge );
+        }
+    }
+    template < class BinaryFunction >
+    void ApplyOnKnowledgesAgent( BinaryFunction fct, int currentTimeStep ) const
+    {
+        for( CIT_KnowledgeAgentMap itKnowledge = realAgentMap_.begin(); itKnowledge != realAgentMap_.end(); )
+        {
+            DEC_Knowledge_Agent& knowledge = *itKnowledge->second;
+            ++itKnowledge;
+            fct( knowledge, currentTimeStep );
         }
     }
     //@}

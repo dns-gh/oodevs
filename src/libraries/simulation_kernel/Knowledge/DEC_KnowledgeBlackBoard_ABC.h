@@ -41,7 +41,7 @@ public:
 
     //! @name Main operations
     //@{
-    void Update();
+    void Update( int currentTimeStep );
     void Clean ();
     //@}
 

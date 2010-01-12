@@ -69,8 +69,9 @@ ArmyFactory::ArmyFactory( AutomateFactory_ABC& automateFactory, FormationFactory
     , objectFactory_( objectFactory )
     , populationFactory_( populationFactory )
     , knowledgeGroupFactory_( knowledgeGroupFactory )
+    , diplomacyConverter_( new MT_Converter< std::string, MIL_Army_ABC::E_Diplomacy >( MIL_Army_ABC::eUnknown ) )
 {
-    // NOTHING
+    InitializeDiplomacies();
 }
 
 // -----------------------------------------------------------------------------
@@ -86,9 +87,22 @@ ArmyFactory::~ArmyFactory()
 // Name: ArmyFactory::Create
 // Created: MGD 2009-10-24
 // -----------------------------------------------------------------------------
-MIL_Army* ArmyFactory::Create( xml::xistream& xis )
+MIL_Army_ABC* ArmyFactory::Create( xml::xistream& xis )
 {
-    MIL_Army* Army = new MIL_Army( xis, *this, formationFactory_, automateFactory_, objectFactory_, populationFactory_, knowledgeGroupFactory_ );
-    Register( Army->GetID(), *Army );
-    return Army;
+    MIL_Army_ABC* army = new MIL_Army( xis, *this, formationFactory_, automateFactory_, objectFactory_, populationFactory_, knowledgeGroupFactory_, *diplomacyConverter_ );
+    Register( army->GetID(), *army );
+    return army;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ArmyFactory::InitializeDiplomacies
+// Created: HBD 2009-12-22
+// -----------------------------------------------------------------------------
+void ArmyFactory::InitializeDiplomacies()
+{
+    MT_LOG_INFO_MSG( "Initializing armies diplomacies" );
+
+    diplomacyConverter_->Register( "enemy"  , MIL_Army_ABC::eEnemy   );
+    diplomacyConverter_->Register( "friend" , MIL_Army_ABC::eFriend  );
+    diplomacyConverter_->Register( "neutral", MIL_Army_ABC::eNeutral );
 }

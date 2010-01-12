@@ -44,32 +44,6 @@ DEC_KnowledgeSource_ABC::~DEC_KnowledgeSource_ABC()
     pBlackBoard_->RemoveFromScheduler( *this );
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeSource_ABC::Talk
-// Created: NLD 2004-03-12
-// -----------------------------------------------------------------------------
-void DEC_KnowledgeSource_ABC::Talk()
-{
-    // Nothing
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeSource_ABC::Prepare
-// Created: NLD 2004-03-16
-// -----------------------------------------------------------------------------
-void DEC_KnowledgeSource_ABC::Prepare()
-{
-    // Nothing
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeSource_ABC::Clean
-// Created: NLD 2005-09-01
-// -----------------------------------------------------------------------------
-void DEC_KnowledgeSource_ABC::Clean()
-{
-    // Nothing
-}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeSource_ABC::GetPriority

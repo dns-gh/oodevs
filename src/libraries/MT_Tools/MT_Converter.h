@@ -30,8 +30,15 @@ public:
     //! @name Operations
     //@{
     bool         Register     ( const KEY& key, const VALUE& value );
-    const VALUE& Convert      ( const KEY& key );
-    const KEY&   RevertConvert( const VALUE& value );
+    const VALUE& Convert      ( const KEY& key ) const;
+    const KEY&   RevertConvert( const VALUE& value ) const;
+    //@}
+
+    //! @name Serialization
+    //@{
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    template< class Archive > void load( Archive& archive, const unsigned int version );
+    template< class Archive > void save( Archive& archive, const unsigned int version ) const;
     //@}
 
 private:
@@ -39,6 +46,12 @@ private:
     //@{
     typedef          std::map< KEY, VALUE, CMP > T_Map;   
     typedef typename T_Map::const_iterator       CIT_Map;
+    //@}
+
+    //! @name Serialization
+    //@{
+    template< typename Archive > friend void save_construct_data( Archive& archive, const MT_Converter< KEY, VALUE, CMP >* element, const unsigned int /*version*/ );
+    template< typename Archive > friend void load_construct_data( Archive& archive, MT_Converter< KEY, VALUE, CMP >* element, const unsigned int /*version*/ );
     //@}
 
 private:

@@ -18,7 +18,15 @@ class MIL_Object_ABC;
 class DEC_Knowledge_Object;
 class DEC_KnowledgeBlackBoard_Army;
 class MIL_KnowledgeGroup;
+class MIL_Formation;
 
+struct ASN1T_MsgChangeDiplomacy;
+
+namespace xml
+{
+    class xostream;
+    class xistream;
+}
 // =============================================================================
 // @class  MIL_Army
 // Created: JVT 2004-08-03
@@ -46,13 +54,29 @@ public:
     //! @name CheckPoints / Interface
     //@{
     template< typename Archive > void serialize( Archive&, const uint ) {}
+    virtual void WriteODB         ( xml::xostream& xos ) const = 0;
+    virtual void WriteDiplomacyODB( xml::xostream& xos ) const = 0;
     //@}
 
     //! @name Hierarchy
     //@{
+    virtual void RegisterFormation  ( MIL_Formation& formation ) = 0;
+    virtual void UnregisterFormation( MIL_Formation& formation ) = 0;
+
     virtual void RegisterObject( MIL_Object_ABC& object ) = 0;
     virtual void UnregisterObject( MIL_Object_ABC& object ) = 0;
     //@}
+
+    virtual void UpdateKnowledges(int currentTimeStep) = 0;
+    virtual void CleanKnowledges () = 0;
+
+    //! @name Network
+    //@{
+    virtual void SendCreation               () const = 0;
+    virtual void SendFullState              () const = 0;
+    virtual void SendKnowledge              () const = 0;
+    //@}
+
 
     //! @name Operations
     //@{    
@@ -63,7 +87,14 @@ public:
     virtual E_Tristate IsNeutral( const MIL_Army_ABC& army ) const = 0;
 
     virtual MIL_KnowledgeGroup* FindKnowledgeGroup( uint nID ) const = 0;
+    virtual void                RegisterKnowledgeGroup  ( MIL_KnowledgeGroup& knowledgeGroup ) = 0;
+    virtual void                UnregisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup ) = 0;
+
+    virtual void InitializeDiplomacy( xml::xistream& xis ) = 0;
+    virtual void OnReceiveMsgChangeDiplomacy( const ASN1T_MsgChangeDiplomacy& msg ) = 0;
+
     //@}
+
 
     //! @name Accessors
     //@{

@@ -90,8 +90,8 @@ public:
     virtual void Move     ( const MT_Vector2D& vNewPosition, const MT_Vector2D& vNewDirection, MT_Float rNewSpeed ) {};
     virtual void Follow   ( const MIL_Agent_ABC& agent ) {};
     virtual void Fly      ( MT_Float rHeight ) {};
-    virtual bool               HasSpeedChanged      () const { return false; }; // Position or direction or height has changed 
-    virtual bool               HasLocationChanged   () const { return false; };
+    virtual bool HasSpeedChanged      () const { return false; }; // Position or direction or height has changed 
+    virtual bool HasLocationChanged   () const { return false; };
     virtual void Serialize( HLA_UpdateFunctor& functor ) const {};
 };
 

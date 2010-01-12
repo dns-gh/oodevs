@@ -21,9 +21,9 @@ uint                                            MIL_KnowledgeGroupType::nNextID_
 
 struct MIL_KnowledgeGroupType::LoadingWrapper
 {
-    void ReadKnowledgeGroup( xml::xistream& xis )
+    void ReadKnowledgeGroup( xml::xistream& xis, double timeFactor )
     {
-        MIL_KnowledgeGroupType::ReadKnowledgeGroup( xis );
+        MIL_KnowledgeGroupType::ReadKnowledgeGroup( xis, timeFactor );
     }
 };
 
@@ -31,21 +31,30 @@ struct MIL_KnowledgeGroupType::LoadingWrapper
 // Name: MIL_KnowledgeGroupType::Initialize
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
-void MIL_KnowledgeGroupType::Initialize( xml::xistream& xis )
+void MIL_KnowledgeGroupType::Initialize( xml::xistream& xis, double timeFactor )
 {
     MT_LOG_INFO_MSG( "Initializing knowledge groups types" );
     LoadingWrapper loader;
 
     xis >> xml::start( "knowledge-groups" )
-            >> xml::list( "knowledge-group", loader, &LoadingWrapper::ReadKnowledgeGroup )
+            >> xml::list( "knowledge-group", loader, &LoadingWrapper::ReadKnowledgeGroup, timeFactor )
         >> xml::end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroupType::Initialize
+// Created: HBD 2009-12-28
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroupType::Initialize( xml::xistream& xis )
+{
+    Initialize( xis, MIL_Tools::ConvertSecondsToSim( 1 ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroupType::ReadKnowledgeGroup
 // Created: ABL 2007-07-23
 // -----------------------------------------------------------------------------
-void MIL_KnowledgeGroupType::ReadKnowledgeGroup( xml::xistream& xis )
+void MIL_KnowledgeGroupType::ReadKnowledgeGroup( xml::xistream& xis, double timeFactor )
 {
     std::string strName;
     std::string strType;
@@ -57,7 +66,7 @@ void MIL_KnowledgeGroupType::ReadKnowledgeGroup( xml::xistream& xis )
     const MIL_KnowledgeGroupType*& pType = knowledgeGroupTypes_[ strName ];
     if( pType )
         xis.error( "Type already defined" );
-    pType = new MIL_KnowledgeGroupType( strName, xis );
+    pType = new MIL_KnowledgeGroupType( strName, xis, timeFactor );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +84,7 @@ void MIL_KnowledgeGroupType::Terminate()
 // Name: MIL_KnowledgeGroupType constructor
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
-MIL_KnowledgeGroupType::MIL_KnowledgeGroupType( const std::string& strName, xml::xistream& xis )
+MIL_KnowledgeGroupType::MIL_KnowledgeGroupType( const std::string& strName, xml::xistream& xis, double timeFactor )
     : strName_                                      ( strName )
     , nID_                                          ( nNextID_++ )
     , rKnowledgeAgentMaxLifeTime_                   ( 0. )
@@ -87,7 +96,7 @@ MIL_KnowledgeGroupType::MIL_KnowledgeGroupType( const std::string& strName, xml:
     tools::ReadTimeAttribute( xis, "communication-delay", rCommunicationDelay_ );
     if( rCommunicationDelay_ < 0 )
         xis.error( "unit-knowledge: max-lifetime <= 0" );
-    rCommunicationDelay_ = MIL_Tools::ConvertSecondsToSim( rCommunicationDelay_ );
+    rCommunicationDelay_ *= timeFactor;
 
     // Connaissances agent
     xis >> xml::start( "unit-knowledge" );
@@ -95,7 +104,7 @@ MIL_KnowledgeGroupType::MIL_KnowledgeGroupType( const std::string& strName, xml:
     tools::ReadTimeAttribute( xis, "max-lifetime", rKnowledgeAgentMaxLifeTime_ );
     if( rKnowledgeAgentMaxLifeTime_ <= 0 )
         xis.error( "unit-knowledge: max-lifetime <= 0" );
-    rKnowledgeAgentMaxLifeTime_ = MIL_Tools::ConvertSecondsToSim( rKnowledgeAgentMaxLifeTime_ );
+    rKnowledgeAgentMaxLifeTime_ = timeFactor * rKnowledgeAgentMaxLifeTime_;
 
     uint nTmp = std::numeric_limits< unsigned int >::max();
     xis >> xml::optional() >> xml::attribute( "max-unit-to-knowledge-distance", nTmp );
@@ -106,7 +115,7 @@ MIL_KnowledgeGroupType::MIL_KnowledgeGroupType( const std::string& strName, xml:
     if( tools::ReadTimeAttribute(xis, "interpolation-time", rKnowledgeAgentExtrapolationTime_ ) )
         if( rKnowledgeAgentExtrapolationTime_ <= 0 )
             xis.error( "unit-knowledge: interpolation-time <= 0" );
-    rKnowledgeAgentExtrapolationTime_ = std::max( 1., MIL_Tools::ConvertSecondsToSim( rKnowledgeAgentExtrapolationTime_ ) );
+    rKnowledgeAgentExtrapolationTime_ = std::max( 1., timeFactor * rKnowledgeAgentExtrapolationTime_ );
     // JVT : 1 car lorsque l'on perd de vue une unité, on veux au moins que l'emplacement de la connaissance soit celle au pas de temps suivant le non vu
 
     xis >> xml::end();
@@ -118,7 +127,7 @@ MIL_KnowledgeGroupType::MIL_KnowledgeGroupType( const std::string& strName, xml:
     if( rKnowledgePopulationMaxLifeTime_ <= 0 )
         xis.error( "population-knowledge: max-lifetime <= 0" );
 
-    rKnowledgePopulationMaxLifeTime_ = MIL_Tools::ConvertSecondsToSim( rKnowledgePopulationMaxLifeTime_ );
+    rKnowledgePopulationMaxLifeTime_ = timeFactor * rKnowledgePopulationMaxLifeTime_;
 
     xis >> xml::end();
 }
@@ -136,7 +145,7 @@ MIL_KnowledgeGroupType::~MIL_KnowledgeGroupType()
 // Name: MIL_KnowledgeGroupType::InstanciateKnowledgeGroup
 // Created: NLD 2004-11-15
 // -----------------------------------------------------------------------------
-MIL_KnowledgeGroup& MIL_KnowledgeGroupType::InstanciateKnowledgeGroup( uint nID, MIL_Army& army ) const
+MIL_KnowledgeGroup& MIL_KnowledgeGroupType::InstanciateKnowledgeGroup( uint nID, MIL_Army_ABC& army ) const
 {
     return *new MIL_KnowledgeGroup( const_cast< MIL_KnowledgeGroupType& >( *this ), nID, army );
 }
@@ -174,7 +183,7 @@ uint MIL_KnowledgeGroupType::GetID() const
 // Name: MIL_KnowledgeGroupType::GetKnowledgePopulationMaxLifeTime
 // Created: NLD 2005-10-14
 // -----------------------------------------------------------------------------
-MT_Float MIL_KnowledgeGroupType::GetKnowledgePopulationMaxLifeTime() const
+double MIL_KnowledgeGroupType::GetKnowledgePopulationMaxLifeTime() const
 {
     return rKnowledgePopulationMaxLifeTime_;
 }
@@ -183,7 +192,7 @@ MT_Float MIL_KnowledgeGroupType::GetKnowledgePopulationMaxLifeTime() const
 // Name: MIL_KnowledgeGroupType::GetKnowledgeAgentMaxLifeTime
 // Created: NLD 2004-11-15
 // -----------------------------------------------------------------------------
-MT_Float MIL_KnowledgeGroupType::GetKnowledgeAgentMaxLifeTime() const
+double MIL_KnowledgeGroupType::GetKnowledgeAgentMaxLifeTime() const
 {
     return rKnowledgeAgentMaxLifeTime_;
 }
@@ -192,7 +201,7 @@ MT_Float MIL_KnowledgeGroupType::GetKnowledgeAgentMaxLifeTime() const
 // Name: MIL_KnowledgeGroupType::GetKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit
 // Created: NLD 2004-11-15
 // -----------------------------------------------------------------------------
-MT_Float MIL_KnowledgeGroupType::GetKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit() const
+double MIL_KnowledgeGroupType::GetKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit() const
 {
     return rKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit_;
 }
@@ -201,7 +210,7 @@ MT_Float MIL_KnowledgeGroupType::GetKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit
 // Name: MIL_KnowledgeGroupType::GetKnowledgeAgentExtrapolationTime
 // Created: JVT 2004-11-29
 // -----------------------------------------------------------------------------
-MT_Float MIL_KnowledgeGroupType::GetKnowledgeAgentExtrapolationTime() const
+double MIL_KnowledgeGroupType::GetKnowledgeAgentExtrapolationTime() const
 {
     return rKnowledgeAgentExtrapolationTime_;
 }
@@ -210,7 +219,7 @@ MT_Float MIL_KnowledgeGroupType::GetKnowledgeAgentExtrapolationTime() const
 // Name: MIL_KnowledgeGroupType::GetKnowledgeCommunicationDelay
 // Created: SLG 2009-11-29
 // -----------------------------------------------------------------------------
-MT_Float MIL_KnowledgeGroupType::GetKnowledgeCommunicationDelay() const
+double MIL_KnowledgeGroupType::GetKnowledgeCommunicationDelay() const
 {
     return rCommunicationDelay_;
 }

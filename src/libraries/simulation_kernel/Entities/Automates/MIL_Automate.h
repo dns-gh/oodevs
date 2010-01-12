@@ -34,7 +34,6 @@ class MIL_Formation;
 class MIL_AutomateType;
 class MIL_AgentPion;
 class MIL_Army_ABC;
-class MIL_Army;
 class MIL_KnowledgeGroup;
 class MIL_AutomateLOG;
 class MIL_Object_ABC;
@@ -118,7 +117,7 @@ public:
     void UnregisterAutomate( MIL_Automate& automate );
 
             void UpdateDecision  ( float duration );
-            void UpdateKnowledges();
+            void UpdateKnowledges( int currentTimeStep );
             void CleanKnowledges ();
     virtual void UpdateNetwork   () const;
     virtual void UpdateState     ();
@@ -132,11 +131,11 @@ public:
 
     //! @name Prisoners
     //@{
-          bool      IsSurrendered       () const;
-    const MIL_Army* GetArmySurrenderedTo() const;
-          bool      NotifyCaptured      ( const MIL_AgentPion& pionTakingPrisoner );
-          bool      NotifyReleased      ();
-          bool      NotifyImprisoned    ( const MIL_Object_ABC& camp );
+          bool          IsSurrendered       () const;
+    const MIL_Army_ABC* GetArmySurrenderedTo() const;
+          bool          NotifyCaptured      ( const MIL_AgentPion& pionTakingPrisoner );
+          bool          NotifyReleased      ();
+          bool          NotifyImprisoned    ( const MIL_Object_ABC& camp );
     //@}
 
     //! @name Refugees $$$$ A revoir
@@ -156,8 +155,8 @@ public:
             void OnReceiveMsgFragOrder            ( const ASN1T_MsgFragOrder&                   msg );
             void OnReceiveMsgSetAutomateMode      ( const ASN1T_MsgSetAutomatMode&              msg );
             void OnReceiveMsgUnitCreationRequest  ( const ASN1T_MsgUnitCreationRequest&         msg );
-            void OnReceiveMsgUnitMagicAction      ( const ASN1T_MsgUnitMagicAction&             msg, const tools::Resolver< MIL_Army >& armies );
-            void OnReceiveMsgChangeKnowledgeGroup ( const ASN1T_MsgAutomatChangeKnowledgeGroup& msg, const tools::Resolver< MIL_Army >& armies );
+            void OnReceiveMsgUnitMagicAction      ( const ASN1T_MsgUnitMagicAction&             msg, const tools::Resolver< MIL_Army_ABC >& armies );
+            void OnReceiveMsgChangeKnowledgeGroup ( const ASN1T_MsgAutomatChangeKnowledgeGroup& msg, const tools::Resolver< MIL_Army_ABC >& armies );
             void OnReceiveMsgChangeSuperior       ( const ASN1T_MsgAutomatChangeSuperior&       msg, const tools::Resolver< MIL_Formation >& formations );
     virtual void OnReceiveMsgChangeLogisticLinks  ( const ASN1T_MsgAutomatChangeLogisticLinks&  msg );
     virtual void OnReceiveMsgLogSupplyChangeQuotas( const ASN1T_MsgLogSupplyChangeQuotas&       msg );
@@ -198,7 +197,7 @@ protected:
     //! @name Tools
     //@{
     virtual void             SendLogisticLinks() const;
-            void             Surrender        ( const MIL_Army& amrySurrenderedTo );
+            void             Surrender        ( const MIL_Army_ABC& amrySurrenderedTo );
             void             CancelSurrender  ();
             MIL_AutomateLOG* GetNominalTC2    () const;
     //@}
@@ -247,7 +246,7 @@ private:
     DEC_KnowledgeBlackBoard_Automate* pKnowledgeBlackBoard_;
 
     // Surrendered / prisoner
-    const MIL_Army*             pArmySurrenderedTo_;
+    const MIL_Army_ABC*             pArmySurrenderedTo_;
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Automate* role, const unsigned int /*version*/ );
   	template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_Automate* role, const unsigned int /*version*/ );

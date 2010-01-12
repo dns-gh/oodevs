@@ -50,7 +50,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Knowledge_Agent( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Agent_ABC& agentKnown );
+             DEC_Knowledge_Agent( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Agent_ABC& agentKnown, MT_Float relevance = 0.);
              DEC_Knowledge_Agent();
     virtual ~DEC_Knowledge_Agent();
     //@}
@@ -66,8 +66,8 @@ public:
     //! @name Operations
     //@{
     void Prepare    ();
-    void Update     ( const DEC_Knowledge_AgentPerception& perception );
-    void Update     ( const DEC_Knowledge_Agent& knowledge );
+    void Update     ( const DEC_Knowledge_AgentPerception& perception, int currentTimeStep );
+    void Update     ( const DEC_Knowledge_Agent& knowledge, int currentTimeStep );
     void Extrapolate();
     bool Clean      () const;
     void Invalidate ();
@@ -76,7 +76,7 @@ public:
 
     //! @name Relevance management
     //@{
-    void     UpdateRelevance();
+    void     UpdateRelevance(int currentTimeStep);
     MT_Float GetRelevance   () const;
     //@}
 
@@ -102,7 +102,7 @@ public:
           MT_Float                       GetSpeed                 () const;
           MT_Float                       GetOperationalState      () const;
           MT_Float                       GetMajorOperationalState () const;
-          MIL_Agent_ABC&                 GetAgentKnown            () const;
+ virtual  MIL_Agent_ABC&                 GetAgentKnown            () const;
     const PHY_NatureAtlas&               GetNatureAtlas           () const;
     const MIL_Army_ABC*                  GetArmy                  () const;
     const PHY_PerceptionLevel&           GetMaxPerceptionLevel    () const;
@@ -180,7 +180,7 @@ private:
           T_PerceptionSourceMap perceptionLevelPerAutomateMap_;
           T_PerceptionSourceMap previousPerceptionLevelPerAutomateMap_;
           MT_Float              rRelevance_;
-          uint                  nTimeExtrapolationEnd_;
+          int                   nTimeExtrapolationEnd_;
           bool                  bLocked_;
           bool                  bValid_;
 

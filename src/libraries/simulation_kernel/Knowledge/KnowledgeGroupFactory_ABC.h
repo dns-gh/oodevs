@@ -37,7 +37,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual MIL_KnowledgeGroup& Create( xml::xistream& xis, MIL_Army& army, MIL_KnowledgeGroup* parent = 0 ) = 0;
+    virtual MIL_KnowledgeGroup& Create( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* parent = 0 ) = 0;
     //@}
 
     //! @name CheckPoint

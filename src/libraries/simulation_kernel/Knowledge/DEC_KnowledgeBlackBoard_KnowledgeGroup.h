@@ -25,6 +25,7 @@ class DEC_KS_Sharing;
 class DEC_Knowledge_PopulationCollision;
 class DEC_Knowledge_PopulationPerception;
 class MIL_Object_ABC;
+class TER_Polygon;
 
 // =============================================================================
 /** @class  DEC_KnowledgeBlackBoard_KnowledgeGroup

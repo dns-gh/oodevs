@@ -25,7 +25,7 @@ class DEC_KnowledgeBlackBoard_KnowledgeGroup;
 class DEC_Knowledge_Object;
 class DEC_Knowledge_Agent;
 
-class MIL_Army;
+class MIL_Army_ABC;
 class MIL_Automate;
 
 class KnowledgeGroupFactory_ABC;
@@ -54,8 +54,8 @@ public:
     //@}
 
 public:
-     MIL_KnowledgeGroup( MIL_KnowledgeGroupType& type, uint nID, MIL_Army& army );
-     MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army& army, MIL_KnowledgeGroup* pParent, KnowledgeGroupFactory_ABC& knowledgeGroupFactory );
+     MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, uint nID, MIL_Army_ABC& army );
+     MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* pParent, KnowledgeGroupFactory_ABC& knowledgeGroupFactory );
      MIL_KnowledgeGroup();
     ~MIL_KnowledgeGroup();
 
@@ -79,7 +79,7 @@ public:
     MIL_KnowledgeGroup* FindKnowledgeGroup ( uint nID ) const;
     void SetType( MIL_KnowledgeGroupType *pType ){ pType_ = pType; }
 
-    void UpdateKnowledges();
+    void UpdateKnowledges(int currentTimeStep);
     void CleanKnowledges ();
     bool IsPerceived     ( const DEC_Knowledge_Object& knowledge ) const;
     bool IsPerceived     ( const DEC_Knowledge_Agent&  knowledge ) const;
@@ -93,7 +93,7 @@ public:
     //@{
     void OnReceiveMsgKnowledgeGroupEnable( const ASN1T_MsgKnowledgeGroupEnable& asnMsg );
     void OnReceiveMsgKnowledgeGroupCreation( const ASN1T_MsgKnowledgeGroupCreation& msg );
-    void OnReceiveMsgKnowledgeGroupChangeSuperior( const ASN1T_MsgKnowledgeGroupChangeSuperior& msg, const tools::Resolver< MIL_Army >& armies );
+    void OnReceiveMsgKnowledgeGroupChangeSuperior( const ASN1T_MsgKnowledgeGroupChangeSuperior& msg, const tools::Resolver< MIL_Army_ABC >& armies );
     void OnReceiveMsgKnowledgeGroupDelete( const ASN1T_MsgKnowledgeGroupDelete& msg );
     void OnReceiveMsgKnowledgeGroupSetType( const ASN1T_MsgKnowledgeGroupSetType& msg );
     //@}
@@ -103,7 +103,7 @@ public:
     //@{
           uint                                    GetID       () const;
     const MIL_KnowledgeGroupType&                 GetType     () const;
-          MIL_Army&                               GetArmy     () const;
+          MIL_Army_ABC&                           GetArmy     () const;
     const T_AutomateVector&                       GetAutomates() const;
     const T_KnowledgeGroupVector&                 GetKnowledgeGroups() const;
     const DEC_KnowledgeBlackBoard_KnowledgeGroup& GetKnowledge() const;
@@ -126,10 +126,10 @@ public:
     //@}
     
 private:
-    MIL_KnowledgeGroupType* pType_;
-    uint                    nID_;
-    MIL_Army*               pArmy_;
-    MIL_KnowledgeGroup*     pParent_;
+    const MIL_KnowledgeGroupType* pType_;
+          uint                    nID_;
+          MIL_Army_ABC*           pArmy_;
+          MIL_KnowledgeGroup*     pParent_;
 
     DEC_KnowledgeBlackBoard_KnowledgeGroup* pKnowledgeBlackBoard_;
 

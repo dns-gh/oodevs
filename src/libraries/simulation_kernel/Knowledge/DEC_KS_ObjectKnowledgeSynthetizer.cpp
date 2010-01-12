@@ -194,7 +194,7 @@ void DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgeRelevance( boost::shared_
 // Name: DEC_KS_ObjectKnowledgeSynthetizer::Talk
 // Created: NLD 2004-03-12
 // -----------------------------------------------------------------------------
-void DEC_KS_ObjectKnowledgeSynthetizer::Talk()
+void DEC_KS_ObjectKnowledgeSynthetizer::Talk( int currentTimeStep )
 {
     // Synthesis of the perceptions of the subordinates 
     SynthetizeSubordinatesPerception();

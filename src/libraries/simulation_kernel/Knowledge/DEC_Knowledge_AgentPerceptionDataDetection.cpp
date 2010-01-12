@@ -20,7 +20,7 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
-#include "Entities/MIL_Army.h"
+#include "Entities/MIL_Army_ABC.h"
 #include "MIL_AgentServer.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
@@ -65,7 +65,7 @@ void DEC_Knowledge_AgentPerceptionDataDetection::load( MIL_CheckPointInArchive& 
          >> vDirection_
          >> rAltitude_
          >> rSpeed_
-         >> const_cast< MIL_Army*& >( pArmySurrenderedTo_ )
+         >> const_cast< MIL_Army_ABC*& >( pArmySurrenderedTo_ )
          >> bPrisoner_
          >> bRefugeeManaged_
          >> bDead_
@@ -264,7 +264,7 @@ const T_ComposanteVolumeSet& DEC_Knowledge_AgentPerceptionDataDetection::GetVisi
 // Name: DEC_Knowledge_AgentPerceptionDataDetection::GetArmySurrenderedTo
 // Created: NLD 2007-02-14
 // -----------------------------------------------------------------------------
-const MIL_Army* DEC_Knowledge_AgentPerceptionDataDetection::GetArmySurrenderedTo() const
+const MIL_Army_ABC* DEC_Knowledge_AgentPerceptionDataDetection::GetArmySurrenderedTo() const
 {
     return pArmySurrenderedTo_;
 }

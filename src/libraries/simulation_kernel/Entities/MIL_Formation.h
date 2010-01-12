@@ -18,7 +18,7 @@ namespace xml
     class xistream;
 }
 
-class MIL_Army;
+class MIL_Army_ABC;
 class PHY_NatureLevel;
 
 class FormationFactory_ABC;
@@ -35,7 +35,7 @@ class MIL_Formation : public tools::Resolver< MIL_Formation >
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_Formation(  xml::xistream& xis, MIL_Army& army, MIL_Formation* pParent, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory );
+             MIL_Formation(  xml::xistream& xis, MIL_Army_ABC& army, MIL_Formation* pParent, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory );
              MIL_Formation();
     virtual ~MIL_Formation();
     //@}
@@ -62,7 +62,7 @@ public:
 
     //! @name Accessors
     //@{
-    MIL_Army& GetArmy() const;
+    MIL_Army_ABC& GetArmy() const;
     uint      GetID  () const;
     //@}
 
@@ -89,7 +89,7 @@ private:
     //! @name Attributes
     //@{
           uint              nID_;
-          MIL_Army*         pArmy_;
+          MIL_Army_ABC*     pArmy_;
           MIL_Formation*    pParent_;
     const PHY_NatureLevel*  pLevel_;
           std::string       strName_;

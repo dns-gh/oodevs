@@ -52,7 +52,7 @@
 #include "Entities/Agents/Units/HumanFactors/PHY_Tiredness.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/MIL_EntityManager.h"
-#include "Entities/MIL_Army.h"
+#include "Entities/MIL_Army_ABC.h"
 #include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_Representations.h"
 
@@ -353,10 +353,10 @@ MT_Float MIL_AgentPion::GetMajorComponentWeight() const
 // Name: MIL_AgentPion::UpdateKnowledges
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::UpdateKnowledges()
+void MIL_AgentPion::UpdateKnowledges( int currentTimeStep )
 {
     assert( pKnowledgeBlackBoard_ );
-    pKnowledgeBlackBoard_->Update();
+    pKnowledgeBlackBoard_->Update(currentTimeStep);
 }
 
 // -----------------------------------------------------------------------------
@@ -858,7 +858,7 @@ void  MIL_AgentPion::OnReceiveMsgRecoverHumansTransporters()
 // Name: MIL_AgentPion::OnReceiveMsgUnitMagicAction
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgUnitMagicAction( const ASN1T_MsgUnitMagicAction& asnMsg, const tools::Resolver< MIL_Army>& armies )
+void MIL_AgentPion::OnReceiveMsgUnitMagicAction( const ASN1T_MsgUnitMagicAction& asnMsg, const tools::Resolver< MIL_Army_ABC>& armies )
 {
     switch( asnMsg.action.t )
     {

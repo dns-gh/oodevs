@@ -13,7 +13,7 @@
 
 #include "Entities/Agents/Units/Categories/PHY_NatureLevel.h"
 #include "Entities/Automates/MIL_Automate.h"
-#include "Entities/MIL_Army.h"
+#include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Network/NET_ASN_Messages.h"
 
@@ -28,7 +28,7 @@
 // Name: MIL_Formation constructor
 // Created: NLD 2006-10-11
 // -----------------------------------------------------------------------------
-MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army& army, MIL_Formation* pParent, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory )
+MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Formation* pParent, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory )
     : pArmy_     ( &army )
     , pParent_   ( pParent )
     , pLevel_    ( 0 )
@@ -247,7 +247,7 @@ void MIL_Formation::SendFullState() const
 // Name: MIL_Formation::GetArmy
 // Created: NLD 2006-10-11
 // -----------------------------------------------------------------------------
-MIL_Army& MIL_Formation::GetArmy() const
+MIL_Army_ABC& MIL_Formation::GetArmy() const
 {
     assert( pArmy_ );
     return *pArmy_;

@@ -31,7 +31,7 @@
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/MIL_EntityManager.h"
-#include "Entities/MIL_Army.h"
+#include "Entities/MIL_Army_ABC.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
@@ -266,7 +266,7 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> bDotationSupplyExplicitlyRequested_
          >> dotationSupplyStates_
          >> pKnowledgeBlackBoard_
-         >> const_cast< MIL_Army*& >( pArmySurrenderedTo_ )
+         >> const_cast< MIL_Army_ABC*& >( pArmySurrenderedTo_ )
          >> nTickRcDotationSupplyQuerySent_;
     {
         DEC_AutomateDecision* pRole;
@@ -503,16 +503,16 @@ void MIL_Automate::UpdateDecision( float duration )
 // Name: MIL_Automate::UpdateKnowledges
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_Automate::UpdateKnowledges()
+void MIL_Automate::UpdateKnowledges( int currentTimeStep )
 {
     // Pions (+ PC)
     for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
-        (**it).UpdateKnowledges();
+        (**it).UpdateKnowledges(currentTimeStep);
 
     assert( pKnowledgeBlackBoard_ );
-    pKnowledgeBlackBoard_->Update();
+    pKnowledgeBlackBoard_->Update(currentTimeStep);
 }
-
+ 
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate::CleanKnowledges
 // Created: NLD 2005-09-01
@@ -752,7 +752,7 @@ void MIL_Automate::NotifyRefugeeReleased( const MIL_Object_ABC& camp )
 // Name: MIL_Automate::Surrender
 // Created: NLD 2005-02-24
 // -----------------------------------------------------------------------------
-void MIL_Automate::Surrender( const MIL_Army& amrySurrenderedTo )
+void MIL_Automate::Surrender( const MIL_Army_ABC& amrySurrenderedTo )
 {
     if( pArmySurrenderedTo_ )
         return;
@@ -982,7 +982,7 @@ void MIL_Automate::OnReceiveMsgUnitCreationRequest( const ASN1T_MsgUnitCreationR
 // Name: MIL_Automate::OnReceiveMsgUnitMagicAction
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgUnitMagicAction( const ASN1T_MsgUnitMagicAction& asnMsg, const tools::Resolver< MIL_Army >& armies )
+void MIL_Automate::OnReceiveMsgUnitMagicAction( const ASN1T_MsgUnitMagicAction& asnMsg, const tools::Resolver< MIL_Army_ABC >& armies )
 {
     if( asnMsg.action.t == T_MsgUnitMagicAction_action_move_to )
     {
@@ -998,7 +998,7 @@ void MIL_Automate::OnReceiveMsgUnitMagicAction( const ASN1T_MsgUnitMagicAction& 
     }
     else if( asnMsg.action.t == T_MsgUnitMagicAction_action_se_rendre )
     {
-        const MIL_Army* pSurrenderedToArmy = armies.Find( asnMsg.action.u.se_rendre );
+        const MIL_Army_ABC* pSurrenderedToArmy = armies.Find( asnMsg.action.u.se_rendre );
         if( !pSurrenderedToArmy || *pSurrenderedToArmy == GetArmy() )
             throw NET_AsnException< ASN1T_EnumUnitErrorCode >( EnumUnitErrorCode::error_invalid_attribute );
         else if( IsSurrendered() )
@@ -1024,9 +1024,9 @@ void MIL_Automate::OnReceiveMsgUnitMagicAction( const ASN1T_MsgUnitMagicAction& 
 // Name: MIL_Automate::OnReceiveMsgChangeKnowledgeGroup
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgChangeKnowledgeGroup( const ASN1T_MsgAutomatChangeKnowledgeGroup& asnMsg, const tools::Resolver< MIL_Army >& armies  )
+void MIL_Automate::OnReceiveMsgChangeKnowledgeGroup( const ASN1T_MsgAutomatChangeKnowledgeGroup& asnMsg, const tools::Resolver< MIL_Army_ABC >& armies  )
 {
-    MIL_Army* pNewArmy = armies.Find( asnMsg.oid_camp );
+    MIL_Army_ABC* pNewArmy = armies.Find( asnMsg.oid_camp );
     if( !pNewArmy || *pNewArmy != GetArmy() )
         throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_camp );
 

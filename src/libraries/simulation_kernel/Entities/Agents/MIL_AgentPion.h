@@ -97,7 +97,7 @@ public:
     //! @name Operations
     //@{
     void PreprocessRandomBreakdowns( uint nEndDayTimeStep ) const;
-    void UpdateKnowledges          ();
+    void UpdateKnowledges          ( int currentTimeStep );
     void CleanKnowledges           ();
     void UpdateDecision            ( float duration );
     void UpdateState               ();
@@ -117,7 +117,7 @@ public:
     void SendFullState() const;
     void SendKnowledge() const;
 
-    void OnReceiveMsgUnitMagicAction  ( const ASN1T_MsgUnitMagicAction&    msg, const tools::Resolver< MIL_Army>& armies );
+    void OnReceiveMsgUnitMagicAction  ( const ASN1T_MsgUnitMagicAction&    msg, const tools::Resolver< MIL_Army_ABC>& armies );
     void OnReceiveMsgOrder            ( const ASN1T_MsgUnitOrder&          msg ); 
     void OnReceiveMsgFragOrder        ( const ASN1T_MsgFragOrder&          msg );
     void OnReceiveMsgChangeSuperior   ( const MIL_EntityManager& manager, const ASN1T_MsgUnitChangeSuperior& msg );

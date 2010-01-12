@@ -19,7 +19,7 @@ class DEC_Knowledge_AgentPerceptionDataDetection;
 class MIL_KnowledgeGroupType;
 class PHY_Posture;
 class MIL_Agent_ABC;
-class MIL_Army;
+class MIL_Army_ABC;
 struct ASN1T_MsgUnitKnowledgeUpdate;
 
 // =============================================================================
@@ -59,7 +59,7 @@ public:
     const PHY_Posture&           GetCurrentPosture             () const;
           MT_Float               GetPostureCompletionPercentage() const;
           uint                   GetTimeLastUpdate             () const;
-    const MIL_Army*              GetArmySurrenderedTo          () const;
+    const MIL_Army_ABC*              GetArmySurrenderedTo          () const;
           bool                   IsSurrendered                 () const;
           bool                   IsPrisoner                    () const;
           bool                   IsRefugeeManaged              () const;
@@ -88,7 +88,7 @@ private:
     MT_Float    rAltitude_;
     bool        bDead_;
 
-    const MIL_Army*   pArmySurrenderedTo_;
+    const MIL_Army_ABC*   pArmySurrenderedTo_;
           bool        bPrisoner_; 
           bool        bRefugeeManaged_;
           

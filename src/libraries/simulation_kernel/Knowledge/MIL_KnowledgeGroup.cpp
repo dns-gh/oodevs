@@ -30,13 +30,15 @@ BOOST_CLASS_EXPORT_GUID( MIL_KnowledgeGroup, "MIL_KnowledgeGroup" )
 // Name: MIL_KnowledgeGroup constructor
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_KnowledgeGroup::MIL_KnowledgeGroup( MIL_KnowledgeGroupType& type, uint nID, MIL_Army& army )
+MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, uint nID, MIL_Army_ABC& army )
     : pType_               ( &type )
     , nID_                 ( nID )
     , pArmy_               ( &army )
     , pParent_             ( 0 )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_KnowledgeGroup( *this ) )
     , automates_           ()
+    , timeToDiffuse_       ( 0 )
+    , isActivated_         ( true )
 {
     pArmy_->RegisterKnowledgeGroup( *this );
     if( !ids_.insert( nID_ ).second )
@@ -47,7 +49,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( MIL_KnowledgeGroupType& type, uint nID, 
 // Name: MIL_KnowledgeGroup constructor
 // Created: SLG 2009-11-11
 // -----------------------------------------------------------------------------
-MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army& army, MIL_KnowledgeGroup* pParent, KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
+MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* pParent, KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
     : nID_                  ( 0 )
     , pArmy_                ( &army )
     , pParent_              ( pParent )
@@ -63,8 +65,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army& army, MIL_
     if( pParent_ )
     {
         pParent_->RegisterKnowledgeGroup( *this );
-        const MT_Float nCurrentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
-        timeToDiffuse_ = pParent_->GetType().GetKnowledgeCommunicationDelay() + nCurrentTimeStep;
+        timeToDiffuse_ = pParent_->GetType().GetKnowledgeCommunicationDelay();
     }
     else
         pArmy_->RegisterKnowledgeGroup( *this );
@@ -164,18 +165,18 @@ void MIL_KnowledgeGroup::WriteODB( xml::xostream& xos ) const
 // Name: MIL_KnowledgeGroup::UpdateKnowledges
 // Created: NLD 2004-08-19
 // -----------------------------------------------------------------------------
-void MIL_KnowledgeGroup::UpdateKnowledges()
+void MIL_KnowledgeGroup::UpdateKnowledges(int currentTimeStep)
 {
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
-        (**it).UpdateKnowledges();
+        (**it).UpdateKnowledges(currentTimeStep);
 
     for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
-        (**it).UpdateKnowledges();
+        (**it).UpdateKnowledges(currentTimeStep);
     //tools::Resolver< MIL_KnowledgeGroup >::Apply( boost::bind( &MIL_KnowledgeGroup::UpdateKnowledges, _1 ) );
 
     assert( pKnowledgeBlackBoard_ );
-    pKnowledgeBlackBoard_->Update();
-}
+    pKnowledgeBlackBoard_->Update(currentTimeStep);
+    }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::CleanKnowledges
@@ -411,7 +412,7 @@ const DEC_KnowledgeBlackBoard_KnowledgeGroup& MIL_KnowledgeGroup::GetKnowledge()
 // Name: MIL_KnowledgeGroup::GetArmy
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-MIL_Army& MIL_KnowledgeGroup::GetArmy() const
+MIL_Army_ABC& MIL_KnowledgeGroup::GetArmy() const
 {
     assert( pArmy_ );
     return *pArmy_;
@@ -555,9 +556,9 @@ void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupEnable( const ASN1T_MsgKnowle
 // Name: MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupChangeSuperior
 // Created: FHD 2009-12-17: 
 // -----------------------------------------------------------------------------
-void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupChangeSuperior( const ASN1T_MsgKnowledgeGroupChangeSuperior& msg, const tools::Resolver< MIL_Army >& armies )
+void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupChangeSuperior( const ASN1T_MsgKnowledgeGroupChangeSuperior& msg, const tools::Resolver< MIL_Army_ABC >& armies )
 {
-    MIL_Army* pTargetArmy = armies.Find( msg.oid_camp );
+    MIL_Army_ABC* pTargetArmy = armies.Find( msg.oid_camp );
     if( !pTargetArmy || *pTargetArmy != GetArmy() )
         throw NET_AsnException< ASN1T_EnumKnowledgeGroupErrorCode >( EnumKnowledgeGroupErrorCode::error_invalid_camp );
 

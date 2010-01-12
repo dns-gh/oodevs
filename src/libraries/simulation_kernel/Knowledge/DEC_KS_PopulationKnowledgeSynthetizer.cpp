@@ -103,7 +103,7 @@ void DEC_KS_PopulationKnowledgeSynthetizer::UpdateKnowledgesFromCollision( const
 // Name: DEC_KS_PopulationKnowledgeSynthetizer::Talk
 // Created: NLD 2004-03-12
 // -----------------------------------------------------------------------------
-void DEC_KS_PopulationKnowledgeSynthetizer::Talk()
+void DEC_KS_PopulationKnowledgeSynthetizer::Talk( int currentTimeStep )
 {
     assert( pBlackBoard_ );
 

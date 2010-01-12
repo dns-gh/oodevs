@@ -194,7 +194,7 @@ bool PHY_RolePion_Surrender::IsSurrendered() const
 // Name: PHY_RolePion_Surrender::GetArmySurrenderedTo
 // Created: NLD 2007-02-14
 // -----------------------------------------------------------------------------
-const MIL_Army* PHY_RolePion_Surrender::GetArmySurrenderedTo() const
+const MIL_Army_ABC* PHY_RolePion_Surrender::GetArmySurrenderedTo() const
 {
 
     return pion_.GetAutomate().GetArmySurrenderedTo();
@@ -210,7 +210,7 @@ void PHY_RolePion_Surrender::SendFullState( NET_ASN_MsgUnitAttributes& msg ) con
     msg().m.prisonnierPresent = 1;
     msg().prisonnier          = IsPrisoner();
 
-    const MIL_Army* pArmySurrenderedTo = GetArmySurrenderedTo();
+    const MIL_Army_ABC* pArmySurrenderedTo = GetArmySurrenderedTo();
     msg().m.renduPresent  = 1;
     msg().rendu           = pArmySurrenderedTo ? pArmySurrenderedTo->GetID() : 0;
 }

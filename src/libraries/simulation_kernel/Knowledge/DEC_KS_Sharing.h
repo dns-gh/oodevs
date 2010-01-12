@@ -37,7 +37,8 @@ public:
     //! @name Operations
     //@{
     virtual void Prepare();
-    virtual void Talk   ();
+    virtual void Clean();
+    virtual void Talk   ( int currentTimeStep );
 
     void ShareFromSource( const MIL_KnowledgeGroup& source, uint nShareTimeStep );
     void ShareFromSource( const MIL_KnowledgeGroup& source, uint nShareTimeStep, const MT_Vector2D& vSharedCircleCenter, MT_Float rSharedCircleRadius );

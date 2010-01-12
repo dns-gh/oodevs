@@ -13,8 +13,11 @@
 #include "simulation_kernel/Entities/Agents/MIL_Agent_ABC.h"
 #include "AlgorithmsFactories.h"
 
-class DEC_Decision_ABC;
+#include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 class MIL_OrderManager_ABC;
+
+//class DEC_KnowledgeBlackBoard_AgentPion;
 
 // =============================================================================
 /** @class  MockAgent
@@ -45,12 +48,13 @@ public:
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( BelongsTo )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( IsPerceived )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( CreateKnowledgeShadow )
+        , GetKnowledge_mocker ("GetKnowledge", this)
     {
     }
     virtual ~MockAgent() {}
     //@}
         
-    virtual const MIL_AgentType_ABC&  GetType() const
+    virtual const MIL_AgentType_ABC& GetType() const
     {
         return *GetTypeShadow();
     }
@@ -68,11 +72,14 @@ public:
     {
         return CreateKnowledgeShadow( knowledgeGroup );
     }
+
+
     virtual DEC_KnowledgeBlackBoard_AgentPion& GetKnowledge   () const
     {
         throw;
+        //      return *GetKnowledge_mocker.forward();
     }
-    
+
     virtual const MIL_Automate& GetAutomate() const { throw; }
     virtual       MIL_Automate& GetAutomate() { throw; }
 
@@ -103,7 +110,9 @@ public:
 
     MOCKPP_CONST_CHAINABLE_EXT1      ( MockAgent, bool, BelongsTo, const MIL_KnowledgeGroup&, bool, , MIL_KnowledgeGroup );
     MOCKPP_CONST_CHAINABLE_EXT1      ( MockAgent, bool, IsPerceived, const MIL_Agent_ABC&, bool, , MIL_Agent_ABC );
-    MOCKPP_CHAINABLE_EXT1            ( MockAgent, boost::shared_ptr< DEC_Knowledge_Agent >, CreateKnowledgeShadow, const MIL_KnowledgeGroup&, DEC_Knowledge_Agent, , MIL_KnowledgeGroup );    
+    MOCKPP_CHAINABLE_EXT1            ( MockAgent, boost::shared_ptr< DEC_Knowledge_Agent >, CreateKnowledgeShadow, const MIL_KnowledgeGroup&, DEC_Knowledge_Agent, , MIL_KnowledgeGroup ); 
+    
+      mockpp::ChainableMockMethod< DEC_KnowledgeBlackBoard_AgentPion* > GetKnowledge_mocker;
 
     AlgorithmsFactories algorithmFacories_;
 };

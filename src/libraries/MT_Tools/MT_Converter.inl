@@ -44,7 +44,7 @@ bool MT_Converter<KEY, VALUE, CMP>::Register( const KEY& key, const VALUE& value
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
 template< typename KEY, typename VALUE, typename CMP >
-const VALUE& MT_Converter<KEY, VALUE, CMP>::Convert( const KEY& key )
+const VALUE& MT_Converter<KEY, VALUE, CMP>::Convert( const KEY& key ) const
 {
     CIT_Map it = map_.find( key );
     if( it == map_.end() )
@@ -57,7 +57,7 @@ const VALUE& MT_Converter<KEY, VALUE, CMP>::Convert( const KEY& key )
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
 template< typename KEY, typename VALUE, typename CMP >
-const KEY& MT_Converter<KEY, VALUE, CMP>::RevertConvert( const VALUE& value )
+const KEY& MT_Converter<KEY, VALUE, CMP>::RevertConvert( const VALUE& value ) const
 {
     for( CIT_Map it = map_.begin(); it != map_.end(); ++it )
     {
@@ -65,4 +65,59 @@ const KEY& MT_Converter<KEY, VALUE, CMP>::RevertConvert( const VALUE& value )
             return it->first;
     }
     return nullKey_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: template< class Archive > void MT_Converter::load
+// Created: HBD 2009-12-22
+// -----------------------------------------------------------------------------
+template< typename KEY, typename VALUE, typename CMP >
+template< class Archive >
+void MT_Converter<KEY, VALUE, CMP>::load( Archive& archive, const unsigned int /*version*/ )
+{
+    unsigned int count;
+    archive >> count;
+    while( count-- )
+    {
+        KEY key;
+        archive >> key;
+        archive >> map_[ key ];
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: template< class Archive > void MT_Converter::save
+// Created: HBD 2009-12-22
+// -----------------------------------------------------------------------------
+template< typename KEY, typename VALUE, typename CMP >
+template< class Archive >
+void MT_Converter<KEY, VALUE, CMP>::save( Archive& archive, const unsigned int /*version*/ ) const
+{
+    unsigned int size = map_.size();
+    archive << size;
+    for( CIT_Map it = map_.begin(); it != map_.end(); ++it )
+        archive << it->first
+                << it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MT_Converter::save_construct_data
+// Created: HBD 2009-12-22
+// -----------------------------------------------------------------------------
+template< typename Archive, typename KEY, typename VALUE, typename CMP >
+void save_construct_data( Archive& archive, const MT_Converter< KEY, VALUE, CMP >* element, const unsigned int  )
+{
+    archive << element->nullValue_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MT_Converter::load_construct_data
+// Created: HBD 2009-12-22
+// -----------------------------------------------------------------------------
+template< typename Archive, typename KEY, typename VALUE, typename CMP >
+void load_construct_data( Archive& archive, MT_Converter< KEY, VALUE, CMP >* element, const unsigned int  )
+{
+    VALUE value;
+    archive >> value;
+    ::new( element ) MT_Converter< KEY, VALUE, CMP >( value );
 }

@@ -11,6 +11,7 @@
 #define __ArmyFactory_h_
 
 #include "ArmyFactory_ABC.h"
+#include "Entities/MIL_Army.h"
 
 class AutomateFactory_ABC;
 class FormationFactory_ABC;
@@ -36,7 +37,13 @@ public:
 
     //! @name Operations
     //@{
-    virtual MIL_Army* Create( xml::xistream& xis );
+    virtual MIL_Army_ABC* Create( xml::xistream& xis );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void InitializeDiplomacies();
     //@}
 
 private:
@@ -47,6 +54,7 @@ private:
     MIL_ObjectManager& objectFactory_;
     PopulationFactory_ABC& populationFactory_;
     KnowledgeGroupFactory_ABC& knowledgeGroupFactory_;
+    std::auto_ptr< MT_Converter< std::string, MIL_Army_ABC::E_Diplomacy > > diplomacyConverter_;
     //@}
 
     //! @name CheckPoint

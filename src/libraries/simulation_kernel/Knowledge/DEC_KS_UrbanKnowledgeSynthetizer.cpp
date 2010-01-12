@@ -128,7 +128,7 @@ void DEC_KS_UrbanKnowledgeSynthetizer::UpdateKnowledgeRelevance( boost::shared_p
 // Name: DEC_KS_UrbanKnowledgeSynthetizer::Talk
 // Created: MGD 2009-12-07
 // -----------------------------------------------------------------------------
-void DEC_KS_UrbanKnowledgeSynthetizer::Talk()
+void DEC_KS_UrbanKnowledgeSynthetizer::Talk( int currentTimeStep )
 {
     // Synthesis of the perceptions of the subordinates 
     SynthetizeSubordinatesPerception();

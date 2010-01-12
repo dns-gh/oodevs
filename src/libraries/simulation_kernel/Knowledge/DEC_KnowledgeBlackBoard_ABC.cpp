@@ -34,7 +34,7 @@ DEC_KnowledgeBlackBoard_ABC::~DEC_KnowledgeBlackBoard_ABC()
 // Name: DEC_KnowledgeBlackBoard_ABC::Update
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard_ABC::Update()
+void DEC_KnowledgeBlackBoard_ABC::Update( int currentTimeStep )
 {
     IT_KnowledgeSourceList itKS;
 
@@ -42,7 +42,7 @@ void DEC_KnowledgeBlackBoard_ABC::Update()
         (**itKS).Prepare();
     
     for( itKS = talkingKnowledgeSources_.begin(); itKS != talkingKnowledgeSources_.end(); ++itKS )
-        (**itKS).Talk();
+        (**itKS).Talk( currentTimeStep );
 
     SendChangedState();
 }

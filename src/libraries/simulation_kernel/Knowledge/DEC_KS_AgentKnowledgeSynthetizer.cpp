@@ -65,7 +65,7 @@ DEC_KS_AgentKnowledgeSynthetizer::~DEC_KS_AgentKnowledgeSynthetizer()
 // -----------------------------------------------------------------------------
 void DEC_KS_AgentKnowledgeSynthetizer::Prepare()
 {
-    pBlackBoard_->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( std::mem_fun_ref( & DEC_Knowledge_Agent::Prepare ) );
+    pBlackBoard_->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( boost::bind( & DEC_Knowledge_Agent::Prepare, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -88,10 +88,10 @@ DEC_Knowledge_Agent& DEC_KS_AgentKnowledgeSynthetizer::GetKnowledgeToUpdate( MIL
 // Created: NLD 2004-03-16
 // -----------------------------------------------------------------------------
 inline
-void DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromAgentPerception( const DEC_Knowledge_AgentPerception& perception )
+void DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromAgentPerception( const DEC_Knowledge_AgentPerception& perception, int currentTimeStep )
 {
     if( perception.IsAvailable() )
-        GetKnowledgeToUpdate( perception.GetAgentPerceived() ).Update( perception );
+        GetKnowledgeToUpdate( perception.GetAgentPerceived() ).Update( perception, currentTimeStep );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,10 +99,10 @@ void DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromAgentPerception( cons
 // Created: SLG 2009-11-26
 // -----------------------------------------------------------------------------
 inline
-void DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromKnowledgeAgent( const DEC_Knowledge_Agent& agentKnowledge )
+void DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromKnowledgeAgent( const DEC_Knowledge_Agent& agentKnowledge, int currentTimeStep )
 {
     if( agentKnowledge.IsValid() )
-        GetKnowledgeToUpdate( agentKnowledge.GetAgentKnown() ).Update( agentKnowledge );
+        GetKnowledgeToUpdate( agentKnowledge.GetAgentKnown() ).Update( agentKnowledge, currentTimeStep );
 }
 
 // -----------------------------------------------------------------------------
@@ -110,68 +110,72 @@ void DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromKnowledgeAgent( const
 // Created: SLG 2009-11-26
 // -----------------------------------------------------------------------------
 inline
-void DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromParentKnowledgeGroup( const DEC_Knowledge_Agent& agentKnowledge )
+void DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromParentKnowledgeGroup( const DEC_Knowledge_Agent& agentKnowledge, int currentTimeStep )
 {
     if( agentKnowledge.IsValid() )
-        GetKnowledgeToUpdate( agentKnowledge.GetAgentKnown() ).Update( agentKnowledge );
+        GetKnowledgeToUpdate( agentKnowledge.GetAgentKnown() ).Update( agentKnowledge, currentTimeStep );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_AgentKnowledgeSynthetizer::Talk
 // Created: NLD 2004-03-12
 // -----------------------------------------------------------------------------
-void DEC_KS_AgentKnowledgeSynthetizer::Talk()
+void DEC_KS_AgentKnowledgeSynthetizer::Talk( int currentTimeStep )
 {
     assert( pBlackBoard_ );
 
-    class_mem_fun_void_const_t< DEC_KS_AgentKnowledgeSynthetizer, DEC_Knowledge_AgentPerception> method( & DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromAgentPerception, *this );
-
-    // Synthèse de la perception des subordonnés
-    // Ajout automatique de la connaissance de chaque subordonné    
-    const MIL_KnowledgeGroup::T_AutomateVector& automates = pBlackBoard_->GetKnowledgeGroup().GetAutomates();
-    for( MIL_KnowledgeGroup::CIT_AutomateVector itAutomate = automates.begin(); itAutomate != automates.end(); ++itAutomate )
     {
-        const MIL_Automate::T_PionVector& pions = (**itAutomate).GetPions();
-        for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
+        boost::function< void ( const DEC_Knowledge_AgentPerception& ) > functor = boost::bind( & DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromAgentPerception, this, _1, boost::ref(currentTimeStep) );
+
+        // Synthèse de la perception des subordonnés
+        // Ajout automatique de la connaissance de chaque subordonné    
+        const MIL_KnowledgeGroup::T_AutomateVector& automates = pBlackBoard_->GetKnowledgeGroup().GetAutomates();
+        for( MIL_KnowledgeGroup::CIT_AutomateVector itAutomate = automates.begin(); itAutomate != automates.end(); ++itAutomate )
         {
-            MIL_AgentPion& pion = **itPion;
-            //if ( pion.GetRole< PHY_RolePion_Communications >().CanCommunicate() )
-                pion.GetKnowledge().GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( method );
+            const MIL_Automate::T_PionVector& pions = (**itAutomate).GetPions();
+            for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
+            {
+                MIL_AgentPion& pion = **itPion;
+                //if ( pion.GetRole< PHY_RolePion_Communications >().CanCommunicate() )
+                pion.GetKnowledge().GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( functor );
+            }
         }
     }
 
     // mis à jour des groupes de connaissances parents
     const MIL_KnowledgeGroup& knowledgeGroup = pBlackBoard_->GetKnowledgeGroup();
-    class_mem_fun_void_const_t< DEC_KS_AgentKnowledgeSynthetizer, DEC_Knowledge_Agent> method3( & DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromKnowledgeAgent, *this );
+   boost::function< void ( const DEC_Knowledge_Agent& ) > functor = boost::bind( &DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) );
+    //class_mem_fun_void_const_t< DEC_KS_AgentKnowledgeSynthetizer, DEC_Knowledge_Agent> method3( & DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromKnowledgeAgent, *this );
     //tools::Iterator< const MIL_KnowledgeGroup& > it = knowledgeGroup.CreateIterator();
     for( MIL_KnowledgeGroup::CIT_KnowledgeGroupVector itKG( knowledgeGroup.GetKnowledgeGroups().begin() ); itKG != knowledgeGroup.GetKnowledgeGroups().end(); ++itKG )
     {
-        //const MIL_KnowledgeGroup& innerKg = *itKG;
         const MIL_KnowledgeGroup& innerKg = **itKG;
 //    while( it.HasMoreElements() )
 //    {
 //        const MIL_KnowledgeGroup& innerKg = it.NextElement();
         if ( innerKg.IsEnabled() && knowledgeGroup.IsEnabled() )
-            innerKg.GetKnowledge().GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( method3 );
+            innerKg.GetKnowledge().GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( functor );
     }
-    //mis à jour des groupes de connaissances fils avec un délai
-    class_mem_fun_void_const_t< DEC_KS_AgentKnowledgeSynthetizer, DEC_Knowledge_Agent> method4( & DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromParentKnowledgeGroup, *this );
-    const uint nCurrentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
-    
-    if ( pBlackBoard_->GetKnowledgeGroup().GetTimeToDiffuseToKnowledgeGroup() < nCurrentTimeStep )
+
     {
-        if ( knowledgeGroup.GetParent() && knowledgeGroup.GetParent()->IsEnabled() && knowledgeGroup.IsEnabled() )
-            knowledgeGroup.GetParent()->GetKnowledge().GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( method4 );
+        //mis à jour des groupes de connaissances fils avec un délai
+        boost::function< void ( const DEC_Knowledge_Agent& ) > functor = boost::bind( &DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) );
+        MIL_KnowledgeGroup* pParent = knowledgeGroup.GetParent();
+      
+        if ( pBlackBoard_->GetKnowledgeGroup().GetTimeToDiffuseToKnowledgeGroup() < currentTimeStep )
+        {
+            if ( pParent && pParent->IsEnabled() && knowledgeGroup.IsEnabled() )
+                pParent->GetKnowledge().GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( functor );
+            pBlackBoard_->GetKnowledgeGroup().RefreshTimeToDiffuseToKnowledgeGroup();
+        }
 
-        pBlackBoard_->GetKnowledgeGroup().RefreshTimeToDiffuseToKnowledgeGroup();
-    }
     // Extrapolation
-    pBlackBoard_->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( std::mem_fun_ref( & DEC_Knowledge_Agent::Extrapolate ) );
-
+    pBlackBoard_->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( boost::bind( & DEC_Knowledge_Agent::Extrapolate, _1 ) );
     // Relevance
-    pBlackBoard_->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( std::mem_fun_ref( & DEC_Knowledge_Agent::UpdateRelevance ) );
+    pBlackBoard_->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( boost::bind( &DEC_Knowledge_Agent::UpdateRelevance, _1, 0 ) );
+    }
+  
 }
-
 
 // =============================================================================
 // CLEAN

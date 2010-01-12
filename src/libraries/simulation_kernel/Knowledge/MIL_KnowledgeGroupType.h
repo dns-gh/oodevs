@@ -18,7 +18,7 @@ namespace xml
 }
 
 class MIL_KnowledgeGroup;
-class MIL_Army;
+class MIL_Army_ABC;
 
 // =============================================================================
 // @class  MIL_KnowledgeGroupType
@@ -28,11 +28,11 @@ class MIL_KnowledgeGroupType : private boost::noncopyable
 {
 
 public:
-    MIL_KnowledgeGroupType( const std::string& strName, xml::xistream& xis );
     ~MIL_KnowledgeGroupType();
 
     //! @name Manager
     //@{
+    static void Initialize( xml::xistream& xis, double timeFactor );
     static void Initialize( xml::xistream& xis );
     static void Terminate ();
 
@@ -42,21 +42,24 @@ public:
 
     //! @name Instanciation
     //@{
-    MIL_KnowledgeGroup& InstanciateKnowledgeGroup( uint nID, MIL_Army& army ) const;
+    MIL_KnowledgeGroup& InstanciateKnowledgeGroup( uint nID, MIL_Army_ABC& army ) const;
     //@}
 
     //! @name Accessors
     //@{
-          MT_Float     GetKnowledgeAgentMaxLifeTime                   () const;
-          MT_Float     GetKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit() const;
-          MT_Float     GetKnowledgeAgentExtrapolationTime             () const;
-          MT_Float     GetKnowledgePopulationMaxLifeTime              () const;
-          MT_Float     GetKnowledgeCommunicationDelay                 () const;
+          double       GetKnowledgeAgentMaxLifeTime                   () const;
+          double       GetKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit() const;
+          double       GetKnowledgeAgentExtrapolationTime             () const;
+          double       GetKnowledgePopulationMaxLifeTime              () const;
+          double       GetKnowledgeCommunicationDelay                 () const;
     const std::string& GetName                                        () const;
           uint         GetID                                          () const;
     //@}
 
 private:
+   
+    MIL_KnowledgeGroupType( const std::string& strName, xml::xistream& xis, double   timeFactor );
+
     //! @name Types
     //@{
     typedef std::map< std::string, const MIL_KnowledgeGroupType*, sCaseInsensitiveLess > T_KnowledgeGroupTypeMap;
@@ -66,18 +69,18 @@ private:
     //! @name Helper
     //@{
     struct LoadingWrapper;
-    static void ReadKnowledgeGroup( xml::xistream& xis );
+    static void ReadKnowledgeGroup( xml::xistream& xis, double timeFactor );
     //@}
 
 private:
     const std::string strName_;
     const uint        nID_;
-          MT_Float    rKnowledgeAgentMaxLifeTime_;
-          MT_Float    rKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit_;
-          MT_Float    rKnowledgeAgentExtrapolationTime_;
+          double      rKnowledgeAgentMaxLifeTime_;
+          double      rKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit_;
+          double      rKnowledgeAgentExtrapolationTime_;
 
-          MT_Float    rKnowledgePopulationMaxLifeTime_;
-          MT_Float    rCommunicationDelay_;
+          double      rKnowledgePopulationMaxLifeTime_;
+          double      rCommunicationDelay_;
 
 private:
     static T_KnowledgeGroupTypeMap knowledgeGroupTypes_;

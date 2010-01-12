@@ -80,7 +80,7 @@
 #include "simulation_kernel/Knowledge/KnowledgeGroupFactory.h"
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_ProfilerMgr.h"
-
+#include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.h>
 
 
@@ -89,7 +89,7 @@ BOOST_CLASS_EXPORT_GUID( MIL_EntityManager, "MIL_EntityManager" )
 
 
 template< typename Archive >
-void save_construct_data( Archive& archive, const MIL_EntityManager* role, const unsigned int /*version*/ )
+void save_construct_data( Archive& /*archive*/, const MIL_EntityManager* /*role*/, const unsigned int /*version*/ )
 {
     //@TODO MGD work on serialization to avoid singleton and add test for all entities
 }
@@ -112,7 +112,6 @@ void MIL_EntityManager::Initialize( MIL_Config& config, const MIL_Time_ABC& time
     PHY_ComposanteState          ::Initialize();
     PHY_HumanRank                ::Initialize();
     PHY_HumanWound               ::Initialize();
-    MIL_Army                     ::Initialize();
     PHY_ConsumptionType          ::Initialize();
     PHY_Posture                  ::Initialize();
     PHY_IndirectFireDotationClass::Initialize();
@@ -423,7 +422,7 @@ void MIL_EntityManager::ReadDiplomacy( xml::xistream& xis )
     unsigned int id;
     xis >> xml::attribute( "id", id );
 
-    MIL_Army* pArmy = armyFactory_->Find( id );
+    MIL_Army_ABC* pArmy = armyFactory_->Find( id );
     if( !pArmy )
         xis.error( "Unknown side" );
     pArmy->InitializeDiplomacy( xis );
@@ -586,10 +585,11 @@ void MIL_EntityManager::UpdateKnowledges()
 {
     profiler_.Start();
 
-    armyFactory_->Apply( boost::bind( &MIL_Army::UpdateKnowledges, _1 ) );
+    int currentTimeStep =  MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    armyFactory_->Apply( boost::bind( &MIL_Army_ABC::UpdateKnowledges,  _1, boost::ref(currentTimeStep) ) );
     populationFactory_->Apply( boost::bind( &MIL_Population::UpdateKnowledges, _1 ) );
 
-    armyFactory_->Apply( boost::bind( &MIL_Army::CleanKnowledges, _1 ) );
+    armyFactory_->Apply( boost::bind( &MIL_Army_ABC::CleanKnowledges, _1 ) );
     populationFactory_->Apply( boost::bind( &MIL_Population::CleanKnowledges, _1 ) );
 
     rKnowledgesTime_ = profiler_.Stop();
@@ -778,9 +778,9 @@ void MIL_EntityManager::Clean()
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::SendStateToNewClient() const
 {
-    armyFactory_->Apply( boost::bind( &MIL_Army::SendCreation, _1 ) );
-    armyFactory_->Apply( boost::bind( &MIL_Army::SendFullState, _1 ) );
-    armyFactory_->Apply( boost::bind( &MIL_Army::SendKnowledge, _1 ) );
+    armyFactory_->Apply( boost::bind( &MIL_Army_ABC::SendCreation, _1 ) );
+    armyFactory_->Apply( boost::bind( &MIL_Army_ABC::SendFullState, _1 ) );
+    armyFactory_->Apply( boost::bind( &MIL_Army_ABC::SendKnowledge, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -855,7 +855,7 @@ void MIL_EntityManager::OnReceiveMsgUnitMagicAction( const ASN1T_MsgUnitMagicAct
         ack().error_code = e.GetErrorID();
     }
     ack.Send( nCtx );
-}
+}   
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnReceiveMsgPopulationOrder
@@ -1002,7 +1002,7 @@ void MIL_EntityManager::OnReceiveMsgChangeDiplomacy( const ASN1T_MsgChangeDiplom
 
     try
     {
-        MIL_Army* pArmy1 = armyFactory_->Find( asnMsg.oid_camp1 );
+        MIL_Army_ABC* pArmy1 = armyFactory_->Find( asnMsg.oid_camp1 );
         if( !pArmy1 )
             throw NET_AsnException< ASN1T_EnumChangeDiplomacyErrorCode >( EnumChangeDiplomacyErrorCode::error_invalid_camp );
         pArmy1->OnReceiveMsgChangeDiplomacy( asnMsg );
@@ -1207,7 +1207,7 @@ void MIL_EntityManager::OnReceiveMsgKnowledgeGroupEnable( const ASN1T_MsgKnowled
         //throw NET_AsnException< ASN1T_MsgLogSupplyPushFlowAck >( MsgLogSupplyPushFlowAck::error_invalid_receveur );
         pReceiver->OnReceiveMsgKnowledgeGroupEnable( asnMsg );
     }
-    catch( NET_AsnException< ASN1T_MsgLogSupplyPushFlowAck >& e )
+    catch( NET_AsnException< ASN1T_MsgLogSupplyPushFlowAck >& /*e*/ )
     {
         //    ack() = e.GetErrorID();
     }
@@ -1398,11 +1398,11 @@ void MIL_EntityManager::WriteODB( xml::xostream& xos ) const
 {
     xos << xml::start( "orbat" )
             << xml::start( "sides" );
-                armyFactory_->Apply( boost::bind( &MIL_Army::WriteODB, _1, boost::ref( xos ) ) );
+                armyFactory_->Apply( boost::bind( &MIL_Army_ABC::WriteODB, _1, boost::ref( xos ) ) );
     xos     << xml::end();
 
     xos     << xml::start( "diplomacies" );
-                armyFactory_->Apply( boost::bind( &MIL_Army::WriteDiplomacyODB, _1, boost::ref( xos ) ) );
+                armyFactory_->Apply( boost::bind( &MIL_Army_ABC::WriteDiplomacyODB, _1, boost::ref( xos ) ) );
     xos     << xml::end();
 
     xos << xml::end();
@@ -1441,7 +1441,7 @@ MIL_AgentPion* MIL_EntityManager::FindAgentPion( unsigned int nID ) const
 // Name: MIL_EntityManager::GetArmies
 // Created: NLD 2004-09-01 //@TODO MGD just use on time in object to destroy knowledge, find a way to remove this function
 // -----------------------------------------------------------------------------
-const tools::Resolver< MIL_Army >& MIL_EntityManager::GetArmies() const
+const tools::Resolver< MIL_Army_ABC >& MIL_EntityManager::GetArmies() const
 {
     return *armyFactory_;
 }

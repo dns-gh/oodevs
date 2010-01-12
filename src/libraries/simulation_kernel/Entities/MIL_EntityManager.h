@@ -109,7 +109,7 @@ public:
                   MIL_Object_ABC*     FindObject    ( uint nID ) const;
     virtual const MIL_ObjectType_ABC& FindObjectType( const std::string& type ) const;
         
-    const tools::Resolver< MIL_Army >& MIL_EntityManager::GetArmies() const;
+    const tools::Resolver< MIL_Army_ABC >& MIL_EntityManager::GetArmies() const;
     
                    MIL_EffectManager& GetEffectManager() const;
     //@}

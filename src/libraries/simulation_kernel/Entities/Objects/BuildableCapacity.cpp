@@ -12,7 +12,7 @@
 #include "Object.h"
 #include "ConstructionAttribute.h"
 #include "MIL_AgentServer.h"
-#include "Entities/MIL_Army.h"
+#include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities\Agents\Units\Dotations\PHY_DotationType.h"
 #include "Entities\Agents\Units\Dotations\PHY_DotationCategory.h"
@@ -225,8 +225,8 @@ void BuildableCapacity::Destroy( Object& object )
     object.MarkForDestruction();
 
     // All the knowledges associated to this object MUST be destroyed (for all the teams ..)
-    const tools::Resolver< MIL_Army >& armies = MIL_AgentServer::GetWorkspace().GetEntityManager().GetArmies();
-    for( tools::Iterator< const MIL_Army& > it = armies.CreateIterator(); it.HasMoreElements(); )
+    const tools::Resolver< MIL_Army_ABC >& armies = MIL_AgentServer::GetWorkspace().GetEntityManager().GetArmies();
+    for( tools::Iterator< const MIL_Army_ABC& > it = armies.CreateIterator(); it.HasMoreElements(); )
     {
         it.NextElement().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( object );
     }

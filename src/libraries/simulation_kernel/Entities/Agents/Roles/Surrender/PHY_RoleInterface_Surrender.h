@@ -16,7 +16,7 @@
 
 class MIL_AgentPion;
 class MIL_Object_ABC;
-class MIL_Army;
+class MIL_Army_ABC;
 
 namespace surrender
 {
@@ -38,10 +38,10 @@ public:
     
     //! @name Accessors
     //@{
-    virtual const MIL_Army* GetArmySurrenderedTo() const = 0;
-    virtual       bool      IsSurrendered       () const = 0;
-    virtual       bool      IsPrisoner          () const = 0;
-    virtual       bool      IsImprisoned        ( const MIL_Object_ABC& camp ) = 0;
+    virtual const MIL_Army_ABC* GetArmySurrenderedTo() const = 0;
+    virtual       bool          IsSurrendered       () const = 0;
+    virtual       bool          IsPrisoner          () const = 0;
+    virtual       bool          IsImprisoned        ( const MIL_Object_ABC& camp ) = 0;
     //@}
 
     //! @name Operations

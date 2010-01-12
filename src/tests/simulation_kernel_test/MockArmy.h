@@ -16,6 +16,12 @@ class DEC_Knowledge_Object;
 class DEC_KnowledgeBlackBoard_Army;
 class MIL_KnowledgeGroup;
 
+namespace xml
+{
+    class xostream;
+    class xistream;
+}
+
 // =============================================================================
 /** @class  MockArmy
     @brief  MockArmy
@@ -40,8 +46,21 @@ public:
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( IsAFriend )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( IsAnEnemy )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( IsNeutral )
-    {
-    }
+        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( RegisterKnowledgeGroup )
+        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( UnregisterKnowledgeGroup )
+        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( RegisterFormation )
+        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( UnregisterFormation )
+        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( InitializeDiplomacy )
+        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( OnReceiveMsgChangeDiplomacy )
+        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( UpdateKnowledges )
+        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( CleanKnowledges )
+        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( WriteDiplomacyODB )
+        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( WriteODB )
+        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( SendCreation )
+        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( SendFullState )
+        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( SendKnowledge )
+       {
+        }
     virtual ~MockArmy() {}
     //@}
         
@@ -62,7 +81,7 @@ public:
     }
 
     virtual uint GetID() const
-    {
+    {   
         return GetID_mocker.forward();
     }
 
@@ -75,6 +94,19 @@ public:
     MOCKPP_CONST_CHAINABLE_EXT1      ( MockArmy, E_Tristate, IsAFriend, const MIL_Army_ABC&, E_Tristate, , MIL_Army_ABC );
     MOCKPP_CONST_CHAINABLE_EXT1      ( MockArmy, E_Tristate, IsAnEnemy, const MIL_Army_ABC&, E_Tristate, , MIL_Army_ABC );
     MOCKPP_CONST_CHAINABLE_EXT1      ( MockArmy, E_Tristate, IsNeutral, const MIL_Army_ABC&, E_Tristate, , MIL_Army_ABC );
+    MOCKPP_VOID_CHAINABLE_EXT1       ( MockArmy, RegisterKnowledgeGroup, MIL_KnowledgeGroup&, , MIL_KnowledgeGroup );   
+    MOCKPP_VOID_CHAINABLE_EXT1       ( MockArmy, UnregisterKnowledgeGroup, MIL_KnowledgeGroup&, , MIL_KnowledgeGroup );   
+    MOCKPP_VOID_CHAINABLE_EXT1       ( MockArmy, RegisterFormation, MIL_Formation&, , MIL_Formation );   
+    MOCKPP_VOID_CHAINABLE_EXT1       ( MockArmy, UnregisterFormation, MIL_Formation&, , MIL_Formation);   
+    MOCKPP_VOID_CHAINABLE_EXT1       ( MockArmy, InitializeDiplomacy, xml::xistream&,  ,  xml::xistream);   
+    MOCKPP_VOID_CHAINABLE_EXT1       ( MockArmy, OnReceiveMsgChangeDiplomacy, const ASN1T_MsgChangeDiplomacy& , , const ASN1T_MsgChangeDiplomacy);   
+    MOCKPP_VOID_CONST_CHAINABLE_EXT1 ( MockArmy, WriteODB, xml::xostream&, , xml::xostream );  
+    MOCKPP_VOID_CONST_CHAINABLE_EXT1 ( MockArmy, WriteDiplomacyODB, xml::xostream& , , xml::xostream);   
+    MOCKPP_VOID_CHAINABLE_EXT1       ( MockArmy, UpdateKnowledges, int, , int);  
+    MOCKPP_VOID_CHAINABLE0           ( MockArmy, CleanKnowledges );   
+    MOCKPP_VOID_CONST_CHAINABLE0     ( MockArmy, SendCreation );   
+    MOCKPP_VOID_CONST_CHAINABLE0     ( MockArmy, SendFullState );   
+    MOCKPP_VOID_CONST_CHAINABLE0     ( MockArmy, SendKnowledge );   
 };
 
 #endif // __MockArmy_h_
