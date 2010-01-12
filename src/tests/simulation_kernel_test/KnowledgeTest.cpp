@@ -20,7 +20,6 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeAgent.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
-//#include "simulation_kernel/MIL_AgentServer.h"
 
 #include <xeumeuleu/xml.h>
 
@@ -68,12 +67,12 @@ BOOST_AUTO_TEST_CASE( TestKnowledgeGroup1 )
     MOCKPP_CHAINER_FOR( MockArmy, RegisterKnowledgeGroup ) ( &army ).expects( mockpp::once() );
     MIL_KnowledgeGroup groupArmy( kgType, 1, army );
 
-    xml::xistringstream xis2( "<toto id='2' type='GTIA'/>" );
-    xis2 >> xml::start( "toto" );
+    xml::xistringstream xis2( "<root id='2' type='GTIA'/>" );
+    xis2 >> xml::start( "root" );
     MIL_KnowledgeGroup group1( xis2, army, &groupArmy, mockKnowledgeGroupFactory );
     MOCKPP_CHAINER_FOR( MockArmy, RegisterKnowledgeGroup ) ( &army ).expects( mockpp::atLeastOnce() );
-    xml::xistringstream xis3( "<toto id='3' type='GTIA'/>" );
-    xis3 >> xml::start( "toto" );
+    xml::xistringstream xis3( "<root id='3' type='GTIA'/>" );
+    xis3 >> xml::start( "root" );
     MIL_KnowledgeGroup group2( xis3, army, &groupArmy, mockKnowledgeGroupFactory );
 
     MockAgent mockAgent;
@@ -120,5 +119,4 @@ BOOST_AUTO_TEST_CASE( TestKnowledgeGroup1 )
     BOOST_CHECK_EQUAL( true, test2.HasKnowledgeAgent( mockAgent ) );
 
     MOCKPP_CHAINER_FOR( MockArmy, UnregisterKnowledgeGroup ) ( &army ).expects( mockpp::atLeastOnce() );
-
 }
