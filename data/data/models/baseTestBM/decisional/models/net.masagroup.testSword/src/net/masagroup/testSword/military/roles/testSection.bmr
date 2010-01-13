@@ -9,7 +9,7 @@ role "testSection" {
   };
   ["skills"] = {};
   ["resources"] = {};
-  ["valid"] = true;
+  ["valid"] = false;
 }
 --
 -- END
