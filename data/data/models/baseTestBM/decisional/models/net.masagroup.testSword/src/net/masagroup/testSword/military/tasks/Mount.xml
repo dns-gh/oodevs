@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.testSword.military.tasks.Load">
-	<parameters>
+<task name="net.masagroup.testSword.military.tasks.Mount" xmlns="http://www.masagroup.net/directia/schemas/bm">
+  <parameters>
 		<parameter name="objectives">
-      <description>Les éléments à charger/embarquer</description>
+      <description>Les éléments dans lesquels il est possible d'embarquer</description>
 			<type>
 				<list>
-          <class name="net.masagroup.military.generic.knowledge.Loadable"/>
+          <class name="net.masagroup.military.generic.knowledge.Mountable"/>
         </list>
 			</type>
 		</parameter>
 	</parameters>
   <goal>
-    <description>Embarquer/charger des élements</description>
+    <description>Embarquer dans un élément.</description>
   </goal>
 	<stages>
 		<stage label="Embarquement">
-      <description>Embarquer/charger des éments</description>
+      <description>Embarquer dans un élément.</description>
 			<goal>
-        <description>Embarquer/charger des élements</description>
+        <description>Embarquer/charger des éléments</description>
 			</goal>
 			<skills>
-        <skill name="net.masagroup.military.generic.skills.primitives.Load" priority="1.0" main="true">
+        <skill name="net.masagroup.military.generic.skills.primitives.Mount" priority="1.0" main="true">
 					<parameter name="entities">
 						<value>
 							<parameter>objectives</parameter>
@@ -28,7 +28,7 @@
 					</parameter>
 					<parameter name="positions">
 						<value>
-							<call method="net.masagroup.military.generic.queries.getDefaultLoadPositions">
+							<call method="net.masagroup.military.generic.queries.getDefaultMountPositions">
 								<parameter name="objectives">
 									<value>
 										<parameter>objectives</parameter>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task name="net.masagroup.testSword.military.tasks.MoveToward" xmlns="http://www.masagroup.net/directia/schemas/bm">
+  <parameters>
+		<parameter name="objectives">
+      <description>Les éléments que l'on veut rejoindre.</description>
+			<type>
+				<list>
+          <class name="net.masagroup.military.generic.knowledge.Reachable"/>
+        </list>
+			</type>
+		</parameter>
+	</parameters>
+  <goal>
+    <description>Se déplacer vers un élément.</description>
+  </goal>
+	<stages>
+		<stage label="Déplacement">
+      <description>Se déplacer vers un élément.</description>
+			<goal>
+        <description>Se déplacer vers un élément.</description>
+			</goal>
+			<skills>
+        <skill name="net.masagroup.military.generic.skills.primitives.MoveToward" priority="1.0" main="true">
+					<parameter name="entities">
+						<value>
+							<parameter>objectives</parameter>
+						</value>
+					</parameter>
+					<parameter name="positions">
+						<value>
+							<call method="net.masagroup.military.generic.queries.getDefaultMovementPositions">
+								<parameter name="objectives">
+									<value>
+										<parameter>objectives</parameter>
+									</value>
+								</parameter>
+							</call>
+						</value>
+					</parameter>
+        </skill>
+      </skills>
+		</stage>
+	</stages>
+</task>

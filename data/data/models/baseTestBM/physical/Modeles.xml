@@ -5,6 +5,8 @@
       <missions>
         <mission name="Follow"/>
         <mission name="Load"/>
+        <mission name="Mount"/>
+        <mission name="MoveToward"/>
         <mission name="MoveToPoint"/>
         <mission name="MoveToPolygon"/>
         <mission name="MoveToAutomate"/>
