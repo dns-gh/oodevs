@@ -1114,6 +1114,60 @@ void ADN_Composantes_Data::HumanProtectionInfos::WriteArchive( xml::xostream& ou
     output << xml::start( "human-protections" ) << xml::end();
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::ActiveProtectionInfos
+// Created: LDC 2010-01-12
+// -----------------------------------------------------------------------------
+ADN_Composantes_Data::ActiveProtectionInfos::ActiveProtectionInfos()
+{
+    // Nothing
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::GetNodeName
+// Created: LDC 2010-01-12
+// -----------------------------------------------------------------------------
+std::string ADN_Composantes_Data::ActiveProtectionInfos::GetNodeName()
+{
+    return "active-protection";
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::ReadArchive
+// Created: LDC 2010-01-12
+// -----------------------------------------------------------------------------
+void ADN_Composantes_Data::ActiveProtectionInfos::ReadArchive( xml::xistream& input )
+{
+    input >> xml::optional() >> xml::start( "active-protections" ) 
+                                 >> xml::list( "protection", *this, &ADN_Composantes_Data::ActiveProtectionInfos::ReadProtection )
+                             >> xml::end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::ReadProtection
+// Created: LDC 2010-01-12
+// -----------------------------------------------------------------------------
+void ADN_Composantes_Data::ActiveProtectionInfos::ReadProtection( xml::xistream& input )
+{
+    std::string protection;
+    input >> xml::attribute( "name", protection );
+    protections_.push_back( protection );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::WriteArchive
+// Created: LDC 2010-01-12
+// -----------------------------------------------------------------------------
+void ADN_Composantes_Data::ActiveProtectionInfos::WriteArchive( xml::xostream& output )
+{
+    if( protections_.size() )
+    {
+        output << xml::start( "active-protections" );
+        for( std::vector< std::string >::const_iterator it = protections_.begin(); it != protections_.end(); ++it )
+            output << xml::start( "protection" ) << xml::attribute( "name", *it ) << xml::end();
+        output << xml::end();
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: CategoryInfos::CategoryInfos
@@ -1907,6 +1961,8 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
     bCanCarryCargo_ = rWeightTransportCapacity_ != 0.;
 
     consumptions_.ReadArchive( input );
+    
+    activeProtections_.ReadArchive( input );
 
     input >> xml::start( "weapon-systems" )
             >> xml::list( "weapon-system", *this, &ADN_Composantes_Data::ComposanteInfos::ReadWeapon )
@@ -1987,6 +2043,7 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output 
         (*itWeapon)->WriteArchive( output );
     output << xml::end();
 
+    activeProtections_.WriteArchive( output );
     humanProtections_.WriteArchive( output );
 
     output << xml::start( "objects" );

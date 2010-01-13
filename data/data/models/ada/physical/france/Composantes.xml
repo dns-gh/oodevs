@@ -32375,7 +32375,7 @@
       </maintenance-functions>
     </logistic-functions>
   </element>
-  <element codeEMAT6="Equipe Brouillage" codeEMAT8="Equipe Brouillage" codeLFRIL="Equipe Brouillage" codeNNO="Equipe Brouillage" comment="Equipe brouillage pour LTO" id="334" max-slope="0.6" name="Equipe Brouillage" protection="VehiculeNonProtege" size="Petit" weight="0.3">
+  <element codeEMAT6="Equipe Brouillage" codeEMAT8="Equipe Brouillage" codeLFRIL="Equipe Brouillage" codeNNO="Equipe Brouillage" comment="Equipe brouillage pour LTO" id="334" max-slope="0.6" name="Equipe Brouillage" protection="Combattant" size="Petit" weight="0.3">
     <speeds max="50">
       <speed terrain="inconnu" value="30"/>
       <speed terrain="foret" value="15"/>
@@ -32443,6 +32443,9 @@
       <weapon-system launcher="Fusil Assaut FAMAS" munition="Charg 5,56 2 O-1T-4 O"/>
       <weapon-system launcher="LTO Brouilleur" munition="LTO Obus brouillage"/>
     </weapon-systems>
+    <active-protections>
+      <protection name="counter-measure"/>
+    </active-protections>
     <human-protections/>
     <objects/>
     <breakdowns>

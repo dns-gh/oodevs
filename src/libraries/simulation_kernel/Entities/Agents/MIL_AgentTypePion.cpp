@@ -49,6 +49,7 @@
 #include "Entities/Agents/Roles/Surrender/PHY_RolePion_Surrender.h"
 #include "Entities/Agents/Roles/Refugee/PHY_RolePion_Refugee.h"
 #include "Entities/Agents/Roles/Population/PHY_RolePion_Population.h"
+#include "Entities/Agents/Roles/Protection/PHY_RolePion_ActiveProtection.h"
 
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects.h"
@@ -326,12 +327,14 @@ void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, DEC_DataBase& databa
     pion.RegisterRole( *new network::NET_RolePion_Dotations( pion ) );
     pion.RegisterRole( *new PHY_RolePion_Reinforcement( pion ) );
     pion.RegisterRole( *new PHY_RolePion_Posture( pion ) );
-    pion.RegisterRole( *new PHY_RolePion_Location( pion ) );
+    PHY_RolePion_Location* roleLocation = new PHY_RolePion_Location( pion );
+    pion.RegisterRole( *roleLocation );
     pion.RegisterRole( *new dotation::PHY_RolePion_Dotations( pion ) );
     pion.RegisterRole( *new human::PHY_RolePion_Humans( pion ) );
-    pion.RegisterRole( *new PHY_RolePion_Composantes( pion ) );
-    pion.RegisterRole( *new PHY_RolePion_Perceiver( pion ) );
-    pion.GetRole< PHY_RolePion_Perceiver >().Initialization( pion.GetRole< PHY_RoleInterface_Location >().GetPosition(), pion.GetRole< PHY_RoleInterface_Location >().GetDirection() );
+    PHY_RolePion_Composantes* rolePionComposantes = new PHY_RolePion_Composantes( pion );
+    pion.RegisterRole( *rolePionComposantes );
+    pion.RegisterRole( *new PHY_RolePion_ActiveProtection( *rolePionComposantes ) );
+    pion.RegisterRole( *new PHY_RolePion_Perceiver( pion, &roleLocation->GetPosition(), &roleLocation->GetDirection() ) );
     pion.RegisterRole( *new nbc::PHY_RolePion_NBC( pion ) );
     pion.RegisterRole( *new PHY_RolePion_Communications( pion, bIsAutonomous ) );
     pion.RegisterRole( *new PHY_RolePion_HumanFactors( pion ) );

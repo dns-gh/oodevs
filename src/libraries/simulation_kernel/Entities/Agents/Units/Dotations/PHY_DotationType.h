@@ -33,13 +33,13 @@ class PHY_DotationType : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    static PHY_DotationType munition_;
-    static PHY_DotationType carburant_;
-    static PHY_DotationType mine_;
-    static PHY_DotationType explosif_;
-    static PHY_DotationType barbele_;
-    static PHY_DotationType piece_;
-    static PHY_DotationType ration_;
+    static PHY_DotationType* munition_;
+    static PHY_DotationType* carburant_;
+    static PHY_DotationType* mine_;
+    static PHY_DotationType* explosif_;
+    static PHY_DotationType* barbele_;
+    static PHY_DotationType* piece_;
+    static PHY_DotationType* ration_;
     //@}
 
 public:
@@ -58,7 +58,7 @@ public:
     //! @name Accessors
     //@{
     const std::string&              GetName               () const;
-          ASN1T_EnumDotationFamily GetAsnID              () const;
+          ASN1T_EnumDotationFamily  GetAsnID              () const;
           uint                      GetID                 () const;
     const PHY_DotationLogisticType& GetDefaultLogisticType() const;
     //@}

@@ -34,9 +34,9 @@ PHY_WeaponType::T_WeaponTypeMap PHY_WeaponType::weaponTypes_;
 
 struct PHY_WeaponType::LoadingWrapper
 {
-    void ReadWeapon( xml::xistream& xis, MIL_EffectManager& manager, const MIL_Time_ABC& time, double timeFactor )
+    void ReadWeapon( xml::xistream& xis, const MIL_Time_ABC& time, double timeFactor )
     {
-        PHY_WeaponType::ReadWeapon( xis, manager, time, timeFactor );
+        PHY_WeaponType::ReadWeapon( xis, time, timeFactor );
     }
 };
 
@@ -44,7 +44,7 @@ struct PHY_WeaponType::LoadingWrapper
 // Name: PHY_WeaponType::Initialize
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-void PHY_WeaponType::Initialize( MIL_EffectManager& manager, const MIL_Time_ABC& time, xml::xistream& xis, double timeFactor )
+void PHY_WeaponType::Initialize( const MIL_Time_ABC& time, xml::xistream& xis, double timeFactor )
 {
     MT_LOG_INFO_MSG( "Initializing weapon types" );
 
@@ -52,7 +52,7 @@ void PHY_WeaponType::Initialize( MIL_EffectManager& manager, const MIL_Time_ABC&
 
     // Initialisation des composantes
     xis >> xml::start( "weapons" )
-            >> xml::list( "weapon-system", loader, &LoadingWrapper::ReadWeapon, manager, time, timeFactor )
+            >> xml::list( "weapon-system", loader, &LoadingWrapper::ReadWeapon, time, timeFactor )
         >> xml::end();
 }
 
@@ -60,7 +60,7 @@ void PHY_WeaponType::Initialize( MIL_EffectManager& manager, const MIL_Time_ABC&
 // Name: PHY_WeaponType::ReadWeapon
 // Created: ABL 2007-07-20
 // -----------------------------------------------------------------------------
-void PHY_WeaponType::ReadWeapon( xml::xistream& xis, MIL_EffectManager& manager, const MIL_Time_ABC& time, double timeFactor )
+void PHY_WeaponType::ReadWeapon( xml::xistream& xis, const MIL_Time_ABC& time, double timeFactor )
 {
     std::string strLauncher;
     std::string strAmmunition;

@@ -4681,6 +4681,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <source>Sword Adaptation Tool - Saving Errors</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Active Protections</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>

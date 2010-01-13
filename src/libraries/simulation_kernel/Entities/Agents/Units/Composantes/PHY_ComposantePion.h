@@ -39,6 +39,7 @@ class DEC_Knowledge_AgentComposante;
 class MIL_Time_ABC;
 class PHY_RoleInterface_Composantes;
 class MIL_Injury_ABC;
+class MIL_Agent_ABC;
 
 namespace firing
 {
@@ -201,6 +202,14 @@ public:
     MT_Float GetPionTransporterWeightCapacity           () const;
     MT_Float GetPionTransporterWeightLoadedPerTimeStep  () const;
     MT_Float GetPionTransporterWeightUnloadedPerTimeStep() const;
+    //@}
+    
+    //! @name PHY_RoleInterface_ActiveProtection
+    //@{
+    virtual void UseAmmunition( const PHY_DotationCategory& category, MIL_Agent_ABC& pion );
+    virtual double GetPHModifier( const PHY_DotationCategory& category, MIL_Agent_ABC& pion ) const;
+    virtual bool CounterIndirectFire( const PHY_DotationCategory& category, MIL_Agent_ABC& pion ) const;
+    virtual bool DestroyIndirectFire( const PHY_DotationCategory& category, MIL_Agent_ABC& pion ) const;
     //@}
 
     //! @name Operations

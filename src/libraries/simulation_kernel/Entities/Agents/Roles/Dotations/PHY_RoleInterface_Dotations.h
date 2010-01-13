@@ -13,6 +13,8 @@
 #define __PHY_RoleInterface_Dotations_h_
 
 #include "MT_Tools/Role_ABC.h"
+#include <xeumeuleu/xml.h>
+#include <boost/serialization/serialization.hpp>
 
 class PHY_DotationCategory;
 class PHY_DotationType;
@@ -78,6 +80,7 @@ public:
     //! @name Fire dotations
     //@{
     virtual double AddFireReservation( const PHY_DotationCategory& category, double rNbr ) = 0;
+    virtual double GetDotationNumber( const PHY_DotationCategory& category ) const = 0;
     //@}
 
     //! @name Logistic - Supply

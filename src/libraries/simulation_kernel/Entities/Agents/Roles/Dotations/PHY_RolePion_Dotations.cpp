@@ -511,6 +511,15 @@ MT_Float PHY_RolePion_Dotations::AddFireReservation( const PHY_DotationCategory&
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations::GetDotationNumber
+// Created: LDC 2010-01-08
+// -----------------------------------------------------------------------------
+MT_Float PHY_RolePion_Dotations::GetDotationNumber( const PHY_DotationCategory& category ) const
+{
+    return pDotations_->GetValue( category );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Dotations::FillSupplyRequest
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------

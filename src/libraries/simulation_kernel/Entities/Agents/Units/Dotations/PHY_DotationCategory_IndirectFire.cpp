@@ -16,6 +16,7 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
+#include "Entities/Agents/Roles/Protection/PHY_RoleInterface_ActiveProtection.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
@@ -112,19 +113,35 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer,
         for( TER_Agent_ABC::CIT_AgentPtrVector itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **itTarget ).GetAgent();
-
             if( target.GetRole< PHY_RoleInterface_Location >().GetHeight() > 0 )
                 continue;
-
-            PHY_RoleInterface_Composantes& targetRoleComposantes = target.GetRole< PHY_RoleInterface_Composantes >();
-            targetRoleComposantes.Neutralize();
-            if( attritionSurface.IsInside( (**itTarget).GetPosition() ) )
-                targetRoleComposantes.ApplyIndirectFire( dotationCategory_, fireResult );
-
-            if( !bRCSent && firer.GetArmy().IsAFriend( target.GetArmy() ) == eTristate_True )
+            PHY_RoleInterface_ActiveProtection& targetRoleProtection = target.GetRole< PHY_RoleInterface_ActiveProtection >();
+            if( targetRoleProtection.DestroyIndirectFire( dotationCategory_ ) )
             {
-                MIL_Report::PostEvent( firer, MIL_Report::eReport_FratricideIndirectFire );
-                bRCSent = true;
+                targetRoleProtection.UseAmmunition( dotationCategory_ );
+                return;
+            }
+        }
+        for( TER_Agent_ABC::CIT_AgentPtrVector itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
+        {
+            MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **itTarget ).GetAgent();
+            if( target.GetRole< PHY_RoleInterface_Location >().GetHeight() > 0 )
+                continue;            
+            PHY_RoleInterface_ActiveProtection& targetRoleProtection = target.GetRole< PHY_RoleInterface_ActiveProtection >();
+            bool counter = targetRoleProtection.CounterIndirectFire( dotationCategory_ );
+            targetRoleProtection.UseAmmunition( dotationCategory_ );
+            if( !counter )
+            {
+                PHY_RoleInterface_Composantes& targetRoleComposantes = target.GetRole< PHY_RoleInterface_Composantes >();
+                targetRoleComposantes.Neutralize();
+                if( attritionSurface.IsInside( (**itTarget).GetPosition() ) )
+                    targetRoleComposantes.ApplyIndirectFire( dotationCategory_, fireResult );
+
+                if( !bRCSent && firer.GetArmy().IsAFriend( target.GetArmy() ) == eTristate_True )
+                {
+                    MIL_Report::PostEvent( firer, MIL_Report::eReport_FratricideIndirectFire );
+                    bRCSent = true;
+                }
             }
         }
     }

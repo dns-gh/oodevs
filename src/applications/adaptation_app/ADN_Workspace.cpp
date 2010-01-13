@@ -64,6 +64,8 @@
 #include "ADN_DialogLog.h"
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_MainWindow.h"
+#include "ADN_ActiveProtections_Data.h"
+#include "ADN_ActiveProtections_GUI.h"
 
 #include "qtundo.h"
 
@@ -135,6 +137,7 @@ ADN_Workspace::ADN_Workspace()
     elements_[eSupply]         = new ADN_WorkspaceElement< ADN_Supply_Data, ADN_Supply_GUI>( tr( "Supply" ) );
     elements_[ePopulation]     = new ADN_WorkspaceElement< ADN_Population_Data, ADN_Population_GUI >( tr( "Populations" ) );
     elements_[eReports]        = new ADN_WorkspaceElement< ADN_Reports_Data, ADN_Reports_GUI >( tr( "Reports" ) );
+    elements_[eActiveProtections] = new ADN_WorkspaceElement< ADN_ActiveProtections_Data, ADN_ActiveProtections_GUI >( tr( "Active Protections" ) );
 }
 
 //-----------------------------------------------------------------------------

@@ -145,7 +145,7 @@ void MIL_AgentServer::ReadStaticData()
     pMeteoDataManager_ = new PHY_MeteoDataManager( config_ );
     pWorkspaceDIA_     = new DEC_Workspace       ( config_ );
 
-    MIL_EntityManager::Initialize( config_, *this, *pEffectManager_ );
+    MIL_EntityManager::Initialize( config_, *this );
 
     if( !config_.IsDataTestMode() )
         pPathFindManager_ = new DEC_PathFind_Manager( config_ );

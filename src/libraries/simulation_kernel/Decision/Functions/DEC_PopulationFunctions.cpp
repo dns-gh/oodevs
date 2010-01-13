@@ -133,7 +133,7 @@ bool DEC_PopulationFunctions::IsKnowledgeObjectValid( unsigned int nID )
 // -----------------------------------------------------------------------------
 int DEC_PopulationFunctions::DamageObject( int knowledgeId, double damageFactor )
 {
-	MIL_Object_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia(knowledgeId);
+	MIL_Object_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( knowledgeId );
     if( !( pObject && (*pObject)().CanBePerceived() ) )
     {
         return  (int)eQueryInvalid ;

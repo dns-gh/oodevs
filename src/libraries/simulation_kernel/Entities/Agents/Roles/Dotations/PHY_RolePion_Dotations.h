@@ -103,7 +103,8 @@ public:
 
     //! @name Fire dotations
     //@{
-    MT_Float AddFireReservation( const PHY_DotationCategory& category, MT_Float rNbr );
+    virtual double AddFireReservation( const PHY_DotationCategory& category, MT_Float rNbr );
+    virtual double GetDotationNumber( const PHY_DotationCategory& category ) const;
     //@}
 
     //! @name Network

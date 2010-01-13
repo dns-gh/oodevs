@@ -78,17 +78,17 @@ void load_construct_data( Archive& archive, PHY_RolePion_Perceiver* role, const 
 {
 	MIL_AgentPion* pion;
     archive >> pion;
-    ::new( role )PHY_RolePion_Perceiver( *pion );
+    ::new( role )PHY_RolePion_Perceiver( *pion, 0, 0 );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver constructor
 // Created: NLD 2004-08-19
 // -----------------------------------------------------------------------------
-PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_AgentPion& pion )
+PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_AgentPion& pion, const MT_Vector2D* perceiverPosition, const MT_Vector2D* perceiverDirection )
     : pion_                        ( pion )
-    , perceiverPosition_           ( 0 )
-    , perceiverDirection_          ( 0 )
+    , perceiverPosition_           ( perceiverPosition )
+    , perceiverDirection_          ( perceiverDirection )
     , rMaxAgentPerceptionDistance_ ( 0. )
     , rMaxObjectPerceptionDistance_( 0. )
     , bPeriphericalVisionEnabled_  ( false )

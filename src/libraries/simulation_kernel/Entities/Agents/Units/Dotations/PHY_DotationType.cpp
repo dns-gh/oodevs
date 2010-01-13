@@ -17,13 +17,13 @@
 #include "PHY_DotationLogisticType.h"
 #include <xeumeuleu/xml.h>
 
-PHY_DotationType PHY_DotationType::munition_ ( "munition" , eMunition , EnumDotationFamily::munition , PHY_DotationLogisticType::uniteFeuSansTD_ );
-PHY_DotationType PHY_DotationType::carburant_( "carburant", eCarburant, EnumDotationFamily::carburant, PHY_DotationLogisticType::uniteEssence_   );
-PHY_DotationType PHY_DotationType::mine_     ( "mine"     , eMine     , EnumDotationFamily::mine     , PHY_DotationLogisticType::uniteFeuSansTD_ );
-PHY_DotationType PHY_DotationType::explosif_ ( "explosif" , eExplosif , EnumDotationFamily::explosif , PHY_DotationLogisticType::uniteFeuSansTD_ );
-PHY_DotationType PHY_DotationType::barbele_  ( "barbele"  , eBarbele  , EnumDotationFamily::barbele  , PHY_DotationLogisticType::uniteFeuSansTD_ );
-PHY_DotationType PHY_DotationType::piece_    ( "piece"    , ePiece    , EnumDotationFamily::piece    , PHY_DotationLogisticType::pieces_         );
-PHY_DotationType PHY_DotationType::ration_   ( "ration"   , eRation   , EnumDotationFamily::ration   , PHY_DotationLogisticType::uniteVivre_     );
+PHY_DotationType* PHY_DotationType::munition_ = 0;
+PHY_DotationType* PHY_DotationType::carburant_ = 0;
+PHY_DotationType* PHY_DotationType::mine_ = 0;
+PHY_DotationType* PHY_DotationType::explosif_ = 0;
+PHY_DotationType* PHY_DotationType::barbele_ = 0;
+PHY_DotationType* PHY_DotationType::piece_ = 0;
+PHY_DotationType* PHY_DotationType::ration_ = 0;
 
 PHY_DotationType::T_DotationTypeMap       PHY_DotationType::dotationTypes_;
 PHY_DotationType::T_DotationCategoryIDMap PHY_DotationType::dotationCategorieIDs_;
@@ -44,13 +44,21 @@ void PHY_DotationType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing dotation types" );
 
-    dotationTypes_[ munition_ .GetName() ] = &munition_;
-    dotationTypes_[ carburant_.GetName() ] = &carburant_;
-    dotationTypes_[ mine_     .GetName() ] = &mine_;
-    dotationTypes_[ explosif_ .GetName() ] = &explosif_;
-    dotationTypes_[ barbele_  .GetName() ] = &barbele_;
-    dotationTypes_[ piece_    .GetName() ] = &piece_;
-    dotationTypes_[ ration_   .GetName() ] = &ration_;
+    PHY_DotationType::munition_  = new PHY_DotationType( "munition" , eMunition , EnumDotationFamily::munition , PHY_DotationLogisticType::uniteFeuSansTD_ );
+    PHY_DotationType::carburant_ = new PHY_DotationType( "carburant", eCarburant, EnumDotationFamily::carburant, PHY_DotationLogisticType::uniteEssence_   );
+    PHY_DotationType::mine_      = new PHY_DotationType( "mine"     , eMine     , EnumDotationFamily::mine     , PHY_DotationLogisticType::uniteFeuSansTD_ );
+    PHY_DotationType::explosif_  = new PHY_DotationType( "explosif" , eExplosif , EnumDotationFamily::explosif , PHY_DotationLogisticType::uniteFeuSansTD_ );
+    PHY_DotationType::barbele_   = new PHY_DotationType( "barbele"  , eBarbele  , EnumDotationFamily::barbele  , PHY_DotationLogisticType::uniteFeuSansTD_ );
+    PHY_DotationType::piece_     = new PHY_DotationType( "piece"    , ePiece    , EnumDotationFamily::piece    , PHY_DotationLogisticType::pieces_         );
+    PHY_DotationType::ration_    = new PHY_DotationType( "ration"   , eRation   , EnumDotationFamily::ration   , PHY_DotationLogisticType::uniteVivre_     );
+
+    dotationTypes_[ munition_ ->GetName() ] = munition_;
+    dotationTypes_[ carburant_->GetName() ] = carburant_;
+    dotationTypes_[ mine_     ->GetName() ] = mine_;
+    dotationTypes_[ explosif_ ->GetName() ] = explosif_;
+    dotationTypes_[ barbele_  ->GetName() ] = barbele_;
+    dotationTypes_[ piece_    ->GetName() ] = piece_;
+    dotationTypes_[ ration_   ->GetName() ] = ration_;
 
     LoadingWrapper loader;
 
@@ -87,6 +95,7 @@ void PHY_DotationType::Terminate()
     for( CIT_DotationTypeMap itDotationType = dotationTypes_.begin(); itDotationType != dotationTypes_.end(); ++itDotationType )
         delete itDotationType->second;
     dotationTypes_.clear();
+    dotationCategorieIDs_.clear();
 }
 
 //-----------------------------------------------------------------------------

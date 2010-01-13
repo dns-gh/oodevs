@@ -524,14 +524,10 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::CanBeOccupied, boost::cref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceObjet_PeutEtreAnime",
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::CanBeAnimated, boost::cref( GetPion() ), _1 ) ) );
-    brain.RegisterFunction( "DEC_ConnaissanceObjet_PeutEtreContourne", 
-        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::CanBeBypassed, boost::cref( GetPion() ), _1 ) ) );
-    brain.RegisterFunction( "DEC_ConnaissanceObjet_Degrader", 
-        boost::function< int( boost::shared_ptr< DEC_Knowledge_Object >, float ) >( boost::bind( &DEC_KnowledgeObjectFunctions::DamageObject, boost::cref( GetPion() ), _1, _2 ) ) );
-    brain.RegisterFunction( "DEC_ConnaisssanceObjet_ChangeDensitePopulationSortante", 
-        boost::function< void( boost::shared_ptr< DEC_Knowledge_Object >, float ) >( boost::bind( &DEC_KnowledgeObjectFunctions::SetExitingPopulationDensity, boost::cref( GetPion() ), _1, _2 ) ) ); 
-    brain.RegisterFunction( "DEC_ConnaisssanceObjet_ResetDensitePopulationSortante", 
-        boost::function< void( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::ResetExitingPopulationDensity, boost::cref( GetPion() ), _1 ) ) );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_PeutEtreContourne", &DEC_KnowledgeObjectFunctions::CanBeBypassed );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_Degrader", &DEC_KnowledgeObjectFunctions::DamageObject );
+    brain.RegisterFunction( "DEC_ConnaisssanceObjet_ChangeDensitePopulationSortante", &DEC_KnowledgeObjectFunctions::SetExitingPopulationDensity ); 
+    brain.RegisterFunction( "DEC_ConnaisssanceObjet_ResetDensitePopulationSortante", &DEC_KnowledgeObjectFunctions::ResetExitingPopulationDensity );
 
     // Population knowledges accessors
     brain.RegisterFunction( "DEC_KnowledgePopulation_Domination"                   ,
@@ -812,8 +808,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     		boost::function< void ( boost::shared_ptr< DEC_Knowledge_Agent >, boost::shared_ptr< DEC_Knowledge_Object > )> ( boost::bind(&DEC_ActionFunctions::Refugees_UnloadInCamp , boost::ref( GetPion() ), _1, _2  ) ) );
     brain.RegisterFunction( "DEC_Refugies_EstEmbarque"         ,
     		boost::function< bool ( boost::shared_ptr< DEC_Knowledge_Agent > ) > ( boost::bind ( &DEC_ActionFunctions::PrisonnersRefugees_IsLoaded , boost::ref( GetPion() ), _1  ) ) );
-    brain.RegisterFunction( "DEC_Refugies_EstDebarqueDansCamp" ,
-       		boost::function< bool (boost::shared_ptr< DEC_Knowledge_Agent >, boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind(&DEC_ActionFunctions::Refugees_IsUnloadedInCamp , boost::ref( GetPion() ), _1, _2 ) ) );
+    brain.RegisterFunction( "DEC_Refugies_EstDebarqueDansCamp" , &DEC_ActionFunctions::Refugees_IsUnloadedInCamp );
 
     // Emergency functions
     brain.RegisterFunction( "DEC_Start_EmergencyInfluence",

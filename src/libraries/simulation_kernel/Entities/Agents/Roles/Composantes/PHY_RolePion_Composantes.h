@@ -14,8 +14,8 @@
 
 #include "PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/NBC/ToxicEffectHandler_ABC.h"
-#include "TransportNotificationHandler_ABC.h"
 #include "SurrenderNotificationHandler_ABC.h"
+#include "TransportNotificationHandler_ABC.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 
 #include "simulation_kernel/HumansChangedNotificationHandler_ABC.h"
@@ -214,6 +214,14 @@ public:
     //! @name HLA
     //@{
     virtual void Serialize( HLA_UpdateFunctor& functor ) const;
+    //@}
+
+    //! @name PHY_RoleInterface_ActiveProtection
+    //@{
+    virtual void UseAmmunition( const PHY_DotationCategory& );
+    virtual double GetPHModifier( const PHY_DotationCategory& ) const;
+    virtual bool CounterIndirectFire( const PHY_DotationCategory& ) const;
+    virtual bool DestroyIndirectFire( const PHY_DotationCategory& ) const;
     //@}
 
     //! @name Composante reserved

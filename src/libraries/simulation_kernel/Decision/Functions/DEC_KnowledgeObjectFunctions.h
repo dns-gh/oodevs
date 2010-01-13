@@ -40,18 +40,18 @@ public:
     static bool CanBeAnimated                     ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool CanBeOccupied                     ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static void DecontaminateZone                 ( const MIL_AgentPion& callerAgent, const TER_Localisation* location );
-    static int  DamageObject                      ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, float factor );
+    static int  DamageObject                      ( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, float factor );
 
-    static bool CanBeBypassed                     ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    static bool CanBeBypassed                     ( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
 
-    static void SetExitingPopulationDensity       ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, float density );
-    static void ResetExitingPopulationDensity     ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    static void SetExitingPopulationDensity       ( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, float density );
+    static void ResetExitingPopulationDensity     ( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
 
     static void Recon                             ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool IsRecon                           ( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
 
-    static int  EquipLogisticRoute                ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
-    static bool IsStockSupplied                   ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    static int  EquipLogisticRoute                ( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    static bool IsStockSupplied                   ( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     //@}
 };
 

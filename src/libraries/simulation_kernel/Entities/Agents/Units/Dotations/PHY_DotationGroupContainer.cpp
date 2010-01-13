@@ -272,7 +272,7 @@ void PHY_DotationGroupContainer::Resupply()
 // -----------------------------------------------------------------------------
 void PHY_DotationGroupContainer::Resupply( const PHY_AmmoDotationClass& ammoDotationClass, MT_Float rFactor )
 {
-    PHY_DotationGroup* pDotationGroup = GetDotationGroup( PHY_DotationType::munition_ );
+    PHY_DotationGroup* pDotationGroup = GetDotationGroup( *PHY_DotationType::munition_ );
     if( pDotationGroup )
         pDotationGroup->Resupply( ammoDotationClass, rFactor );
 }

@@ -431,6 +431,27 @@ public:
     };
 
     //*****************************************************************************
+    class ActiveProtectionInfos
+        : public ADN_Ref_ABC
+        , public ADN_DataTreeNode_ABC
+    {
+        MT_COPYNOTALLOWED( ActiveProtectionInfos )
+
+    public:
+        ActiveProtectionInfos();
+
+        virtual std::string GetNodeName();
+
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
+
+    private:
+        void ReadProtection( xml::xistream& input );
+
+        std::vector< std::string > protections_;
+    };
+
+    //*****************************************************************************
     class CategoryInfos
         : public ADN_Ref_ABC
         , public ADN_DataTreeNode_ABC
@@ -647,6 +668,7 @@ public:
         ConsumptionsInfos                                                         consumptions_;
         DotationInfos                                                             dotations_;
         HumanProtectionInfos                                                      humanProtections_;
+        ActiveProtectionInfos                                                     activeProtections_;
 
         BreakdownGroupInfos                                                       attritionBreakdowns_;
         BreakdownGroupInfos                                                       randomBreakdowns_;

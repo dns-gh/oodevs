@@ -11,7 +11,6 @@
 #define __MockRoleImplantable_h_
 
 #include "simulation_kernel/Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
-//#include "simulation_kernel/Entities/Agents/Units/Postures/PHY_Posture.h"
 
 // =============================================================================
 /** @class  MockRoleImplantable

@@ -159,7 +159,7 @@ void PHY_BreakdownType::ReadPart( xml::xistream& xis )
     std::string strCategory;
     xis >> xml::attribute( "dotation", strCategory );
 
-    const PHY_DotationCategory* pCategory = PHY_DotationType::piece_.FindDotationCategory( strCategory );
+    const PHY_DotationCategory* pCategory = PHY_DotationType::piece_->FindDotationCategory( strCategory );
     if( !pCategory )
         xis.error( "Unknown part category" );
 

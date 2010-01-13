@@ -46,29 +46,30 @@ public:
 
     //! @name Operations 
     //@{
-    virtual void Update    ( bool /*bIsDead*/ ) {};
-    virtual void Clean     () {};
-    virtual bool HasChanged() const { return false; };
+    virtual void Update    ( bool /*bIsDead*/ ) {}
+    virtual void Clean     () {}
+    virtual bool HasChanged() const { return false; }
+    virtual double GetDotationNumber( const PHY_DotationCategory & ) const { return 0.; }
     //@}
 
     //! @name Dotations management
     //@{
-    virtual MT_Float SupplyDotation     ( const PHY_DotationCategory& /*category*/, MT_Float /*rNbr*/ ) { return 0; };
-    virtual void     ResupplyDotations  () {};
-    virtual void     ResupplyDotations  ( const PHY_AmmoDotationClass& /*ammoDotationClass*/, MT_Float /*rFactor*/ ) {};
-    virtual void     ResupplyDotations  ( const PHY_DotationType&      /*type*/             , MT_Float /*rFactor*/ ) {};
+    virtual MT_Float SupplyDotation     ( const PHY_DotationCategory& /*category*/, MT_Float /*rNbr*/ ) { return 0; }
+    virtual void     ResupplyDotations  () {}
+    virtual void     ResupplyDotations  ( const PHY_AmmoDotationClass& /*ammoDotationClass*/, MT_Float /*rFactor*/ ) {}
+    virtual void     ResupplyDotations  ( const PHY_DotationType&      /*type*/             , MT_Float /*rFactor*/ ) {}
     //@}
 
     //! @name Consumption management
     //@{
-    virtual bool                 SetConsumptionMode      ( const PHY_ConsumptionType& /*mode*/ ) { return false; };
-    virtual void                 RollbackConsumptionMode () {};
-    virtual MT_Float             GetMaxTimeForConsumption( const PHY_ConsumptionType& /*mode*/ ) const { return 0; };
+    virtual bool                 SetConsumptionMode      ( const PHY_ConsumptionType& /*mode*/ ) { return false; }
+    virtual void                 RollbackConsumptionMode () {}
+    virtual MT_Float             GetMaxTimeForConsumption( const PHY_ConsumptionType& /*mode*/ ) const { return 0; }
     //@}
 
     //! @name Fire dotations
     //@{
-    virtual MT_Float AddFireReservation( const PHY_DotationCategory& /*category*/, MT_Float /*rNbr*/ ) { return 0; };
+    virtual MT_Float AddFireReservation( const PHY_DotationCategory& /*category*/, MT_Float /*rNbr*/ ) { return 0; }
     //@}
 
     //! @name Logistic - Supply

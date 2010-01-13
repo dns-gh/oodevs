@@ -40,6 +40,7 @@ public:
         ADN_Type_String szDecisional_;
         ADN_Type_String szSizes_;
         ADN_Type_String szArmors_;
+        ADN_Type_String szActiveProtections_;
         ADN_Type_String szHumanProtections_;
         ADN_Type_String szDotationNatures_;
         ADN_Type_String szObjects_;
@@ -141,6 +142,7 @@ public:
     void Save();
 
     DataInfos&           GetDataInfos();
+    const DataInfos&     GetDataInfos() const;
     FileInfos&           GetFileInfos();
     static WorkDirInfos& GetWorkDirInfos();
 
@@ -211,6 +213,16 @@ const std::string ADN_Project_Data::FileInfos::GetFileNameFull()
 // -----------------------------------------------------------------------------
 inline
 ADN_Project_Data::DataInfos& ADN_Project_Data::GetDataInfos()
+{
+    return dataInfos_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Project_Data::GetDataInfos
+// Created: LDC 2010-01-13
+// -----------------------------------------------------------------------------
+inline
+const ADN_Project_Data::DataInfos& ADN_Project_Data::GetDataInfos() const
 {
     return dataInfos_;
 }

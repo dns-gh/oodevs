@@ -44,6 +44,7 @@ public:
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( AddFireReservationShadow )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( HasChanged )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetMaxTimeForConsumptionShadow )
+        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetDotationNumber )
     {}
     virtual ~MockRoleDotations() {}
     //@}
@@ -125,6 +126,7 @@ public:
     MOCKPP_CHAINABLE2( MockRoleDotations, double, AddFireReservationShadow, const PHY_DotationCategory*, double );
     MOCKPP_CONST_CHAINABLE0( MockRoleDotations, bool, HasChanged );
     MOCKPP_CONST_CHAINABLE1( MockRoleDotations, double, GetMaxTimeForConsumptionShadow, const PHY_ConsumptionType* );
+    MOCKPP_CONST_CHAINABLE1(  MockRoleDotations, double, GetDotationNumber, PHY_DotationCategory );
 };
 
 #endif // __MockRoleDotation_h_

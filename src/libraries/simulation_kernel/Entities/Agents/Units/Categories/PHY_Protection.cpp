@@ -16,7 +16,7 @@
 #include <xeumeuleu/xml.h>
 
 PHY_Protection::T_ProtectionMap PHY_Protection::protections_;
-uint                            PHY_Protection::nNextID_;
+uint                            PHY_Protection::nNextID_ = 0;
 MT_Random                       PHY_Protection::random_;
 
 // -----------------------------------------------------------------------------
@@ -77,6 +77,7 @@ void PHY_Protection::Terminate()
     for( CIT_ProtectionMap itProtection = protections_.begin(); itProtection != protections_.end(); ++itProtection )
         delete itProtection->second;
     protections_.clear();
+    nNextID_ = 0;
 }
 
 // -----------------------------------------------------------------------------

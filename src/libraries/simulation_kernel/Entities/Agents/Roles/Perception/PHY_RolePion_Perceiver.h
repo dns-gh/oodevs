@@ -71,15 +71,14 @@ public:
     //@}
 
 public:
-    explicit PHY_RolePion_Perceiver( MIL_AgentPion& pion );
+             PHY_RolePion_Perceiver( MIL_AgentPion& pion, const MT_Vector2D* perceiverPosition, const MT_Vector2D* perceiverDirection );
     virtual ~PHY_RolePion_Perceiver();
 
     //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const uint );
-    //@}
-
     void Initialization( const MT_Vector2D& perceiverPosition, const MT_Vector2D& perceiverDirection );
+    //@}
 
     //@{
     virtual void NotifyExternalPerception( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& level );

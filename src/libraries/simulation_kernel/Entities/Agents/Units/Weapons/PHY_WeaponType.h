@@ -44,7 +44,7 @@ class PHY_WeaponType : private boost::noncopyable
 public:
     //! @name Manager
     //@{
-    static void Initialize( MIL_EffectManager& manager, const MIL_Time_ABC& time, xml::xistream& xis, double timeFactor );
+    static void Initialize( const MIL_Time_ABC& time, xml::xistream& xis, double timeFactor );
     static void Terminate ();
 
     static const PHY_WeaponType* FindWeaponType( const std::string& strLauncher, const std::string& strAmmunition );
@@ -113,7 +113,7 @@ private:
     //! @name Helpers
     //@{
     struct LoadingWrapper;
-    static void ReadWeapon( xml::xistream& xis, MIL_EffectManager& manager, const MIL_Time_ABC& time, double timeFactor );
+    static void ReadWeapon( xml::xistream& xis, const MIL_Time_ABC& time, double timeFactor );
     void ReadDirect       ( xml::xistream& xis );
     void ReadIndirect     ( xml::xistream& xis, double timeFactor );
     //@}

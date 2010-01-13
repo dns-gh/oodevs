@@ -1,0 +1,167 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
+#include "simulation_kernel_pch.h"
+#include "PHY_ActiveProtection.h"
+
+#include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
+#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
+
+MT_Random PHY_ActiveProtection::randomGenerator_;
+PHY_ActiveProtection::T_ProtectionList PHY_ActiveProtection::protections_;
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActiveProtection constructor
+// Created: LDC 2010-01-07
+// -----------------------------------------------------------------------------
+PHY_ActiveProtection::PHY_ActiveProtection( xml::xistream& xis )
+    : pDotation_ ( 0 )
+    , usage_     ( 0. )
+    , hardKill_  ( false )
+{
+    std::string strDotationName;
+    xis >> xml::attribute( "name", name_ )
+        >> xml::attribute( "coefficient", coefficient_ )
+        >> xml::optional() >> xml::start( "dotation" )
+            >> xml::attribute( "name", strDotationName )
+            >> xml::attribute( "usage", usage_ )
+        >> xml::end()
+        >> xml::optional() >> xml::attribute( "hard-kill", hardKill_ )
+        >> xml::list( "weapon", *this, &PHY_ActiveProtection::ReadWeapon );    
+    if( !strDotationName.empty() )
+        pDotation_ = PHY_DotationType::FindDotationCategory( strDotationName );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActiveProtection destructor
+// Created: LDC 2010-01-07
+// -----------------------------------------------------------------------------
+PHY_ActiveProtection::~PHY_ActiveProtection()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActiveProtection::ReadWeapon
+// Created: LDC 2010-01-07
+// -----------------------------------------------------------------------------
+void PHY_ActiveProtection::ReadWeapon( xml::xistream& xis )
+{
+    std::string strName;
+    double value = 0.;
+    xis >> xml::attribute( "name", strName )
+        >> xml::attribute( "coefficient", value );
+    weapons_[ PHY_DotationType::FindDotationCategory( strName ) ] = value;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActiveProtection::Initialize
+// Created: LDC 2010-01-07
+// -----------------------------------------------------------------------------
+void PHY_ActiveProtection::Initialize( xml::xistream& xis )
+{
+    xis >> xml::start( "protections" )
+            >> xml::list( "protection", &PHY_ActiveProtection::Create )
+        >> xml::end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActiveProtection::Create
+// Created: LDC 2010-01-07
+// -----------------------------------------------------------------------------
+void PHY_ActiveProtection::Create( xml::xistream& xis )
+{
+    boost::shared_ptr< PHY_ActiveProtection > pProtection( new PHY_ActiveProtection( xis ) );
+    protections_[ pProtection->name_ ] = pProtection;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActiveProtection::Terminate
+// Created: LDC 2010-01-07
+// -----------------------------------------------------------------------------
+void PHY_ActiveProtection::Terminate()
+{
+    protections_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActiveProtection::Find
+// Created: LDC 2010-01-07
+// -----------------------------------------------------------------------------
+PHY_ActiveProtection* PHY_ActiveProtection::Find( const std::string& strName )
+{
+    CIT_ProtectionList it = protections_.find( strName );
+    if( it == protections_.end() )
+        return 0;
+    return it->second.get();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActiveProtection::UseAmmunition
+// Created: LDC 2010-01-08
+// -----------------------------------------------------------------------------
+void PHY_ActiveProtection::UseAmmunition( const PHY_DotationCategory& category, MIL_Agent_ABC& pion ) const
+{
+    if( pDotation_ )
+    {
+        if( GetCoefficient( category ) != 1. )
+            pion.GetRole< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( *pDotation_, usage_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActiveProtection::GetPHModifier
+// Created: LDC 2010-01-08
+// -----------------------------------------------------------------------------
+double PHY_ActiveProtection::GetPHModifier( const PHY_DotationCategory& category, MIL_Agent_ABC& pion ) const
+{
+    return HasAmmo( pion ) ? GetCoefficient( category ) : 1.;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActiveProtection::CounterIndirectFire
+// Created: LDC 2010-01-08
+// -----------------------------------------------------------------------------
+bool PHY_ActiveProtection::CounterIndirectFire( const PHY_DotationCategory& category, MIL_Agent_ABC& pion ) const
+{
+    return HasAmmo( pion ) ? ( !hardKill_ && randomGenerator_.rand_oi() > GetCoefficient( category ) ) : false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActiveProtection::DestroyIndirectFire
+// Created: LDC 2010-01-08
+// -----------------------------------------------------------------------------
+bool PHY_ActiveProtection::DestroyIndirectFire( const PHY_DotationCategory& category, MIL_Agent_ABC& pion ) const
+{
+    return HasAmmo( pion ) ? ( hardKill_ && randomGenerator_.rand_oi() > GetCoefficient( category ) ) : false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActiveProtection::GetCoefficient
+// Created: LDC 2010-01-08
+// -----------------------------------------------------------------------------
+double PHY_ActiveProtection::GetCoefficient( const PHY_DotationCategory& category ) const
+{
+    CIT_CoefficientMap it = weapons_.find( &category );
+    if( it == weapons_.end() )
+        return coefficient_;
+    else
+        return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActiveProtection::HasAmmo
+// Created: LDC 2010-01-08
+// -----------------------------------------------------------------------------
+bool PHY_ActiveProtection::HasAmmo( MIL_Agent_ABC& pion ) const
+{
+    return pion.GetRole< dotation::PHY_RoleInterface_Dotations >().GetDotationNumber( *pDotation_ ) >= usage_;
+}

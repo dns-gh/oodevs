@@ -350,7 +350,7 @@ void PHY_DotationGroup::NotifyCaptured()
 {
     assert( pType_ );
 
-    if( *pType_ == PHY_DotationType::ration_ )
+    if( pType_ == PHY_DotationType::ration_ )
         return;
 
     for( CIT_DotationMap it = dotations_.begin(); it != dotations_.end(); ++it )
@@ -365,7 +365,7 @@ void PHY_DotationGroup::NotifyReleased()
 {
     assert( pType_ );
 
-    if( *pType_ == PHY_DotationType::ration_ )
+    if( pType_ == PHY_DotationType::ration_ )
         return;
 
     for( CIT_DotationMap it = dotations_.begin(); it != dotations_.end(); ++it )

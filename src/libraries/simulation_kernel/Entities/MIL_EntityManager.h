@@ -84,7 +84,7 @@ public:
              MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ProfilerMgr& profiler, HLA_Federate* hla, DEC_DataBase& database );
     virtual ~MIL_EntityManager();
 
-    static void Initialize( MIL_Config& config, const MIL_Time_ABC& time, MIL_EffectManager& effects );
+    static void Initialize( MIL_Config& config, const MIL_Time_ABC& time );
 
     //! @name Factory
     //@{
@@ -194,7 +194,7 @@ private:
     static void InitializeType       ( xml::xistream& xis, MIL_Config& config, const std::string& strSection );
     static void InitializeMedical    ( xml::xistream& xis, MIL_Config& config );
     static void InitializeComposantes( xml::xistream& xis, MIL_Config& config, const MIL_Time_ABC& time );
-    static void InitializeWeapons    ( xml::xistream& xis, MIL_Config& config, const MIL_Time_ABC& time, MIL_EffectManager& effects );
+    static void InitializeWeapons    ( xml::xistream& xis, MIL_Config& config, const MIL_Time_ABC& time );
     static void InitializeSensors    ( xml::xistream& xis, MIL_Config& config, const MIL_Time_ABC& time );
 
     // ODB

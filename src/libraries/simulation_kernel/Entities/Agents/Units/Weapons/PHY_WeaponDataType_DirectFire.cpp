@@ -17,14 +17,15 @@
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
-#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteType_ABC.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
+#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
+#include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
-#include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
-#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
+#include "Entities/Agents/Roles/Protection/PHY_RoleInterface_ActiveProtection.h"
 #include "Entities/Effects/MIL_Effect_DirectFirePion.h"
 #include "Entities/Effects/MIL_Effect_DirectFirePopulation.h"
 #include "Entities/Effects/MIL_EffectManager.h"
@@ -176,7 +177,8 @@ MT_Float PHY_WeaponDataType_DirectFire::GetPH( const MIL_AgentPion& firer, const
     float rUrbanModificator = MIL_AgentServer::GetWorkspace().GetUrbanModel().ComputeUrbanPhModifier( firerPosition, targetPosition );
     rDistance /= rUrbanModificator;
     const MT_Float rPH = phs_[ targetVolume.GetID() ]( rDistance );
-    return firer.GetRole< PHY_RoleInterface_HumanFactors >().ModifyPH( rPH );
+    const double protection = target.GetRole< PHY_RoleInterface_ActiveProtection >().GetPHModifier( weaponType_.GetDotationCategory() );
+    return firer.GetRole< PHY_RoleInterface_HumanFactors >().ModifyPH( rPH * protection );
 }
 
 // -----------------------------------------------------------------------------
@@ -292,6 +294,7 @@ void PHY_WeaponDataType_DirectFire::Fire( MIL_AgentPion& firer, MIL_Agent_ABC& t
         const MT_Vector3D targetPosition( targetLocation.GetPosition().rX_, targetLocation.GetPosition().rY_, targetLocation.GetAltitude() );
 
         const MT_Float rPH = GetPH( firer, target, targetVolume, firerPosition, targetPosition );
+        target.GetRole< PHY_RoleInterface_ActiveProtection >().UseAmmunition( weaponType_.GetDotationCategory() );
         if ( !( randomGenerator_.rand_oi() <= rPH ) ) 
             return;
     }

@@ -74,7 +74,7 @@ public:
     void     ConsumeConsumptionReservations();    
 
     MT_Float AddFireReservation     ( const PHY_DotationCategory& category, MT_Float rNbr );
-    void     ConsumeFireReservations();    
+    void     ConsumeFireReservations(); 
 
     MT_Float GetValue( const PHY_DotationCategory& category ) const;   
     MT_Float Consume ( const PHY_DotationCategory& category, MT_Float rNbr );

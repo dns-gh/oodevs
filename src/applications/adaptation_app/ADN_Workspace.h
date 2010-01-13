@@ -138,6 +138,7 @@ private:
         eHealth,
         ePopulation,
         eReports,
+        eActiveProtections,
         eNbrWorkspaceElements
     };
 

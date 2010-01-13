@@ -2,6 +2,7 @@
 <physical>
   <decisional file="Decisionnel.xml"/>
   <volumes file="Volumes.xml"/>
+  <active-protections file="ActiveProtections.xml"/>
   <protections file="Protections.xml"/>
   <dotation-natures file="DotationNatures.xml"/>
   <objects file="Objets.xml"/>

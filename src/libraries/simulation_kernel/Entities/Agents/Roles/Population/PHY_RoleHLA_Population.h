@@ -37,11 +37,11 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Update    ( bool bIsDead ) {};
+    virtual void Update    ( bool /*bIsDead*/ ) {};
     virtual void Clean     () {};
     virtual bool HasChanged() const { return false; };
-    virtual MT_Float ModifyMaxSpeed         ( MT_Float rSpeed    ) const { return 0; };
-    virtual MT_Float GetCollidingPopulationDensity() const { return 0; };
+    virtual MT_Float ModifyMaxSpeed ( MT_Float /*rSpeed*/ ) const { return 0.; };
+    virtual MT_Float GetCollidingPopulationDensity() const { return 0.; };
     //@}
 
 private:

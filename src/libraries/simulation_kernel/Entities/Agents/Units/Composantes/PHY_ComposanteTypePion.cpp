@@ -14,18 +14,19 @@
 #include "PHY_ComposanteTypePion.h"
 
 #include "PHY_ComposantePion.h"
-#include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
+#include "Entities/Agents/Units/Composantes/PHY_ActiveProtection.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationConsumptions.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationNature.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
+#include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanProtection.h"
 #include "Entities/Agents/Units/Logistic/PHY_MaintenanceLevel.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
+#include "Entities/Agents/Units/Radars/PHY_RadarType.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
-#include "Entities/Agents/Units/Radars/PHY_RadarType.h"
 #include "Entities/Agents/Units/Weapons/PHY_WeaponType.h"
 #include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
@@ -178,15 +179,16 @@ PHY_ComposanteTypePion::PHY_ComposanteTypePion( const MIL_Time_ABC& time, const 
     if( rWeight_ <= 0 )
         xis.error( "element: weight <= 0" );
 
-    InitializeHumanProtections  ( xis );
-    InitializeWeapons       ( xis );
-    InitializeSensors       ( xis );
-    InitializeRadars        ( xis );
-    InitializeTransport     ( xis );
-    InitializeObjects       ( xis );
-    InitializeConsumptions  ( xis );
-    InitializeLogistic      ( xis );
-    InitializeBreakdownTypes( xis );
+    InitializeHumanProtections( xis );
+    InitializeWeapons         ( xis );
+    InitializeSensors         ( xis );
+    InitializeRadars          ( xis );
+    InitializeTransport       ( xis );
+    InitializeObjects         ( xis );
+    InitializeConsumptions    ( xis );
+    InitializeLogistic        ( xis );
+    InitializeBreakdownTypes  ( xis );
+    InitializeProtections     ( xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -321,6 +323,32 @@ void PHY_ComposanteTypePion::ReadWeaponSystem( xml::xistream& xis )
             xis.error( "Weapon type (" + strLauncher + ", " + strAmmunition + ") already initialized" );
             
         weaponTypes_[ pWeaponType ] = bMajor;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::InitializeProtections
+// Created: LDC 2010-01-07
+// -----------------------------------------------------------------------------
+void PHY_ComposanteTypePion::InitializeProtections( xml::xistream& xis )
+{
+    xis >> xml::optional() >> xml::start( "active-protections" )
+            >> xml::list( "protection", *this, &PHY_ComposanteTypePion::ReadActiveProtection )
+        >> xml::end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::ReadActiveProtection
+// Created: LDC 2010-01-07
+// -----------------------------------------------------------------------------
+void PHY_ComposanteTypePion::ReadActiveProtection( xml::xistream& xis )
+{
+    std::string strProtectionName;
+    
+    xis >> xml::attribute( "name", strProtectionName );
+    const PHY_ActiveProtection* pProtection = PHY_ActiveProtection::Find( strProtectionName );
+    if( !pProtection )
+        xis.error( "Unknow active protection which name is " + strProtectionName );
+    activeProtections_.push_back( pProtection );
 }
 
 // -----------------------------------------------------------------------------
@@ -1273,4 +1301,51 @@ bool PHY_ComposanteTypePion::CanTransportStock( const PHY_DotationCategory& dota
         return false;
 
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::UseAmmunition
+// Created: LDC 2010-01-08
+// -----------------------------------------------------------------------------
+void PHY_ComposanteTypePion::UseAmmunition( const PHY_DotationCategory& category, MIL_Agent_ABC& pion ) const
+{
+    for( CIT_ActiveProtectionVector it = activeProtections_.begin(); it != activeProtections_.end(); ++it )
+        (*it)->UseAmmunition( category, pion );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetPHModifier
+// Created: LDC 2010-01-08
+// -----------------------------------------------------------------------------
+double PHY_ComposanteTypePion::GetPHModifier( const PHY_DotationCategory& category, MIL_Agent_ABC& pion ) const
+{
+    double result = 1.;
+    for( CIT_ActiveProtectionVector it = activeProtections_.begin(); it != activeProtections_.end(); ++it )
+        result *= (*it)->GetPHModifier( category, pion );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::CounterIndirectFire
+// Created: LDC 2010-01-08
+// -----------------------------------------------------------------------------
+bool PHY_ComposanteTypePion::CounterIndirectFire( const PHY_DotationCategory& category, MIL_Agent_ABC& pion ) const
+{
+    for( CIT_ActiveProtectionVector it = activeProtections_.begin(); it != activeProtections_.end(); ++it )
+        if( (*it)->CounterIndirectFire( category, pion ) )
+            return true;
+    return false;
+
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::DestroyIndirectFire
+// Created: LDC 2010-01-08
+// -----------------------------------------------------------------------------
+bool PHY_ComposanteTypePion::DestroyIndirectFire( const PHY_DotationCategory& category, MIL_Agent_ABC& pion ) const
+{
+    for( CIT_ActiveProtectionVector it = activeProtections_.begin(); it != activeProtections_.end(); ++it )
+        if( (*it)->DestroyIndirectFire( category, pion ) )
+            return true;
+    return false;
 }

@@ -1353,4 +1353,38 @@ void PHY_ComposantePion::Execute( firing::WeaponAvailabilityComputer_ABC& algori
         algorithm.ApplyOnWeapon( *this, **itWeapon );
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::UseAmmunition
+// Created: LDC 2010-01-07
+// -----------------------------------------------------------------------------
+void PHY_ComposantePion::UseAmmunition( const PHY_DotationCategory& category, MIL_Agent_ABC& pion )
+{
+    pType_->UseAmmunition( category, pion );
+}
 
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::GetPHModifier
+// Created: LDC 2010-01-07
+// -----------------------------------------------------------------------------
+double PHY_ComposantePion::GetPHModifier( const PHY_DotationCategory& category, MIL_Agent_ABC& pion ) const
+{
+    return pType_->GetPHModifier( category, pion );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::CounterIndirectFire
+// Created: LDC 2010-01-07
+// -----------------------------------------------------------------------------
+bool PHY_ComposantePion::CounterIndirectFire( const PHY_DotationCategory& category, MIL_Agent_ABC& pion ) const
+{
+    return pType_->CounterIndirectFire( category, pion );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::DestroyIndirectFire
+// Created: LDC 2010-01-07
+// -----------------------------------------------------------------------------
+bool PHY_ComposantePion::DestroyIndirectFire( const PHY_DotationCategory& category, MIL_Agent_ABC& pion ) const
+{
+    return pType_->DestroyIndirectFire( category, pion );
+}

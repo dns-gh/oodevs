@@ -25,26 +25,27 @@ namespace xml
     class xistream;
 }
 
-class PHY_HumanProtection;
-class PHY_WeaponType;
-class PHY_Weapon;
-class PHY_SensorType;
-class PHY_Sensor;
-class PHY_RadarType;
+class MIL_AgentPion;
+class MIL_ObjectType_ABC;
+class MIL_Object_ABC;
+class MIL_Time_ABC;
+class PHY_ActiveProtection;
+class PHY_Breakdown;
+class PHY_BreakdownType;
 class PHY_ComposantePion;
 class PHY_ComposanteTypeObjectData;
 class PHY_ConsumptionType;
-class PHY_Human;
 class PHY_DotationConsumptions;
 class PHY_DotationNature;
-class MIL_ObjectType_ABC;
-class MIL_Object_ABC;
+class PHY_Human;
+class PHY_HumanProtection;
 class PHY_MaintenanceLevel;
-class PHY_Breakdown;
-class PHY_BreakdownType;
+class PHY_RadarType;
 class PHY_RolePion_Composantes;
-class MIL_AgentPion;
-class MIL_Time_ABC;
+class PHY_Sensor;
+class PHY_SensorType;
+class PHY_Weapon;
+class PHY_WeaponType;
 
 // =============================================================================
 // @class  PHY_ComposanteTypePion
@@ -177,6 +178,14 @@ public:
     const PHY_DotationNature*  GetStockTransporterNature       () const;
     //@}
 
+    //! @name Active Protection
+    //@{
+    void UseAmmunition( const PHY_DotationCategory&, MIL_Agent_ABC& pion ) const;
+    double GetPHModifier( const PHY_DotationCategory&, MIL_Agent_ABC& pion ) const;
+    bool CounterIndirectFire( const PHY_DotationCategory&, MIL_Agent_ABC& pion ) const;
+    bool DestroyIndirectFire( const PHY_DotationCategory&, MIL_Agent_ABC& pion ) const;
+    //@}
+
     //! @name Operators
     //@{
     bool operator==( const PHY_ComposanteTypePion& rhs ) const;
@@ -237,6 +246,9 @@ private:
     typedef std::list< const PHY_HumanProtection * >        T_ListOfHumanProtection;
     typedef T_ListOfHumanProtection::const_iterator CIT_ListOfHumanProtection;
     typedef T_ListOfHumanProtection::iterator       IT_ListOfHumanProtection;
+    
+    typedef std::vector< const PHY_ActiveProtection* > T_ActiveProtectionVector;
+    typedef T_ActiveProtectionVector::const_iterator CIT_ActiveProtectionVector;
     //@}
 
 public:
@@ -246,20 +258,21 @@ public:
 private:
     //! @name Init
     //@{
-    void InitializeWeapons                ( xml::xistream& xis );
-    void InitializeHumanProtections       ( xml::xistream& xis );
-    void InitializeTransport              ( xml::xistream& xis );
-    void InitializeSensors                ( xml::xistream& xis );
-    void InitializeRadars                 ( xml::xistream& xis );
-    void InitializeObjects                ( xml::xistream& xis );
+    void InitializeAttritionBreakdownTypes( xml::xistream& xis );
+    void InitializeBreakdown              ( xml::xistream& xis );
     void InitializeConsumptions           ( xml::xistream& xis );
+    void InitializeHumanProtections       ( xml::xistream& xis );
     void InitializeLogistic               ( xml::xistream& xis );
     void InitializeLogisticMaintenance    ( xml::xistream& xis );
     void InitializeLogisticMedical        ( xml::xistream& xis ); 
     void InitializeLogisticSupply         ( xml::xistream& xis );
-    void InitializeBreakdown              ( xml::xistream& xis );
+    void InitializeObjects                ( xml::xistream& xis );
+    void InitializeProtections            ( xml::xistream& xis );
+    void InitializeRadars                 ( xml::xistream& xis );
     void InitializeRandomBreakdownTypes   ( xml::xistream& xis );
-    void InitializeAttritionBreakdownTypes( xml::xistream& xis );
+    void InitializeSensors                ( xml::xistream& xis );
+    void InitializeTransport              ( xml::xistream& xis );
+    void InitializeWeapons                ( xml::xistream& xis );
     bool ReadWoundCapabilities            ( xml::xistream& xis, T_WoundCapabilityVector& container, const std::string attributeName ) const;
     //@}
     
@@ -288,6 +301,7 @@ private:
     void ReadRelieving           ( xml::xistream& xis );
     void ReadCollecting          ( xml::xistream& xis );
     void ReadCaring              ( xml::xistream& xis );
+    void ReadActiveProtection    ( xml::xistream& xis );
     //@}
 
 private:
@@ -350,6 +364,9 @@ private:
 
     // Human Protections
     T_ListOfHumanProtection humanProtections_;
+
+    // Active Protections
+    T_ActiveProtectionVector activeProtections_;
 
 private:
     static T_ComposanteTypeMap composantesTypes_;

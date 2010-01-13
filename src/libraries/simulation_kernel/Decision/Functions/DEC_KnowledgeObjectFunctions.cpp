@@ -104,7 +104,7 @@ void DEC_KnowledgeObjectFunctions::DecontaminateZone( const MIL_AgentPion& calle
 // Name: DEC_KnowledgeObjectFunctions::DamageObject
 // Created: SBO 2006-01-23
 // -----------------------------------------------------------------------------
-int DEC_KnowledgeObjectFunctions::DamageObject( const MIL_AgentPion& /*callerAgent*/, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, float factor )
+int DEC_KnowledgeObjectFunctions::DamageObject( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, float factor )
 {
     if( pKnowledge && pKnowledge->IsValid() )
         if( MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown() )
@@ -135,7 +135,7 @@ bool DEC_KnowledgeObjectFunctions::CanBeOccupied( const MIL_AgentPion& callerAge
 // Name: DEC_KnowledgeObjectFunctions::CanBeBypassed
 // Created: JCR 2008-06-03
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeObjectFunctions::CanBeBypassed( const MIL_AgentPion& /*callerAgent*/, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+bool DEC_KnowledgeObjectFunctions::CanBeBypassed( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( pKnowledge && pKnowledge->IsValid() )
         if( const MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown() )
@@ -147,7 +147,7 @@ bool DEC_KnowledgeObjectFunctions::CanBeBypassed( const MIL_AgentPion& /*callerA
 // Name: DEC_KnowledgeObjectFunctions::EquipLogisticRoute
 // Created: NLD 2005-02-18
 // -----------------------------------------------------------------------------
-int DEC_KnowledgeObjectFunctions::EquipLogisticRoute( const MIL_AgentPion& /*callerAgent*/, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+int DEC_KnowledgeObjectFunctions::EquipLogisticRoute( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( pKnowledge && pKnowledge->IsValid() )
         if( MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown() )
@@ -163,7 +163,7 @@ int DEC_KnowledgeObjectFunctions::EquipLogisticRoute( const MIL_AgentPion& /*cal
 // Name: DEC_KnowledgeObjectFunctions::SetExitingPopulationDensity
 // Created: NLD 2006-03-08
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeObjectFunctions::SetExitingPopulationDensity( const MIL_AgentPion& /*callerAgent*/, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, float density )
+void DEC_KnowledgeObjectFunctions::SetExitingPopulationDensity( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, float density )
 {
     if( pKnowledge && pKnowledge->IsValid() )
         if( MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown() )
@@ -175,7 +175,7 @@ void DEC_KnowledgeObjectFunctions::SetExitingPopulationDensity( const MIL_AgentP
 // Name: DEC_KnowledgeObjectFunctions::ResetExitingPopulationDensity
 // Created: NLD 2006-03-08
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeObjectFunctions::ResetExitingPopulationDensity( const MIL_AgentPion& /*callerAgent*/, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+void DEC_KnowledgeObjectFunctions::ResetExitingPopulationDensity( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( pKnowledge && pKnowledge->IsValid() )
         if( MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown() )
@@ -188,7 +188,7 @@ void DEC_KnowledgeObjectFunctions::ResetExitingPopulationDensity( const MIL_Agen
 // Created: JCR 2009-06-03
 // Created: RPD 2009-11-06
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeObjectFunctions::IsStockSupplied( const MIL_AgentPion& /*callerAgent*/, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+bool DEC_KnowledgeObjectFunctions::IsStockSupplied( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     MIL_Object_ABC* pObject;
     if( pKnowledge && ( pObject = pKnowledge->GetObjectKnown() ) )

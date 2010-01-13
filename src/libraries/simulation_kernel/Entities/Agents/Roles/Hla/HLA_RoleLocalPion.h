@@ -12,10 +12,6 @@
 
 #include "HLA_RoleInterface.h"
 
-namespace hla 
-{
-}
-
 class MIL_AgentPion;
 
 // =============================================================================

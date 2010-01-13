@@ -1692,3 +1692,49 @@ void PHY_RolePion_Composantes::NotifyIsUnLoadedInVab()
 {
     bIsLoaded_ = false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::UseAmmunition
+// Created: LDC 2010-01-07
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::UseAmmunition( const PHY_DotationCategory& category )
+{
+    for( PHY_ComposantePion::CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
+        (*itComposante)->UseAmmunition( category, pion_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::GetPHModifier
+// Created: LDC 2010-01-07
+// -----------------------------------------------------------------------------
+double PHY_RolePion_Composantes::GetPHModifier( const PHY_DotationCategory& category ) const
+{
+    double result = 1.;
+    for( PHY_ComposantePion::CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
+        result = std::min( result, (*itComposante)->GetPHModifier( category, pion_ ) );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::CounterIndirectFire
+// Created: LDC 2010-01-07
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Composantes::CounterIndirectFire( const PHY_DotationCategory& category ) const
+{
+    for( PHY_ComposantePion::CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
+        if ( (*itComposante)->CounterIndirectFire( category, pion_ ) )
+            return true;
+    return false;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::DestroyIndirectFire
+// Created: LDC 2010-01-07
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Composantes::DestroyIndirectFire( const PHY_DotationCategory& category ) const
+{
+    for( PHY_ComposantePion::CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
+        if( (*itComposante)->DestroyIndirectFire( category, pion_ ) )
+            return true;
+    return false;
+}
