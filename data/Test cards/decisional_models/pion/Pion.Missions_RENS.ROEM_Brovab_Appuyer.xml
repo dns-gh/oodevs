@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Pion.Missions RENS.ROEM Brovab Appuyer" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 5
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Ordonner au pion Groupe ELGE [560] "ROEM Appuyer" en précisant une position de déploiement et une position de regroupement
+          Ordonner à un pion AMX ennemi de se déplacer de façon à se qu’il se trouve à l’extérieur du cercle de brouillage. Lui ordonner ensuite de se déplacer dans le cercle de brouillage.
+          Ordonner à un pion ami de se déplacer dans le cercle de brouillage.
+        </action>
+        <expectation>
+          Le drone progresse vers la position de déploiement
+          Le drone arrive sur la position de déploiement et s'installe
+          Un grand cercle bleu avec "EW" au milieu s'affiche sur toute la case 5, centré sur la position de déploiement
+          Le CR remonte: "Activation brouillage" et le pion se dirige et arrive à la position de regroupement
+          Le pion AMX ennemi se déplace moins vite (51 kms/h au lieu de 65) lorsqu’il rentre dans le cercle de brouillage et un icône s’affiche indiquant qu’il est brouillé
+          Le pion ami n’est pas impacté par le brouillage
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

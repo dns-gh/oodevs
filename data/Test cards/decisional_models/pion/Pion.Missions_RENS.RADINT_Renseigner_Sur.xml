@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Pion.Missions RENS.RADINT Renseigner Sur" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 5
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Ordonner au pion Patrouille RENS Viviane de mettre en œuvre.
+        </action>
+        <expectation>
+          Le pion remonte les comptes rendus "Progression vers position", "décroche", "exploitation données", "extraction données" et "fin mission"
+          Filtrer la vue sur le pion. A la fin de la mission, le pion a détecté les ennemis dans la zone
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

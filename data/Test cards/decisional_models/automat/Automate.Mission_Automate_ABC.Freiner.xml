@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Automate.Mission Automate ABC.Freiner" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 1
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Ordonner à un automate Escadron de char AMX 30B2 Brennus de se déplacer à l'autre bout du fuseau puis de Freiner.
+          2 pions : Décrocher
+          3 pions : Freiner
+        </action>
+        <expectation>
+          Les pions se déplacent le long de l'itinéraire
+          Les pions qui décroche se recule par rapport aux autres
+          Au fur et à mesure que les pions ennemis avancent, les pions amis reculent
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

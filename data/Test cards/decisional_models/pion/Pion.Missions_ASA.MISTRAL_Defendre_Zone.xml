@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Pion.Missions ASA.MISTRAL Defendre Zone" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 1
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Donner à un pion A la mission ASA Défendre Zone.
+          Donner à des unités aériennes E l’ordre d’attaquer les unités présentes dans la zone défendue.
+        </action>
+        <expectation>
+          Le pion A détecte et engage les pions E
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

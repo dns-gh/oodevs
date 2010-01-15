@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Pion.Missions Communes.Se faire Transporter" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 1
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          (Script existant)
+          Ordonner à un pion ALAT de "heliporter" ou "helitransporter" un pion ami.
+          Ordonner au pion ami de se faire transporter en indiquant le même point d'embarquement que précédemment.
+        </action>
+        <expectation>
+          Le pion ami se retrouve à la position de débarquement
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

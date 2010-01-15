@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Pion.Missions Génie.Activer obstacle" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 1
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Ajouter un abattis grâce à la fenêtre création. Vérifier que l'abattis est non activé.
+          Ordonner à un pion Génie d'activer un obstacle.
+        </action>
+        <expectation>
+          Le pion se déplace jusqu'à la position de l'obstacle
+          Le pion remonte un compte rendu "organisation chantier" et "début travaux" suivi de "fin travaux" et "fin mission"
+          Obstacle de manœuvre activé : oui
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

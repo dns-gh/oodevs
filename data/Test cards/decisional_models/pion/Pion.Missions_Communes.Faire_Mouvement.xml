@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Pion.Missions Communes.Faire Mouvement" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 1
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Ordonner à un ami de Faire Mouvement suivant un itinéraire
+        </action>
+        <expectation>
+          Le pion se déplace jusqu'à la fin de l'itinéraire
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+  <test-case>
+   <data>
+   Case 2
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Ordonner à un ennemi E de Faire Mouvement suivant un itinéraire.
+          Ordonner à un ami A de Faire Mouvement suivant un itinéraire passant par la destination de E.
+        </action>
+        <expectation>
+          Le pion E se déplace jusqu'à la fin de l'itinéraire.
+          Le pion A se déplace le long de son itinéraire en traversant E et continue jusqu'à la fin de son itinéraire
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

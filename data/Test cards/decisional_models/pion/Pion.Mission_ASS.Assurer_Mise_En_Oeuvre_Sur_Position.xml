@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Pion.Mission ASS.Assurer Mise En Oeuvre Sur Position" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 1
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Donner à un pion A la mission "Assurer mise en œuvre sur position
+        </action>
+        <expectation>
+          Le pion A rejoint la position d'implantation, installe son dispositif.
+          L'ordre de conduite "Appliquer feux" est disponible.
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

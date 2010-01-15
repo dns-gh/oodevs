@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Automate.Mission Automate ABC.Soutenir" version="1">
+  <requirements>
+  </requirements>
+  Ordonner à un Escardon ERIAC "Eclairer" entre 2 limites contenant des ennemis
+  <test-case>
+   <data>
+   Case 1
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+        </action>
+        <expectation>
+          Les pions de cet automate reçoivent tous l'ordre "Eclairer" et se dirigent sur 5 couloirs vers le nord
+          Ordonner à un Escardon de chars de "Soutenir" l'ERIAC. Ses pions reçoivent des ordres :
+          - 2 pions "Attaquer"
+          - 3 pions "Suivre"
+          Ils se dirigent en 2 groupes avec 2 itinéraires(un passant par les ennemis) vers le nord
+          L'escardon de chars reste à distance derrière l'ERIAC
+          L'ERIAC continuent sur leurs itinéraires et arrivent à leurs destinations au nord du Limas de Nord
+          Un des pions de l'Escadron de chars qui suivait change en "Soutenir"
+          Un de ses groupes rentrent en conflit avec les méchants
+          A la fin l'automate de soutient reste à distance de l'ERIAC qui est au nord du lima de nord
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

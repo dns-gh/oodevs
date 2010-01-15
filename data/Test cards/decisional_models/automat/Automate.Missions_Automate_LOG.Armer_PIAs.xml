@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Automate.Missions Automate LOG.Armer PIAs" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 5
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Ordonner à un automate Peloton Circulation P4 d’Armer un PIA (bien renseigner la ligne d’identification et d’accueil)
+          5 pions : Armer PIA
+        </action>
+        <expectation>
+          Chaque pion se déplace en direction d’un point sur la ligne LIA
+          Chaque pion arme son propre PIA
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

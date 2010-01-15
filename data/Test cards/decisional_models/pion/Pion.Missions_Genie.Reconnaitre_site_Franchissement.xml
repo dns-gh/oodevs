@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Pion.Missions Génie.Reconnaitre site Franchissement" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 1
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Création d'un objet "Site de franchissement" sur la rivière passant au milieu de la carte
+          Déplacement par action magique de n'importe quel pion A près du site de franchissement.
+          Ordonner "Faire Mouvement" à A afin de traverser par le site de franchissement
+          Ordonner à la Section CBT GEN [212][212] "Reconnaitre site Franchissement" précisant l'objet construit
+          Ordonner de nouveau "Faire Mouvement" à A afin de traverser par le site de franchissement après la reconnaissance du site
+        </action>
+        <expectation>
+          Le pion Génie se déplace vers le site de franchissement
+          A son arrivée sur le site de franchissement, le pion effectue Reconnaissance de point
+          Le pion A a reçu la mission "Faire mouvement" à travers le site de franchissement
+          Le pion reconstruit un itinéraire  passant par le site de franchissement
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

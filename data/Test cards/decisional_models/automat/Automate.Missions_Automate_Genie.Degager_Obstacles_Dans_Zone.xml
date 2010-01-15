@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Automate.Missions Automate Genie.Degager Obstacles Dans Zone" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 1
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          S’assurer que l’automate ait détecté l’obstacle ennemi.
+          Ordonner à un automate Compagnie CBT Génie type BB BM de Dégager l’obstacle.
+          1 pion : Dégager l’obstacle
+          9 pions : Faire mouvement
+        </action>
+        <expectation>
+          Un pion reçoit l’ordre de dégager l’obstacle et tous les autres de se déplacer vers la zone de regroupement
+          L’obstacle disparait de l’écran et la mission décroche est donné à tous les pions qui ne sont pas encore dans la zone de regroupement
+          Faire Franchir
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+  <test-case>
+   <data>
+   Case 1
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Créer un site de franchissement  grâce à la fenêtre « création » par dessus une grosse rivière.
+          Ordonner à un automate Compagnie CBT Génie type BB BM de Franchir ce site.
+          Ordonner à un pion Groupe MLF (appartenant à la compagnie Appui Génie générique) de renforcer le premier pion.
+          1 pion : Reconnaitre site franchissement
+          9 pions : Faire mouvement
+        </action>
+        <expectation>
+          La mission Reconnaitre site franchissement devient Equiper Exploiter site franchissement
+          Dans la fenêtre ODB onglet objet, un pont flottant a été ajouté
+          En ordonnant à une compagnie de se déplacer le long d’un itinéraire passant par le pont, l’ensemble des pions traverse en utilisant le pont
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

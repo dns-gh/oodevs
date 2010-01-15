@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Automate.Missions Automate RENS.ROEM Brovab Appuyer" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 5
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Ordonner à un automate Groupe de brouillage VHS Bromure d’appuyer
+          Ordonner à un pion ami AMX 10 de se déplacer dans la zone de brouillage.
+          Ordonner à un pion ennemi AMX 10 de se déplacer dans la zone de brouillage.
+        </action>
+        <expectation>
+          Le pion Elge de l’automate se déplace vers la position de deploiement
+          Un grand cercle bleu de brouillage apparait
+          Le brouillage ralenti la vitesse de progression ennemi (un icône apparait)
+          Le brouillage ne touche pas le pion ami
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

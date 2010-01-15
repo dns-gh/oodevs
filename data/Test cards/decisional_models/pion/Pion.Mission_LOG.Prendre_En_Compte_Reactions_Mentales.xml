@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Pion.Mission LOG.Prendre En Compte Reactions Mentales" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 5
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Mettre à 100 % dans le fichier Sante.xml le pourcentage de blessés mentaux
+          C'est dans C:\Documents and Settings\dda\Mes documents\SWORD Officer Training 3\data\models\ada\physical\france à la ligne :
+          &lt;injury caring-time="30m" category="mental" percentage="20" resting-time="72h"/&gt;
+          Donner la mission "Attaquer" à un pion rouge ABC sur un itinéraire contenant des pions bleu pour provoquer des blesser mentaux
+        </action>
+        <expectation>
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

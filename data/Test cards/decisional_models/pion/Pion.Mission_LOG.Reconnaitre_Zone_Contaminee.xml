@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Pion.Mission LOG.Reconnaitre Zone Contaminee" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 5
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Donner la mission "Reconnaitre Zone Contaminée" à un pion LOG en précisant une zone
+        </action>
+        <expectation>
+          Le pion se déplace vers la zone et met l'alerte nbc niveau 4:
+          CR: "alerte nbc niveau 4"
+          Le pion arrive sur le barycentre de la zone
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Pion.Missions ALAT.Heliporter" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 1
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Donner au pion A2 (Patrouille 1HM OFF) la mission Heliporter avec en paramètre un pion A1. Donner au pion A1 la mission Se Faire Transporter.
+        </action>
+        <expectation>
+          Le pion A1 embarque dans A2 au point d’embarquement et débarquer au point de débarquement
+          Le pion A2 rejoint le point de regroupement sur l’ordre de conduite « interrompre » ou après avoir débarqué A1
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

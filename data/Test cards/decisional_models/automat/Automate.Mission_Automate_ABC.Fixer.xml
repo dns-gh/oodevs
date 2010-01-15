@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Automate.Mission Automate ABC.Fixer" version="1">
+  <requirements>
+  </requirements>
+  Script non existant pour cette mission
+  <test-case>
+   <data>
+   Case 1
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Se mettre en Preparator dans la première case
+          Faire une action magique:  téléporter l'automate Peloton Protection PC [124][124] au milieu des pions ABC rouges (pour pouvoir créer des connaissances)
+          Donner l'ordre à l'automate Escargon de Chars AMX30B2 BRENNUS [21][21] "Fixer" en spécifiant un pion des rouges (Peloton d'appui direct[32])
+        </action>
+        <expectation>
+          Après avoir reçu l'ordre "Fixer" l'automate distribue les missions:
+          - 2 pions reçoivent la mission "ABC Reconnaitre Axe" et se placent devant les autres
+          - les autres 3 pions recoivent la mission "Suivre"
+          Ils sont divisés en 2 groupes ayant des itinéraires différents pour atteindre 2 objectifs différents les amenant après la lima de Nord:
+          A l'approche des ennemis, un des pions Suivre a changé de la mission ABC Suivre en ABC Soutenir (pion Peloton AMX30B2 BRENNUS CDP OFF[24])
+          Un des 2 groupes se met à poursuivre le pion à Fixer
+          Ils le mettent en dehors des limites et rejoignent un point au nord du limas de nord
+          L'autre groupe a déjà atteint l'objectif
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

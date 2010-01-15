@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Pion.Mission LOG.Bloquer Zone" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 5
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          (Script existant)
+          Donner l'ordre "Bloquer Zone" à un pion patrouille LOG dans une zone.
+          Donner l'ordre "Faire un mouvement" à un pion ami INF en précisant un itinéraire passant par la zone.
+          Donner l'ordre "Faire un mouvement" à un pion ennemi Terroriste en précisant un itinéraire passant par la zone.
+        </action>
+        <expectation>
+          Le pion LOG se dirige et se place sur le barycentre de la zone qu'il avait en paramètre
+          Il commence les travaux (CR: "début travaux"), la zone prend un contour particulier
+          Répétition à tous les tics  du CR :
+          -"début mission"
+          - "progression vers position"
+          - "début travaux"
+          - "arrive sur position"
+          Dans l'onglet "Objets" de l'ODB : " Zone de mouvement interdit 329", le numéro croissant à chaque tic, donc l'objet est créé plusieurs fois
+          Le pion ami INF arrive à traverser la zone
+          Le pion terroriste arrive aussi à traverser la zone
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

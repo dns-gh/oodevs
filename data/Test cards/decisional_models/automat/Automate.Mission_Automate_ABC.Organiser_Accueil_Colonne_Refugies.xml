@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Automate.Mission Automate ABC.Organiser Accueil Colonne Refugies" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 1
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Un Peloton EEI OFF a reçu l'ordre "Organiser Acceuil Colonne Regugies" sur une zone
+        </action>
+        <expectation>
+          Les unités ont reçu les ordres suivants et se dirigent vers la zone:
+          -3 patrouilles ont reçu "Surveiller"
+          -1 patrouille a reçu "Suivre"
+          Les 3 patrouilles qui surveillent se placent au milieu de la zone d'installation
+          La patrouille qui suit se place en dehors
+          Un automate de réfugiés a reçu l'ordre "Faire Mouvement" dans la zone
+          Il poursuit son itinéraire est arrive dans la zone
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

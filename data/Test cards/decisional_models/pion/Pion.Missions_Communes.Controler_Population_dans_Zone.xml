@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Pion.Missions Communes.Contrôler Population dans Zone" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 5
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Ordonner à un pion ami de contrôler la population.
+          Ordonner à la population de se déplacer à travers la zone de canalisation.
+        </action>
+        <expectation>
+          Le pion ami se déplace jusqu'à la zone de canalisation
+          Le pion ami remonte comme compte rendu "mise en place contrôle foule"
+          Le pion ami suit le déplacement de la foule
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

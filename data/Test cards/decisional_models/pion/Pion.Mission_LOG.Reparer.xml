@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Pion.Mission LOG.Reparer" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 5
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Script existant
+          Un pion rouge ABC (Peloton AMX30B2 BRENNUS CDP SOFF[456][456]) a reçu l'ordre d'attaque sur un itinéraire des pions LOG afin de provoquer des pannes.
+        </action>
+        <expectation>
+          Le pion rouge se délace sur son itinéraire et endommage certains des pions LOG en passant
+          Attendre et vérifie qu'un pion LOG (Section MO CL 289 [544][544]) a reçu des pannes .
+          A vérifier dans la fenêtre Composition pour ce pion que dans la fenêtre "Réparable" il y a eu des pannes
+          Un pion LOG (Section Réparation EA BLD glaise [784][784] ) a reçu l'ordre "Réparer"
+          Attendre et vérifier que dans la fenêtre Composition du pion endommagé que les attributs qui étaient dans la colonne "Réparable" soient passé en Maintenance
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

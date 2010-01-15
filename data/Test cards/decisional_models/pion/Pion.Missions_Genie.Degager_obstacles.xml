@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Pion.Missions Génie.Dégager obstacles" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 1
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Ajouter un abattis ennemi grâce à la fenêtre création. Activer l'abattis par une action magique.
+          Ordonner à un pion Génie de se déplacer (en passant pas l'obstacle) afin qu'il le détecte.
+          Ordonner au pion de "Dégager l'obstacle".
+        </action>
+        <expectation>
+          Le pion se déplace jusqu'à la position de l'obstacle, le repère et chercher un nouvel itinéraire pour le contourner
+          Le pion remonte un compte rendu "organisation chantier" et "début travaux" suivi de "fin mission"
+          L'obstacle disparait de l'écran
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

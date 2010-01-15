@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Automate.Mission Automate INF.Fixer" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 1
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          script non existant!
+          Se placer dans la première case en profil Preparator
+          Effecuter une action magique "Se téléporter" sur la Compagnie Anti-Char [293][293] (pour générer des connaissances sur les enis)
+          Donner l'ordre "Fixer" à la Compagnie AMX 10 P [287][287] sur un pion des rouges (Section CBT INF AMX10P CDS OFF [301])
+        </action>
+        <expectation>
+          Les pions du AMX ont reçu les ordres suivants:
+          - 3 pions "Appuyer"
+          - 1 pion "Fixer"
+          - 1 pion "Suivre"
+          le pion Fixer en avant, suivi des pions '"Appuyer" et enfin le pion "Suivre" se dirigeant tous vers le pion cible.
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

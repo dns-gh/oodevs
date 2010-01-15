@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Pion.Mission NBC.Animer Un Plot De Decontamination" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 1
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Donner à un pion A la mission "Animer un plot de décontamination" avec en paramètre une position éloignée d'un éventuel site de décontamination existant.
+        </action>
+        <expectation>
+          Le pion A lève une alerte NBC niveau 4, met sa combinaison NBC, rejoint la position et anime le site.
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+  <test-case>
+   <data>
+   Case 2
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Donner à un pion A la mission "Animer un plot de décontamination" avec en paramètre une position à proximité d'un site de décontamination existant.
+        </action>
+        <expectation>
+          Le pion Ami lève une alerte NBC niveau 4, met sa combinaison NBC, rejoint la position, reconnait le site existant et l'anime.
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

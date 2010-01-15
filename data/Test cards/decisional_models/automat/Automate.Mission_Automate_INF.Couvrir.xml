@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Automate.Mission Automate INF.Couvrir" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 1
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Donner la mission "Eclairer" à la Compagnie INF AMX 10P. Ses pions ont reçu les ordres suivants:
+          - 2 pions "Reconnaitre axe"
+          - 2 pions "Appuyer"
+          - 1 pion "Suivre"
+          Donner la mission "Couvrir" à la Compagnie Anti Char donnant en paramètre l'automate AMX.Ses pions ont reçu les ordres suivants:
+          - 1 pion "Barrer"
+          - 1 pion "Suivre"
+          - 3 pions "Appuyer"
+        </action>
+        <expectation>
+          Tous les pions se déplacent vers leurs objectifs au nord du Limas du Nord
+          L'automate Anti Char se déplace bien devant l'autre
+          Ses unités rentrent en conflit avec les ennemis
+          Après la repousse l'ennemi, l'automate INF arrive par derrière
+          L'anti char reste derrière
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

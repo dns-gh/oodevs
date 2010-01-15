@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Automate.Mission Automate INF.Relever" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 1
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Donner la mission "Faire mouvement" à une Compagnie Anti Char HOT [293][293] (A1) vers le nord
+          Donner la mission "Relever" à une Compagnie INF AMX 10P [287][287] (A2) en indiquant A1
+        </action>
+        <expectation>
+          Les pions de A1 effectuent tous "Faire Mouvement" vers le nord, divisés en 2 groupes
+          Les pions de A2 ont reçu les missions suivantes:
+          - 2 pions "Faire Mouvement"
+          - 2 pions "Appuyer"
+          - 1 pion "Suivre"
+          Ils sont divisés en 2 groupes ayant des itinéraires jusqu'aux positions actuelles des 2 groupes de A
+          Chaque groupe de A2 contient un "Faire Mouvement" placé devant, suivi d'un pion "Appuyer" et enfin le pion "Suivre"
+          Une fois que 3 des pions de A2 arrivent aux positions objectives, tous les pions sauf le pion "Suivre" reçoivent la mission "Faire Mouvement" (car le PC de A1 ne se fait jamais relever)
+          Les pion de A2 se déplacent beaucoup plus vite que les pions de A1 (40 km/h contre 6km/h) et ont des itinéraires les amenant à la destination de A1
+          A2 sont arrivés à la destination
+          A1 se sont arrêté au cours de l'itinéraire sauf le pc de A1 qui continue jusqu' à la destination, car il ne s'est pas fait relevé
+          Rompre Contact
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+  <test-case>
+   <data>
+   Case 1
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Ordonner à un automate Compagnie INF AMX 10P de Rompre le contact.
+          4 pions : Décrocher
+          1 pion : Appuyer
+        </action>
+        <expectation>
+          Tous les pions se déplace vers la zonede regroupement
+          L'automate remonte le compte rendu "décroche" puis "fin mission"
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

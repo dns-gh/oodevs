@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Pion.Missions Communes.Stationner" version="1">
+  <requirements>
+  </requirements>
+  Ordonner à un pion ami A "Stationner" sur une position
+  <test-case>
+   <data>
+   Case 1
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+        </action>
+        <expectation>
+          A construit un itinéraire jusqu'à la position et en y arrivant s'installe
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+  <test-case>
+   <data>
+   Case 2
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Ordonner à un pion ennemi E "Faire mouvement" suivant un itinéraire
+          Ordonner à un pion ami A de "Stationner" sur la position de destination de E
+        </action>
+        <expectation>
+          A construit un itinéraire jusqu'à la position et en y arrivant s'installe
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

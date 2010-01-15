@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Automate.Missions Automate LOG.Appuyer Mouvement Dans Zone" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 5
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Ordonner à un automate Peloton Circulation P4 d’appuyer le franchissement Mouvement dans une zone
+          Une fois les pions installé, ordonner à un pion quelconque de se déplacé sur un itinéraire passant par cette zone.
+          5 pions : Appuyer  Mouvement dans zone
+        </action>
+        <expectation>
+          La zone est découpée en 5 et chaque pion se déplace vers le centre de sa zone
+          Une zone de mobilité améliorée a été créée (dans la fenêtre ODB onglet Objet)
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

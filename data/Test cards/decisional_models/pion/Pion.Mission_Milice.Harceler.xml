@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Pion.Mission Milice.Harceler" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 5
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Ordonner à un pion Milice "Harceler" sur une zone contenant un terroriste rouge et en indiquant une position de regroupement
+        </action>
+        <expectation>
+          Le pion Milice se déplace vers la position de regroupement
+          Le pion Milice reconnaît le point de regroupement avant de s'y placer
+          Il arrive au point de regroupement et installe le dispositif
+          Après l'installation il se dirige vers la zone afin de la contrôler
+          A l'approche du pion rouge le compte rendu remonte "presence de population"
+          Il continue jusqu'à une position dans la zone
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

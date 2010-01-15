@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Automate.Mission Automate INF.Flanc Garder" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 1
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Ordonner à une Compagnie INF AMX 10 P rouge de "Faire un mouvement" vers le sud (A1)
+          Ordonner à une Compagnie Anti Char "Faire un mouvement" vers le nord (A2)
+          Ordonner à une Compagnie INF AMX 10 P bleu de "Flanc Garder"(A3)
+        </action>
+        <expectation>
+          L'automate A3 distribue les missions de la manière suivante:
+          2 pions "Reconnaitre Axe"
+          2 pions "Appuyer"
+          1 pion "Suivre"
+          Ils sont divisé en 2 groupes, sur les flancs gauche et droite avec un pion de "Reconnaitre Axe" dans chaque groupe
+          Le flanc de droite rencontre les unités ennemis et rentrent en conflit
+          Les rouges, presque tous tactiquement détruits, continuent sur leur itinéraire, alors que le flanc de droite reste sur place
+          A2 sont arrivés au bout de l'itinéraire
+          A3 sont arrêté à une distance de A2
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

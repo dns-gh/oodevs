@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Automate.Mission Automate ABC.Couvrir" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 1
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Ordonner à un automate Escadron de char AMX 30B2 Brennus de couvrir une compagnie.
+          2 pions : Barrer
+          2 pions : Faire mouvement
+          1 pion : surveiller
+        </action>
+        <expectation>
+          3 pions se déplacent jusqu'au centre de la zone (mission barrer et surveiller)
+          2 pions restent en dehors de la zone avec la mission faire mouvement
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+  <test-case>
+   <data>
+   Case 2
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Ordonner à un automate Escadron de char AMX 30B2 Brennus de couvrir une compagnie.
+          Ordonner à un automate ennemi d'attaquer
+          2 pions : Barrer
+          2 pions : Faire mouvement
+          1 pion : surveiller
+        </action>
+        <expectation>
+          3 pions se déplacent jusqu'au centre de la zone (mission barrer et surveiller)
+          2 pions restent en dehors de la zone avec la mission faire mouvement
+          Dès qu'un pion se fait attaquer, une mission faire mouvement devient soutenir et s'avance
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

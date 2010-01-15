@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Pion.Mission Milice.Detruire Par Coup De Main" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 5
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          (Script non existant)
+          Se placer dans la case 5.
+          Ordonner au pion Milice armee LRAC LAND ROVER [505] "Détruire Par Coup De Main" en précisant une position objectif sur une route proche, une position de regroupement nature de destruction "Obstacles fixes"  et une heure de destruction déjà passée sur l'horloge de la sim.
+        </action>
+        <expectation>
+          Le pion Milice se déplace vers la position de regroupement et s'installe
+          Après l'installation il se dirige vers la position objectif, commence et termine ses travaux
+          Il se déplace vers la position de regroupement
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

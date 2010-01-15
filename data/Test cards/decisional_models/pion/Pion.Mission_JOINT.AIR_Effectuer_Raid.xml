@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Pion.Mission JOINT.AIR Effectuer Raid" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 1
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Donner à un pion A1 la mission "Eclairer" avec un itinéraire passant par des points occupés par des pions Enis.
+          Donner à un pion A2 la mission "AIR Effectuer raid" avec en paramètre une zone dans laquelle sont situés les pions Enis détectés.
+        </action>
+        <expectation>
+          Le pion A2 effectue des tirs indirects dans la zone s'il a connaissance de la présence de pions Enis.
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

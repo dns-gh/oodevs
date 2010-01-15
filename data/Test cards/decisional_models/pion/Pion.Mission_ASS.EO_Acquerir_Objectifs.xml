@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Pion.Mission ASS.EO Acquerir Objectifs" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 1
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Donner à un pion A1 la mission "EO Acquérir Objectifs" avec en paramètre un pion A2 (INF)
+        </action>
+        <expectation>
+          Le pion A1 rejoint le pion A2.
+          Le pion A1 suit le pion A2, et dirige ses capteurs vers la zone à observer.
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

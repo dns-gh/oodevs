@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Pion.Mission ASY.Commettre attentat contre forces armées" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 5
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Ordonner aux terroristes ennemis de se déplacer de façon à se qu’ils repèrent les ennemis.
+          Ordonner aux terroristes ennemis de commettre un attentat contre les forces armées
+        </action>
+        <expectation>
+          Le pion terroriste ennemi se déplace vers l'unité cible
+          Le pion remonte les comptes rendus "en infiltration", "execution attentat" et "en exfiltration"
+          La composition de l'unité est changé (soit un ou des officier sont morts, soit un équipement est désormais indisponible)
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

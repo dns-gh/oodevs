@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Automate.Mission Automate INF.Appuyer" version="1">
+  <requirements>
+  </requirements>
+  Donner à un premier automate A1 la mission "Attaquer en souplesse" avec en paramètre une position tenue par un automate Eni.
+  Donner à un second automate A2 la mission "Appuyer" avec en paramètre la compagnie A1.
+  <test-case>
+   <data>
+   Case 1
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+        </action>
+        <expectation>
+          Les pions de A2 reçoivent la mission Appuyer, le PC suit
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

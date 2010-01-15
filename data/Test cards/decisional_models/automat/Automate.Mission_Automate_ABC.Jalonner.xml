@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Automate.Mission Automate ABC.Jalonner" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 1
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Ordonner à un automate Escadron ERIAC [87][87] de "Faire un mouvement" afin de se rapprocher vers les rouges
+        </action>
+        <expectation>
+          L'automate distribuent les missions "Faire mouvement" pour chaque pion et divise en 2 groupes les pions pour atteindre l'objectif
+          Ordonner au pions rouge "Attaquer" dans les limites spécifiés:
+          - 2 pions reçoivent Attaquer
+          - les 3 autres reçoivent Suivre
+          Ordonner au pions de l'automate ERIAC "Jalonner" dans les limites spécifiés:
+          - 4 pions reçoivent "Jalonner" et se mettent en ligne horizontale
+          - 1 pion reçoit "Décrocher"
+          Tout le monde se déplace vers le sud jusqu'au Limas de Sud
+          Le combat y est mené et tout le monde arrive à sa destination
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Automate.Mission Automate INF.Semparer" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 1
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Ordonner à un automate Compagnie INF AMX 10P de Rompre le contact.
+          1 pion : S'emparer
+          3 pions : Appuyer
+          1 pion : Suivre
+        </action>
+        <expectation>
+          Les pions se déplace vers l'objectif (suivre est en deuxième échelon)
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+  <test-case>
+   <data>
+   Case 2
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Ordonner à un automate Compagnie INF AMX 10P de Rompre le contact.
+          1 pion : S'emparer
+          3 pions : Appuyer
+          1 pion : Suivre
+        </action>
+        <expectation>
+          Les pions se déplacent vers l'objectif (suivre est en deuxième échelon) en chassant les ennemis de la zone
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

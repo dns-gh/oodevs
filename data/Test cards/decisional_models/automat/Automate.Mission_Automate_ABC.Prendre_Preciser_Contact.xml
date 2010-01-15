@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Automate.Mission Automate ABC.Prendre Preciser Contact" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 1
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Ordonner à un automate de " Prendre Preciser Contact" en précisant des limites contenant des ennemis
+        </action>
+        <expectation>
+          Les pions de l'automate ont reçu des ordres de la manière suivante:
+          - 2 pions reçoivent "Reconnaître axe"
+          - 3 pions reçoivent "Suivre"
+          Ils sont divisé en 2 groupes, un passant par les ennemis et le deuxième passant à côté.
+          Les  groupes ont des positions de destination au nord du Limas de Nord
+          En cours de route un des pions qui suivent change de mission en "Soutenir" et rejoint le groupe passant par les ennemis
+          Par la suite il se remet avec le premier groupe
+          Finalement toutes les unités arrivent à passer et atteindre leur points de destination
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

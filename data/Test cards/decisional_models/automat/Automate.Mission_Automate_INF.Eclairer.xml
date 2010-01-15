@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Automate.Mission Automate INF.Eclairer" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 1
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Donner l'ordre "Eclairer" à la Compagnie INF AMX 10 P [287][287].
+        </action>
+        <expectation>
+          Ses pions ont reçu les ordres suivants:
+          - 2 pions "Appuyer"
+          - 2 pions "Reconnaitre Axe"
+          - 1 pion "Suivre"
+          Ils sont divisé en 2 groupes ayant 2 itinéraires différents ,un passant par les ennemis
+          Les pions qui font "Reconnaitre Axe" sont en avant (1 pour chaque chemin), suivis de pion "Appuyer" et enfin "Suivre"
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

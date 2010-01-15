@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Pion.Missions Génie.Reconnaitre itinéraire" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 1
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Ordonner à un pion "Reconnaitre itinéraire" spécifiant un itinéraire
+        </action>
+        <expectation>
+          Le pion se déplace suivant l'itinéraire et arrive au bout
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+  <test-case>
+   <data>
+   Case 2
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Ordonner à un pion ennemi E  "Faire mouvement" sur un itinéraire
+          Ordonner à un pion Génie "Reconnaitre itinéraire" spécifiant un itinéraire passant par E
+        </action>
+        <expectation>
+          Le pion se déplace suivant l'itinéraire
+          En approchant E, A le détecte et continue sur son itinéraire
+          A et arrive au bout
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>

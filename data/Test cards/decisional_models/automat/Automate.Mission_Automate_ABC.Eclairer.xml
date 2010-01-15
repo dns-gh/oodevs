@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="decisional models" title="Automate.Mission Automate ABC.Eclairer" version="1">
+  <requirements>
+  </requirements>
+  <test-case>
+   <data>
+   Case 1
+   </data>
+    <summary>
+    </summary>
+    <steps>
+      <step>
+        <action>
+          Ordonner à un automate Escadron de char AMX 30B2 Brennus d'effectuer un Raid.
+          Ordonner à un automate ennemi d'attaquer
+          2 pions : Reconnaitre Axe
+          3 pions : Suivre
+        </action>
+        <expectation>
+          Une limite est créée entre les deux autres limites
+          Les deux pions Reconnaitre axe avance de par et d'autre de la limite centrale
+          Des qu'un pion se fait attaquer, une mission suivre devient soutenir et le pion en soutient se déplace vers le pion attaqué
+          Si un pion "reconnaitre axe" est tactiquement détruit alors sa mission devient suivre
+        </expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="" tester-name="" version="" attachment="false">
+      </entry>
+    </history>
+  </test-case>
+</test>
