@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="adaptation" data="donnée du test" title="Titre du Test" version="1">
+  <summary>
+    Ceci est un exemple de test.
+    Il ne contient que des données bidons.
+  </summary>
+  <requirements>
+    <project name="SCIPIO">
+      <requirement id="Exigence 1"/>
+      <requirement id="Exigence 2"/>
+      <requirement id="Exigence 3"/>
+      <requirement id="Exigence 4"/>
+    </project>
+    <project name="LTO">
+      <requirement id="Exi a"/>
+      <requirement id="Exi b"/>
+      <requirement id="Exi c"/>
+    </project>
+  </requirements>
+  <steps>
+    <step id="1" success="true">
+      <action>Faire ceci, comme cela.</action>
+      <expectation>L'IHM affiche ceci</expectation>
+    </step>
+    <step id="2" success="true">
+      <action>blabla...</action>
+      <expectation>blabla...</expectation>
+    </step>
+    <step id="3" success="false">
+      <action>blabla...</action>
+      <expectation>blabla...</expectation>
+    </step>
+  </steps>
+  <history>
+    <entry date="12-10-09"
+        success="true" tester-name="Frank Hillard" version="r68451" attachment="false" >
+        Le test passe
+    </entry>
+    <entry date="03-01-10"
+        success="true" tester-name="Fabrice Duvernois" version="r68450" attachment="true" issues="43351,4684">
+        Ca passe plus, blabla...
+    </entry>
+  </history>
+</test>
