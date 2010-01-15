@@ -1,25 +1,25 @@
 --@TODO MGD Remove this ugly, find why scriptref error
 function CreateKnowledge( strKnowledgeType, knowledgeSource, knowledgedPosition )
   if( strKnowledgeType == "net.masagroup.sword.military.world.Point" ) then
-    kn = knowledges.create( net.masagroup.sword.military.world.Point, knowledgeSource, { ["sim_pos"] = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] } } )
+    kn = kBase.create( net.masagroup.sword.military.world.Point, knowledgeSource, { ["sim_pos"] = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] } } )
     return kn
   elseif( strKnowledgeType == "net.masagroup.sword.military.world.Area" ) then
-    kn = knowledges.create( net.masagroup.sword.military.world.Area, knowledgeSource, { ["sim_pos"] = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] } } )
+    kn = kBase.create( net.masagroup.sword.military.world.Area, knowledgeSource, { ["sim_pos"] = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] } } )
     return kn
   elseif( strKnowledgeType == "net.masagroup.sword.military.world.Object" ) then
-    kn = knowledges.create( net.masagroup.sword.military.world.Object, knowledgeSource, { ["sim_pos"] = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] } } )
+    kn = kBase.create( net.masagroup.sword.military.world.Object, knowledgeSource, { ["sim_pos"] = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] } } )
     return kn
   elseif( strKnowledgeType == "net.masagroup.sword.military.world.Section" ) then
-    kn = knowledges.create( net.masagroup.sword.military.world.Section, knowledgeSource, { ["sim_pos"] = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] } } )
+    kn = kBase.create( net.masagroup.sword.military.world.Section, knowledgeSource, { ["sim_pos"] = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] } } )
     return kn
   elseif( strKnowledgeType == "net.masagroup.sword.military.world.Automat" ) then
-    kn = knowledges.create( net.masagroup.sword.military.world.Automat, knowledgeSource, { ["sim_pos"] = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] } } )
+    kn = kBase.create( net.masagroup.sword.military.world.Automat, knowledgeSource, { ["sim_pos"] = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] } } )
     return kn
   elseif( strKnowledgeType == "net.masagroup.sword.military.world.Population" ) then
-    kn = knowledges.create( net.masagroup.sword.military.world.Population, knowledgeSource, { ["sim_pos"] = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] } } )
+    kn = kBase.create( net.masagroup.sword.military.world.Population, knowledgeSource, { ["sim_pos"] = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] } } )
     return kn
   elseif( strKnowledgeType == "net.masagroup.sword.military.world.UrbanBlock" ) then
-    kn = knowledges.create( net.masagroup.sword.military.world.UrbanBlock, knowledgeSource, { ["sim_pos"] = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] } } )
+    kn = kBase.create( net.masagroup.sword.military.world.UrbanBlock, knowledgeSource, { ["sim_pos"] = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] } } )
     return kn
   else
     error( "Knowledge unknown : " .. strKnowledgeType )
@@ -111,4 +111,26 @@ LinearInterpolation = function( min, max, start, stop, upslope, value )
     end
   end
   return res
+end
+
+local printRec
+printRec = function( var )
+  if( type( var ) == "table" ) then
+    local res = "table:"
+    for key, value in pairs( var ) do
+      res = res.."["..tostring( key )..","..printRec( value ).."]"
+    end
+    return res
+  else
+    return tostring( var )
+  end   
+end
+
+print = function( ... )
+  local res = ""
+  for _,i in pairs({...}) do
+    res = res..printRec( i )
+  end
+  DEC_Trace( res )
+  DEC_Debug( res )
 end
