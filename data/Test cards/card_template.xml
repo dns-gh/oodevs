@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="test_card.xsd" category="adaptation" data="donnée du test" title="Titre du Test" version="1">
-  <summary>
-    Ceci est un exemple de test.
-    Il ne contient que des données bidons.
-  </summary>
   <requirements>
     <project name="SCIPIO">
       <requirement id="Exigence 1"/>
@@ -16,29 +12,47 @@
       <requirement id="Exi b"/>
       <requirement id="Exi c"/>
     </project>
+    <!-- pendant le sprint, on peut indiquer les id des user stories -->
+    <project name="sprint4">
+      <requirement id="5454"/>
+    </project>
   </requirements>
-  <steps>
-    <step id="1" success="true">
-      <action>Faire ceci, comme cela.</action>
-      <expectation>L'IHM affiche ceci</expectation>
-    </step>
-    <step id="2" success="true">
-      <action>blabla...</action>
-      <expectation>blabla...</expectation>
-    </step>
-    <step id="3" success="false">
-      <action>blabla...</action>
-      <expectation>blabla...</expectation>
-    </step>
-  </steps>
-  <history>
-    <entry date="12-10-09"
-        success="true" tester-name="Frank Hillard" version="r68451" attachment="false" >
-        Le test passe
-    </entry>
-    <entry date="03-01-10"
-        success="true" tester-name="Fabrice Duvernois" version="r68450" attachment="true" issues="43351,4684">
-        Ca passe plus, blabla...
-    </entry>
-  </history>
+  <!--
+  il peut y avoir plusieurs test cases, par exemple pour regrouper dans un même fichier les tests portant sur une mission donnée
+  mais il est fortement conseillé de ne faire qu'un test case par fiche
+  -->
+  <test-case>
+    <data>
+      Décrire les données utilisées pour le test.
+    </data>
+    <summary>
+      Ceci est un exemple de test.
+      Il ne contient que des données bidons.
+    </summary>
+    <steps>
+      <step id="1" success="true">
+        <action>Faire ceci, comme cela.</action>
+        <expectation>L'IHM affiche ceci</expectation>
+      </step>
+      <step id="2" success="true">
+        <action>blabla...</action>
+        <expectation>blabla...</expectation>
+      </step>
+      <step id="3" success="false">
+        <action>blabla...</action>
+        <expectation>blabla...</expectation>
+      </step>
+    </steps>
+    <history>
+      <entry date="05-01-10" tester-name="Nom du testeur" version="revision subversion, par ex r68451" attachment="false">
+        <bug severity="major" issues-ids="65354,546338">
+          Description du bug, l'attribut severity peut valoir minor,major ou critical
+          issues-ids contient le ou les ids mantis associés
+        </bug>
+      </entry>
+      <entry date="12-01-10" tester-name="Nom du testeur" version="revision subversion, par ex r68451" attachment="false" >
+        <!-- pas de bug, donc la fiche passe -->
+      </entry>
+    </history>
+  </test-case>
 </test>
