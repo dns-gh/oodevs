@@ -55,7 +55,47 @@
       </step>
     </steps>
     <history>
-      <entry date="" tester-name="" version="" attachment="false">
+      <entry date="29-10-2009" tester-name="DDA" version="" attachment="false">
+       <bug severity="minor" issues-ids="2632">
+        	 L'automate A1(Compagnie Anti Char HOT [293][293]) a reçu la mission "Faire mouvement" vers le nord
+L'automate A2(Compagnie INF AMX 10P [287][287]) a reçu la mission "Relever"A1
+
+
+Résultat en Sword 3:
+
+- Les pions de A1 effectuent tous "Faire Mouvement" vers le nord, divisés en 2 groupes
+
+- Les pions de A2 ont reçu les missions suivantes:
+  2 pions "Faire Mouvement"
+  2 pions "Appuyer"
+  1 pion "Suivre"
+
+- Ils sont divisés en 2 groupes ayant des itinéraires jusqu'aux positions actuelles des 2 groupes de A1, qui est arrêté sur place
+
+- Chaque groupe de A2 contient un "Faire Mouvement" placé devant, suivi d'un pion "Appuyer" et enfin le pion "Suivre"
+
+- Une fois que 3 des pions de A2 arrivent aux positions objectives, tous les pions sauf le pion "Suivre" reçoivent la mission "Faire Mouvement" (car le PC de A1 ne se fait jamais relever)
+
+- Les pion de A2 se déplacent beaucoup plus vite que les pions de A1 (40 km/h contre 6km/h) et ont des itinéraires les amenant à la destination de A1
+
+- A2 sont arrivés à la destination
+
+- A1 se sont arrêté au cours de l'itinéraire sauf le pc de A1 qui continue jusqu' à la destination, car il ne s'est pas fait relevé
+
+
+
+Résultat en Sword 4:
+
+- Les pions de A1 effectuent tous "Faire Mouvement" vers le nord, divisés en 2 groupes
+
+- Les pions de A2 ont reçu les missions suivantes:
+  2 pions "Faire Mouvement"
+  2 pions "Appuyer"
+  1 pion "Suivre"
+
+- Ils ne sont pas divisés en 2 groupes mais restent ensemble
+- Le reste à l'air de bien se passer
+             </bug>
       </entry>
     </history>
   </test-case>

@@ -17,7 +17,16 @@
       </step>
     </steps>
     <history>
-      <entry date="" tester-name="" version="" attachment="false">
+           <entry date="14-01-2010" tester-name="PSN" version="" attachment="false">
+      <bug severity="minor" issues-ids="2576">
+ 	  	 Lorsque des unités ALAT vont se ravitailler à un plot de ravitaillement, leurs dotations en kérosène n'augmentent pas.
+
+En conséquence, ils passent leur temps à tourner autour du plot (vous noterez le jeu de mot subtile) en consommant leur kérosène jusqu'à la panne sèche. 
+        </bug>
+        <bug severity="minor" issues-ids="2976">
+ 	  	 Les unités ALAT cherchent constamment à se ravitailler dès le lancement de la sim, ainsi qu'après réception d'une mission.
+Les plots de ravitaillement ne fonctionnant pas (cf bug mantis 2576), les missions ne sont jamais réalisées. 
+        </bug>
       </entry>
     </history>
   </test-case>

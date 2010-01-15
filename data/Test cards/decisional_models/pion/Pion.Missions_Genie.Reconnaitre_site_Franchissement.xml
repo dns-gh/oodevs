@@ -26,7 +26,23 @@
       </step>
     </steps>
     <history>
-      <entry date="" tester-name="" version="" attachment="false">
+      <entry date="15-01-2010" tester-name="DDA" version="" attachment="false">
+      <bug severity="minor" issues-ids="2990">
+          	Création d'un objet "Site de franchissement" sur la rivière passant au milieu de la carte pour le camp des « Gentils » renseignant les paramètres : nom, largeur, profondeur.
+Déplacement par action magique un pion Génie A (par exemple la Section CBT GEN [212][212]) près du site de franchissement.
+Ordonner à la A "Reconnaitre site Franchissement" précisant l'objet construit.
+
+Résultat attendu :
+
+- Le site de franchissement a été crée.
+- Dans la fenêtre « Connaissance» sur les « Gentils» les paramètres du site (profondeur, largeur) ne sont pas renseignés
+- Après avoir reçu la mission « Reconnaitre site de franchissement » le pion se déplace près du site, effectue une reconnaissance de point. Comptes rendus : progression vers position, reconnaissance de point, arrive sur position, fin de mission
+- Vérifier que dans la fenêtre « Connaissance» sur les « Gentils» les paramètres du site (profondeur, largeur) sont maintenant renseignés avec les valeurs renseignées par la création du site
+
+Problème en Sword 3:
+
+- Les paramètres du site (profondeur, largeur) ne sont pas renseignés après la reconnaissance du site.
+        </bug>
       </entry>
     </history>
   </test-case>

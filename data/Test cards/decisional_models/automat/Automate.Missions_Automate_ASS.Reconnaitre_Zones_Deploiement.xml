@@ -20,7 +20,12 @@
       </step>
     </steps>
     <history>
-      <entry date="" tester-name="" version="" attachment="false">
+       <entry date="21-10-2009" tester-name="PSN" version="" attachment="false">
+                   <bug severity="minor" issues-ids="2547">
+La mission "Pion ASS Reconnaitre Zone Deploiement" retourne Mission Impossible.
+
+Une fois le mission impossible corrigé, l'implantation des zones est à vérifier car le script doti faire appel à S_Geometrie_CreerPositionTir_Canon, qui a deux paramètres de sortie et qui est donc mal pris en compte en lua. On pourrait inliner la fonction, qui n'est utilisée que dans le node BEH_Pion_ASS_Installer_ZoneImplantationCanon.
+             </bug>
       </entry>
     </history>
   </test-case>

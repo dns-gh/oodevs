@@ -4,7 +4,7 @@
   </requirements>
   <test-case>
    <data>
-   Case 5
+    	 Script RENS RADINT Mettre en oeuvre (sur la case 5 à gauche) (Exercice : ValidationTest)
    </data>
     <summary>
     </summary>
@@ -20,7 +20,20 @@
       </step>
     </steps>
     <history>
-      <entry date="" tester-name="" version="" attachment="false">
+            <entry date="21-10-2009" tester-name="LMT" version="" attachment="false">
+      <bug severity="minor" issues-ids="2551">
+ 	  	 Lorsque des unités ALAT vont se ravitailler à un plot de ravitaillement, leurs dotations en kérosène n'augmentent pas.
+
+En conséquence, ils passent leur temps à tourner autour du plot (vous noterez le jeu de mot subtile) en consommant leur kérosène jusqu'à la panne sèche. 
+        </bug>
+        <bug severity="minor" issues-ids="2564">
+ 	  Après avoir donné l'ordre pour chacune des deux missions le résultat en Sword 3 est le suivant:
+
+- Le pion reste sur place
+- CR remonté :
+  * "en position"
+  * "début mission"
+        </bug>
       </entry>
     </history>
   </test-case>

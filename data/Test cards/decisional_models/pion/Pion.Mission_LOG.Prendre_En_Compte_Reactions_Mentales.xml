@@ -21,7 +21,22 @@
       </step>
     </steps>
     <history>
-      <entry date="" tester-name="" version="" attachment="false">
+      <entry date="23-10-2009" tester-name="DDA" version="" attachment="false">
+      <bug severity="minor" issues-ids="2570">
+     Test effectué:
+
+- Mettre à 100 % dans le fichier Sante.xml le pourcentage de blessés mentaux
+C'est dans C:\Documents and Settings\dda\Mes documents\SWORD Officer Training 3\data\models\ada\physical\france à la ligne :
+  <injury caring-time="30m" category="mental" percentage="20" resting-time="72h"/>
+
+- Donner la mission "Attaquer" à un pion rouge ABC sur un itinéraire contenant des pions bleus pour provoquer des blesser mentaux
+
+Résulat attendu:
+- Pour les pions touchés par cette attaque, vérifier que le nombre de blessés mentaux et supérieur à 0
+
+Résultat observé:
+- Le nombre de blessés reste à 0 
+                    </bug>
       </entry>
     </history>
   </test-case>

@@ -4,7 +4,7 @@
   </requirements>
   <test-case>
    <data>
-   Case 5
+    	 Script Pion Milice "Harceler" de l'exercice Validation Tests.
    </data>
     <summary>
     </summary>
@@ -24,7 +24,44 @@
       </step>
     </steps>
     <history>
-      <entry date="" tester-name="" version="" attachment="false">
+      <entry date="21-10-2009" tester-name="DDA" version="" attachment="false">
+      <bug severity="minor" issues-ids="2537">
+                     	 Ordonner à un pion Milice "Harceler" sur une zone et en indiquant une position de regroupement
+
+Résultat en Sword 3:
+
+- Le pion Milice se déplace vers la position de regroupement
+- Le pion Milice reconnaît le point de regroupement avant de s'y placer
+- Il arrive au point de regroupement et installe le dispositif
+- Après l'installation il se dirige vers la zone afin de la contrôler
+- Il continue jusqu'à une position dans la zone qui devrait être le barycentre (ce bug est rapporté pour Sword3 N°2737)
+- A la tombée de la nuit il est sensé détruire des objets terrains(ponts,..) qui sont dans la zone ou alors des ennemis détectés. Il ne le fait pas(ce bug est aussi rapporté pour Sword3 N°2737)
+
+
+Résultat en Sword 4:
+- Le pion Milice se déplace vers la position de regroupement
+- Le pion Milice reconnaît le point de regroupement avant de s'y placer
+- Suivi de Compte rendu: Mission impossible
+
+                    </bug>
+                          <bug severity="minor" issues-ids="2737">
+                     	Résultat attendu en Sword 3:
+
+- Le pion Milice se déplace vers la position de regroupement
+- Le pion Milice reconnaît le point de regroupement avant de s'y placer
+- Il arrive au point de regroupement et installe le dispositif
+- Après l'installation il se dirige vers la zone afin de la contrôler
+- Il se positionne sur le barycentre de la zone.
+- A la tombée de la nuit il doit détruire des objets terrains(ponts,..) qui sont dans la zone ou alors des ennemis détectés.
+
+Résultat obtenu en Sword 3:
+- Le pion Milice se déplace vers la position de regroupement
+- Le pion Milice reconnaît le point de regroupement avant de s'y placer
+- Il arrive au point de regroupement et installe le dispositif
+- Après l'installation il se dirige vers la zone afin de la contrôler
+- Il ne se positionne pas sur le barycentre de la zone, mais sur un autre point dans la zone.
+- A la tombée de la nuit il ne détruit rien.
+                    </bug>
       </entry>
     </history>
   </test-case>

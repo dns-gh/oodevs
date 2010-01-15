@@ -22,7 +22,10 @@
       </step>
     </steps>
     <history>
-      <entry date="" tester-name="" version="" attachment="false">
+     <entry date="02-11-2009" tester-name="LMT" version="" attachment="false">
+       <bug severity="minor" issues-ids="2653">
+L'automate renvoi directement un compte rendu "Mission Impossible"
+</bug>
       </entry>
     </history>
   </test-case>

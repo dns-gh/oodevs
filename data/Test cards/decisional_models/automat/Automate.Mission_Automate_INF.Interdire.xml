@@ -25,7 +25,32 @@
       </step>
     </steps>
     <history>
-      <entry date="" tester-name="" version="" attachment="false">
+      <entry date="29-10-2009" tester-name="DDA" version="" attachment="false">
+       <bug severity="minor" issues-ids="2627">
+       La Compagnie INF AMX 10 P [287][287] a reçu l'ordre "Interdire" sur 2 positions dans la zone des rouges.
+
+Résultat en Sword 3:
+
+L'automate distribue les missions à ses pions de la manière suivante:
+- 2 pions "Interdire"
+- 1 pion "Appuyer"
+- 1 pion "Couvrir"
+- 1 pion "Suivre"
+
+
+
+Résultat en Sword 4:
+
+L'automate ne distribue pas les missions à ses pions alors qu'il a reçu l'ordre "Interdire"
+
+CR :
+  MIS-Automate_MRT_INF_Interdire : début MRT
+  Nombre de pion: 4
+  Sélection de composante pion: Infaterie
+  Sélection de composante pion
+  Assigne la mission 'Couvrir' à Section CBT INF AMX10P CDS OFF
+  Mission impossible
+             </bug>
       </entry>
     </history>
   </test-case>

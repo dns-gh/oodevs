@@ -24,7 +24,24 @@
       </step>
     </steps>
     <history>
-      <entry date="" tester-name="" version="" attachment="false">
+      <entry date="28-10-2009" tester-name="DDA" version="" attachment="false">
+       <bug severity="minor" issues-ids="2623">
+       Donner l'ordre "Harceler" à la compagnie INF AMX 
+       Résulat en Sword 3:
+- Ses pions ont reçu les ordres:
+ * 3 pions "Harceler"
+ * 2 pions "Suivre"
+
+Résulat en Sword 4:
+- Ses pions n'ont reçu d'ordres
+- CR :
+  MIS-Automate_MRT_INF_Harceler : début MRT
+  Nombre de pion: 4
+  Sélection de composante pion: Infaterie
+  Sélection de composante pion
+
+Aucune erreur dnas Sim.log, ni dans Dispatcher.log
+       </bug>
       </entry>
     </history>
   </test-case>

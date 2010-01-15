@@ -4,7 +4,7 @@
   </requirements>
   <test-case>
    <data>
-   Case 1
+    	 Script Mission Automate ABC Freiner case 1 (Exercice : Validation Test aux Tomates)
    </data>
     <summary>
     </summary>
@@ -23,7 +23,17 @@
       </step>
     </steps>
     <history>
-      <entry date="" tester-name="" version="" attachment="false">
+      <entry date="27-10-2009" tester-name="LMT" version="" attachment="false">
+                  <bug severity="minor" issues-ids="2608">
+
+Dans le script, l'automate Escadron de char AMX 30B2 Brennus se déplace pour se rapprocher des ennemis.
+Une fois arrivé à destination, la mission "Freiner" est donné à l'automate. A ce moment, trois pions prennent la mission freiner et deux pions ont la missions décrocher.
+
+En sword 3.1 : les pions qui décrochent se placent derrière les pions qui freinent. Dès qu'un pion qui a la mission freiner recule, le pion qui décroche recule aussi.
+
+En sword 4.0 : les pions qui décrochent se placent derrière les pions qui freinent mais sont plus proche qu'en sword 3.1. Ensuite, lorsqu'un pion qui freine recule, le pion qui décroche ne bouge pas.
+ </bug>
+
       </entry>
     </history>
   </test-case>

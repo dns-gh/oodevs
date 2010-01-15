@@ -23,7 +23,14 @@
       </step>
     </steps>
     <history>
-      <entry date="" tester-name="" version="" attachment="false">
+      <entry date="20-10-2009" tester-name="LMT" version="" attachment="false">
+      <bug severity="minor" issues-ids="5323">
+          	Dans Sword 4, créer un abattis Ennemi grâce à la fenêtre "création". Faire une action magique et activer l'obstacle ennemi.
+Ordonner à un pion "Section CBT GEN" de se déplacer (en passant sur l'obstacle) afin qu'il le détecte.
+Ordonner au pion "Section CBT GEN" de dégager l'obstacle (en donnant l'abattis en paramètre).
+
+Le compte rendu du pion renvoie "Mission Impossible".
+        </bug>
       </entry>
     </history>
   </test-case>

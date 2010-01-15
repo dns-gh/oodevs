@@ -4,7 +4,7 @@
   </requirements>
   <test-case>
    <data>
-   Case 1
+    	 Script Automate ABC Flanc Garder case 1 (Exercice : Validation Test aux tomates)
    </data>
     <summary>
     </summary>
@@ -21,7 +21,11 @@
       </step>
     </steps>
     <history>
-      <entry date="" tester-name="" version="" attachment="false">
+      <entry date="27-10-2009" tester-name="LMT" version="" attachment="false">
+            <bug severity="minor" issues-ids="2597">
+Ordonner à un automate (Escadron de char AMX 30B2 Brennus) de "Flanc Garder".
+2 pions reçoivent l'ordre ABC Attaquer et 3 pions reçoivent l'ordre de Suivre mais aucune ne bouge et aucune erreurs n'est remontées.
+                    </bug>
       </entry>
     </history>
   </test-case>

@@ -25,7 +25,14 @@
       </step>
     </steps>
     <history>
-      <entry date="" tester-name="" version="" attachment="false">
+      <entry date="10-11-2009" tester-name="LMT" version="" attachment="false">
+              <bug severity="minor" issues-ids="2704">
+ 	 Niveau pion, il existe deux pions ROEM : Elge et Brovab (automate Bromure)
+Elge : brouille autant les amis que les ennemis (ie les pions sont brouillés et avancent moins vite)
+Brovab : brouille que les ennemis (mais pas les amis)
+
+L'automate Elge ne possède qu'un unique pion qui est un pion Elge. L'automate Elge recoit la mission "RENS ROEM Appuyer" et la donne à son pion ELGE. Celui-ci effectue bien sa mission mais le pion ami n'est pas brouillé ce qui signifie qu'il a effectué la mission du Brovab. 
+        </bug>
       </entry>
     </history>
   </test-case>

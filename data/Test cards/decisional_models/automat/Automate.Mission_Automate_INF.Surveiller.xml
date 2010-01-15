@@ -24,7 +24,14 @@
       </step>
     </steps>
     <history>
-      <entry date="" tester-name="" version="" attachment="false">
+      <entry date="29-10-2009" tester-name="LMT" version="" attachment="false">
+       <bug severity="minor" issues-ids="2631">
+        	L'automate reçoit la mission Inf Surveiller et remonte le compte rendu "mission impossible" avant d'avoir distribuer les missions à ses pions.
+En sword 3.1, la distribution est la suivante :
+3 pions : Surveiller secteur
+1 pion : Appuyer
+1 pion : Suivre
+             </bug>
       </entry>
     </history>
   </test-case>

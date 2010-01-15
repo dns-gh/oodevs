@@ -4,7 +4,7 @@
   </requirements>
   <test-case>
    <data>
-   Case 5
+    	 Script TRANS Etablir Gerer Liaison (se lance sur la case 5) Exercice : Validation Test
    </data>
     <summary>
     </summary>
@@ -21,7 +21,19 @@
       </step>
     </steps>
     <history>
-      <entry date="" tester-name="" version="" attachment="false">
+      <entry date="10-11-09" tester-name="LMT" version="" attachment="false">
+         <bug severity="minor" issues-ids="2541">
+                     	 	Ordonner à un pion Groupe RAC2 (Automate Section RAC2) de "Etablir et Gérer Liaison".
+
+Sword 3.1 :
+- Compte rendu : "préparation de la mission"
+- 45 minutes plus tard, compte rendu "progression vers position" et le pion se déplace
+- Le pion remonte enfin les compte rendu "section déployee" et "arrive sur position"
+
+Sword 4 :
+- Compte rendu : "préparation de la mission"
+- Compte rendu : Mission Impossible (directement après le premier compte rendu)
+                    </bug>
       </entry>
     </history>
   </test-case>

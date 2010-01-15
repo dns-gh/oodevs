@@ -22,8 +22,15 @@
       </step>
     </steps>
     <history>
-      <entry date="" tester-name="" version="" attachment="false">
-      </entry>
+        <entry date="21-10-2009" tester-name="LMT" version="" attachment="false">
+        <bug severity="minor" issues-ids="2564">
+ 	  Après avoir donné l'ordre pour chacune des deux missions le résultat en Sword 3 est le suivant:
+
+- Le pion reste sur place
+- CR remonté :
+  * "en position"
+  * "début mission"
+        </bug>
     </history>
   </test-case>
 </test>

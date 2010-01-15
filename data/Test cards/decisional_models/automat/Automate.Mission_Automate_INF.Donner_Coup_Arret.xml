@@ -4,7 +4,7 @@
   </requirements>
   <test-case>
    <data>
-   Case 1
+    	 Script Automate INF Donner coup d'arrêt Case 1 (Exercice : ValidationTest aux Tomates)
    </data>
     <summary>
     </summary>
@@ -24,7 +24,21 @@
       </step>
     </steps>
     <history>
-      <entry date="" tester-name="" version="" attachment="false">
+      <entry date="28-10-2009" tester-name="LMT" version="" attachment="false">
+                   <bug severity="minor" issues-ids="2617">
+ 	 Donner la mission "INF donner coup d'arrêt" à un automate.
+Renseigner les paramètres obligatoires et lancer la mission.
+L'automate ne diffuse pas la mission à ses pions et renvoi un compte rendu "mission impossible lima invalide" or les limas sont dans l'onglet "paramètres optionnels" de la mission.
+
+En effet, une ligne de coup d'arrêt est nécessaire à la mission INF Donner Coup D'arrêt. 
+             </bug>
+             <bug severity="minor" issues-ids="2622">
+L'automate Compagnie INF AMX 10P se déplace jusqu'à la ligne LCAR.
+
+Sword 3.1 : 3 pions ont la missions "Défendre" et ses 3 pions se placent à des endroits différents sur la ligne LCAR.
+
+Sword 4.0 : 3 pions ont la missions "Défendre" et ses 3 pions se placent au même endroit sur la ligne LCAR 
+             </bug>
       </entry>
     </history>
   </test-case>

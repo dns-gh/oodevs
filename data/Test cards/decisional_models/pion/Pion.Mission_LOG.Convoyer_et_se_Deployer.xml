@@ -33,7 +33,11 @@
       </step>
     </steps>
     <history>
-      <entry date="" tester-name="" version="" attachment="false">
+      <entry date="15-01-2010" tester-name="LMT" version="" attachment="false">
+      <bug severity="minor" issues-ids="2981">
+     Cliquer sur n'importe quel pion et afficher ses dotations. Sélectionner action magique puis Recompletion partielle. Ajouter par exemple du carburant et regarder de nouveau la valeur de cette dotation : le nouveau chiffre indiqué ne correspond pas à ce que vous vouliez.
+Par exemple, j'ai mis 100 dans la recompletion partielle pour le carburant (alors qu'il n'y en avait plus). Le pion dispose maintenant de 1658 gasoil....
+                    </bug>
       </entry>
     </history>
   </test-case>

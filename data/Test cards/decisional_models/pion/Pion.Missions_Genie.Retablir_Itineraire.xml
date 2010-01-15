@@ -19,7 +19,15 @@
       </step>
     </steps>
     <history>
-      <entry date="" tester-name="" version="" attachment="false">
+            <entry date="20-10-2009" tester-name="PSN" version="" attachment="false">
+            <bug severity="minor" issues-ids="2525">
+ 	 Pour enlever un obstacle de type "abattis", une section CBT Gen met 6 minutes dans la version 3 de SWORD contre 40 secondes dans la version 4
+(il s'agit du temps sim écoulé entre les comptes-rendus "Organisation chantier" et "Begin to remove").
+
+Testé avec le profil "Pion GENIE Rétablir Itinéraire" dans l'exercice ValidationTest (disponible à la révision 6790):
+
+Donner la mission GENIE Rétablir Itinéraire passant au travers d'un abattis. 
+        </bug>
       </entry>
     </history>
   </test-case>

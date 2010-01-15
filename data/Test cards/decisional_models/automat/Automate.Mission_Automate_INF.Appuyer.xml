@@ -6,7 +6,7 @@
   Donner à un second automate A2 la mission "Appuyer" avec en paramètre la compagnie A1.
   <test-case>
    <data>
-   Case 1
+   Exercice "ValidationTests aux tomates", profil "Automate INF Appuyer". 
    </data>
     <summary>
     </summary>
@@ -20,7 +20,10 @@
       </step>
     </steps>
     <history>
-      <entry date="" tester-name="" version="" attachment="false">
+      <entry date="30-10-2009" tester-name="PSN" version="" attachment="false">
+       <bug severity="minor" issues-ids="2646">
+La mission Automate INF Appuyer retourne "Mission Impossible" après de longues heures d'attente.
+       </bug>
       </entry>
     </history>
   </test-case>

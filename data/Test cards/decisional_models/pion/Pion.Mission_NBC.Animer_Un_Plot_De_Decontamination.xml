@@ -40,7 +40,15 @@
       </step>
     </steps>
     <history>
-      <entry date="" tester-name="" version="" attachment="false">
+       <entry date="20-10-2009" tester-name="PSN" version="" attachment="false">
+             <bug severity="minor" issues-ids="2516">
+                     	La mission pion NBC Animer Un Plot De Decontamination retourne "Mission Impossible".
+                    </bug>
+                    <bug severity="minor" issues-ids="2530">
+                     	 	 When given a CBRN mission such as decontamination, it seems that the units are not wearing their CBRN suits since the appropriate icon does not appear in the Info box.
+
+It is also the case when they receive the specific order "NBC Suit On". 
+                    </bug>
       </entry>
     </history>
   </test-case>

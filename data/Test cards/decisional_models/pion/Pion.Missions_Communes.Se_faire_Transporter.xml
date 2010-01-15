@@ -21,7 +21,20 @@
       </step>
     </steps>
     <history>
-      <entry date="" tester-name="" version="" attachment="false">
+       <entry date="19-10-2009" tester-name="LMT" version="" attachment="false">
+        <bug severity="minor" issues-ids="2495">
+          	 Ordonner à une escadrille HM d'Heliporter un pion d'INF (section CBT INF AMX10P) vers une position de débarquement.
+Ordonner au pion INF de se faire transporter à la même position d'embarquement.
+
+L'automate se déplace avec le pion et le dépose à la position de débarquement puis repart vers la position de regroupement.
+Le pion INF à comme compte rendu "en cours de déplacement" et jamais de compte rendu "Fin de déplacement". 
+        </bug>
+                <bug severity="minor" issues-ids="2501">
+          	 Ordonner à un pion Patrouille 1HM OFF d'heliporter un pion Section CBT INF VAB et ordonner au pion INF de se faire transporter.
+
+Les deux pions se déplace vers le point d'embarquement. On voit les deux pions faire l'aller retour entre le point d'embarquement et le point de débarquement.
+Ceci ne s'arrête que lorsque le pion doit se ravitailler (ie plus de 4 heures se sont écoulées).... 
+        </bug>
       </entry>
     </history>
   </test-case>

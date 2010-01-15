@@ -4,7 +4,7 @@
   </requirements>
   <test-case>
    <data>
-   Case 1
+  Script Automate INF Defendre Ferme Case 1 (il faut prendre comme order "orderErreurAttaquer.ord")
    </data>
     <summary>
     </summary>
@@ -17,7 +17,12 @@
       </step>
     </steps>
     <history>
-      <entry date="" tester-name="" version="" attachment="false">
+      <entry date="29-10-2009" tester-name="PSN" version="" attachment="false">
+       <bug severity="minor" issues-ids="2620">
+L'automate Compagnie INF AMX 10P se déplace jusqu'à la zone à défendre. L'automate ennemi Compagnie INF AMX 10 P attaque en souplesse et se déplace jusqu'à la zone.
+
+un pion ennemi engage un pion ami qui riposte. Il y a de nouveau un engagement et qui détruit tactiquement un pion ennemi. Le pion ennemi recule et ensuite, tous les pions ennemis sont immobilisés. Un compte rendu "Mission Impossible" est remonté au niveau de l'automate ennemi" suivi de "Rapport de force defavorable". Une erreur est remontée dans le sim.log.
+       </bug>
       </entry>
     </history>
   </test-case>

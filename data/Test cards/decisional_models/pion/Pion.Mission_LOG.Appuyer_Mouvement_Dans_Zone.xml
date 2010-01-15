@@ -4,7 +4,7 @@
   </requirements>
   <test-case>
    <data>
-   Case 5
+   script "Pion LOG Appuyer Mouvement Zone" (exercice ValidationTest LOG).
    </data>
     <summary>
     </summary>
@@ -27,7 +27,10 @@
       </step>
     </steps>
     <history>
-      <entry date="" tester-name="" version="" attachment="false">
+      <entry date="30-12-2009" tester-name="LMT" version="" attachment="false">
+      <bug severity="minor" issues-ids="2929">
+      Aucune zone de mobilité améliorée n'est créée. 
+                    </bug>
       </entry>
     </history>
   </test-case>

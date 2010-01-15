@@ -19,7 +19,10 @@
       </step>
     </steps>
     <history>
-      <entry date="" tester-name="" version="" attachment="false">
+      <entry date="21-10-2009" tester-name="PSN" version="" attachment="false">
+                    <bug severity="minor" issues-ids="2547">
+                     	 La mission "Pion ASS Reconnaitre Zone Deploiement" retourne Mission Impossible.
+                    </bug>
       </entry>
     </history>
   </test-case>

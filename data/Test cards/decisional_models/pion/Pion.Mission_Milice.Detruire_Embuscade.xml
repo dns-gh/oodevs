@@ -23,7 +23,25 @@
       </step>
     </steps>
     <history>
-      <entry date="" tester-name="" version="" attachment="false">
+      <entry date="21-10-2009" tester-name="DDA" version="" attachment="false">
+      <bug severity="minor" issues-ids="2539">
+                     	 Dans le scénario de test de cette mission:
+- Ordonner au pion Milice armee AK47 LAND ROVER [503] "Detruire Embuscade" en précisant une position de regroupement , une position d'embuscade et un obstacle de type "Abattis"
+
+
+Résultat en Sword 3:
+- Le pion se déplace jusqu' à la position d'embuscade
+- Il s'installe et prépare l'embuscade, et se retire un peu
+- Attendre jusqu'à "fin de travaux" dans le compte rendu
+- Faire passer une unité ennemi "Peloton AMX 30B2 BRENNUS CDP OFF [455][455]" avec "Faire Mouvement" passant sur l'embuscade
+- Le pion milice tire sur l'ennemi , compte rendu "prise de contact" et se retire vers la position de regroupement
+- L'ennemi se retire
+
+Résultat en Sword 4:
+- Le pion se déplace jusqu' à la position d'embuscade
+- Il s'installe et prépare l'embuscade, et se retire un peu
+- Suivi de Compte rendu : "Mission impossible"
+                    </bug>
       </entry>
     </history>
   </test-case>
