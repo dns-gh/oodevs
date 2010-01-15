@@ -1,33 +1,25 @@
 --@TODO MGD Remove this ugly, find why scriptref error
 function CreateKnowledge( strKnowledgeType, knowledgeSource, knowledgedPosition )
   if( strKnowledgeType == "net.masagroup.sword.military.world.Point" ) then
-    --default_engine.createPoint( {}, knowledgedPosition[1], knowledgedPosition[2], knowledgedPosition[3] )
-    kn = knowledges.create( net.masagroup.sword.military.world.Point, knowledgeSource )
-    kn.sim_pos = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] }
+    kn = knowledges.create( net.masagroup.sword.military.world.Point, knowledgeSource, { ["sim_pos"] = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] } } )
     return kn
   elseif( strKnowledgeType == "net.masagroup.sword.military.world.Area" ) then
-    kn = knowledges.create( net.masagroup.sword.military.world.Area, knowledgeSource )
-    kn.sim_pos = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] }
+    kn = knowledges.create( net.masagroup.sword.military.world.Area, knowledgeSource, { ["sim_pos"] = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] } } )
     return kn
   elseif( strKnowledgeType == "net.masagroup.sword.military.world.Object" ) then
-    kn = knowledges.create( net.masagroup.sword.military.world.Object, knowledgeSource )
-    kn.sim_pos = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] }
+    kn = knowledges.create( net.masagroup.sword.military.world.Object, knowledgeSource, { ["sim_pos"] = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] } } )
     return kn
   elseif( strKnowledgeType == "net.masagroup.sword.military.world.Section" ) then
-    kn = knowledges.create( net.masagroup.sword.military.world.Section, knowledgeSource )
-    kn.sim_pos = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] }
+    kn = knowledges.create( net.masagroup.sword.military.world.Section, knowledgeSource, { ["sim_pos"] = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] } } )
     return kn
   elseif( strKnowledgeType == "net.masagroup.sword.military.world.Automat" ) then
-    kn = knowledges.create( net.masagroup.sword.military.world.Automat, knowledgeSource )
-    kn.sim_pos = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] }
+    kn = knowledges.create( net.masagroup.sword.military.world.Automat, knowledgeSource, { ["sim_pos"] = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] } } )
     return kn
   elseif( strKnowledgeType == "net.masagroup.sword.military.world.Population" ) then
-    kn = knowledges.create( net.masagroup.sword.military.world.Population, knowledgeSource )
-    kn.sim_pos = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] }
+    kn = knowledges.create( net.masagroup.sword.military.world.Population, knowledgeSource, { ["sim_pos"] = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] } } )
     return kn
   elseif( strKnowledgeType == "net.masagroup.sword.military.world.UrbanBlock" ) then
-    kn = knowledges.create( net.masagroup.sword.military.world.UrbanBlock, knowledgeSource )
-    kn.sim_pos = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] }
+    kn = knowledges.create( net.masagroup.sword.military.world.UrbanBlock, knowledgeSource, { ["sim_pos"] = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] } } )
     return kn
   else
     error( "Knowledge unknown : " .. strKnowledgeType )
@@ -58,17 +50,20 @@ end
 function InitializeMe( strKnowledgeType, knowledgeSource, posx, posy ,posz )
   if( strKnowledgeType == "net.masagroup.sword.military.world.Section" ) then
     if not kBase.me.body then
-      kBase.me.body = kBase.create( net.masagroup.sword.military.world.Section, {} )
+      kBase.me.body = kBase.create( net.masagroup.sword.military.world.Section, knowledgeSource, { ["sim_pos"] = { x=posx, y=posy, z=posz } } )
+      behavior_model.createGroup( "michel" )
     end
-    kBase.me.body.sim_pos = { x=posx, y=posy, z=posz }
   else
     error( "Knowledge unknown : " .. strKnowledgeType )
   end
 end
 
 function InitializeLeaderMe( strKnowledgeType, knowledgeSource )
-  if( strKnowledgeType == "net.masagroup.sword.military.world.Automat" ) then
-    --knowledges.initializeMe( strKnowledgeType, knowledgeSource )
+  if( strKnowledgeType == "net.masagroup.sword.military.world.Compagnie" ) then
+    if not kBase.me.body then
+      kBase.me.body = kBase.create( net.masagroup.sword.military.world.Compagnie, knowledgeSource )
+      behavior_model.createGroup( "michel" )  
+    end
   else
     error( "Knowledge unknown : " .. strKnowledgeType )
   end

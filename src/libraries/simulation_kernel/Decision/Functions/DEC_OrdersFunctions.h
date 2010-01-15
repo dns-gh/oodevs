@@ -48,6 +48,7 @@ public:
     static void             MRT_Validate           ( MIL_Automate& callerAutomate );
     static void             MRT_AffectFuseaux      ( MIL_Automate& callerAutomate, std::vector< DEC_Decision_ABC* > pions );   
     static MIL_Mission_ABC* CDT_CreatePionMission  ( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission );
+    static MIL_Mission_ABC* CreatePionMissionBM    ( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission );
     static void             CDT_GivePionMission    ( MIL_Automate& callerAutomate, MIL_Mission_ABC* pMission );
 
     static MIL_Mission_ABC* CreateAutomateMission  ( MIL_Automate& callerAutomate, DEC_Decision_ABC* pAutomate, const std::string& mission  );

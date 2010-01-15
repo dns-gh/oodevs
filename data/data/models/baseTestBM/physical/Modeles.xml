@@ -35,11 +35,10 @@
         <mission name="Dumb Automat Mission"/>
       </missions>
     </automat>
-  </automats>
-  <automats>
-    <automat dia-type="DumbAutomat" file="DumbAutomat.bms" name="DumbAutomat">
+     <automat dia-type="BMAutomat" file="BMAutomat.bms" name="BMAutomat">
       <missions>
-        <mission name="Dumb Automat Mission"/>
+        <mission name="GiveOrderMoveTo"/>
+        <mission name="GiveOrderMoveToPoint"/>
       </missions>
     </automat>
   </automats>

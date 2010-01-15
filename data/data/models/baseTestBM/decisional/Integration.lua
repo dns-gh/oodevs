@@ -7,3 +7,5 @@ include "integration/DefaultDestroyableIntegration.lua"
 include "integration/DefaultPositionableIntegration.lua"
 include "integration/DefaultReachingIntegration.lua"
 include "integration/DefaultDestroyingIntegration.lua"
+
+include "integration/CommunicationIntegration.lua"

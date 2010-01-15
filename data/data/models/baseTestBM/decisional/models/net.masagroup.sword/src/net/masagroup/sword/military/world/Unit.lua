@@ -5,7 +5,6 @@ defaultMethods
 return
 {
     moveToIt = function( unit )
-        BreakForDebug( tostring( "moveToIt" ) )
         return integration.moveToIt( unit )
     end,
     
@@ -13,7 +12,7 @@ return
         --TODO 
     end,   
     computeDistance = function( element )
-        BreakForDebug( tostring( "call agent compute distance" ) )
+
         return integration.magnitude( element, kBase.me.body )
     end,
     

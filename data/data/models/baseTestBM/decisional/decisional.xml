@@ -12,7 +12,7 @@
       </RepertoiresBM>
       <Knowledges>
         <Knowledge>net.masagroup.sword.military.world.Area</Knowledge>
-        <Knowledge>net.masagroup.sword.military.world.Automat</Knowledge>
+        <Knowledge>net.masagroup.sword.military.world.Compagnie</Knowledge>
         <Knowledge>net.masagroup.sword.military.world.Object</Knowledge>
         <Knowledge>net.masagroup.sword.military.world.Point</Knowledge>
         <Knowledge>net.masagroup.sword.military.world.Section</Knowledge>

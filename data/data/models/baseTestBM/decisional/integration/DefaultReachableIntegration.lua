@@ -28,6 +28,7 @@ end
 
 integration.moveToIt = function( reachable)
   moveAction = moveAction or nil
+  local etat = nil
   if not moveAction then
     it = DEC_CreerItineraireBM( reachable.sim_pos.x, reachable.sim_pos.y, reachable.sim_pos.z, eTypeItiMouvement )
     moveAction = DEC_StartDeplacement( it )

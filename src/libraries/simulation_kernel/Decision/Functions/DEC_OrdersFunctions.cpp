@@ -112,6 +112,23 @@ MIL_Mission_ABC* DEC_OrdersFunctions::CDT_CreatePionMission( MIL_Automate& calle
 }
 
 //-----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::CreatePionMissionBM
+// Created: MGD 2010-01-14
+// Like CDT_CreatePionMission but no need of active MRT
+//-----------------------------------------------------------------------------
+MIL_Mission_ABC* DEC_OrdersFunctions::CreatePionMissionBM( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission )
+{
+    assert( pPion );
+
+    // Instanciate and check the new mission
+    const MIL_MissionType_ABC* pMissionType = MIL_PionMissionType::FindFromDiaID( mission );
+    assert( pMissionType );
+
+    MIL_PionMission* pPionMission = callerAutomate.GetOrderManager().CreatePionMissionBM( pPion->GetPion(), *pMissionType );
+    return pPionMission;
+}
+
+//-----------------------------------------------------------------------------
 // Name: DEC_OrdersFunctions::CDT_GivePionMission
 // Created: NLD 2003-04-16
 //-----------------------------------------------------------------------------

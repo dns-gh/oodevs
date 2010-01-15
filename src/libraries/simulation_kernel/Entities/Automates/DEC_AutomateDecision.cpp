@@ -600,7 +600,7 @@ void DEC_AutomateDecision::RegisterSelf( directia::Brain& brain )
 // -----------------------------------------------------------------------------
 void DEC_AutomateDecision::UpdateMeKnowledge( directia::Brain& brain )
 {
-    brain.GetScriptFunction( "InitializeLeaderMe" )( std::string("net.masagroup.sword.military.world.Automat"), (DEC_Decision_ABC*)this );
+    brain.GetScriptFunction( "InitializeLeaderMe" )( std::string("net.masagroup.sword.military.world.Compagnie"), (DEC_Decision_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------

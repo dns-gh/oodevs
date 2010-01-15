@@ -342,7 +342,7 @@ void AutomatFunctionBM( directia::ScriptRef& knowledgeCreateFunction, const dire
     {
         MT_Vector2D pos;
         value->GetAutomate().GetAlivePionsBarycenter( pos );
-        knowledgeCreateFunction( refMission, std::string( "net.masagroup.sword.military.world.Automat" ), name, value, pos.ToStdVector(), false );
+        knowledgeCreateFunction( refMission, std::string( "net.masagroup.sword.military.world.Compagnie" ), name, value, pos.ToStdVector(), false );
     }
 }
 void AutomatListFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
@@ -363,7 +363,7 @@ void AutomatListFunctionBM( directia::ScriptRef& knowledgeCreateFunction, const 
             (*it)->GetAutomate().GetAlivePionsBarycenter( pos );
             positions.push_back( pos.ToStdVector() );
         }
-        knowledgeCreateFunction( refMission, std::string( "net.masagroup.sword.military.world.Automat" ), name, value, positions, true );
+        knowledgeCreateFunction( refMission, std::string( "net.masagroup.sword.military.world.Compagnie" ), name, value, positions, true );
     }     
 }
 void AgentFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )

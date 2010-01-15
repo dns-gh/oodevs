@@ -18,8 +18,17 @@ defaultMethods
     isFriend = function () return default_engine.methods.load( "isFriend" ) end,
     perceptionLevel = function() return default_engine.methods.load( "perceptionLevel") end,
     observationPriority = function() return default_engine.methods.load( "observationPriority" ) end,
-
+    
+    -- COMMANDING
+    isCommandingFor = function() return default_engine.methods.load( "isCommandingFor" ) end,
+    isInMyTeam = function() return default_engine.methods.load( "isInMyTeam" ) end,
+    
+    -- 
+    communicate = function() return default_engine.methods.load( "unit_communicate" ) end,
 }
+
+communication.setMessageTreatment( "Order", integration.communication.StartMissionPion )
+
 return
 {
     -- $$$ MIA: temp, to move in default military implementation
@@ -61,7 +70,29 @@ return
         return 0 -- TODO
     end,
     computeReconnaissanceCapability = function(self, objective, keypoint )
-        BreakForDebug("computeReconnaissanceCapability")
     	return integration.normalizedInversedDistance( objective, keypoint )
-    end
+    end,
+    setFront = function( self )
+        --TODO
+    end,
+    setSupport = function( self )
+        --TODO
+    end,
+    commandEfficiency= function( self )
+        --TODO
+    end,
+    tasks = 
+    {
+        adder = function( self, task ) error( "unused method", 2 ) end,
+        accepter = function( self, visitor )
+                        for role in kBase.executeQuery( { knowledgeType = { directia.core.model.Role } } ) do
+                            if role.body == self then                          
+                              return role.tasks:accept( visitor ) 
+                            end
+                        end
+                   end,
+        remover = function( self, task ) 
+                      error( "unused method", 2 ) 
+                  end 
+     }
 }

@@ -271,6 +271,33 @@ MIL_PionMission* MIL_AutomateOrderManager::CDT_CreatePionMission( MIL_AgentPion&
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AutomateOrderManager::CDT_CreatePionMission
+// Created: MGD 2010-01-14
+// Like CDT_CreatePionMission but no need of active MRT
+// -----------------------------------------------------------------------------
+MIL_PionMission* MIL_AutomateOrderManager::CreatePionMissionBM( MIL_AgentPion& pion, const MIL_MissionType_ABC& missionType )
+{
+    assert( automate_.IsEngaged() );
+
+    const MIL_AutomateMission* pCurrentMission = static_cast< const MIL_AutomateMission* >( GetCurrentMission() ); 
+    if( !pCurrentMission )
+    {
+        MT_LOG_WARNING( "Automate '" << automate_.GetName() << "' (ID " << automate_.GetID() << ", Model '" << automate_.GetType().GetModel().GetName() << "') has no current mission", 2, "MIL_AutomateOrderManager::CDT_CreatePionMission" );
+        return 0;
+    }
+    if( !pion.GetOrderManager().IsMissionAvailable( missionType ) )
+    {
+        MT_LOG_ERROR( "Mission '" << missionType.GetName() << "' not available for pion '" << pion.GetName() << "' (ID " << pion.GetID() << ", Model '" << pion.GetType().GetModel().GetName() << "')", 4, "MIL_AutomateOrderManager::CDT_CreatePionMission" );
+        return 0;
+    }
+
+    MIL_PionMission* pPionMission = new MIL_PionMission( missionType, pion, *pCurrentMission );
+    bool bOut = preparedMissions_.insert( pPionMission ).second;
+    assert( bOut );
+    return pPionMission;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AutomateOrderManager::CDT_GivePionMission
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------

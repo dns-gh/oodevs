@@ -240,7 +240,12 @@ void DEC_RolePion_Decision::EndCleanStateAfterCrash()
 // -----------------------------------------------------------------------------
 void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
 {
-// Actions
+// Missions
+    brain.RegisterFunction( "DEC_CreerMissionPion",
+        boost::function< MIL_Mission_ABC*( const std::string& ) >( boost::bind( &DEC_OrdersFunctions::CreatePionMissionBM, boost::ref( GetPion().GetAutomate() ), this, _1 ) ) );
+    brain.RegisterFunction( "DEC_DonnerMissionPion",
+        boost::function< void( MIL_Mission_ABC* pMission ) >( boost::bind( &DEC_OrdersFunctions::CDT_GivePionMission, boost::ref( GetPion().GetAutomate() ), _1 ) ) );
+    // Actions
     brain.RegisterFunction( "DEC_StopAction",
         boost::function< PHY_Action_ABC*( PHY_Action_ABC* ) >( boost::bind( &DEC_ActionFunctions::StopAction< MIL_AgentPion >, boost::ref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_PauseAction",
