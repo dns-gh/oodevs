@@ -11,10 +11,10 @@
 #define __MIL_PopulationConcentration_h_
 
 #include "MIL.h"
-
 #include "MIL_PopulationElement_ABC.h"
 #include "MIL_Population.h"
 #include "simulation_terrain/TER_PopulationConcentration_ABC.h"
+#include "Tools/MIL_IDManager.h"
 
 namespace xml
 {
@@ -36,7 +36,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      MIL_PopulationConcentration( MIL_Population& population, xml::xistream& xis );
-     MIL_PopulationConcentration( MIL_Population& population, const MT_Vector2D& position, unsigned int nID = 0);
+     MIL_PopulationConcentration( MIL_Population& population, const MT_Vector2D& position );
     ~MIL_PopulationConcentration();
     //@}
 
@@ -125,6 +125,8 @@ private:
 
     const MIL_Object_ABC* pSplittingObject_;
     MT_Float                  rPullingFlowsDensity_;
+
+    static MIL_IDManager idManager_;
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_PopulationConcentration* concentration, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_PopulationConcentration* concentration, const unsigned int /*version*/ );

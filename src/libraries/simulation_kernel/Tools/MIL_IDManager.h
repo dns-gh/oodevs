@@ -20,18 +20,19 @@ class MIL_IDManager
 {
 
 public:
-    //! @name Operations
-    //@{
-    static unsigned long GetFreeId();//@TODO replace static by member function and give instance of MIL_IDManager to factories constructor
-
-    template< typename Archive >
-    static void serialize( Archive& archive, uint version );
-    //@}
-
     //! @name Constructors/Destructor
     //@{
      MIL_IDManager();
     ~MIL_IDManager();
+    //@}
+
+    //! @name Operations
+    //@{
+    unsigned long GetFreeId();
+    void Lock( unsigned long id );
+
+    template< typename Archive >
+    void serialize( Archive& archive, uint version );
     //@}
 
 private:
@@ -45,7 +46,7 @@ private:
 private:
     //! @name Member data
     //@{
-    static unsigned long last_;
+    unsigned long last_;
     //@}
 };
 

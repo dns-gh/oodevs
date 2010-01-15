@@ -16,8 +16,6 @@
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "xeumeuleu/xml.h"
 
-
-
 BOOST_CLASS_EXPORT_GUID( MIL_AgentInjuredHumanPion, "MIL_AgentInjuredHumanPion" )
 
 
@@ -54,8 +52,8 @@ void load_construct_data( Archive& archive, MIL_AgentInjuredHumanPion* unit, con
 // Name: MIL_AgentInjuredHumanPion constructor
 // Created: RFT 2008-10-04
 // -----------------------------------------------------------------------------
-MIL_AgentInjuredHumanPion::MIL_AgentInjuredHumanPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis )
-    : MIL_AgentPion( type, nID, automate, algorithmFactories, xis )
+MIL_AgentInjuredHumanPion::MIL_AgentInjuredHumanPion( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis )
+    : MIL_AgentPion( type, automate, algorithmFactories, xis )
 {
     if( !GetAutomate().GetType().IsInjuredHuman() )
         xis.error( "Error: not a logistic automaton for this logistic unit." );
@@ -64,16 +62,6 @@ MIL_AgentInjuredHumanPion::MIL_AgentInjuredHumanPion( const MIL_AgentTypePion& t
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentInjuredHumanPion constructor
 // Created: RFT 2008-02-08
-// -----------------------------------------------------------------------------
-MIL_AgentInjuredHumanPion::MIL_AgentInjuredHumanPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories )
-    : MIL_AgentPion( type, nID, automate, algorithmFactories )
-{
-    assert( automate.GetType().IsInjuredHuman() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentInjuredHumanPion constructor
-// Created: RPD 2009-11-10
 // -----------------------------------------------------------------------------
 MIL_AgentInjuredHumanPion::MIL_AgentInjuredHumanPion( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories )
     : MIL_AgentPion( type, automate, algorithmFactories )

@@ -12,6 +12,8 @@
 #ifndef __PHY_FireResults_Pion_h_
 #define __PHY_FireResults_Pion_h_
 
+#include "MIL.h"
+#include "Tools/MIL_IDManager.h"
 #include "Entities/Actions/PHY_FireResults_ABC.h"
 
 class MIL_Agent_ABC;
@@ -33,15 +35,17 @@ public:
 
     //! @name Accessors
     //@{
-    uint GetID() const;
+    unsigned int GetID() const;
     //@}
 
 private:
     //! @name Member data
     //@{
     const MIL_Agent_ABC& firer_;
-    const uint           nID_;
+    const unsigned int           nID_;
     //@}
+
+    static MIL_IDManager idManager_;
 };
 
 #endif // __PHY_FireResults_Pion_h_

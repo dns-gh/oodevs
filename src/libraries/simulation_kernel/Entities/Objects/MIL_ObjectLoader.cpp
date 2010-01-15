@@ -15,7 +15,6 @@
 #include "ObjectPrototype.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Network/NET_ASN_Tools.h"
-#include "Tools/MIL_IDManager.h"
 #include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
@@ -94,7 +93,7 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const std::string& type, MIL_Arm
     CIT_Prototypes it = prototypes_.find( type );
     if( it == prototypes_.end() )
         throw std::runtime_error( __FUNCTION__ " - Unknown object type: " + type );
-    Object* object = new Object( MIL_IDManager::GetFreeId(), *it->second, army, &location, "", reserved );
+    Object* object = new Object( *it->second, army, &location, "", reserved );
     object->Finalize();
     return object;
 }
@@ -105,9 +104,7 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const std::string& type, MIL_Arm
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectLoader::CreateObject( xml::xistream& xis, MIL_Army_ABC& army ) const
 {    
-    const unsigned int id = xml::attribute< unsigned int >( xis, "id" );
     const std::string type( xml::attribute< std::string >( xis, "type" ) );
-    const std::string name( xml::attribute< std::string >( xis, "name" ) );
     
     CIT_Prototypes it = prototypes_.find( type );
     if( it == prototypes_.end() )
@@ -115,7 +112,7 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( xml::xistream& xis, MIL_Army_ABC
     TER_Localisation location;
     location.Read( xis );
     // $$$$ SBO 2009-06-08: Check geometry constraint
-    Object* object = new Object( id, *it->second, army, &location, name );
+    Object* object = new Object( xis, *it->second, army, &location );
     xis >> xml::optional() >> xml::start( "attributes" )
             >> xml::list( *this, &MIL_ObjectLoader::ReadAttributes, *object )
         >> xml::end();
@@ -138,7 +135,7 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const ASN1T_MagicActionCreateObj
     TER_Localisation location;
     if( ! NET_ASN_Tools::ReadLocation( asn.location, location ) )
         return 0;
-    Object* pObject = new Object( MIL_IDManager::GetFreeId(), *it->second, army, &location, asn.name );
+    Object* pObject = new Object( *it->second, army, &location, asn.name );
     attributes_->Create( *pObject, asn.attributes );
     pObject->Finalize();
     return pObject;
@@ -153,7 +150,7 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const MIL_ObjectBuilder_ABC& bui
     CIT_Prototypes it = prototypes_.find( builder.GetType().GetName() );
     if ( it == prototypes_.end() )
         return 0;
-    Object* pObject = new Object( MIL_IDManager::GetFreeId(), *it->second, army, 0 );
+    Object* pObject = new Object( *it->second, army, 0 );
 	builder.Build( *pObject );
     pObject->Finalize();
     return pObject;

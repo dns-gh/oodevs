@@ -25,13 +25,14 @@
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_ASN_Messages.h"
-#include "Tools/MIL_IDManager.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_Agent, "DEC_Knowledge_Agent" )
 
 MT_Float DEC_Knowledge_Agent::rMaxDangerosityDegradationByRelevance_        = 0.2; // 20%
 MT_Float DEC_Knowledge_Agent::rMaxDangerosityDegradationByOpState_          = 0.2; // 20%
 MT_Float DEC_Knowledge_Agent::rMaxDangerosityDegradationByNeutralizedState_ = 0.8; // 80%
+
+MIL_IDManager DEC_Knowledge_Agent::idManager_;
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Agent constructor
@@ -41,7 +42,7 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent( const MIL_KnowledgeGroup& knowledgeGro
     : DEC_Knowledge_ABC              ()
     , pKnowledgeGroup_               ( &knowledgeGroup )
     , pAgentKnown_                   ( &agentKnown )
-    , nID_                           ( MIL_IDManager::GetFreeId() )
+    , nID_                           ( idManager_.GetFreeId() )
     , pCurrentPerceptionLevel_       ( &PHY_PerceptionLevel::notSeen_ )
     , pPreviousPerceptionLevel_      ( &PHY_PerceptionLevel::notSeen_ )
     , pMaxPerceptionLevel_           ( &PHY_PerceptionLevel::notSeen_ )
@@ -162,7 +163,9 @@ void DEC_Knowledge_Agent::load( MIL_CheckPointInArchive& file, const unsigned in
          >> dataRecognition_
          >> dataIdentification_
          >> nTimeLastUpdate_;
-    
+
+    idManager_.Lock( nID_ );
+
     unsigned int nID;
     file >> nID;
     pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );

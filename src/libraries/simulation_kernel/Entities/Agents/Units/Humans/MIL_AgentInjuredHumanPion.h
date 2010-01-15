@@ -30,8 +30,7 @@ class MIL_AgentInjuredHumanPion : public MIL_AgentPion
     MT_COPYNOTALLOWED( MIL_AgentInjuredHumanPion )
 
 public:
-             MIL_AgentInjuredHumanPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis );
-             MIL_AgentInjuredHumanPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories );
+             MIL_AgentInjuredHumanPion( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis );
              MIL_AgentInjuredHumanPion( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories );
     virtual ~MIL_AgentInjuredHumanPion();
     

@@ -11,7 +11,6 @@
 #include "DEC_Knowledge_Urban.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_ASN_Messages.h"
-#include "Tools/MIL_IDManager.h"
 #include "simulation_kernel/Knowledge/DEC_Knowledge_UrbanPerception.h"
 #include "simulation_kernel/Entities/MIL_Army_ABC.h"
 #include "simulation_kernel/Entities/Automates/MIL_Automate.h"
@@ -20,15 +19,17 @@
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_Urban, "DEC_Knowledge_Urban" )
 
+MIL_IDManager DEC_Knowledge_Urban::idManager_;
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Urban constructor
 // Created: MGD 2009-11-26
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Urban::DEC_Knowledge_Urban( const MIL_Army_ABC& army, const urban::TerrainObject_ABC& object )
     : DEC_Knowledge_ABC              ()
-    , army_                         ( army )
-    , object_                       ( object )
-    , nID_                           ( MIL_IDManager::GetFreeId() )
+    , army_                          ( army )
+    , object_                        ( object )
+    , nID_                           ( idManager_.GetFreeId() )
     , pCurrentPerceptionLevel_       ( &PHY_PerceptionLevel::notSeen_ )
     , pPreviousPerceptionLevel_      ( &PHY_PerceptionLevel::notSeen_ )
     , pMaxPerceptionLevel_           ( &PHY_PerceptionLevel::notSeen_ )

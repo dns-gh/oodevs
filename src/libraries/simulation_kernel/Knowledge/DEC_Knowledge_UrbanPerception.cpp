@@ -11,11 +11,12 @@
 #include "DEC_Knowledge_UrbanPerception.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_ASN_Messages.h"
-#include "Tools/MIL_IDManager.h"
 #include "simulation_kernel/Knowledge/MIL_KnowledgeGroup.h"
 #include "urban/TerrainObject_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_UrbanPerception, "DEC_Knowledge_UrbanPerception" )
+
+MIL_IDManager DEC_Knowledge_UrbanPerception::idManager_;
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_UrbanPerception constructor
@@ -25,7 +26,7 @@ DEC_Knowledge_UrbanPerception::DEC_Knowledge_UrbanPerception( const MIL_AgentPio
     : DEC_Knowledge_ABC              ()
     , perceiver_                     ( agentPerceiving )
     , object_                        ( object )
-    , nID_                           ( MIL_IDManager::GetFreeId() )
+    , nID_                           ( idManager_.GetFreeId() )
     , pCurrentPerceptionLevel_       ( &PHY_PerceptionLevel::notSeen_ )
     , pPreviousPerceptionLevel_      ( &PHY_PerceptionLevel::notSeen_ )
 {

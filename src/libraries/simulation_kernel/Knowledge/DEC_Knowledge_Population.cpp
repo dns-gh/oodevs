@@ -23,10 +23,11 @@
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/DEC_PopulationDecision.h"
 #include "Entities/MIL_Army.h"
-#include "Tools/MIL_IDManager.h"
 #include "Network/NET_ASN_Messages.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_Population, "DEC_Knowledge_Population" )
+
+MIL_IDManager DEC_Knowledge_Population::idManager_;
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Population constructor
@@ -34,7 +35,7 @@ BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_Population, "DEC_Knowledge_Population" )
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Population::DEC_Knowledge_Population( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Population& populationKnown )
     : DEC_Knowledge_ABC     ()
-    , nID_                  ( MIL_IDManager::GetFreeId() )
+    , nID_                  ( idManager_.GetFreeId() )
     , pKnowledgeGroup_      ( &knowledgeGroup )
     , pPopulationKnown_     ( &populationKnown )
     , concentrations_       ()
@@ -93,6 +94,8 @@ void DEC_Knowledge_Population::load( MIL_CheckPointInArchive& file, const uint )
          >> bIsRecon_
          >> bReconAttributesValid_
          >> rDominationState_;
+
+    idManager_.Lock( nID_ );
 
     assert( pPopulationKnown_ );
 }

@@ -105,7 +105,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentListParameter_ToASN )
     ASN1T_UnitList asnIn;
     asnIn.n = 1;
     asnIn.elem = new ASN1T_Unit[1];
-    asnIn.elem[0] = 0;
+    asnIn.elem[0] = 12;
     MockMIL_EntityManager_ABC entityManager;
     FixturePion fixture;
     fixture.pPion_->RegisterRole( *new DEC_RolePion_Decision( *fixture.pPion_, StubDEC_Database() ) );
@@ -115,7 +115,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentListParameter_ToASN )
     ASN1T_UnitList asnOut;
     BOOST_CHECK_EQUAL( true, param.ToAgentList( asnOut ) );
     BOOST_CHECK_EQUAL( 1, asnOut.n );
-    BOOST_CHECK_EQUAL( 0, asnOut.elem[0] );
+    BOOST_CHECK_EQUAL( 12, asnOut.elem[0] );
     delete[] asnOut.elem;
 }
 
@@ -125,7 +125,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentListParameter_ToASN )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_AgentParameter_ToASN )
 {
-    ASN1T_Unit asnIn = 0;
+    ASN1T_Unit asnIn = 12;
     MockMIL_EntityManager_ABC entityManager;
     FixturePion fixture;
     fixture.pPion_->RegisterRole( *new DEC_RolePion_Decision( *fixture.pPion_,  StubDEC_Database() ) );
@@ -133,7 +133,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentParameter_ToASN )
     MIL_AgentParameter param( asnIn, entityManager );
     ASN1T_Unit asnOut;
     BOOST_CHECK_EQUAL( true, param.ToAgent( asnOut ) );
-    BOOST_CHECK_EQUAL( 0, asnOut );
+    BOOST_CHECK_EQUAL( 12, asnOut );
 }
 
 // -----------------------------------------------------------------------------

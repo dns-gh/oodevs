@@ -10,13 +10,16 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_IDManager.h"
 
-unsigned long MIL_IDManager::last_ = 1; 
+// -----------------------------------------------------------------------------
+// Name: MIL_IDManager constructor
+// Created: SBO 2009-12-14
+// -----------------------------------------------------------------------------
+MIL_IDManager::MIL_IDManager()
+    : last_( 1 )
+{
+    // NOTHING
+}
 
-// -----------------------------------------------------------------------------
-// Name: MIL_IDManager::Constructor
-// Created: MGD 2009-08-13
-// -----------------------------------------------------------------------------
-MIL_IDManager::MIL_IDManager(){}
 // -----------------------------------------------------------------------------
 // Name: MIL_IDManager::Destructor
 // Created: MGD 2009-08-13
@@ -30,4 +33,14 @@ MIL_IDManager::~MIL_IDManager(){}
 unsigned long MIL_IDManager::GetFreeId()
 {
     return last_++;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_IDManager::Lock
+// Created: SBO 2009-12-14
+// -----------------------------------------------------------------------------
+void MIL_IDManager::Lock( unsigned long id )
+{
+    if( id > last_ )
+        last_ = id + 1;
 }

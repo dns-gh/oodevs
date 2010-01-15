@@ -15,6 +15,7 @@
 #include "game_asn/Simulation.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
+#include "Tools/MIL_IDManager.h"
 #include "urban/TerrainObject_ABC.h"
 
 class MIL_AgentPion;
@@ -83,6 +84,8 @@ private:
 
     const PHY_PerceptionLevel* pCurrentPerceptionLevel_;
     const PHY_PerceptionLevel* pPreviousPerceptionLevel_;
+
+    static MIL_IDManager idManager_;
 };
 
 // -----------------------------------------------------------------------------

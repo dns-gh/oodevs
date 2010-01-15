@@ -33,6 +33,8 @@
 
 BOOST_CLASS_EXPORT_GUID( MIL_PopulationFlow, "MIL_PopulationFlow" )
 
+MIL_IDManager MIL_PopulationFlow::idManager_;
+
 template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_PopulationFlow* flow, const unsigned int /*version*/ )
 {
@@ -57,7 +59,7 @@ void load_construct_data( Archive& archive, MIL_PopulationFlow* concentration, c
 MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, MIL_PopulationConcentration& sourceConcentration )
     : PHY_MovingEntity_ABC     ()
     , TER_PopulationFlow_ABC   ()
-    , MIL_PopulationElement_ABC( population, MIL_IDManager::GetFreeId() )
+    , MIL_PopulationElement_ABC( population, idManager_.GetFreeId() )
     , pSourceConcentration_    ( &sourceConcentration )
     , pDestConcentration_      ( 0 )
     , primaryDestination_      ()
@@ -84,7 +86,7 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, MIL_Populati
 MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, const MIL_PopulationFlow& source, const MT_Vector2D& splitPoint )
     : PHY_MovingEntity_ABC     ()
     , TER_PopulationFlow_ABC   ()
-    , MIL_PopulationElement_ABC( population, MIL_IDManager::GetFreeId() )
+    , MIL_PopulationElement_ABC( population, idManager_.GetFreeId() )
     , pSourceConcentration_    ( 0 )
     , pDestConcentration_      ( 0 )
     , primaryDestination_      ( source.primaryDestination_   )
@@ -734,6 +736,8 @@ void MIL_PopulationFlow::load( MIL_CheckPointInArchive& file, const uint )
          >> flowShape_
          >> direction_
          >> rSpeed_;
+
+    idManager_.Lock( MIL_PopulationElement_ABC::GetID() );
 
     UpdateLocation();
 }

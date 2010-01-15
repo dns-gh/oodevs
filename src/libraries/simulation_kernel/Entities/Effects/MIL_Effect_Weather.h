@@ -12,8 +12,10 @@
 #ifndef __MIL_Effect_Weather_h_
 #define __MIL_Effect_Weather_h_
 
+#include "MIL.h"
 #include "MIL_Effect_ABC.h"
 #include "MT_Tools/MT_Ellipse.h"
+#include "Tools/MIL_IDManager.h"
 
 class PHY_IndirectFireDotationClass;
 
@@ -47,6 +49,8 @@ private:
     const uint                           nDeploymentTimeStep_;
     const uint                           nLifeLastTimeStep_;
           bool                           bIsDeployed_;
+
+    static MIL_IDManager idManager_;
 };
 
 #endif // __MIL_Effect_Weather_h_

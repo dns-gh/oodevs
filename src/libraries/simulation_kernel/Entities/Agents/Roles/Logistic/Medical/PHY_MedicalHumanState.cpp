@@ -18,16 +18,17 @@
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
-#include "Tools/MIL_IDManager.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_MedicalHumanState, "PHY_MedicalHumanState" )
+
+MIL_IDManager PHY_MedicalHumanState::idManager_;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalHumanState constructor
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
 PHY_MedicalHumanState::PHY_MedicalHumanState( MIL_AgentPion& pion, PHY_Human& human, bool bEvacuatedByThirdParty )
-    : nID_                   ( MIL_IDManager::GetFreeId() )
+    : nID_                   ( idManager_.GetFreeId() )
     , nCreationTick_         ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
     , pPion_                 ( &pion )
     , pHuman_                ( &human )
@@ -92,6 +93,7 @@ void PHY_MedicalHumanState::load( MIL_CheckPointInArchive& file, const uint )
          >> bShouldGoBackToWar_
          >> bHandledByMedical_
          >> bEvacuatedByThirdParty_;
+    idManager_.Lock( nID_ );
 }
 
 // -----------------------------------------------------------------------------

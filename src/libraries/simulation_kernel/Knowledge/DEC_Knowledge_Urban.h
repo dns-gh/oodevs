@@ -14,6 +14,7 @@
 #include "DEC_Knowledge_ABC.h"
 #include "game_asn/Simulation.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
+#include "Tools/MIL_IDManager.h"
 
 class DEC_Knowledge_UrbanPerception;
 class MIL_Army_ABC;
@@ -122,6 +123,8 @@ private:
     bool     bMaxPerceptionLevelUpdated_;
     double   rLastRelevanceSent_;
     double   rLastProgressSent_;
+    
+    static MIL_IDManager idManager_;
 };
 
 // -----------------------------------------------------------------------------

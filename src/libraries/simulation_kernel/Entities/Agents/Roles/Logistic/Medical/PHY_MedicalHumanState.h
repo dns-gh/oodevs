@@ -13,6 +13,7 @@
 #define __PHY_MedicalHumanState_h_
 
 #include "MIL.h"
+#include "Tools/MIL_IDManager.h"
 
 class PHY_Human;
 class PHY_MedicalConsign_ABC;
@@ -99,6 +100,8 @@ private:
           bool                    bSorted_;
           bool                    bHandledByMedical_;
           bool                    bEvacuatedByThirdParty_;
+
+    static MIL_IDManager idManager_;
 };
 
 #endif // __PHY_MedicalHumanState_h_

@@ -19,6 +19,7 @@
 #include "DEC_Knowledge_AgentDataIdentification.h"
 #include "game_asn/Simulation.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
+#include "Tools/MIL_IDManager.h"
 
 class MIL_AgentPion;
 class MIL_Agent_ABC;
@@ -190,6 +191,9 @@ private:
     bool     bCurrentPerceptionLevelUpdated_;
     bool     bMaxPerceptionLevelUpdated_;
     MT_Float rLastRelevanceSent_;
+
+
+    static MIL_IDManager idManager_;
 };
 
 #endif // __DEC_Knowledge_Agent_h_

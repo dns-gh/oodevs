@@ -48,8 +48,8 @@ class MIL_AgentPion : public MIL_Agent_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis );
-             MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories );
+             MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis );
+             MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories );
     virtual ~MIL_AgentPion();
     //@}
 
@@ -141,9 +141,6 @@ public:
             void ChangeSuperior  ( MIL_Automate& newAutomate );
     //@}
 
-protected:
-    MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories );
-
 private:
     //! @name Operations
     //@{
@@ -179,7 +176,6 @@ private:
     const AlgorithmsFactories& algorithmFactories_;
     DEC_KnowledgeBlackBoard_AgentPion* pKnowledgeBlackBoard_;
     MIL_PionOrderManager& orderManager_;
-    //@}
 };
 
 #endif // __MIL_AgentPion_h_

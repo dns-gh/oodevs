@@ -11,15 +11,16 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_SupplyState_ABC.h"
-#include "Tools/MIL_IDManager.h"
 #include "MIL_AgentServer.h"
+
+MIL_IDManager PHY_SupplyState_ABC::idManager_;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyState_ABC::PHY_SupplyState_ABC
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
 PHY_SupplyState_ABC::PHY_SupplyState_ABC()
-    : nID_          ( MIL_IDManager::GetFreeId() )
+    : nID_          ( idManager_.GetFreeId() )
     , nCreationTick_( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
 {
     // NOTHING
@@ -42,6 +43,7 @@ void PHY_SupplyState_ABC::load( MIL_CheckPointInArchive& file, const uint )
 {
     file >> const_cast< uint& >( nID_ )
          >> const_cast< uint& >( nCreationTick_ );
+    idManager_.Lock( nID_ );
 }
 
 // -----------------------------------------------------------------------------

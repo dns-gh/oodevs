@@ -13,6 +13,7 @@
 #define __MIL_Agent_ABC_h_
 
 #include "simulation_kernel/Entities/MIL_Entity_ABC.h"
+#include "Tools/MIL_IDManager.h"
 
 class AlgorithmsFactories;
 class DEC_Decision_ABC;
@@ -34,8 +35,8 @@ class MIL_Agent_ABC : public MIL_Entity_ABC
 {
 
 public:
-             MIL_Agent_ABC( xml::xistream& xis, uint nID );
-             MIL_Agent_ABC( const std::string& name, uint nID );
+    explicit MIL_Agent_ABC( xml::xistream& xis );
+    explicit MIL_Agent_ABC( const std::string& name );
     virtual ~MIL_Agent_ABC();
 
     //! @name CheckPoints
@@ -45,7 +46,7 @@ public:
 
     //! @name Accessors
     //@{
-            uint                      GetID              () const;
+                  unsigned int        GetID              () const;
     virtual       MIL_Army_ABC&       GetArmy            () const = 0;
     virtual       MIL_KnowledgeGroup& GetKnowledgeGroup  () const = 0;
     virtual const MIL_AgentType_ABC&  GetType            () const = 0;
@@ -86,7 +87,8 @@ public:
     //@}
 
 private:
-    uint nID_;
+    unsigned int nID_;
+    static MIL_IDManager idManager_;
 };
 
 // -----------------------------------------------------------------------------

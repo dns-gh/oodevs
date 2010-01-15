@@ -35,7 +35,7 @@ class MIL_AgentHLA : public MIL_Agent_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_AgentHLA( uint nID, const hla::ObjectIdentifier& objectId, HLA_InteractionManager_ABC& interactionManager );
+             MIL_AgentHLA( const hla::ObjectIdentifier& objectId, HLA_InteractionManager_ABC& interactionManager );
     virtual ~MIL_AgentHLA();
     //@}
         

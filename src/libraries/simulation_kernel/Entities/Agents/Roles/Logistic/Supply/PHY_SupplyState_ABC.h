@@ -13,6 +13,7 @@
 #define __PHY_SupplyState_ABC_h_
 
 #include "MIL.h"
+#include "Tools/MIL_IDManager.h"
 
 // =============================================================================
 // @class  PHY_SupplyState_ABC
@@ -36,6 +37,9 @@ public:
 protected:
     const uint nID_;
     const uint nCreationTick_;
+
+private:
+    static MIL_IDManager idManager_;
 };
 
 #endif // __PHY_SupplyState_ABC_h_

@@ -34,8 +34,8 @@ public:
 
     //! @name Instanciation
     //@{
-    virtual MIL_AgentPion* InstanciatePion( uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis ) const;
-    virtual MIL_AgentPion* InstanciatePion( uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories ) const;
+    virtual MIL_AgentPion* InstanciatePion( MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis ) const;
+    virtual MIL_AgentPion* InstanciatePion( MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories ) const;
     virtual void RegisterRoles( MIL_AgentPion& pion, DEC_DataBase& database ) const;
     //@}
 

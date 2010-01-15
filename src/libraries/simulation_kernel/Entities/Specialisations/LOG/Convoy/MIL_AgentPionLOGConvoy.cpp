@@ -22,11 +22,9 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_AgentPionLOGConvoy* pion, const unsigned int /*version*/ )
 {
 	unsigned int nTypeID = pion->GetType().GetID();
-    unsigned int nID = pion->GetID() ;
 	const MIL_Automate* const pAutomate = &pion->GetAutomate();
     const AlgorithmsFactories* const algorithmFactories = &pion->GetAlgorithms();
-	archive << nTypeID 
-            << nID 
+	archive << nTypeID
             << pAutomate
             << algorithmFactories;
 }
@@ -34,24 +32,23 @@ void save_construct_data( Archive& archive, const MIL_AgentPionLOGConvoy* pion, 
 template< typename Archive >
 void load_construct_data( Archive& archive, MIL_AgentPionLOGConvoy* pion, const unsigned int /*version*/ )
 {
-	unsigned int nTypeID, nID;
+	unsigned int nTypeID;
 	MIL_Automate* pAutomate = 0;
     AlgorithmsFactories* algorithmFactories = 0;
     archive >> nTypeID
-            >> nID
             >> pAutomate
             >> algorithmFactories;
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( nTypeID );
     assert( pType );
-    ::new( pion )MIL_AgentPionLOGConvoy( *pType, nID, *pAutomate, *algorithmFactories );
+    ::new( pion )MIL_AgentPionLOGConvoy( *pType, *pAutomate, *algorithmFactories );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPionLOGConvoy constructor
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-MIL_AgentPionLOGConvoy::MIL_AgentPionLOGConvoy( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis )
-    : MIL_AgentPionLOG_ABC( type, nID, automate, algorithmFactories, xis )
+MIL_AgentPionLOGConvoy::MIL_AgentPionLOGConvoy( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis )
+    : MIL_AgentPionLOG_ABC( type, automate, algorithmFactories, xis )
 {
     xis.error( "Creation of pion of type 'Pion LOG Convoi' not allowed in ODB" );
 }
@@ -60,12 +57,11 @@ MIL_AgentPionLOGConvoy::MIL_AgentPionLOGConvoy( const MIL_AgentTypePion& type, u
 // Name: MIL_AgentPionLOGConvoy constructor
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
-MIL_AgentPionLOGConvoy::MIL_AgentPionLOGConvoy( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories )
-    : MIL_AgentPionLOG_ABC( type, nID, automate, algorithmFactories )
+MIL_AgentPionLOGConvoy::MIL_AgentPionLOGConvoy( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories )
+    : MIL_AgentPionLOG_ABC( type, automate, algorithmFactories )
 {
     // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPionLOGConvoy destructor

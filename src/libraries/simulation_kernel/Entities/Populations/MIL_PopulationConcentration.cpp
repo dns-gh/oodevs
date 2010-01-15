@@ -20,7 +20,6 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/PopulationAttribute.h"
 #include "Tools/MIL_Tools.h"
-#include "Tools/MIL_IDManager.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
@@ -29,6 +28,7 @@
 
 BOOST_CLASS_EXPORT_GUID( MIL_PopulationConcentration, "MIL_PopulationConcentration" )
 
+MIL_IDManager MIL_PopulationConcentration::idManager_;
 template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_PopulationConcentration* concentration, const unsigned int /*version*/ )
 {
@@ -50,7 +50,7 @@ void load_construct_data( Archive& archive, MIL_PopulationConcentration* concent
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
 MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& population, xml::xistream& xis )
-    : MIL_PopulationElement_ABC      ( population, MIL_IDManager::GetFreeId() )
+    : MIL_PopulationElement_ABC      ( population, idManager_.GetFreeId() )
     , TER_PopulationConcentration_ABC()
     , position_                      ()
     , location_                      ()
@@ -79,8 +79,8 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
 // Name: MIL_PopulationConcentration constructor
 // Created: NLD 2005-10-05
 // -----------------------------------------------------------------------------
-MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& population, const MT_Vector2D& position, unsigned int nID )
-    : MIL_PopulationElement_ABC      (  population, nID==0 ? MIL_IDManager::GetFreeId() :  nID )
+MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& population, const MT_Vector2D& position )
+    : MIL_PopulationElement_ABC      ( population, idManager_.GetFreeId() )
     , TER_PopulationConcentration_ABC()
     , position_                      ( position )
     , location_                      ()
@@ -351,6 +351,7 @@ void MIL_PopulationConcentration::load( MIL_CheckPointInArchive& file, const uin
          >> pushingFlows_
          >> rPullingFlowsDensity_
          >> const_cast< MIL_Object_ABC*& >( pSplittingObject_ );
+    idManager_.Lock( MIL_PopulationElement_ABC::GetID() );
 }
 
 // -----------------------------------------------------------------------------

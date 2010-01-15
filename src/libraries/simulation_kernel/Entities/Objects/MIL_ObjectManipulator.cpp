@@ -26,6 +26,14 @@
 #include "MineAttribute.h"
 #include "ObstacleAttribute.h"
 
+#include "Entities/MIL_Army.h"
+#include "Entities/MIL_EntityManager.h"
+
+#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
+#include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
+#include "Knowledge/DEC_Knowledge_Object.h"
+
+#include "Tools/Iterator.h"
 #include "Tools/MIL_Tools.h"
 
 #include "simulation_terrain/TER_Localisation.h"
@@ -94,7 +102,18 @@ void MIL_ObjectManipulator::Destroy( MT_Float rDeltaPercentage )
 // -----------------------------------------------------------------------------
 void MIL_ObjectManipulator::Destroy()
 {
-    object_.Get< BuildableCapacity >().Destroy( object_ );    
+    BuildableCapacity* buildableCapacity = object_.Retrieve< BuildableCapacity >();
+    if( buildableCapacity )
+        buildableCapacity->Destroy( object_ );    
+
+    object_.MarkForDestruction();
+
+    // All the knowledges associated to this object MUST be destroyed (for all the teams ..)
+    const tools::Resolver< MIL_Army_ABC >& armies = MIL_AgentServer::GetWorkspace().GetEntityManager().GetArmies();
+    for( tools::Iterator< const MIL_Army_ABC& > it = armies.CreateIterator(); it.HasMoreElements(); )
+    {
+        it.NextElement().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( object_ );
+    }
 }
 
 // -----------------------------------------------------------------------------

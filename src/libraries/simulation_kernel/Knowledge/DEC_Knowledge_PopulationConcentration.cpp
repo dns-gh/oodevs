@@ -21,10 +21,11 @@
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
-#include "Tools/MIL_IDManager.h"
 #include "MIL_AgentServer.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_PopulationConcentration, "DEC_Knowledge_PopulationConcentration" )
+
+MIL_IDManager DEC_Knowledge_PopulationConcentration::idManager_;
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationConcentration constructor
@@ -33,7 +34,7 @@ BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_PopulationConcentration, "DEC_Knowledge_P
 DEC_Knowledge_PopulationConcentration::DEC_Knowledge_PopulationConcentration( DEC_Knowledge_Population& populationKnowledge, const MIL_PopulationConcentration& concentrationKnown )
     : pPopulationKnowledge_     ( &populationKnowledge    )
     , pConcentrationKnown_      ( &concentrationKnown )
-    , nID_                      ( MIL_IDManager::GetFreeId() )
+    , nID_                      ( idManager_.GetFreeId() )
     , nTimeLastUpdate_          ( 0 )
     , position_                 ( concentrationKnown.GetPosition() )
     , rNbrAliveHumans_          ( 0. )
@@ -102,6 +103,8 @@ void DEC_Knowledge_PopulationConcentration::load( MIL_CheckPointInArchive& file,
          >> rNbrAliveHumans_
          >> rNbrDeadHumans_
          >> bReconAttributesValid_;
+
+    idManager_.Lock( nID_ );
 
     uint nTmpID;
     bool bAttitudeValid;

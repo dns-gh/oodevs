@@ -48,13 +48,35 @@ BOOST_CLASS_EXPORT_GUID( Object, "Object" )
 
 using namespace hla;
 
+MIL_IDManager Object::idManager_;
+
 // -----------------------------------------------------------------------------
 // Name: Object constructor
 // Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------
-Object::Object( uint id, const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const TER_Localisation* pLocation, const std::string& name, bool reserved )
+Object::Object( xml::xistream& xis, const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const TER_Localisation* pLocation, bool reserved )
     : MIL_Object_ABC( army, builder.GetType() )
-    , id_       ( id )
+    , id_       ( xml::attribute< unsigned long >( xis, "id" ) )
+    , name_     ( xml::attribute< std::string >( xis, "name", "" ) )
+    , pView_    ( 0 )
+    , manipulator_ ( new MIL_ObjectManipulator( *this ) )
+{
+    if( pLocation )
+        Initialize( *pLocation );
+    builder.Build( *this );
+    ObstacleAttribute* pObstacle = RetrieveAttribute< ObstacleAttribute >();
+    if( pObstacle )
+        pObstacle->SetType( reserved? ASN1T_EnumDemolitionTargetType::reserved : ASN1T_EnumDemolitionTargetType::preliminary );
+    idManager_.Lock( id_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Object constructor
+// Created: SBO 2009-12-14
+// -----------------------------------------------------------------------------
+Object::Object( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const TER_Localisation* pLocation, const std::string& name /*= std::string()*/, bool reserved /*= true*/ )
+    : MIL_Object_ABC( army, builder.GetType() )
+    , id_       ( idManager_.GetFreeId() )
     , name_     ( name )
     , pView_    ( 0 )
     , manipulator_ ( new MIL_ObjectManipulator( *this ) )
@@ -115,6 +137,7 @@ void Object::load( MIL_CheckPointInArchive& file, const uint )
     std::for_each( capacities.begin(), capacities.end(), boost::bind( &ObjectCapacity_ABC::Register, _1, boost::ref( *this ) ) );
 
     file >> attributes_;
+    idManager_.Lock( id_ );
 }
     
 // -----------------------------------------------------------------------------

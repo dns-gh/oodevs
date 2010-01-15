@@ -12,14 +12,9 @@
 #include "Object.h"
 #include "ConstructionAttribute.h"
 #include "MIL_AgentServer.h"
-#include "Entities/MIL_Army_ABC.h"
-#include "Entities/MIL_EntityManager.h"
-#include "Entities\Agents\Units\Dotations\PHY_DotationType.h"
-#include "Entities\Agents\Units\Dotations\PHY_DotationCategory.h"
-#include "Entities\Agents\Units\Dotations\PHY_ConsumptionType.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
-#include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
-#include "Knowledge/DEC_Knowledge_Object.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
+#include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( BuildableCapacity, "BuildableCapacity" )
@@ -221,15 +216,6 @@ void BuildableCapacity::Destroy( Object& object, float rDeltaPercentage )
 void BuildableCapacity::Destroy( Object& object )
 {
     ChangeConstructionPercentage( object, 0. );
-
-    object.MarkForDestruction();
-
-    // All the knowledges associated to this object MUST be destroyed (for all the teams ..)
-    const tools::Resolver< MIL_Army_ABC >& armies = MIL_AgentServer::GetWorkspace().GetEntityManager().GetArmies();
-    for( tools::Iterator< const MIL_Army_ABC& > it = armies.CreateIterator(); it.HasMoreElements(); )
-    {
-        it.NextElement().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( object );
-    }
 }
 
 // -----------------------------------------------------------------------------

@@ -473,8 +473,12 @@ void MIL_EntityManager::CreateAutomat( xml::xistream& xis, MIL_Automate& parent 
 // -----------------------------------------------------------------------------
 MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis )
 {
-    MIL_AgentPion* pPion = agentFactory_->Create( type, automate, xis );
+    MIL_AgentPion* pPion = tools::Resolver< MIL_AgentPion >::Find( xml::attribute< unsigned long >( xis, "id" ) );
+    if( pPion )
+        xis.error( "Pawn using this id already exists" );
+    pPion = agentFactory_->Create( type, automate, xis );
     tools::Resolver< MIL_AgentPion >::Register( pPion->GetID(), *pPion );
+    pPion->ReadOverloading( xis );
 
     if( hla_ )
         hla_->Register( *pPion );
@@ -490,6 +494,8 @@ MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL
 MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition )
 {
     MIL_AgentPion* pPion = agentFactory_->Create( type, automate, vPosition );
+    if(  tools::Resolver< MIL_AgentPion >::Find( pPion->GetID() ) != 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "A unit with ID '%d' already exists.", pPion->GetID() ) );
     tools::Resolver< MIL_AgentPion >::Register( pPion->GetID(), *pPion );
 
     if( hla_ )

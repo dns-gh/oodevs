@@ -16,7 +16,8 @@
 #include "Entities/Populations/MIL_Population.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
-#include "Tools/MIL_IDManager.h"
+
+MIL_IDManager PHY_FireResults_Pion::idManager_;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_FireResults_Pion constructor
@@ -25,7 +26,7 @@
 PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target )
     : PHY_FireResults_ABC()
     , firer_             ( firer )
-    , nID_               ( MIL_IDManager::GetFreeId() )
+    , nID_               ( idManager_.GetFreeId() )
 {
     NET_ASN_MsgStartUnitFire asnMsg;
     asnMsg().m.ammunitionPresent = 0;
@@ -45,7 +46,7 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MI
 PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MIL_Population& target )
     : PHY_FireResults_ABC()
     , firer_             ( firer )
-    , nID_               ( MIL_IDManager::GetFreeId() )
+    , nID_               ( idManager_.GetFreeId() )
 {
     NET_ASN_MsgStartUnitFire asnMsg;
     asnMsg().m.ammunitionPresent = 0;
@@ -65,7 +66,7 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MI
 PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MT_Vector2D& targetPosition, const PHY_DotationCategory& dotationCategory )
     : PHY_FireResults_ABC()
     , firer_             ( firer )
-    , nID_               ( MIL_IDManager::GetFreeId() )
+    , nID_               ( idManager_.GetFreeId() )
 {
     NET_ASN_MsgStartUnitFire asnMsg;
     asnMsg().m.ammunitionPresent = 1;
@@ -118,7 +119,7 @@ PHY_FireResults_Pion::~PHY_FireResults_Pion()
 // Name: PHY_FireResults_Pion::GetID
 // Created: NLD 2005-02-21
 // -----------------------------------------------------------------------------
-uint PHY_FireResults_Pion::GetID() const
+unsigned int PHY_FireResults_Pion::GetID() const
 {
     return nID_;
 }

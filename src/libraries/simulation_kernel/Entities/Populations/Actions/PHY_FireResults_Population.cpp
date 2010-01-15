@@ -13,7 +13,8 @@
 #include "PHY_FireResults_Population.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Network/NET_ASN_Messages.h"
-#include "Tools/MIL_IDManager.h"
+
+MIL_IDManager PHY_FireResults_Population::idManager_;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_FireResults_Population constructor
@@ -22,7 +23,7 @@
 PHY_FireResults_Population::PHY_FireResults_Population( const MIL_Population& firer )
     : PHY_FireResults_ABC()
     , firer_             ( firer )
-    , nID_               ( MIL_IDManager::GetFreeId() )
+    , nID_               ( idManager_.GetFreeId() )
 {
     NET_ASN_MsgStartPopulationFire asnMsg;
     asnMsg().fire_oid  = nID_;

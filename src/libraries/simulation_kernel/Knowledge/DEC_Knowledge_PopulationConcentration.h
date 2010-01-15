@@ -13,6 +13,7 @@
 #define __DEC_Knowledge_PopulationConcentration_h_
 
 #include "MIL.h"
+#include "Tools/MIL_IDManager.h"
 
 class DEC_Knowledge_Population;
 class DEC_Knowledge_PopulationCollision;
@@ -94,6 +95,8 @@ private:
     bool     bRealConcentrationUpdated_;
     bool     bRelevanceUpdated_;
     MT_Float rLastRelevanceSent_;
+
+    static MIL_IDManager idManager_;
 };
 
 #endif // __DEC_Knowledge_PopulationConcentration_h_

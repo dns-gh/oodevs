@@ -14,6 +14,7 @@
 #include "MIL_Object_ABC.h"
 #include "CapacityContainer_ABC.h"
 #include "tools/Extendable.h"
+#include "Tools/MIL_IDManager.h"
 
 class ObjectAttribute_ABC;
 class MIL_ObjectType_ABC;
@@ -31,8 +32,9 @@ class Object : public MIL_Object_ABC
 public:
 	//! @name Constructors/Destructor
     //@{
-            Object( uint id, const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const TER_Localisation* pLocation, const std::string& name = std::string(), bool reserved = true );
-            Object();
+             Object( xml::xistream& xis, const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const TER_Localisation* pLocation, bool reserved = true );
+             Object( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const TER_Localisation* pLocation, const std::string& name = std::string(), bool reserved = true );
+             Object();
 	virtual ~Object();
     //@}
 
@@ -184,6 +186,8 @@ private:
     mutable uint8 xAttrToUpdate_;
     mutable uint8 xAttrToUpdateForHLA_;
     //@}
+
+    static MIL_IDManager idManager_;
 };
 
 // -----------------------------------------------------------------------------

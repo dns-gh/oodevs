@@ -83,10 +83,7 @@ void MIL_CheckPointManager::LoadCheckPoint( const MIL_Config& config )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Cannot open file '%s'", config.BuildCheckpointChildFile( "data" ).c_str() ) );
 
     MIL_CheckPointInArchive* pArchive = new MIL_CheckPointInArchive( file );
-    
-    MIL_IDManager  ::serialize( *pArchive, 0 ); // $$$$ AGE 2007-05-29: version
     MIL_AgentServer::GetWorkspace().load( *pArchive );
-   
     file.close();
 
 #ifndef _DEBUG //$$$$ boost + nedmalloc + binary_ioarchive + std::locale = crash
@@ -195,8 +192,6 @@ boost::crc_32_type::value_type MIL_CheckPointManager::CreateData( const std::str
         throw MT_ScipioException( __FILE__, __FUNCTION__, __LINE__, MT_FormatString( "Cannot open file '%s'", strFileName.c_str() ) );
 
     MIL_CheckPointOutArchive* pArchive = new MIL_CheckPointOutArchive( file );
-    
-    MIL_IDManager  ::serialize( *pArchive, 0 ); // $$$$ AGE 2007-05-29: version
     MIL_AgentServer::GetWorkspace().save( *pArchive );
     file.close();
 

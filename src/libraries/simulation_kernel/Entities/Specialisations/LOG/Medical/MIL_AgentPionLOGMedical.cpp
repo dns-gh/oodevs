@@ -20,11 +20,9 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_AgentPionLOGMedical* pion, const unsigned int /*version*/ )
 {
 	unsigned int nTypeID = pion->GetType().GetID();
-    unsigned int nID = pion->GetID() ;
 	const MIL_Automate* const pAutomate = &pion->GetAutomate();
     const AlgorithmsFactories* const algorithmFactories = &pion->GetAlgorithms();
     archive << nTypeID 
-            << nID 
             << pAutomate
             << algorithmFactories;
 }
@@ -36,32 +34,32 @@ void load_construct_data( Archive& archive, MIL_AgentPionLOGMedical* pion, const
 	MIL_Automate* pAutomate = 0;
     AlgorithmsFactories* algorithmFactories = 0;
     archive >> nTypeID
-        >> nID
         >> pAutomate
         >> algorithmFactories;
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( nTypeID );
     assert( pType );
-    ::new( pion )MIL_AgentPionLOGMedical( *pType, nID, *pAutomate, *algorithmFactories );
+    ::new( pion )MIL_AgentPionLOGMedical( *pType, *pAutomate, *algorithmFactories );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPionLOGMedical constructor
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-MIL_AgentPionLOGMedical::MIL_AgentPionLOGMedical( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis )
-    : MIL_AgentPionLOG_ABC( type, nID, automate, algorithmFactories, xis )
+MIL_AgentPionLOGMedical::MIL_AgentPionLOGMedical( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis )
+    : MIL_AgentPionLOG_ABC( type, automate, algorithmFactories, xis )
 { 
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPionLOGMedical constructor
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
-MIL_AgentPionLOGMedical::MIL_AgentPionLOGMedical( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories)
-    : MIL_AgentPionLOG_ABC( type, nID, automate, algorithmFactories )
+MIL_AgentPionLOGMedical::MIL_AgentPionLOGMedical( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories)
+    : MIL_AgentPionLOG_ABC( type, automate, algorithmFactories )
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPionLOGMedical destructor

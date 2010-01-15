@@ -36,7 +36,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MIL_Entity_ABC( const std::string& name );
-             MIL_Entity_ABC( xml::xistream& xis );
+    explicit MIL_Entity_ABC( xml::xistream& xis );
     virtual ~MIL_Entity_ABC();
     //@}
 

@@ -17,16 +17,17 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Network/NET_ASN_Messages.h"
-#include "Tools/MIL_IDManager.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_MaintenanceComposanteState, "PHY_MaintenanceComposanteState" )
+
+MIL_IDManager PHY_MaintenanceComposanteState::idManager_;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceComposanteState constructor
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
 PHY_MaintenanceComposanteState::PHY_MaintenanceComposanteState( MIL_Agent_ABC& pion, PHY_ComposantePion& composante )
-    : nID_                ( MIL_IDManager::GetFreeId() )
+    : nID_                ( idManager_.GetFreeId() )
     , nCreationTick_      ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
     , pPion_              ( &pion )
     , pComposante_        ( &composante )
@@ -52,6 +53,7 @@ PHY_MaintenanceComposanteState::PHY_MaintenanceComposanteState()
     , bHasChanged_        ( true )
     , bDiagnosed_         ( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -80,6 +82,7 @@ void PHY_MaintenanceComposanteState::load( MIL_CheckPointInArchive& file, const 
          >> pConsign_
          >> vComposantePosition_
          >> bDiagnosed_;
+    idManager_.Lock( nID_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -163,7 +166,6 @@ void PHY_MaintenanceComposanteState::Cancel()
         pConsign_ = 0;
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceComposanteState::GetAutomate

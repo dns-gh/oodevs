@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-11-05 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Hla/HLA_Federate.h $
-// $Author: Age $
-// $Modtime: 6/12/04 14:43 $
-// $Revision: 14 $
-// $Workfile: HLA_Federate.h $
-//
-// *****************************************************************************
 
 #ifndef __HLA_Federate_h_
 #define __HLA_Federate_h_

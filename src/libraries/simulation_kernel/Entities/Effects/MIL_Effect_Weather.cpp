@@ -16,15 +16,16 @@
 #include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_ASN_Messages.h"
-#include "Tools/MIL_IDManager.h"
 #include "game_asn/ASN_Delete.h"
+
+MIL_IDManager MIL_Effect_Weather::idManager_;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Effect_Weather constructor
 // Created: NLD 2004-10-12
 // -----------------------------------------------------------------------------
 MIL_Effect_Weather::MIL_Effect_Weather( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& ammoCategory, MT_Float rLifeDuration, MT_Float rDeploymentDuration )
-    : nID_                ( MIL_IDManager::GetFreeId() )
+    : nID_                ( idManager_.GetFreeId() )
     , surface_            ( surface )
     , ammoCategory_       ( ammoCategory )
     , nDeploymentTimeStep_( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + (uint)rDeploymentDuration )

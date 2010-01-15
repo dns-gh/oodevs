@@ -6,16 +6,15 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-
 #ifndef __MIL_PopulationFlow_h_
 #define __MIL_PopulationFlow_h_
 
 #include "MIL.h"
-
 #include "MIL_PopulationElement_ABC.h"
 #include "MIL_Population.h"
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
 #include "simulation_terrain/TER_PopulationFlow_ABC.h"
+#include "Tools/MIL_IDManager.h"
 #include <boost/shared_ptr.hpp>
 
 class MIL_PopulationConcentration;
@@ -168,6 +167,8 @@ private:
 
     // Split
     const MIL_Object_ABC* pSplittingObject_;
+
+    static MIL_IDManager idManager_;
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_PopulationFlow* flow, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_PopulationFlow* flow, const unsigned int /*version*/ );

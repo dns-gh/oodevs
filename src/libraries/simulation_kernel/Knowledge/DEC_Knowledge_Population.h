@@ -14,6 +14,7 @@
 
 #include "MIL.h"
 #include "DEC_Knowledge_ABC.h"
+#include "Tools/MIL_IDManager.h"
 
 class MIL_Agent_ABC;
 class MIL_AgentPion;
@@ -135,6 +136,8 @@ private:
           bool                bReconAttributesValid_;
           MT_Float            rDominationState_;
           bool                bDecStateUpdated_;
+
+    static MIL_IDManager idManager_;
 };
 
 #endif // __DEC_Knowledge_Population_h_

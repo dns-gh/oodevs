@@ -13,6 +13,7 @@
 #define __DEC_Knowledge_PopulationFlow_h_
 
 #include "MIL.h"
+#include "Tools/MIL_IDManager.h"
 
 class DEC_Knowledge_Population;
 class DEC_Knowledge_PopulationFlowPerception;
@@ -100,6 +101,8 @@ private:
         
     const PHY_PerceptionLevel*       pPreviousPerceptionLevel_;
     const PHY_PerceptionLevel*       pCurrentPerceptionLevel_;
+
+    static MIL_IDManager idManager_;
 };
 
 #endif // __DEC_Knowledge_PopulationFlow_h_

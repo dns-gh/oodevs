@@ -408,4 +408,42 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestResourceConsumptionsForUnits )
     ParseAndCheck( "Sum( Domain( Filter( Compare( 'less', Derivate( resources( $Resources ), 1 ), 0 ), Derivate( resources( $Resources ), 1 ) ), $Units ) )", expected );
 }
 
+// -----------------------------------------------------------------------------
+// Name: IndicatorSerializer_TestEquipmentStatusForUnits
+// Created: SBO 2009-12-12
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestEquipmentStatusForUnits )
+{
+    const std::string expected = 
+        "<indicator>"
+            "<extract equipments='11' function='equipments' id='1' states='prisoner,repairable,repairing,unavailable'/>"
+            "<transform function='domain' id='2' input='1' select='14,22,23,24,15,16,17,18,25,26,20,21' type='unsigned long'/>"
+            "<reduce function='sum' id='3' input='2' type='unsigned long'/>"
+        "</indicator>";
+
+    RegisterVariable( "Units", "unit list", "14,22,23,24,15,16,17,18,25,26,20,21" );
+    RegisterVariable( "MBT", "equipment list", "11" );
+    RegisterVariable( "states", "equipment states", "prisoner,repairable,repairing,unavailable" );
+    ParseAndCheck( "Sum( Domain( Equipments( $MBT, $states ), $Units ) )", expected );
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorSerializer_TestHumansStatusForUnits
+// Created: SBO 2009-12-12
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestHumansStatusForUnits )
+{
+    const std::string expected = 
+        "<indicator>"
+            "<extract function='humans' id='1' ranks='officer,sub-officer,troopers' states='dead'/>"
+            "<transform function='domain' id='2' input='1' select='14,22,23,24,15,16,17,18,25,26,20,21' type='unsigned long'/>"
+            "<reduce function='sum' id='3' input='2' type='unsigned long'/>"
+        "</indicator>";
+
+    RegisterVariable( "Units", "unit list", "14,22,23,24,15,16,17,18,25,26,20,21" );
+    RegisterVariable( "ranks", "human ranks", "officer,sub-officer,troopers" );
+    RegisterVariable( "states", "human states", "dead" );
+    ParseAndCheck( "Sum( Domain( Humans( $ranks, $states ), $Units ) )", expected );
+}
+
 BOOST_AUTO_TEST_SUITE_END()

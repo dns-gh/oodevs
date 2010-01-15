@@ -13,13 +13,13 @@
 #define __DEC_Knowledge_Object_h_
 
 #include "MIL.h"
-
-#include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "DEC_Knowledge_ABC.h"
 #include "DEC_Knowledge_ObjectAttribute_ABC.h"
+#include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "game_asn/Simulation.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "tools/Extendable.h"
+#include "Tools/MIL_IDManager.h"
 
 class DEC_Knowledge_ObjectCollision;
 class DEC_Knowledge_ObjectPerception;
@@ -207,6 +207,8 @@ private:
     bool     bValid_;
 
     T_AgentTypeSet reconByAgentTypes_;
+
+    static MIL_IDManager idManager_;
 };
 
 // -----------------------------------------------------------------------------

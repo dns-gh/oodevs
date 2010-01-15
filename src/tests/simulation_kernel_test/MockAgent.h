@@ -35,7 +35,7 @@ public:
     //@{
     MockAgent() 
         : mockpp::ChainableMockObject( MOCKPP_PCHAR( "MockAgent" ) )
-		, MIL_Agent_ABC("",0)
+		, MIL_Agent_ABC( "" )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetID )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( IsDead )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( IsNeutralized )

@@ -31,6 +31,8 @@
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_PopulationFlow, "DEC_Knowledge_PopulationFlow" )
 
+MIL_IDManager DEC_Knowledge_PopulationFlow::idManager_;
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationFlow constructor
 // Created: NLD 2004-03-11
@@ -38,7 +40,7 @@ BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_PopulationFlow, "DEC_Knowledge_Population
 DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow( DEC_Knowledge_Population& populationKnowledge, const MIL_PopulationFlow& flowKnown )
     : pPopulationKnowledge_    ( &populationKnowledge )
     , pFlowKnown_              ( &flowKnown )
-    , nID_                     ( MIL_IDManager::GetFreeId() )
+    , nID_                     ( idManager_.GetFreeId() )
     , direction_               ( 1., 0. )
     , rSpeed_                  ( 0. )
     , flowParts_               ()
@@ -150,6 +152,8 @@ void DEC_Knowledge_PopulationFlow::load( MIL_CheckPointInArchive& file, const ui
          >> rNbrAliveHumans_
          >> rNbrDeadHumans_
          >> bReconAttributesValid_;
+
+    idManager_.Lock( nID_ );
 
     uint nTmpID;
     file >> nTmpID;

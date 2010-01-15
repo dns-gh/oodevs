@@ -38,18 +38,18 @@ MIL_AgentTypePionLOGConvoy::~MIL_AgentTypePionLOGConvoy()
 // Name: MIL_AgentTypePionLOGConvoy::InstanciatePion
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePionLOGConvoy::InstanciatePion( uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis ) const
+MIL_AgentPion* MIL_AgentTypePionLOGConvoy::InstanciatePion( MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis ) const
 {
-    return new MIL_AgentPionLOGConvoy( *this, nID, automate, algorithmFactories, xis );
+    return new MIL_AgentPionLOGConvoy( *this, automate, algorithmFactories, xis );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOGConvoy::InstanciatePion
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePionLOGConvoy::InstanciatePion( uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories ) const
+MIL_AgentPion* MIL_AgentTypePionLOGConvoy::InstanciatePion( MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories ) const
 {
-    return new MIL_AgentPionLOGConvoy( *this, nID, automate, algorithmFactories );
+    return new MIL_AgentPionLOGConvoy( *this, automate, algorithmFactories );
 }
 
 // -----------------------------------------------------------------------------

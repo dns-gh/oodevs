@@ -25,7 +25,7 @@ struct FixturePion
     FixturePion()
         : algorithmsFactories_( new AlgorithmsFactories())
     {
-        xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
+        xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms' id='12' name='stuff'/>" );
         xis.start( "main" );
         std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
 
@@ -33,7 +33,7 @@ struct FixturePion
         pType_.reset( new StubMIL_AgentTypePion( *pModel_ ) );
         pTypeAutomat_.reset( new StubMIL_AutomateType( *pModel_ ) );
         pAutomat_.reset( new StubMIL_Automate( *pTypeAutomat_ ) );
-        pPion_.reset( new StubMIL_AgentPion( *pType_, *pAutomat_, *algorithmsFactories_ ) );
+        pPion_.reset( new StubMIL_AgentPion( *pType_, *pAutomat_, *algorithmsFactories_, xis ) );
     }
 
     std::auto_ptr< AlgorithmsFactories >   algorithmsFactories_;

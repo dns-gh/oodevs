@@ -44,6 +44,8 @@
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_Object, "DEC_Knowledge_Object" )
 
+MIL_IDManager DEC_Knowledge_Object::idManager_;
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object constructor
 // Created: NLD 2004-03-11
@@ -53,7 +55,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_Army_ABC& armyKnowing, MIL
     , pArmyKnowing_                     ( &armyKnowing )
     , pObjectKnown_                     ( &objectKnown )
     , pObjectType_                      ( &objectKnown.GetType() )
-    , nID_                              ( MIL_IDManager::GetFreeId() )
+    , nID_                              ( idManager_.GetFreeId() )
     , nAttributesUpdated_               ( eAttr_AllAttributes )
     , pOwnerArmy_                       ( &objectKnown.GetArmy() )    
     , localisation_                     ( )
@@ -131,6 +133,8 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const uint )
          >> localisation_
          >> avoidanceLocalisation_;
          
+    idManager_.Lock( nID_ );
+
     uint nPerceptionID;
     file >> nPerceptionID;
     pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nPerceptionID );

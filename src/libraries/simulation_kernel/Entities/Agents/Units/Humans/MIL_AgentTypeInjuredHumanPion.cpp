@@ -46,20 +46,24 @@ MIL_AgentTypeInjuredHumanPion::~MIL_AgentTypeInjuredHumanPion()
 // Name: MIL_AgentTypeInjuredHumanPion::InstanciatePion
 // Created: RFT 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypeInjuredHumanPion::InstanciatePion( uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis ) const
+MIL_AgentPion* MIL_AgentTypeInjuredHumanPion::InstanciatePion( MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis ) const
 {
-    return new MIL_AgentInjuredHumanPion( *this, nID, automate, algorithmFactories, xis );
+    return new MIL_AgentInjuredHumanPion( *this, automate, algorithmFactories, xis );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypeInjuredHumanPion::InstanciatePion
 // Created: RFT 2005-02-08
 // -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypeInjuredHumanPion::InstanciatePion( uint nID, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories ) const
+MIL_AgentPion* MIL_AgentTypeInjuredHumanPion::InstanciatePion( MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories ) const
 {
-    return new MIL_AgentInjuredHumanPion( *this, nID, automate, algorithmFactories );
+    return new MIL_AgentInjuredHumanPion( *this, automate, algorithmFactories );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypeInjuredHumanPion::Create
+// Created: RFT 2005-02-08
+// -----------------------------------------------------------------------------
 const MIL_AgentTypePion* MIL_AgentTypeInjuredHumanPion::Create( const std::string& strName, xml::xistream& xis )
 {
     return new MIL_AgentTypeInjuredHumanPion( strName, xis );

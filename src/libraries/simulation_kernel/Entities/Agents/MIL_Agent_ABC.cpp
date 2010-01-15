@@ -11,25 +11,28 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_Agent_ABC.h"
+#include <xeumeuleu/xml.h>
+
+MIL_IDManager MIL_Agent_ABC::idManager_;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Agent_ABC constructor
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_Agent_ABC::MIL_Agent_ABC( xml::xistream& xis, uint nID )
+MIL_Agent_ABC::MIL_Agent_ABC( xml::xistream& xis )
     : MIL_Entity_ABC ( xis ) 
-    , nID_           ( nID )
+    , nID_           ( xml::attribute< unsigned long >( xis, "id" ) )
 {
-    // NOTHING
+    idManager_.Lock( nID_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Agent_ABC constructor
 // Created: RDS 2008-05-09
 // -----------------------------------------------------------------------------
-MIL_Agent_ABC::MIL_Agent_ABC( const std::string& name, uint nID )
+MIL_Agent_ABC::MIL_Agent_ABC( const std::string& name )
     : MIL_Entity_ABC ( name ) 
-    , nID_           ( nID )
+    , nID_           ( idManager_.GetFreeId() )
 {
     // NOTHING
 }
@@ -59,6 +62,7 @@ uint MIL_Agent_ABC::GetID() const
 bool MIL_Agent_ABC::operator==( const MIL_Agent_ABC& rhs ) const
 {
     return nID_ == rhs.nID_;
+    idManager_.Lock( nID_ );
 }
 
 // -----------------------------------------------------------------------------
