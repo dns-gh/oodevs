@@ -671,7 +671,16 @@ function DEC_UserTypeList_Remove( list, element )
     end
 end
 
-DEC_ListePoints_Remove = DEC_UserTypeList_Remove
+function DEC_ListePoints_Remove( list, index )
+    if index and index < #list then
+        local i = index + 1 -- $$$$ LDC Conversion from lists beginning at 0 in C++ and directia3 to 1 in lua
+        while i < #list do
+            list[ i ] = list[ i + 1 ]
+            i = i + 1
+        end
+        list[ #list ] = nil
+    end
+end
 
 function DEC_DetruireDIAThing( obj ) end
 
