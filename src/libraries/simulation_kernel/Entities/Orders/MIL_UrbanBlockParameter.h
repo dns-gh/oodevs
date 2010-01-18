@@ -32,6 +32,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MIL_UrbanBlockParameter( const ASN1T_UrbanBlock& asn, MIL_AgentServer& entityManager );
+    explicit MIL_UrbanBlockParameter( urban::Block* urbanBlock );
     virtual ~MIL_UrbanBlockParameter();
     //@}
 

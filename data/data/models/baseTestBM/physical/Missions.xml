@@ -136,7 +136,7 @@
       <parameter dia-name="MedicalPriorities_" name="MedicalPrioritiesParam" optional="true" type="MedicalPriorities"/>
       <parameter dia-name="ObjectiveList_" name="ObjectiveListParam" optional="true" type="ObjectiveList"/>
     </mission>
-    <mission mrt-dia-behavior="net.masagroup.sword.military.tasks.GiveOrderMoveTo" dia-type="T_Mission_Automate_GiveOrderMoveTo" id="1001" cdt-dia-behavior="net.masagroup.sword.military.tasks.GiveOrderMoveTo" name="GiveOrderMoveTo">
+    <mission mrt-dia-behavior="net.masagroup.sword.military.tasks.GiveOrderMoveTo" dia-type="T_Mission_Automate_GiveOrderMoveToUrbanBlock" id="1001" cdt-dia-behavior="net.masagroup.sword.military.tasks.GiveOrderMoveTo" name="GiveOrderMoveToUrbanBlock">
       <parameter dia-name="objective" name="destination" optional="false" type="UrbanBlockBM"/>
     </mission>
     <mission mrt-dia-behavior="net.masagroup.sword.military.tasks.GiveOrderMoveTo" dia-type="T_Mission_Automate_GiveOrderMoveToPoint" id="1002" cdt-dia-behavior="net.masagroup.sword.military.tasks.GiveOrderMoveTo" name="GiveOrderMoveToPoint">

@@ -37,7 +37,7 @@
     </automat>
      <automat dia-type="BMAutomat" file="BMAutomat.bms" name="BMAutomat">
       <missions>
-        <mission name="GiveOrderMoveTo"/>
+        <mission name="GiveOrderMoveToUrbanBlock"/>
         <mission name="GiveOrderMoveToPoint"/>
       </missions>
     </automat>

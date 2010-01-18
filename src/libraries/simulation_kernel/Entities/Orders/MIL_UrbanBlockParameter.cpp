@@ -30,6 +30,16 @@ MIL_UrbanBlockParameter::MIL_UrbanBlockParameter( const ASN1T_UrbanBlock& asn, M
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_UrbanBlockParameter constructor
+// Created: MGD 2010-01-15
+// -----------------------------------------------------------------------------
+MIL_UrbanBlockParameter::MIL_UrbanBlockParameter( urban::Block* urbanBlock )
+: pUrbanBlock_( urbanBlock )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_UrbanBlockParameter destructor
 // Created: MGD 2009-11-02
 // -----------------------------------------------------------------------------

@@ -19,12 +19,24 @@ local AssignMissionParameter = function ( missionPion, parameterName, parameterT
 end
 
 integration.communication.StartMissionPion = function( content  )
-  BreakForDebug( tostring(content.params.mission_type) )
   local mission = DEC_CreerMissionPion( content.params.mission_type )
   for parameterName, list in pairs( content.params.mission_objectives ) do
     for _, value in pairs( list ) do
-      AssignMissionParameter( mission, parameterName, tostring(value:getClass()), value.source )
+      AssignMissionParameter( mission, parameterName, tostring( value:getClass() ), value.source )
     end
   end
   DEC_DonnerMissionPion( mission )
 end
+
+--TODO MGD generate from mission.xml
+local missionConverter = {
+  ["net.masagroup.sword.military.tasks.MoveTowardCrossroad"] = { ["net.masagroup.sword.military.world.Point"] = "T_Mission_Pion_MoveToPoint",
+                                                                 ["net.masagroup.sword.military.world.UrbanBlock"] = "T_Mission_Pion_MoveToUrbanBlock" }
+}
+integration.communication.ConvertMission = function( missionType, params )
+  BreakForDebug( "type"..missionType )
+  BreakForDebug( "param"..tostring(params.objectives[1]:getClass()) )
+  
+  if not missionConverter[ missionType ][ tostring(params.objectives[1]:getClass()) ] then error( "No mission converter for :"..missionType..","..tostring(params.objectives[1]:getClass()) ) end
+  return missionConverter[ missionType ][ tostring(params.objectives[1]:getClass()) ]
+end 

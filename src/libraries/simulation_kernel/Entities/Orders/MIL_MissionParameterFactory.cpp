@@ -387,6 +387,16 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 }
 
 // -----------------------------------------------------------------------------
+// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create
+// Created: MGD 2010-01-15
+// -----------------------------------------------------------------------------
+boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( urban::Block* urbanblock )
+{
+    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_UrbanBlockParameter( urbanblock ) );
+    return result; 
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_MissionParameterFactory::Copy
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
@@ -594,4 +604,13 @@ void MIL_MissionParameterFactory::SetPolygonListParameter( MIL_Mission_ABC* pMis
 {
     boost::shared_ptr< MIL_PolygonListParameter > listParam( new MIL_PolygonListParameter( locationList ) );
     pMission->SetParameter( parameter, listParam );    
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_MissionParameterFactory::SetUrbanBlockParameter
+// Created: MGD 2010-01-15
+// -----------------------------------------------------------------------------
+void MIL_MissionParameterFactory::SetUrbanBlockParameter( MIL_Mission_ABC* pMission, const std::string& parameter, urban::Block* urbanblock )
+{
+    pMission->SetParameter( parameter, Create( urbanblock ) );
 }
