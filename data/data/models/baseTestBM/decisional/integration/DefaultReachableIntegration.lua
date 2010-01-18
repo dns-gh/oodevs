@@ -26,9 +26,9 @@ integration.normalizedInversedDistance = function( pos1, pos2 )
   return LinearInterpolation( 0, 100, 10, 10000, false, integration.magnitude( pos1, pos2 ) )
 end
 
+local moveAction = nil
+local etat = nil
 integration.moveToIt = function( reachable)
-  moveAction = moveAction or nil
-  local etat = nil
   if not moveAction then
     it = DEC_CreerItineraireBM( reachable.sim_pos.x, reachable.sim_pos.y, reachable.sim_pos.z, eTypeItiMouvement )
     moveAction = DEC_StartDeplacement( it )
