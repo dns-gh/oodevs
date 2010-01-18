@@ -9,36 +9,41 @@
     <project name="LTO">
     </project>
   </requirements>
-  <steps>
-    <step id="1" success="true">
-      <action>
-		Choisir un terrain de simulation comprenant une zone urbaine enrichie (avec des blocs urbains).
-		Zoomer sur la zone urbaine.
-	  </action>
-      <expectation>L'interface fait apparaître des blocs urbains de différentes tailles.</expectation>
-    </step>
-    <step id="2" success="true">
-      <action>
-		Repérer deux blocs urbains dont le paramètre "Enceinte" (compound clearing)
-		est respectivement "open" (un jardinet "closed" (fenêtre de Propriétés sur l'objet urbain).
-		Pour le bloc "open", la traficabilité doit être supérieure à 54 tonnes.
-	  </action>
-      <expectation/>
-    </step>
-    <step id="3" success="false">
-      <action>
-		Choisir deux pions débrayés et lancer une mission Faire Mouvement avec respectivement comme destination un point à l'intérieur de l'un et l'autre des blocs.
-	  </action>
-      <expectation>
-	   La mission sur le bloc "open" se lance et l'unité arrive à destination.
-	   La mission sur le bloc "closed" ne se lance pas. Un message "mission impossible" est reçu.
-	  </expectation>
-    </step>
-  </steps>
-  <history>
-    <entry date="12-10-09"
-        success="true" tester-name="RPD" version="svn7333" attachment="false" >
-        Le test passe.
-    </entry>
-  </history>
+  <test-case>
+    <data>
+		Choisir un terrain de simulation comprenant une zone urbaine enrichie (avec des blocs urbains) tel que Drosoville.
+    </data>
+	  <steps>
+		<step id="1" success="true">
+		  <action>
+			Choisir un terrain de simulation comprenant une zone urbaine enrichie (avec des blocs urbains).
+			Zoomer sur la zone urbaine.
+		  </action>
+		  <expectation>L'interface fait apparaître des blocs urbains de différentes tailles.</expectation>
+		</step>
+		<step id="2" success="true">
+		  <action>
+			Repérer deux blocs urbains dont le paramètre "Enceinte" (compound clearing)
+			est respectivement "open" (un jardinet "closed" (fenêtre de Propriétés sur l'objet urbain).
+			Pour le bloc "open", la traficabilité doit être supérieure à 54 tonnes.
+		  </action>
+		  <expectation/>
+		</step>
+		<step id="3" success="false">
+		  <action>
+			Choisir deux pions débrayés et lancer une mission Faire Mouvement avec respectivement comme destination un point à l'intérieur de l'un et l'autre des blocs.
+		  </action>
+		  <expectation>
+		   La mission sur le bloc "open" se lance et l'unité arrive à destination.
+		   La mission sur le bloc "closed" ne se lance pas. Un message "mission impossible" est reçu.
+		  </expectation>
+		</step>
+	  </steps>
+	  <history>
+		<entry date="12-10-09"
+			success="true" tester-name="RPD" version="svn7333" attachment="false" >
+			Le test passe.
+		</entry>
+	  </history>
+  </test-case>
 </test>
