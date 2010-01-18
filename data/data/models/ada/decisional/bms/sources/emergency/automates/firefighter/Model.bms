@@ -12,7 +12,7 @@ includedFiles["sources/emergency/automates/firefighter/Model.bms"] = true
 ]]
 
 --[[//=============================================================================
-]]--[[// Model of medical units
+]]--[[// Model of fire-fighter units
 ]]--[[//=============================================================================
 ]]include "MacroFunctions.bms"
 

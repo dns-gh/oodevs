@@ -795,9 +795,9 @@
   <element codeEMAT6="Leclerc" codeEMAT8="Leclerc" codeLFRIL="Leclerc" codeNNO="Leclerc" comment="" id="11" name="Main Battle Tank" protection="HeavyTank" size="Heavy" weight="54">
     <speeds max="70">
       <speed terrain="inconnu" value="20"/>
-      <speed terrain="foret" value="0"/>
-      <speed terrain="plantation" value="0"/>
-      <speed terrain="marais" value="0"/>
+      <speed terrain="foret" value="1"/>
+      <speed terrain="plantation" value="1"/>
+      <speed terrain="marais" value="1"/>
       <speed terrain="dune" value="30"/>
       <speed terrain="urbain" value="60"/>
       <speed terrain="etendue eau" value="0"/>

@@ -51,9 +51,7 @@
     <propagation model="input"/>
   </object>
   <object geometry="point" name="Arson/Fire" symbol="O*VPA-----*****" type="fire">
-    <avoidable distance="250"/>
     <extinguishable/>
-    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <propagation model="fire"/>
   </object>
   <object geometry="polygon" name="Decontamination Point" symbol="G*MPNDP---****X" type="decontamination site">

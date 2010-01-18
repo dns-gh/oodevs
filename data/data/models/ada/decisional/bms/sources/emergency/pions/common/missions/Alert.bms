@@ -268,6 +268,7 @@ node "BEH_Dep_Pion_Emergency_AlertInZone"
 {
     activations =
     {
+        { "ACT_Info_Trace", {} },
         { "ACT_RC", {} },
         { "BEH_Dep_ProgressionVers", {} },
     },
@@ -284,10 +285,10 @@ node "BEH_Dep_Pion_Emergency_AlertInZone"
             do
                 local exact = S_Geometrie_BarycentreZone( self._namedParams.zone )
                 self.target = DEC_Geometrie_CalculerPositionObstacle( exact, S_TypeObject_ToString( eTypeObjectPosteControle ), 400 )
-                DEC_RC( eRC_Trace, "Alert population in next zone" )
             end
         end
 
+        Activate( self.activations.ACT_Info_Trace, 1, { "Alert population in next zone", } )
         if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self.target, 50 ) ) then
             self.eAction = eActionEffectuee
         end
@@ -312,6 +313,7 @@ node "BEH_Dep_Pion_Emergency_AlertInZone"
 eventmanager_plugin = eventmanager_plugin or {}
 eventmanager_plugin.MIS_Pion_Emergency_Alert = { "mission" }
 connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_Emergency_AlertInZone, "ACT_Info_Trace", nodes.ACT_Info_Trace }
 connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_Emergency_AlertInZone, "ACT_RC", nodes.ACT_RC }
 connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_Emergency_AlertInZone, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
 connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_Emergency_OrganizeAlert, "ACT_RC_PreparationMission", nodes.ACT_RC_PreparationMission }

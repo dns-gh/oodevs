@@ -740,3 +740,85 @@ elseif switch_1 == eActionObjetTerminee then
 
 }
 
+node "ACT_Obj_Pion_Emergency_ExtinguishFire"
+{
+    actuators =
+    {
+        deplacement = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.knFire = self.params[1]
+    end,
+
+    select = function( self )
+        --[[//booleens suspension reprise et terminaison
+]]        self.actionID = self.actionID or nil
+        self.bSuspendu = self.bSuspendu or false
+        self.bReprise = self.bReprise or false
+        self.eEtatAction = self.eEtatAction or nil
+        if( ModuleBegins() ) then
+            do
+                self.actionID = DEC_StartEteindreObjet( self._namedParams.knFire )
+                actionCallbacks[ self.actionID ] = function( arg ) self.eEtatAction = arg end
+
+            end
+        end
+
+        if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.knFire ) ) then
+            do
+                DEC_StopAction( self.actionID )
+                                self.params.__returnValue = eActionImpossible
+                Halt( self )
+                do return end
+
+            end
+        end
+
+         do
+            local _continue = true
+            local switch_1 = self.eEtatAction
+            local cases_switch_1 = {}
+                if switch_1 == eActionInfluence_EnCours
+                or switch_1 == eActionInfluence_Terminee then
+                    _continue = false
+                                cases_switch_1[1] = true
+elseif switch_1 == eActionInfluence_Impossible then
+                    self.actionID = DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt( self )
+                    do return end
+
+                    _continue = false
+                                end
+            end
+
+        if( self.bSuspendu ) then
+            do
+                --[[// Pas de delais de reorganisation du chantier
+]]self.bReprise = true
+                self.bSuspendu = false
+            end
+        end
+
+        if( self.bReprise ) then
+            do
+                DEC_ReprendAction( self.actionID )
+                self.bReprise = false
+            end
+        end
+
+    end,
+
+    deselect = function( self )
+                DEC_PauseAction( self.actionID )
+        self.bSuspendu = true
+    end,
+
+    destroy = function( self )
+                self.actionID = DEC_StopAction( self.actionID )
+    end,
+
+}
+

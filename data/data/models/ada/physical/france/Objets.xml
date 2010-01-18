@@ -50,10 +50,8 @@
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
     <propagation model="input"/>
   </object>
-  <object geometry="point" name="Feu" symbol="O*VPA-----*****" type="fire">
-    <avoidable distance="250"/>
+  <object geometry="point" name="Incendie" symbol="O*VPA-----*****" type="fire">
     <extinguishable/>
-    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <propagation model="fire"/>
   </object>
   <object geometry="polygon" name="Site de décontamination" symbol="G*MPNDP---****X" type="decontamination site">
