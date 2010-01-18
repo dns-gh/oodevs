@@ -101,6 +101,8 @@ namespace
         boost::replace_all( result, "resource-type", "unsigned long" );
         boost::replace_all( result, "damage", "float" );
         boost::replace_all( result, "resources", "int" );
+        boost::replace_all( result, "equipments", "unsigned long" );
+        boost::replace_all( result, "humans", "unsigned long" );
         // $$$$ SBO 2009-05-12: Function parameter types
         boost::replace_all( result, "operator", "string" );
         // $$$$ SBO 2009-04-15: TODO: put this into a config file...
