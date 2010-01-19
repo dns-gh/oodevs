@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.skills.GiveOrderMoveTo">
+    <description>Give MoveTo Order to all sections</description>
+    <parameters>
+        <parameter name="entities">
+            <description>Les entités du groupe servant à la résolution de la tâche.</description>
+            <type>
+                <list>
+                	<class name="net.masagroup.military.generic.knowledge.Commanding" /></list>
+            </type>
+        </parameter>
+        <parameter name="objectives">
+            <description>Les objectifs de la tâche.</description>
+            <type>
+            <list>
+                <class name="net.masagroup.military.generic.knowledge.Reachable"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <modifiers/>
+</skill>
