@@ -389,8 +389,7 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< bool( MT_Vector2D*, DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::IsPointInPionFuseau , boost::ref( GetAutomate() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Automate_CalculerPositionParRapportALimaPourPion",
         boost::function< boost::shared_ptr< MT_Vector2D >( int, float, const DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::ComputePointBeforeLimaForPion, _1, _2, _3 ) ) );
-    brain.RegisterFunction( "DEC_Automate_CalculerPointProcheLocalisationDansFuseauPourPion",
-        boost::function< boost::shared_ptr< MT_Vector2D >( const TER_Localisation*, const DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::ComputePionNearestLocalisationPointInFuseau, _1, _2 ) ) );
+    brain.RegisterFunction( "DEC_Automate_CalculerPointProcheLocalisationDansFuseauPourPion", &DEC_AutomateFunctions::ComputePionNearestLocalisationPointInFuseau );
     brain.RegisterFunction( "DEC_Automate_PionPeutConstruireObjet",
         boost::function< bool( const DEC_Decision_ABC*, const std::string& ) >( boost::bind( &DEC_AutomateFunctions::CanPionConstructObject, boost::cref( GetAutomate() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Automate_PionPeutConstruireContournementObjet",

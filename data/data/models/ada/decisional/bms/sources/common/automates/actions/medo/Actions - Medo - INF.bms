@@ -191,7 +191,8 @@ elseif switch_1 == ePhase_CDT then
             do
                 DEC_Trace( "Assigne mission 'Surveiller' a " .. DEC_GetSzName( self._namedParams.pPion ) )
                 S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
-                if( not DEC_Automate_CalculerPointProcheLocalisationDansFuseauPourPion( self._namedParams.locZone, self.ptZone, self._namedParams.pPion ) ) then
+                self.ptZone = DEC_Automate_CalculerPointProcheLocalisationDansFuseauPourPion( self._namedParams.locZone, self._namedParams.pPion )
+                if( not self.ptZone ) then
                     do
                         self.ptZone = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( self._namedParams.locZone )
                         if( ( self.ptZone == 0 or self.ptZone == nil ) ) then

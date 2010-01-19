@@ -24,7 +24,7 @@
 #include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
-// Name: TestKnowledge
+// Name: TestKnowledgeGroupType
 // Created: LDC 2009-12-10
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestKnowledgeGroupType )
@@ -53,15 +53,15 @@ BOOST_AUTO_TEST_CASE( TestKnowledgeGroupType )
 
 
 // -----------------------------------------------------------------------------
-// Name: TestKnowledge
+// Name: TestPropagationInKnowledgeGroups
 // Created: HBD 2009-12-10
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( TestKnowledgeGroup1 )
+BOOST_AUTO_TEST_CASE( TestPropagationInKnowledgeGroups )
 {
     MockArmy army;
     MockKnowledgeGroupFactory mockKnowledgeGroupFactory;
     
-    // Use previously define type
+    // Use previously defined type
     const MIL_KnowledgeGroupType &kgType = *MIL_KnowledgeGroupType::FindType("GTIA");
   
     MOCKPP_CHAINER_FOR( MockArmy, RegisterKnowledgeGroup ) ( &army ).expects( mockpp::once() );
