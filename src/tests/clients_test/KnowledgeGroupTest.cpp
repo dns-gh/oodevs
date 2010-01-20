@@ -60,7 +60,7 @@ namespace
         MOCK_METHOD( Activate, 1 );
         MOCK_METHOD( Accept, 1 );
         MOCK_METHOD( IsActivated, 0 );
-        MOCK_METHOD( DoUpdate, 1 );
+        //MOCK_METHOD( DoUpdate, 1 );
 
         MOCK_METHOD_EXT( Register, 1, void( kernel::KnowledgeGroup_ABC& ), Register1 );
         MOCK_METHOD_EXT( Remove, 1, void( kernel::KnowledgeGroup_ABC& ), Remove1 );

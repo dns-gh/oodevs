@@ -32,8 +32,6 @@ public:
     //@{
     virtual void Send( ASN1T_MsgsSimToClient& ) = 0;
 
-    static void Register( NET_Publisher_ABC& publisher );
-    static void Unregister( NET_Publisher_ABC& publisher );
     static void SendAsnMessage( ASN1T_MsgsSimToClient& );
     //@}
 };

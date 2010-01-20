@@ -30,9 +30,12 @@ public:
      : mockpp::ChainableMockObject( MOCKPP_PCHAR( "MockNET_Publisher_ABC" ) )
      , Send_mocker                ( "Send", this )
     {
-        NET_Publisher_ABC::Register( *this ); 
+        // NOTHING
     }
-    virtual ~MockNET_Publisher_ABC() { NET_Publisher_ABC::Unregister( *this ); }
+    virtual ~MockNET_Publisher_ABC()
+    {
+        // NOTHING
+    }
     //@}
     
     virtual void Send( ASN1T_MsgsSimToClient& msg )

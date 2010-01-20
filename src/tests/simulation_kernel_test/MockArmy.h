@@ -38,7 +38,8 @@ public:
     explicit MockArmy() 
         : mockpp::ChainableMockObject( MOCKPP_PCHAR( "MockArmy" ), 0 )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetNameShadow )
-        , GetID_mocker                      ( "GetID", this )
+        //, GetID_mocker                      ( "GetID", this )
+        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetID )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetKnowledgeShadow )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( RegisterObject )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( UnregisterObject )        
@@ -59,6 +60,7 @@ public:
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( SendCreation )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( SendFullState )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( SendKnowledge )
+        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( FindKnowledgeGroup )
        {
         }
     virtual ~MockArmy() {}
@@ -74,18 +76,18 @@ public:
         return *GetKnowledgeShadow();
     }
 
-    MIL_KnowledgeGroup* FindKnowledgeGroup(uint) const
-    {
-        MOCKPP_NOT_IMPLEMENTED( __FUNCTION__ );
-        throw;
-    }
+//    MIL_KnowledgeGroup* FindKnowledgeGroup(uint) const
+//    {
+//        return *FindKnowledgeGroupShadow();
+//    }
 
-    virtual uint GetID() const
-    {   
-        return GetID_mocker.forward();
-    }
+//    virtual uint GetID() const
+//    {   
+//        return GetID_mocker.forward();
+//    }
 
-    mockpp::ChainableMockMethod< uint > GetID_mocker;
+    //mockpp::ChainableMockMethod< uint > GetID_mocker;
+    MOCKPP_CONST_CHAINABLE_EXT0      ( MockArmy, uint, GetID, void, );   
     MOCKPP_CONST_CHAINABLE_EXT0      ( MockArmy, const std::string*, GetNameShadow, std::string, );   
     MOCKPP_CONST_CHAINABLE_EXT0      ( MockArmy, DEC_KnowledgeBlackBoard_Army*, GetKnowledgeShadow, DEC_KnowledgeBlackBoard_Army, );   
     MOCKPP_VOID_CHAINABLE_EXT1       ( MockArmy, RegisterObject, MIL_Object_ABC&, , MIL_Object_ABC );   
@@ -106,7 +108,8 @@ public:
     MOCKPP_VOID_CHAINABLE0           ( MockArmy, CleanKnowledges );   
     MOCKPP_VOID_CONST_CHAINABLE0     ( MockArmy, SendCreation );   
     MOCKPP_VOID_CONST_CHAINABLE0     ( MockArmy, SendFullState );   
-    MOCKPP_VOID_CONST_CHAINABLE0     ( MockArmy, SendKnowledge );   
+    MOCKPP_VOID_CONST_CHAINABLE0     ( MockArmy, SendKnowledge );
+    MOCKPP_CONST_CHAINABLE_EXT1      ( MockArmy, MIL_KnowledgeGroup*, FindKnowledgeGroup, unsigned int, MIL_KnowledgeGroup*, , unsigned int );
 };
 
 #endif // __MockArmy_h_
