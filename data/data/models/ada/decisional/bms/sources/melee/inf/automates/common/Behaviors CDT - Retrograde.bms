@@ -365,14 +365,14 @@ node "BEH_Ordre_Automate_ArretSauvegardeSur"
 ]]if( ModuleBegins() ) then
             do
                 DEC_Trace( "Desactive sauvegarde sur pion " .. DEC_GetSzName( self._namedParams.pion ) )
-                self._namedParams.pion:S_Mot_EtatDesactiveSauvegarde( true )
+                F_Mot_EtatDesactiveSauvegarde( self._namedParams.pion, true )
             end
         end
 
         if( self.eEtat == eActionEffectuee ) then
             do
                 self.eEtat = eActionEnCours
-                self._namedParams.pion:S_Mot_EtatDesactiveSauvegarde( false )
+                F_Mot_EtatDesactiveSauvegarde( self._namedParams.pion, false )
                                 self.params.__returnValue = eActionEffectuee
                 Halt( self )
                 do return end
@@ -384,7 +384,7 @@ node "BEH_Ordre_Automate_ArretSauvegardeSur"
     end,
 
     destroy = function( self )
-                self._namedParams.pion:S_Mot_EtatDesactiveSauvegarde( false )
+                F_Mot_EtatDesactiveSauvegarde( self._namedParams.pion, false )
     end,
 
 }

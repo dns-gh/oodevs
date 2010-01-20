@@ -85,6 +85,7 @@ void DEC_CommunicationFunctions::Register( directia::Brain& brain )
     brain.RegisterFunction( "F_Pion_GetselUnitesEnAppui", &F_Pion_GetselUnitesEnAppui );
     brain.RegisterFunction( "F_AddToselUnitesEnAppui", &F_AddToselUnitesEnAppui );
     brain.RegisterFunction( "F_RemoveFromselUnitesEnAppui", &F_RemoveFromselUnitesEnAppui );
+    brain.RegisterFunction( "F_Mot_EtatDesactiveSauvegarde", &F_Mot_EtatDesactiveSauvegarde );
 
     brain.RegisterFunction( "F_Automat_GeteEtatPhaseMission", &F_GeteEtatPhaseMission );
     brain.RegisterFunction( "F_Automat_SeteEtatPhaseMission", &F_SeteEtatPhaseMission );
@@ -699,6 +700,15 @@ void DEC_CommunicationFunctions::F_AddToselUnitesEnAppui( DEC_Decision_ABC* pPio
 void DEC_CommunicationFunctions::F_RemoveFromselUnitesEnAppui( DEC_Decision_ABC* pPion )
 {
     dynamic_cast< DEC_RolePion_Decision* >( pPion )->RemoveFromselUnitesEnAppui( pPion );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_CommunicationFunctions::F_Mot_EtatDesactiveSauvegarde
+// Created: LDC 2010-01-20
+// -----------------------------------------------------------------------------
+void DEC_CommunicationFunctions::F_Mot_EtatDesactiveSauvegarde( DEC_Decision_ABC* pPion, bool value )
+{
+    pPion->SetVariable( "g_bDesactiveSauvegarde" ,value );
 }
 
 // -----------------------------------------------------------------------------
