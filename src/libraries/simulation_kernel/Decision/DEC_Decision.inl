@@ -59,12 +59,13 @@ void DEC_Decision<T>::InitBrain( const std::string& brainFile, const std::string
     includePath_ = includePath;
     pRefs_.reset( 0 );//Must delete ScriptRef before call Brain destructor and destroy vm
     pBrain_.reset( new directia::Brain( includePath ) );
+    RegisterUserFunctions( *pBrain_ );
+    DEC_DecisionImpl::RegisterCommonUserFunctions( *pBrain_, pEntity_->GetID() );
     pBrain_->GetScriptFunction( "include" )( ( brainFile ),(includePath) );
     database_.InitKnowledges( *pBrain_ );//@TODO MGD Find a better way to merge dia4/dia5
 
     pRefs_.reset( new ScriptRefs( *pBrain_) );
-    RegisterUserFunctions( *pBrain_ );
-    DEC_DecisionImpl::RegisterCommonUserFunctions( *pBrain_, pEntity_->GetID() );
+
     RegisterSelf( *pBrain_ );
 }
 
@@ -123,8 +124,10 @@ void DEC_Decision<T>::GarbageCollect()
 // Created: LDC 2009-02-27
 // -----------------------------------------------------------------------------
 template <class T>
-void DEC_Decision<T>::Reset()
+void DEC_Decision<T>::Reset( std::string groupName )
 {
+    if( groupName != "" )
+        pBrain_->GetScriptFunction( "CleanBrainBeforeDeletion" )( groupName );
     InitBrain( brainFile_, "name", includePath_ );
     StartDefaultBehavior();
 }

@@ -993,7 +993,7 @@ void MIL_Automate::OnReceiveMsgUnitMagicAction( const ASN1T_MsgUnitMagicAction& 
         for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
             (**itPion).OnReceiveMsgMagicMove( (**itPion).GetRole< PHY_RoleInterface_Location >().GetPosition() + vTranslation );
 
-        GetRole< DEC_AutomateDecision >().Reset();
+        GetRole< DEC_AutomateDecision >().Reset( GetName() );
         orderManager_.ReplaceMission();
     }
     else if( asnMsg.action.t == T_MsgUnitMagicAction_action_se_rendre )

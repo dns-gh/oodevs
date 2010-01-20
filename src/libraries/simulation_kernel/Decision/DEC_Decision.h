@@ -49,7 +49,7 @@ public:
     //@{
     void SetModel( const DEC_Model_ABC& model );
     virtual void UpdateDecision( float duration );
-    virtual void Reset();
+    virtual void Reset( std::string groupName = "" );
     
     virtual void SetMission( MIL_Mission_ABC* pMission );
     virtual MIL_Mission_ABC* GetMission();

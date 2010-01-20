@@ -38,6 +38,7 @@ public:
     // @name Events 
     //@{
     void ReplaceMission( MIL_Mission_ABC* pMission = 0 ); // asynchronous
+    virtual void StopAllMissions(); // synchronous
     //@}
 
     // @name Accessors 
@@ -57,15 +58,11 @@ public:
     const MIL_MissionType_ABC* GetCurrentMissionType() const;
     //@}
 
+
 protected:
     //! @name Accessors
     //@{
     MIL_Mission_ABC* GetCurrentMission() const;
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void StopAllMissions(); // synchronous
     //@}
 
 private:

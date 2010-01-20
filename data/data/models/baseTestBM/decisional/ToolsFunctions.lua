@@ -1,4 +1,8 @@
---@TODO MGD Remove this ugly, find why scriptref error
+--- Create a knowledge
+-- @param strKnowledgeType The concret knowledge type to instanciate
+-- @param knowledgeSource  The cpp source object  
+-- @param knowledgedPosition The knowledge current position
+-- @todo MGD Remove this ugly, find why scriptref error
 function CreateKnowledge( strKnowledgeType, knowledgeSource, knowledgedPosition )
   if( strKnowledgeType == "net.masagroup.sword.military.world.Point" ) then
     kn = kBase.create( net.masagroup.sword.military.world.Point, knowledgeSource, { ["sim_pos"] = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] } } )
@@ -26,6 +30,13 @@ function CreateKnowledge( strKnowledgeType, knowledgeSource, knowledgedPosition 
   end
 end
 
+--- Fill mission parameters and create corresponding knowledges
+-- @param params The table to fill 
+-- @param strKnowledgeType  The concret knowledge type to instanciate for the parameter
+-- @param name The parameter name
+-- @param knowledgeSource  The cpp source objects  
+-- @param knowledgedPosition The knowledge's current positions
+-- @param list Indicate if the parameter is a list
 function InitTaskParameter( params, strKnowledgeType, name, knowledgeSource, knowledgedPosition, list )
   if list then
     params[name] = {};
@@ -47,27 +58,32 @@ function InitQueryReturn( params, strKnowledgeType, knowledgeSource, knowledgedP
   end
 end
 
-function InitializeMe( strKnowledgeType, knowledgeSource, posx, posy ,posz )
+function InitializeMe( strKnowledgeType, knowledgeSource, groupName, posx, posy ,posz )
   if( strKnowledgeType == "net.masagroup.sword.military.world.Section" ) then
     if not kBase.me.body then
-      kBase.me.body = kBase.create( net.masagroup.sword.military.world.Section, knowledgeSource, { ["sim_pos"] = { x=posx, y=posy, z=posz } } )
-      behavior_model.createGroup( "michel" )
+      kBase.me.body = kBase.create( net.masagroup.sword.military.world.Section, knowledgeSource, { sim_pos = { x=posx, y=posy, z=posz } } )
+      behavior_model.createGroup( groupName )
     end
   else
     error( "Knowledge unknown : " .. strKnowledgeType )
   end
 end
 
-function InitializeLeaderMe( strKnowledgeType, knowledgeSource )
+function InitializeLeaderMe( strKnowledgeType, knowledgeSource, groupName )
   if( strKnowledgeType == "net.masagroup.sword.military.world.Compagnie" ) then
     if not kBase.me.body then
       kBase.me.body = kBase.create( net.masagroup.sword.military.world.Compagnie, knowledgeSource )
-      behavior_model.createGroup( "michel" )  
+      behavior_model.createGroup( groupName )  
     end
   else
     error( "Knowledge unknown : " .. strKnowledgeType )
   end
-end    
+end
+
+function CleanBrainBeforeDeletion( groupName )
+  BreakForDebug( "ok delete :"..tostring( groupName ) )
+  behavior_model.leaveGroup( groupName )
+end  
 
 
 
