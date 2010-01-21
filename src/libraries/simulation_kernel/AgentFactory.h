@@ -53,7 +53,7 @@ private:
 
     //! @name Operations
     //@{
-    void Initialize( MIL_AgentPion& pion, MIL_Automate& automate, const MT_Vector2D& vPosition );
+    void Initialize( MIL_AgentPion& pion, const MT_Vector2D& vPosition );
     //@}
 
     //! @name CheckPoint

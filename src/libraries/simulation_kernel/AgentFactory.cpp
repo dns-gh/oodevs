@@ -61,7 +61,7 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
     MT_Vector2D vPosTmp;
     MIL_Tools::ConvertCoordMosToSim( strPosition, vPosTmp );
 
-    Initialize( *pPion, automate, vPosTmp );
+    Initialize( *pPion, vPosTmp );
 
     pPion->ReadOverloading( xis );
     return pPion;
@@ -76,14 +76,12 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
     MIL_AgentPion* pPion = type.InstanciatePion( automate, *algorithmsFactories_ );
     type.RegisterRoles( *pPion, database_ );
 
-    Initialize( *pPion, automate, vPosition );
+    Initialize( *pPion, vPosition );
     return pPion;
 }
 
-void AgentFactory::Initialize( MIL_AgentPion& pion, MIL_Automate& automate, const MT_Vector2D& vPosition )
+void AgentFactory::Initialize( MIL_AgentPion& pion, const MT_Vector2D& vPosition )
 {
-    automate.RegisterPion( pion );
-
     pion.GetRole< PHY_RoleInterface_Location >().Move( vPosition, MT_Vector2D( 0., 1. ), 0. );
 }
 
