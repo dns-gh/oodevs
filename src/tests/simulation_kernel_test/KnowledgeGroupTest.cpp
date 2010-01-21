@@ -200,35 +200,40 @@ BOOST_AUTO_TEST_CASE( ReceiveKnowledgeGroupSetType )
     MockArmy army;
     MockKnowledgeGroupFactory mockKnowledgeGroupFactory;
     
-    // Use previously define type
-    const MIL_KnowledgeGroupType &kgType = *MIL_KnowledgeGroupType::FindType("TOTO");
-  
+    // define a new knowledge group type
+    const std::string initialisation ="<knowledge-groups><knowledge-group name=\"Standard\" communication-delay=\"01m\">"
+    "<unit-knowledge max-lifetime=\"03h\" max-unit-to-knowledge-distance=\"60000\"/>"
+    "<population-knowledge max-lifetime=\"2m\"/>"
+    "</knowledge-group>"
+    "</knowledge-groups>";
+    xml::xistringstream xis( initialisation );
+    double timeFactor = 0.5f;
+    MIL_KnowledgeGroupType::Initialize(xis, timeFactor);
+
     // register army sub knowledge group
+    const MIL_KnowledgeGroupType &kgType = *MIL_KnowledgeGroupType::FindType("Standard");
     MOCKPP_CHAINER_FOR( MockArmy, RegisterKnowledgeGroup ) ( &army ).expects( mockpp::once() );
     MIL_KnowledgeGroup groupArmy( kgType, 30, army );
 
     // prepare message    
     ASN1T_MsgKnowledgeGroupSetType msg;
     msg.oid = groupArmy.GetID();
-    msg.type = kgType.GetName().c_str();
+    const MIL_KnowledgeGroupType &kgType_new = *MIL_KnowledgeGroupType::FindType("TOTO");
+    msg.type = kgType_new.GetName().c_str();
 
     tools::Resolver< MIL_Army_ABC > armies;
-    
     MOCKPP_CHAINER_FOR( MockArmy, GetID ) ( &army ).expects( mockpp::once() ).will( mockpp::returnValue< uint >( 1 ) );
     armies.Register( army.GetID(), army );
-
-    //MOCKPP_CHAINER_FOR( MockArmy, FindKnowledgeGroup ) ( &army ).expects( mockpp::once() ).will( mockpp::returnValue( &group1 ) );
 
     // initialize publisher
     MockNET_Publisher_ABC mockPublisher;
     mockPublisher.Send_mocker.expects( atLeastOnce() ); // NET_ASN_MsgknowledgeGroupUpdate
 
-    MOCKPP_CHAINER_FOR( MockArmy, UnregisterKnowledgeGroup ) ( &army ).expects( mockpp::once() );
-    // moves group2 under group1
+    // change knowledge group type
     groupArmy.OnReceiveMsgKnowledgeGroupSetType( msg );
 
     // verify
-    //BOOST_CHECK_EQUAL( "Standard", groupArmy.GetParent() );
+    BOOST_CHECK_EQUAL( "TOTO", groupArmy.GetType().GetName().c_str() );
     mockPublisher.verify();
     MOCKPP_CHAINER_FOR( MockArmy, UnregisterKnowledgeGroup ) ( &army ).expects( mockpp::once() );   
    
