@@ -350,5 +350,5 @@ void DEC_PopulationDecision::RegisterSelf( directia::Brain& brain )
 // -----------------------------------------------------------------------------
 void DEC_PopulationDecision::UpdateMeKnowledge( directia::Brain& brain )
 {
-    brain.GetScriptFunction( "InitializeLeaderMe" )( std::string("net.masagroup.sword.military.world.Population"), (DEC_Decision_ABC*)this );
+    brain.GetScriptFunction( "UpdateLeaderMe" )( brain.GetScriptVariable("net.masagroup.sword.military.world.Population"), (DEC_Decision_ABC*)this );
 }

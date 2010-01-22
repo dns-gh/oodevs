@@ -53,7 +53,7 @@ namespace directia
 // Created: LDC 2009-04-08
 // -----------------------------------------------------------------------------
 template <class T>
-void DEC_Decision<T>::InitBrain( const std::string& brainFile, const std::string& /*type*/, const std::string& includePath )
+void DEC_Decision<T>::InitBrain( const std::string& brainFile, const std::string& type, const std::string& includePath )
 {
     brainFile_ = brainFile;
     includePath_ = includePath;
@@ -64,7 +64,7 @@ void DEC_Decision<T>::InitBrain( const std::string& brainFile, const std::string
     RegisterUserFunctions( *pBrain_ );
     DEC_DecisionImpl::RegisterCommonUserFunctions( *pBrain_, pEntity_->GetID() );
     
-    pBrain_->GetScriptFunction( "include" )( ( brainFile ),(includePath) );
+    pBrain_->GetScriptFunction( "include" )( brainFile ,includePath, type );
     database_.InitKnowledges( *pBrain_ );//@TODO MGD Find a better way to merge dia4/dia5
     pRefs_.reset( new ScriptRefs( *pBrain_) );
 

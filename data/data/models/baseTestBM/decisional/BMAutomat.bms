@@ -3,5 +3,6 @@ pragma "once"
 include "ToolsFunctions.lua"
 include "Integration.lua"
 
-libPath = select(1,...)
-behavior_model.loadModel( "net.masagroup.sword.military.roles.Compagnie", { libPath .. "/models/libs/core", libPath .. "/models/libs/base", libPath .. "/models/net.masagroup.sword/src", libPath .. "/models/net.masagroup.testSword/src" } )
+local libPath = select(1,...)
+local role    = select(2,...)
+behavior_model.loadModel( role, { libPath .. "/models/libs/core", libPath .. "/models/libs/base", libPath .. "/models/net.masagroup.sword/src", libPath .. "/models/net.masagroup.testSword/src" } )

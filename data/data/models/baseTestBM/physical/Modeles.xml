@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <models>
   <units>
-    <unit dia-type="BMPion" file="BMPion.bms" name="BMPion">
+    <unit dia-type="BMPion" file="BMPion.bms" name="net.masagroup.sword.military.roles.Section">
       <missions>
         <mission name="Follow"/>
         <mission name="Load"/>
@@ -30,12 +30,7 @@
     </unit>
   </units>
   <automats>
-    <automat dia-type="DumbAutomat" file="DumbAutomat.bms" name="DumbAutomat">
-      <missions>
-        <mission name="Dumb Automat Mission"/>
-      </missions>
-    </automat>
-     <automat dia-type="BMAutomat" file="BMAutomat.bms" name="BMAutomat">
+     <automat dia-type="BMAutomat" file="BMAutomat.bms" name="net.masagroup.sword.military.roles.Compagnie">
       <missions>
         <mission name="GiveOrderMoveToUrbanBlock"/>
         <mission name="GiveOrderMoveToPoint"/>
