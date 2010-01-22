@@ -28,6 +28,7 @@ class TER_Localisation;
 
 namespace directia
 {
+    class Brain;
     class ScriptRef;
 }
 
@@ -120,7 +121,7 @@ public:
     static bool GetInterceptionPoint   ( const MT_Vector2D& vToInterceptPosition, const MT_Vector2D& vToInterceptSpeed, const MT_Vector2D& vInterceptingPosition, MT_Float rInterceptingSpeed, MT_Vector2D& result );
 
     // Terrain keypoint
-    static void GetCrossroads( directia::ScriptRef& knowledgeCreateFunction, float x, float y, float z, float radius, const directia::ScriptRef& table ); 
+    static void GetCrossroads( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, float x, float y, float z, float radius, const directia::ScriptRef& table ); 
     // BMArea
     static boost::shared_ptr< MT_Vector2D > ComputeBarycenter( const TER_Localisation* localisation );
     //@}

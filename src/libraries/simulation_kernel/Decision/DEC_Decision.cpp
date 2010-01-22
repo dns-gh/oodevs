@@ -81,14 +81,14 @@ void RegisterCommonUserFunctions( directia::Brain& brain, unsigned int id )
     brain.RegisterFunction( "DEC_Geometrie_TrierZonesSelonOuvertureTerrain",    &DEC_GeometryFunctions::SortZonesAccordingToTerrainOpening );
     brain.RegisterFunction( "DEC_Geometrie_PourcentageZoneTerrainCompartimente",&DEC_GeometryFunctions::ComputeClosedTerrainRatioInZone );
     brain.RegisterFunction( "DEC_Geometrie_PourcentageZoneTerrainOuvert",       &DEC_GeometryFunctions::ComputeOpenTerrainRatioInZone );
-   brain.RegisterFunction( "DEC_Geometrie_TrierFuseauxSelonOuvertureTerrain",  &DEC_GeometryFunctions::SortFuseauxAccordingToTerrainOpening );
+    brain.RegisterFunction( "DEC_Geometrie_TrierFuseauxSelonOuvertureTerrain",  &DEC_GeometryFunctions::SortFuseauxAccordingToTerrainOpening );
     brain.RegisterFunction( "DEC_Geometrie_ConvertirFuseauEnLocalisation",      &DEC_GeometryFunctions::ConvertFuseauToLocalisation );
     brain.RegisterFunction( "DEC_Geometrie_ProchainObjectifDansFuseau",         &DEC_GeometryFunctions::GetNextObjectiveInFuseau );
     
     directia::ScriptRef initQueryFunction = brain.GetScriptFunction( "InitQueryReturn" );
     //Keypoint
     brain.RegisterFunction( "DEC_Crossroads", 
-        boost::function< void( float, float, float, float, const directia::ScriptRef& ) >( boost::bind( &DEC_GeometryFunctions::GetCrossroads, initQueryFunction, _1 , _2, _3, _4, _5 ) ) ) ;
+        boost::function< void( float, float, float, float, const directia::ScriptRef& ) >( boost::bind( &DEC_GeometryFunctions::GetCrossroads, boost::ref( brain ), initQueryFunction, _1 , _2, _3, _4, _5 ) ) ) ;
     //BMArea
     brain.RegisterFunction( "DEC_BMArea_Barycenter", &DEC_GeometryFunctions::ComputeBarycenter );
 
@@ -170,7 +170,7 @@ void RegisterCommonUserFunctions( directia::Brain& brain, unsigned int id )
     
     directia::ScriptRef initParameterFunction = brain.GetScriptFunction( "InitTaskParameter" );
     brain.RegisterFunction( "DEC_FillMissionParameters",
-        boost::function< void( const directia::ScriptRef&, MIL_Mission_ABC* ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, initParameterFunction, _1 , _2 ) ) );
+        boost::function< void( const directia::ScriptRef&, MIL_Mission_ABC* ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, boost::ref(brain), initParameterFunction, _1 , _2 ) ) );
     
     // Debug
     brain.RegisterFunction( "DEC_PointToString",      &DEC_DIAFunctions::PointToString );
@@ -216,7 +216,7 @@ void RegisterCommonUserFunctions( directia::Brain& brain, unsigned int id )
 }
 
 typedef void (*T_Function)( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element );
-typedef void (*T_FunctionBM)( directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element );
+typedef void (*T_FunctionBM)( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element );
 
 void BoolFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -242,15 +242,15 @@ void PointListFunction( const directia::ScriptRef& refMission, const std::string
     if( element.ToPointList( value ) )
         refMission.RegisterObject( name, value );
 }
-void PointFunctionBM( directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void PointFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     boost::shared_ptr< MT_Vector2D > value;
     if( element.ToPoint( value ) && value.get() )
     {
-        knowledgeCreateFunction( refMission, std::string( "net.masagroup.sword.military.world.Point" ), name, value, value->ToStdVector(), false );//@TODO MGD fix this ugly        
+        knowledgeCreateFunction( refMission,  brain.GetScriptVariable( "net.masagroup.sword.military.world.Point" ) , name, value, value->ToStdVector(), false );//@TODO MGD fix this ugly        
     }
 }
-void PointListFunctionBM( directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void PointListFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< boost::shared_ptr< MT_Vector2D > > value;
     if( element.ToPointList( value ) )
@@ -260,7 +260,7 @@ void PointListFunctionBM( directia::ScriptRef& knowledgeCreateFunction, const di
         {
             positions.push_back( (*it)->ToStdVector() );
         }
-        knowledgeCreateFunction( refMission, std::string( "net.masagroup.sword.military.world.Point" ), name, value, positions, true );
+        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Point" ), name, value, positions, true );
     }
 }
 void PolygonFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
@@ -275,15 +275,15 @@ void PolygonListFunction( const directia::ScriptRef& refMission, const std::stri
     if( element.ToPolygonList( value ) )
         refMission.RegisterObject( name, value );
 }
-void AreaFunctionBM( directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void AreaFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     boost::shared_ptr< TER_Localisation > value;
     if( element.ToPolygon( value ) && value.get() )
     {
-        knowledgeCreateFunction( refMission, std::string( "net.masagroup.sword.military.world.Area" ), name, value, value->ComputeBarycenter().ToStdVector(), false );
+        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Area" ), name, value, value->ComputeBarycenter().ToStdVector(), false );
     }
 }
-void AreaListFunctionBM( directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void AreaListFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< boost::shared_ptr< TER_Localisation > > value;
     if( element.ToPolygonList( value ) )
@@ -293,7 +293,7 @@ void AreaListFunctionBM( directia::ScriptRef& knowledgeCreateFunction, const dir
         {
             positions.push_back( (*it)->ComputeBarycenter().ToStdVector() );
         }
-        knowledgeCreateFunction( refMission, std::string( "net.masagroup.sword.military.world.Area" ), name, value, positions, true );
+        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Area" ), name, value, positions, true );
     }
 }
 void LocationFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
@@ -336,14 +336,14 @@ void AutomatFunction( const directia::ScriptRef& refMission, const std::string& 
     if( element.ToAutomat( value ) )
         refMission.RegisterObject( name, value );
 }
-void AutomatFunctionBM( directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void AutomatFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     DEC_Decision_ABC* value = 0;
     if( element.ToAutomat( value ) )
     {
         MT_Vector2D pos;
         value->GetAutomate().GetAlivePionsBarycenter( pos );
-        knowledgeCreateFunction( refMission, std::string( "net.masagroup.sword.military.world.Compagnie" ), name, value, pos.ToStdVector(), false );
+        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Compagnie" ), name, value, pos.ToStdVector(), false );
     }
 }
 void AutomatListFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
@@ -352,7 +352,7 @@ void AutomatListFunction( const directia::ScriptRef& refMission, const std::stri
     if( element.ToAutomatList( value ) )
         refMission.RegisterObject( name, value );
 }
-void AutomatListFunctionBM( directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void AutomatListFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< DEC_Decision_ABC* > value;
     if( element.ToAutomatList( value ) )
@@ -364,7 +364,7 @@ void AutomatListFunctionBM( directia::ScriptRef& knowledgeCreateFunction, const 
             (*it)->GetAutomate().GetAlivePionsBarycenter( pos );
             positions.push_back( pos.ToStdVector() );
         }
-        knowledgeCreateFunction( refMission, std::string( "net.masagroup.sword.military.world.Compagnie" ), name, value, positions, true );
+        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Compagnie" ), name, value, positions, true );
     }     
 }
 void AgentFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
@@ -373,11 +373,11 @@ void AgentFunction( const directia::ScriptRef& refMission, const std::string& na
     if( element.ToAgent( value ) )
         refMission.RegisterObject( name, value );
 }
-void AgentFunctionBM( directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void AgentFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     DEC_Decision_ABC* value = 0; // $$$$ LDC: Parfois on se sert de champs dessus comme eniEnCours_...
     if( element.ToAgent( value ) )
-        knowledgeCreateFunction( refMission, std::string( "net.masagroup.sword.military.world.Section" ), name, value, value->GetPosition()->ToStdVector(), false );
+        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Section" ), name, value, value->GetPosition()->ToStdVector(), false );
 }
 void AgentListFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -385,7 +385,7 @@ void AgentListFunction( const directia::ScriptRef& refMission, const std::string
     if( element.ToAgentList( value ) )
         refMission.RegisterObject( name, value );
 }
-void AgentListFunctionBM( directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void AgentListFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< DEC_Decision_ABC* > value;
     if( element.ToAgentList( value ) )
@@ -395,7 +395,7 @@ void AgentListFunctionBM( directia::ScriptRef& knowledgeCreateFunction, const di
         {
             positions.push_back( (*it)->GetPosition()->ToStdVector() );
         }
-        knowledgeCreateFunction( refMission, std::string( "net.masagroup.sword.military.world.Section" ), name, value, positions, true );
+        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Section" ), name, value, positions, true );
     }
 }
 void AgentKnowledgeFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
@@ -404,11 +404,11 @@ void AgentKnowledgeFunction( const directia::ScriptRef& refMission, const std::s
     if( element.ToAgentKnowledge( value ) && value.get() )
         refMission.RegisterObject( name, value );
 }
-void AgentKnowledgeFunctionBM( directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void AgentKnowledgeFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     boost::shared_ptr< DEC_Knowledge_Agent > value;//@TODO SEE how to bind agent and knowledge agent with the same BM knowledge
     if( element.ToAgentKnowledge( value ) && value.get() )
-        knowledgeCreateFunction( refMission, std::string( "net.masagroup.sword.military.world.Section" ), name, value, value->GetPosition().ToStdVector(), false );
+        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Section" ), name, value, value->GetPosition().ToStdVector(), false );
 }
 void AgentKnowledgeListFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -416,7 +416,7 @@ void AgentKnowledgeListFunction( const directia::ScriptRef& refMission, const st
     if( element.ToAgentKnowledgeList( value ) )
         refMission.RegisterObject( name, value );
 }
-void AgentKnowledgeListFunctionBM( directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void AgentKnowledgeListFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > value;
     if( element.ToAgentKnowledgeList( value ) )
@@ -426,7 +426,7 @@ void AgentKnowledgeListFunctionBM( directia::ScriptRef& knowledgeCreateFunction,
         {
             positions.push_back( (*it)->GetPosition().ToStdVector() );
         }
-        knowledgeCreateFunction( refMission, std::string( "net.masagroup.sword.military.world.Section" ), name, value, positions, true );
+        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Section" ), name, value, positions, true );
     }
 }
 void ObjectKnowledgeFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
@@ -435,11 +435,11 @@ void ObjectKnowledgeFunction( const directia::ScriptRef& refMission, const std::
     if( element.ToObjectKnowledge( value ) && value && value->IsValid() )
         refMission.RegisterObject( name, value );
 }
-void ObjectKnowledgeFunctionBM( directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void ObjectKnowledgeFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     boost::shared_ptr< DEC_Knowledge_Object > value;
     if( element.ToObjectKnowledge( value ) && value )
-        knowledgeCreateFunction( refMission, std::string( "net.masagroup.sword.military.world.Object" ), name, value, value->GetObjectKnown()->GetLocalisation().ComputeBarycenter().ToStdVector(), false );
+        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Object" ), name, value, value->GetObjectKnown()->GetLocalisation().ComputeBarycenter().ToStdVector(), false );
 }
 void ObjectKnowledgeListFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -447,7 +447,7 @@ void ObjectKnowledgeListFunction( const directia::ScriptRef& refMission, const s
     if( element.ToObjectKnowledgeList( value ) )
         refMission.RegisterObject( name, value );
 }
-void ObjectKnowledgeListFunctionBM( directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void ObjectKnowledgeListFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< boost::shared_ptr< DEC_Knowledge_Object > > value;
     if( element.ToObjectKnowledgeList( value ) )
@@ -457,7 +457,7 @@ void ObjectKnowledgeListFunctionBM( directia::ScriptRef& knowledgeCreateFunction
         {
             positions.push_back( (*it)->GetObjectKnown()->GetLocalisation().ComputeBarycenter().ToStdVector() );
         }
-        knowledgeCreateFunction( refMission, std::string( "net.masagroup.sword.military.world.Object" ), name, value, positions, true );
+        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Object" ), name, value, positions, true );
     }
 }
 void PopulationKnowledgeFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
@@ -466,14 +466,14 @@ void PopulationKnowledgeFunction( const directia::ScriptRef& refMission, const s
     if( element.ToPopulationKnowledge( value ) && value )
         refMission.RegisterObject( name, value->GetID() );
 }
-void PopulationKnowledgeFunctionBM( directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void PopulationKnowledgeFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     DEC_Knowledge_Population* value = 0;
     if( element.ToPopulationKnowledge( value ) && value )
-        knowledgeCreateFunction( refMission, std::string( "net.masagroup.sword.military.world.Population" ), name, value, false );//@TODO MGD Add CompositeReachable for Population?
+        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Population" ), name, value, false );//@TODO MGD Add CompositeReachable for Population?
 }
 
-void UrbanBlockFunctionBM( directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void UrbanBlockFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     urban::Block* value = 0;
     if( element.ToUrbanBlock( value ) && value )
@@ -483,7 +483,7 @@ void UrbanBlockFunctionBM( directia::ScriptRef& knowledgeCreateFunction, const d
         position.push_back( point.X() );
         position.push_back( point.Y() );
         position.push_back( 0 );
-        knowledgeCreateFunction( refMission, std::string( "net.masagroup.sword.military.world.UrbanBlock" ), name, value, position, false );//@TODO MGD fix this ugly        
+        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.UrbanBlock" ), name, value, position, false );//@TODO MGD fix this ugly        
     }
 }
 
@@ -517,11 +517,11 @@ void GenObjectFunction( const directia::ScriptRef& refMission, const std::string
     if( element.ToGenObject( value ) && value.get() )
         refMission.RegisterObject( name, value );
 }
-void GenObjectFunctionBM( directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void GenObjectFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< DEC_Decision_ABC* > value;
     if( element.ToAgentList( value ) )
-        knowledgeCreateFunction( refMission, std::string( "net.masagroup.sword.military.world.Object" ), name, value, true );
+        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Object" ), name, value, true );
 }
 void GenObjectListFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -529,11 +529,11 @@ void GenObjectListFunction( const directia::ScriptRef& refMission, const std::st
     if( element.ToGenObjectList( value ) )
         refMission.RegisterObject( name, value );
 }
-void GenObjectListFunctionBM( directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+void GenObjectListFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< boost::shared_ptr< DEC_Gen_Object > > value;
     if( element.ToGenObjectList( value ) )
-        knowledgeCreateFunction( refMission, std::string( "net.masagroup.sword.military.world.Object" ), name, value, true );
+        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Object" ), name, value, true );
 }
 void MaintenancePrioritiesFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -630,8 +630,9 @@ void InitFunctions()
 class RegisterMissionParameterVisitor : public MIL_MissionParameterVisitor_ABC
 {
 public:
-    RegisterMissionParameterVisitor( const directia::ScriptRef& refMission, directia::ScriptRef& knowledgeCreateFunction ) 
-        : refMission_( refMission )
+    RegisterMissionParameterVisitor( const directia::Brain& brain, const directia::ScriptRef& refMission, directia::ScriptRef& knowledgeCreateFunction ) 
+        : brain_( brain )
+        , refMission_( refMission )
         , knowledgeCreateFunction_( knowledgeCreateFunction )
     {}
     virtual ~RegisterMissionParameterVisitor()
@@ -643,10 +644,11 @@ public:
         if( itFind != functors.end() )
             functors[ type.GetName() ]( refMission_, dianame, element );
         else
-            functorsBM[ type.GetName() ]( knowledgeCreateFunction_, refMission_, dianame, element );
+            functorsBM[ type.GetName() ]( brain_, knowledgeCreateFunction_, refMission_, dianame, element );
     }
 
 private:
+     const directia::Brain& brain_;
      const directia::ScriptRef& refMission_;
      directia::ScriptRef& knowledgeCreateFunction_;
 };
@@ -655,10 +657,10 @@ private:
 // Name: RegisterMissionParameters
 // Created: LDC 2009-05-04
 // -----------------------------------------------------------------------------
-void RegisterMissionParameters( directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, MIL_Mission_ABC& mission )
+void RegisterMissionParameters( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, MIL_Mission_ABC& mission )
 {
     InitFunctions();
-    RegisterMissionParameterVisitor visitor( refMission, knowledgeCreateFunction );
+    RegisterMissionParameterVisitor visitor( brain, refMission, knowledgeCreateFunction );
     mission.Visit( visitor );
 }
 

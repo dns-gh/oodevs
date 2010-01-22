@@ -39,7 +39,7 @@ DEC_Decision<T>::~DEC_Decision()
 namespace DEC_DecisionImpl
 {
     void RegisterCommonUserFunctions( directia::Brain& brain, unsigned int id );
-    void RegisterMissionParameters( directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, MIL_Mission_ABC& mission );
+    void RegisterMissionParameters( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, MIL_Mission_ABC& mission );
 }
 
 namespace directia
@@ -57,13 +57,15 @@ void DEC_Decision<T>::InitBrain( const std::string& brainFile, const std::string
 {
     brainFile_ = brainFile;
     includePath_ = includePath;
+    
     pRefs_.reset( 0 );//Must delete ScriptRef before call Brain destructor and destroy vm
     pBrain_.reset( new directia::Brain( includePath ) );
+    
     RegisterUserFunctions( *pBrain_ );
     DEC_DecisionImpl::RegisterCommonUserFunctions( *pBrain_, pEntity_->GetID() );
+    
     pBrain_->GetScriptFunction( "include" )( ( brainFile ),(includePath) );
     database_.InitKnowledges( *pBrain_ );//@TODO MGD Find a better way to merge dia4/dia5
-
     pRefs_.reset( new ScriptRefs( *pBrain_) );
 
     RegisterSelf( *pBrain_ );
@@ -242,7 +244,7 @@ void DEC_Decision<T>::ActivateOrder( const std::string& strBehavior, MIL_Mission
     // Register mission parameters in the brain...
     directia::ScriptRef refMission = pBrain_->RegisterObject( pMission_ );
     directia::ScriptRef refFunction = pBrain_->GetScriptFunction( "InitTaskParameter" );
-    DEC_DecisionImpl::RegisterMissionParameters( refFunction, refMission, *pMission_ );
+    DEC_DecisionImpl::RegisterMissionParameters( *pBrain_, refFunction, refMission, *pMission_ );
     pRefs_->startEvent_( strBehavior, pMission_ );
 }
 

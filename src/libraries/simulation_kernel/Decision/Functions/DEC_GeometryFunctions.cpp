@@ -1413,7 +1413,7 @@ float DEC_GeometryFunctions::ComputeDelayFromSchedule( const MIL_Fuseau* pFuseau
 // Name: DEC_GeometryFunctions::GetCrossroads
 // Created: MGD 2009-08-19
 // -----------------------------------------------------------------------------
-void DEC_GeometryFunctions::GetCrossroads( directia::ScriptRef& knowledgeCreateFunction, float x, float y, float z, float radius, const directia::ScriptRef& table )
+void DEC_GeometryFunctions::GetCrossroads( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, float x, float y, float z, float radius, const directia::ScriptRef& table )
 {
     std::vector< boost::shared_ptr< MT_Vector2D > > points = TER_PathFindManager::GetPathFindManager().FindCrossroadsWithinCircle( MT_Vector2D( x, y ), radius );
     std::vector< std::vector< MT_Float > > positions;
@@ -1421,7 +1421,7 @@ void DEC_GeometryFunctions::GetCrossroads( directia::ScriptRef& knowledgeCreateF
     {
         positions.push_back( (*it)->ToStdVector() );
     }
-    knowledgeCreateFunction( table, std::string( "net.masagroup.sword.military.world.Point" ), points, positions, true );//@TODO MGD replace "none" by another function
+    knowledgeCreateFunction( table, brain.GetScriptVariable( "net.masagroup.sword.military.world.Point" ), points, positions, true );
 }
 
 // -----------------------------------------------------------------------------

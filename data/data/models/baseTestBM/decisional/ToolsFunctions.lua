@@ -1,33 +1,13 @@
+---\ Knowledge management /---
+
 --- Create a knowledge
 -- @param strKnowledgeType The concret knowledge type to instanciate
 -- @param knowledgeSource  The cpp source object  
 -- @param knowledgedPosition The knowledge current position
--- @todo MGD Remove this ugly, find why scriptref error
+-- @author MGD
+-- @release 2010-01-22
 function CreateKnowledge( strKnowledgeType, knowledgeSource, knowledgedPosition )
-  if( strKnowledgeType == "net.masagroup.sword.military.world.Point" ) then
-    kn = kBase.create( net.masagroup.sword.military.world.Point, knowledgeSource, { ["sim_pos"] = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] } } )
-    return kn
-  elseif( strKnowledgeType == "net.masagroup.sword.military.world.Area" ) then
-    kn = kBase.create( net.masagroup.sword.military.world.Area, knowledgeSource, { ["sim_pos"] = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] } } )
-    return kn
-  elseif( strKnowledgeType == "net.masagroup.sword.military.world.Object" ) then
-    kn = kBase.create( net.masagroup.sword.military.world.Object, knowledgeSource, { ["sim_pos"] = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] } } )
-    return kn
-  elseif( strKnowledgeType == "net.masagroup.sword.military.world.Section" ) then
-    kn = kBase.create( net.masagroup.sword.military.world.Section, knowledgeSource, { ["sim_pos"] = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] } } )
-    return kn
-  elseif( strKnowledgeType == "net.masagroup.sword.military.world.Automat" ) then
-    kn = kBase.create( net.masagroup.sword.military.world.Automat, knowledgeSource, { ["sim_pos"] = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] } } )
-    return kn
-  elseif( strKnowledgeType == "net.masagroup.sword.military.world.Population" ) then
-    kn = kBase.create( net.masagroup.sword.military.world.Population, knowledgeSource, { ["sim_pos"] = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] } } )
-    return kn
-  elseif( strKnowledgeType == "net.masagroup.sword.military.world.UrbanBlock" ) then
-    kn = kBase.create( net.masagroup.sword.military.world.UrbanBlock, knowledgeSource, { ["sim_pos"] = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] } } )
-    return kn
-  else
-    error( "Knowledge unknown : " .. strKnowledgeType )
-  end
+    return kBase.create( strKnowledgeType, knowledgeSource, { ["sim_pos"] = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] } } )
 end
 
 --- Fill mission parameters and create corresponding knowledges
@@ -35,8 +15,10 @@ end
 -- @param strKnowledgeType  The concret knowledge type to instanciate for the parameter
 -- @param name The parameter name
 -- @param knowledgeSource  The cpp source objects  
--- @param knowledgedPosition The knowledge's current positions
+-- @param knowledgedPosition The knowledges' current positions
 -- @param list Indicate if the parameter is a list
+-- @author MGD
+-- @release 2010-01-22
 function InitTaskParameter( params, strKnowledgeType, name, knowledgeSource, knowledgedPosition, list )
   if list then
     params[name] = {};
@@ -48,6 +30,14 @@ function InitTaskParameter( params, strKnowledgeType, name, knowledgeSource, kno
   end
 end
 
+--- Fill queries result and create corresponding knowledges
+-- @param params The table to fill 
+-- @param strKnowledgeType  The concret knowledge type to instanciate
+-- @param knowledgeSource  The cpp source objects  
+-- @param knowledgedPosition The knowledges' current positions
+-- @param list Indicate if the parameter is a list
+-- @author MGD
+-- @release 2010-01-22
 function InitQueryReturn( params, strKnowledgeType, knowledgeSource, knowledgedPosition, list)
   if list then
     for i = 1, #knowledgeSource do
@@ -58,34 +48,44 @@ function InitQueryReturn( params, strKnowledgeType, knowledgeSource, knowledgedP
   end
 end
 
-function InitializeMe( strKnowledgeType, knowledgeSource, groupName, posx, posy ,posz )
-  if( strKnowledgeType == "net.masagroup.sword.military.world.Section" ) then
-    if not kBase.me.body then
-      kBase.me.body = kBase.create( net.masagroup.sword.military.world.Section, knowledgeSource, { sim_pos = { x=posx, y=posy, z=posz } } )
-      behavior_model.createGroup( groupName )
-    end
+--- Update Pion's data push to lua
+-- @param strKnowledgeType The brain's role type
+-- @param knowledgeSource  The cpp source object  
+-- @param groupName The name of the leader  
+-- @param posx, posy, posz The current brain position
+-- @author MGD
+-- @release 2010-01-22
+function UpdateMe( strKnowledgeType, knowledgeSource, groupName, posx, posy ,posz )
+  if not kBase.me.body then
+    kBase.me.body = kBase.create( strKnowledgeType, knowledgeSource, { sim_pos = { x=posx, y=posy, z=posz } } )
+    behavior_model.createGroup( groupName )
   else
-    error( "Knowledge unknown : " .. strKnowledgeType )
+    kBase.me.body.sim_pos = { x=posx, y=posy, z=posz }
   end
 end
 
-function InitializeLeaderMe( strKnowledgeType, knowledgeSource, groupName )
-  if( strKnowledgeType == "net.masagroup.sword.military.world.Compagnie" ) then
-    if not kBase.me.body then
-      kBase.me.body = kBase.create( net.masagroup.sword.military.world.Compagnie, knowledgeSource )
-      behavior_model.createGroup( groupName )  
-    end
-  else
-    error( "Knowledge unknown : " .. strKnowledgeType )
+--- Update Automat's data push to lua
+-- @param strKnowledgeType The brain's role type
+-- @param knowledgeSource  The cpp source object  
+-- @param groupName The name of the leader  itself
+-- @author MGD
+-- @release 2010-01-22
+function UpdateLeaderMe( strKnowledgeType, knowledgeSource, groupName )
+  if not kBase.me.body then
+    kBase.me.body = kBase.create( strKnowledgeType, knowledgeSource, { sim_pos = { x=posx, y=posy, z=posz } } )
+    behavior_model.createGroup( groupName )
   end
 end
 
+--- Unregister brain from communication group before deletion
+-- @param groupName The name of the leader
+-- @author MGD
+-- @release 2010-01-22
 function CleanBrainBeforeDeletion( groupName )
-  BreakForDebug( "ok delete :"..tostring( groupName ) )
   behavior_model.leaveGroup( groupName )
 end  
 
-
+---\ Callback management /---
 
 actionCallbacks = {}
 actionKnowledgeCallbacks = {}
@@ -107,6 +107,17 @@ RemoveAction = function( action )
   actionKnowledgeCallbacks[ action ] = nil
 end
 
+---\Tools /---
+
+--- Return a linear interpolation between to point
+-- @param min The min value on Y axis
+-- @param min The max value on Y axis
+-- @param start The value on x where interpolation begin
+-- @param stop The value on x where interpolation stop
+-- @param upslop Indicate if the function inscrease or decrease
+-- @param value The x value where we want f(x)
+-- @author MGD
+-- @release 2010-01-22
 LinearInterpolation = function( min, max, start, stop, upslope, value )
   local res = 0;
   if( upslope ) then
@@ -129,6 +140,10 @@ LinearInterpolation = function( min, max, start, stop, upslope, value )
   return res
 end
 
+--- Tools for print function which create a string for all var type 
+-- @param var The variable to convert to string
+-- @author MGD
+-- @release 2010-01-22
 local printRec
 printRec = function( var )
   if( type( var ) == "table" ) then
@@ -142,6 +157,10 @@ printRec = function( var )
   end   
 end
 
+--- Redirect print function to sword gaming and log
+-- @param ... 
+-- @author MGD
+-- @release 2010-01-22
 print = function( ... )
   local res = ""
   for _,i in pairs({...}) do
