@@ -125,7 +125,7 @@ protected:
         brain.RegisterFunction( "DEC_TestMissionCalled",     &NotifyMissionCallFromScript );
         brain.RegisterFunction( "DEC_GetRawMission",         &GetRawMission );
         brain.RegisterFunction( "DEC_FillMissionParameters",
-            boost::function< void( const directia::ScriptRef&, MIL_Mission_ABC* ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, boost::ref( brain.GetScriptFunction("InitTaskParameter") ), _1 , _2 ) ) );
+            boost::function< void( const directia::ScriptRef&, MIL_Mission_ABC* ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, boost::ref( brain ), boost::ref( brain.GetScriptFunction("InitTaskParameter") ), _1 , _2 ) ) );
         if( pOther_ )
             brain.RegisterObject< DEC_TestPopulationDecision* >( "other", pOther_ );
     }
