@@ -117,8 +117,6 @@ void Model::Receive( const ASN1T_MsgsSimToClient& asn )
 // -----------------------------------------------------------------------------
 void Model::Update( const ASN1T_MsgsSimToClient& asn )
 {
-    if( asn.msg.t == T_MsgsSimToClient_msg_msg_object_creation )
-        assert( true );
     switch( asn.msg.t )
     {
         case T_MsgsSimToClient_msg_msg_unit_order_ack:
