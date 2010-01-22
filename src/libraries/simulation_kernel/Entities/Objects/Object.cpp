@@ -61,6 +61,7 @@ Object::Object( xml::xistream& xis, const MIL_ObjectBuilder_ABC& builder, MIL_Ar
     , pView_    ( 0 )
     , manipulator_ ( new MIL_ObjectManipulator( *this ) )
 {
+    MIL_Object_ABC::Register();
     if( pLocation )
         Initialize( *pLocation );
     builder.Build( *this );

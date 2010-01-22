@@ -117,6 +117,8 @@ void Model::Receive( const ASN1T_MsgsSimToClient& asn )
 // -----------------------------------------------------------------------------
 void Model::Update( const ASN1T_MsgsSimToClient& asn )
 {
+    if( asn.msg.t == T_MsgsSimToClient_msg_msg_object_creation )
+        assert( true );
     switch( asn.msg.t )
     {
         case T_MsgsSimToClient_msg_msg_unit_order_ack:
@@ -136,9 +138,9 @@ void Model::Update( const ASN1T_MsgsSimToClient& asn )
         case T_MsgsSimToClient_msg_msg_automat_change_logistic_links_ack:
         case T_MsgsSimToClient_msg_msg_automat_change_knowledge_group_ack:
         case T_MsgsSimToClient_msg_msg_automat_change_superior_ack:
-        case T_MsgsSimToClient_msg_msg_unit_change_superior_ack:
+        case T_MsgsSimToClient_msg_msg_unit_change_superior_ack:                 
+            break; //NOTHING
         case T_MsgsSimToClient_msg_msg_knowledge_group_update:                   knowledgeGroups_.Get( asn.msg.u.msg_knowledge_group_update->oid ).Update( *asn.msg.u.msg_knowledge_group_update ); break;
-            break; // NOTHING
         case T_MsgsSimToClient_msg_msg_unit_change_superior:                     agents_.Get( asn.msg.u.msg_unit_change_superior->oid ).Update( *asn.msg.u.msg_unit_change_superior ); break;
         case T_MsgsSimToClient_msg_msg_log_supply_push_flow_ack:
         case T_MsgsSimToClient_msg_msg_log_supply_change_quotas_ack:
