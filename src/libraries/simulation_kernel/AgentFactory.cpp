@@ -80,6 +80,10 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
     return pPion;
 }
 
+// -----------------------------------------------------------------------------
+// Name: AgentFactory::Initialize
+// Created: SLG 2010-01-21
+// -----------------------------------------------------------------------------
 void AgentFactory::Initialize( MIL_AgentPion& pion, const MT_Vector2D& vPosition )
 {
     pion.GetRole< PHY_RoleInterface_Location >().Move( vPosition, MT_Vector2D( 0., 1. ), 0. );

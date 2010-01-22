@@ -33,6 +33,10 @@
 
 BOOST_CLASS_EXPORT_GUID( UrbanModel, "UrbanModel" )
 
+namespace
+{
+    UrbanModel* singleton = 0;
+}
 // -----------------------------------------------------------------------------
 // Name: UrbanModel constructor
 // Created: SLG 2009-08-10
@@ -41,9 +45,11 @@ UrbanModel::UrbanModel()
     : staticModel_      ( new urban::StaticModel() )
     , model_            ( new urban::Model( *staticModel_ ) )
     , phFirerModifier_  ( new BlockPhFirerModifier() )
-    , phTargetModifier_ ( new BlockPhFirerModifier() )
+    , phTargetModifier_ ( new BlockPhTargetModifier() )
 {
-    //TODO
+    if ( singleton )
+        throw std::runtime_error( "urbanModel already registered" );
+    singleton = this;
 }
 
 // -----------------------------------------------------------------------------
@@ -52,7 +58,7 @@ UrbanModel::UrbanModel()
 // -----------------------------------------------------------------------------
 UrbanModel::~UrbanModel()
 {
-    //NOTHING
+    singleton = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -222,4 +228,15 @@ MT_Float UrbanModel::ComputeUrbanPhModifier( const MT_Vector3D& firerPosition, c
 urban::Model& UrbanModel::GetModel() const
 {
     return *model_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::GetSingleton
+// Created: SLG 2010-01-20
+// -----------------------------------------------------------------------------
+UrbanModel& UrbanModel::GetSingleton()
+{
+    if( !singleton )
+        throw std::runtime_error( "EntityManager not defined" );
+    return *singleton;
 }

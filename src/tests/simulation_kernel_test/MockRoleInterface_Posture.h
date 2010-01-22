@@ -31,6 +31,7 @@ public:
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetLastPostureShadow )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetCurrentPostureShadow )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetPostureCompletionPercentage )
+        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetElongationFactor )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( CanBePerceived )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( SetPosturePostePrepareGenie )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( UnsetPosturePostePrepareGenie )
@@ -57,6 +58,7 @@ public:
     MOCKPP_CONST_CHAINABLE_EXT0( MockRoleInterface_Posture, const PHY_Posture*, GetCurrentPostureShadow, PHY_Posture, );
 
     MOCKPP_CONST_CHAINABLE0( MockRoleInterface_Posture, MT_Float, GetPostureCompletionPercentage );
+    MOCKPP_CONST_CHAINABLE0( MockRoleInterface_Posture, MT_Float, GetElongationFactor );
 
     MOCKPP_CONST_CHAINABLE_EXT1( MockRoleInterface_Posture, bool, CanBePerceived, const MIL_AgentPion&, bool, , MIL_AgentPion );
 
@@ -93,7 +95,6 @@ public:
     //! @name Elongation
     //@{
     virtual void     SetElongationFactor( MT_Float ) {};
-    virtual MT_Float GetElongationFactor() const { return 0; };
     //@}
 
     //! @name Accessors

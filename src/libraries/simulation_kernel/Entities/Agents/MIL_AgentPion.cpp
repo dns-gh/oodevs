@@ -86,7 +86,6 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
     , orderManager_            ( *new MIL_PionOrderManager( *this ) )
     , algorithmFactories_      ( algorithmFactories )
 {
-    // NOTHING
     automate.RegisterPion( *this );
 }
 

@@ -235,6 +235,44 @@ BOOST_AUTO_TEST_CASE( ReceiveKnowledgeGroupSetType )
     // verify
     BOOST_CHECK_EQUAL( "TOTO", groupArmy.GetType().GetName().c_str() );
     mockPublisher.verify();
+    MOCKPP_CHAINER_FOR( MockArmy, UnregisterKnowledgeGroup ) ( &army ).expects( mockpp::once() ); 
+       
+}
+
+// -----------------------------------------------------------------------------
+// Name: BOOST_AUTO_TEST_CASE
+// Created: FHD 2010-01-19: 
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( ReceiveKnowledgeGroupEnable )
+{
+    MockArmy army;
+    MockKnowledgeGroupFactory mockKnowledgeGroupFactory;
+
+    // register army sub knowledge group
+    const MIL_KnowledgeGroupType &kgType = *MIL_KnowledgeGroupType::FindType("Standard");
+    MOCKPP_CHAINER_FOR( MockArmy, RegisterKnowledgeGroup ) ( &army ).expects( mockpp::once() );
+    MIL_KnowledgeGroup groupArmy( kgType, 30, army );
+    BOOST_CHECK_EQUAL( true, groupArmy.IsEnabled() );
+
+    // prepare message    
+    ASN1T_MsgKnowledgeGroupEnable msg;
+    msg.oid = groupArmy.GetID();
+    msg.enabled = false;
+
+    tools::Resolver< MIL_Army_ABC > armies;
+    MOCKPP_CHAINER_FOR( MockArmy, GetID ) ( &army ).expects( mockpp::once() ).will( mockpp::returnValue< uint >( 1 ) );
+    armies.Register( army.GetID(), army );
+
+    // initialize publisher
+    MockNET_Publisher_ABC mockPublisher;
+    mockPublisher.Send_mocker.expects( atLeastOnce() ); // NET_ASN_MsgknowledgeGroupUpdate
+
+    // change knowledge group activation
+    groupArmy.OnReceiveMsgKnowledgeGroupEnable( msg );
+
+    // verify
+    BOOST_CHECK_EQUAL( false, groupArmy.IsEnabled() );
+    mockPublisher.verify();
     MOCKPP_CHAINER_FOR( MockArmy, UnregisterKnowledgeGroup ) ( &army ).expects( mockpp::once() );   
-   
+
 }

@@ -56,8 +56,9 @@ public:
     urban::Model&   GetModel                () const;
     //@}
 
-    //! @name Network
+    //! @name Operations
     //@{
+    static UrbanModel& GetSingleton();
     //@}
 
     //! @name CheckPoints

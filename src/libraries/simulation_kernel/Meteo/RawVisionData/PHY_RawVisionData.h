@@ -63,7 +63,7 @@ public:
         envBits         e     : 8;   // champ de bit représentant l'environnement visuel statique
         PHY_Meteo*      pMeteo;      // météo locale
         PHY_AmmoEffect* pEffects;    // effets météo provoqués par des munitions ( fumigènes, obus eclairants )
-
+        
         static const PHY_Meteo* pGlobalMeteo_;
 
     public:
