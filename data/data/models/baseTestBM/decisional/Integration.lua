@@ -1,3 +1,5 @@
+include "integration/ToolsFunctions.lua"
+
 integration = {}
 
 include "integration/DefaultObservableIntegration.lua"
