@@ -599,7 +599,13 @@ void DEC_AutomateDecision::RegisterSelf( directia::Brain& brain )
 // -----------------------------------------------------------------------------
 void DEC_AutomateDecision::UpdateMeKnowledge( directia::Brain& brain )
 {
-    brain.GetScriptFunction( "UpdateLeaderMe" )( brain.GetScriptVariable( "net.masagroup.sword.military.world.Compagnie" ), (DEC_Decision_ABC*)this, GetAutomate().GetName() );
+    try
+    {
+        brain.GetScriptFunction( "UpdateLeaderMe" )( brain.GetScriptVariable( "net.masagroup.sword.military.world.Compagnie" ), (DEC_Decision_ABC*)this, GetAutomate().GetName() );
+    }
+    catch( std::exception )
+    {
+    }
 }
 
 // -----------------------------------------------------------------------------

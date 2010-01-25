@@ -950,7 +950,13 @@ void DEC_RolePion_Decision::RegisterSelf( directia::Brain& brain )
 void DEC_RolePion_Decision::UpdateMeKnowledge( directia::Brain& brain )
 {
     const MT_Vector2D*  pos = GetPosition();
-    brain.GetScriptFunction( "UpdateMe" )( brain.GetScriptVariable( "net.masagroup.sword.military.world.Section" ), (DEC_Decision_ABC*)this, GetPion().GetAutomate().GetName(), pos->rX_, pos->rY_, 0. );
+    try
+    {
+        brain.GetScriptFunction( "UpdateMe" )( brain.GetScriptVariable( "net.masagroup.sword.military.world.Section" ), (DEC_Decision_ABC*)this, GetPion().GetAutomate().GetName(), pos->rX_, pos->rY_, 0. );
+    }
+    catch( std::exception )
+    {
+    }
 }
 
 // -----------------------------------------------------------------------------
