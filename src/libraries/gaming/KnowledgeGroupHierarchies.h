@@ -28,8 +28,7 @@ namespace kernel
 // Created: AGE 2006-09-20
 // =============================================================================
 class KnowledgeGroupHierarchies : public kernel::EntityHierarchies< kernel::CommunicationHierarchies >
-                                , public kernel::Updatable_ABC< ASN1T_MsgKnowledgeGroupUpdate >
-                                , public kernel::Updatable_ABC< ASN1T_MsgKnowledgeGroupDelete >
+                                , public kernel::Updatable_ABC< ASN1T_MsgKnowledgeGroupChangeSuperior >
 {
 
 public:
@@ -42,8 +41,7 @@ public:
 
     //! @name Operations 
     //@{
-    virtual void DoUpdate( const ASN1T_MsgKnowledgeGroupUpdate& updateMessage );
-    virtual void DoUpdate( const ASN1T_MsgKnowledgeGroupDelete& deleteMessage );
+    virtual void DoUpdate( const ASN1T_MsgKnowledgeGroupChangeSuperior& message );
     //@}
 
 private:

@@ -12,8 +12,14 @@
 
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
-#include "clients_kernel/KnowledgeGroupType.h"
+#include "clients_kernel/Updatable_ABC.h"
 #include "game_asn/Simulation.h"
+#include "tools/Resolver_ABC.h"
+
+namespace kernel
+{
+    class KnowledgeGroupType;
+}
 
 // =============================================================================
 /** @class  KnowledgeGroup
@@ -22,11 +28,13 @@
 // Created: AGN 2003-12-22
 // =============================================================================
 class KnowledgeGroup : public kernel::EntityImplementation< kernel::KnowledgeGroup_ABC >
+                     , public kernel::Extension_ABC
+                     , public kernel::Updatable_ABC< ASN1T_MsgKnowledgeGroupUpdate >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    KnowledgeGroup( unsigned long nId, kernel::Controller& controller, const std::string& sType, tools::Resolver< kernel::KnowledgeGroupType, std::string >& types );
+             KnowledgeGroup( unsigned long nId, kernel::Controller& controller, const std::string& sType, const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types );
     virtual ~KnowledgeGroup();
     //@}
 
@@ -37,14 +45,12 @@ public:
     virtual void Remove( kernel::KnowledgeGroup_ABC& knowledgeGroup );
     virtual void Register( kernel::Automat_ABC& knowledgeGroup );
     virtual void Remove( kernel::Automat_ABC& knowledgeGroup );
-    virtual void DoUpdate( const ASN1T_MsgKnowledgeGroupUpdate& message );
     //@}
 
     //! @name Accessors
     //@{
     virtual bool IsActivated() const;
-    void SetActivated( bool activate );
-    const std::string& GetType( void ) const { return type_; }
+    std::string GetType() const;
     //@}
 
 private:
@@ -54,11 +60,17 @@ private:
     KnowledgeGroup& operator=( const KnowledgeGroup& );
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual void DoUpdate( const ASN1T_MsgKnowledgeGroupUpdate& message );
+    //@}
+
+private:
     //! @name Member data
     //@{
-    bool isActivated_;
-    std::string type_;    
-    tools::Resolver< kernel::KnowledgeGroupType, std::string >& types_;
+    const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types_;
+    std::string type_;
+    bool activated_;
     //@}
 };
 

@@ -10,21 +10,20 @@
 #include "gaming_pch.h"
 #include "KnowledgeGroup.h"
 #include "Tools.h"
+#include "clients_kernel/KnowledgeGroupType.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
-
-using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup constructor
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( unsigned long nId, Controller& controller, const std::string& type, tools::Resolver< kernel::KnowledgeGroupType, std::string >& types )
-    : EntityImplementation< KnowledgeGroup_ABC >( controller, nId, QString( tools::translate( "KnowledgeGroup", "Group %1" ) ).arg( nId ) )
-    , isActivated_ ( true )
-    , type_( type )
+KnowledgeGroup::KnowledgeGroup( unsigned long nId, kernel::Controller& controller, const std::string& type, const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types )
+    : kernel::EntityImplementation< kernel::KnowledgeGroup_ABC >( controller, nId, QString( tools::translate( "KnowledgeGroup", "Group %1" ) ).arg( nId ) )
     , types_( types )
+    , type_( type )
+    , activated_( true )
 {
-    // NOTHING
+    RegisterSelf( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,16 +41,16 @@ KnowledgeGroup::~KnowledgeGroup()
 // -----------------------------------------------------------------------------
 bool KnowledgeGroup::IsActivated() const
 {
-    return isActivated_;
+    return activated_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: KnowledgeGroup Desactivate
-// Created: NLD 2004-03-18
+// Name: KnowledgeGroup::GetType
+// Created: FHD 2010-01-15
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::SetActivated( bool activate )
+std::string KnowledgeGroup::GetType() const
 {
-    isActivated_ = activate;
+    return type_;
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +66,7 @@ void KnowledgeGroup::Accept( kernel::ModelVisitor_ABC& visitor ) const
 // Name: KnowledgeGroup::Accept
 // Created: MGD 2009-12-21
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::Register( KnowledgeGroup_ABC& knowledgeGroup )
+void KnowledgeGroup::Register( kernel::KnowledgeGroup_ABC& knowledgeGroup )
 {
     //NOTHING
 }
@@ -76,7 +75,7 @@ void KnowledgeGroup::Register( KnowledgeGroup_ABC& knowledgeGroup )
 // Name: KnowledgeGroup::Accept
 // Created: MGD 2009-12-21
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::Remove( KnowledgeGroup_ABC& knowledgeGroup )
+void KnowledgeGroup::Remove( kernel::KnowledgeGroup_ABC& knowledgeGroup )
 {
     //NOTHING
 }
@@ -88,9 +87,9 @@ void KnowledgeGroup::Remove( KnowledgeGroup_ABC& knowledgeGroup )
 void KnowledgeGroup::DoUpdate( const ASN1T_MsgKnowledgeGroupUpdate& message )
 {
     if( message.type != type_ )
-         type_ = message.type;
-    if( message.enabled != isActivated_ )
-        isActivated_ = message.enabled;
+        type_ = message.type;
+    if( message.enabled != activated_ )
+        activated_ = message.enabled ? true : false;
     Touch();
 }
 
@@ -98,7 +97,7 @@ void KnowledgeGroup::DoUpdate( const ASN1T_MsgKnowledgeGroupUpdate& message )
 // Name: KnowledgeGroup::Accept
 // Created: MGD 2009-12-21
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::Register( Automat_ABC& automat )
+void KnowledgeGroup::Register( kernel::Automat_ABC& automat )
 {
     //NOTHING
 }
@@ -107,7 +106,7 @@ void KnowledgeGroup::Register( Automat_ABC& automat )
 // Name: KnowledgeGroup::Accept
 // Created: MGD 2009-12-21
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::Remove( Automat_ABC& automat )
+void KnowledgeGroup::Remove( kernel::Automat_ABC& automat )
 {
     //NOTHING
 }

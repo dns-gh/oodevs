@@ -56,9 +56,16 @@ void KnowledgeGroupMagicOrdersInterface::NotifyContextMenu( const KnowledgeGroup
         return;
     selectedEntity_ = &entity;
     QPopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
-
     const KnowledgeGroup& knowledgeGroup = static_cast< const KnowledgeGroup& >( entity );
-    AddMagic( tr( "Delete" ), SLOT( OnDeleteKnowledgeGroup() ), magicMenu );
+    
+    // provide Delete menu item only if knowledge group node is empty
+    if( const kernel::CommunicationHierarchies* hierarchies = selectedEntity_->Retrieve< kernel::CommunicationHierarchies >() )
+    {
+        int nMenuId = -1;
+        tools::Iterator< const kernel::Entity_ABC& > it( hierarchies->CreateSubordinateIterator() );
+        nMenuId = AddMagic( tr( "Delete" ), SLOT( OnDeleteKnowledgeGroup() ), magicMenu );
+        magicMenu->setItemEnabled( nMenuId, !it.HasMoreElements() );
+    }
 
     if( knowledgeGroup.IsActivated() ) 
         AddMagic( tr( "Desactivate" ), SLOT( OnDesactivateKnowledgeGroup() ), magicMenu );  
@@ -125,18 +132,29 @@ void KnowledgeGroupMagicOrdersInterface::OnSetType( int id )
     }
 }
 
+
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroupMagicOrdersInterface::OnDeleteKnowledgeGroup
 // Created: SLG 2009-12-22
 // -----------------------------------------------------------------------------
 void KnowledgeGroupMagicOrdersInterface::OnDeleteKnowledgeGroup()
 {
-    simulation::KnowledgeGroupDelete asnMsg;
-    if( selectedEntity_ )
+    if( const kernel::CommunicationHierarchies* hierarchies = selectedEntity_->Retrieve< kernel::CommunicationHierarchies >() )
     {
-        asnMsg().oid = selectedEntity_->GetId();
-        asnMsg.Send( publisher_ );
+        int oid_parent = hierarchies->GetSuperior()->GetId();
+        int oid_camp = hierarchies->GetTop().GetId();
+        tools::Iterator< const kernel::Entity_ABC& > it( hierarchies->CreateSubordinateIterator() );
+        if( !it.HasMoreElements() )
+        {
+            simulation::KnowledgeGroupDelete asnMsg;
+            if( selectedEntity_ )
+            {
+                asnMsg().oid = selectedEntity_->GetId();
+                asnMsg.Send( publisher_ );
+            }
+        }
     }
+
 }
 
 // -----------------------------------------------------------------------------

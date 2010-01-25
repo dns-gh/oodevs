@@ -18,8 +18,6 @@ namespace kernel
     class KnowledgeGroup_ABC;
 }
 
-class TeamsModel;
-
 // =============================================================================
 /** @class  KnowledgeGroupsModel
     @brief  KnowledgeGroupsModel
@@ -32,7 +30,7 @@ class KnowledgeGroupsModel : public tools::Resolver< kernel::KnowledgeGroup_ABC 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit KnowledgeGroupsModel( kernel::Controller& controller );
+             KnowledgeGroupsModel();
     virtual ~KnowledgeGroupsModel();
     //@}
 
@@ -47,11 +45,6 @@ private:
     //@{
     KnowledgeGroupsModel( const KnowledgeGroupsModel& );            //!< Copy constructor
     KnowledgeGroupsModel& operator=( const KnowledgeGroupsModel& ); //!< Assignement operator
-    //@}
-public:
-    //! @name Member data
-    //@{
-    kernel::Controller& controller_;
     //@}
 };
 

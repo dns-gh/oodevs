@@ -10,21 +10,16 @@
 #include "gaming_pch.h"
 #include "KnowledgeGroupsModel.h"
 #include "KnowledgeGroupHierarchies.h"
-
 #include "TeamsModel.h"
-#include "clients_kernel/Controllers.h"
 #include "clients_kernel/CommunicationHierarchies.h"
-
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
-
-using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroupsModel constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-KnowledgeGroupsModel::KnowledgeGroupsModel( kernel::Controller& controller )
-: controller_( controller )
+KnowledgeGroupsModel::KnowledgeGroupsModel()
 {
     // NOTHING
 }
@@ -44,7 +39,7 @@ KnowledgeGroupsModel::~KnowledgeGroupsModel()
 // -----------------------------------------------------------------------------
 void KnowledgeGroupsModel::Purge()
 {
-    tools::Resolver< KnowledgeGroup_ABC >::DeleteAll();
+    DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -53,6 +48,6 @@ void KnowledgeGroupsModel::Purge()
 // -----------------------------------------------------------------------------
 void KnowledgeGroupsModel::Delete( const ASN1T_MsgKnowledgeGroupDelete& asn )
 {
-//    KnowledgeGroup_ABC* pCurrentKnowledgegroup = Find( asn.oid );
+    delete Find( asn.oid );
     Remove( asn.oid );
 }

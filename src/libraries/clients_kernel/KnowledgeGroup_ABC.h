@@ -11,10 +11,6 @@
 #define __KnowledgeGroup_ABC_h_
 
 #include "Entity_ABC.h"
-#include "tools/Resolver.h"
-#include "clients_kernel/Updatable_ABC.h"
-
-struct ASN1T_MsgKnowledgeGroupUpdate;
 
 namespace kernel
 {
@@ -28,8 +24,8 @@ namespace kernel
 // Created: SBO 2006-08-09
 // =============================================================================
 class KnowledgeGroup_ABC : public Entity_ABC
-                         , public kernel::Updatable_ABC< ASN1T_MsgKnowledgeGroupUpdate >
 {
+
 public:
     //! @name Static
     //@{
@@ -46,9 +42,6 @@ public:
     //! @name Operations
     //@{
     virtual QString GetTypeName() const;
-
-    virtual void DoUpdate( const ASN1T_MsgKnowledgeGroupUpdate& );
-
     virtual void Select( ActionController& controller ) const;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
     virtual void Activate( ActionController& controller ) const;

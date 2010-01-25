@@ -287,35 +287,15 @@ void MIL_KnowledgeGroup::DeleteKnowledgeGroup()
     MIL_KnowledgeGroup *pParent = GetParent();
     if( pParent )
     {
-        // move automats to parent
-        T_AutomateVector automate_copied;
-        for( IT_AutomateVector it(automates_.begin()); it != automates_.end(); ++it )
-        {
-            automate_copied.push_back( *it );
-            MIL_Automate *automat( *it );
-            pParent->RegisterAutomate( *automat );
-        }
-        for( IT_AutomateVector iter(automate_copied.begin()); iter != automate_copied.end(); ++iter)
-            UnregisterAutomate( **iter );
+        assert( automates_.size() == 0);
+        assert( knowledgeGroups_.size() == 0);
 
-        // move knowledge groups to parent
-        std::vector< MIL_KnowledgeGroup* > children;
-        for( IT_KnowledgeGroupVector itKG( knowledgeGroups_.begin() ); itKG != knowledgeGroups_.end(); ++itKG )
-        {
-            MIL_KnowledgeGroup& child = **itKG;
-            children.push_back( &child );
-            pParent->RegisterKnowledgeGroup( child );
-        }
-        for( std::vector< MIL_KnowledgeGroup* >::iterator it( children.begin() ); it != children.end(); ++it )
-            UnregisterKnowledgeGroup( **it );
+        pParent->UnregisterKnowledgeGroup( *this );         // remove current knowledgegroup
 
-        // remove current knowledgegroup
-        pParent->UnregisterKnowledgeGroup( *this );
+        NET_ASN_MsgKnowledgeGroupDelete asn;
+        asn().oid = nID_;
+        asn.Send();
     }
-
-    NET_ASN_MsgKnowledgeGroupDelete asn;
-    asn().oid = nID_;
-    asn.Send();
 }
 
 // -----------------------------------------------------------------------------

@@ -41,19 +41,19 @@ namespace kernel
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class AgentTypes : public  tools::Resolver< AgentType >
-                 , public  tools::Resolver< AgentType, std::string >
-                 , public  tools::Resolver< PopulationType >
-                 , public  tools::Resolver< PopulationType, std::string >
-                 , public  tools::Resolver< AutomatType >
-                 , public  tools::Resolver< AutomatType, std::string >
-                 , public  tools::Resolver< ComponentType >
-                 , public  tools::Resolver< ComponentType, std::string >
-                 , public  tools::Resolver< SensorType, std::string >
-                 , public  tools::Resolver< KnowledgeGroupType, std::string >
-                 , public  tools::Resolver< MissionType >
-                 , public  tools::Resolver< FragOrderType >
-                 , public  tools::Resolver< FragOrderType, std::string >
+class AgentTypes : public tools::Resolver< AgentType >
+                 , public tools::Resolver< AgentType, std::string >
+                 , public tools::Resolver< PopulationType >
+                 , public tools::Resolver< PopulationType, std::string >
+                 , public tools::Resolver< AutomatType >
+                 , public tools::Resolver< AutomatType, std::string >
+                 , public tools::Resolver< ComponentType >
+                 , public tools::Resolver< ComponentType, std::string >
+                 , public tools::Resolver< SensorType, std::string >
+                 , public tools::Resolver< KnowledgeGroupType, std::string >
+                 , public tools::Resolver< MissionType >
+                 , public tools::Resolver< FragOrderType >
+                 , public tools::Resolver< FragOrderType, std::string >
 {
 
 public:

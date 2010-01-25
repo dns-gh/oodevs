@@ -1482,7 +1482,7 @@ void AgentServerMsgMgr::OnReceiveMsgUrbanCreation( const ASN1T_MsgUrbanCreation&
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupChangeSuperior( const ASN1T_MsgKnowledgeGroupChangeSuperior& asnMsg )
 {
-//    GetModel().knowledgeGroups_.Get( asnMsg.iod ).Update( asnMsg );
+//    GetModel().knowledgeGroups_.Get( asnMsg.oid ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
