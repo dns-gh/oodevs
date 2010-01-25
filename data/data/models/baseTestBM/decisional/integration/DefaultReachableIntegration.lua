@@ -23,7 +23,7 @@ integration.magnitude = function ( pos1, pos2 )
 end
 
 integration.normalizedInversedDistance = function( pos1, pos2 )
-  return LinearInterpolation( 0, 100, 10, 10000, false, integration.magnitude( pos1, pos2 ) )
+  return LinearInterpolation( 0, 100, 0, 10000, false, integration.magnitude( pos1, pos2 ) )
 end
 
 local moveAction = nil
