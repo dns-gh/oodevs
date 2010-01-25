@@ -23,9 +23,9 @@ std::pair< float, int > DEC_KnowledgePopulationFunctions::GetDominationState( co
 {
 	DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
     if( !pKnowledge )
-        return std::pair< float, int >( 0.f, eQueryInvalid );
+        return std::pair< float, int >( 0.f, knowledgeId );
 
-    return std::pair< float, int >( float( pKnowledge->GetDominationState() ), eQueryValid );
+    return std::pair< float, int >( float( pKnowledge->GetDominationState() ), knowledgeId );
 }
 
 // -----------------------------------------------------------------------------
