@@ -47,8 +47,8 @@
     <mission dia-behavior="net.masagroup.sword.military.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToUrbanBlock" id="13" name="MoveToUrbanBlock">
       <parameter dia-name="objectives" name="objectives" optional="false" type="UrbanBlockBM"/>
     </mission>
-        <mission dia-behavior="net.masagroup.sword.military.tasks.DestroyCrossroad" dia-type="T_Mission_Pion_Destroy" id="14" name="DestroyAgent">
-      <parameter dia-name="objectives" name="targets" optional="false" type="AgentKnowledgeListBM"/>
+        <mission dia-behavior="net.masagroup.sword.military.tasks.DestroyAgents" dia-type="T_Mission_Pion_Destroy" id="14" name="DestroyAgents">
+      <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>
     </mission>    
      <mission dia-behavior="net.masagroup.sword.military.tasks.ObserveAndReconnoiter" dia-type="T_Mission_Pion_ObserveAndReconnoiter" id="15" name="ObserveAndReconnoiterPoint">
       <parameter dia-name="objectives" name="destination" optional="false" type="PointBM"/>

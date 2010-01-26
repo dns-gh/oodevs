@@ -87,5 +87,19 @@
 				</type>
 			</return>
 		</method>
+		<method name="destructionEfficiency">
+            <description>__INTEGRATION</description>
+    		<argument name="objective">
+                <description>L'objectif à détruire.</description>
+    			<type>
+    				<class name="net.masagroup.military.generic.knowledge.Destroyable"/>
+    			</type>
+    		</argument>
+			<return>
+				<type>
+					<simple name="numeric"/>
+				</type>
+			</return>
+		</method>
 	</methods>
 </class>

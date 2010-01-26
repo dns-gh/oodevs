@@ -20,7 +20,6 @@ node "MoveToPosition"
   };
 
   activate = function( self )
-    BreakForDebug( "call move to position" )
     for _, keypoint in pairs( self.params.area ) do
       Activate( skill.nodes.MoveToNode, keypoint:reachEfficiency( self.params.position ), { entity = keypoint } )
     end
@@ -32,12 +31,9 @@ node "MoveToNode"
     connections = { skill.nodes.MoveTo, skill.nodes.TakePosition };
     
     activate = function( self )
-        BreakForDebug("movetonode:enter")
         if self.params.entity:canTakePosition() then
-            BreakForDebug( "movetonode:takePos" )
             Activate( skill.nodes.TakePosition, 1, { position = self.params.entity } )
         else
-            BreakForDebug("movetonode:moveTo")
             Activate( skill.nodes.MoveTo, 1, { position = self.params.entity } )
         end
     end

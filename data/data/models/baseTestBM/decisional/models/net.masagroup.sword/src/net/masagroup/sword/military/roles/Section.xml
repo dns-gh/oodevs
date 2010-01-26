@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<role xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.roles.Section">
+<role xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.roles.Section" knowledge-class="net.masagroup.sword.military.world.Section">
 	<description>Une entité décisionnelle quelconque dans un contexte militaire.</description>
 	<skills>
 		<skill name="net.masagroup.military.generic.skills.primitives.MoveToward"/>
@@ -10,6 +10,7 @@
 		<skill name="net.masagroup.sword.military.skills.ObserveAndReconnoiter"/>
 		<skill name="net.masagroup.military.generic.combatant.skills.primitives.Reconnoitre"/>
 		<skill name="net.masagroup.military.generic.skills.primitives.ObserveToward"/>
+		<skill name="net.masagroup.military.generic.combatant.skills.primitives.Destroy"/>
 	</skills>
 	<resources>
 		<resource name="net.masagroup.military.generic.resources.Move"/>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query name="net.masagroup.sword.military.queries.getDestroying" xmlns="http://www.masagroup.net/directia/schemas/bm">
+		<parameters>
+		<parameter name="entities" >
+        <type>
+        	<list>
+              <class name="net.masagroup.military.generic.knowledge.Destroyable"></class>
+            </list>
+         </type>     
+        </parameter>
+	</parameters>
+	<target name="Destroying">
+		<type>
+			<class name="net.masagroup.military.generic.knowledge.Destroying"/>
+		</type>
+	</target>
+</query>

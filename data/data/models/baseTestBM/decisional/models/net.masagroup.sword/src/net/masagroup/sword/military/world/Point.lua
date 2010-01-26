@@ -39,9 +39,13 @@ defaultMethods
     -- OBSERVING
     observationEfficiency = function() return default_engine.methods.load( "observationEfficiency" ) end,
     isObservingFor = function() return default_engine.predicates.load( "terrain_analysis_isObservingFor" ) end,
+    
+    --Destroyable
+    destructionEfficiency = function() return default_engine.methods.load( "destructionEfficiency" ) end,
 }
 return
 {
+	
     -- $$$ MIA: temp, to move in default military implementation
     isTotallyPerceived = function( self )
         return self:perceptionLevel() == 100
@@ -109,4 +113,7 @@ return
     isOccupied = function( self )
         return true -- TODO
     end,
+--    destructionEfficiency = function()
+--    	return 100
+--    end,
 }
