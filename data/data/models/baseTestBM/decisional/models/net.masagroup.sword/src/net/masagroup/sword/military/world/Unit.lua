@@ -1,6 +1,10 @@
 defaultMethods
 {
-   
+    proximityLevel = function() return default_engine.methods.load( "proximityLevel") end,
+    accessibilityLevel = function() return default_engine.methods.load( "accessibilityLevel") end,
+    perceptionLevel = function() return default_engine.methods.load( "element_perceptionLevel") end,
+    isReachingFor = function() return default_engine.predicates.load( "isReachingFor" ) end,
+    observationPriority = function() return default_engine.methods.load( "generic_observationPriority" ) end,
 }
 return
 {
@@ -17,14 +21,6 @@ return
     end,
     
     hostilityLevel = function()
-        --TODO
-        return 1
-    end,
-    proximityLevel = function()
-        --TODO
-        return 1
-    end,
-    accessibilityLevel = function()
         --TODO
         return 1
     end,

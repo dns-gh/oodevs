@@ -4,19 +4,18 @@ defaultMethods
     proximityLevel = function() return default_engine.methods.load( "proximityLevel") end,
     accessibilityLevel = function() return default_engine.methods.load( "accessibilityLevel") end,
     reachPriority = function() return default_engine.methods.load( "reachPriority") end,
-    isReachingFor = function() return default_engine.methods.load( "isReachingFor" ) end,
-    isDistant = function() return default_engine.methods.load( "isDistant" ) end,
-    isNearby = function() return default_engine.methods.load( "isNearby" ) end,
-    isFar = function() return default_engine.methods.load( "isFar" ) end,
-    isReached = function() return default_engine.methods.load( "isReached" ) end,
+    isDistant = function() return default_engine.methods.load( "generic_isDistant" ) end,
+    isNearby = function() return default_engine.methods.load( "generic_isNearby" ) end,
+    isFar = function() return default_engine.methods.load( "generic_isFar" ) end,
+    isReached = function() return default_engine.methods.load( "generic_isReached" ) end,
 
    -- OBSERVABLE
     hostilityLevel = function() return default_engine.methods.load( "unit_hostilityLevel" ) end,
-    isHostile = function () return default_engine.predicates.load( "isHostile") end,
-    isNeutral = function () return default_engine.methods.load( "isNeutral") end,
-    isFriend = function () return default_engine.methods.load( "isFriend" ) end,
-    perceptionLevel = function() return default_engine.methods.load( "perceptionLevel") end,
-    observationPriority = function() return default_engine.methods.load( "observationPriority" ) end,
+    isHostile = function () return default_engine.predicates.load( "generic_isHostile") end,
+    isNeutral = function () return default_engine.methods.load( "generic_isNeutral") end,
+    isFriend = function () return default_engine.methods.load( "generic_isFriend" ) end,
+    perceptionLevel = function() return default_engine.methods.load( "element_perceptionLevel") end,
+    observationPriority = function() return default_engine.methods.load( "generic_observationPriority" ) end,
 
     -- RECONNOITRABLE
     reconnaissancePriority = function() return default_engine.methods.load( "reconnaissancePriority" ) end,
@@ -30,7 +29,8 @@ defaultMethods
     canTakePosition = function() return default_engine.methods.load( "canTakePosition" ) end,
     
     -- REACHING
-    reachEfficiency = function() return default_engine.methods.load( "reachEfficiency" ) end,   
+    reachEfficiency = function() return default_engine.methods.load( "reachEfficiency" ) end,  
+    isReachingFor = function() return default_engine.predicates.load( "isReachingFor" ) end, 
     
     -- RECONNOITRING
     reconnaissanceEfficiency = function() return default_engine.methods.load( "reconnaissanceEfficiency" ) end,

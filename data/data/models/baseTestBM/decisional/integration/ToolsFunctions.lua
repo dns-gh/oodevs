@@ -82,9 +82,7 @@ end
 -- @author MGD
 -- @release 2010-01-22
 function CleanBrainBeforeDeletion( groupName )
-  BreakForDebug("before")
   behavior_model.leaveGroup( groupName )
-  BreakForDebug("after")
 end  
 
 ---\ Callback management /---
@@ -146,6 +144,7 @@ end
 -- @param var The variable to convert to string
 -- @author MGD
 -- @release 2010-01-22
+-- @TODO manage cycle to replace lua system print
 local printRec
 printRec = function( var )
   if( type( var ) == "table" ) then
