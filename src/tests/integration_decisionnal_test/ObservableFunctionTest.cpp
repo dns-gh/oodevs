@@ -32,6 +32,8 @@ namespace
             brain.RegisterFunction( "DEC_ConnaissanceAgent_EstUnAllie", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_IsAllie, boost::cref(this), _1  ) ) );
             brain.RegisterFunction( "DEC_ConnaissanceObject_EstUnEnnemi", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_IsEnemy, boost::cref(this), _1  ) ) );
             brain.RegisterFunction( "DEC_ConnaissanceObject_EstUnAllie", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_IsAllie, boost::cref(this), _1  ) ) );
+            brain.RegisterFunction( "DEC_ConnaissanceObjet_NiveauDePerceptionCourant", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_GetPerceptionLevel, boost::cref(this), _1  ) ) );
+            brain.RegisterFunction( "DEC_ConnaissanceAgent_NiveauDePerceptionCourant", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_GetPerceptionLevel, boost::cref(this), _1  ) ) );
         }
         int Mock_IsEnemy( const std::string& name )
         {
@@ -49,6 +51,18 @@ namespace
                 return 1;
             return 2;
         }
+
+        int Mock_GetPerceptionLevel( const std::string& name )
+        {
+            if ( name == "enemyDetected" )
+                return 1;
+            if ( name == "enemyRecognized" )
+                return 2;
+            if ( name == "enemyIdentified" )
+                return 3;
+            return 0;
+        }
+
         void ComputeRelationAgentTest( directia::ScriptRef unit, double expected )
         {
             directia::ScriptRef computeRelation = *brain.GetScriptFunction( "integration.computeRelationAgent" );
@@ -60,6 +74,18 @@ namespace
             directia::ScriptRef computeRelation = *brain.GetScriptFunction( "integration.computeRelationAgent" );
             BOOST_CHECK( computeRelation( unit ) );
             brain.GetScriptFunction( "check" )( computeRelation, expected );
+        }
+        void GetAgentPerceptionLevelTest( directia::ScriptRef unit, double expected )
+        {
+            directia::ScriptRef getAgentPerceptionLevel = *brain.GetScriptFunction( "integration.getAgentPerception" );
+            BOOST_CHECK( getAgentPerceptionLevel( unit ) );
+            brain.GetScriptFunction( "check" )( getAgentPerceptionLevel, expected );
+        }
+        void GetObjectPerceptionLevelTest( directia::ScriptRef unit, double expected )
+        {
+            directia::ScriptRef getObjectPerceptionLevel = *brain.GetScriptFunction( "integration.getObjectPerception" );
+            BOOST_CHECK( getObjectPerceptionLevel( unit ) );
+            brain.GetScriptFunction( "check" )( getObjectPerceptionLevel, expected );
         }
         directia::ScriptRef CreateAgent( const std::string& name )
         {
@@ -90,4 +116,28 @@ BOOST_FIXTURE_TEST_CASE( ComputeRelationObject, BrainFixture )
     ComputeRelationObjectTest( CreateAgent( "allie" ), 100. );
     ComputeRelationObjectTest( CreateAgent( "enemy" ), 0. );
     ComputeRelationObjectTest( CreateAgent( "neutre" ), 50. );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GetAgentPerceptionLevel
+// Created: MGD 2010-01-22
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( GetAgentPerceptionLevel, BrainFixture )
+{
+    GetAgentPerceptionLevelTest( CreateAgent( "enemyDetected"   ), 30. );
+    GetAgentPerceptionLevelTest( CreateAgent( "enemyRecognized" ), 60. );
+    GetAgentPerceptionLevelTest( CreateAgent( "enemyIdentified" ), 100. );
+    GetAgentPerceptionLevelTest( CreateAgent( "enemyNotSeen"    ), 0. );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GetObjectPerceptionLevel
+// Created: MGD 2010-01-22
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( GetObjectPerceptionLevel, BrainFixture )
+{
+    GetObjectPerceptionLevelTest( CreateAgent( "enemyDetected"   ), 30. );
+    GetObjectPerceptionLevelTest( CreateAgent( "enemyRecognized" ), 60. );
+    GetObjectPerceptionLevelTest( CreateAgent( "enemyIdentified" ), 100. );
+    GetObjectPerceptionLevelTest( CreateAgent( "enemyNotSeen"    ), 0. );
 }

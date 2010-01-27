@@ -109,17 +109,17 @@ namespace boost
     namespace serialization
     {
         template< typename Archive >
-        inline void serialize( Archive& file, DEC_Knowledge_Agent::T_PerceptionSourceMap& map, const unsigned int nVersion )
+        inline void serialize( Archive& file, DEC_Knowledge_Agent::T_PerceptionAutomateSourceMap& map, const unsigned int nVersion )
         {
             split_free( file, map, nVersion); 
         }
 
         template < typename Archive >
-        void save( Archive& file, const DEC_Knowledge_Agent::T_PerceptionSourceMap& map, const unsigned int )
+        void save( Archive& file, const DEC_Knowledge_Agent::T_PerceptionAutomateSourceMap& map, const unsigned int )
         {
             unsigned size = map.size();
             file << size;
-            for ( DEC_Knowledge_Agent::CIT_PerceptionSourceMap it = map.begin(); it != map.end(); ++it )
+            for ( DEC_Knowledge_Agent::CIT_PerceptionAutomateSourceMap it = map.begin(); it != map.end(); ++it )
             {
                 file << it->first;
                 unsigned id = it->second->GetID();
@@ -129,7 +129,7 @@ namespace boost
         }
         
         template < typename Archive >
-        void load( Archive& file, DEC_Knowledge_Agent::T_PerceptionSourceMap& g, const unsigned int )
+        void load( Archive& file, DEC_Knowledge_Agent::T_PerceptionAutomateSourceMap& g, const unsigned int )
         {
             unsigned int nNbr;
             file >> nNbr;
@@ -271,18 +271,25 @@ void DEC_Knowledge_Agent::UpdatePerceptionSources( const DEC_Knowledge_AgentPerc
     if( perception.GetCurrentPerceptionLevel() == PHY_PerceptionLevel::notSeen_ )
         return;
 
-    const MIL_Automate& automateSource = perception.GetAgentPerceiving().GetAutomate();
+    const MIL_AgentPion& pionSource = perception.GetAgentPerceiving();
+    const MIL_Automate& automateSource = pionSource.GetAutomate();
 
     // On ne garde que les sources provenant d'autres knowledge groupes
     assert( pAgentKnown_ );
     if ( pAgentKnown_->BelongsTo( automateSource.GetKnowledgeGroup() ) )
         return;
 
-    IT_PerceptionSourceMap it = perceptionLevelPerAutomateMap_.find( &automateSource );
+    IT_PerceptionAutomateSourceMap it = perceptionLevelPerAutomateMap_.find( &automateSource );
     if( it == perceptionLevelPerAutomateMap_.end() )
         perceptionLevelPerAutomateMap_.insert( std::make_pair( &automateSource, &perception.GetCurrentPerceptionLevel() ) );
     else
         it->second = &std::min( *it->second, perception.GetCurrentPerceptionLevel() );
+
+    IT_PerceptionAgentSourceMap it2 = perceptionLevelPerAgentMap_.find( &pionSource );
+    if( it2 == perceptionLevelPerAgentMap_.end() )
+        perceptionLevelPerAgentMap_.insert( std::make_pair( &pionSource, &perception.GetCurrentPerceptionLevel() ) );
+    else
+        it2->second = &std::min( *it2->second, perception.GetCurrentPerceptionLevel() );
 }
 
 // -----------------------------------------------------------------------------
@@ -414,7 +421,7 @@ void DEC_Knowledge_Agent::WriteMsgPerceptionSources( ASN1T_MsgUnitKnowledgeUpdat
     {
         ASN1T_AutomatPerception* pPerceptions = new ASN1T_AutomatPerception[ perceptionLevelPerAutomateMap_.size() ]; //$$ RAM
         unsigned int i = 0;
-        for( CIT_PerceptionSourceMap it = perceptionLevelPerAutomateMap_.begin(); it != perceptionLevelPerAutomateMap_.end(); ++it )
+        for( CIT_PerceptionAutomateSourceMap it = perceptionLevelPerAutomateMap_.begin(); it != perceptionLevelPerAutomateMap_.end(); ++it )
         {
             pPerceptions[i].oid_compagnie        = it->first->GetID();
             it->second->Serialize( pPerceptions[i].identification_level );
@@ -988,6 +995,19 @@ const PHY_PerceptionLevel& DEC_Knowledge_Agent::GetCurrentPerceptionLevel() cons
 {
     assert( pCurrentPerceptionLevel_ );
     return *pCurrentPerceptionLevel_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::GetCurrentPerceptionLevel
+// Created: SLG 2010-01-27
+// -----------------------------------------------------------------------------
+const PHY_PerceptionLevel& DEC_Knowledge_Agent::GetCurrentPerceptionLevel( const MIL_AgentPion& pion ) const
+{
+    CIT_PerceptionAgentSourceMap  itPerceptionLevel = perceptionLevelPerAgentMap_.find( &pion );
+    if( itPerceptionLevel != perceptionLevelPerAgentMap_.end() )
+        return *( itPerceptionLevel->second );
+    else
+        return PHY_PerceptionLevel::notSeen_;
 }
 
 // -----------------------------------------------------------------------------

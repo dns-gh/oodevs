@@ -846,3 +846,16 @@ E_Tristate DEC_Knowledge_Object::IsAFriend( const MIL_Army_ABC& army ) const
     return army.IsAnEnemy( GetArmy() );
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::GetCurrentPerceptionLevel
+// Created: SLG 2010-01-27
+// -----------------------------------------------------------------------------
+const PHY_PerceptionLevel& DEC_Knowledge_Object::GetCurrentPerceptionLevel( const MIL_Agent_ABC& pion ) const
+{
+    CIT_PerceptionAgentSourceMap  itPerceptionLevel = perceptionLevelPerAgentMap_.find( &pion );
+    if( itPerceptionLevel != perceptionLevelPerAgentMap_.end() )
+        return *( itPerceptionLevel->second );
+    else
+        return PHY_PerceptionLevel::notSeen_;
+}

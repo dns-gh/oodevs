@@ -313,3 +313,15 @@ int DEC_KnowledgeObjectFunctions::IsAFriend( const MIL_AgentPion& callerAgent, b
         return int( eTristate_DontKnow );
     return int( pKnowledge->IsAFriend( callerAgent.GetArmy() ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::GetCurrentPerceptionLevel
+// Created: SLG 2010-01-27
+// -----------------------------------------------------------------------------
+int DEC_KnowledgeObjectFunctions::GetCurrentPerceptionLevel( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    if( pKnowledge.get() && pKnowledge->IsValid() )
+        return (int)pKnowledge->GetCurrentPerceptionLevel( callerAgent ).GetID();
+    else
+        return 0;
+}

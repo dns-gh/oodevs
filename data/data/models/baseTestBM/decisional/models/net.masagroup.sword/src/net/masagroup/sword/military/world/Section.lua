@@ -86,7 +86,7 @@ return
         return 100 -- TODO -- $$$ MIA: not used in skill yet...
     end,
     getPerception = function( self )
-        return 0 -- TODO
+        return integration.getAgentPerception( self )
     end,
     computeReconnaissanceCapability = function(self, objective, keypoint )
       return integration.normalizedInversedDistance( objective, keypoint )

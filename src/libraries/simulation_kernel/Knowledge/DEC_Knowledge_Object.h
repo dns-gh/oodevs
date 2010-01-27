@@ -74,6 +74,8 @@ public:
 
     bool IsValid() const;
     void Invalidate();
+
+    const PHY_PerceptionLevel& GetCurrentPerceptionLevel( const MIL_Agent_ABC& pion ) const;
     //@}
 
     //! @name Relevance management
@@ -174,6 +176,10 @@ private:
     typedef T_PerceptionSourceSet::iterator         IT_PerceptionSourceSet;
     typedef T_PerceptionSourceSet::const_iterator   CIT_PerceptionSourceSet;
 
+    typedef std::map< const MIL_Agent_ABC*, const PHY_PerceptionLevel* > T_PerceptionAgentSourceMap;
+    typedef T_PerceptionAgentSourceMap::iterator         IT_PerceptionAgentSourceMap;
+    typedef T_PerceptionAgentSourceMap::const_iterator   CIT_PerceptionAgentSourceMap;
+
     typedef std::set< const MIL_AgentType_ABC* >    T_AgentTypeSet;
     typedef T_AgentTypeSet::const_iterator          CIT_AgentTypeSet;
 
@@ -203,6 +209,8 @@ private:
     
     T_PerceptionSourceSet  perceptionPerAutomateSet_;
     T_PerceptionSourceSet  previousPerceptionPerAutomateSet_;
+
+    T_PerceptionAgentSourceMap  perceptionLevelPerAgentMap_;
 
     uint     nTimeLastUpdate_;
     MT_Float rRelevance_;

@@ -253,3 +253,15 @@ int DEC_KnowledgeAgentFunctions::GetMaxPerceptionLevelForKnowledgeGroup( boost::
     else
         return 0;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::GetCurrentPerceptionLevel
+// Created: SLG 2010-01-27
+// -----------------------------------------------------------------------------
+int DEC_KnowledgeAgentFunctions::GetCurrentPerceptionLevel( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+{
+    if( pKnowledge.get() && pKnowledge->IsValid() )
+        return (int)pKnowledge->GetCurrentPerceptionLevel( callerAgent ).GetID();
+    else
+        return 0;
+}

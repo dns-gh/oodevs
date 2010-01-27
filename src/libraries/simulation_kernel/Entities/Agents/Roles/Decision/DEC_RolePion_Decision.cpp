@@ -485,6 +485,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< int( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetNatureAtlas, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_NiveauPerceptionMax",
         boost::function< int( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetMaxPerceptionLevelForKnowledgeGroup, _1 ) ) );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_NiveauDePerceptionCourant", 
+        boost::function< int( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetCurrentPerceptionLevel, boost::cref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_Dangerosite",
         boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetDangerosity, boost::cref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_DangerositeSurPion", 
@@ -539,6 +541,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_ConnaissanceObjet_Degrader", &DEC_KnowledgeObjectFunctions::DamageObject );
     brain.RegisterFunction( "DEC_ConnaisssanceObjet_ChangeDensitePopulationSortante", &DEC_KnowledgeObjectFunctions::SetExitingPopulationDensity ); 
     brain.RegisterFunction( "DEC_ConnaisssanceObjet_ResetDensitePopulationSortante", &DEC_KnowledgeObjectFunctions::ResetExitingPopulationDensity );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_NiveauDePerceptionCourant", 
+        boost::function< int( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::GetCurrentPerceptionLevel, boost::cref( GetPion() ), _1 ) ) );
 
     // Population knowledges accessors
     brain.RegisterFunction( "DEC_KnowledgePopulation_Domination"                   ,

@@ -28,6 +28,41 @@ integration.computeRelationObject = function( object )
   end
 end
 
+--- Get unit perception
+-- @param knowledge on an unit
+-- @author SLG
+-- @release 2010-01-27
+integration.getAgentPerception = function( unit )
+  perceptionLevel = DEC_ConnaissanceAgent_NiveauDePerceptionCourant( unit.source )
+  if ( perceptionLevel == 1 ) then
+    return 30
+  elseif ( perceptionLevel == 2 ) then
+    return 60
+  elseif ( perceptionLevel == 3 ) then
+    return 100
+  else
+    return 0   
+  end
+end
+
+--- Get object perception
+-- @param knowledge on an object
+-- @author SLG
+-- @release 2010-01-27
+integration.getObjectPerception = function( object )
+  perceptionLevel = DEC_ConnaissanceObjet_NiveauDePerceptionCourant( object.source )
+  if ( perceptionLevel == 1 ) then
+    return 30
+  elseif ( perceptionLevel == 2 ) then
+    return 60
+  elseif ( perceptionLevel == 3 ) then
+    return 100
+  else
+    return 0   
+  end
+end
+
 integration.observeIt = function( point )
   --TODO
 end
+

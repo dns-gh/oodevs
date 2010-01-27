@@ -60,12 +60,18 @@
       <parameter dia-name="objectives" name="objectives" optional="false" type="AgentBM"/>
     </mission>
   <mission dia-behavior="net.masagroup.testSword.military.tasks.ObserveToward" dia-type="T_Mission_Pion_ObservePoint" id="18" name="ObservePoint">
-      <parameter dia-name="objectives" name="destination" optional="false" type="PointBM"/>
+      <parameter dia-name="objectives" name="target" optional="false" type="PointBM"/>
     </mission>  
     <mission dia-behavior="net.masagroup.testSword.military.tasks.ObserveToward" dia-type="T_Mission_Pion_ObserveUrbanBlock" id="19" name="ObserveUrbanBlock">
-      <parameter dia-name="objectives" name="destination" optional="false" type="UrbanBlockBM"/>
-    </mission>  
-    <mission dia-behavior="net.masagroup.testSword.military.tasks.Reconnoiter" dia-type="T_Mission_Pion_Reconnoiter" id="21" name="ReconnoiterUrbanBlock">
+      <parameter dia-name="objectives" name="target" optional="false" type="UrbanBlockBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.ObserveToward" dia-type="T_Mission_Pion_ObserveAgent" id="20" name="ObserveAgent">
+      <parameter dia-name="objectives" name="target" optional="false" type="AgentKnowledgeBM"/>
+    </mission>      
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.ObserveToward" dia-type="T_Mission_Pion_ObserveObject" id="21" name="ObserveObject">
+      <parameter dia-name="objectives" name="target" optional="false" type="ObjectKnowledgeBM"/>
+    </mission>     
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.Reconnoiter" dia-type="T_Mission_Pion_Reconnoiter" id="22" name="ReconnoiterUrbanBlock">
       <parameter dia-name="objectives" name="destination" optional="false" type="UrbanBlockBM"/>
     </mission> 
     <mission dia-behavior="net.masagroup.testSword.military.tasks.Load" dia-type="T_Mission_Pion_Load" id="26" name="Load">

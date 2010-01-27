@@ -37,6 +37,7 @@ public:
     static bool  KillOfficers      ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
 
     static int   GetMaxPerceptionLevelForKnowledgeGroup ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static int   GetCurrentPerceptionLevel              ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static float GetDangerosityOnPion                   ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, const DEC_Decision_ABC* pTarget );
     static float GetDangerosityOnKnowledge              ( boost::shared_ptr< DEC_Knowledge_Agent > pSource, boost::shared_ptr< DEC_Knowledge_Agent > pTarget );
     static const MT_Vector2D* GetPosition               ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );

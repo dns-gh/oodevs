@@ -25,6 +25,8 @@
         <mission name="ObserveAndReconnoiterUrbanBlock"/>
         <mission name="ObservePoint"/>
         <mission name="ObserveUrbanBlock"/>
+        <mission name="ObserveAgent"/>
+        <mission name="ObserveObject"/>
         <mission name="ReconnoiterUrbanBlock"/>
       </missions>
     </unit>

@@ -2,6 +2,7 @@
 <class xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.world.Object">
   <description>Unité</description>
   <realizes>net.masagroup.military.generic.knowledge.Observable</realizes>
+  <realizes>net.masagroup.military.generic.knowledge.Reachable</realizes>
   <methods>
     <method name="computeRelation">
       <description>__INTEGRATION</description>
@@ -18,27 +19,46 @@
         </type>
       </return>
     </method>
+    <method name="computeDistance">
+            <description>__INTEGRATION</description>
+            <argument name="objective">
+                <description>L'élément objectif</description>
+                <type>
+                    <class name="net.masagroup.military.generic.world.Element"/>
+                </type>
+            </argument>
+        </method>
     <method name="observeIt">
-      <description>Action d'observation de l'élément.
-        Cette action permet à l'agent d'observer l'élément. Pour un individu, il peut s'agir d'une orientation simple des senseurs, sans se soucier
-        de l'efficacité du senseur pour l'indentification de l'élément. Pour une entité de plus haut niveau (équipe ou groupe) il s'agit de
-        l'effort d'observation vers l'élément (direction principale d'observation vers l'élément).
+            <description>Action d'observation de l'élément.
+      
+      Cette action permet à l'agent d'observer l'élément. Pour un individu, il peut s'agir d'une orientation simple des senseurs, sans se soucier 
+      de l'efficacité du senseur pour l'indentification de l'élément. Pour une entité de plus haut niveau (équipe ou groupe) il s'agit de 
+      l'effort d'observation vers l'élément (direction principale d'observation vers l'élément).
       </description>
-    </method>
-    <method name="isTotallyPerceived">
-      <return>
-        <type>
-          <simple name="boolean"/>
-        </type>
-      </return>
-    </method>
-    <method name="isPartiallyPerceived">
-      <description></description>
-      <return>
-        <type>
-          <simple name="boolean"/>
-        </type>
-      </return>
-    </method>
+        </method>
+        <method name="isTotallyPerceived">
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="isPartiallyPerceived">
+            <description></description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="getPerception">
+            <description>__INTEGRATION</description>
+            <return>
+                <description>Retourne la valeur de la perception de l'element par l'agent entre 0 et 100.</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
   </methods>
 </class>

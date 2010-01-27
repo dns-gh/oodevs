@@ -108,6 +108,7 @@ public:
     const MIL_Army_ABC*                  GetArmy                  () const;
     const PHY_PerceptionLevel&           GetMaxPerceptionLevel    () const;
     const PHY_PerceptionLevel&           GetCurrentPerceptionLevel() const;
+    const PHY_PerceptionLevel&           GetCurrentPerceptionLevel( const MIL_AgentPion& pion ) const;
     const DEC_Knowledge_AgentComposante* GetMajorComposante       () const;
           bool                           IsHuman                  () const; // $$$$ NLD 2007-04-19: A CHIER
     E_Tristate                           IsAnEnemy                ( const MIL_Army_ABC& army ) const;
@@ -135,9 +136,13 @@ public:
 public:
     //! @name Types
     //@{
-    typedef std::map< const MIL_Automate*, const PHY_PerceptionLevel* > T_PerceptionSourceMap;
-    typedef T_PerceptionSourceMap::iterator                             IT_PerceptionSourceMap;
-    typedef T_PerceptionSourceMap::const_iterator                       CIT_PerceptionSourceMap;
+    typedef std::map< const MIL_Automate*, const PHY_PerceptionLevel* > T_PerceptionAutomateSourceMap;
+    typedef T_PerceptionAutomateSourceMap::iterator                             IT_PerceptionAutomateSourceMap;
+    typedef T_PerceptionAutomateSourceMap::const_iterator                       CIT_PerceptionAutomateSourceMap;
+
+    typedef std::map< const MIL_AgentPion*, const PHY_PerceptionLevel* > T_PerceptionAgentSourceMap;
+    typedef T_PerceptionAgentSourceMap::iterator                             IT_PerceptionAgentSourceMap;
+    typedef T_PerceptionAgentSourceMap::const_iterator                       CIT_PerceptionAgentSourceMap;
     //@}
 
 private:
@@ -178,8 +183,9 @@ private:
     const PHY_PerceptionLevel*  pCurrentPerceptionLevel_;
     const PHY_PerceptionLevel*  pPreviousPerceptionLevel_;
     const PHY_PerceptionLevel*  pMaxPerceptionLevel_;        // Niveau maximal de perception auquel l'unité a été vue
-          T_PerceptionSourceMap perceptionLevelPerAutomateMap_;
-          T_PerceptionSourceMap previousPerceptionLevelPerAutomateMap_;
+          T_PerceptionAutomateSourceMap perceptionLevelPerAutomateMap_;
+          T_PerceptionAutomateSourceMap previousPerceptionLevelPerAutomateMap_;
+          T_PerceptionAgentSourceMap perceptionLevelPerAgentMap_;
           MT_Float              rRelevance_;
           int                   nTimeExtrapolationEnd_;
           bool                  bLocked_;
