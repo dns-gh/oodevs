@@ -17,7 +17,7 @@ rootnode
     end,
 
     activate = function( self ) 
-	    for _,entity in ipairs( self.params.entities ) do
+      for _,entity in ipairs( self.params.entities ) do
             Activate( skill.nodes.BuildElement, entity:buildPriority(), { entity = entity } )
         end
     end
@@ -29,15 +29,15 @@ node "BuildElement"
 
     activate = function( self )
     
-    	if not self.params.entity:isBuild() then
+      if not self.params.entity:isBuild() then
             Feedback( self.feedbacks.done, { buildEntity = self.params.entity } )
         end
-    	
+      
     
         if self.params.entity:canBeBuild() then
             Activate( skill.nodes.Build, 1, { entity = entity } )
         else
-        	--TODO RC not possible to build, by feedback , by other way?
+          --TODO RC not possible to build, by feedback , by other way?
         end
     end
 }
@@ -49,6 +49,6 @@ node "Build"
     acquire = { [ skill.resources.buildEquipment ] = 1 };
 
     select = function( self )
-    	self.param.entity:buildIt()
+      self.param.entity:buildIt()
     end
 }

@@ -32,46 +32,46 @@ return
       return integration.destroyIt( target )
     end,
     computeAggressiveness = function ( target )
-    	return 1
+      return 1
     end,
     identifyIt = function( target )
-    	--TODO
+      --TODO
     end,
     getAttrition = function( target )
-    	--TODO
+      --TODO
     end,
     getEstimateAttrition = function( target )
-    	--TODO
+      --TODO
     end,
     respondToIt = function( target )
-    	--TODO
+      --TODO
     end,
     getAttrition = function( target )
-    	--TODO
+      --TODO
     end,
     computeSupportCapability = function( target )
-    	--TODO
+      --TODO
     end,
     computeEstimateDestroyAttritionOnEnemy = function( target )
-    	--TODO
+      --TODO
     end,
     computeEstimateNeutralizeAttritionOnEnemy = function( target )
-    	--TODO
+      --TODO
     end,
      computeEstimateAttritionOnMe = function( target )
-    	--TODO
+      --TODO
     end,
     setFront = function( target )
-    	--TODO
+      --TODO
     end,
     setSupport = function( target )
-    	--TODO
+      --TODO
     end,
     selfProtect = function( target )
       --TODO
     end,
     computeReconnaissanceCapability = function( target )
-    	--TODO
+      --TODO
     end,
     
 }

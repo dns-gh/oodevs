@@ -43,7 +43,7 @@ return
         return self:perceptionLevel() == 100
     end,
     isPartiallyPerceived = function( self )
-    	return self:perceptionLevel() > 25
+      return self:perceptionLevel() > 25
     end,
     takeUpPosition = function( point )
         --NOTHING

@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.tasks.GiveOrderMoveTo">
-	<description>Tâche de commandement d'une mission.</description>
-	<parameters>
-		<parameter name="objective">
-			<description>Les objectifs de la tâche passée en paramètre.</description>
-			<type>
-				<list>
-					<class name="net.masagroup.military.generic.knowledge.Reachable"/>
-				</list>
-			</type>
-		</parameter>
-	</parameters>
-	<goal>
-		<description>Assigner les différentes tâches aux éléments qui permettent de mener à bien la mission passée en paramètre.</description>
-	</goal>
-	<stages>
-		<stage>
-			<description>Assigner les tâches aux entités passées en paramètre.</description>
-			<goal>
-				<description>Assigner les tâches adaptés aux entités pour faire la mission.</description>
-			</goal>
-			<skills>
-				<skill name="net.masagroup.sword.military.skills.GiveOrderMoveTo" main="true">
-					<parameter name="entities">
-						<value>
-							<call method="net.masagroup.sword.military.queries.getDefaultEntitiesToLead"/>
-						</value>
-					</parameter>
-					<parameter name="objectives">
-						<value>
-							<parameter>objective</parameter>
-						</value>
-					</parameter>
-				</skill>
-			</skills>
-		</stage>
-	</stages>
+  <description>Tâche de commandement d'une mission.</description>
+  <parameters>
+    <parameter name="objective">
+      <description>Les objectifs de la tâche passée en paramètre.</description>
+      <type>
+        <list>
+          <class name="net.masagroup.military.generic.knowledge.Reachable"/>
+        </list>
+      </type>
+    </parameter>
+  </parameters>
+  <goal>
+    <description>Assigner les différentes tâches aux éléments qui permettent de mener à bien la mission passée en paramètre.</description>
+  </goal>
+  <stages>
+    <stage>
+      <description>Assigner les tâches aux entités passées en paramètre.</description>
+      <goal>
+        <description>Assigner les tâches adaptés aux entités pour faire la mission.</description>
+      </goal>
+      <skills>
+        <skill name="net.masagroup.sword.military.skills.GiveOrderMoveTo" main="true">
+          <parameter name="entities">
+            <value>
+              <call method="net.masagroup.sword.military.queries.getDefaultEntitiesToLead"/>
+            </value>
+          </parameter>
+          <parameter name="objectives">
+            <value>
+              <parameter>objective</parameter>
+            </value>
+          </parameter>
+        </skill>
+      </skills>
+    </stage>
+  </stages>
 </task>

@@ -23,11 +23,11 @@ defaultMethods
     reconnaissanceLevel = function() return default_engine.methods.load( "reconnaissanceLevel" ) end,
     isRecognized = function() return default_engine.methods.load( "keypoint_isRecognized" ) end,
     reconnoitreIt = function() return default_engine.methods.load( "reconnoitreIt" ) end,
-    
+
     -- POSITIONNABLE
     isInMyAOR = function() return default_engine.predicates.load( "isInMyAOR") end,
     canTakePosition = function() return default_engine.methods.load( "canTakePosition" ) end,
-    
+
     -- REACHING
     reachEfficiency = function() return default_engine.methods.load( "reachEfficiency" ) end,
     isReachingFor = function() return default_engine.predicates.load( "isReachingFor" ) end,    
@@ -39,19 +39,19 @@ defaultMethods
     -- OBSERVING
     observationEfficiency = function() return default_engine.methods.load( "observationEfficiency" ) end,
     isObservingFor = function() return default_engine.predicates.load( "terrain_analysis_isObservingFor" ) end,
-    
+
     -- DESTROYABLE
     destructionEfficiency = function() return default_engine.methods.load( "destructionEfficiency" ) end,
 }
 return
 {
-	
+
     -- $$$ MIA: temp, to move in default military implementation
     isTotallyPerceived = function( self )
         return self:perceptionLevel() == 100
     end,
     isPartiallyPerceived = function( self )
-    	return self:perceptionLevel() > 25
+      return self:perceptionLevel() > 25
     end,
     takeUpPosition = function( point )
         --NOTHING
@@ -85,12 +85,12 @@ return
      return 0 -- TODO
     end,
     computeMovementCapability = function( self )
-        return 100 -- TODO -- $$$ MIA: not used in skill yet... 
+        return 100 -- TODO -- $$$ MIA: not used in skill yet...
     end,
     getPerception = function( self )
         return 0 -- TODO
     end,
-    getReconnaissanceState = function( self ) 
+    getReconnaissanceState = function( self )
        return 0 -- TODO
     end,
     recce = function( self )
@@ -114,6 +114,6 @@ return
         return true -- TODO
     end,
 --    destructionEfficiency = function()
---    	return 100
+--      return 100
 --    end,
 }

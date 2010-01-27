@@ -5,11 +5,11 @@ rootnode
     };
 
     activate = function( self )
-    	if( self.params.Point_ ) then
-    		BreakForDebug( "TestParam Knowledges created: Point")
+      if( self.params.Point_ ) then
+        BreakForDebug( "TestParam Knowledges created: Point")
         end
         if( self.params.PointList_ ) then
-        	BreakForDebug( "TestParam Knowledges created: PointList")
+          BreakForDebug( "TestParam Knowledges created: PointList")
         end
     end
 }

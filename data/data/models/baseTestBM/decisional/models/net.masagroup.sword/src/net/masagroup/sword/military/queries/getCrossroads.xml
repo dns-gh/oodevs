@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <query name="net.masagroup.sword.military.queries.getCrossroads" xmlns="http://www.masagroup.net/directia/schemas/bm">
-	<description>Test : retourne les carrefours dans un cercle d'un rayon donné autour d'un Reachable</description>
-	<parameters>
-		<parameter name="objectives" >
+  <description>Test : retourne les carrefours dans un cercle d'un rayon donné autour d'un Reachable</description>
+  <parameters>
+    <parameter name="objectives" >
         <type>
-        	<list>
+          <list>
               <class name="net.masagroup.military.generic.knowledge.Reachable"></class>
             </list>
          </type>     
         </parameter>
-	</parameters>
-		<target name="k">
-				<type>
-					<class name="net.masagroup.military.generic.knowledge.Reaching" />
-				</type>
-		</target>
+  </parameters>
+    <target name="k">
+        <type>
+          <class name="net.masagroup.military.generic.knowledge.Reaching" />
+        </type>
+    </target>
 </query>

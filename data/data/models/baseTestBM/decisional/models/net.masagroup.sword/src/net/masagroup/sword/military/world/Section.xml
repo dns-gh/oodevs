@@ -1,220 +1,222 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.world.Section" >
-    <description>Une section interarme en milieu urbain.</description>
-    <realizes>net.masagroup.military.generic.knowledge.Reachable</realizes>
-    <realizes>net.masagroup.military.generic.knowledge.Observable</realizes>
-    <realizes>net.masagroup.military.generic.knowledge.Destroying</realizes>
-    <realizes>net.masagroup.military.generic.knowledge.Destroyable</realizes>
-    <realizes>directia.core.model.RoleBody</realizes>
-	<realizes>net.masagroup.military.generic.knowledge.Commanding</realizes>
-    <methods>
-        <method name="computeMovementCapability">
-            <description>__INTEGRATION</description>
-            <return>
-                <type>
-                    <simple name="numeric"/>
-                </type>
-            </return>
-        </method>
-        <method name="computeRelation">
-            <description>__INTEGRATION</description>
-            <argument name="objective">
-                <description>L'unité avec laquelle on veut calculer sa relation de diplomatie</description>
-                <type>
-                    <class name="net.masagroup.military.generic.knowledge.Observable"/>
-                </type>
-            </argument>
-            <return>
-                <description>Retourne la valeur de la relation entre 0 et 100</description>
-                <type>
-                    <simple name="numeric"/>
-                </type>
-            </return>
-        </method>
-        <method name="computePerceptionCapability">
-            <description>__INTEGRATION</description>
-            <argument name="objective">
-                <description>L'élément à percevoir dont on veut calculer le niveau de perception</description>
-                <type>
-                    <class name="net.masagroup.military.generic.knowledge.Observable"/>
-                </type>
-            </argument>
-            <argument name="objectiveFrom">
-                <description>L'élément position à partir duquel on veut observer l'élément</description>
-                <type>
-                    <class name="net.masagroup.military.generic.knowledge.Observable"/>
-                </type>
-            </argument>
-            <return>
-                <description>Retourne la valeur de la perception d'un élément par l'unité entre 0 et 100</description>
-                <type>
-                    <simple name="numeric"/>
-                </type>
-            </return>
-        </method>
-        <method name="computeDistance">
-            <description>__INTEGRATION</description>
-            <argument name="objective">
-                <description>L'élément objectif</description>
-                <type>
-                    <class name="net.masagroup.military.generic.world.Element"/>
-                </type>
-            </argument>
-        </method>
-        <method name="getPerception">
-            <description>__INTEGRATION</description>
-            <return>
-                <description>Retourne la valeur de la perception de l'element par l'agent entre 0 et 100.</description>
-                <type>
-                    <simple name="numeric"/>
-                </type>
-            </return>
-        </method>
-        <method name="computeReconnaissanceCapability">
-            <description>__INTEGRATION</description>
-            <argument name="objective">
-                <type>
-                    <class name="net.masagroup.military.generic.knowledge.Reconnoitrable"/>
-                </type>
-            </argument>
-        </method>
-		 <method name="communicate">
-            <description>__INTEGRATION : pour communiquer avec une unité.
-                Ici une implémentation par défaut est proposée.
-            </description>
-        </method>
-        <method name="getAttrition">
-            <description>__INTEGRATION</description>
-            <argument name="objective">
-                <description>L'unité sur laquelle l'agent souhaite tirer.</description>
-                <type>
-                    <class name="net.masagroup.military.generic.world.Unit"/>
-                </type>
-            </argument>
-            <argument name="objectiveFrom">
-                <description>L'élément position à partir de laquelle l'agent souhaite tirer.</description>
-                <type>
-                    <class name="net.masagroup.military.generic.world.Element"/>
-                </type>
-            </argument>
-        </method>
-        <method name="destructionPriority">
-            <description>__INTEGRATION</description>
-            <return>
-                <description>La valeur de la priorité.</description>
-                <type>
-                    <simple name="numeric" />
-                </type>
-            </return>
-        </method>
-         <method name="destructionLevel">
-            <description>__INTEGRATION</description>
-            <return>
-                <description>La valeur du niveau de destruction</description>
-                <type>
-                    <simple name="numeric" />
-                </type>
-            </return>
-        </method>
-         <method name="canDestroyIt">
-            <description>__INTEGRATION</description>
-            <return>
-                <description>L'état des conditions</description>
-                <type>
-                    <simple name="boolean" />
-                </type>
-            </return>
-        </method>
-		<method name="canTakePosition">
-            <description>__INTEGRATION</description>
-            <return>
-			<type>
-				<simple name="boolean" /></type>
-			</return>
-        </method>
-        <method name="takeUpPosition">
-			<description>__INTEGRATION</description>
-		</method>
-		<method name="occupationLevel">
-           <description>__INTEGRATION</description>
-           <return>
-			<type>
-				<simple name="numeric" /></type>
-			</return>
-       </method>
-               <method name="safeApproachIt">
-            <description>__INTEGRATION</description>
-        </method>
-       <method name="isSafety">
-       <description>__INTEGRATION</description>
-        <return>
-            <type>
-                <simple name="boolean"/>
-            </type>
-        </return>     
-       </method>
-       <method name="destroyIt">
-            <description>__INTEGRATION</description>
-        </method>
-        <method name="getDestructionState">
-            <description>__INTEGRATION</description>
-            <return>
-                <description>Retourne la valeur du niveau de destruction courant de l'unité entre 0 et 100.</description>
-                <type>
-                    <simple name="numeric"/>
-                </type>
-            </return>
-        </method>
-        <method name="isOccupied">
-            <description>__INTEGRATION</description>
-            <return>
-                <description></description>
-                <type>
-                    <simple name="boolean"/>
-                </type>
-            </return>
-        </method>
-        <method name="destructionEfficiency">
-            <description>Le niveau d'efficacité de la connaissance pour son utilisation dans la destruction de l'objectif</description>
-            <argument name="objective">
-                <description>L'objectif à détruire.</description>
-                <type>
-                    <class name="net.masagroup.military.generic.knowledge.Destroyable"/>
-                </type>
-            </argument>
-            <return>
-                <type>
-                    <simple name="numeric"/>
-                </type>
-            </return>
-        </method>
-       <method name="destroy">
-            <description>__INTEGRATION</description>
-       </method>
-    </methods>
-     <predicates>
-        <predicate name="isDestroyed">
-            <description>Retourne vrai si la connaissance est détruite.</description>
-        </predicate>
-        <predicate name="isDestroyingFor">
-        <description>Retourne vrai si la connaissance est adéquate pour mettre en oeuvre un comportement de destruction sur un objectif</description>
-            <argument name="objectives" >
-                <description>L'objectif que l'agent veut détruire</description>
-                <type>
-                    <list>
-                        <class name="net.masagroup.military.generic.knowledge.Destroyable"/>
-                    </list>
-                </type>
-            </argument>
-        </predicate>
-     </predicates>
-	<attributes>
-        <attribute name="tasks">
-            <type>
-                <list>
-                    <class name="net.masagroup.military.generic.tasks.knowledge.Task"/>
-                </list>
-            </type>
-        </attribute>
-    </attributes>
+  <description>Une section interarme en milieu urbain.</description>
+  <realizes>net.masagroup.military.generic.knowledge.Reachable</realizes>
+  <realizes>net.masagroup.military.generic.knowledge.Observable</realizes>
+  <realizes>net.masagroup.military.generic.knowledge.Destroying</realizes>
+  <realizes>net.masagroup.military.generic.knowledge.Destroyable</realizes>
+  <realizes>directia.core.model.RoleBody</realizes>
+  <realizes>net.masagroup.military.generic.knowledge.Commanding</realizes>
+  <methods>
+    <method name="computeMovementCapability">
+      <description>__INTEGRATION</description>
+      <return>
+        <type>
+          <simple name="numeric"/>
+        </type>
+      </return>
+    </method>
+    <method name="computeRelation">
+      <description>__INTEGRATION</description>
+      <argument name="objective">
+        <description>L'unité avec laquelle on veut calculer sa relation de diplomatie</description>
+        <type>
+          <class name="net.masagroup.military.generic.knowledge.Observable"/>
+        </type>
+      </argument>
+      <return>
+        <description>Retourne la valeur de la relation entre 0 et 100</description>
+        <type>
+          <simple name="numeric"/>
+        </type>
+      </return>
+    </method>
+    <method name="computePerceptionCapability">
+      <description>__INTEGRATION</description>
+      <argument name="objective">
+        <description>L'élément à percevoir dont on veut calculer le niveau de perception</description>
+        <type>
+          <class name="net.masagroup.military.generic.knowledge.Observable"/>
+        </type>
+      </argument>
+      <argument name="objectiveFrom">
+        <description>L'élément position à partir duquel on veut observer l'élément</description>
+        <type>
+          <class name="net.masagroup.military.generic.knowledge.Observable"/>
+        </type>
+      </argument>
+      <return>
+        <description>Retourne la valeur de la perception d'un élément par l'unité entre 0 et 100</description>
+        <type>
+          <simple name="numeric"/>
+        </type>
+      </return>
+    </method>
+    <method name="computeDistance">
+      <description>__INTEGRATION</description>
+      <argument name="objective">
+        <description>L'élément objectif</description>
+        <type>
+          <class name="net.masagroup.military.generic.world.Element"/>
+        </type>
+      </argument>
+    </method>
+    <method name="getPerception">
+      <description>__INTEGRATION</description>
+      <return>
+        <description>Retourne la valeur de la perception de l'element par l'agent entre 0 et 100.</description>
+        <type>
+          <simple name="numeric"/>
+        </type>
+      </return>
+    </method>
+    <method name="computeReconnaissanceCapability">
+      <description>__INTEGRATION</description>
+      <argument name="objective">
+        <type>
+          <class name="net.masagroup.military.generic.knowledge.Reconnoitrable"/>
+        </type>
+      </argument>
+    </method>
+    <method name="communicate">
+      <description>__INTEGRATION : pour communiquer avec une unité.
+        Ici une implémentation par défaut est proposée.
+      </description>
+    </method>
+    <method name="getAttrition">
+      <description>__INTEGRATION</description>
+      <argument name="objective">
+        <description>L'unité sur laquelle l'agent souhaite tirer.</description>
+        <type>
+          <class name="net.masagroup.military.generic.world.Unit"/>
+        </type>
+      </argument>
+      <argument name="objectiveFrom">
+        <description>L'élément position à partir de laquelle l'agent souhaite tirer.</description>
+        <type>
+          <class name="net.masagroup.military.generic.world.Element"/>
+        </type>
+      </argument>
+    </method>
+    <method name="destructionPriority">
+      <description>__INTEGRATION</description>
+      <return>
+        <description>La valeur de la priorité.</description>
+        <type>
+          <simple name="numeric" />
+        </type>
+      </return>
+    </method>
+    <method name="destructionLevel">
+      <description>__INTEGRATION</description>
+      <return>
+        <description>La valeur du niveau de destruction</description>
+        <type>
+          <simple name="numeric" />
+        </type>
+      </return>
+    </method>
+    <method name="canDestroyIt">
+      <description>__INTEGRATION</description>
+      <return>
+        <description>L'état des conditions</description>
+        <type>
+          <simple name="boolean" />
+        </type>
+      </return>
+    </method>
+    <method name="canTakePosition">
+      <description>__INTEGRATION</description>
+      <return>
+        <type>
+          <simple name="boolean" />
+        </type>
+      </return>
+    </method>
+    <method name="takeUpPosition">
+      <description>__INTEGRATION</description>
+    </method>
+    <method name="occupationLevel">
+      <description>__INTEGRATION</description>
+      <return>
+        <type>
+          <simple name="numeric" />
+        </type>
+      </return>
+    </method>
+    <method name="safeApproachIt">
+      <description>__INTEGRATION</description>
+    </method>
+    <method name="isSafety">
+      <description>__INTEGRATION</description>
+      <return>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>     
+    </method>
+    <method name="destroyIt">
+      <description>__INTEGRATION</description>
+    </method>
+    <method name="getDestructionState">
+      <description>__INTEGRATION</description>
+      <return>
+        <description>Retourne la valeur du niveau de destruction courant de l'unité entre 0 et 100.</description>
+        <type>
+          <simple name="numeric"/>
+        </type>
+      </return>
+    </method>
+    <method name="isOccupied">
+      <description>__INTEGRATION</description>
+      <return>
+        <description></description>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
+    </method>
+    <method name="destructionEfficiency">
+      <description>Le niveau d'efficacité de la connaissance pour son utilisation dans la destruction de l'objectif</description>
+      <argument name="objective">
+        <description>L'objectif à détruire.</description>
+        <type>
+          <class name="net.masagroup.military.generic.knowledge.Destroyable"/>
+        </type>
+      </argument>
+      <return>
+        <type>
+          <simple name="numeric"/>
+        </type>
+      </return>
+    </method>
+    <method name="destroy">
+      <description>__INTEGRATION</description>
+    </method>
+  </methods>
+  <predicates>
+    <predicate name="isDestroyed">
+      <description>Retourne vrai si la connaissance est détruite.</description>
+    </predicate>
+    <predicate name="isDestroyingFor">
+      <description>Retourne vrai si la connaissance est adéquate pour mettre en oeuvre un comportement de destruction sur un objectif</description>
+        <argument name="objectives" >
+          <description>L'objectif que l'agent veut détruire</description>
+          <type>
+            <list>
+              <class name="net.masagroup.military.generic.knowledge.Destroyable"/>
+            </list>
+          </type>
+        </argument>
+    </predicate>
+  </predicates>
+  <attributes>
+    <attribute name="tasks">
+      <type>
+        <list>
+          <class name="net.masagroup.military.generic.tasks.knowledge.Task"/>
+        </list>
+      </type>
+    </attribute>
+  </attributes>
 </class>

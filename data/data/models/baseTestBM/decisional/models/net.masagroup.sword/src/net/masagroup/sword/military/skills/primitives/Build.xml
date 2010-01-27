@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill name="net.masagroup.sword.military.skills.primitives.Build" xmlns="http://www.masagroup.net/directia/schemas/bm">
-	<description>Build objects</description>
+  <description>Build objects</description>
     <parameters>
         <parameter name="entities">
             <description>elements to build</description>
             <type>
                 <list>
-                	<class name="net.masagroup.sword.military.knowledge.Buildable" />
+                  <class name="net.masagroup.sword.military.knowledge.Buildable" />
                 </list>
             </type>
         </parameter>

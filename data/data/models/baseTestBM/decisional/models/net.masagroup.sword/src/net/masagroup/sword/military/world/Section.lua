@@ -1,6 +1,6 @@
 defaultMethods
 {
-    -- DEFAULT METHODS NEEDED UNTIL SECTION INHERITE FROM 
+    -- DEFAULT METHODS NEEDED UNTIL SECTION INHERITE FROM
     -- net.masagroup.military.generic.world.Unit
     -- REACHABLE
     proximityLevel = function() return default_engine.methods.load( "proximityLevel") end,
@@ -18,32 +18,32 @@ defaultMethods
     isFriend = function () return default_engine.methods.load( "generic_isFriend" ) end,
     perceptionLevel = function() return default_engine.methods.load( "element_perceptionLevel") end,
     observationPriority = function() return default_engine.methods.load( "generic_observationPriority" ) end,
-    
+
     -- DESTROYABLE
     destructionLevel = function() return default_engine.methods.load( "destructionLevel" ) end,
     destructionPriority = function() return default_engine.methods.load( "destructionPriority" ) end,
     isDestroyed = function() return default_engine.predicates.load( "isDestroyed" ) end,
-  	isDangerous = function() return default_engine.predicates.load( "isDangerous" ) end,
-  	destroyIt = function() return default_engine.methods.load( "destroyIt" ) end,
-  	dangerosityLevel = function() return default_engine.methods.load( "dangerosityLevel" ) end,
-  
+    isDangerous = function() return default_engine.predicates.load( "isDangerous" ) end,
+    destroyIt = function() return default_engine.methods.load( "destroyIt" ) end,
+    dangerosityLevel = function() return default_engine.methods.load( "dangerosityLevel" ) end,
+
     -- COMMANDING
     isCommandingFor = function() return default_engine.methods.load( "isCommandingFor" ) end,
     isInMyTeam = function() return default_engine.methods.load( "isInMyTeam" ) end,
-    
-    -- 
+
+    --
     communicate = function() return default_engine.methods.load( "unit_communicate" ) end,
-  	
-  	
-  	-- Destroying
-  	destructionEfficiency = function() return default_engine.methods.load( "destructionEfficiency" ) end,
-  	
-  	isDestroyingFor = function() return default_engine.predicates.load( "terrain_analysis_isDestroyingFor" ) end,
-  
+
+
+    -- Destroying
+    destructionEfficiency = function() return default_engine.methods.load( "destructionEfficiency" ) end,
+
+    isDestroyingFor = function() return default_engine.predicates.load( "terrain_analysis_isDestroyingFor" ) end,
+
     --Reconnoitring
     isInMyAOR = function() return default_engine.predicates.load( "isInMyAOR" ) end,
-	
-	
+
+
 }
 
 communication.setMessageTreatment( "Order", integration.communication.StartMissionPion )
@@ -55,7 +55,7 @@ return
         return self:perceptionLevel() == 100
     end,
     isPartiallyPerceived = function( self )
-    	return self:perceptionLevel() > 25
+      return self:perceptionLevel() > 25
     end,
 
     -- INTEGRATION METHODS
@@ -83,13 +83,13 @@ return
         end
     end,
     computeMovementCapability = function( self )
-        return 100 -- TODO -- $$$ MIA: not used in skill yet... 
+        return 100 -- TODO -- $$$ MIA: not used in skill yet...
     end,
     getPerception = function( self )
         return 0 -- TODO
     end,
     computeReconnaissanceCapability = function(self, objective, keypoint )
-    	return integration.normalizedInversedDistance( objective, keypoint )
+      return integration.normalizedInversedDistance( objective, keypoint )
     end,
     setFront = function( self )
         --TODO
@@ -100,62 +100,62 @@ return
     commandEfficiency= function( self )
         --TODO
     end,
-    
+
 --    predicate "isDestroyed" {
---    	dependencies = {},
---	    method = function( self )
---	        if DEC_Agent_EtatOps == 0 then
---	        	return true
---	        elseif DEC_Agent_EtatOpsMajeur == 0 then
---	        	return true
---	        end
---	        return false
---	    end
---	},
-    
+--      dependencies = {},
+--      method = function( self )
+--          if DEC_Agent_EtatOps == 0 then
+--            return true
+--          elseif DEC_Agent_EtatOpsMajeur == 0 then
+--            return true
+--          end
+--          return false
+--      end
+--  },
+
     getAttrition = function( self, objective, position )
-	    local rPH = 0.5
-		local rPorteeMax    = DEC_Tir_PorteeMaxPourTirerSurUnite( objective.source, rPH )
-		local rPorteeMin    = DEC_Tir_PorteeMinPourTirerSurUnite( objective.source, rPH )
+    local rPH = 0.5
+    local rPorteeMax    = DEC_Tir_PorteeMaxPourTirerSurUnite( objective.source, rPH )
+    local rPorteeMin    = DEC_Tir_PorteeMinPourTirerSurUnite( objective.source, rPH )
         local rDistanceAEni = integration.magnitude( position, objective )
         if( rDistanceAEni > rPorteeMax or rDistanceAEni < rPorteeMin ) then return 0 end
-		return 100
+    return 100
     end,
 --    destructionPriority = function()
---	    return 100
+--      return 100
 --    end,
 --    destructionLevel = function( self )
---	    local etatOp = ( 1 - DEC_ConnaissanceAgent_EtatOps( self.source ) )*100
---		BreakForDebug( tostring ( etatOp) )
---	    return etatOp
+--      local etatOp = ( 1 - DEC_ConnaissanceAgent_EtatOps( self.source ) )*100
+--    BreakForDebug( tostring ( etatOp) )
+--      return etatOp
 --    end,
-	getDestructionState = function( self )
-		local etatOp = ( 1 - DEC_ConnaissanceAgent_EtatOps( self.source ) )*100
-		BreakForDebug( tostring ( etatOp) )
-	    return etatOp
-	end,
+  getDestructionState = function( self )
+    local etatOp = ( 1 - DEC_ConnaissanceAgent_EtatOps( self.source ) )*100
+    BreakForDebug( tostring ( etatOp) )
+      return etatOp
+  end,
     canDestroyIt = function()
-	    return true
+      return true
     end,
     canTakePosition= function()
-    	return true
+      return true
     end,
     takeUpPosition = function()
     end,
     occupationLevel = function()
-    	return 100
+      return 100
     end,
     safeApproachIt = function()
     end,
     isSafety = function()
-    	return true
+      return true
     end,
-  
+
 --    destroyIt = function( self )
 --    eEtatFeu_Executer = 1
 --    eEtatFeu_aucun = 0
 --        if not self.actionTir then
---      		BreakForDebug(" if not self.actionTir then ")
+--          BreakForDebug(" if not self.actionTir then ")
 --            F_Pion_SeteEtatFeu( myself, eEtatFeu_Executer )
 --            self.actionTir = DEC_StartTirDirect( self.source, 100, eTirDirectNormal, -1 )
 --           -- actionCallbacks[ actionTir ] = function( arg ) self.eTir = arg end
@@ -170,30 +170,30 @@ return
 --            self.actionTir = nil
 --            self.eTir = nil
 --       else
---        	BreakForDebug(" else ") 
+--          BreakForDebug(" else ")
 --       end
 --    end
 
  destroy = function( self )
-	 integration.destroyIt( self )
- end,
- 
- isOccupied = function( self )
-	 return true
+  integration.destroyIt( self )
  end,
 
-tasks = 
+ isOccupied = function( self )
+  return true
+ end,
+
+tasks =
     {
         adder = function( self, task ) error( "unused method", 2 ) end,
         accepter = function( self, visitor )
                         for role in kBase.executeQuery( { knowledgeType = { directia.core.model.Role } } ) do
-                            if role.body == self then                          
-                              return role.tasks:accept( visitor ) 
+                            if role.body == self then
+                              return role.tasks:accept( visitor )
                             end
                         end
                    end,
-        remover = function( self, task ) 
-                      error( "unused method", 2 ) 
-                  end 
+        remover = function( self, task )
+                      error( "unused method", 2 )
+                  end
      }
 }

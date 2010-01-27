@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <role xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.roles.Compagnie" knowledge-class="net.masagroup.sword.military.world.Compagnie">
-	<description>Une entité décisionnelle quelconque dans un contexte militaire.</description>
-	<skills>
-		<skill name="net.masagroup.sword.military.skills.GiveOrderMoveTo"/>
-	</skills>
-	<resources/>
+  <description>Une entité décisionnelle quelconque dans un contexte militaire.</description>
+  <skills>
+    <skill name="net.masagroup.sword.military.skills.GiveOrderMoveTo"/>
+  </skills>
+  <resources/>
 </role>

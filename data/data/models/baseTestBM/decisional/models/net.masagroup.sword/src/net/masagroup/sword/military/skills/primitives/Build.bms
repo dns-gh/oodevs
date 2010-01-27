@@ -17,7 +17,7 @@ rootnode
     end,
 
     activate = function( self ) 
-	    for _,entity in ipairs( self.params.entities ) do
+      for _,entity in ipairs( self.params.entities ) do
             Activate( skill.nodes.BuildElement, entity:buildPriority(), { entity = entity } )
         end
     end
@@ -25,21 +25,21 @@ rootnode
 
 node "BuildElement"
 {
-	connections = { skill.links.MoveAndTakePosition, skill.nodes.Build, skill.nodes.Valorize };
-	
+  connections = { skill.links.MoveAndTakePosition, skill.nodes.Build, skill.nodes.Valorize };
+  
     feedbacks = { "done" }; 
 
     activate = function( self )
-    	if self.params.entity:isBuild() and ( not params.entity:isValorizable() or self.params.entity::isValorized() ) then
+      if self.params.entity:isBuild() and ( not params.entity:isValorizable() or self.params.entity::isValorized() ) then
             Feedback( self.feedbacks.done, { buildEntity = self.params.entity } )
-        end   	
+        end     
     
         if self.params.entity:canBeBuild() then
             Activate( skill.nodes.Build, 1, { entity = entity } )
         elseif self.params.entity:isValorizable() and self.params.entity:canBeValorized()
-        	Activate( skill.nodes.Valorized, 1, { entity = entity } )
+          Activate( skill.nodes.Valorized, 1, { entity = entity } )
         else
-        	--TODO RC not possible to build, by feedback , by other way?
+          --TODO RC not possible to build, by feedback , by other way?
         end
               
         -- Moving toward build position, no need for keypoint "building position" i think, move directly to destination
@@ -54,7 +54,7 @@ node "Build"
     acquire = { [ skill.resources.buildEquipment ] = 1 };
 
     select = function( self )
-    	self.param.entity:buildIt()
+      self.param.entity:buildIt()
     end
 }
 
@@ -65,6 +65,6 @@ node "Valorize"
     acquire = { [ skill.resources.buildEquipment ] = 1 };
 
     select = function( self )
-    	self.param.entity:valorizedIt()
+      self.param.entity:valorizedIt()
     end
 }
