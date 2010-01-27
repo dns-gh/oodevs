@@ -827,3 +827,22 @@ void DEC_Knowledge_Object::Invalidate()
             SendMsgDestruction();
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::IsAnEnemy
+// Created: MGD 2010-01-26
+// -----------------------------------------------------------------------------
+E_Tristate DEC_Knowledge_Object::IsAnEnemy( const MIL_Army_ABC& army ) const
+{
+    return army.IsAnEnemy( GetArmy() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::IsAFriend
+// Created: MGD 2010-01-26
+// -----------------------------------------------------------------------------
+E_Tristate DEC_Knowledge_Object::IsAFriend( const MIL_Army_ABC& army ) const
+{
+    return army.IsAnEnemy( GetArmy() );
+}
+

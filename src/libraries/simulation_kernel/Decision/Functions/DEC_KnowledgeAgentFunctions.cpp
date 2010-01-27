@@ -81,6 +81,17 @@ int DEC_KnowledgeAgentFunctions::IsAnEnemy( const MIL_AgentPion& callerAgent, bo
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::IsAFriend
+// Created: MGD 2010-01-26
+// -----------------------------------------------------------------------------
+int DEC_KnowledgeAgentFunctions::IsAFriend( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+{
+    if( !pKnowledge || !pKnowledge->IsValid() )
+        return int( eTristate_DontKnow );
+    return int( pKnowledge->IsAFriend( callerAgent.GetArmy() ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::IsMoving
 // Created: NLD 2004-04-09
 // -----------------------------------------------------------------------------

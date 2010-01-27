@@ -72,7 +72,7 @@ return
         return integration.normalizedInversedDistance( self, target )
     end,
     computeRelation = function( self )
-        return 100 --TODO
+        return integration.computeRelationAgent( self )
     end,
     computePerceptionCapability = function( self, objective, keypoint )
         if( integration.magnitude( keypoint, objective ) > 1000 ) then

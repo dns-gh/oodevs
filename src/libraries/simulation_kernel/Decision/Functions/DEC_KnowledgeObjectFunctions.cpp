@@ -291,3 +291,25 @@ bool DEC_KnowledgeObjectFunctions::IsRecon( boost::shared_ptr< DEC_Knowledge_Obj
         return pKnowledge->IsRecon();
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::IsAnEnemy
+// Created: MGD 2010-01-26
+// -----------------------------------------------------------------------------
+int DEC_KnowledgeObjectFunctions::IsAnEnemy( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    if( !pKnowledge || !pKnowledge->IsValid() )
+        return int( eTristate_DontKnow );
+    return int( pKnowledge->IsAnEnemy( callerAgent.GetArmy() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::IsAFriend
+// Created: MGD 2010-01-26
+// -----------------------------------------------------------------------------
+int DEC_KnowledgeObjectFunctions::IsAFriend( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    if( !pKnowledge || !pKnowledge->IsValid() )
+        return int( eTristate_DontKnow );
+    return int( pKnowledge->IsAFriend( callerAgent.GetArmy() ) );
+}

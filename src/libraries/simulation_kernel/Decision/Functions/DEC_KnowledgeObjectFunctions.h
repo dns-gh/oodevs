@@ -52,6 +52,10 @@ public:
 
     static int  EquipLogisticRoute                ( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool IsStockSupplied                   ( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    
+    static int   IsAnEnemy                        ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    static int   IsAFriend                        ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+
     //@}
 };
 

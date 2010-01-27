@@ -72,7 +72,7 @@ end
 -- @release 2010-01-22
 function UpdateLeaderMe( strKnowledgeType, knowledgeSource, groupName )
   if not kBase.me.body then
-    kBase.me.body = kBase.create( strKnowledgeType, knowledgeSource, { sim_pos = { x=posx, y=posy, z=posz } } )
+    kBase.me.body = kBase.create( strKnowledgeType, knowledgeSource )
     behavior_model.createGroup( groupName )
   end
 end
@@ -161,11 +161,12 @@ end
 -- @param ... 
 -- @author MGD
 -- @release 2010-01-22
-print = function( ... )
+printGaming = function( ... )
   local res = ""
-  for _,i in pairs({...}) do
-    res = res..printRec( i )
-  end
+    for _,i in pairs( {...} ) do
+      res = res..printRec( i )
+    end
+  
   DEC_Trace( res )
   DEC_Debug( res )
 end

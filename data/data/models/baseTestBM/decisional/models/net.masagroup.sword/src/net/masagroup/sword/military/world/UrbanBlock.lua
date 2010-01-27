@@ -71,7 +71,7 @@ return
         return integration.normalizedInversedDistance( self, target )
     end,
     computeRelation = function( self )
-        return 100 --TODO
+        return 50 --Always neutral
     end,
     computePerceptionCapability = function( self )
      return 0 -- TODO

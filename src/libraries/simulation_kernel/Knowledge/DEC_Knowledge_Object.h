@@ -102,6 +102,8 @@ public:
     const TER_Localisation&   GetAvoidanceLocalisation   () const;
     const MIL_Army_ABC&       GetArmy                    () const;    
           MT_Float            GetMaxInteractionHeight    () const;
+    E_Tristate                IsAnEnemy                  ( const MIL_Army_ABC& army ) const;
+    E_Tristate                IsAFriend                  ( const MIL_Army_ABC& army ) const;
     //@}
 
     //! @name Extension

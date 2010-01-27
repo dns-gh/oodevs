@@ -10,7 +10,7 @@ defaultMethods
     isFar = function() return default_engine.methods.load( "isFar" ) end,
     isReached = function() return default_engine.methods.load( "isReached" ) end,
 
-   -- OBSERVABLE
+    -- OBSERVABLE
     hostilityLevel = function() return default_engine.methods.load( "unit_hostilityLevel" ) end,
     isHostile = function () return default_engine.predicates.load( "isHostile") end,
     isNeutral = function () return default_engine.methods.load( "isNeutral") end,
@@ -79,7 +79,7 @@ return
         return integration.normalizedInversedDistance( self, target )
     end,
     computeRelation = function( self )
-        return 100 --TODO
+        return 50 --Always neutral
     end,
     computePerceptionCapability = function( self )
      return 0 -- TODO
