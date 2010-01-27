@@ -82,7 +82,9 @@ end
 -- @author MGD
 -- @release 2010-01-22
 function CleanBrainBeforeDeletion( groupName )
+  BreakForDebug("before")
   behavior_model.leaveGroup( groupName )
+  BreakForDebug("after")
 end  
 
 ---\ Callback management /---

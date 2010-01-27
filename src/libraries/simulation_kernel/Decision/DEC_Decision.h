@@ -175,12 +175,11 @@ private:
     //!@name Data
     //@{
     std::auto_ptr< directia::Brain >   pBrain_;
-    bool                               bDIA5_;
     std::auto_ptr< struct ScriptRefs > pRefs_;
     std::string                        brainFile_;
     std::string                        includePath_;
     std::string                        diaType_;
-    int                                toto_;
+    std::string                        modelName_;
     //@}
 };
 

@@ -50,12 +50,13 @@ namespace directia
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::InitBrain
-// Created: LDC 2009-04-08
+// Created: MGD 2010-01-27
 // -----------------------------------------------------------------------------
 template <class T>
 void DEC_Decision<T>::InitBrain( const std::string& brainFile, const std::string& type, const std::string& includePath )
 {
     brainFile_ = brainFile;
+    modelName_ = type;
     includePath_ = includePath;
     
     pRefs_.reset( 0 );//Must delete ScriptRef before call Brain destructor and destroy vm
@@ -123,14 +124,14 @@ void DEC_Decision<T>::GarbageCollect()
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::Reset
-// Created: LDC 2009-02-27
+// Created: MGD 2010-01-27
 // -----------------------------------------------------------------------------
 template <class T>
 void DEC_Decision<T>::Reset( std::string groupName )
 {
     if( groupName != "" )
         pBrain_->GetScriptFunction( "CleanBrainBeforeDeletion" )( groupName );
-    InitBrain( brainFile_, "name", includePath_ );
+    InitBrain( brainFile_, modelName_, includePath_ );
     StartDefaultBehavior();
 }
 
