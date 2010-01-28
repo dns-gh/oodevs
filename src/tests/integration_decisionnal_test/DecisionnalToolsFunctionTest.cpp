@@ -16,9 +16,13 @@ using namespace mockpp;
 
 namespace
 {
-    void Check( double result, double expected )
+    void CheckClose( double result, double expected )
     {
         BOOST_CHECK_CLOSE( result, expected, std::numeric_limits<float>::epsilon() );
+    }
+    void Check( double result, double expected )
+    {
+        BOOST_CHECK_EQUAL( result, expected );
     }
     class BrainFixture
     {
@@ -27,13 +31,14 @@ namespace
         : brain( BOOST_RESOLVE( "." ) ) 
         {
             brain.RegisterFunction< boost::function< void( double, double ) > >( "check", boost::bind( &Check, _1, _2 ) );
+            brain.RegisterFunction< boost::function< void( double, double ) > >( "checkClose", boost::bind( &CheckClose, _1, _2 ) );
             brain.GetScriptFunction( "include" )( std::string("integration/ToolsFunctions.lua") );
         }
         void LinearInterpolationTest( double min, double max, double start, double stop, bool upslop, double value, double expected )
         {
             directia::ScriptRef linearInterpolation = *brain.GetScriptFunction( "LinearInterpolation" );
             BOOST_CHECK( linearInterpolation( min, max, start, stop, upslop, value ) );
-            brain.GetScriptFunction( "check" )( linearInterpolation, expected );
+            brain.GetScriptFunction( "checkClose" )( linearInterpolation, expected );
         }
     private:
         directia::Brain brain;

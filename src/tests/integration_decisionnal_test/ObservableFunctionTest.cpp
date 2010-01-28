@@ -16,9 +16,13 @@ using namespace mockpp;
 
 namespace
 {
-    void Check( double result, double expected )
+    void CheckClose( double result, double expected )
     {
         BOOST_CHECK_CLOSE( result, expected, std::numeric_limits<float>::epsilon() );
+    }
+    void Check( double result, double expected )
+    {
+        BOOST_CHECK_EQUAL( result, expected );
     }
     class BrainFixture
     {
@@ -27,6 +31,7 @@ namespace
         : brain( BOOST_RESOLVE( "." ) ) 
         {
             brain.RegisterFunction< boost::function< void( double, double ) > >( "check", boost::bind( &Check, _1, _2 ) );
+            brain.RegisterFunction< boost::function< void( double, double ) > >( "checkClose", boost::bind( &CheckClose, _1, _2 ) );
             brain.GetScriptFunction( "include" )( std::string("Integration.lua") );
             brain.RegisterFunction( "DEC_ConnaissanceAgent_EstUnEnnemi", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_IsEnemy, boost::cref(this), _1  ) ) );
             brain.RegisterFunction( "DEC_ConnaissanceAgent_EstUnAllie", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_IsAllie, boost::cref(this), _1  ) ) );
