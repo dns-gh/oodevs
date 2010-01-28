@@ -31,7 +31,7 @@ return
     end,
       
     observeIt = function( self )
-        --TODO
+        integration.observeIt( self )
     end,
     -- $$$ MIA: temp, to move in default military implementation
     isTotallyPerceived = function( self )
@@ -49,6 +49,6 @@ return
     end,
     -- OBSERVABLE
     observeIt = function( self )
-        --TODO
+        integration.observeIt( self )
     end,
 }

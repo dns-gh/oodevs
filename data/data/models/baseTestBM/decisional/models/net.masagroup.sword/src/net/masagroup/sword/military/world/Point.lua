@@ -72,7 +72,7 @@ return
     end,
     -- observable action
     observeIt = function( self )
-        --TODO
+        integration.observeIt( self )
     end,
     -- Tactical analysis integration
     computeDistance = function( self, target )

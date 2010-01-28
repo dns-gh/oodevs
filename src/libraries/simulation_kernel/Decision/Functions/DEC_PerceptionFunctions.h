@@ -27,6 +27,7 @@ public:
     //@{
     static void SetVisionModeDirection              ( MIL_AgentPion& callerAgent, boost::shared_ptr< MT_Vector2D > );
     static void SetVisionModePoint                  ( MIL_AgentPion& callerAgent, const MT_Vector2D* pPoint );
+    static void SetVisionModePoint                  ( MIL_AgentPion& callerAgent, float x, float y );
     static void SetVisionModeNormal                 ( MIL_AgentPion& callerAgent );
     static void SetStealthFactor                    ( MIL_AgentPion& callerAgent, float factor );
     static bool IsPointVisible                      ( const MIL_AgentPion& callerAgent, MT_Vector2D* pPt );

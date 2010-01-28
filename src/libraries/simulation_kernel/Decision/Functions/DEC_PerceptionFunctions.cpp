@@ -79,6 +79,16 @@ void DEC_PerceptionFunctions::SetVisionModePoint( MIL_AgentPion& callerAgent, co
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_PerceptionFunctions::SetVisionModePoint
+// Created: SLG 2010-01-28
+// -----------------------------------------------------------------------------
+void DEC_PerceptionFunctions::SetVisionModePoint( MIL_AgentPion& callerAgent, float x, float y )
+{
+    const MT_Vector2D point( x, y );
+    callerAgent.GetRole< PHY_RoleInterface_Perceiver >().SetVisionModePoint( point );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_PerceptionFunctions::SetVisionModeNormal
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------

@@ -63,6 +63,6 @@ integration.getObjectPerception = function( object )
 end
 
 integration.observeIt = function( point )
-  --TODO
+  DEC_Perception_VisionVerrouilleeSurPointXY( point.sim_pos.x, point.sim_pos.y )
 end
 

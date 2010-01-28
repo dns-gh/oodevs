@@ -344,6 +344,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< void( boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_PerceptionFunctions::SetVisionModeDirection, boost::ref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Perception_VisionVerrouilleeSurPoint",
         boost::function< void( const MT_Vector2D* ) >( boost::bind( &DEC_PerceptionFunctions::SetVisionModePoint, boost::ref( GetPion() ), _1 ) ) );
+    brain.RegisterFunction( "DEC_Perception_VisionVerrouilleeSurPointXY",
+        boost::function< void( float, float ) >( boost::bind( &DEC_PerceptionFunctions::SetVisionModePoint, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Perception_VisionNormale",
                             boost::bind( &DEC_PerceptionFunctions::SetVisionModeNormal, boost::ref( GetPion() ) ) );   
     brain.RegisterFunction( "DEC_Perception_ActiverReconnaissanceLocalisation",
