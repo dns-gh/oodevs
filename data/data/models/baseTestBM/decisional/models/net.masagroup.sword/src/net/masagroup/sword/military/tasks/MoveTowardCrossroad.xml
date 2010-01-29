@@ -24,14 +24,14 @@
             n'utilise pas l'automatisme d'engagement.</description>
       <skills>
         <skill
-          name="net.masagroup.sword.military.skills.MoveTo" main="true"
+          name="net.masagroup.sword.military.skills.primitives.MoveToward" main="true"
           priority="10">
           <parameter name="entities">
             <value>
               <parameter>objectives</parameter>
             </value>
           </parameter>
-          <parameter name="area">
+          <parameter name="positions">
             <value>
               <call
                 method="net.masagroup.sword.military.queries.getCrossroads">

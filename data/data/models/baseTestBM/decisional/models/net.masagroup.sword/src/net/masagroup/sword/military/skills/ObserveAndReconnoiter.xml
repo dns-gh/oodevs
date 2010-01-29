@@ -32,7 +32,7 @@
   </goal>
   <modifiers/>
   <links>
-    <link name="moveTo" skill="net.masagroup.sword.military.skills.MoveTo">
+    <link name="moveTo" skill="net.masagroup.sword.military.skills.primitives.MoveToward">
       <description>Lien vers le skill MoveTo</description>
     </link>
     <link name="reconnoitre" skill="net.masagroup.military.generic.combatant.skills.primitives.Reconnoitre">
