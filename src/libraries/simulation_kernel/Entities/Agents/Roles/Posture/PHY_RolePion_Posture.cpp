@@ -503,5 +503,6 @@ void PHY_RolePion_Posture::Execute( detection::DetectionComputer_ABC& algorithm 
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Posture::Execute( detection::PerceptionDistanceComputer_ABC& algorithm ) const
 {
-    algorithm.AddModifier( rElongationFactor_ );
+    //algorithm.AddModifier( rElongationFactor_ );
+    algorithm.AddElongationFactor( rElongationFactor_ );
 }

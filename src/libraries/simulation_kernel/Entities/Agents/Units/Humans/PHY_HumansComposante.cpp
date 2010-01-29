@@ -184,6 +184,7 @@ void PHY_HumansComposante::ApplyWounds( const PHY_ComposanteState& newComposante
         const PHY_HumanWound& oldWound = human.GetWound();
         if( human.ApplyWound( PHY_HumanWound::killed_ ) ) //return true only if newWound (here = killed_) > oldWound
             fireDamages.NotifyHumanWoundChanged( human, oldWound );
+        --nNbrDead;
         ++ itCur;
     }
 
@@ -194,6 +195,7 @@ void PHY_HumansComposante::ApplyWounds( const PHY_ComposanteState& newComposante
         if( human.ApplyWound( PHY_HumanWound::ChooseRandomWound() ) )
             fireDamages.NotifyHumanWoundChanged( human, oldWound );
         human.ApplyMentalDisease();
+        --nNbrWounded;
         ++ itCur;
     }
 }
