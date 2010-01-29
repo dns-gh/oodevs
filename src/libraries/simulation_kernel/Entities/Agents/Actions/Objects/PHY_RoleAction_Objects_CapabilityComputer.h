@@ -40,7 +40,7 @@ public:
 
 public:
      PHY_RoleAction_Objects_CapabilityComputer( const MIL_AgentPion& pion, E_Operation nOperation, const MIL_ObjectType_ABC& objectType );
-    ~PHY_RoleAction_Objects_CapabilityComputer();
+    virtual ~PHY_RoleAction_Objects_CapabilityComputer();
 
     //! @name Operations
     //@{

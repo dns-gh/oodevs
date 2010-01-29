@@ -47,7 +47,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      MIL_Population( xml::xistream& xis, const MIL_PopulationType& type, MIL_Army& army, DEC_DataBase& database );
-    ~MIL_Population();
+    virtual ~MIL_Population();
     //@}
 
     //! @name Accessors

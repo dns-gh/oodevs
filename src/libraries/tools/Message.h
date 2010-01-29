@@ -37,7 +37,7 @@ public:
     //@{
               Message();
      explicit Message( unsigned long size );
-             ~Message();
+     virtual ~Message();
     //@}
 
     //! @name Operations

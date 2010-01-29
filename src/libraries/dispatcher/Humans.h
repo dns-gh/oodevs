@@ -28,7 +28,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      Humans( const Model& model, const ASN1T_HumanDotations& asnMsg );
-    ~Humans();
+    virtual ~Humans();
     //@}
 
     //! @name Operations

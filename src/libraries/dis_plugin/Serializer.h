@@ -32,7 +32,7 @@ public:
         : data_( data )
         , size_( N )
         , offset_( 0 ) {}
-    ~Serializer();
+    virtual ~Serializer();
     //@}
 
     //! @name Operations

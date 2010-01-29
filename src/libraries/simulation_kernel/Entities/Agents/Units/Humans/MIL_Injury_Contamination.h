@@ -29,7 +29,7 @@ public:
     MIL_Injury_Contamination();
     explicit MIL_Injury_Contamination( int agentConcentration, const std::string& NBCAgent, int injuryID );
     MIL_Injury_Contamination( const MIL_Injury_Contamination& rhs );
-    ~MIL_Injury_Contamination();
+    virtual ~MIL_Injury_Contamination();
     //@}
 
 public:

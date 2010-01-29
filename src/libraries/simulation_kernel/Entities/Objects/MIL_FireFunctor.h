@@ -26,7 +26,7 @@ class MIL_FireFunctor : public OnComponentFunctor_ABC
 {
 public:
     explicit MIL_FireFunctor( const MIL_FireClass& fireClass );
-    ~MIL_FireFunctor();
+    virtual ~MIL_FireFunctor();
     
     void operator()( PHY_ComposantePion& composantePion );
     void operator()( const PHY_ComposantePion& composantePion, const PHY_Weapon& weapon );

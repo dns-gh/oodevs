@@ -37,7 +37,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ADN_Equipement_AmmoListView( QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
-    ~ADN_Equipement_AmmoListView();
+    virtual ~ADN_Equipement_AmmoListView();
     //@}
 
 private:

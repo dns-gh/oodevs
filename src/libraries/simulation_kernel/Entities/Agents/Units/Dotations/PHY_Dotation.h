@@ -34,7 +34,7 @@ class PHY_Dotation : private boost::noncopyable
 public:
      PHY_Dotation( const PHY_DotationCategory& category, PHY_DotationGroup& group );
      PHY_Dotation();
-    ~PHY_Dotation();
+    virtual ~PHY_Dotation();
   
     //! @name CheckPoints
     //@{

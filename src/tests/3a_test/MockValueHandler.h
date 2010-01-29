@@ -31,6 +31,7 @@ public:
     , Handle_mocker   ( "Handle", this )
     , EndTick_mocker  ( "EndTick", this )
     {}
+    virtual ~MockValueHandler() {}
     //@}
 
     //! @name Operations

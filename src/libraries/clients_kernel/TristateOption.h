@@ -39,7 +39,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit TristateOption( const QString& state = OffName() );
-            ~TristateOption();
+    virtual ~TristateOption();
     //@}
 
     //! @name Operations

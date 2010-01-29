@@ -31,12 +31,6 @@ public:
     //! @name Types
     //@{
     typedef typename KeyValue::Type K;
-    /*
-    struct FunctionFactoryConcept
-    {
-        boost::shared_ptr< ModelFunction_ABC > operator()( K );
-    };
-    */
     //@}
 
 public:
@@ -46,6 +40,7 @@ public:
                 : factory_( factory )
                 , keyValue_( keyValue )
                 , frameWasEnded_( false ) {}
+    virtual ~Dispatcher() {}
     //@}
 
     //! @name Operations

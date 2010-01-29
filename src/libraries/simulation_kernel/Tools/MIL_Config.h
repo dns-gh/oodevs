@@ -33,7 +33,7 @@ class MIL_Config : public virtual tools::SessionConfig
 {
 public:
      MIL_Config();
-    ~MIL_Config();
+    virtual ~MIL_Config();
 
     //! @name Accessors
     //@{

@@ -29,7 +29,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      BypassAttribute( const Model& model, const ASN1T_ObjectAttributes& asnMsg );
-    ~BypassAttribute();
+    virtual ~BypassAttribute();
     //@}
 
     //! @name Operations

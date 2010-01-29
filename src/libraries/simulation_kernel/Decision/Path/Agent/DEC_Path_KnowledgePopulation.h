@@ -31,7 +31,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     DEC_Path_KnowledgePopulation( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Population& knowledge, bool avoidPolicy );
-    ~DEC_Path_KnowledgePopulation();
+    virtual ~DEC_Path_KnowledgePopulation();
     //@}
 
     //! @name Operations

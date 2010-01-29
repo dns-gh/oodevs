@@ -34,6 +34,7 @@ public:
     //@{
     Distance( xml::xistream&, Function1_ABC< K, NumericValue >& next )
         : next_( next ) {}
+    virtual ~Distance() {}
     //@}
 
     //! @name Operations

@@ -29,7 +29,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      SupplyRouteAttribute( const Model& model, const ASN1T_ObjectAttributes& asnMsg );
-    ~SupplyRouteAttribute();
+    virtual ~SupplyRouteAttribute();
     //@}
 
     //! @name Operations

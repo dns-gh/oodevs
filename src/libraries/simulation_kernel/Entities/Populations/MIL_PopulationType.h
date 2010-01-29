@@ -74,7 +74,7 @@ public:
 
 protected:
     MIL_PopulationType( const DEC_Model_ABC& model );
-    ~MIL_PopulationType();
+    virtual ~MIL_PopulationType();
 
 private:
     //! @name Types

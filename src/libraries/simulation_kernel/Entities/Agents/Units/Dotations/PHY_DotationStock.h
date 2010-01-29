@@ -27,7 +27,7 @@ class PHY_DotationStock : private boost::noncopyable
 public:
      PHY_DotationStock( PHY_DotationStockContainer& stockContainer, const PHY_DotationCategory& dotationCategory, MT_Float rSupplyThresholdRatio, MT_Float rCapacity );
      PHY_DotationStock();
-    ~PHY_DotationStock();
+    virtual ~PHY_DotationStock();
 
     //! @name CheckPoints
     //@{

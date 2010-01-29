@@ -39,6 +39,7 @@ public:
                  : handler_( handler ), sum_() {}
     explicit Adder( Function1_ABC< K, T >& handler ) 
                 : handler_( handler ), sum_() {}
+    virtual ~Adder() {}
     //@}
 
     //! @name Operations

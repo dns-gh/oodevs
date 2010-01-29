@@ -46,23 +46,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ADN_SupplyUnitSelector( QWidget* pParent, const char* szName = 0 );
-    ~ADN_SupplyUnitSelector();
-    //@}
-
-    //! @name Operations
-    //@{
-    //@}
-
-    //! @name Accessors
-    //@{
-    //@}
-
-    //! @name Modifiers
-    //@{
-    //@}
-
-    //! @name Operators
-    //@{
+    virtual ~ADN_SupplyUnitSelector();
     //@}
 
 private slots:
@@ -86,7 +70,7 @@ private:
         MT_COPYNOTALLOWED( ADN_SupplyUnitSelector_Connector )
     public:
         ADN_SupplyUnitSelector_Connector( ADN_SupplyUnitSelector& gui );
-        ~ADN_SupplyUnitSelector_Connector();
+        virtual ~ADN_SupplyUnitSelector_Connector();
 
         void NotifySelected( void* pData );
         void SetDataPrivate( void* pData );

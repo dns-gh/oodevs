@@ -29,7 +29,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ConstructionAttribute( const Model& model, const ASN1T_ObjectAttributes& asnMsg );
-    ~ConstructionAttribute();
+    virtual ~ConstructionAttribute();
     //@}
 
     //! @name Operations

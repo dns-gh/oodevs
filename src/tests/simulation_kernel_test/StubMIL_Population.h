@@ -7,6 +7,7 @@ class StubMIL_Population : public MIL_Population
 {
 public:
     StubMIL_Population( MIL_PopulationType& type ) : MIL_Population( type ) {}
+    virtual ~StubMIL_Population() {}
 };
 
 #endif

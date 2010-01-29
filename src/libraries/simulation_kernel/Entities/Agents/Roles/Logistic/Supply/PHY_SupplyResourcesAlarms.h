@@ -41,7 +41,7 @@ private:
 
 private:
      PHY_SupplyResourcesAlarms();
-    ~PHY_SupplyResourcesAlarms();
+    virtual ~PHY_SupplyResourcesAlarms();
 
     //! @name Tools
     //@{

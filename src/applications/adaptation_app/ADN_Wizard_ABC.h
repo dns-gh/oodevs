@@ -40,7 +40,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ADN_Wizard_ABC( QWidget* pParent = 0, const char* szName = 0 );
-    ~ADN_Wizard_ABC();
+    virtual ~ADN_Wizard_ABC();
     //@}
 
     //! @name Operations

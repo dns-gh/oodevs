@@ -34,6 +34,7 @@ public:
     //@{
     Filter( xml::xistream&, Function1_ABC< K, T >& next )
         : next_( next ) {}
+    virtual ~Filter() {}
     //@}
 
     //! @name Operations

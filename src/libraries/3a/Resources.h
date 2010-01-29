@@ -40,6 +40,7 @@ public:
     //@{
                  Resources();
     /*implicit*/ Resources( xml::xistream& xis );
+    virtual ~Resources() {}
     //@}
 
     //! @name Operations

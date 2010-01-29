@@ -28,7 +28,7 @@ class MIL_ObjectFilter : private boost::noncopyable
 public:
               MIL_ObjectFilter();
      explicit MIL_ObjectFilter( const std::vector< std::string >& params ); 
-             ~MIL_ObjectFilter();
+     virtual ~MIL_ObjectFilter();
 
     //! @name 
     //@{

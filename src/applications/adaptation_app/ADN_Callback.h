@@ -31,6 +31,7 @@ class ADN_Callback_ABC
 {
 public:
     ADN_Callback_ABC() {}
+    virtual ~ADN_Callback_ABC() {}
     virtual Result operator()() = 0;
 };
 
@@ -47,6 +48,7 @@ class ADN_Callback
 {
 public:
     ADN_Callback( Class* pCaller, Result( Class::* f )( ) ) : f_( f ), pCaller_( pCaller ) {}
+    virtual ~ADN_Callback() {}
 
     Result operator()()
     {

@@ -37,7 +37,7 @@ public:
 
 public:
      PHY_DotationConsumptions( const std::string& strParentTagName, xml::xistream& xis );
-    ~PHY_DotationConsumptions();
+    virtual ~PHY_DotationConsumptions();
 
     //! @name Accessors
     //@{

@@ -35,6 +35,7 @@ public:
     //@{
     Contains( xml::xistream&, Function1_ABC< K, bool >& next )
         : next_( next ) {}
+    virtual ~Contains() {}
     //@}
 
     //! @name Operations

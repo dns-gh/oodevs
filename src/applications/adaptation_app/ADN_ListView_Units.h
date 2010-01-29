@@ -26,7 +26,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     ADN_ListView_Units( QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
-    ~ADN_ListView_Units();
+    virtual ~ADN_ListView_Units();
     //@}
 
 private:

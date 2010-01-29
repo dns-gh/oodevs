@@ -41,6 +41,7 @@ public:
     //@{
     Derivate( xml::xistream& xis, Function1_ABC< K, T >& next )
         : period_( double( std::max( xml::attribute< unsigned int >( xis, "period", 1 ), 1u ) ) ), next_( next ), currentKey_() {}
+    virtual ~Derivate() {}
     //@}
 
     //! @name Operations

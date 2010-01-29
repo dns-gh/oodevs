@@ -28,7 +28,7 @@ class MT_Rect
 public:
      MT_Rect( MT_Float rPosX1 = 0., MT_Float rPosY1 = 0., MT_Float rPosX2 = 0., MT_Float rPosY2 = 0. );
      MT_Rect( const MT_Rect& rhs );
-    ~MT_Rect();
+    virtual ~MT_Rect();
 
     void Set( const MT_Vector2D&, const MT_Vector2D& );
     void Reset();

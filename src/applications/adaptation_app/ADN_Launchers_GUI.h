@@ -44,7 +44,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ADN_Launchers_GUI( ADN_Launchers_Data& data );
-    ~ADN_Launchers_GUI();
+    virtual ~ADN_Launchers_GUI();
     //@}
 
     //! @name Operations

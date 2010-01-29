@@ -39,7 +39,7 @@ class MIL_ObjectManager : private boost::noncopyable
 
 public:
      MIL_ObjectManager();
-    ~MIL_ObjectManager();
+    virtual ~MIL_ObjectManager();
 
     //! @name CheckPoints
     //@{

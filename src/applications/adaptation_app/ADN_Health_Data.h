@@ -54,7 +54,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ADN_Health_Data();
-    ~ADN_Health_Data();
+    virtual ~ADN_Health_Data();
     //@}
 
     //! @name Operations

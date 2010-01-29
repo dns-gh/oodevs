@@ -69,7 +69,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     ADN_Sensors_GUI( ADN_Sensors_Data& data );
-    ~ADN_Sensors_GUI();
+    virtual ~ADN_Sensors_GUI();
     //@}
 
     //! @name Operations

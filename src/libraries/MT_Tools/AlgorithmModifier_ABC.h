@@ -22,6 +22,8 @@ template< typename Algorithm >
 class AlgorithmModifier_ABC
 {
 public:
+             AlgorithmModifier_ABC() {}
+    virtual ~AlgorithmModifier_ABC() {}
     virtual void Execute( Algorithm& algo ) const = 0;
 };
 

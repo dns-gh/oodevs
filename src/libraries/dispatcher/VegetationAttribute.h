@@ -29,7 +29,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     VegetationAttribute( const Model& model, const ASN1T_UrbanAttributes& asnMsg );
-    ~VegetationAttribute();
+    virtual ~VegetationAttribute();
     //@}
 
     //! @name Operations

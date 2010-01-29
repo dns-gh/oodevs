@@ -53,7 +53,7 @@ public:
      ADN_GraphValue( ADN_GraphData& graphData, void* pObject, ADN_Type_Int&    x, ADN_Type_Double& y );
      ADN_GraphValue( ADN_GraphData& graphData, void* pObject, ADN_Type_Int&    y );
      ADN_GraphValue( ADN_GraphData& graphData, void* pObject, ADN_Type_Double& y );
-    ~ADN_GraphValue();
+    virtual ~ADN_GraphValue();
     //@}
 
     //! @name Accessors

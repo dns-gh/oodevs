@@ -28,7 +28,7 @@ class PHY_RoleAction_Objects_DataComputer : public OnComponentFunctor_ABC
 
 public:
      PHY_RoleAction_Objects_DataComputer( MIL_AgentPion& pion, PHY_RoleAction_Objects_DataComputerPionData::E_Operation nOperation, const MIL_Object_ABC& object );
-    ~PHY_RoleAction_Objects_DataComputer();
+    virtual ~PHY_RoleAction_Objects_DataComputer();
 
 
     //! @name Operations

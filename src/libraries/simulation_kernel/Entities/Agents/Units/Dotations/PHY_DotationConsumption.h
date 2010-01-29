@@ -28,7 +28,7 @@ class PHY_DotationConsumption : private boost::noncopyable
 
 public:
      PHY_DotationConsumption( const PHY_DotationCategory& category, xml::xistream& xis );
-    ~PHY_DotationConsumption();
+    virtual ~PHY_DotationConsumption();
 
     //! @name Accessors
     //@{

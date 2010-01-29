@@ -18,11 +18,12 @@ class TER_PopulationFlow_ABC;
 class TER_PopulationFlowTraits
 {
 public:
+    virtual ~TER_PopulationFlowTraits() {}
     //! @name Types
     //@{
     typedef TER_PopulationFlow_ABC* T_Value;
     //@}
-public:
+
     //! @name Operations
     //@{
     int CompareOnX( MT_Float rValue, const T_Value& pFlow ) const;

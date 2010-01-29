@@ -31,7 +31,7 @@ public:
               PHY_AttritionData();
      explicit PHY_AttritionData( xml::xistream& xis );
               PHY_AttritionData( const PHY_AttritionData& rhs );
-             ~PHY_AttritionData();
+     virtual ~PHY_AttritionData();
 
     //! @name Operations
     //@{

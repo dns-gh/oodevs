@@ -25,9 +25,9 @@ class PHY_Breakdown : private boost::noncopyable
 public:
     //! @name Contruction
     //@{
-     explicit PHY_Breakdown( const PHY_BreakdownType& type );
-              PHY_Breakdown();
-             ~PHY_Breakdown();
+    explicit PHY_Breakdown( const PHY_BreakdownType& type );
+             PHY_Breakdown();
+    virtual ~PHY_Breakdown();
     //@}
 
     //! @name CheckPoints

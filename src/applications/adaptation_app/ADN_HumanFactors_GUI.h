@@ -38,7 +38,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     ADN_HumanFactors_GUI( ADN_HumanFactors_Data& data );
-    ~ADN_HumanFactors_GUI();
+    virtual ~ADN_HumanFactors_GUI();
     //@}
 
     //! @name Operations

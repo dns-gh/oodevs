@@ -110,7 +110,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     ADN_Objects_GUI( ADN_Objects_Data& data );
-    ~ADN_Objects_GUI();
+    virtual ~ADN_Objects_GUI();
     //@}
 
     //! @name Operations

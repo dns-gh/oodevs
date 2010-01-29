@@ -35,7 +35,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      DEC_Path_KnowledgeAgent( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Agent& knowledge, const MIL_AgentPion& pion );
-    ~DEC_Path_KnowledgeAgent();
+    virtual ~DEC_Path_KnowledgeAgent();
     //@}
 
     //! @name Operations

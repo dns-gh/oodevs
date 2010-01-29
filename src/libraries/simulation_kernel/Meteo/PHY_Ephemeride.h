@@ -30,7 +30,7 @@ class PHY_Ephemeride : private boost::noncopyable
     
 public:
     PHY_Ephemeride( xml::xistream& xis );
-    ~PHY_Ephemeride();
+    virtual ~PHY_Ephemeride();
 
     //! @name 
     //@{

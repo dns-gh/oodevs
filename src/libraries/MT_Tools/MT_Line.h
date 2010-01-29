@@ -27,7 +27,7 @@ class MT_Line
 public:
     explicit MT_Line();
     MT_Line( const MT_Vector2D&, const MT_Vector2D& );
-    ~MT_Line();
+    virtual ~MT_Line();
 
     const MT_Vector2D&  GetPosStart() const;
     const MT_Vector2D&  GetPosEnd  () const;

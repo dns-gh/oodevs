@@ -38,6 +38,7 @@ public:
     {
         // NOTHING
     }
+    virtual ~Domain() {}
     //@}
 
     //! @name Operations

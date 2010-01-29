@@ -57,7 +57,7 @@ public:
      TER_Localisation( E_LocationType, const T_PointVector& );
      TER_Localisation( const TER_Polygon&  );
      TER_Localisation( const MT_Vector2D& vPos, MT_Float rRadius );
-    ~TER_Localisation();
+    virtual ~TER_Localisation();
 
     //! @name CheckPoints
     //@{

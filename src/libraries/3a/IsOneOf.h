@@ -37,6 +37,7 @@ public:
     {
         // NOTHING
     }
+    virtual ~IsOneOf() {}
     //@}
 
     //! @name Operations

@@ -39,7 +39,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ADN_AiEngine_GUI( ADN_AiEngine_Data& data );
-    ~ADN_AiEngine_GUI();
+    virtual ~ADN_AiEngine_GUI();
     //@}
 
     //! @name Operations

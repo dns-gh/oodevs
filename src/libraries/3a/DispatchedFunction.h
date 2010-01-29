@@ -30,6 +30,7 @@ public:
     //@{
              DispatchedFunction( const K& key, ValueHandler_ABC< K >& keyHandler, boost::shared_ptr< ModelFunction_ABC > base )
                  : key_( key ), keyHandler_( keyHandler ), base_( base ) {}
+    virtual ~DispatchedFunction() {}
     //@}
 
     //! @name Operations

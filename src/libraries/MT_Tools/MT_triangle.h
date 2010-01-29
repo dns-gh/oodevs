@@ -23,7 +23,7 @@ class MT_Triangle
 public:
     explicit MT_Triangle();
     MT_Triangle( const MT_Vector2D& vPos1, const MT_Vector2D& vPos2, const MT_Vector2D& vPos3 );
-    ~MT_Triangle();
+    virtual ~MT_Triangle();
 
     //-------------------------------------------------------------------------
     /** @name Accessors */

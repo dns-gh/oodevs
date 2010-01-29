@@ -38,7 +38,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     ADN_Automata_SubUnitsTable( QWidget* pParent = 0 );
-    ~ADN_Automata_SubUnitsTable();
+    virtual ~ADN_Automata_SubUnitsTable();
     //@}
 
     //! @name Operations

@@ -29,7 +29,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      CrossingSiteAttribute( const Model& model, const ASN1T_ObjectAttributes& asnMsg );
-    ~CrossingSiteAttribute();
+    virtual ~CrossingSiteAttribute();
     //@}
 
     //! @name Operations

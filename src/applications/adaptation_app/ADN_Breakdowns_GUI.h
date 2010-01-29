@@ -51,7 +51,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     ADN_Breakdowns_GUI( ADN_Breakdowns_Data& data );
-    ~ADN_Breakdowns_GUI();
+    virtual ~ADN_Breakdowns_GUI();
     //@}
 
     //! @name Operations

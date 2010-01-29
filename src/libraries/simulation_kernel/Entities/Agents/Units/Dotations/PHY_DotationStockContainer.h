@@ -34,7 +34,7 @@ class PHY_DotationStockContainer : private boost::noncopyable
 public:
     explicit PHY_DotationStockContainer( PHY_RoleInterface_Supply& roleSupply );
              PHY_DotationStockContainer();
-            ~PHY_DotationStockContainer();
+    virtual ~PHY_DotationStockContainer();
 
     //! @name CheckPoints
     //@{

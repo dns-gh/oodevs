@@ -33,6 +33,7 @@ public:
         : function_( function )
         , first_( this )
         , second_( this ) {}
+    virtual ~KeyMarshaller() {}
     //@}
 
     //! @name Operations

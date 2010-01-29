@@ -28,7 +28,7 @@ class MIL_KnowledgeGroupType : private boost::noncopyable
 {
 
 public:
-    ~MIL_KnowledgeGroupType();
+    virtual ~MIL_KnowledgeGroupType();
 
     //! @name Manager
     //@{

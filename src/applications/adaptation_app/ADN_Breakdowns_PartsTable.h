@@ -38,7 +38,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ADN_Breakdowns_PartsTable( QWidget* pParent = 0 );
-    ~ADN_Breakdowns_PartsTable();
+    virtual ~ADN_Breakdowns_PartsTable();
     //@}
 
 private:

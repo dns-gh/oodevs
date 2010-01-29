@@ -69,7 +69,7 @@ private:
 
 private:
      PHY_AmmoDotationClass( const std::string& strName, E_Type nType, ASN1T_EnumAmmunitionFamily nAsnID );
-    ~PHY_AmmoDotationClass();
+    virtual ~PHY_AmmoDotationClass();
 
 private:
     const std::string               strName_;

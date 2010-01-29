@@ -28,7 +28,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      SimulationModel();
-    ~SimulationModel();
+    virtual ~SimulationModel();
     //@}
 
     //! @name Operations

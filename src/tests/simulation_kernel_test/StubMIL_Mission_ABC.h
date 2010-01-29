@@ -14,6 +14,7 @@ public:
         : MIL_Mission_ABC( type, knowledgeResolver )
         , param_( param )
     {}
+    virtual ~StubMIL_Mission_ABC() {}
 
     virtual void Start               () {}
     virtual bool IsFragOrderAvailable( const MIL_FragOrderType& fragOrderType ) const 

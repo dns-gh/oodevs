@@ -28,7 +28,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      Zone();
-    ~Zone();
+    virtual ~Zone();
     //@}
 
     //! @name Operations

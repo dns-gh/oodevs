@@ -41,7 +41,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ADN_Equipement_AttritionTable( QWidget* pParent = 0 );
-    ~ADN_Equipement_AttritionTable();
+    virtual ~ADN_Equipement_AttritionTable();
     //@}
 };
 

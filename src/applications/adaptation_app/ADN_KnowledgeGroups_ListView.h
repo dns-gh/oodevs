@@ -37,7 +37,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ADN_KnowledgeGroups_ListView( QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
-    ~ADN_KnowledgeGroups_ListView();
+    virtual ~ADN_KnowledgeGroups_ListView();
     //@}
 
     //! @name Operations

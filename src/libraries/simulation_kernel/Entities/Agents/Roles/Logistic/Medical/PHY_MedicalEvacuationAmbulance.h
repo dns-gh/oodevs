@@ -26,7 +26,7 @@ class PHY_MedicalEvacuationAmbulance : private boost::noncopyable
 public:
      PHY_MedicalEvacuationAmbulance( PHY_RoleInterface_Medical& medical, PHY_ComposantePion& compAmbulance );
      PHY_MedicalEvacuationAmbulance();
-    ~PHY_MedicalEvacuationAmbulance();
+    virtual ~PHY_MedicalEvacuationAmbulance();
 
     //! @name CheckPoints
     //@{

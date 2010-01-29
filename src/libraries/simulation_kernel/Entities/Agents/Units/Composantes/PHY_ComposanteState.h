@@ -77,7 +77,7 @@ private:
 
 private:
      PHY_ComposanteState( const std::string& strName, E_State nState, bool bUsable, bool bDamaged );
-    ~PHY_ComposanteState();
+    virtual ~PHY_ComposanteState();
 
 private:
     const std::string strName_;

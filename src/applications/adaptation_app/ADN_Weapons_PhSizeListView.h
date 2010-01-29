@@ -38,7 +38,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ADN_Weapons_PhSizeListView( GQ_Plot& plot, QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
-    ~ADN_Weapons_PhSizeListView();
+    virtual ~ADN_Weapons_PhSizeListView();
     //@}
 
 private:

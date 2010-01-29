@@ -28,7 +28,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit DisHeader( unsigned char exercise );
-            ~DisHeader();
+    virtual ~DisHeader();
     //@}
 
     //! @name Constructions

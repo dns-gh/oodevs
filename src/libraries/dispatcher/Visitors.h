@@ -21,6 +21,7 @@ namespace dispatcher
     {
     public:
         FullUpdateVisitor( ClientPublisher_ABC& publisher );
+        virtual ~FullUpdateVisitor() {}
         virtual void Visit( const kernel::Entity_ABC& entity );
     private:
         ClientPublisher_ABC* publisher_;
@@ -30,6 +31,7 @@ namespace dispatcher
     {
     public:
         CreationVisitor( ClientPublisher_ABC& publisher );
+        virtual ~CreationVisitor() {}
         virtual void Visit( const kernel::Entity_ABC& entity );
     private:
         ClientPublisher_ABC* publisher_;

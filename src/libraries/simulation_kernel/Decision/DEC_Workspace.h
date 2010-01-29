@@ -33,7 +33,7 @@ class DEC_Workspace : private boost::noncopyable
      
 public:
      DEC_Workspace( MIL_Config& config );
-    ~DEC_Workspace();
+    virtual ~DEC_Workspace();
 
     //! @name Fonction dia
     //@{

@@ -66,7 +66,7 @@ private:
     //! @name Constructor/Destructor
     //@{
      PHY_Protection( const std::string& strName, xml::xistream& xis );
-    ~PHY_Protection();
+    virtual ~PHY_Protection();
     //@}
 
     //! @name Helpers

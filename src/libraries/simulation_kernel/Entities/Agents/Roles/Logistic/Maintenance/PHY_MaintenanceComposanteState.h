@@ -30,7 +30,7 @@ class PHY_MaintenanceComposanteState : private boost::noncopyable
 public:
      PHY_MaintenanceComposanteState( MIL_Agent_ABC& pion, PHY_ComposantePion& composante );
      PHY_MaintenanceComposanteState();
-    ~PHY_MaintenanceComposanteState();
+    virtual ~PHY_MaintenanceComposanteState();
 
     //! @name CheckPoints
     //@{

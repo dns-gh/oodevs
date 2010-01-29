@@ -29,7 +29,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     ArchitectureAttribute( const Model& model, const ASN1T_UrbanAttributes& asnMsg );
-    ~ArchitectureAttribute();
+    virtual ~ArchitectureAttribute();
     //@}
 
     //! @name Operations

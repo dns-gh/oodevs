@@ -28,7 +28,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      LogSupplyDotation( const Model& model, const ASN1T_DotationQuery& asnMsg );
-    ~LogSupplyDotation();
+    virtual ~LogSupplyDotation();
     //@}
 
     //! @name Operations

@@ -25,7 +25,7 @@ public:
      MT_Vector2D();                           // Constructor : les valeurs XYZ sont mises a 0
      MT_Vector2D( MT_Float rX, MT_Float rY ); // Constructor : X Y Z ne ser<T> rien ce commentaire !!!!
      MT_Vector2D( const MT_Vector2D& v );     // Constructor : Vector2D
-    ~MT_Vector2D();                           // Destructor :
+    virtual ~MT_Vector2D();                           // Destructor :
 
     MT_Float          SquareMagnitude   () const;                  // Retourne la magnitude au carré d'un vector 2D ( longeur )
     MT_Float          Magnitude         () const;                        // Retourne la magnitude d'un vector 2D ( longeur )

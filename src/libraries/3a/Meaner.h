@@ -40,6 +40,7 @@ public:
                 : handler_( handler ), sum_(), count_( 0 ) {};
     explicit Meaner( Function1_ABC< K, T >& handler )
                 : handler_( handler ), sum_(), count_( 0 ) {};
+    virtual ~Meaner() {}
     //@}
 
     //! @name Operations

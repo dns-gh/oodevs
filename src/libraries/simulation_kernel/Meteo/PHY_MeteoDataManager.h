@@ -31,7 +31,7 @@ class PHY_MeteoDataManager : private boost::noncopyable
 
 public:
      PHY_MeteoDataManager( MIL_Config& config );
-    ~PHY_MeteoDataManager();
+    virtual ~PHY_MeteoDataManager();
     
     //! @name Raw Data management
     //@{

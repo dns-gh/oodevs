@@ -38,7 +38,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ADN_AutomatLog_ListView( ADN_Automata_Data& data, QWidget* pParent = 0 );
-    ~ADN_AutomatLog_ListView();
+    virtual ~ADN_AutomatLog_ListView();
     //@}
 
 private:

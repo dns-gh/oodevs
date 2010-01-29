@@ -29,7 +29,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     SoilAttribute( const Model& model, const ASN1T_UrbanAttributes& asnMsg );
-    ~SoilAttribute();
+    virtual ~SoilAttribute();
     //@}
 
     //! @name Operations

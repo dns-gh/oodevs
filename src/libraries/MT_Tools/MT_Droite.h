@@ -42,7 +42,7 @@ public:
      MT_Droite( const MT_Vector2D& vPointInLine1, const MT_Vector2D& vPointInLine2 );
      MT_Droite( MT_Float rX1, MT_Float rY1, MT_Float rX2, MT_Float rY2 );
      MT_Droite( const MT_Droite& );
-    ~MT_Droite();
+    virtual ~MT_Droite();
     
     MT_Droite& operator = ( const MT_Droite& );
 

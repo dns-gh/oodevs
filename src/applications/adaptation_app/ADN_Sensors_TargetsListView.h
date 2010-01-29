@@ -36,7 +36,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ADN_Sensors_TargetsListView( QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
-    ~ADN_Sensors_TargetsListView();
+    virtual ~ADN_Sensors_TargetsListView();
     //@}
 
 private:

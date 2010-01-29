@@ -53,6 +53,7 @@ private:
     {
     public:
         Protection( xml::xistream& xis );
+        virtual ~Protection() {}
         void WriteArchive( xml::xostream& xos ) const;
     private:
         void ReadWeapon( xml::xistream& xis );

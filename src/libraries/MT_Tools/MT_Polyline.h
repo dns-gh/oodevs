@@ -28,7 +28,7 @@ class MT_Polyline
 public:
      MT_Polyline();
      MT_Polyline( const T_PointVector& points );
-    ~MT_Polyline();
+    virtual ~MT_Polyline();
 
     //-------------------------------------------------------------------------
     /** @name */

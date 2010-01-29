@@ -34,7 +34,7 @@ public:
     //@{
      Loan( const Model& model, const ASN1T_BorrowedEquipment& asnMsg );
      Loan( const Model& model, const ASN1T_LentEquipment&    asnMsg );
-    ~Loan();
+    virtual ~Loan();
     //@}
 
     //! @name Operations

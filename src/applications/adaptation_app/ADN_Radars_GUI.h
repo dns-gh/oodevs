@@ -67,7 +67,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     ADN_Radars_GUI( ADN_Radars_Data& data );
-    ~ADN_Radars_GUI();
+    virtual ~ADN_Radars_GUI();
     //@}
 
     //! @name Operations

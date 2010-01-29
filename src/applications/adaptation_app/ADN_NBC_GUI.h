@@ -44,7 +44,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ADN_NBC_GUI( ADN_NBC_Datas& data );
-    ~ADN_NBC_GUI();
+    virtual ~ADN_NBC_GUI();
     //@}
 
     //! @name Operations

@@ -21,6 +21,7 @@ namespace nbc
     class ToxicEffectHandler_ABC
     {
     public:
+        virtual ~ToxicEffectHandler_ABC() {}
         virtual void     ApplyContamination              ( const MIL_ToxicEffectManipulator& contamination ) =0;
         virtual void     ApplyPoisonous                  ( const MIL_ToxicEffectManipulator& contamination ) =0;
     };

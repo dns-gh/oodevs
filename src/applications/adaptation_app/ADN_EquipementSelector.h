@@ -46,7 +46,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ADN_EquipementSelector( QWidget* pParent, const char* szName = 0 );
-    ~ADN_EquipementSelector();
+    virtual ~ADN_EquipementSelector();
     //@}
 
     //! @name Operations
@@ -87,7 +87,7 @@ private:
         MT_COPYNOTALLOWED( ADN_EquipementSelector_Connector )
     public:
         ADN_EquipementSelector_Connector( ADN_EquipementSelector& gui );
-        ~ADN_EquipementSelector_Connector();
+        virtual ~ADN_EquipementSelector_Connector();
 
         void NotifySelected( void* pData );
         void SetDataPrivate( void* pData );

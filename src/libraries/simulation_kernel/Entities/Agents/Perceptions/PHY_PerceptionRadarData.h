@@ -38,7 +38,7 @@ public:
 public:
      PHY_PerceptionRadarData();
      PHY_PerceptionRadarData( const PHY_RadarType& radarType );
-    ~PHY_PerceptionRadarData();
+    virtual ~PHY_PerceptionRadarData();
 
     //! @name Operations
     //@{

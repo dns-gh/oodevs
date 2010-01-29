@@ -32,7 +32,7 @@ public:
              Position();
     explicit Position( const std::string& coord );
     explicit Position( const ASN1T_CoordLatLong& coord );
-            ~Position();
+    virtual ~Position();
     //@}
 
     //! @name Operations

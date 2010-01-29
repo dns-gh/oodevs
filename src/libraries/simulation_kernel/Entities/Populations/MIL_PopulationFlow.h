@@ -33,7 +33,7 @@ public:
     //@{
      MIL_PopulationFlow( MIL_Population& population, const MIL_PopulationFlow& source, const MT_Vector2D& splitPoint );
      MIL_PopulationFlow( MIL_Population& population, MIL_PopulationConcentration& sourceConcentration );
-    ~MIL_PopulationFlow();
+    virtual ~MIL_PopulationFlow();
     //@}
 
     //! @name Operations

@@ -29,6 +29,7 @@ class WeaponReloadingComputer_ABC
 {
 
 public:
+    virtual ~WeaponReloadingComputer_ABC() {}
     //! @name Operations
     //@{
     virtual void AddModifier( double modifier ) = 0;

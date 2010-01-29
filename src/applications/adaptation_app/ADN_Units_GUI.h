@@ -70,7 +70,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     ADN_Units_GUI( ADN_Units_Data& data );
-    ~ADN_Units_GUI();
+    virtual ~ADN_Units_GUI();
     //@}
 
     //! @name Operations

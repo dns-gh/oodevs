@@ -40,7 +40,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ADN_TableDialog( QWidget* pParent, const QString& strCaption, ADN_Table* pTable );
-    ~ADN_TableDialog();
+    virtual ~ADN_TableDialog();
     //@}
 
 private slots:

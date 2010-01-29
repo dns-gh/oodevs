@@ -29,9 +29,10 @@ class MT_Random
     MT_COPYNOTALLOWED( MT_Random )
 
 public:
-    explicit MT_Random();
+             MT_Random();
     explicit MT_Random( uint32 nSeed );
     explicit MT_Random( const std::vector< uint32 >& key );
+    virtual ~MT_Random() {}
 
     uint32 rand32();                            // [ 0  , 0xffffffff ]
     uint32 rand32_ii( uint32 min, uint32 max ); // [ min, max ]

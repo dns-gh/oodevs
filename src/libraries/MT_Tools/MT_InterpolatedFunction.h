@@ -34,6 +34,7 @@ public:
         : interpolation_(), knownData_(), useBeforeDefault_( false ), beforeDefaultValue_( TypeOut() ), useAfterDefault_( false ), afterDefaultValue_( TypeOut() ) {}
     MT_InterpolatedFunction( const TypeOut& beforeVal, const TypeOut& afterVal )
         : interpolation_(), knownData_(), useBeforeDefault_( true ), beforeDefaultValue_( beforeVal ), useAfterDefault_( true ), afterDefaultValue_( afterVal ) {}
+    virtual ~MT_InterpolatedFunction() {}
 
     void SetBeforeValue( const TypeOut& val )
     {

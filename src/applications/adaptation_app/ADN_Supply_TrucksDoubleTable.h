@@ -37,7 +37,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     ADN_Supply_TrucksDoubleTable( QWidget* pParent = 0 );
-    ~ADN_Supply_TrucksDoubleTable();
+    virtual ~ADN_Supply_TrucksDoubleTable();
     //@}
 
     //! @name Operations

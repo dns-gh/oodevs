@@ -31,7 +31,7 @@ class PHY_DotationCapacities : private boost::noncopyable
 
 public:
      PHY_DotationCapacities( const std::string& strParentTagName, xml::xistream& xis );
-    ~PHY_DotationCapacities();
+    virtual ~PHY_DotationCapacities();
 
     //! @name Operations
     //@{

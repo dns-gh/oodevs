@@ -28,7 +28,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     ADN_Maintenance_GUI( ADN_Maintenance_Data& data );
-    ~ADN_Maintenance_GUI();
+    virtual ~ADN_Maintenance_GUI();
     //@}
 
     //! @name Operations

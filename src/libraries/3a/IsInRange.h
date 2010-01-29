@@ -37,6 +37,7 @@ public:
     {
         // NOTHING
     }
+    virtual ~IsInRange() {}
     //@}
 
     //! @name Operations

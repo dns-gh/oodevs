@@ -26,6 +26,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     Reductor_ABC() : count_( 0 ) {}
+    virtual ~Reductor_ABC() {}
     //@}
 
     //! @name Operations

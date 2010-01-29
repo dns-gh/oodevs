@@ -29,7 +29,7 @@ class PHY_ComposanteTypeObjectData
 {
 public:
      PHY_ComposanteTypeObjectData( const MIL_ObjectType_ABC& objectType, xml::xistream& xis );
-    ~PHY_ComposanteTypeObjectData();
+    virtual ~PHY_ComposanteTypeObjectData();
 
     //! @name Accessors
     //@{

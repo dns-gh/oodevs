@@ -40,7 +40,8 @@ public:
     //! @name Constructors/Destructor
     //@{
                  Equipments();
-    /*implicit*/ Equipments( xml::xistream& xis );
+    /*implicti*/ Equipments( xml::xistream& xis );
+    virtual     ~Equipments() {}
     //@}
 
     //! @name Operations

@@ -50,7 +50,7 @@ public:
 
 private:
      PHY_Volume( const std::string& strName );
-    ~PHY_Volume();
+    virtual ~PHY_Volume();
 
 private:
     const std::string strName_;

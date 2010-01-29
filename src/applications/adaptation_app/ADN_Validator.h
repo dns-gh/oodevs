@@ -28,7 +28,7 @@ class ADN_IntValidator
 public:
     ADN_IntValidator( QObject* pParent, const char* szName = 0 );
     ADN_IntValidator( int nBottom, int nTop, QObject* pParent, const char* szName = 0 );
-    ~ADN_IntValidator();
+    virtual ~ADN_IntValidator();
 
     QValidator::State validate( QString& strInput, int& nPos ) const;
     void fixup( QString& strInput ) const;
@@ -47,7 +47,7 @@ class ADN_DoubleValidator
 public:
     ADN_DoubleValidator( QObject* pParent, const char* szName = 0 );
     ADN_DoubleValidator( double rBottom, double rTop, int nDecimals, QObject* pParent, const char* szName = 0 );
-    ~ADN_DoubleValidator();
+    virtual ~ADN_DoubleValidator();
 
     QValidator::State validate( QString& strInput, int& nPos ) const;
     void fixup( QString& strInput ) const;
@@ -65,7 +65,7 @@ class ADN_PercentageValidator
 {
 public:
     ADN_PercentageValidator( QObject* pParent, const char* szName = 0 );
-    ~ADN_PercentageValidator();
+    virtual ~ADN_PercentageValidator();
 
     void AddLinkedValue( ADN_Type_Double& value );
 

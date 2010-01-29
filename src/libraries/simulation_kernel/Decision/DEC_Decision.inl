@@ -102,7 +102,7 @@ void DEC_Decision<T>::UpdateDecision( float duration )
 {
     __try
     {
-        UpdateMeKnowledge( *pBrain_ );
+        //UpdateMeKnowledge( *pBrain_ );
         pBrain_->SelectActions         ();
         pBrain_->TriggerSelectedActions( duration );
     }

@@ -48,7 +48,7 @@ private:
 
 private:
      PHY_MedicalResourcesAlarms();
-    ~PHY_MedicalResourcesAlarms();
+    virtual ~PHY_MedicalResourcesAlarms();
 
     //! @name Tools
     //@{

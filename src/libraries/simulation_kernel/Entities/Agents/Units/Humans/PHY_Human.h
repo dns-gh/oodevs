@@ -48,7 +48,7 @@ public:
      PHY_Human( const MIL_Time_ABC& time, PHY_HumansComposante& composante );
      PHY_Human( const PHY_Human& rhs );
      PHY_Human();
-    ~PHY_Human();
+    virtual ~PHY_Human();
     
     //! @name CheckPoints
     //@{

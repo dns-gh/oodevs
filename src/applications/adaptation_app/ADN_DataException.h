@@ -39,7 +39,7 @@ public:
                         const std::string& strErrorDescription,
                         const std::string& strErrorSolution = std::string() );
      ADN_DataException( const ADN_DataException& );            //!< Copy constructor
-    ~ADN_DataException();
+    virtual ~ADN_DataException();
     //@}
 
     //! @name Operations

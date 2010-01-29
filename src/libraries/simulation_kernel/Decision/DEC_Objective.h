@@ -26,7 +26,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit DEC_Objective( const ASN1T_MissionObjective& asn );
-            ~DEC_Objective();
+    virtual ~DEC_Objective();
     //@}
 
     //! @name Accessors

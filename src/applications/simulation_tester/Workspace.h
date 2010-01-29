@@ -50,7 +50,7 @@ public:
 	//! @name Constructors/Destructor
     //@{
      Workspace( TestSet_ABC&  testSet, const Config& config );
-    ~Workspace();
+    virtual ~Workspace();
     //@}
 
     //! @name Operations

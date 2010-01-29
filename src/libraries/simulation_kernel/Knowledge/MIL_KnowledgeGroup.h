@@ -54,10 +54,10 @@ public:
     //@}
 
 public:
-     MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, uint nID, MIL_Army_ABC& army );
-     MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* pParent, KnowledgeGroupFactory_ABC& knowledgeGroupFactory );
-     MIL_KnowledgeGroup();
-    ~MIL_KnowledgeGroup();
+    MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, uint nID, MIL_Army_ABC& army );
+    MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* pParent, KnowledgeGroupFactory_ABC& knowledgeGroupFactory );
+    MIL_KnowledgeGroup();
+    virtual ~MIL_KnowledgeGroup();
 
     //! @name CheckPoints
     //@{

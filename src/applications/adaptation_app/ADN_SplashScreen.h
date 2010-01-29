@@ -40,7 +40,7 @@ public:
     //@{
      ADN_SplashScreen( const QPixmap& pixmap, WFlags f = 0 );
      ADN_SplashScreen();
-    ~ADN_SplashScreen();
+    virtual ~ADN_SplashScreen();
     //@}
 
     //! @name Modifiers

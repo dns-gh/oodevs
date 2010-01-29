@@ -28,7 +28,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      Equipment( const Model& model, const ASN1T_EquipmentDotations& asnMsg );
-    ~Equipment();
+    virtual ~Equipment();
     //@}
 
     //! @name Operations

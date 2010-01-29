@@ -37,6 +37,7 @@ public:
     //@{
     template< typename T >
     explicit ValuedDragObject( const T* element, QWidget* dragSource = 0 );
+    virtual ~ValuedDragObject() {}
     //@}
 
 private:

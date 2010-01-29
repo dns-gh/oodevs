@@ -28,7 +28,7 @@ class DEC_Knowledge_AgentPerceptionDataDetection : private boost::noncopyable
 
 public:
      DEC_Knowledge_AgentPerceptionDataDetection();
-    ~DEC_Knowledge_AgentPerceptionDataDetection();
+    virtual ~DEC_Knowledge_AgentPerceptionDataDetection();
 
     //! @name CheckPoints
     //@{

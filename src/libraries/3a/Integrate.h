@@ -40,6 +40,7 @@ public:
                 : next_( next ), currentKey_() {}
              Integrate( xml::xistream& , Function1_ABC< K, T >& next )
                 : next_( next ), currentKey_() {}
+    virtual ~Integrate() {}
     //@}
 
     //! @name Operations

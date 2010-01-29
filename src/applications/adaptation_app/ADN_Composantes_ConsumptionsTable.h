@@ -46,7 +46,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ADN_Composantes_ConsumptionsTable( ADN_ListView_Composantes& composanteListView, QWidget* pParent = 0 );
-    ~ADN_Composantes_ConsumptionsTable();
+    virtual ~ADN_Composantes_ConsumptionsTable();
     //@}
 
     //! @name Operations

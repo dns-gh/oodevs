@@ -94,7 +94,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ADN_Equipement_GUI( ADN_Equipement_Data& data );
-    ~ADN_Equipement_GUI();
+    virtual ~ADN_Equipement_GUI();
     //@}
 
     //! @name Operations

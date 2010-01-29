@@ -30,7 +30,7 @@ class PHY_PerceptionSurfaceAgent
 public:
      PHY_PerceptionSurfaceAgent();
      PHY_PerceptionSurfaceAgent( const PHY_SensorTypeAgent& sensorType, const MT_Vector2D& vOrigin, MT_Float rHeight );
-    ~PHY_PerceptionSurfaceAgent();
+    virtual ~PHY_PerceptionSurfaceAgent();
 
     //! @name CheckPoints
     //@{

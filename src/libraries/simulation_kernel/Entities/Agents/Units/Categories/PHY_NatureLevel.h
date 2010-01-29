@@ -62,7 +62,7 @@ private:
 
 private:
      PHY_NatureLevel( const std::string& strName, E_Type nType, ASN1T_EnumNatureLevel nAsnID );
-    ~PHY_NatureLevel();
+    virtual ~PHY_NatureLevel();
 
 private:
     const std::string     strName_;

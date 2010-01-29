@@ -107,7 +107,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ADN_KnowledgeGroups_Data();
-    ~ADN_KnowledgeGroups_Data();
+    virtual ~ADN_KnowledgeGroups_Data();
     //@}
 
     //! @name Operations

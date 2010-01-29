@@ -46,7 +46,7 @@ public:
 public:
      PHY_DotationGroup( const PHY_DotationType& type, PHY_DotationGroupContainer& groupContainer );
      PHY_DotationGroup();
-    ~PHY_DotationGroup();
+    virtual ~PHY_DotationGroup();
 
     //! @name CheckPoints
     //@{

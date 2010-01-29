@@ -37,7 +37,7 @@ private:
     //! @name Constructors/Destructor
     //@{
      PHY_MaintenanceResourcesAlarms();
-    ~PHY_MaintenanceResourcesAlarms();
+    virtual ~PHY_MaintenanceResourcesAlarms();
     //@}
 
     //! @name Types

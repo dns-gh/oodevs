@@ -28,7 +28,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      DotationQuota( const Model_ABC& model, const ASN1T_DotationQuota& asnMsg );
-    ~DotationQuota();
+    virtual ~DotationQuota();
     //@}
 
     //! @name Operations

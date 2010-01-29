@@ -29,7 +29,7 @@ class PHY_SupplyDotationRequestContainer : private boost::noncopyable
 
 public:
      PHY_SupplyDotationRequestContainer( MIL_Automate& suppliedAutomate, bool bForceRequestActivation );
-    ~PHY_SupplyDotationRequestContainer();
+    virtual ~PHY_SupplyDotationRequestContainer();
 
     //! @name Operations
     //@{

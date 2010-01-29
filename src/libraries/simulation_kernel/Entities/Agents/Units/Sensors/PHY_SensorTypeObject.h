@@ -33,7 +33,7 @@ class PHY_SensorTypeObject : private boost::noncopyable
 
 public:
      PHY_SensorTypeObject( const PHY_SensorType& type, xml::xistream& xis );
-    ~PHY_SensorTypeObject();
+    virtual ~PHY_SensorTypeObject();
 
     //! @name Accessors
     //@{

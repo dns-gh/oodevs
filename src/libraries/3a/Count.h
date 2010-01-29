@@ -42,6 +42,7 @@ public:
     explicit Count( Function1_ABC< K, NumericValue >& handler )
                 : handler_( handler )
                 , set_( false ){}
+    virtual ~Count() {}
     //@}
 
     //! @name Operations

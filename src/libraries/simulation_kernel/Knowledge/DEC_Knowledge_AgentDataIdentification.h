@@ -29,7 +29,7 @@ class DEC_Knowledge_AgentDataIdentification : private boost::noncopyable
 
 public:
      DEC_Knowledge_AgentDataIdentification();
-    ~DEC_Knowledge_AgentDataIdentification();
+    virtual ~DEC_Knowledge_AgentDataIdentification();
 
     //! @name CheckPoints
     //@{

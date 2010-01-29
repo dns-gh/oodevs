@@ -30,11 +30,12 @@ class TER_Agent_ABC;
 class TER_AgentTraits
 {
 public:
+    virtual ~TER_AgentTraits() {}
     //! @name Types
     //@{
     typedef TER_Agent_ABC* T_Value;
     //@}
-public:
+
     //! @name Operations
     //@{
     int CompareOnX( MT_Float rValue, const T_Value& pAgent ) const;

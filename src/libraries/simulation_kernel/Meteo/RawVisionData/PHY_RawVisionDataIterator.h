@@ -23,6 +23,7 @@ class PHY_RawVisionDataIterator : private boost::noncopyable
 
 public:
     PHY_RawVisionDataIterator( const MT_Vector3D& beginPos, const MT_Vector3D& endPos );
+    virtual ~PHY_RawVisionDataIterator() {}
 
     PHY_RawVisionDataIterator& operator ++ ();
     

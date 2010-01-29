@@ -29,7 +29,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ObstacleAttribute( const Model& model, const ASN1T_ObjectAttributes& asnMsg );
-    ~ObstacleAttribute();
+    virtual ~ObstacleAttribute();
     //@}
 
     //! @name Operations

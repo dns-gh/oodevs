@@ -29,7 +29,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      NBCAttribute( const Model& model, const ASN1T_ObjectAttributes& asnMsg );
-    ~NBCAttribute();
+    virtual ~NBCAttribute();
     //@}
 
     //! @name Operations

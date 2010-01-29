@@ -40,7 +40,7 @@ class ADN_MainWindow : public QMainWindow
 
 public:
     explicit ADN_MainWindow( ADN_Config& config );
-    ~ADN_MainWindow();
+    virtual ~ADN_MainWindow();
     
     void Build();
     void AddPage    ( const QString& strPageName, QWidget& page );

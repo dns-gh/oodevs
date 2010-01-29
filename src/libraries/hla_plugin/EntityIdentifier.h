@@ -29,7 +29,7 @@ public:
     //@{
      EntityIdentifier();
      EntityIdentifier( unsigned short site, unsigned short application, unsigned short number );
-    ~EntityIdentifier();
+    virtual ~EntityIdentifier();
     //@}
 
     //! @name Operations

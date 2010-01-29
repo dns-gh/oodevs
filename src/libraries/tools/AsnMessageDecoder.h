@@ -31,6 +31,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit AsnMessageDecoder( Message& message );
+    virtual ~AsnMessageDecoder() {}
     //@}
 
     //! @name Accessors

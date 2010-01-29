@@ -34,7 +34,7 @@ public:
     //! @name Constructor/destructor
     //@{
      TER_PopulationManager( const MT_Rect& extent );
-    ~TER_PopulationManager();
+    virtual ~TER_PopulationManager();
     //@}
 
     //! @name Accessors

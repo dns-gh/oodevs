@@ -24,7 +24,7 @@ public:
     //! @name Constructor/destructor
     //@{
      MIL_DynamicPathDataHandler();
-    ~MIL_DynamicPathDataHandler();
+    virtual ~MIL_DynamicPathDataHandler();
     //@}
 
     //! @name Operations

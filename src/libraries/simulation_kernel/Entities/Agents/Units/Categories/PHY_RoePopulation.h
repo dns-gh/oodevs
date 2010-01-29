@@ -70,7 +70,7 @@ private:
 
 private:
     PHY_RoePopulation( const std::string& strName, E_Type nType, ASN1T_EnumPopulationRoe nAsnID );
-    ~PHY_RoePopulation();
+    virtual ~PHY_RoePopulation();
 
 private:
     const std::string             strName_;

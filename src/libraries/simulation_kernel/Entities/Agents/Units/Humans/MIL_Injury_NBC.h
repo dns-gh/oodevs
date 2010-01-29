@@ -29,7 +29,7 @@ public:
     MIL_Injury_NBC();
     explicit MIL_Injury_NBC( NBCTypeAttribute& attr , int injuryID );
     MIL_Injury_NBC( const MIL_Injury_NBC& rhs );
-    ~MIL_Injury_NBC();
+    virtual ~MIL_Injury_NBC();
     //@}
 
     //! @name Get

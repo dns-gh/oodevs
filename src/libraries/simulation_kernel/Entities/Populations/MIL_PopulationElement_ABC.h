@@ -41,7 +41,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      MIL_PopulationElement_ABC( MIL_Population& population, uint nID );
-    ~MIL_PopulationElement_ABC();
+    virtual ~MIL_PopulationElement_ABC();
     //@}
 
     //! @name Operations

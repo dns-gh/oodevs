@@ -32,7 +32,7 @@ class MIL_AgentTypeInjuredHumanPion : public MIL_AgentTypePion
 
 public:
     MIL_AgentTypeInjuredHumanPion( const std::string& strName, xml::xistream& xis );
-    ~MIL_AgentTypeInjuredHumanPion();
+    virtual ~MIL_AgentTypeInjuredHumanPion();
 
     //! @name Instanciation
     //@{

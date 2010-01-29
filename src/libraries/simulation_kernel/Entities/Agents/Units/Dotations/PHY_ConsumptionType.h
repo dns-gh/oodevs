@@ -70,7 +70,7 @@ private:
 
 private:
      PHY_ConsumptionType( const std::string& strName, E_ConsumptionType nType );
-    ~PHY_ConsumptionType();
+    virtual ~PHY_ConsumptionType();
 
 private:
     const std::string       strName_;

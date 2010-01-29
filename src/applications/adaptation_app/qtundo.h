@@ -44,6 +44,7 @@ class QtCommand : public QObject
 			bool canMerge = false);
 	QtCommand(const QString &description = QString::null,
 			bool canMerge = true);
+    virtual ~QtCommand() {}
 
 	virtual void redo() {};
 	virtual void undo() {};
@@ -86,6 +87,7 @@ class QtUndoStack : public QObject, private QPtrList<QtCommand>
 
     public:
 	QtUndoStack(QObject *parent = 0, const char* szName = 0);
+	virtual ~QtUndoStack() {}
 	void push(QtCommand *command);
 	bool canUndo() const;
 	bool canRedo() const;
@@ -169,6 +171,7 @@ class QtUndoManager : public QObject
 	typedef QMap<QObject*, QtUndoStack*> StackMap;
 
 	QtUndoManager();
+    virtual ~QtUndoManager() {}
 	QtUndoStack *currentStack() const;
 
 	StackMap m_stack_map;
@@ -188,6 +191,7 @@ class QtUndoListBox : public QListBox
 
     public:
 	QtUndoListBox(QWidget* pParent = 0, const char* szName = 0);
+	virtual ~QtUndoListBox() {}
 
     public slots:
 	void updateContents();
@@ -206,6 +210,7 @@ class UndoRedoAction : public QAction
 
     public:
     	UndoRedoAction(QWidget *parent) : QAction(parent) {}
+    	virtual ~UndoRedoAction() {}
     
     public slots:
     	// It's a pity QAction::setText() is not a slot...

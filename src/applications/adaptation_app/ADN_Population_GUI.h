@@ -64,7 +64,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ADN_Population_GUI( ADN_Population_Data& data );
-    ~ADN_Population_GUI();
+    virtual ~ADN_Population_GUI();
     //@}
 
     //! @name Operations

@@ -35,7 +35,7 @@ class PHY_HumansComposante : private boost::noncopyable
 public:
      PHY_HumansComposante( const MIL_Time_ABC& time, PHY_ComposantePion& composante, uint nNbrMdr );
      PHY_HumansComposante();
-    ~PHY_HumansComposante();
+    virtual ~PHY_HumansComposante();
 
     //! @name Checkpoints
     //@{

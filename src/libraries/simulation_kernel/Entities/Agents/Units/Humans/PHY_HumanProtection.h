@@ -85,7 +85,7 @@ public:
     //@{
     PHY_HumanProtection( const std::string& strName, xml::xistream& xis );
     PHY_HumanProtection( const PHY_HumanProtection& humanProtection );
-    ~PHY_HumanProtection();
+    virtual ~PHY_HumanProtection();
     //@}
 
 private:

@@ -26,7 +26,7 @@ class DEC_FrontAndBackLinesComputer : private boost::noncopyable
 public:
      DEC_FrontAndBackLinesComputer( const MIL_Automate& caller, const std::vector< MIL_AgentPion*>& pions );
      DEC_FrontAndBackLinesComputer( const MIL_Automate& caller, const std::vector< MIL_Automate*>& automats );
-    ~DEC_FrontAndBackLinesComputer();
+    virtual ~DEC_FrontAndBackLinesComputer();
 
     //! @name Operations
     //@{

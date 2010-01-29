@@ -44,7 +44,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ADN_Connector_ListView( ADN_ListView& list );
-    ~ADN_Connector_ListView();
+    virtual ~ADN_Connector_ListView();
     //@}
 
     //! @name Operations

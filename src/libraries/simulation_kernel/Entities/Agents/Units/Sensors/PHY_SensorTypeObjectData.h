@@ -33,7 +33,7 @@ class PHY_SensorTypeObjectData : private boost::noncopyable
 
 public:
     explicit PHY_SensorTypeObjectData( xml::xistream& xis );
-            ~PHY_SensorTypeObjectData();
+    virtual ~PHY_SensorTypeObjectData();
 
     //! @name Tools
     //@{

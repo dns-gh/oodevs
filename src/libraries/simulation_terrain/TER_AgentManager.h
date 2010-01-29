@@ -51,7 +51,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      TER_AgentManager( const MT_Rect& extent );
-    ~TER_AgentManager();
+    virtual ~TER_AgentManager();
     //@}
 
     //! @name Operations

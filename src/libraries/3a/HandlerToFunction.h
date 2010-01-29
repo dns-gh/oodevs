@@ -32,6 +32,7 @@ public:
     //@{
     explicit HandlerToFunction( Function1_ABC< K, A >& function )
         : function_( function ), key_(), value_( this ) {};
+    virtual ~HandlerToFunction() {}
     //@}
 
     //! @name Operations

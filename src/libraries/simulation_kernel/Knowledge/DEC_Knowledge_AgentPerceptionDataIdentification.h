@@ -27,7 +27,7 @@ class DEC_Knowledge_AgentPerceptionDataIdentification : private boost::noncopyab
 
 public:
      DEC_Knowledge_AgentPerceptionDataIdentification();
-    ~DEC_Knowledge_AgentPerceptionDataIdentification();
+    virtual ~DEC_Knowledge_AgentPerceptionDataIdentification();
 
     //! @name CheckPoints
     //@{

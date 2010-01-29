@@ -35,6 +35,7 @@ public:
 
     public:
         NbcIntoxInfos( const std::string& nodeName );
+        virtual ~NbcIntoxInfos() {}
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -66,6 +67,7 @@ public:
 
     public:
         NbcGazInfos();
+        virtual ~NbcGazInfos() {}
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -89,6 +91,7 @@ public:
 
     public:
         NbcAgentInfos();
+        virtual ~NbcAgentInfos() {}
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -115,7 +118,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ADN_NBC_Datas();
-    ~ADN_NBC_Datas();
+    virtual ~ADN_NBC_Datas();
     //@}
 
     void FilesNeeded( T_StringList& vFiles ) const;

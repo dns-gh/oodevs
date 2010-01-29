@@ -40,7 +40,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      EntityStatePDU( unsigned long time, unsigned char exercise, const hla::EntityIdentifier& id );
-    ~EntityStatePDU();
+    virtual ~EntityStatePDU();
     //@}
 
     //! @name Modifiers

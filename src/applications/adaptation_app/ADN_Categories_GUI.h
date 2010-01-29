@@ -62,7 +62,7 @@ public slots:
 
 public:
      ADN_Categories_GUI( ADN_Categories_Data& data );
-    ~ADN_Categories_GUI();
+    virtual ~ADN_Categories_GUI();
 
     void Build();
 

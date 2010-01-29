@@ -18,7 +18,7 @@ class TrayIcon : public QObject
 public:
     TrayIcon( QObject *parent = 0, const char *name = 0 );
     TrayIcon( const QPixmap &, const QString &, QPopupMenu *popup = 0, QObject *parent = 0, const char *name = 0 );
-    ~TrayIcon();
+    virtual ~TrayIcon();
 
     // Set a popup menu to handle RMB
     void		setPopup( QPopupMenu * );

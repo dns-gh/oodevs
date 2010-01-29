@@ -31,6 +31,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      explicit AsnMessageEncoder( const T& asnMsg );
+     virtual ~AsnMessageEncoder() {}
     //@}
 
     //! @name Accessors

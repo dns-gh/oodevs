@@ -37,6 +37,7 @@ public:
                  : handler_( handler ), min_( std::numeric_limits< T >::max() ) {};
              Minimum( xml::xistream&, Function1_ABC< K, T >& handler )
                  : handler_( handler ), min_( std::numeric_limits< T >::max() ) {};
+    virtual ~Minimum() {}
     //@}
 
     //! @name Operations

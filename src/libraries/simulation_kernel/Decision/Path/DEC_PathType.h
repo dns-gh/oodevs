@@ -74,7 +74,7 @@ private:
 
 private:
      DEC_PathType( E_PathType nType, const std::string& strName );
-    ~DEC_PathType();
+    virtual ~DEC_PathType();
 
 private:
     const E_PathType  nPathType_;

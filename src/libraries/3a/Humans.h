@@ -41,6 +41,7 @@ public:
     //@{
                  Humans();
     /*implicit*/ Humans( xml::xistream& xis );
+    virtual     ~Humans() {}
     //@}
 
     //! @name Operations

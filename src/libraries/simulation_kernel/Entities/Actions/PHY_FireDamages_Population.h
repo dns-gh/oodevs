@@ -23,7 +23,7 @@ class PHY_FireDamages_Population
 {
 public:
      PHY_FireDamages_Population();
-    ~PHY_FireDamages_Population();
+    virtual ~PHY_FireDamages_Population();
 
     //! @name Notifications
     //@{

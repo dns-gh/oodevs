@@ -31,7 +31,7 @@ class DEC_Knowledge_AgentDataRecognition : private boost::noncopyable
 
 public:
      DEC_Knowledge_AgentDataRecognition();
-    ~DEC_Knowledge_AgentDataRecognition();
+    virtual ~DEC_Knowledge_AgentDataRecognition();
 
     //! @name CheckPoints
     //@{

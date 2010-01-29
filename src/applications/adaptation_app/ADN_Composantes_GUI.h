@@ -144,7 +144,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     ADN_Composantes_GUI( ADN_Composantes_Data& data );
-    ~ADN_Composantes_GUI();
+    virtual ~ADN_Composantes_GUI();
     //@}
 
     //! @name Operations

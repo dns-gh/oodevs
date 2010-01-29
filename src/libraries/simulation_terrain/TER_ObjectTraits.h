@@ -30,11 +30,12 @@ class TER_Object_ABC;
 class TER_ObjectTraits
 {
 public:
+    virtual ~TER_ObjectTraits() {}
     //! @name Types
     //@{
     typedef TER_Object_ABC* T_Value;
     //@}
-public:
+
     //! @name Operations
     //@{
     int CompareOnX( MT_Float rValue, const T_Value& pObject ) const;

@@ -29,7 +29,7 @@ public:
     //@{
              EntityType();
     explicit EntityType( const std::string& value);
-            ~EntityType();
+            virtual ~EntityType();
     //@}
 
     //! @name Operations

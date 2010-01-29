@@ -37,6 +37,7 @@ public:
              Selector( const K& key, Function1_ABC< K, T >& handler )
                  : key_( key )
                  , handler_( handler ), found_( false ) {}
+    virtual ~Selector() {}
     //@}
 
     //! @name Operations

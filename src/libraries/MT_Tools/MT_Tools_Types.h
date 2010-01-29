@@ -43,6 +43,7 @@ namespace std
                 , uf2_( uf2 )
             {
             }
+            virtual ~unary_compose() {}
 
             typename UnaryFunction1::result_type operator() ( const typename UnaryFunction2::argument_type& x ) const
             {
@@ -78,6 +79,7 @@ namespace std
                 , uf2_( uf2 )
             {
             }
+            virtual ~binary_compose() {}
 
             typename BinaryFunction::result_type operator () ( const typename UnaryFunction1::argument_type& x ) const
             {
@@ -122,6 +124,7 @@ class binary_compose2 : public std::binary_function< typename UnaryFunction1::ar
             , uf2_ ( uf2 )
         {
         }
+        virtual ~binary_compose2() {}
 
         typename BinaryFunction::result_type operator () ( const typename UnaryFunction1::argument_type& x, const typename UnaryFunction2::argument_type& y ) const
         {
@@ -168,6 +171,7 @@ public:
         , pInstance_( &instance )
     {
     }
+    virtual ~class_mem_fun_void_t() {}
 
     void operator () ( Param& rhs ) const
     {
@@ -202,6 +206,7 @@ public:
         , pInstance_( &instance )
     {
     }
+    virtual ~class_mem_fun_void_const_t() {}
 
     void operator () ( const Param& rhs ) const
     {

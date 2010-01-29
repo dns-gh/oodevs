@@ -47,7 +47,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      TER_ObjectManager( const MT_Rect& extent );
-    ~TER_ObjectManager();
+    virtual ~TER_ObjectManager();
     //@}
 
     //! @name Operations

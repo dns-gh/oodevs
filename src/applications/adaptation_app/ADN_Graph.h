@@ -45,7 +45,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ADN_Graph( QWidget* pParent = 0 );
-    ~ADN_Graph();
+    virtual ~ADN_Graph();
     //@}
 
     //! @name Operations

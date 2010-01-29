@@ -32,7 +32,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      TER_PopulationConcentrationManager( const MT_Rect& extent );
-    ~TER_PopulationConcentrationManager();
+    virtual ~TER_PopulationConcentrationManager();
     //@}
 
     //! @name Operations

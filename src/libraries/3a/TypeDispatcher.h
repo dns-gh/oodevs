@@ -53,6 +53,7 @@ public:
         : name_( name ), xis_( xis ), result_( result ), allowNullType_( allowNull ) {}
     TypeDispatcher( xml::xistream& xis, Task& result, bool allowNull = false )
         : name_( xml::attribute< std::string >( xis, "id" ) ), xis_( xis ), result_( result ), allowNullType_( allowNull ) {}
+    virtual ~TypeDispatcher() {}
     //@}
 
     //! @name Operations

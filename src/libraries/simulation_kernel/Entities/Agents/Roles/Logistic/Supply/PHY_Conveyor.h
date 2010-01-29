@@ -27,7 +27,7 @@ class PHY_Conveyor : private boost::noncopyable
 public:
      PHY_Conveyor();
      PHY_Conveyor( PHY_ComposantePion& conveyorComp, MIL_AgentPion& conveyorPion );
-    ~PHY_Conveyor();
+    virtual ~PHY_Conveyor();
 
     //! @name Dotations
     //@{
@@ -53,7 +53,7 @@ public:
     template< typename Archive > void serialize( Archive&, const uint );
     //@}
 
-    //! @name Debug
+    //!/cygdrive/ @name Debug
     //@{
     void Dump() const;
     //@}

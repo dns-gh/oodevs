@@ -37,7 +37,7 @@ public:
     //@{
      MIL_PopulationConcentration( MIL_Population& population, xml::xistream& xis );
      MIL_PopulationConcentration( MIL_Population& population, const MT_Vector2D& position );
-    ~MIL_PopulationConcentration();
+    virtual ~MIL_PopulationConcentration();
     //@}
 
     //! @name Operations

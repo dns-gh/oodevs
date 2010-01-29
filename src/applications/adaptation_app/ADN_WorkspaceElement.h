@@ -38,7 +38,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     ADN_WorkspaceElement( const char* szName ) : ADN_WorkspaceElement_ABC( szName ),  data_( *new DATA() ), gui_( *new GUI( data_ ) ) {}
-    ~ADN_WorkspaceElement() { delete &(ADN_Data_ABC&)data_; delete &(ADN_GUI_ABC&)gui_; }
+    virtual ~ADN_WorkspaceElement() { delete &(ADN_Data_ABC&)data_; delete &(ADN_GUI_ABC&)gui_; }
     //@}
 
     //! @name Accessors

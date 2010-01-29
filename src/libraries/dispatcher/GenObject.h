@@ -30,7 +30,7 @@ public:
     //@{
     GenObject( const ASN1T_PlannedWork& asn );
     GenObject();
-   ~GenObject();
+   virtual ~GenObject();
     //@}
 
     //! @name Operations

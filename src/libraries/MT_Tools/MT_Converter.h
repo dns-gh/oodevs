@@ -25,7 +25,7 @@ class MT_Converter
 
 public:
      MT_Converter( const VALUE& nullValue );
-    ~MT_Converter();
+    virtual ~MT_Converter();
 
     //! @name Operations
     //@{

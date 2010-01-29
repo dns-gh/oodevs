@@ -29,7 +29,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     DEC_Path_KnowledgeObject( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Object& knowledge );
-    ~DEC_Path_KnowledgeObject();
+    virtual ~DEC_Path_KnowledgeObject();
     //@}
 
     //! @name Copy/Assignement

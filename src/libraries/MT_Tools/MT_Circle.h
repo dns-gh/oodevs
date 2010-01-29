@@ -28,7 +28,7 @@ public:
     MT_Circle(const MT_Vector2D& a,const MT_Vector2D& b);
     MT_Circle(MT_Float x,MT_Float y,MT_Float r);
     MT_Circle(const MT_Circle& c);
-    ~MT_Circle();
+    virtual ~MT_Circle();
 
     MT_Vector2D Center() const;
     MT_Float    Radius() const;

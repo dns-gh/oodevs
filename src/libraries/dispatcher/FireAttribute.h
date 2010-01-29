@@ -29,7 +29,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      FireAttribute( const Model& model, const ASN1T_ObjectAttributes& asnMsg );
-    ~FireAttribute();
+    virtual ~FireAttribute();
     //@}
 
     //! @name Operations

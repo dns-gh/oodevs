@@ -30,7 +30,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      MIL_TacticalLineManager();
-    ~MIL_TacticalLineManager();
+    virtual ~MIL_TacticalLineManager();
     //@}
 
     //! @name CheckPoints

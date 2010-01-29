@@ -36,7 +36,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ADN_Radars_ListView( QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
-    ~ADN_Radars_ListView();
+    virtual ~ADN_Radars_ListView();
     //@}
 
     //! @name Operations

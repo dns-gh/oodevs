@@ -37,7 +37,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     ADN_Supply_GUI( ADN_Supply_Data& data );
-    ~ADN_Supply_GUI();
+    virtual ~ADN_Supply_GUI();
     //@}
 
     //! @name Operations

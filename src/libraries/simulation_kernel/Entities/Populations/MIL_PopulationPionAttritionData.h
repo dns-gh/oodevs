@@ -29,7 +29,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      MIL_PopulationPionAttritionData();
-    ~MIL_PopulationPionAttritionData();
+    virtual ~MIL_PopulationPionAttritionData();
     //@}
 
     //! @name Initialization

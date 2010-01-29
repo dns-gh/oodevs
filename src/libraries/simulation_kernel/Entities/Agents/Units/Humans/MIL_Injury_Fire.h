@@ -29,7 +29,7 @@ public:
     MIL_Injury_Fire();
     explicit MIL_Injury_Fire( int heat , const std::string fireAgent , int injuryID );
     MIL_Injury_Fire( const MIL_Injury_Fire& rhs );
-    ~MIL_Injury_Fire();
+    virtual ~MIL_Injury_Fire();
     //@}
 
 public:

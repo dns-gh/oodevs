@@ -36,7 +36,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     ADN_HtmlBuilder();
-    ~ADN_HtmlBuilder();
+    virtual ~ADN_HtmlBuilder();
     //@}
 
     //! @name Operations

@@ -65,7 +65,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ADN_Weapons_GUI( ADN_Weapons_Data& data );
-    ~ADN_Weapons_GUI();
+    virtual ~ADN_Weapons_GUI();
     //@}
 
     //! @name Operations

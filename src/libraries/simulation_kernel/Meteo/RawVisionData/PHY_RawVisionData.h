@@ -83,7 +83,7 @@ public:
 
 public:
      PHY_RawVisionData( PHY_Meteo& globalMeteo, MIL_Config& config );
-    ~PHY_RawVisionData();
+    virtual ~PHY_RawVisionData();
 
     //-------------------------------------------------------------------------
     /** @name Tools */

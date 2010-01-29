@@ -29,7 +29,7 @@ public:
     //@{
     Objective( const ASN1T_MissionObjective& asn );
     Objective();
-   ~Objective();
+   virtual ~Objective();
     //@}
 
     //! @name Operations

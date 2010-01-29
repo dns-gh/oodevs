@@ -29,7 +29,7 @@ public:
     explicit        MT_V3D( void );                                 // Constructor : les valeurs XYZ sont mises a 0
                     MT_V3D( T rX, T rY, T rZ );                     // Constructor : X Y Z ne ser<T> rien ce commentaire !!!!
                     MT_V3D( const MT_V3D<T>& v );                   // Constructor : Vector3D
-                    ~MT_V3D( void );                                // Destructor :
+    virtual         ~MT_V3D( void );                                // Destructor :
 
     T               SquareMagnitude( void ) const;                  // Retourne la magnitude au carré d'un vector 3D ( longeur )
     T               Magnitude( void ) const;                        // Retourne la magnitude d'un vector 3D ( longeur )

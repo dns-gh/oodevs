@@ -23,7 +23,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      MIL_IDManager();
-    ~MIL_IDManager();
+    virtual ~MIL_IDManager();
     //@}
 
     //! @name Operations

@@ -38,7 +38,7 @@ public:
     {
     public:
         NameCmp( const std::string& strName ) : strName_( strName ) {}
-        ~NameCmp() {}
+        virtual ~NameCmp() {}
 
         template < typename T >
         bool operator()( T* tgtnfos ) const 

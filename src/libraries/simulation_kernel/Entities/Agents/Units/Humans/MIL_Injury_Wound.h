@@ -30,7 +30,7 @@ public:
     MIL_Injury_Wound();
     explicit MIL_Injury_Wound( int injuryID );
     MIL_Injury_Wound( const MIL_Injury_Wound& rhs );
-    ~MIL_Injury_Wound();
+    virtual ~MIL_Injury_Wound();
     //@}
 
 public:

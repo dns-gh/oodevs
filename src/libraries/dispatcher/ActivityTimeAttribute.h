@@ -29,7 +29,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ActivityTimeAttribute( const Model& model, const ASN1T_ObjectAttributes& asnMsg );
-    ~ActivityTimeAttribute();
+    virtual ~ActivityTimeAttribute();
     //@}
 
     //! @name Operations

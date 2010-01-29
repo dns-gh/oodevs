@@ -31,7 +31,7 @@ class PHY_MedicalHumanState : private boost::noncopyable
 public:
      PHY_MedicalHumanState( MIL_AgentPion& pion, PHY_Human& humann, bool bEvacuatedByThirdParty = false );
      PHY_MedicalHumanState();
-    ~PHY_MedicalHumanState();
+    virtual ~PHY_MedicalHumanState();
 
     //! @name CheckPoints
     //@{

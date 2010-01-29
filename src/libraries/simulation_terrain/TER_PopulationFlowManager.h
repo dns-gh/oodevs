@@ -32,7 +32,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      TER_PopulationFlowManager( const MT_Rect& extent );
-    ~TER_PopulationFlowManager();
+    virtual ~TER_PopulationFlowManager();
     //@}
 
     //! @name Operations

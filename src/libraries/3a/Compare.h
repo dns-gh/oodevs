@@ -38,6 +38,7 @@ public:
         : operator_( MakeOperator( xis ) )
         , next_    ( next )
     {}
+    virtual ~Compare() {}
     //@}
 
     //! @name Operations

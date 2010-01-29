@@ -38,6 +38,7 @@ public:
         MT_COPYNOTALLOWED( WorkingSchemeInfo )
     public:
         WorkingSchemeInfo( unsigned int nIdx );
+        virtual ~WorkingSchemeInfo() {}
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -59,7 +60,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     ADN_Maintenance_Data();
-    ~ADN_Maintenance_Data();
+    virtual ~ADN_Maintenance_Data();
     //@}
 
     //! @name Operations

@@ -33,7 +33,7 @@ public:
     //@{
              DEC_Knowledge_AgentComposante();
     explicit DEC_Knowledge_AgentComposante( const PHY_Composante_ABC& composante );
-            ~DEC_Knowledge_AgentComposante();
+    virtual ~DEC_Knowledge_AgentComposante();
     //@}
 
     //! @name CheckPoints

@@ -39,7 +39,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ADN_Weapons_PhTable( QWidget* pParent = 0 );
-    ~ADN_Weapons_PhTable();
+    virtual ~ADN_Weapons_PhTable();
     //@}
 
     //! @name Operations

@@ -36,7 +36,7 @@ public:
     //@{
     ADN_SaveFile_Exception( const std::string& strFileName );
     ADN_SaveFile_Exception( const ADN_SaveFile_Exception& ); //!< Copy constructor
-    ~ADN_SaveFile_Exception();
+    virtual ~ADN_SaveFile_Exception();
     //@}
 
     //! @name Operations

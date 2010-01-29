@@ -30,7 +30,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      LogisticAttribute( const Model& model, const ASN1T_ObjectAttributes& asnMsg );
-    ~LogisticAttribute();
+    virtual ~LogisticAttribute();
     //@}
 
     //! @name Operations

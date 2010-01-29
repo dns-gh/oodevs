@@ -26,7 +26,7 @@ class PHY_AmmoEffect : private boost::noncopyable
 
 public:
      PHY_AmmoEffect( const PHY_IndirectFireDotationClass& ammoClass, PHY_AmmoEffect* pNextEffect );
-    ~PHY_AmmoEffect();
+    virtual ~PHY_AmmoEffect();
 
     //! @name Accessors
     //@{

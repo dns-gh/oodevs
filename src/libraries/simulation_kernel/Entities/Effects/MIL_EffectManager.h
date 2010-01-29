@@ -31,7 +31,7 @@ public:
 
 public:
      MIL_EffectManager();
-    ~MIL_EffectManager();
+    virtual ~MIL_EffectManager();
 
     //! @name Operations
     //@{

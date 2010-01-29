@@ -39,6 +39,7 @@ public:
 public:
     PHY_RoleAction_Objects_DataComputerPionData();
     PHY_RoleAction_Objects_DataComputerPionData( MIL_AgentPion& pion, E_Operation operation, const MIL_Object_ABC& object );
+    virtual ~PHY_RoleAction_Objects_DataComputerPionData() {}
 
     //! @name Operations
     //@{

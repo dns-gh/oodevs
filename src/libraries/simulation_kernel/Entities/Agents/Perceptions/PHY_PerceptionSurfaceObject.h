@@ -22,7 +22,7 @@ class PHY_PerceptionSurfaceObject
 public:
      PHY_PerceptionSurfaceObject();
      PHY_PerceptionSurfaceObject( const PHY_SensorTypeObject& sensorType, const MT_Vector2D& vOrigin, MT_Float rHeight );
-    ~PHY_PerceptionSurfaceObject();
+    virtual ~PHY_PerceptionSurfaceObject();
 
     //! @name CheckPoints
     //@{

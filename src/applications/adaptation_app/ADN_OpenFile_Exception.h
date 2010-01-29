@@ -36,7 +36,7 @@ public:
     //@{
      ADN_OpenFile_Exception( const std::string& strFileName );
      ADN_OpenFile_Exception( const ADN_OpenFile_Exception& ); //!< Copy constructor
-    ~ADN_OpenFile_Exception();
+    virtual ~ADN_OpenFile_Exception();
     //@}
 
     //! @name Operations

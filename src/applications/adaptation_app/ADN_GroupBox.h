@@ -46,7 +46,7 @@ public:
     ADN_GroupBox( const QString & title, QWidget * parent = 0, const char * name = 0 );
     ADN_GroupBox( int strips, Orientation orientation, QWidget * parent = 0, const char * name = 0 );
     ADN_GroupBox( int strips, Orientation orientation, const QString & title, QWidget * parent = 0, const char * name = 0 );
-    ~ADN_GroupBox();
+    virtual ~ADN_GroupBox();
     //@}
 
     //! @name Operations

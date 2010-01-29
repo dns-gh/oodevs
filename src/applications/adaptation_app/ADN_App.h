@@ -26,8 +26,8 @@ class ADN_App
     MT_COPYNOTALLOWED( ADN_App );
 
 public:
-     ADN_App( int argc, char** argv );
-    ~ADN_App();
+    ADN_App( int argc, char** argv );
+    virtual ~ADN_App();
 
     bool Initialize( const std::string& inputFile, const std::string& outputFile );
 

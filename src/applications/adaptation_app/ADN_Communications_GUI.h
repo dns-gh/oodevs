@@ -38,7 +38,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     ADN_Communications_GUI( ADN_Communications_Data& data );
-    ~ADN_Communications_GUI();
+    virtual ~ADN_Communications_GUI();
     //@}
 
     //! @name Operations

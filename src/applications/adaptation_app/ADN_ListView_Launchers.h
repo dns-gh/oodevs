@@ -30,7 +30,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     ADN_ListView_Launchers( QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
-    ~ADN_ListView_Launchers();
+    virtual ~ADN_ListView_Launchers();
     //@}
 
 private:

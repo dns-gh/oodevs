@@ -69,7 +69,7 @@ private:
 
 private:
      PHY_PerceptionLevel( const std::string& strName, E_Level nLevel, const ASN1T_EnumUnitIdentificationLevel& nAsnID );
-    ~PHY_PerceptionLevel();
+    virtual ~PHY_PerceptionLevel();
 
 private:
     //! @name types

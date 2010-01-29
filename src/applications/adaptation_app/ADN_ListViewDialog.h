@@ -40,7 +40,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ADN_ListViewDialog( QWidget* pParent, const QString& strCaption, ADN_ListView* pListView );
-    ~ADN_ListViewDialog();
+    virtual ~ADN_ListViewDialog();
     //@}
 
 private slots:

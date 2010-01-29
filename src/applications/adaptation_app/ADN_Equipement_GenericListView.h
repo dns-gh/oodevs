@@ -35,7 +35,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ADN_Equipement_GenericListView( E_DotationFamily nType, QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
-    ~ADN_Equipement_GenericListView();
+    virtual ~ADN_Equipement_GenericListView();
     //@}
 
 private:

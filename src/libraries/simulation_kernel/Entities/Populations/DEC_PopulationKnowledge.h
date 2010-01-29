@@ -38,7 +38,7 @@ public:
 
 public:
      DEC_PopulationKnowledge();
-    ~DEC_PopulationKnowledge();
+    virtual ~DEC_PopulationKnowledge();
 
     //! @name Main operations
     //@{

@@ -30,7 +30,7 @@ public:
      WorldLocation();
      WorldLocation( const std::string mgrs, float altitude );
      WorldLocation( double latitude, double longitude, float altitude );
-    ~WorldLocation();
+    virtual ~WorldLocation();
     //@}
 
     //! @name Operations
@@ -70,7 +70,7 @@ public:
     //@{
      VelocityVector();
      VelocityVector( const WorldLocation& location, float speed, float heading );
-    ~VelocityVector();
+    virtual ~VelocityVector();
     //@}
 
     //! @name Operations
@@ -115,7 +115,7 @@ public:
     //@{
      Orientation();
      Orientation( const WorldLocation& location, const VelocityVector& velocity );
-    ~Orientation();
+    virtual ~Orientation();
     //@}
 
     //! @name Operations

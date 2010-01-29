@@ -39,6 +39,7 @@ public:
         : function_( next )
         , first_( this )
         , second_( this ) {}
+    virtual ~Composer() {}
     //@}
 
     //! @name Operations

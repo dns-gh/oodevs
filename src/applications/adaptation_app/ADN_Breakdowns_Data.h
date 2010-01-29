@@ -46,6 +46,7 @@ public:
         MT_COPYNOTALLOWED( RepairPartInfo )
     public:
         RepairPartInfo();
+        virtual ~RepairPartInfo() {}
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -73,7 +74,7 @@ public:
         MT_COPYNOTALLOWED( BreakdownInfo )
     public:
          BreakdownInfo();
-        ~BreakdownInfo();
+        virtual ~BreakdownInfo();
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -105,7 +106,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     ADN_Breakdowns_Data();
-    ~ADN_Breakdowns_Data();
+    virtual ~ADN_Breakdowns_Data();
     //@}
 
     //! @name Operations

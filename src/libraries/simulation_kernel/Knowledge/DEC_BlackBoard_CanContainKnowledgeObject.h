@@ -31,7 +31,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      DEC_BlackBoard_CanContainKnowledgeObject();
-    ~DEC_BlackBoard_CanContainKnowledgeObject();
+    virtual ~DEC_BlackBoard_CanContainKnowledgeObject();
     //@}
 
     //! @name CheckPoints

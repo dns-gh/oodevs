@@ -30,7 +30,7 @@ public:
         : QComboTableItem( table, list )
         , list_( list ) {}
 
-    ~ExclusiveComboTableItem() {}
+    virtual ~ExclusiveComboTableItem() {}
     //@}
 
     //! @name Operations

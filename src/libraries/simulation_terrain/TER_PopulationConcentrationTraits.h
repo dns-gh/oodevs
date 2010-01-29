@@ -18,11 +18,12 @@ class TER_PopulationConcentration_ABC;
 class TER_PopulationConcentrationTraits
 {
 public:
+    virtual ~TER_PopulationConcentrationTraits() {}
     //! @name Types
     //@{
     typedef TER_PopulationConcentration_ABC* T_Value;
     //@}
-public:
+
     //! @name Operations
     //@{
     int CompareOnX( MT_Float rValue, const T_Value& pConcentration ) const;

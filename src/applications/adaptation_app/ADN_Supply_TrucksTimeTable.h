@@ -37,7 +37,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     ADN_Supply_TrucksTimeTable( QWidget* pParent = 0 );
-    ~ADN_Supply_TrucksTimeTable();
+    virtual ~ADN_Supply_TrucksTimeTable();
     //@}
 
     //! @name Operations

@@ -63,7 +63,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     ADN_HumanFactors_Data();
-    ~ADN_HumanFactors_Data();
+    virtual ~ADN_HumanFactors_Data();
     //@}
 
     //! @name Operations

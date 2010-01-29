@@ -26,6 +26,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     Frame();
+    virtual ~Frame() {}
     //@}
 
     //! @name Operations
@@ -51,6 +52,7 @@ class KeyFrame
     //! @name Constructors/Destructor
     //@{
     KeyFrame();
+    virtual ~KeyFrame() {}
     //@}
 
     //! @name Member data

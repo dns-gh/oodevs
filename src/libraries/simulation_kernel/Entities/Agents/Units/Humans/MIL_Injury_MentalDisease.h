@@ -30,7 +30,7 @@ public:
     MIL_Injury_MentalDisease();
     explicit MIL_Injury_MentalDisease( int injuryID );
     MIL_Injury_MentalDisease( const MIL_Injury_MentalDisease& rhs );
-    ~MIL_Injury_MentalDisease();
+    virtual ~MIL_Injury_MentalDisease();
     //@}
 
 public:

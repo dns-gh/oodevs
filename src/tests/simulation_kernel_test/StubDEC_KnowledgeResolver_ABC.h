@@ -7,6 +7,7 @@ class StubDEC_KnowledgeResolver_ABC : public DEC_KnowledgeResolver_ABC
 {
 public:
     StubDEC_KnowledgeResolver_ABC() {}
+    virtual ~StubDEC_KnowledgeResolver_ABC() {}
 
     virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent ( const ASN1T_UnitKnowledge&  asn ) const{ throw; }
     virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent (       uint                   nID ) const{ throw; }

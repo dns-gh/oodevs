@@ -24,6 +24,7 @@ public:
     NumericValue() : NumericVariant() {}
     template< typename T >
     NumericValue( const T& t ) : NumericVariant( t ) {}
+    virtual ~NumericValue() {}
 
     // MSVC++ bug fix: https://svn.boost.org/trac/boost/ticket/592
     //@{

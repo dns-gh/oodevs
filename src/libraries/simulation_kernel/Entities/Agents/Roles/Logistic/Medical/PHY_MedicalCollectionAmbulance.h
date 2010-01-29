@@ -26,7 +26,7 @@ class PHY_MedicalCollectionAmbulance : private boost::noncopyable
 public:
      PHY_MedicalCollectionAmbulance( PHY_RoleInterface_Medical& medical, PHY_ComposantePion& compAmbulance );
      PHY_MedicalCollectionAmbulance();
-    ~PHY_MedicalCollectionAmbulance();
+    virtual ~PHY_MedicalCollectionAmbulance();
 
     //! @name CheckPoints
     //@{

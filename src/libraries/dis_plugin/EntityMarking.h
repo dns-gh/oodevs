@@ -28,7 +28,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit EntityMarking( const std::string& name = std::string() );
-            ~EntityMarking();
+    virtual ~EntityMarking();
     //@}
 
     //! @name Operations

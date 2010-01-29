@@ -24,7 +24,7 @@ class MIL_AutomateMRT : private boost::noncopyable
         
 public:
      MIL_AutomateMRT();
-    ~MIL_AutomateMRT();
+    virtual ~MIL_AutomateMRT();
 
     //! @name Operations
     //@{

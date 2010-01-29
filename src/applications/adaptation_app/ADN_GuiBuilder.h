@@ -59,7 +59,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ADN_GuiBuilder();
-    ~ADN_GuiBuilder();
+    virtual ~ADN_GuiBuilder();
     //@}
 
     //! @name Field Operations

@@ -48,7 +48,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ADN_Models_GUI( ADN_Models_Data& data );
-    ~ADN_Models_GUI();
+    virtual ~ADN_Models_GUI();
     //@}
 
     //! @name Operations

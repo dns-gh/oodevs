@@ -32,7 +32,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MIL_LimaOrder( const ASN1T_LimaOrder& asn );
-            ~MIL_LimaOrder();
+    virtual ~MIL_LimaOrder();
     //@}
 
     //! @name Operations

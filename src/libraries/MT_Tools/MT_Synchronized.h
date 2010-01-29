@@ -48,6 +48,7 @@ class MT_Synchronized
 public:
 
     MT_Synchronized(){ }
+    virtual ~MT_Synchronized() {}
 
     /**
      * This class give you a thread safe access to the MT_Synchronized Value. Look at the example in MT_Synchronized.
@@ -68,7 +69,7 @@ public:
         }
 
         /// release the mutex
-        ~MT_Accessor()
+        virtual ~MT_Accessor()
         {
 #ifdef MT_USE_MUTEX
             const_cast<MT_Mutex&>(synchronized_->ms_).Unlock();
@@ -100,7 +101,7 @@ public:
         }
 
         /// release the mutex
-        ~MT_Locker()
+        virtual ~MT_Locker()
         {
             Unlock();
             synchronized_=0;

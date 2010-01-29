@@ -22,7 +22,7 @@ class TER_LimitData : private boost::noncopyable
 
 public:
      TER_LimitData( const T_PointVector& points );
-    ~TER_LimitData();
+    virtual ~TER_LimitData();
 
     //! @name Accessors
     //@{

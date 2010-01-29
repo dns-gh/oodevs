@@ -29,7 +29,7 @@ class MIL_Object_ABC;
 class TerrainData;
 class PHY_MovingEntity_ABC;
 
-// =============================================================================
+// ===================================/cygdrive/==========================================
 // Created: NLD 2005-09-30
 // =============================================================================
 class DEC_PathWalker
@@ -53,7 +53,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      DEC_PathWalker( PHY_MovingEntity_ABC& movingEntity );
-    ~DEC_PathWalker();
+    virtual ~DEC_PathWalker();
     //@}
 
     //! @name Operations

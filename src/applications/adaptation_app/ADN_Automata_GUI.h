@@ -52,8 +52,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-     ADN_Automata_GUI( ADN_Automata_Data& data );
-    ~ADN_Automata_GUI();
+    ADN_Automata_GUI( ADN_Automata_Data& data );
+    virtual ~ADN_Automata_GUI();
     //@}
 
     //! @name Operations

@@ -29,7 +29,7 @@ class PHY_FireDamages_Agent
 {
 public:
      PHY_FireDamages_Agent();
-    ~PHY_FireDamages_Agent();
+    virtual ~PHY_FireDamages_Agent();
 
     //! @name Notifications
     //@{

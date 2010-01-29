@@ -56,7 +56,7 @@ public:
 
 public:
      PHY_DirectFireData( MIL_AgentPion& firer, E_ComposanteFiringType nComposanteFiringType, E_FiringMode nFiringMode = eFiringModeNormal, MT_Float rPercentageComposantesToUse = 1., const PHY_AmmoDotationClass* pAmmoDotationClass = 0 );
-    ~PHY_DirectFireData();
+    virtual ~PHY_DirectFireData();
 
     //! @name Operations
     //@{
@@ -91,7 +91,7 @@ private:
     struct sComposanteWeapons
     {
          sComposanteWeapons();
-        ~sComposanteWeapons();
+        virtual ~sComposanteWeapons();
 
         //! @name Accessors
         //@{

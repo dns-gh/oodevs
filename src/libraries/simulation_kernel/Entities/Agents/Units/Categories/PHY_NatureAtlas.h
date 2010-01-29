@@ -65,7 +65,7 @@ private:
 
 private:
      PHY_NatureAtlas( const std::string& strName, E_Type nType, uint nAsnID );
-    ~PHY_NatureAtlas();
+    virtual ~PHY_NatureAtlas();
 
 private:
     const std::string  strName_;

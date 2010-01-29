@@ -38,7 +38,7 @@ class MIL_CheckPointManager : private boost::noncopyable
 public:
               MIL_CheckPointManager();
      explicit MIL_CheckPointManager( const MIL_Config& config );
-             ~MIL_CheckPointManager();
+     virtual ~MIL_CheckPointManager();
 
     //! @name Main
     //@{

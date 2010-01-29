@@ -38,6 +38,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     RangeHelper() {};
+    virtual ~RangeHelper() {}
 	// value of attribute must be '[min->max]' or 'value' or a sequence of these separated by ','
     RangeHelper( xml::xistream& xis, const std::string& attribute )
     {

@@ -39,7 +39,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ADN_Communications_Data();
-    ~ADN_Communications_Data();
+    virtual ~ADN_Communications_Data();
     //@}
 
     //! @name Operations

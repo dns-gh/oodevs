@@ -35,7 +35,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      MedicalTreatmentAttribute( const Model& model, const ASN1T_ObjectAttributes& asnMsg );
-    ~MedicalTreatmentAttribute();
+    virtual ~MedicalTreatmentAttribute();
     //@}
 
     //! @name Operations

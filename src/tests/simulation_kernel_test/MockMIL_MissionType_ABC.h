@@ -12,6 +12,7 @@ public:
         : mockpp::ChainableMockObject( "MockMIL_MissionType_ABC", 0 )
         , GetDIABehavior_mocker( "GetDIABehavior", this )
     {}
+    virtual ~MockMIL_MissionType_ABC() {}
 
     virtual const std::string& GetDIABehavior( MIL_MissionType_ABC::Phase phase ) const
     {

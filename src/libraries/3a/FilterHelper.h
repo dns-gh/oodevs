@@ -46,6 +46,7 @@ public:
             std::transform( split.begin(), split.end(), std::inserter( allowed_, allowed_.begin() ), &boost::lexical_cast< T, std::string > );
         }
     }
+    virtual ~FilterHelper() {};
     //@}
 
     //! @name Operations

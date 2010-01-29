@@ -32,6 +32,7 @@ public:
         , Apply_mocker    ( "Apply", this )
         , EndTick_mocker  ( "EndTick", this )
         {}
+    virtual ~MockFunction1() {}
     //@}
 
     //! @name Operations

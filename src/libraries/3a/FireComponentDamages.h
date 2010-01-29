@@ -36,6 +36,7 @@ public:
     //@{
                  FireComponentDamages();
     /*implicit*/ FireComponentDamages( xml::xistream& xis );
+    virtual     ~FireComponentDamages() {}
     //@}
 
     //! @name Operations

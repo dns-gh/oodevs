@@ -36,7 +36,7 @@ public:
     MT_ScipioException( const MT_ScipioException& );
     MT_ScipioException& operator = ( const MT_ScipioException& );
 
-    ~MT_ScipioException();
+    virtual ~MT_ScipioException();
 
     //-------------------------------------------------------------------------
     /** @name Accessors */

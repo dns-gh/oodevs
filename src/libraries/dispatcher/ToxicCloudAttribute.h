@@ -31,7 +31,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      ToxicCloudAttribute( const Model& model, const ASN1T_ObjectAttributes& asnMsg );
-    ~ToxicCloudAttribute();
+    virtual ~ToxicCloudAttribute();
     //@}
 
     //! @name Operations

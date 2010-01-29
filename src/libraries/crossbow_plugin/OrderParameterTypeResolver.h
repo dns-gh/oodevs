@@ -21,6 +21,7 @@ namespace crossbow
     {
     public:
         OrderParameterTypeResolver& Register( const std::string& type, int value );
+        virtual ~OrderParameterTypeResolver() {}
         int Resolve( const std::string& type ) const;
 
     private:

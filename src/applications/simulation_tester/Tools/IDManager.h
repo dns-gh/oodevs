@@ -39,7 +39,7 @@ class IDManager
 
 public:
      IDManager( uint nMOSClassID, uint nStartInstanceID = 0 );
-    ~IDManager();
+    virtual ~IDManager();
 
     //-------------------------------------------------------------------------
     /** @name ID management */

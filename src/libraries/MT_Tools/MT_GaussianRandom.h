@@ -25,6 +25,7 @@ public:
              MT_GaussianRandom( double rMean, double rVariance );
              MT_GaussianRandom( double rMean, double rVariance, uint32 nSeed );
     explicit MT_GaussianRandom( const MT_GaussianRandom& );
+    virtual ~MT_GaussianRandom() {}
 
     MT_GaussianRandom& operator = ( const MT_GaussianRandom& );
 

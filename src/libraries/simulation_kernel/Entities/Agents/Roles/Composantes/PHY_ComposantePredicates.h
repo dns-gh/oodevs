@@ -27,6 +27,7 @@ class PHY_ComposanteTypePion;
 class ComponentPredicate_ABC
 {
 public:
+    virtual ~ComponentPredicate_ABC() {}
     virtual bool operator() ( const PHY_ComposantePion& composante ) = 0;
 };
 
@@ -48,6 +49,7 @@ public:
         : compPredicate_( compPredicate )
     {
     }
+    virtual ~PHY_ComposantePredicate() {}
 
     bool operator() ( const PHY_ComposantePion& composante )
     {
@@ -77,6 +79,7 @@ public:
         , param_        ( param )
     {
     }
+    virtual ~PHY_ComposantePredicate1() {}
 
     bool operator() ( const PHY_ComposantePion& composante )
     {
@@ -102,6 +105,7 @@ public:
         , result_( 0 )
     {
     }
+    virtual ~GetComponentFunctor() {}
 
     void operator() ( PHY_ComposantePion& composante )
     {
@@ -121,6 +125,7 @@ public:
 class ComponentTypePredicate_ABC
 {
 public:
+    virtual ~ComponentTypePredicate_ABC() {}
     virtual bool operator() ( const PHY_ComposanteTypePion& composanteType ) = 0;
 };
 
@@ -141,6 +146,7 @@ public:
         : compTypePredicate_( compTypePredicate )
     {
     }
+    virtual ~PHY_ComposanteTypePredicate() {}
 
     bool operator() ( const PHY_ComposanteTypePion& composanteType )
     {
@@ -170,6 +176,7 @@ public:
         , param_            ( param )
     {
     }
+    virtual ~PHY_ComposanteTypePredicate1() {}
 
     bool operator() ( const PHY_ComposanteTypePion& composanteType )
     {
@@ -194,6 +201,7 @@ public:
         , result_( false )
     {
     }
+    virtual ~HasUsableComponentFunctor() {}
 
     void operator() ( PHY_ComposantePion& composante )
     {
@@ -212,6 +220,7 @@ public:
 class ComposanteUsePredicate_ABC
 {
 public:
+    virtual ~ComposanteUsePredicate_ABC() {}
     virtual bool operator() ( const PHY_ComposantePion& composante ) = 0;
     virtual bool operator() ( const PHY_ComposanteTypePion& composanteType ) = 0;
 };
@@ -235,6 +244,7 @@ public:
         , compTypePredicate_( compTypePredicate )
     {
     }
+    virtual ~PHY_ComposanteUsePredicate() {}
 
     bool operator() ( const PHY_ComposantePion& composante )
     {
@@ -272,6 +282,7 @@ public:
         , param_            ( param )
     {
     }
+    virtual ~PHY_ComposanteUsePredicate1() {}
 
     bool operator() ( const PHY_ComposantePion& composante )
     {
@@ -302,6 +313,7 @@ public:
         , result_( result )
     {
     }
+    virtual ~GetComponentUseFunctor() {}
 
     void operator() ( PHY_ComposantePion& composante )
     {
@@ -336,6 +348,7 @@ public:
         , result_( result )
     {
     }
+    virtual ~GetComponentLendedUseFunctor() {}
 
     void operator() ( PHY_ComposantePion& composante )
     {

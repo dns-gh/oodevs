@@ -45,7 +45,7 @@ class PHY_SensorTypeAgent : private boost::noncopyable
 
 public:
      PHY_SensorTypeAgent( const PHY_SensorType& type, xml::xistream& xis );
-    ~PHY_SensorTypeAgent();
+    virtual ~PHY_SensorTypeAgent();
 
     //! @name Accessors
     //@{

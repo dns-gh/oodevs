@@ -29,7 +29,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     ADN_Health_GUI( ADN_Health_Data& data );
-    ~ADN_Health_GUI();
+    virtual ~ADN_Health_GUI();
     //@}
 
     //! @name Operations

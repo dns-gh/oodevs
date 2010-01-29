@@ -22,6 +22,8 @@ class PHY_SupplyDotationRequestContainer;
 class Stub_PHY_RoleInterface_Dotation : public dotation::PHY_RoleInterface_Dotations
 {
 public:
+    Stub_PHY_RoleInterface_Dotation() {}
+    virtual ~Stub_PHY_RoleInterface_Dotation() {}
     virtual const PHY_ConsumptionType& GetConsumptionMode() const { throw; }
     virtual void ReadOverloading( xml::xistream& xis ) {}
     virtual void Update( bool bIsDead ) {}

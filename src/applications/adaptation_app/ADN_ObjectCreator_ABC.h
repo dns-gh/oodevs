@@ -33,6 +33,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     ADN_ObjectCreator_ABC()  {}
+    virtual ~ADN_ObjectCreator_ABC()  {}
     //@}
 
     //! @name Operations
@@ -55,6 +56,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     ADN_DefaultObjectCreator() : ADN_ObjectCreator_ABC() {}
+    virtual ~ADN_DefaultObjectCreator() {}
     //@}
 
     //! @name Operations
