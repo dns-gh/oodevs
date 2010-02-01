@@ -40,7 +40,7 @@ KnowledgeGroupsModel::~KnowledgeGroupsModel()
 // -----------------------------------------------------------------------------
 void KnowledgeGroupsModel::Purge()
 {
-    // NOTHING 
+    Clear();
 }
 
 // LTO begin

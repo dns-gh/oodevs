@@ -307,7 +307,7 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
 // -----------------------------------------------------------------------------
 bool MainWindow::New()
 {
-    QString filename = QFileDialog::getOpenFileName( config_.GetExerciseFile().c_str(), "Exercise (*.xml)", this, 0, tr( "Load exercise definition file (exercise.xml)" ) );
+    QString filename = QFileDialog::getOpenFileName( config_.GetExerciseFile().c_str(), "Exercise (exercise.xml)", this, 0, tr( "Load exercise definition file (exercise.xml)" ) );
     if( filename.isEmpty() )
         return false;
     if( filename.startsWith( "//" ) )
@@ -363,10 +363,12 @@ bool MainWindow::Load()
 // -----------------------------------------------------------------------------
 void MainWindow::Close()
 {
+    if( !CheckSaving() )
+        return;
     model_.Purge();
-    SetWindowTitle( false );
-    selector_->Close();
     staticModel_.Purge();
+    selector_->Close();
+    SetWindowTitle( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -384,6 +386,7 @@ void MainWindow::LoadExercise()
     }
     catch( std::exception& e )
     {
+        Close();
         QMessageBox::critical( this, tools::translate( "Application", "SWORD" )
                                    , ( tr( "Error loading exercise: " ) + e.what() ).ascii() );
     }
@@ -447,16 +450,10 @@ MainWindow::~MainWindow()
 // -----------------------------------------------------------------------------
 void MainWindow::closeEvent( QCloseEvent* pEvent )
 {
-    if( needsSaving_ )
+    if( !CheckSaving() )
     {
-        int result = QMessageBox::question( this, tools::translate( "Application", "SWORD" )
-                                                , tr( "Save modifications?" )
-                                                , QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel );
-        if( ( result == QMessageBox::Yes && !Save() ) || result == QMessageBox::Cancel )
-        {
-            pEvent->ignore();
-            return;
-        }
+        pEvent->ignore();
+        return;
     }
     WriteSettings();
     WriteOptions();
@@ -565,9 +562,35 @@ void MainWindow::NotifyDeleted()
 // -----------------------------------------------------------------------------
 void MainWindow::SetWindowTitle( bool needsSaving )
 {
-    needsSaving_ = needsSaving;
+    SetNeedsSaving( needsSaving );
     QString filename = model_.GetName().isEmpty() ? tr( "New ORBAT" ) : model_.GetName();
     if( needsSaving )
         filename += "*";
     setCaption( tr( "Preparation - [%1]" ).arg( filename ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::SetNeedsSaving
+// Created: RPD 2010-01-29
+// -----------------------------------------------------------------------------
+void MainWindow::SetNeedsSaving( bool status )
+{
+    needsSaving_ = status;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::CheckSaving
+// Created: RPD 2010-02-01
+// -----------------------------------------------------------------------------
+bool MainWindow::CheckSaving()
+{
+    if ( needsSaving_ )
+    {
+        int result = QMessageBox::question( this, tools::translate( "Application", "SWORD" )
+                                                , tr( "Save modifications?" )
+                                                , QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel );
+        if( ( result == QMessageBox::Yes && !Save() ) || result == QMessageBox::Cancel )
+            return false;
+    }
+    return true;
 }

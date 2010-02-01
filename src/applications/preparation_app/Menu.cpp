@@ -71,7 +71,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     QPopupMenu* menu = new QPopupMenu( this );
     menu->insertItem( MAKE_ICON( new ) , tools::translate( "Menu", "&New..." ) , parent(), SLOT( New() ) , CTRL + Key_N );
     menu->insertItem( MAKE_ICON( open ), tools::translate( "Menu", "&Open..." ), parent(), SLOT( Open() ), CTRL + Key_O );
-    menu->insertItem( tools::translate( "Menu", "Close" ), parent(), SLOT( Close() ) );
+    menu->insertItem( tools::translate( "Menu", "Close" ), parent(), SLOT( Close() ), CTRL + Key_W );
     menu->insertSeparator();
     menu->insertItem( tools::translate( "Menu", "&Import..." ), &importDialog, SLOT( exec() ), CTRL + Key_I );
     menu->insertSeparator();

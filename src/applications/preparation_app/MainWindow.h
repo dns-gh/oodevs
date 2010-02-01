@@ -112,6 +112,8 @@ private:
     virtual void NotifyUpdated();
     virtual void NotifyDeleted();
     void SetWindowTitle( bool needsSaving );
+    void SetNeedsSaving( bool status );
+    bool CheckSaving();
     //@}
 
 private:
