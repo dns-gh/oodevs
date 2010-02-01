@@ -111,7 +111,7 @@ void SpinBoxDisplayer::Call( const int& value )
 // -----------------------------------------------------------------------------
 void SpinBoxDisplayer::Call( const Unit& value )
 {
-    edit_->setSuffix( value );
+    edit_->setSuffix( value.AsString() );
 }
 
 // -----------------------------------------------------------------------------

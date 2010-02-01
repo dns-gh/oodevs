@@ -27,7 +27,7 @@ MinePrototype_ABC::MinePrototype_ABC( QWidget* parent )
     densityBox_ = new QHBox( this );
     density_ = new QLineEdit( QString::number( 0. ), densityBox_ );
     density_->setValidator( new QDoubleValidator( 0, 5, 3, density_ ) );
-    new QLabel( Units::minesPerMeter, densityBox_ );
+    new QLabel( Units::minesPerMeter.AsString(), densityBox_ );
 }
 
 // -----------------------------------------------------------------------------

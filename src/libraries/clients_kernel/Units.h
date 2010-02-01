@@ -25,8 +25,8 @@ class Unit
 {
 public:
     explicit Unit( const QString& symbol );
-    virtual ~Unit() {}
-    operator const QString& () const { return symbol_; };
+    ~Unit() {}
+    const QString& AsString() const { return symbol_; }
 private:
     QString symbol_;
 };

@@ -10,6 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "Formatter.h"
 #include "Tools.h"
+#include "Units.h"
 
 #include "urban/TerrainObject_ABC.h"
 
@@ -50,7 +51,7 @@ void Formatter< ValueNotSet >::operator()( const ValueNotSet& , Displayer_ABC& d
 }
 
 void Formatter< Unit >::operator()( const Unit& value, Displayer_ABC& displayer ) const {
-    displayer.AddToDisplay( (const QString&)value );
+    displayer.AddToDisplay( value.AsString() );
 }
 
 void Formatter< urban::TerrainObject_ABC >::operator()( const urban::TerrainObject_ABC& value, Displayer_ABC& displayer ) const

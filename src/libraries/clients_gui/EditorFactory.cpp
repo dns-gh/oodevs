@@ -168,7 +168,7 @@ namespace
                      : DecimalSpinBox( parent, decimals )
                      , unit_( value.unit_ )
                  {
-                     setSuffix( value.unit_ );
+                     setSuffix( value.unit_.AsString() );
                      SetValue( value.value_ );
                  }
         virtual ~UnitEditor() {}

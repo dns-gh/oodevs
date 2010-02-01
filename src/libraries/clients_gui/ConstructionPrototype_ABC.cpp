@@ -23,7 +23,7 @@ ConstructionPrototype_ABC::ConstructionPrototype_ABC( QWidget* parent )
 {
     new QLabel( tools::translate( "ConstructionPrototype_ABC", "Construction:" ), this );
     completion_ = new QSpinBox( 0, 100, 1, this );
-    completion_->setSuffix( kernel::Units::percentage );
+    completion_->setSuffix( kernel::Units::percentage.AsString() );
 }
 
 // -----------------------------------------------------------------------------

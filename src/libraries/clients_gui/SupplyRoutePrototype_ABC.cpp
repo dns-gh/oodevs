@@ -23,19 +23,19 @@ SupplyRoutePrototype_ABC::SupplyRoutePrototype_ABC( QWidget* parent )
 {
     new QLabel( tools::translate( "SupplyRoutePrototype_ABC", "Flow:" ), this );
     flow_ = new QSpinBox( 1, 10000, 1, this );
-    flow_->setSuffix( kernel::Units::vehiclesPerHour );
+    flow_->setSuffix( kernel::Units::vehiclesPerHour.AsString() );
 
     new QLabel( tools::translate( "SupplyRoutePrototype_ABC", "Width:" ), this );
     width_ = new QSpinBox( 1, 10000, 1, this );
-    width_->setSuffix( kernel::Units::meters );
+    width_->setSuffix( kernel::Units::meters.AsString() );
 
     new QLabel( tools::translate( "SupplyRoutePrototype_ABC", "Length:" ), this );
     length_ = new QSpinBox( 1, 10000, 1, this );
-    length_->setSuffix( kernel::Units::meters );
+    length_->setSuffix( kernel::Units::meters.AsString() );
 
     new QLabel( tools::translate( "SupplyRoutePrototype_ABC", "Maximum weight:" ), this );
     maxWeight_ = new QSpinBox( 1, 10000, 1, this );
-    maxWeight_->setSuffix( kernel::Units::tons );
+    maxWeight_->setSuffix( kernel::Units::tons.AsString() );
 
     equipped_ = new QCheckBox( tools::translate( "SupplyRoutePrototype_ABC", "Equipped:" ), this );
 }
