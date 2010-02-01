@@ -41,6 +41,6 @@ unsigned long MIL_IDManager::GetFreeId()
 // -----------------------------------------------------------------------------
 void MIL_IDManager::Lock( unsigned long id )
 {
-    if( id > last_ )
+    if( id >= last_ )
         last_ = id + 1;
 }
