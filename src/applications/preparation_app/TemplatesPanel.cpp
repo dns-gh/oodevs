@@ -14,7 +14,7 @@
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h" // LTO
 #include "tools/ExerciseConfig.h"
 
 // -----------------------------------------------------------------------------
@@ -74,7 +74,7 @@ void TemplatesPanel::NotifyUpdated( const kernel::ModelUnLoaded& )
 void TemplatesPanel::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
     if(    ! dynamic_cast< const kernel::Team_ABC* >( & entity )
-        && ! dynamic_cast< const kernel::KnowledgeGroup_ABC* >( & entity ) )
+        && ! dynamic_cast< const kernel::KnowledgeGroup_ABC* >( & entity ) ) // LTO
     {
         menuEntity_ = &entity;
         menu.InsertItem( "Command", tr( "Create template" ), this, SLOT( OnCreateTemplate() ) );

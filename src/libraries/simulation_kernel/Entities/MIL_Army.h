@@ -31,7 +31,7 @@ class MIL_Population;
 class MIL_Object_ABC;
 class MIL_ObjectManager;
 class PopulationFactory_ABC;
-class KnowledgeGroupFactory_ABC;
+class KnowledgeGroupFactory_ABC; // LTO
 struct ASN1T_MsgChangeDiplomacy;
 
 // =============================================================================
@@ -132,14 +132,14 @@ private:
     void ReadObject             ( xml::xistream& xis, MIL_ObjectManager& objectFactory );
     void ReadPopulation         ( xml::xistream& xis, PopulationFactory_ABC& populationFactory );
     void ReadLogistic           ( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgegroupFactory );
-    void ReadAutomat            ( xml::xistream& xis, AutomateFactory_ABC& automateFactory );
+    void ReadAutomat            ( xml::xistream& xis, AutomateFactory_ABC& automateFactory ); // LTO
     void ReadSubordinate        ( xml::xistream& xis, AutomateFactory_ABC& automateFactory, MIL_Automate* pSuperior );
     void ReadDiplomacy          ( xml::xistream& xis );
     //@}
 
     //! @name CheckPoint
     //@{
-    MIL_Army( ArmyFactory_ABC& armyFactory, const MT_Converter< std::string, E_Diplomacy >& diplomacyConverter );
+    MIL_Army( ArmyFactory_ABC& armyFactory, const MT_Converter< std::string, E_Diplomacy >& diplomacyConverter ); // LTO
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Army* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_Army* role, const unsigned int /*version*/ );
     //@}

@@ -46,11 +46,13 @@ GENERATE_ASN_MSG_SENDER      ( ClientToSim, AutomatChangeSuperior,          auto
 GENERATE_ASN_MSG_SENDER      ( ClientToSim, AutomatChangeLogisticLinks,     automat_change_logistic_links )
 GENERATE_ASN_MSG_SENDER      ( ClientToSim, LogSupplyPushFlow,              log_supply_push_flow )
 GENERATE_ASN_MSG_SENDER      ( ClientToSim, LogSupplyChangeQuotas,          log_supply_change_quotas )
+// LTO begin
 GENERATE_ASN_MSG_SENDER      ( ClientToSim, KnowledgeGroupEnable,           knowledge_group_enable )
 GENERATE_ASN_MSG_SENDER      ( ClientToSim, KnowledgeGroupChangeSuperior,   knowledge_group_change_superior )
 GENERATE_ASN_MSG_SENDER      ( ClientToSim, KnowledgeGroupDelete,           knowledge_group_delete )
 GENERATE_ASN_MSG_SENDER      ( ClientToSim, KnowledgeGroupSetType,          knowledge_group_set_type )
 GENERATE_ASN_MSG_SENDER      ( ClientToSim, KnowledgeGroupCreation,         knowledge_group_creation )
+// LTO end
 
 }
 

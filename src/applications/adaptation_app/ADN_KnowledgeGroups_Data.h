@@ -92,7 +92,7 @@ public:
 
     public:
         ADN_Type_String     strName_;
-        ADN_Type_Time       communicationDelay_;
+        ADN_Type_Time       communicationDelay_; // LTO
 
         AgentGroupInfo      agentInfos_;
         PopulationGroupInfo populationInfos_;

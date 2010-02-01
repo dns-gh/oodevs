@@ -210,7 +210,7 @@ bool Profile::CheckRights( const ASN1T_MsgsClientToSim& msg ) const
         case T_MsgsClientToSim_msg_msg_control_local_meteo             : return bSupervision_;
         case T_MsgsClientToSim_msg_msg_control_checkpoint_save_now     : return bSupervision_;
         case T_MsgsClientToSim_msg_msg_control_checkpoint_set_frequency: return bSupervision_;
-        case T_MsgsClientToSim_msg_msg_knowledge_group_enable          : return bSupervision_;
+        case T_MsgsClientToSim_msg_msg_knowledge_group_enable          : return bSupervision_; // LTO
 
         case T_MsgsClientToSim_msg_msg_control_toggle_vision_cones   : return true;
         case T_MsgsClientToSim_msg_msg_unit_order                    : return true;
@@ -231,10 +231,12 @@ bool Profile::CheckRights( const ASN1T_MsgsClientToSim& msg ) const
         case T_MsgsClientToSim_msg_msg_log_supply_push_flow          : return true;
         case T_MsgsClientToSim_msg_msg_log_supply_change_quotas      : return true;
         
+        // LTO begin
         case T_MsgsClientToSim_msg_msg_knowledge_group_change_superior  : return true;
         case T_MsgsClientToSim_msg_msg_knowledge_group_delete           : return true;
         case T_MsgsClientToSim_msg_msg_knowledge_group_set_type         : return true;
         case T_MsgsClientToSim_msg_msg_knowledge_group_creation         : return true;
+        // LTO end
 
         default:
             return false;

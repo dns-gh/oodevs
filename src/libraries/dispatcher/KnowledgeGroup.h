@@ -48,11 +48,11 @@ public:
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
     void Accept         ( kernel::ModelVisitor_ABC& visitor ) const;
-    virtual bool IsActivated() const { return true; };  // $$$$ _RC_ SLG 2009-12-21: TEMP 
-    virtual void Register( kernel::KnowledgeGroup_ABC& knowledgeGroup );
-    virtual void Remove( kernel::KnowledgeGroup_ABC& knowledgeGroup );
-    virtual void Register( kernel::Automat_ABC& automat );
-    virtual void Remove( kernel::Automat_ABC& automat );
+    virtual bool IsActivated() const { return true; };  // $$$$ _RC_ SLG 2009-12-21: TEMP  // LTO
+    virtual void Register( kernel::KnowledgeGroup_ABC& knowledgeGroup ); // LTO
+    virtual void Remove( kernel::KnowledgeGroup_ABC& knowledgeGroup ); // LTO
+    virtual void Register( kernel::Automat_ABC& automat ); // LTO
+    virtual void Remove( kernel::Automat_ABC& automat ); // LTO
     //@}
 
 private:
@@ -65,9 +65,9 @@ private:
 public:
     //! @name Member data
     //@{
-    kernel::Team_ABC&   team_;
+    kernel::Team_ABC&   team_; 
     kernel::KnowledgeGroup_ABC*     parent_;
-    std::string nType_;
+    std::string nType_; // LTO
     tools::Resolver< kernel::KnowledgeGroup_ABC > knowledgeGroups_;
     tools::Resolver< kernel::Automat_ABC > automats_;
     //@}

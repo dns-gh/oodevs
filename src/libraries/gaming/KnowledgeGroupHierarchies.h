@@ -41,7 +41,7 @@ public:
 
     //! @name Operations 
     //@{
-    virtual void DoUpdate( const ASN1T_MsgKnowledgeGroupChangeSuperior& message );
+    virtual void DoUpdate( const ASN1T_MsgKnowledgeGroupChangeSuperior& message ); // LTO
     //@}
 
 private:

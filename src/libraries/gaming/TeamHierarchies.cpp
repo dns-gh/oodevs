@@ -45,7 +45,7 @@ TeamHierarchies::~TeamHierarchies()
 void TeamHierarchies::DoUpdate( const ASN1T_MsgKnowledgeGroupCreation& message )
 {
     if( ! Find( message.oid ) )
-        factory_.CreateKnowledgeGroup( message, holder_ );
+        factory_.CreateKnowledgeGroup( message, holder_ ); // LTO
 }
 
 // -----------------------------------------------------------------------------

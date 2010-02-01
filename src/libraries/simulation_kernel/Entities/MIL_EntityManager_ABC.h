@@ -15,7 +15,7 @@ class MIL_Army_ABC;
 class MIL_Automate;
 class MIL_EffectManager;
 class MIL_EntityManager;
-class MIL_KnowledgeGroup;
+class MIL_KnowledgeGroup; // LTO
 class MIL_Object_ABC;
 class MIL_ObjectBuilder_ABC;
 class MIL_ObjectType_ABC;
@@ -43,7 +43,7 @@ public:
 
     virtual       MIL_AgentPion*      FindAgentPion ( unsigned int nID ) const = 0;
     virtual       MIL_Automate*       FindAutomate  ( unsigned int nID ) const = 0;
-    virtual       MIL_KnowledgeGroup* FindKnowledgeGroup( unsigned int nID ) const = 0;
+    virtual       MIL_KnowledgeGroup* FindKnowledgeGroup( unsigned int nID ) const = 0; // LTO
     virtual const MIL_ObjectType_ABC& FindObjectType( const std::string& type ) const = 0;
 
     virtual MIL_Object_ABC* CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation ) = 0;

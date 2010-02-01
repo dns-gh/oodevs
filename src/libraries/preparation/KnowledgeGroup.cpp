@@ -14,9 +14,9 @@
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/CommunicationHierarchies.h" // LTO
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/KnowledgeGroupType.h"
+#include "clients_kernel/KnowledgeGroupType.h" // LTO
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Team_ABC.h"
@@ -34,8 +34,8 @@ using namespace xml;
 KnowledgeGroup::KnowledgeGroup( Controller& controller, IdManager& idManager, tools::Resolver_ABC< KnowledgeGroupType, std::string >& types )
     : EntityImplementation< KnowledgeGroup_ABC >( controller, idManager.GetNextId(), "" )
     , type_( types.Find( "Standard" ) ) // $$$$ SBO 2006-11-17: Hard coded default
-    , strCommunicationDelay_()
-    , isActivated_( true )
+    , strCommunicationDelay_() // LTO
+    , isActivated_( true ) // LTO
 {
     UpdateCommunicationDelay();
     name_ = tools::translate( "KnowledgeGroup", "Knowledge group [%1]" ).arg( id_ );
@@ -49,13 +49,13 @@ KnowledgeGroup::KnowledgeGroup( Controller& controller, IdManager& idManager, to
 // -----------------------------------------------------------------------------
 KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, tools::Resolver_ABC< KnowledgeGroupType, std::string >& types )
     : EntityImplementation< KnowledgeGroup_ABC >( controller, xml::attribute< unsigned int >( xis, "id" ), "" )
-    , strCommunicationDelay_()
+    , strCommunicationDelay_() // LTO
 {
     std::string type, name;
     xis >> attribute( "type", type )
         >> optional() >> attribute( "name", name );
     type_ = &types.Get( type );
-    UpdateCommunicationDelay();
+    UpdateCommunicationDelay(); // LTO
     name_ = name.empty() ? tools::translate( "KnowledgeGroup", "Knowledge group [%1]" ).arg( id_ ) : name.c_str();
     idManager.Lock( id_ );
 
@@ -83,12 +83,13 @@ void KnowledgeGroup::CreateDictionary( kernel::Controller& controller )
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "KnowledgeGroup", "Info/Identifier" ), (const unsigned long)id_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "KnowledgeGroup", "Info/Name" ), name_, *this, &KnowledgeGroup::Rename );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "KnowledgeGroup", "Type/Name" ), type_, *this, &KnowledgeGroup::SetType );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "KnowledgeGroup", "Type/Delay" ), ((const KnowledgeGroup*)this)->strCommunicationDelay_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "KnowledgeGroup", "Type/Delay" ), ((const KnowledgeGroup*)this)->strCommunicationDelay_ ); // LTO
 }
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup::UpdateCommunicationDelay
 // Created: SYD 2009-11-23
+// LTO
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::UpdateCommunicationDelay()
 {
@@ -111,6 +112,7 @@ void KnowledgeGroup::Rename( const QString& name )
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup::SetType
 // Created: SYD 2009-11-20
+// LTO
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::SetType( kernel::KnowledgeGroupType* const& type )
 {
@@ -145,6 +147,7 @@ void KnowledgeGroup::Accept( kernel::ModelVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup::Accept
 // Created: MGD 2009-12-21
+// LTO
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::Register( kernel::KnowledgeGroup_ABC& knowledgeGroup )
 {
@@ -154,6 +157,7 @@ void KnowledgeGroup::Register( kernel::KnowledgeGroup_ABC& knowledgeGroup )
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup::Accept
 // Created: MGD 2009-12-21
+// LTO
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::Remove( kernel::KnowledgeGroup_ABC& knowledgeGroup )
 {
@@ -163,6 +167,7 @@ void KnowledgeGroup::Remove( kernel::KnowledgeGroup_ABC& knowledgeGroup )
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup::Accept
 // Created: MGD 2009-12-21
+// LTO
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::Register( kernel::Automat_ABC& automat )
 {
@@ -172,6 +177,7 @@ void KnowledgeGroup::Register( kernel::Automat_ABC& automat )
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup::Accept
 // Created: MGD 2009-12-21
+// LTO
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::Remove( kernel::Automat_ABC& automat )
 {
@@ -181,6 +187,7 @@ void KnowledgeGroup::Remove( kernel::Automat_ABC& automat )
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup IsActivated
 // Created: SLG 2009-12-18
+// LTO
 // -----------------------------------------------------------------------------
 bool KnowledgeGroup::IsActivated() const
 {

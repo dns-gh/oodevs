@@ -12,9 +12,11 @@
 #include "UnitMagicOrdersInterface.h"
 #include "PopulationMagicOrdersInterface.h"
 #include "ObjectMagicOrdersInterface.h"
+// LTO begin
 #include "KnowledgeGroupMagicOrdersInterface.h"
 #include "clients_kernel/AgentTypes.h"
 #include "gaming/StaticModel.h"
+// LTO end
 
 // -----------------------------------------------------------------------------
 // Name: MagicOrdersInterface constructor
@@ -25,7 +27,7 @@ MagicOrdersInterface::MagicOrdersInterface( QWidget* parent, kernel::Controllers
     new UnitMagicOrdersInterface( parent, controllers, publisher, staticModel, layer, profile );
     new PopulationMagicOrdersInterface( parent, controllers, publisher, staticModel, layer, profile );
     new ObjectMagicOrdersInterface( parent, controllers, publisher, profile );
-    new KnowledgeGroupMagicOrdersInterface( parent, controllers, publisher, profile, staticModel.types_ );
+    new KnowledgeGroupMagicOrdersInterface( parent, controllers, publisher, profile, staticModel.types_ ); // LTO
 }
 
 // -----------------------------------------------------------------------------

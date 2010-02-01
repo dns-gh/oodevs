@@ -5,6 +5,8 @@
 //
 // Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
 //
+// LTO
+//
 // *****************************************************************************
 
 #ifndef __KnowledgeGroupMagicOrdersInterface_h_

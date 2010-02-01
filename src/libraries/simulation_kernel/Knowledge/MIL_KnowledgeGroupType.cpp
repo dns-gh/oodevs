@@ -91,12 +91,12 @@ MIL_KnowledgeGroupType::MIL_KnowledgeGroupType( const std::string& strName, xml:
     , rKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit_( 0. )
     , rKnowledgeAgentExtrapolationTime_             ( 0. )
     , rKnowledgePopulationMaxLifeTime_              ( 0. )
-    , rCommunicationDelay_                          ( 0. )
+    , rCommunicationDelay_                          ( 0. ) // LTO
 {
-    tools::ReadTimeAttribute( xis, "communication-delay", rCommunicationDelay_ );
-    if( rCommunicationDelay_ < 0 )
-        xis.error( "unit-knowledge: max-lifetime <= 0" );
-    rCommunicationDelay_ *= timeFactor;
+    tools::ReadTimeAttribute( xis, "communication-delay", rCommunicationDelay_ ); // LTO
+    if( rCommunicationDelay_ < 0 ) // LTO
+        xis.error( "unit-knowledge: max-lifetime <= 0" ); // LTO
+    rCommunicationDelay_ *= timeFactor; // LTO
 
     // Connaissances agent
     xis >> xml::start( "unit-knowledge" );
@@ -104,7 +104,7 @@ MIL_KnowledgeGroupType::MIL_KnowledgeGroupType( const std::string& strName, xml:
     tools::ReadTimeAttribute( xis, "max-lifetime", rKnowledgeAgentMaxLifeTime_ );
     if( rKnowledgeAgentMaxLifeTime_ <= 0 )
         xis.error( "unit-knowledge: max-lifetime <= 0" );
-    rKnowledgeAgentMaxLifeTime_ = timeFactor * rKnowledgeAgentMaxLifeTime_;
+    rKnowledgeAgentMaxLifeTime_ = timeFactor * rKnowledgeAgentMaxLifeTime_; // LTO
 
     uint nTmp = std::numeric_limits< unsigned int >::max();
     xis >> xml::optional() >> xml::attribute( "max-unit-to-knowledge-distance", nTmp );
@@ -218,6 +218,7 @@ double MIL_KnowledgeGroupType::GetKnowledgeAgentExtrapolationTime() const
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroupType::GetKnowledgeCommunicationDelay
 // Created: SLG 2009-11-29
+// LTO
 // -----------------------------------------------------------------------------
 double MIL_KnowledgeGroupType::GetKnowledgeCommunicationDelay() const
 {

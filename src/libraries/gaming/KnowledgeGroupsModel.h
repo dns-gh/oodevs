@@ -36,7 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    void Delete( const ASN1T_MsgKnowledgeGroupDelete& asn );
+    void Delete( const ASN1T_MsgKnowledgeGroupDelete& asn ); // LTO
     void Purge();
     //@}
 

@@ -53,8 +53,8 @@ private:
     FormationFactory_ABC& formationFactory_;
     MIL_ObjectManager& objectFactory_;
     PopulationFactory_ABC& populationFactory_;
-    KnowledgeGroupFactory_ABC& knowledgeGroupFactory_;
-    std::auto_ptr< MT_Converter< std::string, MIL_Army_ABC::E_Diplomacy > > diplomacyConverter_;
+    KnowledgeGroupFactory_ABC& knowledgeGroupFactory_; // LTO
+    std::auto_ptr< MT_Converter< std::string, MIL_Army_ABC::E_Diplomacy > > diplomacyConverter_; // LTO
     //@}
 
     //! @name CheckPoint

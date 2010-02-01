@@ -82,10 +82,10 @@ void ModelBuilder::OnCreate()
 // -----------------------------------------------------------------------------
 void ModelBuilder::OnCreateCommunication()
 {
-    if( selectedTeam_ )
+    if( selectedTeam_ ) // LTO
         model_.knowledgeGroups_.Create( *selectedTeam_.ConstCast() );
-    else if( selectedGroup_ )
-        model_.knowledgeGroups_.CreateSubKnowledgeGroup( *selectedGroup_.ConstCast() );
+    else if( selectedGroup_ ) // LTO
+        model_.knowledgeGroups_.CreateSubKnowledgeGroup( *selectedGroup_.ConstCast() ); // LTO
 }
 
 // -----------------------------------------------------------------------------

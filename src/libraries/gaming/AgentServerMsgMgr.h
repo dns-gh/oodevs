@@ -276,6 +276,7 @@ private:
     void OnReceiveMsgUrbanKnowledgeUpdate( const ASN1T_MsgUrbanKnowledgeUpdate& asnMsg );
     void OnReceiveMsgUrbanKnowledgeDestruction( const ASN1T_MsgUrbanKnowledgeDestruction& asnMsg );
 
+    // LTO begin
     //knowledgegroup
     void OnReceiveMsgKnowledgeGroupChangeSuperior( const ASN1T_MsgKnowledgeGroupChangeSuperior& asnMsg );
     void OnReceiveMsgKnowledgeGroupChangeSuperiorAck( const ASN1T_MsgKnowledgeGroupChangeSuperiorAck& asnMsg, unsigned long nCtx );
@@ -286,6 +287,7 @@ private:
     void OnReceiveMsgKnowledgeGroupSetTypeAck( const ASN1T_MsgKnowledgeGroupSetTypeAck& asnMsg, unsigned long nCtx );
     void OnReceiveMsgKnowledgeGroupCreation( const ASN1T_MsgKnowledgeGroupCreation& asnMsg );
     void OnReceiveMsgKnowledgeGroupCreationAck( const ASN1T_MsgKnowledgeGroupCreationAck& asnMsg, unsigned long nCtx );
+    // LTO end
     //@}
 
     //! @name Helpers

@@ -13,12 +13,12 @@
 #include "PreparationProfile.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
-#include "clients_gui/ValuedDragObject.h"
-#include "clients_gui/ValuedListItem.h"
+#include "clients_gui/ValuedDragObject.h" // LTO
+#include "clients_gui/ValuedListItem.h" // LTO
 #include "preparation/AutomatCommunications.h"
-#include "preparation/KnowledgeGroupCommunications.h"
+#include "preparation/KnowledgeGroupCommunications.h" // LTO
 #include "preparation/Tools.h"
-#include <qevent.h>
+#include <qevent.h> // LTO
 
 using namespace kernel;
 
@@ -87,6 +87,7 @@ void CommunicationListView::NotifyContextMenu( const Team_ABC&, ContextMenu& men
 // -----------------------------------------------------------------------------
 // Name: CommunicationListView::NotifyContextMenu
 // Created: FHD 2009-11-19
+// LTO
 // -----------------------------------------------------------------------------
 void CommunicationListView::NotifyContextMenu( const kernel::KnowledgeGroup_ABC& /*knowledgegroup*/, kernel::ContextMenu& menu )
 {
@@ -98,6 +99,7 @@ void CommunicationListView::NotifyContextMenu( const kernel::KnowledgeGroup_ABC&
 // -----------------------------------------------------------------------------
 // Name: CommunicationListView::CanDrop
 // Created: FHD/SYD 2009-11-30
+// LTO
 // -----------------------------------------------------------------------------
 bool CommunicationListView::CanDrop( const Entity_ABC* draggedEntity, QPoint dropPosition ) const
 {
@@ -154,6 +156,7 @@ bool CommunicationListView::CanDrop( const Entity_ABC* draggedEntity, QPoint dro
 // -----------------------------------------------------------------------------
 // Name: CommunicationListView::Drop
 // Created: SBO 2006-09-26
+// LTO
 // -----------------------------------------------------------------------------
 bool CommunicationListView::Drop( const Entity_ABC& draggedEntity, const Entity_ABC& target )
 {
@@ -209,6 +212,7 @@ void CommunicationListView::keyPressEvent( QKeyEvent* event )
 // -----------------------------------------------------------------------------
 // Name: CommunicationListView::CommunicationListView::dragMoveEvent
 // Created: FHD/SYD 2009-12-01
+// LTO
 // -----------------------------------------------------------------------------
 void CommunicationListView::dragMoveEvent( QDragMoveEvent *pEvent )
 {

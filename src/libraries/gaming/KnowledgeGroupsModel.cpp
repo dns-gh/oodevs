@@ -9,10 +9,10 @@
 
 #include "gaming_pch.h"
 #include "KnowledgeGroupsModel.h"
-#include "KnowledgeGroupHierarchies.h"
+#include "KnowledgeGroupHierarchies.h" // LTO
 #include "TeamsModel.h"
-#include "clients_kernel/CommunicationHierarchies.h"
-#include "clients_kernel/Controllers.h"
+#include "clients_kernel/CommunicationHierarchies.h" // LTO
+#include "clients_kernel/Controllers.h" // LTO
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 
 // -----------------------------------------------------------------------------
@@ -45,6 +45,7 @@ void KnowledgeGroupsModel::Purge()
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroupsModel::KnowledgeGroupsModel::Delete
 // Created: FHD 2009-12-21
+// LTO
 // -----------------------------------------------------------------------------
 void KnowledgeGroupsModel::Delete( const ASN1T_MsgKnowledgeGroupDelete& asn )
 {

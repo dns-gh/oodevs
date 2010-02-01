@@ -28,7 +28,7 @@
 #include "simulation_kernel/AutomateFactory_ABC.h"
 #include "simulation_kernel/FormationFactory_ABC.h"
 #include "simulation_kernel/PopulationFactory_ABC.h"
-#include "simulation_kernel/Knowledge/KnowledgeGroupFactory_ABC.h"
+#include "simulation_kernel/Knowledge/KnowledgeGroupFactory_ABC.h" // LTO
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( MIL_Army, "MIL_Army" )
@@ -78,7 +78,7 @@ MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationF
     nType_ = diplomacyConverter_.Convert( strType );
 
     xis >> xml::start( "communication" )
-            >> xml::list( "knowledge-group", *this, &MIL_Army::ReadLogistic, knowledgegroupFactory )
+            >> xml::list( "knowledge-group", *this, &MIL_Army::ReadLogistic, knowledgegroupFactory ) // LTO
         >> xml::end()
         >> xml::start( "tactical" )
             >> xml::list( "formation", *this, &MIL_Army::ReadFormation, formationFactory )
@@ -303,6 +303,7 @@ void MIL_Army::ReadDiplomacy( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 // Name: MIL_Army::ReadLogistic
 // Created: ABL 2007-07-09
+// LTO
 // -----------------------------------------------------------------------------
 void MIL_Army::ReadLogistic( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
 {
@@ -631,6 +632,7 @@ void MIL_Army::UnregisterPopulation( MIL_Population& population )
 MIL_KnowledgeGroup* MIL_Army::FindKnowledgeGroup( uint nID ) const
 {
     CIT_KnowledgeGroupMap it = knowledgeGroups_.find( nID );
+    // LTO begin
     if( it == knowledgeGroups_.end() )
     {
         for( CIT_KnowledgeGroupMap itBis = knowledgeGroups_.begin(); itBis != knowledgeGroups_.end(); ++itBis )
@@ -641,6 +643,7 @@ MIL_KnowledgeGroup* MIL_Army::FindKnowledgeGroup( uint nID ) const
         }
         return 0;
     }
+    // LTO end
     return it->second;
 }
 

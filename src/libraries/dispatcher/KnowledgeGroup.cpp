@@ -25,13 +25,15 @@ KnowledgeGroup::KnowledgeGroup( Model_ABC& model, const ASN1T_MsgKnowledgeGroupC
     : SimpleEntity< kernel::KnowledgeGroup_ABC >( msg.oid )
     , team_( model.Sides().Get( msg.oid_camp ) )
     , parent_( msg.m.oid_knowledgegroup_parentPresent ? &model.KnowledgeGroups().Get( msg.oid_knowledgegroup_parent ) : 0 )
-    , nType_( msg.type )
+    , nType_( msg.type ) // LTO
 {
+    // LTO begin
     if( parent_ == this )
         throw std::runtime_error( __FUNCTION__ ": recursive hierarchy." );
     if( parent_ )
         parent_->Register( *this );
     else
+    // LTO end
         team_.Register( *this );
 }
 
@@ -58,12 +60,14 @@ void KnowledgeGroup::SendCreation( ClientPublisher_ABC& publisher ) const
     
     asn().oid      = GetId();
     asn().oid_camp = team_.GetId();
+    // LTO begin
     asn().type = nType_.c_str();
     if( parent_ )
     {
         asn().m.oid_knowledgegroup_parentPresent = 1;
         asn().oid_knowledgegroup_parent = parent_->GetId();
     }
+    // LTO end
     asn.Send( publisher );
 }
 
@@ -92,12 +96,13 @@ void KnowledgeGroup::SendDestruction( ClientPublisher_ABC& ) const
 void KnowledgeGroup::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
-    knowledgeGroups_.Apply( boost::bind( &KnowledgeGroup_ABC::Accept, _1, boost::ref( visitor ) ) );
+    knowledgeGroups_.Apply( boost::bind( &KnowledgeGroup_ABC::Accept, _1, boost::ref( visitor ) ) ); // LTO
 }
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup::Register
 // Created: MGD 2009-12-21
+// LTO
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::Register( kernel::KnowledgeGroup_ABC& knowledgeGroup )
 {
@@ -106,6 +111,7 @@ void KnowledgeGroup::Register( kernel::KnowledgeGroup_ABC& knowledgeGroup )
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup::Register
 // Created: MGD 2009-12-21
+// LTO
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::Remove( kernel::KnowledgeGroup_ABC& knowledgeGroup )
 {
@@ -115,30 +121,19 @@ void KnowledgeGroup::Remove( kernel::KnowledgeGroup_ABC& knowledgeGroup )
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup::Register
 // Created: MGD 2009-12-21
+// LTO
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::Register( kernel::Automat_ABC& automat )
 {
     automats_.Register( automat.GetId(), automat );
 }
+
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup::Register
 // Created: MGD 2009-12-21
+// LTO
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::Remove( kernel::Automat_ABC& automat )
 {
     automats_.Remove( automat.GetId() );
 }
-
-//void KnowledgeGroup::SendChangeParent( ClientPublisher_ABC& publisher ) const
-//{
-//    client::KnowledgeGroupChangeSuperior asn;
-//    
-//    asn().oid      = GetId();
-//    asn().oid_camp = team_.GetId();
-//    if( parent_ )
-//    {
-//        asn().m.oid_knowledgegroup_parentPresent = 1;
-//        asn().oid_knowledgegroup_parent = parent_->GetId();
-//    }
-//    asn.Send( publisher );
-//}

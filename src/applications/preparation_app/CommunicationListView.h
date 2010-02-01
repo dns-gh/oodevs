@@ -16,8 +16,8 @@
 namespace kernel
 {
     class ModelLoaded;
-    class KnowledgeGroup_ABC;
-    class Team_ABC;
+    class KnowledgeGroup_ABC; // LTO
+    class Team_ABC; // LTO
 }
 
 class ModelBuilder;
@@ -32,7 +32,7 @@ class CommunicationListView : public gui::HierarchyListView< kernel::Communicati
                             , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                             , public tools::ElementObserver_ABC< kernel::Entity_ABC >
                             , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
-                            , public kernel::ContextMenuObserver_ABC< kernel::KnowledgeGroup_ABC >
+                            , public kernel::ContextMenuObserver_ABC< kernel::KnowledgeGroup_ABC > // LTO
 {
 
 public:
@@ -59,12 +59,14 @@ private:
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
     virtual void NotifyUpdated( const kernel::Entity_ABC& );
     virtual void NotifyContextMenu( const kernel::Team_ABC& agent, kernel::ContextMenu& menu );
+    virtual bool Drop( const kernel::Entity_ABC& draggedEntity, const kernel::Entity_ABC& target );
+    // LTO begin
     virtual void NotifyContextMenu( const kernel::KnowledgeGroup_ABC& knowledgegroup, kernel::ContextMenu& menu );
 
     virtual bool CanDrop( const kernel::Entity_ABC* draggedEntity, QPoint dropPosition ) const;
-    virtual bool Drop( const kernel::Entity_ABC& draggedEntity, const kernel::Entity_ABC& target );
-    virtual void keyPressEvent( QKeyEvent* event );
     virtual void dragMoveEvent( QDragMoveEvent *pEvent );
+    // LTO end
+    virtual void keyPressEvent( QKeyEvent* event );
    //@}
 
 private:

@@ -5,6 +5,8 @@
 //
 // Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
 //
+// LTO
+//
 // *****************************************************************************
 
 #include "gaming_app_pch.h"

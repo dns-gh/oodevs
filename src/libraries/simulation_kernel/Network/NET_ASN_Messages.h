@@ -233,12 +233,14 @@ GENERATE_ASN_MSG_SENDER( SimToClient, UrbanKnowledgeUpdate  , urban_knowledge_up
 GENERATE_ASN_MSG_SENDER( SimToClient, UrbanKnowledgeDestruction  , urban_knowledge_destruction )
 
 // KnowledgeGroup
+// LTO begin
 GENERATE_ASN_MSG_SENDER( SimToClient, KnowledgeGroupUpdate              , knowledge_group_update )
 GENERATE_ASN_MSG_SENDER( SimToClient, KnowledgeGroupDelete              , knowledge_group_delete )
 GENERATE_ASN_MSG_SENDER( SimToClient, KnowledgeGroupChangeSuperiorAck   , knowledge_group_change_superior_ack )
 GENERATE_ASN_MSG_SENDER( SimToClient, KnowledgeGroupDeleteAck           , knowledge_group_delete_ack )
 GENERATE_ASN_MSG_SENDER( SimToClient, KnowledgeGroupSetTypeAck          , knowledge_group_set_type_ack )
 GENERATE_ASN_MSG_SENDER( SimToClient, KnowledgeGroupCreationAck         , knowledge_group_creation_ack )
+// LTO end
 
 #endif // __NET_ASN_Messages_h_
 

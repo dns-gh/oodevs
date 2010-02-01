@@ -16,7 +16,7 @@ namespace kernel
 {
     class Controllers;
     class Entity_ABC;
-    class KnowledgeGroupFactory_ABC;
+    class KnowledgeGroupFactory_ABC; // LTO
 }
 
 class Model;
@@ -69,7 +69,7 @@ private:
     Model& model_;
     const StaticModel& static_;
     IdManager& idManager_;
-    kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory_;
+    kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory_; // LTO
     //@}
 };
 

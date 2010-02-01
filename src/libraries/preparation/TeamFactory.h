@@ -24,7 +24,6 @@ namespace kernel
     class Controllers;
     class PropertiesDictionary;    
     class Extension_ABC;
-    class KnowledgeGroupFactory_ABC;
 }
 
 class Model;

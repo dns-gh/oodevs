@@ -12,6 +12,7 @@
 
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
+// LTO begin
 #include "clients_kernel/Updatable_ABC.h"
 #include "game_asn/Simulation.h"
 #include "tools/Resolver_ABC.h"
@@ -20,6 +21,7 @@ namespace kernel
 {
     class KnowledgeGroupType;
 }
+// LTO end
 
 // =============================================================================
 /** @class  KnowledgeGroup
@@ -28,8 +30,8 @@ namespace kernel
 // Created: AGN 2003-12-22
 // =============================================================================
 class KnowledgeGroup : public kernel::EntityImplementation< kernel::KnowledgeGroup_ABC >
-                     , public kernel::Extension_ABC
-                     , public kernel::Updatable_ABC< ASN1T_MsgKnowledgeGroupUpdate >
+                     , public kernel::Extension_ABC // LTO
+                     , public kernel::Updatable_ABC< ASN1T_MsgKnowledgeGroupUpdate > // LTO
 {
 public:
     //! @name Constructors/Destructor
@@ -40,6 +42,7 @@ public:
 
     //! @name Operation
     //@{
+    // LTO begin
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     virtual void Register( kernel::KnowledgeGroup_ABC& knowledgeGroup );
     virtual void Remove( kernel::KnowledgeGroup_ABC& knowledgeGroup );
@@ -51,6 +54,7 @@ public:
     //@{
     virtual bool IsActivated() const;
     std::string GetType() const;
+    // LTO end
     //@}
 
 private:
@@ -60,6 +64,7 @@ private:
     KnowledgeGroup& operator=( const KnowledgeGroup& );
     //@}
 
+    // LTO begin
     //! @name Helpers
     //@{
     virtual void DoUpdate( const ASN1T_MsgKnowledgeGroupUpdate& message );
@@ -72,6 +77,7 @@ private:
     std::string type_;
     bool activated_;
     //@}
+    // LTO end
 };
 
 #endif // __KnowledgeGroup_h_

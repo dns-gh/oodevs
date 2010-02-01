@@ -156,9 +156,11 @@ Entity_ABC* AgentFactory::FindorCreateKnowledgeGroup( const kernel::Entity_ABC& 
         if( dynamic_cast< const KnowledgeGroup_ABC* >( entity ) )
             return const_cast< Entity_ABC* >( entity );
     }
+    // LTO begin
     Team_ABC* teamtop = dynamic_cast< Team_ABC* >( const_cast< Entity_ABC* >(&team) );
     if ( teamtop )
         return knowledgeGroupFactory_.Create( *teamtop );
+    // LTO end
     return const_cast< Entity_ABC* >( &team );
 }
 

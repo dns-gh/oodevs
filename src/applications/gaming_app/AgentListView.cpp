@@ -15,7 +15,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/CommandPostAttributes.h"
 #include "gaming/AutomatDecisions.h"
-#include "gaming/KnowledgeGroupHierarchies.h"
+#include "gaming/KnowledgeGroupHierarchies.h" // LTO
 #include "game_asn/SimulationSenders.h"
 #include "icons.h"
 
@@ -29,9 +29,9 @@ AgentListView::AgentListView( QWidget* pParent, Controllers& controllers, Publis
     : gui::HierarchyListView< kernel::CommunicationHierarchies >( pParent, controllers, factory, profile, icons )
     , publisher_( publisher )
     , lock_( MAKE_PIXMAP( lock ) )
-    , scisors_( MAKE_PIXMAP( scisors ) )
+    , scisors_( MAKE_PIXMAP( scisors ) ) // LTO
     , commandPost_( MAKE_PIXMAP( commandpost ) )
-    , controllers_( controllers )
+    , controllers_( controllers ) // LTO
 {
     addColumn( "HiddenPuce", 15 );
     setColumnAlignment( 1, Qt::AlignCenter );
@@ -76,9 +76,10 @@ void AgentListView::Display( const Entity_ABC& entity, gui::ValuedListItem* item
         item->setPixmap( 1, decisions->IsEmbraye() ? lock_ : QPixmap() );
     else if( const kernel::CommandPostAttributes* commandPost = entity.Retrieve< kernel::CommandPostAttributes >() )
         item->setPixmap( 1, commandPost->IsCommandPost() ? commandPost_ : QPixmap() );
-
+    // LTO begin
     else if ( const kernel::KnowledgeGroup_ABC* kg = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &entity ) ) // $$$$ _RC_ SLG 2009-12-21: TEMP
         item->setPixmap( 1, !kg->IsActivated() ? scisors_ : QPixmap() );
+    // LTO end
 
     gui::HierarchyListView< kernel::CommunicationHierarchies >::Display( entity, item );
 }
@@ -98,6 +99,7 @@ void AgentListView::NotifyUpdated( const AutomatDecisions& decisions )
 // -----------------------------------------------------------------------------
 // Name: AgentListView::NotifyUpdated
 // Created: SBO 2006-08-18
+// LTO
 // -----------------------------------------------------------------------------
 void AgentListView::NotifyUpdated( const KnowledgeGroup_ABC& knowledgeGroup )
 {
@@ -132,6 +134,7 @@ bool AgentListView::Drop( const kernel::Entity_ABC& item, const kernel::Entity_A
         return group && Drop( *automat, *group );
     }
 
+    // LTO begin
     const KnowledgeGroup_ABC* knowledgeGroup = dynamic_cast< const KnowledgeGroup_ABC* >( &item );
     if( knowledgeGroup )
     {
@@ -142,6 +145,7 @@ bool AgentListView::Drop( const kernel::Entity_ABC& item, const kernel::Entity_A
         if( teamParent )
             return Drop( *knowledgeGroup, *teamParent );
     }
+    // LTO end
     return false;
 }
 
@@ -186,7 +190,8 @@ bool AgentListView::Drop( const Automat_ABC& item, const KnowledgeGroup_ABC& tar
 
 // -----------------------------------------------------------------------------
 // Name: AgentListView::Drop
-// Created: FHD 2010-01-04: 
+// Created: FHD 2010-01-04:
+// LTO
 // -----------------------------------------------------------------------------
 bool AgentListView::Drop( const KnowledgeGroup_ABC& item, const Team_ABC& target )
 {
@@ -201,6 +206,7 @@ bool AgentListView::Drop( const KnowledgeGroup_ABC& item, const Team_ABC& target
 // -----------------------------------------------------------------------------
 // Name: AgentListView::Drop
 // Created: FHD 2010-01-04: 
+// LTO
 // -----------------------------------------------------------------------------
 bool AgentListView::Drop( const KnowledgeGroup_ABC& item, const KnowledgeGroup_ABC& target )
 {

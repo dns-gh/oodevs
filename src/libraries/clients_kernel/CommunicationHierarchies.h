@@ -31,6 +31,7 @@ public:
              CommunicationHierarchies() {};
     virtual ~CommunicationHierarchies() {};
     //@}
+    // LTO begin
     //! @name Accessors
     //@{
     virtual const Entity_ABC* GetSuperior() const = 0;
@@ -57,6 +58,7 @@ public:
     //@{
     virtual const Hierarchies* RetrieveHierarchies( const Entity_ABC& entity ) const = 0;
     //@}
+    // LTO end
     
 };
 

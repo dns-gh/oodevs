@@ -200,19 +200,4 @@ bool ProfileFilter::IsKnown( const kernel::Entity_ABC& entity ) const  // $$$$ _
       if( ! i && iHierarchies_ )
          return ( t && IsChildSubordinateOf( *t, *iHierarchies_ ) ) || ( c && IsChildSubordinateOf( *c, *iHierarchies_ ) );
      return false;
-
-    /*if( ! entity_ )
-        return true;
-
-    unsigned int id = entity.GetId();
-    const AgentKnowledges* k = entity_->Retrieve< AgentKnowledges >();
-    tools::Iterator< const AgentKnowledge_ABC& > itK = k->CreateIterator();
-    while( itK.HasMoreElements() )
-    {
-        const AgentKnowledge_ABC& agentKnowledge = itK.NextElement();
-        const kernel::Entity_ABC* realEntity =  agentKnowledge.GetEntity();
-        if ( realEntity == &entity )
-            return true;
-    }   
-    return false;*/
 }

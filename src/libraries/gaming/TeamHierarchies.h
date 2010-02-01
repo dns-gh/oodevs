@@ -30,7 +30,7 @@ class KnowledgeGroupFactory_ABC;
 // =============================================================================
 class TeamHierarchies : public kernel::EntityHierarchies< kernel::CommunicationHierarchies >
                       , public kernel::Updatable_ABC< ASN1T_MsgKnowledgeGroupCreation >
-                      , public kernel::Updatable_ABC< ASN1T_MsgKnowledgeGroupUpdate >
+                      , public kernel::Updatable_ABC< ASN1T_MsgKnowledgeGroupUpdate > // LTO
 {
 
 public:
@@ -44,7 +44,7 @@ private:
     //! @name Operations
     //@{
     virtual void DoUpdate( const ASN1T_MsgKnowledgeGroupCreation& message );
-    virtual void DoUpdate( const ASN1T_MsgKnowledgeGroupUpdate& message );
+    virtual void DoUpdate( const ASN1T_MsgKnowledgeGroupUpdate& message ); // LTO
     //@}
 
 private:

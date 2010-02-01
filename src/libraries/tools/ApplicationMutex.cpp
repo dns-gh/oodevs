@@ -13,6 +13,10 @@
 
 using namespace tools;
 
+#ifdef __LTO__
+#error ARGH
+#endif
+
 namespace
 {
     class ApplicationMutexInternal : public ApplicationMutex_ABC

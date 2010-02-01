@@ -19,8 +19,8 @@ namespace kernel
     class Agent_ABC;
     class Automat_ABC;
     class KnowledgeGroup_ABC;
-    class Team_ABC;
-    class Controllers;
+    class Team_ABC; // LTO
+    class Controllers; // LTO
 }
 
 class Publisher_ABC;
@@ -35,7 +35,7 @@ class AutomatDecisions;
 // =============================================================================
 class AgentListView : public gui::HierarchyListView< kernel::CommunicationHierarchies >
                     , public tools::ElementObserver_ABC< AutomatDecisions >
-                    , public tools::ElementObserver_ABC< kernel::KnowledgeGroup_ABC >
+                    , public tools::ElementObserver_ABC< kernel::KnowledgeGroup_ABC > // LTO
 {
 
 public:
@@ -57,13 +57,13 @@ private:
     virtual void setColumnWidth( int column, int w );
 
     virtual void NotifyUpdated( const AutomatDecisions& decisions );
-    virtual void NotifyUpdated( const kernel::KnowledgeGroup_ABC& knowledgeGroup );
+    virtual void NotifyUpdated( const kernel::KnowledgeGroup_ABC& knowledgeGroup ); // LTO
     virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
     virtual bool Drop( const kernel::Agent_ABC& item,  const kernel::Agent_ABC& target );
     virtual bool Drop( const kernel::Agent_ABC& item,  const kernel::Automat_ABC& target );
     virtual bool Drop( const kernel::Automat_ABC& item,  const kernel::KnowledgeGroup_ABC& target );
-    virtual bool Drop( const kernel::KnowledgeGroup_ABC& item,  const kernel::KnowledgeGroup_ABC& target );
-    virtual bool Drop( const kernel::KnowledgeGroup_ABC& item,  const kernel::Team_ABC& target );
+    virtual bool Drop( const kernel::KnowledgeGroup_ABC& item,  const kernel::KnowledgeGroup_ABC& target ); // LTO
+    virtual bool Drop( const kernel::KnowledgeGroup_ABC& item,  const kernel::Team_ABC& target ); // LTO
     //@}
 
 private:
@@ -71,7 +71,7 @@ private:
     //@{
     Publisher_ABC& publisher_;
     QPixmap lock_, commandPost_, scisors_;
-    kernel::Controllers& controllers_;
+    kernel::Controllers& controllers_; // LTO
     //@}
 };
 

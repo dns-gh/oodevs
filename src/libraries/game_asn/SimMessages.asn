@@ -65,10 +65,12 @@ MsgsSimToClient ::= SEQUENCE
         
         msg-log-supply-push-flow-ack                            MsgLogSupplyPushFlowAck,
         msg-log-supply-change-quotas-ack                        MsgLogSupplyChangeQuotasAck,
+        -- LTO begin
         msg-knowledge-group-change-superior-ack                 MsgKnowledgeGroupChangeSuperiorAck,
         msg-knowledge-group-delete-ack                          MsgKnowledgeGroupDeleteAck,
         msg-knowledge-group-set-type-ack                        MsgKnowledgeGroupSetTypeAck,
         msg-knowledge-group-creation-ack                        MsgKnowledgeGroupCreationAck,
+        -- LTO end
 
         -- MESSAGES
         msg-control-information                                 MsgControlInformation,
@@ -187,8 +189,8 @@ MsgsSimToClient ::= SEQUENCE
         msg-urban-knowledge-update                              MsgUrbanKnowledgeUpdate,
         msg-urban-knowledge-destruction                         MsgUrbanKnowledgeDestruction,
         
-        msg-knowledge-group-update                              MsgKnowledgeGroupUpdate,
-        msg-knowledge-group-delete                              MsgKnowledgeGroupDelete
+        msg-knowledge-group-update                              MsgKnowledgeGroupUpdate, -- LTO
+        msg-knowledge-group-delete                              MsgKnowledgeGroupDelete -- LTO
     }
 }
 
@@ -228,11 +230,13 @@ MsgsClientToSim ::= SEQUENCE
 
         msg-log-supply-push-flow                MsgLogSupplyPushFlow,
         msg-log-supply-change-quotas            MsgLogSupplyChangeQuotas,
+        -- LTO begin
         msg-knowledge-group-change-superior     MsgKnowledgeGroupChangeSuperior,
         msg-knowledge-group-creation            MsgKnowledgeGroupCreation,
         msg-knowledge-group-delete              MsgKnowledgeGroupDelete,
         msg-knowledge-group-set_type            MsgKnowledgeGroupSetType,
         msg-knowledge-group-enable              MsgKnowledgeGroupEnable
+        -- LTO end
     }
 }
 

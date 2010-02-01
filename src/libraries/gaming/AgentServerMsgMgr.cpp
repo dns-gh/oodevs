@@ -1477,21 +1477,22 @@ void AgentServerMsgMgr::OnReceiveMsgUrbanCreation( const ASN1T_MsgUrbanCreation&
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupChangeSuperior
-// Created: FHD 2009-12-16: 
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupChangeSuperior( const ASN1T_MsgKnowledgeGroupChangeSuperior& asnMsg )
-{
-//    GetModel().knowledgeGroups_.Get( asnMsg.oid ).Update( asnMsg );
-}
-
-// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgUrbanDetection
 // Created: MGD 2009-12-10
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUrbanDetection( const ASN1T_MsgUrbanDetection& asnMsg )
 {
     GetModel().agents_.GetAgent( asnMsg.oid ).Update( asnMsg );
+}
+
+// LTO begin
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupChangeSuperior
+// Created: FHD 2009-12-16: 
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupChangeSuperior( const ASN1T_MsgKnowledgeGroupChangeSuperior& asnMsg )
+{
+//    GetModel().knowledgeGroups_.Get( asnMsg.oid ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1539,7 +1540,7 @@ void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupCreation( const ASN1T_MsgKnowl
 {
     GetModel().knowledgeGroups_.Get( asnMsg.oid ).Update( asnMsg );
 }
-
+// LTO end
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgUrbanKnowledgeCreation
@@ -1721,6 +1722,7 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const ASN1
         case T_MsgsSimToClient_msg_msg_urban_knowledge_update                         : OnReceiveMsgUrbanKnowledgeUpdate        ( *message.msg.u.msg_urban_knowledge_update ); break;
         case T_MsgsSimToClient_msg_msg_urban_knowledge_destruction                    : OnReceiveMsgUrbanKnowledgeDestruction   ( *message.msg.u.msg_urban_knowledge_destruction ); break;
 
+        // LTO begin
         //case T_MsgsSimToClient_msg_msg_knowledge_group_change_superior                : OnReceiveMsgKnowledgeGroupChangeSuperior ( *message.msg.u.msg_knowledge_group_change_superior ); break;
         case T_MsgsSimToClient_msg_msg_knowledge_group_change_superior_ack            : OnReceiveMsgKnowledgeGroupChangeSuperiorAck( *message.msg.u.msg_knowledge_group_change_superior_ack, message.context ); break;
         //case T_MsgsSimToClient_msg_msg_knowledge_group_delete                         : OnReceiveMsgKnowledgeGroupDelete ( *message.msg.u.msg_knowledge_group_delete ); break;
@@ -1730,6 +1732,7 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const ASN1
         case T_MsgsSimToClient_msg_msg_knowledge_group_update                         : OnReceiveMsgKnowledgeGroupUpdate( *message.msg.u.msg_knowledge_group_update ); break;
         case T_MsgsSimToClient_msg_msg_knowledge_group_creation_ack                   : OnReceiveMsgKnowledgeGroupCreationAck( *message.msg.u.msg_knowledge_group_creation_ack, message.context ); break;
         case T_MsgsSimToClient_msg_msg_knowledge_group_delete                         : OnReceiveMsgKnowledgeGroupDelete( *message.msg.u.msg_knowledge_group_delete ); break;
+        // LTO end
         default:
             UnhandledMessage( message.msg.t );
     };

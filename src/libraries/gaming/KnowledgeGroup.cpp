@@ -21,7 +21,7 @@ KnowledgeGroup::KnowledgeGroup( unsigned long nId, kernel::Controller& controlle
     : kernel::EntityImplementation< kernel::KnowledgeGroup_ABC >( controller, nId, QString( tools::translate( "KnowledgeGroup", "Group %1" ) ).arg( nId ) )
     , types_( types )
     , type_( type )
-    , activated_( true )
+    , activated_( true ) // LTO
 {
     RegisterSelf( *this );
 }
@@ -35,6 +35,7 @@ KnowledgeGroup::~KnowledgeGroup()
     Destroy();
 }
 
+// LTO begin
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup IsActivated
 // Created: SLG 2009-12-18
@@ -110,3 +111,4 @@ void KnowledgeGroup::Remove( kernel::Automat_ABC& automat )
 {
     //NOTHING
 }
+// LTO end

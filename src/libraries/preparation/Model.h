@@ -11,13 +11,13 @@
 #define __Model_h_
 
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/KnowledgeGroupFactory_ABC.h"
+#include "clients_kernel/KnowledgeGroupFactory_ABC.h" // LTO
 
 namespace kernel
 {
     class Controllers;
     class ActionController;
-    class KnowledgeGroupFactory_ABC;
+    class KnowledgeGroupFactory_ABC; // LTO
 }
 
 namespace tools
@@ -94,7 +94,7 @@ private:
     IdManager& idManager_;
     kernel::Controllers& controllers_;
     TeamFactory_ABC& teamFactory_;
-    kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory_;
+    kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory_; // LTO
     FormationFactory_ABC& formationFactory_;
     AgentFactory_ABC& agentFactory_;
     ProfileFactory_ABC& profileFactory_;

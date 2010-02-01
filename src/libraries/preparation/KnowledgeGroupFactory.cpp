@@ -4,7 +4,7 @@
 // Refer to the included end-user license agreement for restrictions.
 //
 // Copyright (c) 2009 MASA Group
-//
+// LTO
 // *****************************************************************************
 
 #include "preparation_pch.h"

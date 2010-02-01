@@ -4,6 +4,7 @@
 // Refer to the included end-user license agreement for restrictions.
 //
 // Copyright (c) 2008 Mathématiques Appliquées SA (MASA)
+// LTO
 //
 // *****************************************************************************
 

@@ -37,6 +37,7 @@ KnowledgeGroupHierarchies::~KnowledgeGroupHierarchies()
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroupHierarchies::DoUpdate
 // Created: FHD 2009-12-21
+// LTO
 // -----------------------------------------------------------------------------
 void KnowledgeGroupHierarchies::DoUpdate( const ASN1T_MsgKnowledgeGroupChangeSuperior& message )
 {

@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_KnowledgeGroup.h"
-#include "KnowledgeGroupFactory_ABC.h"
+#include "KnowledgeGroupFactory_ABC.h" // LTO
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_AsnException.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -34,11 +34,11 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, uint
     : pType_               ( &type )
     , nID_                 ( nID )
     , pArmy_               ( &army )
-    , pParent_             ( 0 )
+    , pParent_             ( 0 ) // LTO
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_KnowledgeGroup( *this ) )
     , automates_           ()
-    , timeToDiffuse_       ( 0 )
-    , isActivated_         ( true )
+    , timeToDiffuse_       ( 0 ) // LTO
+    , isActivated_         ( true ) // LTO
 {
     pArmy_->RegisterKnowledgeGroup( *this );
     if( !ids_.insert( nID_ ).second )
@@ -48,6 +48,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, uint
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup constructor
 // Created: SLG 2009-11-11
+// LTO
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* pParent, KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
     : nID_                  ( 0 )
@@ -81,10 +82,10 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
     : pType_               ( 0 )
     , nID_                 ( 0 )
     , pArmy_               ( 0 )
-    , pParent_             ( 0 )
+    , pParent_             ( 0 ) // LTO
     , pKnowledgeBlackBoard_( 0 )
     , automates_           ()
-    , isActivated_         ( true )
+    , isActivated_         ( true ) // LTO
 {
     // NOTHING
 }
@@ -95,9 +96,11 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup::~MIL_KnowledgeGroup()
 {
+    // LTO begin
     if( GetParent() )
         GetParent()->UnregisterKnowledgeGroup( *this );
     else if( pArmy_ )
+    // LTO end
         pArmy_->UnregisterKnowledgeGroup( *this );
     delete pKnowledgeBlackBoard_;
     ids_.erase( nID_ );
@@ -106,6 +109,7 @@ MIL_KnowledgeGroup::~MIL_KnowledgeGroup()
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::InitializeKnowledgeGroup
 // Created: SLG 2009-11-11
+// LTO
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::InitializeKnowledgeGroup( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
 {
@@ -141,7 +145,7 @@ void MIL_KnowledgeGroup::save( MIL_CheckPointOutArchive& file, const uint ) cons
     file << type
          << nID_
          << pArmy_
-         << pParent_
+         << pParent_ // LTO
          << pKnowledgeBlackBoard_
          << automates_;
 }
@@ -158,9 +162,8 @@ void MIL_KnowledgeGroup::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "type", pType_->GetName() )
         << xml::end();
 
-    for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
-        (**it).WriteODB( boost::ref(xos) );    
-    //tools::Resolver< MIL_KnowledgeGroup >::Apply( boost::bind( &MIL_KnowledgeGroup::WriteODB, _1, boost::ref(xos) ) );
+    for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
+        (**it).WriteODB( boost::ref(xos) );     // LTO
 }
 
 // -----------------------------------------------------------------------------
@@ -172,9 +175,8 @@ void MIL_KnowledgeGroup::UpdateKnowledges(int currentTimeStep)
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
         (**it).UpdateKnowledges(currentTimeStep);
 
-    for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
-        (**it).UpdateKnowledges(currentTimeStep);
-    //tools::Resolver< MIL_KnowledgeGroup >::Apply( boost::bind( &MIL_KnowledgeGroup::UpdateKnowledges, _1 ) );
+    for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
+        (**it).UpdateKnowledges(currentTimeStep); // LTO
 
     assert( pKnowledgeBlackBoard_ );
     pKnowledgeBlackBoard_->Update(currentTimeStep);
@@ -189,9 +191,8 @@ void MIL_KnowledgeGroup::CleanKnowledges()
     assert( pKnowledgeBlackBoard_ );
     pKnowledgeBlackBoard_->Clean();
 
-    for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
-        (**it).CleanKnowledges();
-    //tools::Resolver< MIL_KnowledgeGroup >::Apply( boost::bind( &MIL_KnowledgeGroup::CleanKnowledges, _1 ) );
+    for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
+        (**it).CleanKnowledges(); // LTO
 
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
         (**it).CleanKnowledges();
@@ -238,6 +239,7 @@ void MIL_KnowledgeGroup::SendCreation() const
     NET_ASN_MsgKnowledgeGroupCreation asn;   
     asn().oid       = nID_;
     asn().oid_camp  = pArmy_->GetID();
+    // LTO begin
     asn().type      = GetType().GetName().c_str();
     if( pParent_ )
     {
@@ -248,7 +250,7 @@ void MIL_KnowledgeGroup::SendCreation() const
     //SLG : @TODO MGD Move to factory
     for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
         (**it).SendCreation();
-//    tools::Resolver< MIL_KnowledgeGroup >::Apply( boost::bind( &MIL_KnowledgeGroup::SendCreation, _1 ) );//SLG : @TODO MGD Move to factory
+    // LTO end
 }
 
 // -----------------------------------------------------------------------------
@@ -257,13 +259,14 @@ void MIL_KnowledgeGroup::SendCreation() const
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::SendFullState() const
 {
-    for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
-        (**it).SendFullState();    
+    for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
+        (**it).SendFullState(); // LTO
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::UpdateKnowledgeGroup
 // Created: SLG 2009-12-23
+// LTO
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::UpdateKnowledgeGroup() const
 {
@@ -281,6 +284,7 @@ void MIL_KnowledgeGroup::UpdateKnowledgeGroup() const
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::UpdateKnowledgeGroup
 // Created: SLG 2009-12-23
+// LTO
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::DeleteKnowledgeGroup()
 {
@@ -301,6 +305,7 @@ void MIL_KnowledgeGroup::DeleteKnowledgeGroup()
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::MoveKnowledgeGroup
 // Created: NLD 2004-09-06
+// LTO
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::MoveKnowledgeGroup( MIL_KnowledgeGroup *pNewParent )
 {
@@ -324,8 +329,8 @@ void MIL_KnowledgeGroup::SendKnowledge() const
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
         (**it).SendKnowledge();
 
-    for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
-        (**it).SendKnowledge(); 
+    for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
+        (**it).SendKnowledge(); // LTO
 }
 
 // -----------------------------------------------------------------------------
@@ -365,8 +370,9 @@ const MIL_KnowledgeGroup::T_AutomateVector& MIL_KnowledgeGroup::GetAutomates() c
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_KnowledgeGroup::GetAutomates
-// Created: NLD 2004-09-01
+// Name: MIL_KnowledgeGroup::GetKnowledgeGroups
+// Created: 
+// LTO
 // -----------------------------------------------------------------------------
 const MIL_KnowledgeGroup::T_KnowledgeGroupVector& MIL_KnowledgeGroup::GetKnowledgeGroups() const
 {
@@ -393,10 +399,10 @@ MIL_Army_ABC& MIL_KnowledgeGroup::GetArmy() const
     return *pArmy_;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::GetParent
 // Created: NLD 2004-09-07
+// LTO
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup* MIL_KnowledgeGroup::GetParent() const
 {
@@ -406,6 +412,7 @@ MIL_KnowledgeGroup* MIL_KnowledgeGroup::GetParent() const
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::SetParent
 // Created: FHD 2009-12-22
+// LTO
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::SetParent( MIL_KnowledgeGroup* pParent )
 {
@@ -415,6 +422,7 @@ void MIL_KnowledgeGroup::SetParent( MIL_KnowledgeGroup* pParent )
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::RegisterKnowledgeGroup
 // Created: NLD 2006-10-13
+// LTO
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::RegisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup )
 {
@@ -425,6 +433,7 @@ void MIL_KnowledgeGroup::RegisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGr
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::UnregisterKnowledgeGroup
 // Created: FHD 2009-12-16: 
+// LTO
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::UnregisterKnowledgeGroup( const MIL_KnowledgeGroup& knowledgeGroup )
 {
@@ -467,6 +476,7 @@ const MIL_KnowledgeGroupType& MIL_KnowledgeGroup::GetType() const
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::IsEnabled
 // Created: SLG 2009-12-17
+// LTO
 // -----------------------------------------------------------------------------
 bool MIL_KnowledgeGroup::IsEnabled() const
 {
@@ -476,6 +486,7 @@ bool MIL_KnowledgeGroup::IsEnabled() const
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::FindKnowledgeGroup
 // Created: SLG 2009-11-30
+// LTO
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup* MIL_KnowledgeGroup::FindKnowledgeGroup( uint nID ) const
 {
@@ -501,6 +512,7 @@ MIL_KnowledgeGroup* MIL_KnowledgeGroup::FindKnowledgeGroup( uint nID ) const
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::GetTimeToDiffuseToKnowledgeGroup
 // Created: SLG 2009-11-30
+// LTO
 // -----------------------------------------------------------------------------
 MT_Float MIL_KnowledgeGroup::GetTimeToDiffuseToKnowledgeGroup() const
 {
@@ -510,6 +522,7 @@ MT_Float MIL_KnowledgeGroup::GetTimeToDiffuseToKnowledgeGroup() const
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::RefreshTimeToDiffuseToKnowledgeGroup
 // Created: SLG 2009-11-30
+// LTO
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::RefreshTimeToDiffuseToKnowledgeGroup()
 {
@@ -520,6 +533,7 @@ void MIL_KnowledgeGroup::RefreshTimeToDiffuseToKnowledgeGroup()
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupEnable
 // Created: SLG 2009-12-17
+// LTO
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupEnable( const ASN1T_MsgKnowledgeGroupEnable& asnMsg )
 {
@@ -529,7 +543,8 @@ void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupEnable( const ASN1T_MsgKnowle
 
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupChangeSuperior
-// Created: FHD 2009-12-17: 
+// Created: FHD 2009-12-17:  
+// LTO
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupChangeSuperior( const ASN1T_MsgKnowledgeGroupChangeSuperior& msg, const tools::Resolver< MIL_Army_ABC >& armies )
 {
@@ -577,6 +592,7 @@ void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupChangeSuperior( const ASN1T_M
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupDelete
 // Created: FHD 2009-12-17: 
+// LTO
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupDelete( const ASN1T_MsgKnowledgeGroupDelete& /*msg*/ )
 {
@@ -586,6 +602,7 @@ void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupDelete( const ASN1T_MsgKnowle
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupSetType
 // Created: FHD 2009-12-17: 
+// LTO
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupSetType( const ASN1T_MsgKnowledgeGroupSetType& msg )
 {
@@ -600,6 +617,7 @@ void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupSetType( const ASN1T_MsgKnowl
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupCreation
 // Created: FHD 2009-12-17: 
+// LTO
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupCreation( const ASN1T_MsgKnowledgeGroupCreation& msg )
 {

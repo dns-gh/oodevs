@@ -14,7 +14,7 @@
 #include "simulation_kernel/Entities/Objects/MIL_ObjectManager.h"
 #include "simulation_kernel/FormationFactory_ABC.h"
 #include "simulation_kernel/PopulationFactory_ABC.h"
-#include "simulation_kernel/knowledge/KnowledgeGroupFactory_ABC.h"
+#include "simulation_kernel/knowledge/KnowledgeGroupFactory_ABC.h" // LTO
 
 
 #include <xeumeuleu/xml.h>
@@ -32,12 +32,12 @@ void save_construct_data( Archive& archive, const ArmyFactory* factory, const un
     const FormationFactory_ABC* const formationFactory = &factory->formationFactory_;
     const MIL_ObjectManager* const objectFactory = &factory->objectFactory_;
     const PopulationFactory_ABC* const populationFactory = &factory->populationFactory_;
-    const KnowledgeGroupFactory_ABC* const knowledgeGroupFactory = &factory->knowledgeGroupFactory_;
+    const KnowledgeGroupFactory_ABC* const knowledgeGroupFactory = &factory->knowledgeGroupFactory_; // LTO
     archive << automateFactory
             << formationFactory
             << objectFactory
             << populationFactory
-            << knowledgeGroupFactory;
+            << knowledgeGroupFactory; // LTO
 }
 // -----------------------------------------------------------------------------
 // Name: ArmyFactory::save_construct_data
@@ -50,13 +50,13 @@ void load_construct_data( Archive& archive, ArmyFactory* factory, const unsigned
     FormationFactory_ABC* formationFactory;
     MIL_ObjectManager* objectFactory;
     PopulationFactory_ABC* populationFactory;
-    KnowledgeGroupFactory_ABC* knowledgeGroupFactory;
+    KnowledgeGroupFactory_ABC* knowledgeGroupFactory; // LTO
     archive >> automateFactory
             >> formationFactory
             >> objectFactory
             >> populationFactory
-            >> knowledgeGroupFactory;
-    ::new( factory )ArmyFactory( *automateFactory, *formationFactory, *objectFactory, *populationFactory, *knowledgeGroupFactory );
+            >> knowledgeGroupFactory; // LTO
+    ::new( factory )ArmyFactory( *automateFactory, *formationFactory, *objectFactory, *populationFactory, *knowledgeGroupFactory ); // LTO
 }
 
 // -----------------------------------------------------------------------------
@@ -68,8 +68,8 @@ ArmyFactory::ArmyFactory( AutomateFactory_ABC& automateFactory, FormationFactory
     , formationFactory_( formationFactory )
     , objectFactory_( objectFactory )
     , populationFactory_( populationFactory )
-    , knowledgeGroupFactory_( knowledgeGroupFactory )
-    , diplomacyConverter_( new MT_Converter< std::string, MIL_Army_ABC::E_Diplomacy >( MIL_Army_ABC::eUnknown ) )
+    , knowledgeGroupFactory_( knowledgeGroupFactory ) // LTO
+    , diplomacyConverter_( new MT_Converter< std::string, MIL_Army_ABC::E_Diplomacy >( MIL_Army_ABC::eUnknown ) ) // LTO
 {
     InitializeDiplomacies();
 }

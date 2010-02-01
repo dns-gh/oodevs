@@ -19,9 +19,9 @@ using namespace kernel;
 // Name: KnowledgeGroupsModel constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-KnowledgeGroupsModel::KnowledgeGroupsModel( kernel::Controllers& controllers, kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
+KnowledgeGroupsModel::KnowledgeGroupsModel( kernel::Controllers& controllers, kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory ) // LTO
     : controllers_( controllers )
-    , knowledgeGroupFactory_( knowledgeGroupFactory )
+    , knowledgeGroupFactory_( knowledgeGroupFactory ) // LTO
 {
 }
 
@@ -43,6 +43,7 @@ void KnowledgeGroupsModel::Purge()
     // NOTHING 
 }
 
+// LTO begin
 // -----------------------------------------------------------------------------
 // Name: tools::Iterator< const kernel::KnowledgeGroup_ABC& > KnowledgeGroupsModel::CreateIterator
 // Created: AGE 2006-09-19
@@ -93,3 +94,4 @@ void KnowledgeGroupsModel::CreateSubKnowledgeGroup( xml::xistream& xis, kernel::
     xis >> xml::list( "knowledge-group", *this, &KnowledgeGroupsModel::CreateSubKnowledgeGroup, *knowledgegroup, model );
     Register( knowledgegroup->GetId(), *knowledgegroup );
 }
+// LTO end

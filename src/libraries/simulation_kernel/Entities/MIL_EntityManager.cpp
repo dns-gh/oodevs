@@ -737,6 +737,7 @@ void MIL_EntityManager::PreprocessRandomBreakdowns()
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::UpdateKnowledgeGroups
 // Created:  FHD 2009-12-18: 
+// LTO
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::UpdateKnowledgeGroups()
 {
@@ -762,7 +763,7 @@ void MIL_EntityManager::Update()
     UpdateActions   ();
     UpdateEffects   ();
     UpdateStates    ();
-    UpdateKnowledgeGroups();
+    UpdateKnowledgeGroups(); // LTO
 };
 
 // -----------------------------------------------------------------------------
@@ -1203,28 +1204,24 @@ void MIL_EntityManager::OnReceiveMsgLogSupplyPushFlow( const ASN1T_MsgLogSupplyP
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnReceiveMsgKnowledgeGroupEnable
 // Created: SLG 2009-12-17
+// LTO
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveMsgKnowledgeGroupEnable( const ASN1T_MsgKnowledgeGroupEnable& asnMsg, unsigned int nCtx )
 {
-    //NET_ASN_MsgKnowledgeGroupEnable ack;
-    //ack() = MsgKnowledgeGroupEnable::no_error;
     try
     {
         MIL_KnowledgeGroup* pReceiver = FindKnowledgeGroup( asnMsg.oid );
-        //if( !pReceiver )
-        //throw NET_AsnException< ASN1T_MsgLogSupplyPushFlowAck >( MsgLogSupplyPushFlowAck::error_invalid_receveur );
         pReceiver->OnReceiveMsgKnowledgeGroupEnable( asnMsg );
     }
     catch( NET_AsnException< ASN1T_MsgLogSupplyPushFlowAck >& /*e*/ )
     {
-        //    ack() = e.GetErrorID();
     }
-    //ack.Send( nCtx );*/
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnReceiveMsgKnowledgeGroupChangeSuperior
 // Created: FHD 2009-12-15: 
+// LTO
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveMsgKnowledgeGroupChangeSuperior( const ASN1T_MsgKnowledgeGroupChangeSuperior& msg, uint nCtx )
 {
@@ -1251,6 +1248,7 @@ void MIL_EntityManager::OnReceiveMsgKnowledgeGroupChangeSuperior( const ASN1T_Ms
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnReceiveMsgKnowledgeGroupDelete
 // Created: FHD 2009-12-15: 
+// LTO
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveMsgKnowledgeGroupDelete( const ASN1T_MsgKnowledgeGroupDelete& msg, uint nCtx )
 {
@@ -1275,6 +1273,7 @@ void MIL_EntityManager::OnReceiveMsgKnowledgeGroupDelete( const ASN1T_MsgKnowled
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnReceiveMsgKnowledgeGroupSetType
 // Created: FHD 2009-12-15: 
+// LTO
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveMsgKnowledgeGroupSetType( const ASN1T_MsgKnowledgeGroupSetType& msg, uint nCtx )
 {
@@ -1299,6 +1298,7 @@ void MIL_EntityManager::OnReceiveMsgKnowledgeGroupSetType( const ASN1T_MsgKnowle
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnReceiveMsgKnowledgeGroupCreation
 // Created: FHD 2009-12-15: 
+// LTO
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveMsgKnowledgeGroupCreation( const ASN1T_MsgKnowledgeGroupCreation& msg, uint nCtx )
 {
@@ -1428,6 +1428,7 @@ MIL_Automate* MIL_EntityManager::FindAutomate( unsigned int nID ) const
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::FindKnowledgeGroup
 // Created: SLG 2009-12-17
+// LTO
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup* MIL_EntityManager::FindKnowledgeGroup( unsigned int nID ) const
 {//@TODO MGD Remove

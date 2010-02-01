@@ -42,7 +42,7 @@ class KnowledgeGroupsModel : public tools::Resolver< kernel::KnowledgeGroup_ABC 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit KnowledgeGroupsModel( kernel::Controllers& controllers, kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory );
+    explicit KnowledgeGroupsModel( kernel::Controllers& controllers, kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory ); // LTO
     virtual ~KnowledgeGroupsModel();
     //@}
 
@@ -50,10 +50,12 @@ public:
     //@{
     void Purge();
     virtual tools::Iterator< const kernel::KnowledgeGroup_ABC& > CreateIterator() const;
-        void Create( kernel::Team_ABC& parent );
-        void Create( xml::xistream& xis, kernel::Team_ABC& parent, Model& model );
-        void CreateSubKnowledgeGroup( kernel::KnowledgeGroup_ABC& parent );
-        void CreateSubKnowledgeGroup( xml::xistream& xis, kernel::KnowledgeGroup_ABC& parent, Model& model );
+    // LTO begin
+    void Create( kernel::Team_ABC& parent );
+    void Create( xml::xistream& xis, kernel::Team_ABC& parent, Model& model );
+    void CreateSubKnowledgeGroup( kernel::KnowledgeGroup_ABC& parent );
+    void CreateSubKnowledgeGroup( xml::xistream& xis, kernel::KnowledgeGroup_ABC& parent, Model& model );
+    // LTO end
     //@}
 
 private:
@@ -66,8 +68,8 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
-    kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory_;
+    kernel::Controllers& controllers_; // LTO
+    kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory_; // LTO
     //@}
 };
 
