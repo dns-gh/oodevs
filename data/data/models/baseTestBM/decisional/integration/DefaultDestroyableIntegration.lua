@@ -19,10 +19,12 @@ local eActionTirDirect_None = 6
 
 integration.canDestroyIt = function( target )
   BreakForDebug( "canDestroyIt eTir = "..tostring( eTir )..","..tostring(target) )
+  BreakForDebug("DEC_ConnaissanceAgent_EtatOps: "..DEC_ConnaissanceAgent_EtatOps(target.source))
   if eTir == eActionTirDirect_NoAmmo
     or eTir == eActionTirDirect_NoCapacity
     or eTir == eActionTirDirect_EnemyDestroyed
-    or eTir == eActionTirDirect_Impossible then
+    or eTir == eActionTirDirect_Impossible 
+    or DEC_ConnaissanceAgent_EtatOps(target.source) < 0.01 then 
     BreakForDebug( "Cannot Destroy It!" )
     return false
   else
