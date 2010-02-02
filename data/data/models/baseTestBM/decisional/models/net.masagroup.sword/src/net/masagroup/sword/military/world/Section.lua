@@ -19,6 +19,10 @@ defaultMethods
     perceptionLevel = function() return default_engine.methods.load( "element_perceptionLevel") end,
     observationPriority = function() return default_engine.methods.load( "generic_observationPriority" ) end,
 
+    -- POSITIONNABLE
+    isInMyAOR = function() return default_engine.predicates.load( "isInMyAOR") end,
+    canTakePosition = function() return default_engine.methods.load( "canTakePosition" ) end,
+    
     -- DESTROYABLE
     destructionLevel = function() return default_engine.methods.load( "destructionLevel" ) end,
     destructionPriority = function() return default_engine.methods.load( "destructionPriority" ) end,
@@ -56,6 +60,11 @@ return
     end,
     isPartiallyPerceived = function( self )
       return self:perceptionLevel() > 25
+    end,
+    
+    -- POSITIONNABLE
+    takeUpPosition = function( self )
+        return integration.takeUpPosition( self )
     end,
 
     -- INTEGRATION METHODS
@@ -136,11 +145,6 @@ return
   end,
     canDestroyIt = function()
       return true
-    end,
-    canTakePosition= function()
-      return true
-    end,
-    takeUpPosition = function()
     end,
     occupationLevel = function()
       return 100

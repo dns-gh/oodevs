@@ -49,8 +49,9 @@ return
     isPartiallyPerceived = function( self )
       return self:perceptionLevel() > 25
     end,
-    takeUpPosition = function( point )
-        --NOTHING
+    -- POSITIONNABLE
+    takeUpPosition = function( self )
+        return integration.takeUpPosition( self )
     end,
     safeApproachIt = function( point )
         --TODO

@@ -26,7 +26,7 @@ defaultMethods
 
     -- POSITIONNABLE
     isInMyAOR = function() return default_engine.predicates.load( "isInMyAOR") end,
-    canTakePosition = function() return default_engine.methods.load( "canTakePosition" ) end,
+    canTakePosition = function() return default_engine.methods.load( "canTakePosition") end,
 
     -- REACHING
     reachEfficiency = function() return default_engine.methods.load( "reachEfficiency" ) end,
@@ -48,14 +48,16 @@ return
 
     -- $$$ MIA: temp, to move in default military implementation
     isTotallyPerceived = function( self )
-        return self:perceptionLevel() == 100
+      return self:perceptionLevel() == 100
     end,
     isPartiallyPerceived = function( self )
       return self:perceptionLevel() > 25
     end,
-    takeUpPosition = function( point )
-        --NOTHING
+    -- POSITIONNABLE
+    takeUpPosition = function( self )
+        return integration.takeUpPosition( self )
     end,
+    --
     safeApproachIt = function( point )
         --TODO
     end,

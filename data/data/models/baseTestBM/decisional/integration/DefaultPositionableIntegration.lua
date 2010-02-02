@@ -1,5 +1,5 @@
 --Positionnable Implementation
-integration.takeUpPosition = function( point )
-  DEC_Agent_SInstaller()
-  return DEC_Agent_EstInstalle()
+integration.takeUpPosition = function( reachable )
+  BreakForDebug( "posture"..tostring(DEC_Agent_NiveauInstallation()) )
+  return DEC_Agent_NiveauInstallation() >= 4 -- 4 corresponding to E_PostureType::ePosturePoste
 end

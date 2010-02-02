@@ -30,13 +30,16 @@ local moveAction = nil
 local etat = nil
 integration.moveToIt = function( reachable)
   if not moveAction then
+    default_engine.methods.occupyPosition( kBase.me.body, nil ) -- UnOccupyPosition
     it = DEC_CreerItineraireBM( reachable.sim_pos.x, reachable.sim_pos.y, reachable.sim_pos.z, eTypeItiMouvement )
     moveAction = DEC_StartDeplacement( it )
     actionCallbacks[ moveAction ] = function( arg ) etat = arg end
   elseif etat == eEtatActionDeplacement_Termine then
+    default_engine.methods.occupyPosition( kBase.me.body, reachable ) --OccupyPosition
     moveAction = DEC_StopAction( moveAction )
     moveAction = nil
     etat = nil
+    return true
   elseif etat == eEtatActionDeplacement_Pause then
     DEC_ReprendAction( moveAction )
   elseif etat == eEtatActionDeplacement_ManqueCarburant then

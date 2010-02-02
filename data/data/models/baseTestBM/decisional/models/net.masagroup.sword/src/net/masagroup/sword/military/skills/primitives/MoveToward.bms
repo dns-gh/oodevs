@@ -12,7 +12,11 @@ rootnode
     -- objectives are reached
     -- --------------------------------------------------------------------------------
     done = function( self, params, additionnalParams )
-        Feedback( self.feedbacks.done, { position = additionnalParams.position, state = additionnalParams.state } )
+        BreakForDebug("call done in rootnodee from moveToward")
+        if additionnalParams.state == "posted" then
+            BreakForDebug("poster callback")
+            Feedback( self.feedbacks.done, { position = additionnalParams.position, state = additionnalParams.state } )
+        end
     end,
 
     -- -------------------------------------------------------------------------------- 
