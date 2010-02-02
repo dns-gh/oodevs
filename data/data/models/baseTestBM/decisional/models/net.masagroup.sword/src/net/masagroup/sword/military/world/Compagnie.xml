@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.world.Compagnie" extends="net.masagroup.sword.military.world.Unit">
-  <description>Automat</description>
-  <methods/>
+  <description>Compagnie</description>
+  <methods>
+    <method name="getAttritionForNeutralization">
+        <description>__INTEGRATION</description>
+        <return>
+          <description>return a value between 0 and 100 to express the estimation of the attrition for the neutralization from a shooter to a target when the shooter is located on the position in parameter</description>
+          <type>
+            <simple name="numeric"/>
+          </type>
+        </return>
+      </method>
+    </methods>
 </class>
