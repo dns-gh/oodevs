@@ -369,7 +369,7 @@ MT_Float PHY_SensorTypeAgent::ComputeExtinction( const PHY_RawVisionDataIterator
 // Last modified: JVT 03-01-27
 //-----------------------------------------------------------------------------
 inline
-const PHY_PerceptionLevel& PHY_SensorTypeAgent::InterpreteExtinction( MT_Float rExtinction ) const
+const PHY_PerceptionLevel& PHY_SensorTypeAgent::InterpretExtinction( MT_Float rExtinction ) const
 {
     if( rExtinction >= rDetectionDist_ - rIdentificationDist_ )
         return PHY_PerceptionLevel::identified_;
@@ -378,18 +378,6 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::InterpreteExtinction( MT_Float r
     if( rExtinction >= 0 )
          return PHY_PerceptionLevel::detected_;
     return PHY_PerceptionLevel::notSeen_;
-}
-
-//-----------------------------------------------------------------------------
-// Name: PHY_SensorTypeAgent::InterpreteExtinction
-// Created: JVT 02-07-12
-// Last modified: JVT 03-01-27
-//-----------------------------------------------------------------------------
-inline
-const PHY_PerceptionLevel& PHY_SensorTypeAgent::InterpreteTerrainObjectExtinction( MT_Float rExtinction ) const
-{
-    //@TODO MGD replace by true management , test for the moment
-    return PHY_PerceptionLevel::identified_;
 }
 
 // -----------------------------------------------------------------------------
@@ -410,7 +398,7 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::RayTrace( const MT_Vector2D& vSo
     while ( rVisionNRJ > 0 && !(++it).End() )
         rVisionNRJ = ComputeExtinction( it, rDistanceMaxModificator, rVisionNRJ );
 
-    return InterpreteTerrainObjectExtinction( rVisionNRJ );
+    return InterpretExtinction( rVisionNRJ );
 }
 
 // -----------------------------------------------------------------------------
