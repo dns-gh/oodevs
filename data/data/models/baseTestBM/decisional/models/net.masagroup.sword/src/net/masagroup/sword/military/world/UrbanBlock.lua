@@ -80,12 +80,7 @@ return
         return 100 -- TODO -- $$$ MIA: not used in skill yet... 
     end,
     getPerception = function( self )
-        if timer then
-            timer = timer + 1
-        else
-            timer = 0
-        end
-        return timer -- TODO MGD Replace by DEC_function
+        integration.getUrbanBlockPerception( self )
     end,
     getReconnaissanceState = function( self ) 
        return 0 -- TODO

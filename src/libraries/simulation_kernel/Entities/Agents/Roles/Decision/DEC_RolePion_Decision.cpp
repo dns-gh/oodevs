@@ -30,6 +30,7 @@
 #include "Decision/Functions/DEC_KnowledgeAgentFunctions.h"
 #include "Decision/Functions/DEC_KnowledgeObjectFunctions.h"
 #include "Decision/Functions/DEC_KnowledgePopulationFunctions.h"
+#include "Decision/Functions/DEC_KnowledgeUrbanFunctions.h"
 #include "Decision/Functions/DEC_GeometryFunctions.h"
 #include "Decision/Functions/DEC_FireFunctions.h"
 #include "Decision/Functions/DEC_DynamicFireFunctions.h"
@@ -572,6 +573,11 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_ConnaissancePopulation_Exterminer"                   ,
     		boost::function< int (int, float) >(boost::bind( &DEC_KnowledgePopulationFunctions::Exterminate, boost::cref( GetPion() ), _1, _2 ) ) );
     
+    // Urban knowledges accessors
+    brain.RegisterFunction( "DEC_ConnaissanceUrbanBlock_NiveauDePerceptionCourant"    , 
+            boost::function< int( boost::shared_ptr< DEC_Knowledge_Urban > ) >( boost::bind( &DEC_KnowledgeUrbanFunctions::GetCurrentPerceptionLevel, boost::cref( GetPion() ), _1 ) ) );
+
+
     // Global knowledge
     brain.RegisterFunction( "DEC_RapportDeForceLocal", boost::bind( &DEC_KnowledgeFunctions::GetRapForLocal, boost::ref( GetPion() ) ) );
     brain.RegisterFunction( "DEC_Connaissances_UnitesDetecteesDansFuseau", boost::bind( &DEC_KnowledgeFunctions::GetDetectedAgentsInFuseau, boost::ref( GetPion() ) ) );

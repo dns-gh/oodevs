@@ -62,6 +62,29 @@ integration.getObjectPerception = function( object )
   end
 end
 
+--- Get object perception
+-- @param knowledge on an object
+-- @author SLG
+-- @release 2010-02-01
+integration.getUrbanBlockPerception = function( urbanBlock )
+  perceptionLevel = DEC_ConnaissanceUrbanBlock_NiveauDePerceptionCourant( urbanBlock.source )
+  if ( perceptionLevel == 1 ) then
+    return 30
+  elseif ( perceptionLevel == 2 ) then
+    return 60
+  elseif ( perceptionLevel == 3 ) then
+    return 100
+  else
+    return 0   
+  end
+end
+
+
+
+--- Observe a knowledge
+-- @param position of a knowledge
+-- @author SLG
+-- @release 2010-01-27
 integration.observeIt = function( point )
   DEC_Perception_VisionVerrouilleeSurPointXY( point.sim_pos.x, point.sim_pos.y )
 end

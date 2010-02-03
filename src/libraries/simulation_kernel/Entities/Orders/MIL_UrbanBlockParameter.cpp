@@ -9,32 +9,29 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_UrbanBlockParameter.h"
-#include "MIL_AgentServer.h"
 #include "simulation_orders/MIL_ParameterType_UrbanBlock.h"
+#include "simulation_kernel/knowledge/DEC_KnowledgeResolver_ABC.h"
+#include "simulation_kernel/knowledge/DEC_Knowledge_Urban.h"
 #include "UrbanModel.h"
 #include <urban/Model.h>
 #include <urban/BlockModel.h>
-#include <urban/Block.h>
 #include "Network/NET_ASN_Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_UrbanBlockParameter constructor
 // Created: MGD 2009-11-02
 // -----------------------------------------------------------------------------
-MIL_UrbanBlockParameter::MIL_UrbanBlockParameter( const ASN1T_UrbanBlock& asn, MIL_AgentServer& agentServer )
-: pUrbanBlock_( 0 )
+MIL_UrbanBlockParameter::MIL_UrbanBlockParameter( const ASN1T_UrbanBlock& asn, const DEC_KnowledgeResolver_ABC& resolver )
+: pKnowledgeUrbanBlock_( resolver.ResolveKnowledgeUrban( asn ) )
 {
-    urban::Block* pBlock = agentServer.GetUrbanModel().FindUrbanBlock( asn );
-    if( pBlock )
-        pUrbanBlock_ = pBlock; 
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_UrbanBlockParameter constructor
 // Created: MGD 2010-01-15
 // -----------------------------------------------------------------------------
-MIL_UrbanBlockParameter::MIL_UrbanBlockParameter( urban::Block* urbanBlock )
-: pUrbanBlock_( urbanBlock )
+MIL_UrbanBlockParameter::MIL_UrbanBlockParameter( boost::shared_ptr< DEC_Knowledge_Urban > urbanBlock )
+: pKnowledgeUrbanBlock_( urbanBlock )
 {
     // NOTHING
 }
@@ -63,24 +60,16 @@ bool MIL_UrbanBlockParameter::IsOfType( const MIL_ParameterType_ABC& type ) cons
 // -----------------------------------------------------------------------------
 bool MIL_UrbanBlockParameter::ToUrbanBlock( ASN1T_UrbanBlock& asn ) const
 {
-    if( pUrbanBlock_ )
-    {
-        asn = pUrbanBlock_->GetId();
-        return true;
-    }
-    return false;
+    asn = pKnowledgeUrbanBlock_->GetId();
+    return true;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_UrbanBlockParameter::ToUrbanBlock
 // Created: MGD 2009-11-02
 // -----------------------------------------------------------------------------
-bool MIL_UrbanBlockParameter::ToUrbanBlock( urban::Block*& value ) const
+bool MIL_UrbanBlockParameter::ToUrbanBlock( boost::shared_ptr< DEC_Knowledge_Urban >& value ) const
 {
-    if( pUrbanBlock_ )
-    {
-        value = pUrbanBlock_;
-        return true;
-    }
-    return false;
+    value = pKnowledgeUrbanBlock_;
+    return true;
 }

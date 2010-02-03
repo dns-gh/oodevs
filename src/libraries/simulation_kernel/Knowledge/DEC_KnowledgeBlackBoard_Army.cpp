@@ -416,6 +416,16 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Army::GetKnowl
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Army::GetKnowledgeUrbanFromID
+// Created: SLG 2010-02-01
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Urban > DEC_KnowledgeBlackBoard_Army::GetKnowledgeUrbanFromID( uint nID ) const
+{
+    assert( pKnowledgeUrbanContainer_ );
+    return pKnowledgeUrbanContainer_->GetKnowledgeUrbanFromID( nID );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_Army::GetKnowledgeObject
 // Created: NLD 2004-03-26
 // -----------------------------------------------------------------------------
@@ -502,6 +512,23 @@ DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_Army::ResolveKnowledgePopulati
     return 0;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeUrban
+// Created: SLG 2010-02-01
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Urban > DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeUrban( const ASN1T_UrbanKnowledge& /*asn*/ ) const
+{
+    return boost::shared_ptr< DEC_Knowledge_Urban >();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeUrban
+// Created: SLG 2010-02-01
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Urban > DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeUrban( uint /*nID*/ ) const
+{
+    return boost::shared_ptr< DEC_Knowledge_Urban >();
+}
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_Army::GetKnowledgeObjectContainer
 // Created: NLD 2006-04-12

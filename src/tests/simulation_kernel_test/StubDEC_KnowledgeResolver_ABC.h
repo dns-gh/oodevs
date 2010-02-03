@@ -17,6 +17,9 @@ public:
 
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const ASN1T_PopulationKnowledge& asn ) const{ throw; }
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation(       uint                       nID ) const{ throw; }
+
+    virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban( const ASN1T_UrbanKnowledge& asn ) const{ throw; }
+    virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban(       uint                   nID ) const{ throw; }
 };
 
 #endif // __StubDEC_KnowledgeResolver_ABC_h_

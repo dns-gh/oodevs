@@ -12,12 +12,8 @@
 
 #include "MIL_BaseParameter.h"
 
-namespace urban
-{
-    class Block;
-}
-
-class MIL_AgentServer;
+class DEC_KnowledgeResolver_ABC;
+class DEC_Knowledge_Urban;
 
 // =============================================================================
 /** @class  MIL_UrbanBlockParameter
@@ -31,8 +27,8 @@ class MIL_UrbanBlockParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_UrbanBlockParameter( const ASN1T_UrbanBlock& asn, MIL_AgentServer& entityManager );
-    explicit MIL_UrbanBlockParameter( urban::Block* urbanBlock );
+    explicit MIL_UrbanBlockParameter( const ASN1T_UrbanBlock& asn, const DEC_KnowledgeResolver_ABC& resolver );
+    explicit MIL_UrbanBlockParameter( boost::shared_ptr< DEC_Knowledge_Urban > urbanBlock );
     virtual ~MIL_UrbanBlockParameter();
     //@}
 
@@ -44,7 +40,7 @@ public:
     //! @name Conversions
     //@{
     virtual bool ToUrbanBlock( ASN1T_UrbanBlock& ) const;
-    virtual bool ToUrbanBlock( urban::Block*& ) const;
+    virtual bool ToUrbanBlock( boost::shared_ptr< DEC_Knowledge_Urban >& ) const;
     //@}
 
 private:
@@ -57,7 +53,7 @@ private:
 private:
     //! @name Member data
     //@{
-    urban::Block* pUrbanBlock_;
+    boost::shared_ptr< DEC_Knowledge_Urban > pKnowledgeUrbanBlock_;
     //@}
 };
 

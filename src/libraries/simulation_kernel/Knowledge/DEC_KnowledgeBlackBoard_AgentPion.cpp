@@ -579,6 +579,23 @@ DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgePop
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeUrban
+// Created: SLG 2010-02-01
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Urban > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeUrban( const ASN1T_UrbanKnowledge& asn ) const
+{
+    return pPion_->GetKnowledgeGroup().GetArmy().GetKnowledge().GetKnowledgeUrbanFromID( asn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeUrban
+// Created: SLG 2010-02-01
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Urban > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeUrban( uint nID ) const
+{
+    return pPion_->GetKnowledgeGroup().GetArmy().GetKnowledge().GetKnowledgeUrbanFromID( nID );
+}
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_AgentPion::GetPion
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------

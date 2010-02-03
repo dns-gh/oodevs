@@ -15,6 +15,7 @@
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
 class DEC_Knowledge_Population;
+class DEC_Knowledge_Urban;
 
 // =============================================================================
 /** @class  DEC_KnowledgeResolver_ABC
@@ -38,6 +39,9 @@ public:
 
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const ASN1T_ObjectKnowledge& asn ) const = 0;
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject(       uint                   nID ) const = 0;
+
+    virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban( const ASN1T_UrbanKnowledge& asn ) const = 0;
+    virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban(       uint                   nID ) const = 0;
 
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const ASN1T_PopulationKnowledge& asn ) const = 0;
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation(       uint                       nID ) const = 0;

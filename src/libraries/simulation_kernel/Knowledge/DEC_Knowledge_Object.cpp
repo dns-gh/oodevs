@@ -91,6 +91,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object()
     , pPreviousPerceptionLevel_        ( 0 )
     , pMaxPerceptionLevel_             ( 0 )
     , perceptionPerAutomateSet_        ()
+    , perceptionLevelPerAgentMap_      ()
     , previousPerceptionPerAutomateSet_()
     , nTimeLastUpdate_                 ( 0 )
     , rRelevance_                      ( 0. )
@@ -260,12 +261,17 @@ void DEC_Knowledge_Object::UpdatePerceptionSources( const DEC_Knowledge_ObjectPe
     if( perception.GetCurrentPerceptionLevel() == PHY_PerceptionLevel::notSeen_ )
         return;
 
+    const MIL_Agent_ABC& pionSource = perception.GetAgentPerceiving();
     MIL_Automate* pAutomateSource = const_cast< MIL_Automate* >( &perception.GetAgentPerceiving().GetAutomate() );   
 
     // On ne garde que les sources provenant d'autres GTIAs
     IT_PerceptionSourceSet it = perceptionPerAutomateSet_.find( pAutomateSource );
     if( it == perceptionPerAutomateSet_.end() )
         perceptionPerAutomateSet_.insert( pAutomateSource );
+
+    IT_PerceptionAgentSourceMap it2 = perceptionLevelPerAgentMap_.find( &pionSource );
+    if( it2 == perceptionLevelPerAgentMap_.end() )
+        perceptionLevelPerAgentMap_.insert( std::make_pair( &pionSource, &perception.GetCurrentPerceptionLevel() ) );
 }
 
 // -----------------------------------------------------------------------------

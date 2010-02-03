@@ -20,6 +20,7 @@ class DEC_KnowledgeResolver_ABC;
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
 class DEC_Knowledge_Population;
+class DEC_Knowledge_Urban;
 class DEC_RolePion_Decision;
 class MIL_Mission_ABC;
 class MIL_MissionParameter_ABC;
@@ -59,7 +60,7 @@ public:
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreateTir( int id );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const MT_Vector2D& point );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( boost::shared_ptr< TER_Localisation > pLocation );
-    static boost::shared_ptr<MIL_MissionParameter_ABC> Create( urban::Block* urbanblock );
+    static boost::shared_ptr<MIL_MissionParameter_ABC> Create( boost::shared_ptr< DEC_Knowledge_Urban > urbanblock );
 
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreatePath( const std::vector< boost::shared_ptr< MT_Vector2D > >& pointList );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreatePath( boost::shared_ptr< MT_Vector2D > point );
@@ -85,7 +86,7 @@ public:
     static void SetPionListParameter( MIL_Mission_ABC* pMission, const std::string& parameter, const std::vector< DEC_Decision_ABC* >& pionList );
     static void SetLocationListParameter( MIL_Mission_ABC* pMission, const std::string& parameter, const std::vector< boost::shared_ptr< TER_Localisation > >& locationList );    
     static void SetPolygonListParameter( MIL_Mission_ABC* pMission, const std::string& parameter, const std::vector< boost::shared_ptr< TER_Localisation > >& locationList );
-    static void SetUrbanBlockParameter( MIL_Mission_ABC* pMission, const std::string& parameter, urban::Block* urbanblock );
+    static void SetUrbanBlockParameter( MIL_Mission_ABC* pMission, const std::string& parameter, boost::shared_ptr< DEC_Knowledge_Urban > urbanblock );
 
     static void Copy( const ASN1T_MissionParameters& asn, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& parameters, const DEC_KnowledgeResolver_ABC& resolver );
     //@}

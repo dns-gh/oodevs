@@ -13,7 +13,10 @@
 #include "Network/NET_ASN_Messages.h"
 #include "simulation_kernel/Knowledge/DEC_Knowledge_UrbanPerception.h"
 #include "simulation_kernel/Entities/MIL_Army_ABC.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "simulation_kernel/Entities/Automates/MIL_Automate.h"
+#include "simulation_kernel/Entities/MIL_EntityManager.h"
+#include "simulation_kernel/MIL_AgentServer.h"
 #include "urban/TerrainObject_ABC.h"
 
 
@@ -46,6 +49,12 @@ DEC_Knowledge_Urban::DEC_Knowledge_Urban( const MIL_Army_ABC& army, const urban:
 {
     if ( bCreatedOnNetwork_ )
         SendMsgCreation();
+
+/*    for( tools::Iterator< const MIL_AgentPion& > it = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateIterator(); it.HasMoreElements(); )
+    {
+        const MIL_Agent_ABC& pionSource = it.NextElement();
+        perceptionLevelPerAgentMap_.insert( std::pair< const MIL_Agent_ABC*, const PHY_PerceptionLevel* >( &pionSource, &PHY_PerceptionLevel::notSeen_ ) );
+    }*/
 }
 
 // -----------------------------------------------------------------------------
@@ -132,8 +141,9 @@ void DEC_Knowledge_Urban::Update( const DEC_Knowledge_UrbanPerception& perceptio
 {
     const PHY_PerceptionLevel& level = perception.GetCurrentPerceptionLevel();
     
-    float area = object_.GetFootprint()->ComputeArea();
-    float progress = level.GetID() * 100 / area;//@TODO MGD Add true physical in ADN
+    float area = object_.GetFootprint()->ComputeArea(); //@SLG TEST A SUPPRIMER
+    float complexity = object_.ComputeComplexity(); // ALGO TEMPORAIRE
+    float progress = level.GetID() * 100 / complexity;//@TODO MGD Add true physical in ADN
     rProgressPercent_ = rProgressPercent_ + progress;
     if( rProgressPercent_ > 1.0 )
     {
@@ -197,11 +207,18 @@ void DEC_Knowledge_Urban::UpdatePerceptionSources( const DEC_Knowledge_UrbanPerc
     if( perception.GetCurrentPerceptionLevel() == PHY_PerceptionLevel::notSeen_ )
         return;
 
-    const MIL_Automate* pAutomateSource = &perception.GetPerceiver().GetAutomate();   
+    const MIL_Automate* pAutomateSource = &perception.GetPerceiver().GetAutomate(); 
+    const MIL_Agent_ABC& pionSource = perception.GetPerceiver();
+
 
     IT_PerceptionSourceMap it = perceptionLevelPerAutomateMap_.find( pAutomateSource );
     if( it == perceptionLevelPerAutomateMap_.end() )
         perceptionLevelPerAutomateMap_.insert( std::pair< const MIL_Automate*, const PHY_PerceptionLevel* >( pAutomateSource, &perception.GetCurrentPerceptionLevel() ) );
+
+    IT_PerceptionAgentSourceMap it2 = perceptionLevelPerAgentMap_.find( &pionSource );
+    if( it2 == perceptionLevelPerAgentMap_.end() )
+        perceptionLevelPerAgentMap_.insert( std::pair< const MIL_Agent_ABC*, const PHY_PerceptionLevel* >( &pionSource, &perception.GetCurrentPerceptionLevel() ) );
+
 }
 
 // -----------------------------------------------------------------------------
@@ -447,12 +464,34 @@ const PHY_PerceptionLevel& DEC_Knowledge_Urban::GetCurrentPerceptionLevel() cons
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Urban::GetLevel
+// Created: MGD 2009-12-01
+// -----------------------------------------------------------------------------
+const PHY_PerceptionLevel& DEC_Knowledge_Urban::GetCurrentPerceptionLevel( const MIL_Agent_ABC& pion ) const
+{
+    CIT_PerceptionAgentSourceMap  itPerceptionLevel = perceptionLevelPerAgentMap_.find( &pion );
+    if( itPerceptionLevel != perceptionLevelPerAgentMap_.end() )
+        return *( itPerceptionLevel->second );
+    else
+        return PHY_PerceptionLevel::notSeen_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Urban::GetProgress
 // Created: MGD 2009-12-01
 // -----------------------------------------------------------------------------
 double DEC_Knowledge_Urban::GetProgress() const
 {
     return rProgressPercent_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Urban::GetProgress
+// Created: MGD 2010-02-01
+// -----------------------------------------------------------------------------
+const geometry::Point2f DEC_Knowledge_Urban::GetBarycenter() const
+{
+    return object_.GetFootprint()->Barycenter();
 }
 
 // -----------------------------------------------------------------------------

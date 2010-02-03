@@ -232,7 +232,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
             }
             case T_MissionParameter_value_urbanBlock:
             {
-                ptr = new MIL_UrbanBlockParameter( asn.value.u.urbanBlock, MIL_AgentServer::GetWorkspace() );
+                ptr = new MIL_UrbanBlockParameter( asn.value.u.urbanBlock, resolver );
                 break;
             }
             case T_MissionParameter_value_line:
@@ -390,7 +390,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 // Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create
 // Created: MGD 2010-01-15
 // -----------------------------------------------------------------------------
-boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( urban::Block* urbanblock )
+boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( boost::shared_ptr< DEC_Knowledge_Urban > urbanblock )
 {
     boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_UrbanBlockParameter( urbanblock ) );
     return result; 
@@ -610,7 +610,7 @@ void MIL_MissionParameterFactory::SetPolygonListParameter( MIL_Mission_ABC* pMis
 // Name: MIL_MissionParameterFactory::SetUrbanBlockParameter
 // Created: MGD 2010-01-15
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::SetUrbanBlockParameter( MIL_Mission_ABC* pMission, const std::string& parameter, urban::Block* urbanblock )
+void MIL_MissionParameterFactory::SetUrbanBlockParameter( MIL_Mission_ABC* pMission, const std::string& parameter, boost::shared_ptr< DEC_Knowledge_Urban > urbanblock )
 {
     pMission->SetParameter( parameter, Create( urbanblock ) );
 }

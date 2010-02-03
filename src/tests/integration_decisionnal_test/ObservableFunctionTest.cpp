@@ -39,6 +39,7 @@ namespace
             brain.RegisterFunction( "DEC_ConnaissanceObject_EstUnAllie", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_IsAllie, boost::cref(this), _1  ) ) );
             brain.RegisterFunction( "DEC_ConnaissanceObjet_NiveauDePerceptionCourant", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_GetPerceptionLevel, boost::cref(this), _1  ) ) );
             brain.RegisterFunction( "DEC_ConnaissanceAgent_NiveauDePerceptionCourant", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_GetPerceptionLevel, boost::cref(this), _1  ) ) );
+            brain.RegisterFunction( "DEC_ConnaissanceUrbanBlock_NiveauDePerceptionCourant", boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_GetPerceptionLevel, boost::cref(this), _1  ) ) );
         }
         int Mock_IsEnemy( const std::string& name )
         {
@@ -91,6 +92,12 @@ namespace
             directia::ScriptRef getObjectPerceptionLevel = *brain.GetScriptFunction( "integration.getObjectPerception" );
             BOOST_CHECK( getObjectPerceptionLevel( unit ) );
             brain.GetScriptFunction( "check" )( getObjectPerceptionLevel, expected );
+        }
+        void GetUrbanBlockPerceptionLevelTest( directia::ScriptRef unit, double expected )
+        {
+            directia::ScriptRef getUrbanBlockPerceptionLevel = *brain.GetScriptFunction( "integration.getUrbanBlockPerception" );
+            BOOST_CHECK( getUrbanBlockPerceptionLevel( unit ) );
+            brain.GetScriptFunction( "check" )( getUrbanBlockPerceptionLevel, expected );
         }
         directia::ScriptRef CreateAgent( const std::string& name )
         {
@@ -145,4 +152,16 @@ BOOST_FIXTURE_TEST_CASE( GetObjectPerceptionLevel, BrainFixture )
     GetObjectPerceptionLevelTest( CreateAgent( "enemyRecognized" ), 60. );
     GetObjectPerceptionLevelTest( CreateAgent( "enemyIdentified" ), 100. );
     GetObjectPerceptionLevelTest( CreateAgent( "enemyNotSeen"    ), 0. );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GetObjectPerceptionLevel
+// Created: MGD 2010-01-22
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( GetUrbanPerceptionLevel, BrainFixture )
+{
+    GetUrbanBlockPerceptionLevelTest( CreateAgent( "enemyDetected"   ), 30. );
+    GetUrbanBlockPerceptionLevelTest( CreateAgent( "enemyRecognized" ), 60. );
+    GetUrbanBlockPerceptionLevelTest( CreateAgent( "enemyIdentified" ), 100. );
+    GetUrbanBlockPerceptionLevelTest( CreateAgent( "enemyNotSeen"    ), 0. );
 }

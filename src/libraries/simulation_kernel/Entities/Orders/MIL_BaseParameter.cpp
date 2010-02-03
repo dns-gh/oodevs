@@ -589,7 +589,7 @@ bool MIL_BaseParameter::ToUrbanBlock( ASN1T_UrbanBlock& ) const
 // Name: MIL_BaseParameter::ToUrbanBlock
 // Created: MGD 2009-11-04
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToUrbanBlock( urban::Block*& ) const
+bool MIL_BaseParameter::ToUrbanBlock( boost::shared_ptr< DEC_Knowledge_Urban >& ) const
 {
     return false;
 }

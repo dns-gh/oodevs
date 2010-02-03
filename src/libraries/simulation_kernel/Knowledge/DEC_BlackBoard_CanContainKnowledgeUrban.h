@@ -65,7 +65,7 @@ public:
     template < class UnaryFunction >
     void ApplyOnKnowledgesUrban( UnaryFunction& fct ) const
     {
-        for( CIT_KnowledgeUrbanMap itKnowledge = urbanMap_.begin(); itKnowledge != urbanMap_.end(); )
+        for( CIT_KnowledgeUrbanMap itKnowledge = urbanMapFromConcrete_.begin(); itKnowledge != urbanMapFromConcrete_.end(); )
         {
             boost::shared_ptr< DEC_Knowledge_Urban > knowledge = itKnowledge->second;
             ++itKnowledge;
@@ -76,7 +76,7 @@ public:
     template < class UnaryFunction >
     void ApplyOnKnowledgesUrbanRef( UnaryFunction& fct ) const
     {
-        for( CIT_KnowledgeUrbanMap itKnowledge = urbanMap_.begin(); itKnowledge != urbanMap_.end(); )
+        for( CIT_KnowledgeUrbanMap itKnowledge = urbanMapFromConcrete_.begin(); itKnowledge != urbanMapFromConcrete_.end(); )
         {
             DEC_Knowledge_Urban& knowledge = *itKnowledge->second;
             ++itKnowledge;
@@ -84,6 +84,7 @@ public:
         }
     }
     //@}
+
 
 private:
 
@@ -95,7 +96,7 @@ private:
     //! @name Member data
     //@{
     const MIL_Army& army_;
-          T_KnowledgeUrbanMap urbanMap_;
+          T_KnowledgeUrbanMap urbanMapFromConcrete_;
     //@}
 };
 

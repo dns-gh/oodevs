@@ -197,6 +197,24 @@ DEC_Knowledge_Population* DEC_PopulationKnowledge::ResolveKnowledgePopulation( u
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_PopulationKnowledge::ResolveKnowledgeUrban
+// Created: SLG 2010-02-01
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Urban > DEC_PopulationKnowledge::ResolveKnowledgeUrban( const ASN1T_UrbanKnowledge& /*asn*/ ) const
+{
+    return boost::shared_ptr< DEC_Knowledge_Urban >();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationKnowledge::ResolveKnowledgeUrban
+// Created: SLG 2010-02-01
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Urban > DEC_PopulationKnowledge::ResolveKnowledgeUrban( uint /*nID*/ ) const
+{
+    return boost::shared_ptr< DEC_Knowledge_Urban >();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_PopulationKnowledge::NotifyAttackedBy
 // Created: NLD 2005-12-01
 // -----------------------------------------------------------------------------

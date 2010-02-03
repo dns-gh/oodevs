@@ -18,6 +18,7 @@
 
 class DEC_Knowledge_UrbanPerception;
 class MIL_Army_ABC;
+class MIL_Agent_ABC;
 
 namespace urban
 {
@@ -57,7 +58,9 @@ public:
     bool Clean      () const;
     unsigned GetId  () const;
     const PHY_PerceptionLevel& GetCurrentPerceptionLevel() const;
-    double GetProgress() const;
+    const PHY_PerceptionLevel& GetCurrentPerceptionLevel( const MIL_Agent_ABC& pion ) const;
+    double GetProgress() const; 
+    const geometry::Point2f GetBarycenter() const;
     //@}
 
     //! @name Relevance management
@@ -78,6 +81,10 @@ public:
     typedef std::map< const MIL_Automate*, const PHY_PerceptionLevel* > T_PerceptionSourceMap;
     typedef T_PerceptionSourceMap::iterator                             IT_PerceptionSourceMap;
     typedef T_PerceptionSourceMap::const_iterator                       CIT_PerceptionSourceMap;
+
+    typedef std::map< const MIL_Agent_ABC*, const PHY_PerceptionLevel* > T_PerceptionAgentSourceMap;
+    typedef T_PerceptionAgentSourceMap::iterator                         IT_PerceptionAgentSourceMap;
+    typedef T_PerceptionAgentSourceMap::const_iterator                   CIT_PerceptionAgentSourceMap;
     //@}
 
 private:
@@ -107,12 +114,13 @@ private:
     const urban::TerrainObject_ABC& object_;
 
     // Internal attributes
-    const PHY_PerceptionLevel*  pCurrentPerceptionLevel_;
-    const PHY_PerceptionLevel*  pPreviousPerceptionLevel_;
-    const PHY_PerceptionLevel*  pMaxPerceptionLevel_;
-          double                rProgressPercent_;
-          double                rRelevance_;
-          T_PerceptionSourceMap perceptionLevelPerAutomateMap_;
+    const PHY_PerceptionLevel*          pCurrentPerceptionLevel_;
+    const PHY_PerceptionLevel*          pPreviousPerceptionLevel_;
+    const PHY_PerceptionLevel*          pMaxPerceptionLevel_;
+          double                        rProgressPercent_;
+          double                        rRelevance_;
+          T_PerceptionSourceMap         perceptionLevelPerAutomateMap_;
+          T_PerceptionAgentSourceMap    perceptionLevelPerAgentMap_;
 
     // Network
     bool     bCreatedOnNetwork_;

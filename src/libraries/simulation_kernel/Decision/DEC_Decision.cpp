@@ -19,9 +19,9 @@
 #include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Entities/Orders/MIL_MissionParameterFactory.h"
 #include "Entities/Orders/MIL_MissionParameterVisitor_ABC.h"
-#include "Knowledge/DEC_Knowledge_Population.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
-#include "Urban/Block.h"
+#include "Knowledge/DEC_Knowledge_Population.h"
+#include "Knowledge/DEC_Knowledge_Urban.h"
 #include "geometry/Point2.h"
 
 #include <boost/bind.hpp>
@@ -462,7 +462,7 @@ void ObjectKnowledgeListFunctionBM( const directia::Brain& brain, directia::Scri
 }
 void PopulationKnowledgeFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    DEC_Knowledge_Population* value = 0;
+    DEC_Knowledge_Population* value = 0;//@TODO MGD why not shared_ptr
     if( element.ToPopulationKnowledge( value ) && value )
         refMission.RegisterObject( name, value->GetID() );
 }
@@ -475,15 +475,15 @@ void PopulationKnowledgeFunctionBM( const directia::Brain& brain, directia::Scri
 
 void UrbanBlockFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    urban::Block* value = 0;
+    boost::shared_ptr< DEC_Knowledge_Urban > value;
     if( element.ToUrbanBlock( value ) && value )
     {
-        const geometry::Point2f& point = value->GetFootprint()->Barycenter();
+        const geometry::Point2f point = value->GetBarycenter();
         std::vector< float > position;
         position.push_back( point.X() );
         position.push_back( point.Y() );
         position.push_back( 0 );
-        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.UrbanBlock" ), name, value, position, false );//@TODO MGD fix this ugly        
+        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.UrbanBlock" ), name, value, position, false );  
     }
 }
 

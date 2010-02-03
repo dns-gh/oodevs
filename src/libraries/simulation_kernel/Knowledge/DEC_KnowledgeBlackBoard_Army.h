@@ -69,12 +69,16 @@ public:
 
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const ASN1T_PopulationKnowledge& asn ) const;
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation(       uint                       nID ) const;
+
+    virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban( const ASN1T_UrbanKnowledge& asn ) const;
+    virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban(       uint                   nID ) const;
     //@}
 
     //! @name Queries
     //@{
     bool                  IsKnown                 ( const MIL_Object_ABC& oject ) const;
     boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObjectFromID( uint nID ) const;
+    boost::shared_ptr< DEC_Knowledge_Urban >  GetKnowledgeUrbanFromID( uint nID ) const;
 
     void                  GetKnowledgesObject( T_KnowledgeObjectVector& container ) const;
     boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObject ( MIL_Object_ABC& object ) const;
