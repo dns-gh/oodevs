@@ -30,6 +30,4 @@ public:
     //@}
 };
 
-#include "DEC_KnowledgeUrbanFunctions.inl"
-
 #endif // __DEC_KnowledgeUrbanFunctions_h_
