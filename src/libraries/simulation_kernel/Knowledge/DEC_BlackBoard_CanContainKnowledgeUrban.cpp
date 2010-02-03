@@ -29,7 +29,7 @@ BOOST_CLASS_EXPORT_GUID( DEC_BlackBoard_CanContainKnowledgeUrban, "DEC_BlackBoar
 DEC_BlackBoard_CanContainKnowledgeUrban::DEC_BlackBoard_CanContainKnowledgeUrban( const MIL_Army& army )
     : army_           ( army )
 {
-    for( tools::Iterator< const urban::Block& > it = MIL_AgentServer::GetWorkspace().GetUrbanModel().GetModel().blocks_.CreateIterator(); it.HasMoreElements(); )
+    for( tools::Iterator< const urban::Block& > it = UrbanModel::GetSingleton().GetModel().blocks_.CreateIterator(); it.HasMoreElements(); )
     {
         const urban::TerrainObject_ABC& object = it.NextElement();
         boost::shared_ptr< DEC_Knowledge_Urban > knowledge ( new DEC_Knowledge_Urban( army, object ) );

@@ -10,6 +10,7 @@
 #include "simulation_kernel_test_pch.h"
 
 #include "simulation_kernel/ArmyFactory.h"
+#include "simulation_kernel/UrbanModel.h"
 
 
 #include "MockFormationFactory.h"
@@ -31,6 +32,7 @@ BOOST_AUTO_TEST_CASE( FactoriesTest_ArmyFactory )
     MockPopulationFactory populationFactory;
     MockObjectManager objetFactory;
     MockKnowledgeGroupFactory knowledgeGroupFactory; // LTO
+    UrbanModel* urbanModel = new UrbanModel();
 
     ArmyFactory armyFactory( automateFactory, formationFactory, objetFactory, populationFactory, knowledgeGroupFactory ); // LTO
 
@@ -55,4 +57,5 @@ BOOST_AUTO_TEST_CASE( FactoriesTest_ArmyFactory )
     xis >> xml::end();
 
     formationFactory.verify();
+    delete urbanModel;
 }

@@ -63,6 +63,7 @@ public:
     mockpp::ChainableMockMethod< boost::shared_ptr< DEC_Knowledge_Agent >, const ASN1T_UnitKnowledge* > ResolveKnowledgeAgent_mocker;
     mockpp::ChainableMockMethod< boost::shared_ptr< DEC_Knowledge_Object >, const ASN1T_ObjectKnowledge* > ResolveKnowledgeObject_mocker;
     mockpp::ChainableMockMethod< DEC_Knowledge_Population*, const ASN1T_PopulationKnowledge* > ResolveKnowledgePopulation_mocker;
+    mockpp::ChainableMockMethod< boost::shared_ptr< DEC_Knowledge_Urban >, const ASN1T_UrbanKnowledge* > ResolveKnowledgeUrban_mocker;
 };
 
 #endif // __MockDEC_KnowledgeResolver_ABC_h_
