@@ -258,7 +258,7 @@ void DEC_Decision<T>::StopMission( const std::string& strBehavior )
 {
     __try
     {
-        pRefs_->stopEvents_.operator ()< const std::string& >( strBehavior );
+        assert( pRefs_->stopEvents_.operator ()< const std::string& >( strBehavior ) );
         pMission_ = 0;
     }
     __except( MT_CrashHandler::ExecuteHandler( GetExceptionInformation() ) )

@@ -716,5 +716,5 @@ end
 
 behavior_model = {}
 behavior_model.startTask = StartEvent
-behavior_model.stopTask = StopEvents
+behavior_model.stopTasks = StopEvents
 

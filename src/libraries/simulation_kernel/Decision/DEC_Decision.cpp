@@ -33,7 +33,7 @@
 ScriptRefs::ScriptRefs( directia::Brain& brain  )
 : sendEvent_       ( brain.GetScriptFunction( "SendEvent" ) )
 , startEvent_      ( brain.GetScriptFunction( "behavior_model.startTask" ) )
-, stopEvents_      ( brain.GetScriptFunction( "behavior_model.stopTask" ) )
+, stopEvents_      ( brain.GetScriptFunction( "behavior_model.stopTasks" ) )
 , setStateVariable_( brain.GetScriptFunction( "SetStateVariable" ) )
 , collectgarbage_  ( brain.GetScriptFunction( "collectgarbage" ) )
 , step_            ( brain.RegisterObject( std::string( "step" ) ) )
