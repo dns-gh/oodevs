@@ -18,9 +18,6 @@ local eActionTirDirect_Finished = 5
 local eActionTirDirect_None = 6
 
 integration.canDestroyIt = function( target )
-  BreakForDebug( "canDestroyIt eTir = "..tostring( eTir )..","..tostring( target ) )
-  BreakForDebug( "DEC_ConnaissanceAgent_EstDetruitTactique: "..tostring( DEC_ConnaissanceAgent_EstDetruitTactique( target.source ) ) )
-  BreakForDebug( "DEC_ConnaissanceAgent_EtatOps: "..DEC_ConnaissanceAgent_EtatOps( target.source ) )
   if eTir == eActionTirDirect_NoAmmo
     or eTir == eActionTirDirect_NoCapacity
     or eTir == eActionTirDirect_Impossible then
@@ -43,10 +40,7 @@ integration.stopDestroyingIt = function( target )
 end
 
 integration.destructionLevel = function( target )
-  etatOps = ( DEC_ConnaissanceAgent_EstDetruitTactique( target.source ) ) * 100
-  BreakForDebug( "DEC_ConnaissanceAgent_EtatOps: "..DEC_ConnaissanceAgent_EtatOps( target.source ) )
-  BreakForDebug( "DEC_ConnaissanceAgent_EstDetruitTactique : "..tostring( DEC_ConnaissanceAgent_EstDetruitTactique( target.source ) ) )
-  BreakForDebug( "etatOps = "..tostring( etatOps )..","..tostring( target ) )
+  etatOps = ( DEC_ConnaissanceAgent_NiveauDeDestructionTactique( target.source ) ) * 100
   return etatOps
 end
 
