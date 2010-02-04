@@ -214,6 +214,19 @@ void DEC_PerceptionFunctions::DisableRadar( MIL_AgentPion& callerAgent, int nRad
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_PerceptionFunctions::EnableRadarOnPointXY
+// Created: LMT 2010-02-04
+// -----------------------------------------------------------------------------
+int DEC_PerceptionFunctions::EnableRadarOnPointXY( MIL_AgentPion& callerAgent, int nRadarClass, const float x, const float y )
+{
+	T_PointVector point;
+	point.push_back( MT_Vector2D( x , y ) );
+	TER_Localisation localisation ( TER_Localisation::E_LocationType::ePoint, point );
+   
+	return EnableRadarOnLocalisation( callerAgent, nRadarClass, &localisation );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_PerceptionFunctions::EnableRecordMode
 // Created: NLD 2004-11-15
 // -----------------------------------------------------------------------------

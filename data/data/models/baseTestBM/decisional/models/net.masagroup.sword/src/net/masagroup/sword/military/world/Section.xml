@@ -5,6 +5,7 @@
   <realizes>net.masagroup.military.generic.knowledge.Observable</realizes>
   <realizes>net.masagroup.military.generic.knowledge.Destroying</realizes>
   <realizes>net.masagroup.military.generic.knowledge.Destroyable</realizes>
+  <realizes>net.masagroup.military.generic.knowledge.Identifiable</realizes>
   <realizes>directia.core.model.RoleBody</realizes>
   <realizes>net.masagroup.military.generic.knowledge.Commanding</realizes>
   <methods>
@@ -196,6 +197,46 @@
     <method name="destroy">
       <description>__INTEGRATION</description>
     </method>
+    <method name="isDetected">
+           <description>__INTEGRATION</description>
+           <return>
+            <type>
+                <simple name="boolean" /></type>
+            </return>
+       </method>
+       <method name="identifyIt">
+           <description>__INTEGRATION</description>
+       </method>
+       <method name="isRecognized">
+           <description>__INTEGRATION</description>
+           <return>
+            <type>
+                <simple name="boolean" /></type>
+            </return>
+       </method>
+        <method name="identificationLevel">
+           <description>__INTEGRATION</description>
+           <return>
+            <type>
+                <simple name="numeric" /></type>
+            </return>
+       </method>
+    <method name="identificationPriority">
+            <description>__INTEGRATION</description>
+            <return>
+            <type>
+                <simple name="numeric" /></type>
+            </return>
+        </method>
+         <method name="getIdentificationState">
+            <description>__INTEGRATION</description>
+            <return>
+                <description>Retourne la valeur du niveau d'identification courant de l'unité entre 0 et 100.</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
   </methods>
   <predicates>
     <predicate name="isDestroyed">

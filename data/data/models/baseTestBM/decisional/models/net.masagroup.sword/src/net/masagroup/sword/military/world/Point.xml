@@ -8,6 +8,7 @@
   <realizes>net.masagroup.military.generic.knowledge.Reaching</realizes>
   <realizes>net.masagroup.military.generic.knowledge.Reconnoitring</realizes>
   <realizes>net.masagroup.military.generic.knowledge.Observing</realizes>
+  <realizes>net.masagroup.military.generic.knowledge.Identifying</realizes>
   <methods>
     <method name="computeMovementCapability">
       <description>__INTEGRATION</description>
@@ -101,5 +102,45 @@
         </type>
       </return>
     </method>
+        <method name="computeIdentificationCapability">
+      <description>__INTEGRATION</description>
+      <argument name="objective">
+        <description>L'objectif à détruire.</description>
+        <type>
+          <class name="net.masagroup.military.generic.knowledge.Identifiable"/>
+        </type>
+      </argument>
+      <return>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
+    </method>
+    <method name="identificationEfficiency">
+            <description>__INTEGRATION</description>
+            <argument name="objectives">
+            <description>L'objectif à identifier.</description>
+            <type>
+            <class name ="net.masagroup.military.generic.knowledge.Identifiable"/>
+            </type>
+            </argument>
+            <return>
+            <type>
+                <simple name="numeric" /></type>
+            </return>
+        </method>
   </methods>
+  <predicates>
+   <predicate name="isIdentifyingFor">
+            <description>__INTEGRATION</description>
+            <argument name="objectives">
+                <description>L'objectif à identifier.</description>
+                <type>
+                    <list>
+                        <class name="net.masagroup.military.generic.knowledge.Identifiable"/>
+                    </list>
+                </type>
+            </argument>
+        </predicate>
+    </predicates>
 </class>

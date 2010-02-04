@@ -1,23 +1,23 @@
 defaultMethods
 {
-  -- DEFAULT METHODS NEEDED UNTIL SECTION INHERITE FROM
-  -- net.masagroup.military.generic.world.Unit
-  -- REACHABLE
-  proximityLevel = function() return default_engine.methods.load( "proximityLevel") end,
-  accessibilityLevel = function() return default_engine.methods.load( "accessibilityLevel") end,
-  reachPriority = function() return default_engine.methods.load( "reachPriority") end,
-  isDistant = function() return default_engine.methods.load( "generic_isDistant" ) end,
-  isNearby = function() return default_engine.methods.load( "generic_isNearby" ) end,
-  isFar = function() return default_engine.methods.load( "generic_isFar" ) end,
-  isReached = function() return default_engine.methods.load( "generic_isReached" ) end,
+    -- DEFAULT METHODS NEEDED UNTIL SECTION INHERITE FROM
+    -- net.masagroup.military.generic.world.Unit
+    -- REACHABLE
+    proximityLevel = function() return default_engine.methods.load( "proximityLevel") end,
+    accessibilityLevel = function() return default_engine.methods.load( "accessibilityLevel") end,
+    reachPriority = function() return default_engine.methods.load( "reachPriority") end,
+    isDistant = function() return default_engine.methods.load( "generic_isDistant" ) end,
+    isNearby = function() return default_engine.methods.load( "generic_isNearby" ) end,
+    isFar = function() return default_engine.methods.load( "generic_isFar" ) end,
+    isReached = function() return default_engine.methods.load( "generic_isReached" ) end,
 
- -- OBSERVABLE
-  hostilityLevel = function() return default_engine.methods.load( "unit_hostilityLevel" ) end,
-  isHostile = function () return default_engine.predicates.load( "generic_isHostile") end,
-  isNeutral = function () return default_engine.methods.load( "generic_isNeutral") end,
-  isFriend = function () return default_engine.methods.load( "generic_isFriend" ) end,
-  perceptionLevel = function() return default_engine.methods.load( "element_perceptionLevel") end,
-  observationPriority = function() return default_engine.methods.load( "generic_observationPriority" ) end,
+   -- OBSERVABLE
+    hostilityLevel = function() return default_engine.methods.load( "unit_hostilityLevel" ) end,
+    isHostile = function () return default_engine.predicates.load( "generic_isHostile") end,
+    isNeutral = function () return default_engine.methods.load( "generic_isNeutral") end,
+    isFriend = function () return default_engine.methods.load( "generic_isFriend" ) end,
+    perceptionLevel = function() return default_engine.methods.load( "element_perceptionLevel") end,
+    observationPriority = function() return default_engine.methods.load( "generic_observationPriority" ) end,
 
     -- POSITIONNABLE
     isInMyAOR = function() return default_engine.predicates.load( "isInMyAOR") end,
@@ -30,110 +30,118 @@ defaultMethods
     destroyIt = function() return default_engine.methods.load( "destroyIt" ) end,
     dangerosityLevel = function() return default_engine.methods.load( "dangerosityLevel" ) end,
 
-  -- COMMANDING
-  isCommandingFor = function() return default_engine.methods.load( "isCommandingFor" ) end,
-  isInMyTeam = function() return default_engine.methods.load( "isInMyTeam" ) end,
+    -- COMMANDING
+    isCommandingFor = function() return default_engine.methods.load( "isCommandingFor" ) end,
+    isInMyTeam = function() return default_engine.methods.load( "isInMyTeam" ) end,
 
-  --
-  communicate = function() return default_engine.methods.load( "unit_communicate" ) end,
+    --
+    communicate = function() return default_engine.methods.load( "unit_communicate" ) end,
 
 
-  -- Destroying
-  destructionEfficiency = function() return default_engine.methods.load( "destructionEfficiency" ) end,
+    -- Destroying
+    destructionEfficiency = function() return default_engine.methods.load( "destructionEfficiency" ) end,
 
-  isDestroyingFor = function() return default_engine.predicates.load( "terrain_analysis_isDestroyingFor" ) end,
+    isDestroyingFor = function() return default_engine.predicates.load( "terrain_analysis_isDestroyingFor" ) end,
 
-  --Reconnoitring
-  isInMyAOR = function() return default_engine.predicates.load( "isInMyAOR" ) end,
+    --Reconnoitring
+    isInMyAOR = function() return default_engine.predicates.load( "isInMyAOR" ) end,
+
+    -- IDENTIFIABLE
+    identificationPriority = function() return default_engine.methods.load( "identificationPriority" ) end,
+    isDetected = function() return default_engine.methods.load( "isDetected" ) end,
+    isRecognized = function() return default_engine.methods.load( "isRecognized" ) end,
+    identificationLevel = function() return default_engine.methods.load( "identificationLevel" ) end,
+    isIdentified = function() return default_engine.predicates.load( "isIdentified" ) end,
+   
 }
 
 communication.setMessageTreatment( "Order", integration.communication.StartMissionPion )
 
 return
 {
-  -- $$$ MIA: temp, to move in default military implementation
-  isTotallyPerceived = function( self )
-    return self:perceptionLevel() == 100
-  end,
-  isPartiallyPerceived = function( self )
-    return self:perceptionLevel() > 25
-  end,
-    
+    -- $$$ MIA: temp, to move in default military implementation
+    isTotallyPerceived = function( self )
+        return self:perceptionLevel() == 100
+    end,
+    isPartiallyPerceived = function( self )
+      return self:perceptionLevel() > 25
+    end,
+
     -- POSITIONNABLE
     takeUpPosition = function( self )
         return integration.takeUpPosition( self )
     end,
 
-  -- INTEGRATION METHODS
-  -- reachable action
-  moveToIt = function( self )
-    return integration.moveToIt( self )
-  end,
-  -- observable action
-  observeIt = function( self )
-    integration.observeIt( self )
-  end,
-  -- Tactical analysis integration
-  computeDistance = function( self, target )
-    return integration.normalizedInversedDistance( self, target )
-  end,
-  computeRelation = function( self )
-    return integration.computeRelationAgent( self )
-  end,
-  computePerceptionCapability = function( self, objective, keypoint )
-    if( integration.magnitude( keypoint, objective ) > 1000 ) then
-      return 0
-    else
-      --@TODO MGD Possible update : use true perception possibility
+    -- INTEGRATION METHODS
+    -- reachable action
+    moveToIt = function( self )
+        return integration.moveToIt( self )
+    end,
+    -- observable action
+    observeIt = function( self )
+    	integration.observeIt( self )
+    end,
+    -- Tactical analysis integration
+    computeDistance = function( self, target )
+        return integration.normalizedInversedDistance( self, target )
+    end,
+    computeRelation = function( self )
+        return integration.computeRelationAgent( self )
+    end,
+    computePerceptionCapability = function( self, objective, keypoint )
+        if( integration.magnitude( keypoint, objective ) > 1000 ) then
+            return 0
+        else
+            --@TODO MGD Possible update : use true perception possibility
+            return integration.normalizedInversedDistance( objective, keypoint )
+        end
+    end,
+    computeMovementCapability = function( self )
+        return 100 -- TODO -- $$$ MIA: not used in skill yet...
+    end,
+    getPerception = function( self )
+        return integration.getAgentPerception( self )
+    end,
+    computeReconnaissanceCapability = function(self, objective, keypoint )
       return integration.normalizedInversedDistance( objective, keypoint )
-    end
-  end,
-  computeMovementCapability = function( self )
-    return 100 -- TODO -- $$$ MIA: not used in skill yet...
-  end,
-  getPerception = function( self )
-    return integration.getAgentPerception( self )
-  end,
-  computeReconnaissanceCapability = function(self, objective, keypoint )
-    return integration.normalizedInversedDistance( objective, keypoint )
-  end,
-  setFront = function( self )
-    --TODO
-  end,
-  setSupport = function( self )
-    --TODO
-  end,
-  commandEfficiency= function( self )
-    --TODO
-  end,
+    end,
+    setFront = function( self )
+        --TODO
+    end,
+    setSupport = function( self )
+        --TODO
+    end,
+    commandEfficiency= function( self )
+        --TODO
+    end,
 
-  getAttrition = function( self, objective, position )
+    getAttrition = function( self, objective, position )
     local rPH = 0.5
     local rPorteeMax    = DEC_Tir_PorteeMaxPourTirerSurUnite( objective.source, rPH )
     local rPorteeMin    = DEC_Tir_PorteeMinPourTirerSurUnite( objective.source, rPH )
-    local rDistanceAEni = integration.magnitude( position, objective )
-    if( rDistanceAEni > rPorteeMax or rDistanceAEni < rPorteeMin ) then return 0 end
+        local rDistanceAEni = integration.magnitude( position, objective )
+        if( rDistanceAEni > rPorteeMax or rDistanceAEni < rPorteeMin ) then return 0 end
     return 100
-  end,
+    end,
 
   getDestructionState = function( self )
     local etatOp = ( 1 - DEC_ConnaissanceAgent_EtatOps( self.source ) )*100
-    BreakForDebug( tostring ( etatOp) )  
-    return etatOp
+    BreakForDebug( tostring ( etatOp) )
+      return etatOp
   end,
   canDestroyIt = function(self)
     return integration.canDestroyIt(self)
-  end,
+    end,
 
-  occupationLevel = function()
-    return 100
-  end,
-  safeApproachIt = function()
-  end,
-  isSafety = function()
-    return true
-  end,
-  
+    occupationLevel = function()
+      return 100
+    end,
+    safeApproachIt = function()
+    end,
+    isSafety = function()
+      return true
+    end,
+
   stopDestroyingIt = function( self )
     integration.stopDestroyingIt( self )
   end,
@@ -142,26 +150,35 @@ return
     return integration.destructionLevel( self )
   end,
 
-  destroy = function( self )
-    integration.destroyIt( self )
-  end,
+ destroy = function( self )
+  integration.destroyIt( self )
+ end,
 
-  isOccupied = function( self )
-    return true
-  end,
+ isOccupied = function( self )
+  return true
+ end,
+ 
+ identifyIt = function ( self )
+   integration.identifyIt( self )
+ end,
+ 
+getIdentificationState = function( self )
+   return integration.getAutomatPerception( self )
+end,
+ 
 
-  tasks =
-  {
-    adder = function( self, task ) error( "unused method", 2 ) end,
-    accepter = function( self, visitor )
-      for role in kBase.executeQuery( { knowledgeType = { directia.core.model.Role } } ) do
-        if role.body == self then
-          return role.tasks:accept( visitor )
-        end
-      end
-    end,
-    remover = function( self, task )
-      error( "unused method", 2 )
-    end
-  }
+tasks =
+    {
+        adder = function( self, task ) error( "unused method", 2 ) end,
+        accepter = function( self, visitor )
+                        for role in kBase.executeQuery( { knowledgeType = { directia.core.model.Role } } ) do
+                            if role.body == self then
+                              return role.tasks:accept( visitor )
+                            end
+                        end
+                   end,
+        remover = function( self, task )
+                      error( "unused method", 2 )
+                  end
+     }
 }

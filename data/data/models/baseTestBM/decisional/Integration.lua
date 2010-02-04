@@ -3,6 +3,7 @@ include "integration/ToolsFunctions.lua"
 integration = {}
 
 include "integration/DefaultObservableIntegration.lua"
+include "integration/DefaultIdentifiableIntegration.lua"
 include "integration/DefaultReachableIntegration.lua"
 include "integration/DefaultDestroyableIntegration.lua"
 

@@ -12,6 +12,7 @@
     <skill name="net.masagroup.military.generic.skills.primitives.ObserveToward"/>
     <skill name="net.masagroup.military.generic.combatant.skills.primitives.Destroy"/>
     <!-- en attente de décision côté BM pour le deselect au niveau des primitives - PSN --><skill name="net.masagroup.sword.military.skills_tmp.Destroy"/>
+    <skill name="net.masagroup.military.generic.combatant.skills.primitives.Identify"/>
   </skills>
   <resources>
     <resource name="net.masagroup.military.generic.resources.Move"/>

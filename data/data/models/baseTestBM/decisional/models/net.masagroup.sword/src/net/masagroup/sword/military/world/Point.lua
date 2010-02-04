@@ -42,6 +42,10 @@ defaultMethods
 
     -- DESTROYABLE
     destructionEfficiency = function() return default_engine.methods.load( "destructionEfficiency" ) end,
+    
+    -- IDENTIFYING
+	isIdentifyingFor = function() return default_engine.predicates.load( "terrain_analysis_isIdentifyingFor" ) end,
+	identificationEfficiency = function() return default_engine.methods.load( "identificationEfficiency" ) end,
 }
 return
 {
@@ -115,7 +119,8 @@ return
     isOccupied = function( self )
         return true -- TODO
     end,
---    destructionEfficiency = function()
---      return 100
---    end,
+
+	computeIdentificationCapability = function ( self, objective )
+		return self:computeDistance( objective )
+	end,
 }
