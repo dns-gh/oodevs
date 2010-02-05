@@ -12,3 +12,6 @@ include "integration/DefaultReachingIntegration.lua"
 include "integration/DefaultDestroyingIntegration.lua"
 
 include "integration/CommunicationIntegration.lua"
+
+-- Frag orders
+include "integration/FragOrderIntegration.lua"

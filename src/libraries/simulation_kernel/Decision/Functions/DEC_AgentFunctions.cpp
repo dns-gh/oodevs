@@ -186,6 +186,9 @@ MT_Float DEC_AgentFunctions::GetOperationalState( const MIL_AgentPion& callerAge
     return callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetOperationalState();
 }
 
+
+
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::GetMajorOperationalState
 // Created: NLD 2005-11-25
@@ -369,6 +372,15 @@ void DEC_AgentFunctions::NotifyIndirectFireAvailabilityChanged( MIL_AgentPion& c
 void DEC_AgentFunctions::NotifyRulesOfEngagementStateChanged( MIL_AgentPion& callerAgent, int state )
 {
     dynamic_cast< DEC_RolePion_Decision& >( callerAgent.GetDecision() ).NotifyRulesOfEngagementStateChanged( (E_RulesOfEngagementState )state );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetRulesOfEngagementState
+// Created: DDA 2010-02-03
+// -----------------------------------------------------------------------------
+int DEC_AgentFunctions::GetRulesOfEngagementState( const MIL_AgentPion& callerAgent )
+{
+   return int( callerAgent.GetRole< DEC_RolePion_Decision >().GetRulesOfEngagementState() );
 }
 
 // -----------------------------------------------------------------------------

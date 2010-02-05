@@ -17,6 +17,7 @@
         <Knowledge>net.masagroup.sword.military.world.Point</Knowledge>
         <Knowledge>net.masagroup.sword.military.world.Section</Knowledge>
         <Knowledge>net.masagroup.sword.military.world.UrbanBlock</Knowledge>
+        <Knowledge>net.masagroup.sword.military.world.FragOrder</Knowledge>
       </Knowledges>
     </BMDatabase>
 </decisional>

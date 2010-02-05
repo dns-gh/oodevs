@@ -17,14 +17,21 @@ local eActionTirDirect_Running = 4
 local eActionTirDirect_Finished = 5
 local eActionTirDirect_None = 6
 
+-- ROE states
+local  eRoeStateNone = 0
+local  eRoeStateFreeFire = 1
+local  eRoeStateRestrictedFire = 2
+local  eRoeStateFireByOrder = 3
+
 integration.canDestroyIt = function( target )
-  if eTir == eActionTirDirect_NoAmmo
-    or eTir == eActionTirDirect_NoCapacity
-    or eTir == eActionTirDirect_Impossible then
-    BreakForDebug( "Cannot Destroy It!" )
-    return false
-  else
+  local stateROE = DEC_Agent_GetEtatROE()
+  if not(eTir == eActionTirDirect_NoAmmo)
+    and not(eTir == eActionTirDirect_NoCapacity)
+    and not(eTir == eActionTirDirect_Impossible)
+    and (stateROE == eRoeStateFreeFire) then
     return true
+  else
+    return false
   end
 end
 
@@ -45,6 +52,5 @@ integration.destructionLevel = function( target )
 end
 
 integration.getEstimateAttrition = function( target, myself )
-  BreakForDebug( "DEC_ConnaissanceAgent_Dangerosite "..tostring( DEC_ConnaissanceAgent_Dangerosite( target ) ) )
   return DEC_ConnaissanceAgent_Dangerosite( target )
 end

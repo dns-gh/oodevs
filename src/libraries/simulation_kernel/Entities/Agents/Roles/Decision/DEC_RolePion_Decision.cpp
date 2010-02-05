@@ -645,12 +645,14 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_SetMission",
         boost::function< void( DEC_Decision_ABC*, MIL_Mission_ABC* )>( boost::bind( &DEC_AgentFunctions::SetMission, _1, _2 ) ) );
 
-    // Etat dcisionnel
+    // Etat décisionnel
     brain.RegisterFunction( "DEC_Agent_ChangeEtatRapportDeForce",
         boost::function< void( int ) >( boost::bind( &DEC_AgentFunctions::NotifyForceRatioStateChanged, boost::ref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Agent_ChangeEtatROE",
         boost::function< void( int ) >( boost::bind( &DEC_AgentFunctions::NotifyRulesOfEngagementStateChanged, boost::ref( GetPion() ), _1 ) ) );
-    brain.RegisterFunction( "DEC_Agent_ChangeEtatROEPopulation",
+	brain.RegisterFunction( "DEC_Agent_GetEtatROE",
+		boost::bind( &DEC_AgentFunctions::GetRulesOfEngagementState, boost::ref( GetPion() ) ) );
+	brain.RegisterFunction( "DEC_Agent_ChangeEtatROEPopulation",
         boost::function< void( int ) >( boost::bind( &DEC_AgentFunctions::NotifyRulesOfEngagementPopulationStateChanged, boost::ref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Agent_ChangeEtatCombatDeRencontre",
          boost::function< void( int ) >( boost::bind( &DEC_AgentFunctions::NotifyCloseCombatStateChanged, boost::ref( GetPion() ), _1 ) ) );
@@ -1753,6 +1755,17 @@ void DEC_RolePion_Decision::NotifyRulesOfEngagementStateChanged( E_RulesOfEngage
         NotifyHasChanged();
     }
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::GetRulesOfEngagementState
+// Created: DDA 2010-02-03
+// -----------------------------------------------------------------------------
+int DEC_RolePion_Decision::GetRulesOfEngagementState() const
+{
+	return nRulesOfEngagementState_;
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision::NotifyCloseCombatStateChanged

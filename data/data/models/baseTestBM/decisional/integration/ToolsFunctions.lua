@@ -10,6 +10,14 @@ function CreateKnowledge( strKnowledgeType, knowledgeSource, knowledgedPosition 
     return kBase.create( strKnowledgeType, knowledgeSource, { ["sim_pos"] = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] } } )
 end
 
+--- Create a knowledge
+-- @TODO update name 
+-- @author DDA
+-- @release 2010-02-2
+function CreateKnowledgeWithoutPos( strKnowledgeType, knowledgeSource )
+    return kBase.create( strKnowledgeType, knowledgeSource )
+end
+
 --- Fill mission parameters and create corresponding knowledges
 -- @param params The table to fill 
 -- @param strKnowledgeType  The concret knowledge type to instanciate for the parameter

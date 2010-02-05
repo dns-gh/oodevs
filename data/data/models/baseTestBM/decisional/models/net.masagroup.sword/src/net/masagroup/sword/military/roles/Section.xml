@@ -11,12 +11,34 @@
     <skill name="net.masagroup.military.generic.combatant.skills.primitives.Reconnoitre"/>
     <skill name="net.masagroup.military.generic.skills.primitives.ObserveToward"/>
     <skill name="net.masagroup.military.generic.combatant.skills.primitives.Destroy"/>
+    <skill name="net.masagroup.sword.military.skills.ManageFragOrder"/>
+    
     <!-- en attente de décision côté BM pour le deselect au niveau des primitives - PSN --><skill name="net.masagroup.sword.military.skills_tmp.Destroy"/>
     <skill name="net.masagroup.military.generic.combatant.skills.primitives.Identify"/>
   </skills>
-  <resources>
+   <resources>
     <resource name="net.masagroup.military.generic.resources.Move"/>
     <resource name="net.masagroup.military.generic.resources.Observe"/>
     <resource name="net.masagroup.military.generic.resources.Engage"/>
   </resources>
+   <default-task label="Prise en compte des ordres de conduite." permanent="true">
+        <description>Gestion par défaut des ordres de conduite.</description>
+        <goal>
+            <description>Gestion et affectation des ordres de conduite.</description>
+        </goal>
+        <let name="fragOrdersToManage">
+            <value>
+                <call method="net.masagroup.sword.military.queries.getFragOrder"/>
+            </value>
+        </let>
+        <skills>
+            <skill name="net.masagroup.sword.military.skills.ManageFragOrder" priority="1.0">
+                <parameter name="fragOrders">
+                    <value>
+                        <parameter>fragOrdersToManage</parameter>
+                    </value>
+                </parameter>
+            </skill>
+        </skills>
+    </default-task>
 </role>

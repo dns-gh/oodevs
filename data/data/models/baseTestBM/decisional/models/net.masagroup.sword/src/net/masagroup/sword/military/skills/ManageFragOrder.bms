@@ -1,0 +1,34 @@
+-- **************************************************************************** 
+-- Frag orders.
+-- self.params.orders: the Frag Orders
+-- ****************************************************************************
+rootnode
+{
+    connections =
+    {
+        skill.nodes.UpdateROE
+    },
+    
+    -- -------------------------------------------------------------------------------- 
+    -- Apply the frag order 
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+   
+        for _, fragOrder in ipairs( self.params.fragOrders ) do
+            if fragOrder:isROE() then
+     			Activate( skill.nodes.UpdateROE, 1, { fragOrder = fragOrder } )
+			end
+        end          
+		-- DDA : complete with other frag orders
+    end
+}
+
+-- -------------------------------------------------------------------------------- 
+-- Update frag order
+-- --------------------------------------------------------------------------------
+node "UpdateROE"
+{	
+    select = function( self )
+        self.params.fragOrder:updateROE()
+    end
+}

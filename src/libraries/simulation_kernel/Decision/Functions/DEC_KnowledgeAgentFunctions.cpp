@@ -134,7 +134,6 @@ float DEC_KnowledgeAgentFunctions::GetOperationalState( boost::shared_ptr< DEC_K
         return float( pKnowledge->GetOperationalState() );
     return 0;
 }
-
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::GetMajorOperationalState
 // Created: NLD 2004-04-14

@@ -152,5 +152,13 @@
   <populations>
   </populations>
   <fragorders>
+      <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_ChangerReglesEngagement" id="346" name="Changer Regles Engagement">
+      <parameter dia-name="orderConduiteChangerReglesEngagement_" name="Order conduite changer regles engagement" optional="false" type="Enumeration">
+        <value id="0" name="none"/>
+        <value id="1" name="tir_libre"/>
+        <value id="2" name="tir_sur_riposte"/>
+        <value id="3" name="tir_interdit"/>
+      </parameter>
+    </fragorder>
   </fragorders>
 </missions>

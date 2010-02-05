@@ -60,6 +60,7 @@ public:
     static void RecoverHumanTransportersNow       ( MIL_AgentPion& callerAgent );
 
     // Etat décisionnel
+	static int  GetRulesOfEngagementState			         ( const MIL_AgentPion& callerAgent );
     static void NotifyForceRatioStateChanged                 ( MIL_AgentPion& callerAgent, int state );
     static void NotifyRulesOfEngagementStateChanged          ( MIL_AgentPion& callerAgent, int state );
     static void NotifyRulesOfEngagementPopulationStateChanged( MIL_AgentPion& callerAgent, int population );
