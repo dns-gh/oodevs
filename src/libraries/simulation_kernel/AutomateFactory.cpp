@@ -8,18 +8,14 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
+
 #include "AutomateFactory.h"
-
-#include "Entities/Automates/MIL_AutomateType.h"
-#include "Entities/Automates/MIL_Automate.h"
-
-#include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Decision/DEC_Representations.h"
-
+#include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Automates/DEC_AutomateDecision.h"
+#include "Entities/Automates/MIL_AutomateType.h"
 #include "simulation_kernel/Decision/DEC_DataBase.h"
-
 #include "Tools/MIL_IDManager.h"
-
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( AutomateFactory, "AutomateFactory" )
@@ -32,7 +28,7 @@ AutomateFactory::AutomateFactory( MIL_IDManager& idManager, DEC_DataBase& databa
     : idManager_( idManager ) 
     , database_( database )
 {
-
+    //NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -41,7 +37,7 @@ AutomateFactory::AutomateFactory( MIL_IDManager& idManager, DEC_DataBase& databa
 // -----------------------------------------------------------------------------
 AutomateFactory::~AutomateFactory()
 {
-    // NOTHING
+    DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -49,7 +45,7 @@ AutomateFactory::~AutomateFactory()
 // Created: MGD 2009-08-17
 // -----------------------------------------------------------------------------
 MIL_Automate& AutomateFactory::Create( xml::xistream& xis, MIL_Automate& parent )
-{//@TODO MGD Method's pattern
+{
     uint id;
     std::string strType;
 
@@ -57,10 +53,8 @@ MIL_Automate& AutomateFactory::Create( xml::xistream& xis, MIL_Automate& parent 
         >> xml::attribute( "type", strType );
 
     const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( strType );
-
     MIL_Automate& automate = pType->InstanciateAutomate( id, parent, xis, database_ );
     automate.ReadOverloading( xis );
-
     tools::Resolver< MIL_Automate >::Register( automate.GetID(), automate );
 
     return automate;
@@ -79,10 +73,11 @@ MIL_Automate& AutomateFactory::Create( xml::xistream& xis, MIL_Formation& parent
         >> xml::attribute( "type", strType );
 
     const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( strType );
+    if( !pType )
+        xis.error( "Unknown automat type" );
 
     MIL_Automate& automate = pType->InstanciateAutomate( id, parent, xis, database_ );
     automate.ReadOverloading( xis );
-
     tools::Resolver< MIL_Automate >::Register( automate.GetID(), automate );
 
     return automate;

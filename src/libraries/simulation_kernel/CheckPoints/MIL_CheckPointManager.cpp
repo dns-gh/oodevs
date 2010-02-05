@@ -391,7 +391,7 @@ void MIL_CheckPointManager::OnReceiveMsgCheckPointSaveNow( const ASN1T_MsgContro
 // -----------------------------------------------------------------------------
 void MIL_CheckPointManager::OnReceiveMsgCheckPointSetFrequency( const ASN1T_MsgControlCheckPointSetFrequency& asnMsg )
 {
-    nCheckPointsFrequency_ = asnMsg * 60; // $$$$ NLD 2007-01-11: beeeeeeaaaaah
+    nCheckPointsFrequency_ = asnMsg * 60;
      
     NET_ASN_MsgControlCheckPointSetFrequencyAck asnReplyMsg;
     asnReplyMsg.Send();

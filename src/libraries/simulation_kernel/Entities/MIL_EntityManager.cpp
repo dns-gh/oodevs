@@ -90,9 +90,13 @@ BOOST_CLASS_EXPORT_GUID( MIL_EntityManager, "MIL_EntityManager" )
 
 
 template< typename Archive >
-void save_construct_data( Archive& /*archive*/, const MIL_EntityManager* /*role*/, const unsigned int /*version*/ )
+void save_construct_data( Archive& archive, const MIL_EntityManager* entities, const unsigned int /*version*/ )
 {
     //@TODO MGD work on serialization to avoid singleton and add test for all entities
+    //const AutomateFactory_ABC* const automateFactory = &factory->automateFactory_;
+    //archive << armyFactory_
+    //        << formationFactory_
+    //        << 
 }
 
 template< typename Archive >
@@ -100,7 +104,9 @@ void load_construct_data( Archive& archive, MIL_EntityManager* role, const unsig
 {
     DEC_DataBase* database;
     archive >> database;
-    ::new( role )MIL_EntityManager( MIL_Singletons::GetTime(), MIL_Singletons::GetEffectManager(), MIL_Singletons::GetProfiler(), MIL_Singletons::GetHla(), MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().GetDatabase() );
+    ::new( role )MIL_EntityManager( MIL_Singletons::GetTime(), MIL_Singletons::GetEffectManager(),
+                                    MIL_Singletons::GetProfiler(), MIL_Singletons::GetHla(),
+                                    MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().GetDatabase() );
 }
 
 // -----------------------------------------------------------------------------
@@ -187,7 +193,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , automateFactory_              ( new AutomateFactory( *idManager_, database ) )
     , formationFactory_             ( new FormationFactory( *automateFactory_ ) )
     , knowledgeGroupFactory_        ( new KnowledgeGroupFactory() )
-    , armyFactory_                  ( new ArmyFactory( *automateFactory_, *formationFactory_, *pObjectManager_, *populationFactory_, *knowledgeGroupFactory_ ) )
+    , armyFactory_                  ( new ArmyFactory( *automateFactory_, *agentFactory_, *formationFactory_, *pObjectManager_, *populationFactory_, *knowledgeGroupFactory_ ) )
 {
     // NOTHING
 }
@@ -304,13 +310,6 @@ void MIL_EntityManager::InitializeWeapons( xml::xistream& xis, MIL_Config& confi
 // -----------------------------------------------------------------------------
 MIL_EntityManager::~MIL_EntityManager()
 {
-    // ODB - $$$ Virer ça ... utiliser des factories
-    tools::Resolver< MIL_AgentPion >::DeleteAll();//@TODO move resolver in factory
-    automateFactory_->DeleteAll();
-    formationFactory_->DeleteAll(); //@TODO test if can be done in destructor or maintain this
-    armyFactory_->DeleteAll();
-    populationFactory_->DeleteAll();
-
     // Types
     MIL_PopulationAttitude        ::Terminate();
     MIL_AutomateType              ::Terminate();
@@ -378,14 +377,14 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     InitializeDiplomacy( xis );
 
     MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automateFactory_->Count() ) );
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , tools::Resolver< MIL_AgentPion >::Count() ) );
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populationFactory_->Count() ) );//@TODO MGD maybe add more informations
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , agentFactory_->Count() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populationFactory_->Count() ) );
     
     xis >> xml::end();
 
     // Check automate composition
     if( config.CheckAutomateComposition() )
-    {//@TODO MGD move exception in called function
+    {
         for( tools::Iterator< const MIL_Automate& > it = automateFactory_->CreateIterator(); it.HasMoreElements(); )
         {
             const MIL_Automate& automate = it.NextElement();
@@ -451,9 +450,7 @@ void MIL_EntityManager::InitializeArmies( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::CreateAutomat( xml::xistream& xis, MIL_Formation& formation )
 {
-    //@TODO MGD Remove
     automateFactory_->Create( xis, formation );
-    // $$$ Network
 }
 
 // -----------------------------------------------------------------------------
@@ -462,9 +459,7 @@ void MIL_EntityManager::CreateAutomat( xml::xistream& xis, MIL_Formation& format
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::CreateAutomat( xml::xistream& xis, MIL_Automate& parent )
 {
-    //@TODO MGD Remove
     automateFactory_->Create( xis, parent );
-    // $$$ Network
 }
 
 // -----------------------------------------------------------------------------
@@ -473,16 +468,10 @@ void MIL_EntityManager::CreateAutomat( xml::xistream& xis, MIL_Automate& parent 
 // -----------------------------------------------------------------------------
 MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis )
 {
-    MIL_AgentPion* pPion = tools::Resolver< MIL_AgentPion >::Find( xml::attribute< unsigned long >( xis, "id" ) );
-    if( pPion )
-        xis.error( "Pawn using this id already exists" );
-    pPion = agentFactory_->Create( type, automate, xis );
-    tools::Resolver< MIL_AgentPion >::Register( pPion->GetID(), *pPion );
-    pPion->ReadOverloading( xis );
+    MIL_AgentPion* pPion = agentFactory_->Create( type, automate, xis );
 
     if( hla_ )
         hla_->Register( *pPion );
-    // $$$ Network
 
     return *pPion;
 }
@@ -494,9 +483,6 @@ MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL
 MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition )
 {
     MIL_AgentPion* pPion = agentFactory_->Create( type, automate, vPosition );
-    if(  tools::Resolver< MIL_AgentPion >::Find( pPion->GetID() ) != 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "A unit with ID '%d' already exists.", pPion->GetID() ) );
-    tools::Resolver< MIL_AgentPion >::Register( pPion->GetID(), *pPion );
 
     if( hla_ )
         hla_->Register( *pPion );
@@ -641,7 +627,7 @@ void MIL_EntityManager::UpdateDecisions()
         rAutomatesDecisionTime_ = profiler_.Stop();
 
         profiler_.Start();
-        tools::Resolver< MIL_AgentPion >::Apply( boost::bind( &UpdatePion, boost::ref(decisionUpdateProfiler), duration, _1 ) );
+        agentFactory_->Apply( boost::bind( &UpdatePion, boost::ref(decisionUpdateProfiler), duration, _1 ) );
         rPionsDecisionTime_ = profiler_.Stop();
 
         profiler_.Start();
@@ -655,7 +641,7 @@ void MIL_EntityManager::UpdateDecisions()
         rAutomatesDecisionTime_ = profiler_.Stop();
 
         profiler_.Start();
-        tools::Resolver< MIL_AgentPion >::Apply( boost::bind( &MIL_AgentPion::UpdateDecision, _1, duration ) );
+        agentFactory_->Apply( boost::bind( &MIL_AgentPion::UpdateDecision, _1, duration ) );
         rPionsDecisionTime_ = profiler_.Stop();
 
         profiler_.Start();
@@ -673,7 +659,7 @@ void MIL_EntityManager::UpdateActions()
     profiler_.Start();
 
     automateFactory_->Apply( boost::bind( &MIL_Automate::UpdateActions, _1 ) );
-    tools::Resolver< MIL_AgentPion >::Apply( boost::bind( &MIL_AgentPion::UpdateActions, _1 ) );
+    agentFactory_->Apply( boost::bind( &MIL_AgentPion::UpdateActions, _1 ) );
 
     populationFactory_->Apply( boost::bind( &MIL_Population::UpdateActions, _1 ) );
 
@@ -704,11 +690,11 @@ void MIL_EntityManager::UpdateStates()
 
     // !! Automate avant Pions (?? => LOG ??)
     automateFactory_->Apply( boost::bind( &MIL_Automate::UpdateState, _1 ) );
-    tools::Resolver< MIL_AgentPion >::Apply( boost::bind( &MIL_AgentPion::UpdateState, _1 ) );
+    agentFactory_->Apply( boost::bind( &MIL_AgentPion::UpdateState, _1 ) );
     populationFactory_->Apply( boost::bind( &MIL_Population::UpdateState, _1 ) );
 
     automateFactory_->Apply( boost::bind( &MIL_Automate::UpdateNetwork, _1 ) );
-    tools::Resolver< MIL_AgentPion >::Apply( boost::bind( &MIL_AgentPion::UpdateNetwork, _1 ) );
+    agentFactory_->Apply( boost::bind( &MIL_AgentPion::UpdateNetwork, _1 ) );
     populationFactory_->Apply( boost::bind( &MIL_Population::UpdateNetwork, _1 ) );
 
     assert( pObjectManager_ );
@@ -730,7 +716,7 @@ void MIL_EntityManager::PreprocessRandomBreakdowns()
     while( nRandomBreakdownsNextTimeStep_ <= nCurrentTimeStep )
         nRandomBreakdownsNextTimeStep_ += ( 3600 * 24 / time_.GetTickDuration() );
 
-    tools::Resolver< MIL_AgentPion >::Apply( boost::bind( &MIL_AgentPion::PreprocessRandomBreakdowns, _1, nRandomBreakdownsNextTimeStep_ ) );
+    agentFactory_->Apply( boost::bind( &MIL_AgentPion::PreprocessRandomBreakdowns, _1, nRandomBreakdownsNextTimeStep_ ) );
     MT_LOG_INFO_MSG( "Breakdowns preprocessed" );
 }
 
@@ -772,7 +758,7 @@ void MIL_EntityManager::Update()
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::Clean()
 {
-    tools::Resolver< MIL_AgentPion >::Apply( boost::bind( &MIL_AgentPion::Clean, _1 ) );
+    agentFactory_->Apply( boost::bind( &MIL_AgentPion::Clean, _1 ) );
     automateFactory_->Apply( boost::bind( &MIL_Automate::Clean, _1 ) );
     populationFactory_->Apply( boost::bind( &MIL_Population::Clean, _1 ) );
 }
@@ -1343,11 +1329,12 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
     ArmyFactory * armyFactory;
     FormationFactory * formationFactory;
     AutomateFactory * automateFactory;
+    AgentFactory * agentFactory;
     PopulationFactory * populationFactory;
     file //>> effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
          >> armyFactory
          >> formationFactory//@TODO MGD serialize
-         >> tools::Resolver< MIL_AgentPion >::elements_
+         >> agentFactory
          >> automateFactory
          >> populationFactory
          >> pObjectManager_
@@ -1362,11 +1349,12 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
 
     armyFactory_.reset( armyFactory );
     formationFactory_.reset( formationFactory );
+    agentFactory_.reset( agentFactory );
     automateFactory_.reset( automateFactory );
     populationFactory_.reset( populationFactory );
 
     MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automateFactory_->Count() ) );
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , tools::Resolver< MIL_AgentPion >::Count() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , agentFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populationFactory_->Count() ) );
 }
 
@@ -1377,14 +1365,15 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
 void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     const ArmyFactory_ABC * const tempArmy = armyFactory_.get();
-    const FormationFactory_ABC * const tempFormationFactory = formationFactory_.get();//@TODO MGD See to move std::auto_ptr serialization in an include file in tools
+    const FormationFactory_ABC * const tempFormationFactory = formationFactory_.get();
+    const AgentFactory_ABC * const tempAgentFactory = agentFactory_.get();
     const AutomateFactory_ABC * const tempAutomateFactory = automateFactory_.get();
     const PopulationFactory_ABC * const populationFactory = populationFactory_.get();
 
     file //<< effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
          << tempArmy
          << tempFormationFactory
-         << tools::Resolver< MIL_AgentPion >::elements_
+         << tempAgentFactory
          << tempAutomateFactory
          << populationFactory
          << pObjectManager_
@@ -1441,7 +1430,7 @@ MIL_KnowledgeGroup* MIL_EntityManager::FindKnowledgeGroup( unsigned int nID ) co
 // -----------------------------------------------------------------------------
 MIL_AgentPion* MIL_EntityManager::FindAgentPion( unsigned int nID ) const
 {
-    return tools::Resolver< MIL_AgentPion >::Find( nID );
+    return agentFactory_->Find( nID );
 }
 
 

@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "AgentFactory.h"
-
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Automates/MIL_Automate.h"
@@ -44,7 +43,7 @@ AgentFactory::AgentFactory( MIL_IDManager& idManager, DEC_DataBase& database )
 // -----------------------------------------------------------------------------
 AgentFactory::~AgentFactory()
 {
-    // NOTHING
+    DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -53,7 +52,11 @@ AgentFactory::~AgentFactory()
 // -----------------------------------------------------------------------------
 MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis )
 {
-    MIL_AgentPion* pPion = type.InstanciatePion( automate, *algorithmsFactories_, xis );//@TODO REPLACE WHEN PIONLOG WILL BE DELETED
+    MIL_AgentPion* pPion = tools::Resolver< MIL_AgentPion >::Find( xml::attribute< unsigned long >( xis, "id" ) );
+    if( pPion )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "A unit with ID '%d' already exists.", pPion->GetID() ) );
+
+    pPion = type.InstanciatePion( automate, *algorithmsFactories_, xis );
     type.RegisterRoles( *pPion , database_ );
     
     std::string strPosition;
@@ -62,7 +65,7 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
     MIL_Tools::ConvertCoordMosToSim( strPosition, vPosTmp );
 
     Initialize( *pPion, vPosTmp );
-
+    tools::Resolver< MIL_AgentPion >::Register( pPion->GetID(), *pPion );
     pPion->ReadOverloading( xis );
     return pPion;
 }
@@ -77,6 +80,7 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
     type.RegisterRoles( *pPion, database_ );
 
     Initialize( *pPion, vPosition );
+    tools::Resolver< MIL_AgentPion >::Register( pPion->GetID(), *pPion );
     return pPion;
 }
 

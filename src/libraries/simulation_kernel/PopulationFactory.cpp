@@ -25,7 +25,7 @@ BOOST_CLASS_EXPORT_GUID( PopulationFactory, "AutomateFactory" )
 PopulationFactory::PopulationFactory( DEC_DataBase& database )
     : database_( database )
 {
-
+    //NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -34,7 +34,7 @@ PopulationFactory::PopulationFactory( DEC_DataBase& database )
 // -----------------------------------------------------------------------------
 PopulationFactory::~PopulationFactory()
 {
-
+    DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -46,7 +46,7 @@ MIL_Population& PopulationFactory::Create( xml::xistream& xis, MIL_Army& army )
     std::string strType;
     xis >> xml::attribute( "type", strType );
 
-    const MIL_PopulationType* pType = MIL_PopulationType::Find( strType );//@TODO MGD move to internal resolver
+    const MIL_PopulationType* pType = MIL_PopulationType::Find( strType );
     if( !pType )
         xis.error( "Unknown population type" );
 

@@ -43,7 +43,7 @@ KnowledgeGroupFactory::KnowledgeGroupFactory()
 // -----------------------------------------------------------------------------
 KnowledgeGroupFactory::~KnowledgeGroupFactory()
 {
-
+    DeleteAll();
 }
 
 // -----------------------------------------------------------------------------

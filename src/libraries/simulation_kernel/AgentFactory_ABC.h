@@ -10,6 +10,9 @@
 #ifndef __AgentFactory_ABC_h_
 #define __AgentFactory_ABC_h_
 
+#include "tools/Resolver.h"
+#include "Entities/Agents/MIL_AgentPion.h"
+
 class MIL_AgentPion;
 class MIL_AgentTypePion;
 class MIL_Automate;
@@ -24,7 +27,8 @@ namespace xml
 */
 // Created: MGD 2009-08-13
 // =============================================================================
-class AgentFactory_ABC
+class AgentFactory_ABC : public tools::Resolver< MIL_AgentPion >
+                       , private boost::noncopyable
 {
 
 public:

@@ -76,7 +76,6 @@ struct ASN1T_MsgKnowledgeGroupEnable; // LTO
 // Created: JVT 2004-08-03
 // =============================================================================
 class MIL_EntityManager : public MIL_EntityManager_ABC,
-                          public tools::Resolver< MIL_AgentPion >,
                           private boost::noncopyable
 {
 
@@ -230,13 +229,12 @@ private:
     // ID Manager
     std::auto_ptr< MIL_IDManager > idManager_;
     // Factories
-    std::auto_ptr< PopulationFactory_ABC > populationFactory_;
-    std::auto_ptr< AgentFactory_ABC >  agentFactory_;
-    std::auto_ptr< AutomateFactory_ABC > automateFactory_;
-    std::auto_ptr< FormationFactory_ABC > formationFactory_;
-    std::auto_ptr< KnowledgeGroupFactory_ABC > knowledgeGroupFactory_;
-    std::auto_ptr< ArmyFactory_ABC > armyFactory_;
-
+    std::auto_ptr< PopulationFactory_ABC >      populationFactory_;
+    std::auto_ptr< AgentFactory_ABC >           agentFactory_;
+    std::auto_ptr< AutomateFactory_ABC >        automateFactory_;
+    std::auto_ptr< FormationFactory_ABC >       formationFactory_;
+    std::auto_ptr< KnowledgeGroupFactory_ABC >  knowledgeGroupFactory_;
+    std::auto_ptr< ArmyFactory_ABC >            armyFactory_;
 
     // Profiling
     MT_Profiler   profiler_;
