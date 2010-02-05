@@ -1,5 +1,15 @@
 ---\ Knowledge management /---
 
+
+--- Bind DIA4 event interface to DIA5 interface
+rawset( getfenv(), "StartEvent", function( ... )
+  behavior_model.startTask( ... )
+end )
+
+rawset( getfenv(), "StopEvents", function( ... )
+  pcall( behavior_model.stopTask, select(1,...) )
+end )
+
 --- Create a knowledge
 -- @param strKnowledgeType The concret knowledge type to instanciate
 -- @param knowledgeSource  The cpp source object  

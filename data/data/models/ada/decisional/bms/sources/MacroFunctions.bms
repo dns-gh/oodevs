@@ -714,7 +714,3 @@ do
     end )
 end
 
-behavior_model = {}
-behavior_model.startTask = StartEvent
-behavior_model.stopTasks = StopEvents
-
