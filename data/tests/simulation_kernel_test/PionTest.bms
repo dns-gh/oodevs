@@ -35,7 +35,3 @@ kBase.createKnowledgeImplementation { className = dummyClass }
 kBase:registerRole( kBase.create( dummyClass, {} ) )
 kBase.me.body = kBase.create( dummyClass, {} )
 brain "name" ( pionTest )
-
-behavior_model = {}
-behavior_model.startTask = StartEvent
-behavior_model.stopTask = StopEvents
