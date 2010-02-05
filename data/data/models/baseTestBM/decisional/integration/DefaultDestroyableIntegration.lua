@@ -47,10 +47,12 @@ integration.stopDestroyingIt = function( target )
 end
 
 integration.destructionLevel = function( target )
+  BreakForDebug( "DEC_ConnaissanceAgent_AttritionPotentielle "..tostring( DEC_ConnaissanceAgent_AttritionPotentielle( target.source ) ) )
   etatOps = ( DEC_ConnaissanceAgent_NiveauDeDestructionTactique( target.source ) ) * 100
   return etatOps
 end
 
 integration.getEstimateAttrition = function( target, myself )
-  return DEC_ConnaissanceAgent_Dangerosite( target )
+  BreakForDebug( "DEC_ConnaissanceAgent_AttritionPotentielle "..tostring( DEC_ConnaissanceAgent_AttritionPotentielle( target.source ) ) )
+  return DEC_ConnaissanceAgent_AttritionPotentielle( target.source )
 end

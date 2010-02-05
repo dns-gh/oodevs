@@ -46,6 +46,17 @@ float DEC_KnowledgeAgentFunctions::GetDangerosity( const MIL_AgentPion& callerAg
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::GetPotentialAttrition
+// Created: MGD 2010-02-04
+// -----------------------------------------------------------------------------
+float DEC_KnowledgeAgentFunctions::GetPotentialAttrition( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+{
+	if( pKnowledge && pKnowledge->IsValid() )
+		return float(callerAgent.GetDangerosity( pKnowledge ));
+	return 0.f;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::IsInDetectionCone
 // Created: JVT 2005-08-23
 // -----------------------------------------------------------------------------

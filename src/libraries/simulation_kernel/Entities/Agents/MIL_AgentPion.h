@@ -111,6 +111,11 @@ public:
     virtual bool                                     IsPerceived    ( const MIL_Agent_ABC& agent ) const; //$$$$ DEGUEU - VOIR AVEC MODELISATEURS
     //@}
 
+    //! @name Operation on Knowledge
+    //@{
+	double GetDangerosity( boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge ) const;
+	//@}
+
     //! @name Network
     //@{
     void SendCreation () const;

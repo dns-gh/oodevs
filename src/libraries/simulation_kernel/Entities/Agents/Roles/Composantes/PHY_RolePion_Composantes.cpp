@@ -1180,6 +1180,20 @@ void PHY_RolePion_Composantes::Serialize( HLA_UpdateFunctor& functor ) const
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::GetDangerosity
+// Created: MGD 2010-02-04
+// -----------------------------------------------------------------------------
+double PHY_RolePion_Composantes::GetDangerosity( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget ) const
+{
+	double rDangerosity = 0.f;
+	for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+	{
+		rDangerosity = std::max( rDangerosity, (*it)->GetDangerosity( compTarget, rDistBtwSourceAndTarget ) );
+	}
+	return rDangerosity;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::GetMaxRangeToFireOn
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
