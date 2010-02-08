@@ -12,9 +12,9 @@
 #include "simulation_kernel/ArmyFactory.h"
 #include "simulation_kernel/UrbanModel.h"
 
-
 #include "MockFormationFactory.h"
 #include "MockKnowledgeGroupFactory.h" // LTO
+#include "MockAgentFactory.h"
 #include "MockAutomateFactory.h"
 #include "MockPopulationFactory.h"
 #include "MockObjectManager.h"
@@ -28,13 +28,14 @@
 BOOST_AUTO_TEST_CASE( FactoriesTest_ArmyFactory )
 {
     MockAutomateFactory automateFactory;
+    MockAgentFactory agentFactory;
     MockFormationFactory formationFactory;
     MockPopulationFactory populationFactory;
     MockObjectManager objetFactory;
     MockKnowledgeGroupFactory knowledgeGroupFactory; // LTO
     UrbanModel* urbanModel = new UrbanModel();
 
-    ArmyFactory armyFactory( automateFactory, formationFactory, objetFactory, populationFactory, knowledgeGroupFactory ); // LTO
+    ArmyFactory armyFactory( automateFactory, agentFactory, formationFactory, objetFactory, populationFactory, knowledgeGroupFactory /*LTO*/ ); 
 
 
     MOCKPP_CHAINER_FOR( MockFormationFactory, CreateFormationShadow ) ( &formationFactory ).expects( mockpp::once() );
