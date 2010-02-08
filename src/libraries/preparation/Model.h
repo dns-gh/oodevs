@@ -80,12 +80,14 @@ public:
     bool Save( const tools::ExerciseConfig& config, ModelChecker_ABC& checker );
     void Purge();
     QString GetName() const;
+    bool IsLoaded() const;
     //@}
 
 private:
     //! @name Helpers
     //@{
     void UpdateName( const std::string& orbat );
+    void SetLoaded( bool status );
     //@}
 
 private:
@@ -102,6 +104,7 @@ private:
     SuccessFactorFactory_ABC& successFactorFactory_;
     gui::DrawingFactory_ABC& drawingFactory_;
     QString name_;
+    bool loaded_;
     //@}
 
 public:

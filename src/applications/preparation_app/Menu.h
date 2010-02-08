@@ -14,6 +14,7 @@
 
 class QMainWindow;
 class QDialog;
+class QPopupMenu;
 
 namespace kernel
 {
@@ -43,6 +44,18 @@ public:
                  , QDialog& prefDialog, QDialog& profileDialog, QDialog& profileWizardDialog, QDialog& importDialog, QDialog& scoreDialog, QDialog& successFactorDialog
                  , gui::ItemFactory_ABC& factory, const QString& license, const gui::HelpSystem& help );
     virtual ~Menu();
+    //@}
+    
+    //! @name Operations
+    //@{
+    void EnableSaveItem( bool status );
+    //@}
+
+    private:
+    //! @name Member data
+    //@{
+    QPopupMenu*             fileMenu_;
+    int                     saveMenuItem_;
     //@}
 };
 

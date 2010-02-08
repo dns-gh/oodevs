@@ -217,6 +217,10 @@ Do you want to save anyway?</source>
         <source>Preparation - [%1]</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>No file loaded</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Menu</name>

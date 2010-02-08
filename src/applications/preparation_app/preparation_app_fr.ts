@@ -286,6 +286,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>Preparation - [%1]</source>
         <translation>Préparation - [%1]</translation>
     </message>
+    <message>
+        <source>No file loaded</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Menu</name>

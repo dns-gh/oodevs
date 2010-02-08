@@ -50,6 +50,7 @@ class StaticModel;
 class ObjectCreationPanel;
 class WeatherLayer;
 class MapLayer_ABC;
+class Menu;
 
 // =============================================================================
 /** @class  MainWindow
@@ -136,6 +137,7 @@ private:
 
     gui::OptionsPanel*    pOptionsPanel_;
     gui::ParametersLayer* parameters_;
+    Menu*                 menu_;
     bool                  loading_;
     bool                  needsSaving_;
     //@}

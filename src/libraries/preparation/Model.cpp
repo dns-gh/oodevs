@@ -75,6 +75,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , successFactors_( *new SuccessFactorsModel( successFactorFactory_ ) )
     , intelligences_( *new IntelligencesModel( controllers.controller_, staticModel.coordinateConverter_, idManager_, staticModel.levels_ ) )
     , drawings_( *new gui::DrawerModel( controllers, drawingFactory_ ) )
+    , loaded_ ( false )
 {
     // NOTHING
 }
@@ -122,6 +123,7 @@ void Model::Purge()
     knowledgeGroups_.Purge();
     teams_.Purge();
     idManager_.Reset();
+    SetLoaded( false );
 }
 
 namespace
@@ -159,6 +161,7 @@ void Model::Load( const tools::ExerciseConfig& config )
     LoadOptional( config.GetProfilesFile(), profiles_ );
     LoadOptional( config.GetScoresFile(), scores_ );
     LoadOptional( config.GetSuccessFactorsFile(), successFactors_ );
+    SetLoaded( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -225,4 +228,22 @@ void Model::UpdateName( const std::string& orbat )
         file = file.substr( 0, file.find_last_of( '.' ) );
         name_ = file.c_str();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::IsLoaded
+// Created: RPD 2010-02-05
+// -----------------------------------------------------------------------------
+bool Model::IsLoaded() const
+{
+    return loaded_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::SetLoaded
+// Created: RPD 2010-02-05
+// -----------------------------------------------------------------------------
+void Model::SetLoaded( bool status )
+{
+    loaded_ = status;
 }

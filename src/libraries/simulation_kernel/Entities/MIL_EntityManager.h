@@ -15,6 +15,7 @@
 #include "MIL.h"
 #include "MT_Tools/MT_Profiler.h"
 #include "MIL_EntityManager_ABC.h"
+#include "MIL_EntityManagerStaticMethods.h"
 
 #include "game_asn/Simulation.h"
 #include "tools/Resolver.h"
@@ -76,14 +77,13 @@ struct ASN1T_MsgKnowledgeGroupEnable; // LTO
 // Created: JVT 2004-08-03
 // =============================================================================
 class MIL_EntityManager : public MIL_EntityManager_ABC,
+                          public MIL_EntityManagerStaticMethods,
                           private boost::noncopyable
 {
 
 public:
              MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ProfilerMgr& profiler, HLA_Federate* hla, DEC_DataBase& database );
     virtual ~MIL_EntityManager();
-
-    static void Initialize( MIL_Config& config, const MIL_Time_ABC& time );
 
     //! @name Factory
     //@{
@@ -110,7 +110,7 @@ public:
         
     const tools::Resolver< MIL_Army_ABC >& MIL_EntityManager::GetArmies() const;
     
-                   MIL_EffectManager& GetEffectManager() const;
+    MIL_EffectManager& GetEffectManager() const;
     //@}
 
     //! @name Stats
@@ -175,7 +175,6 @@ public:
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_EntityManager* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_EntityManager* role, const unsigned int /*version*/ );
 
-
     void WriteODB( xml::xostream& xos ) const;
     //@}
     
@@ -190,13 +189,6 @@ private:
 private:
     //! @name Init
     //@{
-    // Types
-    template < typename T > 
-    static void InitializeType       ( xml::xistream& xis, MIL_Config& config, const std::string& strSection );
-    static void InitializeMedical    ( xml::xistream& xis, MIL_Config& config );
-    static void InitializeComposantes( xml::xistream& xis, MIL_Config& config, const MIL_Time_ABC& time );
-    static void InitializeWeapons    ( xml::xistream& xis, MIL_Config& config, const MIL_Time_ABC& time );
-    static void InitializeSensors    ( xml::xistream& xis, MIL_Config& config, const MIL_Time_ABC& time );
 
     // ODB
     void InitializeArmies     ( xml::xistream& xis );

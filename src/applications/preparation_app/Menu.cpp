@@ -26,7 +26,7 @@ using namespace gui;
 
 namespace
 {
-    // $$$$ AGE 2007-05-31: ^c^v
+    // $$$$ AGE 2007-05-31:
     void Populate( OptionMenu< TristateOption >& menu )
     {
         menu.AddItem( TristateOption::AutoName(), TristateOption::Auto() );
@@ -66,21 +66,23 @@ namespace
 // Created: SBO 2006-04-28
 // -----------------------------------------------------------------------------
 Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, QDialog& profileDialog, QDialog& profileWizardDialog, QDialog& importDialog, QDialog& scoreDialog, QDialog& successFactorDialog, gui::ItemFactory_ABC& factory, const QString& license, const gui::HelpSystem& help )
-    : QMenuBar( pParent )
+    : QMenuBar      ( pParent )
+    , fileMenu_     ( 0 )
+    , saveMenuItem_ ( 0 )
 {
-    QPopupMenu* menu = new QPopupMenu( this );
-    menu->insertItem( MAKE_ICON( new ) , tools::translate( "Menu", "&New..." ) , parent(), SLOT( New() ) , CTRL + Key_N );
-    menu->insertItem( MAKE_ICON( open ), tools::translate( "Menu", "&Open..." ), parent(), SLOT( Open() ), CTRL + Key_O );
-    menu->insertItem( tools::translate( "Menu", "Close" ), parent(), SLOT( Close() ), CTRL + Key_W );
-    menu->insertSeparator();
-    menu->insertItem( tools::translate( "Menu", "&Import..." ), &importDialog, SLOT( exec() ), CTRL + Key_I );
-    menu->insertSeparator();
-    menu->insertItem( MAKE_ICON( save )  , tools::translate( "Menu", "&Save" )      , parent(), SLOT( Save() ), CTRL + Key_S );
-    menu->insertSeparator();
-    menu->insertItem( tools::translate( "Menu", "&Quit" ), pParent, SLOT( close() ), CTRL + Key_Q );
-    insertItem( tools::translate( "Menu", "&File" ), menu );
+    fileMenu_ = new QPopupMenu( this );
+    fileMenu_->insertItem( MAKE_ICON( new ) , tools::translate( "Menu", "&New..." ) , parent(), SLOT( New() ) , CTRL + Key_N );
+    fileMenu_->insertItem( MAKE_ICON( open ), tools::translate( "Menu", "&Open..." ), parent(), SLOT( Open() ), CTRL + Key_O );
+    fileMenu_->insertItem( tools::translate( "Menu", "Close" ), parent(), SLOT( Close() ), CTRL + Key_W );
+    fileMenu_->insertSeparator();
+    fileMenu_->insertItem( tools::translate( "Menu", "&Import..." ), &importDialog, SLOT( exec() ), CTRL + Key_I );
+    fileMenu_->insertSeparator();
+    saveMenuItem_ = fileMenu_->insertItem( MAKE_ICON( save )  , tools::translate( "Menu", "&Save" )      , parent(), SLOT( Save() ), CTRL + Key_S );
+    fileMenu_->insertSeparator();
+    fileMenu_->insertItem( tools::translate( "Menu", "&Quit" ), pParent, SLOT( close() ), CTRL + Key_Q );
+    insertItem( tools::translate( "Menu", "&File" ), fileMenu_ );
 
-    menu = new QPopupMenu( this );
+    QPopupMenu* menu = new QPopupMenu( this );
     menu->insertItem( MAKE_ICON( profile ), tools::translate( "Menu", "View/Edit..." ), &profileDialog, SLOT( exec() ) );
     menu->insertSeparator();
     menu->insertItem( tools::translate( "Menu", "Creation wizard..." ), &profileWizardDialog, SLOT( exec() ) );
@@ -144,4 +146,13 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
 Menu::~Menu()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Menu EnableSaveItem
+// Created: RPD 2010-02-05
+// -----------------------------------------------------------------------------
+void Menu::EnableSaveItem( bool status )
+{
+    setItemEnabled( saveMenuItem_, status );
 }

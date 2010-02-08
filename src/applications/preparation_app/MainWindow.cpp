@@ -122,10 +122,10 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     , forward_      ( new CircularEventStrategy() )
     , eventStrategy_( new ExclusiveEventStrategy( *forward_ ) )
     , glProxy_      ( 0 )
+    , menu_         ( 0 )
     , needsSaving_  ( false )
 {
     setIcon( MAKE_PIXMAP( csword ) );
-    SetWindowTitle( false );
 
     lighting_ = new LightingProxy( this );
     PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *lighting_ );
@@ -226,7 +226,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     new DisplayToolbar( this, controllers );
 
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/preparation.xml" ) );
-    new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *importDialog, *scoreDialog, *successFactorDialog, *factory, expiration, *help );
+    menu_ = new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *importDialog, *scoreDialog, *successFactorDialog, *factory, expiration, *help );
 
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
     CreateLayers( *objectCreationPanel, *paramLayer, *locationsLayer, *weatherLayer, *agentsLayer, prefDialog->GetPreferences(), *prefDialog, PreparationProfile::GetProfile() );
@@ -236,6 +236,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     connect( selector_, SIGNAL( MouseMove( const geometry::Point3f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point3f& ) ) );
     controllers_.Register( *this );
 
+    SetWindowTitle( false );
     ReadSettings();
     ReadOptions();
 
@@ -327,6 +328,8 @@ bool MainWindow::New()
 // -----------------------------------------------------------------------------
 void MainWindow::Open()
 {
+    if ( model_.IsLoaded() && !CheckSaving())
+        return;
     if( New() )
         LoadExercise();
 }
@@ -563,10 +566,16 @@ void MainWindow::NotifyDeleted()
 void MainWindow::SetWindowTitle( bool needsSaving )
 {
     SetNeedsSaving( needsSaving );
-    QString filename = model_.GetName().isEmpty() ? tr( "New ORBAT" ) : model_.GetName();
-    if( needsSaving )
-        filename += "*";
+    QString filename = tr( "No file loaded" );
+    if ( model_.IsLoaded() )
+    {
+        filename = model_.GetName().isEmpty() ? tr( "New ORBAT" ) : model_.GetName();
+        if( needsSaving )
+            filename += "*";
+    }
     setCaption( tr( "Preparation - [%1]" ).arg( filename ) );
+    if ( menu_ )
+        menu_->EnableSaveItem( needsSaving );
 }
 
 // -----------------------------------------------------------------------------
