@@ -100,13 +100,13 @@ const std::string& DEC_Decision<T>::GetDIAType() const
 template <class T>
 void DEC_Decision<T>::UpdateDecision( float duration )
 {
-    __try
+    try
     {
         UpdateMeKnowledge( *pBrain_ );
         pBrain_->SelectActions         ();
         pBrain_->TriggerSelectedActions( duration );
     }
-    __except( MT_CrashHandler::ExecuteHandler( GetExceptionInformation() ) )
+    catch( std::runtime_error& )
     {
         HandleUpdateDecisionError();
     }
@@ -256,12 +256,12 @@ void DEC_Decision<T>::ActivateOrder( const std::string& strBehavior, MIL_Mission
 template <class T>
 void DEC_Decision<T>::StopMission( const std::string& strBehavior )
 {
-    __try
+    try
     {
-        assert( pRefs_->stopEvents_.operator ()< const std::string& >( strBehavior ) );
+        pRefs_->stopEvents_.operator ()< const std::string& >( strBehavior );
         pMission_ = 0;
     }
-    __except( MT_CrashHandler::ExecuteHandler( GetExceptionInformation() ) )
+    catch( std::runtime_error& )
     {
         CleanStateAfterCrash();
     }

@@ -122,11 +122,11 @@ void DEC_Path_ABC::DoExecute( TerrainPathfinder& pathfind )
 // -----------------------------------------------------------------------------
 void DEC_Path_ABC::Execute( TerrainPathfinder& pathfind )
 {
-    __try
+    try
     {
         DoExecute( pathfind );
     }
-    __except( MT_CrashHandler::ExecuteHandler( GetExceptionInformation() ) )
+    catch( std::runtime_error& )
     {
         bJobCanceled_ = true;
         nState_ = eCanceled;

@@ -162,6 +162,7 @@ BOOST_AUTO_TEST_CASE( ActivateOrderExecutesBehaviour )
     StubMIL_Mission_ABC mission( missionType, resolver );
     decision.StartMissionBehavior( mission );
     missionType.verify();
+
     scriptMocker_.Call_mocker.expects( once() ).with(  eq< std::string >( "missionBehavior called" ) );
     decision.UpdateDecision( 1.f );
     scriptMocker_.verify();
