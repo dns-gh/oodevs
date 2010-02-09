@@ -158,6 +158,13 @@ LinearInterpolation = function( min, max, start, stop, upslope, value )
   return res
 end
 
+
+--[[local taskListener = {}@TODO MGD 
+taskListener.TaskStarted = function() BreakForDebug( "startTask" ) end
+taskListener.StageChanged = function() BreakForDebug( "StageChanged" ) end
+taskListener.TaskFinished = function() BreakForDebug( "stopTask" ) end
+behavior_model.registerTaskListener( taskListener ) ]]--
+
 --- Tools for print function which create a string for all var type 
 -- @param var The variable to convert to string
 -- @author MGD

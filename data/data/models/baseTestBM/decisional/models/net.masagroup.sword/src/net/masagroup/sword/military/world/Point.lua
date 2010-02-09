@@ -44,8 +44,8 @@ defaultMethods
     destructionEfficiency = function() return default_engine.methods.load( "destructionEfficiency" ) end,
     
     -- IDENTIFYING
-	isIdentifyingFor = function() return default_engine.predicates.load( "terrain_analysis_isIdentifyingFor" ) end,
-	identificationEfficiency = function() return default_engine.methods.load( "identificationEfficiency" ) end,
+  isIdentifyingFor = function() return default_engine.predicates.load( "terrain_analysis_isIdentifyingFor" ) end,
+  identificationEfficiency = function() return default_engine.methods.load( "identificationEfficiency" ) end,
 }
 return
 {
@@ -68,14 +68,9 @@ return
     occupationLevel = function( self )
       --TODO
     end,
-    isSafety = function( area )
-        --TODO
-    end,
     -- INTEGRATION METHODS
     -- reachable action
-    moveToIt = function( self )
-        return integration.moveToIt( self )
-    end,
+    moveToIt = behavior_model.integration.startStopAction( { start = integration.startMoveToIt, started = function( self, ...) end, stop = integration.stopMoveToIt } ),
     -- observable action
     observeIt = function( self )
         integration.observeIt( self )
@@ -104,7 +99,6 @@ return
     end,
     -- TEMP FUNCTIONS
     estimatedReconnaissanceLevel = function( self, objective )
-        BreakForDebug("good call to reconnaissance level")
         if not estimatedReconnaissanceLevels[ objective ] then
             local values = {}
             values[ self ] = kBase.me.body:computeReconnaissanceCapability( objective, self )
@@ -120,7 +114,7 @@ return
         return true -- TODO
     end,
 
-	computeIdentificationCapability = function ( self, objective )
-		return self:computeDistance( objective )
-	end,
+  computeIdentificationCapability = function ( self, objective )
+    return self:computeDistance( objective )
+  end,
 }

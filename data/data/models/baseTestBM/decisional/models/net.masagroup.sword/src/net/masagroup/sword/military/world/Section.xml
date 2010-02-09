@@ -168,9 +168,6 @@
         </type>
       </return>
     </method>
-    <method name="stopDestroyingIt">
-      <description>__INTEGRATION</description>
-    </method>
     <method name="isOccupied">
       <description>__INTEGRATION</description>
       <return>

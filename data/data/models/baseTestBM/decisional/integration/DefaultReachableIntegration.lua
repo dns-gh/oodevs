@@ -26,28 +26,32 @@ integration.normalizedInversedDistance = function( pos1, pos2 )
   return LinearInterpolation( 0, 100, 0, 10000, false, integration.magnitude( pos1, pos2 ) )
 end
 
-local moveAction = nil
-local etat = nil
-integration.moveToIt = function( reachable)
-  if not moveAction then
+integration.startMoveToIt = function( reachable )
+  if not reachable.moveAction then
     default_engine.methods.occupyPosition( kBase.me.body, nil ) -- UnOccupyPosition
     it = DEC_CreerItineraireBM( reachable.sim_pos.x, reachable.sim_pos.y, reachable.sim_pos.z, eTypeItiMouvement )
-    moveAction = DEC_StartDeplacement( it )
-    actionCallbacks[ moveAction ] = function( arg ) etat = arg end
-  elseif etat == eEtatActionDeplacement_Termine then
+    reachable.moveAction = DEC_StartDeplacement( it )
+    actionCallbacks[ reachable.moveAction ] = function( arg ) reachable.etat = arg end
+  elseif reachable.etat == eEtatActionDeplacement_Termine then
     default_engine.methods.occupyPosition( kBase.me.body, reachable ) --OccupyPosition
-    moveAction = DEC_StopAction( moveAction )
-    moveAction = nil
-    etat = nil
+    reachable.moveAction = DEC_StopAction( reachable.moveAction )
+    reachable.moveAction = nil
+    reachable.etat = nil
     return true
-  elseif etat == eEtatActionDeplacement_Pause then
-    DEC_ReprendAction( moveAction )
-  elseif etat == eEtatActionDeplacement_ManqueCarburant then
-    DEC_PauseAction( moveAction )
-  elseif etat == eEtatActionDeplacement_NonAutorise then
+  elseif reachable.etat == eEtatActionDeplacement_Pause then
+    DEC_ReprendAction( reachable.moveAction )
+  elseif reachable.etat == eEtatActionDeplacement_ManqueCarburant then
+    DEC_PauseAction( reachable.moveAction )
+  elseif reachable.etat == eEtatActionDeplacement_NonAutorise then
     --TODO
-  elseif etat == eEtatActionDeplacement_DejaEnDeplacement then
+  elseif reachable.etat == eEtatActionDeplacement_DejaEnDeplacement then
     --TODO
   end
   return false
+end
+
+integration.stopMoveToIt = function( reachable )
+  DEC_StopAction( reachable.moveAction )
+  reachable.moveAction = nil
+  reachable.etat = nil
 end

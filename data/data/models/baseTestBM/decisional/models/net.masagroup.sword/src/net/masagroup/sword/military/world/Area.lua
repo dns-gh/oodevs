@@ -59,14 +59,9 @@ return
     occupationLevel = function( self )
       --TODO
     end,
-    isSafety = function( area )
-        --TODO
-    end,
     -- INTEGRATION METHODS
     -- reachable action
-    moveToIt = function( self )
-        return integration.moveToIt( self )
-    end,
+    moveToIt = behavior_model.integration.startStopAction( { start = integration.startMoveToIt, started = function( self, ...) end, stop = integration.stopMoveToIt } ),
     -- observable action
     observeIt = function( self )
         integration.observeIt( self )
@@ -95,7 +90,6 @@ return
     end,
     -- TEMP FUNCTIONS
     estimatedReconnaissanceLevel = function( self, objective )
-        BreakForDebug("good call to reconnaissance level")
         if not estimatedReconnaissanceLevels[ objective ] then
             local values = {}
             values[ self ] = kBase.me.body:computeReconnaissanceCapability( objective, self )

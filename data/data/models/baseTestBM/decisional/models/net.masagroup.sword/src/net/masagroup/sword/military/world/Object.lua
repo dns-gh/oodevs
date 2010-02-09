@@ -26,7 +26,6 @@ return
     end,
     
     getPerception = function( self )
-      BreakForDebug( "call getPerception object" )
       return integration.getObjectPerception( self )
     end,
       
@@ -44,9 +43,7 @@ return
     computeDistance = function( self, target )
         return integration.normalizedInversedDistance( self, target )
     end,
-    moveToIt = function( self )
-        return integration.moveToIt( self )
-    end,
+    moveToIt = behavior_model.integration.startStopAction( { start = integration.startMoveToIt, nil, stop = integration.stopMoveToIt } ),
     -- OBSERVABLE
     observeIt = function( self )
         integration.observeIt( self )

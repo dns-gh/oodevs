@@ -6,9 +6,6 @@ end
 eTirDirectNormal = 0
 eTirDirectLibre = 1
 
-local actionTir = actionTir or nil
-local eTir = eTir or nil
-
 local eActionTirDirect_Impossible = 0
 local eActionTirDirect_EnemyDestroyed = 1
 local eActionTirDirect_NoCapacity = 2
@@ -35,24 +32,23 @@ integration.canDestroyIt = function( target )
   end
 end
 
-integration.destroyIt = function( target )
-  if not actionTir then
-    actionTir = DEC_StartTirDirect( target.source, 100, eTirDirectNormal, 0 )
-    actionCallbacks[ actionTir ] = function( arg ) eTir = arg end
+integration.startDestroyingIt = function( target )
+  if not target.actionTir then
+    target.actionTir = DEC_StartTirDirect( target.source, 100, eTirDirectNormal, 0 )
+    actionCallbacks[ target.actionTir ] = function( arg ) eTir = arg end
   end
 end
 
 integration.stopDestroyingIt = function( target )
-  actionTir = DEC_StopAction( actionTir )
+  DEC_StopAction( target.actionTir )
+  target.actionTir = nil
 end
 
 integration.destructionLevel = function( target )
-  BreakForDebug( "DEC_ConnaissanceAgent_AttritionPotentielle "..tostring( DEC_ConnaissanceAgent_AttritionPotentielle( target.source ) ) )
   etatOps = ( DEC_ConnaissanceAgent_NiveauDeDestructionTactique( target.source ) ) * 100
   return etatOps
 end
 
 integration.getEstimateAttrition = function( target, myself )
-  BreakForDebug( "DEC_ConnaissanceAgent_AttritionPotentielle "..tostring( DEC_ConnaissanceAgent_AttritionPotentielle( target.source ) ) )
   return DEC_ConnaissanceAgent_AttritionPotentielle( target.source )
 end

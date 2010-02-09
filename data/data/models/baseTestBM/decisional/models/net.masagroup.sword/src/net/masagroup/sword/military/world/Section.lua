@@ -22,7 +22,7 @@ defaultMethods
     -- POSITIONNABLE
     isInMyAOR = function() return default_engine.predicates.load( "isInMyAOR") end,
     canTakePosition = function() return default_engine.methods.load( "canTakePosition" ) end,
-    
+
     -- DESTROYABLE
     destructionPriority = function() return default_engine.methods.load( "destructionPriority" ) end,
     isDestroyed = function() return default_engine.predicates.load( "isDestroyed" ) end,
@@ -52,11 +52,11 @@ defaultMethods
     isRecognized = function() return default_engine.methods.load( "isRecognized" ) end,
     identificationLevel = function() return default_engine.methods.load( "identificationLevel" ) end,
     isIdentified = function() return default_engine.predicates.load( "isIdentified" ) end,
-   
+
 }
 
 communication.setMessageTreatment( "Order", integration.communication.StartMissionPion )
-
+ 
 return
 {
     -- $$$ MIA: temp, to move in default military implementation
@@ -74,12 +74,11 @@ return
 
     -- INTEGRATION METHODS
     -- reachable action
-    moveToIt = function( self )
-        return integration.moveToIt( self )
-    end,
+    moveToIt = behavior_model.integration.startStopAction( { start = integration.startMoveToIt, started = function( self, ...) end, stop = integration.stopMoveToIt } ),
+
     -- observable action
     observeIt = function( self )
-    	integration.observeIt( self )
+      integration.observeIt( self )
     end,
     -- Tactical analysis integration
     computeDistance = function( self, target )
@@ -124,13 +123,11 @@ return
     return 100
     end,
 
-  getDestructionState = function( self )
-    local etatOp = ( 1 - DEC_ConnaissanceAgent_EtatOps( self.source ) )*100
-    BreakForDebug( tostring ( etatOp) )
-      return etatOp
-  end,
-  canDestroyIt = function(self)
-    return integration.canDestroyIt(self)
+    getDestructionState = function( self )
+      return ( 1 - DEC_ConnaissanceAgent_EtatOps( self.source ) )*100
+    end,
+    canDestroyIt = function(self)
+      return integration.canDestroyIt(self)
     end,
 
     occupationLevel = function()
@@ -142,30 +139,24 @@ return
       return true
     end,
 
-  stopDestroyingIt = function( self )
-    integration.stopDestroyingIt( self )
-  end,
-  
-  destructionLevel = function( self )
-    return integration.destructionLevel( self )
-  end,
+    destructionLevel = function( self )
+      return integration.destructionLevel( self )
+    end,
 
- destroy = function( self )
-  integration.destroyIt( self )
- end,
+    destroy = behavior_model.integration.startStopAction( { start = integration.startDestroyingIt, started = function( self, ...) end, stop = integration.stopDestroyingIt } ),
 
- isOccupied = function( self )
-  return true
- end,
- 
- identifyIt = function ( self )
-   integration.identifyIt( self )
- end,
- 
-getIdentificationState = function( self )
-   return integration.getAutomatPerception( self )
-end,
- 
+    isOccupied = function( self )
+      return true
+    end,
+
+    identifyIt = function ( self )
+      integration.identifyIt( self )
+    end,
+
+    getIdentificationState = function( self )
+      return integration.getAutomatPerception( self )
+    end,
+
 
 tasks =
     {

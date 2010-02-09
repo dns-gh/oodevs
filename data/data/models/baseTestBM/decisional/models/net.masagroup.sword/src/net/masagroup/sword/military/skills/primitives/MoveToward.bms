@@ -12,9 +12,7 @@ rootnode
     -- objectives are reached
     -- --------------------------------------------------------------------------------
     done = function( self, params, additionnalParams )
-        BreakForDebug("call done in rootnodee from moveToward")
         if additionnalParams.state == "posted" then
-            BreakForDebug("poster callback")
             Feedback( self.feedbacks.done, { position = additionnalParams.position, state = additionnalParams.state } )
         end
     end,
@@ -52,5 +50,9 @@ node "MoveTowardElement"
         for _, keypoint in pairs( self.params.positions ) do
             Activate( skill.links.moveAndTakePosition, keypoint:reachEfficiency( self.params.entity ), { entity = keypoint } )
         end
+    end,
+    
+    destroy = function( self )
+      --BreakForDebug("call destroy moveTowardelement")
     end
 }
