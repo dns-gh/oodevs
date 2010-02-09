@@ -13,7 +13,8 @@
 #include "PHY_RolePion_Posture.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
-#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Agents/MIL_AgentType_ABC.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Hla/HLA_UpdateFunctor.h"
 
@@ -35,14 +36,14 @@ static const MT_Float rDeltaPercentageForNetwork = 0.05; //$$$ DEGUEU
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePion_Posture* role, const unsigned int /*version*/ )
 {
-    const MIL_AgentPion* const pion = &role->pion_;
+    const MIL_Agent_ABC* const pion = &role->pion_;
     archive << pion;
 }
 
 template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RolePion_Posture* role, const unsigned int /*version*/ )
 {
-	MIL_AgentPion* pion;
+	MIL_Agent_ABC* pion;
     archive >> pion;
     ::new( role )PHY_RolePion_Posture( *pion );
 }
@@ -51,7 +52,7 @@ void load_construct_data( Archive& archive, PHY_RolePion_Posture* role, const un
 // Name: PHY_RolePion_Posture constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-PHY_RolePion_Posture::PHY_RolePion_Posture( MIL_AgentPion& pion )
+PHY_RolePion_Posture::PHY_RolePion_Posture( MIL_Agent_ABC& pion )
     : pion_                                ( pion )
     , pCurrentPosture_                     ( &PHY_Posture::arret_ )
     , pLastPosture_                        ( &PHY_Posture::arret_ )

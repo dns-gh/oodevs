@@ -19,7 +19,7 @@
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
-class MIL_AgentPion;
+class MIL_Agent_ABC;
 class NET_ASN_MsgUnitAttributes;
 class HLA_UpdateFunctor;
 
@@ -45,7 +45,7 @@ class PHY_RolePion_Posture : public PHY_RoleInterface_Posture
 {
 
 public:
-    explicit  PHY_RolePion_Posture( MIL_AgentPion& pion );
+    explicit  PHY_RolePion_Posture( MIL_Agent_ABC& pion );
     virtual ~PHY_RolePion_Posture();
 
     //! @name CheckPoints
@@ -123,7 +123,7 @@ private:
     //@}
 
 private:
-          MIL_AgentPion& pion_;
+          MIL_Agent_ABC& pion_;
     const PHY_Posture*   pCurrentPosture_;
     const PHY_Posture*   pLastPosture_;
           MT_Float       rPostureCompletionPercentage_;
