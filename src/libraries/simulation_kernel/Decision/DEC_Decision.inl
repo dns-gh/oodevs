@@ -246,7 +246,7 @@ void DEC_Decision<T>::ActivateOrder( const std::string& strBehavior, MIL_Mission
     directia::ScriptRef refMission = pBrain_->RegisterObject( pMission_ );
     directia::ScriptRef refFunction = pBrain_->GetScriptFunction( "InitTaskParameter" );
     DEC_DecisionImpl::RegisterMissionParameters( *pBrain_, refFunction, refMission, *pMission_ );
-    assert( pRefs_->startEvent_( strBehavior, pMission_ ) );
+    pRefs_->startEvent_( strBehavior, pMission_ );
 }
 
 // -----------------------------------------------------------------------------
