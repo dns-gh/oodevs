@@ -168,7 +168,7 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Ar
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, ASN1T_EnumDemolitionTargetType obstacleType )
 {
-	if ( pLocalisation )
+    if ( pLocalisation )
         return builder_->BuildObject( type, army, *pLocalisation, obstacleType );
     return 0;
 }

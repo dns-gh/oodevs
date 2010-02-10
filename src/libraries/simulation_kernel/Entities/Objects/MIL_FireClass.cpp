@@ -75,13 +75,13 @@ void MIL_FireClass::Initialize( xml::xistream& xis )
 // Modified: RFT 14/05/2008
 // -----------------------------------------------------------------------------
 MIL_FireClass::MIL_FireClass( const std::string& strName, xml::xistream& xis )
-	: strName_              ( strName )
-	, nID_                  ( 0 )
-	, tempThreshold_        ( 0 )
-	, defaultHeat_          ( 0 )
-	, heatMax_              ( 0 )
-	, increaseRate_         ( 0 )
-	, decreaseRate_         ( 0 )
+    : strName_              ( strName )
+    , nID_                  ( 0 )
+    , tempThreshold_        ( 0 )
+    , defaultHeat_          ( 0 )
+    , heatMax_              ( 0 )
+    , increaseRate_         ( 0 )
+    , decreaseRate_         ( 0 )
     , propagationThreshold_ ( 0 )
 {
     tools::ReadTimeAttribute( xis , "tempthreshold" , tempThreshold_ );
@@ -187,7 +187,7 @@ const MIL_FireClass* MIL_FireClass::Find( uint nID )
 // -----------------------------------------------------------------------------
 MIL_FireClass::~MIL_FireClass()
 {
-	//Nothing
+    //Nothing
 }
 
 // -----------------------------------------------------------------------------
@@ -261,7 +261,7 @@ int MIL_FireClass::GetPropagationThreshold() const
 // Created: RFT 28/04/2008
 // Modified: none
 // -----------------------------------------------------------------------------
-int	MIL_FireClass::ComputeHeatEvolution( int heat, unsigned int timeOfCreation, unsigned int timeOflastUpdate ) const
+int    MIL_FireClass::ComputeHeatEvolution( int heat, unsigned int timeOfCreation, unsigned int timeOflastUpdate ) const
 {
     //Temporal informations acquisition
     unsigned int time = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();

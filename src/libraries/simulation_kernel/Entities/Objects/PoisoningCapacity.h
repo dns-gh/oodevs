@@ -46,11 +46,11 @@ public:
     virtual void Register( Object& object );
     //@}
 
-	//! @name virtual
+    //! @name virtual
     //@{
     virtual void Instanciate( Object& object ) const;
-	virtual void Update( Object& object, float time );
-	//@}
+    virtual void Update( Object& object, float time );
+    //@}
 
     //! @name 
     //@{

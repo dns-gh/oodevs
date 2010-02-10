@@ -28,7 +28,7 @@ class PHY_Weapon;
 
 class MIL_FireClass
 {
-public:	
+public:
     enum E_FireExtinguisherAgent {
         eEauEnMasse = 0,
         eEauEnPulverisation,
@@ -49,11 +49,11 @@ public:
     //@}
 
 private:
-	//!@ Constructor and destructor
-	//@{   
+    //!@ Constructor and destructor
+    //@{   
     MIL_FireClass( const std::string& strName, xml::xistream& xis ); 
     ~MIL_FireClass();
-	//@}
+    //@}
 
 public:
     //! @name
@@ -77,7 +77,7 @@ public:
     //! @name Operations
     //@{
     int                  ComputeHeatEvolution( int heat, unsigned int timeOfCreation, unsigned int lastTimeSinceUpdate ) const;
-    int                  ComputeHeatWhenExtinguishing( int heat, E_FireExtinguisherAgent extinguisherAgent, int numberOfFireHoses ) const;	
+    int                  ComputeHeatWhenExtinguishing( int heat, E_FireExtinguisherAgent extinguisherAgent, int numberOfFireHoses ) const;
     T_EvaluationResult   Evaluate( const PHY_Weapon& weapon ) const;
     //@}
 

@@ -25,7 +25,7 @@
 // -----------------------------------------------------------------------------
 void DEC_KnowledgePopulationFunctions::Recon( const MIL_AgentPion& callerAgent, int knowledgeId )
 {
-	DEC_Knowledge_Population* pKnowledge = callerAgent.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
+    DEC_Knowledge_Population* pKnowledge = callerAgent.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
     if( pKnowledge )
         pKnowledge->Recon();
 }
@@ -53,7 +53,7 @@ float DEC_KnowledgePopulationFunctions::GetDangerosity( const MIL_AgentPion& cal
 // -----------------------------------------------------------------------------
 void DEC_KnowledgePopulationFunctions::Secure( const MIL_AgentPion& caller, int knowledgeId )
 {
-	DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
+    DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
     if( pKnowledge )
         pKnowledge->Secure( caller );
 }
@@ -64,9 +64,9 @@ void DEC_KnowledgePopulationFunctions::Secure( const MIL_AgentPion& caller, int 
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MT_Vector2D> DEC_KnowledgePopulationFunctions::SecuringPoint( const MIL_AgentPion& caller, int knowledgeId )
 {
-	DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
+    DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
     if( !pKnowledge )
-    	return boost::shared_ptr<MT_Vector2D>();
+        return boost::shared_ptr<MT_Vector2D>();
     else
     {
         MT_Vector2D* pResult = new MT_Vector2D( pKnowledge->GetSecuringPoint( caller ) );
@@ -80,9 +80,9 @@ boost::shared_ptr<MT_Vector2D> DEC_KnowledgePopulationFunctions::SecuringPoint( 
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MT_Vector2D> DEC_KnowledgePopulationFunctions::ClosestPoint( const MIL_AgentPion& caller, int knowledgeId )
 {
-	DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
+    DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
     if( !pKnowledge )
-    	return boost::shared_ptr<MT_Vector2D>();
+        return boost::shared_ptr<MT_Vector2D>();
     else
     {
         MT_Vector2D* pResult = new MT_Vector2D( pKnowledge->GetClosestPoint( caller.GetRole< PHY_RoleInterface_Location >().GetPosition() ) ); //$$$ RAM
@@ -97,7 +97,7 @@ boost::shared_ptr<MT_Vector2D> DEC_KnowledgePopulationFunctions::ClosestPoint( c
 // -----------------------------------------------------------------------------
 bool DEC_KnowledgePopulationFunctions::IsEnemy( const MIL_AgentPion& caller, int knowledgeId )
 {
-	DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
+    DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
     if( !pKnowledge )
         return false;
     else
@@ -110,7 +110,7 @@ bool DEC_KnowledgePopulationFunctions::IsEnemy( const MIL_AgentPion& caller, int
 // -----------------------------------------------------------------------------
 int DEC_KnowledgePopulationFunctions::Exterminate( const MIL_AgentPion& caller, int knowledgeId, float surface )
 {
-	DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
+    DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
     if( !pKnowledge )
     {
         return eQueryInvalid;
@@ -125,7 +125,7 @@ int DEC_KnowledgePopulationFunctions::Exterminate( const MIL_AgentPion& caller, 
 // -----------------------------------------------------------------------------
 bool DEC_KnowledgePopulationFunctions::IsPerceivedByAgent( const MIL_AgentPion& caller, int knowledgeId )
 {
-	DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
+    DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
     if( !pKnowledge )
     {
         return false;

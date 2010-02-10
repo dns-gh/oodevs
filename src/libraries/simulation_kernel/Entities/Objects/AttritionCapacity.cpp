@@ -58,7 +58,7 @@ AttritionCapacity::AttritionCapacity( const AttritionCapacity& from )
 {
     // NOTHING
 }
-	
+
 // -----------------------------------------------------------------------------
 // Name: AttritionCapacity destructor
 // Created: JCR 2008-05-22

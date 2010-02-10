@@ -23,12 +23,12 @@ class InterferenceCapacity : public ObjectCapacity_ABC
                            , public MIL_InteractiveContainer_ABC
 {
 public:
-	//! @name Constructors/Destructor
+    //! @name Constructors/Destructor
     //@{
-	         InterferenceCapacity();
+             InterferenceCapacity();
     explicit InterferenceCapacity( xml::xistream& xis );
     virtual ~InterferenceCapacity();
-	//@}
+    //@}
 
     //! @name CheckPoints
     //@{

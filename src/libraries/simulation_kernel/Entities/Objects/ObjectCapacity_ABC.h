@@ -15,11 +15,11 @@ class Object;
 class ObjectCapacity_ABC 
 {
 public:
-	//! @name Constructors/Destructor
+    //! @name Constructors/Destructor
     //@{
-			ObjectCapacity_ABC() {}
-	virtual ~ObjectCapacity_ABC() {}
-	//@}
+            ObjectCapacity_ABC() {}
+    virtual ~ObjectCapacity_ABC() {}
+    //@}
 
     //! @name CheckPoints / boost serialize/deserialize
     //@{

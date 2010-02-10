@@ -75,7 +75,7 @@ public:
 
     virtual int GeteEtatDec() const;
     virtual void SeteEtatDec( int value );
-	int GetRulesOfEngagementState() const;
+    int GetRulesOfEngagementState() const;
     int GeteEtatDecPrudence() const;
     void SeteEtatDecPrudence( int value );
     virtual int GeteEtatLima() const;

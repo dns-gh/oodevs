@@ -202,7 +202,7 @@ template< typename Archive >
 void PHY_RolePion_Composantes::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_RoleInterface_Composantes >( *this )
-		 & composantes_
+         & composantes_
          & lentComposantes_
          & borrowedComposantes_
          & composanteTypes_
@@ -1185,12 +1185,12 @@ void PHY_RolePion_Composantes::Serialize( HLA_UpdateFunctor& functor ) const
 // -----------------------------------------------------------------------------
 double PHY_RolePion_Composantes::GetDangerosity( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget ) const
 {
-	double rDangerosity = 0.f;
-	for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-	{
-		rDangerosity = std::max( rDangerosity, (*it)->GetDangerosity( compTarget, rDistBtwSourceAndTarget ) );
-	}
-	return rDangerosity;
+    double rDangerosity = 0.f;
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    {
+        rDangerosity = std::max( rDangerosity, (*it)->GetDangerosity( compTarget, rDistBtwSourceAndTarget ) );
+    }
+    return rDangerosity;
 }
 
 // -----------------------------------------------------------------------------
@@ -1599,8 +1599,8 @@ void PHY_RolePion_Composantes::Execute( transport::TransportWeightComputer_ABC& 
 {
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
     {
-    	if( (*it)->CanBeTransported() )
-    		algorithm.AddTransportedWeight((*it)->GetWeight(), (*it)->CanBeLoaded());
+        if( (*it)->CanBeTransported() )
+            algorithm.AddTransportedWeight((*it)->GetWeight(), (*it)->CanBeLoaded());
     }
 }
 
@@ -1636,17 +1636,17 @@ void PHY_RolePion_Composantes::Execute( OnComponentLendedFunctorComputer_ABC& al
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::Execute( transport::HumanLoadingTimeComputer_ABC& algorithm ) const
 {
-	for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-	{
-		const PHY_ComposantePion& composante= **it;
-		if( composante.CanBeLoaded() )
-			algorithm.AddHumans(composante.GetNbrUsableHumans());
-		if( composante.CanTransportHumans() )
-		{
-			const PHY_ComposanteTypePion& compType = composante.GetType();
-			algorithm.AddTime(compType.GetNbrHumansLoadedPerTimeStep  (), compType.GetNbrHumansUnloadedPerTimeStep());
-		}
-	}
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    {
+        const PHY_ComposantePion& composante= **it;
+        if( composante.CanBeLoaded() )
+            algorithm.AddHumans(composante.GetNbrUsableHumans());
+        if( composante.CanTransportHumans() )
+        {
+            const PHY_ComposanteTypePion& compType = composante.GetType();
+            algorithm.AddTime(compType.GetNbrHumansLoadedPerTimeStep  (), compType.GetNbrHumansUnloadedPerTimeStep());
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -1655,21 +1655,21 @@ void PHY_RolePion_Composantes::Execute( transport::HumanLoadingTimeComputer_ABC&
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::Execute( transport::LoadedStateConsistencyComputer_ABC& algorithm ) const
 {
-	for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-	{
-		const PHY_ComposantePion& composante= **it;
-		algorithm.EnableCarrier(composante.CanTransportHumans());
-		algorithm.EnableLoadable(composante.CanBeLoaded());
-	}
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    {
+        const PHY_ComposantePion& composante= **it;
+        algorithm.EnableCarrier(composante.CanTransportHumans());
+        algorithm.EnableLoadable(composante.CanBeLoaded());
+    }
 }
 
 void PHY_RolePion_Composantes::Execute( moving::SpeedComputer_ABC& algorithm ) const
 {
-	for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-	{
-		const PHY_ComposantePion& composante= **it;
-		algorithm.ApplyOnComponent(composante);
-	}
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    {
+        const PHY_ComposantePion& composante= **it;
+        algorithm.ApplyOnComponent(composante);
+    }
 }
 
 // -----------------------------------------------------------------------------

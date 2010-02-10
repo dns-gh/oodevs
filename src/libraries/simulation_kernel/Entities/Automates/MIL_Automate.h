@@ -249,7 +249,7 @@ private:
     const MIL_Army_ABC*             pArmySurrenderedTo_;
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Automate* role, const unsigned int /*version*/ );
-  	template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_Automate* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_Automate* role, const unsigned int /*version*/ );
 
 };
 

@@ -30,12 +30,12 @@ class MIL_ObjectBuilder_ABC;
 class Object : public MIL_Object_ABC
 {
 public:
-	//! @name Constructors/Destructor
+    //! @name Constructors/Destructor
     //@{
              Object( xml::xistream& xis, const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const TER_Localisation* pLocation, bool reserved = true );
              Object( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const TER_Localisation* pLocation, const std::string& name = std::string(), bool reserved = true );
              Object();
-	virtual ~Object();
+    virtual ~Object();
     //@}
 
     //! @name CheckPoints
@@ -64,9 +64,9 @@ public:
     template< typename T >       const T*   RetrieveAttribute() const;
     //@}
 
-	//! @name Construction
+    //! @name Construction
     //@{
-	void Update( uint time );
+    void Update( uint time );
     void UpdateLocalisation( const TER_Localisation& location );
     //@}
 
@@ -162,7 +162,7 @@ private:
     //@}
 
 private:
-	//! @name Member data
+    //! @name Member data
     //@{
     std::string             name_;
     uint                    id_;

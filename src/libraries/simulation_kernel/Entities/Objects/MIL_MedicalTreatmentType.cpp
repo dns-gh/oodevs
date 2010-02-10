@@ -57,7 +57,7 @@ void MIL_MedicalTreatmentType::Initialize( xml::xistream& xis )
     MT_LOG_INFO_MSG( "Initializing Medical Treatment Types" );
     
     xis >> xml::start( "medical-treatments" )
-			>> xml::list( "medical-treatment", &ReadMedicalTreatment )
+            >> xml::list( "medical-treatment", &ReadMedicalTreatment )
         >> xml::end();
 
     for( CIT_MedicalTreatmentTypeMap it = types_.begin(); it != types_.end(); ++it )
@@ -71,8 +71,8 @@ void MIL_MedicalTreatmentType::Initialize( xml::xistream& xis )
 // Modified: RFT 14/05/2008
 // -----------------------------------------------------------------------------
 MIL_MedicalTreatmentType::MIL_MedicalTreatmentType( const std::string& strName, xml::xistream& xis )
-	: strName_               ( strName )
-	, nID_                   ( 0 )
+    : strName_               ( strName )
+    , nID_                   ( 0 )
     , deathThreshold_        ( 0 )
 {
     xis >> xml::attribute( "id", nID_ )
@@ -179,7 +179,7 @@ const MIL_MedicalTreatmentType* MIL_MedicalTreatmentType::Find( uint nID )
 // -----------------------------------------------------------------------------
 MIL_MedicalTreatmentType::~MIL_MedicalTreatmentType()
 {
-	//Nothing
+    //Nothing
 }
 
 // -----------------------------------------------------------------------------

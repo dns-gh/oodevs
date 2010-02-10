@@ -22,9 +22,9 @@ BOOST_CLASS_EXPORT_GUID( MIL_AgentInjuredHumanPion, "MIL_AgentInjuredHumanPion" 
 template< typename Archive > 
 void save_construct_data( Archive& archive, const MIL_AgentInjuredHumanPion* unit, const unsigned int /*version*/ )
 {
-	unsigned int nTypeID = unit->GetType().GetID();
+    unsigned int nTypeID = unit->GetType().GetID();
     unsigned int nID = unit->GetID() ;
-	const MIL_Automate* const pAutomate = &unit->GetAutomate();
+    const MIL_Automate* const pAutomate = &unit->GetAutomate();
     const AlgorithmsFactories* const algorithmFactories = &unit->GetAlgorithms();
     archive << nTypeID 
         << nID 
@@ -35,8 +35,8 @@ void save_construct_data( Archive& archive, const MIL_AgentInjuredHumanPion* uni
 template< typename Archive >
 void load_construct_data( Archive& archive, MIL_AgentInjuredHumanPion* unit, const unsigned int /*version*/ )
 {
-	unsigned int nTypeID, nID;
-	MIL_Automate* pAutomate = 0;
+    unsigned int nTypeID, nID;
+    MIL_Automate* pAutomate = 0;
     AlgorithmsFactories* algorithmFactories = 0;
     archive >> nTypeID
         >> nID

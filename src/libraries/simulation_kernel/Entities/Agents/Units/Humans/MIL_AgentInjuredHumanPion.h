@@ -47,7 +47,7 @@ public:
     //! @name Serialization
     //@{
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_AgentInjuredHumanPion* unit, const unsigned int /*version*/ );
-  	template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_AgentInjuredHumanPion* unit, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_AgentInjuredHumanPion* unit, const unsigned int /*version*/ );
     //@}
 };
 

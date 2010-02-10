@@ -18,13 +18,13 @@ class CrossingSiteAttribute
     , public UpdatableAttribute_ABC
 {
 public:
-	//! @name Constructors/Destructor
+    //! @name Constructors/Destructor
     //@{
-	         CrossingSiteAttribute();
+             CrossingSiteAttribute();
     explicit CrossingSiteAttribute( xml::xistream& xis );
     explicit CrossingSiteAttribute( const ASN1T_ObjectAttributes& asn );
-	virtual ~CrossingSiteAttribute();
-	//@}
+    virtual ~CrossingSiteAttribute();
+    //@}
 
     //! @name CheckPoints
     //@{

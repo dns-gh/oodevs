@@ -35,9 +35,9 @@ public:
     template< typename Archive > void serialize( Archive&, const uint );    
     //@}
 
-	//! @name Operations
+    //! @name Operations
     //@{
-    virtual void Instanciate( Object& object ) const;	
+    virtual void Instanciate( Object& object ) const;
     virtual void Register( Object& object );
     virtual void ProcessAgentInside( Object& object, MIL_Agent_ABC& agent );
     //@}

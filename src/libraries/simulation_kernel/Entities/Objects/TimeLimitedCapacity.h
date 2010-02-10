@@ -25,12 +25,12 @@ class Object;
 class TimeLimitedCapacity : public ObjectCapacity_ABC
 {
 public:
-	//! @name Constructors/Destructor
+    //! @name Constructors/Destructor
     //@{
              TimeLimitedCapacity();
     explicit TimeLimitedCapacity( xml::xistream& xis );
     virtual ~TimeLimitedCapacity();
-	//@}
+    //@}
 
     //! @name Operations
     //@{    
@@ -38,7 +38,7 @@ public:
     virtual void Instanciate( Object& object ) const;
     virtual void Register( Object& object );
     virtual void Update( Object& object, uint time );
-	//@}
+    //@}
 
 private:
     //! @name Copy

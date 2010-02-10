@@ -22,12 +22,12 @@ class Object;
 // =============================================================================
 class AttributeFactory : public ObjectComponentRegistry_ABC< Object >
 {
-public:	
-	//! @name Constructors/Destructor
+public:
+    //! @name Constructors/Destructor
     //@{
-			 AttributeFactory();
-	virtual ~AttributeFactory();
-	//@}
+             AttributeFactory();
+    virtual ~AttributeFactory();
+    //@}
 
     //! @name Operations
     //@{    
@@ -42,10 +42,10 @@ private:
     //@}
 
 private:
-	//! @name Members
+    //! @name Members
     //@{
-	T_CallBacks callbacks_;
-	//@}
+    T_CallBacks callbacks_;
+    //@}
 };
 
 #endif

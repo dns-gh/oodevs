@@ -265,7 +265,7 @@ void PHY_RolePion_HumanFactors::SetTiredness( const PHY_Tiredness& tiredness )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_HumanFactors::Execute( moving::SpeedComputer_ABC& algorithm ) const
 {
-	algorithm.AddModifier(pExperience_->GetCoefMaxSpeedModificator() * pTiredness_->GetCoefMaxSpeedModificator(),true);
+    algorithm.AddModifier(pExperience_->GetCoefMaxSpeedModificator() * pTiredness_->GetCoefMaxSpeedModificator(),true);
 }
 
 // -----------------------------------------------------------------------------

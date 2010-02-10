@@ -45,7 +45,7 @@ public:
     
     static void EnableRadar                         ( MIL_AgentPion& callerAgent, int nRadarClass );
     static void DisableRadar                        ( MIL_AgentPion& callerAgent, int nRadarClass );
-    static int  EnableRadarOnPointXY				( MIL_AgentPion& callerAgent, int nRadarClass, const float x, const float y );
+    static int  EnableRadarOnPointXY                ( MIL_AgentPion& callerAgent, int nRadarClass, const float x, const float y );
     static int  EnableRadarOnLocalisation           ( MIL_AgentPion& callerAgent, int nRadarClass, const TER_Localisation* pLocalisation );
     static void DisableRadarOnLocalisation          ( MIL_AgentPion& callerAgent, int nRadarClass, int id );
 

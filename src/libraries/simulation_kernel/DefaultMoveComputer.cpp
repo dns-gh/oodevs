@@ -39,7 +39,7 @@ DefaultMoveComputer::~DefaultMoveComputer()
 // -----------------------------------------------------------------------------
 void DefaultMoveComputer::NotifyReinforcing()
 {
-	bCanMove_ = false;
+    bCanMove_ = false;
 }
 // -----------------------------------------------------------------------------
 // Name: DefaultMoveComputer::NotifyTransported
@@ -47,7 +47,7 @@ void DefaultMoveComputer::NotifyReinforcing()
 // -----------------------------------------------------------------------------
 void DefaultMoveComputer::NotifyTransported()
 {
-	bCanMove_ = false;
+    bCanMove_ = false;
 }
 // -----------------------------------------------------------------------------
 // Name: DefaultMoveComputer::NotifySurrendered
@@ -55,7 +55,7 @@ void DefaultMoveComputer::NotifyTransported()
 // -----------------------------------------------------------------------------
 void DefaultMoveComputer::NotifySurrendered()
 {
-	isSurrendered_ = true;
+    isSurrendered_ = true;
 }
 // -----------------------------------------------------------------------------
 // Name: DefaultMoveComputer::NotifyCannotFly
@@ -63,7 +63,7 @@ void DefaultMoveComputer::NotifySurrendered()
 // -----------------------------------------------------------------------------
 void DefaultMoveComputer::NotifyCannotFly()
 {
-	bCanMove_ = false;
+    bCanMove_ = false;
 }
 // -----------------------------------------------------------------------------
 // Name: DefaultMoveComputer::CanMove
@@ -79,5 +79,5 @@ bool DefaultMoveComputer::CanMove() const
 // -----------------------------------------------------------------------------
 bool DefaultMoveComputer::CanMoveOverride() const
 {
-	return isSurrendered_;
+    return isSurrendered_;
 }

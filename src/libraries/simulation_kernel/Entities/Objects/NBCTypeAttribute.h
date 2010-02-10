@@ -24,7 +24,7 @@
 // =============================================================================
 class NBCTypeAttribute 
     : public ObjectAttribute_ABC
-	, public UpdatableAttribute_ABC
+    , public UpdatableAttribute_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -53,21 +53,21 @@ public:
 
     //! @name Operations
     //@{
-	void UpdateConcentration( int concentration );
+    void UpdateConcentration( int concentration );
     void ComputeAgentConcentrationEvolution( bool bHasASource );
     bool IsSource() const;
     void UpdateSourceLifeDuration( float time , float timeOfLastUpdate );
-	//@}
+    //@}
 
-	//! @name Get
+    //! @name Get
     //@{
-	int				   GetConcentration() const;
+    int                   GetConcentration() const;
     const MIL_NBCType& GetAgentType() const;
     unsigned int       GetWidth() const;
     unsigned int       GetLength() const;
     unsigned int       GetPropagationAngle() const;
     int                GetSourceLifeDuration() const;
-	//@}
+    //@}
 
     //! @name Operations
     //@{
@@ -78,10 +78,10 @@ public:
 private:
     //! @name Member data
     //@{    
-	//Fire temperature    
+    //Fire temperature    
     const MIL_NBCType* pAgent_;
     int                concentration_;
-	unsigned int       width_;
+    unsigned int       width_;
     unsigned int       length_;
     unsigned int       propagationAngle_;
     int                sourceLifeDuration_;

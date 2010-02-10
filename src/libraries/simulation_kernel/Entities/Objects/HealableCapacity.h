@@ -30,19 +30,19 @@ private:
     typedef T_WaitingList::iterator          IT_WaitingList;
 
 public:
-	//! @name Constructors/Destructor
+    //! @name Constructors/Destructor
     //@{
-	         HealableCapacity();
+             HealableCapacity();
     explicit HealableCapacity( xml::xistream& xis );
     virtual ~HealableCapacity();
-	//@}
+    //@}
 
     //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const uint );
     //@}
 
-	//! @name Operations
+    //! @name Operations
     //@{
     virtual void Instanciate( Object& object ) const;
     virtual void Register( Object& object );

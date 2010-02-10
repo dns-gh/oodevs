@@ -675,9 +675,9 @@ bool DEC_Knowledge_Object::IsReservedObstacle() const
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_Object::IsReservedObstacleActivated() const
 {
-	const DEC_Knowledge_ObjectAttributeObstacle* activable = Retrieve< DEC_Knowledge_ObjectAttributeObstacle >();
-	if ( activable ) 
-		return activable->IsActivated();
+    const DEC_Knowledge_ObjectAttributeObstacle* activable = Retrieve< DEC_Knowledge_ObjectAttributeObstacle >();
+    if ( activable ) 
+        return activable->IsActivated();
     return false;
 }
 

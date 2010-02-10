@@ -44,19 +44,19 @@ public:
     //@}
 
 public:
-	//! @name Constructors/Destructor
+    //! @name Constructors/Destructor
     //@{
              ControlZoneCapacity();
     explicit ControlZoneCapacity( const MIL_Agent_ABC& controler );
     virtual ~ControlZoneCapacity();
-	//@}
+    //@}
 
     //! @name CheckPoints
     //@{    
     template< typename Archive > void serialize( Archive&, const uint );
     //@}
 
-	//! @name Operations
+    //! @name Operations
     //@{
     virtual void Instanciate( Object& object ) const;
     virtual void Register( Object& object );

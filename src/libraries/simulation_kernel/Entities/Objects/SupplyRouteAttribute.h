@@ -18,13 +18,13 @@ class SupplyRouteAttribute
     , public UpdatableAttribute_ABC
 {
 public:
-	//! @name Constructors/Destructor
+    //! @name Constructors/Destructor
     //@{
-	         SupplyRouteAttribute();
+             SupplyRouteAttribute();
     explicit SupplyRouteAttribute( xml::xistream& xis );
     explicit SupplyRouteAttribute( const ASN1T_ObjectAttributes& asn );
-	virtual ~SupplyRouteAttribute();
-	//@}
+    virtual ~SupplyRouteAttribute();
+    //@}
 
     //! @name CheckPoints
     //@{

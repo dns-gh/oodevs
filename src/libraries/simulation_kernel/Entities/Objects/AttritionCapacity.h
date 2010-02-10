@@ -31,13 +31,13 @@ class AttritionCapacity : public ObjectCapacity_ABC
                         , public MIL_InteractiveContainer_ABC
 {
 public:
-	//! @name Constructors/Destructor
+    //! @name Constructors/Destructor
     //@{
              AttritionCapacity();
              AttritionCapacity( const AttritionCapacity& from );
     explicit AttritionCapacity( xml::xistream& xis );
     virtual ~AttritionCapacity();
-	//@}
+    //@}
 
     //! @name CheckPoints
     //@{
@@ -46,9 +46,9 @@ public:
     void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}
 
-	//! @name Operations
+    //! @name Operations
     //@{
-    virtual void Instanciate( Object& object ) const;	
+    virtual void Instanciate( Object& object ) const;
     virtual void Register( Object& object );
 
     virtual void ProcessAgentMovingInside( Object& object, MIL_Agent_ABC& agent );

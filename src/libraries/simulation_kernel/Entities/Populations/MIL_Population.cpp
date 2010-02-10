@@ -42,14 +42,14 @@ namespace
 template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_Population* population, const unsigned int /*version*/ )
 {
-	unsigned int nTypeID = population->GetType().GetID();
-	archive << nTypeID;
+    unsigned int nTypeID = population->GetType().GetID();
+    archive << nTypeID;
 }
 
 template< typename Archive >
 void load_construct_data( Archive& archive, MIL_Population* population, const unsigned int /*version*/ )
 {
-	unsigned int nTypeID;
+    unsigned int nTypeID;
     archive >> nTypeID;
     const MIL_PopulationType* pType = MIL_PopulationType::Find( nTypeID );
     assert( pType );

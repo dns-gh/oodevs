@@ -37,14 +37,14 @@ namespace firing
 
 namespace transport
 {
-	class TransportCapacityComputer_ABC;
-	class TransportWeightComputer_ABC;
-	class HumanLoadingTimeComputer_ABC;
-	class LoadedStateConsistencyComputer_ABC;
+    class TransportCapacityComputer_ABC;
+    class TransportWeightComputer_ABC;
+    class HumanLoadingTimeComputer_ABC;
+    class LoadedStateConsistencyComputer_ABC;
 }
 namespace moving
 {
-	class SpeedComputer_ABC;
+    class SpeedComputer_ABC;
 }
 class OnComponentComputer_ABC;
 class OnComponentLendedFunctorComputer_ABC;
@@ -60,7 +60,7 @@ class PHY_RolePion_Composantes : public PHY_RoleInterface_Composantes
                                , public tools::AlgorithmModifier_ABC< transport::TransportWeightComputer_ABC>
                                , public tools::AlgorithmModifier_ABC< OnComponentComputer_ABC >
                                , public tools::AlgorithmModifier_ABC< OnComponentLendedFunctorComputer_ABC >
-            	               , public tools::AlgorithmModifier_ABC< transport::HumanLoadingTimeComputer_ABC>
+                               , public tools::AlgorithmModifier_ABC< transport::HumanLoadingTimeComputer_ABC>
                                , public tools::AlgorithmModifier_ABC< transport::LoadedStateConsistencyComputer_ABC>
                                , public tools::AlgorithmModifier_ABC< moving::SpeedComputer_ABC >
                                , public nbc::ToxicEffectHandler_ABC
@@ -164,7 +164,7 @@ public:
     virtual void     ApplyContamination              ( const MIL_ToxicEffectManipulator& contamination );
     virtual void     ApplyPoisonous                  ( const MIL_ToxicEffectManipulator& contamination );
 
-	virtual double    GetDangerosity					 ( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget ) const; 
+    virtual double    GetDangerosity                     ( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget ) const; 
     virtual MT_Float GetOnlyLoadableMaxRangeToFireOn ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
     virtual MT_Float GetMaxRangeToFireOn             ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
     virtual MT_Float GetMinRangeToFireOn             ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;

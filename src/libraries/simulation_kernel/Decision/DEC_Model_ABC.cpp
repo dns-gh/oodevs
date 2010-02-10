@@ -95,7 +95,7 @@ void DEC_Model_ABC::ReadMission( xml::xistream& xis, const std::map< std::string
     if( !pType )
         xis.error( "Invalid mission name '" + strMission + "' for model '" + GetName() + "'" );
 
-	availableMissions_.insert( pType ) ;
+    availableMissions_.insert( pType ) ;
 
     // Check if the DIA behavior is present
     if( !IsMissionAvailable( *pType ) )
@@ -118,14 +118,14 @@ void DEC_Model_ABC::InitializeMissionFragOrders( xml::xistream& xis, const MIL_M
 // -----------------------------------------------------------------------------
 void DEC_Model_ABC::ReadFragOrder( xml::xistream& xis, const MIL_MissionType_ABC& missionType )
 {
-	std::string strOrdreConduite;
-	xis >> xml::attribute( "name", strOrdreConduite );
+    std::string strOrdreConduite;
+    xis >> xml::attribute( "name", strOrdreConduite );
 
-	const MIL_FragOrderType* pType = MIL_FragOrderType::Find( strOrdreConduite );
-	if( !pType )
-		xis.error( "Unknown orderConduite type" );
+    const MIL_FragOrderType* pType = MIL_FragOrderType::Find( strOrdreConduite );
+    if( !pType )
+        xis.error( "Unknown orderConduite type" );
 
-	availableFragOrdersPerMission_[ &missionType ].insert( pType ) ; 
+    availableFragOrdersPerMission_[ &missionType ].insert( pType ) ; 
 }
 
 // =============================================================================
@@ -138,7 +138,7 @@ void DEC_Model_ABC::ReadFragOrder( xml::xistream& xis, const MIL_MissionType_ABC
 // -----------------------------------------------------------------------------
 bool DEC_Model_ABC::IsMissionAvailable( const MIL_MissionType_ABC& missionType ) const
 {
-	return availableMissions_.find( &missionType ) !=  availableMissions_.end(); 
+    return availableMissions_.find( &missionType ) !=  availableMissions_.end(); 
 }
 
 // -----------------------------------------------------------------------------
@@ -147,14 +147,14 @@ bool DEC_Model_ABC::IsMissionAvailable( const MIL_MissionType_ABC& missionType )
 // -----------------------------------------------------------------------------
 bool DEC_Model_ABC::IsFragOrderAvailableForMission( const MIL_MissionType_ABC& missionType, const MIL_FragOrderType& fragOrderType ) const
 {
-	if( fragOrderType.IsAvailableForAllMissions() )
+    if( fragOrderType.IsAvailableForAllMissions() )
         return true;
 
     CIT_FragOrderPerMissionMap it = availableFragOrdersPerMission_.find( &missionType );
     if( it == availableFragOrdersPerMission_.end() )
         return false;
 
-	return it->second.find( &fragOrderType ) != it->second.end();
+    return it->second.find( &fragOrderType ) != it->second.end();
 }
 
 // -----------------------------------------------------------------------------

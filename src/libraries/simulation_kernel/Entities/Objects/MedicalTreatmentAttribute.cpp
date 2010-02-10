@@ -112,7 +112,7 @@ void MedicalTreatmentAttribute::InitializePatientDiagnosisList( int occupiedBeds
 // -----------------------------------------------------------------------------
 MedicalTreatmentAttribute& MedicalTreatmentAttribute::operator=( const MedicalTreatmentAttribute& rhs )
 {
-	medicalTreatmentMap_ = rhs.medicalTreatmentMap_;
+    medicalTreatmentMap_ = rhs.medicalTreatmentMap_;
     beds_                = rhs.beds_;           
     availableBeds_       = rhs.availableBeds_;  
     doctors_             = rhs.doctors_;        

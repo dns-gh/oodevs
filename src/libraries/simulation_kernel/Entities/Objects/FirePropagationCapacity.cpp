@@ -26,9 +26,9 @@ BOOST_CLASS_EXPORT_GUID( FirePropagationCapacity, "FirePropagationCapacity" )
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
 FirePropagationCapacity::FirePropagationCapacity( xml::xistream& xis, MIL_PropagationManager& manager )
-	: pManager_ ( &manager )
-	, timeOfCreation_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
-	, timeOfDeath_ ( 0 )
+    : pManager_ ( &manager )
+    , timeOfCreation_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
+    , timeOfDeath_ ( 0 )
     , needUpdate_ ( true )
 {
     // NOTHING
@@ -39,9 +39,9 @@ FirePropagationCapacity::FirePropagationCapacity( xml::xistream& xis, MIL_Propag
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
 FirePropagationCapacity::FirePropagationCapacity()
-	: pManager_ ( 0 )
-	, timeOfCreation_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
-	, timeOfDeath_ ( 0 )
+    : pManager_ ( 0 )
+    , timeOfCreation_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
+    , timeOfDeath_ ( 0 )
     , needUpdate_ ( true )
 {
     // NOTHING
@@ -53,8 +53,8 @@ FirePropagationCapacity::FirePropagationCapacity()
 // -----------------------------------------------------------------------------
 FirePropagationCapacity::FirePropagationCapacity( const FirePropagationCapacity& from )
     : pManager_ ( from.pManager_ )
-	, timeOfCreation_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
-	, timeOfDeath_ ( 0 )
+    , timeOfCreation_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
+    , timeOfDeath_ ( 0 )
     , needUpdate_ ( true )
 {
     // NOTHING
@@ -79,7 +79,7 @@ void FirePropagationCapacity::serialize( Archive& file, const uint )
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );        
     file //& pManager_
          & timeOfCreation_
-	     & timeOfDeath_;
+         & timeOfDeath_;
 }
 
 // -----------------------------------------------------------------------------
@@ -108,16 +108,16 @@ void FirePropagationCapacity::Instanciate( Object& object ) const
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
 void FirePropagationCapacity::Update( Object& object, uint time )
-{	
+{
     FireAttribute& attr = object.GetAttribute< FireAttribute >();
-	const unsigned int timeSinceCreation = time - timeOfCreation_;
-	
+    const unsigned int timeSinceCreation = time - timeOfCreation_;
+    
     if( needUpdate_ )
         InitializeUpdate( object, attr );
     attr.ComputeHeatEvolution( timeOfCreation_, time );
-	int heat = UpdateState( object, attr, time );
-	if ( heat > 0 && heat * (int)timeSinceCreation > attr.GetClass().GetPropagationThreshold() )
-		Propagate( object );
+    int heat = UpdateState( object, attr, time );
+    if ( heat > 0 && heat * (int)timeSinceCreation > attr.GetClass().GetPropagationThreshold() )
+        Propagate( object );
 }
 
 void FirePropagationCapacity::InitializeUpdate( Object& object, const FireAttribute& attr )
@@ -140,22 +140,22 @@ void FirePropagationCapacity::InitializeUpdate( Object& object, const FireAttrib
 // -----------------------------------------------------------------------------
 int FirePropagationCapacity::UpdateState( Object& object, const FireAttribute& attr, unsigned int time )
 {
-	//Set the time of death of the fire as soon as its temperature is below
+    //Set the time of death of the fire as soon as its temperature is below
     //Used to block the propagation of the fire on a fire which just died one tick ago
     if( attr.GetHeat() >= 0 )
-		timeOfDeath_ = 0;
-	else
-	{
-		if( timeOfDeath_ == 0 )
-		{
-			object.MarkForDestruction();
-			//A reflechir
-			timeOfDeath_ = time + 10;
-		}
-		if ( time >= timeOfDeath_ )
-			pManager_->RemoveFlag( object.GetLocalisation().ComputeBarycenter() , attr.GetLength() , attr.GetWidth() );
-	}
-	return attr.GetHeat();
+        timeOfDeath_ = 0;
+    else
+    {
+        if( timeOfDeath_ == 0 )
+        {
+            object.MarkForDestruction();
+            //A reflechir
+            timeOfDeath_ = time + 10;
+        }
+        if ( time >= timeOfDeath_ )
+            pManager_->RemoveFlag( object.GetLocalisation().ComputeBarycenter() , attr.GetLength() , attr.GetWidth() );
+    }
+    return attr.GetHeat();
 }
 
 // -----------------------------------------------------------------------------
@@ -166,7 +166,7 @@ int FirePropagationCapacity::UpdateState( Object& object, const FireAttribute& a
 void FirePropagationCapacity::Propagate( Object& object )
 {
     FireAttribute& attr = object.GetAttribute< FireAttribute >();
-	MT_Vector2D vOrigin( object.GetLocalisation().ComputeBarycenter() );
+    MT_Vector2D vOrigin( object.GetLocalisation().ComputeBarycenter() );
     MT_Vector2D vPerpendicularToWind, vNormalizedWind;
 
     const PHY_Meteo::sWindData& wind = MIL_Tools::GetWind( vOrigin );
@@ -182,22 +182,22 @@ void FirePropagationCapacity::Propagate( Object& object )
     vPerpendicularToWind.rY_ = vNormalizedWind.rX_;
     
     //Propagation to three out of four adjacent positions.
-	CheckPropagation( vOrigin + vNormalizedWind, object );
-	CheckPropagation( vOrigin + vPerpendicularToWind, object );
-	CheckPropagation( vOrigin - vPerpendicularToWind, object );
-	//Propagation taking in account wind speed and the length of the fire
+    CheckPropagation( vOrigin + vNormalizedWind, object );
+    CheckPropagation( vOrigin + vPerpendicularToWind, object );
+    CheckPropagation( vOrigin - vPerpendicularToWind, object );
+    //Propagation taking in account wind speed and the length of the fire
     for( int i = 2; i < wind.rWindSpeed_ / attr.GetLength() ; i++ )
-		CheckPropagation( vOrigin - i * vNormalizedWind, object );
+        CheckPropagation( vOrigin - i * vNormalizedWind, object );
 }
 
 namespace
 {
-	class MIL_FireBuilder : public MIL_ObjectBuilder_ABC
+    class MIL_FireBuilder : public MIL_ObjectBuilder_ABC
     {
     public:
         MIL_FireBuilder( const Object& object, const TER_Localisation& location ) 
             : object_ ( object ) 
-			, location_ ( location )
+            , location_ ( location )
         {
         }
 
@@ -215,7 +215,7 @@ namespace
 
     private:
         const Object&           object_;
-        const TER_Localisation&	location_;
+        const TER_Localisation&    location_;
     };
 }
 
@@ -227,14 +227,14 @@ namespace
 void FirePropagationCapacity::CheckPropagation( const MT_Vector2D& vOrigin, Object& object )
 {
     FireAttribute& attr = object.GetAttribute< FireAttribute >();
-	TER_Localisation location( GetLocalisation( vOrigin ) );
+    TER_Localisation location( GetLocalisation( vOrigin ) );
 
-	if( !pManager_->IsFlagged( location , attr.GetLength() , attr.GetWidth() ) ) 
-	{
-		MIL_FireBuilder builder( object, location );
-		MIL_EntityManager::GetSingleton().CreateObject( object.GetArmy(), builder );
+    if( !pManager_->IsFlagged( location , attr.GetLength() , attr.GetWidth() ) ) 
+    {
+        MIL_FireBuilder builder( object, location );
+        MIL_EntityManager::GetSingleton().CreateObject( object.GetArmy(), builder );
         pManager_->Flag( vOrigin , attr.GetLength() , attr.GetWidth() );
-	}
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -244,7 +244,7 @@ void FirePropagationCapacity::CheckPropagation( const MT_Vector2D& vOrigin, Obje
 // -----------------------------------------------------------------------------
 TER_Localisation FirePropagationCapacity::GetLocalisation( const MT_Vector2D& pt ) const
 {
-	T_PointVector pointVector;
+    T_PointVector pointVector;
     pointVector.push_back( pt );
-	return TER_Localisation( TER_Localisation::ePoint, pointVector );
+    return TER_Localisation( TER_Localisation::ePoint, pointVector );
 }

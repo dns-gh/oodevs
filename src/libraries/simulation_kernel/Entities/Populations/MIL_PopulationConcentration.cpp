@@ -32,15 +32,15 @@ MIL_IDManager MIL_PopulationConcentration::idManager_;
 template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_PopulationConcentration* concentration, const unsigned int /*version*/ )
 {
-	MIL_Population* const pPopulation = &concentration->GetPopulation();
-	archive << pPopulation << concentration->position_;
+    MIL_Population* const pPopulation = &concentration->GetPopulation();
+    archive << pPopulation << concentration->position_;
 }
 
 template< typename Archive >
 void load_construct_data( Archive& archive, MIL_PopulationConcentration* concentration, const unsigned int /*version*/ )
 {
-	MIL_Population* pPopulation;
-	MT_Vector2D position;
+    MIL_Population* pPopulation;
+    MT_Vector2D position;
     archive >> pPopulation >> position;
     ::new( concentration )MIL_PopulationConcentration( *pPopulation, position);
 }

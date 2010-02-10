@@ -22,12 +22,12 @@ class MIL_ObjectBuilder_ABC;
 
 class MIL_ObjectFactory
 {
-public:	
-	//! @name Constructors/Destructor
+public:
+    //! @name Constructors/Destructor
     //@{
     explicit MIL_ObjectFactory( MIL_ObjectManager& manager );
-	virtual ~MIL_ObjectFactory();
-	//@}	
+    virtual ~MIL_ObjectFactory();
+    //@}    
 
     //! @name Methods
     //@{
@@ -39,7 +39,7 @@ public:
     MIL_Object_ABC&             BuildObject( xml::xistream& xis, MIL_Army_ABC& army );
     ASN1T_EnumObjectErrorCode   BuildObject( const ASN1T_MagicActionCreateObject& asn, MIL_Army_ABC& army );
     MIL_Object_ABC*             BuildObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, ASN1T_EnumDemolitionTargetType obstacleType );
-	MIL_Object_ABC*             BuildObject( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army );
+    MIL_Object_ABC*             BuildObject( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army );
     //@}
 
     //! @name Accessors

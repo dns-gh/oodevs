@@ -23,7 +23,7 @@
 // =============================================================================
 class FireAttribute 
     : public ObjectAttribute_ABC
-	, public UpdatableAttribute_ABC
+    , public UpdatableAttribute_ABC
 { 
 public:
     //! @name Constructors/Destructor
@@ -50,20 +50,20 @@ public:
     void WriteODB( xml::xostream& xos ) const;
     //@}
 
-	//! @name Operations
+    //! @name Operations
     //@{
-	void ComputeHeatEvolution( unsigned int initial, unsigned int time );
-	void ComputeHeatWhenExtinguishing( MIL_FireClass::E_FireExtinguisherAgent extinguisherAgent, int numberOfFireHoses );
-	void UpdateHeat( int heat, unsigned int time );	
-	//@}
+    void ComputeHeatEvolution( unsigned int initial, unsigned int time );
+    void ComputeHeatWhenExtinguishing( MIL_FireClass::E_FireExtinguisherAgent extinguisherAgent, int numberOfFireHoses );
+    void UpdateHeat( int heat, unsigned int time );
+    //@}
 
-	//! @name Operations
+    //! @name Operations
     //@{
-	int				      GetHeat() const;
+    int                      GetHeat() const;
     const MIL_FireClass&  GetClass() const;
     unsigned int          GetWidth() const;
     unsigned int          GetLength() const;
-	//@}
+    //@}
 
     //! @name Operations
     //@{
@@ -74,10 +74,10 @@ public:
 private:
     //! @name Member data
     //@{    
-	//Fire temperature    
+    //Fire temperature    
     const MIL_FireClass*  pClass_;
     int                   heat_;
-	unsigned int		  timeOfLastUpdate_;
+    unsigned int          timeOfLastUpdate_;
     unsigned int          width_;
     unsigned int          length_;
     //@}

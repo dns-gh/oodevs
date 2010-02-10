@@ -41,7 +41,7 @@ ActivableCapacity::ActivableCapacity( const ActivableCapacity& from )
 {
     // NOTHING
 }
-	
+
 // -----------------------------------------------------------------------------
 // Name: ActivableCapacity destructor
 // Created: JCR 2008-05-22

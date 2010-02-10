@@ -63,9 +63,9 @@ NBCTypeAttribute::NBCTypeAttribute( const ASN1T_ObjectAttributes& asn )
 {
     // pAgent_ = MIL_NBCType::Find( asn.nbc_agent.agent_id );
     if( !pAgent_ )
-        throw std::runtime_error( "Unknown 'NBC agent' for nbc object attribute" );	
+        throw std::runtime_error( "Unknown 'NBC agent' for nbc object attribute" );
 
-	// width_            = MIL_NBCType::GetWidth();
+    // width_            = MIL_NBCType::GetWidth();
     // length_           = MIL_NBCType::GetLength();
     // propagationAngle_ = MIL_NBCType::GetPropagationAngle();
 }
@@ -122,7 +122,7 @@ void NBCTypeAttribute::load( MIL_CheckPointInArchive& ar, const uint )
 
     pAgent_ = MIL_NBCType::Find( agentName );
     if( !pAgent_ )
-        throw std::runtime_error( "Unknown 'nbc agent' '" + agentName + "' for nbc object attribute" );	
+        throw std::runtime_error( "Unknown 'nbc agent' '" + agentName + "' for nbc object attribute" );
 }
     
 // -----------------------------------------------------------------------------
@@ -203,7 +203,7 @@ void NBCTypeAttribute::ComputeAgentConcentrationEvolution( bool bHasASource )
 {
     //Compute the new temperature and send a notification if it has changed
     int concentration = pAgent_->ComputeAgentConcentrationEvolution( bHasASource , concentration_ );
-	UpdateConcentration( concentration );
+    UpdateConcentration( concentration );
 }
 
 // -----------------------------------------------------------------------------
@@ -212,7 +212,7 @@ void NBCTypeAttribute::ComputeAgentConcentrationEvolution( bool bHasASource )
 // -----------------------------------------------------------------------------
 void NBCTypeAttribute::UpdateConcentration( int concentration )
 {
-	if( concentration != concentration_ )
+    if( concentration != concentration_ )
     {
         NotifyAttributeUpdated( eOnUpdate );
         concentration_ = concentration;
@@ -225,7 +225,7 @@ void NBCTypeAttribute::UpdateConcentration( int concentration )
 // -----------------------------------------------------------------------------
 int NBCTypeAttribute::GetConcentration() const
 {
-	return concentration_;
+    return concentration_;
 }
 
 // -----------------------------------------------------------------------------

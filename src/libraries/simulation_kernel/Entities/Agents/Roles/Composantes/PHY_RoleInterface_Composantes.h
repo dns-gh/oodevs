@@ -119,8 +119,8 @@ public:
     virtual void ApplyDirectFire            ( PHY_Composante_ABC& compTarget, const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result ) = 0;
     virtual void ApplyIndirectFire          ( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result ) = 0;
     virtual void ApplyExplosion             ( const AttritionCapacity& capacity, PHY_FireResults_ABC& result ) = 0;
-	virtual double GetDangerosity            ( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget ) const = 0;   
-	virtual double GetOnlyLoadableMaxRangeToFireOn ( const DEC_Knowledge_Agent& target, double rWantedPH ) const = 0;
+    virtual double GetDangerosity            ( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget ) const = 0;   
+    virtual double GetOnlyLoadableMaxRangeToFireOn ( const DEC_Knowledge_Agent& target, double rWantedPH ) const = 0;
     virtual double GetMaxRangeToFireOn             ( const DEC_Knowledge_Agent& target, double rWantedPH ) const = 0;
     virtual double GetMinRangeToFireOn             ( const DEC_Knowledge_Agent& target, double rWantedPH ) const = 0;
     virtual double GetMaxRangeToFireOnActualPosture( const DEC_Knowledge_Agent& target, double rWantedPH ) const = 0;
@@ -166,13 +166,13 @@ public:
 
 private:
     //! @name Serialization
-	//@{
-	friend class boost::serialization::access;
-	template< typename Archive > void serialize( Archive& ar, const uint )
-	{
-		ar & boost::serialization::base_object< tools::Role_ABC >( *this );
-	}
-	//@}
+    //@{
+    friend class boost::serialization::access;
+    template< typename Archive > void serialize( Archive& ar, const uint )
+    {
+        ar & boost::serialization::base_object< tools::Role_ABC >( *this );
+    }
+    //@}
 };
 
 #endif // __PHY_RoleInterface_Composantes_h_

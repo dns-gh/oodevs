@@ -21,24 +21,24 @@
 class InputPropagationCapacity : public PropagationCapacity_ABC    
 {
 public:
-	//! @name Constructors/Destructor
+    //! @name Constructors/Destructor
     //@{
-	         InputPropagationCapacity();
+             InputPropagationCapacity();
     explicit InputPropagationCapacity( xml::xistream& xis );
     virtual ~InputPropagationCapacity();
-	//@}
+    //@}
 
     //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const uint );
     //@}
 
-	//! @name Operations
+    //! @name Operations
     //@{
     virtual void Instanciate( Object& object ) const;
     virtual void Register( Object& object );
     virtual void Update( Object& object, uint time );
-	//@}
+    //@}
 
 private:
     //! @name Copy

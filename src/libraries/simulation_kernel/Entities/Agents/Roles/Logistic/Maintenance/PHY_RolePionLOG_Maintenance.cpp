@@ -48,7 +48,7 @@ void save_construct_data( Archive& archive, const PHY_RolePionLOG_Maintenance* r
 template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RolePionLOG_Maintenance* role, const unsigned int /*version*/ )
 {
-	MIL_AgentPionLOG_ABC* pion;
+    MIL_AgentPionLOG_ABC* pion;
     archive >> pion;
     ::new( role )PHY_RolePionLOG_Maintenance( *pion );
 }
@@ -168,7 +168,7 @@ namespace boost
 void PHY_RolePionLOG_Maintenance::load( MIL_CheckPointInArchive& file, const uint )
 {
     file >> boost::serialization::base_object< PHY_RoleInterface_Maintenance >( *this )
-		 >> bSystemEnabled_
+         >> bSystemEnabled_
          >> priorities_
          >> tacticalPriorities_;
          
@@ -200,7 +200,7 @@ void PHY_RolePionLOG_Maintenance::save( MIL_CheckPointOutArchive& file, const ui
     ASN1T_EnumLogMaintenanceRegimeTravail workRate = pWorkRate_->GetAsnID();
 
     file << boost::serialization::base_object< PHY_RoleInterface_Maintenance >( *this )
-		 << bSystemEnabled_
+         << bSystemEnabled_
          << priorities_
          << tacticalPriorities_
          << workRate

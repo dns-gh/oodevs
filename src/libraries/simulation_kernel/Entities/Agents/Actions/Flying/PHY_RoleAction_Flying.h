@@ -38,7 +38,7 @@ namespace moving
 class PHY_RoleAction_Flying : public PHY_RoleAction_InterfaceFlying
                             , public tools::AlgorithmModifier_ABC< location::LocationComputer_ABC >
                             , public tools::AlgorithmModifier_ABC< posture::PostureComputer_ABC >
-							, public tools::AlgorithmModifier_ABC< moving::MoveComputer_ABC >
+                            , public tools::AlgorithmModifier_ABC< moving::MoveComputer_ABC >
 {
 
 public:

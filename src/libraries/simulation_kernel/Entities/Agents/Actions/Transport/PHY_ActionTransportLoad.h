@@ -16,7 +16,7 @@
 
 namespace transport
 {
-	class PHY_RoleAction_Transport;
+    class PHY_RoleAction_Transport;
 }
 class MIL_AgentPion;
 

@@ -23,7 +23,7 @@
 // =============================================================================
 class MedicalTreatmentAttribute 
     : public ObjectAttribute_ABC
-	, public UpdatableAttribute_ABC
+    , public UpdatableAttribute_ABC
 { 
 public:
     typedef std::pair< float , int >                                             T_PatientDiagnosis; //Patient entry time, Category of injury (UA or UR)

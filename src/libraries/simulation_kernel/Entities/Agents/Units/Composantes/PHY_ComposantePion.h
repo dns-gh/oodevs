@@ -157,9 +157,9 @@ public:
             double                          GetWeight          () const;
             bool                            IsMajor            () const;
       const PHY_ComposanteState&            GetState           () const;
-			double                          GetMaxSpeed        () const;
-			double                          GetMaxSpeed        ( const TerrainData& data ) const;
-			double                          GetMaxSpeed        ( const MIL_Object_ABC& object ) const;
+            double                          GetMaxSpeed        () const;
+            double                          GetMaxSpeed        ( const TerrainData& data ) const;
+            double                          GetMaxSpeed        ( const MIL_Object_ABC& object ) const;
             bool                            CanMove            () const;
             bool                            CanPerceive        () const;
             bool                            CanBeFired         () const;

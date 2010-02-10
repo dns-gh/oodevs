@@ -47,7 +47,7 @@ void save_construct_data( Archive& archive, const PHY_RolePionLOG_Medical* role,
 template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RolePionLOG_Medical* role, const unsigned int /*version*/ )
 {
-	MIL_AgentPionLOG_ABC* pion;
+    MIL_AgentPionLOG_ABC* pion;
     archive >> pion;
     ::new( role )PHY_RolePionLOG_Medical( *pion );
 }
@@ -244,7 +244,7 @@ namespace boost
 void PHY_RolePionLOG_Medical::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< PHY_RoleInterface_Medical >( *this )
-		 >> bSystemEnabled_
+         >> bSystemEnabled_
          >> bSortingFunctionEnabled_
          >> bHealingFunctionEnabled_
          >> priorities_
@@ -275,7 +275,7 @@ void PHY_RolePionLOG_Medical::load( MIL_CheckPointInArchive& file, const unsigne
 void PHY_RolePionLOG_Medical::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< PHY_RoleInterface_Medical >( *this )
-		 << bSystemEnabled_
+         << bSystemEnabled_
          << bSortingFunctionEnabled_
          << bHealingFunctionEnabled_
          << priorities_

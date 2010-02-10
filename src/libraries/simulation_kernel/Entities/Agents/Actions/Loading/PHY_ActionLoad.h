@@ -18,7 +18,7 @@ class MIL_AgentPion;
 namespace transport
 {
 
-	class PHY_RoleAction_Loading;
+    class PHY_RoleAction_Loading;
 
 // =============================================================================
 // @class  PHY_ActionLoad

@@ -31,7 +31,7 @@ void save_construct_data( Archive& archive, const NET_RolePion_Dotations* role, 
 template< typename Archive >
 void load_construct_data( Archive& archive, NET_RolePion_Dotations* role, const unsigned int /*version*/ )
 {
-	MIL_AgentPion* pion;
+    MIL_AgentPion* pion;
     archive >> pion;
     ::new( role )NET_RolePion_Dotations( *pion );
 }
@@ -66,7 +66,7 @@ template< typename Archive >
 void NET_RolePion_Dotations::serialize( Archive& file, const uint )
 {
     file & boost::serialization::base_object< NET_RoleInterface_Dotations >( *this )
-		 & bLastStateDead_
+         & bLastStateDead_
          & bLastStateNeutralized_;
 }
 

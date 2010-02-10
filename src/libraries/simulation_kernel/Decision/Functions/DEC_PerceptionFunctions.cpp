@@ -219,11 +219,11 @@ void DEC_PerceptionFunctions::DisableRadar( MIL_AgentPion& callerAgent, int nRad
 // -----------------------------------------------------------------------------
 int DEC_PerceptionFunctions::EnableRadarOnPointXY( MIL_AgentPion& callerAgent, int nRadarClass, const float x, const float y )
 {
-	T_PointVector point;
-	point.push_back( MT_Vector2D( x , y ) );
-	TER_Localisation localisation ( TER_Localisation::E_LocationType::ePoint, point );
+    T_PointVector point;
+    point.push_back( MT_Vector2D( x , y ) );
+    TER_Localisation localisation ( TER_Localisation::E_LocationType::ePoint, point );
    
-	return EnableRadarOnLocalisation( callerAgent, nRadarClass, &localisation );
+    return EnableRadarOnLocalisation( callerAgent, nRadarClass, &localisation );
 }
 
 // -----------------------------------------------------------------------------

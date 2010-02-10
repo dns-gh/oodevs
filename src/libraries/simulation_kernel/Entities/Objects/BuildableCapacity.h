@@ -32,12 +32,12 @@ class PHY_ConsumptionType;
 class BuildableCapacity : public ObjectCapacity_ABC
 {
 public:
-	//! @name Constructors/Destructor
+    //! @name Constructors/Destructor
     //@{    
              BuildableCapacity();
-    explicit BuildableCapacity( const PHY_ConsumptionType& consumption, ConstructionCapacity::E_UnitType type, xml::xistream& xis );	
+    explicit BuildableCapacity( const PHY_ConsumptionType& consumption, ConstructionCapacity::E_UnitType type, xml::xistream& xis );    
     virtual ~BuildableCapacity();
-	//@}
+    //@}
 
      //! @name CheckPoints
     //@{
@@ -46,9 +46,9 @@ public:
     void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}
 
-	//! @name Operations
+    //! @name Operations
     //@{
-    virtual void Instanciate( Object& object ) const;	
+    virtual void Instanciate( Object& object ) const;
     virtual void Register( Object& object );
 
     void Construct( Object& object );

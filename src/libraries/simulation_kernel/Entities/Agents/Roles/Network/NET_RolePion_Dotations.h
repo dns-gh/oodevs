@@ -65,7 +65,7 @@ private:
     bool bExternalMustUpdateData_;
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const NET_RolePion_Dotations* role, const unsigned int /*version*/ );
-  	template< typename Archive > friend  void load_construct_data( Archive& archive, NET_RolePion_Dotations* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, NET_RolePion_Dotations* role, const unsigned int /*version*/ );
 
 };
 

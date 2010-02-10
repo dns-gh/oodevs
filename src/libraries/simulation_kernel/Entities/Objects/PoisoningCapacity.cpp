@@ -95,7 +95,7 @@ void PoisoningCapacity::Instanciate( Object& object ) const
 {
     object.AddCapacity( new PoisoningCapacity( *this ) );
 }
-	
+
 // -----------------------------------------------------------------------------
 // Name: PoisoningCapacity::Update
 // Created: RFT 2008-06-02

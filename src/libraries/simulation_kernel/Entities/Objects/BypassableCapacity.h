@@ -21,19 +21,19 @@
 class BypassableCapacity : public ObjectCapacity_ABC
 {
 public:
-	//! @name Constructors/Destructor
+    //! @name Constructors/Destructor
     //@{
              BypassableCapacity();
     explicit BypassableCapacity( xml::xistream& xis );
     virtual ~BypassableCapacity();
-	//@}
+    //@}
 
     //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const uint );
     //@}
 
-	//! @name Operations
+    //! @name Operations
     //@{
     virtual void Instanciate( Object& object ) const;
     virtual void Register( Object& object );

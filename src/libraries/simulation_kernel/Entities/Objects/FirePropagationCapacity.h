@@ -24,24 +24,24 @@ class FireAttribute;
 class FirePropagationCapacity : public PropagationCapacity_ABC    
 {
 public:
-	//! @name Constructors/Destructor
+    //! @name Constructors/Destructor
     //@{
-	         FirePropagationCapacity();
+             FirePropagationCapacity();
     explicit FirePropagationCapacity( xml::xistream& xis, MIL_PropagationManager& manager );
     virtual ~FirePropagationCapacity();
-	//@}
+    //@}
 
     //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const uint );
     //@}
 
-	//! @name Operations
+    //! @name Operations
     //@{
     virtual void Instanciate( Object& object ) const;
     virtual void Register( Object& object );
     virtual void Update( Object& object, uint time );
-	//@}
+    //@}
 
 private:
     //! @name Copy
@@ -49,23 +49,23 @@ private:
     FirePropagationCapacity( const FirePropagationCapacity& from );
     //@}
 
-	//! @name Helpers
+    //! @name Helpers
     //@{
     void InitializeUpdate( Object& object, const FireAttribute& attr );
     int  UpdateState( Object& object, const FireAttribute& attr, unsigned int time );
-	void Propagate( Object& object );
-	void CheckPropagation( const MT_Vector2D& vOrigin, Object& object );
+    void Propagate( Object& object );
+    void CheckPropagation( const MT_Vector2D& vOrigin, Object& object );
     //@}
-	
-	//! @name Helpers
+    
+    //! @name Helpers
     //@{
-	TER_Localisation GetLocalisation( const MT_Vector2D& pt ) const;
-	//@}
+    TER_Localisation GetLocalisation( const MT_Vector2D& pt ) const;
+    //@}
 
 private:
-	//! @name Member data
+    //! @name Member data
     //@{
-	MIL_PropagationManager* pManager_;
+    MIL_PropagationManager* pManager_;
     //Time of creation, and time of death of the fire
     bool           needUpdate_;
     unsigned int   timeOfCreation_;

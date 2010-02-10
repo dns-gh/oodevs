@@ -37,13 +37,13 @@ public:
     static int GetKnowledgeAgentRoePopulation ( uint agentId );
 
     // Knowledge objects
-    static boost::shared_ptr<MT_Vector2D> GetKnowledgeObjectLocalisation 	( int knowledgeId);
-    static bool IsKnowledgeObjectValid										( unsigned int nID );
-    static std::vector< unsigned int > GetObjectsInZone						( const TER_Localisation* pZone, const std::vector< std::string >& parameters );
-    static int DamageObject													( int knowledgeId, double damageFactor ) ;
-    static float GetKnowledgeObjectDistance									( const MIL_Population& callerPopulation, int knowledgeId ) ;
-    static boost::shared_ptr<MT_Vector2D> GetKnowledgeObjectClosestPoint 	( const MIL_Population& callerPopulation, int knowledgeId ) ;
-    static int IsEnemy                         								( const MIL_Population& callerPopulation, int knowledgeId   );
+    static boost::shared_ptr<MT_Vector2D> GetKnowledgeObjectLocalisation     ( int knowledgeId);
+    static bool IsKnowledgeObjectValid                                        ( unsigned int nID );
+    static std::vector< unsigned int > GetObjectsInZone                        ( const TER_Localisation* pZone, const std::vector< std::string >& parameters );
+    static int DamageObject                                                    ( int knowledgeId, double damageFactor ) ;
+    static float GetKnowledgeObjectDistance                                    ( const MIL_Population& callerPopulation, int knowledgeId ) ;
+    static boost::shared_ptr<MT_Vector2D> GetKnowledgeObjectClosestPoint     ( const MIL_Population& callerPopulation, int knowledgeId ) ;
+    static int IsEnemy                                                         ( const MIL_Population& callerPopulation, int knowledgeId   );
 
     // Etat decisionnel
     static void NotifyDominationStateChanged( MIL_Population& callerPopulation, MT_Float dominationState );

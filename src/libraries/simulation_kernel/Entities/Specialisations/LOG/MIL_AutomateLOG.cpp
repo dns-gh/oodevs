@@ -38,15 +38,15 @@ BOOST_CLASS_EXPORT_GUID( MIL_AutomateLOG, "MIL_AutomateLOG" )
 template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_AutomateLOG* automat, const unsigned int /*version*/ )
 {
-	unsigned int nTypeID = automat->GetType().GetID();
-	unsigned int nID = automat->GetID();
-	archive << nTypeID << nID;
+    unsigned int nTypeID = automat->GetType().GetID();
+    unsigned int nID = automat->GetID();
+    archive << nTypeID << nID;
 }
 
 template< typename Archive >
 void load_construct_data( Archive& archive, MIL_AutomateLOG* automat, const unsigned int /*version*/ )
 {
-	unsigned int nTypeID, nID ;
+    unsigned int nTypeID, nID ;
     archive >> nTypeID >> nID;
     const MIL_AutomateTypeLOG* pType = dynamic_cast<const MIL_AutomateTypeLOG*>(MIL_AutomateTypeLOG::FindAutomateType( nTypeID ));
     assert( pType );
@@ -96,8 +96,8 @@ MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID, MIL
 }
 
 MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID)
-	: MIL_Automate(type, nID)
-	, pMaintenanceSuperior_       ( 0 )
+    : MIL_Automate(type, nID)
+    , pMaintenanceSuperior_       ( 0 )
     , pMedicalSuperior_           ( 0 )
     , pSupplySuperior_            ( 0 )
     , stockQuotas_                ()

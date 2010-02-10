@@ -77,7 +77,7 @@ template< typename Archive >
 void PHY_RoleAction_Loading::serialize( Archive& file, const uint )
 {
     file & boost::serialization::base_object< tools::Role_ABC >( *this )
-		 & nState_
+         & nState_
          & bIsLoaded_
          & nEndTimeStep_
          & bHasBeenUpdated_;
@@ -214,7 +214,7 @@ int PHY_RoleAction_Loading::Unload()
 void PHY_RoleAction_Loading::CheckConsistency()
 {
     std::auto_ptr< LoadedStateConsistencyComputer_ABC > comp = pion_.GetAlgorithms().loadingComputerFactory_->CreateLoadedStateConsistencyComputer();
-	pion_.Execute( *comp );
+    pion_.Execute( *comp );
 
     if( bIsLoaded_ )
     {
@@ -375,7 +375,7 @@ void PHY_RoleAction_Loading::Execute( posture::PostureComputer_ABC& algorithm ) 
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Loading::LoadForTransport   ( const MIL_Agent_ABC& /*transporter*/, bool /*bTransportOnlyLoadable*/ )
 {
-	ForceUnloadedState ();
+    ForceUnloadedState ();
 }
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Loading::UnloadFromTransport
@@ -383,7 +383,7 @@ void PHY_RoleAction_Loading::LoadForTransport   ( const MIL_Agent_ABC& /*transpo
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Loading::UnloadFromTransport( const MIL_Agent_ABC& /*transporter*/, bool /*bTransportOnlyLoadable*/ )
 {
-	ForceUnloadedState ();
+    ForceUnloadedState ();
 }
 
 } // namespace transport

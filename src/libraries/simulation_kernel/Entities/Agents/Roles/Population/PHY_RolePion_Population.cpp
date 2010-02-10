@@ -31,7 +31,7 @@ void save_construct_data( Archive& archive, const PHY_RolePion_Population* role,
 template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RolePion_Population* role, const unsigned int /*version*/ )
 {
-	MIL_Agent_ABC* pion;
+    MIL_Agent_ABC* pion;
     archive >> pion;
     ::new( role )PHY_RolePion_Population( *pion );
 }
@@ -64,7 +64,7 @@ PHY_RolePion_Population::~PHY_RolePion_Population()
 template< typename Archive >
 void PHY_RolePion_Population::serialize( Archive& file, const uint )
 {
-	file & boost::serialization::base_object< PHY_RoleInterface_Population >( *this );
+    file & boost::serialization::base_object< PHY_RoleInterface_Population >( *this );
 }
 
 // -----------------------------------------------------------------------------

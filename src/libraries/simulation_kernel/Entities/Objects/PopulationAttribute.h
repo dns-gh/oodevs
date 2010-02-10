@@ -17,20 +17,20 @@ class MIL_AutomateLOG;
 class PopulationAttribute : public ObjectAttribute_ABC
 {
 public:
-	//! @name Constructors/Destructor
+    //! @name Constructors/Destructor
     //@{
-	         PopulationAttribute();
+             PopulationAttribute();
     explicit PopulationAttribute( xml::xistream& xis );
-	virtual ~PopulationAttribute();
-	//@}
+    virtual ~PopulationAttribute();
+    //@}
 
-	//! @name Operations
+    //! @name Operations
     //@{
     MT_Float GetDensity() const;
     void  Reset();
     void  SetDensity( MT_Float rDensity );    
     template< typename Archive > void serialize( Archive&, const uint );
-	//@}
+    //@}
 
     //! @name Copy
     //@{

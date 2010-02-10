@@ -34,7 +34,7 @@ public:
         eDead,
     };
 
-public:	
+public:
     //! @name Factory
     //@{
     static void Initialize( xml::xistream& xis );
@@ -45,11 +45,11 @@ public:
     //@}
 
 private:
-	//!@ Constructor and destructor
-	//@{   
+    //!@ Constructor and destructor
+    //@{   
     MIL_MedicalTreatmentType( const std::string& strName, xml::xistream& xis );
     ~MIL_MedicalTreatmentType();
-	//@}
+    //@}
 
 public:
     //! @name

@@ -23,12 +23,12 @@ class TerrainData;
 class TerrainHeuristicCapacity : public ObjectCapacity_ABC
 {
 public:
-	//! @name Constructors/Destructor
+    //! @name Constructors/Destructor
     //@{
-	         TerrainHeuristicCapacity();
+             TerrainHeuristicCapacity();
     explicit TerrainHeuristicCapacity( xml::xistream& xis );
-	virtual ~TerrainHeuristicCapacity();
-	//@}
+    virtual ~TerrainHeuristicCapacity();
+    //@}
 
      //! @name Operations
     //@{    

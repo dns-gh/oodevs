@@ -21,7 +21,7 @@ inline void save_construct_data( Archive& archive, const PHY_RolePion_Composante
 template< typename Archive >
 inline void load_construct_data( Archive& archive, PHY_RolePion_Composantes* role, const unsigned int /*version*/ )
 {
-	MIL_Agent_ABC* pion;
+    MIL_Agent_ABC* pion;
     archive >> pion;
     ::new( role )PHY_RolePion_Composantes( *pion );
 }

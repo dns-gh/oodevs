@@ -94,10 +94,10 @@ private:
     T_PopulationSet populationInsideSet_;
     //@}
 
-	//! @name Member data
+    //! @name Member data
     //@{
     MT_Float    height_;
-	//@}
+    //@}
 };
 
 // -----------------------------------------------------------------------------

@@ -53,13 +53,13 @@ private:
     //@}
 
     //! @name Serialization
-	//@{
+    //@{
     friend class boost::serialization::access;
-	template< typename Archive > void serialize( Archive& ar, const uint )
-	{
-		ar & boost::serialization::base_object< tools::Role_ABC >( *this );
-	}
-	//@}
+    template< typename Archive > void serialize( Archive& ar, const uint )
+    {
+        ar & boost::serialization::base_object< tools::Role_ABC >( *this );
+    }
+    //@}
 
     //! @name Types
     //@{

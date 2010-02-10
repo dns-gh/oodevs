@@ -28,7 +28,7 @@ public:
     //@{
     static int   GetNatureAtlas    ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static float GetDangerosity    ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
-	static float GetPotentialAttrition( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static float GetPotentialAttrition( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool  IsPerceivedByAgent( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static int   IsAnEnemy         ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static int   IsAFriend         ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
@@ -43,7 +43,7 @@ public:
     static float GetDangerosityOnKnowledge              ( boost::shared_ptr< DEC_Knowledge_Agent > pSource, boost::shared_ptr< DEC_Knowledge_Agent > pTarget );
     static const MT_Vector2D* GetPosition               ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static float GetOperationalState                    ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
-	static float GetROE					                ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static float GetROE                                    ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool  GetMajorOperationalState               ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool  IsFlying                               ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool  IsKnowledgeValid                       ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );

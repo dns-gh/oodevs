@@ -25,8 +25,8 @@ class NET_ASN_MsgUnitAttributes;
 
 namespace moving
 {
-	class SpeedComputer_ABC;
-	class MoveComputer_ABC;
+    class SpeedComputer_ABC;
+    class MoveComputer_ABC;
 }
 
 // =============================================================================
@@ -77,7 +77,7 @@ public:
     void ChangeConsumptionMode(dotation::ConsumptionModeChangeRequest_ABC& request);
     //@}
 
-	//! @name Event handlers
+    //! @name Event handlers
     //@{
     void LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
     void NotifyMovingInsideObject ( MIL_Object_ABC& object );
@@ -121,8 +121,8 @@ private:
     bool           bHasChanged_;
     bool           bExternalCanReinforce_;
 
-	template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Reinforcement* role, const unsigned int /*version*/ );
-	template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Reinforcement* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Reinforcement* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Reinforcement* role, const unsigned int /*version*/ );
 };
 
 #endif // __PHY_RolePion_Reinforcement_h_

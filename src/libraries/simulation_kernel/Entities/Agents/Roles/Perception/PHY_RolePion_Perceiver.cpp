@@ -76,7 +76,7 @@ void save_construct_data( Archive& archive, const PHY_RolePion_Perceiver* role, 
 template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RolePion_Perceiver* role, const unsigned int /*version*/ )
 {
-	MIL_AgentPion* pion;
+    MIL_AgentPion* pion;
     archive >> pion;
     ::new( role )PHY_RolePion_Perceiver( *pion, 0, 0 );
 }
@@ -217,7 +217,7 @@ template< typename Archive >
 void PHY_RolePion_Perceiver::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_RoleInterface_Perceiver >( *this )
-		 & bPeriphericalVisionEnabled_
+         & bPeriphericalVisionEnabled_
          & nNextPeriphericalVisionStep_
          & surfacesAgent_
          & surfacesObject_
@@ -693,12 +693,12 @@ class sPerceptionDataComposantes : public OnComponentFunctor_ABC
 {
 public:
     sPerceptionDataComposantes( PHY_RolePion_Perceiver::T_SurfaceAgentMap& surfacesAgent, PHY_RolePion_Perceiver::T_SurfaceObjectMap& surfacesObject,
-    		const MT_Vector2D& position, const MT_Vector2D& direction, const MT_Vector2D& vMainPerceptionDirection, MT_Float rDirectionRotation,
-    		MT_Float& rMaxAgentPerceptionDistance, MT_Float& rMaxObjectPerceptionDistance )
+            const MT_Vector2D& position, const MT_Vector2D& direction, const MT_Vector2D& vMainPerceptionDirection, MT_Float rDirectionRotation,
+            MT_Float& rMaxAgentPerceptionDistance, MT_Float& rMaxObjectPerceptionDistance )
         : surfacesAgent_               ( surfacesAgent  )
         , surfacesObject_              ( surfacesObject )
-        , position_             	   ( position )
-		, direction_                   ( direction )
+        , position_                    ( position )
+        , direction_                   ( direction )
         , vMainPerceptionDirection_    ( vMainPerceptionDirection )
         , nRotationIdx_                ( vMainPerceptionDirection != direction ? -1 : 0 ) // détection lockée
         , rRotationAngle_              ( rDirectionRotation )
@@ -727,8 +727,8 @@ public:
 private:
     PHY_RolePion_Perceiver::T_SurfaceAgentMap&  surfacesAgent_;
     PHY_RolePion_Perceiver::T_SurfaceObjectMap& surfacesObject_;
-    const MT_Vector2D& 							position_;
-    const MT_Vector2D& 							direction_;
+    const MT_Vector2D&                             position_;
+    const MT_Vector2D&                             direction_;
     const MT_Vector2D&                          vMainPerceptionDirection_;
     MT_Float&                                   rMaxAgentPerceptionDistance_;
     MT_Float&                                   rMaxObjectPerceptionDistance_;

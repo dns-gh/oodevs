@@ -28,12 +28,12 @@ class BurnCapacity
     , public MIL_InteractiveContainer_ABC
 {
 public:
-	//! @name Constructors/Destructor
+    //! @name Constructors/Destructor
     //@{
-	explicit BurnCapacity( xml::xistream& xis );
-	         BurnCapacity();
+    explicit BurnCapacity( xml::xistream& xis );
+             BurnCapacity();
     virtual ~BurnCapacity();
-	//@}
+    //@}
 
     //! @name Initialize Data
     //@{
@@ -46,10 +46,10 @@ public:
     virtual void Register( Object& object );
     //@}
 
-	//! @name virtual
+    //! @name virtual
     //@{
     virtual void Instanciate( Object& object ) const;
-	virtual void Update( Object& object, float time );
+    virtual void Update( Object& object, float time );
     //@}
 
     //! @name MIL_InteractiveContainer_ABC

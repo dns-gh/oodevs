@@ -21,19 +21,19 @@
 class ExtinguishableCapacity : public ObjectCapacity_ABC
 {
 public:
-	//! @name Constructors/Destructor
+    //! @name Constructors/Destructor
     //@{
-	         ExtinguishableCapacity();
+             ExtinguishableCapacity();
     explicit ExtinguishableCapacity( xml::xistream& xis );
     virtual ~ExtinguishableCapacity();
-	//@}
+    //@}
 
     //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const uint );
     //@}
 
-	//! @name Operations
+    //! @name Operations
     //@{
     virtual void Instanciate( Object& object ) const;
     virtual void Register( Object& object );

@@ -41,7 +41,7 @@ void save_construct_data( Archive& archive, const PHY_RolePionLOG_Supply* role, 
 template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RolePionLOG_Supply* role, const unsigned int /*version*/ )
 {
-	MIL_AgentPionLOG_ABC* pion;
+    MIL_AgentPionLOG_ABC* pion;
     archive >> pion;
     ::new( role )PHY_RolePionLOG_Supply( *pion );
 }
@@ -81,7 +81,7 @@ template< typename Archive >
 void PHY_RolePionLOG_Supply::serialize( Archive& file, const uint )
 {
     file & boost::serialization::base_object< PHY_RoleInterface_Supply >( *this )
-		 & bSystemEnabled_
+         & bSystemEnabled_
          & pStocks_;
 }
 

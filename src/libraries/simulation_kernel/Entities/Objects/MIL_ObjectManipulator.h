@@ -44,7 +44,7 @@ public:
     virtual void Destroy  ();
     virtual void Mine     ();
 
-	virtual void Extinguish( int agent, int nHose );
+    virtual void Extinguish( int agent, int nHose );
 
     virtual bool CanBeAnimatedBy( const MIL_Agent_ABC& agent ) const;
     virtual void AddAnimator( const MIL_Agent_ABC& agent );

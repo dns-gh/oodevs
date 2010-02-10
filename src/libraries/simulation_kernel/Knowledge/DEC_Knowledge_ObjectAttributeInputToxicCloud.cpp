@@ -59,7 +59,7 @@ void DEC_Knowledge_ObjectAttributeInputToxicCloud::Register( DEC_Knowledge_Objec
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeInputToxicCloud::UpdateOnPerceptionLevel( const PHY_PerceptionLevel& currentPerceptionLevel )
 {
-    UpdateAttributes();	
+    UpdateAttributes();
 }
 
 // -----------------------------------------------------------------------------

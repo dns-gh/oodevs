@@ -38,16 +38,16 @@ MIL_IDManager MIL_PopulationFlow::idManager_;
 template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_PopulationFlow* flow, const unsigned int /*version*/ )
 {
-	MIL_Population* const pPopulation = &flow->GetPopulation();
-	unsigned int nID = flow->GetID();
-	archive << pPopulation << nID;
+    MIL_Population* const pPopulation = &flow->GetPopulation();
+    unsigned int nID = flow->GetID();
+    archive << pPopulation << nID;
 }
 
 template< typename Archive >
 void load_construct_data( Archive& archive, MIL_PopulationFlow* concentration, const unsigned int /*version*/ )
 {
-	MIL_Population* pPopulation;
-	unsigned int nID;
+    MIL_Population* pPopulation;
+    unsigned int nID;
     archive >> pPopulation >> nID;
     ::new( concentration )MIL_PopulationFlow( *pPopulation, nID);
 }

@@ -21,7 +21,7 @@
 template< typename T > 
 std::pair< float, int > DEC_KnowledgePopulationFunctions::GetDominationState( const T& caller, unsigned int knowledgeId )
 {
-	DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
+    DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
     if( !pKnowledge )
         return std::pair< float, int >( 0.f, knowledgeId );
 
@@ -35,7 +35,7 @@ std::pair< float, int > DEC_KnowledgePopulationFunctions::GetDominationState( co
 template< typename T >
 unsigned int DEC_KnowledgePopulationFunctions::GetAttitude( const T& caller, unsigned int knowledgeId )
 {
-	DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
+    DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
     if( !pKnowledge )
         return 0;
     else
@@ -49,7 +49,7 @@ unsigned int DEC_KnowledgePopulationFunctions::GetAttitude( const T& caller, uns
 template< typename T > 
 bool DEC_KnowledgePopulationFunctions::IsRecon( const T& caller, unsigned int knowledgeId )
 {
-	DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
+    DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
     if( !pKnowledge )
         return false ;
     else
@@ -63,7 +63,7 @@ bool DEC_KnowledgePopulationFunctions::IsRecon( const T& caller, unsigned int kn
 template< typename T > 
 bool DEC_KnowledgePopulationFunctions::IsInZone( const T& caller, unsigned int knowledgeId, TER_Localisation* pLoc )
 {
-	DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
+    DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
     if( !pKnowledge )
     {
         return false;

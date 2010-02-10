@@ -68,8 +68,8 @@ public:
     virtual void ApplyExplosion             ( const AttritionCapacity& objectType        , PHY_FireResults_ABC& result );
     virtual void ApplyContamination         ( const MIL_ToxicEffectManipulator& /*contamination*/ ) {};
     virtual void ApplyPoisonous             ( const MIL_ToxicEffectManipulator& /*contamination*/ ) {};
-    virtual double    GetDangerosity					 ( const DEC_Knowledge_AgentComposante& /*compTarget*/, float /*rDistBtwSourceAndTarget*/ ) const {return 0; }; 
-	virtual MT_Float GetOnlyLoadableMaxRangeToFireOn ( const DEC_Knowledge_Agent& /*target*/, MT_Float /*rWantedPH*/ ) const {return 0; };
+    virtual double    GetDangerosity                     ( const DEC_Knowledge_AgentComposante& /*compTarget*/, float /*rDistBtwSourceAndTarget*/ ) const {return 0; }; 
+    virtual MT_Float GetOnlyLoadableMaxRangeToFireOn ( const DEC_Knowledge_Agent& /*target*/, MT_Float /*rWantedPH*/ ) const {return 0; };
     virtual MT_Float GetMaxRangeToFireOn             ( const DEC_Knowledge_Agent& /*target*/, MT_Float /*rWantedPH*/ ) const {return 0; };
     virtual MT_Float GetMinRangeToFireOn             ( const DEC_Knowledge_Agent& /*target*/, MT_Float /*rWantedPH*/ ) const {return 0; };
     virtual MT_Float GetMaxRangeToFireOnActualPosture( const DEC_Knowledge_Agent& /*target*/, MT_Float /*rWantedPH*/ ) const {return 0; };

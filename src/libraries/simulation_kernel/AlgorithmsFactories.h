@@ -43,8 +43,8 @@ namespace human
 }
 namespace transport
 {
-	class TransportComputerFactory_ABC;
-	class LoadingComputerFactory_ABC;
+    class TransportComputerFactory_ABC;
+    class LoadingComputerFactory_ABC;
 }
 
 class OnComponentFunctorComputerFactory_ABC;

@@ -31,7 +31,7 @@ void save_construct_data( Archive& archive, const PHY_RolePionLOGConvoy_Supply* 
 template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RolePionLOGConvoy_Supply* role, const unsigned int /*version*/ )
 {
-	MIL_AgentPion* pion;
+    MIL_AgentPion* pion;
     archive >> pion;
     ::new( role )PHY_RolePionLOGConvoy_Supply( *pion );
 }
@@ -65,7 +65,7 @@ template< typename Archive >
 void PHY_RolePionLOGConvoy_Supply::serialize( Archive& file, const uint )
 {
     file & boost::serialization::base_object< PHY_RoleInterface_Supply >( *this )
-		 & pConvoy_;
+         & pConvoy_;
 }
 
 // -----------------------------------------------------------------------------

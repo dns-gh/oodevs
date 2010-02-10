@@ -93,7 +93,7 @@ DEC_AutomateDecision::~DEC_AutomateDecision()
 void DEC_AutomateDecision::load( MIL_CheckPointInArchive& file, const uint )
 {
     file >> boost::serialization::base_object< DEC_Decision< MIL_Automate > >( *this )
-		 >> pEntity_
+         >> pEntity_
          >> nRulesOfEngagementState_
          >> nCloseCombatState_
          >> nOperationalState_;
@@ -129,7 +129,7 @@ void DEC_AutomateDecision::save( MIL_CheckPointOutArchive& file, const uint ) co
     assert( pEntity_ );
     unsigned id = pEntity_->GetType().GetID();
     file << boost::serialization::base_object< DEC_Decision< MIL_Automate > >( *this )
-		 << pEntity_
+         << pEntity_
          << nRulesOfEngagementState_
          << nCloseCombatState_
          << nOperationalState_
@@ -177,11 +177,11 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< void ( const std::string&, const std::string& ) >( boost::bind( &DEC_AutomateFunctions::DecisionalState, boost::ref( GetAutomate() ), _1, _2 ) ) );
 
     brain.RegisterFunction( "DEC_DebugAffichePoint"  ,
-    		boost::function< void ( const MT_Vector2D* ) > ( boost::bind( &DEC_MiscFunctions::DebugDrawPoint< MIL_Automate >, boost::ref( GetAutomate()), _1  ) ) );
+            boost::function< void ( const MT_Vector2D* ) > ( boost::bind( &DEC_MiscFunctions::DebugDrawPoint< MIL_Automate >, boost::ref( GetAutomate()), _1  ) ) );
     brain.RegisterFunction( "DEC_DebugAffichePoints" ,
-    		boost::function< void ( std::vector< boost::shared_ptr< MT_Vector2D > > ) > (boost::bind( &DEC_MiscFunctions::DebugDrawPoints< MIL_Automate >, boost::ref( GetAutomate()), _1  ) ) );
+            boost::function< void ( std::vector< boost::shared_ptr< MT_Vector2D > > ) > (boost::bind( &DEC_MiscFunctions::DebugDrawPoints< MIL_Automate >, boost::ref( GetAutomate()), _1  ) ) );
     brain.RegisterFunction( "DEC_Debug",
-    		boost::function < void ( const std::string& ) > ( boost::bind( &DEC_MiscFunctions::Debug< MIL_Automate > , boost::ref( GetAutomate()) , "Automate" , _1  ) ) );
+            boost::function < void ( const std::string& ) > ( boost::bind( &DEC_MiscFunctions::Debug< MIL_Automate > , boost::ref( GetAutomate()) , "Automate" , _1  ) ) );
     brain.RegisterFunction( "DEC_Trace",
         boost::function< void ( const std::string& ) >( boost::bind( &DEC_MiscFunctions::Trace< MIL_Automate >, boost::ref( GetAutomate() ), _1 ) ) );
 
@@ -336,15 +336,15 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_GetLima",
         boost::function< unsigned int( unsigned int ) >( boost::bind( &DEC_OrdersFunctions::GetLima< MIL_Automate >, boost::ref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_ProchaineLimaHoraireNonFlagee",
-    		boost::function< unsigned int () >( boost::bind( &DEC_OrdersFunctions::GetNextScheduledLima< MIL_Automate >, boost::ref( GetAutomate() ) ) ) );
+            boost::function< unsigned int () >( boost::bind( &DEC_OrdersFunctions::GetNextScheduledLima< MIL_Automate >, boost::ref( GetAutomate() ) ) ) );
     brain.RegisterFunction( "DEC_Fuseau",
-    		boost::bind( &DEC_OrdersFunctions::GetFuseau< MIL_Automate>, boost::ref( GetAutomate() ) ) );
+            boost::bind( &DEC_OrdersFunctions::GetFuseau< MIL_Automate>, boost::ref( GetAutomate() ) ) );
     brain.RegisterFunction( "DEC_SetMissionLimaFlag",
-    		boost::function< void (unsigned int, bool)> ( boost::bind( &DEC_OrdersFunctions::AutomateSetMissionLimaFlag, boost::ref( GetAutomate() ), _1, _2 ) ) );
+            boost::function< void (unsigned int, bool)> ( boost::bind( &DEC_OrdersFunctions::AutomateSetMissionLimaFlag, boost::ref( GetAutomate() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_GetMissionLimaFlag",
-    		boost::function< bool (unsigned int)> ( boost::bind( &DEC_OrdersFunctions::GetMissionLimaFlag < MIL_Automate >, boost::ref( GetAutomate() ), _1 ) ) );
+            boost::function< bool (unsigned int)> ( boost::bind( &DEC_OrdersFunctions::GetMissionLimaFlag < MIL_Automate >, boost::ref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_SetMissionLimaFlagHoraire",
-    		boost::function< void (unsigned int, bool)> ( boost::bind( &DEC_OrdersFunctions::AutomateSetMissionLimaScheduleFlag, boost::ref( GetAutomate() ), _1, _2 ) ) );
+            boost::function< void (unsigned int, bool)> ( boost::bind( &DEC_OrdersFunctions::AutomateSetMissionLimaScheduleFlag, boost::ref( GetAutomate() ), _1, _2 ) ) );
 
     // MRT / conduite
     brain.RegisterFunction( "DEC_MRT_CreerMissionPion",
@@ -358,15 +358,15 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_CDT_DonnerMissionPion_Mission",
         boost::function< void( MIL_Mission_ABC* pMission ) >( boost::bind( &DEC_OrdersFunctions::CDT_GivePionMission, boost::ref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_CreerMissionAutomate",
-    	boost::function< MIL_Mission_ABC* (DEC_Decision_ABC*, const std::string&)> ( boost::bind( &DEC_OrdersFunctions::CreateAutomateMission, boost::ref( GetAutomate() ), _1, _2 ) ) );
+        boost::function< MIL_Mission_ABC* (DEC_Decision_ABC*, const std::string&)> ( boost::bind( &DEC_OrdersFunctions::CreateAutomateMission, boost::ref( GetAutomate() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_DonnerMissionAutomate",
-    		boost::function< void( MIL_AutomateMission*)>( boost::bind( &DEC_OrdersFunctions::GiveAutomateMission , _1, boost::ref( GetAutomate() ) ) ) );
+            boost::function< void( MIL_AutomateMission*)>( boost::bind( &DEC_OrdersFunctions::GiveAutomateMission , _1, boost::ref( GetAutomate() ) ) ) );
     brain.RegisterFunction( "DEC_AssignerFuseauAMissionAutomate",
-    		boost::function< void( MIL_Fuseau* , MIL_AutomateMission*)>( boost::bind( &DEC_OrdersFunctions::AssignFuseauToAutomateMission , _1, _2 ) ) );
+            boost::function< void( MIL_Fuseau* , MIL_AutomateMission*)>( boost::bind( &DEC_OrdersFunctions::AssignFuseauToAutomateMission , _1, _2 ) ) );
     brain.RegisterFunction( "DEC_AssignerDirectionAMissionAutomate",
-    		boost::function< void (MT_Vector2D* , MIL_AutomateMission* ) >( boost::bind( &DEC_OrdersFunctions::AssignDirectionToAutomateMission , _1, _2 ) ) );
+            boost::function< void (MT_Vector2D* , MIL_AutomateMission* ) >( boost::bind( &DEC_OrdersFunctions::AssignDirectionToAutomateMission , _1, _2 ) ) );
     brain.RegisterFunction( "DEC_DecouperFuseau",
-    		boost::function<std::list<MIL_Fuseau*> (unsigned int ) >( boost::bind( &DEC_OrdersFunctions::SplitFuseau  , boost::ref( GetAutomate() ), _1 ) ) );
+            boost::function<std::list<MIL_Fuseau*> (unsigned int ) >( boost::bind( &DEC_OrdersFunctions::SplitFuseau  , boost::ref( GetAutomate() ), _1 ) ) );
 
     // Pion management
     brain.RegisterFunction( "DEC_Pion_ChangeAutomate", 
@@ -413,7 +413,7 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_KnowledgePopulation_Domination",
         boost::function< std::pair< float, int > (int) > ( boost::bind ( &DEC_KnowledgePopulationFunctions::GetDominationState< MIL_Automate >, boost::cref( GetAutomate() ) ,_1 ) ) ) ;
     brain.RegisterFunction( "DEC_ConnaissancePopulation_EstDansZone",
-    		boost::function< bool (unsigned int , TER_Localisation*) > ( boost::bind ( &DEC_KnowledgePopulationFunctions::IsInZone  < MIL_Automate >, boost::cref( GetAutomate() ), _1, _2 ) ) );
+            boost::function< bool (unsigned int , TER_Localisation*) > ( boost::bind ( &DEC_KnowledgePopulationFunctions::IsInZone  < MIL_Automate >, boost::cref( GetAutomate() ), _1, _2 ) ) );
 
     // Representations
     brain.RegisterFunction( "DEC_GetOrdersCategory",

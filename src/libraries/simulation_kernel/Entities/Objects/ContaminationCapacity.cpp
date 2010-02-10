@@ -97,7 +97,7 @@ void ContaminationCapacity::Instanciate( Object& object ) const
     object.AddCapacity( capacity );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );
 }
-	
+
 // -----------------------------------------------------------------------------
 // Name: ContaminationCapacity::ProcessAgentInside
 // Created: JCR 2008-06-02

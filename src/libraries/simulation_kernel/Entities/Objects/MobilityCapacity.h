@@ -21,12 +21,12 @@
 class MobilityCapacity : public ObjectCapacity_ABC
 {
 public:
-	//! @name Constructors/Destructor
+    //! @name Constructors/Destructor
     //@{
              MobilityCapacity();
     explicit MobilityCapacity( xml::xistream& xis );
-	virtual ~MobilityCapacity();
-	//@}
+    virtual ~MobilityCapacity();
+    //@}
 
     //! @name Operations
     //@{

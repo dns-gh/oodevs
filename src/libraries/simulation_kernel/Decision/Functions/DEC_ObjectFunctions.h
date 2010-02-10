@@ -35,9 +35,9 @@ public:
     static const TER_Localisation& GetGenObjectLocalisation     ( boost::shared_ptr< DEC_Gen_Object > knowledgeId );
 
     // Gen object
-    static std::string GetGenObjectType             			( const DEC_Gen_Object* object );
-    static bool GetGenObjectReservedObstacle 					( const DEC_Gen_Object* object );
-    static boost::shared_ptr<DEC_Decision_ABC> GetGenObjectTC2	( const DEC_Gen_Object* object );
+    static std::string GetGenObjectType                         ( const DEC_Gen_Object* object );
+    static bool GetGenObjectReservedObstacle                     ( const DEC_Gen_Object* object );
+    static boost::shared_ptr<DEC_Decision_ABC> GetGenObjectTC2    ( const DEC_Gen_Object* object );
 
     // Objects
     static std::string ConvertTypeObjectToString    ( int id );

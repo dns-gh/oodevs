@@ -23,7 +23,7 @@ public:
              ComponentsChangedNotificationHandler_ABC() {}
     virtual ~ComponentsChangedNotificationHandler_ABC() {}
 
-	virtual void NotifyComponentHasChanged() = 0;
+    virtual void NotifyComponentHasChanged() = 0;
 };
 
 } // namespace component

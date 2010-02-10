@@ -26,24 +26,24 @@ class TER_DynamicData;
 class BridgingCapacity : public ObjectCapacity_ABC
 {
 public:
-	//! @name Constructors/Destructor
+    //! @name Constructors/Destructor
     //@{
              BridgingCapacity();
     explicit BridgingCapacity( xml::xistream& xis );
     virtual ~BridgingCapacity();
-	//@}
+    //@}
 
     //! @name CheckPoints
     //@{    
     template< typename Archive > void serialize( Archive&, const uint );
     //@}
 
-	//! @name Operations
+    //! @name Operations
     //@{
     virtual void Instanciate( Object& object ) const;
     virtual void Register( Object& object );
     virtual void Finalize( Object& object );
-	//@}
+    //@}
 
 private:
     //! @name Copy

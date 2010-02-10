@@ -86,5 +86,5 @@ void ExtinguishableCapacity::Instanciate( Object& object ) const
 // -----------------------------------------------------------------------------
 void ExtinguishableCapacity::Extinguish( Object& object, int extinguisherAgent, int numberOfFireHoses )
 {
-    object.GetAttribute< FireAttribute >().ComputeHeatWhenExtinguishing( (MIL_FireClass::E_FireExtinguisherAgent)extinguisherAgent, numberOfFireHoses );	
+    object.GetAttribute< FireAttribute >().ComputeHeatWhenExtinguishing( (MIL_FireClass::E_FireExtinguisherAgent)extinguisherAgent, numberOfFireHoses );
 }

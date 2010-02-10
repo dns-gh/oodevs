@@ -42,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Instanciate( Object& object ) const;	
+    virtual void Instanciate( Object& object ) const;
     virtual void Register( Object& object );
     void Activate( Object& object );
     //@}   

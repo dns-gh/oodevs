@@ -73,7 +73,7 @@ template< typename Archive >
 void PHY_RoleAction_Flying::serialize( Archive& file, const uint )
 {
     file & boost::serialization::base_object< PHY_RoleAction_InterfaceFlying >( *this )
-		 & entity_;
+         & entity_;
 }
 
 // -----------------------------------------------------------------------------
@@ -136,7 +136,7 @@ void PHY_RoleAction_Flying::Fly()
 void PHY_RoleAction_Flying::Apply( double rHeight )
 {
     std::auto_ptr< dotation::ConsumptionModeChangeRequest_ABC > request =
-    		entity_.GetAlgorithms().consumptionComputerFactory_->CreateConsumptionModeChangeRequest( PHY_ConsumptionType::moving_ );
+            entity_.GetAlgorithms().consumptionComputerFactory_->CreateConsumptionModeChangeRequest( PHY_ConsumptionType::moving_ );
     entity_.Apply( &dotation::ConsumptionChangeRequestHandler_ABC::ChangeConsumptionMode, *request ); // automatic rollback
 
     if ( !request->AllChanged() || rHeight <= 0. )
@@ -208,6 +208,6 @@ void PHY_RoleAction_Flying::Execute( posture::PostureComputer_ABC& algorithm ) c
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Flying::Execute( moving::MoveComputer_ABC& algorithm ) const
 {
-	if(pActionFly_ == 0)
-		algorithm.NotifyCannotFly();
+    if(pActionFly_ == 0)
+        algorithm.NotifyCannotFly();
 }

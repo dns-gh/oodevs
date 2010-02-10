@@ -25,17 +25,17 @@ class MIL_PropagationManager;
 class CapacityFactory : public ObjectComponentRegistry_ABC< ObjectPrototype >
                       , public CapacityFactory_ABC
 {
-public:	
-	//! @name Constructors/Destructor
+public:
+    //! @name Constructors/Destructor
     //@{
              CapacityFactory();
-	virtual ~CapacityFactory();
-	//@}	
+    virtual ~CapacityFactory();
+    //@}    
 
-	//! @name Creation
+    //! @name Creation
     //@{
     void Create( ObjectPrototype& object, const std::string& capacity, xml::xistream& xis );
-	//@}
+    //@}
 
 private:
     //! @name Registration
@@ -44,11 +44,11 @@ private:
     //@}
 
 private:
-	//! @name Members
+    //! @name Members
     //@{
-	T_CallBacks callbacks_;
-	std::auto_ptr< MIL_PropagationManager > propagation_;
-	//@}
+    T_CallBacks callbacks_;
+    std::auto_ptr< MIL_PropagationManager > propagation_;
+    //@}
 };
 
 #endif // __Object_CapacityFactory_h_

@@ -35,7 +35,7 @@ public:
                            static void Secure            ( const MIL_AgentPion& caller, int knowledgeId );
                            static boost::shared_ptr<MT_Vector2D> SecuringPoint ( const MIL_AgentPion& caller, int knowledgeId );
                            static bool IsEnemy           ( const MIL_AgentPion& caller, int knowledgeId );
-                           static int Exterminate		 ( const MIL_AgentPion& caller, int knowledgeId, float surface );
+                           static int Exterminate         ( const MIL_AgentPion& caller, int knowledgeId, float surface );
     //@}
 };
 

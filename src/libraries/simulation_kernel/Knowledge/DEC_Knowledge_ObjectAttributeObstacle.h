@@ -46,7 +46,7 @@ public:
     void Register( DEC_Knowledge_Object& knObject );
     //@}
     
-	//! @name Update
+    //! @name Update
     //@{
     bool IsActivated() const;
     //@}

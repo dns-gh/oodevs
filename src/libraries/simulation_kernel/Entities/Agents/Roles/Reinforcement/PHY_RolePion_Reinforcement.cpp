@@ -33,7 +33,7 @@ void save_construct_data( Archive& archive, const PHY_RolePion_Reinforcement* ro
 template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RolePion_Reinforcement* role, const unsigned int /*version*/ )
 {
-	MIL_AgentPion* pion;
+    MIL_AgentPion* pion;
     archive >> pion;
     ::new( role )PHY_RolePion_Reinforcement( *pion );
 }
@@ -68,7 +68,7 @@ PHY_RolePion_Reinforcement::~PHY_RolePion_Reinforcement()
 template< typename Archive >
 void PHY_RolePion_Reinforcement::serialize( Archive& file, const uint )
 {
-	file & boost::serialization::base_object< PHY_RoleInterface_Reinforcement >( *this );
+    file & boost::serialization::base_object< PHY_RoleInterface_Reinforcement >( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -267,10 +267,10 @@ const PHY_RolePion_Reinforcement::T_PionSet& PHY_RolePion_Reinforcement::GetRein
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Reinforcement::LoadForTransport( const MIL_Agent_ABC& /*transporter*/, bool /*bTransportOnlyLoadable*/ )
 {
-	CancelReinforcement();
-	const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = GetReinforcements();
-	while( !reinforcements.empty() )
-	   (**reinforcements.begin()).GetRole< PHY_RoleInterface_Reinforcement >().CancelReinforcement();
+    CancelReinforcement();
+    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = GetReinforcements();
+    while( !reinforcements.empty() )
+       (**reinforcements.begin()).GetRole< PHY_RoleInterface_Reinforcement >().CancelReinforcement();
 }
 
 // -----------------------------------------------------------------------------
@@ -279,11 +279,11 @@ void PHY_RolePion_Reinforcement::LoadForTransport( const MIL_Agent_ABC& /*transp
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Reinforcement::Execute( moving::SpeedComputer_ABC& algorithm ) const
 {
-	for( CIT_PionSet itPion = reinforcements_.begin(); itPion != reinforcements_.end(); ++itPion )
-	{
-		MIL_AgentPion& reinforcement = **itPion;
-		algorithm.ApplyOnReinforcement( reinforcement );
-	}
+    for( CIT_PionSet itPion = reinforcements_.begin(); itPion != reinforcements_.end(); ++itPion )
+    {
+        MIL_AgentPion& reinforcement = **itPion;
+        algorithm.ApplyOnReinforcement( reinforcement );
+    }
 }
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Reinforcement::Execute
@@ -291,8 +291,8 @@ void PHY_RolePion_Reinforcement::Execute( moving::SpeedComputer_ABC& algorithm )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Reinforcement::Execute(moving::MoveComputer_ABC& algorithm) const
 {
-	if( IsReinforcing() )
-		algorithm.NotifyReinforcing();
+    if( IsReinforcing() )
+        algorithm.NotifyReinforcing();
 }
 
 // -----------------------------------------------------------------------------
@@ -301,11 +301,11 @@ void PHY_RolePion_Reinforcement::Execute(moving::MoveComputer_ABC& algorithm) co
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Reinforcement::ChangeConsumptionMode(dotation::ConsumptionModeChangeRequest_ABC& request)
 {
-	for ( CIT_PionSet itPion = reinforcements_.begin(); itPion != reinforcements_.end(); ++itPion )
-	{
-		MIL_AgentPion& reinforcement = **itPion;
-		reinforcement.Apply(&ConsumptionChangeRequestHandler_ABC::ChangeConsumptionMode, request);
-	}
+    for ( CIT_PionSet itPion = reinforcements_.begin(); itPion != reinforcements_.end(); ++itPion )
+    {
+        MIL_AgentPion& reinforcement = **itPion;
+        reinforcement.Apply(&ConsumptionChangeRequestHandler_ABC::ChangeConsumptionMode, request);
+    }
 }
 
 // -----------------------------------------------------------------------------

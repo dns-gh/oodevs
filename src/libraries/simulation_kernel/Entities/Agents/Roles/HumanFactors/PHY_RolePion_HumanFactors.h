@@ -39,7 +39,7 @@ namespace firing
 }
 namespace moving
 {
-	class SpeedComputer_ABC;
+    class SpeedComputer_ABC;
 }
 namespace detection
 {

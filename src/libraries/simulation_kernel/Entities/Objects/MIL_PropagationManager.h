@@ -36,12 +36,12 @@ public:
     virtual ~MIL_PropagationManager();
     //@}
 
-	//! @name Methods
+    //! @name Methods
     //@{
     void    Flag( const MT_Vector2D& vOrigin , unsigned int length , unsigned int width );
     void    RemoveFlag( const MT_Vector2D& vOrigin , unsigned int length , unsigned int width );
     bool    IsFlagged( const TER_Localisation& localisation , unsigned int length , unsigned int width ) const;
-	//@}
+    //@}
 
 private:
     typedef std::pair< int, int > T_Coordinate;

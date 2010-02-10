@@ -75,11 +75,11 @@ public:
     //@}
 
     //! @name Event handler
-	//@{
+    //@{
     virtual void LoadForTransport   ( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
-	virtual void UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
-	virtual void CheckConsistency();
-	//@}
+    virtual void UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable );
+    virtual void CheckConsistency();
+    //@}
 
     //! @name Network
     //@{

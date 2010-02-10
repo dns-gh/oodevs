@@ -45,9 +45,9 @@ void save_construct_data( Archive& archive, const PHY_RolePion_Location* role, c
 template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RolePion_Location* role, const unsigned int /*version*/ )
 {
-	MIL_AgentPion* pion;
-	archive >> pion;
-	::new( role )PHY_RolePion_Location( *pion );
+    MIL_AgentPion* pion;
+    archive >> pion;
+    ::new( role )PHY_RolePion_Location( *pion );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,7 +91,7 @@ void PHY_RolePion_Location::load( MIL_CheckPointInArchive& file, const uint )
 {
     MT_Vector2D vPosition;
     file >> boost::serialization::base_object< PHY_RoleInterface_Location >( *this )
-		 >> vDirection_
+         >> vDirection_
          >> vPosition
          >> bHasDoneMagicMove_
          >> bHasMove_;

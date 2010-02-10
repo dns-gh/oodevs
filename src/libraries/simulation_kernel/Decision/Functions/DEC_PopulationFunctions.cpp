@@ -133,7 +133,7 @@ bool DEC_PopulationFunctions::IsKnowledgeObjectValid( unsigned int nID )
 // -----------------------------------------------------------------------------
 int DEC_PopulationFunctions::DamageObject( int knowledgeId, double damageFactor )
 {
-	MIL_Object_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( knowledgeId );
+    MIL_Object_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( knowledgeId );
     if( !( pObject && (*pObject)().CanBePerceived() ) )
     {
         return  (int)eQueryInvalid ;
@@ -164,7 +164,7 @@ boost::shared_ptr<MT_Vector2D> DEC_PopulationFunctions::GetKnowledgeObjectCloses
 {
     const MIL_Object_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( knowledgeId );
     if( !( pObject && (*pObject)().CanBePerceived() ) )
-    	return boost::shared_ptr<MT_Vector2D>();
+        return boost::shared_ptr<MT_Vector2D>();
     else
     {
         MT_Vector2D* pPoint = new MT_Vector2D( callerPopulation.GetClosestPoint( pObject->GetLocalisation() ) );
@@ -178,7 +178,7 @@ boost::shared_ptr<MT_Vector2D> DEC_PopulationFunctions::GetKnowledgeObjectCloses
 // -----------------------------------------------------------------------------
 int DEC_PopulationFunctions::IsEnemy(const MIL_Population& callerPopulation, int knowledgeId  )
 {
-	const MIL_Object_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia(knowledgeId);
+    const MIL_Object_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia(knowledgeId);
     if( !( pObject && (*pObject)().CanBePerceived() ) )
         return 0;
     else

@@ -36,12 +36,12 @@ class MIL_ObjectBuilder_ABC;
 // =============================================================================
 class MIL_ObjectLoader : public MIL_ObjectTypeHandler_ABC
 {
-public:	
+public:
     //! @name Constructors/Destructor
     //@{
              MIL_ObjectLoader();
     virtual ~MIL_ObjectLoader();
-    //@}	
+    //@}
 
     //! @name Operations
     //@{

@@ -19,7 +19,7 @@
 class MIL_AgentPion;
 namespace moving
 {
-	class PHY_RoleAction_Moving;
+    class PHY_RoleAction_Moving;
 }
 class DEC_Path_ABC;
 class DEC_Agent_Path;

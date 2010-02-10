@@ -23,12 +23,12 @@ class ProtectionCapacity : public ObjectCapacity_ABC
                          , private MIL_InteractiveContainer_ABC
 {
 public:
-	//! @name Constructors/Destructor
+    //! @name Constructors/Destructor
     //@{
              ProtectionCapacity();
     explicit ProtectionCapacity( xml::xistream& xis );
-	virtual ~ProtectionCapacity();
-	//@}
+    virtual ~ProtectionCapacity();
+    //@}
 
     //! @name Operations
     //@{

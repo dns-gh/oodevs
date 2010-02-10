@@ -124,7 +124,7 @@ ControlZoneCapacity::ControlZoneCapacity( const ControlZoneCapacity& from )
 {
     // NOTHING
 }
-	
+
 // -----------------------------------------------------------------------------
 // Name: ControlZoneCapacitydestructor
 // Created: JCR 2008-05-22

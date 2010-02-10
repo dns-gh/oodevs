@@ -54,10 +54,10 @@ public:
     template< typename T > static void ReportPopulationKnowledge( T& caller, int type, int reportId, int populationKnowledge );
     template< typename T > static void ReportTirPion            ( T& caller, int type, int reportId, int id );
 
-    template< typename T > static void Trace          			( const T& caller, const std::string& message );
-    template< typename T > static void Debug          			( const T& caller, const std::string& callerType, const std::string& message );
-    template< typename T > static void DebugDrawPoints			( const T& caller, std::vector< boost::shared_ptr< MT_Vector2D > > points );
-    template< typename T > static void DebugDrawPoint 			( const T& caller, const MT_Vector2D* pPoint  );
+    template< typename T > static void Trace                      ( const T& caller, const std::string& message );
+    template< typename T > static void Debug                      ( const T& caller, const std::string& callerType, const std::string& message );
+    template< typename T > static void DebugDrawPoints            ( const T& caller, std::vector< boost::shared_ptr< MT_Vector2D > > points );
+    template< typename T > static void DebugDrawPoint             ( const T& caller, const MT_Vector2D* pPoint  );
   
     // Reinforcement
     static std::vector<DEC_Decision_ABC*> GetReinforcements  ( const MIL_AgentPion& callerAgent );

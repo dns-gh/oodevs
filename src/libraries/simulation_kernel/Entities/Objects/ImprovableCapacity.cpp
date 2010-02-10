@@ -76,7 +76,7 @@ ImprovableCapacity::ImprovableCapacity( const ImprovableCapacity& from )
 {
     // NOTHING
 }
-	
+
 // -----------------------------------------------------------------------------
 // Name: ImprovableCapacity destructor
 // Created: JCR 2008-05-22

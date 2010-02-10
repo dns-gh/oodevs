@@ -89,7 +89,7 @@ CapacityFactory::CapacityFactory()
     // logistic is not needed except during prepa
     Register( "supply-route", boost::bind( &AddBuilder< InteractIfEquippedCapacity >::Add, _1, _2 ) );
     Register( "mobility", boost::bind( &AddBuilder< MobilityCapacity >::Add, _1, _2 ) );
-	Register( "propagation", boost::bind( &AddPropagation, _1, _2, boost::ref( *propagation_ ) ) );	
+    Register( "propagation", boost::bind( &AddPropagation, _1, _2, boost::ref( *propagation_ ) ) );
     Register( "protection", boost::bind( &AddBuilder< ProtectionCapacity >::Add, _1, _2 ) );
     Register( "time-limited", boost::bind( &AddBuilder< TimeLimitedCapacity >::Add, _1, _2 ) );
     Register( "workable", boost::bind( &AddBuilder< WorkableCapacity >::Add, _1, _2 ) );
@@ -113,7 +113,7 @@ CapacityFactory::~CapacityFactory()
 void CapacityFactory::Register( const std::string& capacity, const T_CallBack& callback )
 {
     if ( ! callbacks_.insert( std::make_pair( capacity, callback ) ).second )
-		throw std::invalid_argument( "capacity '" + capacity + "' already registered." );
+        throw std::invalid_argument( "capacity '" + capacity + "' already registered." );
 }
 
 // -----------------------------------------------------------------------------
@@ -122,7 +122,7 @@ void CapacityFactory::Register( const std::string& capacity, const T_CallBack& c
 // -----------------------------------------------------------------------------
 void CapacityFactory::Create( ObjectPrototype& prototype, const std::string& capacity, xml::xistream& xis )
 {
-	const CIT_Callbacks it = callbacks_.find( capacity );
-	if ( it != callbacks_.end() )
+    const CIT_Callbacks it = callbacks_.find( capacity );
+    if ( it != callbacks_.end() )
         it->second( prototype, xis );
 }

@@ -31,7 +31,7 @@ namespace firing
 
 namespace moving
 {
-	class SpeedComputer_ABC;
+    class SpeedComputer_ABC;
 }
 // =============================================================================
 // @class  PHY_RolePion_Communications

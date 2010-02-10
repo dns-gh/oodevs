@@ -19,17 +19,17 @@ namespace xml
 
 class CapacityFactory_ABC
 {
-public:	
-	//! @name Constructors/Destructor
+public:
+    //! @name Constructors/Destructor
     //@{
-			CapacityFactory_ABC() {}
-	virtual ~CapacityFactory_ABC() {}
-	//@}	
+            CapacityFactory_ABC() {}
+    virtual ~CapacityFactory_ABC() {}
+    //@}    
 
-	//! @name Registrer
+    //! @name Registrer
     //@{
-	virtual void Create( ObjectPrototype& protoype, const std::string& capacity, xml::xistream& xis ) = 0;
-	//@}
+    virtual void Create( ObjectPrototype& protoype, const std::string& capacity, xml::xistream& xis ) = 0;
+    //@}
 };
 
 #endif

@@ -19,10 +19,10 @@ BOOST_CLASS_EXPORT_GUID( MIL_AgentPionLOGMaintenance, "MIL_AgentPionLOGMaintenan
 template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_AgentPionLOGMaintenance* pion, const unsigned int /*version*/ )
 {
-	unsigned int nTypeID = pion->GetType().GetID();
-	const MIL_Automate* const pAutomate = &pion->GetAutomate();
+    unsigned int nTypeID = pion->GetType().GetID();
+    const MIL_Automate* const pAutomate = &pion->GetAutomate();
     const AlgorithmsFactories* const algorithmFactories = &pion->GetAlgorithms();
-	archive << nTypeID 
+    archive << nTypeID 
             << pAutomate
             << algorithmFactories;
 }
@@ -30,8 +30,8 @@ void save_construct_data( Archive& archive, const MIL_AgentPionLOGMaintenance* p
 template< typename Archive >
 void load_construct_data( Archive& archive, MIL_AgentPionLOGMaintenance* pion, const unsigned int /*version*/ )
 {
-	unsigned int nTypeID, nID;
-	MIL_Automate* pAutomate = 0;
+    unsigned int nTypeID, nID;
+    MIL_Automate* pAutomate = 0;
     AlgorithmsFactories* algorithmFactories = 0;
     archive >> nTypeID
             >> pAutomate

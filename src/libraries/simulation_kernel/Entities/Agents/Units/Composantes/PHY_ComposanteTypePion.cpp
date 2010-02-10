@@ -357,7 +357,7 @@ void PHY_ComposanteTypePion::ReadActiveProtection( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::InitializeHumanProtections( xml::xistream& xis )
 {
-	xis >> xml::optional() >> xml::start( "human-protections" )
+    xis >> xml::optional() >> xml::start( "human-protections" )
             >> xml::list( "human-protection", *this, &PHY_ComposanteTypePion::ReadHumanProtection )
         >> xml::end();
 }

@@ -23,8 +23,8 @@ namespace refugee {
 // =============================================================================
 class RefugeeActionsNotificationHandler_ABC {
 public:
-	RefugeeActionsNotificationHandler_ABC();
-	virtual ~RefugeeActionsNotificationHandler_ABC();
+    RefugeeActionsNotificationHandler_ABC();
+    virtual ~RefugeeActionsNotificationHandler_ABC();
 
     virtual void Orientate( MIL_AgentPion& pionManaging ) = 0;
     virtual void Release  ( MIL_AgentPion& callerAgent ) = 0;

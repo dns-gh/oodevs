@@ -82,7 +82,7 @@ void PHY_RoleHLA_Communications::DeactivateBlackout( )
 // -----------------------------------------------------------------------------
 MT_Float PHY_RoleHLA_Communications::ModifySpeed            ( MT_Float rSpeed    ) const
 {
-	return rSpeed;
+    return rSpeed;
 }
 
 // -----------------------------------------------------------------------------

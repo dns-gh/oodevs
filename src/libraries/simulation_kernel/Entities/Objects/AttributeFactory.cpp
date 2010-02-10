@@ -99,7 +99,7 @@ AttributeFactory::AttributeFactory()
     Register( "population-filter", boost::bind( &AddBuilder< PopulationAttribute >::Add, _1, _2 ) );
     Register( "stock", boost::bind( &AddBuilder< StockAttribute >::Add, _1, _2 ) );
 }
-	
+
 // -----------------------------------------------------------------------------
 // Name: AttributeFactory destructor
 // Created: JCR 2008-05-30
@@ -116,7 +116,7 @@ AttributeFactory::~AttributeFactory()
 void AttributeFactory::Register( const std::string& attribute, const T_CallBack& callback )
 {
     if ( ! callbacks_.insert( std::make_pair( attribute, callback ) ).second )
-		throw std::invalid_argument( "capacity '" + attribute + "' already registered." );
+        throw std::invalid_argument( "capacity '" + attribute + "' already registered." );
 }
 
 // -----------------------------------------------------------------------------
@@ -125,8 +125,8 @@ void AttributeFactory::Register( const std::string& attribute, const T_CallBack&
 // -----------------------------------------------------------------------------
 void AttributeFactory::Create( Object& object, const std::string& attribute, xml::xistream& xis ) const
 {
-	const CIT_Callbacks it = callbacks_.find( attribute );
-	if ( it != callbacks_.end() )
+    const CIT_Callbacks it = callbacks_.find( attribute );
+    if ( it != callbacks_.end() )
         it->second( object, xis );
 }
 

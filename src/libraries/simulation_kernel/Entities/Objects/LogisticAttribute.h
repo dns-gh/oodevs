@@ -17,13 +17,13 @@ class MIL_AutomateLOG;
 class LogisticAttribute : public ObjectAttribute_ABC    
 {
 public:
-	//! @name Constructors/Destructor
+    //! @name Constructors/Destructor
     //@{
-	         LogisticAttribute();
+             LogisticAttribute();
     explicit LogisticAttribute( xml::xistream& xis );
     explicit LogisticAttribute( const ASN1T_ObjectAttributes& asn );
-	virtual ~LogisticAttribute();
-	//@}
+    virtual ~LogisticAttribute();
+    //@}
 
     //! @name Knowledge
     //@{
@@ -38,10 +38,10 @@ public:
     template < typename Archive > void serialize( Archive&, const uint );
     //@}
 
-	//! @name virtual
+    //! @name virtual
     //@{
     MIL_AutomateLOG& GetTC2() const;
-	//@}
+    //@}
 
     //! @name Copy
     //@{

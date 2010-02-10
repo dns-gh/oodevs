@@ -151,7 +151,7 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const MIL_ObjectBuilder_ABC& bui
     if ( it == prototypes_.end() )
         return 0;
     Object* pObject = new Object( *it->second, army, 0 );
-	builder.Build( *pObject );
+    builder.Build( *pObject );
     pObject->Finalize();
     return pObject;
 }

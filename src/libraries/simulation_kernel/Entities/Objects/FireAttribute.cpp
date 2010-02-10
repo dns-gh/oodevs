@@ -22,9 +22,9 @@ BOOST_CLASS_EXPORT_GUID( FireAttribute, "FireAttribute" )
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 FireAttribute::FireAttribute()
-    : heat_		( 0 )
-	, pClass_	( 0 )
-	, timeOfLastUpdate_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
+    : heat_        ( 0 )
+    , pClass_    ( 0 )
+    , timeOfLastUpdate_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
     , width_            ( 0 )
     , length_           ( 0 )
 {
@@ -36,9 +36,9 @@ FireAttribute::FireAttribute()
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
 FireAttribute::FireAttribute( xml::xistream& xis )
-    : heat_		( 0 )
-	, pClass_	( 0 )
-	, timeOfLastUpdate_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
+    : heat_        ( 0 )
+    , pClass_    ( 0 )
+    , timeOfLastUpdate_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
     , width_            ( MIL_FireClass::GetWidth() )
     , length_           ( MIL_FireClass::GetLength() )
 {
@@ -46,9 +46,9 @@ FireAttribute::FireAttribute( xml::xistream& xis )
     pClass_ = MIL_FireClass::Find( className );
     if( !pClass_ )
         xis.error( "Unknown 'Fire class' '" + className + "' for fire object attribute" );
-	heat_ = pClass_->GetDefaultHeat();
-	xis >> xml::optional() 
-		>> xml::attribute( "heat", heat_ );
+    heat_ = pClass_->GetDefaultHeat();
+    xis >> xml::optional() 
+        >> xml::attribute( "heat", heat_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,16 +56,16 @@ FireAttribute::FireAttribute( xml::xistream& xis )
 // Created: JCR 2008-07-21
 // -----------------------------------------------------------------------------
 FireAttribute::FireAttribute( const ASN1T_ObjectAttributes& asn )
-    : heat_		( 0 )
-	, pClass_	( 0 )
+    : heat_        ( 0 )
+    , pClass_    ( 0 )
     , width_    ( MIL_FireClass::GetWidth() )
     , length_   ( MIL_FireClass::GetLength() )
-	, timeOfLastUpdate_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
+    , timeOfLastUpdate_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
 {        
     pClass_ = MIL_FireClass::Find( asn.fire.class_id );
     if( !pClass_ )
-        throw std::runtime_error( "Unknown 'Fire class' for fire object attribute" );	
-	heat_ = pClass_->GetDefaultHeat();
+        throw std::runtime_error( "Unknown 'Fire class' for fire object attribute" );    
+    heat_ = pClass_->GetDefaultHeat();
 //    asn.fire.heat
 }
 
@@ -74,11 +74,11 @@ FireAttribute::FireAttribute( const ASN1T_ObjectAttributes& asn )
 // Created: JCR 2008-07-21
 // -----------------------------------------------------------------------------
 FireAttribute::FireAttribute( const FireAttribute& attr )
-    : pClass_	( attr.pClass_ )
-    , heat_		( attr.pClass_->GetDefaultHeat() )
+    : pClass_    ( attr.pClass_ )
+    , heat_        ( attr.pClass_->GetDefaultHeat() )
     , width_    ( attr.width_ )
     , length_   ( attr.length_ )
-	, timeOfLastUpdate_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
+    , timeOfLastUpdate_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
 {
     // NOTHING
 }
@@ -99,7 +99,7 @@ FireAttribute::~FireAttribute()
 FireAttribute& FireAttribute::operator=( const FireAttribute& rhs )
 {
     timeOfLastUpdate_ = rhs.timeOfLastUpdate_;
-	heat_ = rhs.heat_;
+    heat_ = rhs.heat_;
     pClass_ = rhs.pClass_;
     width_ = rhs.width_;
     length_ = rhs.length_;
@@ -186,7 +186,7 @@ void FireAttribute::ComputeHeatEvolution( unsigned int initial, unsigned int tim
 {
     //Compute the new temperature and send a notification if it has changed
     int heat = pClass_->ComputeHeatEvolution( heat_, initial, timeOfLastUpdate_ );
-	UpdateHeat( heat, time );
+    UpdateHeat( heat, time );
 }
 
 // -----------------------------------------------------------------------------
@@ -197,7 +197,7 @@ void FireAttribute::ComputeHeatWhenExtinguishing( MIL_FireClass::E_FireExtinguis
 {
     //Compute the new temperature and send a notification if it has changed
     int heat = pClass_->ComputeHeatWhenExtinguishing( heat_, extinguisherAgent, numberOfFireHoses );
-	UpdateHeat( heat, MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() );
+    UpdateHeat( heat, MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() );
 }
 
 // -----------------------------------------------------------------------------
@@ -206,12 +206,12 @@ void FireAttribute::ComputeHeatWhenExtinguishing( MIL_FireClass::E_FireExtinguis
 // -----------------------------------------------------------------------------
 void FireAttribute::UpdateHeat( int heat, unsigned int time )
 {
-	if( heat != heat_ )
+    if( heat != heat_ )
     {
         NotifyAttributeUpdated( eOnUpdate );
         heat_ = heat;
     }
-	timeOfLastUpdate_ = time;
+    timeOfLastUpdate_ = time;
 }
 
 // -----------------------------------------------------------------------------
@@ -220,7 +220,7 @@ void FireAttribute::UpdateHeat( int heat, unsigned int time )
 // -----------------------------------------------------------------------------
 int FireAttribute::GetHeat() const
 {
-	return heat_;
+    return heat_;
 }
 
 // -----------------------------------------------------------------------------

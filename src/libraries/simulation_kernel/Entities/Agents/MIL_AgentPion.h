@@ -113,8 +113,8 @@ public:
 
     //! @name Operation on Knowledge
     //@{
-	double GetDangerosity( boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge ) const;
-	//@}
+    double GetDangerosity( boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge ) const;
+    //@}
 
     //! @name Network
     //@{
@@ -169,7 +169,7 @@ private:
     //! @name Serialization
     //@{
     template< typename Archive > friend void save_construct_data( Archive& archive, const MIL_AgentPion* pion, const unsigned int version );
-  	template< typename Archive > friend void load_construct_data( Archive& archive, MIL_AgentPion* pion, const unsigned int version );
+      template< typename Archive > friend void load_construct_data( Archive& archive, MIL_AgentPion* pion, const unsigned int version );
     //@}
 
 private:

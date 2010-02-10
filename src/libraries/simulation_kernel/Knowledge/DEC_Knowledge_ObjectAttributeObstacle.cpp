@@ -142,5 +142,5 @@ void DEC_Knowledge_ObjectAttributeObstacle::Send( ASN1T_ObjectAttributes& asn ) 
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_ObjectAttributeObstacle::IsActivated() const
 {
-	return bActivated_;
+    return bActivated_;
 }

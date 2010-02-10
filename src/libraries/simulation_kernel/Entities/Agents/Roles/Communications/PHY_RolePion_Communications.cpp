@@ -37,11 +37,11 @@ void save_construct_data( Archive& archive, const PHY_RolePion_Communications* r
 template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RolePion_Communications* role, const unsigned int /*version*/ )
 {
-	MIL_Entity_ABC* entity;
+    MIL_Entity_ABC* entity;
   bool isAutonomous;
-	archive >> entity
+    archive >> entity
           >> isAutonomous;
-	::new( role )PHY_RolePion_Communications( *entity, isAutonomous );
+    ::new( role )PHY_RolePion_Communications( *entity, isAutonomous );
 }
 
 
@@ -251,7 +251,7 @@ bool PHY_RolePion_Communications::CanCommunicate() const
 void PHY_RolePion_Communications::Execute(moving::SpeedComputer_ABC& algorithm) const
 {
     if( !jammers_.empty() )
-    	algorithm.AddModifier(rCoefSpeedModificator_, false);
+        algorithm.AddModifier(rCoefSpeedModificator_, false);
 }
 
 // -----------------------------------------------------------------------------

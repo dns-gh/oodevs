@@ -32,22 +32,22 @@ public:
     typedef boost::function2< void, Component&, xml::xistream& > T_CallBack;
     //@}
 
-public:	
-	//! @name Constructors/Destructor
+public:
+    //! @name Constructors/Destructor
     //@{
-			 ObjectComponentRegistry_ABC() {}
-	virtual ~ObjectComponentRegistry_ABC() {}
-	//@}	
+             ObjectComponentRegistry_ABC() {}
+    virtual ~ObjectComponentRegistry_ABC() {}
+    //@}    
 
-	//! @name Registrer
+    //! @name Registrer
     //@{
-	virtual void Register( const std::string& component, const T_CallBack& callback ) = 0;
-	//@}
+    virtual void Register( const std::string& component, const T_CallBack& callback ) = 0;
+    //@}
 
 protected:    
-	//! @name Type
+    //! @name Type
     //@{
-	typedef std::map< std::string, T_CallBack >     T_CallBacks;
+    typedef std::map< std::string, T_CallBack >     T_CallBacks;
     typedef typename T_CallBacks::const_iterator    CIT_Callbacks;
     //@}
 

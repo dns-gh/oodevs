@@ -50,8 +50,8 @@ std::auto_ptr< MoveComputer_ABC > MoveComputerFactory::CreateMoveComputer() cons
 // -----------------------------------------------------------------------------
 std::auto_ptr< SpeedComputer_ABC > MoveComputerFactory::CreateSpeedComputer( const SpeedStrategy_ABC& strategy ) const
 {
-	std::auto_ptr< SpeedComputer_ABC > pSpeedComputer( new DefaultSpeedComputer( strategy ) );
-	return pSpeedComputer;
+    std::auto_ptr< SpeedComputer_ABC > pSpeedComputer( new DefaultSpeedComputer( strategy ) );
+    return pSpeedComputer;
 }
 
 // -----------------------------------------------------------------------------
@@ -60,6 +60,6 @@ std::auto_ptr< SpeedComputer_ABC > MoveComputerFactory::CreateSpeedComputer( con
 // -----------------------------------------------------------------------------
 std::auto_ptr< MaxSlopeComputer_ABC > MoveComputerFactory::CreateMaxSlopeComputer() const
 {
-	std::auto_ptr< MaxSlopeComputer_ABC > pSlopeComputer( new DefaultMaxSlopeComputer() );
-	return pSlopeComputer;
+    std::auto_ptr< MaxSlopeComputer_ABC > pSlopeComputer( new DefaultMaxSlopeComputer() );
+    return pSlopeComputer;
 }

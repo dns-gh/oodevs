@@ -42,7 +42,7 @@ TerrainHeuristicCapacity::TerrainHeuristicCapacity( const TerrainHeuristicCapaci
 {
     environmentScores_ = from.environmentScores_;
 }
-	
+
 // -----------------------------------------------------------------------------
 // Name: TerrainHeuristicCapacity destructor
 // Created: JCR 2008-05-22

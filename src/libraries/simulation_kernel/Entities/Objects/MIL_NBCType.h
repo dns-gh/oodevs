@@ -49,11 +49,11 @@ public:
     //@}
 
 private:
-	//!@ Constructor and destructor
-	//@{   
+    //!@ Constructor and destructor
+    //@{   
     MIL_NBCType( const std::string& strName, xml::xistream& xis );
     ~MIL_NBCType();
-	//@}
+    //@}
 
 private:
     //! @name Helpers
