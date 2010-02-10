@@ -410,6 +410,9 @@ void MIL_Fuseau::Reset( const MT_Vector2D& vOrientationRefPos, const T_PointVect
     // Fuseau global orientation
     vStartGlobalDirection_ = MT_Line( *pLeftLimit_->GetPoints().begin (), *pRightLimit_->GetPoints().begin () ).GetCenter();
     vEndGlobalDirection_   = MT_Line( *pLeftLimit_->GetPoints().rbegin(), *pRightLimit_->GetPoints().rbegin() ).GetCenter();
+
+    // Crossroad buffer //@TODO first basic implementation, can have a lot of crossroad if fuseau is to big
+    crossroadsBuffer_ = TER_PathFindManager::GetPathFindManager().FindCrossroadsWithinCircle( GetBoundingBox().GetCenter(), 50000 ); //@TODO MGD update Pathfind and urban to work on polygon instead of circle
     
     // DEBUG
     /*printf( "MIL_Fuseau::Reset BEGIN\n" );
@@ -1128,6 +1131,23 @@ const TER_LimitData* MIL_Fuseau::GetRightLimit() const
 const MT_Line& MIL_Fuseau::GetGlobalDirection() const
 {
     return globalDirectionLine_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Fuseau::FindCrossroadsWithinCircle
+// Created: MGD 2010-02-05
+// -----------------------------------------------------------------------------
+std::vector< boost::shared_ptr< MT_Vector2D > > MIL_Fuseau::FindCrossroadsWithinCircle( MT_Vector2D& pos, float radius ) const
+{
+    std::vector< boost::shared_ptr< MT_Vector2D > > res;
+    for( std::vector< boost::shared_ptr< MT_Vector2D > >::const_iterator it = crossroadsBuffer_.begin(); it != crossroadsBuffer_.end(); it++ )
+    {
+        if( (*it)->Distance( pos ) < radius )
+        {
+            res.push_back( *it );
+        }
+    }
+    return res;
 }
 
 //-----------------------------------------------------------------------------

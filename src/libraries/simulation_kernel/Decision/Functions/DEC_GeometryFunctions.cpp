@@ -1413,9 +1413,16 @@ float DEC_GeometryFunctions::ComputeDelayFromSchedule( const MIL_Fuseau* pFuseau
 // Name: DEC_GeometryFunctions::GetCrossroads
 // Created: MGD 2009-08-19
 // -----------------------------------------------------------------------------
-void DEC_GeometryFunctions::GetCrossroads( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, float x, float y, float z, float radius, const directia::ScriptRef& table )
-{
-    std::vector< boost::shared_ptr< MT_Vector2D > > points = TER_PathFindManager::GetPathFindManager().FindCrossroadsWithinCircle( MT_Vector2D( x, y ), radius );
+void DEC_GeometryFunctions::GetCrossroads( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, float x, float y, float /*z*/, float radius, const directia::ScriptRef& table )
+{  
+    MT_Vector2D center( x, y );
+    std::vector< boost::shared_ptr< MT_Vector2D > > points;
+    const MIL_Fuseau& fuseau = pion.GetOrderManager().GetFuseau();
+    if( fuseau.IsNull() )
+        points = TER_PathFindManager::GetPathFindManager().FindCrossroadsWithinCircle( center, radius );
+    else
+        points = pion.GetOrderManager().GetFuseau().FindCrossroadsWithinCircle( center, radius );
+
     std::vector< std::vector< MT_Float > > positions;
     for( std::vector< boost::shared_ptr< MT_Vector2D > >::iterator it = points.begin(); it != points.end(); it++ )
     {

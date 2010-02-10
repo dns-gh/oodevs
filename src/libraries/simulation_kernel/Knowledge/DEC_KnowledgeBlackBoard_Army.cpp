@@ -549,6 +549,38 @@ DEC_BlackBoard_CanContainKnowledgeUrban& DEC_KnowledgeBlackBoard_Army::GetKnowle
     return *pKnowledgeUrbanContainer_;
 }
 
+
+namespace
+{
+    class sUrbanKnowledgesInserter
+    {
+    public:
+        sUrbanKnowledgesInserter( T_KnowledgeUrbanVector& container )
+        : pContainer_( &container )
+        {
+        }
+
+        void operator() ( boost::shared_ptr< DEC_Knowledge_Urban >& knowledge )
+        {
+            pContainer_->push_back( knowledge );
+        }
+
+    private:
+        T_KnowledgeUrbanVector* pContainer_;
+    };
+}
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Army::GetObjects
+// Created: MGD 2010-02-10
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeBlackBoard_Army::GetUrbanObjects( T_KnowledgeUrbanVector& container ) const
+{
+    sUrbanKnowledgesInserter functor( container );
+
+    assert( pKnowledgeUrbanContainer_ );
+    pKnowledgeUrbanContainer_->ApplyOnKnowledgesUrban( functor );           
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_Army::GetArmy
 // Created: NLD 2006-04-12

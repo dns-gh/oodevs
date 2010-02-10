@@ -85,10 +85,6 @@ void RegisterCommonUserFunctions( directia::Brain& brain, unsigned int id )
     brain.RegisterFunction( "DEC_Geometrie_ConvertirFuseauEnLocalisation",      &DEC_GeometryFunctions::ConvertFuseauToLocalisation );
     brain.RegisterFunction( "DEC_Geometrie_ProchainObjectifDansFuseau",         &DEC_GeometryFunctions::GetNextObjectiveInFuseau );
     
-    directia::ScriptRef initQueryFunction = brain.GetScriptFunction( "InitQueryReturn" );
-    //Keypoint
-    brain.RegisterFunction( "DEC_Crossroads", 
-        boost::function< void( float, float, float, float, const directia::ScriptRef& ) >( boost::bind( &DEC_GeometryFunctions::GetCrossroads, boost::ref( brain ), initQueryFunction, _1 , _2, _3, _4, _5 ) ) ) ;
     //BMArea
     brain.RegisterFunction( "DEC_BMArea_Barycenter", &DEC_GeometryFunctions::ComputeBarycenter );
 

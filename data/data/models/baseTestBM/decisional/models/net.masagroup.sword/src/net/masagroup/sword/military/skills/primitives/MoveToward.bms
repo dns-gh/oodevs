@@ -51,8 +51,4 @@ node "MoveTowardElement"
             Activate( skill.links.moveAndTakePosition, keypoint:reachEfficiency( self.params.entity ), { entity = keypoint } )
         end
     end,
-    
-    destroy = function( self )
-      --BreakForDebug("call destroy moveTowardelement")
-    end
 }

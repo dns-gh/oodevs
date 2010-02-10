@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query name="net.masagroup.sword.military.queries.getObservable" xmlns="http://www.masagroup.net/directia/schemas/bm">
+	<parameters/>
+	<target name="observable">
+		<type>
+			<class name="net.masagroup.military.generic.knowledge.Observable"/>
+		</type>
+	</target>
+</query>

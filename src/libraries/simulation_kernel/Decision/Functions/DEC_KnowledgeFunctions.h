@@ -18,6 +18,12 @@
 class DEC_Decision_ABC;
 class MIL_AgentPion;
 
+namespace directia
+{
+    class Brain;
+    class ScriptRef;
+}
+
 // =============================================================================
 // Created: NLD 2004-03-31
 // =============================================================================
@@ -37,6 +43,9 @@ public:
     static T_ConstKnowledgeAgentVector GetLivingEnemiesInZone           ( const MIL_AgentPion& callerAgent, TER_Localisation* pZone );
     static T_ConstKnowledgeAgentVector GetLivingEnemiesInFuseau         ( const MIL_AgentPion& callerAgent );
     static T_ConstKnowledgeAgentVector GetLivingEnemiesInCircle         ( const MIL_AgentPion& callerAgent, const MT_Vector2D* pCenter, float radius );
+
+    static void GetObservableKnowledge( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& table );
+    static void DEC_KnowledgeFunctions::GetDestroyableKnowledge( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& table );
 
     template< typename T > static std::vector< boost::shared_ptr< TER_Localisation > > SortAccordingToUnloadedEnemies( const T& caller, const std::vector< boost::shared_ptr< TER_Localisation > >& locations );
     template< typename T > static std::vector< boost::shared_ptr< TER_Localisation > > SortAccordingToLoadedEnemies  ( const T& caller, const std::vector< boost::shared_ptr< TER_Localisation > >& locations );

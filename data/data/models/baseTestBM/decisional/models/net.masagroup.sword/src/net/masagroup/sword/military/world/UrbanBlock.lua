@@ -75,7 +75,7 @@ return
         return 100 -- TODO -- $$$ MIA: not used in skill yet... 
     end,
     getPerception = function( self )
-        integration.getUrbanBlockPerception( self )
+        return integration.getUrbanBlockPerception( self )
     end,
     getReconnaissanceState = function( self ) 
        return 0 -- TODO

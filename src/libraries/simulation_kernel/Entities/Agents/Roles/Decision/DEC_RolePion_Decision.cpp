@@ -241,6 +241,8 @@ void DEC_RolePion_Decision::EndCleanStateAfterCrash()
 // -----------------------------------------------------------------------------
 void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
 {
+    directia::ScriptRef initQueryFunction = brain.GetScriptFunction( "InitQueryReturn" );
+
 // Missions
     brain.RegisterFunction( "DEC_CreerMissionPion",
         boost::function< MIL_Mission_ABC*( const std::string& ) >( boost::bind( &DEC_OrdersFunctions::CreatePionMissionBM, boost::ref( GetPion().GetAutomate() ), this, _1 ) ) );
@@ -593,6 +595,10 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_Connaissances_UnitesEnnemiesDangereuses", boost::bind( &DEC_KnowledgeFunctions::GetDangerousEnemies, boost::ref( GetPion() ) ) );
 
     brain.RegisterFunction( "DEC_Connaissances_UnitesEnnemiesVivantesPercues", boost::bind( &DEC_KnowledgeFunctions::GetLivingEnemiesPerceived, boost::ref( GetPion() ) ) );
+    brain.RegisterFunction( "DEC_Connaissances_Observable",
+        boost::function< void( const directia::ScriptRef& ) >( boost::bind( &DEC_KnowledgeFunctions::GetObservableKnowledge, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1 ) ) );
+    brain.RegisterFunction( "DEC_Connaissances_Destroyable",
+        boost::function< void( const directia::ScriptRef& ) >( boost::bind( &DEC_KnowledgeFunctions::GetDestroyableKnowledge, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1 ) ) );//@TODO MGD same function than Observable for the moment
     brain.RegisterFunction( "DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion", 
         boost::function< T_ConstKnowledgeAgentVector( const DEC_Decision_ABC* ) >( boost::bind( &DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedByPion< MIL_AgentPion >, boost::cref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansFuseau", boost::bind( &DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedInFuseau, boost::ref( GetPion() ) ) );
@@ -711,6 +717,11 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_Geometrie_CalculerPositionParRapportALima",
         boost::function< boost::shared_ptr< MT_Vector2D >( int, float ) >( boost::bind( &DEC_GeometryFunctions::ComputePointBeforeLima< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2 ) ) );
 
+    //Keypoint
+    brain.RegisterFunction( "DEC_Crossroads", 
+        boost::function< void( float, float, float, float, const directia::ScriptRef& ) >( boost::bind( &DEC_GeometryFunctions::GetCrossroads, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1 , _2, _3, _4, _5 ) ) ) ;
+
+    
     // Fire 
     brain.RegisterFunction( "DEC_Tir_PorteeMaxPourTirerSurUnite",
         boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent >, float ) >( boost::bind( &DEC_FireFunctions::GetMaxRangeToFireOnEnemy, boost::ref( GetPion() ), _1, _2 ) ) );

@@ -21,6 +21,7 @@ class DEC_Knowledge_ObjectPerception;
 class DEC_Knowledge_ObjectCollision;
 class DEC_Knowledge_Population;
 class DEC_Knowledge_PopulationCollision;
+class DEC_Knowledge_Urban;
 class PHY_Volume;
 
 //! @name Types
@@ -44,6 +45,10 @@ typedef T_KnowledgeObjectCollisionVector::const_iterator  CIT_KnowledgeObjectCol
 typedef std::vector< boost::shared_ptr< DEC_Knowledge_Object > > T_KnowledgeObjectVector;
 typedef T_KnowledgeObjectVector::iterator                        IT_KnowledgeObjectVector;
 typedef T_KnowledgeObjectVector::const_iterator                  CIT_KnowledgeObjectVector;
+
+typedef std::vector< boost::shared_ptr< DEC_Knowledge_Urban > > T_KnowledgeUrbanVector;
+typedef T_KnowledgeUrbanVector::iterator                        IT_KnowledgeUrbanVector;
+typedef T_KnowledgeUrbanVector::const_iterator                  CIT_KnowledgeUrbanVector;
 
 typedef std::vector< boost::shared_ptr< DEC_Knowledge_Object > > T_KnowledgeObjectDiaIDVector;
 typedef T_KnowledgeObjectDiaIDVector::iterator                   IT_KnowledgeObjectDiaIDVector;

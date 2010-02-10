@@ -85,7 +85,13 @@
     </mission>
     <mission dia-behavior="net.masagroup.sword.military.tasks.NeutralizeAgents" dia-type="T_Mission_Pion_Neutralize" id="29" name="NeutralizeAgents">
       <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.sword.military.tasks.MoveAndObserve" dia-type="T_Mission_Pion_MoveAndObserve" id="30" name="MoveAndObserve">
+      <parameter dia-name="objectives" name="objectives" optional="false" type="PointBM"/>
     </mission> 
+    <mission dia-behavior="net.masagroup.sword.military.tasks.SeekAndDestroy" dia-type="T_Mission_Pion_SeekAndDestroy" id="31" name="SeekAndDestroy">
+      <parameter dia-name="objectives" name="objectives" optional="false" type="PointBM"/>
+    </mission>     
     <mission dia-behavior="net.masagroup.military.tasks.TestParam" dia-type="T_Mission_Pion_BM_TestReachable" id="100" name="BM TestReachable">
       <parameter dia-name="Point_" name="Point" optional="true" type="PointBM"/>
       <parameter dia-name="PointList_" name="PointList" optional="true" type="PointListBM"/>

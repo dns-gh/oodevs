@@ -29,6 +29,8 @@
         <mission name="ObserveObject"/>
         <mission name="ReconnoiterUrbanBlock"/>
         <mission name="IdentifyAgent"/>
+        <mission name="MoveAndObserve"/>
+        <mission name="SeekAndDestroy"/>
       </missions>
     </unit>
   </units>

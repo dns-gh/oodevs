@@ -59,7 +59,7 @@ end
 function InitQueryReturn( params, strKnowledgeType, knowledgeSource, knowledgedPosition, list)
   if list then
     for i = 1, #knowledgeSource do
-      params[i] = CreateKnowledge( strKnowledgeType, knowledgeSource[i], knowledgedPosition[i] )
+      params[ #params + 1 ] = CreateKnowledge( strKnowledgeType, knowledgeSource[i], knowledgedPosition[i] )
     end
   else
     params[1] = CreateKnowledge( strKnowledgeType, knowledgeSource, knowledgedPosition )
