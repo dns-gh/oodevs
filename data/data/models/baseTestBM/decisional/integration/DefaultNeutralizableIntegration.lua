@@ -1,6 +1,8 @@
---Destroyable Implementation
+-- --Neutralizable Implementation
+
 eTirDirectNormal = 0
 eTirDirectLibre = 1
+
 
 local eActionTirDirect_Impossible = 0
 local eActionTirDirect_EnemyDestroyed = 1
@@ -16,20 +18,9 @@ local  eRoeStateFreeFire = 1
 local  eRoeStateRestrictedFire = 2
 local  eRoeStateFireByOrder = 3
 
-integration.destructionPriority = function( target )
+
+integration.neutralizationPriority  = function( target )
   return integration.reachPriority( target )
-end
-
-integration.startDestroyingIt = function( target )
-  if not target.actionTir then
-    target.actionTir = DEC_StartTirDirect( target.source, 100, eTirDirectNormal, 0 )
-    actionCallbacks[ target.actionTir ] = function( arg ) target.eTir = arg end
-  end
-end
-
-integration.stopDestroyingIt = function( target )
-  DEC_StopAction( target.actionTir )
-  target.actionTir = nil
 end
 
 integration.firePermitted = function(target)
@@ -37,16 +28,28 @@ integration.firePermitted = function(target)
   return stateROE == eRoeStateFreeFire
 end
 
-integration.getDestructionState = function( target )
-  etatOps = ( DEC_ConnaissanceAgent_NiveauDeDestructionTactique( target.source ) ) * 100
+integration.getOperationalCapacity = function(target)
+  local etatOps = DEC_ConnaissanceAgent_EtatOps( target.source )*100
   return etatOps
 end
 
-integration.getAttrition = function( self, target, position )
+integration.startNeutralizingIt = function( target )
+  if not target.actionTir then
+    target.actionTir = DEC_StartTirDirect( target.source, 100, eTirDirectNormal, 0 )
+    actionCallbacks[ target.actionTir ] = function( arg ) target.eTir = arg end
+  end
+end
+
+integration.stopNeutralizingIt = function( target )
+  DEC_StopAction( target.actionTir )
+  target.actionTir = nil
+end
+
+integration.getAttritionForNeutralization = function( self, target, position )
   -- gestion des munitions 
-  if   target.eTir == eActionTirDirect_NoAmmo
-    or target.eTir == eActionTirDirect_NoCapacity
-    or target.eTir == eActionTirDirect_Impossible then
+  if   eTir == eActionTirDirect_NoAmmo
+    or eTir == eActionTirDirect_NoCapacity
+    or eTir == eActionTirDirect_Impossible then
     return 0
   end
   -- gestion de perception sur la cible par lancer de rayon

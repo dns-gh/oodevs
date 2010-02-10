@@ -47,7 +47,7 @@
     <mission dia-behavior="net.masagroup.sword.military.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveToUrbanBlock" id="13" name="MoveToUrbanBlock">
       <parameter dia-name="objectives" name="objectives" optional="false" type="UrbanBlockBM"/>
     </mission>
-        <mission dia-behavior="net.masagroup.sword.military.tasks.DestroyAgents" dia-type="T_Mission_Pion_Destroy" id="14" name="DestroyAgents">
+    <mission dia-behavior="net.masagroup.sword.military.tasks.DestroyAgents" dia-type="T_Mission_Pion_Destroy" id="14" name="DestroyAgents">
       <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>
     </mission>    
      <mission dia-behavior="net.masagroup.sword.military.tasks.ObserveAndReconnoiter" dia-type="T_Mission_Pion_ObserveAndReconnoiter" id="15" name="ObserveAndReconnoiterPoint">
@@ -83,6 +83,9 @@
         <mission dia-behavior="net.masagroup.testSword.military.tasks.Identify" dia-type="T_Mission_Pion_Identify" id="28" name="IdentifyAgent">
       <parameter dia-name="objectives" name="objectives" optional="false" type="AgentKnowledgeBM"/>
     </mission>
+    <mission dia-behavior="net.masagroup.sword.military.tasks.NeutralizeAgents" dia-type="T_Mission_Pion_Neutralize" id="29" name="NeutralizeAgents">
+      <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>
+    </mission> 
     <mission dia-behavior="net.masagroup.military.tasks.TestParam" dia-type="T_Mission_Pion_BM_TestReachable" id="100" name="BM TestReachable">
       <parameter dia-name="Point_" name="Point" optional="true" type="PointBM"/>
       <parameter dia-name="PointList_" name="PointList" optional="true" type="PointListBM"/>
@@ -152,8 +155,8 @@
   <populations>
   </populations>
   <fragorders>
-      <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_ChangerReglesEngagement" id="346" name="Changer Regles Engagement">
-      <parameter dia-name="orderConduiteChangerReglesEngagement_" name="Order conduite changer regles engagement" optional="false" type="Enumeration">
+      <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_ChangerReglesEngagement" id="346" name="Changer les r&#232;gles d&apos;engagement">
+      <parameter dia-name="orderConduiteChangerReglesEngagement_" name="Ordre conduite: changer les r&#232;gles d&apos;engagement" optional="false" type="Enumeration">
         <value id="0" name="none"/>
         <value id="1" name="tir_libre"/>
         <value id="2" name="tir_sur_riposte"/>

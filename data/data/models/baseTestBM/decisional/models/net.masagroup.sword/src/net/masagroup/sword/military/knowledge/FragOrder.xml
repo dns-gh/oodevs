@@ -5,7 +5,7 @@
       <description>Appliquer le changement de ROE</description>
     </method>
     <method name="isROE">
-      <description>Retourne vrai si l'ordre de conduite et de type ROE</description>
+      <description>Retourne vrai si l'ordre de conduite est de type ROE</description>
       <return>
         <type>
           <simple name="boolean" />

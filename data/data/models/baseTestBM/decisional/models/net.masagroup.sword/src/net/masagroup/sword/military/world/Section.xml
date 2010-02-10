@@ -8,6 +8,8 @@
   <realizes>net.masagroup.military.generic.knowledge.Identifiable</realizes>
   <realizes>directia.core.model.RoleBody</realizes>
   <realizes>net.masagroup.military.generic.knowledge.Commanding</realizes>
+  <realizes>net.masagroup.military.generic.knowledge.Neutralizing</realizes>
+  <realizes>net.masagroup.military.generic.knowledge.Neutralizable</realizes>
   <methods>
     <method name="computeMovementCapability">
       <description>__INTEGRATION</description>
@@ -92,12 +94,19 @@
           <class name="net.masagroup.military.generic.world.Unit"/>
         </type>
       </argument>
-      <argument name="objectiveFrom">
+      <argument name="position">
         <description>L'élément position à partir de laquelle l'agent souhaite tirer.</description>
         <type>
+        <!--  TODO DDA Positionable au lieu de Element  <class name="net.masagroup.military.generic.knowledge.Positionable"/> -->
           <class name="net.masagroup.military.generic.world.Element"/>
         </type>
       </argument>
+      <return>
+          <description>Retourne une valeur entre 0 et 100.</description>
+             <type>
+               <simple name="numeric"/>
+             </type>
+          </return>
     </method>
     <method name="destructionPriority">
       <description>__INTEGRATION</description>
@@ -108,7 +117,7 @@
         </type>
       </return>
     </method>
-    <method name="destructionLevel">
+    <method name="getDestructionState">
       <description>__INTEGRATION</description>
       <return>
         <description>La valeur du niveau de destruction</description>
@@ -116,15 +125,74 @@
           <simple name="numeric" />
         </type>
       </return>
+    </method> 
+    <method name="operationalLevel">
+        <description>Le niveau opérationel de la connaissance</description>
+        <return>
+            <type>
+                <simple name="numeric"/>
+            </type>
+        </return>
     </method>
-    <method name="canDestroyIt">
+    <method name="getOperationalCapacity">
+       <description>Retourne le niveau operationnel de l'unité. </description>
+         <return>
+           <description>Retourne une valeur entre 0 et 100.</description>
+             <type>
+              <simple name="numeric"/>
+             </type>
+         </return>
+    </method>
+    <method name="neutralize">
+      <description>__INTEGRATION</description>
+    </method>
+    <method name="canNeutralizeIt">
+       <description>Retourne vrai si les conditions sont réunies pour neutraliser la connaissance.</description>
+       <return>
+          <type>
+            <simple name="boolean"/>
+          </type>
+       </return>
+    </method>
+    <method name="neutralizeIt">
+         <description>Action de neutralisation</description>
+    </method>
+     <method name="neutralizationPriority">
       <description>__INTEGRATION</description>
       <return>
-        <description>L'état des conditions</description>
+        <description>La valeur de la priorité.</description>
         <type>
-          <simple name="boolean" />
+          <simple name="numeric" />
         </type>
       </return>
+    </method>
+      <method name="getAttritionForNeutralization">
+            <description>Retourne l'estimation de l'attrition pour la neutralisation d'un agent de type Unit
+sur un objectif target neutralisable à partir d'une position donnée.
+</description>
+            <argument name="target">
+                <description>La cible à neutraliser.</description>
+                <type>
+                    <class name="net.masagroup.military.generic.knowledge.Neutralizable"/>
+                </type>
+            </argument>
+            <argument name="position">
+                <description>La position à partir de laquelle on veut tirer calculer l'efficacité pour la neutralization&#xD;
+</description>
+                <type>
+                    <class name="net.masagroup.military.generic.knowledge.Neutralizing"/>
+                </type>
+            </argument>
+        </method>
+    
+    <method name="firePermitted">
+      <description>Retourne vrai si l'autorisation est donnée de tirer sur l'unité. </description>
+        <return>
+          <description>__INTEGRATION. Retourne vrai si l'autorisation est donnée de tirer sur l'unité, faux sinon.</description>
+          <type>
+            <simple name="boolean"/>
+          </type>
+        </return>
     </method>
     <method name="canTakePosition">
       <description>__INTEGRATION</description>
@@ -156,18 +224,6 @@
         </type>
       </return>     
     </method>
-    <method name="destroyIt">
-      <description>__INTEGRATION</description>
-    </method>
-    <method name="getDestructionState">
-      <description>__INTEGRATION</description>
-      <return>
-        <description>Retourne la valeur du niveau de destruction courant de l'unité entre 0 et 100.</description>
-        <type>
-          <simple name="numeric"/>
-        </type>
-      </return>
-    </method>
     <method name="isOccupied">
       <description>__INTEGRATION</description>
       <return>
@@ -190,9 +246,6 @@
           <simple name="numeric"/>
         </type>
       </return>
-    </method>
-    <method name="destroy">
-      <description>__INTEGRATION</description>
     </method>
     <method name="isDetected">
            <description>__INTEGRATION</description>
@@ -234,7 +287,16 @@
                 </type>
             </return>
         </method>
+       <method name="destroy">
+       <description>__ Intégration. Action physique d'engagement d'un élément par le feu. Renvoie vrai quand l'action est en cours.</description>
+       <return>
+          <type>
+            <simple name="boolean"/>
+          </type>
+       </return>
+       </method>
   </methods>
+
   <predicates>
     <predicate name="isDestroyed">
       <description>Retourne vrai si la connaissance est détruite.</description>
@@ -249,6 +311,9 @@
             </list>
           </type>
         </argument>
+    </predicate>
+    <predicate name="isOperational">
+         <description>Retourne vrai si la connaissance est opérationnelle.</description>
     </predicate>
   </predicates>
   <attributes>

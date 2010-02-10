@@ -6,10 +6,11 @@ include "integration/DefaultObservableIntegration.lua"
 include "integration/DefaultIdentifiableIntegration.lua"
 include "integration/DefaultReachableIntegration.lua"
 include "integration/DefaultDestroyableIntegration.lua"
-
+include "integration/DefaultNeutralizableIntegration.lua"
 include "integration/DefaultPositionableIntegration.lua"
+
 include "integration/DefaultReachingIntegration.lua"
-include "integration/DefaultDestroyingIntegration.lua"
+include "integration/DefaultNeutralizingIntegration.lua"
 
 include "integration/CommunicationIntegration.lua"
 

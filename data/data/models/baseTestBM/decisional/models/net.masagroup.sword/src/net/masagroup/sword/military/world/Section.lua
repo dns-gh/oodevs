@@ -11,7 +11,7 @@ defaultMethods
     isFar = function() return default_engine.methods.load( "generic_isFar" ) end,
     isReached = function() return default_engine.methods.load( "generic_isReached" ) end,
 
-   -- OBSERVABLE
+    -- OBSERVABLE
     hostilityLevel = function() return default_engine.methods.load( "unit_hostilityLevel" ) end,
     isHostile = function () return default_engine.predicates.load( "generic_isHostile") end,
     isNeutral = function () return default_engine.methods.load( "generic_isNeutral") end,
@@ -24,12 +24,21 @@ defaultMethods
     canTakePosition = function() return default_engine.methods.load( "canTakePosition" ) end,
 
     -- DESTROYABLE
+    destructionLevel = function() return default_engine.methods.load( "destructionLevel" ) end,
+    canDestroyIt = function() return default_engine.methods.load( "canDestroyIt" ) end,
     destructionPriority = function() return default_engine.methods.load( "destructionPriority" ) end,
     isDestroyed = function() return default_engine.predicates.load( "isDestroyed" ) end,
     isDangerous = function() return default_engine.predicates.load( "isDangerous" ) end,
     destroyIt = function() return default_engine.methods.load( "destroyIt" ) end,
     dangerosityLevel = function() return default_engine.methods.load( "dangerosityLevel" ) end,
 
+    -- NEUTRALIZABLE
+    operationalLevel = function() return default_engine.methods.load( "unit_operationalLevel" ) end,
+    isOperational = function() return default_engine.predicates.load( "generic_isOperational" ) end,
+    canNeutralizeIt = function() return default_engine.methods.load( "unit_canNeutralizeIt" ) end,
+    neutralizeIt = function() return default_engine.methods.load( "unit_neutralizeIt" ) end,
+    neutralizationPriority = function() return default_engine.methods.load( "generic_neutralizationPriority" ) end,    
+    
     -- COMMANDING
     isCommandingFor = function() return default_engine.methods.load( "isCommandingFor" ) end,
     isInMyTeam = function() return default_engine.methods.load( "isInMyTeam" ) end,
@@ -38,12 +47,16 @@ defaultMethods
     communicate = function() return default_engine.methods.load( "unit_communicate" ) end,
 
 
-    -- Destroying
+    -- DESTROYING
     destructionEfficiency = function() return default_engine.methods.load( "destructionEfficiency" ) end,
-
     isDestroyingFor = function() return default_engine.predicates.load( "terrain_analysis_isDestroyingFor" ) end,
 
-    --Reconnoitring
+    -- NEUTRALIZING
+    isNeutralizingFor = function() return default_engine.predicates.load( "terrain_analysis_isNeutralizingFor" ) end,
+    neutralizationEfficiency = function() return default_engine.methods.load( "neutralizationEfficiency" ) end,
+    
+
+    -- RECONNOITRING
     isInMyAOR = function() return default_engine.predicates.load( "isInMyAOR" ) end,
 
     -- IDENTIFIABLE
@@ -114,20 +127,8 @@ return
         --TODO
     end,
 
-    getAttrition = function( self, objective, position )
-    local rPH = 0.5
-    local rPorteeMax    = DEC_Tir_PorteeMaxPourTirerSurUnite( objective.source, rPH )
-    local rPorteeMin    = DEC_Tir_PorteeMinPourTirerSurUnite( objective.source, rPH )
-        local rDistanceAEni = integration.magnitude( position, objective )
-        if( rDistanceAEni > rPorteeMax or rDistanceAEni < rPorteeMin ) then return 0 end
-    return 100
-    end,
-
-    getDestructionState = function( self )
-      return ( 1 - DEC_ConnaissanceAgent_EtatOps( self.source ) )*100
-    end,
-    canDestroyIt = function(self)
-      return integration.canDestroyIt(self)
+    getAttrition = function( self, target, position )
+     return integration.getAttrition( self, target, position )
     end,
 
     occupationLevel = function()
@@ -138,17 +139,29 @@ return
     isSafety = function()
       return true
     end,
-
-    destructionLevel = function( self )
-      return integration.destructionLevel( self )
+    getOperationalCapacity = function( self )
+      return integration.getOperationalCapacity( self )
     end,
+    
+    firePermitted = function( self )
+      return integration.firePermitted( self )
+    end,
+   
+    getDestructionState = function( self )
+      return integration.getDestructionState( self )
+    end,
+    
+    getAttritionForNeutralization = function( self, target, position )
+      return integration.getAttritionForNeutralization( self, target, position )
+    end,
+    
+    neutralize = behavior_model.integration.startStopAction( { start = integration.startNeutralizingIt, started = function( self, ...) end, stop = integration.stopNeutralizingIt } ),
 
     destroy = behavior_model.integration.startStopAction( { start = integration.startDestroyingIt, started = function( self, ...) end, stop = integration.stopDestroyingIt } ),
 
     isOccupied = function( self )
       return true
     end,
-
     identifyIt = function ( self )
       integration.identifyIt( self )
     end,

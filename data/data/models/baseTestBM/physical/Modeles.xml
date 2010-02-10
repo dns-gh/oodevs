@@ -20,6 +20,7 @@
         <mission name="MoveToObjectKnowledgeList"/>
         <mission name="MoveToUrbanBlock"/>
         <mission name="DestroyAgents"/>
+        <mission name="NeutralizeAgents"/>
         <mission name="ObserveAndReconnoiterPoint"/>
         <mission name="ObserveAndReconnoiterUrbanBlock"/>
         <mission name="ObservePoint"/>
