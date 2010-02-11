@@ -71,9 +71,6 @@ return
     computePerceptionCapability = function( self )
      return 0 -- TODO
     end,
-    computeMovementCapability = function( self )
-        return 100 -- TODO -- $$$ MIA: not used in skill yet... 
-    end,
     getPerception = function( self )
         return integration.getUrbanBlockPerception( self )
     end,

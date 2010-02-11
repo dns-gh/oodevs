@@ -7,14 +7,6 @@
   <realizes>net.masagroup.military.generic.knowledge.Reaching</realizes>
   <realizes>net.masagroup.military.generic.knowledge.Reconnoitring</realizes>
   <methods>
-    <method name="computeMovementCapability">
-      <description>__INTEGRATION</description>
-      <return>
-        <type>
-          <simple name="numeric"/>
-        </type>
-      </return>
-    </method>
     <method name="computeRelation">
       <description>__INTEGRATION</description>
       <argument name="objective">

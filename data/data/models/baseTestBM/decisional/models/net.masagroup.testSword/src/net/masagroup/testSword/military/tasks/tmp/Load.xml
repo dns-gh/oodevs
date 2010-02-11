@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.testSword.military.tasks.tmp.Load">
+  <parameters>
+    <parameter name="objectives">
+      <description>Les éléments à charger/embarquer</description>
+      <type>
+        <list>
+          <class name="net.masagroup.military.generic.knowledge.Loadable"/>
+        </list>
+      </type>
+    </parameter>
+  </parameters>
+  <goal>
+    <description>Embarquer/charger des élements</description>
+  </goal>
+  <stages>
+    <stage label="Embarquement">
+      <description>Embarquer/charger des éments</description>
+      <goal>
+        <description>Embarquer/charger des élements</description>
+      </goal>
+      <skills>
+        <skill name="net.masagroup.military.generic.skills.primitives.Load" main="true" priority="1.0">
+          <parameter name="entities">
+            <value>
+              <parameter>objectives</parameter>
+            </value>
+          </parameter>
+          <parameter name="positions">
+            <value>
+              <call method="net.masagroup.military.generic.queries.getDefaultLoadPositions">
+                <parameter name="objectives">
+                  <value>
+                    <parameter>objectives</parameter>
+                  </value>
+                </parameter>
+              </call>
+            </value>
+          </parameter>
+        </skill>
+      </skills>
+    </stage>
+  </stages>
+</task>

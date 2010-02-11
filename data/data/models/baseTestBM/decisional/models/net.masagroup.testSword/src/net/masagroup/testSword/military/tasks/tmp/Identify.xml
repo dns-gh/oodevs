@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.testSword.military.tasks.tmp.Identify">
+  <parameters>
+    <parameter name="objectives">
+      <description>Les éléments à identifier.</description>
+      <type>
+        <list>
+          <class name="net.masagroup.military.generic.knowledge.Identifiable"/>
+        </list>
+      </type>
+    </parameter>
+  </parameters>
+  <goal>
+    <description>Identifier les entités.</description>
+  </goal>
+  <stages>
+    <stage>
+      <skills>
+        <skill name="net.masagroup.military.generic.combatant.skills.primitives.Identify" main="true" priority="1.0">
+          <parameter name="entities">
+            <value>
+              <parameter>objectives</parameter>
+            </value>
+          </parameter>
+          <parameter name="positions">
+            <value>
+              <call method="net.masagroup.sword.military.queries.getIdentifying">
+                <parameter name="objectives">
+                  <value>
+                    <parameter>objectives</parameter>
+                  </value>
+                </parameter>
+              </call>
+            </value>
+          </parameter>
+        </skill>
+      </skills>
+    </stage>
+  </stages>
+</task>

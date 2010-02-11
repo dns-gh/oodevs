@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.tasks.DestroyAgents">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.testSword.military.tasks.NeutralizeAgents">
   <parameters>
     <parameter name="entities">
       <type>
         <list>
-          <class name="net.masagroup.military.generic.knowledge.Destroyable"/>
+          <class name="net.masagroup.military.generic.knowledge.Neutralizable"/>
         </list>
       </type>
     </parameter>
   </parameters>
   <stages>
-    <stage label="Destroy enemies">
+    <stage label="Neutralize enemies">
       <skills>
-        <skill name="net.masagroup.military.generic.combatant.skills.primitives.Destroy" main="true" priority="1.0">
+        <skill name="net.masagroup.military.generic.combatant.skills.primitives.Neutralize" main="true" priority="1.0">
           <parameter name="entities">
             <value>
               <parameter>entities</parameter>
@@ -20,7 +20,7 @@
           </parameter>
           <parameter name="positions">
             <value>
-              <call method="net.masagroup.sword.military.queries.getDestroying">
+              <call method="net.masagroup.sword.military.queries.getNeutralizing">
                 <parameter name="entities">
                   <value>
                     <parameter>entities</parameter>

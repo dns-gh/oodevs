@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.tasks.SeekAndDestroy">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.testSword.military.tasks.SeekAndDestroy">
   <parameters>
     <parameter name="objectives">
       <type>
@@ -24,7 +24,7 @@
         </value>
       </let>
       <skills>
-        <skill name="net.masagroup.sword.military.skills.primitives.MoveToward" main="true" priority="1.0">
+        <skill name="net.masagroup.sword.military.skills.primitives.MoveToward" main="true" priority="0.1">
           <parameter name="entities">
             <value>
               <parameter>objectives</parameter>
@@ -32,8 +32,7 @@
           </parameter>
           <parameter name="positions">
             <value>
-              <call
-                method="net.masagroup.sword.military.queries.getCrossroads">
+              <call method="net.masagroup.sword.military.queries.getCrossroads">
                 <parameter name="objectives">
                   <value>
                     <parameter>objectives</parameter>
@@ -43,7 +42,7 @@
             </value>
           </parameter>
         </skill>
-        <skill name="net.masagroup.military.generic.combatant.skills.primitives.Destroy" priority="2.0">
+        <skill name="net.masagroup.military.generic.combatant.skills.primitives.Destroy" priority="0.9">
           <parameter name="entities">
             <value>
               <parameter>destroyableEntities</parameter>

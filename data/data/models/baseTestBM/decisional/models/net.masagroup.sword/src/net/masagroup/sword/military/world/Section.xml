@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.world.Section" >
   <description>Une section interarme en milieu urbain.</description>
+  <realizes>directia.core.model.RoleBody</realizes>
   <realizes>net.masagroup.military.generic.knowledge.Reachable</realizes>
   <realizes>net.masagroup.military.generic.knowledge.Observable</realizes>
   <realizes>net.masagroup.military.generic.knowledge.Destroying</realizes>
   <realizes>net.masagroup.military.generic.knowledge.Destroyable</realizes>
   <realizes>net.masagroup.military.generic.knowledge.Identifiable</realizes>
-  <realizes>directia.core.model.RoleBody</realizes>
   <realizes>net.masagroup.military.generic.knowledge.Commanding</realizes>
   <realizes>net.masagroup.military.generic.knowledge.Neutralizing</realizes>
   <realizes>net.masagroup.military.generic.knowledge.Neutralizable</realizes>
