@@ -88,7 +88,8 @@ void DEC_PopulationDecision::save( MIL_CheckPointOutArchive& file, const uint ) 
 {
     assert( pEntity_ );
     
-    file << pEntity_
+    file << boost::serialization::base_object< DEC_Decision< MIL_Population  > >( *this )
+         << pEntity_
          << rDominationState_
          << rLastDominationState_;
 }

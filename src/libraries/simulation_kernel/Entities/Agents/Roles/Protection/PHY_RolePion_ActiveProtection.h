@@ -11,6 +11,7 @@
 #define __PHY_RolePion_ActiveProtection_h_
 
 #include "PHY_RoleInterface_ActiveProtection.h"
+
 class PHY_RolePion_Composantes;
 
 // =============================================================================
@@ -36,6 +37,10 @@ public:
     virtual bool CounterIndirectFire( const PHY_DotationCategory& ) const;
     virtual bool DestroyIndirectFire( const PHY_DotationCategory& ) const;
     //@}
+
+    //! @name Checkpoints
+    //@{
+    template< typename Archive > void serialize( Archive& file, const unsigned int );
     //@}
 
 private:
@@ -46,10 +51,18 @@ private:
     //@}
 
 private:
+    //! @name Checkpoints
+    //@{
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_ActiveProtection* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_ActiveProtection* role, const unsigned int /*version*/ );
+    //@}
+
+private:
     //! @name Member data
     //@{
     PHY_RolePion_Composantes& pion_;
     //@}
 };
+
 
 #endif // __PHY_RolePion_ActiveProtection_h_

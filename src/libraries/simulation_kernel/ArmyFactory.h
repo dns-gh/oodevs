@@ -43,11 +43,24 @@ public:
     virtual MIL_Army_ABC* Create( xml::xistream& xis );
     //@}
 
+    //! @name CheckPoint
+    //@{
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+
+    void load( MIL_CheckPointInArchive&, const uint );
+    void save( MIL_CheckPointOutArchive&, const uint ) const;
+
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const ArmyFactory* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, ArmyFactory* role, const unsigned int /*version*/ );
+    //@}
+
+
 private:
     //! @name Helpers
     //@{
     void InitializeDiplomacies();
     //@}
+
 
 private:
     //! @name Operations
@@ -62,11 +75,7 @@ private:
     std::auto_ptr< MT_Converter< std::string, MIL_Army_ABC::E_Diplomacy > > diplomacyConverter_; // LTO
     //@}
 
-    //! @name CheckPoint
-    //@{
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const ArmyFactory* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, ArmyFactory* role, const unsigned int /*version*/ );
-    //@}
+   
 };
 
 #endif // __ArmyFactory_h_

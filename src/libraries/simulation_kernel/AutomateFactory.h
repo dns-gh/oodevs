@@ -36,6 +36,12 @@ public:
     virtual MIL_Automate& Create( xml::xistream& xis, MIL_Automate& parent );
     virtual MIL_Automate& Create( xml::xistream& xis, MIL_Formation& parent );
     //@}
+
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+
+    void load( MIL_CheckPointInArchive&, const uint );
+    void save( MIL_CheckPointOutArchive&, const uint ) const;
+
 private:
     //! @name CheckPoint
     //@{

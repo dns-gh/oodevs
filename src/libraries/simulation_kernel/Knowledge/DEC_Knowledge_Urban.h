@@ -44,10 +44,10 @@ public:
     
     //! @name CheckPoints
     //@{
-    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    /*BOOST_SERIALIZATION_SPLIT_MEMBER()
     
     void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void save( MIL_CheckPointOutArchive&, const uint ) const;*/
     //@}
 
     //! @name Operations
@@ -143,10 +143,10 @@ private:
 template< typename Archive >
 inline void save_construct_data( Archive& archive, const DEC_Knowledge_Urban* knowledge, const unsigned int /*version*/ )
 {
-    const MIL_Army_ABC* const army = &knowledge->army_;
+    /*const MIL_Army_ABC* const army = &knowledge->army_;
     const urban::TerrainObject_ABC* const object = &knowledge->object_;
     archive << army
-            << object;
+            << object;*/
 }
 
 // -----------------------------------------------------------------------------
@@ -156,11 +156,11 @@ inline void save_construct_data( Archive& archive, const DEC_Knowledge_Urban* kn
 template< typename Archive >
 inline void load_construct_data( Archive& archive, DEC_Knowledge_Urban* knowledge, const unsigned int /*version*/ )
 {
-    MIL_Army_ABC* army;
+   /* MIL_Army_ABC* army;
     urban::TerrainObject_ABC* object;
     archive >> army
             >> object;
-    ::new( knowledge )DEC_Knowledge_Urban( *army, *object );
+    ::new( knowledge )DEC_Knowledge_Urban( *army, *object );*/
 }
 
 #endif // __DEC_Knowledge_Urban_h_

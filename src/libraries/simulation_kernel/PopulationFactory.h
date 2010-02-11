@@ -35,6 +35,13 @@ public:
     virtual MIL_Population& Create( xml::xistream& xis, MIL_Army& army );
     //@}
 
+    //! @name CheckPoint
+    //@{
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    void load( MIL_CheckPointInArchive&, const uint );
+    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    //@}
+
 private:
     //! @name CheckPoint
     //@{

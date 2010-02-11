@@ -49,12 +49,6 @@ DEC_Knowledge_Urban::DEC_Knowledge_Urban( const MIL_Army_ABC& army, const urban:
 {
     if ( bCreatedOnNetwork_ )
         SendMsgCreation();
-
-/*    for( tools::Iterator< const MIL_AgentPion& > it = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateIterator(); it.HasMoreElements(); )
-    {
-        const MIL_Agent_ABC& pionSource = it.NextElement();
-        perceptionLevelPerAgentMap_.insert( std::pair< const MIL_Agent_ABC*, const PHY_PerceptionLevel* >( &pionSource, &PHY_PerceptionLevel::notSeen_ ) );
-    }*/
 }
 
 // -----------------------------------------------------------------------------
@@ -70,7 +64,7 @@ DEC_Knowledge_Urban::~DEC_Knowledge_Urban()
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
-
+/*
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Urban::load
 // Created: MGD 2009-11-26
@@ -119,7 +113,7 @@ void DEC_Knowledge_Urban::save( MIL_CheckPointOutArchive& file, const uint ) con
          << bCurrentPerceptionLevelUpdated_
          << bMaxPerceptionLevelUpdated_;
 }
-
+*/
 // =============================================================================
 // INTERNAL UPDATERS
 // =============================================================================

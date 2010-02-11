@@ -82,3 +82,21 @@ MIL_Automate& AutomateFactory::Create( xml::xistream& xis, MIL_Formation& parent
 
     return automate;
 }
+
+// -----------------------------------------------------------------------------
+// Name: AutomateFactory::load
+// Created: SLG 2010-02-10
+// -----------------------------------------------------------------------------
+void AutomateFactory::load( MIL_CheckPointInArchive& file, const unsigned int )
+{   
+    file >> boost::serialization::base_object < AutomateFactory_ABC >( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateFactory::save
+// Created: SLG 2010-02-10
+// -----------------------------------------------------------------------------
+void AutomateFactory::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object < AutomateFactory_ABC >( *this );
+}

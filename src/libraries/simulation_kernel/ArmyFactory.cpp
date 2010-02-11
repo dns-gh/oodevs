@@ -112,3 +112,22 @@ void ArmyFactory::InitializeDiplomacies()
     diplomacyConverter_->Register( "friend" , MIL_Army_ABC::eFriend  );
     diplomacyConverter_->Register( "neutral", MIL_Army_ABC::eNeutral );
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::load
+// Created: SLG 2010-02-10
+// -----------------------------------------------------------------------------
+void ArmyFactory::load( MIL_CheckPointInArchive& file, const unsigned int )
+{   
+    file >> boost::serialization::base_object < ArmyFactory_ABC >( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ArmyFactory::save
+// Created: SLG 2010-02-10
+// -----------------------------------------------------------------------------
+void ArmyFactory::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object < ArmyFactory_ABC >( *this );
+}

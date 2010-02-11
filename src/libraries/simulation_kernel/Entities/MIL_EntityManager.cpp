@@ -102,8 +102,6 @@ void save_construct_data( Archive& archive, const MIL_EntityManager* entities, c
 template< typename Archive >
 void load_construct_data( Archive& archive, MIL_EntityManager* role, const unsigned int /*version*/ )
 {
-    DEC_DataBase* database;
-    archive >> database;
     ::new( role )MIL_EntityManager( MIL_Singletons::GetTime(), MIL_Singletons::GetEffectManager(),
                                     MIL_Singletons::GetProfiler(), MIL_Singletons::GetHla(),
                                     MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().GetDatabase() );

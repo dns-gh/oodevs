@@ -34,6 +34,13 @@ public:
     virtual MIL_KnowledgeGroup& Create( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* parent = 0 );
     //@}
 
+    //! @name CheckPoint
+    //@{
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    void load( MIL_CheckPointInArchive&, const uint );
+    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    //@}
+
 private:
     //! @name CheckPoint
     //@{

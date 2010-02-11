@@ -59,3 +59,21 @@ MIL_Formation& FormationFactory::Create( xml::xistream& xis, MIL_Army_ABC& army,
     Register( formation.GetID(), formation );
     return formation;
 }
+
+// -----------------------------------------------------------------------------
+// Name: FormationFactory::load
+// Created: SLG 2010-02-10
+// -----------------------------------------------------------------------------
+void FormationFactory::load( MIL_CheckPointInArchive& file, const unsigned int )
+{   
+    file >> boost::serialization::base_object < FormationFactory_ABC >( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FormationFactory::save
+// Created: SLG 2010-02-10
+// -----------------------------------------------------------------------------
+void FormationFactory::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object <FormationFactory_ABC >( *this );
+}

@@ -54,3 +54,21 @@ MIL_Population& PopulationFactory::Create( xml::xistream& xis, MIL_Army& army )
     Register( population.GetID(), population );
     return population;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFactory::load
+// Created: SLG 2010-02-10
+// -----------------------------------------------------------------------------
+void PopulationFactory::load( MIL_CheckPointInArchive& file, const unsigned int )
+{   
+    file >> boost::serialization::base_object < PopulationFactory_ABC >( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFactory::save
+// Created: SLG 2010-02-10
+// -----------------------------------------------------------------------------
+void PopulationFactory::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object < PopulationFactory_ABC >( *this );
+}

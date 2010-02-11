@@ -29,7 +29,7 @@ void load_construct_data( Archive& archive, KnowledgeGroupFactory* factory, cons
 }
 
 // -----------------------------------------------------------------------------
-// Name: FormationFactory constructor
+// Name: KnowledgeGroupFactory constructor
 // Created: MGD 2009-10-22
 // -----------------------------------------------------------------------------
 KnowledgeGroupFactory::KnowledgeGroupFactory()
@@ -38,7 +38,7 @@ KnowledgeGroupFactory::KnowledgeGroupFactory()
 }
 
 // -----------------------------------------------------------------------------
-// Name: FormationFactory destructor
+// Name: KnowledgeGroupFactory destructor
 // Created: MGD 2009-10-22
 // -----------------------------------------------------------------------------
 KnowledgeGroupFactory::~KnowledgeGroupFactory()
@@ -47,7 +47,7 @@ KnowledgeGroupFactory::~KnowledgeGroupFactory()
 }
 
 // -----------------------------------------------------------------------------
-// Name: FormationFactory::Create
+// Name: KnowledgeGroupFactory::Create
 // Created: MGD 2009-10-22
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup& KnowledgeGroupFactory::Create( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* parent )
@@ -55,4 +55,22 @@ MIL_KnowledgeGroup& KnowledgeGroupFactory::Create( xml::xistream& xis, MIL_Army_
     MIL_KnowledgeGroup& knowledgeGroup = *new MIL_KnowledgeGroup( xis, army, parent, *this );
     Register( knowledgeGroup.GetID(), knowledgeGroup );
     return knowledgeGroup;
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroupFactory::load
+// Created: SLG 2010-02-10
+// -----------------------------------------------------------------------------
+void KnowledgeGroupFactory::load( MIL_CheckPointInArchive& file, const unsigned int )
+{   
+    file >> boost::serialization::base_object < KnowledgeGroupFactory_ABC >( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroupFactory::save
+// Created: SLG 2010-02-10
+// -----------------------------------------------------------------------------
+void KnowledgeGroupFactory::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object < KnowledgeGroupFactory_ABC >( *this );
 }

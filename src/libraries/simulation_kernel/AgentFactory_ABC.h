@@ -44,6 +44,11 @@ public:
     virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition ) = 0;
     //@}
 
+    //! @name CheckPoint
+    //@{
+    template< typename Archive > void serialize( Archive& file, const uint );
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
@@ -60,5 +65,15 @@ private:
     //@{
     //@}
 };
+
+// -----------------------------------------------------------------------------
+// Name: template< typename Archive > void AgentFactory_ABC::serialize
+// Created: SLG 2010-02-10
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void AgentFactory_ABC::serialize( Archive& file, const uint )
+{
+    file & elements_;
+}
 
 #endif // __AgentFactory_ABC_h_

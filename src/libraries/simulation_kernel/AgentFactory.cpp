@@ -93,3 +93,20 @@ void AgentFactory::Initialize( MIL_AgentPion& pion, const MT_Vector2D& vPosition
     pion.GetRole< PHY_RoleInterface_Location >().Move( vPosition, MT_Vector2D( 0., 1. ), 0. );
 }
 
+// -----------------------------------------------------------------------------
+// Name: AgentFactory::load
+// Created: SLG 2010-02-10
+// -----------------------------------------------------------------------------
+void AgentFactory::load( MIL_CheckPointInArchive& file, const unsigned int )
+{   
+    file >> boost::serialization::base_object < AgentFactory_ABC >( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentFactory::save
+// Created: SLG 2010-02-10
+// -----------------------------------------------------------------------------
+void AgentFactory::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object < AgentFactory_ABC >( *this );
+}

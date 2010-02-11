@@ -74,7 +74,7 @@ public:
 private:
     //! @name CheckPoints
     //@{
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const AlgorithmsFactories* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const AlgorithmsFactories* factories, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, AlgorithmsFactories* factories, const unsigned int /*version*/ );
     //@}
 
