@@ -14,6 +14,11 @@
     <skill name="net.masagroup.military.generic.combatant.skills.primitives.Neutralize"/>
     <skill name="net.masagroup.sword.military.skills.ManageFragOrder"/>
     <skill name="net.masagroup.military.generic.combatant.skills.primitives.Identify"/>
+    <skill name="net.masagroup.military.generic.combatant.skills.Engage">
+        <modifier name="effect">
+            <value>destroy</value>
+        </modifier>
+    </skill>
   </skills>
    <resources>
     <resource name="net.masagroup.military.generic.resources.Move"/>
