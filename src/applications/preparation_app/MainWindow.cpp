@@ -123,6 +123,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     , eventStrategy_( new ExclusiveEventStrategy( *forward_ ) )
     , glProxy_      ( 0 )
     , menu_         ( 0 )
+    , fileToolBar_  ( 0 )
     , needsSaving_  ( false )
 {
     setIcon( MAKE_PIXMAP( csword ) );
@@ -222,7 +223,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     QDialog* importDialog = new ImportOrbatDialog( this, config_, model );
     ScoreDialog* scoreDialog = new ScoreDialog( this, controllers, *factory, model_.scores_, *paramLayer, staticModel_ );
     SuccessFactorDialog* successFactorDialog = new SuccessFactorDialog( this, controllers, model_.successFactors_, *factory, staticModel_.successFactorActionTypes_, model_.scores_ );
-    new FileToolbar( this );
+    fileToolBar_ = new FileToolbar( this );
     new DisplayToolbar( this, controllers );
 
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/preparation.xml" ) );
@@ -242,6 +243,17 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     if( bfs::exists( bfs::path( config_.GetExerciseFile(), bfs::native ) ) && Load() )
         LoadExercise();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow destructor
+// Created: APE 2004-03-01
+// -----------------------------------------------------------------------------
+MainWindow::~MainWindow()
+{
+    controllers_.Unregister( *this );
+    delete glProxy_;
+    delete modelBuilder_;
 }
 
 // -----------------------------------------------------------------------------
@@ -429,22 +441,15 @@ namespace
 // -----------------------------------------------------------------------------
 bool MainWindow::Save()
 {
-    SaveModelChecker checker( this );
-    const bool result = model_.Save( config_, checker );
-    if( result )
-        SetWindowTitle( false );
+    bool result ( false );
+    if ( needsSaving_ )
+    {
+        SaveModelChecker checker( this );
+        const bool result = model_.Save( config_, checker );
+        if( result )
+            SetWindowTitle( false );
+    }
     return result;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow destructor
-// Created: APE 2004-03-01
-// -----------------------------------------------------------------------------
-MainWindow::~MainWindow()
-{
-    controllers_.Unregister( *this );
-    delete glProxy_;
-    delete modelBuilder_;
 }
 
 // -----------------------------------------------------------------------------
@@ -574,8 +579,11 @@ void MainWindow::SetWindowTitle( bool needsSaving )
             filename += "*";
     }
     setCaption( tr( "Preparation - [%1]" ).arg( filename ) );
-    if ( menu_ )
+    if ( menu_ && fileToolBar_ )
+    {
         menu_->EnableSaveItem( needsSaving );
+        fileToolBar_->EnableSaveItem( needsSaving );
+    }
 }
 
 // -----------------------------------------------------------------------------

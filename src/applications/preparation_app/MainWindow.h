@@ -51,6 +51,7 @@ class ObjectCreationPanel;
 class WeatherLayer;
 class MapLayer_ABC;
 class Menu;
+class FileToolbar;
 
 // =============================================================================
 /** @class  MainWindow
@@ -138,6 +139,7 @@ private:
     gui::OptionsPanel*    pOptionsPanel_;
     gui::ParametersLayer* parameters_;
     Menu*                 menu_;
+    FileToolbar*          fileToolBar_;
     bool                  loading_;
     bool                  needsSaving_;
     //@}
