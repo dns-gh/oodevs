@@ -15,9 +15,7 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Urban.h"
 #include "simulation_terrain/TER_World.h"
-
 #include "urban/TerrainObject_ABC.h"
-
 #include "simulation_kernel/DetectionComputer_ABC.h"
 #include "simulation_kernel/DetectionComputerFactory_ABC.h"
 
@@ -32,11 +30,9 @@ PHY_PerceptionRecoUrbanBlockReco::PHY_PerceptionRecoUrbanBlockReco( const boost:
 {
     T_PointVector points;
     geometry::T_Point2fVector footprint = urbanBlock_->GetTerrainObjectKnown().GetFootprint()->Vertices();
-    for( geometry::T_Point2fVector::iterator it = footprint.begin(); it != footprint.end(); it++ )
-    {
+    for( geometry::T_Point2fVector::iterator it = footprint.begin(); it != footprint.end(); ++it )
         points.push_back( MT_Vector2D( it->X(), it->Y() ) );
-    }
-    localisation_.Reset( TER_Localisation::E_LocationType::ePolygon, points);
+    localisation_.Reset( TER_Localisation::ePolygon, points );
 }
  
 // -----------------------------------------------------------------------------
@@ -45,7 +41,7 @@ PHY_PerceptionRecoUrbanBlockReco::PHY_PerceptionRecoUrbanBlockReco( const boost:
 // -----------------------------------------------------------------------------
 bool PHY_PerceptionRecoUrbanBlockReco::IsInside( const PHY_RoleInterface_Perceiver& /*perceiver*/, const MT_Vector2D& vPoint ) const
 {
-    return localisation_.IsInside( vPoint );    
+    return localisation_.IsInside( vPoint );
 }
 
 // -----------------------------------------------------------------------------
