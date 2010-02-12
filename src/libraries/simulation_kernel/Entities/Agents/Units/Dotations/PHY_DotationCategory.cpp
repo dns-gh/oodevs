@@ -35,6 +35,11 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
     , attritions_        ()
     , rWeight_           ( 0. )
     , rVolume_           ( 0. ) 
+    , bIlluminating_     ( false )
+    , fRange_            ( 0.)
+    , bMaintainIllumination_ ( false )
+    , bGuided_           ( false )
+    , bMaintainGuidance_ ( false )
 {
     std::string strNature;
     xis >> xml::attribute( "id", nMosID_ )
@@ -48,6 +53,9 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
     InitializeAttritions      ( xis );
     InitializeIndirectFireData( xis );
     InitializeLogisticType    ( xis );
+
+    InitializeIllumination    ( xis );
+    InitializeGuidance        ( xis );
 
     if( !attritions_.empty() || pIndirectFireData_ )
     {
@@ -173,6 +181,37 @@ void PHY_DotationCategory::InitializeLogisticType( xml::xistream& xis )
     xis >> xml::optional() >> xml::attribute( "d-type", dTranche );
     if( dTranche )
         pLogisticType_ = &PHY_DotationLogisticType::uniteFeuTD_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::InitializeIllumination
+// Created: MGD 2010-02-12
+// -----------------------------------------------------------------------------
+void PHY_DotationCategory::InitializeIllumination( xml::xistream& xis )
+{
+    if( xis.has_child("illuminating") )
+    {
+        bIlluminating_ = true;
+        xis >> xml::start("illuminating") 
+                >> xml::attribute( "range", fRange_ )
+                >> xml::attribute( "maintain", bMaintainIllumination_ )
+            >> xml::end();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::InitializeGuidance
+// Created: MGD 2010-02-12
+// -----------------------------------------------------------------------------
+void PHY_DotationCategory::InitializeGuidance( xml::xistream& xis )
+{
+    if( xis.has_child("guided") )
+    {
+        bGuided_ = true;
+        xis >> xml::start("guided") 
+                >> xml::attribute( "maintain", bMaintainGuidance_ ) 
+            >> xml::end();
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -88,6 +88,8 @@ private:
     void InitializeIndirectFireData( xml::xistream& xis );
     void InitializePackagingData   ( xml::xistream& xis );
     void InitializeLogisticType    ( xml::xistream& xis );
+    void InitializeIllumination    ( xml::xistream& xis );
+    void InitializeGuidance        ( xml::xistream& xis );
     //@}
     //! @name Helpers
     //@{
@@ -110,7 +112,16 @@ private:
     MT_Float rVolume_;
 
     T_AttritionVector                      attritions_;
-    PHY_DotationCategory_IndirectFire_ABC* pIndirectFireData_;     
+    PHY_DotationCategory_IndirectFire_ABC* pIndirectFireData_;
+
+    //Illumination capacity
+    bool  bIlluminating_;
+    float fRange_;
+    bool  bMaintainIllumination_;
+    //Guidance
+    bool bGuided_;
+    bool bMaintainGuidance_;
+
 };
 
 #endif // __PHY_DotationCategory_h_
