@@ -20,7 +20,7 @@
 // Name: PHY_DotationConsumptions constructor
 // Created: NLD 2004-08-04
 // -----------------------------------------------------------------------------
-PHY_DotationConsumptions::PHY_DotationConsumptions( const std::string& strParentTagName, xml::xistream& xis )
+PHY_DotationConsumptions::PHY_DotationConsumptions( const std::string& /*strParentTagName*/, xml::xistream& xis )
 {
     xis >> xml::list( "dotation", *this, &PHY_DotationConsumptions::ReadDotation );
 }

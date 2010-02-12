@@ -56,7 +56,7 @@ DEC_Knowledge_ObjectAttributeNBC::~DEC_Knowledge_ObjectAttributeNBC()
 // Name: DEC_Knowledge_ObjectZoneNBC::load
 // Created: JVT 2005-03-25
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeNBC::load( MIL_CheckPointInArchive& file, const uint )
+void DEC_Knowledge_ObjectAttributeNBC::load( MIL_CheckPointInArchive& /*file*/, const uint )
 {
 //    uint nID;
 //    file >> nID;
@@ -127,7 +127,7 @@ void DEC_Knowledge_ObjectAttributeNBC::UpdateOnCollision( const DEC_Knowledge_Ob
 // Name: DEC_Knowledge_ObjectAttributeNBC::BuildMsgSpecificAttributes
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeNBC::Send( ASN1T_ObjectAttributes& asn ) const
+void DEC_Knowledge_ObjectAttributeNBC::Send( ASN1T_ObjectAttributes& /*asn*/ ) const
 {
     if ( attr_ )
     {

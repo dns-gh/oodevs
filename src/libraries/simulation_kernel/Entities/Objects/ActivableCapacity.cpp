@@ -19,7 +19,7 @@ BOOST_CLASS_EXPORT_GUID( ActivableCapacity, "ActivableCapacity" )
 // Name: ActivableCapacity::ActivableCapacity
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
-ActivableCapacity::ActivableCapacity( xml::xistream& xis )
+ActivableCapacity::ActivableCapacity( xml::xistream& /*xis*/ )
 {
     // NOTHING
 }
@@ -37,7 +37,7 @@ ActivableCapacity::ActivableCapacity()
 // Name: ActivableCapacity constructor
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
-ActivableCapacity::ActivableCapacity( const ActivableCapacity& from )
+ActivableCapacity::ActivableCapacity( const ActivableCapacity& /*from*/ )
 {
     // NOTHING
 }

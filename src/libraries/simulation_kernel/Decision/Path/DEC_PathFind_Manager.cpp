@@ -61,9 +61,9 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config )
     xisPathfind >> xml::end();
 
     MT_LOG_INFO_MSG( MT_FormatString( "Starting %d pathfind thread(s)", config.GetPathFinderThreads() ) );
-    for( int i = 0; i < config.GetPathFinderThreads(); ++i )
+    for( uint i = 0; i < config.GetPathFinderThreads(); ++i )
         pathFindThreads_.push_back( & TER_World::GetWorld().GetPathFindManager().CreatePathFinderThread( *this ) );
-}   
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFind_Manager destructor

@@ -11,6 +11,7 @@
 #define __PHY_RoleHLA_NBC_h_
 
 #include "PHY_RoleInterface_NBC.h"
+#include <string>
 
 // =============================================================================
 /** @class  PHY_RoleHLA_NBC
@@ -20,7 +21,6 @@
 // =============================================================================
 class PHY_RoleHLA_NBC : public nbc::PHY_RoleInterface_NBC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -44,17 +44,17 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Update    ( bool /*bIsDead*/ ) {};
-    virtual void Clean     () {};
-    virtual bool HasChanged() const { return false; };
+    virtual void Update    ( bool /*bIsDead*/ ) {}
+    virtual void Clean     () {}
+    virtual bool HasChanged() const { return false; }
     //@}
 
     //! @name Main
     //@{
-    virtual void WearNbcProtectionSuit  () {};
-    virtual void RemoveNbcProtectionSuit() {};
+    virtual void WearNbcProtectionSuit  () {}
+    virtual void RemoveNbcProtectionSuit() {}
 
-    virtual MT_Float ModifyMaxSpeed         ( MT_Float /*rSpeed*/    ) const { return 0; };
+    virtual MT_Float ModifyMaxSpeed( MT_Float /*rSpeed*/    ) const { return 0; }
     //@}
 
 private:

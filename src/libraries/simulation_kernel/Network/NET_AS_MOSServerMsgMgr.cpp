@@ -69,7 +69,7 @@ void NET_AS_MOSServerMsgMgr::Send( ASN1T_MsgsSimToClient& asnMsg )
 // Name: NET_AS_MOSServerMsgMgr::OnReceiveClient
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& from, const ASN1T_MsgsClientToSim& asnMsg )
+void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const ASN1T_MsgsClientToSim& asnMsg )
 {
     MIL_AgentServer& workspace = MIL_AgentServer::GetWorkspace();
     uint nCtx = asnMsg.context;
@@ -84,8 +84,8 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& from, const ASN
         case T_MsgsClientToSim_msg_msg_control_local_meteo                : workspace.GetMeteoDataManager     ().OnReceiveMsgLocalMeteo                     ( *asnMsg.msg.u.msg_control_local_meteo                       ); break;
         case T_MsgsClientToSim_msg_msg_control_checkpoint_save_now        : workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSaveNow              ( *asnMsg.msg.u.msg_control_checkpoint_save_now               ); break;
         case T_MsgsClientToSim_msg_msg_control_checkpoint_set_frequency   : workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSetFrequency         (  asnMsg.msg.u.msg_control_checkpoint_set_frequency          ); break;
-        case T_MsgsClientToSim_msg_msg_control_toggle_vision_cones        : agentServer_                        .SetMustSendUnitVisionCones                 (  asnMsg.msg.u.msg_control_toggle_vision_cones               ); break;
-        case T_MsgsClientToSim_msg_msg_unit_order                         : workspace.GetEntityManager        ().OnReceiveMsgUnitOrder                      ( *asnMsg.msg.u.msg_unit_order                         , nCtx ); break;         
+        case T_MsgsClientToSim_msg_msg_control_toggle_vision_cones        : agentServer_                        .SetMustSendUnitVisionCones                 (  asnMsg.msg.u.msg_control_toggle_vision_cones != 0          ); break;
+        case T_MsgsClientToSim_msg_msg_unit_order                         : workspace.GetEntityManager        ().OnReceiveMsgUnitOrder                      ( *asnMsg.msg.u.msg_unit_order                         , nCtx ); break;
         case T_MsgsClientToSim_msg_msg_automat_order                      : workspace.GetEntityManager        ().OnReceiveMsgAutomatOrder                   ( *asnMsg.msg.u.msg_automat_order                      , nCtx ); break;
         case T_MsgsClientToSim_msg_msg_population_order                   : workspace.GetEntityManager        ().OnReceiveMsgPopulationOrder                ( *asnMsg.msg.u.msg_population_order                   , nCtx ); break;
         case T_MsgsClientToSim_msg_msg_frag_order                         : workspace.GetEntityManager        ().OnReceiveMsgFragOrder                      ( *asnMsg.msg.u.msg_frag_order                         , nCtx ); break;

@@ -100,7 +100,7 @@ void TerrainHeuristicCapacity::Instanciate( Object& object ) const
 // Name: TerrainHeuristicCapacity::ComputePlacementScore
 // Created: JCR 2008-06-04
 // -----------------------------------------------------------------------------
-int TerrainHeuristicCapacity::ComputePlacementScore( const MT_Vector2D& pos, const TerrainData& nPassability ) const
+int TerrainHeuristicCapacity::ComputePlacementScore( const MT_Vector2D& /*pos*/, const TerrainData& nPassability ) const
 {
     int nScore = -1;
     for( CIT_EnvironmentScoreMap itEnvScore = environmentScores_.begin(); itEnvScore != environmentScores_.end(); ++itEnvScore )

@@ -239,8 +239,7 @@ int DEC_PerceptionFunctions::EnableRadarOnPointXY( MIL_AgentPion& callerAgent, i
 {
     T_PointVector point;
     point.push_back( MT_Vector2D( x , y ) );
-    TER_Localisation localisation ( TER_Localisation::E_LocationType::ePoint, point );
-   
+    TER_Localisation localisation ( TER_Localisation::ePoint, point );
     return EnableRadarOnLocalisation( callerAgent, nRadarClass, &localisation );
 }
 

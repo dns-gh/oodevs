@@ -66,11 +66,11 @@ boost::shared_ptr<MT_Vector2D> DEC_KnowledgePopulationFunctions::SecuringPoint( 
 {
     DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
     if( !pKnowledge )
-        return boost::shared_ptr<MT_Vector2D>();
+        return boost::shared_ptr< MT_Vector2D >();
     else
     {
         MT_Vector2D* pResult = new MT_Vector2D( pKnowledge->GetSecuringPoint( caller ) );
-        return boost::shared_ptr<MT_Vector2D>(pResult);
+        return boost::shared_ptr< MT_Vector2D >( pResult );
     }
 }
 
@@ -86,8 +86,7 @@ boost::shared_ptr<MT_Vector2D> DEC_KnowledgePopulationFunctions::ClosestPoint( c
     else
     {
         MT_Vector2D* pResult = new MT_Vector2D( pKnowledge->GetClosestPoint( caller.GetRole< PHY_RoleInterface_Location >().GetPosition() ) ); //$$$ RAM
-
-        return boost::shared_ptr<MT_Vector2D>(pResult);
+        return boost::shared_ptr< MT_Vector2D >( pResult );
     }
 }
 
@@ -100,8 +99,7 @@ bool DEC_KnowledgePopulationFunctions::IsEnemy( const MIL_AgentPion& caller, int
     DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
     if( !pKnowledge )
         return false;
-    else
-        return caller.GetArmy().IsAnEnemy( pKnowledge->GetArmy() ) ;
+    return caller.GetArmy().IsAnEnemy( pKnowledge->GetArmy() );
 }
 
 // -----------------------------------------------------------------------------
@@ -112,9 +110,7 @@ int DEC_KnowledgePopulationFunctions::Exterminate( const MIL_AgentPion& caller, 
 {
     DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
     if( !pKnowledge )
-    {
         return eQueryInvalid;
-    }
     pKnowledge->Exterminate( caller, surface );
     return eQueryValid;
 }
@@ -127,8 +123,6 @@ bool DEC_KnowledgePopulationFunctions::IsPerceivedByAgent( const MIL_AgentPion& 
 {
     DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
     if( !pKnowledge )
-    {
         return false;
-    }
     return caller.GetKnowledge().IsPerceived( pKnowledge->GetPopulationKnown() );
 }

@@ -60,8 +60,8 @@ void SimulationModel::Update( const ASN1T_MsgControlInformation& msg )
     nTimeFactor_          = msg.time_factor;
     nCheckpointFrequency_ = msg.checkpoint_frequency;
     nSimState_            = msg.status;
-    bSendVisionCones_     = msg.send_vision_cones;
-    bProfilingEnabled_    = msg.profiling_enabled;
+    bSendVisionCones_     = msg.send_vision_cones != 0;
+    bProfilingEnabled_    = msg.profiling_enabled != 0;
 }
 
 // -----------------------------------------------------------------------------

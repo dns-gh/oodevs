@@ -11,6 +11,7 @@
 #define __PHY_RoleHLA_Communications_h_
 
 #include "PHY_RoleInterface_Communications.h"
+#include <string>
 
 // =============================================================================
 /** @class  PHY_RoleHLA_Communications
@@ -36,7 +37,7 @@ public:
     virtual void ActivateBlackout  ();
     virtual void DeactivateBlackout();
 
-    virtual MT_Float ModifySpeed            ( MT_Float rSpeed    ) const;
+    virtual MT_Float ModifySpeed( MT_Float rSpeed ) const;
     //@}
 
     //! @name Modifiers
@@ -46,8 +47,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Update    ( bool /*bIsDead*/ ) {};
-    virtual void Clean     () {};
+    virtual void Update( bool /*bIsDead*/ ) {}
+    virtual void Clean () {}
     //@}
 
 private:

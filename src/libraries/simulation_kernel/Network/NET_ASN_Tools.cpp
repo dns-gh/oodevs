@@ -680,12 +680,11 @@ void NET_ASN_Tools::WriteObjectKnowledge( const DEC_Knowledge_Object& knowledge,
 // Name: NET_ASN_Tools::WriteListKnowledgeObject
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::WriteObjectKnowledgeList( const T_KnowledgeObjectDiaIDVector& knowledges, ASN1T_ObjectKnowledgeList& asnListKnowledge, const DEC_KnowledgeResolver_ABC& resolver )
+void NET_ASN_Tools::WriteObjectKnowledgeList( const T_KnowledgeObjectDiaIDVector& knowledges, ASN1T_ObjectKnowledgeList& asnListKnowledge, const DEC_KnowledgeResolver_ABC& /*resolver*/ )
 {
     asnListKnowledge.n = knowledges.size();
     if( knowledges.empty() )
         return;
-    
     asnListKnowledge.elem = new ASN1T_OID[ knowledges.size() ];
     uint i = 0;
     for( CIT_KnowledgeObjectDiaIDVector itKnowledge = knowledges.begin(); itKnowledge != knowledges.end(); ++itKnowledge )    
@@ -694,7 +693,7 @@ void NET_ASN_Tools::WriteObjectKnowledgeList( const T_KnowledgeObjectDiaIDVector
         if( pKnowledge && pKnowledge->IsValid() )
             asnListKnowledge.elem[i] = pKnowledge->GetID();
         else
-            asnListKnowledge.elem[i] = 0;       
+            asnListKnowledge.elem[i] = 0;
         ++i;
     }
 }

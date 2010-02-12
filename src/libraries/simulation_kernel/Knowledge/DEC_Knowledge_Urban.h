@@ -142,7 +142,7 @@ private:
 // Created: MGD 2009-12-07
 // -----------------------------------------------------------------------------
 template< typename Archive >
-inline void save_construct_data( Archive& archive, const DEC_Knowledge_Urban* knowledge, const unsigned int /*version*/ )
+inline void save_construct_data( Archive& /*archive*/, const DEC_Knowledge_Urban* /*knowledge*/, const unsigned int /*version*/ )
 {
     /*const MIL_Army_ABC* const army = &knowledge->army_;
     const urban::TerrainObject_ABC* const object = &knowledge->object_;
@@ -155,7 +155,7 @@ inline void save_construct_data( Archive& archive, const DEC_Knowledge_Urban* kn
 // Created: MGD 2009-12-07
 // -----------------------------------------------------------------------------
 template< typename Archive >
-inline void load_construct_data( Archive& archive, DEC_Knowledge_Urban* knowledge, const unsigned int /*version*/ )
+inline void load_construct_data( Archive& /*archive*/, DEC_Knowledge_Urban* /*knowledge*/, const unsigned int /*version*/ )
 {
    /* MIL_Army_ABC* army;
     urban::TerrainObject_ABC* object;

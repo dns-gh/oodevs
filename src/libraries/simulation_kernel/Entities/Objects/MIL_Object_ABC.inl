@@ -76,7 +76,7 @@ Extension* MIL_Object_ABC::RetrieveAttribute()
 // Created: JCR 2008-08-28
 // -----------------------------------------------------------------------------
 template< typename Functor > 
-void MIL_Object_ABC::ProcessAgentsInside( Functor& functor ) const
+void MIL_Object_ABC::ProcessAgentsInside( Functor functor ) const
 {
     interaction_.ProcessInteraction( functor );
 }

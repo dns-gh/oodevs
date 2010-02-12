@@ -39,12 +39,12 @@ public:
     //! @name Operations
     //@{
     const MIL_NbcAgentType& GetType() const;
-    MT_Float                GetQuantity() const;        
+    MT_Float                GetQuantity() const;
     //@}
 
     //! @name 
     //@{
-    template< typename WoundFunctor > bool ApplyRandomWound( WoundFunctor& functor ) const;
+    template< typename WoundFunctor > bool ApplyRandomWound( WoundFunctor functor ) const;
     //@}
 
 private:
@@ -66,7 +66,7 @@ private:
 // Created: JCR 2008-08-28
 // -----------------------------------------------------------------------------
 template< typename WoundFunctor >
-bool MIL_ToxicEffectManipulator::ApplyRandomWound( WoundFunctor& functor ) const
+bool MIL_ToxicEffectManipulator::ApplyRandomWound( WoundFunctor functor ) const
 {
     bool result = false;
     for( CIT_NBCAgents it = types_.begin(); it != types_.end(); ++it )

@@ -179,13 +179,13 @@ MT_Float ControlZoneCapacity::GetUnitDensityFirePercentage( const PHY_Volume& vo
 // Created: JCR 2008-08-28
 // -----------------------------------------------------------------------------
 void ControlZoneCapacity::RetrieveTargets( const MIL_Object_ABC& object, T_TargetVector& targets ) const
-{        
+{
     MT_Float area = object.GetLocalisation().GetArea();
-    MT_Float rPHCoeff = MT_IsZero( area ) 
-                                ? 0. 
+    MT_Float rPHCoeff = MT_IsZero( area )
+                                ? 0
                                 : controller_->GetRole< human::PHY_RoleInterface_Humans >().GetNbrUsableHumans() / area;
     targets.clear();
-    object.ProcessAgentsInside( boost::bind( &ControlZoneCapacity::ControlTarget, this, _1,  boost::cref( object.GetArmy() ), rPHCoeff, boost::ref( targets ) ) );
+    object.ProcessAgentsInside( boost::bind( &ControlZoneCapacity::ControlTarget, this, _1, boost::cref( object.GetArmy() ), rPHCoeff, boost::ref( targets ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -194,14 +194,13 @@ void ControlZoneCapacity::RetrieveTargets( const MIL_Object_ABC& object, T_Targe
 // -----------------------------------------------------------------------------
 void ControlZoneCapacity::ControlTarget( MIL_Agent_ABC* agent, const MIL_Army_ABC& army, MT_Float phCoef, T_TargetVector& targets ) const
 {
-    if ( army.IsAFriend( agent->GetArmy() ) == eTristate_True )
-        return;    
+    if( army.IsAFriend( agent->GetArmy() ) == eTristate_True )
+        return;
     PHY_Composante_ABC::T_ComposanteVector compTargets;
     agent->GetRole< PHY_RoleInterface_Composantes >().GetComposantesAbleToBeFired( compTargets );
     for( PHY_Composante_ABC::CIT_ComposanteVector itCompTarget = compTargets.begin(); itCompTarget != compTargets.end(); ++itCompTarget )
     {
         PHY_Composante_ABC& compTarget = **itCompTarget;
-
         if ( randomGenerator_.rand_oi( 0., 1. ) <= phCoef * GetUnitDensityFirePercentage( compTarget.GetType().GetVolume() ) )
             targets.push_back( std::make_pair( agent, &compTarget ) );
     }

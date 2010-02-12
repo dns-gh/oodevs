@@ -19,7 +19,7 @@ BOOST_CLASS_EXPORT_GUID( ExtinguishableCapacity, "ExtinguishableCapacity" )
 // Name: ExtinguishableCapacity::ExtinguishableCapacity
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
-ExtinguishableCapacity::ExtinguishableCapacity( xml::xistream& xis )
+ExtinguishableCapacity::ExtinguishableCapacity( xml::xistream& /*xis*/ )
 {
     // NOTHING
 }
@@ -38,7 +38,7 @@ ExtinguishableCapacity::ExtinguishableCapacity()
 // Name: ExtinguishableCapacity constructor
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
-ExtinguishableCapacity::ExtinguishableCapacity( const ExtinguishableCapacity& from )
+ExtinguishableCapacity::ExtinguishableCapacity( const ExtinguishableCapacity& /*from*/ )
 {
     // NOTHING
 }

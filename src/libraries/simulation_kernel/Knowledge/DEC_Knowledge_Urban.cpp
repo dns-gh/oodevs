@@ -19,7 +19,6 @@
 #include "simulation_kernel/MIL_AgentServer.h"
 #include "urban/TerrainObject_ABC.h"
 
-
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_Urban, "DEC_Knowledge_Urban" )
 
 MIL_IDManager DEC_Knowledge_Urban::idManager_;
@@ -135,7 +134,6 @@ void DEC_Knowledge_Urban::Prepare()
 void DEC_Knowledge_Urban::Update( const DEC_Knowledge_UrbanPerception& perception )
 {
     const PHY_PerceptionLevel& level = perception.GetCurrentPerceptionLevel();
-    
     float complexity = object_.ComputeComplexity(); // ALGO TEMPORAIRE
     float progress = level.GetID() * 100 / complexity;//@TODO MGD Add true physical in ADN
     rProgressPercent_ = rProgressPercent_ + progress;

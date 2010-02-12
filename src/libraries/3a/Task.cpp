@@ -165,7 +165,7 @@ void Task::Receive( const ASN1T_MsgsSimToClient& message )
         else
             composite_.Receive( message );
     }
-    catch( std::exception& e )
+    catch( std::exception& )
     {
         // $$$$ AGE 2007-09-25:  ?
     }

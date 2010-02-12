@@ -57,7 +57,7 @@ void DEC_Knowledge_ObjectAttributeInputToxicCloud::Register( DEC_Knowledge_Objec
 // Name: DEC_Knowledge_ObjectAttributeInputToxicCloud::UpdateOnPerceptionLevel
 // Created: JCR 2008-08-18
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeInputToxicCloud::UpdateOnPerceptionLevel( const PHY_PerceptionLevel& currentPerceptionLevel )
+void DEC_Knowledge_ObjectAttributeInputToxicCloud::UpdateOnPerceptionLevel( const PHY_PerceptionLevel& /*currentPerceptionLevel*/ )
 {
     UpdateAttributes();
 }
@@ -66,7 +66,7 @@ void DEC_Knowledge_ObjectAttributeInputToxicCloud::UpdateOnPerceptionLevel( cons
 // Name: DEC_Knowledge_ObjectAttributeInputToxicCloud::UpdateOnPerception
 // Created: JCR 2008-08-18
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeInputToxicCloud::UpdateOnPerception( const DEC_Knowledge_ObjectPerception& perception )
+void DEC_Knowledge_ObjectAttributeInputToxicCloud::UpdateOnPerception( const DEC_Knowledge_ObjectPerception& /*perception*/ )
 {
     UpdateAttributes();
 }
@@ -75,7 +75,7 @@ void DEC_Knowledge_ObjectAttributeInputToxicCloud::UpdateOnPerception( const DEC
 // Name: DEC_Knowledge_ObjectAttributeCrossingSite::UpdateOnCollision
 // Created: JCR 2008-08-18
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeInputToxicCloud::UpdateOnCollision( const DEC_Knowledge_ObjectCollision& collision )
+void DEC_Knowledge_ObjectAttributeInputToxicCloud::UpdateOnCollision( const DEC_Knowledge_ObjectCollision& /*collision*/ )
 {
     UpdateAttributes();
 }
@@ -84,7 +84,7 @@ void DEC_Knowledge_ObjectAttributeInputToxicCloud::UpdateOnCollision( const DEC_
 // Name: DEC_Knowledge_ObjectAttributeInputToxicCloud::Send
 // Created: JCR 2008-08-18
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeInputToxicCloud::Send( ASN1T_ObjectAttributes& asnMsg ) const
+void DEC_Knowledge_ObjectAttributeInputToxicCloud::Send( ASN1T_ObjectAttributes& /*asnMsg*/ ) const
 {
     // NOTHING
 }

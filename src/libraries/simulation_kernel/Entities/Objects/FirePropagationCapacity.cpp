@@ -25,7 +25,7 @@ BOOST_CLASS_EXPORT_GUID( FirePropagationCapacity, "FirePropagationCapacity" )
 // Name: FirePropagationCapacity constructor
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
-FirePropagationCapacity::FirePropagationCapacity( xml::xistream& xis, MIL_PropagationManager& manager )
+FirePropagationCapacity::FirePropagationCapacity( xml::xistream& /*xis*/, MIL_PropagationManager& manager )
     : pManager_ ( &manager )
     , timeOfCreation_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
     , timeOfDeath_ ( 0 )

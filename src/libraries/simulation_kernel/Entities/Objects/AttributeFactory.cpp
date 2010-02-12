@@ -141,8 +141,7 @@ void AttributeFactory::Create( Object& object, const std::string& attribute, xml
 void AttributeFactory::Create( Object& object, const ASN1T_ObjectAttributes& asn ) const
 {
     // Initialize construction with 100%
-    ConstructionAttribute& construction = object.GetAttribute< ConstructionAttribute >();
-    
+    object.GetAttribute< ConstructionAttribute >();
     object.GetAttribute< OccupantAttribute >();     // $$$$ LDC: All physical objects have an occupant attribute.
     ASN_CREATE_ATTRIBUTE( obstacle, ObstacleAttribute );
     ASN_CREATE_ATTRIBUTE( mine, MineAttribute );

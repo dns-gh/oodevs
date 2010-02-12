@@ -10,6 +10,8 @@
 #ifndef __IndicatorBuilder_h_
 #define __IndicatorBuilder_h_
 
+#include <string>
+
 namespace indicators
 {
     class DataTypeFactory;

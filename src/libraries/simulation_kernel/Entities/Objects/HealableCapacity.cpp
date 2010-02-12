@@ -56,7 +56,7 @@ HealableCapacity::HealableCapacity()
 // Name: HealableCapacity constructor
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
-HealableCapacity::HealableCapacity( const HealableCapacity& from )
+HealableCapacity::HealableCapacity( const HealableCapacity& /*from*/ )
 {
     // NOTHING
 }

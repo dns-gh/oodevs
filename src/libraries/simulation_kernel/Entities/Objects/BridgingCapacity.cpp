@@ -21,7 +21,7 @@ BOOST_CLASS_EXPORT_GUID( BridgingCapacity, "BridgingCapacity" )
 // Name: BridgingCapacity constructor
 // Created: JCR 2008-08-21
 // -----------------------------------------------------------------------------
-BridgingCapacity::BridgingCapacity( xml::xistream& xis )
+BridgingCapacity::BridgingCapacity( xml::xistream& /*xis*/ )
 {
     // NOTHING
 }

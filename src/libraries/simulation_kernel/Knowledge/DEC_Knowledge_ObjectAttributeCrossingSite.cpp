@@ -117,7 +117,7 @@ void DEC_Knowledge_ObjectAttributeCrossingSite::UpdateOnPerceptionLevel( const P
 // Name: DEC_Knowledge_ObjectAttributeCrossingSite::UpdateSpecificAttributes
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeCrossingSite::UpdateOnPerception( const DEC_Knowledge_ObjectPerception& perception )
+void DEC_Knowledge_ObjectAttributeCrossingSite::UpdateOnPerception( const DEC_Knowledge_ObjectPerception& /*perception*/ )
 {
 //    if( !IsReconBy( perception.GetAgentPerceiving().GetType() ) )
 //        return;
@@ -128,7 +128,7 @@ void DEC_Knowledge_ObjectAttributeCrossingSite::UpdateOnPerception( const DEC_Kn
 // Name: DEC_Knowledge_ObjectAttributeCrossingSite::UpdateSpecificAttributes
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeCrossingSite::UpdateOnCollision( const DEC_Knowledge_ObjectCollision& collision )
+void DEC_Knowledge_ObjectAttributeCrossingSite::UpdateOnCollision( const DEC_Knowledge_ObjectCollision& /*collision*/ )
 {
 //    if( !IsReconBy( perception.GetAgentPerceiving().GetType() ) )
 //        return;

@@ -32,7 +32,7 @@ UrbanBlock::UrbanBlock( const kernel::OrderParameter& parameter, unsigned long i
 // Name: UrbanBlock constructor
 // Created: MGD 2009-11-05
 // -----------------------------------------------------------------------------
-UrbanBlock::UrbanBlock( const kernel::OrderParameter& parameter, const ASN1T_UrbanBlock& asn )
+UrbanBlock::UrbanBlock( const kernel::OrderParameter& parameter, const ASN1T_UrbanBlock& /*asn*/ )
 : Parameter< unsigned long >( parameter )
 {
     // NOTHING

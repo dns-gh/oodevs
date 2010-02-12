@@ -18,23 +18,13 @@ using namespace dispatcher;
 // Created: RFT 2006-09-26
 // -----------------------------------------------------------------------------
 MedicalTreatmentAttribute::MedicalTreatmentAttribute( const Model& model, const ASN1T_ObjectAttributes& asnMsg )
-    : ObjectAttribute_ABC  ( model, asnMsg )
-    , beds_                ( 0 )
-    , availableBeds_       ( 0 )
-    , doctors_             ( 0 )
-    , availableDoctors_    ( 0 )
-    , medicalTreatmentList_()
+    : ObjectAttribute_ABC( model, asnMsg )
+    , beds_              ( 0 )
+    , availableBeds_     ( 0 )
+    , doctors_           ( 0 )
+    , availableDoctors_  ( 0 )
 {
-    if( asnMsg.m.medical_treatmentPresent )
-    {
-        beds_   = asnMsg.medical_treatment.beds;
-        availableBeds_ = asnMsg.medical_treatment.available_beds;
-        doctors_ = asnMsg.medical_treatment.doctors;
-        availableDoctors_ = asnMsg.medical_treatment.available_doctors;
-        for( int i = 0 ; i < asnMsg.medical_treatment.type_id.n ; i++ )
-            medicalTreatmentList_.push_back( asnMsg.medical_treatment.type_id.elem[ i ] );
- 
-    }
+    Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,8 +33,8 @@ MedicalTreatmentAttribute::MedicalTreatmentAttribute( const Model& model, const 
 // -----------------------------------------------------------------------------
 MedicalTreatmentAttribute::~MedicalTreatmentAttribute()
 {
-
-}  
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: MedicalTreatmentAttribute::Update
@@ -52,15 +42,15 @@ MedicalTreatmentAttribute::~MedicalTreatmentAttribute()
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::Update( const ASN1T_ObjectAttributes& asnMsg )
 {
-    if ( asnMsg.m.medical_treatmentPresent )
+    if( asnMsg.m.medical_treatmentPresent )
     {
-        beds_   = asnMsg.medical_treatment.beds;
+        beds_ = asnMsg.medical_treatment.beds;
         availableBeds_ = asnMsg.medical_treatment.available_beds;
         doctors_ = asnMsg.medical_treatment.doctors;
         availableDoctors_ = asnMsg.medical_treatment.available_doctors;
-        for( int i = 0 ; i < asnMsg.medical_treatment.type_id.n ; i++ )
+        for( ASN::ASN1Uint i = 0 ; i < asnMsg.medical_treatment.type_id.n ; i++ )
             medicalTreatmentList_.push_back( asnMsg.medical_treatment.type_id.elem[ i ] );
-    }  
+    }
 }
 
 // -----------------------------------------------------------------------------

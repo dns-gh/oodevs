@@ -21,7 +21,6 @@
 class NET_RoleInterface_Dotations : public tools::Role_ABC
                                   , private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{

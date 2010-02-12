@@ -56,10 +56,10 @@ MIL_IDManager Object::idManager_;
 // -----------------------------------------------------------------------------
 Object::Object( xml::xistream& xis, const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const TER_Localisation* pLocation, bool reserved )
     : MIL_Object_ABC( army, builder.GetType() )
-    , id_       ( xml::attribute< unsigned long >( xis, "id" ) )
-    , name_     ( xml::attribute< std::string >( xis, "name", "" ) )
-    , pView_    ( 0 )
-    , manipulator_ ( new MIL_ObjectManipulator( *this ) )
+    , id_         ( xml::attribute< unsigned long >( xis, "id" ) )
+    , name_       ( xml::attribute< std::string >( xis, "name", "" ) )
+    , pView_      ( 0 )
+    , manipulator_( new MIL_ObjectManipulator( *this ) )
 {
     MIL_Object_ABC::Register();
     if( pLocation )
@@ -67,7 +67,7 @@ Object::Object( xml::xistream& xis, const MIL_ObjectBuilder_ABC& builder, MIL_Ar
     builder.Build( *this );
     ObstacleAttribute* pObstacle = RetrieveAttribute< ObstacleAttribute >();
     if( pObstacle )
-        pObstacle->SetType( reserved? ASN1T_EnumDemolitionTargetType::reserved : ASN1T_EnumDemolitionTargetType::preliminary );
+        pObstacle->SetType( reserved ? EnumDemolitionTargetType::reserved : EnumDemolitionTargetType::preliminary );
     idManager_.Lock( id_ );
 }
 
@@ -88,7 +88,7 @@ Object::Object( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const 
     builder.Build( *this );
     ObstacleAttribute* pObstacle = RetrieveAttribute< ObstacleAttribute >();
     if( pObstacle )
-        pObstacle->SetType( reserved ? ASN1T_EnumDemolitionTargetType::reserved : ASN1T_EnumDemolitionTargetType::preliminary );
+        pObstacle->SetType( reserved ? EnumDemolitionTargetType::reserved : EnumDemolitionTargetType::preliminary );
 }
 
 // -----------------------------------------------------------------------------

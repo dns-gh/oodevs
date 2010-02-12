@@ -53,7 +53,7 @@ NBCTypeAttribute::NBCTypeAttribute()
 // Name: NBCTypeAttribute constructor
 // Created: RFT 2008-07-21
 // -----------------------------------------------------------------------------
-NBCTypeAttribute::NBCTypeAttribute( const ASN1T_ObjectAttributes& asn )
+NBCTypeAttribute::NBCTypeAttribute( const ASN1T_ObjectAttributes& /*asn*/ )
     : pAgent_            ( 0 )
     , concentration_     ( 0 )
     , width_             ( 0 )
@@ -149,7 +149,7 @@ void NBCTypeAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 // Name: NBCTypeAttribute::SendFullState
 // Created: RFT 2008-06-18
 // -----------------------------------------------------------------------------
-void NBCTypeAttribute::SendFullState( ASN1T_ObjectAttributes& asn ) const
+void NBCTypeAttribute::SendFullState( ASN1T_ObjectAttributes& /*asn*/ ) const
 {
 //    asn.m.nbc_agentPresent      = 1;
 //    asn.nbc_agent.concentration = concentration_;

@@ -18,12 +18,12 @@
 BOOST_CLASS_EXPORT_GUID( KnowledgeGroupFactory, "KnowledgeGroupFactory" )
 
 template< typename Archive >
-void save_construct_data( Archive& archive, const KnowledgeGroupFactory* factory, const unsigned int /*version*/ )
+void save_construct_data( Archive& archive, const KnowledgeGroupFactory* /*factory*/, const unsigned int /*version*/ )
 {
     //TODO
 }
 template< typename Archive >
-void load_construct_data( Archive& archive, KnowledgeGroupFactory* factory, const unsigned int /*version*/ )
+void load_construct_data( Archive& /*archive*/, KnowledgeGroupFactory* /*factory*/, const unsigned int /*version*/ )
 {
     //TODO
 }

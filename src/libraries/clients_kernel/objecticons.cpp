@@ -105,7 +105,7 @@ namespace
 // Name: TypeIcon
 // Created: AGE 2008-03-14
 // -----------------------------------------------------------------------------
-const char** TypeIcon( const std::string& symbol, const std::string& type )
+const char** TypeIcon( const std::string& /*symbol*/, const std::string& type )
 {
     if( sTypeIcons.empty() )
         Init();

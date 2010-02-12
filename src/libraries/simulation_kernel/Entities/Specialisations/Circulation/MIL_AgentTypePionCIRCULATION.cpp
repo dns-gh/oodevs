@@ -48,7 +48,7 @@ const MIL_AgentTypePion* MIL_AgentTypePionCirculation::Create( const std::string
 // Name: MIL_AgentTypePionCirculation::RegisterFunctions
 // Created: LDC 2009-04-23
 // -----------------------------------------------------------------------------
-void MIL_AgentTypePionCirculation::RegisterFunctions( directia::Brain& brain, MIL_AgentPion& agent ) const
-{    
+void MIL_AgentTypePionCirculation::RegisterFunctions( directia::Brain& brain, MIL_AgentPion& /*agent*/ ) const
+{
     brain.RegisterFunction( "DEC_Circulation_EquiperItineraireLogistique", &DEC_KnowledgeObjectFunctions::EquipLogisticRoute );
 }

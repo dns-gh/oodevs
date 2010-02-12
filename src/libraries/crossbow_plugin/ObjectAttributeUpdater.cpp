@@ -74,7 +74,7 @@ void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objec
 	builder.SetId( "id" );
 	builder.SetField( "object_id", objectId );	
 	builder.SetField( "activated", obstacle.activated ); // bool
-	builder.SetField( "type", obstacle.type == ASN1T_EnumDemolitionTargetType::preliminary ? "preliminary" : "reserved" );
+	builder.SetField( "type", obstacle.type == EnumDemolitionTargetType::preliminary ? "preliminary" : "reserved" );
 	
 	db.Execute( builder );
 }

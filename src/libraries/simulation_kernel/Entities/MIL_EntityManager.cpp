@@ -90,7 +90,7 @@ BOOST_CLASS_EXPORT_GUID( MIL_EntityManager, "MIL_EntityManager" )
 
 
 template< typename Archive >
-void save_construct_data( Archive& archive, const MIL_EntityManager* entities, const unsigned int /*version*/ )
+void save_construct_data( Archive& /*archive*/, const MIL_EntityManager* /*entities*/, const unsigned int /*version*/ )
 {
     //@TODO MGD work on serialization to avoid singleton and add test for all entities
     //const AutomateFactory_ABC* const automateFactory = &factory->automateFactory_;
@@ -100,7 +100,7 @@ void save_construct_data( Archive& archive, const MIL_EntityManager* entities, c
 }
 
 template< typename Archive >
-void load_construct_data( Archive& archive, MIL_EntityManager* role, const unsigned int /*version*/ )
+void load_construct_data( Archive& /*archive*/, MIL_EntityManager* role, const unsigned int /*version*/ )
 {
     ::new( role )MIL_EntityManager( MIL_Singletons::GetTime(), MIL_Singletons::GetEffectManager(),
                                     MIL_Singletons::GetProfiler(), MIL_Singletons::GetHla(),
@@ -1024,7 +1024,7 @@ void MIL_EntityManager::OnReceiveMsgLogSupplyPushFlow( const ASN1T_MsgLogSupplyP
 // Created: SLG 2009-12-17
 // LTO
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgKnowledgeGroupEnable( const ASN1T_MsgKnowledgeGroupEnable& asnMsg, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveMsgKnowledgeGroupEnable( const ASN1T_MsgKnowledgeGroupEnable& asnMsg, unsigned int /*nCtx*/ )
 {
     try
     {

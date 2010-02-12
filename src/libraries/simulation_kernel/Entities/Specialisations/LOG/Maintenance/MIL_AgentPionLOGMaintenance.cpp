@@ -30,7 +30,7 @@ void save_construct_data( Archive& archive, const MIL_AgentPionLOGMaintenance* p
 template< typename Archive >
 void load_construct_data( Archive& archive, MIL_AgentPionLOGMaintenance* pion, const unsigned int /*version*/ )
 {
-    unsigned int nTypeID, nID;
+    unsigned int nTypeID;
     MIL_Automate* pAutomate = 0;
     AlgorithmsFactories* algorithmFactories = 0;
     archive >> nTypeID

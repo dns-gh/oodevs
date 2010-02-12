@@ -70,7 +70,7 @@ void DrawingsModel::Load( const dispatcher::Config& config )
                 >> xml::list( "shape", *this, &DrawingsModel::ReadShape )
             >> xml::end();
     }
-    catch( std::exception& e )
+    catch( std::exception& )
     {
         // $$$$ SBO 2008-06-10: log error
     }

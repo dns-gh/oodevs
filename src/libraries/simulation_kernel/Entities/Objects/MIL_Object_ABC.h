@@ -109,7 +109,7 @@ public:
 
     //! @name 
     //@{
-    template< typename T> void ProcessAgentsInside( T& functor ) const;
+    template< typename T> void ProcessAgentsInside( T functor ) const;
     //@}
 
     //! @name Knowledge

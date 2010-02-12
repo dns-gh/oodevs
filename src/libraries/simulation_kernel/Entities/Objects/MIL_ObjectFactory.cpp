@@ -28,7 +28,6 @@ MIL_ObjectFactory::MIL_ObjectFactory( MIL_ObjectManager& manager )
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectFactory destructor
 // Created: JCR 2008-04-21
@@ -98,7 +97,7 @@ ASN1T_EnumObjectErrorCode MIL_ObjectFactory::BuildObject( const ASN1T_MagicActio
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, ASN1T_EnumDemolitionTargetType obstacleType )
 {
-    MIL_Object_ABC* pObject = MIL_ObjectLoader::GetLoader().CreateObject( type, army, localisation, obstacleType );
+    MIL_Object_ABC* pObject = MIL_ObjectLoader::GetLoader().CreateObject( type, army, localisation, obstacleType == EnumDemolitionTargetType::reserved );
     if ( pObject )
         manager_.RegisterObject( *pObject );
     return pObject;

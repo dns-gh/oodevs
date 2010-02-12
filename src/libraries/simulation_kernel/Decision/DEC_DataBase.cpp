@@ -61,7 +61,7 @@ DEC_DataBase::DEC_DataBase( xml::xistream& xis, const std::string strPath )
 // Name: DEC_DataBase constructor
 // Created: MGD 2009-08-27
 // -----------------------------------------------------------------------------
-DEC_DataBase::DEC_DataBase( T_LibPaths libPaths, std::vector< const std::string >& knowledge )
+DEC_DataBase::DEC_DataBase( T_LibPaths libPaths, const std::vector< const std::string >& knowledge )
     : directia5::Library( libPaths )
     , libPaths_  ( libPaths )
     , knowledges_( knowledge )

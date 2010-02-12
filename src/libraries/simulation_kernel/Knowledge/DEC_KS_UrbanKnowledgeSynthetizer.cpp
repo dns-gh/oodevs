@@ -60,7 +60,7 @@ DEC_KS_UrbanKnowledgeSynthetizer::~DEC_KS_UrbanKnowledgeSynthetizer()
 // -----------------------------------------------------------------------------
 void DEC_KS_UrbanKnowledgeSynthetizer::Prepare()
 {
-    pBlackBoard_->GetKnowledgeUrbanContainer().ApplyOnKnowledgesUrbanRef( std::mem_fun_ref( & DEC_Knowledge_Urban::Prepare ) );
+    pBlackBoard_->GetKnowledgeUrbanContainer().ApplyOnKnowledgesUrbanRef( std::mem_fun_ref( &DEC_Knowledge_Urban::Prepare ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,7 +128,7 @@ void DEC_KS_UrbanKnowledgeSynthetizer::UpdateKnowledgeRelevance( boost::shared_p
 // Name: DEC_KS_UrbanKnowledgeSynthetizer::Talk
 // Created: MGD 2009-12-07
 // -----------------------------------------------------------------------------
-void DEC_KS_UrbanKnowledgeSynthetizer::Talk( int currentTimeStep )
+void DEC_KS_UrbanKnowledgeSynthetizer::Talk( int /*currentTimeStep*/ )
 {
     // Synthesis of the perceptions of the subordinates 
     SynthetizeSubordinatesPerception();

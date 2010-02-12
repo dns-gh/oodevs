@@ -350,7 +350,7 @@ namespace
 // Name: DEC_KS_Perception::Talk
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-void DEC_KS_Perception::Talk( int currentTimeStep )
+void DEC_KS_Perception::Talk( int /*currentTimeStep*/ )
 {
     assert( pBlackBoard_ );
 

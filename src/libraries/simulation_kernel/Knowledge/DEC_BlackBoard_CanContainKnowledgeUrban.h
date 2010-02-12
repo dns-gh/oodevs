@@ -63,7 +63,7 @@ public:
     bool HasKnowledgeUrban( const urban::TerrainObject_ABC& object ) const;
 
     template < class UnaryFunction >
-    void ApplyOnKnowledgesUrban( UnaryFunction& fct ) const
+    void ApplyOnKnowledgesUrban( UnaryFunction fct ) const
     {
         for( CIT_KnowledgeUrbanMap itKnowledge = urbanMapFromConcrete_.begin(); itKnowledge != urbanMapFromConcrete_.end(); )
         {
@@ -74,7 +74,7 @@ public:
     }
 
     template < class UnaryFunction >
-    void ApplyOnKnowledgesUrbanRef( UnaryFunction& fct ) const
+    void ApplyOnKnowledgesUrbanRef( UnaryFunction fct ) const
     {
         for( CIT_KnowledgeUrbanMap itKnowledge = urbanMapFromConcrete_.begin(); itKnowledge != urbanMapFromConcrete_.end(); )
         {

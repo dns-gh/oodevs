@@ -85,7 +85,7 @@ void DEC_Knowledge_ObjectAttributeConstruction::UpdateOnPerceptionLevel( const P
 {
     UpdateAttributes();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectAttributeConstruction::UpdateAttribute
 // Created: JCR 2008-06-04
@@ -94,16 +94,16 @@ void DEC_Knowledge_ObjectAttributeConstruction::UpdateOnPerception( const DEC_Kn
 {
     UpdateAttributes();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectAttributeConstruction::UpdateAttribute
 // Created: JCR 2008-06-04
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeConstruction::UpdateOnCollision( const DEC_Knowledge_ObjectCollision& collision )
+void DEC_Knowledge_ObjectAttributeConstruction::UpdateOnCollision( const DEC_Knowledge_ObjectCollision& /*collision*/ )
 {
     UpdateAttributes();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectAttributeConstruction::BuildMsgAttribute
 // Created: JCR 2008-06-04
@@ -115,7 +115,6 @@ void DEC_Knowledge_ObjectAttributeConstruction::Send( ASN1T_ObjectAttributes& as
         asn.m.constructionPresent = 1;
         asn.construction.m.percentagePresent = 1;
         asn.construction.percentage = rConstructionPercentage_;
-
         asn.construction.m.dotation_nbrPresent = 1;
         asn.construction.dotation_nbr = nNbrDotation_;
         Reset();

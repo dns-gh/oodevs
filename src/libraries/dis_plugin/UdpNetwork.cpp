@@ -10,6 +10,7 @@
 #include "dis_plugin_pch.h"
 #include "UdpNetwork.h"
 #include <boost/lexical_cast.hpp>
+#include <iostream>
 
 using namespace plugins::dis;
 

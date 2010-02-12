@@ -42,7 +42,7 @@ AgentLogSupply::~AgentLogSupply()
 void AgentLogSupply::Update( const ASN1T_MsgLogSupplyState& asnMsg )
 {
     if( asnMsg.m.chaine_activeePresent )
-        bSystemEnabled_ = asnMsg.chaine_activee;
+        bSystemEnabled_ = asnMsg.chaine_activee != 0;
 
     if( asnMsg.m.disponibilites_transporteurs_convoisPresent )
     {

@@ -214,7 +214,7 @@ namespace
             composantePion.ApplyOnHumanProtection( *this );
         }
 
-        void operator()( const PHY_ComposantePion& composantePion, const PHY_HumanProtection& humanProtection )
+        void operator()( const PHY_ComposantePion& /*composantePion*/, const PHY_HumanProtection& humanProtection )
         {
             //Protection value is the sum of the effects of all the protections which can protect against a fire of class fireClass_
             protectionValue_ += humanProtection.ComputeProtectionValue( injuryID_ , heat_ , fireClass_ );

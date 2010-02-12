@@ -61,7 +61,7 @@ public:
 
     //! @name Process Agent inside
     //@{
-    template< typename T > void ProcessInteraction( T& functor ) const;
+    template< typename T > void ProcessInteraction( T functor ) const;
     //@}
 
 private:
@@ -105,7 +105,7 @@ private:
 // Created: JCR 2008-08-28
 // -----------------------------------------------------------------------------
 template< typename T > 
-void MIL_ObjectInteraction::ProcessInteraction( T& functor ) const
+void MIL_ObjectInteraction::ProcessInteraction( T functor ) const
 {
     std::for_each( agentInsideSet_.begin(), agentInsideSet_.end(), functor );
 }

@@ -132,11 +132,9 @@ namespace
 void MIL_NBCType::ReadEffects( xml::xistream& xis )
 {
     std::string type;
-    E_Form extinguisherAgent; 
     xis >> xml::attribute( "type"       , type )
         >> xml::attribute( "contaminate", bCanContaminate_ )
         >> xml::attribute( "poison"     , bCanPoison_ );
-
     form_ = StringToE_Form( type );
 }
 

@@ -51,7 +51,7 @@ BurnCapacity::~BurnCapacity()
 // Name: BurnCapacity constructor
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
-BurnCapacity::BurnCapacity( const BurnCapacity& from )
+BurnCapacity::BurnCapacity( const BurnCapacity& /*from*/ )
 {
     // NOTHING
 }

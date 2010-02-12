@@ -165,10 +165,8 @@ const MIL_MedicalTreatmentType* MIL_MedicalTreatmentType::Find( const std::strin
 const MIL_MedicalTreatmentType* MIL_MedicalTreatmentType::Find( uint nID )
 {
     for( CIT_MedicalTreatmentTypeMap it = types_.begin(); it != types_.end(); ++it )
-    {        
         if( it->second->GetID() == nID )
             return it->second;
-    }
     return 0;
 }
 
@@ -222,8 +220,7 @@ float MIL_MedicalTreatmentType::GetTreatmentTime( int injuryCategory ) const
     CIT_MedicalTreatmentEffectMap iter = medicalTreatmentEffect_.find( ( E_InjuryCategories )injuryCategory );
     if( iter != medicalTreatmentEffect_.end() )
         return iter->second.treatmentTime_;
-    else
-        return -1;//IF THERE IS AN ERROR
+    return -1;//IF THERE IS AN ERROR
 }
 
 // -----------------------------------------------------------------------------
@@ -236,8 +233,7 @@ float MIL_MedicalTreatmentType::GetHospitalisationTime( int injuryCategory ) con
     CIT_MedicalTreatmentEffectMap iter = medicalTreatmentEffect_.find( ( E_InjuryCategories )injuryCategory );
     if( iter != medicalTreatmentEffect_.end() )
         return iter->second.hospitalisationTime_;
-    else
-        return -1;//IF THERE IS AN ERROR
+    return -1;//IF THERE IS AN ERROR
 }
 
 // -----------------------------------------------------------------------------
@@ -247,12 +243,10 @@ float MIL_MedicalTreatmentType::GetHospitalisationTime( int injuryCategory ) con
 // -----------------------------------------------------------------------------
 float MIL_MedicalTreatmentType::GetLifeExpectancy( E_InjuryCategories injuryCategory ) const
 {
-    
     CIT_MedicalTreatmentEffectMap iter = medicalTreatmentEffect_.find( injuryCategory );
     if( iter != medicalTreatmentEffect_.end() )
         return iter->second.lifeExpectancy_;
-    else
-        return -2;//IF THERE IS AN ERROR (not -1 because this means the injury isn't deadly)
+    return -2;//IF THERE IS AN ERROR (not -1 because this means the injury isn't deadly)
 }
 
 // -----------------------------------------------------------------------------
@@ -265,6 +259,5 @@ unsigned int MIL_MedicalTreatmentType::GetInjuryThreshold( E_InjuryCategories in
     CIT_MedicalTreatmentEffectMap iter = medicalTreatmentEffect_.find( injuryCategory );
     if( iter != medicalTreatmentEffect_.end() )
         return iter->second.injuryThreshold_;
-    else
-        return -1;//IF THERE IS AN ERROR
+    return -1;//IF THERE IS AN ERROR
 }

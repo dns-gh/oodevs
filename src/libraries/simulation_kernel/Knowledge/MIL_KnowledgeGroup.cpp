@@ -537,7 +537,7 @@ void MIL_KnowledgeGroup::RefreshTimeToDiffuseToKnowledgeGroup()
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupEnable( const ASN1T_MsgKnowledgeGroupEnable& asnMsg )
 {
-    isActivated_ = asnMsg.enabled;
+    isActivated_ = asnMsg.enabled != 0;
     UpdateKnowledgeGroup();
 }
 
@@ -619,7 +619,6 @@ void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupSetType( const ASN1T_MsgKnowl
 // Created: FHD 2009-12-17: 
 // LTO
 // -----------------------------------------------------------------------------
-void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupCreation( const ASN1T_MsgKnowledgeGroupCreation& msg )
+void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupCreation( const ASN1T_MsgKnowledgeGroupCreation& /*msg*/ )
 {
-
 }

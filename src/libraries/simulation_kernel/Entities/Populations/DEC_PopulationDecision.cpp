@@ -349,7 +349,7 @@ void DEC_PopulationDecision::RegisterSelf( directia::Brain& brain )
 // Name: DEC_PopulationDecision::UpdateMeKnowledge
 // Created: MGD 2009-11-01
 // -----------------------------------------------------------------------------
-void DEC_PopulationDecision::UpdateMeKnowledge( directia::Brain& brain )
+void DEC_PopulationDecision::UpdateMeKnowledge( directia::Brain& /*brain*/ )
 {
     //NOTHING no BMPopulation for the moment
 }

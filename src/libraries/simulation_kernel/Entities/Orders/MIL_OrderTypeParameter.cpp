@@ -33,7 +33,7 @@ MIL_OrderTypeParameter::MIL_OrderTypeParameter( xml::xistream& xis )
 // Name: MIL_OrderTypeParameter constructor
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-MIL_OrderTypeParameter::MIL_OrderTypeParameter( const MIL_OrderType_ABC& orderType, xml::xistream& xis )
+MIL_OrderTypeParameter::MIL_OrderTypeParameter( const MIL_OrderType_ABC& /*orderType*/, xml::xistream& xis )
     : bIsOptional_  ( xml::attribute< bool >( xis, "optional", false ) )
     , strName_      ( xml::attribute< std::string >( xis, "name" ) )
     , strDiaName_   ( xml::attribute< std::string >( xis, "dia-name" ) )

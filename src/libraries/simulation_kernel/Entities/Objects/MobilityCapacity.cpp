@@ -44,9 +44,9 @@ void MobilityCapacity::InitializeSpeed( xml::xistream& xis )
     if( rDefaultSpeed_ >= 0. )
         rDefaultSpeed_ = MIL_Tools::ConvertSpeedMosToSim( rDefaultSpeed_ );
     else
-        rDefaultSpeed_ = std::numeric_limits< MT_Float >::max();
+        rDefaultSpeed_ = std::numeric_limits< float >::max();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MobilityCapacity::InitializeSpeedPolicy
 // Created: JCR 2008-06-02

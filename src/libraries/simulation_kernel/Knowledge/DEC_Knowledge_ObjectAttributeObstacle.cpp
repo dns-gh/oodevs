@@ -23,8 +23,8 @@ BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_ObjectAttributeObstacle, "DEC_Knowledge_O
 // Created: JVT 2005-03-25
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeObstacle::DEC_Knowledge_ObjectAttributeObstacle()
-    : attr_ ( 0 )
-    , obstacle_ ( E_ObstacleType::preliminary )
+    : attr_      ( 0 )
+    , obstacle_  ( EnumDemolitionTargetType::preliminary )
     , bActivated_( true )
 {
     // NOTHING
@@ -36,7 +36,7 @@ DEC_Knowledge_ObjectAttributeObstacle::DEC_Knowledge_ObjectAttributeObstacle()
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeObstacle::DEC_Knowledge_ObjectAttributeObstacle( const ObstacleAttribute& attr )
     : attr_ ( &attr )
-    , obstacle_ ( ( attr.IsActivable() ) ? E_ObstacleType::reserved : E_ObstacleType::preliminary )
+    , obstacle_ ( ( attr.IsActivable() ) ? EnumDemolitionTargetType::reserved : EnumDemolitionTargetType::preliminary )
     , bActivated_( attr.IsActivable() ? false : true )
 {
     // NOTHING

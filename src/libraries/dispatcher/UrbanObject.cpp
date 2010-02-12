@@ -90,7 +90,7 @@ void UrbanObject::SendCreation( ClientPublisher_ABC& publisher ) const
 // Name: UrbanObject::SendCreation
 // Created: SLG 2009-09-27
 // -----------------------------------------------------------------------------
-void UrbanObject::SendFullUpdate( ClientPublisher_ABC& publisher ) const
+void UrbanObject::SendFullUpdate( ClientPublisher_ABC& /*publisher*/ ) const
 {
     //TODO
 }
@@ -99,7 +99,7 @@ void UrbanObject::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 // Name: UrbanObject::SendCreation
 // Created: SLG 2009-09-27
 // -----------------------------------------------------------------------------
-void UrbanObject::SendDestruction( ClientPublisher_ABC& publisher ) const
+void UrbanObject::SendDestruction( ClientPublisher_ABC& /*publisher*/ ) const
 {
     //TODO
 }
@@ -108,7 +108,7 @@ void UrbanObject::SendDestruction( ClientPublisher_ABC& publisher ) const
 // Name: Agent::Update
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void UrbanObject::Update( const ASN1T_MsgUrbanCreation& msg )
+void UrbanObject::Update( const ASN1T_MsgUrbanCreation& /*msg*/ )
 {
     //ApplyUpdate( msg );
 }

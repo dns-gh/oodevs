@@ -79,7 +79,7 @@ void DEC_KS_Fire::Clean()
 // Name: DEC_KS_Fire::Talk
 // Created: NLD 2004-03-17
 // -----------------------------------------------------------------------------
-void DEC_KS_Fire::Talk( int currentTimeStep )
+void DEC_KS_Fire::Talk( int /*currentTimeStep*/ )
 {
     assert( pBlackBoard_ );
 

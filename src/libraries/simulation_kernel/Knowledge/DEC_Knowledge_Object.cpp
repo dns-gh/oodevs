@@ -828,7 +828,7 @@ void DEC_Knowledge_Object::Invalidate()
 {
     if( bValid_ )
     {
-        bValid_ = false;    
+        bValid_ = false;
         if( pObjectType_ )
             SendMsgDestruction();
     }

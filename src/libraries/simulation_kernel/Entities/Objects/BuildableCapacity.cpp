@@ -226,12 +226,11 @@ void BuildableCapacity::ChangeConstructionPercentage( Object& object, float rNew
 {
     if( object.IsMarkedForDestruction() )
         return;
-
     const MT_Float rDeltaPercentage = rNewConstructionPercentage - object.GetAttribute< ConstructionAttribute >().GetState();
-    if( rDeltaPercentage == 0. )
+    if( rDeltaPercentage == 0 )
         return;
-    if( rDeltaPercentage > 0. )
+    if( rDeltaPercentage > 0 )
         Construct( object, rDeltaPercentage );
     else    
-        Destroy( object, -rDeltaPercentage );    
+        Destroy( object, -rDeltaPercentage );
 }

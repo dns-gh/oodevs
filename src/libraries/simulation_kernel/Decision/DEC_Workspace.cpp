@@ -184,7 +184,6 @@ void DEC_Workspace::InitializeDIA( MIL_Config& config )
     {
         dataBase_.reset( new DEC_DataBase( std::vector< std::string >(), std::vector< const std::string >() ) );
     }
-
 }
 
 // -----------------------------------------------------------------------------

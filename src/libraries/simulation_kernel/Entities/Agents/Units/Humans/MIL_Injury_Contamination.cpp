@@ -172,7 +172,7 @@ bool  MIL_Injury_Contamination::CanInjuryBeDeadly()
 // Name: MIL_Injury_Contamination::CanInjuryBeDeadly
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
-void MIL_Injury_Contamination::UpdateLifeExpectancy( float time )
+void MIL_Injury_Contamination::UpdateLifeExpectancy( float /*time*/ )
 {
     //NOTHING
 }
@@ -208,7 +208,7 @@ namespace
             composantePion.ApplyOnHumanProtection( *this );
         }
 
-        void operator()( const PHY_ComposantePion& composantePion, const PHY_HumanProtection& humanProtection )
+        void operator()( const PHY_ComposantePion& /*composantePion*/, const PHY_HumanProtection& humanProtection )
         {
             protectionValue_ += humanProtection.ComputeProtectionValue( injuryID_ , agentConcentration_ , NBCAgent_ );
         }

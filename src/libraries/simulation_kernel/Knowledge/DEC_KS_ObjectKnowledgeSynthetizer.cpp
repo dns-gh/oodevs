@@ -64,7 +64,7 @@ DEC_KS_ObjectKnowledgeSynthetizer::~DEC_KS_ObjectKnowledgeSynthetizer()
 // -----------------------------------------------------------------------------
 void DEC_KS_ObjectKnowledgeSynthetizer::Prepare()
 {
-    pBlackBoard_->GetKnowledgeObjectContainer().ApplyOnKnowledgesObjectRef( std::mem_fun_ref( & DEC_Knowledge_Object::Prepare ) );
+    pBlackBoard_->GetKnowledgeObjectContainer().ApplyOnKnowledgesObjectRef( std::mem_fun_ref( &DEC_Knowledge_Object::Prepare ) );
 }
 
 // -----------------------------------------------------------------------------
