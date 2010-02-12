@@ -26,6 +26,7 @@ class ADN_Connector_ABC;
 // =============================================================================
 class ADN_NBC_GUI : public ADN_GUI_ABC
 {
+    Q_OBJECT
     MT_COPYNOTALLOWED( ADN_NBC_GUI )
 
 public:

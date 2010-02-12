@@ -12,6 +12,8 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_ABC.h"
 #include "MIL_AgentServer.h"
+#include "MIL_Singletons.h"
+#include "MIL_Time_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_ABC, "DEC_Knowledge_ABC" )
 
@@ -39,5 +41,5 @@ DEC_Knowledge_ABC::~DEC_Knowledge_ABC()
 // -----------------------------------------------------------------------------
 uint DEC_Knowledge_ABC::GetCurrentTimeStep() const
 {
-    return MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    return MIL_Singletons::GetTime().GetCurrentTick();
 }

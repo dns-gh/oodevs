@@ -9,6 +9,8 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_NBC_Intox_GUI.h"
+#include "moc_ADN_NBC_Intox_GUI.cpp"
+
 #include "ADN_GuiBuilder.h"
 #include "ADN_EditLine.h"
 #include "ADN_NBC_Datas.h"

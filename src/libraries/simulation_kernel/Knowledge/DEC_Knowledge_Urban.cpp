@@ -64,6 +64,7 @@ DEC_Knowledge_Urban::~DEC_Knowledge_Urban()
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
+// $$$$ LDC - RC Serialization is commented because urban lib doesn't offer serialisation yet.
 /*
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Urban::load
@@ -135,7 +136,6 @@ void DEC_Knowledge_Urban::Update( const DEC_Knowledge_UrbanPerception& perceptio
 {
     const PHY_PerceptionLevel& level = perception.GetCurrentPerceptionLevel();
     
-    float area = object_.GetFootprint()->ComputeArea(); //@SLG TEST A SUPPRIMER
     float complexity = object_.ComputeComplexity(); // ALGO TEMPORAIRE
     float progress = level.GetID() * 100 / complexity;//@TODO MGD Add true physical in ADN
     rProgressPercent_ = rProgressPercent_ + progress;

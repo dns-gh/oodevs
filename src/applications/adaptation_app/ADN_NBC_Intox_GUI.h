@@ -20,9 +20,10 @@
 */
 // Created: SBO 2006-10-30
 // =============================================================================
-class ADN_NBC_Intox_GUI : public ADN_Gfx_ABC
-                        , public QVBox
+class ADN_NBC_Intox_GUI : public QVBox
+                        , public ADN_Gfx_ABC
 {
+    Q_OBJECT
 public:
     enum E_GuiElements
     {

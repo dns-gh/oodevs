@@ -39,6 +39,11 @@
 
 using namespace hla;
 
+namespace
+{
+    HLA_Federate* singleton_ = 0;
+}
+
 // -----------------------------------------------------------------------------
 // Name: HLA_Federate constructor
 // Created: AGE 2004-11-05
@@ -54,7 +59,9 @@ HLA_Federate::HLA_Federate( const std::string& strFederateName, unsigned int nTi
     , pObjectRegistration_( 0 )
     , pInteractionManager_( 0 )
 {
-    // NOTHING
+    if( singleton_ )
+        throw std::runtime_error( "HLA Federate already exists" );
+    singleton_ = this;
 }
 
 // -----------------------------------------------------------------------------
@@ -72,6 +79,7 @@ HLA_Federate::~HLA_Federate()
     delete pAmbassador_;
     delete pIntervalFactory_;
     delete pTimeFactory_;
+    singleton_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -259,4 +267,13 @@ MIL_Object_ABC* HLA_Federate::GetLocalObject( const ObjectIdentifier& objectId )
     if( itObject != localObjects_.end() )
         return itObject->second;
     return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: HLA_Federate::GetSingleton
+// Created: LDC 2010-02-10
+// -----------------------------------------------------------------------------
+HLA_Federate* HLA_Federate::GetSingleton()
+{
+    return singleton_;
 }

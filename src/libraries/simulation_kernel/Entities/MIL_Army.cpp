@@ -32,6 +32,7 @@
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_GUID( MIL_Army, "MIL_Army" )
+BOOST_CLASS_EXPORT_GUID( MIL_Army_ABC, "MIL_Army_ABC" );
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Army::save_construct_data

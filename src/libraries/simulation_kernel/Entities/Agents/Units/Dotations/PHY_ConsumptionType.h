@@ -12,6 +12,8 @@
 #ifndef __PHY_ConsumptionType_h_
 #define __PHY_ConsumptionType_h_
 
+#include "MT_Tools/MT_Tools_Types.h"
+
 // =============================================================================
 // @class  PHY_ConsumptionType
 // Created: JVT 2004-08-03

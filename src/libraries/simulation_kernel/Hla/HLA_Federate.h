@@ -59,6 +59,7 @@ public:
 
     //! @name Accessors
     //@{
+    static HLA_Federate* GetSingleton();
     MIL_Agent_ABC*  GetLocalAgent ( const hla::ObjectIdentifier& objectId ) const;
     MIL_Object_ABC* GetLocalObject( const hla::ObjectIdentifier& objectId ) const;
     //@}

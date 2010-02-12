@@ -62,7 +62,6 @@ uint MIL_Agent_ABC::GetID() const
 bool MIL_Agent_ABC::operator==( const MIL_Agent_ABC& rhs ) const
 {
     return nID_ == rhs.nID_;
-    idManager_.Lock( nID_ );
 }
 
 // -----------------------------------------------------------------------------

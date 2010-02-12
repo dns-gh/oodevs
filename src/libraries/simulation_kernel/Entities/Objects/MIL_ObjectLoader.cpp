@@ -17,6 +17,22 @@
 #include "Network/NET_ASN_Tools.h"
 #include <xeumeuleu/xml.h>
 
+namespace
+{
+    MIL_ObjectLoader* pLoader_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectLoader::GetLoader
+// Created: JCR 2008-05-29
+// -----------------------------------------------------------------------------
+MIL_ObjectLoader& MIL_ObjectLoader::GetLoader()
+{
+    if ( !pLoader_ )
+        pLoader_ = new MIL_ObjectLoader();
+    return *pLoader_;
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectLoader constructor
 // Created: JCR 2008-04-21
@@ -25,7 +41,10 @@ MIL_ObjectLoader::MIL_ObjectLoader()
     : factory_( new CapacityFactory() )
     , attributes_( new AttributeFactory() )
 {
-    //NOTHING
+    if ( !pLoader_ )
+        pLoader_ = this;
+    else
+        throw std::runtime_error( "MIL_ObjectLoader already created" );
 }
 
 
@@ -35,7 +54,7 @@ MIL_ObjectLoader::MIL_ObjectLoader()
 // -----------------------------------------------------------------------------
 MIL_ObjectLoader::~MIL_ObjectLoader()
 {
-    // NOTHING
+    pLoader_ = 0;
 }
 
 // -----------------------------------------------------------------------------

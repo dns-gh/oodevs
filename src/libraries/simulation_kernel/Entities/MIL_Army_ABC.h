@@ -13,6 +13,7 @@
 #define __MIL_Army_ABC_h_
 
 #include "MIL.h" // only for E_Tristate !!!
+#include <boost/serialization/export.hpp>
 
 class MIL_Object_ABC;
 class DEC_Knowledge_Object;

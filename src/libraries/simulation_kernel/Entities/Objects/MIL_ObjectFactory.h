@@ -54,17 +54,7 @@ private:
     MIL_ObjectFactory& operator=( const MIL_ObjectFactory& ); //!< Assignment operator
     //@}
 
-    //! @name Singleton
-    //@{
-    static MIL_ObjectLoader& GetLoader();
-    //@}
-
 private:
-    //! @name Data members
-    //@{
-    static MIL_ObjectLoader* pLoader_;
-    //@}
-
     //! @name 
     //@{
     MIL_ObjectManager& manager_;

@@ -521,7 +521,7 @@ void PHY_ComposanteTypePion::ReadObject( xml::xistream& xis )
     const PHY_ComposanteTypeObjectData*& pObject = objectData_[ objectType.GetID() ];
     if( pObject )
         xis.error( "Object type '" + strType + "' already instanciated" );
-    pObject = new PHY_ComposanteTypeObjectData( objectType, xis );
+    pObject = new PHY_ComposanteTypeObjectData( xis );
 }
 
 // -----------------------------------------------------------------------------

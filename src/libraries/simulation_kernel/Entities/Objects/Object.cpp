@@ -102,7 +102,7 @@ Object::Object()
     , pView_    ( 0 )
     , manipulator_ ( new MIL_ObjectManipulator( *this ) )
 {
-    MIL_Object_ABC::Register();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -139,6 +139,7 @@ void Object::load( MIL_CheckPointInArchive& file, const uint )
 
     file >> attributes_;
     idManager_.Lock( id_ );
+    MIL_Object_ABC::Register();
 }
     
 // -----------------------------------------------------------------------------

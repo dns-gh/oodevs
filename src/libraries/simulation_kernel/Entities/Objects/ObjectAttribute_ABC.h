@@ -21,6 +21,7 @@ class HLA_UpdateFunctor;
 
 class Object;
 class DEC_Knowledge_Object;
+struct ASN1T_ObjectAttributes;
 
 namespace xml
 {

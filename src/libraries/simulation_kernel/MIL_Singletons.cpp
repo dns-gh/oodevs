@@ -12,6 +12,7 @@
 #include "MIL_AgentServer.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Effects/MIL_EffectManager.h"
+#include "Hla/HLA_Federate.h"
 
 namespace
 {
@@ -64,7 +65,7 @@ MIL_EntityManager_ABC& MIL_Singletons::GetEntityManager()
 // -----------------------------------------------------------------------------
 HLA_Federate* MIL_Singletons::GetHla()
 {
-    return MIL_AgentServer::GetWorkspace().GetHLAFederate();
+    return HLA_Federate::GetSingleton();
 }
 
 // -----------------------------------------------------------------------------

@@ -18,8 +18,6 @@
 
 using namespace xml;
 
-MIL_ObjectLoader* MIL_ObjectFactory::pLoader_ = 0;
-
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectFactory constructor
 // Created: JCR 2008-04-21
@@ -40,25 +38,13 @@ MIL_ObjectFactory::~MIL_ObjectFactory()
     // NOTHING
 }
 
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ObjectFactory::GetLoader
-// Created: JCR 2008-05-29
-// -----------------------------------------------------------------------------
-MIL_ObjectLoader& MIL_ObjectFactory::GetLoader()
-{
-    if ( !pLoader_ )
-        pLoader_ = new MIL_ObjectLoader();
-    return *pLoader_;
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectFactory::Initialize
 // Created: JCR 2008-05-29
 // -----------------------------------------------------------------------------
 void MIL_ObjectFactory::Initialize( xml::xistream& xis )
 {
-    GetLoader().Initialize( xis );
+    MIL_ObjectLoader::GetLoader().Initialize( xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +53,7 @@ void MIL_ObjectFactory::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 const MIL_ObjectType_ABC& MIL_ObjectFactory::FindType( const std::string& type )
 {    
-    return GetLoader().GetType( type );
+    return MIL_ObjectLoader::GetLoader().GetType( type );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,7 +62,7 @@ const MIL_ObjectType_ABC& MIL_ObjectFactory::FindType( const std::string& type )
 // -----------------------------------------------------------------------------
 MIL_Object_ABC& MIL_ObjectFactory::BuildObject( xml::xistream& xis, MIL_Army_ABC& army )
 {
-    MIL_Object_ABC* pObject = GetLoader().CreateObject( xis, army );
+    MIL_Object_ABC* pObject = MIL_ObjectLoader::GetLoader().CreateObject( xis, army );
     if ( pObject )
     {
         manager_.RegisterObject( *pObject );
@@ -96,7 +82,7 @@ MIL_Object_ABC& MIL_ObjectFactory::BuildObject( xml::xistream& xis, MIL_Army_ABC
 ASN1T_EnumObjectErrorCode MIL_ObjectFactory::BuildObject( const ASN1T_MagicActionCreateObject& asn, MIL_Army_ABC& army )
 {
     ASN1T_EnumObjectErrorCode   value = EnumObjectErrorCode::no_error;
-    MIL_Object_ABC*             pObject = GetLoader().CreateObject( asn, army, value );
+    MIL_Object_ABC*             pObject = MIL_ObjectLoader::GetLoader().CreateObject( asn, army, value );
     if ( pObject )
     {
         MIL_ObjectManipulator_ABC& obj = pObject->operator ()();
@@ -112,7 +98,7 @@ ASN1T_EnumObjectErrorCode MIL_ObjectFactory::BuildObject( const ASN1T_MagicActio
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, ASN1T_EnumDemolitionTargetType obstacleType )
 {
-    MIL_Object_ABC* pObject = GetLoader().CreateObject( type, army, localisation, obstacleType );
+    MIL_Object_ABC* pObject = MIL_ObjectLoader::GetLoader().CreateObject( type, army, localisation, obstacleType );
     if ( pObject )
         manager_.RegisterObject( *pObject );
     return pObject;
@@ -124,7 +110,7 @@ MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const std::string& type, MIL_Arm
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army ) 
 {
-    MIL_Object_ABC* pObject = GetLoader().CreateObject( builder, army );
+    MIL_Object_ABC* pObject = MIL_ObjectLoader::GetLoader().CreateObject( builder, army );
     if ( pObject )
         manager_.RegisterObject( *pObject );
     return pObject;

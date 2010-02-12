@@ -11,6 +11,7 @@
 #define __MockArmy_h_
 
 #include "simulation_kernel/Entities/MIL_Army_ABC.h"
+#include <boost/serialization/export.hpp>
 
 class DEC_Knowledge_Object;
 class DEC_KnowledgeBlackBoard_Army;
@@ -38,7 +39,6 @@ public:
     explicit MockArmy() 
         : mockpp::ChainableMockObject( MOCKPP_PCHAR( "MockArmy" ), 0 )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetNameShadow )
-        //, GetID_mocker                      ( "GetID", this )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetID )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetKnowledgeShadow )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( RegisterObject )
@@ -81,12 +81,12 @@ public:
 //        return *FindKnowledgeGroupShadow();
 //    }
 
-//    virtual uint GetID() const
-//    {   
-//        return GetID_mocker.forward();
-//    }
+    template< typename Archive >
+    void serialize( Archive&, const unsigned int ) 
+    {
+        boost::serialization::base_object< MIL_Army_ABC >( *this );
+    }
 
-    //mockpp::ChainableMockMethod< uint > GetID_mocker;
     MOCKPP_CONST_CHAINABLE_EXT0      ( MockArmy, uint, GetID, void, );   
     MOCKPP_CONST_CHAINABLE_EXT0      ( MockArmy, const std::string*, GetNameShadow, std::string, );   
     MOCKPP_CONST_CHAINABLE_EXT0      ( MockArmy, DEC_KnowledgeBlackBoard_Army*, GetKnowledgeShadow, DEC_KnowledgeBlackBoard_Army, );   
@@ -110,6 +110,6 @@ public:
     MOCKPP_VOID_CONST_CHAINABLE0     ( MockArmy, SendFullState );   
     MOCKPP_VOID_CONST_CHAINABLE0     ( MockArmy, SendKnowledge );
     MOCKPP_CONST_CHAINABLE_EXT1      ( MockArmy, MIL_KnowledgeGroup*, FindKnowledgeGroup, unsigned int, MIL_KnowledgeGroup*, , unsigned int );
-};
+};        
 
 #endif // __MockArmy_h_

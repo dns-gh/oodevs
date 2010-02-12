@@ -23,7 +23,7 @@
 // Name: PHY_ComposanteTypeObjectData constructor
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
-PHY_ComposanteTypeObjectData::PHY_ComposanteTypeObjectData( const MIL_ObjectType_ABC& objectType, xml::xistream& xis )
+PHY_ComposanteTypeObjectData::PHY_ComposanteTypeObjectData( xml::xistream& xis )
     : rTimeBaseConstruction_      ( std::numeric_limits< MT_Float >::max() )
     , rTimeBaseDestruction_       ( std::numeric_limits< MT_Float >::max() )
     , rTimeConstructionCoef_      ( 1 )
@@ -31,8 +31,8 @@ PHY_ComposanteTypeObjectData::PHY_ComposanteTypeObjectData( const MIL_ObjectType
     , rTimeMining_                ( std::numeric_limits< MT_Float >::max() )
     , rTimeDemining_              ( std::numeric_limits< MT_Float >::max() )
     , rCoefTimeBypass_            ( 1. )
-//    , rSpeedWithinWhenNotBypassed_( objectType.GetDefaultSpeedWhenNotBypassed() )
-//    , rSpeedWithinWhenBypassed_   ( objectType.GetDefaultSpeedWhenBypassed   () )
+    , rSpeedWithinWhenNotBypassed_( std::numeric_limits< MT_Float >::max() )
+    , rSpeedWithinWhenBypassed_   ( std::numeric_limits< MT_Float >::max() )
     , pConsumptionMode_           ( 0 )
 {
     std::string strConsumptionMode = "";
@@ -68,6 +68,7 @@ PHY_ComposanteTypeObjectData::PHY_ComposanteTypeObjectData( const MIL_ObjectType
 // -----------------------------------------------------------------------------
 PHY_ComposanteTypeObjectData::~PHY_ComposanteTypeObjectData()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -77,9 +78,9 @@ PHY_ComposanteTypeObjectData::~PHY_ComposanteTypeObjectData()
 MT_Float PHY_ComposanteTypeObjectData::GetMaxSpeed( const MIL_Object_ABC& object ) const
 {    
     if( object().IsBypassed() )
-        return rSpeedWithinWhenBypassed_; // object().GetDefaultSpeedWhenBypassed()
+        return rSpeedWithinWhenBypassed_;
     else 
-        return rSpeedWithinWhenNotBypassed_; // object().GetDefaultSpeedWhenBypassed()
+        return rSpeedWithinWhenNotBypassed_;
 }
 
 // -----------------------------------------------------------------------------

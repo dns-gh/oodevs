@@ -57,6 +57,11 @@ public:
     const MIL_ObjectType_ABC& GetType( const std::string& type ) const;
     //@}
 
+    //! @name Singleton
+    //@{
+    static MIL_ObjectLoader& GetLoader();
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{

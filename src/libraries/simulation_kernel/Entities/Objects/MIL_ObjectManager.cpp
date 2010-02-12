@@ -15,6 +15,7 @@
 #include "MIL_ObjectFactory.h"
 #include "MIL_Object_ABC.h"
 #include "MIL_ObjectManipulator_ABC.h"
+#include "MIL_Singletons.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Hla/HLA_Federate.h"
 #include "Entities/MIL_Army_ABC.h"
@@ -114,8 +115,8 @@ void MIL_ObjectManager::UpdateStates()
 // -----------------------------------------------------------------------------
 void MIL_ObjectManager::RegisterObject( MIL_Object_ABC& object )
 {
-    if( MIL_AgentServer::GetWorkspace().GetHLAFederate() )
-        MIL_AgentServer::GetWorkspace().GetHLAFederate()->Register( object );
+    if( MIL_Singletons::GetHla() )
+        MIL_Singletons::GetHla()->Register( object );
     bool bOut = objects_.insert( std::make_pair( object.GetID(), &object ) ).second;
     assert( bOut );
     object.SendCreation(); //$$$ a déplacer ...
