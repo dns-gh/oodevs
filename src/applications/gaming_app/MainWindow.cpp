@@ -56,6 +56,7 @@
 #include "ClientCommandFacade.h"
 #include "MessagePanel.h"
 #include "ScorePanel.h"
+#include "NotesPanel.h"
 #include "IndicatorExportDialog.h"
 #include "IndicatorPlotFactory.h"
 
@@ -328,6 +329,14 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
         moveDockWindow( scorePanel, Qt::DockRight );
         setDockEnabled( scorePanel, Qt::DockTop, false );
         scorePanel->hide();
+    }
+
+    // Notes panel
+    {
+        NotesPanel* notePanel = new NotesPanel( this, controllers_.controller_, *factory, model_.notes_, publisher );
+        moveDockWindow( notePanel, Qt::DockRight );
+        setDockEnabled( notePanel, Qt::DockTop, false );
+
     }
 
     // Message panel

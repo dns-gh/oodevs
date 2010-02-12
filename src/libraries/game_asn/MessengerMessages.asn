@@ -11,10 +11,11 @@ IMPORTS BaseExports                   FROM Base
         LimaLimiteExports             FROM LimaLimite
         IntelligenceExports           FROM Intelligence
         DrawingExports                FROM Drawing
-        ChatExports                   FROM Chat;
+        ChatExports                   FROM Chat
+        NotesExports				  FROM Notes;
 
 MessengerMessagesIncludes ::= SEQUENCE
-{ BaseExports, LimaLimiteExports, IntelligenceExports, DrawingExports, ChatExports }
+{ BaseExports, LimaLimiteExports, IntelligenceExports, DrawingExports, ChatExports,NotesExports }
 MessengerMessagesExports  ::= NULL
 -- END includes
 
@@ -59,7 +60,12 @@ MsgsMessengerToClient ::= CHOICE
     msg-shape-creation-request-ack                           MsgShapeCreationRequestAck,
     msg-shape-destruction-request-ack                        MsgShapeDestructionRequestAck,
     msg-shape-update-request-ack                             MsgShapeUpdateRequestAck,
-   
+
+    -- NOTE 
+    msg-note-creation                                        MsgNoteCreation,
+    msg-note-update                                          MsgNoteUpdate,
+    msg-note-destruction                                     MsgNoteDestruction,
+    
     msg-text-message                                         MsgTextMessage
 }
 
@@ -81,7 +87,11 @@ MsgsClientToMessenger ::= CHOICE
     msg-shape-creation-request              MsgShapeCreationRequest,
     msg-shape-destruction-request           MsgShapeDestructionRequest,
     msg-shape-update-request                MsgShapeUpdateRequest,
-  
+
+    msg-note-creation-request               MsgNoteCreationRequest,
+    msg-note-destruction-request            MsgNoteDestructionRequest,
+    msg-note-update-request                 MsgNoteUpdateRequest,
+      
     msg-text-message                        MsgTextMessage
 }
 

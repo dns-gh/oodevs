@@ -8,43 +8,36 @@
 // *****************************************************************************
 
 #include "gaming_pch.h"
+#include "AfterActionModel.h"
 #include "AgentServerMsgMgr.h"
+#include "AgentsModel.h"
+#include "CommandHandler.h"
+#include "DrawingsModel.h"
+#include "FiresModel.h"
+#include "FolkModel.h"
+#include "IntelligencesModel.h"
+#include "KnowledgeGroupsModel.h"
 #include "Lima.h"
 #include "Limit.h"
-#include "game_asn/SimulationSenders.h"
-#include "game_asn/ClientSenders.h"
-#include "game_asn/DispatcherSenders.h"
-#include "game_asn/ReplaySenders.h"
-#include "game_asn/MessengerSenders.h"
-#include "game_asn/AuthenticationSenders.h"
-#include "game_asn/AarSenders.h"
-#include "game_asn/PluginSenders.h"
-#include "Tools.h"
+#include "LimitsModel.h"
+#include "LogisticsModel.h"
 #include "LogMaintenanceConsign.h"
 #include "LogMedicalConsign.h"
 #include "LogSupplyConsign.h"
-#include "Simulation.h"
-#include "Profile.h"
+#include "LogTools.h"
 #include "Model.h"
-#include "Services.h"
-#include "AgentsModel.h"
-#include "FiresModel.h"
-#include "KnowledgeGroupsModel.h"
-#include "LimitsModel.h"
-#include "LogisticsModel.h"
+#include "NotesModel.h"
 #include "ObjectsModel.h"
+#include "Profile.h"
+#include "Services.h"
+#include "ScoreModel.h"
+#include "Simulation.h"
 #include "TeamsModel.h"
-#include "WeatherModel.h"
+#include "Tools.h"
+#include "UrbanModel.h"
 #include "UserProfilesModel.h"
 #include "UserProfile.h"
-#include "LogTools.h"
-#include "FolkModel.h"
-#include "AfterActionModel.h"
-#include "IntelligencesModel.h"
-#include "DrawingsModel.h"
-#include "ScoreModel.h"
-#include "UrbanModel.h"
-#include "CommandHandler.h"
+#include "WeatherModel.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Object_ABC.h"
@@ -53,6 +46,14 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Logger_ABC.h"
 #include "clients_gui/Drawing_ABC.h"
+#include "game_asn/SimulationSenders.h"
+#include "game_asn/ClientSenders.h"
+#include "game_asn/DispatcherSenders.h"
+#include "game_asn/ReplaySenders.h"
+#include "game_asn/MessengerSenders.h"
+#include "game_asn/AuthenticationSenders.h"
+#include "game_asn/AarSenders.h"
+#include "game_asn/PluginSenders.h"
 #include "tools/MessageDispatcher_ABC.h"
 #include "tools/MessageSender_ABC.h"
 #include <ctime>
@@ -1429,6 +1430,34 @@ void AgentServerMsgMgr::OnReceiveMsgShapeDestructionRequestAck( const ASN1T_MsgS
     CheckAcknowledge( logger_, message, "ShapeDestructionRequestAck" );
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgNoteCreation
+// Created: HBD 2010-02-04
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgNoteCreation( const ASN1T_MsgNoteCreation& message )
+{
+    GetModel().notes_.Create( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgNoteUpdate
+// Created: HBD 2010-02-04
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgNoteUpdate( const ASN1T_MsgNoteUpdate& message )
+{
+    GetModel().notes_.Update( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgNoteDestruction
+// Created: HBD 2010-02-04
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgNoteDestruction( const ASN1T_MsgNoteDestruction& message )
+{
+    GetModel().notes_.Delete( message );
+}
+
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgAarInformation
 // Created: AGE 2007-09-17
@@ -1823,6 +1852,10 @@ void AgentServerMsgMgr::OnReceiveMsgMessengerToClient( const std::string&, const
         case T_MsgsMessengerToClient_msg_lima_update:       OnReceiveMsgLimaUpdate      ( *message.u.msg_lima_update      ); break;
         case T_MsgsMessengerToClient_msg_lima_destruction:  OnReceiveMsgLimaDestruction ( message.u.msg_lima_destruction  ); break;
 
+        case T_MsgsMessengerToClient_msg_note_creation:     OnReceiveMsgNoteCreation    ( *message.u.msg_note_creation     ); break;
+        case T_MsgsMessengerToClient_msg_note_update:       OnReceiveMsgNoteUpdate      ( *message.u.msg_note_update       ); break;
+        case T_MsgsMessengerToClient_msg_note_destruction:  OnReceiveMsgNoteDestruction ( *message.u.msg_note_destruction  ); break;
+     
         case T_MsgsMessengerToClient_msg_intelligence_creation_request_ack:    OnReceiveMsgIntelligenceCreationRequestAck   ( message.u.msg_intelligence_creation_request_ack    ); break;
         case T_MsgsMessengerToClient_msg_intelligence_update_request_ack:      OnReceiveMsgIntelligenceUpdateRequestAck     ( message.u.msg_intelligence_update_request_ack      ); break;
         case T_MsgsMessengerToClient_msg_intelligence_destruction_request_ack: OnReceiveMsgIntelligenceDestructionRequestAck( message.u.msg_intelligence_destruction_request_ack ); break;
@@ -1867,13 +1900,13 @@ void AgentServerMsgMgr::OnReceiveMsgPluginToClient( const std::string& , const A
 {
     switch( message.msg.t )
     {
-    case T_MsgsPluginToClient_msg_plugin_intelligence_creation:    OnReceiveMsgIntelligenceCreation( *message.msg.u.plugin_intelligence_creation ); break;
-    case T_MsgsPluginToClient_msg_plugin_intelligence_update:      OnReceiveMsgIntelligenceUpdate( *message.msg.u.plugin_intelligence_update ); break;
-    case T_MsgsPluginToClient_msg_plugin_intelligence_destruction: OnReceiveMsgIntelligenceDestruction( *message.msg.u.plugin_intelligence_destruction ); break;
-    case T_MsgsPluginToClient_msg_plugin_limit_creation:           OnReceiveMsgLimitCreation( *message.msg.u.plugin_limit_creation ); break;
-    case T_MsgsPluginToClient_msg_plugin_limit_destruction:        OnReceiveMsgLimitDestruction( message.msg.u.plugin_limit_destruction ); break;
-    default:
-        UnhandledMessage( message.msg.t );
+        case T_MsgsPluginToClient_msg_plugin_intelligence_creation:    OnReceiveMsgIntelligenceCreation( *message.msg.u.plugin_intelligence_creation ); break;
+        case T_MsgsPluginToClient_msg_plugin_intelligence_update:      OnReceiveMsgIntelligenceUpdate( *message.msg.u.plugin_intelligence_update ); break;
+        case T_MsgsPluginToClient_msg_plugin_intelligence_destruction: OnReceiveMsgIntelligenceDestruction( *message.msg.u.plugin_intelligence_destruction ); break;
+        case T_MsgsPluginToClient_msg_plugin_limit_creation:           OnReceiveMsgLimitCreation( *message.msg.u.plugin_limit_creation ); break;
+        case T_MsgsPluginToClient_msg_plugin_limit_destruction:        OnReceiveMsgLimitDestruction( message.msg.u.plugin_limit_destruction ); break;
+        default:
+            UnhandledMessage( message.msg.t );
     }
 }
 

@@ -13,6 +13,7 @@
 #include "TacticalLinesModel.h"
 #include "IntelligencesModel.h"
 #include "DrawingsModel.h"
+#include "NotesModel.h"
 #include "Chat.h"
 #include "dispatcher/ClientPublisher_ABC.h"
 #include "dispatcher/LinkResolver_ABC.h"
@@ -128,6 +129,13 @@ void MessengerPlugin::OnReceiveClientToMessenger( const std::string& client, con
     // Chat
     case T_MsgsClientToMessenger_msg_text_message:
         chat_->OnReceive( *message.u.msg_text_message ); break;
+        // Notes
+    case T_MsgsClientToMessenger_msg_note_creation_request:
+        model_.notes_.HandleRequest( *message.u.msg_note_creation_request ); break;
+    case T_MsgsClientToMessenger_msg_note_update_request:
+        model_.notes_.HandleRequest( *message.u.msg_note_update_request ); break;
+    case T_MsgsClientToMessenger_msg_note_destruction_request:
+        model_.notes_.HandleRequest( *message.u.msg_note_destruction_request ); break;
     default:
         break;
     }

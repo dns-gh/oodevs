@@ -35,6 +35,7 @@ namespace messenger
     class TacticalLinesModel;
     class IntelligencesModel;
     class DrawingsModel;
+    class NotesModel;
 
 // =============================================================================
 /** @class  Model
@@ -75,7 +76,7 @@ private:
 
 private:
     //! @name Member data
-    //@{
+    //@{    
     std::auto_ptr< IdManager > idManager_;
     std::auto_ptr< kernel::CoordinateConverter_ABC > converter_;
     //@}
@@ -87,6 +88,7 @@ public:
     TacticalLinesModel& tacticalLines_;
     IntelligencesModel& intelligences_;
     DrawingsModel&      drawings_;
+    NotesModel&         notes_;
     //@}
 };
 

@@ -64,7 +64,6 @@ public:
     virtual void Send( const ASN1T_MsgsClientToAar& message );
     virtual void Send( const ASN1T_MsgsClientToMessenger& message ) ;
 
-
     void SetElements( Model& model, Profile& profile );
     //@}
 
@@ -260,6 +259,12 @@ private:
     void OnReceiveMsgShapeCreationRequestAck   ( const ASN1T_MsgShapeCreationRequestAck&    message );
     void OnReceiveMsgShapeUpdateRequestAck     ( const ASN1T_MsgShapeUpdateRequestAck&      message );
     void OnReceiveMsgShapeDestructionRequestAck( const ASN1T_MsgShapeDestructionRequestAck& message );
+
+    // Notes
+    void OnReceiveMsgNoteCreation             ( const ASN1T_MsgNoteCreation&              message );
+    void OnReceiveMsgNoteUpdate               ( const ASN1T_MsgNoteUpdate&                message );
+    void OnReceiveMsgNoteDestruction          ( const ASN1T_MsgNoteDestruction&           message );
+
 
     // Chat
     void OnReceiveMsgTextMessage( const ASN1T_MsgTextMessage& message );

@@ -38,6 +38,10 @@ GENERATE_NOCTX_ASN_MSG_SENDER      ( ClientToMessenger, ShapeUpdateRequest,     
 GENERATE_NOCTX_ASN_MSG_SENDER      ( ClientToMessenger, ShapeDestructionRequest,        shape_destruction_request )
 GENERATE_NOCTX_ASN_MSG_SENDER      ( ClientToMessenger, TextMessage,                    text_message )
 
+GENERATE_NOCTX_ASN_MSG_SENDER      ( ClientToMessenger, NoteCreationRequest,           note_creation_request )
+GENERATE_NOCTX_ASN_MSG_SENDER      ( ClientToMessenger, NoteUpdateRequest,             note_update_request )
+GENERATE_NOCTX_ASN_MSG_SENDER      ( ClientToMessenger, NoteDestructionRequest,        note_destruction_request )
+
 GENERATE_NOCTX_NOPTR_ASN_MSG_SENDER( MessengerToClient, LimitCreationRequestAck,   limit_creation_request_ack )
 GENERATE_NOCTX_NOPTR_ASN_MSG_SENDER( MessengerToClient, LimitDestructionRequestAck,limit_destruction_request_ack )
 GENERATE_NOCTX_NOPTR_ASN_MSG_SENDER( MessengerToClient, LimitUpdateRequestAck,     limit_update_request_ack )
@@ -62,7 +66,7 @@ GENERATE_NOCTX_ASN_MSG_SENDER      ( MessengerToClient, IntelligenceCreation,   
 GENERATE_NOCTX_ASN_MSG_SENDER      ( MessengerToClient, IntelligenceUpdate,                intelligence_update )
 GENERATE_NOCTX_ASN_MSG_SENDER      ( MessengerToClient, IntelligenceDestruction,           intelligence_destruction )
 
-// Drawings
+// DRAWINGS
 GENERATE_NOCTX_NOPTR_ASN_MSG_SENDER( MessengerToClient, ShapeCreationRequestAck,    shape_creation_request_ack )
 GENERATE_NOCTX_NOPTR_ASN_MSG_SENDER( MessengerToClient, ShapeDestructionRequestAck, shape_destruction_request_ack )
 GENERATE_NOCTX_NOPTR_ASN_MSG_SENDER( MessengerToClient, ShapeUpdateRequestAck,      shape_update_request_ack )
@@ -70,6 +74,11 @@ GENERATE_NOCTX_NOPTR_ASN_MSG_SENDER( MessengerToClient, ShapeUpdateRequestAck,  
 GENERATE_NOCTX_ASN_MSG_SENDER      ( MessengerToClient, ShapeCreation,    shape_creation )
 GENERATE_NOCTX_ASN_MSG_SENDER      ( MessengerToClient, ShapeUpdate,      shape_update )
 GENERATE_NOCTX_ASN_MSG_SENDER      ( MessengerToClient, ShapeDestruction, shape_destruction )
+
+// Notes
+GENERATE_NOCTX_ASN_MSG_SENDER      ( MessengerToClient, NoteCreation,    note_creation )
+GENERATE_NOCTX_ASN_MSG_SENDER      ( MessengerToClient, NoteUpdate,      note_update )
+GENERATE_NOCTX_ASN_MSG_SENDER      ( MessengerToClient, NoteDestruction, note_destruction )
 
 }
 }

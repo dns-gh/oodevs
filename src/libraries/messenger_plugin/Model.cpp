@@ -13,6 +13,7 @@
 #include "IntelligencesModel.h"
 #include "TacticalLinesModel.h"
 #include "DrawingsModel.h"
+#include "NotesModel.h"
 #include "Entity_ABC.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "dispatcher/Config.h"
@@ -35,7 +36,8 @@ Model::Model( const dispatcher::Config& config, dispatcher::ClientPublisher_ABC&
     , converter_    ( new kernel::CoordinateConverter( config ) )
     , tacticalLines_( *new TacticalLinesModel( clients, *idManager_, *converter_ ) )
     , intelligences_( *new IntelligencesModel( clients, *idManager_, *converter_ ) )
-    , drawings_     ( *new DrawingsModel( config, clients, *idManager_, *converter_ ) )
+    , drawings_     ( *new DrawingsModel( config, clients, *idManager_, *converter_ ))
+    , notes_        ( *new NotesModel ( config, clients, *idManager_ ))
 {
     registrables.Add( new dispatcher::RegistrableProxy( drawings_ ) );
     Load();

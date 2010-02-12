@@ -10,7 +10,6 @@
 #include "messenger_plugin_pch.h"
 #include "Drawing.h"
 #include "dispatcher/ClientPublisher_ABC.h"
-#include "dispatcher/ClientPublisher_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.h>

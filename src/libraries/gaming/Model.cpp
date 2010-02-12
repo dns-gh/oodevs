@@ -40,6 +40,7 @@
 #include "IntelligencesModel.h"
 #include "DrawingFactory.h"
 #include "DrawingsModel.h"
+#include "NotesModel.h"
 #include "ScoreModel.h"
 #include "UrbanModel.h"
 #include "clients_kernel/AgentTypes.h"
@@ -91,6 +92,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , drawings_( *new DrawingsModel( controllers, drawingFactory_ ) )
     , scores_( *new ScoreModel( controllers, publisher, staticModel.scores_ ) )
     , urbanObjects_( *new UrbanModel( controllers.controller_, staticModel.urbanTypes_ ) )
+    , notes_( *new NotesModel(controllers.controller_) )
 {
     // NOTHING
 }

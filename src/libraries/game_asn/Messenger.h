@@ -21,6 +21,7 @@
 #include "generated/Intelligence.h"
 #include "generated/Drawing.h"
 #include "generated/Chat.h"
+#include "generated/Notes.h"
 #include "generated/MessengerMessages.h"
 
 #pragma warning( pop ) 
