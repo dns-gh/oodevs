@@ -48,7 +48,7 @@ void MedicalTreatmentAttribute::Update( const ASN1T_ObjectAttributes& asnMsg )
         availableBeds_ = asnMsg.medical_treatment.available_beds;
         doctors_ = asnMsg.medical_treatment.doctors;
         availableDoctors_ = asnMsg.medical_treatment.available_doctors;
-        for( int i = 0 ; i < asnMsg.medical_treatment.type_id.n ; i++ )
+        for( asn::ASN1UINT i = 0 ; i < asnMsg.medical_treatment.type_id.n ; i++ )
             medicalTreatmentList_.push_back( asnMsg.medical_treatment.type_id.elem[ i ] );
     }
 }
