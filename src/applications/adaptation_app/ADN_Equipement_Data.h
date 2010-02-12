@@ -233,7 +233,15 @@ public:
         ADN_Type_Bool bIndirect_;
 
         T_AttritionInfos_Vector attritions_;
+        
+        ADN_Type_Bool bIlluminating_;
+        ADN_Type_Bool bMaintainIllumination_;
+        ADN_Type_Double fRange_;
+
         IndirectAmmoInfos indirectAmmoInfos_;
+
+        ADN_Type_Bool bGuided_;
+        ADN_Type_Bool bMaintainGuidance_;
     };
 
     typedef ADN_Type_Vector_ABC<AmmoCategoryInfo> T_AmmoCategoryInfo_Vector;

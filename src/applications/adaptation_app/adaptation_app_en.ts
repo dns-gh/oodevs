@@ -1548,6 +1548,26 @@ Parked engine running</source>
         <source>Maintenance support needed</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Illumination</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Must Maintain illumination</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Guided</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Must Maintain guidance</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipement_Postures_GUI</name>

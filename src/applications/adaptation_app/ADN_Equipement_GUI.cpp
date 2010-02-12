@@ -211,6 +211,17 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
 
     builder.AddField<ADN_EditLine_Int>( pMineParametersGroup_, tr( "Mines quantity" ), vConnectors[eMineNumber] );
 
+    // Illumination 
+    ADN_GroupBox* pIlluminationGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Illumination" ), pGroupBox );
+    vConnectors[eIlluminating] = &pIlluminationGroup->GetConnector();
+    builder.AddField<ADN_EditLine_Double>( pIlluminationGroup, tr( "Range" ), vConnectors[eRange] );
+    builder.AddField<ADN_CheckBox>( pIlluminationGroup, tr( "Must Maintain illumination" ), vConnectors[eMaintainIllumination] );
+
+    ADN_GroupBox* pGuidanceGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Guided" ), pGroupBox );
+    vConnectors[eGuided] = &pGuidanceGroup->GetConnector();
+    builder.AddField<ADN_CheckBox>( pGuidanceGroup, tr( "Must Maintain guidance" ), vConnectors[eMaintainGuidance] );
+
+    //Connect
     pAmmoListView_->SetItemConnectors(vConnectors);
 
     // Layout

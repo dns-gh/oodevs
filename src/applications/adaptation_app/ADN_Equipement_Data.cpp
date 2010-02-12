@@ -432,6 +432,11 @@ ADN_Equipement_Data::AmmoCategoryInfo::AmmoCategoryInfo( DotationInfos& parentDo
 , bDirect_          ( false )
 , bTrancheD_        ( false )
 , bIndirect_        ( false )
+, bIlluminating_    ( false )
+, fRange_           ( 0 )
+, bMaintainIllumination_( false )
+, bGuided_          ( false )
+, bMaintainGuidance_( false )
 , attritions_       (ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos())
 , indirectAmmoInfos_()
 {
@@ -457,6 +462,14 @@ ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::AmmoCategoryInfo::Create
     pCopy->strCodeEMAT8_  = strCodeEMAT8_.GetData();
     pCopy->strCodeLFRIL_  = strCodeLFRIL_.GetData();
     pCopy->strCodeNNO_    = strCodeNNO_.GetData();
+
+    pCopy->bIlluminating_ = bIlluminating_.GetData();
+    pCopy->bMaintainIllumination_ = bMaintainIllumination_.GetData();
+    pCopy->fRange_ = fRange_.GetData();
+
+    pCopy->bGuided_ = bGuided_.GetData();
+    pCopy->bMaintainGuidance_ = bMaintainGuidance_.GetData();
+
 
     for( uint n = 0; n < attritions_.size(); ++n )
         pCopy->attritions_[n]->CopyFrom( * attritions_[n] );
@@ -506,6 +519,24 @@ void ADN_Equipement_Data::AmmoCategoryInfo::ReadArchive( xml::xistream& input )
         if( nType_ == E_MunitionType( -1 ) )
             throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Equipment - Invalid resource type '%1'" ).arg( type.c_str() ).ascii() );
     }
+
+    if( input.has_child( "illuminating" ) )
+    {
+        bIlluminating_ = true;
+        input >> xml::start( "illuminating" )
+                >> xml::attribute( "range", fRange_ )
+                >> xml::attribute( "maintain", bMaintainIllumination_ )
+              >> xml::end();
+    }
+    if( input.has_child( "guided" ) )
+    {
+        bGuided_ = true;
+        input >> xml::start( "guided" )
+            >> xml::attribute( "maintain", bMaintainGuidance_ )
+            >> xml::end();
+    }
+    
+
     input >> xml::optional() 
           >> xml::start( "attritions" )
             >> xml::list( "attrition", *this, &ADN_Equipement_Data::AmmoCategoryInfo::ReadAttrition )
@@ -524,6 +555,21 @@ void ADN_Equipement_Data::AmmoCategoryInfo::WriteArchive( xml::xostream& output 
     output << xml::attribute( "type", ADN_Tr::ConvertFromMunitionType( nType_.GetData() ) );
     if( bTrancheD_.GetData() )
         output << xml::attribute( "d-type", bTrancheD_ );
+    if( bIlluminating_.GetData() == true )
+    {
+        output << xml::start( "illuminating" )
+                << xml::attribute( "range", fRange_.GetData() )
+                << xml::attribute( "maintain", bMaintainIllumination_.GetData() )
+                << xml::end();
+
+    }
+    if( bGuided_.GetData() == true )
+    {
+        output << xml::start( "guided" )
+                << xml::attribute( "maintain", bMaintainGuidance_.GetData() )
+               << xml::end();
+
+    }
     if( bDirect_.GetData() == true )
     {
         output << xml::start( "attritions" );

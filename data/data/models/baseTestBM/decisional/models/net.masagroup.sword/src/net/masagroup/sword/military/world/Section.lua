@@ -116,8 +116,6 @@ return
     end,
     -- RECONNOITRABLE --
     computeReconnaissanceCapability = function(self, objective )
-       BreakForDebug( tostring(objective:proximityLevel()))
-       BreakForDebug( tostring(objective:isReached()))
        return objective:isReached() and 100 or 0 --@TODO Add physic like fantassin number
     end,
     setFront = function( self )

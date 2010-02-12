@@ -73,6 +73,11 @@ public:
         eMineNumber,
         eDirect,
         eIndirect,
+        eIlluminating,
+        eMaintainIllumination,
+        eRange,
+        eGuided,
+        eMaintainGuidance,
         eNbrAmmoGuiElements
     };
 
