@@ -13,6 +13,7 @@
 #include "ObjectCapacity_ABC.h"
 #include "MIL_InteractiveContainer_ABC.h"
 
+class MIL_Agent_ABC;
 // =============================================================================
 /** @class  DetectionCapacity
     @brief  DetectionCapacity
@@ -40,6 +41,19 @@ public:
     virtual void Instanciate( Object& object ) const;
     virtual void Register( Object& object );
     virtual void ProcessAgentInside( Object& object, MIL_Agent_ABC& agent );
+    virtual void ProcessAgentEntering( Object& object, MIL_Agent_ABC& agent );
+    virtual void ProcessAgentExiting( Object& object, MIL_Agent_ABC& agent );
+    //@}
+
+    //! @name Helpers
+    //@{
+    void ReadAcquisitionTime( xml::xistream& xis );
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::map< MIL_Agent_ABC* , int >                        T_AgentMap;
+    typedef T_AgentMap::const_iterator                              CIT_AgentMap;
     //@}
 
 private:
@@ -47,6 +61,18 @@ private:
     //@{
     DetectionCapacity( const DetectionCapacity& );  //!< Copy constructor
     //@}
+
+private:
+    //! @name Members
+    //@{
+        float rDetectionTime_;
+        float rRecognitionTime_;
+        float rIdentificationTime_;
+        float rActionRange_;
+
+        T_AgentMap agentInsideMap_;
+    //@}
+
 };
 
 #endif // __DetectionCapacity_h_

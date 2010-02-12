@@ -60,6 +60,9 @@ DEC_Knowledge_Urban::~DEC_Knowledge_Urban()
         SendMsgDestruction();
 }
 
+
+ // $$$$ _RC_ SLG 2010-02-11: CHECKPOINTS mis en commentaire car pas de fonction de serialization dans URBAN, 
+// A decommenter des que c'est fait dans la lib urban
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
