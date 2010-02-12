@@ -1549,10 +1549,6 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Illumination</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Range</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1561,11 +1557,15 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Guided</source>
+        <source>Must Maintain guidance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Must Maintain guidance</source>
+        <source>Illumination capacity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Guidance</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
