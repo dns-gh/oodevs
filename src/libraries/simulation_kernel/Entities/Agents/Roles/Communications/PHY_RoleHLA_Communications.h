@@ -46,7 +46,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Update    ( bool bIsDead ) {};
+    virtual void Update    ( bool /*bIsDead*/ ) {};
     virtual void Clean     () {};
     //@}
 

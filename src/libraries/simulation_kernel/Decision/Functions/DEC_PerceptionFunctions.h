@@ -15,6 +15,7 @@
 #include "MIL.h"
 
 class DEC_Decision_ABC;
+class DEC_Knowledge_Urban;
 class MIL_AgentPion;
 
 // =============================================================================
@@ -39,7 +40,9 @@ public:
     static int  EnableObjectRecognitionLocalisation ( DEC_Decision_ABC& callerAgent, const TER_Localisation* pLocalisation, const MT_Vector2D* pCenter, MT_Float rGrowthSpeed );
     static void DisableObjectRecognitionLocalisation( MIL_AgentPion& callerAgent, int id );
     static int  EnableRecognitionLocalisation       ( MIL_AgentPion& callerAgent, const TER_Localisation* pLocalisation );
+    static int  EnableRecognitionUrbanBlock         ( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Urban > urbanBlock );
     static void DisableRecognitionLocalisation      ( MIL_AgentPion& callerAgent, int id );
+    static void DisableRecognitionUrbanBlock        ( MIL_AgentPion& callerAgent, int id );
     static int  EnableRecognitionPoint              ( DEC_Decision_ABC& callerAgent, MT_Vector2D* pCenter, MT_Float rSize, MT_Float rGrowthSpeed );
     static void DisableRecognitionPoint             ( MIL_AgentPion& callerAgent, int id );
     

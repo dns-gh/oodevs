@@ -114,8 +114,11 @@ return
     getPerception = function( self )
         return integration.getAgentPerception( self )
     end,
-    computeReconnaissanceCapability = function(self, objective, keypoint )
-      return integration.normalizedInversedDistance( objective, keypoint )
+    -- RECONNOITRABLE --
+    computeReconnaissanceCapability = function(self, objective )
+       BreakForDebug( tostring(objective:proximityLevel()))
+       BreakForDebug( tostring(objective:isReached()))
+       return objective:isReached() and 100 or 0 --@TODO Add physic like fantassin number
     end,
     setFront = function( self )
         --TODO

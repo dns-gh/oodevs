@@ -22,9 +22,11 @@
 //namespace perception
 //{
 
-class DEC_Knowledge_Object;
-class DEC_Knowledge_Agent;
+
 class DEC_Decision_ABC;
+class DEC_Knowledge_Agent;
+class DEC_Knowledge_Object;
+class DEC_Knowledge_Urban;
 class PHY_PerceptionLevel;
 class PHY_RadarClass;
 class PHY_RadarType;
@@ -119,6 +121,8 @@ public:
     virtual void  DisableRecoPoint               ( int ) = 0;
     virtual int   EnableRecoLocalisation         ( const TER_Localisation& localisation, MT_Float rRadius ) = 0;
     virtual int   EnableRecoLocalisation         ( const TER_Localisation& localisation ) = 0;
+    virtual int   EnableRecoUrbanBlock           ( boost::shared_ptr< DEC_Knowledge_Urban > urbanBlock ) = 0;
+    virtual void  DisableRecoUrbanBlock          ( int ) = 0;
     virtual int   EnableControlLocalisation      ( const TER_Localisation& localisation ) = 0;
     virtual void  DisableRecoLocalisation        ( int ) = 0;
     virtual int   EnableSurveillanceLocalisation ( const TER_Localisation& localisation ) = 0;

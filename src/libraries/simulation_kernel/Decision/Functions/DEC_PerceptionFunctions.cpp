@@ -156,12 +156,30 @@ int DEC_PerceptionFunctions::EnableRecognitionLocalisation( MIL_AgentPion& calle
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_PerceptionFunctions::EnableRecognitionLocalisation
+// Created: MGD 2010-02-11
+// -----------------------------------------------------------------------------
+int DEC_PerceptionFunctions::EnableRecognitionUrbanBlock( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Urban > urbanBlock )
+{
+    return callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableRecoUrbanBlock( urbanBlock );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_PerceptionFunctions::DisableRecognitionLocalisation
 // Created: JVT 2004-10-22
 // -----------------------------------------------------------------------------
 void DEC_PerceptionFunctions::DisableRecognitionLocalisation( MIL_AgentPion& callerAgent, int id )
 {
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().DisableRecoLocalisation( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PerceptionFunctions::DisableRecognitionUrbanBlock
+// Created: MGD 2010-02-11
+// -----------------------------------------------------------------------------
+void DEC_PerceptionFunctions::DisableRecognitionUrbanBlock( MIL_AgentPion& callerAgent, int id )
+{
+    callerAgent.GetRole< PHY_RoleInterface_Perceiver >().DisableRecoUrbanBlock( id );
 }
 
 // -----------------------------------------------------------------------------

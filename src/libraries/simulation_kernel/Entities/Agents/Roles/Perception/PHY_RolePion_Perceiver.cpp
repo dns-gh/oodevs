@@ -25,6 +25,7 @@
 #include "Entities/Agents/Perceptions/PHY_PerceptionRecoLocalisation.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionRecoSurveillance.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionRecoObjects.h"
+#include "Entities/Agents/Perceptions/PHY_PerceptionRecoUrbanBlock.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionRadar.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionAlat.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionFlyingShell.h"
@@ -104,6 +105,7 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_AgentPion& pion, const MT_Ve
     , pPerceptionCoupDeSonde_      ( 0 )
     , pPerceptionRecoPoint_        ( 0 )
     , pPerceptionRecoLocalisation_ ( 0 )
+    , pPerceptionRecoUrbanBlock_   ( 0 )
     , pPerceptionRadar_            ( 0 )
     , pPerceptionAlat_             ( 0 )
     , pPerceptionSurveillance_     ( 0 )
@@ -439,6 +441,20 @@ int PHY_RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& loca
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::EnableRecoLocalisation
+// Created: MGD 2010-02-11
+// -----------------------------------------------------------------------------
+int PHY_RolePion_Perceiver::EnableRecoUrbanBlock( boost::shared_ptr< DEC_Knowledge_Urban > urbanBlock )
+{    
+    if ( !pPerceptionRecoUrbanBlock_ )
+    {
+        pPerceptionRecoUrbanBlock_ = new PHY_PerceptionRecoUrbanBlock( *this );
+        activePerceptions_.push_back( pPerceptionRecoUrbanBlock_ );
+    }
+    return pPerceptionRecoUrbanBlock_->AddUrbanBlock( urbanBlock );    
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::EnableControlLocalisation
 // Created: JVT 2004-10-28
 // -----------------------------------------------------------------------------
@@ -463,6 +479,24 @@ void PHY_RolePion_Perceiver::DisableRecoLocalisation( int id )
         activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionRecoLocalisation_ ) );
         delete pPerceptionRecoLocalisation_;
         pPerceptionRecoLocalisation_ = 0;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::DisableRecoUrbanBlock
+// Created: MGD 2010-02-11
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::DisableRecoUrbanBlock( int id )
+{
+    if ( !pPerceptionRecoUrbanBlock_ )
+        return;
+
+    pPerceptionRecoUrbanBlock_->RemoveUrbanBlock( id );
+    if ( !pPerceptionRecoUrbanBlock_->HasLocalisationToHandle() )
+    {
+        activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionRecoUrbanBlock_ ) );
+        delete pPerceptionRecoUrbanBlock_;
+        pPerceptionRecoUrbanBlock_ = 0;
     }
 }
 
@@ -855,6 +889,12 @@ void PHY_RolePion_Perceiver::DisableAllPerceptions()
     {
         delete pPerceptionRecoLocalisation_;
         pPerceptionRecoLocalisation_ = 0;
+    }
+
+    if( pPerceptionRecoUrbanBlock_ )
+    {
+        delete pPerceptionRecoUrbanBlock_;
+        pPerceptionRecoUrbanBlock_ = 0;
     }
 
     if( pPerceptionRecoObjects_ )

@@ -20,9 +20,6 @@ defaultMethods
     -- RECONNOITRABLE
     reconnaissancePriority = function() return default_engine.methods.load( "reconnaissancePriority" ) end,
     canReconnoitreIt = function() return default_engine.methods.load( "canReconnoitreIt" ) end,
-    reconnaissanceLevel = function() return default_engine.methods.load( "reconnaissanceLevel" ) end,
-    isRecognized = function() return default_engine.methods.load( "keypoint_isRecognized" ) end,
-    reconnoitreIt = function() return default_engine.methods.load( "reconnoitreIt" ) end,
     
     -- POSITIONNABLE
     isInMyAOR = function() return default_engine.predicates.load( "isInMyAOR") end,
@@ -74,13 +71,20 @@ return
     getPerception = function( self )
         return integration.getUrbanBlockPerception( self )
     end,
-    getReconnaissanceState = function( self ) 
-       return 0 -- TODO
+    -- RECONNOITRABLE -- @TODO use default function
+    reconnaissanceLevel = function( self )
+        return self:getReconnaissanceState()
     end,
-    recce = function( self )
-        return false -- TODO
+    getReconnaissanceState = function( self )
+        return integration.getUrbanBlockReconnaissanceState( self )
     end,
-    -- TEMP FUNCTIONS
+    reconnoitreIt = function( self )
+        return self:recce()
+    end,
+    recce = behavior_model.integration.startStopAction( { start = integration.startRecceUrbanBlock, stop = integration.startRecceUrbanBlock } ),
+    isRecognized = function( self ) 
+        return self:reconnaissanceLevel() == 100 
+    end,
     estimatedReconnaissanceLevel = function( self, objective )
         if not estimatedReconnaissanceLevels[ objective ] then
             local values = {}

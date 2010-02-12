@@ -28,6 +28,7 @@
         <mission name="ObserveAgent"/>
         <mission name="ObserveObject"/>
         <mission name="ReconnoiterUrbanBlock"/>
+        <mission name="ReconnoiterPoint"/>
         <mission name="IdentifyAgent"/>
         <mission name="MoveAndObserve"/>
         <mission name="SeekAndDestroy"/>

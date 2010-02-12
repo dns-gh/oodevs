@@ -135,7 +135,7 @@ void MIL_AgentHLA::NotifyAttackedBy( MIL_AgentPion& )
 // Name: MIL_AgentHLA::NotifyAttackedBy
 // Created: NLD 2005-12-01
 // -----------------------------------------------------------------------------
-void MIL_AgentHLA::NotifyAttackedBy( MIL_Population& population )
+void MIL_AgentHLA::NotifyAttackedBy( MIL_Population& /*population*/ )
 {
     // $$$$ NLD/SBO 2005-12-01: interaction ?
 }

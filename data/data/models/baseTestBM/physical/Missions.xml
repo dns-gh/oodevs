@@ -73,7 +73,7 @@
     </mission>     
     <mission dia-behavior="net.masagroup.testSword.military.tasks.tmp.Reconnoiter" dia-type="T_Mission_Pion_Reconnoiter" id="22" name="ReconnoiterUrbanBlock">
       <parameter dia-name="objectives" name="destination" optional="false" type="UrbanBlockBM"/>
-    </mission> 
+    </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.tmp.Load" dia-type="T_Mission_Pion_Load" id="26" name="Load">
       <parameter dia-name="objectives" name="objectives" optional="false" type="AgentBM"/>
     </mission> 
@@ -91,8 +91,11 @@
     </mission> 
     <mission dia-behavior="net.masagroup.testSword.military.tasks.SeekAndDestroy" dia-type="T_Mission_Pion_SeekAndDestroy" id="31" name="SeekAndDestroy">
       <parameter dia-name="objectives" name="objectives" optional="false" type="PointBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.tmp.Reconnoiter" dia-type="T_Mission_Pion_ReconnoiterPoint" id="32" name="ReconnoiterPoint">
+      <parameter dia-name="objectives" name="point" optional="false" type="PointBM"/>
     </mission>     
-    <mission dia-behavior="net.masagroup.testSword.military.tasks.EngageAgents" dia-type="T_Mission_Pion_Engage" id="32" name="EngageAgents">
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.EngageAgents" dia-type="T_Mission_Pion_Engage" id="33" name="EngageAgents">
       <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>
     </mission> 
   </units>

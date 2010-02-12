@@ -20,9 +20,6 @@ defaultMethods
     -- RECONNOITRABLE
     reconnaissancePriority = function() return default_engine.methods.load( "reconnaissancePriority" ) end,
     canReconnoitreIt = function() return default_engine.methods.load( "canReconnoitreIt" ) end,
-    reconnaissanceLevel = function() return default_engine.methods.load( "reconnaissanceLevel" ) end,
-    isRecognized = function() return default_engine.methods.load( "keypoint_isRecognized" ) end,
-    reconnoitreIt = function() return default_engine.methods.load( "reconnoitreIt" ) end,
 
     -- POSITIONNABLE
     isInMyAOR = function() return default_engine.predicates.load( "isInMyAOR") end,
@@ -91,13 +88,20 @@ return
     getPerception = function( self )
         return 0 -- TODO
     end,
+     -- RECONNOITRABLE -- @TODO use default function when caro will commit changes
+    reconnaissanceLevel = function( self )
+        return self:getReconnaissanceState()
+    end,
     getReconnaissanceState = function( self )
-       return 0 -- TODO
+        return integration.getPointReconnaissanceState( self )
     end,
-    recce = function( self )
-        return false -- TODO
+    reconnoitreIt = function( self )
+        return self:recce()
     end,
-    -- TEMP FUNCTIONS
+    recce = behavior_model.integration.startStopAction( { start = integration.startReccePoint, stop = integration.startReccePoint } ),
+    isRecognized = function( self ) 
+        return self:reconnaissanceLevel() == 100 
+    end,
     estimatedReconnaissanceLevel = function( self, objective )
         if not estimatedReconnaissanceLevels[ objective ] then
             local values = {}
@@ -110,11 +114,12 @@ return
         end
         return estimatedReconnaissanceLevels[ objective ][ self ]
     end,
+    
     isOccupied = function( self )
         return true -- TODO
     end,
 
-  computeIdentificationCapability = function ( self, objective )
-    return self:computeDistance( objective )
-  end,
+    computeIdentificationCapability = function ( self, objective )
+        return self:computeDistance( objective )
+    end,
 }

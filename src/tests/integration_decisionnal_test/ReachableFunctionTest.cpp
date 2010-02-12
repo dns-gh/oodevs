@@ -78,5 +78,5 @@ BOOST_FIXTURE_TEST_CASE( NormalizedInversedDistance, BrainFixture )
 {
     NormalizedInversedDistanceTest( CreateVarWithPosition( 0, 0, 0 ), CreateVarWithPosition( 0, 0, 0 ), 100. );
     NormalizedInversedDistanceTest( CreateVarWithPosition( 0, 0, 0 ), CreateVarWithPosition( 10000, 0, 0 ), 0. );
-    NormalizedInversedDistanceTest( CreateVarWithPosition( 0, 0, 0 ), CreateVarWithPosition( 5000, 0, 0 ), 50. );
+    NormalizedInversedDistanceTest( CreateVarWithPosition( 0, 0, 0 ), CreateVarWithPosition( 5000, 0, 0 ), 50.050050050050054 );
 }

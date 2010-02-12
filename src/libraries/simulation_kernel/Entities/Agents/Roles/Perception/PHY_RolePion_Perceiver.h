@@ -29,6 +29,7 @@ class PHY_PerceptionRecoPoint;
 class PHY_PerceptionRecoLocalisation;
 class PHY_PerceptionRecoObjects;
 class PHY_PerceptionRecoSurveillance;
+class PHY_PerceptionRecoUrbanBlock;
 class PHY_PerceptionRadar;
 class PHY_PerceptionAlat;
 class PHY_PerceptionFlyingShell;
@@ -131,6 +132,8 @@ public:
     void  DisableRecoPoint               ( int );
     int   EnableRecoLocalisation         ( const TER_Localisation& localisation, MT_Float rRadius );
     int   EnableRecoLocalisation         ( const TER_Localisation& localisation );
+    int   EnableRecoUrbanBlock           ( boost::shared_ptr< DEC_Knowledge_Urban > urbanBlock );
+    void  DisableRecoUrbanBlock          ( int );
     int   EnableControlLocalisation      ( const TER_Localisation& localisation );
     void  DisableRecoLocalisation        ( int );
     int   EnableSurveillanceLocalisation ( const TER_Localisation& localisation );
@@ -237,6 +240,7 @@ private:
     PHY_PerceptionCoupDeSonde*      pPerceptionCoupDeSonde_;
     PHY_PerceptionRecoPoint*        pPerceptionRecoPoint_;
     PHY_PerceptionRecoLocalisation* pPerceptionRecoLocalisation_;
+    PHY_PerceptionRecoUrbanBlock*   pPerceptionRecoUrbanBlock_;
     PHY_PerceptionRecoObjects*      pPerceptionRecoObjects_;
     PHY_PerceptionRecoSurveillance* pPerceptionSurveillance_;
     PHY_PerceptionRadar*            pPerceptionRadar_;

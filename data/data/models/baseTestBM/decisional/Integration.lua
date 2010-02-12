@@ -4,6 +4,7 @@ integration = {}
 
 include "integration/DefaultObservableIntegration.lua"
 include "integration/DefaultIdentifiableIntegration.lua"
+include "integration/DefaultReconnoitrableIntegration.lua"
 include "integration/DefaultReachableIntegration.lua"
 include "integration/DefaultDestroyableIntegration.lua"
 include "integration/DefaultNeutralizableIntegration.lua"

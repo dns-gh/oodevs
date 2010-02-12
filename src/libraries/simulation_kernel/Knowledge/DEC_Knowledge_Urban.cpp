@@ -488,6 +488,11 @@ const geometry::Point2f DEC_Knowledge_Urban::GetBarycenter() const
     return object_.GetFootprint()->Barycenter();
 }
 
+const urban::TerrainObject_ABC& DEC_Knowledge_Urban::GetTerrainObjectKnown() const
+{
+    return object_;
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Urban::IsValid
 // Created: MGD 2009-12-04

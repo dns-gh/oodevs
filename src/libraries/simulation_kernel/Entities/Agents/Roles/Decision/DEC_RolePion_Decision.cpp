@@ -355,6 +355,10 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< int( const TER_Localisation* ) >( boost::bind( &DEC_PerceptionFunctions::EnableRecognitionLocalisation, boost::ref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Perception_DesactiverReconnaissanceLocalisation",
          boost::function< void( int ) >( boost::bind( &DEC_PerceptionFunctions::DisableRecognitionLocalisation, boost::ref( GetPion() ), _1 ) ) );
+    brain.RegisterFunction( "DEC_Perception_ActiverReconnaissanceDansBlocUrbain",
+        boost::function< int( boost::shared_ptr< DEC_Knowledge_Urban > ) >( boost::bind( &DEC_PerceptionFunctions::EnableRecognitionUrbanBlock, boost::ref( GetPion() ), _1 ) ) );
+    brain.RegisterFunction( "DEC_Perception_DesactiverReconnaissanceDansBlocUrbain",
+        boost::function< void( int ) >( boost::bind( &DEC_PerceptionFunctions::DisableRecognitionUrbanBlock, boost::ref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Perception_ActiverReconnaissancePoint",
         boost::function< int( MT_Vector2D*, MT_Float, MT_Float ) >( boost::bind( &DEC_PerceptionFunctions::EnableRecognitionPoint, boost::ref( *(DEC_Decision_ABC*)this ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_Perception_DesactiverReconnaissancePoint",
