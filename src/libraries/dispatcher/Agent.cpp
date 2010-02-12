@@ -154,16 +154,16 @@ void Agent::Update( const ASN1T_MsgUnitAttributes& asnMsg )
     if( asnMsg.m.pion_renforcePresent )
         pReinforced_ = asnMsg.pion_renforce == 0 ? 0 : &model_.agents_.Get( asnMsg.pion_renforce );
 
-    UPDATE_ASN_ATTRIBUTE( mort, bDead_ != 0 );
-    UPDATE_ASN_ATTRIBUTE( neutralise,  bNeutralized_ != 0 );
-    UPDATE_ASN_ATTRIBUTE( mode_furtif_actif, bStealthModeEnabled_ != 0 );
-    UPDATE_ASN_ATTRIBUTE( embarque, bLoaded_ != 0 );
-    UPDATE_ASN_ATTRIBUTE( transporteurs_disponibles, bHumanTransportersAvailable_ != 0 );
+    UPDATE_ASN_ATTRIBUTE( mort, bDead_ );
+    UPDATE_ASN_ATTRIBUTE( neutralise,  bNeutralized_ );
+    UPDATE_ASN_ATTRIBUTE( mode_furtif_actif, bStealthModeEnabled_ );
+    UPDATE_ASN_ATTRIBUTE( embarque, bLoaded_ );
+    UPDATE_ASN_ATTRIBUTE( transporteurs_disponibles, bHumanTransportersAvailable_ );
     UPDATE_ASN_ATTRIBUTE( posture_old, nLastPosture_ );
     UPDATE_ASN_ATTRIBUTE( posture_new, nCurrentPosture_ );
     UPDATE_ASN_ATTRIBUTE( posture_pourcentage, nPostureCompletion_ );
     UPDATE_ASN_ATTRIBUTE( etat_installation, nInstallationState_ );
-    UPDATE_ASN_ATTRIBUTE( en_tenue_de_protection_nbc, bNbcProtectionSuitEnabled_ != 0 );
+    UPDATE_ASN_ATTRIBUTE( en_tenue_de_protection_nbc, bNbcProtectionSuitEnabled_ );
 
     if( asnMsg.m.contamine_par_agents_nbcPresent )
     {
@@ -173,9 +173,9 @@ void Agent::Update( const ASN1T_MsgUnitAttributes& asnMsg )
     }
             
     UPDATE_ASN_ATTRIBUTE( etat_contamination, contamination_ );
-    UPDATE_ASN_ATTRIBUTE( communications_brouillees, bCommunicationJammed_ != 0 );
-    UPDATE_ASN_ATTRIBUTE( silence_radio, bBlackoutEnabled_ != 0 );
-    UPDATE_ASN_ATTRIBUTE( radar_actif, bRadarEnabled_ != 0 );
+    UPDATE_ASN_ATTRIBUTE( communications_brouillees, bCommunicationJammed_ );
+    UPDATE_ASN_ATTRIBUTE( silence_radio, bBlackoutEnabled_ );
+    UPDATE_ASN_ATTRIBUTE( radar_actif, bRadarEnabled_ );
 
     if( asnMsg.m.pions_transportesPresent )
     {
@@ -203,8 +203,8 @@ void Agent::Update( const ASN1T_MsgUnitAttributes& asnMsg )
     if( asnMsg.m.renduPresent )
         pSideSurrenderedTo_ = asnMsg.rendu == 0 ? 0 : &model_.sides_.Get( asnMsg.rendu );
 
-    UPDATE_ASN_ATTRIBUTE( prisonnier, bPrisonner_ != 0 );
-    UPDATE_ASN_ATTRIBUTE( refugie_pris_en_compte, bRefugeeManaged_ != 0 );
+    UPDATE_ASN_ATTRIBUTE( prisonnier, bPrisonner_ );
+    UPDATE_ASN_ATTRIBUTE( refugie_pris_en_compte, bRefugeeManaged_ );
 
     if( asnMsg.m.dotation_eff_materielPresent )
     {
