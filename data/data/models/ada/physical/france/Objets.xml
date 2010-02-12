@@ -270,7 +270,9 @@
         </resources>
       </buildable>
     </constructor>
-    <detection/>
+    <detection action-range="0">
+      <acquisition-times/>
+    </detection>
     <workable max-animator="1"/>
   </object>
   <object geometry="polygon" name="Terrain de largage" symbol="G*GPGAD---****X" type="dropping area"/>

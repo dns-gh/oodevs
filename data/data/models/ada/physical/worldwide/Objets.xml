@@ -270,7 +270,9 @@
         </resources>
       </buildable>
     </constructor>
-    <detection/>
+    <detection action-range="0">
+      <acquisition-times/>
+    </detection>
     <heuristic>
       <terrain type="autoroute" value="1"/>
       <terrain type="departementale" value="3"/>
@@ -294,4 +296,13 @@
   </object>
   <object geometry="point" name="Installation" symbol="S*GPI-----*****" type="installation"/>
   <object geometry="point" name="Distribution point" symbol="G*SPPR----****X" type="distribution point"/>
+  <object geometry="point" name="Sensors zone" symbol="G*GPGPPK--****X" type="sensors">
+    <detection action-range="10">
+      <acquisition-times>
+        <acquisition-time level="detection" time="20s"/>
+        <acquisition-time level="recognition" time="40s"/>
+        <acquisition-time level="identification" time="60s"/>
+      </acquisition-times>
+    </detection>
+  </object>
 </objects>
