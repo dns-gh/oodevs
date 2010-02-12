@@ -179,7 +179,6 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Objects_GUI::eIntoxicationCapacity_MaxToxic]->Connect( &intoxication.max_toxic_, bConnect );
 
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Decontamination >( ADN_Objects_GUI::eDecontaminationCapacityPresent );
-    builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Detection >( ADN_Objects_GUI::eDetectionCapacityPresent );
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Extinguishable >( ADN_Objects_GUI::eExtinguishableCapacityPresent );
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Healable >( ADN_Objects_GUI::eHealableCapacityPresent );
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Interference >( ADN_Objects_GUI::eInterferenceCapacityPresent );
@@ -195,7 +194,17 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
 
     ADN_Objects_Data::ADN_CapacityInfos_Propagation& propagation = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Propagation >( ADN_Objects_GUI::ePropagationCapacityPresent );
     vItemConnectors_[ ADN_Objects_GUI::ePropagationCapacity_ModelType ]->Connect( &propagation.model_, bConnect );
-    
+
+    ADN_Objects_Data::ADN_CapacityInfos_Detection& detection = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Detection >( ADN_Objects_GUI::eDetectionCapacityPresent );
+    vItemConnectors_[ADN_Objects_GUI::eDetectionCapacityPresent]->Connect( &detection.bPresent_, bConnect );
+    vItemConnectors_[ADN_Objects_GUI::eActionRange]->Connect( &detection.rActionRange_, bConnect );
+    vItemConnectors_[ADN_Objects_GUI::eHasDetectionTime]->Connect( &detection.bDetectTime_, bConnect );
+    vItemConnectors_[ADN_Objects_GUI::eHasIdentificationTime]->Connect( &detection.bIdentTime_, bConnect );
+    vItemConnectors_[ADN_Objects_GUI::eHasRecoTime]->Connect( &detection.bRecoTime_, bConnect );
+    vItemConnectors_[ADN_Objects_GUI::eDetectionTime]->Connect( &detection.detectTime_, bConnect );
+    vItemConnectors_[ADN_Objects_GUI::eRecoTime]->Connect( &detection.recoTime_, bConnect );
+    vItemConnectors_[ADN_Objects_GUI::eIdentificationTime]->Connect( &detection.identTime_, bConnect );
+
 	ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Objects_GUI::eNbrGuiElements );
 }
 

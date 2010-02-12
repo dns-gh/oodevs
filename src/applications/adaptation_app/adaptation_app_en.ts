@@ -2582,6 +2582,22 @@ stance</source>
         <source>Genie prepared</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Detection duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recognition duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identification duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Action range</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_OpenFile_Exception</name>

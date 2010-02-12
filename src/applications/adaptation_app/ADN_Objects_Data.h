@@ -196,7 +196,6 @@ public:
     };
 
     typedef ADN_CapacityInfos_Default< eActivableCapacity >         ADN_CapacityInfos_Activable;
-    typedef ADN_CapacityInfos_Default< eDetectionCapacity >         ADN_CapacityInfos_Detection;
     typedef ADN_CapacityInfos_Default< eExtinguishableCapacity >    ADN_CapacityInfos_Extinguishable;
     typedef ADN_CapacityInfos_Default< eInteractWithEnemyCapacity > ADN_CapacityInfos_InteractWithEnemy;
     typedef ADN_CapacityInfos_Default< eInterferenceCapacity >      ADN_CapacityInfos_Interference;
@@ -533,6 +532,37 @@ public:
         ADN_Type_Choice< std::string > unitType_;   
         std::auto_ptr< ADN_CapacityInfos_Buildable >     ptrBuildable_;
         std::auto_ptr< ADN_CapacityInfos_Improvable >    ptrImprovable_;
+    };
+
+    class ADN_CapacityInfos_Detection
+        : public ADN_CapacityInfos_Default< eDetectionCapacity >
+    {
+    public:
+        static const std::string TAG;
+        static const std::string DISPLAY_NAME;
+        ADN_CapacityInfos_Detection();
+
+        void ReadArchive( xml::xistream& input );
+        void ReadAcquisitionTime( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
+
+        const std::string& displayName() const
+        {
+            return DISPLAY_NAME;
+        }
+        const std::string& tag() const
+        {
+            return TAG;
+        }
+
+    public:
+        ADN_Type_Bool   bDetectTime_;
+        ADN_Type_Time   detectTime_;
+        ADN_Type_Bool   bIdentTime_;
+        ADN_Type_Time   recoTime_;
+        ADN_Type_Bool   bRecoTime_;
+        ADN_Type_Time   identTime_;
+        ADN_Type_Double rActionRange_;
     };
     
 //*****************************************************************************

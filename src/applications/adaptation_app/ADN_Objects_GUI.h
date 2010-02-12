@@ -61,8 +61,6 @@ public:
 
 		eDecontaminationCapacityPresent,
 
-		eDetectionCapacityPresent,
-
 		eExtinguishableCapacityPresent,
 
 		eHealableCapacityPresent,    
@@ -102,6 +100,15 @@ public:
 
 		eWorkableCapacityPresent,
         eWorkableCapacity_Size,
+
+        eDetectionCapacityPresent,
+        eActionRange,
+        eHasDetectionTime,
+        eDetectionTime,
+        eHasRecoTime,
+        eRecoTime,
+        eHasIdentificationTime,
+        eIdentificationTime,
 
         eNbrGuiElements
     };

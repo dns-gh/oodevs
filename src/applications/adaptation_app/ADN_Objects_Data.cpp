@@ -776,6 +776,101 @@ void ADN_Objects_Data::ADN_CapacityInfos_Toxic::WriteArchive( xml::xostream& xos
 //@}
 */
 
+
+//! @name ADN_CapacityInfos_Detection
+//@{
+// -----------------------------------------------------------------------------
+// Name: DetectTimes::DetectTimes
+// Created: APE 2005-01-17
+// -----------------------------------------------------------------------------
+ADN_Objects_Data::ADN_CapacityInfos_Detection::ADN_CapacityInfos_Detection()
+    : bDetectTime_  ( false )
+    , detectTime_   ( "0s" )
+    , bIdentTime_   ( false )
+    , recoTime_     ( "0s" )
+    , bRecoTime_    ( false )
+    , identTime_    ( "0s" )
+    , rActionRange_ ( 0 )
+{
+    bDetectTime_.SetParentNode( *this );
+    detectTime_.SetParentNode( *this );
+    bIdentTime_.SetParentNode( *this );
+    recoTime_.SetParentNode( *this );
+    identTime_.SetParentNode( *this );
+    rActionRange_.SetParentNode( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DetectTimes::ReadArchive
+// Created: APE 2005-01-17
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_Detection::ReadArchive( xml::xistream& input )
+{
+    bPresent_ = true;
+    input >> xml::attribute( "action-range", rActionRange_ );
+    input >> xml::optional()
+        >> xml::start( "acquisition-times" )
+        >> xml::list( "acquisition-time", *this, &ADN_Objects_Data::ADN_CapacityInfos_Detection::ReadAcquisitionTime )
+        >> xml::end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::DetectTimes::ReadAcquisitionTime
+// Created: AGE 2007-08-16
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_Detection::ReadAcquisitionTime( xml::xistream& input )
+{
+    std::string time, level;
+    input >> xml::optional() 
+          >> xml::attribute( "time", time )
+          >> xml::attribute( "level", level );
+    if( time.empty() )
+        return;
+
+    if( level == "identification" ) {
+        bIdentTime_ = true;
+        identTime_ = time;
+    }
+    else if( level == "recognition" ) {
+        bRecoTime_ = true;
+        recoTime_ = time;
+    }
+    else if( level == "detection" ) {
+        bDetectTime_ = true;
+        detectTime_ = time;
+    }
+    else
+        throw ADN_DataException( "Invalid data", tr( "Objects - Invalid level '%1'" ).arg( level.c_str() ).ascii() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DetectTimes::WriteArchive
+// Created: APE 2005-01-17
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_Detection::WriteArchive( xml::xostream& output )
+{
+    output << xml::attribute( "action-range", rActionRange_ );
+    output << xml::start( "acquisition-times" );
+    if( bDetectTime_.GetData() )
+        output << xml::start( "acquisition-time" )
+        << xml::attribute( "level", "detection" )
+        << xml::attribute( "time", detectTime_ )
+        << xml::end();
+    if( bRecoTime_.GetData() )
+        output << xml::start( "acquisition-time" )
+        << xml::attribute( "level", "recognition" )
+        << xml::attribute( "time", recoTime_ )
+        << xml::end();
+    if( bIdentTime_.GetData() )
+        output << xml::start( "acquisition-time" )
+        << xml::attribute( "level", "identification" )
+        << xml::attribute( "time", identTime_ )
+        << xml::end();
+    output << xml::end();
+}
+//@}
+
+
 // =============================================================================
 // ObjectInfos
 // =============================================================================

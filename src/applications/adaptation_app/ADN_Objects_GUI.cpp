@@ -233,9 +233,14 @@ void ADN_Objects_GUI::Build()
         vInfosConnectors[ eDecontaminationCapacityPresent ] = & decontamination->GetConnector();
     }
 
+    // Detection
 	ADN_GroupBox* detection = new ADN_GroupBox( 3, Qt::Horizontal, tr( ADN_Objects_Data::ADN_CapacityInfos_Detection::DISPLAY_NAME.c_str() ), hBox );        
     {
         vInfosConnectors[ eDetectionCapacityPresent ] = & detection->GetConnector();
+        builder.AddField<ADN_TimeField>( detection, tr( "Action range" ), vInfosConnectors[eActionRange], tr( "m" ) );
+        builder.AddOptionnalField<ADN_TimeField>( detection, tr( "Detection duration" ), vInfosConnectors[eHasDetectionTime], vInfosConnectors[eDetectionTime] );
+        builder.AddOptionnalField<ADN_TimeField>( detection, tr( "Recognition duration" ), vInfosConnectors[eHasRecoTime], vInfosConnectors[eRecoTime] );
+        builder.AddOptionnalField<ADN_TimeField>( detection, tr( "Identification duration" ), vInfosConnectors[eHasIdentificationTime], vInfosConnectors[eIdentificationTime] );
     }
 
 	ADN_GroupBox* extinguishable = new ADN_GroupBox( 3, Qt::Horizontal, tr( ADN_Objects_Data::ADN_CapacityInfos_Extinguishable::DISPLAY_NAME.c_str() ), hBox );        
