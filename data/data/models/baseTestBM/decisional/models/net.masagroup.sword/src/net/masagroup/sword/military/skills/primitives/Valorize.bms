@@ -3,7 +3,7 @@ rootnode
     connections = { skill.links.MoveAndTakePosition, skill.nodes.TakePosition };
 
     done = function( self, params, additionnalParams )
-        self.targets[ additionnalParams.buildEntity ] = nil
+        self.targets[ additionnalParams.valorizeEntity ] = nil
         if not next( self.targets ) then
             Feedback( self.feedbacks.done )
         end
@@ -18,37 +18,34 @@ rootnode
 
     activate = function( self ) 
       for _,entity in ipairs( self.params.entities ) do
-            Activate( skill.nodes.BuildElement, entity:buildPriority(), { entity = entity } )
+            Activate( skill.nodes.ValorizeElement, entity:valorizePriority(), { entity = entity } )
         end
     end
 }
 
-node "BuildElement"
+node "ValorizeElement"
 {
     feedbacks = { "done" }; 
 
     activate = function( self )
     
-      if not self.params.entity:isBuild() then
-            Feedback( self.feedbacks.done, { buildEntity = self.params.entity } )
-        end
-      
-    
-        if self.params.entity:canBeBuild() then
-            Activate( skill.nodes.Build, 1, { entity = entity } )
-        else
-          --TODO RC not possible to build, by feedback , by other way?
-        end
+      if not self.params.entity:isValorized() then
+            Feedback( self.feedbacks.done, { valorizeEntity = self.params.entity } )
+      end    
+      if self.params.entity:canBeRealized() then
+            Activate( skill.nodes.Realize, 1, { entity = entity } )
+      else
+      end
     end
 }
 
-node "Build"
+node "Realize"
 {
     feedbacks = { "done" };
 
     acquire = { [ skill.resources.buildEquipment ] = 1 };
 
     select = function( self )
-      self.param.entity:buildIt()
+      self.param.entity:realizeIt()
     end
 }

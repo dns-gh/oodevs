@@ -25,28 +25,21 @@ rootnode
 
 node "BuildElement"
 {
-  connections = { skill.links.MoveAndTakePosition, skill.nodes.Build, skill.nodes.Valorize };
-  
+ 	connections = { skill.links.MoveAndTakePosition, skill.nodes.Build };
     feedbacks = { "done" }; 
 
     activate = function( self )
-      if self.params.entity:isBuild() and ( not params.entity:isValorizable() or self.params.entity::isValorized() ) then
-            Feedback( self.feedbacks.done, { buildEntity = self.params.entity } )
-        end     
     
+    	if self.params.entity:isBuild() then
+            Feedback( self.feedbacks.done, { buildEntity = self.params.entity } )
+        end      
         if self.params.entity:canBeBuild() then
             Activate( skill.nodes.Build, 1, { entity = entity } )
-        elseif self.params.entity:isValorizable() and self.params.entity:canBeValorized()
-          Activate( skill.nodes.Valorized, 1, { entity = entity } )
-        else
-          --TODO RC not possible to build, by feedback , by other way?
         end
-              
         -- Moving toward build position, no need for keypoint "building position" i think, move directly to destination
         Activate( skill.links.moveAndTakePosition, 1, { entity = entity } )
     end
 }
-
 node "Build"
 {
     feedbacks = { "done" };
@@ -55,16 +48,5 @@ node "Build"
 
     select = function( self )
       self.param.entity:buildIt()
-    end
-}
-
-node "Valorize"
-{
-    feedbacks = { "done" };
-
-    acquire = { [ skill.resources.buildEquipment ] = 1 };
-
-    select = function( self )
-      self.param.entity:valorizedIt()
     end
 }
