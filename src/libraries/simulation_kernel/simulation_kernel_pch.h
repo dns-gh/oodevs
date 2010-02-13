@@ -18,15 +18,13 @@
 #pragma warning( disable : 4702 )
 #pragma warning( disable : 4511 4512 4100 4244 )
 
-#include <boost/mpl/and.hpp> // $$$$ MCO : see http://svn.boost.org/trac/boost/ticket/1782
 #include <boost/serialization/serialization.hpp>
-
+#include <boost/serialization/extended_type_info.hpp> // $$$$ MCO : see http://old.nabble.com/-Serialization--extended_type_info.hpp-to27448440.html
 #include <boost/serialization/map.hpp>
 #include <boost/serialization/list.hpp>
 #include <boost/serialization/set.hpp>
 #include <boost/serialization/vector.hpp>
 #include <boost/serialization/string.hpp>
-#include <boost/serialization/export.hpp>
 
 #include <boost/utility.hpp>
 

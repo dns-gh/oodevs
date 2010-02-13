@@ -9,18 +9,17 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_CheckPointInArchive.h"
-
 #include <boost/archive/impl/basic_binary_iprimitive.ipp>
 #include <boost/archive/impl/basic_binary_iarchive.ipp>
-#include <boost/archive/impl/archive_pointer_iserializer.ipp>
+#include <boost/archive/impl/archive_serializer_map.ipp>
 
 namespace boost {
 namespace archive {
 
 template class basic_binary_iprimitive<MIL_CheckPointInArchive, char, std::char_traits<char> >;
-template class basic_binary_iarchive<MIL_CheckPointInArchive> ;
+template class basic_binary_iarchive<MIL_CheckPointInArchive>;
 template class binary_iarchive_impl<MIL_CheckPointInArchive, char, std::char_traits<char> >;
-template class detail::archive_pointer_iserializer<MIL_CheckPointInArchive> ;
+template class detail::archive_serializer_map<MIL_CheckPointInArchive>;
 
 } // namespace archive
 } // namespace boost

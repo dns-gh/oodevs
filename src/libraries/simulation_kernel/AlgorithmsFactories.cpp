@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/WeaponAvailabilityComputerFactory.h"
 #include "simulation_kernel/ComposantesAbleToBeFiredComputerFactory.h"
@@ -24,6 +23,7 @@
 #include "simulation_kernel/DotationComputerFactory.h"
 #include "simulation_kernel/LoadingComputerFactory.h"
 #include "simulation_kernel/WeaponReloadingComputerFactory.h"
+#include <boost/serialization/export.hpp>
 
 BOOST_CLASS_EXPORT_GUID( AlgorithmsFactories, "AlgorithmsFactories" )
 

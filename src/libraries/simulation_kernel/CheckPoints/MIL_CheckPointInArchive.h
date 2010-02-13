@@ -11,6 +11,7 @@
 #define __MIL_CheckPointInArchive_h_
 
 #pragma warning( push, 0 )
+#include <boost/serialization/export.hpp>
 #include <boost/archive/binary_iarchive_impl.hpp>
 #pragma warning( pop )
 

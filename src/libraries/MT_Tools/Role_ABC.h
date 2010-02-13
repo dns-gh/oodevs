@@ -12,9 +12,10 @@
 #ifndef __Role_ABC_h_
 #define __Role_ABC_h_
 
+#include <boost/serialization/export.hpp>
+
 namespace tools
 {
-
 // =============================================================================
 // @class  Role_ABC
 // Created: JVT/NLD 2004-08-03
