@@ -17,6 +17,7 @@
 #include <boost/bind.hpp>
 #include <boost/thread.hpp>
 #include <boost/tokenizer.hpp>
+#include <boost/lexical_cast.hpp>
 #pragma warning( pop )
 
 using namespace boost::asio;
@@ -36,8 +37,8 @@ NetworkExerciseLister::NetworkExerciseLister( const Config& config, const std::s
         socket_.reset( new boost::asio::ip::udp::socket( network_, ip::udp::endpoint( ip::udp::v4(), config.GetListClientPort() ) ) );
         thread_.reset( new boost::thread( boost::bind( &NetworkExerciseLister::RunNetwork, this ) ) );
         socket_->async_receive( buffer( answer_, 1024 ),
-				                boost::bind( &NetworkExerciseLister::OnReceive, this, 
-								              placeholders::error,
+                                boost::bind( &NetworkExerciseLister::OnReceive, this,
+                                              placeholders::error,
                                               placeholders::bytes_transferred ) );
     }
     catch( ... )
@@ -112,9 +113,9 @@ void NetworkExerciseLister::OnReceive( const boost::system::error_code& error, s
             (*it)->Update();
     }
     socket_->async_receive( buffer( answer_, 1024 ),
-						    boost::bind( &NetworkExerciseLister::OnReceive, this, 
-							              placeholders::error,
-									      placeholders::bytes_transferred ) );
+                            boost::bind( &NetworkExerciseLister::OnReceive, this, 
+                                          placeholders::error,
+                                          placeholders::bytes_transferred ) );
 }
 
 // -----------------------------------------------------------------------------

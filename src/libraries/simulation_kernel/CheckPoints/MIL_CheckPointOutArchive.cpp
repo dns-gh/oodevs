@@ -15,10 +15,12 @@
 
 namespace boost {
 namespace archive {
+
 template class basic_binary_oprimitive<MIL_CheckPointOutArchive, char, std::char_traits<char> >;
 template class basic_binary_oarchive<MIL_CheckPointOutArchive>;
 template class binary_oarchive_impl<MIL_CheckPointOutArchive, char, std::char_traits<char> >;
 template class detail::archive_serializer_map<MIL_CheckPointOutArchive>;
+
 } // namespace archive
 } // namespace boost
 
