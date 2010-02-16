@@ -39,6 +39,7 @@ struct ASN1T_Location;
 #include "MockBuilder.h"
 #include "MockArmy.h"
 #include "MockAgent.h"
+#include "MockMIL_Time_ABC.h"
 #include "MockRoleLocation.h"
 #include "MockRoleNBC.h"
 #include "MockRoleInterface_Posture.h"
@@ -400,6 +401,8 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Detection )
     static_cast< Object& >( *object ).GetAttribute< AnimatorAttribute >().AddAnimator( animator );
 
     MockAgent intruder;
+    MockMIL_Time_ABC time;
+    time.GetCurrentTick_mocker.expects( mockpp::once() ).will( returnValue( 1u ) );
     BOOST_CHECK_NO_THROW( object->ProcessAgentEntering( intruder ) );
     animator.GetRole< MockRolePerceiver >().NotifyExternalPerception_mocker.expects( once() )
                                                                            .with( same< MIL_Agent_ABC >( intruder )

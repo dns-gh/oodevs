@@ -27,7 +27,7 @@ class AutomateFactory : public AutomateFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit AutomateFactory( MIL_IDManager& idManager, DEC_DataBase& database  );
+             AutomateFactory( MIL_IDManager& idManager, DEC_DataBase& database  );
     virtual ~AutomateFactory();
     //@}
 
