@@ -106,7 +106,11 @@ public:
     {
         const PHY_ConsumptionType* pMode = &mode;
         return SetConsumptionModeShadow( pMode );
-    }
+    }	
+    virtual const PHY_DotationCategory* GetIlluminationDotations( float, bool ) const
+	{
+		throw;
+	}
 
     MOCKPP_VOID_CHAINABLE1( MockRoleDotations, ReadOverloadingShadow, xml::xistream* );    
     MOCKPP_VOID_CHAINABLE_EXT1( MockRoleDotations, Update, bool, , bool );
