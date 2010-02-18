@@ -197,13 +197,17 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
 
     ADN_Objects_Data::ADN_CapacityInfos_Detection& detection = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Detection >( ADN_Objects_GUI::eDetectionCapacityPresent );
     vItemConnectors_[ADN_Objects_GUI::eDetectionCapacityPresent]->Connect( &detection.bPresent_, bConnect );
-    vItemConnectors_[ADN_Objects_GUI::eActionRange]->Connect( &detection.rActionRange_, bConnect );
     vItemConnectors_[ADN_Objects_GUI::eHasDetectionTime]->Connect( &detection.bDetectTime_, bConnect );
     vItemConnectors_[ADN_Objects_GUI::eHasIdentificationTime]->Connect( &detection.bIdentTime_, bConnect );
     vItemConnectors_[ADN_Objects_GUI::eHasRecoTime]->Connect( &detection.bRecoTime_, bConnect );
     vItemConnectors_[ADN_Objects_GUI::eDetectionTime]->Connect( &detection.detectTime_, bConnect );
     vItemConnectors_[ADN_Objects_GUI::eRecoTime]->Connect( &detection.recoTime_, bConnect );
     vItemConnectors_[ADN_Objects_GUI::eIdentificationTime]->Connect( &detection.identTime_, bConnect );
+
+    ADN_Objects_Data::ADN_CapacityInfos_Spawn& spawn = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Spawn >( ADN_Objects_GUI::eSpawnCapacityPresent );
+    vItemConnectors_[ADN_Objects_GUI::eSpawnCapacityPresent]->Connect( &spawn.bPresent_, bConnect );
+    vItemConnectors_[ADN_Objects_GUI::eActionRange]->Connect( &spawn.rActionRange_, bConnect );
+    vItemConnectors_[ADN_Objects_GUI::eObjectType]->Connect( &spawn.ptrObject_, bConnect );
 
 	ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Objects_GUI::eNbrGuiElements );
 }

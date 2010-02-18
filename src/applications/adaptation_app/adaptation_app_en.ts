@@ -2598,6 +2598,10 @@ stance</source>
         <source>Action range</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Object type</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_OpenFile_Exception</name>

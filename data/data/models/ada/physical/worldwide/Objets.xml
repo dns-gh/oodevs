@@ -270,7 +270,7 @@
         </resources>
       </buildable>
     </constructor>
-    <detection action-range="0">
+    <detection>
       <acquisition-times/>
     </detection>
     <heuristic>
@@ -296,13 +296,19 @@
   </object>
   <object geometry="point" name="Installation" symbol="S*GPI-----*****" type="installation"/>
   <object geometry="point" name="Distribution point" symbol="G*SPPR----****X" type="distribution point"/>
-  <object geometry="point" name="Sensors zone" symbol="G*GPGPPK--****X" type="sensors">
-    <detection action-range="10">
+  <object geometry="point" name="Sensors detection zone" symbol="G*GPGAL---****X" type="sensorsDetectionZone">
+    <detection>
       <acquisition-times>
-        <acquisition-time level="detection" time="20s"/>
-        <acquisition-time level="recognition" time="40s"/>
-        <acquisition-time level="identification" time="60s"/>
+        <acquisition-time level="detection" time="200s"/>
+        <acquisition-time level="recognition" time="400s"/>
+        <acquisition-time level="identification" time="600s"/>
       </acquisition-times>
     </detection>
+  </object>
+  <object geometry="polygon" name="Sensors zone" symbol="G*GPGAL---****X" type="sensors">
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw">
+      <buildable/>
+    </constructor>
+    <spawn action-range="1000" object="sensorsDetectionZone"/>
   </object>
 </objects>

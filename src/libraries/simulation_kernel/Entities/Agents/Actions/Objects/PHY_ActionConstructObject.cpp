@@ -27,6 +27,7 @@ PHY_ActionConstructObject::PHY_ActionConstructObject( MIL_AgentPion& pion, const
     , role_              ( pion.GetRole< PHY_RoleAction_Objects >() )
     , pObject_           ( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( pion.GetArmy(), strType, pLocalisation, EnumDemolitionTargetType::preliminary ) ) 
 {    
+    role_.SetCreator( *pObject_ );
     Callback( role_.GetInitialReturnCode() );
 }
 

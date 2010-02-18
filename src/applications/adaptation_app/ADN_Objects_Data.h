@@ -171,7 +171,8 @@ public:
         eSupplyRouteCapacity,
         eTerrainHeuristicCapacity,
         eTimeLimitedCapacity,
-        eWorkableCapacity	
+        eWorkableCapacity,
+        eSpawnCapacity
     };
 
     template< E_Capacities T, typename DefaultFieldsHolderType = NullType >
@@ -562,6 +563,32 @@ public:
         ADN_Type_Time   recoTime_;
         ADN_Type_Bool   bRecoTime_;
         ADN_Type_Time   identTime_;
+    };
+
+    class ObjectInfos;
+    class ADN_CapacityInfos_Spawn
+        : public ADN_CapacityInfos_Default< eSpawnCapacity >
+    {
+    public:
+        static const std::string TAG;
+        static const std::string DISPLAY_NAME;
+        ADN_CapacityInfos_Spawn();
+
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
+
+        const std::string& displayName() const
+        {
+            return DISPLAY_NAME;
+        }
+        const std::string& tag() const
+        {
+            return TAG;
+        }
+
+    public:
+        ADN_Objects_Data::ObjectInfos* pObject_;
+        ADN_Type_String ptrObject_;
         ADN_Type_Double rActionRange_;
     };
     

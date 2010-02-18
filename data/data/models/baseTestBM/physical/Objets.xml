@@ -272,7 +272,7 @@
         </resources>
       </buildable>
     </constructor>
-    <detection action-range="0">
+    <detection>
       <acquisition-times/>
     </detection>
     <workable max-animator="1"/>

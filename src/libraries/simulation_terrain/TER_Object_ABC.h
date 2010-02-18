@@ -74,6 +74,7 @@ public:
     //! @name Accessors
     //@{
     const TER_Localisation& GetLocalisation() const;
+    TER_Localisation  GetLocalisation();
     //@}
 
     //! @name Modifiers

@@ -1140,6 +1140,7 @@
       <object type="landing area (helicopter)"/>
       <object construction-time-factor="240s" destruction-time-factor="180s" devalorization-time="800s" initial-construction-time="3600s" initial-destruction-time="0s" type="mined area (scattered)" valorization-time="0s"/>
       <object construction-time-factor="20m" initial-construction-time="2h" initial-destruction-time="02h" type="anti tank obstacle"/>
+      <object construction-time-factor="1s" destruction-time-factor="1s" devalorization-time="1s" initial-construction-time="1s" initial-destruction-time="0s" type="sensors"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="MOB Breakdown 1 EB"/>

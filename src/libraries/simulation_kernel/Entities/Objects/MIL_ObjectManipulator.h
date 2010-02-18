@@ -48,6 +48,8 @@ public:
 
     virtual bool CanBeAnimatedBy( const MIL_Agent_ABC& agent ) const;
     virtual void AddAnimator( const MIL_Agent_ABC& agent );
+    virtual void AddDetector( const MIL_Agent_ABC& agent );
+    virtual void AddCreator( const MIL_Agent_ABC& agent );
     virtual void ReleaseAnimator( const MIL_Agent_ABC& agent );
     //@}
 

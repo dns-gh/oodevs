@@ -102,6 +102,15 @@ const TER_Localisation& TER_Object_ABC::GetLocalisation() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: TER_Object_ABC::GetLocalisation
+// Created: AGE 2005-01-31
+// -----------------------------------------------------------------------------
+TER_Localisation TER_Object_ABC::GetLocalisation()
+{
+    return location_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: TER_Object_ABC::UpdateLocalisation
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------

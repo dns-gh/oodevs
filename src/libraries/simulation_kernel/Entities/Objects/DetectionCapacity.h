@@ -15,6 +15,7 @@
 #include <boost/serialization/export.hpp>
 
 class MIL_Agent_ABC;
+class TER_Localisation;
 // =============================================================================
 /** @class  DetectionCapacity
     @brief  DetectionCapacity
@@ -44,6 +45,9 @@ public:
     virtual void ProcessAgentInside( Object& object, MIL_Agent_ABC& agent );
     virtual void ProcessAgentEntering( Object& object, MIL_Agent_ABC& agent );
     virtual void ProcessAgentExiting( Object& object, MIL_Agent_ABC& agent );
+
+    void AddDetector( Object& object, const MIL_Agent_ABC& agent );
+    void ScaleLocalisation( TER_Localisation& localisation );
     //@}
 
     //! @name Helpers
@@ -69,7 +73,6 @@ private:
         float rDetectionTime_;
         float rRecognitionTime_;
         float rIdentificationTime_;
-        float rActionRange_;
 
         T_AgentMap agentInsideMap_;
     //@}

@@ -102,13 +102,16 @@ public:
         eWorkableCapacity_Size,
 
         eDetectionCapacityPresent,
-        eActionRange,
         eHasDetectionTime,
         eDetectionTime,
         eHasRecoTime,
         eRecoTime,
         eHasIdentificationTime,
         eIdentificationTime,
+
+        eSpawnCapacityPresent,
+        eActionRange,
+        eObjectType,
 
         eNbrGuiElements
     };

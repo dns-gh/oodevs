@@ -30,6 +30,8 @@
 #include "CrossingSiteAttribute.h"
 #include "SupplyRouteAttribute.h"
 
+#include "DetectionCapacity.h"
+
 #include "Knowledge/DEC_Knowledge_Object.h"
 
 #include "Entities/Agents/MIL_Agent_ABC.h"
@@ -113,6 +115,18 @@ Object::~Object()
 {
     MIL_Object_ABC::Unregister();
 }
+
+//TEMP SLG
+/*
+// -----------------------------------------------------------------------------
+// Name: Object constructor
+// Created: SLG 2010-02-17
+// -----------------------------------------------------------------------------
+void Object::CreateChildObject( *this, const DetectionCapacity& capacity )
+{
+    childObject_ = new Object( capacity );
+}
+*/
 
 // -----------------------------------------------------------------------------
 // Name: Object::GetID

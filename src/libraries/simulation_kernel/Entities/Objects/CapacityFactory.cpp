@@ -30,6 +30,7 @@
 #include "InputPropagationCapacity.h"
 #include "MobilityCapacity.h"
 #include "ProtectionCapacity.h"
+#include "SpawnCapacity.h"
 #include "TerrainHeuristicCapacity.h"
 #include "TimeLimitedCapacity.h"
 #include "WorkableCapacity.h"
@@ -95,6 +96,7 @@ CapacityFactory::CapacityFactory()
     Register( "workable", boost::bind( &AddBuilder< WorkableCapacity >::Add, _1, _2 ) );
     Register( "supply", boost::bind( &AddBuilder< SupplyCapacity >::Add, _1, _2 ) );
     Register( "detection", boost::bind( &AddBuilder< DetectionCapacity >::Add, _1, _2 ) );
+    Register( "spawn", boost::bind( &AddBuilder< SpawnCapacity >::Add, _1, _2 ) );
 }
 
 // -----------------------------------------------------------------------------

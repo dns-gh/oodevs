@@ -19,6 +19,8 @@
 #include "MobilityCapacity.h"
 #include "ExtinguishableCapacity.h"
 #include "WorkableCapacity.h"
+#include "DetectionCapacity.h"
+#include "SpawnCapacity.h"
 
 #include "AnimatorAttribute.h"
 #include "ConstructionAttribute.h"
@@ -177,6 +179,24 @@ void MIL_ObjectManipulator::Extinguish( int agent, int nHose )
 void MIL_ObjectManipulator::AddAnimator( const MIL_Agent_ABC& agent )
 {
     object_.Get< WorkableCapacity >().AddAnimator( object_, agent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectManipulator::AddCreator
+// Created: SLG 2010-02-17
+// -----------------------------------------------------------------------------
+void MIL_ObjectManipulator::AddCreator( const MIL_Agent_ABC& agent )
+{
+    object_.Get< SpawnCapacity >().AddCreator( object_, agent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectManipulator::AddDetector
+// Created: SLG 2010-02-17
+// -----------------------------------------------------------------------------
+void MIL_ObjectManipulator::AddDetector( const MIL_Agent_ABC& agent )
+{
+    object_.Get< DetectionCapacity >().AddDetector( object_, agent );
 }
     
 // -----------------------------------------------------------------------------

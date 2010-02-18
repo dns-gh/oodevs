@@ -20,6 +20,7 @@ class ObjectAttribute_ABC;
 class MIL_ObjectType_ABC;
 class MIL_Army_ABC;
 class MIL_ObjectBuilder_ABC;
+class DetectionCapacity;
 
 // =============================================================================
 /** @class  Object
@@ -168,7 +169,8 @@ private:
     uint                    id_;
     T_Capacities            capacities_;
     T_InteractiveCapacities interactives_;
-    T_Attributes            attributes_;    
+    T_Attributes            attributes_;   
+    std::auto_ptr< Object > pChildObject_;
     //@}
 
     //! @name 

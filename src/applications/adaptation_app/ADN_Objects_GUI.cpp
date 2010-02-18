@@ -237,10 +237,17 @@ void ADN_Objects_GUI::Build()
 	ADN_GroupBox* detection = new ADN_GroupBox( 3, Qt::Horizontal, tr( ADN_Objects_Data::ADN_CapacityInfos_Detection::DISPLAY_NAME.c_str() ), hBox );        
     {
         vInfosConnectors[ eDetectionCapacityPresent ] = & detection->GetConnector();
-        builder.AddField<ADN_TimeField>( detection, tr( "Action range" ), vInfosConnectors[eActionRange], tr( "m" ) );
         builder.AddOptionnalField<ADN_TimeField>( detection, tr( "Detection duration" ), vInfosConnectors[eHasDetectionTime], vInfosConnectors[eDetectionTime] );
         builder.AddOptionnalField<ADN_TimeField>( detection, tr( "Recognition duration" ), vInfosConnectors[eHasRecoTime], vInfosConnectors[eRecoTime] );
         builder.AddOptionnalField<ADN_TimeField>( detection, tr( "Identification duration" ), vInfosConnectors[eHasIdentificationTime], vInfosConnectors[eIdentificationTime] );
+    }
+
+    // Detection
+    ADN_GroupBox* spawn = new ADN_GroupBox( 3, Qt::Horizontal, tr( ADN_Objects_Data::ADN_CapacityInfos_Spawn::DISPLAY_NAME.c_str() ), hBox );        
+    {
+        vInfosConnectors[ eSpawnCapacityPresent ] = & spawn->GetConnector();
+        builder.AddField<ADN_EditLine_Int>( spawn, tr( "Action range" ), vInfosConnectors[eActionRange], tr( "m" ) );
+        builder.AddField<ADN_EditLine_String>( spawn, tr( "Object type" ), vInfosConnectors[eObjectType] );
     }
 
 	ADN_GroupBox* extinguishable = new ADN_GroupBox( 3, Qt::Horizontal, tr( ADN_Objects_Data::ADN_CapacityInfos_Extinguishable::DISPLAY_NAME.c_str() ), hBox );        

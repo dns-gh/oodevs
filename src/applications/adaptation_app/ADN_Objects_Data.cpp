@@ -780,7 +780,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Toxic::WriteArchive( xml::xostream& xos
 //! @name ADN_CapacityInfos_Detection
 //@{
 // -----------------------------------------------------------------------------
-// Name: DetectTimes::DetectTimes
+// Name: ADN_Objects_Data::DetectTimes
 // Created: APE 2005-01-17
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_Detection::ADN_CapacityInfos_Detection()
@@ -790,24 +790,21 @@ ADN_Objects_Data::ADN_CapacityInfos_Detection::ADN_CapacityInfos_Detection()
     , recoTime_     ( "0s" )
     , bRecoTime_    ( false )
     , identTime_    ( "0s" )
-    , rActionRange_ ( 0 )
 {
     bDetectTime_.SetParentNode( *this );
     detectTime_.SetParentNode( *this );
     bIdentTime_.SetParentNode( *this );
     recoTime_.SetParentNode( *this );
     identTime_.SetParentNode( *this );
-    rActionRange_.SetParentNode( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DetectTimes::ReadArchive
-// Created: APE 2005-01-17
+// Name: ADN_Objects_Data::ReadArchive
+// Created: SLG 2010-02-18
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ADN_CapacityInfos_Detection::ReadArchive( xml::xistream& input )
 {
     bPresent_ = true;
-    input >> xml::attribute( "action-range", rActionRange_ );
     input >> xml::optional()
         >> xml::start( "acquisition-times" )
         >> xml::list( "acquisition-time", *this, &ADN_Objects_Data::ADN_CapacityInfos_Detection::ReadAcquisitionTime )
@@ -816,7 +813,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Detection::ReadArchive( xml::xistream& 
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::DetectTimes::ReadAcquisitionTime
-// Created: AGE 2007-08-16
+// Created: SLG 2010-02-18
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ADN_CapacityInfos_Detection::ReadAcquisitionTime( xml::xistream& input )
 {
@@ -844,12 +841,11 @@ void ADN_Objects_Data::ADN_CapacityInfos_Detection::ReadAcquisitionTime( xml::xi
 }
 
 // -----------------------------------------------------------------------------
-// Name: DetectTimes::WriteArchive
-// Created: APE 2005-01-17
+// Name: ADN_Objects_Data::WriteArchive
+// Created: SLG 2010-02-18
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ADN_CapacityInfos_Detection::WriteArchive( xml::xostream& output )
 {
-    output << xml::attribute( "action-range", rActionRange_ );
     output << xml::start( "acquisition-times" );
     if( bDetectTime_.GetData() )
         output << xml::start( "acquisition-time" )
@@ -867,6 +863,48 @@ void ADN_Objects_Data::ADN_CapacityInfos_Detection::WriteArchive( xml::xostream&
         << xml::attribute( "time", identTime_ )
         << xml::end();
     output << xml::end();
+}
+//@}
+
+//! @name ADN_CapacityInfos_Spawn
+//@{
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ADN_CapacityInfos_Spawn
+// Created: SLG 2010-02-18
+// -----------------------------------------------------------------------------
+ADN_Objects_Data::ADN_CapacityInfos_Spawn::ADN_CapacityInfos_Spawn()
+    : pObject_( 0 )
+    , rActionRange_( 0 )
+    , ptrObject_( "" )
+{
+    rActionRange_.SetParentNode( *this );
+    ptrObject_.SetParentNode( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ReadArchive
+// Created: APE 2005-01-17
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_Spawn::ReadArchive( xml::xistream& input )
+{
+    bPresent_ = true;
+    std::string objectType;
+    input >> xml::attribute( "object", objectType )
+          >> xml::attribute( "action-range", rActionRange_ );
+
+    pObject_ = ADN_Workspace::GetWorkspace().GetObjects().GetData().FindObject( objectType );
+    ptrObject_ = pObject_->strName_.GetData();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::WriteArchive
+// Created: APE 2005-01-17
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_Spawn::WriteArchive( xml::xostream& output )
+{
+    std::string strObject = pObject_->strType_.GetData();
+    output << xml::attribute( "object", strObject )
+           << xml::attribute( "action-range", rActionRange_ );
 }
 //@}
 
@@ -909,6 +947,7 @@ INIT_DATA( ADN_CapacityInfos_SupplyRoute,      "Supply-Route",      "supply-rout
 INIT_DATA( ADN_CapacityInfos_TerrainHeuristic, "Terrain Heuristic", "heuristic" );
 INIT_DATA( ADN_CapacityInfos_TimeLimited,      "TimeLimited",       "time-limited" );
 INIT_DATA( ADN_CapacityInfos_Workable,         "Workable",          "workable" );
+INIT_DATA( ADN_CapacityInfos_Spawn,            "Spawn   ",          "spawn" );
 
 
 //-----------------------------------------------------------------------------
@@ -977,6 +1016,7 @@ void ADN_Objects_Data::ObjectInfos::InitializeCapacities()
     capacities_[ ADN_CapacityInfos_TerrainHeuristic::TAG ].reset( new ADN_CapacityInfos_TerrainHeuristic() );
     capacities_[ ADN_CapacityInfos_TimeLimited::TAG ].reset( new ADN_CapacityInfos_TimeLimited() );
     capacities_[ ADN_CapacityInfos_Workable::TAG ].reset( new ADN_CapacityInfos_Workable() );
+    capacities_[ ADN_CapacityInfos_Spawn::TAG ].reset( new ADN_CapacityInfos_Spawn() );
 }
 
 // -----------------------------------------------------------------------------

@@ -13,10 +13,12 @@
 #include "AnimatorAttribute.h"
 #include "DetectionCapacity.h"
 #include "MIL_Singletons.h"
+#include "DetectorAttribute.h"
 #include "Object.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
+#include "simulation_terrain/TER_Localisation.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.h>
@@ -46,12 +48,10 @@ namespace
 // Created: MGD 2009-03-05
 // -----------------------------------------------------------------------------
 DetectionCapacity::DetectionCapacity( xml::xistream& xis )
-    : rActionRange_( 0 )
-    , rDetectionTime_( 0 )
+    : rDetectionTime_( 0 )
     , rRecognitionTime_( 0 )
     , rIdentificationTime_( 0 )
 {
-    xis >> xml::optional() >> xml::attribute( "action-range", rActionRange_ );
     xis >> xml::optional()
         >> xml::start( "acquisition-times" )
             >> xml::list( "acquisition-time", *this, &DetectionCapacity::ReadAcquisitionTime )
@@ -115,8 +115,10 @@ DetectionCapacity::DetectionCapacity()
 // Created: MGD 2009-03-05
 // -----------------------------------------------------------------------------
 DetectionCapacity::DetectionCapacity( const DetectionCapacity& from )
+    : rDetectionTime_( from.rDetectionTime_ )
+    , rRecognitionTime_( from.rRecognitionTime_ )
+    , rIdentificationTime_( from.rIdentificationTime_ )
 {
-    UNREFERENCED_PARAMETER( from );
     // NOTHING
 }
 
@@ -172,10 +174,16 @@ void DetectionCapacity::ProcessAgentInside( Object& object, MIL_Agent_ABC& agent
     {
         int currentTime = MIL_Singletons::GetTime().GetCurrentTick();
         const AnimatorAttribute::T_AgentSet& animators = object.GetAttribute< AnimatorAttribute >().GetAnimators();
-
         for( AnimatorAttribute::CIT_AgentSet itAnimator = animators.begin(); itAnimator != animators.end(); ++itAnimator )
         {
             PHY_RoleInterface_Perceiver& role = const_cast< MIL_Agent_ABC& >(**itAnimator).GetRole< PHY_RoleInterface_Perceiver >();
+            role.NotifyExternalPerception( agent, PHY_PerceptionLevel::identified_ );
+        }
+
+        const MIL_Agent_ABC* detector = object.GetAttribute< DetectorAttribute >().GetDetector();
+        if( detector )
+        {
+            PHY_RoleInterface_Perceiver& role = const_cast< MIL_Agent_ABC& >( *detector ).GetRole< PHY_RoleInterface_Perceiver >();
             if( it->second + rIdentificationTime_ < currentTime )
                 role.NotifyExternalPerception( agent, PHY_PerceptionLevel::identified_ );
             else if( it->second + rRecognitionTime_ < currentTime )
@@ -183,9 +191,13 @@ void DetectionCapacity::ProcessAgentInside( Object& object, MIL_Agent_ABC& agent
             else if( it->second + rDetectionTime_ < currentTime )
                 role.NotifyExternalPerception( agent, PHY_PerceptionLevel::detected_ );
         }
+        else
+        {
+            // SLG TODO when object is created by magic action : put agent in blackboard of all army's knowledgeGroup
+        }
+
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DetectionCapacity::ProcessAgentEntering
@@ -205,3 +217,11 @@ void DetectionCapacity::ProcessAgentExiting( Object& /*object*/, MIL_Agent_ABC& 
     agentInsideMap_.erase( &agent );
 }
   
+// -----------------------------------------------------------------------------
+// Name: WorkableCapacity::AddAnimator
+// Created: SLG 2010-02-16
+// -----------------------------------------------------------------------------
+void DetectionCapacity::AddDetector( Object& object, const MIL_Agent_ABC& agent )
+{
+    object.GetAttribute< DetectorAttribute >().AddDetector( agent );    
+}

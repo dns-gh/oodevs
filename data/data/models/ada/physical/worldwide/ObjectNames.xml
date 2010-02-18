@@ -40,5 +40,6 @@
     <object id="37" type="installation"/>
     <object id="38" type="fire"/>
     <object id="39" type="emergency shelter"/>
-	<object id="39" type="sensors"/>
+	<object id="40" type="sensors"/>
+	<object id="41" type="sensorsDetectionZone"/>
 </objects>

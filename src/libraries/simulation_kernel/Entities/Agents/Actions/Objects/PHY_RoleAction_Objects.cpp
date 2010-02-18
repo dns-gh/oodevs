@@ -22,6 +22,7 @@
 #include "Entities/Objects/MineAttribute.h"
 #include "Entities/Objects/BuildableCapacity.h"
 #include "Entities/Objects/WorkableCapacity.h"
+#include "Entities/Objects/SpawnCapacity.h"
 #include "Entities/Objects/OccupantAttribute.h"
 #include "Entities/Objects/StockAttribute.h"
 #include "Entities/Objects/FireAttribute.h"
@@ -485,6 +486,19 @@ void PHY_RoleAction_Objects::StartAnimateObject( boost::shared_ptr< DEC_Knowledg
     {
         pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
         object().AddAnimator( pion_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects::SetCreato
+// Created: SLG 2010-02-16
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Objects::SetCreator( MIL_Object_ABC& object )
+{
+    SpawnCapacity* capacity = object.Retrieve< SpawnCapacity >();
+    if ( capacity )
+    {
+        object().AddCreator( pion_ );
     }
 }
 

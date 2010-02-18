@@ -68,6 +68,7 @@ public:
     void StopOccupyingObject ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
     int  Supply              ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
     int  Distribute          ( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, boost::shared_ptr< DEC_Knowledge_Population >& populationKnowledge, uint quantity );
+    void SetCreator          ( MIL_Object_ABC& object );
 
     void ResumeWorkSuspended();
     void ConstructSuspended ();
