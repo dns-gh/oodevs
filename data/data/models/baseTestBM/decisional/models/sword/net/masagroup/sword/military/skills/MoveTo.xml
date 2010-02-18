@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.skills.MoveTo">
+	<description>Déplacement simple vers l'objectif et occupation de celui-ci. 
+	
+	Cet automatisme de bas niveau est utilisé par d'autres automatismes pour le déplacement vers des positions adaptées
+	à l'action à entreprendre sur les éléments.</description>
+	<parameters>
+		<parameter name="entities">
+			<description>L'élément que l'on veut rejoindre et occuper</description>
+			<type>
+				<list>
+					<class name="net.masagroup.military.generic.knowledge.Reachable" />
+				</list>
+			</type>
+		</parameter>
+		<parameter name="area">
+			<description>Zone dans laquelle l'entité peut se déplacer pour identifier l'élément.</description>
+			<type>
+				<list>
+					<class name="net.masagroup.military.generic.knowledge.Reaching" />
+				</list>
+			</type>
+		</parameter>
+	</parameters>
+<modifiers></modifiers>
+<resources>
+    <resource name="net.masagroup.military.generic.resources.Move" variable="move">
+      <description>La mise en oeuvre des capacités de mouvement.</description>
+    </resource>
+  </resources>
+</skill>

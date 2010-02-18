@@ -1,0 +1,32 @@
+--
+-- DO NOT EDIT!
+--
+skill "Destroy" {
+  ["description"] = "Atteindre une position de tir et engager un \233l\233ment par le feu (tir offensif) et de le d\233truire totalement";
+  ["abstract"] = false;
+  ["parameters"] = {
+    ["entity"] = {
+      ["description"] = "L'\233l\233ment \224 engager.";
+      ["type"] = {
+        ["tag"] = "interfaces";
+        ["value"] = {
+          net.masagroup.military.generic.knowledge.Destroyable;
+        };
+      };
+    };
+  };
+  ["modifiers"] = {};
+  ["links"] = {
+    ["MoveTo"] = {
+      ["skill"] = net.masagroup.sword.military.skills.MoveTo;
+    };
+    ["observe"] = {
+      ["skill"] = net.masagroup.military.generic.skills.primitives.Observe;
+    };
+  };
+  ["resources"] = {};
+  ["valid"] = true;
+}
+--
+-- END
+--

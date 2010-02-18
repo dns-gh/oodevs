@@ -1,0 +1,6 @@
+rootnode
+{
+	--select = acquire{ [ skill.resources.observe ] = 1 } + function( self )
+        self.params.entity:observeIt()
+   -- end
+}

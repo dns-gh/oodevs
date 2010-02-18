@@ -1,0 +1,36 @@
+--
+-- DO NOT EDIT!
+--
+skill "TestParam" {
+  ["abstract"] = false;
+  ["parameters"] = {
+    ["Point_"] = {
+      ["description"] = "Test point";
+      ["type"] = {
+        ["tag"] = "interfaces";
+        ["value"] = {
+          net.masagroup.military.generic.knowledge.Reachable;
+        };
+      };
+    };
+    ["PointList_"] = {
+      ["description"] = "Test pointList";
+      ["type"] = {
+        ["tag"] = "list";
+        ["value"] = {
+          ["tag"] = "interfaces";
+          ["value"] = {
+            net.masagroup.military.generic.knowledge.Reachable;
+          };
+        };
+      };
+    };
+  };
+  ["modifiers"] = {};
+  ["links"] = {};
+  ["resources"] = {};
+  ["valid"] = true;
+}
+--
+-- END
+--

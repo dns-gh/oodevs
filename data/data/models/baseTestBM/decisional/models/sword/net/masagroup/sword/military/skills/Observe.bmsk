@@ -1,0 +1,25 @@
+--
+-- DO NOT EDIT!
+--
+skill "Observe" {
+  ["description"] = "Action simple qui consiste \224 mettre l'effort d'observation vers l'\233l\233ment d\233sign\233.";
+  ["abstract"] = false;
+  ["parameters"] = {
+    ["target"] = {
+      ["type"] = {
+        ["tag"] = "list";
+        ["value"] = {
+          ["tag"] = "?";
+          ["value"] = nil;
+        };
+      };
+    };
+  };
+  ["modifiers"] = {};
+  ["links"] = {};
+  ["resources"] = {};
+  ["valid"] = true;
+}
+--
+-- END
+--
