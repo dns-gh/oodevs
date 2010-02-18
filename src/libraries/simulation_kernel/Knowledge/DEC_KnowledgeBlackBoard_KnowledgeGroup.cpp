@@ -26,7 +26,7 @@
 #include "Decision/DEC_Tools.h"
 #include "Entities/MIL_Army.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_KnowledgeBlackBoard_KnowledgeGroup, "DEC_KnowledgeBlackBoard_KnowledgeGroup" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KnowledgeBlackBoard_KnowledgeGroup )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup constructor

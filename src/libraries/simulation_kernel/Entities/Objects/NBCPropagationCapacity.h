@@ -11,6 +11,7 @@
 #define __NBCPropagationCapacity_h_
 
 #include "PropagationCapacity_ABC.h"
+#include <boost/serialization/export.hpp>
 
 class MIL_PropagationManager;
 
@@ -61,5 +62,7 @@ private:
     float                   timeOfLastUpdate_;
 	//@}
 };
+
+BOOST_CLASS_EXPORT_KEY( NBCPropagationCapacity )
 
 #endif

@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Supply/PHY_RolePionLOGConvoy_Supply.h $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_RolePionLOGConvoy_Supply.h $
 // $Author: Jvt $
 // $Modtime: 30/03/05 18:26 $
 // $Revision: 2 $
@@ -75,5 +75,7 @@ private:
       template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePionLOGConvoy_Supply* role, const unsigned int /*version*/ );
 
 };
+
+BOOST_CLASS_EXPORT_KEY( PHY_RolePionLOGConvoy_Supply )
 
 #endif // __PHY_RolePionLOGConvoy_Supply_h_

@@ -24,7 +24,7 @@
 #include "simulation_kernel/MIL_AgentServer.h" // LTO
 #include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h" // LTO
  
-BOOST_CLASS_EXPORT_GUID( DEC_KS_AgentKnowledgeSynthetizer, "DEC_KS_AgentKnowledgeSynthetizer" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_AgentKnowledgeSynthetizer )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_AgentKnowledgeSynthetizer constructor

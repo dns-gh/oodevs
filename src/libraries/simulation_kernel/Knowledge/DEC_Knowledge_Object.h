@@ -221,6 +221,8 @@ private:
     static MIL_IDManager idManager_;
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_Object )
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::Attach
 // Created: JCR 2008-08-12

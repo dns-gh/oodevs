@@ -59,4 +59,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( ActivableCapacity )
+
 #endif // __ActivableCapacity_h_

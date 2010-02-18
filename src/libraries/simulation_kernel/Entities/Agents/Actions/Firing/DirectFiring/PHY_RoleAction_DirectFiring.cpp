@@ -39,7 +39,7 @@
 
 using namespace firing;
 
-BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_DirectFiring, "PHY_RoleAction_DirectFiring" )
+BOOST_CLASS_EXPORT_IMPLEMENT( firing::PHY_RoleAction_DirectFiring )
 
 template< typename Archive >
 void firing::save_construct_data( Archive& archive, const PHY_RoleAction_DirectFiring* role, const unsigned int /*version*/ )

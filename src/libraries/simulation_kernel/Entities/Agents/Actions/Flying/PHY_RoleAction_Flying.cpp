@@ -26,7 +26,7 @@
 #include "simulation_kernel/ConsumptionChangeRequestHandler_ABC.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_Flying, "PHY_RoleAction_Flying" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RoleAction_Flying )
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RoleAction_Flying* role, const unsigned int /*version*/ )

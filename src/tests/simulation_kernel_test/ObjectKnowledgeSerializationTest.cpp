@@ -41,8 +41,6 @@
 
 using namespace mockpp;
 
-BOOST_CLASS_EXPORT( MockArmy );  
-
 /**
  * StubArmy is used instead of MockArmy because it is deserialised,
  * and there is no way in MockArmy to say during deserialization that one expects some methods to be called.
@@ -50,6 +48,7 @@ BOOST_CLASS_EXPORT( MockArmy );
 class StubArmy : public MockArmy
 {
     public:
+
         virtual void RegisterObject( MIL_Object_ABC& object ) {}        
         virtual uint GetID() const { return 1; }
     template< typename Archive >
@@ -59,7 +58,8 @@ class StubArmy : public MockArmy
     }
         
 };
-BOOST_CLASS_EXPORT( StubArmy ); 
+BOOST_CLASS_EXPORT_IMPLEMENT( MockArmy )
+BOOST_CLASS_EXPORT( StubArmy )
 
 // -----------------------------------------------------------------------------
 // Name: VerifyObjectKnowledge_Serialization

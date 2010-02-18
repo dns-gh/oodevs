@@ -17,7 +17,7 @@
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_KS_PopulationInteraction, "DEC_KS_PopulationInteraction" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_PopulationInteraction )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_PopulationInteraction constructor

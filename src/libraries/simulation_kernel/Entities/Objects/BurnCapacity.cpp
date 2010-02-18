@@ -18,7 +18,7 @@
 
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( BurnCapacity, "BurnCapacity" )
+BOOST_CLASS_EXPORT_IMPLEMENT( BurnCapacity )
 
 // -----------------------------------------------------------------------------
 // Name: BurnCapacity::BurnCapacity

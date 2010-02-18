@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Maintenance/PHY_MaintenanceComposanteState.cpp $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_MaintenanceComposanteState.cpp $
 // $Author: Jvt $
 // $Modtime: 4/05/05 10:42 $
 // $Revision: 5 $
@@ -18,7 +18,7 @@
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Network/NET_ASN_Messages.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_MaintenanceComposanteState, "PHY_MaintenanceComposanteState" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MaintenanceComposanteState )
 
 MIL_IDManager PHY_MaintenanceComposanteState::idManager_;
 

@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Supply/PHY_SupplyStockRequest.h $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_SupplyStockRequest.h $
 // $Author: Jvt $
 // $Modtime: 11/04/05 13:23 $
 // $Revision: 3 $
@@ -37,6 +37,8 @@ public:
     void     AddStock                 ( PHY_DotationStock& stock, MT_Float rValue );
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( PHY_SupplyStockRequest )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyStockRequest::serialize

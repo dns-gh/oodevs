@@ -94,4 +94,6 @@ private:
           bool                  bDotationBlocked_; // Prisoner
 };
 
+BOOST_CLASS_EXPORT_KEY( PHY_Dotation )
+
 #endif // __PHY_Dotation_h_

@@ -12,7 +12,7 @@
 #include "Entities/Orders/MIL_FragOrder.h"
 #include "Decision/Path/DEC_PathPoint.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_Representations, "DEC_Representations" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Representations )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Representations constructor

@@ -13,7 +13,7 @@
 #include "DEC_Knowledge_UrbanPerception.h"
 #include "urban/TerrainObject_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_BlackBoard_CanContainKnowledgeUrbanPerception, "DEC_BlackBoard_CanContainKnowledgeUrbanPerception" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgeUrbanPerception )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeUrbanPerception constructor

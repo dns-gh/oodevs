@@ -14,6 +14,7 @@
 
 #include "DEC_Knowledge_ObjectAttribute_ABC.h"
 #include "DEC_Knowledge_ObjectAttributeUpdatable_ABC.h"
+#include <boost/serialization/export.hpp>
 
 class BypassAttribute;
 
@@ -64,5 +65,7 @@ private:
     uint  nBypassPercentage_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeBypass )
 
 #endif // __DEC_Knowledge_ObjectAttributeBypass_h_

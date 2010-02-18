@@ -75,6 +75,7 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( AgentFactory )
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const AgentFactory* factory, const unsigned int /*version*/ )

@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Supply/PHY_Conveyor.cpp $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_Conveyor.cpp $
 // $Author: Nld $
 // $Modtime: 19/07/05 18:18 $
 // $Revision: 1 $
@@ -19,7 +19,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_Conveyor, "PHY_Conveyor" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_Conveyor )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Conveyor constructor

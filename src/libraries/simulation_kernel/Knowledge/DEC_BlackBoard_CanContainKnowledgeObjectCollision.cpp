@@ -15,7 +15,7 @@
 #include "DEC_Knowledge_ObjectCollision.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_BlackBoard_CanContainKnowledgeObjectCollision, "DEC_BlackBoard_CanContainKnowledgeObjectCollision" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgeObjectCollision )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeObjectCollision constructor

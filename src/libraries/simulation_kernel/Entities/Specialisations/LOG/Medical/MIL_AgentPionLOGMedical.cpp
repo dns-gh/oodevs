@@ -14,7 +14,7 @@
 #include "Entities/Agents/Roles/Logistic/PHY_RolePionLOG_Medical.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 
-BOOST_CLASS_EXPORT_GUID( MIL_AgentPionLOGMedical, "MIL_AgentPionLOGMedical" )
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentPionLOGMedical )
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_AgentPionLOGMedical* pion, const unsigned int /*version*/ )

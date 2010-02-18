@@ -110,6 +110,8 @@ public:
     MOCKPP_VOID_CONST_CHAINABLE0     ( MockArmy, SendFullState );   
     MOCKPP_VOID_CONST_CHAINABLE0     ( MockArmy, SendKnowledge );
     MOCKPP_CONST_CHAINABLE_EXT1      ( MockArmy, MIL_KnowledgeGroup*, FindKnowledgeGroup, unsigned int, MIL_KnowledgeGroup*, , unsigned int );
-};        
+};
+
+BOOST_CLASS_EXPORT_KEY( MockArmy )
 
 #endif // __MockArmy_h_

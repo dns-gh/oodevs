@@ -99,8 +99,8 @@ private:
 };
 
 
-BOOST_CLASS_EXPORT_GUID( MyRole, "MyRole" )
-BOOST_CLASS_EXPORT_GUID( MyRole2, "MyRole2" )
+BOOST_CLASS_EXPORT( MyRole )
+BOOST_CLASS_EXPORT( MyRole2 )
 
 // -----------------------------------------------------------------------------
 // Name: SerializationTest_SimpleDerivedRole
@@ -218,7 +218,7 @@ void load_construct_data( Archive& archive, MyRole3* element, const unsigned int
     ::new( element )MyRole3( *entity, id );
 }
 
-BOOST_CLASS_EXPORT_GUID( MyRole3, "MyRole3" )
+BOOST_CLASS_EXPORT( MyRole3 )
 
 // -----------------------------------------------------------------------------
 // Name: SerializationTest_NoDefaultConstructor

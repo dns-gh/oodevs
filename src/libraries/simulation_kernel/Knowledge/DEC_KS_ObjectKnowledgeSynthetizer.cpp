@@ -25,7 +25,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_KS_ObjectKnowledgeSynthetizer, "DEC_KS_ObjectKnowledgeSynthetizer" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_ObjectKnowledgeSynthetizer )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_ObjectKnowledgeSynthetizer constructor

@@ -81,4 +81,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_BlackBoard_CanContainKnowledgePopulationCollision )
+
 #endif // __DEC_BlackBoard_CanContainKnowledgePopulationCollision_h_

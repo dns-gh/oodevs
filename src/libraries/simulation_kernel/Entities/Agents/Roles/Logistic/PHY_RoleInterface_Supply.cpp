@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Supply/PHY_RoleInterface_Supply.cpp $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.cpp $
 // $Author: Jvt $
 // $Modtime: 6/04/05 11:48 $
 // $Revision: 2 $
@@ -11,8 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleInterface_Supply.h"
-
-BOOST_CLASS_EXPORT_GUID( PHY_RoleInterface_Supply, "PHY_RoleInterface_Supply" )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleInterface_Supply constructor

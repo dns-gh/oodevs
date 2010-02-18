@@ -12,6 +12,8 @@
 #ifndef __PHY_DotationGroupContainer_h_
 #define __PHY_DotationGroupContainer_h_
 
+#include <boost/serialization/export.hpp>
+
 namespace xml
 {
     class xostream;
@@ -126,5 +128,7 @@ private:
     T_DotationGroupMap      dotationGroups_;
     T_DotationSet           dotationsChanged_;
 };
+
+BOOST_CLASS_EXPORT_KEY( PHY_DotationGroupContainer )
 
 #endif // __PHY_DotationGroupContainer_h_

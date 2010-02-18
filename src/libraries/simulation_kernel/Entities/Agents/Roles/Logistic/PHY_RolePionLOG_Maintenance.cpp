@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Maintenance/PHY_RolePionLOG_Maintenance.cpp $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_RolePionLOG_Maintenance.cpp $
 // $Author: Jvt $
 // $Modtime: 4/05/05 10:53 $
 // $Revision: 13 $
@@ -36,7 +36,7 @@
 
 #include "simulation_kernel/ConsumeDotationNotificationHandler_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_RolePionLOG_Maintenance, "PHY_RolePionLOG_Maintenance" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePionLOG_Maintenance )
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePionLOG_Maintenance* role, const unsigned int /*version*/ )

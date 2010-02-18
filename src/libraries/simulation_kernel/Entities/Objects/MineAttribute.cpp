@@ -17,7 +17,7 @@
 #include <hla/AttributeIdentifier.h>
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( MineAttribute, "MineAttribute" )
+BOOST_CLASS_EXPORT_IMPLEMENT( MineAttribute )
 
 // -----------------------------------------------------------------------------
 // Name: MineAttribute constructor

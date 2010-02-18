@@ -79,4 +79,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( BurnCapacity )
+
 #endif // __BurnCapacity_h_

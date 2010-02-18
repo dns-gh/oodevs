@@ -44,4 +44,6 @@ private:
     template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_AgentPionLOGMedical* pion, const unsigned int /*version*/ );
 };
 
+BOOST_CLASS_EXPORT_KEY( MIL_AgentPionLOGMedical )
+
 #endif // __MIL_AgentPionLOGMedical_h_

@@ -12,7 +12,7 @@
 #include "MIL.h"
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( AnimatorAttribute, "AnimatorAttribute" )
+BOOST_CLASS_EXPORT_IMPLEMENT( AnimatorAttribute )
 
 // -----------------------------------------------------------------------------
 // Name: AnimatorAttribute constructor

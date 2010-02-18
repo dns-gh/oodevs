@@ -17,7 +17,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities\Agents\Perceptions\PHY_PerceptionLevel.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_AgentPerception, "DEC_Knowledge_AgentPerception" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentPerception )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentPerception constructor

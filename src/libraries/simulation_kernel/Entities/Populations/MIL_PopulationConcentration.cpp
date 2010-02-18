@@ -26,7 +26,7 @@
 #include "simulation_kernel/PopulationCollisionNotificationHandler_ABC.h"
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( MIL_PopulationConcentration, "MIL_PopulationConcentration" )
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PopulationConcentration )
 
 MIL_IDManager MIL_PopulationConcentration::idManager_;
 template< typename Archive >

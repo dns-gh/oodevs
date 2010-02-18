@@ -58,4 +58,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( PHY_RoleHLA_Communications )
+
 #endif // __PHY_RoleHLA_Communications_h_

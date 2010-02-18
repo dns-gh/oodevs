@@ -14,7 +14,7 @@
 #include "HLA/Deserializer.h"
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( BypassableCapacity, "BypassableCapacity" )
+BOOST_CLASS_EXPORT_IMPLEMENT( BypassableCapacity )
 
 // -----------------------------------------------------------------------------
 // Name: BypassableCapacity::BypassableCapacity

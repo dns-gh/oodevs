@@ -14,8 +14,9 @@
 #include "MIL_AgentServer.h"
 #include "MIL_Singletons.h"
 #include "MIL_Time_ABC.h"
+#include <boost/serialization/export.hpp>
 
-BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_ABC, "DEC_Knowledge_ABC" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ABC )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ABC constructor

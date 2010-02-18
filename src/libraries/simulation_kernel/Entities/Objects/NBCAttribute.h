@@ -13,6 +13,7 @@
 #include "ToxicAttribute_ABC.h"
 #include "MIL_ToxicEffectManipulator.h"
 #include "UpdatableAttribute_ABC.h"
+#include <boost/serialization/export.hpp>
 
 class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;
@@ -113,5 +114,7 @@ private:
     unsigned int    danger_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( NBCAttribute )
 
 #endif // __NBCAttribute_h_

@@ -21,7 +21,7 @@
 #include "Entities/MIL_Army.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_KnowledgeBlackBoard_Army, "DEC_KnowledgeBlackBoard_Army" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KnowledgeBlackBoard_Army )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_Army constructor

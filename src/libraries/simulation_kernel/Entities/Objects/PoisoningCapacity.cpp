@@ -18,7 +18,7 @@
 
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( PoisoningCapacity, "PoisoningCapacity" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PoisoningCapacity )
 
 // -----------------------------------------------------------------------------
 // Name: PoisoningCapacity constructor

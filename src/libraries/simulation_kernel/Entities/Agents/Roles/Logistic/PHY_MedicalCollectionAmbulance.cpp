@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Medical/PHY_MedicalCollectionAmbulance.cpp $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_MedicalCollectionAmbulance.cpp $
 // $Author: Jvt $
 // $Modtime: 11/04/05 14:55 $
 // $Revision: 2 $
@@ -14,11 +14,11 @@
 #include "PHY_MedicalCollectionConsign.h"
 #include "PHY_MedicalHumanState.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
-#include "Entities/Agents/Roles/Logistic//PHY_RoleInterface_Medical.h"
+#include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Medical.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_MedicalCollectionAmbulance, "PHY_MedicalCollectionAmbulance" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MedicalCollectionAmbulance )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalCollectionAmbulance constructor

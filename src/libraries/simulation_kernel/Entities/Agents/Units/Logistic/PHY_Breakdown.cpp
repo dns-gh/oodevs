@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_Breakdown.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_Breakdown, "PHY_Breakdown" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_Breakdown )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Breakdown constructor

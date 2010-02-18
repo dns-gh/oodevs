@@ -73,4 +73,6 @@ private:
 
 };
 
+BOOST_CLASS_EXPORT_KEY( PHY_RolePion_Population )
+
 #endif // __PHY_RolePion_Population_h_

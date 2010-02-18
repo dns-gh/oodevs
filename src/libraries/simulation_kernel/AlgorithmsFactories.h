@@ -10,6 +10,8 @@
 #ifndef __AlgorithmsFactories_h_
 #define __AlgorithmsFactories_h_
 
+#include <boost/serialization/export.hpp>
+
 namespace firing
 {
     class WeaponAvailabilityComputerFactory_ABC;
@@ -97,6 +99,8 @@ public:
     std::auto_ptr< firing::WeaponReloadingComputerFactory_ABC > weaponReloadingComputerFactory_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( AlgorithmsFactories )
 
 template< typename Archive >
 void save_construct_data( Archive& /*archive*/, const AlgorithmsFactories* /*role*/, const unsigned int /*version*/ )

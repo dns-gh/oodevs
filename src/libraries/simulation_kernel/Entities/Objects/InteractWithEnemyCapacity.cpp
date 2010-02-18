@@ -13,7 +13,7 @@
 #include "simulation_kernel/Entities/Agents/MIL_Agent_ABC.h"
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( InteractWithEnemyCapacity, "InteractWithEnemyCapacity" )
+BOOST_CLASS_EXPORT_IMPLEMENT( InteractWithEnemyCapacity )
 
 // -----------------------------------------------------------------------------
 // Name: InteractWithEnemyCapacity constructor

@@ -90,4 +90,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( PHY_InjuredHuman )
+
 #endif // __PHY_InjuredHuman_h_

@@ -16,7 +16,7 @@
 #include "Entities\Agents\Units\Dotations\PHY_ConsumptionType.h"
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( ImprovableCapacity, "ImprovableCapacity" )
+BOOST_CLASS_EXPORT_IMPLEMENT( ImprovableCapacity )
 
 // -----------------------------------------------------------------------------
 // Name: ImprovableCapacity::ImprovableCapacity

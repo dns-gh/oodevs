@@ -15,7 +15,7 @@
 #include "Entities/MIL_Army.h"
 #include "DEC_Knowledge_Object.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_ObjectAttributeMine, "DEC_Knowledge_ObjectAttributeMine" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeMine )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectAttributeMine constructor

@@ -64,4 +64,6 @@ private:
           bool                 bIsValid_;
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectCollision )
+
 #endif // __DEC_Knowledge_ObjectCollision_h_

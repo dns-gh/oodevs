@@ -12,6 +12,7 @@
 
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
+#include <boost/serialization/export.hpp>
 
 class CrossingSiteAttribute 
     : public ObjectAttribute_ABC
@@ -76,5 +77,7 @@ private:
     bool     bBanksToFitOut_; // Berges a amenager
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( CrossingSiteAttribute )
 
 #endif // __CrossingSiteAttribute_h_

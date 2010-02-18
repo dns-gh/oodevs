@@ -45,4 +45,6 @@ private:
 
 };
 
+BOOST_CLASS_EXPORT_KEY( MIL_AgentPionLOGTC2 )
+
 #endif // __MIL_AgentPionLOGTC2_h_

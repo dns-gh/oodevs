@@ -22,7 +22,7 @@
 #include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
 #include "simulation_kernel/MoveComputer_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( surrender::PHY_RolePion_Surrender, "PHY_RolePion_Surrender" )
+BOOST_CLASS_EXPORT_IMPLEMENT( surrender::PHY_RolePion_Surrender )
 
 namespace surrender
 {

@@ -23,7 +23,7 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/MIL_AgentPion.h"
  
-BOOST_CLASS_EXPORT_GUID( DEC_KS_PopulationKnowledgeSynthetizer, "DEC_KS_PopulationKnowledgeSynthetizer" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_PopulationKnowledgeSynthetizer )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_PopulationKnowledgeSynthetizer constructor

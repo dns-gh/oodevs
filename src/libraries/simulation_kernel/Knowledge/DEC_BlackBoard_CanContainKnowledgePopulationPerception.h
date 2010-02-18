@@ -77,4 +77,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_BlackBoard_CanContainKnowledgePopulationPerception )
+
 #endif // __DEC_BlackBoard_CanContainKnowledgePopulationPerception_h_

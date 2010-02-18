@@ -78,4 +78,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_BlackBoard_CanContainKnowledgePopulation )
+
 #endif // __DEC_BlackBoard_CanContainKnowledgePopulation_h_

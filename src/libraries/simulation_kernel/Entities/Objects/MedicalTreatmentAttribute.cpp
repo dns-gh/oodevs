@@ -19,7 +19,7 @@
 
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( MedicalTreatmentAttribute, "MedicalTreatmentAttribute" )
+BOOST_CLASS_EXPORT_IMPLEMENT( MedicalTreatmentAttribute )
 
 MT_Random MedicalTreatmentAttribute::randomGenerator_;
 

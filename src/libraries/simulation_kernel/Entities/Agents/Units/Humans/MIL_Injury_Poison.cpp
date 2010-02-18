@@ -26,7 +26,7 @@
 
 MT_Random MIL_Injury_Poison::randomGenerator_;
 
-//BOOST_CLASS_EXPORT_GUID( MIL_Injury_Poison, "MIL_Injury_Poison" )
+//BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Injury_Poison )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Injury_Poison::constructor

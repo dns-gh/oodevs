@@ -16,7 +16,7 @@
 
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( PopulationFactory, "AutomateFactory" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PopulationFactory )
 
 // -----------------------------------------------------------------------------
 // Name: PopulationFactory constructor

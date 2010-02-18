@@ -12,7 +12,7 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Network/NET_ASN_Tools.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_PerceptionSurfaceAgent, "PHY_PerceptionSurfaceAgent" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_PerceptionSurfaceAgent )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionSurfaceAgent constructor

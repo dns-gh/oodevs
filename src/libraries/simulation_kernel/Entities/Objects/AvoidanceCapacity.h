@@ -73,4 +73,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( AvoidanceCapacity )
+
 #endif // __AvoidanceCapacity_h_

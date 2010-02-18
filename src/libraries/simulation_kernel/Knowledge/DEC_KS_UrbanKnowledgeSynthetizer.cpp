@@ -21,7 +21,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "urban/TerrainObject_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_KS_UrbanKnowledgeSynthetizer, "DEC_KS_UrbanKnowledgeSynthetizer" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_UrbanKnowledgeSynthetizer )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_UrbanKnowledgeSynthetizer constructor

@@ -13,6 +13,7 @@
 #include "MIL.h"
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
+#include <boost/serialization/export.hpp>
 
 namespace hla 
 {
@@ -118,5 +119,7 @@ private:
     MT_Float    rConstructionPercentage_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( ConstructionAttribute )
 
 #endif // __ConstructionAttribute_h_

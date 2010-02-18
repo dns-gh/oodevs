@@ -84,4 +84,6 @@ private:
     T_ObjectCollisionVector            objectCollisions_;
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_KS_ObjectInteraction )
+
 #endif // __DEC_KS_ObjectInteraction_h_

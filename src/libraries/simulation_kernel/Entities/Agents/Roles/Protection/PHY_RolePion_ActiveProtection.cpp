@@ -13,7 +13,7 @@
 
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_RolePion_ActiveProtection, "PHY_RolePion_ActiveProtection" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_ActiveProtection )
 
 template< typename Archive >
 inline void save_construct_data( Archive& archive, const PHY_RolePion_ActiveProtection* role, const unsigned int /*version*/ )

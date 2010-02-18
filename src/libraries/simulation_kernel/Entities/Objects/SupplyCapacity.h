@@ -45,4 +45,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( SupplyCapacity )
+
 #endif // __SupplyCapacity_h_

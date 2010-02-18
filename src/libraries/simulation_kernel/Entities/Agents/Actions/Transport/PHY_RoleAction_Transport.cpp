@@ -25,8 +25,8 @@
 
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( transport::PHY_RoleAction_Transport, "PHY_RoleAction_Transport" )
-BOOST_CLASS_EXPORT_GUID( transport::PHY_RoleAction_Transport::sTransportData, "PHY_RoleAction_Transport::sTransportData" )
+BOOST_CLASS_EXPORT_IMPLEMENT( transport::PHY_RoleAction_Transport )
+BOOST_CLASS_EXPORT_IMPLEMENT( transport::PHY_RoleAction_Transport::sTransportData )
 
 namespace transport
 {

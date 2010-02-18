@@ -1,7 +1,7 @@
 //******************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Medical/PHY_MedicalHealingConsign.cpp $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_MedicalHealingConsign.cpp $
 // $Author: Jvt $
 // $Modtime: 28/04/05 17:45 $
 // $Revision: 3 $
@@ -20,7 +20,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_MedicalHealingConsign, "PHY_MedicalHealingConsign" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MedicalHealingConsign )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalHealingConsign constructor

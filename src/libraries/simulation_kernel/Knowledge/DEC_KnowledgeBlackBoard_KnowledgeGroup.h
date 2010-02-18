@@ -141,4 +141,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_KnowledgeBlackBoard_KnowledgeGroup )
+
 #endif // __DEC_KnowledgeBlackBoard_KnowledgeGroup_h_

@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Medical/PHY_RolePionLOG_Medical.h $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_RolePionLOG_Medical.h $
 // $Author: Jvt $
 // $Modtime: 4/05/05 10:23 $
 // $Revision: 9 $
@@ -172,5 +172,7 @@ private:
     template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePionLOG_Medical* role, const unsigned int /*version*/ );
 
 };
+
+BOOST_CLASS_EXPORT_KEY( PHY_RolePionLOG_Medical )
 
 #endif // __PHY_RolePionLOG_Medical_h_

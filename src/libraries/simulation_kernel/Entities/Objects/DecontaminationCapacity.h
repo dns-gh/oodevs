@@ -67,4 +67,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( DecontaminationCapacity )
+
 #endif // __Object_DecontaminationCapacity_h_

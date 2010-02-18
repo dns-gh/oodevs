@@ -104,4 +104,6 @@ private:
           bool                                            bAttacker_;
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_AgentPerception )
+
 #endif // __DEC_Knowledge_AgentPerception_h_

@@ -55,4 +55,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( IntoxicationCapacity )
+
 #endif // __IntoxicationCapacity_h_

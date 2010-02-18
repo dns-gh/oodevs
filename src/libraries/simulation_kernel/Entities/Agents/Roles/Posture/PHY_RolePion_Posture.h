@@ -155,4 +155,6 @@ private:
 
 };
 
+BOOST_CLASS_EXPORT_KEY( PHY_RolePion_Posture )
+
 #endif // __PHY_RolePion_Posture_h_

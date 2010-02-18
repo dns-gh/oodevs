@@ -15,7 +15,7 @@
 #include "DEC_Knowledge_Object.h"
 #include "MIL.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_ObjectAttributeConstruction, "DEC_Knowledge_ObjectAttributeConstruction" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeConstruction )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectAttributeConstruction constructor

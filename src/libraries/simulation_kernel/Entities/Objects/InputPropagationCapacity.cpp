@@ -15,7 +15,7 @@
 #include "simulation_terrain/TER_Localisation.h"
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( InputPropagationCapacity, "InputPropagationCapacity" )
+BOOST_CLASS_EXPORT_IMPLEMENT( InputPropagationCapacity )
 
 // -----------------------------------------------------------------------------
 // Name: InputPropagationCapacity constructor

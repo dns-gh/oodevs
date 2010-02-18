@@ -42,7 +42,7 @@
 
 #include "game_asn/ASN_Delete.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_Object, "DEC_Knowledge_Object" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_Object )
 
 MIL_IDManager DEC_Knowledge_Object::idManager_;
 

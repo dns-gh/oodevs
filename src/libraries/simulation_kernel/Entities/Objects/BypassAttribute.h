@@ -12,6 +12,7 @@
 
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
+#include <boost/serialization/export.hpp>
 
 namespace hla 
 {
@@ -69,5 +70,7 @@ private:
     MT_Float rBypass_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( BypassAttribute )
 
 #endif // __BypassAttribute_h_

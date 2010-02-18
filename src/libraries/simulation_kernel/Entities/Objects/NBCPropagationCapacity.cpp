@@ -20,7 +20,7 @@
 
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( NBCPropagationCapacity, "NBCPropagationCapacity" )
+BOOST_CLASS_EXPORT_IMPLEMENT( NBCPropagationCapacity )
 
 // -----------------------------------------------------------------------------
 // Name: NBCPropagationCapacity constructor

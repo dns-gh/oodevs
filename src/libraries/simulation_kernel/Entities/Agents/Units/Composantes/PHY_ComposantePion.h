@@ -276,6 +276,8 @@ public:
     static MT_Float rOpStateWeightHumans_;
 };
 
+BOOST_CLASS_EXPORT_KEY( PHY_ComposantePion )
+
 #include "PHY_ComposantePion.inl"
 
 #endif // __PHY_ComposantePion_h_

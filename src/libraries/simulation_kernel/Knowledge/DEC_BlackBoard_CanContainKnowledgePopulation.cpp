@@ -15,7 +15,7 @@
 #include "DEC_Knowledge_Population.h"
 #include "Entities/Populations/MIL_Population.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_BlackBoard_CanContainKnowledgePopulation, "DEC_BlackBoard_CanContainKnowledgePopulation" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgePopulation )
 BOOST_CLASS_TRACKING   ( DEC_BlackBoard_CanContainKnowledgePopulation, boost::serialization::track_never ) 
 
 // -----------------------------------------------------------------------------

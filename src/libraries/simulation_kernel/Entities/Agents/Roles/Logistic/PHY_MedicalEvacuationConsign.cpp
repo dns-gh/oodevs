@@ -1,7 +1,7 @@
 //*****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Medical/PHY_MedicalEvacuationConsign.cpp $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_MedicalEvacuationConsign.cpp $
 // $Author: Jvt $
 // $Modtime: 11/04/05 17:36 $
 // $Revision: 3 $
@@ -21,7 +21,7 @@
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_MedicalEvacuationConsign, "PHY_MedicalEvacuationConsign" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MedicalEvacuationConsign )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalEvacuationConsign constructor

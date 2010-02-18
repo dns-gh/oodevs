@@ -13,7 +13,7 @@
 #include "AnimatorAttribute.h"
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( WorkableCapacity, "WorkableCapacity" )
+BOOST_CLASS_EXPORT_IMPLEMENT( WorkableCapacity )
 
 // -----------------------------------------------------------------------------
 // Name: WorkableCapacity constructor

@@ -190,6 +190,8 @@ private:
     static MIL_IDManager idManager_;
 };
 
+BOOST_CLASS_EXPORT_KEY( Object )
+
 // -----------------------------------------------------------------------------
 // Name: template< typename T >             T& Object::GetAttribute
 // Created: JCR 2008-06-18

@@ -17,7 +17,7 @@
 
 #include "MIL.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_ObjectAttributeBypass, "DEC_Knowledge_ObjectAttributeBypass" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeBypass )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectAttributeBypass constructor

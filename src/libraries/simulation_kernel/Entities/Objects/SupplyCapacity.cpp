@@ -20,7 +20,7 @@
 #include <boost/ptr_container/serialize_ptr_vector.hpp>
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( SupplyCapacity, "SupplyCapacity" )
+BOOST_CLASS_EXPORT_IMPLEMENT( SupplyCapacity )
 
 // -----------------------------------------------------------------------------
 // Name: SupplyCapacity constructor

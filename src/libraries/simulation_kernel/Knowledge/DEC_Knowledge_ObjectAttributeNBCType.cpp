@@ -16,7 +16,7 @@
 #include "Entities/Objects/NBCTypeAttribute.h"
 #include "MIL.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_ObjectAttributeNBCType, "DEC_Knowledge_ObjectAttributeNBCType" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeNBCType )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectAttributeNBCType constructor

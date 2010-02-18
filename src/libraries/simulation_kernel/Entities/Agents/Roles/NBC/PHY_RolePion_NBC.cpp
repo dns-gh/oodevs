@@ -22,7 +22,7 @@
 #include "simulation_kernel/WeaponReloadingComputer_ABC.h"
 #include "simulation_kernel/SpeedComputer_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( nbc::PHY_RolePion_NBC, "PHY_RolePion_NBC" )
+BOOST_CLASS_EXPORT_IMPLEMENT( nbc::PHY_RolePion_NBC )
 
 // =============================================================================
 // CHECKPOINTS

@@ -26,7 +26,7 @@
 
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( MIL_ObjectManager, "MIL_ObjectManager" )
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_ObjectManager )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectManager constructor

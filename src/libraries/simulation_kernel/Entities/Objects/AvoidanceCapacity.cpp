@@ -16,7 +16,7 @@
 #include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( AvoidanceCapacity, "AvoidanceCapacity" )
+BOOST_CLASS_EXPORT_IMPLEMENT( AvoidanceCapacity )
 
 // -----------------------------------------------------------------------------
 // Name: AvoidanceCapacity constructor

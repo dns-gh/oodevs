@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Supply/PHY_SupplyDotationState.cpp $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_SupplyDotationState.cpp $
 // $Author: Jvt $
 // $Modtime: 11/04/05 13:32 $
 // $Revision: 3 $
@@ -17,7 +17,7 @@
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Network/NET_ASN_Messages.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_SupplyDotationState, "PHY_SupplyDotationState" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_SupplyDotationState )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyDotationState::PHY_SupplyDotationState

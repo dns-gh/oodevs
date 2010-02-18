@@ -16,7 +16,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Network/NET_ASN_Messages.h"
 
-BOOST_CLASS_EXPORT_GUID( network::NET_RolePion_Dotations, "NET_RolePion_Dotations" )
+BOOST_CLASS_EXPORT_IMPLEMENT( network::NET_RolePion_Dotations )
 
 namespace network
 {

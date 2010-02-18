@@ -15,7 +15,7 @@
 #include "DEC_Knowledge_PopulationPerception.h"
 #include "Entities/Populations/MIL_Population.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_BlackBoard_CanContainKnowledgePopulationPerception, "DEC_BlackBoard_CanContainKnowledgePopulationPerception" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgePopulationPerception )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgePopulationPerception constructor

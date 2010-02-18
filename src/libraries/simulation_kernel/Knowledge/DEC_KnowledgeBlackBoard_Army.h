@@ -107,4 +107,6 @@ private:
     DEC_KS_UrbanKnowledgeSynthetizer* pKsUrbanKnowledgeSynthetizer_;
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_KnowledgeBlackBoard_Army )
+
 #endif // __DEC_KnowledgeBlackBoard_Army_h_

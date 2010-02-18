@@ -12,6 +12,8 @@
 #ifndef __PHY_DotationStockContainer_h_
 #define __PHY_DotationStockContainer_h_
 
+#include <boost/serialization/export.hpp>
+
 namespace xml
 {
     class xistream;
@@ -110,5 +112,7 @@ private:
     T_StockSet              stocksChanged_;
     bool                    bCheckStockCapacities_;
 };
+
+BOOST_CLASS_EXPORT_KEY( PHY_DotationStockContainer )
 
 #endif // __PHY_DotationStockContainer_h_

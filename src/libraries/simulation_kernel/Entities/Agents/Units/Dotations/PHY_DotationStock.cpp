@@ -16,7 +16,7 @@
 #include "PHY_DotationType.h"
 #include "PHY_DotationCategory.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_DotationStock, "PHY_DotationStock" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_DotationStock )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationStock constructor

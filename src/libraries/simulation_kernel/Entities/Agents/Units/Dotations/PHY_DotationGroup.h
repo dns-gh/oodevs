@@ -123,4 +123,6 @@ private:
           T_DotationMap               dotations_;
 };
 
+BOOST_CLASS_EXPORT_KEY( PHY_DotationGroup )
+
 #endif // __PHY_DotationGroup_h_

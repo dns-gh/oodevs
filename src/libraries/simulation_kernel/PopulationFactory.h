@@ -56,6 +56,8 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( PopulationFactory )
+
 template< typename Archive >
 void save_construct_data( Archive& archive, const PopulationFactory* factory, const unsigned int /*version*/ )
 {

@@ -13,6 +13,7 @@
 #include "MIL.h"
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
+#include <boost/serialization/export.hpp>
 
 namespace hla 
 {
@@ -98,5 +99,7 @@ private:
     uint     nDeathTimeStep_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MineAttribute )
 
 #endif // __MineAttribute_h_

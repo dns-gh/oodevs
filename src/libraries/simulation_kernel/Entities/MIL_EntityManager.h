@@ -241,6 +241,7 @@ private:
     uint          nRandomBreakdownsNextTimeStep_;
 };
 
+BOOST_CLASS_EXPORT_KEY( MIL_EntityManager )
 
 #endif // __MIL_EntityManager_h_
 

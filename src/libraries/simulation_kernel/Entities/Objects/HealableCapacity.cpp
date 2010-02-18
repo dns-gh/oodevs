@@ -14,7 +14,7 @@
 #include "Object.h"
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( HealableCapacity, "HealableCapacity" )
+BOOST_CLASS_EXPORT_IMPLEMENT( HealableCapacity )
 
 // -----------------------------------------------------------------------------
 // Name: HealableCapacity::HealableCapacity

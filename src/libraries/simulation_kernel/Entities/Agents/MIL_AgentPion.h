@@ -183,4 +183,6 @@ private:
     MIL_PionOrderManager& orderManager_;
 };
 
+BOOST_CLASS_EXPORT_KEY( MIL_AgentPion )
+
 #endif // __MIL_AgentPion_h_

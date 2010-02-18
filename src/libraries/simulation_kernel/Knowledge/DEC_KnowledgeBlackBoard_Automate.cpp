@@ -18,7 +18,7 @@
 #include "Entities/MIL_Army.h"
 #include "Decision/DEC_Tools.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_KnowledgeBlackBoard_Automate, "DEC_KnowledgeBlackBoard_Automate" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KnowledgeBlackBoard_Automate )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_Automate constructor

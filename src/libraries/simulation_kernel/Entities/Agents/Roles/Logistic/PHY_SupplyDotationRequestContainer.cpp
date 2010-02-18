@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/Src/Entities/Agents/Roles/Logistic/Supply/PHY_SupplyDotationRequestContainer.cpp $
+// $Archive: /MVW_v10/Build/SDK/MIL/Src/Entities/Agents/Roles/Logistic/PHY_SupplyDotationRequestContainer.cpp $
 // $Author: Nld $
 // $Modtime: 3/03/05 16:04 $
 // $Revision: 4 $

@@ -14,6 +14,7 @@
 
 #include "DEC_Knowledge_ObjectAttribute_ABC.h"
 #include "DEC_Knowledge_ObjectAttributeUpdatable_ABC.h"
+#include <boost/serialization/export.hpp>
 
 class ConstructionAttribute;
 
@@ -65,5 +66,7 @@ private:
     uint        nNbrDotation_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeConstruction )
 
 #endif // __DEC_Knowledge_ObjectAttributeConstruction_h_

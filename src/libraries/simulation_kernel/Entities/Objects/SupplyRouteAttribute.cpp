@@ -16,7 +16,7 @@
 #include <hla/AttributeIdentifier.h>
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( SupplyRouteAttribute, "SupplyRouteAttribute" )
+BOOST_CLASS_EXPORT_IMPLEMENT( SupplyRouteAttribute )
 
 using namespace hla;
 

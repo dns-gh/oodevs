@@ -80,7 +80,7 @@
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_RolePion_Decision, "DEC_RolePion_Decision" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_RolePion_Decision )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision constructor
@@ -1008,7 +1008,7 @@ void DEC_RolePion_Decision::UpdateMeKnowledge( directia::Brain& brain )
     const MT_Vector2D*  pos = GetPosition();
     try
     {
-        brain.GetScriptFunction( "UpdateMe" )( brain.GetScriptVariable( "net.masagroup.sword.military.world.Section" ), (DEC_Decision_ABC*)this, GetPion().GetAutomate().GetName(), pos->rX_, pos->rY_, 0. );
+//        brain.GetScriptFunction( "UpdateMe" )( brain.GetScriptVariable( "net.masagroup.sword.military.world.Section" ), (DEC_Decision_ABC*)this, GetPion().GetAutomate().GetName(), pos->rX_, pos->rY_, 0. );
     }
     catch( std::exception )
     {

@@ -21,7 +21,7 @@
 
 #include "simulation_kernel/HumansActionsNotificationHandler_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_HumansComposante, "PHY_HumansComposante" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_HumansComposante )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_HumansComposante constructor

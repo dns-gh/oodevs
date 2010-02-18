@@ -12,8 +12,9 @@
 
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
-#include <boost/shared_ptr.hpp>
 #include "MIL_FireClass.h"
+#include <boost/shared_ptr.hpp>
+#include <boost/serialization/export.hpp>
 
 // =============================================================================
 /** @class  FireAttribute
@@ -82,5 +83,7 @@ private:
     unsigned int          length_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( FireAttribute )
 
 #endif // __FireAttribute_h_

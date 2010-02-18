@@ -13,7 +13,7 @@
 #include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( MobilityCapacity, "MobilityCapacity" )
+BOOST_CLASS_EXPORT_IMPLEMENT( MobilityCapacity )
 
 // -----------------------------------------------------------------------------
 // Name: MobilityCapacity constructor

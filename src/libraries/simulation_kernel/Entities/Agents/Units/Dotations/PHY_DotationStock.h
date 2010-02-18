@@ -73,4 +73,6 @@ private:
           MT_Float                    rSupplyThreshold_;    
 };
 
+BOOST_CLASS_EXPORT_KEY( PHY_DotationStock )
+
 #endif // __PHY_DotationStock_h_

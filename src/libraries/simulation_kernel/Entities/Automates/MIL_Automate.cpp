@@ -51,7 +51,7 @@ namespace
     }
 }
 
-BOOST_CLASS_EXPORT_GUID( MIL_Automate, "MIL_Automate" )
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Automate )
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_Automate* automat, const unsigned int /*version*/ )
@@ -252,8 +252,14 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> pTC2_
          >> pNominalTC2_;
 
-    file >> const_cast< unsigned int& >( nID_ )
-         >> pParentFormation_
+    file >> const_cast< unsigned int& >( nID_ );
+    {
+        DEC_AutomateDecision* pRole;
+        file >> pRole;
+        RegisterRole( *pRole );
+        RegisterRole( *new DEC_Representations() );
+    }
+    file >> pParentFormation_
          >> pParentAutomate_
          >> bEngaged_
          >> pKnowledgeGroup_
@@ -268,12 +274,6 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> pKnowledgeBlackBoard_
          >> const_cast< MIL_Army_ABC*& >( pArmySurrenderedTo_ )
          >> nTickRcDotationSupplyQuerySent_;
-    {
-        DEC_AutomateDecision* pRole;
-        file >> pRole;
-        RegisterRole( *pRole );
-        RegisterRole( *new DEC_Representations() );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -285,8 +285,9 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const unsigned int ) co
     file << boost::serialization::base_object< MIL_Entity_ABC >( *this ) 
          << pTC2_
          << pNominalTC2_
-         << const_cast< unsigned int& >( nID_ )
-         << pParentFormation_
+         << const_cast< unsigned int& >( nID_ );
+    SaveRole< DEC_AutomateDecision >( *this, file );
+    file << pParentFormation_
          << pParentAutomate_
          << bEngaged_
          << pKnowledgeGroup_
@@ -301,8 +302,6 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const unsigned int ) co
          << pKnowledgeBlackBoard_
          << pArmySurrenderedTo_
          << nTickRcDotationSupplyQuerySent_;
-    SaveRole< DEC_AutomateDecision >( *this, file );
-
 }
 
 // -----------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 //*****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Medical/PHY_MedicalSortingConsign.cpp $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_MedicalSortingConsign.cpp $
 // $Author: Jvt $
 // $Modtime: 11/04/05 17:35 $
 // $Revision: 3 $
@@ -18,7 +18,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_MedicalSortingConsign, "PHY_MedicalSortingConsign" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MedicalSortingConsign )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalSortingConsign constructor

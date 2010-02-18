@@ -26,7 +26,7 @@
 
 MT_Random MIL_Injury_Fire::randomGenerator_;
 
-BOOST_CLASS_EXPORT_GUID( MIL_Injury_Fire, "MIL_Injury_Fire" )
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Injury_Fire )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Injury_Fire::constructor

@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Maintenance/PHY_RolePionLOG_Maintenance.h $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_RolePionLOG_Maintenance.h $
 // $Author: Jvt $
 // $Modtime: 4/05/05 10:34 $
 // $Revision: 9 $
@@ -17,6 +17,7 @@
 #include "PHY_RoleInterface_Maintenance.h"
 #include "ComponentsChangedNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
+#include <boost/serialization/export.hpp>
 
 class MIL_AgentPionLOG_ABC;
 class MIL_AutomateLOG;
@@ -133,5 +134,7 @@ private:
     template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePionLOG_Maintenance* role, const unsigned int /*version*/ );
 
 };
+
+BOOST_CLASS_EXPORT_KEY( PHY_RolePionLOG_Maintenance )
 
 #endif // __PHY_RolePionLOG_Maintenance_h_

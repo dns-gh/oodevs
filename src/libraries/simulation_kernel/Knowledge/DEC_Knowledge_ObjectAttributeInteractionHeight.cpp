@@ -16,7 +16,7 @@
 #include <boost/serialization/void_cast.hpp>
 
 
-BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_ObjectAttributeInteractionHeight, "DEC_Knowledge_ObjectAttributeInteractionHeight" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeInteractionHeight )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectAttributeInteractionHeight constructor

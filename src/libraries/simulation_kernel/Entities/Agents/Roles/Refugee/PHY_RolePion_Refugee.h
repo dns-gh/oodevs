@@ -81,4 +81,6 @@ private:
 
 } //namespace refugee
 
+BOOST_CLASS_EXPORT_KEY( refugee::PHY_RolePion_Refugee )
+
 #endif // __PHY_RolePion_Refugee_h_

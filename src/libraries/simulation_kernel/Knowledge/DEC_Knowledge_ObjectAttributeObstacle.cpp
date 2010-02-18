@@ -16,7 +16,7 @@
 
 #include "MIL.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_ObjectAttributeObstacle, "DEC_Knowledge_ObjectAttributeObstacle" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeObstacle )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectAttributeObstacle constructor

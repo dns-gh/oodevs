@@ -47,4 +47,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( TimeLimitedCapacity )
+
 #endif

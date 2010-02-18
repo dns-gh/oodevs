@@ -39,7 +39,7 @@
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Decision/DEC_Tools.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_KnowledgeBlackBoard_AgentPion, "DEC_KnowledgeBlackBoard_AgentPion" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KnowledgeBlackBoard_AgentPion )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_AgentPion constructor

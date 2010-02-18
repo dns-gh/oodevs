@@ -14,7 +14,7 @@
 
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( FormationFactory, "FormationFactory" )
+BOOST_CLASS_EXPORT_IMPLEMENT( FormationFactory )
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const FormationFactory* factory, const unsigned int /*version*/ )

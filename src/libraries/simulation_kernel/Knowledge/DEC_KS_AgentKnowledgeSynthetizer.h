@@ -65,6 +65,8 @@ private:
     DEC_KnowledgeBlackBoard_KnowledgeGroup* pBlackBoard_;
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_KS_AgentKnowledgeSynthetizer )
+
 // -----------------------------------------------------------------------------
 // Name: template< typename Archive > void DEC_KS_AgentKnowledgeSynthetizer::serialize
 // Created: NLD 2006-04-12

@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleHLA_Perceiver.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_RoleHLA_Perceiver, "PHY_RoleHLA_Perceiver" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RoleHLA_Perceiver )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Perceiver constructor

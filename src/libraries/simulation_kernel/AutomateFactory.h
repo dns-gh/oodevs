@@ -57,6 +57,8 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( AutomateFactory )
+
 template< typename Archive >
 void save_construct_data( Archive& archive, const AutomateFactory* factory, const unsigned int /*version*/ )
 {

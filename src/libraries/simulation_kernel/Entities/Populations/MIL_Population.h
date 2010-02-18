@@ -229,4 +229,6 @@ private:
           template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_Population* population, const unsigned int /*version*/ );
 };
 
+BOOST_CLASS_EXPORT_KEY( MIL_Population )
+
 #endif // __MIL_Population_h_

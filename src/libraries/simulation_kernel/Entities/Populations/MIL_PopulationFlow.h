@@ -175,4 +175,6 @@ private:
 
 };
 
+BOOST_CLASS_EXPORT_KEY( MIL_PopulationFlow )
+
 #endif // __MIL_PopulationFlow_h_

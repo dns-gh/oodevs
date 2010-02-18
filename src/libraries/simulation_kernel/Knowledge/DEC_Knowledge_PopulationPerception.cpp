@@ -21,7 +21,7 @@
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_PopulationPerception, "DEC_Knowledge_PopulationPerception" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_PopulationPerception )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationPerception constructor

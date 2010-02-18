@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Supply/PHY_SupplyStockConsign.cpp $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_SupplyStockConsign.cpp $
 // $Author: Nld $
 // $Modtime: 14/04/05 10:08 $
 // $Revision: 5 $
@@ -17,7 +17,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Network/NET_ASN_Messages.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_SupplyStockConsign, "PHY_SupplyStockConsign" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_SupplyStockConsign )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyRepairConsign::PHY_SupplyStockConsign

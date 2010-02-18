@@ -73,4 +73,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( FirePropagationCapacity )
+
 #endif

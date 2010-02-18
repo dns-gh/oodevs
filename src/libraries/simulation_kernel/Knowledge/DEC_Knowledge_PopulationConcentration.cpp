@@ -23,7 +23,7 @@
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 #include "MIL_AgentServer.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_PopulationConcentration, "DEC_Knowledge_PopulationConcentration" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_PopulationConcentration )
 
 MIL_IDManager DEC_Knowledge_PopulationConcentration::idManager_;
 

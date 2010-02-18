@@ -31,7 +31,7 @@
 #include "Network/NET_ASN_Messages.h"
 #include <boost/bind.hpp>
 
-BOOST_CLASS_EXPORT_GUID( UrbanModel, "UrbanModel" )
+BOOST_CLASS_EXPORT_IMPLEMENT( UrbanModel )
 
 namespace
 {

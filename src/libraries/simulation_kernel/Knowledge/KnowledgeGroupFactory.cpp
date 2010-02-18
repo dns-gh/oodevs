@@ -15,7 +15,7 @@
 
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( KnowledgeGroupFactory, "KnowledgeGroupFactory" )
+BOOST_CLASS_EXPORT_IMPLEMENT( KnowledgeGroupFactory )
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const KnowledgeGroupFactory* /*factory*/, const unsigned int /*version*/ )

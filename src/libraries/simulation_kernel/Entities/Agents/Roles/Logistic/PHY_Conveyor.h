@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Supply/PHY_Conveyor.h $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_Conveyor.h $
 // $Author: Nld $
 // $Modtime: 19/07/05 18:14 $
 // $Revision: 1 $
@@ -11,6 +11,8 @@
 
 #ifndef __PHY_Conveyor_h_
 #define __PHY_Conveyor_h_
+
+#include <boost/serialization/export.hpp>
 
 class PHY_ComposantePion;
 class MIL_AgentPion;
@@ -75,5 +77,7 @@ private:
 
     MIL_AgentPion*       pLentTo_;
 };
+
+BOOST_CLASS_EXPORT_KEY( PHY_Conveyor )
 
 #endif // __PHY_Conveyor_h_

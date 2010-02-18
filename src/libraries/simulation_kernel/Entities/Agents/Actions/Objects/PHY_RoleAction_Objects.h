@@ -115,4 +115,6 @@ private:
     MIL_AgentPion& pion_;
 };
 
+BOOST_CLASS_EXPORT_KEY( PHY_RoleAction_Objects )
+
 #endif // __PHY_RoleAction_Objects_h_

@@ -84,4 +84,6 @@ private:
     T_PopulationConcentrationVector    concentrationCollisions_;
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_KS_PopulationInteraction )
+
 #endif // __DEC_KS_PopulationInteraction_h_

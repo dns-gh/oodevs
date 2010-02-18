@@ -42,4 +42,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( NET_RoleInterface_Dotations )
+
 #endif // __NET_RoleInterface_Dotations_h_

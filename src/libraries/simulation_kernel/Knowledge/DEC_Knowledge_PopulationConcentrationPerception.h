@@ -75,4 +75,6 @@ private:
     const PHY_PerceptionLevel*                 pPreviousPerceptionLevel_;
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_PopulationConcentrationPerception )
+
 #endif // __DEC_Knowledge_PopulationConcentrationPerception_h_

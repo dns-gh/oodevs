@@ -23,7 +23,7 @@
 
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( AgentFactory, "AutomateFactory" )
+BOOST_CLASS_EXPORT_IMPLEMENT( AgentFactory )
 
 // -----------------------------------------------------------------------------
 // Name: AgentFactory constructor

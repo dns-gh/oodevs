@@ -10,6 +10,8 @@
 #ifndef __ObjectCapacity_ABC_h_
 #define __ObjectCapacity_ABC_h_
 
+#include <boost/serialization/export.hpp>
+
 class Object;
 
 class ObjectCapacity_ABC 

@@ -15,7 +15,7 @@
 #include "DEC_Knowledge_ObjectPerception.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_BlackBoard_CanContainKnowledgeObjectPerception, "DEC_BlackBoard_CanContainKnowledgeObjectPerception" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgeObjectPerception )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeObjectPerception constructor

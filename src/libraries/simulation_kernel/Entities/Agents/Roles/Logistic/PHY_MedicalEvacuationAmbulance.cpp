@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Medical/PHY_MedicalEvacuationAmbulance.cpp $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_MedicalEvacuationAmbulance.cpp $
 // $Author: Jvt $
 // $Modtime: 11/04/05 14:55 $
 // $Revision: 3 $
@@ -18,7 +18,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Specialisations/log/MIL_AgentPionLOG_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_MedicalEvacuationAmbulance, "PHY_MedicalEvacuationAmbulance" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MedicalEvacuationAmbulance )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalEvacuationAmbulance constructor

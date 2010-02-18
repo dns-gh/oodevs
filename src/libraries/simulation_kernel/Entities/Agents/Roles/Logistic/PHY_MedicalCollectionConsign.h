@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Medical/PHY_MedicalCollectionConsign.h $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_MedicalCollectionConsign.h $
 // $Author: Nld $
 // $Modtime: 25/04/05 11:10 $
 // $Revision: 3 $
@@ -67,5 +67,7 @@ private:
 private:
     PHY_MedicalCollectionAmbulance* pCollectionAmbulance_;
 };
+
+BOOST_CLASS_EXPORT_KEY( PHY_MedicalCollectionConsign )
 
 #endif // __PHY_MedicalCollectionConsign_h_

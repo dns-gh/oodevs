@@ -14,7 +14,7 @@
 
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( CrossingSiteAttribute, "CrossingSiteAttribute" )
+BOOST_CLASS_EXPORT_IMPLEMENT( CrossingSiteAttribute )
 
 // -----------------------------------------------------------------------------
 // Name: CrossingSiteAttribute constructor

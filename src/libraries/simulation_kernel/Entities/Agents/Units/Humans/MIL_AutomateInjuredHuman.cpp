@@ -23,7 +23,7 @@
 #include "Network/NET_AsnException.h"
 #include "xeumeuleu/xml.h"
 
-BOOST_CLASS_EXPORT_GUID( MIL_AutomateInjuredHuman, "MIL_AutomateInjuredHuman" )
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AutomateInjuredHuman )
 
 
 template< typename Archive > 

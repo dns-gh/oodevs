@@ -41,7 +41,7 @@
 #include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
 #include "simulation_kernel/DotationsActionsNotificationHandler_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Composantes, "PHY_RolePion_Composantes" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Composantes )
 
 using namespace human;
 // -----------------------------------------------------------------------------

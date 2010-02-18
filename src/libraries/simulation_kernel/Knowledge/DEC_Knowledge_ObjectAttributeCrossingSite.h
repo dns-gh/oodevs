@@ -14,6 +14,7 @@
 
 #include "DEC_Knowledge_ObjectAttribute_ABC.h"
 #include "DEC_Knowledge_ObjectAttributeUpdatable_ABC.h"
+#include <boost/serialization/export.hpp>
 
 class CrossingSiteAttribute;
 
@@ -68,5 +69,7 @@ private:
     bool  bBanksToFitOut_; // Berges a amenager
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeCrossingSite )
 
 #endif // __DEC_Knowledge_ObjectAttributeCrossingSite_h_

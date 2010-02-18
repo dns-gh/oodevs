@@ -20,7 +20,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteType_ABC.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_AgentDataRecognition, "DEC_Knowledge_AgentDataRecognition" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentDataRecognition )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentDataRecognition constructor

@@ -21,7 +21,7 @@
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( DetectionCapacity, "DetectionCapacity" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DetectionCapacity )
 
 
 namespace

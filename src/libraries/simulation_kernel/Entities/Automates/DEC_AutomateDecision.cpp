@@ -36,7 +36,7 @@
 
 #include <boost/bind.hpp>
 
-BOOST_CLASS_EXPORT_GUID( DEC_AutomateDecision, "DEC_AutomateDecision" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_AutomateDecision )
 
 
 // -----------------------------------------------------------------------------
@@ -601,7 +601,7 @@ void DEC_AutomateDecision::UpdateMeKnowledge( directia::Brain& brain )
 {
     try
     {
-        brain.GetScriptFunction( "UpdateLeaderMe" )( brain.GetScriptVariable( "net.masagroup.sword.military.world.Compagnie" ), (DEC_Decision_ABC*)this, GetAutomate().GetName() );
+//        brain.GetScriptFunction( "UpdateLeaderMe" )( brain.GetScriptVariable( "net.masagroup.sword.military.world.Compagnie" ), (DEC_Decision_ABC*)this, GetAutomate().GetName() );
     }
     catch( std::exception )
     {

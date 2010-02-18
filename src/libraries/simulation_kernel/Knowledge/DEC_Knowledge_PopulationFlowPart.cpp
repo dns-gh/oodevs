@@ -19,7 +19,7 @@
 #include "Network/NET_ASN_Tools.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_PopulationFlowPart, "DEC_Knowledge_PopulationFlowPart" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_PopulationFlowPart )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationFlowPart constructor

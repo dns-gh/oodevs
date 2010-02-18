@@ -80,4 +80,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( MIL_Injury_Fire )
+
 #endif // __MIL_Injury_Fire_h_

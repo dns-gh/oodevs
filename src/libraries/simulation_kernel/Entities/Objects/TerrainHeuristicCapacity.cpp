@@ -13,7 +13,7 @@
 #include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( TerrainHeuristicCapacity, "TerrainHeuristicCapacity" )
+BOOST_CLASS_EXPORT_IMPLEMENT( TerrainHeuristicCapacity )
 
 // -----------------------------------------------------------------------------
 // Name: TerrainHeuristicCapacity constructor

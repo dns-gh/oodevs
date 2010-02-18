@@ -74,4 +74,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( ContaminationCapacity )
+
 #endif // __ContaminationCapacity_h_

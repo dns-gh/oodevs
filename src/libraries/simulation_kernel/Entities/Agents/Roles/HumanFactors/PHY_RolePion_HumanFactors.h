@@ -129,4 +129,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( PHY_RolePion_HumanFactors )
+
 #endif // __PHY_RolePion_HumanFactors_h_

@@ -17,7 +17,7 @@
 #include <hla/AttributeIdentifier.h>
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( ConstructionAttribute, "ConstructionAttribute" )
+BOOST_CLASS_EXPORT_IMPLEMENT( ConstructionAttribute )
 
 // -----------------------------------------------------------------------------
 // Name: ConstructionAttribute constructor

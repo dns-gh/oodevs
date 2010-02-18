@@ -11,6 +11,7 @@
 #define __TimeLimitedAttribute_h_
 
 #include "ObjectAttribute_ABC.h"
+#include <boost/serialization/export.hpp>
 
 class Object;
 
@@ -66,5 +67,7 @@ private:
     mutable uint nDeathTimeStep_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( TimeLimitedAttribute )
 
 #endif

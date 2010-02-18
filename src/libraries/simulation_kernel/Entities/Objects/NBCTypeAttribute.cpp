@@ -14,7 +14,7 @@
 
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( NBCTypeAttribute, "NBCTypeAttribute" )
+BOOST_CLASS_EXPORT_IMPLEMENT( NBCTypeAttribute )
 
 // -----------------------------------------------------------------------------
 // Name: NBCTypeAttribute constructor

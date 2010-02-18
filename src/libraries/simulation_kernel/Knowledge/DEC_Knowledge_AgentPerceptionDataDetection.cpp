@@ -24,7 +24,7 @@
 #include "MIL_AgentServer.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_AgentPerceptionDataDetection, "DEC_Knowledge_AgentPerceptionDataDetection" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentPerceptionDataDetection )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentPerceptionDataDetection constructor

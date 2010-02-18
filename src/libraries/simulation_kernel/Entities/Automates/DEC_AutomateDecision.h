@@ -150,8 +150,9 @@ private:
 
 private:
     static int nDIAMissionIdx_; // index de mission_ dans T_Automate
-    //    static int nDIANameIdx_;
 };
+
+BOOST_CLASS_EXPORT_KEY( DEC_AutomateDecision )
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const DEC_AutomateDecision* role, const unsigned int /*version*/ )

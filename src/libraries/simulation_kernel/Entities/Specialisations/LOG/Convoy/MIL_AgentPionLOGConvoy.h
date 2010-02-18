@@ -48,4 +48,6 @@ private:
 
 };
 
+BOOST_CLASS_EXPORT_KEY( MIL_AgentPionLOGConvoy )
+
 #endif // __MIL_AgentPionLOGConvoy_h_

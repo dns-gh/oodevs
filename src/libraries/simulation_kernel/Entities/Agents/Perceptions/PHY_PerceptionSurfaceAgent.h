@@ -87,4 +87,6 @@ private:
           T_SectorVector       sectors_;
 };
 
+BOOST_CLASS_EXPORT_KEY( PHY_PerceptionSurfaceAgent )
+
 #endif // __PHY_PerceptionSurfaceAgent_h_

@@ -80,4 +80,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_BlackBoard_CanContainKnowledgeObjectPerception )
+
 #endif // __DEC_BlackBoard_CanContainKnowledgeObjectPerception_h_

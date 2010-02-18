@@ -76,4 +76,6 @@ private:
     const PHY_PerceptionLevel* pPreviousPerceptionLevel_;
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectPerception )
+
 #endif // __DEC_Knowledge_ObjectPerception_h_

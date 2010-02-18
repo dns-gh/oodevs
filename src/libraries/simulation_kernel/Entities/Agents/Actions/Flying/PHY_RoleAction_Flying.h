@@ -91,6 +91,6 @@ private:
     //@}
 };
 
-
+BOOST_CLASS_EXPORT_KEY( PHY_RoleAction_Flying )
 
 #endif // __PHY_RoleAction_Flying_h_

@@ -50,4 +50,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( InteractIfEquippedCapacity )
+
 #endif // __InteractIfEquippedCapacity_h_

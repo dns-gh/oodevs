@@ -11,6 +11,7 @@
 #define __DEC_Knowledge_ObjectAttributeInteractionHeight_h_
 
 #include "DEC_Knowledge_ObjectAttribute_ABC.h"
+#include <boost/serialization/export.hpp>
 
 class InteractionHeightAttribute;
 
@@ -68,5 +69,7 @@ private:
     float height_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeInteractionHeight )
 
 #endif // __DEC_Knowledge_ObjectAttributeInteractionHeight_h_

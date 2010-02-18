@@ -17,7 +17,7 @@
 #include "MIL_KnowledgeGroup.h"
 #include "MIL_AgentServer.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_KS_Sharing, "DEC_KS_Sharing" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_Sharing )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_Sharing::sShareSource::sShareSource

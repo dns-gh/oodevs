@@ -26,7 +26,7 @@
 
 MT_Random MIL_Injury_Contamination::randomGenerator_;
 
-BOOST_CLASS_EXPORT_GUID( MIL_Injury_Contamination, "MIL_Injury_Contamination" )
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Injury_Contamination )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Injury_Contamination::constructor

@@ -15,7 +15,7 @@
 #include "DEC_Knowledge_PopulationCollision.h"
 #include "Entities/Populations/MIL_Population.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_BlackBoard_CanContainKnowledgePopulationCollision, "DEC_BlackBoard_CanContainKnowledgePopulationCollision" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgePopulationCollision )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgePopulationCollision constructor

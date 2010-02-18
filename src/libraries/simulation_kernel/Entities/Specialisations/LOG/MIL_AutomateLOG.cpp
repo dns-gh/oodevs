@@ -33,7 +33,7 @@
 #include "Network/NET_AsnException.h"
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( MIL_AutomateLOG, "MIL_AutomateLOG" )
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AutomateLOG )
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_AutomateLOG* automat, const unsigned int /*version*/ )

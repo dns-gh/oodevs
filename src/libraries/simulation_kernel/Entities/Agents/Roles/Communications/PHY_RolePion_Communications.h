@@ -117,4 +117,6 @@ private:
     template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Communications* role, const unsigned int /*version*/ );
 };
 
+BOOST_CLASS_EXPORT_KEY( PHY_RolePion_Communications )
+
 #endif // __PHY_RolePion_Communications_h_

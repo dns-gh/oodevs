@@ -62,8 +62,21 @@ public:
     //@}
 
 private:
+    //! @name Serialization
+    //@{
+    friend class boost::serialization::access;
+    template< typename Archive > void serialize( Archive& ar, const uint )
+    {
+        ar & boost::serialization::base_object< surrender::PHY_RoleInterface_Surrender >( *this );
+        ar & bPrisoner_;
+    }
+    //@}
+
     bool bPrisoner_;
 };
 
 } // namespace surrender
+
+BOOST_CLASS_EXPORT_KEY( surrender::PHY_RoleHLA_Surrender )
+
 #endif // __PHY_RoleHLA_Surrender_h_

@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Medical/PHY_MedicalHumanState.cpp $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_MedicalHumanState.cpp $
 // $Author: Jvt $
 // $Modtime: 29/04/05 11:13 $
 // $Revision: 7 $
@@ -19,7 +19,7 @@
 #include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_MedicalHumanState, "PHY_MedicalHumanState" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MedicalHumanState )
 
 MIL_IDManager PHY_MedicalHumanState::idManager_;
 

@@ -25,7 +25,7 @@
 #include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
 #include "simulation_kernel/LoadingChangeNotificationHandler_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( transport::PHY_RoleAction_Loading, "PHY_RoleAction_Loading" )
+BOOST_CLASS_EXPORT_IMPLEMENT( transport::PHY_RoleAction_Loading )
 
 namespace transport
 {

@@ -10,6 +10,7 @@
 #ifndef __UrbanModel_h_
 #define __UrbanModel_h_
 
+#include <boost/serialization/export.hpp>
 
 namespace xml
 {
@@ -78,6 +79,7 @@ private:
     std::auto_ptr< urban::BlockPhModifier_ABC   > phTargetModifier_;
 };
 
+BOOST_CLASS_EXPORT_KEY( UrbanModel )
 
 #endif // __UrbanModel_h_
 

@@ -64,5 +64,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( PHY_RolePion_ActiveProtection )
 
 #endif // __PHY_RolePion_ActiveProtection_h_

@@ -14,6 +14,7 @@
 
 #include "DEC_Knowledge_ObjectAttribute_ABC.h"
 #include "DEC_Knowledge_ObjectAttributeUpdatable_ABC.h"
+#include <boost/serialization/export.hpp>
 
 class LogisticAttribute;
 class MIL_AutomateLOG;
@@ -61,5 +62,7 @@ private:
     MIL_AutomateLOG*         pTC2_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeLogistic )
 
 #endif // __DEC_Knowledge_ObjectAttributeLogistic_h_

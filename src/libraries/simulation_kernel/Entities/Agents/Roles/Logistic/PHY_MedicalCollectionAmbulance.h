@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Medical/PHY_MedicalCollectionAmbulance.h $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_MedicalCollectionAmbulance.h $
 // $Author: Jvt $
 // $Modtime: 11/04/05 14:34 $
 // $Revision: 2 $
@@ -11,6 +11,8 @@
 
 #ifndef __PHY_MedicalCollectionAmbulance_h_
 #define __PHY_MedicalCollectionAmbulance_h_
+
+#include <boost/serialization/export.hpp>
 
 class PHY_ComposantePion;
 class PHY_MedicalCollectionConsign;
@@ -92,5 +94,7 @@ private:
     MT_Float                    rNbrHumanHandled_;
     PHY_RoleInterface_Medical*  pSortingArea_;
 };
+
+BOOST_CLASS_EXPORT_KEY( PHY_MedicalCollectionAmbulance )
 
 #endif // __PHY_MedicalCollectionAmbulance_h_

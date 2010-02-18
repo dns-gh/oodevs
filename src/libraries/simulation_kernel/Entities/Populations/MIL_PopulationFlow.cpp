@@ -31,7 +31,7 @@
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 #include "simulation_kernel/PopulationCollisionNotificationHandler_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( MIL_PopulationFlow, "MIL_PopulationFlow" )
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PopulationFlow )
 
 MIL_IDManager MIL_PopulationFlow::idManager_;
 

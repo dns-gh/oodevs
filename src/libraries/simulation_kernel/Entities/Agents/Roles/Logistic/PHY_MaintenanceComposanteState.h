@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Maintenance/PHY_MaintenanceComposanteState.h $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_MaintenanceComposanteState.h $
 // $Author: Jvt $
 // $Modtime: 4/05/05 10:42 $
 // $Revision: 4 $
@@ -91,5 +91,7 @@ private:
 
     static MIL_IDManager idManager_;
 };
+
+BOOST_CLASS_EXPORT_KEY( PHY_MaintenanceComposanteState )
 
 #endif // __PHY_MaintenanceComposanteState_h_

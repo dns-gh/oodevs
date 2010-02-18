@@ -31,8 +31,7 @@
 #include "simulation_kernel/Knowledge/KnowledgeGroupFactory_ABC.h" // LTO
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( MIL_Army, "MIL_Army" )
-BOOST_CLASS_EXPORT_GUID( MIL_Army_ABC, "MIL_Army_ABC" );
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Army )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Army::save_construct_data

@@ -134,4 +134,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( InputToxicCloudAttribute )
+
 #endif // __InputToxicCloudAttribute_h_

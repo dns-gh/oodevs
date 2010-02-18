@@ -16,7 +16,7 @@
 
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( MIL_AgentPionLOGConvoy, "MIL_AgentPionLOGConvoy" )
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentPionLOGConvoy )
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_AgentPionLOGConvoy* pion, const unsigned int /*version*/ )

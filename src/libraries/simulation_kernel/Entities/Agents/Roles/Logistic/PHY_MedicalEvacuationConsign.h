@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Medical/PHY_MedicalEvacuationConsign.h $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_MedicalEvacuationConsign.h $
 // $Author: Nld $
 // $Modtime: 25/04/05 11:10 $
 // $Revision: 3 $
@@ -75,5 +75,7 @@ private:
     PHY_ComposantePion*             pDoctor_;
     PHY_MedicalEvacuationAmbulance* pEvacuationAmbulance_;
 };
+
+BOOST_CLASS_EXPORT_KEY( PHY_MedicalEvacuationConsign )
 
 #endif // __PHY_MedicalEvacuationConsign_h_

@@ -55,4 +55,6 @@ private:
     const uint               nRepairTime_;
 };
 
+BOOST_CLASS_EXPORT_KEY( PHY_Breakdown )
+
 #endif // __PHY_Breakdown_h_

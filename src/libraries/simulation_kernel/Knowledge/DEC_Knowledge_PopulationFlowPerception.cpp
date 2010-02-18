@@ -23,7 +23,7 @@
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 #include "game_asn/ASN_Delete.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_PopulationFlowPerception, "DEC_Knowledge_PopulationFlowPerception" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_PopulationFlowPerception )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationFlowPerception constructor

@@ -133,4 +133,6 @@ private:
 
 };
 
+BOOST_CLASS_EXPORT_KEY( MIL_PopulationConcentration )
+
 #endif // __MIL_PopulationConcentration_h_

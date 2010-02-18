@@ -28,7 +28,7 @@
 #include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_DotationStockContainer, "PHY_DotationStockContainer" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_DotationStockContainer )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationStockContainer constructor

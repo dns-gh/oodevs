@@ -14,6 +14,7 @@
 
 #include "DEC_Knowledge_RapFor_ABC.h"
 #include "DEC_Knowledge_Def.h"
+#include <boost/serialization/export.hpp>
 
 class MIL_AgentPion;
 
@@ -50,5 +51,7 @@ private:
     const MIL_AgentPion*              pPion_;
           T_ConstKnowledgeAgentVector dangerousEnemies_;
 };
+
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_RapForLocal )
 
 #endif // __DEC_Knowledge_RapForLocal_h_

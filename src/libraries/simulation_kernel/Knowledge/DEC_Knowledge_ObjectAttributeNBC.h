@@ -14,6 +14,7 @@
 
 #include "DEC_Knowledge_ObjectAttribute_ABC.h"
 #include "game_asn/Simulation.h"
+#include <boost/serialization/export.hpp>
 
 class NBCAttribute;
 class MIL_NbcAgentType;
@@ -64,5 +65,7 @@ private:
     const MIL_NbcAgentType* pNbcAgentType_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeNBC )
 
 #endif // __DEC_Knowledge_ObjectAttributeNBC_h_

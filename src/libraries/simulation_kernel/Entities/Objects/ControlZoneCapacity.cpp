@@ -25,7 +25,7 @@
 
 MT_Random ControlZoneCapacity::randomGenerator_;
 
-BOOST_CLASS_EXPORT_GUID( ControlZoneCapacity, "ControlZoneCapacity" )
+BOOST_CLASS_EXPORT_IMPLEMENT( ControlZoneCapacity )
 
 namespace 
 {

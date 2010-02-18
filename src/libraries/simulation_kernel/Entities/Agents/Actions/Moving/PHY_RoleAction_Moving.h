@@ -148,4 +148,6 @@ private:
 
 } // namespace moving
 
+BOOST_CLASS_EXPORT_KEY( moving::PHY_RoleAction_Moving )
+
 #endif // __PHY_RoleAction_Moving_h_

@@ -93,4 +93,6 @@ private:
 
 } //namespace firing
 
+BOOST_CLASS_EXPORT_KEY( firing::PHY_RoleAction_IndirectFiring )
+
 #endif // __PHY_RoleAction_IndirectFiring_h_

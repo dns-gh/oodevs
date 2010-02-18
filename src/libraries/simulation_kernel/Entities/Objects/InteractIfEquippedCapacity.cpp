@@ -13,7 +13,7 @@
 #include "Object.h"
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( InteractIfEquippedCapacity, "InteractIfEquippedCapacity" )
+BOOST_CLASS_EXPORT_IMPLEMENT( InteractIfEquippedCapacity )
 
 // -----------------------------------------------------------------------------
 // Name: InteractIfEquippedCapacity constructor

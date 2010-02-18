@@ -19,7 +19,7 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_KS_ObjectInteraction, "DEC_KS_ObjectInteraction" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_ObjectInteraction )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_ObjectInteraction constructor

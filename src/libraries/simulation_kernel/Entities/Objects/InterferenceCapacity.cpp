@@ -16,7 +16,7 @@
 
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( InterferenceCapacity, "InterferenceCapacity" )
+BOOST_CLASS_EXPORT_IMPLEMENT( InterferenceCapacity )
 
 // -----------------------------------------------------------------------------
 // Name: InterferenceCapacity constructor

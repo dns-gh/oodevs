@@ -164,4 +164,7 @@ private:
 
 } // namespace transport
 
+BOOST_CLASS_EXPORT_KEY( transport::PHY_RoleAction_Transport )
+BOOST_CLASS_EXPORT_KEY( transport::PHY_RoleAction_Transport::sTransportData )
+
 #endif // __PHY_RoleAction_Transport_h_

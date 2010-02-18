@@ -49,4 +49,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( KnowledgeGroupFactory )
+
 #endif // __KnowledgeGroupFactory_h_

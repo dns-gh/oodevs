@@ -39,7 +39,7 @@
 #include "AlgorithmsFactories.h"
 #include "SpeedComputerStrategy.h"
 
-BOOST_CLASS_EXPORT_GUID( moving::PHY_RoleAction_Moving, "PHY_RoleAction_Moving" )
+BOOST_CLASS_EXPORT_IMPLEMENT( moving::PHY_RoleAction_Moving )
 
 namespace moving
 {

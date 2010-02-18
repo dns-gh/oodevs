@@ -71,4 +71,6 @@ private:
 
 } // namespace network
 
+BOOST_CLASS_EXPORT_KEY( network::NET_RolePion_Dotations )
+
 #endif // __NET_RolePion_Dotations_h_

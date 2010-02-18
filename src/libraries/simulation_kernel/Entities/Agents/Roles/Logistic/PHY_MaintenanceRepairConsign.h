@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Maintenance/PHY_MaintenanceRepairConsign.h $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_MaintenanceRepairConsign.h $
 // $Author: Jvt $
 // $Modtime: 11/04/05 16:53 $
 // $Revision: 2 $
@@ -57,5 +57,7 @@ private:
 private:
     PHY_ComposantePion* pRepairer_;
 };
+
+BOOST_CLASS_EXPORT_KEY( PHY_MaintenanceRepairConsign )
 
 #endif // __PHY_MaintenanceRepairConsign_h_

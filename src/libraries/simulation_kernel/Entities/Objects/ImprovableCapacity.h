@@ -84,4 +84,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( ImprovableCapacity )
+
 #endif // __ImprovableCapacity_h_

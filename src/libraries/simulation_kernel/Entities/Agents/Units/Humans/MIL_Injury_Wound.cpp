@@ -25,7 +25,7 @@
 
 MT_Random MIL_Injury_Wound::randomGenerator_;
 
-//BOOST_CLASS_EXPORT_GUID( MIL_Injury_Wound, "MIL_Injury_Wound" )
+//BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Injury_Wound )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Injury_Wound::constructor

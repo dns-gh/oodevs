@@ -74,4 +74,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( PoisoningCapacity )
+
 #endif // __PoisoningCapacity_h_

@@ -77,4 +77,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( MIL_Injury_Contamination )
+
 #endif // __MIL_Injury_Contamination_h_

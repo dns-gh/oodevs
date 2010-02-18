@@ -11,6 +11,7 @@
 #define __AnimatorAttribute_h_
 
 #include "ObjectAttribute_ABC.h"
+#include <boost/serialization/export.hpp>
 
 class MIL_Agent_ABC;
 
@@ -70,5 +71,7 @@ private:
     uint        maxAnimators_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( AnimatorAttribute )
 
 #endif // __AnimatorAttribute_h_

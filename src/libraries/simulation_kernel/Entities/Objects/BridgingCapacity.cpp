@@ -15,7 +15,7 @@
 #include "simulation_terrain/TER_Localisation.h"
 #include "simulation_terrain/TER_PathFindManager.h"
 
-BOOST_CLASS_EXPORT_GUID( BridgingCapacity, "BridgingCapacity" )
+BOOST_CLASS_EXPORT_IMPLEMENT( BridgingCapacity )
 
 // -----------------------------------------------------------------------------
 // Name: BridgingCapacity constructor

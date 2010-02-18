@@ -54,4 +54,6 @@ private:
           MT_Float              rHeight_;
 };
 
+BOOST_CLASS_EXPORT_KEY( PHY_PerceptionSurfaceObject )
+
 #endif // __PHY_PerceptionSurfaceObject_h_

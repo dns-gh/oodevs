@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Supply/PHY_RolePionLOGConvoy_Supply.cpp $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_RolePionLOGConvoy_Supply.cpp $
 // $Author: Jvt $
 // $Modtime: 6/04/05 11:48 $
 // $Revision: 3 $
@@ -19,7 +19,7 @@
 #include "simulation_kernel/LocationActionNotificationHandler_ABC.h"
 #include "simulation_kernel/SpeedComputer_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_RolePionLOGConvoy_Supply, "PHY_RolePionLOGConvoy_Supply" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePionLOGConvoy_Supply )
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePionLOGConvoy_Supply* role, const unsigned int /*version*/ )

@@ -67,4 +67,6 @@ private:
     uint            nTimeLastUpdate_;
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_PopulationFlowPart )
+
 #endif // __DEC_Knowledge_PopulationFlowPart_h_

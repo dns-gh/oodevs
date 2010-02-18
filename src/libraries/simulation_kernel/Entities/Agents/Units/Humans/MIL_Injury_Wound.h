@@ -76,4 +76,6 @@ private:
     //@}
 };
 
+//BOOST_CLASS_EXPORT_KEY( MIL_Injury_Wound )
+
 #endif // __MIL_Injury_Wound_h_

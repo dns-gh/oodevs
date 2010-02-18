@@ -13,8 +13,9 @@
 
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
-#include <boost/shared_ptr.hpp>
 #include "MIL_NBCType.h"
+#include <boost/shared_ptr.hpp>
+#include <boost/serialization/export.hpp>
 
 // =============================================================================
 /** @class  NBCTypeAttribute
@@ -87,5 +88,7 @@ private:
     int                sourceLifeDuration_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( NBCTypeAttribute )
 
 #endif // __NBCTypeAttribute_h_

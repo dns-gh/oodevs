@@ -78,4 +78,6 @@ private:
    
 };
 
+BOOST_CLASS_EXPORT_KEY( ArmyFactory )
+
 #endif // __ArmyFactory_h_

@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Supply/PHY_SupplyDotationConsign.cpp $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_SupplyDotationConsign.cpp $
 // $Author: Nld $
 // $Modtime: 13/04/05 12:15 $
 // $Revision: 5 $
@@ -14,7 +14,7 @@
 #include "PHY_SupplyDotationState.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_SupplyDotationConsign, "PHY_SupplyDotationConsign" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_SupplyDotationConsign )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyRepairConsign::PHY_SupplyDotationConsign

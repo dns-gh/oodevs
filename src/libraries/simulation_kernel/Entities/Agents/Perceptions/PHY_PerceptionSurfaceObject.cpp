@@ -9,7 +9,7 @@
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_PerceptionSurfaceObject, "PHY_PerceptionSurfaceObject" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_PerceptionSurfaceObject )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionSurfaceObject constructor

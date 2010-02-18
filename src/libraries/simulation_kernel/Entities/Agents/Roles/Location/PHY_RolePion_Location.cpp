@@ -33,7 +33,7 @@
 
 using namespace location;
 
-BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Location, "PHY_RolePion_Location" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Location )
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePion_Location* role, const unsigned int /*version*/ )

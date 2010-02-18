@@ -96,6 +96,8 @@ private:
     static int nDIANameIdx_;
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_PopulationDecision )
+
 template< typename Archive >
 void save_construct_data( Archive& archive, const DEC_PopulationDecision* role, const unsigned int /*version*/ )
 {

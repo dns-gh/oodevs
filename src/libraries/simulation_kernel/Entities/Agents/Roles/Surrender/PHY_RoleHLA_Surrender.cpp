@@ -13,7 +13,7 @@
 #include "PHY_RoleHLA_Surrender.h"
 #include "Network/NET_ASN_Messages.h"
 
-BOOST_CLASS_EXPORT_GUID( surrender::PHY_RoleHLA_Surrender, "PHY_RoleHLA_Surrender" )
+BOOST_CLASS_EXPORT_IMPLEMENT( surrender::PHY_RoleHLA_Surrender )
 
 namespace surrender
 {

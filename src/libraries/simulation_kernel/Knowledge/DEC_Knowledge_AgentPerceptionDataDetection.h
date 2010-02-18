@@ -14,6 +14,7 @@
 
 #include "MIL.h"
 #include "DEC_Knowledge_Def.h"
+#include <boost/serialization/export.hpp>
 
 class MIL_Agent_ABC;
 class PHY_PerceptionLevel;
@@ -80,5 +81,7 @@ private:
     const PHY_Posture*    pCurrentPosture_;
     MT_Float              rPostureCompletionPercentage_;
 };
+
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_AgentPerceptionDataDetection )
 
 #endif // __DEC_Knowledge_AgentPerceptionDataDetection_h_

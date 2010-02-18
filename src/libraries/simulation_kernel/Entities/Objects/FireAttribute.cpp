@@ -15,7 +15,7 @@
 
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( FireAttribute, "FireAttribute" )
+BOOST_CLASS_EXPORT_IMPLEMENT( FireAttribute )
 
 // -----------------------------------------------------------------------------
 // Name: FireAttribute constructor

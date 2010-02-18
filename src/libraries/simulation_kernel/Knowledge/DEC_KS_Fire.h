@@ -74,6 +74,8 @@ private:
     T_PopulationSet                    populationsAttacking_;
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_KS_Fire )
+
 // -----------------------------------------------------------------------------
 // Name: template< typename Archive > void DEC_KnowledgeBlackBoard_AgentPion::serialize
 // Created: NLD 2006-04-12

@@ -15,7 +15,7 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_ObjectCollision, "DEC_Knowledge_ObjectCollision" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectCollision )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectCollision constructor

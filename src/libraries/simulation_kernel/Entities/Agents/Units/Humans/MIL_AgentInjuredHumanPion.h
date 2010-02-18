@@ -51,4 +51,6 @@ public:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( MIL_AgentInjuredHumanPion )
+
 #endif // __MIL_AgentInjuredHumanPion_h_

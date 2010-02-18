@@ -28,7 +28,7 @@
 
 namespace bpt = boost::posix_time;
 
-BOOST_CLASS_EXPORT_GUID( InputToxicCloudAttribute, "InputToxicCloudAttribute" )
+BOOST_CLASS_EXPORT_IMPLEMENT( InputToxicCloudAttribute )
 
 namespace 
 {

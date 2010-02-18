@@ -54,4 +54,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( FormationFactory )
+
 #endif // __FormationFactory_h_

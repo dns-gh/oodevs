@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Supply/PHY_SupplyDotationRequest.h $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_SupplyDotationRequest.h $
 // $Author: Jvt $
 // $Modtime: 11/04/05 13:20 $
 // $Revision: 2 $
@@ -35,6 +35,8 @@ public:
     void AddDotation( PHY_Dotation& dotation );
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( PHY_SupplyDotationRequest )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyDotationRequest::serialize

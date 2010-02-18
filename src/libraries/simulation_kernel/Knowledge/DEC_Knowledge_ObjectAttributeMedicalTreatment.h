@@ -14,6 +14,7 @@
 
 #include "DEC_Knowledge_ObjectAttribute_ABC.h"
 #include "game_asn/Simulation.h"
+#include <boost/serialization/export.hpp>
 
 class MedicalTreatmentAttribute;
 class MIL_MedicalTreatmentType;
@@ -73,5 +74,7 @@ private:
     int                              doctors_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeMedicalTreatment )
 
 #endif // __DEC_Knowledge_ObjectAttributeMedicalTreatment_h_

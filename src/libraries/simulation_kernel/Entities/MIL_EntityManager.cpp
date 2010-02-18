@@ -86,7 +86,7 @@
 
 
 
-BOOST_CLASS_EXPORT_GUID( MIL_EntityManager, "MIL_EntityManager" )
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_EntityManager )
 
 
 template< typename Archive >

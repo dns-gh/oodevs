@@ -25,7 +25,7 @@
 #include "simulation_kernel/HumansChangedNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( human::PHY_RolePion_Humans, "PHY_RolePion_Humans" )
+BOOST_CLASS_EXPORT_IMPLEMENT( human::PHY_RolePion_Humans )
 
 namespace human
 {

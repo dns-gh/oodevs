@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleHLA_Population.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_RoleHLA_Population, "PHY_RoleHLA_Population" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RoleHLA_Population )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Population constructor

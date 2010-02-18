@@ -111,4 +111,6 @@ private:
 
 }
 
+BOOST_CLASS_EXPORT_KEY( nbc::PHY_RolePion_NBC )
+
 #endif // __PHY_RolePion_NBC_h_

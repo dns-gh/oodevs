@@ -130,4 +130,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_BlackBoard_CanContainKnowledgeAgent )
+
 #endif // __DEC_BlackBoard_CanContainKnowledgeAgent_h_

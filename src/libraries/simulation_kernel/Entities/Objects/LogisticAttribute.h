@@ -11,6 +11,7 @@
 #define __LogisticAttribute_h_
 
 #include "ObjectAttribute_ABC.h"
+#include <boost/serialization/export.hpp>
 
 class MIL_AutomateLOG;
 
@@ -60,5 +61,7 @@ private:
     MIL_AutomateLOG*    pTC2_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( LogisticAttribute )
 
 #endif //__LogisticAttribute_h_

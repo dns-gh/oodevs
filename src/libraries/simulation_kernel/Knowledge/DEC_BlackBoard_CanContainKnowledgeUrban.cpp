@@ -20,7 +20,7 @@
 #include <urban/TerrainObject_ABC.h>
 
 
-BOOST_CLASS_EXPORT_GUID( DEC_BlackBoard_CanContainKnowledgeUrban, "DEC_BlackBoard_CanContainKnowledgeUrban" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgeUrban )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeUrban constructor

@@ -13,6 +13,7 @@
 #include "simulation_kernel/MIL.h"
 #include "ObjectCapacity_ABC.h"
 #include "ConstructionCapacity.h"
+#include <boost/serialization/export.hpp>
 
 namespace xml
 {
@@ -86,5 +87,7 @@ private:
     ConstructionCapacity::E_UnitType unitType_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( BuildableCapacity )
 
 #endif // __BuildableCapacity_h_

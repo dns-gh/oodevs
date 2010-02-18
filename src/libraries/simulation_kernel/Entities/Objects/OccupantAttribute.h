@@ -11,6 +11,7 @@
 #define __OccupantAttribute_h_
 
 #include "ObjectAttribute_ABC.h"
+#include <boost/serialization/export.hpp>
 
 class MIL_Agent_ABC;
 
@@ -64,5 +65,7 @@ private:
     const MIL_Agent_ABC*  pOccupant_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( OccupantAttribute )
 
 #endif // __AnimatorAttibute_h_

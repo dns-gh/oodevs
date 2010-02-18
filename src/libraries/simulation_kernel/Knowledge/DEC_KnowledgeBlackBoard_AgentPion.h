@@ -145,4 +145,6 @@ private:
     DEC_KS_Perception*            pKsPerception_;
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_KnowledgeBlackBoard_AgentPion )
+
 #endif // __DEC_KnowledgeBlackBoard_AgentPion_h_

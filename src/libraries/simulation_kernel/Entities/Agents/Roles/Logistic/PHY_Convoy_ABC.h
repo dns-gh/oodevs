@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Supply/PHY_Convoy_ABC.h $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_Convoy_ABC.h $
 // $Author: Jvt $
 // $Modtime: 1/04/05 11:44 $
 // $Revision: 5 $
@@ -13,6 +13,7 @@
 #define __PHY_Convoy_ABC_h_
 
 #include "MT_Tools/MT_InterpolatedFunction.h"
+#include <boost/serialization/export.hpp>
 
 namespace xml
 {
@@ -115,5 +116,7 @@ protected:
     static const MIL_AgentTypePion*                  pConvoyAgentType_;
     static const MIL_MissionType_ABC*                pConvoyMissionType_;
 };
+
+BOOST_CLASS_EXPORT_KEY( PHY_Convoy_ABC )
 
 #endif // __PHY_Convoy_ABC_h_

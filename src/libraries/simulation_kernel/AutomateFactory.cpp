@@ -16,9 +16,10 @@
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "simulation_kernel/Decision/DEC_DataBase.h"
 #include "Tools/MIL_IDManager.h"
+#include <boost/serialization/export.hpp>
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( AutomateFactory, "AutomateFactory" )
+BOOST_CLASS_EXPORT_IMPLEMENT( AutomateFactory )
 
 // -----------------------------------------------------------------------------
 // Name: AutomateFactory constructor

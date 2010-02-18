@@ -37,16 +37,18 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Update    ( bool /*bIsDead*/ ) {};
-    virtual void Clean     () {};
-    virtual bool HasChanged() const { return false; };
-    virtual MT_Float ModifyMaxSpeed ( MT_Float /*rSpeed*/ ) const { return 0.; };
-    virtual MT_Float GetCollidingPopulationDensity() const { return 0.; };
+    virtual void Update    ( bool /*bIsDead*/ ) {}
+    virtual void Clean     () {}
+    virtual bool HasChanged() const { return false; }
+    virtual MT_Float ModifyMaxSpeed ( MT_Float /*rSpeed*/ ) const { return 0.; }
+    virtual MT_Float GetCollidingPopulationDensity() const { return 0.; }
     //@}
 
 private:
     bool bInvulnerable_;
 
 };
+
+BOOST_CLASS_EXPORT_KEY( PHY_RoleHLA_Population )
 
 #endif // __PHY_RoleHLA_Population_h_

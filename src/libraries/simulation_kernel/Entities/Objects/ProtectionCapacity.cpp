@@ -14,7 +14,7 @@
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( ProtectionCapacity, "ProtectionCapacity" )
+BOOST_CLASS_EXPORT_IMPLEMENT( ProtectionCapacity )
 
 // -----------------------------------------------------------------------------
 // Name: ProtectionCapacity::ProtectionCapacity

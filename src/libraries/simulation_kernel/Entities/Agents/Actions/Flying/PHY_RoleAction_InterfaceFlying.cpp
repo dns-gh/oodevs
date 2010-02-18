@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleAction_InterfaceFlying.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_InterfaceFlying, "PHY_RoleAction_InterfaceFlying" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RoleAction_InterfaceFlying )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_InterfaceFlying constructor

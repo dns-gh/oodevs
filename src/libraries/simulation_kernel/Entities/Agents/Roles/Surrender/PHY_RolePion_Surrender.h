@@ -92,4 +92,6 @@ private:
 
 } // namespace surrender
 
+BOOST_CLASS_EXPORT_KEY( surrender::PHY_RolePion_Surrender )
+
 #endif // __PHY_RolePion_Surrender_h_

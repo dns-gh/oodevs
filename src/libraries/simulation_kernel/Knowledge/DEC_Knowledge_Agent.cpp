@@ -26,7 +26,7 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_ASN_Messages.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_Agent, "DEC_Knowledge_Agent" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_Agent )
 
 MT_Float DEC_Knowledge_Agent::rMaxDangerosityDegradationByRelevance_        = 0.2; // 20%
 MT_Float DEC_Knowledge_Agent::rMaxDangerosityDegradationByOpState_          = 0.2; // 20%

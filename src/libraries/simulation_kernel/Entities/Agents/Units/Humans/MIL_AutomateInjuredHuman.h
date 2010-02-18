@@ -108,5 +108,7 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( MIL_AutomateInjuredHuman )
+
 #endif // __MIL_AutomateInjuredHuman_h_
 

@@ -72,6 +72,8 @@ private:
     T_ShareSourceMMap                       shareSources_;
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_KS_Sharing )
+
 // -----------------------------------------------------------------------------
 // Name: template< typename Archive > void DEC_KS_Sharing::serialize
 // Created: NLD 2006-04-12

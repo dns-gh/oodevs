@@ -18,7 +18,7 @@
 
 #include "MIL.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_ObjectAttributeCrossingSite, "DEC_Knowledge_ObjectAttributeCrossingSite" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeCrossingSite )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectAttributeCrossingSite constructor

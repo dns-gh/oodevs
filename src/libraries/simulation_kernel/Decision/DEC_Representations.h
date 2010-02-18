@@ -77,4 +77,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_Representations )
+
 #endif // __DEC_Representations_h_

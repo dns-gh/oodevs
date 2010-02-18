@@ -12,7 +12,7 @@
 #include "Object.h"
 #include "TimeLimitedAttribute.h"
 
-BOOST_CLASS_EXPORT_GUID( TimeLimitedCapacity, "TimeLimitedCapacity" )
+BOOST_CLASS_EXPORT_IMPLEMENT( TimeLimitedCapacity )
 
 // -----------------------------------------------------------------------------
 // Name: TimeLimitedCapacity constructor

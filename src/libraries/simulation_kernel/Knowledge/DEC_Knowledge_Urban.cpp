@@ -19,7 +19,7 @@
 #include "simulation_kernel/MIL_AgentServer.h"
 #include "urban/TerrainObject_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_Urban, "DEC_Knowledge_Urban" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_Urban )
 
 MIL_IDManager DEC_Knowledge_Urban::idManager_;
 

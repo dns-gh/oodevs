@@ -18,7 +18,7 @@
 
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( StockAttribute, "StockAttribute" )
+BOOST_CLASS_EXPORT_IMPLEMENT( StockAttribute )
 
 using namespace hla;
 

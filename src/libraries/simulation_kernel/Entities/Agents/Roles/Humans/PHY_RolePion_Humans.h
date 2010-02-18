@@ -142,4 +142,6 @@ private:
 
 } //namespace human
 
+BOOST_CLASS_EXPORT_KEY( human::PHY_RolePion_Humans )
+
 #endif // __PHY_RolePion_Humans_h_

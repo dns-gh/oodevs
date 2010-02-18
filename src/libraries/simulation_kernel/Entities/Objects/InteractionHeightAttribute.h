@@ -11,6 +11,7 @@
 #define __InteractionHeightAttribute_h_
 
 #include "ObjectAttribute_ABC.h"
+#include <boost/serialization/export.hpp>
 
 struct ASN1T_ObjectAttributes;
 
@@ -63,5 +64,7 @@ private:
     MT_Float height_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( InteractionHeightAttribute )
 
 #endif // __InteractionHeightAttribute_h_

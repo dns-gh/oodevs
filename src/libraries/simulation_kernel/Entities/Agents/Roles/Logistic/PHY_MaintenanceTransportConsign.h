@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Maintenance/PHY_MaintenanceTransportConsign.h $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_MaintenanceTransportConsign.h $
 // $Author: Jvt $
 // $Modtime: 11/04/05 16:56 $
 // $Revision: 2 $
@@ -58,5 +58,7 @@ private:
 private:
     PHY_ComposantePion* pCarrier_;
 };
+
+BOOST_CLASS_EXPORT_KEY( PHY_MaintenanceTransportConsign )
 
 #endif // __PHY_MaintenanceTransportConsign_h_

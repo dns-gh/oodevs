@@ -57,4 +57,6 @@ private:
     //@}
 };
 
+//BOOST_CLASS_EXPORT_KEY( MIL_Injury_NBC )
+
 #endif // __MIL_Injury_NBC_h_

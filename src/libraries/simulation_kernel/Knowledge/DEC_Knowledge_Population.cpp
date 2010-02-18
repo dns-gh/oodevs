@@ -25,7 +25,7 @@
 #include "Entities/MIL_Army.h"
 #include "Network/NET_ASN_Messages.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_Population, "DEC_Knowledge_Population" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_Population )
 
 MIL_IDManager DEC_Knowledge_Population::idManager_;
 

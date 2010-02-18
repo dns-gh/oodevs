@@ -94,4 +94,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( HealableCapacity )
+
 #endif // __HealableCapacity_h_

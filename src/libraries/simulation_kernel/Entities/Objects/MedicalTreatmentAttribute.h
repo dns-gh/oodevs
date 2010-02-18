@@ -12,8 +12,9 @@
 
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
-#include <boost/shared_ptr.hpp>
 #include "MIL_MedicalTreatmentType.h"
+#include <boost/shared_ptr.hpp>
+#include <boost/serialization/export.hpp>
 
 // =============================================================================
 /** @class  MedicalTreatmentAttribute
@@ -108,5 +109,7 @@ private:
     int                   initialDoctors_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MedicalTreatmentAttribute )
 
 #endif // __MedicalTreatmentAttribute_h_

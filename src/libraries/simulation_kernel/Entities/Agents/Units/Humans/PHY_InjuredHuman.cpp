@@ -19,7 +19,7 @@
 
 #define min(a,b)    (((a) < (b)) ? (a) : (b))
 
-BOOST_CLASS_EXPORT_GUID( PHY_InjuredHuman, "PHY_InjuredHuman" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_InjuredHuman )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_InjuredHuman constructor

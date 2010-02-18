@@ -12,6 +12,7 @@
 
 #include "ObjectCapacity_ABC.h"
 #include "MIL_InteractiveContainer_ABC.h"
+#include <boost/serialization/export.hpp>
 
 class MIL_Agent_ABC;
 // =============================================================================
@@ -74,5 +75,7 @@ private:
     //@}
 
 };
+
+BOOST_CLASS_EXPORT_KEY( DetectionCapacity )
 
 #endif // __DetectionCapacity_h_

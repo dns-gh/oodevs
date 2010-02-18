@@ -31,8 +31,9 @@ class AutomateFactory_ABC : public tools::Resolver< MIL_Automate >
 {
 
 public:
-    //! @name Destructor
+    //! @name Constructor/Destructor
     //@{
+             AutomateFactory_ABC() {}
     virtual ~AutomateFactory_ABC() {}
     //@}
 
@@ -46,13 +47,14 @@ public:
     //@{
     template< typename Archive > void serialize( Archive& file, const uint );
     //@}
-
-protected:
-    //! @name Constructor
-    //@{
-    AutomateFactory_ABC() {}
-    //@}
 };
+
+namespace boost {
+namespace serialization {
+    template<>
+    struct is_abstract<const AutomateFactory_ABC> : boost::true_type { } ;
+} // namespace serialization
+}
 
 // -----------------------------------------------------------------------------
 // Name: template< typename Archive > void AutomateFactory_ABC::serialize

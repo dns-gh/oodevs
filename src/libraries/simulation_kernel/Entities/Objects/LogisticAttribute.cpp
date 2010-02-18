@@ -19,7 +19,7 @@
 
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( LogisticAttribute, "LogisticAttribute" )
+BOOST_CLASS_EXPORT_IMPLEMENT( LogisticAttribute )
 
 // -----------------------------------------------------------------------------
 // Name: LogisticAttribute constructor

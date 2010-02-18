@@ -19,7 +19,7 @@
 
 #include "simulation_kernel/WeaponReloadingComputer_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Population, "PHY_RolePion_Population" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Population )
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePion_Population* role, const unsigned int /*version*/ )

@@ -29,7 +29,7 @@
 #include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( transport::PHY_RolePion_Transported, "PHY_RolePion_Transported" )
+BOOST_CLASS_EXPORT_IMPLEMENT( transport::PHY_RolePion_Transported )
 
 namespace transport
 {

@@ -243,6 +243,8 @@ private:
     DEC_AutomateDecision*    pAutomate_;
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_RolePion_Decision )
+
 template< typename Archive >
 void save_construct_data( Archive& archive, const DEC_RolePion_Decision* role, const unsigned int /*version*/ )
 {

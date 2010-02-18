@@ -99,4 +99,6 @@ private:
     static MIL_IDManager idManager_;
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_PopulationConcentration )
+
 #endif // __DEC_Knowledge_PopulationConcentration_h_

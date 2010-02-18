@@ -125,4 +125,6 @@ private:
 
 };
 
+BOOST_CLASS_EXPORT_KEY( PHY_RolePion_Location )
+
 #endif // __PHY_RolePion_Location_h_

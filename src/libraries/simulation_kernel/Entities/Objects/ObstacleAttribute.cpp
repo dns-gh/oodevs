@@ -16,7 +16,7 @@
 
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( ObstacleAttribute, "ObstacleAttribute" )
+BOOST_CLASS_EXPORT_IMPLEMENT( ObstacleAttribute )
 
 // -----------------------------------------------------------------------------
 // Name: ObstacleAttribute constructor

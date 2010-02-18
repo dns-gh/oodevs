@@ -97,4 +97,6 @@ private:
     bool                   bAttacker_;
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_PopulationPerception )
+
 #endif // __DEC_Knowledge_PopulationPerception_h_

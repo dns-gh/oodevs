@@ -64,4 +64,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( TerrainHeuristicCapacity )
+
 #endif // __TerrainHeuristicCapacity_h_

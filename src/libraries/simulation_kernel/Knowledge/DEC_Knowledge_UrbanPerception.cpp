@@ -14,7 +14,7 @@
 #include "simulation_kernel/Knowledge/MIL_KnowledgeGroup.h"
 #include "urban/TerrainObject_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_UrbanPerception, "DEC_Knowledge_UrbanPerception" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_UrbanPerception )
 
 MIL_IDManager DEC_Knowledge_UrbanPerception::idManager_;
 

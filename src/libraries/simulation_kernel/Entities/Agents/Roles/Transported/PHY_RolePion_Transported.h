@@ -103,4 +103,6 @@ private:
 
 } // namespace transport
 
+BOOST_CLASS_EXPORT_KEY( transport::PHY_RolePion_Transported )
+
 #endif // __PHY_RolePion_Transported_h_

@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Medical/PHY_MedicalHumanState.h $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_MedicalHumanState.h $
 // $Author: Jvt $
 // $Modtime: 29/04/05 11:15 $
 // $Revision: 6 $
@@ -103,5 +103,7 @@ private:
 
     static MIL_IDManager idManager_;
 };
+
+BOOST_CLASS_EXPORT_KEY( PHY_MedicalHumanState )
 
 #endif // __PHY_MedicalHumanState_h_

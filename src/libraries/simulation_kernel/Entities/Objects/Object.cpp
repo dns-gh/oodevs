@@ -44,7 +44,7 @@
 #include <xeumeuleu/xml.h>
 #include <boost/bind.hpp>
 
-BOOST_CLASS_EXPORT_GUID( Object, "Object" )
+BOOST_CLASS_EXPORT_IMPLEMENT( Object )
 
 using namespace hla;
 

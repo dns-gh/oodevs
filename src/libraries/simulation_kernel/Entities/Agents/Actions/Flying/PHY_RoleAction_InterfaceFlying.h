@@ -57,6 +57,8 @@ public:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( PHY_RoleAction_InterfaceFlying )
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_InterfaceFlying::serialize
 // Created: RPD 2009-08-13

@@ -64,5 +64,7 @@ private:
           uint                    nMajorScore_;
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_AgentComposante )
+
 #endif // __DEC_Knowledge_AgentComposante_h_
 

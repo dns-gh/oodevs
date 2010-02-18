@@ -95,6 +95,8 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( MIL_ObjectManager )
+
 #include "MIL_ObjectManager.inl"
 
 #endif // __MIL_ObjectManager_h_

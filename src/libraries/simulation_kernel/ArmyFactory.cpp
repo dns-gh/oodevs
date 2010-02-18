@@ -20,7 +20,7 @@
 
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( ArmyFactory, "ArmyFactory" )
+BOOST_CLASS_EXPORT_IMPLEMENT( ArmyFactory )
 
 // -----------------------------------------------------------------------------
 // Name: ArmyFactory::save_construct_data

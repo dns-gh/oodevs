@@ -13,6 +13,7 @@
 #include "MIL.h"
 #include "ObjectCapacity_ABC.h"
 #include "MIL_InteractiveContainer_ABC.h"
+#include <boost/serialization/export.hpp>
 
 class Object;
 class PHY_DotationCategory;
@@ -86,5 +87,7 @@ private:
     const PHY_DotationCategory* dotation_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( AttritionCapacity )
 
 #endif

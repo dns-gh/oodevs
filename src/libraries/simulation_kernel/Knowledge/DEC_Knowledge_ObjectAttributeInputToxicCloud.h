@@ -18,8 +18,6 @@
 
 class InputToxicCloudAttribute;
 class MIL_NbcAgentType;
-class MIL_CheckPointInArchive;
-class MIL_CheckPointOutArchive;
 
 // =============================================================================
 // Created: NLD 2004-05-04

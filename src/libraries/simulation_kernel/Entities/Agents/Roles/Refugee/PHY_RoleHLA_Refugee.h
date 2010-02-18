@@ -36,12 +36,14 @@ public:
     void ChangeStatus( const std::vector< std::string >& statuses );
     //@}
 
-    virtual void Update    ( bool /*bIsDead*/ ) {};
-    virtual void Clean     () {};
+    virtual void Update    ( bool /*bIsDead*/ ) {}
+    virtual void Clean     () {}
     //@}
 
 private:
     bool bManaged_;
 };
+
+BOOST_CLASS_EXPORT_KEY( PHY_RoleHLA_Refugee )
 
 #endif // __PHY_RoleHLA_Refugee_h_

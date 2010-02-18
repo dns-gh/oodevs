@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Medical/PHY_MedicalHealingConsign.h $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_MedicalHealingConsign.h $
 // $Author: Jvt $
 // $Modtime: 29/04/05 11:13 $
 // $Revision: 4 $
@@ -66,5 +66,7 @@ private:
 private:
     PHY_ComposantePion* pDoctor_;
 };
+
+BOOST_CLASS_EXPORT_KEY( PHY_MedicalHealingConsign )
 
 #endif // __PHY_MedicalHealingConsign_h_

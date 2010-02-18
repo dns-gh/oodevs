@@ -137,6 +137,8 @@ private:
     static MIL_IDManager idManager_;
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_Urban )
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_UrbanPerception::save_construct_data
 // Created: MGD 2009-12-07

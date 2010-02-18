@@ -16,7 +16,7 @@
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "MIL_AgentServer.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_AgentPerceptionDataIdentification, "DEC_Knowledge_AgentPerceptionDataIdentification" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentPerceptionDataIdentification )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentPerceptionDataIdentification constructor

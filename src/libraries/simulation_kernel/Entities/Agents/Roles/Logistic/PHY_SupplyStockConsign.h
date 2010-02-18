@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Supply/PHY_SupplyStockConsign.h $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_SupplyStockConsign.h $
 // $Author: Nld $
 // $Modtime: 13/04/05 12:10 $
 // $Revision: 4 $
@@ -75,5 +75,7 @@ private:
     PHY_SupplyStockState* pSupplyState_;
     PHY_StockConvoy*      pConvoy_;
 };
+
+BOOST_CLASS_EXPORT_KEY( PHY_SupplyStockConsign )
 
 #endif // __PHY_SupplyStockConsign_h_

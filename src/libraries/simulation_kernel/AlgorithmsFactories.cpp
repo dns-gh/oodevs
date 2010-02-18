@@ -25,7 +25,7 @@
 #include "simulation_kernel/WeaponReloadingComputerFactory.h"
 #include <boost/serialization/export.hpp>
 
-BOOST_CLASS_EXPORT_GUID( AlgorithmsFactories, "AlgorithmsFactories" )
+BOOST_CLASS_EXPORT_IMPLEMENT( AlgorithmsFactories )
 
 // -----------------------------------------------------------------------------
 // Name: AlgorithmsFactories constructor

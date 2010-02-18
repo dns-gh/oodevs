@@ -17,7 +17,7 @@
 
 #include "MIL.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_ObjectAttributeMedicalTreatment, "DEC_Knowledge_ObjectAttributeMedicalTreatment" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeMedicalTreatment )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectAttributeMedicalTreatment constructor

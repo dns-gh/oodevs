@@ -19,7 +19,7 @@
 
 #include "MIL.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_ObjectAttributeSupplyRoute, "DEC_Knowledge_ObjectAttributeSupplyRoute" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeSupplyRoute )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectAttributeSupplyRoute constructor

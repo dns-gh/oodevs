@@ -253,6 +253,8 @@ private:
 
 };
 
+BOOST_CLASS_EXPORT_KEY( MIL_Automate )
+
 #include "MIL_Automate.inl"
 
 #endif // __MIL_Automate_h_

@@ -29,7 +29,7 @@
 
 using namespace posture;
 
-BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Posture, "PHY_RolePion_Posture" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Posture )
 
 static const MT_Float rDeltaPercentageForNetwork = 0.05; //$$$ DEGUEU
 

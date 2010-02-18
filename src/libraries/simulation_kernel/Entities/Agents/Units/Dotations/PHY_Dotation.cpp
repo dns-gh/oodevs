@@ -18,7 +18,7 @@
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( PHY_Dotation, "PHY_Dotation" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_Dotation )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Dotation constructor

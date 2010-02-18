@@ -14,7 +14,7 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( InteractionHeightAttribute, "InteractionHeightAttribute" )
+BOOST_CLASS_EXPORT_IMPLEMENT( InteractionHeightAttribute )
 
 // -----------------------------------------------------------------------------
 // Name: InteractionHeightAttribute constructor

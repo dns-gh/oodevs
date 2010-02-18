@@ -50,4 +50,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( InteractWithEnemyCapacity )
+
 #endif // __InteractWithEnemyCapacity_h_

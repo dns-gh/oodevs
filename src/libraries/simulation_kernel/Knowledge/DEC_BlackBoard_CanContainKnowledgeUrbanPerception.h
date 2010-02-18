@@ -80,4 +80,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_BlackBoard_CanContainKnowledgeUrbanPerception )
+
 #endif // __DEC_BlackBoard_CanContainKnowledgeUrbanPerception_h_

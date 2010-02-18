@@ -63,4 +63,6 @@ private:
     MIL_Automate* pAutomate_;
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_KnowledgeBlackBoard_Automate )
+
 #endif // __DEC_KnowledgeBlackBoard_Automate_h_

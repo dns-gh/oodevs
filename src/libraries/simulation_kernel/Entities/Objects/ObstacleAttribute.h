@@ -12,6 +12,7 @@
 
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
+#include <boost/serialization/export.hpp>
 
 // =============================================================================
 /** @class  ObstacleAttribute
@@ -74,5 +75,7 @@ private:
     bool                    bActivated_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( ObstacleAttribute )
 
 #endif // __ObstacleAttribute_h_

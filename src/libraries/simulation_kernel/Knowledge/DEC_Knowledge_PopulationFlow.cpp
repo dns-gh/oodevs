@@ -29,7 +29,7 @@
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 #include "game_asn/ASN_Delete.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_PopulationFlow, "DEC_Knowledge_PopulationFlow" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_PopulationFlow )
 
 MIL_IDManager DEC_Knowledge_PopulationFlow::idManager_;
 

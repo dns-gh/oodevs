@@ -15,6 +15,7 @@
 #include "MIL.h"
 #include "tools/Resolver.h"
 #include "Network/NET_ASN_Messages.h"
+#include <boost/serialization/export.hpp>
 
 namespace xml
 {
@@ -148,5 +149,7 @@ private:
 private:
     static std::set< uint > ids_;
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_KnowledgeGroup )
 
 #endif // __MIL_KnowledgeGroup_h_

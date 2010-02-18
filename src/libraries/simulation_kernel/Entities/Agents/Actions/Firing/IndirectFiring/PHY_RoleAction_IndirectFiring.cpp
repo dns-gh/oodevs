@@ -27,7 +27,7 @@
 
 using namespace firing;
 
-BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_IndirectFiring, "PHY_RoleAction_IndirectFiring" )
+BOOST_CLASS_EXPORT_IMPLEMENT( firing::PHY_RoleAction_IndirectFiring )
 
 using namespace firing;
 

@@ -13,7 +13,7 @@
 
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( TimeLimitedAttribute, "TimeLimitedAttribute" )
+BOOST_CLASS_EXPORT_IMPLEMENT( TimeLimitedAttribute )
 
 // -----------------------------------------------------------------------------
 // Name: TimeLimitedAttributeconstructor

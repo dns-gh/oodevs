@@ -49,7 +49,7 @@
 MT_Random PHY_ComposantePion::random_;
 double  PHY_ComposantePion::rOpStateWeightHumans_ = 0.;
 
-BOOST_CLASS_EXPORT_GUID( PHY_ComposantePion, "PHY_ComposantePion" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_ComposantePion )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion constructor

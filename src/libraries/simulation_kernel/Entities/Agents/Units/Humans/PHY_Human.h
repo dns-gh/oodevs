@@ -131,4 +131,6 @@ private:
           uint                   nDeathTimeStep_;
 };
 
+BOOST_CLASS_EXPORT_KEY( PHY_Human )
+
 #endif // __PHY_Human_h_

@@ -21,7 +21,7 @@
 #include "simulation_kernel/ObjectCollisionNotificationHandler_ABC.h"
 #include "simulation_kernel/LocationActionNotificationHandler_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Reinforcement, "PHY_RolePion_Reinforcement" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Reinforcement )
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePion_Reinforcement* role, const unsigned int /*version*/ )

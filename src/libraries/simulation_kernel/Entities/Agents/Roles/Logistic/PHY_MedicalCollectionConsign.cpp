@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Medical/PHY_MedicalCollectionConsign.cpp $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_MedicalCollectionConsign.cpp $
 // $Author: Jvt $
 // $Modtime: 11/04/05 17:04 $
 // $Revision: 2 $
@@ -19,7 +19,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Specialisations/log/MIL_AgentPionLOG_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_MedicalCollectionConsign, "PHY_MedicalCollectionConsign" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MedicalCollectionConsign )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalCollectionConsign constructor

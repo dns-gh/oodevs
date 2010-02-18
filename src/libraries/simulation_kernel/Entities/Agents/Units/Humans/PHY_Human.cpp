@@ -24,7 +24,7 @@
 
 #include <boost/bind.hpp>
 
-BOOST_CLASS_EXPORT_GUID( PHY_Human, "PHY_Human" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_Human )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Human constructor

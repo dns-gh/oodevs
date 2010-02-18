@@ -19,7 +19,7 @@
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/TransportNotificationHandler_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( refugee::PHY_RolePion_Refugee, "PHY_RolePion_Refugee" )
+BOOST_CLASS_EXPORT_IMPLEMENT( refugee::PHY_RolePion_Refugee )
 
 namespace refugee
 {

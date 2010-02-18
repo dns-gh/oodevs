@@ -31,7 +31,7 @@
 #include "Entities/Populations/Actions/PHY_Population_ActionFireOnPions.h"
 
 
-BOOST_CLASS_EXPORT_GUID( DEC_PopulationDecision, "DEC_PopulationDecision" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_PopulationDecision )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationDecision constructor

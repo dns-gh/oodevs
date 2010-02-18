@@ -17,7 +17,7 @@
 
 #include "MIL.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_ObjectAttributeFire, "DEC_Knowledge_ObjectAttributeFire" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeFire )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectAttributeFire constructor

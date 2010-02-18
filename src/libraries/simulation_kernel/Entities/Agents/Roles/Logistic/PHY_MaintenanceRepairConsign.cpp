@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Maintenance/PHY_MaintenanceRepairConsign.cpp $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_MaintenanceRepairConsign.cpp $
 // $Author: Jvt $
 // $Modtime: 11/04/05 17:57 $
 // $Revision: 2 $
@@ -20,7 +20,7 @@
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_MaintenanceRepairConsign, "PHY_MaintenanceRepairConsign" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MaintenanceRepairConsign )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceRepairConsign constructor

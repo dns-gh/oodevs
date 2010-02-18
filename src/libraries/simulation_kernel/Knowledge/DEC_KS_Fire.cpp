@@ -20,7 +20,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_KS_Fire, "DEC_KS_Fire" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_Fire )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_Fire constructor

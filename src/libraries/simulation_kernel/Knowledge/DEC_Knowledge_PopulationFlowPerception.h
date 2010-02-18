@@ -81,4 +81,6 @@ private:
           
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_PopulationFlowPerception )
+
 #endif // __DEC_Knowledge_PopulationFlowPerception_h_

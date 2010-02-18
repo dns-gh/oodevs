@@ -81,4 +81,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( PHY_RoleAction_FolkInfluence )
+
 #endif // __PHY_RoleAction_FolkInfluence_h_

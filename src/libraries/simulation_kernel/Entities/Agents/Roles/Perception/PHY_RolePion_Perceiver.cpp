@@ -65,7 +65,7 @@ using namespace detection;
 
 const unsigned int PHY_RolePion_Perceiver::nNbrStepsBetweenPeriphericalVision_ = 12; //$$$ En dur ...
 
-BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Perceiver, "PHY_RolePion_Perceiver" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Perceiver )
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePion_Perceiver* role, const unsigned int /*version*/ )

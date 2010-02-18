@@ -39,7 +39,7 @@
 
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( dotation::PHY_RolePion_Dotations, "PHY_RolePion_Dotations" )
+BOOST_CLASS_EXPORT_IMPLEMENT( dotation::PHY_RolePion_Dotations )
 
 namespace boost
 {

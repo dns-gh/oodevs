@@ -24,7 +24,7 @@
 
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( AttritionCapacity, "AttritionCapacity" )
+BOOST_CLASS_EXPORT_IMPLEMENT( AttritionCapacity )
 
 // -----------------------------------------------------------------------------
 // Name: AttritionCapacity constructor

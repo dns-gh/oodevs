@@ -80,6 +80,8 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_KS_UrbanKnowledgeSynthetizer )
+
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_UrbanKnowledgeSynthetizer::serialize
 // Created: NLD 2006-04-12

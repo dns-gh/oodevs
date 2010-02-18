@@ -13,7 +13,7 @@
 #include "ObstacleAttribute.h"
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( ActivableCapacity, "ActivableCapacity" )
+BOOST_CLASS_EXPORT_IMPLEMENT( ActivableCapacity )
 
 // -----------------------------------------------------------------------------
 // Name: ActivableCapacity::ActivableCapacity

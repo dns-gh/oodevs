@@ -147,4 +147,6 @@ private:
 
 } // namespace dotation
 
+BOOST_CLASS_EXPORT_KEY( dotation::PHY_RolePion_Dotations )
+
 #endif // __PHY_RolePion_Dotations_h_

@@ -14,6 +14,7 @@
 
 #include "DEC_Knowledge_ObjectAttribute_ABC.h"
 #include "game_asn/Simulation.h"
+#include <boost/serialization/export.hpp>
 
 class NBCTypeAttribute;
 class MIL_NBCType;
@@ -70,5 +71,7 @@ private:
           int               concentration_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeNBCType )
 
 #endif // __DEC_Knowledge_ObjectAttributeNBCType_h_

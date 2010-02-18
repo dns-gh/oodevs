@@ -51,4 +51,6 @@ private:
     T_CoordinatesSet coordinatesSet_;
 };
 
+// BOOST_CLASS_EXPORT_KEY( MIL_PropagationManager )
+
 #endif // __MIL_PropagationManager_h_

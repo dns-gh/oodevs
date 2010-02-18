@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Medical/PHY_MedicalEvacuationAmbulance.h $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_MedicalEvacuationAmbulance.h $
 // $Author: Jvt $
 // $Modtime: 11/04/05 14:30 $
 // $Revision: 2 $
@@ -11,6 +11,8 @@
 
 #ifndef __PHY_MedicalEvacuationAmbulance_h_
 #define __PHY_MedicalEvacuationAmbulance_h_
+
+#include <boost/serialization/export.hpp>
 
 class PHY_ComposantePion;
 class PHY_MedicalEvacuationConsign;
@@ -81,5 +83,7 @@ private:
 
     MT_Float                    rNbrHumanHandled_;
 };
+
+BOOST_CLASS_EXPORT_KEY( PHY_MedicalEvacuationAmbulance )
 
 #endif // __PHY_MedicalEvacuationAmbulance_h_

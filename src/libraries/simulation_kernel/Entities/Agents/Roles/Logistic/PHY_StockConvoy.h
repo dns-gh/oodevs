@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Supply/PHY_StockConvoy.h $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_StockConvoy.h $
 // $Author: Nld $
 // $Modtime: 14/04/05 10:10 $
 // $Revision: 5 $
@@ -76,5 +76,7 @@ private:
     MIL_AgentPion*          pPionConvoy_;
     bool                    bMissionActivated_;
 };
+
+BOOST_CLASS_EXPORT_KEY( PHY_StockConvoy )
 
 #endif // __PHY_StockConvoy_h_

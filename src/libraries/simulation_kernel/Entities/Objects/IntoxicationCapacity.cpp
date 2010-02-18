@@ -19,7 +19,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( IntoxicationCapacity, "IntoxicationCapacity" )
+BOOST_CLASS_EXPORT_IMPLEMENT( IntoxicationCapacity )
 
 // -----------------------------------------------------------------------------
 // Name: IntoxicationCapacity constructor

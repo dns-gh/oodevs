@@ -14,6 +14,7 @@
 
 #include "MIL.h"
 #include "DEC_Knowledge_Def.h"
+#include <boost/serialization/export.hpp>
 
 class MIL_Agent_ABC;
 class PHY_PerceptionLevel;
@@ -64,5 +65,7 @@ private:
           bool                         bIsPC_;
     const MIL_AgentType_ABC*           pAgentType_; // For 'natures'
 };
+
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_AgentPerceptionDataRecognition )
 
 #endif // __DEC_Knowledge_AgentPerceptionDataRecognition_h_

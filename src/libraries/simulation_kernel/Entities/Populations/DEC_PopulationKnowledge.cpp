@@ -13,7 +13,7 @@
 #include "DEC_PopulationKnowledge.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_PopulationKnowledge, "DEC_PopulationKnowledge" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_PopulationKnowledge )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationKnowledge constructor

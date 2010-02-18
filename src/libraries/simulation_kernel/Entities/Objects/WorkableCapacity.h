@@ -53,4 +53,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( WorkableCapacity )
+
 #endif // __WorkableCapacity_h_

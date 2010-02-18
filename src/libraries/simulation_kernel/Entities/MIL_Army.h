@@ -158,4 +158,6 @@ private:
     const MT_Converter< std::string, E_Diplomacy >& diplomacyConverter_;
 };
 
+BOOST_CLASS_EXPORT_KEY( MIL_Army )
+
 #endif // __MIL_Army_h_

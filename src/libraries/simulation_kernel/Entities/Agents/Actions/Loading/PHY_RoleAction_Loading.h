@@ -140,4 +140,6 @@ private:
 
 } // namespace transport
 
+BOOST_CLASS_EXPORT_KEY( transport::PHY_RoleAction_Loading )
+
 #endif // __PHY_RoleAction_Loading_h_

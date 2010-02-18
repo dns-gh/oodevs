@@ -24,7 +24,7 @@
 MT_Float PHY_RolePion_Communications::rCoefSpeedModificator_         = 0.;
 MT_Float PHY_RolePion_Communications::rCoefReloadingTimeModificator_ = 0.;
 
-BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Communications, "PHY_RolePion_Communications" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Communications )
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePion_Communications* role, const unsigned int /*version*/ )

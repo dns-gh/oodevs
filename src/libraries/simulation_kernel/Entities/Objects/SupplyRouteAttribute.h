@@ -12,6 +12,7 @@
 
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
+#include <boost/serialization/export.hpp>
 
 class SupplyRouteAttribute 
     : public ObjectAttribute_ABC
@@ -76,5 +77,7 @@ private:
     MT_Float   rFlow_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( SupplyRouteAttribute )
 
 #endif

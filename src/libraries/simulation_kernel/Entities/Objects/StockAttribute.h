@@ -13,6 +13,7 @@
 #include "MIL.h"
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
+#include <boost/serialization/export.hpp>
 
 class PHY_DotationCategory;
 
@@ -92,5 +93,7 @@ private:
     T_DotationProgress  stock_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( StockAttribute )
 
 #endif // __StockAttribute_h_

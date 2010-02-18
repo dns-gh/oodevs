@@ -12,6 +12,8 @@
 #ifndef __DEC_Knowledge_ABC_h_
 #define __DEC_Knowledge_ABC_h_
 
+#include <boost/serialization/export.hpp>
+
 // =============================================================================
 /** @class  DEC_Knowledge_ABC
     @brief  The base class for a knowledge
@@ -39,5 +41,7 @@ protected:
     uint GetCurrentTimeStep() const; 
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ABC )
 
 #endif // __DEC_Knowledge_ABC_h_

@@ -24,7 +24,7 @@
 
 MT_Random MIL_Injury_NBC::randomGenerator_;
 
-//BOOST_CLASS_EXPORT_GUID( MIL_Injury_NBC, "MIL_Injury_NBC" )
+//BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Injury_NBC )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Injury_NBC::constructor

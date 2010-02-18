@@ -14,6 +14,7 @@
 
 #include "DEC_Knowledge_ObjectAttribute_ABC.h"
 #include "game_asn/Simulation.h"
+#include <boost/serialization/export.hpp>
 
 class FireAttribute;
 class MIL_FireClass;
@@ -65,5 +66,7 @@ private:
           int            heat_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeFire )
 
 #endif // __DEC_Knowledge_ObjectAttributeFire_h_

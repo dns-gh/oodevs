@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Supply/PHY_SupplyDotationState.h $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_SupplyDotationState.h $
 // $Author: Jvt $
 // $Modtime: 11/04/05 13:30 $
 // $Revision: 3 $
@@ -83,5 +83,7 @@ private:
     bool                   bRequestsChanged_;
     T_RequestMap           requests_;
 };
+
+BOOST_CLASS_EXPORT_KEY( PHY_SupplyDotationState )
 
 #endif // __PHY_SupplyDotationState_h_

@@ -18,7 +18,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "MIL_AgentServer.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_RapForLocal, "DEC_Knowledge_RapForLocal" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_RapForLocal )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_RapForLocal constructor

@@ -20,7 +20,7 @@
 #include "Network/NET_ASN_Messages.h"
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( PHY_DotationGroupContainer, "PHY_DotationGroupContainer" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_DotationGroupContainer )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationGroupContainer constructor

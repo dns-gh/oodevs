@@ -91,4 +91,6 @@ private:
     bool             bChannelingChanged_;
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_PopulationKnowledge )
+
 #endif // __DEC_PopulationKnowledge_h_

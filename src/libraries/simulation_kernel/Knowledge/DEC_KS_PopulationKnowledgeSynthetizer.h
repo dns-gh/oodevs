@@ -58,6 +58,8 @@ private:
     DEC_KnowledgeBlackBoard_KnowledgeGroup* pBlackBoard_;
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_KS_PopulationKnowledgeSynthetizer )
+
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_PopulationKnowledgeSynthetizer::serialize
 // Created: NLD 2006-04-12

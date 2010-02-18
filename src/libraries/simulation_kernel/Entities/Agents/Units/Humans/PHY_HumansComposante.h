@@ -90,6 +90,8 @@ private:
     uint                nNbrUsableHumans_;
 };
 
+BOOST_CLASS_EXPORT_KEY( PHY_HumansComposante )
+
 // -----------------------------------------------------------------------------
 // Name: PHY_HumansComposante::serialize
 // Created: JVT 2005-04-01

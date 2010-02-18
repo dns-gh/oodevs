@@ -71,7 +71,7 @@
 #include "Tools/MIL_IDManager.h"
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( MIL_AgentPion, "MIL_AgentPion" )
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentPion )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion constructor

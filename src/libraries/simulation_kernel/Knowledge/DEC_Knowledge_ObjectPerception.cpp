@@ -16,7 +16,7 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_ObjectPerception, "DEC_Knowledge_ObjectPerception" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectPerception )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectPerception constructor

@@ -75,4 +75,6 @@ private:
     bool bAgentTypeUpdated_;
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_AgentDataIdentification )
+
 #endif // __DEC_Knowledge_AgentDataIdentification_h_

@@ -20,7 +20,7 @@
 #include "Entities/Agents/Roles/Logistic/PHY_SupplyDotationRequestContainer.h"
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( PHY_DotationGroup, "PHY_DotationGroup" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_DotationGroup )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationGroup constructor

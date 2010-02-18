@@ -11,7 +11,7 @@
 #include "OccupantAttribute.h"
 #include "MIL.h"
 
-BOOST_CLASS_EXPORT_GUID( OccupantAttribute, "OccupantAttribute" )
+BOOST_CLASS_EXPORT_IMPLEMENT( OccupantAttribute )
 
 // -----------------------------------------------------------------------------
 // Name: OccupantAttribute constructor

@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Supply/PHY_SupplyStockRequest.cpp $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_SupplyStockRequest.cpp $
 // $Author: Jvt $
 // $Modtime: 11/04/05 13:44 $
 // $Revision: 4 $
@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_SupplyStockRequest.h"
 
-BOOST_CLASS_EXPORT_GUID( PHY_SupplyStockRequest, "PHY_SupplyStockRequest" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_SupplyStockRequest )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyStockRequest constructor

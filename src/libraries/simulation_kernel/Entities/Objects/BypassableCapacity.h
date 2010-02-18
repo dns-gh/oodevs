@@ -47,4 +47,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( BypassableCapacity )
+
 #endif // __BypassableCapacity_h_

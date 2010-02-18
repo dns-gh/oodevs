@@ -105,4 +105,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_BlackBoard_CanContainKnowledgeObject )
+
 #endif // __DEC_BlackBoard_CanContainKnowledgeObject_h_

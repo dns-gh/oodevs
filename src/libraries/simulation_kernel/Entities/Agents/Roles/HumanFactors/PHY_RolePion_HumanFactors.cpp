@@ -25,7 +25,7 @@
 
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( PHY_RolePion_HumanFactors, "PHY_RolePion_HumanFactors" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_HumanFactors )
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePion_HumanFactors* role, const unsigned int /*version*/ )

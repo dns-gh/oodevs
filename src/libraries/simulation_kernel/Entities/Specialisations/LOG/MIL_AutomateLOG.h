@@ -191,5 +191,7 @@ private:
 
 };
 
+BOOST_CLASS_EXPORT_KEY( MIL_AutomateLOG )
+
 #endif // __MIL_AutomateLOG_h_
 

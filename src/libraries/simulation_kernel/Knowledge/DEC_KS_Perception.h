@@ -102,4 +102,6 @@ private:
     bool                               bMakePerceptionsAvailableTimed_;
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_KS_Perception )
+
 #endif // __DEC_KS_Perception_h_

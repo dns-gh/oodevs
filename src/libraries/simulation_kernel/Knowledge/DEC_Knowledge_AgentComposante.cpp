@@ -13,7 +13,7 @@
 #include "DEC_Knowledge_AgentComposante.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_AgentComposante, "DEC_Knowledge_AgentComposante" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentComposante )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentComposante constructor

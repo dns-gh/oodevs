@@ -15,7 +15,7 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
 
-BOOST_CLASS_EXPORT_GUID( DecontaminationCapacity, "DecontaminationCapacity" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DecontaminationCapacity )
 
 // -----------------------------------------------------------------------------
 // Name: DecontaminationCapacity constructor

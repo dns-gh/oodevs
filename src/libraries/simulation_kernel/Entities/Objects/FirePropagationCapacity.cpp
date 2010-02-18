@@ -19,7 +19,7 @@
 
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( FirePropagationCapacity, "FirePropagationCapacity" )
+BOOST_CLASS_EXPORT_IMPLEMENT( FirePropagationCapacity )
 
 // -----------------------------------------------------------------------------
 // Name: FirePropagationCapacity constructor

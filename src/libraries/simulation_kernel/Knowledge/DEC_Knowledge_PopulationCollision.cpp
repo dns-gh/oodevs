@@ -20,7 +20,7 @@
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_PopulationCollision, "DEC_Knowledge_PopulationCollision" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_PopulationCollision )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationCollision constructor

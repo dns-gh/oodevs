@@ -14,6 +14,7 @@
 
 #include "DEC_Knowledge_ObjectAttribute_ABC.h"
 #include "DEC_Knowledge_ObjectAttributeUpdatable_ABC.h"
+#include <boost/serialization/export.hpp>
 
 class SupplyRouteAttribute;
 
@@ -68,5 +69,7 @@ private:
     MT_Float rFlow_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeSupplyRoute )
 
 #endif // __DEC_Knowledge_ObjectAttributeSupplyRoute_h_

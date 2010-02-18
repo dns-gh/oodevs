@@ -15,7 +15,7 @@
 
 #include <hla/AttributeIdentifier.h>
 
-BOOST_CLASS_EXPORT_GUID( BypassAttribute, "BypassAttribute" )
+BOOST_CLASS_EXPORT_IMPLEMENT( BypassAttribute )
 
 using namespace hla;
 

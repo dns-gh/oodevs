@@ -19,7 +19,7 @@
 #include <boost/lexical_cast.hpp>
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( NBCAttribute, "NBCAttribute" )
+BOOST_CLASS_EXPORT_IMPLEMENT( NBCAttribute )
 
 using namespace hla;
 

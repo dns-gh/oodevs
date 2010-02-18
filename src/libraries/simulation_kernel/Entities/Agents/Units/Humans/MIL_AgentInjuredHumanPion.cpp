@@ -16,7 +16,7 @@
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "xeumeuleu/xml.h"
 
-BOOST_CLASS_EXPORT_GUID( MIL_AgentInjuredHumanPion, "MIL_AgentInjuredHumanPion" )
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentInjuredHumanPion )
 
 
 template< typename Archive > 

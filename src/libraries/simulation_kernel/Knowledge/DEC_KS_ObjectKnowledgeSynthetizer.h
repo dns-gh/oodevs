@@ -95,6 +95,8 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_KS_ObjectKnowledgeSynthetizer )
+
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_ObjectKnowledgeSynthetizer::serialize
 // Created: NLD 2006-04-12

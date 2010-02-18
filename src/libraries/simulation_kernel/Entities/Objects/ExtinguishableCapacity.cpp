@@ -13,7 +13,7 @@
 #include "Object.h"
 #include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_GUID( ExtinguishableCapacity, "ExtinguishableCapacity" )
+BOOST_CLASS_EXPORT_IMPLEMENT( ExtinguishableCapacity )
 
 // -----------------------------------------------------------------------------
 // Name: ExtinguishableCapacity::ExtinguishableCapacity

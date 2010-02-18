@@ -265,4 +265,6 @@ private:
     template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Perceiver* role, const unsigned int /*version*/ );
 };
 
+BOOST_CLASS_EXPORT_KEY( PHY_RolePion_Perceiver )
+
 #endif // __PHY_RolePion_Perceiver_h_

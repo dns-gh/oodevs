@@ -105,4 +105,6 @@ private:
     static MIL_IDManager idManager_;
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_PopulationFlow )
+
 #endif // __DEC_Knowledge_PopulationFlow_h_

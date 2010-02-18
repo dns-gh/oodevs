@@ -1,7 +1,7 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Supply/PHY_Convoy_ABC.cpp $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/PHY_Convoy_ABC.cpp $
 // $Author: Jvt $
 // $Modtime: 11/04/05 17:26 $
 // $Revision: 8 $
@@ -42,7 +42,7 @@ struct PHY_Convoy_ABC::LoadingWrapper
 const MIL_AgentTypePion*                  PHY_Convoy_ABC::pConvoyAgentType_   = 0;
 const MIL_MissionType_ABC*                PHY_Convoy_ABC::pConvoyMissionType_ = 0;
 
-BOOST_CLASS_EXPORT_GUID( PHY_Convoy_ABC, "PHY_Convoy_ABC" )
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_Convoy_ABC )
 
 // =============================================================================
 // 

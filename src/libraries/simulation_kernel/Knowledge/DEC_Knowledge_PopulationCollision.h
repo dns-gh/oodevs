@@ -84,4 +84,6 @@ private:
           T_PopulationConcentrationSet  previousConcentrations_;
 };
 
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_PopulationCollision )
+
 #endif // __DEC_Knowledge_PopulationCollision_h_
