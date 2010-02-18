@@ -20,6 +20,10 @@ defaultMethods
     -- POSITIONNABLE
     isInMyAOR = function() return default_engine.predicates.load( "isInMyAOR") end,
     canTakePosition = function() return default_engine.methods.load( "canTakePosition" ) end,
+    
+    -- REACHING
+    reachEfficiency = function() return default_engine.methods.load( "reachEfficiency" ) end,
+    isReachingFor = function() return default_engine.predicates.load( "isReachingFor" ) end,    
 }
 return
 {
@@ -46,17 +50,18 @@ return
     computeDistance = function( self, target )
         return integration.normalizedInversedDistance( self, target )
     end,
-    moveToIt = behavior_model.integration.startStopAction( { start = integration.startMoveToIt, nil, stop = integration.stopMoveToIt } ),
+    moveToIt = behavior_model.integration.startStopAction( { start = integration.startMoveToIt, started = integration.updateMoveToIt, stop = integration.stopMoveToIt } ),
     -- OBSERVABLE
     observeIt = function( self )
         integration.observeIt( self )
     end,
     -- POSITIONNABLE
     takeUpPosition = function( self )
+        BreakForDebug( "call take up position ")
         return integration.takeUpPositionObject( self )
     end,
     occupationLevel = function()
-      return 100 --TODO MGD
+      return 0 --TODO MGD
     end,
     safeApproachIt = function()
     end,

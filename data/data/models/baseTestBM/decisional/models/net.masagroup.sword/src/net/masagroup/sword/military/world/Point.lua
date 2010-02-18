@@ -63,11 +63,11 @@ return
         --TODO
     end,
     occupationLevel = function( self )
-      --TODO
+      return 0 --TODO MGD
     end,
     -- INTEGRATION METHODS
     -- reachable action
-    moveToIt = behavior_model.integration.startStopAction( { start = integration.startMoveToIt, started = function( self, ...) end, stop = integration.stopMoveToIt } ),
+    moveToIt = behavior_model.integration.startStopAction( { start = integration.startMoveToIt, started = integration.updateMoveToIt, stop = integration.stopMoveToIt } ),
     -- observable action
     observeIt = function( self )
         integration.observeIt( self )

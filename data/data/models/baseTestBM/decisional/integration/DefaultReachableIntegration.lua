@@ -28,17 +28,20 @@ end
 
 integration.startMoveToIt = function( reachable )
   -- Leave tactical object
-  if kBase.me.body.actionOccupy then
-    DEC_StopAction( kBase.me.body.actionOccupy )
-  end
-  
-  -- Movement management
+  --if kBase.me.body.actionOccupy then
+    --DEC_StopAction( kBase.me.body.actionOccupy )
+  --end
   if not reachable.moveAction then
     default_engine.methods.occupyPosition( kBase.me.body, nil ) -- UnOccupyPosition
     it = DEC_CreerItineraireBM( reachable.sim_pos.x, reachable.sim_pos.y, reachable.sim_pos.z, eTypeItiMouvement )
     reachable.moveAction = DEC_StartDeplacement( it )
     actionCallbacks[ reachable.moveAction ] = function( arg ) reachable.etat = arg end
-  elseif reachable.etat == eEtatActionDeplacement_Termine then
+  end
+  return false
+end
+
+integration.updateMoveToIt = function( reachable )
+  if reachable.etat == eEtatActionDeplacement_Termine then
     default_engine.methods.occupyPosition( kBase.me.body, reachable ) --OccupyPosition
     reachable.moveAction = DEC_StopAction( reachable.moveAction )
     reachable.moveAction = nil
@@ -53,11 +56,11 @@ integration.startMoveToIt = function( reachable )
   elseif reachable.etat == eEtatActionDeplacement_DejaEnDeplacement then
     --TODO
   end
-  return false
 end
 
 integration.stopMoveToIt = function( reachable )
   DEC_StopAction( reachable.moveAction )
   reachable.moveAction = nil
   reachable.etat = nil
+  return false
 end
