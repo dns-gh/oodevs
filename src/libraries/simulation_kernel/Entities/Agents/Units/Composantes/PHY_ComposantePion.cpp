@@ -28,7 +28,7 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
-#include "Entities/Agents/Roles/Logistic/Maintenance/PHY_MaintenanceComposanteState.h"
+#include "Entities/Agents/Roles/Logistic/PHY_MaintenanceComposanteState.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Actions/Firing/DirectFiring/PHY_DirectFireData.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_IndirectFireData.h"

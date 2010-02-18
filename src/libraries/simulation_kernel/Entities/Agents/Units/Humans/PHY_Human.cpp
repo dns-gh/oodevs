@@ -13,7 +13,7 @@
 #include "PHY_Human.h"
 #include "PHY_HumanRank.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
-#include "Entities/Agents/Roles/Logistic/Medical/PHY_MedicalHumanState.h"
+#include "Entities/Agents/Roles/Logistic/PHY_MedicalHumanState.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Objects/MIL_ToxicEffectManipulator.h"
 #include "Entities/Orders/MIL_Report.h"

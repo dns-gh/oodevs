@@ -13,7 +13,7 @@
 #include "MIL_AgentTypePionLOGMedical.h"
 #include "MIL_AgentPionLOGMedical.h"
 
-#include "Entities/Agents/Roles/Logistic/Medical/PHY_RolePionLOG_Medical.h"
+#include "Entities/Agents/Roles/Logistic/PHY_RolePionLOG_Medical.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 
 // -----------------------------------------------------------------------------

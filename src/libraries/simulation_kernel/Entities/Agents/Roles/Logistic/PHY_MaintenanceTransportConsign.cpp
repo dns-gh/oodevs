@@ -16,7 +16,7 @@
 #include "PHY_MaintenanceComposanteState.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
-#include "Entities/Agents/Roles/Logistic/Maintenance/PHY_RoleInterface_Maintenance.h"
+#include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 

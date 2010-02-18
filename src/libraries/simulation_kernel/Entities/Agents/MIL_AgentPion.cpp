@@ -29,9 +29,9 @@
 #include "Roles/Surrender/PHY_RolePion_Surrender.h"
 #include "Roles/Refugee/PHY_RolePion_Refugee.h"
 #include "Roles/Population/PHY_RolePion_Population.h"
-#include "Roles/Logistic/Supply/PHY_RoleInterface_Supply.h"
-#include "Roles/Logistic/Maintenance/PHY_RoleInterface_Maintenance.h"
-#include "Roles/Logistic/Medical/PHY_RoleInterface_Medical.h"
+#include "Roles/Logistic/PHY_RoleInterface_Supply.h"
+#include "Roles/Logistic/PHY_RoleInterface_Maintenance.h"
+#include "Roles/Logistic/PHY_RoleInterface_Medical.h"
 
 #include "Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Actions/Objects/PHY_RoleAction_Objects.h"

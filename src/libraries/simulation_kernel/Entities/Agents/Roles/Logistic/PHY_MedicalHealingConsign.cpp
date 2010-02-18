@@ -14,7 +14,7 @@
 #include "PHY_MedicalHealingConsign.h"
 #include "PHY_RoleInterface_Medical.h"
 #include "PHY_MedicalHumanState.h"
-#include "Entities/Agents/Roles/Logistic/Medical/PHY_RoleInterface_Medical.h"
+#include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Medical.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"

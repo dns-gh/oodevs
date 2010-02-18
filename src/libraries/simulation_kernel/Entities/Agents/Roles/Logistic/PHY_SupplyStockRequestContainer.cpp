@@ -13,7 +13,7 @@
 #include "PHY_SupplyStockRequestContainer.h"
 #include "PHY_SupplyStockState.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Logistic/Supply/PHY_RoleInterface_Supply.h"
+#include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationStock.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"

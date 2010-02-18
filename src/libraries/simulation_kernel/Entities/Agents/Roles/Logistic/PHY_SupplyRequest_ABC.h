@@ -12,7 +12,7 @@
 #ifndef __PHY_SupplyRequest_ABC_h_
 #define __PHY_SupplyRequest_ABC_h_
 
-#include "Entities/Agents/Roles/Logistic/Supply/PHY_RoleInterface_Supply.h"
+#include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 
 class PHY_DotationCategory;

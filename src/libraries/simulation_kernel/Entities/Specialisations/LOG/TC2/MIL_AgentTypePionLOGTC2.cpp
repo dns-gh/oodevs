@@ -13,9 +13,9 @@
 #include "MIL_AgentTypePionLOGTC2.h"
 #include "MIL_AgentPionLOGTC2.h"
 
-#include "Entities/Agents/Roles/Logistic/Maintenance/PHY_RolePionLOG_Maintenance.h"
-#include "Entities/Agents/Roles/Logistic/Medical/PHY_RolePionLOG_Medical.h"
-#include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePionLOG_Supply.h"
+#include "Entities/Agents/Roles/Logistic/PHY_RolePionLOG_Maintenance.h"
+#include "Entities/Agents/Roles/Logistic/PHY_RolePionLOG_Medical.h"
+#include "Entities/Agents/Roles/Logistic/PHY_RolePionLOG_Supply.h"
 
 #include "simulation_kernel/AlgorithmsFactories.h"
 

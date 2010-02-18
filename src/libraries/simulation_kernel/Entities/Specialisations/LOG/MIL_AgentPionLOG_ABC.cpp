@@ -14,9 +14,9 @@
 #include "MIL_AutomateLOG.h"
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/Actions/PHY_ActionLogistic.h"
-#include "Entities/Agents/Roles/Logistic/Maintenance/PHY_RoleInterface_Maintenance.h"
-#include "Entities/Agents/Roles/Logistic/Medical/PHY_RoleInterface_Medical.h"
-#include "Entities/Agents/Roles/Logistic/Supply/PHY_RoleInterface_Supply.h"
+#include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
+#include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Medical.h"
+#include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
 #include <xeumeuleu/xml.h>
 
 

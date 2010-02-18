@@ -13,7 +13,7 @@
 #include "PHY_StockConvoy.h"
 #include "PHY_SupplyStockConsign.h"
 #include "PHY_Conveyor.h"
-#include "Entities/Agents/Roles/Logistic/Supply/PHY_RoleInterface_Supply.h"
+#include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"

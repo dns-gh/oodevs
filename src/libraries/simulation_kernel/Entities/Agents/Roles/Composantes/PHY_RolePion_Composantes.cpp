@@ -18,7 +18,7 @@
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Agents/Units/Humans/MIL_Injury_ABC.h"
-#include "Entities/Agents/Roles/Logistic/Maintenance/PHY_MaintenanceComposanteState.h"
+#include "Entities/Agents/Roles/Logistic/PHY_MaintenanceComposanteState.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Actions/PHY_FireResults_ABC.h"
 #include "Knowledge/DEC_Knowledge_AgentComposante.h"

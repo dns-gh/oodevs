@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentPionLOGMedical.h"
-#include "Entities/Agents/Roles/Logistic/Medical/PHY_RolePionLOG_Medical.h"
+#include "Entities/Agents/Roles/Logistic/PHY_RolePionLOG_Medical.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 
 BOOST_CLASS_EXPORT_GUID( MIL_AgentPionLOGMedical, "MIL_AgentPionLOGMedical" )

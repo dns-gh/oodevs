@@ -14,7 +14,7 @@
 #include "PHY_MedicalConsign_ABC.h"
 
 #include "PHY_MedicalHumanState.h"
-#include "Entities/Agents/Roles/Logistic/Medical/PHY_RoleInterface_Medical.h"
+#include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Medical.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Network/NET_ASN_Messages.h"
 

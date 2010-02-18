@@ -13,7 +13,7 @@
 #include "MIL_AgentTypePionLOGSupply.h"
 #include "MIL_AgentPionLOGSupply.h"
 
-#include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePionLOG_Supply.h"
+#include "Entities/Agents/Roles/Logistic/PHY_RolePionLOG_Supply.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOGSupply constructor

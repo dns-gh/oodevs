@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_Conveyor.h"
 #include "PHY_SupplyStockConsign.h"
-#include "Entities/Agents/Roles/Logistic/Supply/PHY_RoleInterface_Supply.h"
+#include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"

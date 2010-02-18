@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentPionLOGConvoy.h"
-#include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePionLOGConvoy_Supply.h"
+#include "Entities/Agents/Roles/Logistic/PHY_RolePionLOGConvoy_Supply.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 
 #include <xeumeuleu/xml.h>

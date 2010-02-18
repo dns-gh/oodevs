@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Humans.h"
-#include "Entities/Agents/Roles/Logistic/Medical/PHY_MedicalHumanState.h"
+#include "Entities/Agents/Roles/Logistic/PHY_MedicalHumanState.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/MIL_AgentPion.h"

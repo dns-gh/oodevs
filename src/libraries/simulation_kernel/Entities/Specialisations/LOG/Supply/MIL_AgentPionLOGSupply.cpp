@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentPionLOGSupply.h"
-#include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePionLOG_Supply.h"
+#include "Entities/Agents/Roles/Logistic/PHY_RolePionLOG_Supply.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 
 BOOST_CLASS_EXPORT_GUID( MIL_AgentPionLOGSupply, "MIL_AgentPionLOGSupply" )
