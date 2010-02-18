@@ -245,6 +245,17 @@ void PHY_DotationCategory::ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, 
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::ApplyIndirectFireEffect
+// Created: MGD 2010-10-15
+// -----------------------------------------------------------------------------
+void PHY_DotationCategory::ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, uint nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const
+{
+    assert( pIndirectFireData_ );
+    const MT_Float rInterventionTypeFired = pIndirectFireData_->ConvertToInterventionType( nNbrAmmoFired );
+    pIndirectFireData_->ApplyEffect( firer, target, rInterventionTypeFired, fireResult );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory::GetNature
 // Created: NLD 2006-03-21
 // -----------------------------------------------------------------------------
@@ -370,4 +381,23 @@ MT_Float PHY_DotationCategory::GetWeight() const
 MT_Float PHY_DotationCategory::GetVolume() const
 {
     return rVolume_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::IsGuided
+// Created: MGD 2010-02-15
+// -----------------------------------------------------------------------------
+bool PHY_DotationCategory::IsGuided() const
+{
+    return bGuided_;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::IsIlluminating
+// Created: MGD 2010-02-15
+// -----------------------------------------------------------------------------
+bool PHY_DotationCategory::IsIlluminating( float range, bool permanent ) const
+{
+    return bIlluminating_ && range < fRange_ && permanent != bMaintainIllumination_;
 }

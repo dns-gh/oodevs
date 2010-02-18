@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.tasks.Illuminate">
+  <parameters>
+    <parameter name="entities">
+      <type>
+        <list>
+          <class name="net.masagroup.sword.military.knowledge.Illuminatable"/>
+        </list>
+      </type>
+    </parameter>
+  </parameters>
+  <stages>
+    <stage label="Destroy enemies by indirect fire">
+      <skills>
+        <skill name="net.masagroup.sword.military.skills.primitives.Illuminate" main="true" priority="1.0">
+          <parameter name="entities">
+            <value>
+              <parameter>entities</parameter>
+            </value>
+          </parameter>
+          <parameter name="positions">
+            <value>
+              <call method="net.masagroup.sword.military.queries.getIlluminating">
+                <parameter name="entities">
+                  <value>
+                    <parameter>entities</parameter>
+                  </value>
+                </parameter>
+              </call>
+            </value>
+          </parameter>
+        </skill>
+      </skills>
+    </stage>
+  </stages>
+</task>

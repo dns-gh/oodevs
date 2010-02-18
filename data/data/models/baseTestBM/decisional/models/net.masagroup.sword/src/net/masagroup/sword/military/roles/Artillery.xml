@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<role extends="net.masagroup.sword.military.roles.Section" name="net.masagroup.sword.military.roles.Artillery" xmlns="http://www.masagroup.net/directia/schemas/bm">
+	<skills>
+    <skill name="net.masagroup.sword.military.skills.primitives.IndirectFire"/>
+  </skills>
+	<resources>
+    <resource name="net.masagroup.sword.military.resources.IndirectFire"/>
+  </resources>
+</role>

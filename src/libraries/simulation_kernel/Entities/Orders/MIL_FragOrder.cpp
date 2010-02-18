@@ -18,6 +18,7 @@
 #include "Decision/DEC_Representations.h"
 #include "Decision/DEC_Tools.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
+
 #include <directia/Brain.h>
 
 // -----------------------------------------------------------------------------
@@ -99,6 +100,7 @@ void MIL_FragOrder::Register( directia::Brain& brain )
     brain.RegisterFunction( "GetporteeAction_", &MIL_FragOrder::GetPorteeAction );
     brain.RegisterFunction( "GetsiteFranchissementOriginal_", &MIL_FragOrder::GetSiteFranchissementOriginal );
     brain.RegisterFunction( "GetsiteFranchissementVariante_", &MIL_FragOrder::GetSiteFranchissementVariante );
+    brain.RegisterFunction( "GetAgentKnowledge_", &MIL_FragOrder::GetAgentKnowledge );
 }
 
 namespace
@@ -414,4 +416,26 @@ int MIL_FragOrder::GetSiteFranchissementVariante() const
     static const std::string parameterName( "siteFranchissementVariante_" );
     return GetIntegerParameter( parameterName, parameters_, type_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FragOrder::GetAgentKnowledge
+// Created: MGD 2010-02-16
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Agent > MIL_FragOrder::GetAgentKnowledge() const
+{
+    static const std::string parameterName( "agentKnowledge_" );
+    
+    unsigned int parametersNumber = parameters_.size();
+    for (unsigned int i = 0; i < parametersNumber; ++i )
+    {
+        if( type_.GetParameterName( i ) == parameterName )
+        {
+            boost::shared_ptr< DEC_Knowledge_Agent > result;
+            if( parameters_[i]->ToAgentKnowledge( result ) )
+                return result;
+        }
+    }
+    throw std::runtime_error( std::string( "Unknown parameter: " ) + parameterName );
+}
+
 

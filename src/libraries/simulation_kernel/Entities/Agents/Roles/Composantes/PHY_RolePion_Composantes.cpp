@@ -875,6 +875,21 @@ void PHY_RolePion_Composantes::ApplyDirectFire( PHY_Composante_ABC& compTarget, 
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::ApplyDirectFireOnMajorComposantes
+// Created: MGD 2010-02-17
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::ApplyDirectFireOnMajorComposantes( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& fireResult )
+{
+    PHY_FireDamages_Agent& fireDamages = fireResult.GetDamages( pion_ );
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    {
+        PHY_ComposantePion& composante = **it;
+        if( composante.IsMajor() && composante.CanBeFired() )
+            composante.ApplyDirectFire( dotationCategory, fireDamages );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::ApplyPopulationFire
 // Created: NLD 2005-11-03
 // -----------------------------------------------------------------------------

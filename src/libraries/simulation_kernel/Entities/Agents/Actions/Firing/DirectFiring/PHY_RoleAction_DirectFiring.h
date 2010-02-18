@@ -65,6 +65,8 @@ public:
 
     int  FirePion               ( boost::shared_ptr< DEC_Knowledge_Agent > pAgent, PHY_DirectFireData::E_FiringMode nFiringMode, MT_Float rPercentageComposantesToUse, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType, PHY_FireResults_Pion*& pFireResult, const PHY_AmmoDotationClass* pAmmoDotationClass = 0 );
     void FirePionSuspended      ( boost::shared_ptr< DEC_Knowledge_Agent > pAgent );
+    int  IlluminatePion         ( boost::shared_ptr< DEC_Knowledge_Agent > pEnemy );
+    void IlluminatePionSuspended( boost::shared_ptr< DEC_Knowledge_Agent > pEnemy );
 
     void FireZone               ( const MIL_Object_ABC& zone, PHY_FireResults_Default*& pFireResult );
     //@}

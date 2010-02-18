@@ -518,6 +518,14 @@ MT_Float PHY_RolePion_Dotations::GetDotationNumber( const PHY_DotationCategory& 
 {
     return pDotations_->GetValue( category );
 }
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations::GetIlluminationDotations
+// Created: MGD 2010-02-15
+// -----------------------------------------------------------------------------
+const PHY_DotationCategory* PHY_RolePion_Dotations::GetIlluminationDotations( float range, bool permanent ) const
+{
+    return pDotations_->GetIlluminationDotations( range, permanent );
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Dotations::FillSupplyRequest

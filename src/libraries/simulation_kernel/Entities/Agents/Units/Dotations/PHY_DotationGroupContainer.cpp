@@ -289,6 +289,21 @@ void PHY_DotationGroupContainer::Resupply( const PHY_DotationType& type, MT_Floa
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_DotationGroupContainer::HasIlluminationDotations
+// Created: MGD 2010-02-15
+// -----------------------------------------------------------------------------
+const PHY_DotationCategory* PHY_DotationGroupContainer::GetIlluminationDotations( float range, bool permanent ) const
+{
+    for( T_DotationGroupMap::const_iterator it = dotationGroups_.begin(); it != dotationGroups_.end(); it++ )
+    {
+        const PHY_DotationCategory* dotation = it->second->GetIlluminationDotations( range, permanent );
+        if( dotation )
+            return dotation;
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_DotationGroupContainer::AddConsumptionReservation
 // Created: NLD 2004-09-30
 // -----------------------------------------------------------------------------

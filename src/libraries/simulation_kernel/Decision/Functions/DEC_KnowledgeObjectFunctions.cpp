@@ -16,6 +16,7 @@
 #include "Entities/Objects/Object.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 
+#include "Entities/Objects/AnimatorAttribute.h"
 #include "Entities/Objects/ContaminationCapacity.h"
 #include "Entities/Objects/DecontaminationCapacity.h"
 #include "Entities/Objects/OccupantAttribute.h"
@@ -78,6 +79,24 @@ bool DEC_KnowledgeObjectFunctions::CanBeAnimated( const MIL_AgentPion& callerAge
         if( const MIL_Object_ABC* object = pKnowledge->GetObjectKnown() )
             return (*object)().CanBeAnimatedBy( callerAgent );
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::GetAnimationLevel
+// Created: MGD 2010-02-15
+// -----------------------------------------------------------------------------
+float DEC_KnowledgeObjectFunctions::GetAnimationLevel( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge)
+{
+    if( pKnowledge && pKnowledge->IsValid() )
+    {
+        if( MIL_Object_ABC* object = pKnowledge->GetObjectKnown() )
+        {
+            const AnimatorAttribute* capacity = object->RetrieveAttribute< AnimatorAttribute >();
+            if( capacity )
+                return float(capacity->GetCurrent()) / float(capacity->GetMaxAnimators()); 
+        }
+    }
+    return 0.f;
 }
 
 // -----------------------------------------------------------------------------

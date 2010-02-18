@@ -100,6 +100,7 @@
     </attritions>
   </dotation>
   <dotation category="Charg 5,56 2 O-1T-4 O" codeEMAT6="" codeEMAT8="1305-054" codeLFRIL="" codeNNO="" id="10" name="munition" nature="Solide" package-mass="0.021" package-size="1300" package-volume="0.018" type="Mitraille">
+    <illuminating maintain="false" range="1000"/>
     <attritions>
       <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CharMoyen" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -269,6 +270,7 @@
     </indirect-fire>
   </dotation>
   <dotation category="Obus 155 OE CCR F1" codeEMAT6="" codeEMAT8="1320-300" codeLFRIL="" codeNNO="" d-type="true" id="22" name="munition" nature="Solide" package-mass="0.65" package-size="8" package-volume="0.82" type="Obus">
+    <guided maintain="false"/>
     <attritions>
       <attrition destruction="0.05" protection="CharLourd" repairable-with-evacuation="0.2" repairable-without-evacuation="0.75"/>
       <attrition destruction="0.1" protection="CharMoyen" repairable-with-evacuation="0.3" repairable-without-evacuation="0.6"/>

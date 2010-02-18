@@ -182,6 +182,43 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer,
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory_IndirectFire::ApplyEffect
+// Created: MGD 2010-02-15
+// -----------------------------------------------------------------------------
+void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, MT_Float /*rInterventionTypeFired*/, PHY_FireResults_ABC& fireResult ) const
+{
+    // Agents
+    bool bRCSent = false;
+
+    //Active Protection Management
+    if( ! (target.GetRole< PHY_RoleInterface_Location >().GetHeight() > 0 ) )
+    {
+        PHY_RoleInterface_ActiveProtection& targetRoleProtection = target.GetRole< PHY_RoleInterface_ActiveProtection >();
+        if( targetRoleProtection.DestroyIndirectFire( dotationCategory_ ) )
+        {
+            targetRoleProtection.UseAmmunition( dotationCategory_ );
+            return;
+        }
+
+        bool counter = targetRoleProtection.CounterIndirectFire( dotationCategory_ );
+        targetRoleProtection.UseAmmunition( dotationCategory_ );
+        if( !counter )
+        {
+            PHY_RoleInterface_Composantes& targetRoleComposantes = target.GetRole< PHY_RoleInterface_Composantes >();
+            targetRoleComposantes.Neutralize();
+            targetRoleComposantes.ApplyDirectFireOnMajorComposantes( dotationCategory_, fireResult );
+
+            if( !bRCSent && firer.GetArmy().IsAFriend( target.GetArmy() ) == eTristate_True )
+            {
+                MIL_Report::PostEvent( firer, MIL_Report::eReport_FratricideIndirectFire );
+                bRCSent = true;
+            }
+        }
+    }
+    // Precision Fire, no Population attrition
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectFire::HasHit
 // Created: NLD 2005-08-04
 // -----------------------------------------------------------------------------

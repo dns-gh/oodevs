@@ -12,5 +12,16 @@
         </type>
        </return>
     </method>
+    <method name="isTask">
+      <description>Retourne vrai si l'ordre de conduite est une mission</description>
+      <return>
+        <type>
+          <simple name="boolean" />
+        </type>
+       </return>
+    </method>
+    <method name="startTask">
+      <description>Lance la mission</description>
+    </method>
 	</methods>
 </interface>

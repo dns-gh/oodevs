@@ -6,7 +6,9 @@
         <mission name="Follow"/>
         <mission name="Load"/>
         <mission name="Mount"/>
-        <mission name="MoveToPoint"/>
+        <mission name="MoveToPoint">
+          <fragorder name="Illuminate"/>
+        </mission>
         <mission name="MoveToPolygon"/>
         <mission name="MoveToAutomate"/>
         <mission name="MoveToAgent"/>
@@ -33,6 +35,14 @@
         <mission name="MoveAndObserve"/>
         <mission name="SeekAndDestroy"/>
         <mission name="EngageAgents"/>
+      </missions>
+    </unit>
+    <unit dia-type="BMPion" file="BMPion.bms" name="net.masagroup.sword.military.roles.Artillery">
+      <missions>
+        <mission name="DeployOnPosition">
+          <fragorder name="ApplyFire"/>
+          <fragorder name="ApplyGuidedFire"/>
+        </mission>
       </missions>
     </unit>
   </units>

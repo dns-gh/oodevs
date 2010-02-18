@@ -35,6 +35,7 @@ public:
     //! @name Accessors
     //@{
           bool                                   IsInterventionTypeFired    () const;
+          bool                                   MustWaitImpact             () const;
           bool                                   IsTargetValid              () const;
 
     const PHY_DotationCategory_IndirectFire_ABC& GetIndirectDotationCategory         () const;
@@ -75,6 +76,7 @@ private:
           uint                                   nNbrAmmoFired_;
           bool                                   bIsFlying_;
           bool                                   bFired_;
+          bool                                   bArrived_;
           MT_Float                               rImpactTimeStep_;
           PHY_FireResults_Pion*                  pFireResult_;
 };

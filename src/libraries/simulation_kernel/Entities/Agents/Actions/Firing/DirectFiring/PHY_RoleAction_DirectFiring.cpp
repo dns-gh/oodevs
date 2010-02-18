@@ -17,6 +17,9 @@
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 #include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
 #include "Entities/Agents/Actions/Firing/PHY_FireResults_Pion.h"
+#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Illumination/PHY_RoleInterface_Illumination.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/ControlZoneCapacity.h"
 #include "Entities/Populations/MIL_Population.h"
@@ -28,10 +31,11 @@
 #include "Knowledge/MIL_Knowledgegroup.h"
 
 #include "simulation_kernel/AlgorithmsFactories.h"
-#include "simulation_kernel/WeaponAvailabilityComputer_ABC.h"
+#include "simulation_kernel/ConsumeDotationNotificationHandler_ABC.h"
 #include "simulation_kernel/ComposantesAbleToBeFiredComputer_ABC.h"
-#include "simulation_kernel/WeaponAvailabilityComputerFactory_ABC.h"
 #include "simulation_kernel/ComposantesAbleToBeFiredComputerFactory_ABC.h"
+#include "simulation_kernel/WeaponAvailabilityComputer_ABC.h"
+#include "simulation_kernel/WeaponAvailabilityComputerFactory_ABC.h"
 
 using namespace firing;
 
@@ -212,6 +216,55 @@ void PHY_RoleAction_DirectFiring::FirePionSuspended( boost::shared_ptr< DEC_Know
 {
     if( pEnemy && pEnemy->IsValid() )
         pEnemy->GetAgentKnown().NotifyAttackedBy( pion_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_DirectFiring::IlluminatePion
+// Created: MGD 2010-02-12
+// -----------------------------------------------------------------------------
+int  PHY_RoleAction_DirectFiring::IlluminatePion( boost::shared_ptr< DEC_Knowledge_Agent > pEnemy )
+{
+    MIL_Agent_ABC* pTarget = pEnemy && pEnemy->IsValid() ? &pEnemy->GetAgentKnown() : 0;
+    if( !pTarget )
+        return eImpossible;
+    if( pTarget->IsDead() )
+        return eEnemyDestroyed;
+    if( pTarget->GetRole< PHY_RoleInterface_Illumination >().IsUnderIndirectFire() )
+        return eFinished;
+
+    const dotation::PHY_RoleInterface_Dotations& roleDotations = pion_.GetRole< dotation::PHY_RoleInterface_Dotations >();
+    const PHY_RoleInterface_Location& pionLocation = pion_.Get< PHY_RoleInterface_Location >();
+    double range = pionLocation.GetPosition().Distance( pEnemy->GetPosition() );
+    const PHY_DotationCategory* munition = roleDotations.GetIlluminationDotations( (float)range , true );
+    if( munition  ) 
+    {
+        pTarget->GetRole< PHY_RoleInterface_Illumination >().NotifyDefinitelyIlluminated();
+        unsigned int consommation = 1;
+        pion_.Apply( &dotation::ConsumeDotationNotificationHandler_ABC::NotifyConsumeDotation, *munition, consommation );
+        return eFinished;
+    }
+    munition = roleDotations.GetIlluminationDotations( (float)range, false );
+    if( munition )
+    {
+        pTarget->GetRole< PHY_RoleInterface_Illumination >().NotifyStartIlluminatedBy( pion_ );
+        pion_.GetRole< PHY_RoleInterface_Illumination >().NotifyStartIlluminate( *pTarget );
+        return eRunning;
+    }
+    else
+        return eNoCapacity;
+}
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_DirectFiring::IlluminatePionSuspended
+// Created: MGD 2010-02-12
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_DirectFiring::IlluminatePionSuspended( boost::shared_ptr< DEC_Knowledge_Agent > pEnemy )
+{
+    MIL_Agent_ABC* pTarget = pEnemy && pEnemy->IsValid() ? &pEnemy->GetAgentKnown() : 0;
+    if( !pTarget )
+    {
+        pTarget->GetRole< PHY_RoleInterface_Illumination >().NotifyStopIlluminatedBy( pion_ );
+        pion_.GetRole< PHY_RoleInterface_Illumination >().NotifyStopIlluminate();
+    }
 }
 
 // -----------------------------------------------------------------------------

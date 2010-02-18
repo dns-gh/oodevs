@@ -19,6 +19,8 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory_IndirectFire_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Entities/Agents/Roles/Illumination/PHY_RoleInterface_Illumination.h"
 #include "Entities/Agents/Actions/Firing/PHY_FireResults_Pion.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Effects/MIL_EffectManager.h"
@@ -41,6 +43,7 @@ MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_Agent_ABC& firer, ui
     , nNbrAmmoFired_           ( 0 )
     , bIsFlying_               ( false )
     , bFired_                  ( false )
+    , bArrived_                ( false )
     , rImpactTimeStep_         ( 0. )
     , pFireResult_             ( 0 )    
 {
@@ -151,14 +154,31 @@ bool MIL_Effect_IndirectFire::Execute()
         return true;
 
     if( MIL_Singletons::GetTime().GetCurrentTick() < rImpactTimeStep_ )
+    {
         return true;
+    }
 
     if( nNbrAmmoFired_ > 0 )
     {
         UpdateTargetPositionFromKnowledge();
         assert( pFireResult_ );
-        indirectDotationCategory_.GetDotationCategory().ApplyIndirectFireEffect( firer_, vSourcePosition_, vTargetPosition_, nNbrAmmoFired_, *pFireResult_ );
+        //[--LTO
+        if( indirectDotationCategory_.GetDotationCategory().IsGuided() )
+        {
+            boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge = firer_.GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgentFromID( nTargetKnowledgeID_ );
+            if( pTargetKnowledge && pTargetKnowledge->IsValid() )
+            {
+                indirectDotationCategory_.GetDotationCategory().ApplyIndirectFireEffect( firer_, pTargetKnowledge->GetAgentKnown(), nNbrAmmoFired_, *pFireResult_ );
+            }      
+        }
+        //LTO--]
+        else
+        {
+            indirectDotationCategory_.GetDotationCategory().ApplyIndirectFireEffect( firer_, vSourcePosition_, vTargetPosition_, nNbrAmmoFired_, *pFireResult_ );
+        }
     }
+
+    bArrived_ = true;
     StopFlying();
     DecRef();
     return false;
@@ -253,6 +273,20 @@ const PHY_DotationCategory_IndirectFire_ABC& MIL_Effect_IndirectFire::GetIndirec
 // -----------------------------------------------------------------------------
 bool MIL_Effect_IndirectFire::IsTargetValid() const
 {
+    if( indirectDotationCategory_.GetDotationCategory().IsGuided() )
+    {
+        if( nTargetKnowledgeID_ != 0 )
+        {
+            boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge = firer_.GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgentFromID( nTargetKnowledgeID_ );
+            if( pTargetKnowledge && pTargetKnowledge->IsValid() )
+            {
+                if( !pTargetKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Illumination >().IsIlluminated())
+                {
+                    return false;
+                }
+            }
+        }
+    }
     return vTargetPosition_.rX_ != -1. && vTargetPosition_.rY_ != -1.;
 }
 
@@ -263,6 +297,18 @@ bool MIL_Effect_IndirectFire::IsTargetValid() const
 bool MIL_Effect_IndirectFire::IsInterventionTypeFired() const
 {
     return bFired_ || GetNbrAmmoToCompleteInterventionType() == 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Effect_IndirectFire::MustWaitImpact
+// Created: MGD 2010-02-17
+// -----------------------------------------------------------------------------
+bool MIL_Effect_IndirectFire::MustWaitImpact() const
+{
+    if( indirectDotationCategory_.GetDotationCategory().IsGuided() )
+    {
+        return bFired_ && !bArrived_;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -302,4 +348,5 @@ uint MIL_Effect_IndirectFire::GetNbrAmmoFired() const
 {
     return nNbrAmmoFired_;
 }
+
 

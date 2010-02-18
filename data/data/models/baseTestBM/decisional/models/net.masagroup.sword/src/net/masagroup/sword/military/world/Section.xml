@@ -10,6 +10,9 @@
   <realizes>net.masagroup.military.generic.knowledge.Commanding</realizes>
   <realizes>net.masagroup.military.generic.knowledge.Neutralizing</realizes>
   <realizes>net.masagroup.military.generic.knowledge.Neutralizable</realizes>
+  <realizes>net.masagroup.sword.military.knowledge.Illuminatable</realizes>
+  <realizes>net.masagroup.sword.military.knowledge.Illuminating</realizes>
+  <realizes>net.masagroup.sword.military.knowledge.IndirectFireable</realizes>
   <methods>
     <method name="computeMovementCapability">
       <description>__INTEGRATION</description>
@@ -295,6 +298,86 @@ sur un objectif target neutralisable à partir d'une position donnée.
           </type>
        </return>
        </method>
+       <method name="illuminationPriority">
+      <description>Retourne la priorité d'illumination d'un élément de connaissance</description>
+      <return>
+        <description>La valeur de la priorité.</description>
+        <type>
+          <simple name="numeric"/>
+        </type>
+      </return>
+    </method>
+    <method name="canIlluminateIt">
+      <description>Retourne vrai si les conditions sont réunies pour illuminer la connaissance</description>
+      <return>
+        <description>L'état des conditions</description>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
+    </method>
+    <method name="illuminateIt">
+      <description>Action physique d'illumination.</description>
+    </method>
+    <method name="illuminationLevel">
+      <description>Retourne le niveau d'illumination de la connaissance.</description>
+      <return>
+        <description>La valeur du niveau de'illumination</description>
+        <type>
+          <simple name="numeric"/>
+        </type>
+      </return>
+    </method>
+    <method name="illuminationEfficiency">
+      <description>Le niveau d'efficacité de la connaissance pour son utilisation dans l'illumination de l'objectif</description>
+      <argument name="objective">
+          <description>L'objectif à illuminer.</description>
+          <type>
+              <class name="net.masagroup.sword.military.knowledge.Illuminatable"/>
+          </type>
+      </argument>
+      <return>
+          <type>
+              <simple name="numeric"/>
+          </type>
+      </return>
+    </method>
+    <method name="canApplyFireOnIt">
+      <description>return if the section has the capacity to fire</description>
+      <argument name="munition">
+        <type>
+          <simple name="numeric"/>
+        </type>
+      </argument>
+      <argument name="interventionType">
+        <type>
+          <simple name="numeric"/>
+        </type>
+      </argument>
+      <return>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
+    </method>
+    <method name="applyFireOnIt">
+      <description>execute fire order</description>
+      <argument name="munition">
+        <type>
+          <simple name="numeric"/>
+        </type>
+      </argument>
+      <argument name="interventionType">
+        <type>
+          <simple name="numeric"/>
+        </type>
+      </argument>
+      <return>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
+    </method>
   </methods>
 
   <predicates>
@@ -314,6 +397,20 @@ sur un objectif target neutralisable à partir d'une position donnée.
     </predicate>
     <predicate name="isOperational">
          <description>Retourne vrai si la connaissance est opérationnelle.</description>
+    </predicate>
+    <predicate name="isDefinitelyIlluminated">
+      <description>Retourne vrai si la connaissance est illuminée définitevement, par une munition traçante par exemple.</description>
+    </predicate>
+    <predicate name="isIlluminatingFor">
+      <description>Retourne vrai si la connaissance est adéquate pour mettre en oeuvre un comportement d'illumination sur un objectif</description>
+      <argument name="objectives">
+          <description>L'objectif que l'agent veut illuminer</description>
+          <type>
+              <list>
+                  <class name="net.masagroup.sword.military.knowledge.Illuminatable"/>
+              </list>
+          </type>
+      </argument>
     </predicate>
   </predicates>
   <attributes>

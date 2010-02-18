@@ -84,6 +84,8 @@ int PHY_RoleAction_IndirectFiring::Fire( MIL_Effect_IndirectFire* pEffect )
     if( !pEffect )
         return eImpossible;
 
+    if( pEffect->MustWaitImpact() )
+        return eRunning;
     if( pEffect->IsInterventionTypeFired() )
         return eFinished;
 
@@ -120,7 +122,7 @@ int PHY_RoleAction_IndirectFiring::Fire( MIL_Effect_IndirectFire* pEffect )
         firerWeapons.RemoveFirer( *pFirer );
     }
 
-    if( pEffect->IsInterventionTypeFired() )
+    if( pEffect->IsInterventionTypeFired() && !pEffect->MustWaitImpact() )
         return eFinished;
 
     return eRunning;

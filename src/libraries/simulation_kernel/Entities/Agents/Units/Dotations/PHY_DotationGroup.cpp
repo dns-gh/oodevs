@@ -222,6 +222,22 @@ MT_Float PHY_DotationGroup::Consume( const PHY_DotationCategory& category, MT_Fl
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_DotationGroup::GetIlluminationDotations
+// Created: MGD 2010-02-15
+// -----------------------------------------------------------------------------
+const PHY_DotationCategory* PHY_DotationGroup::GetIlluminationDotations( float range, bool permanent ) const
+{
+    for( T_DotationMap::const_iterator it = dotations_.begin(); it != dotations_.end(); it++ )
+    {
+        if( it->first->IsIlluminating( range, permanent ) )
+        {
+            return it->first;
+        }
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_DotationGroup::Supply
 // Created: NLD 2005-05-11
 // -----------------------------------------------------------------------------

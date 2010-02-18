@@ -65,7 +65,6 @@ defaultMethods
     isRecognized = function() return default_engine.methods.load( "isRecognized" ) end,
     identificationLevel = function() return default_engine.methods.load( "identificationLevel" ) end,
     isIdentified = function() return default_engine.predicates.load( "isIdentified" ) end,
-
 }
 
 communication.setMessageTreatment( "Order", integration.communication.StartMissionPion )
@@ -109,7 +108,7 @@ return
         end
     end,
     computeMovementCapability = function( self )
-        return 100 -- TODO -- $$$ MIA: not used in skill yet...
+        return 100 -- TODO -- $$$ MIA: not used in skill yet... @MGD URGENT clean all concrete knowledge
     end,
     getPerception = function( self )
         return integration.getAgentPerception( self )
@@ -133,7 +132,7 @@ return
     end,
 
     occupationLevel = function()
-      return 100
+      return 100 --TODO MGD ??? not do before??????
     end,
     safeApproachIt = function()
     end,
@@ -161,7 +160,7 @@ return
     destroy = behavior_model.integration.startStopAction( { start = integration.startDestroyingIt, started = function( self, ...) end, stop = integration.stopDestroyingIt } ),
 
     isOccupied = function( self )
-      return true
+      return true --TODO MGD
     end,
     identifyIt = function ( self )
       integration.identifyIt( self )
@@ -170,7 +169,44 @@ return
     getIdentificationState = function( self )
       return integration.getAutomatPerception( self )
     end,
-
+    
+    -- ILLUMINABLE
+    illuminationPriority = function( self )
+        -- @ TODO MGD add ( math.max( self:proximityLevel(), 1 ) ) / 100 after refactor on knowledge position
+        return self:isDefinitelyIlluminated() and 0 or 100
+    end,
+    canIlluminateIt = function( self )
+        -- @ TODO MGD add self.params.entity:canObserveIt() after refactor on knowledge position
+        return integration.canIlluminateIt( self )
+    end,
+    illuminationLevel = function( self )
+        return integration.illuminationLevel( self )
+    end,
+    illuminateIt = behavior_model.integration.startStopAction( { start = integration.startIlluminateIt, stop = integration.stopIlluminateIt } ),
+ 
+    predicate "isDefinitelyIlluminated"
+    {
+        method = function( self )
+                    return integration.isDefinitelyIlluminated( self )
+                 end
+    },
+    -- ILLUMINATING
+    illuminationEfficiency = function( self, objective )
+        -- @ TODO MGD replace by computeDistance( self, objective ) after refactor on knowledge position
+        return 100
+    end,
+    predicate "isIlluminatingFor" 
+    { 
+        method = function( self, objective )
+                    -- @ TODO MGD replace by computeDistance( self, objective ) > 0 after refactor on knowledge position
+                    return true
+                 end 
+    },
+    -- INDIRECTFIREABLE
+    canApplyFireOnIt = function( self, munition, interventionType )
+        return integration.canApplyFireOnSection( self, munition, interventionType )
+    end,
+    applyFireOnIt = behavior_model.integration.startStopAction( { start = integration.startApplyFireOnSection, started = startedIlluminateIt, stop = integration.stopApplyFireOnSection } ),
 
 tasks =
     {

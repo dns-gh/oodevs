@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.knowledge.IndirectFireable">
+  <methods>
+    <method name="canApplyFireOnIt">
+      <description>return if the section has the capacity to fire</description>
+      <argument name="munition">
+        <type>
+          <simple name="numeric"/>
+        </type>
+      </argument>
+      <argument name="interventionType">
+        <type>
+          <simple name="numeric"/>
+        </type>
+      </argument>
+      <return>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
+    </method>
+    <method name="applyFireOnIt">
+      <description>execute fire order</description>
+      <argument name="munition">
+        <type>
+          <simple name="numeric"/>
+        </type>
+      </argument>
+      <argument name="interventionType">
+        <type>
+          <simple name="numeric"/>
+        </type>
+      </argument>
+      <return>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
+    </method>
+  </methods>
+</interface>

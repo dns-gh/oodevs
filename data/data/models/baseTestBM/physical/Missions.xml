@@ -97,6 +97,9 @@
     </mission>     
     <mission dia-behavior="net.masagroup.testSword.military.tasks.EngageAgents" dia-type="T_Mission_Pion_Engage" id="33" name="EngageAgents">
       <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MiseEnOeuvreSurPosition" id="34" name="DeployOnPosition">
+      <parameter dia-name="objectives" name="objective" optional="false" type="ObjectKnowledgeBM"/>
     </mission> 
   </units>
   <automats>
@@ -157,6 +160,19 @@
         <value id="2" name="tir_sur_riposte"/>
         <value id="3" name="tir_interdit"/>
       </parameter>
+    </fragorder>
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="net.masagroup.sword.military.tasks.Illuminate" id="367" name="Illuminate">
+      <parameter dia-name="agentKnowledge_" name="target" optional="false" type="AgentKnowledgeBM"/>
+    </fragorder>
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="net.masagroup.sword.military.tasks.ApplyIndirectFire" id="368" name="ApplyFire">
+      <parameter dia-name="munitions_" name="Ammunitions" optional="false" type="DotationType"/>
+      <parameter dia-name="nbIT_" name="Shells number" optional="false" type="Numeric"/>
+      <parameter dia-name="pointCible_" name="target" optional="false" type="PointBM"/>
+    </fragorder>
+    <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="net.masagroup.sword.military.tasks.ApplyIndirectFire" id="369" name="ApplyGuidedFire">
+      <parameter dia-name="munitions_" name="Ammunitions" optional="false" type="DotationType"/>
+      <parameter dia-name="nbIT_" name="Shells number" optional="false" type="Numeric"/>
+      <parameter dia-name="agentKnowledge_" name="target" optional="false" type="AgentKnowledgeBM"/>
     </fragorder>
   </fragorders>
 </missions>

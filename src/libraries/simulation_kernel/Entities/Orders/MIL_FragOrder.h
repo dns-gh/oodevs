@@ -11,6 +11,7 @@
 #define __MIL_FragOrder_h_
 
 class DEC_Decision_ABC;
+class DEC_Knowledge_Agent;
 class DEC_KnowledgeResolver_ABC;
 class DEC_Representations;
 class MIL_FragOrderType;
@@ -70,6 +71,7 @@ public:
     int GetOrderConduitePopulationChangerAttitude() const;
     DEC_Decision_ABC* GetPionARenforcer() const;
     DEC_Decision_ABC* GetPionRenforce() const;
+    boost::shared_ptr< DEC_Knowledge_Agent > GetAgentKnowledge() const;
     boost::shared_ptr< MT_Vector2D > GetPointCible() const;
     int GetPorteeAction() const;
     int GetSiteFranchissementOriginal() const;

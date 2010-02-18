@@ -4,5 +4,6 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Section CBT INF VAB CDS OFF"/>
     <unit max-occurs="2" min-occurs="2" type="Section CDT CIE INF VAB"/>
     <unit max-occurs="2" min-occurs="2" type="Peloton LECLERC CDP OFF"/>
+    <unit max-occurs="2" min-occurs="0" type="Section de Tir AUF1 CDS OFF"/>
   </automat>
 </automats>

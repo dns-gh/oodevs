@@ -16,7 +16,10 @@ defaultMethods
     isNearby = function() return default_engine.methods.load( "generic_isNearby" ) end,
     isFar = function() return default_engine.methods.load( "generic_isFar" ) end,
     isReached = function() return default_engine.methods.load( "generic_isReached" ) end,
-
+    
+    -- POSITIONNABLE
+    isInMyAOR = function() return default_engine.predicates.load( "isInMyAOR") end,
+    canTakePosition = function() return default_engine.methods.load( "canTakePosition" ) end,
 }
 return
 {
@@ -48,4 +51,51 @@ return
     observeIt = function( self )
         integration.observeIt( self )
     end,
+    -- POSITIONNABLE
+    takeUpPosition = function( self )
+        return integration.takeUpPositionObject( self )
+    end,
+    occupationLevel = function()
+      return 100 --TODO MGD
+    end,
+    safeApproachIt = function()
+    end,
+    isOccupied = function( self )
+      return true -- TODO MGD
+    end,
+    -- ANIMATABLE
+    animationPriority = function( self )
+        return self:proximityLevel()
+    end,
+    canAnimateIt = function( self )
+        return integration.canAnimateIt( self )
+    end,
+    animateIt = function( self )
+        return integration.animateIt( self )
+    end,
+    predicate "isFullyAnimated"
+    {
+        method = function( self )
+                    return animationLevel() == 100
+                 end,
+    },
+    predicate "isPartiallyAnimated"
+    {
+        method = function( self )
+                    return animationLevel() > 0
+                 end,
+    },
+    animationLevel = function( self )
+        return integration.animationLevel()
+    end,
+    -- ANIMATING
+    predicate "isAnimatingFor"
+    {
+        method = function( self )
+                    return self == objective
+                 end,
+    },
+    animationEfficiency = function( self, objective )
+        return self == objective
+    end
 }

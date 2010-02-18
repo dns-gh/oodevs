@@ -18,6 +18,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
+#include "Knowledge/DEC_Knowledge_Agent.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionIndirectFire_Knowledge constructor
@@ -30,6 +31,22 @@ PHY_ActionIndirectFire_Knowledge::PHY_ActionIndirectFire_Knowledge( MIL_AgentPio
     if( pDotationCategory_ && pDotationCategory_->CanBeUsedForIndirectFire() )
     {
         pEffect_ = new MIL_Effect_IndirectFire( pion, nTargetKnowledgeID, *pDotationCategory_->GetIndirectFireData(), rNbInterventionType_ );
+        pEffect_->IncRef();
+        MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pEffect_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionIndirectFire_Knowledge constructor
+// Created: MGD 2010-02-17
+// -----------------------------------------------------------------------------
+PHY_ActionIndirectFire_Knowledge::PHY_ActionIndirectFire_Knowledge( MIL_AgentPion& pion, const PHY_DotationCategory* pDotationCategory, float rNbInterventionType, boost::shared_ptr< DEC_Knowledge_Agent > targetKnowledge )
+: PHY_ActionIndirectFire_ABC( pion, pDotationCategory, rNbInterventionType )
+, pEffect_                  ( 0 )
+{
+    if( pDotationCategory_ && pDotationCategory_->CanBeUsedForIndirectFire() )
+    {
+        pEffect_ = new MIL_Effect_IndirectFire( pion, targetKnowledge->GetID(), *pDotationCategory_->GetIndirectFireData(), rNbInterventionType_ );
         pEffect_->IncRef();
         MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pEffect_ );
     }

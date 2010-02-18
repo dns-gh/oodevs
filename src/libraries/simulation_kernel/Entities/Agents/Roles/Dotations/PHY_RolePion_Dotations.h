@@ -105,6 +105,7 @@ public:
     //@{
     virtual double AddFireReservation( const PHY_DotationCategory& category, MT_Float rNbr );
     virtual double GetDotationNumber( const PHY_DotationCategory& category ) const;
+    virtual const PHY_DotationCategory* GetIlluminationDotations( float range, bool permanent ) const;
     //@}
 
     //! @name Network

@@ -1,0 +1,85 @@
+-- **************************************************************************** 
+-- Activate elements.
+-- self.params.entities: the activable elements
+-- self.params.positions: the animating elements
+-- ****************************************************************************
+rootnode
+{
+    connections = { skill.nodes.activateElement };
+    
+    -- -------------------------------------------------------------------------------- 
+    -- Feedback when position reached and when occupied
+    -- --------------------------------------------------------------------------------
+    done = function( self, params, additionnalParams )
+        Feedback( self.feedbacks.done, { position = additionnalParams.position, state = additionnalParams.state } )
+    end;
+    -- -------------------------------------------------------------------------------- 
+    -- For each objective of the skill, try to activate it. 
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        for _, entity in pairs( self.params.entities ) do
+            Activate( skill.nodes.activateElement, entity:activationPriority(), 
+                { entity = entity, positions = self.params.positions[ entity ] or self.params.positions } )
+        end
+    end
+}
+-- **************************************************************************** 
+-- activate activable element using MoveAndTakePosition skills
+-- self.params.entity: the activable element
+-- self.params.positions: the animating elements
+-- ****************************************************************************
+node "activateElement"
+{
+    connections = { skill.links.moveAndTakePosition, skill.nodes.activate,
+                    skill.links.observe };
+
+    feedbacks = { "done" };
+    
+    -- -------------------------------------------------------------------------------- 
+    -- Feedback when position reached and when occupied
+    -- --------------------------------------------------------------------------------
+    done = function( self, params, additionnalParams )
+        Feedback( self.feedbacks.done, { entity = self.params.entity, state = additionnalParams.state } )
+    end;
+
+    -- -------------------------------------------------------------------------------- 
+    -- Move toward an animating element and activate the entity
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        -- when the entity is activated send a feedback
+        if self.params.entity:isActivated() then -- never called because isfullyactivated is a part of activationPriority
+            Feedback( self.feedbacks.done, { activatedEntity = self.params.entity } )
+        end
+
+        -- current observation toward the element to reconnoiter
+        Activate( skill.links.observe, 1, { entity = self.params.entity } )
+
+       -- when it possible activate the element
+        if self.params.entity:canActivateIt() then
+            Activate( skill.nodes.activate, 1, { entity = self.params.entity } )
+        end
+
+        -- Moving toward an activating positions
+        for _,position in pairs( self.params.positions )  do
+            Activate( skill.links.moveAndTakePosition, 
+                position:activationEfficiency( self.params.entity ), { entity = position } )
+        end
+    end
+}
+-- **************************************************************************** 
+-- activate action on the activable element 
+-- ****************************************************************************
+node "activate"
+{
+    feedbacks = { "done" };
+    
+    acquire = { [ skill.resources.animator ] = 1 };
+
+    select = function( self )
+        if self.params.entity:activateIt() then
+            Feedback( self.feedbacks.done, { state = "activated" } )
+        else
+            Feedback( self.feedbacks.done, { state = "partiallyActivated" } )
+        end
+    end
+}

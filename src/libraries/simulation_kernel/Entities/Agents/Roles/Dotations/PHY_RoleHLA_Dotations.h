@@ -50,6 +50,7 @@ public:
     virtual void Clean     () {}
     virtual bool HasChanged() const { return false; }
     virtual double GetDotationNumber( const PHY_DotationCategory & ) const { return 0.; }
+    virtual bool HasIlluminationDotations( float /*range*/, bool /*permanent*/, PHY_DotationCategory& /*munition*/ ) const { return false; }
     //@}
 
     //! @name Dotations management
@@ -70,6 +71,7 @@ public:
     //! @name Fire dotations
     //@{
     virtual MT_Float AddFireReservation( const PHY_DotationCategory& /*category*/, MT_Float /*rNbr*/ ) { return 0; }
+    virtual const PHY_DotationCategory* GetIlluminationDotations( float range, bool permanent ) const { return 0; }
     //@}
 
     //! @name Logistic - Supply

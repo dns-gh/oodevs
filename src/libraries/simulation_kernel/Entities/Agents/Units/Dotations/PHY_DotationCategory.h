@@ -48,6 +48,8 @@ public:
     const PHY_AmmoDotationClass*    GetAmmoDotationClass() const;
     const PHY_DotationLogisticType& GetLogisticType     () const;
     const PHY_DotationNature&       GetNature           () const;
+          bool                      IsGuided            () const;
+          bool                      IsIlluminating      ( float range, bool permanent ) const;
     //@}
 
     //! @name Fire
@@ -61,6 +63,7 @@ public:
     const PHY_DotationCategory_IndirectFire_ABC* GetIndirectFireData() const;
 
     void ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const;
+    void ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const;
     //@}
 
     //! @name Packaging

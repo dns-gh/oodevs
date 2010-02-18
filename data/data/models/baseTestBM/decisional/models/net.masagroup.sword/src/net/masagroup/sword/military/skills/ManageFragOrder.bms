@@ -6,7 +6,8 @@ rootnode
 {
     connections =
     {
-        skill.nodes.UpdateROE
+        skill.nodes.UpdateROE,
+        skill.nodes.StartMission
     },
     
     -- -------------------------------------------------------------------------------- 
@@ -16,8 +17,10 @@ rootnode
    
         for _, fragOrder in ipairs( self.params.fragOrders ) do
             if fragOrder:isROE() then
-     			Activate( skill.nodes.UpdateROE, 1, { fragOrder = fragOrder } )
-			end
+              Activate( skill.nodes.UpdateROE, 1, { fragOrder = fragOrder } )
+            elseif fragOrder:isTask() then
+              Activate( skill.nodes.StartMission, 1, { fragOrder = fragOrder } )
+            end
         end          
 		-- DDA : complete with other frag orders
     end
@@ -30,5 +33,15 @@ node "UpdateROE"
 {	
     select = function( self )
         self.params.fragOrder:updateROE()
+    end
+}
+
+-- -------------------------------------------------------------------------------- 
+-- Start frag order
+-- --------------------------------------------------------------------------------
+node "StartMission"
+{	
+    select = function( self )
+        self.params.fragOrder:startTask()
     end
 }

@@ -14,6 +14,8 @@
 
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
+#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
+#include "Entities/Agents/Roles/Illumination/PHY_RoleInterface_Illumination.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Units/Categories/PHY_NatureAtlas.h"
@@ -274,4 +276,36 @@ int DEC_KnowledgeAgentFunctions::GetCurrentPerceptionLevel( const MIL_AgentPion&
         return (int)pKnowledge->GetCurrentPerceptionLevel( callerAgent ).GetID();
     else
         return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::IsIlluminated
+// Created: MGD 2010-02-15
+// -----------------------------------------------------------------------------
+bool  DEC_KnowledgeAgentFunctions::IsIlluminated( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+{
+    return pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Illumination >().IsIlluminated();
+}
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::IsIlluminated
+// Created: MGD 2010-02-15
+// -----------------------------------------------------------------------------
+bool  DEC_KnowledgeAgentFunctions::IsDefinitivelyIlluminated( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+{
+    return pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Illumination >().IsDefinitevelyIlluminated();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::CanBeIlluminate
+// Created: MGD 2010-02-17
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgeAgentFunctions::CanBeIlluminate( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+{
+    const dotation::PHY_RoleInterface_Dotations& roleDotations = callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >();
+    float range = pKnowledge->GetPosition().Distance( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    
+    if( roleDotations.GetIlluminationDotations( range, true ) || roleDotations.GetIlluminationDotations( range, false ) )
+        return true;
+    else
+        return false;
 }
