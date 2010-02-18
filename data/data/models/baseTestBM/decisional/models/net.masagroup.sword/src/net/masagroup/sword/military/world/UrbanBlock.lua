@@ -18,8 +18,8 @@ defaultMethods
     observationPriority = function() return default_engine.methods.load( "generic_observationPriority" ) end,
 
     -- RECONNOITRABLE
-    reconnaissancePriority = function() return default_engine.methods.load( "reconnaissancePriority" ) end,
-    canReconnoitreIt = function() return default_engine.methods.load( "canReconnoitreIt" ) end,
+    reconnaissancePriority = function() return default_engine.methods.load( "generic_reconnaissancePriority" ) end,
+    canReconnoitreIt = function() return default_engine.methods.load( "me_canReconnoitreIt" ) end,
     
     -- POSITIONNABLE
     isInMyAOR = function() return default_engine.predicates.load( "isInMyAOR") end,
@@ -85,18 +85,18 @@ return
     isRecognized = function( self ) 
         return self:reconnaissanceLevel() == 100 
     end,
-    estimatedReconnaissanceLevel = function( self, objective )
-        if not estimatedReconnaissanceLevels[ objective ] then
-            local values = {}
-            values[ self ] = kBase.me.body:computeReconnaissanceCapability( objective, self )
-            estimatedReconnaissanceLevels[ objective ] = values
-        else
-            if not estimatedReconnaissanceLevels[ objective ][ self ] then
-                estimatedReconnaissanceLevels[ objective ][ self ] = kBase.me.body:computeReconnaissanceCapability( objective, self )
-            end
-        end
-        return estimatedReconnaissanceLevels[ objective ][ self ]
-    end,
+--    estimatedReconnaissanceLevel = function( self, objective )
+--        if not estimatedReconnaissanceLevels[ objective ] then
+--            local values = {}
+--            values[ self ] = kBase.me.body:computeReconnaissanceCapability( objective, self )
+--            estimatedReconnaissanceLevels[ objective ] = values
+--        else
+--            if not estimatedReconnaissanceLevels[ objective ][ self ] then
+--                estimatedReconnaissanceLevels[ objective ][ self ] = kBase.me.body:computeReconnaissanceCapability( objective, self )
+--            end
+--        end
+--        return estimatedReconnaissanceLevels[ objective ][ self ]
+--    end,
     isOccupied = function( self )
         return true -- TODO
     end,

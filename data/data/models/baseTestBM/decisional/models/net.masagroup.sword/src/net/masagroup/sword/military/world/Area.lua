@@ -18,11 +18,11 @@ defaultMethods
     observationPriority = function() return default_engine.methods.load( "generic_observationPriority" ) end,
 
     -- RECONNOITRABLE
-    reconnaissancePriority = function() return default_engine.methods.load( "reconnaissancePriority" ) end,
-    canReconnoitreIt = function() return default_engine.methods.load( "canReconnoitreIt" ) end,
-    reconnaissanceLevel = function() return default_engine.methods.load( "reconnaissanceLevel" ) end,
-    isRecognized = function() return default_engine.methods.load( "keypoint_isRecognized" ) end,
-    reconnoitreIt = function() return default_engine.methods.load( "reconnoitreIt" ) end,
+    reconnaissancePriority = function() return default_engine.methods.load( "generic_reconnaissancePriority" ) end,
+    canReconnoitreIt = function() return default_engine.methods.load( "me_canReconnoitreIt" ) end,
+    reconnaissanceLevel = function() return default_engine.methods.load( "keypoint_reconnaissanceLevel" ) end,
+    isRecognized = function() return default_engine.methods.load( "generic_isRecognized" ) end,
+    reconnoitreIt = function() return default_engine.methods.load( "me_canReconnoitreIt" ) end,
     
     -- POSITIONNABLE
     isInMyAOR = function() return default_engine.predicates.load( "isInMyAOR") end,
@@ -88,20 +88,21 @@ return
     recce = function( self )
         return false -- TODO
     end,
-    -- TEMP FUNCTIONS
-    estimatedReconnaissanceLevel = function( self, objective )
-        if not estimatedReconnaissanceLevels[ objective ] then
-            local values = {}
-            values[ self ] = kBase.me.body:computeReconnaissanceCapability( objective, self )
-            estimatedReconnaissanceLevels[ objective ] = values
-        else
-            if not estimatedReconnaissanceLevels[ objective ][ self ] then
-                estimatedReconnaissanceLevels[ objective ][ self ] = kBase.me.body:computeReconnaissanceCapability( objective, self )
-            end
-        end
-        return estimatedReconnaissanceLevels[ objective ][ self ]
-    end,
-    isOccupied = function( self )
-        return true -- TODO
-    end,
+   
+   -- TEMP FUNCTIONS
+--    estimatedReconnaissanceLevel = function( self, objective )
+--        if not estimatedReconnaissanceLevels[ objective ] then
+--            local values = {}
+--            values[ self ] = kBase.me.body:computeReconnaissanceCapability( objective, self )
+--            estimatedReconnaissanceLevels[ objective ] = values
+--        else
+--            if not estimatedReconnaissanceLevels[ objective ][ self ] then
+--                estimatedReconnaissanceLevels[ objective ][ self ] = kBase.me.body:computeReconnaissanceCapability( objective, self )
+--            end
+--        end
+--        return estimatedReconnaissanceLevels[ objective ][ self ]
+--    end,
+   isOccupied = function( self )
+       return true -- TODO
+   end,
 }
