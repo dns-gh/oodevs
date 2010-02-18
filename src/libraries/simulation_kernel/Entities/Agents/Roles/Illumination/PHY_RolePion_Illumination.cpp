@@ -12,6 +12,8 @@
 
 #include "Entities/MIL_Entity_ABC.h"
 
+BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Illumination )
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Illumination constructor
 // Created: MGD 2010-02-15

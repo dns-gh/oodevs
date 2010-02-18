@@ -61,4 +61,6 @@ private:
     //@}
 };
 
+BOOST_CLASS_EXPORT_KEY( PHY_RolePion_Illumination )
+
 #endif // __PHY_RolePion_Illumination_h_
