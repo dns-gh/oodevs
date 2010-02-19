@@ -32,6 +32,7 @@
 #include "Roles/Logistic/PHY_RoleInterface_Supply.h"
 #include "Roles/Logistic/PHY_RoleInterface_Maintenance.h"
 #include "Roles/Logistic/PHY_RoleInterface_Medical.h"
+#include "Roles/Illumination/PHY_RolePion_Illumination.h" // LTO
 
 #include "Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Actions/Objects/PHY_RoleAction_Objects.h"
@@ -194,6 +195,7 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const uint )
     LoadRole< DEC_RolePion_Decision >( file, *this );
     LoadRole< PHY_RoleAction_InterfaceFlying >( file, *this );
     LoadRole< PHY_RoleAction_FolkInfluence >( file, *this );
+    LoadRole< PHY_RolePion_Illumination >( file, *this ); // LTO
     RegisterRole( *new DEC_Representations() );
 }
 
@@ -237,7 +239,8 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const uint ) const
     SaveRole< firing::PHY_RoleAction_IndirectFiring  >( *this, file );
     SaveRole< DEC_RolePion_Decision          >( *this, file );
     SaveRole< PHY_RoleAction_InterfaceFlying >( *this, file );
-    SaveRole< PHY_RoleAction_FolkInfluence   >( *this, file );    
+    SaveRole< PHY_RoleAction_FolkInfluence   >( *this, file );  
+    SaveRole< PHY_RolePion_Illumination >     ( *this, file ); // LTO
 }
 
 // -----------------------------------------------------------------------------

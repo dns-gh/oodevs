@@ -4,6 +4,7 @@
 // Refer to the included end-user license agreement for restrictions.
 //
 // Copyright (c) 2010 MASA Group
+// LTO
 //
 // *****************************************************************************
 
@@ -11,6 +12,10 @@
 #define __PHY_RolePion_Illumination_h_
 
 #include "PHY_RoleInterface_Illumination.h"
+#include <boost/serialization/export.hpp>
+
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
 
 // =============================================================================
 /** @class  PHY_RolePion_Illumination
@@ -24,7 +29,7 @@ class PHY_RolePion_Illumination : public PHY_RoleInterface_Illumination
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PHY_RolePion_Illumination();
+             PHY_RolePion_Illumination();
     virtual ~PHY_RolePion_Illumination();
     //@}
 
@@ -42,6 +47,14 @@ public:
     
     virtual bool IsUnderIndirectFire() const;
     virtual void NotifyHitByIndirectFire();
+    //@}
+
+    //! @name Serialization
+    //@{
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    
+    void load( MIL_CheckPointInArchive&, const uint );
+    void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}
 
 private:

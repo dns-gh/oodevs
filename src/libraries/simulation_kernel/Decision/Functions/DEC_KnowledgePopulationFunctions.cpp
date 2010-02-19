@@ -99,7 +99,7 @@ bool DEC_KnowledgePopulationFunctions::IsEnemy( const MIL_AgentPion& caller, int
     DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
     if( !pKnowledge )
         return false;
-    return caller.GetArmy().IsAnEnemy( pKnowledge->GetArmy() );
+    return eTristate_True == caller.GetArmy().IsAnEnemy( pKnowledge->GetArmy() );
 }
 
 // -----------------------------------------------------------------------------

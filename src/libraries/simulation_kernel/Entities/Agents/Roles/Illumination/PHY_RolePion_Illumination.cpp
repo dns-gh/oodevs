@@ -4,12 +4,15 @@
 // Refer to the included end-user license agreement for restrictions.
 //
 // Copyright (c) 2010 MASA Group
+// LTO
 //
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Illumination.h"
 
+#include "CheckPoints/MIL_CheckPointInArchive.h"
+#include "CheckPoints/MIL_CheckPointOutArchive.h"
 #include "Entities/MIL_Entity_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Illumination )
@@ -125,4 +128,35 @@ bool PHY_RolePion_Illumination::IsUnderIndirectFire() const
 void PHY_RolePion_Illumination::NotifyHitByIndirectFire()
 {
     bHit_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Illumination::load
+// Created: LDC 2010-02-19
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Illumination::load( MIL_CheckPointInArchive& ar, const uint )
+{
+    ar >>boost::serialization::base_object<PHY_RoleInterface_Illumination>( *this );
+    ar >> bIlluminatedDefinitely_;
+    ar >> bHit_;
+    MIL_Entity_ABC* target = 0;
+    ar >> target;
+    target_ = target;
+    std::set< MIL_Entity_ABC* > illuminators;
+    ar >> illuminators;
+    for( std::set< MIL_Entity_ABC* >::const_iterator it = illuminators.begin(); it != illuminators.end(); ++it )
+        illuminators_.insert( *it );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Illumination::save
+// Created: LDC 2010-02-19
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Illumination::save( MIL_CheckPointOutArchive& ar, const uint ) const
+{    
+    ar << boost::serialization::base_object<PHY_RoleInterface_Illumination>( *this );
+    ar << bIlluminatedDefinitely_;
+    ar << bHit_;
+    ar << target_;
+    ar << illuminators_;
 }

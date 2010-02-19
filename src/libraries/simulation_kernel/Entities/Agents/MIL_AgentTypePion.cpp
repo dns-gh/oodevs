@@ -50,7 +50,7 @@
 #include "Entities/Agents/Roles/Refugee/PHY_RolePion_Refugee.h"
 #include "Entities/Agents/Roles/Population/PHY_RolePion_Population.h"
 #include "Entities/Agents/Roles/Protection/PHY_RolePion_ActiveProtection.h"
-#include "Entities/Agents/Roles/Illumination/PHY_RolePion_Illumination.h"
+#include "Entities/Agents/Roles/Illumination/PHY_RolePion_Illumination.h" // LTO
 
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects.h"
@@ -349,7 +349,7 @@ void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, DEC_DataBase& databa
     pion.RegisterRole( *new PHY_RoleAction_Objects( pion ) );
     pion.RegisterRole( *new firing::PHY_RoleAction_DirectFiring( pion ) );
     pion.RegisterRole( *new firing::PHY_RoleAction_IndirectFiring( pion ) );
-    pion.RegisterRole( *new PHY_RolePion_Illumination() );
+    pion.RegisterRole( *new PHY_RolePion_Illumination() ); // LTO
     pion.RegisterRole( *new DEC_RolePion_Decision( pion, database ) );
     pion.RegisterRole( *new PHY_RoleAction_FolkInfluence() );
     pion.RegisterRole( *new DEC_Representations() );

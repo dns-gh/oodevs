@@ -480,7 +480,7 @@ bool PHY_RolePion_Posture::IsUninstalled() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::Execute
+// Name: PHY_RolePion_Posture::Execute
 // Created: MGD 2009-09-21
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Posture::Execute( dotation::ConsumptionComputer_ABC& algorithm ) const
@@ -489,7 +489,7 @@ void PHY_RolePion_Posture::Execute( dotation::ConsumptionComputer_ABC& algorithm
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::Execute
+// Name: PHY_RolePion_Posture::Execute
 // Created: MGD 2009-09-21
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Posture::Execute( detection::DetectionComputer_ABC& algorithm ) const
@@ -499,7 +499,7 @@ void PHY_RolePion_Posture::Execute( detection::DetectionComputer_ABC& algorithm 
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::Execute
+// Name: PHY_RolePion_Posture::Execute
 // Created: MGD 2009-10-06
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Posture::Execute( detection::PerceptionDistanceComputer_ABC& algorithm ) const

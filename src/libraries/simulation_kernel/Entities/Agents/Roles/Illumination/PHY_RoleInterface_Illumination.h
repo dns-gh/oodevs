@@ -4,6 +4,7 @@
 // Refer to the included end-user license agreement for restrictions.
 //
 // Copyright (c) 2010 MASA Group
+// LTO
 //
 // *****************************************************************************
 
@@ -51,20 +52,16 @@ public:
     virtual void NotifyHitByIndirectFire() = 0;
     //@}
 
+    template< typename Archive > void serialize( Archive& ar, const uint )
+    {
+        ar & boost::serialization::base_object< tools::Role_ABC >( *this );
+    }
+
 private:
     //! @name Copy/Assignment
     //@{
     PHY_RoleInterface_Illumination( const PHY_RoleInterface_Illumination& );            //!< Copy constructor
     PHY_RoleInterface_Illumination& operator=( const PHY_RoleInterface_Illumination& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
     //@}
 };
 
