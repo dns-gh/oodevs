@@ -13,12 +13,12 @@ include "integration/DefaultIndirectFireableIntegration.lua"
 
 
 include "integration/DefaultPositionableIntegration.lua"
+include "integration/DefaultSafeguardableIntegration.lua"
 
 include "integration/DefaultReachingIntegration.lua"
-include "integration/DefaultNeutralizingIntegration.lua"
 include "integration/DefaultIlluminatingIntegration.lua"
+
 
 include "integration/CommunicationIntegration.lua"
 
--- Frag orders
 include "integration/FragOrderIntegration.lua"

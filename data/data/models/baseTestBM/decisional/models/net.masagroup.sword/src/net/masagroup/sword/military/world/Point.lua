@@ -41,8 +41,17 @@ defaultMethods
     destructionEfficiency = function() return default_engine.methods.load( "destructionEfficiency" ) end,
     
     -- IDENTIFYING
-  isIdentifyingFor = function() return default_engine.predicates.load( "terrain_analysis_isIdentifyingFor" ) end,
-  identificationEfficiency = function() return default_engine.methods.load( "identificationEfficiency" ) end,
+  	isIdentifyingFor = function() return default_engine.predicates.load( "terrain_analysis_isIdentifyingFor" ) end,
+  	identificationEfficiency = function() return default_engine.methods.load( "identificationEfficiency" ) end,
+
+    -- SAFEGUARDING
+    isSafeguardingFor = function() return default_engine.predicates.load( "terrain_analysis_isSafeguardingFor") end,
+    safetyEfficiency = function() return default_engine.methods.load( "safetyEfficiency" ) end,
+    
+    -- FLEEING
+    isFleeingFor = function() return default_engine.predicates.load( "terrain_analysis_isFleeingFor" ) end,
+    fleeEfficiency = function() return default_engine.methods.load( "fleeEfficiency" ) end,
+
 }
 return
 {

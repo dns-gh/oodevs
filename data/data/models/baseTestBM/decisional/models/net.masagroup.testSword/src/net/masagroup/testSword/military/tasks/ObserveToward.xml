@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.testSword.military.tasks.tmp.MoveToward">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.testSword.military.tasks.ObserveToward">
   <parameters>
     <parameter name="objectives">
-      <description>Les éléments que l'on veut rejoindre.</description>
+      <description>Les objectifs à observer</description>
       <type>
         <list>
-          <class name="net.masagroup.military.generic.knowledge.Reachable"/>
+          <class name="net.masagroup.military.generic.knowledge.Observable"/>
         </list>
       </type>
     </parameter>
   </parameters>
   <goal>
-    <description>Se déplacer vers un élément.</description>
+    <description>Observer les élements.</description>
   </goal>
   <stages>
-    <stage label="Déplacement">
-      <description>Se déplacer vers un élément.</description>
+    <stage label="Observation" permanent="true">
+      <description>Observation des objectifs</description>
       <goal>
-        <description>Se déplacer vers un élément.</description>
+        <description>Observation des objectifs.</description>
       </goal>
       <skills>
-        <skill name="net.masagroup.military.generic.skills.primitives.MoveToward" main="true" priority="1.0">
+        <skill name="net.masagroup.military.generic.skills.primitives.ObserveToward" priority="1.0">
           <parameter name="entities">
             <value>
               <parameter>objectives</parameter>
@@ -28,7 +28,7 @@
           </parameter>
           <parameter name="positions">
             <value>
-              <call method="net.masagroup.military.generic.queries.getDefaultMovementPositions">
+              <call method="net.masagroup.sword.military.queries.getObserving">
                 <parameter name="objectives">
                   <value>
                     <parameter>objectives</parameter>

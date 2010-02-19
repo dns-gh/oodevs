@@ -22,6 +22,7 @@ end
 
 integration.startDestroyingIt = function( target )
   if not target.actionTir then
+    -- @TODO DDA: replace by DEC__StartTirDirectSurComposantesMajeures with the right ennemies ammoDotationClass 
     target.actionTir = DEC_StartTirDirect( target.source, 100, eTirDirectNormal, 0 )
     actionCallbacks[ target.actionTir ] = function( arg ) target.eTir = arg end
   end

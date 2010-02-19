@@ -10,6 +10,8 @@
   <realizes>net.masagroup.military.generic.knowledge.Commanding</realizes>
   <realizes>net.masagroup.military.generic.knowledge.Neutralizing</realizes>
   <realizes>net.masagroup.military.generic.knowledge.Neutralizable</realizes>
+  <realizes>net.masagroup.military.generic.knowledge.Safeguardable</realizes>
+  <realizes>net.masagroup.military.generic.knowledge.Fleeable</realizes>
   <realizes>net.masagroup.sword.military.knowledge.Illuminatable</realizes>
   <realizes>net.masagroup.sword.military.knowledge.Illuminating</realizes>
   <realizes>net.masagroup.sword.military.knowledge.IndirectFireable</realizes>
@@ -298,6 +300,64 @@ sur un objectif target neutralisable à partir d'une position donnée.
           </type>
        </return>
        </method>
+
+      <method name="safetyPriority">
+            <description>La priorité de la sauvegarde vis-à-vis de l'élément.</description>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="canRespond">
+            <description>Renvoie vraie si les conditions de riposte sont réunies.
+            
+            Comme pour les conditions d'engagement (initiative du tir), les conditions de riposte dépendent du système d'armes mais 
+            pour le reste, elles diffèrent sur plusieurs points : l'efficacité du tir pour la destruction n'est pas forcément 
+            recherchée (tir de neutralisation) et l'autorisation du supérieur n'est pas nécéssaire (appréciation d'un tir de 
+            sauvegarde face à une entité qui peut mettre la vie de l'agent en danger).
+            </description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+       </method>
+       <method name="threatLevel">
+            <description>Représente le niveau de menace d'une connaissance. 
+          
+          Par exemple, une unité est considérée comme menaçante si elle engagée l'agent.
+          </description>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+          <method name="isThreatening">
+            <description>Renvoie vrai si la connaissance est considérée comme étant menaçante.
+          
+          Par exemple, une unité est considérée comme menaçante si son niveau de menace est positif.
+          </description>
+        </method>
+        <method name="selfProtectFromIt">
+          <description>Action de protection envers l'élément.
+          
+            Cette action permet à un agent de se protéger d'un élément de connaissance en adoptant une posture particulière.
+          </description>
+        </method>
+        <method name="computeAggressiveness">
+            <description>Retourne le niveau d'agressivité d'une unité</description>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+       
+        <method name="fleeFromIt">
+            <description>Action spécifique de la fuite pour une unité.</description>
+        </method>
        <method name="illuminationPriority">
       <description>Retourne la priorité d'illumination d'un élément de connaissance</description>
       <return>

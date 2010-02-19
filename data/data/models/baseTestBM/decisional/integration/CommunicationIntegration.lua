@@ -33,10 +33,7 @@ local missionConverter = {
   ["net.masagroup.sword.military.tasks.MoveTowardCrossroad"] = { ["net.masagroup.sword.military.world.Point"] = "T_Mission_Pion_MoveToPoint",
                                                                  ["net.masagroup.sword.military.world.UrbanBlock"] = "T_Mission_Pion_MoveToUrbanBlock" }
 }
-integration.communication.ConvertMission = function( missionType, params )
-  BreakForDebug( "type"..missionType )
-  BreakForDebug( "param"..tostring(params.objectives[1]:getClass()) )
-  
+integration.communication.ConvertMission = function( missionType, params )  
   if not missionConverter[ missionType ][ tostring(params.objectives[1]:getClass()) ] then error( "No mission converter for :"..missionType..","..tostring(params.objectives[1]:getClass()) ) end
   return missionConverter[ missionType ][ tostring(params.objectives[1]:getClass()) ]
 end 

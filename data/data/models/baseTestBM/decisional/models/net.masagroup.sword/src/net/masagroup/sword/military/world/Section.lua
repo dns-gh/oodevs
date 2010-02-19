@@ -28,7 +28,7 @@ defaultMethods
     canDestroyIt = function() return default_engine.methods.load( "canDestroyIt" ) end,
     destructionPriority = function() return default_engine.methods.load( "destructionPriority" ) end,
     isDestroyed = function() return default_engine.predicates.load( "isDestroyed" ) end,
-    isDangerous = function() return default_engine.predicates.load( "isDangerous" ) end,
+    isDangerous = function() return default_engine.predicates.load( "unit_isDangerous" ) end,
     destroyIt = function() return default_engine.methods.load( "destroyIt" ) end,
     dangerosityLevel = function() return default_engine.methods.load( "dangerosityLevel" ) end,
 
@@ -65,12 +65,32 @@ defaultMethods
     isRecognized = function() return default_engine.methods.load( "isRecognized" ) end,
     identificationLevel = function() return default_engine.methods.load( "identificationLevel" ) end,
     isIdentified = function() return default_engine.predicates.load( "isIdentified" ) end,
+    -- SAFEGUARDABLE
+    canRespond = function() return default_engine.methods.load( "canRespond" ) end,
+    safetyPriority = function() return default_engine.methods.load( "safetyPriority" ) end,
+    threatLevel = function() return default_engine.methods.load( "threatLevel" ) end,
+    isThreatening = function() return default_engine.methods.load( "isThreatening" ) end,
+    selfProtectFromIt = function() return default_engine.methods.load( "selfProtectFromIt" ) end,
+    isThreateningOrHostile = function() return default_engine.predicates.load( "isThreateningOrHostile" ) end,
+   
+    -- FLEEABLE
+    fleePriority = function() return default_engine.methods.load( "fleePriority" ) end,
+    
 }
 
 communication.setMessageTreatment( "Order", integration.communication.StartMissionPion )
  
 return
 {
+    -- -- @TODO DDA: delete when this method is in the generic base BM
+    -- predicate "isThreateningOrHostile"
+    -- {
+        -- dependencies = "none",
+        -- method = function( self )
+            -- return self:isHostile() or self:isThreatening()
+        -- end 
+     -- },
+     
     -- $$$ MIA: temp, to move in default military implementation
     isTotallyPerceived = function( self )
         return self:perceptionLevel() == 100
@@ -158,7 +178,7 @@ return
     neutralize = behavior_model.integration.startStopAction( { start = integration.startNeutralizingIt, started = function( self, ...) end, stop = integration.stopNeutralizingIt } ),
 
     destroy = behavior_model.integration.startStopAction( { start = integration.startDestroyingIt, started = function( self, ...) end, stop = integration.stopDestroyingIt } ),
-
+    
     isOccupied = function( self )
       return true --TODO MGD
     end,
@@ -170,6 +190,14 @@ return
       return integration.getAutomatPerception( self )
     end,
     
+    -- SAFEGUARDABLE
+    respondToIt =  behavior_model.integration.startStopAction( { start = integration.startDestroyingIt, started = function( self, ...) end, stop = integration.stopDestroyingIt } ),
+    
+    -- FLEEABLE
+    fleeFromIt = function( self )
+        -- $$$$ MIA: nothing by default.
+    end,
+
     -- ILLUMINABLE
     illuminationPriority = function( self )
         -- @ TODO MGD add ( math.max( self:proximityLevel(), 1 ) ) / 100 after refactor on knowledge position
@@ -208,6 +236,10 @@ return
     end,
     applyFireOnIt = behavior_model.integration.startStopAction( { start = integration.startApplyFireOnSection, started = startedIlluminateIt, stop = integration.stopApplyFireOnSection } ),
 
+    computeAggressiveness = function( self, target )
+      return integration.computeAggressiveness( self, target )
+    end,
+    
 tasks =
     {
         adder = function( self, task ) error( "unused method", 2 ) end,

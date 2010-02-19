@@ -9,6 +9,8 @@
   <realizes>net.masagroup.military.generic.knowledge.Reconnoitring</realizes>
   <realizes>net.masagroup.military.generic.knowledge.Observing</realizes>
   <realizes>net.masagroup.military.generic.knowledge.Identifying</realizes>
+  <realizes>net.masagroup.military.generic.knowledge.Safeguarding</realizes>
+  <realizes>net.masagroup.military.generic.knowledge.Fleeing</realizes>
   <methods>
     <method name="computeMovementCapability">
       <description>__INTEGRATION</description>
@@ -102,7 +104,7 @@
         </type>
       </return>
     </method>
-        <method name="computeIdentificationCapability">
+    <method name="computeIdentificationCapability">
       <description>__INTEGRATION</description>
       <argument name="objective">
         <description>L'objectif à détruire.</description>
@@ -117,30 +119,82 @@
       </return>
     </method>
     <method name="identificationEfficiency">
-            <description>__INTEGRATION</description>
+      <description>__INTEGRATION</description>
+      <argument name="objectives">
+        <description>L'objectif à identifier.</description>
+        <type>
+          <class name="net.masagroup.military.generic.knowledge.Identifiable"/>
+        </type>
+      </argument>
+      <return>
+        <type>
+          <simple name="numeric"/>
+        </type>
+      </return>
+    </method>
+    <method name="safetyEfficiency">
+           <description>Renvoie l'efficacité (la pertinence) de la position pour se sauvegarder de l'entité.</description>
             <argument name="objectives">
-            <description>L'objectif à identifier.</description>
-            <type>
-            <class name ="net.masagroup.military.generic.knowledge.Identifiable"/>
-            </type>
+                <description>L'entité dont l'agent veut se sauvegarder.</description>
+                <type>
+                    <class name="net.masagroup.military.generic.knowledge.Safeguardable"/>
+                </type>
             </argument>
             <return>
-            <type>
-                <simple name="numeric" /></type>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+    </method>
+   <method name="fleeEfficiency">
+            <description>Renvoie l'efficacité (la pertinence) de la position pour se sauvegarder de l'entité.</description>
+            <argument name="objectives">
+                <description>L'entité que l'agent veut fuir</description>
+                <type>
+                    <class name="net.masagroup.military.generic.knowledge.Fleeable"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
             </return>
         </method>
+
   </methods>
   <predicates>
-   <predicate name="isIdentifyingFor">
-            <description>__INTEGRATION</description>
+    <predicate name="isIdentifyingFor">
+      <description>__INTEGRATION</description>
+      <argument name="objectives">
+        <description>L'objectif à identifier.</description>
+        <type>
+          <list>
+            <class name="net.masagroup.military.generic.knowledge.Identifiable"/>
+          </list>
+        </type>
+      </argument>
+    </predicate>
+   <predicate name="isSafeguardingFor">
+     <description>Renvoie vrai si l'élément est une position pour se sauvegarder de l'entité.</description>
+        <argument name="objectives">
+           <description>L'entité dont l'agent veut se sauvegarder.</description>
+           <type>
+              <list>
+                <class name="net.masagroup.military.generic.knowledge.Safeguardable"/>
+                </list>
+           </type>
+           </argument>
+    </predicate>
+    <predicate name="isFleeingFor">
+            <description>Renvoie vrai si l'élément est une position pour se sauvegarder de l'entité.</description>
             <argument name="objectives">
-                <description>L'objectif à identifier.</description>
+                <description>L'entité dont l'agent veut se sauvegarder.</description>
                 <type>
                     <list>
-                        <class name="net.masagroup.military.generic.knowledge.Identifiable"/>
+                        <class name="net.masagroup.military.generic.knowledge.Fleeable"/>
                     </list>
                 </type>
             </argument>
-        </predicate>
-    </predicates>
+       </predicate>
+  </predicates>
 </class>

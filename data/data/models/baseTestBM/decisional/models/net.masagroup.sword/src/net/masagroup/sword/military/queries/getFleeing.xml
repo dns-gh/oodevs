@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.queries.getFleeing">
+	<description>Retourne toute position permettant de rester en sécurité par rapport à un élément dangereux.
+	</description>
+    <parameters>
+        <parameter name="objectives" >
+            <type>
+                <list>
+                  <class name="net.masagroup.military.generic.knowledge.Fleeable"></class>
+                </list>
+             </type>     
+        </parameter>
+    </parameters>
+    <target>
+        <type>
+            <class name="net.masagroup.military.generic.knowledge.Fleeing" />
+        </type>
+    </target>
+</query>

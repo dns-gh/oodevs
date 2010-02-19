@@ -35,6 +35,9 @@
         <mission name="MoveAndObserve"/>
         <mission name="SeekAndDestroy"/>
         <mission name="EngageAgents"/>
+        <mission name="Safeguard"/>
+        <mission name="Flee"/>
+        <mission name="SelfProtect"/>
       </missions>
     </unit>
     <unit dia-type="BMPion" file="BMPion.bms" name="net.masagroup.sword.military.roles.Artillery">

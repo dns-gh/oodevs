@@ -1,0 +1,40 @@
+
+-- **************************************************************************** 
+-- @DDA Copy of skill of the generic base 
+-- @TODO will be deleted 
+-- Flee from entities
+-- self.params.entities: the fleeable elements
+-- self.params.positions: the fleeing elements
+-- ****************************************************************************
+rootnode
+{
+    connections = { skill.nodes.FleeFromElement };
+
+    -- -------------------------------------------------------------------------------- 
+    -- For each objective of the skill, flee from it. 
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        for _, entity in pairs( self.params.entities ) do
+        -- instead of  : Activate( skill.nodes.FleeFromElement, entity:fleePriority(), { entity = entity, positions = {} } )
+            Activate( skill.nodes.FleeFromElement, entity:fleePriority(), { entity = entity, positions = self.params.positions } )
+        end
+    end
+}
+-- **************************************************************************** 
+-- Flee from an fleeable element
+-- self.params.entities: the fleeable element
+-- self.params.positions: the fleeing elements
+-- ****************************************************************************
+node "FleeFromElement"
+{
+    connections = { skill.links.moveAndTakePosition, skill.links.observe };
+
+    activate = function( self ) 
+        self.currentPositions = self.params.positions
+        Activate( skill.links.observe, 1, { entity = self.params.entity } )
+        for _,position in pairs( self.currentPositions )  do
+            Activate( skill.links.moveAndTakePosition,
+                position:fleeEfficiency( self.params.entity ), { entity = position } )
+        end
+    end
+}

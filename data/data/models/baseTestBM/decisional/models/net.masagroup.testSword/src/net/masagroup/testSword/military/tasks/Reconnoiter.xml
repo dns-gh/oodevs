@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.testSword.military.tasks.tmp.ObserveToward">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.testSword.military.tasks.Reconnoiter">
+  <description>Reconnaître les élements</description>
   <parameters>
     <parameter name="objectives">
-      <description>Les objectifs à observer</description>
+      <description>Les objectifs à reconnaître. </description>
       <type>
         <list>
-          <class name="net.masagroup.military.generic.knowledge.Observable"/>
+          <class name="net.masagroup.military.generic.knowledge.Reconnoitrable"/>
         </list>
       </type>
     </parameter>
   </parameters>
   <goal>
-    <description>Observer les élements.</description>
+    <description>Reconnaître les élements.</description>
   </goal>
   <stages>
-    <stage label="Observation" permanent="true">
-      <description>Observation des objectifs</description>
+    <stage label="Reconnaissance" permanent="true">
+      <description>Reconnaissance des objectifs</description>
       <goal>
-        <description>Observation des objectifs.</description>
+        <description>Obtenir des informations sur les objectifs avec agressivité.</description>
       </goal>
       <skills>
-        <skill name="net.masagroup.military.generic.skills.primitives.ObserveToward" priority="1.0">
+        <skill name="net.masagroup.military.generic.combatant.skills.primitives.Reconnoitre" priority="1.0">
           <parameter name="entities">
             <value>
               <parameter>objectives</parameter>
@@ -28,7 +29,7 @@
           </parameter>
           <parameter name="positions">
             <value>
-              <call method="net.masagroup.sword.military.queries.getObserving">
+              <call method="net.masagroup.sword.military.queries.getReconnoiteringCrossroads">
                 <parameter name="objectives">
                   <value>
                     <parameter>objectives</parameter>

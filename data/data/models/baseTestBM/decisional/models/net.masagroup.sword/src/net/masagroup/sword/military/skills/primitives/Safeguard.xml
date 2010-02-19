@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.skills.primitives.Safeguard">
+  <description>Rejoindre des positions permettant de se mettre à couvert par rapport aux objectifs.</description>
+  <parameters>
+    <parameter name="entities">
+      <description>Les entités représentant un danger potentiel.</description>
+      <type>
+        <list>
+          <class name="net.masagroup.military.generic.knowledge.Safeguardable"/>
+        </list>
+      </type>
+    </parameter>
+    <parameter name="positions">
+      <description>Les positions de sauvegarde.</description>
+      <type>
+        <list>
+          <class name="net.masagroup.military.generic.knowledge.Safeguarding"/>
+        </list>
+      </type>
+    </parameter>
+  </parameters>
+  <goal>
+    <description>Se mettre à couvert.</description>
+  </goal>
+  <modifiers/>
+  <links>
+    <link name="moveAndTakePosition" skill="net.masagroup.military.generic.skills.primitives.MoveAndTakePosition">
+        <description>Lien vers le skill MoveAndTakePosition</description>
+        </link>
+    <link name="observe" skill="net.masagroup.military.generic.skills.primitives.Observe">
+        <description>Lien vers le skill Observe</description>
+     </link>
+  </links>
+  <resources>
+    <resource name="net.masagroup.military.generic.resources.Engage" variable="engage">
+      <description>La riposte utilise les capacités physiques d'engagement.</description>
+    </resource>
+  </resources>
+</skill>

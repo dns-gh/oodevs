@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.skills.primitives.Flee">
+  <description>Rejoindre des positions permettant de se cacher ou de s'éloigner des objectifs </description>
+  <parameters>
+    <parameter name="entities">
+      <description>L'élément représentant un danger potentiel</description>
+      <type>
+        <list>
+          <class name="net.masagroup.military.generic.knowledge.Fleeable"/>
+        </list>
+      </type>
+    </parameter>
+    <parameter name="positions">
+      <description>Zone dans laquelle l'entité peut se déplacer pour rejoindre une position sûre par rapport à l'élément.</description>
+      <type>
+        <list>
+          <class name="net.masagroup.military.generic.knowledge.Fleeing"/>
+        </list>
+      </type>
+    </parameter>
+  </parameters>
+  <goal>
+    <description>S'éloigner des entités.</description>
+  </goal>
+  <modifiers/>
+  <links>
+    <link name="moveAndTakePosition" skill="net.masagroup.military.generic.skills.primitives.MoveAndTakePosition">
+        <description>Lien vers le skill MoveAndTakePosition</description>
+    </link>
+    <link name="observe" skill="net.masagroup.military.generic.skills.primitives.Observe">
+        <description>Lien vers le skill Observe</description>
+    </link>
+  </links>
+</skill>

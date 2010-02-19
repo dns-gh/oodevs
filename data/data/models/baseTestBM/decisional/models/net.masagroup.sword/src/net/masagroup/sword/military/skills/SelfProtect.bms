@@ -1,0 +1,24 @@
+-- **************************************************************************** 
+-- @DDA Copy of skill of the generic base  
+-- @TODO will be deleted
+-- SelfProtect.
+-- self.params.entities: the safeguardable elements
+-- self.params.positions: the safeguardable elements
+-- ****************************************************************************
+rootnode
+{
+    connections = { skill.links.flee, skill.links.safeguard };
+
+    -- -------------------------------------------------------------------------------- 
+    -- Flee or safeguard depending on skill modifier
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        local safeguardStrength = skill.modifiers.kind / 10 * skill.modifiers.importance
+        local fleeStrength = ( 10 - skill.modifiers.kind ) / 10 * skill.modifiers.importance
+
+        Activate( skill.links.safeguard, safeguardStrength, { entities = self.params.entities , 
+            positions = self.params.positions } )
+        Activate( skill.links.flee, fleeStrength, { entities = self.params.entities, 
+            positions = self.params.positions } )
+    end
+}

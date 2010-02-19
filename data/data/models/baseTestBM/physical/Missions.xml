@@ -59,19 +59,19 @@
     <mission dia-behavior="net.masagroup.testSword.military.tasks.Follow" dia-type="T_Mission_Pion_Follow" id="17" name="Follow">
       <parameter dia-name="objectives" name="objectives" optional="false" type="AgentBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.testSword.military.tasks.tmp.ObserveToward" dia-type="T_Mission_Pion_ObservePoint" id="18" name="ObservePoint">
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.ObserveToward" dia-type="T_Mission_Pion_ObservePoint" id="18" name="ObservePoint">
       <parameter dia-name="objectives" name="target" optional="false" type="PointBM"/>
     </mission>  
-    <mission dia-behavior="net.masagroup.testSword.military.tasks.tmp.ObserveToward" dia-type="T_Mission_Pion_ObserveUrbanBlock" id="19" name="ObserveUrbanBlock">
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.ObserveToward" dia-type="T_Mission_Pion_ObserveUrbanBlock" id="19" name="ObserveUrbanBlock">
       <parameter dia-name="objectives" name="target" optional="false" type="UrbanBlockBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.testSword.military.tasks.tmp.ObserveToward" dia-type="T_Mission_Pion_ObserveAgent" id="20" name="ObserveAgent">
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.ObserveToward" dia-type="T_Mission_Pion_ObserveAgent" id="20" name="ObserveAgent">
       <parameter dia-name="objectives" name="target" optional="false" type="AgentKnowledgeBM"/>
     </mission>      
-    <mission dia-behavior="net.masagroup.testSword.military.tasks.tmp.ObserveToward" dia-type="T_Mission_Pion_ObserveObject" id="21" name="ObserveObject">
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.ObserveToward" dia-type="T_Mission_Pion_ObserveObject" id="21" name="ObserveObject">
       <parameter dia-name="objectives" name="target" optional="false" type="ObjectKnowledgeBM"/>
     </mission>     
-    <mission dia-behavior="net.masagroup.testSword.military.tasks.tmp.Reconnoiter" dia-type="T_Mission_Pion_Reconnoiter" id="22" name="ReconnoiterUrbanBlock">
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.Reconnoiter" dia-type="T_Mission_Pion_Reconnoiter" id="22" name="ReconnoiterUrbanBlock">
       <parameter dia-name="objectives" name="destination" optional="false" type="UrbanBlockBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.tmp.Load" dia-type="T_Mission_Pion_Load" id="26" name="Load">
@@ -80,7 +80,7 @@
     <mission dia-behavior="net.masagroup.testSword.military.tasks.tmp.Mount" dia-type="T_Mission_Pion_Mount" id="27" name="Mount">
       <parameter dia-name="objectives" name="objectives" optional="false" type="AgentBM"/>
     </mission> 
-    <mission dia-behavior="net.masagroup.testSword.military.tasks.tmp.Identify" dia-type="T_Mission_Pion_Identify" id="28" name="IdentifyAgent">
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.Identify" dia-type="T_Mission_Pion_Identify" id="28" name="IdentifyAgent">
       <parameter dia-name="objectives" name="objectives" optional="false" type="AgentKnowledgeBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.NeutralizeAgents" dia-type="T_Mission_Pion_Neutralize" id="29" name="NeutralizeAgents">
@@ -101,6 +101,15 @@
     <mission dia-behavior="net.masagroup.testSword.military.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MiseEnOeuvreSurPosition" id="34" name="DeployOnPosition">
       <parameter dia-name="objectives" name="objective" optional="false" type="ObjectKnowledgeBM"/>
     </mission> 
+     <mission dia-behavior="net.masagroup.testSword.military.tasks.Safeguard" dia-type="T_Mission_Pion_Safeguard" id="35" name="Safeguard">
+      <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.Flee" dia-type="T_Mission_Pion_Flee" id="36" name="Flee">
+      <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.SelfProtect" dia-type="T_Mission_Pion_SelfProtect" id="37" name="SelfProtect">
+      <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>
+    </mission>
   </units>
   <automats>
     <context>
