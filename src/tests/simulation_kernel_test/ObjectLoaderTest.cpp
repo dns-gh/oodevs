@@ -27,6 +27,7 @@ struct ASN1T_Location;
 #include "simulation_kernel/Entities/Objects/BuildableCapacity.h"
 #include "simulation_kernel/Entities/Objects/ImprovableCapacity.h"
 #include "simulation_kernel/Entities/Objects/ContaminationCapacity.h"
+#include "simulation_kernel/Entities/Objects/SpawnCapacity.h"
 
 #include "simulation_kernel/Entities/Objects/ConstructionAttribute.h"
 
@@ -143,4 +144,24 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_ConstructorImprovable )
     BOOST_CHECK( type.GetCapacity< BuildableCapacity >() != 0 );
     BOOST_CHECK( type.GetCapacity< ImprovableCapacity >() != 0 );
 }
+
+// -----------------------------------------------------------------------------
+// Name: BOOST_AUTO_TEST_CASE
+// Created: SLG 2010-02-19
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Spawn )
+{
+    MIL_ObjectLoader loader;
+    xml::xistringstream xis( "<objects>" 
+        "<object type='object'>"
+        "<spawn object='toto' action-range='10'/>"
+        "</object>" 
+        "</objects>"
+        ); 
+    BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
+
+    const MIL_ObjectType_ABC& type = loader.GetType( "object" );
+    BOOST_CHECK( type.GetCapacity< SpawnCapacity >() != 0 );
+}
+
 

@@ -22,6 +22,7 @@ struct ASN1T_Location;
 #include "simulation_kernel/Entities/Objects/MIL_ObjectType_ABC.h"
 #include "simulation_kernel/Entities/Objects/AnimatorAttribute.h"
 #include "simulation_kernel/Entities/Objects/ConstructionAttribute.h"
+#include "simulation_kernel/Entities/Objects/DetectorAttribute.h"
 #include "simulation_kernel/Entities/Objects/NBCAttribute.h"
 #include "simulation_kernel/Entities/Objects/ToxicAttribute_ABC.h"
 #include "simulation_kernel/Entities/Objects/MIL_ToxicEffectManipulator.h"
@@ -410,6 +411,62 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Detection )
     army.verify();
     animator.verify();
     intruder.verify();
+}
+
+// -----------------------------------------------------------------------------
+// Name: VerifyObjectCapacity_Interaction_Detection2
+// Created: SLG 2010-02-19
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Detection2 )
+{
+    MIL_ObjectLoader loader;
+    {
+        xml::xistringstream xis( 
+            "<objects>"
+                "<object geometry='point' type='sensors'>"
+                    "<detection>"
+                        "<acquisition-times>"
+                            /*"<acquisition-time level='detection' time='2s'/>"
+                            "<acquisition-time level='recognition' time='4s'/>"
+                            "<acquisition-time level='identification' time='6s'/>"*/
+                        "</acquisition-times>"
+                    "</detection>"
+                "</object>"
+            "</objects>"
+            );
+        BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
+    }
+    const MIL_ObjectType_ABC& type = loader.GetType( "sensors" );
+    MockArmy army;
+    MOCKPP_CHAINER_FOR( MockArmy, RegisterObject ) ( &army ).expects( mockpp::once() );
+
+    MIL_Object_ABC* object = CreateObject( type, army, loader );
+    CheckCapacity< DetectionCapacity >( *object );
+
+    MockAgent intruder;
+    intruder.RegisterRole( *new MockRoleLocation() );
+    MockMIL_Time_ABC time;
+    time.GetCurrentTick_mocker.expects( mockpp::once() ).will( returnValue( 1u ) );
+    BOOST_CHECK_NO_THROW( object->ProcessAgentEntering( intruder ) );
+    army.verify();
+    intruder.verify();
+
+
+    BOOST_CHECK_NO_THROW( static_cast< Object& >( *object ).GetAttribute< DetectorAttribute >() );
+    MockAgent detector;
+    detector.RegisterRole( *new MockRolePerceiver() );
+    static_cast< Object& >( *object ).GetAttribute< DetectorAttribute >().AddDetector( detector );
+
+    time.GetCurrentTick_mocker.expects( mockpp::once() ).will( returnValue( 3u ) );
+
+    MOCKPP_CHAINER_FOR( MockRoleLocation, NotifyTerrainObjectCollision ) ( &intruder.GetRole< MockRoleLocation >() ).expects( mockpp::once() );
+
+    detector.GetRole< MockRolePerceiver >().NotifyExternalPerception_mocker.expects( once() )
+        .with( same< MIL_Agent_ABC >( intruder )
+        , same< const PHY_PerceptionLevel >( PHY_PerceptionLevel::identified_ ) );
+   
+    BOOST_CHECK_NO_THROW( object->ProcessAgentInside( intruder ) );
+
 }
 
 // -----------------------------------------------------------------------------
