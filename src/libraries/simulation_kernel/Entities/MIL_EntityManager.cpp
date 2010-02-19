@@ -1158,11 +1158,11 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
     delete pObjectManager_;
     pObjectManager_ = 0;
 
-    ArmyFactory * armyFactory;
-    FormationFactory * formationFactory;
-    AutomateFactory * automateFactory;
-    AgentFactory * agentFactory;
-    PopulationFactory * populationFactory;
+    ArmyFactory_ABC * armyFactory;
+    FormationFactory_ABC * formationFactory;
+    AutomateFactory_ABC * automateFactory;
+    AgentFactory_ABC * agentFactory;
+    PopulationFactory_ABC * populationFactory;
     file //>> effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
          >> armyFactory
          >> formationFactory//@TODO MGD serialize
