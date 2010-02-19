@@ -134,41 +134,19 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetLivingEnemiesInCircle( co
 void DEC_KnowledgeFunctions::GetObservableKnowledge( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& table )
 {
     //Agents
-    T_ConstKnowledgeAgentVector agentsKn = pion.GetKnowledgeGroup().GetKnowledge().GetEnemies();
-
-    std::vector< std::vector< MT_Float > > positionsAgents;
-    for( CIT_ConstKnowledgeAgentVector it = agentsKn.begin(); it != agentsKn.end(); it++ )
-    {
-        positionsAgents.push_back( (*it)->GetPosition().ToStdVector() );
-    }
-    knowledgeCreateFunction( table, brain.GetScriptVariable( "net.masagroup.sword.military.world.Section" ), agentsKn, positionsAgents, true );
+    knowledgeCreateFunction( table, brain.GetScriptVariable( "net.masagroup.sword.military.world.Section" ), pion.GetKnowledgeGroup().GetKnowledge().GetEnemies(), true );
 
     //Object
     T_KnowledgeObjectVector objectsKn;
     pion.GetArmy().GetKnowledge().GetObjects( objectsKn );
 
-    std::vector< std::vector< MT_Float > > positionsObjects;
-    for( CIT_KnowledgeObjectVector it = objectsKn.begin(); it != objectsKn.end(); it++ )
-    {
-        positionsObjects.push_back( (*it)->GetLocalisation().ComputeBarycenter().ToStdVector() );
-    }
-    knowledgeCreateFunction( table, brain.GetScriptVariable( "net.masagroup.sword.military.world.Object" ), objectsKn, positionsObjects, true );
+    knowledgeCreateFunction( table, brain.GetScriptVariable( "net.masagroup.sword.military.world.Object" ), objectsKn, true );
 
     //Urban
     T_KnowledgeUrbanVector urbansKn;
     pion.GetArmy().GetKnowledge().GetUrbanObjects( urbansKn );
 
-    std::vector< std::vector< MT_Float > > positionsUrbans;
-    for( CIT_KnowledgeUrbanVector it = urbansKn.begin(); it != urbansKn.end(); it++ )
-    {
-        const geometry::Point2f point = (*it)->GetBarycenter();
-        std::vector< MT_Float > position;
-        position.push_back( point.X() );
-        position.push_back( point.Y() );
-        position.push_back( 0 );
-        positionsUrbans.push_back( position );
-    }
-    knowledgeCreateFunction( table, brain.GetScriptVariable( "net.masagroup.sword.military.world.UrbanBlock" ), urbansKn, positionsUrbans, true );
+    knowledgeCreateFunction( table, brain.GetScriptVariable( "net.masagroup.sword.military.world.UrbanBlock" ), urbansKn, true );
 
 }
 
@@ -179,14 +157,7 @@ void DEC_KnowledgeFunctions::GetObservableKnowledge( const directia::Brain& brai
 void DEC_KnowledgeFunctions::GetDestroyableKnowledge( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& table )
 {
     //Agents //@TODO Add private tools function
-    T_ConstKnowledgeAgentVector agentsKn = pion.GetKnowledgeGroup().GetKnowledge().GetEnemies();
-
-    std::vector< std::vector< MT_Float > > positionsAgents;
-    for( CIT_ConstKnowledgeAgentVector it = agentsKn.begin(); it != agentsKn.end(); it++ )
-    {
-        positionsAgents.push_back( (*it)->GetPosition().ToStdVector() );
-    }
-    knowledgeCreateFunction( table, brain.GetScriptVariable( "net.masagroup.sword.military.world.Section" ), agentsKn, positionsAgents, true );
+    knowledgeCreateFunction( table, brain.GetScriptVariable( "net.masagroup.sword.military.world.Section" ), pion.GetKnowledgeGroup().GetKnowledge().GetEnemies(), true );
 }
 
 // -----------------------------------------------------------------------------

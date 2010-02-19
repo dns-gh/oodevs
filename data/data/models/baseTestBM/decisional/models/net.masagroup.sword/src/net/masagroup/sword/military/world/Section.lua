@@ -113,6 +113,9 @@ return
       integration.observeIt( self )
     end,
     -- Tactical analysis integration
+    getPosition = function( self )
+      return integration.getSectionPosition( self )
+    end,
     computeDistance = function( self, target )
         return integration.normalizedInversedDistance( self, target )
     end,

@@ -86,6 +86,6 @@ end
 -- @author SLG
 -- @release 2010-01-27
 integration.observeIt = function( point )
-  DEC_Perception_VisionVerrouilleeSurPointXY( point.sim_pos.x, point.sim_pos.y )
+  DEC_Perception_VisionVerrouilleeSurPointPtr( point:getPosition() )
 end
 

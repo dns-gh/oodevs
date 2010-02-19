@@ -26,6 +26,6 @@ end
 -- @author LMT
 -- @release 2010-02-04
 integration.identifyIt = function( point )
-  DEC_Perception_VisionVerrouilleeSurPointXY( point.sim_pos.x, point.sim_pos.y )
-  DEC_Perception_ActiverRadarSurPointXY( eRadarType_Radar, point.sim_pos.x, point.sim_pos.y )
+  DEC_Perception_VisionVerrouilleeSurPointPtr( point:getPosition() )
+  DEC_Perception_VisionVerrouilleeSurPointPtr( eRadarType_Radar, point:getPosition() )
 end

@@ -26,7 +26,8 @@ class DEC_KnowledgeUrbanFunctions
 public:
     //! @name Functions
     //@{
-    static int GetCurrentPerceptionLevel ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge );
+    static int GetCurrentPerceptionLevel( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge );
+    static boost::shared_ptr< MT_Vector2D > GetCurrentBarycenter( boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge );
     //@}
 };
 

@@ -118,6 +118,9 @@
         </type>
       </return>
     </method>
+    <method name="getPosition">
+      <description>Fonction d'intégration retournant un MT_Vector2D</description>
+    </method>
   </methods>
   <predicates>
     <predicate name="isFullyAnimated">

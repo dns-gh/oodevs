@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.world.Section" >
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.world.Section">
   <description>Une section interarme en milieu urbain.</description>
   <realizes>directia.core.model.RoleBody</realizes>
   <realizes>net.masagroup.military.generic.knowledge.Reachable</realizes>
@@ -102,23 +102,22 @@
       <argument name="position">
         <description>L'élément position à partir de laquelle l'agent souhaite tirer.</description>
         <type>
-        <!--  TODO DDA Positionable au lieu de Element  <class name="net.masagroup.military.generic.knowledge.Positionable"/> -->
           <class name="net.masagroup.military.generic.world.Element"/>
         </type>
       </argument>
       <return>
-          <description>Retourne une valeur entre 0 et 100.</description>
-             <type>
-               <simple name="numeric"/>
-             </type>
-          </return>
+        <description>Retourne une valeur entre 0 et 100.</description>
+        <type>
+          <simple name="numeric"/>
+        </type>
+      </return>
     </method>
     <method name="destructionPriority">
       <description>__INTEGRATION</description>
       <return>
         <description>La valeur de la priorité.</description>
         <type>
-          <simple name="numeric" />
+          <simple name="numeric"/>
         </type>
       </return>
     </method>
@@ -127,83 +126,82 @@
       <return>
         <description>La valeur du niveau de destruction</description>
         <type>
-          <simple name="numeric" />
+          <simple name="numeric"/>
         </type>
       </return>
-    </method> 
+    </method>
     <method name="operationalLevel">
-        <description>Le niveau opérationel de la connaissance</description>
-        <return>
-            <type>
-                <simple name="numeric"/>
-            </type>
-        </return>
+      <description>Le niveau opérationel de la connaissance</description>
+      <return>
+        <type>
+          <simple name="numeric"/>
+        </type>
+      </return>
     </method>
     <method name="getOperationalCapacity">
-       <description>Retourne le niveau operationnel de l'unité. </description>
-         <return>
-           <description>Retourne une valeur entre 0 et 100.</description>
-             <type>
-              <simple name="numeric"/>
-             </type>
-         </return>
+      <description>Retourne le niveau operationnel de l'unité. </description>
+      <return>
+        <description>Retourne une valeur entre 0 et 100.</description>
+        <type>
+          <simple name="numeric"/>
+        </type>
+      </return>
     </method>
     <method name="neutralize">
       <description>__INTEGRATION</description>
     </method>
     <method name="canNeutralizeIt">
-       <description>Retourne vrai si les conditions sont réunies pour neutraliser la connaissance.</description>
-       <return>
-          <type>
-            <simple name="boolean"/>
-          </type>
-       </return>
+      <description>Retourne vrai si les conditions sont réunies pour neutraliser la connaissance.</description>
+      <return>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
     </method>
     <method name="neutralizeIt">
-         <description>Action de neutralisation</description>
+      <description>Action de neutralisation</description>
     </method>
-     <method name="neutralizationPriority">
+    <method name="neutralizationPriority">
       <description>__INTEGRATION</description>
       <return>
         <description>La valeur de la priorité.</description>
         <type>
-          <simple name="numeric" />
+          <simple name="numeric"/>
         </type>
       </return>
     </method>
-      <method name="getAttritionForNeutralization">
-            <description>Retourne l'estimation de l'attrition pour la neutralisation d'un agent de type Unit
+    <method name="getAttritionForNeutralization">
+      <description>Retourne l'estimation de l'attrition pour la neutralisation d'un agent de type Unit
 sur un objectif target neutralisable à partir d'une position donnée.
 </description>
-            <argument name="target">
-                <description>La cible à neutraliser.</description>
-                <type>
-                    <class name="net.masagroup.military.generic.knowledge.Neutralizable"/>
-                </type>
-            </argument>
-            <argument name="position">
-                <description>La position à partir de laquelle on veut tirer calculer l'efficacité pour la neutralization&#xD;
+      <argument name="target">
+        <description>La cible à neutraliser.</description>
+        <type>
+          <class name="net.masagroup.military.generic.knowledge.Neutralizable"/>
+        </type>
+      </argument>
+      <argument name="position">
+        <description>La position à partir de laquelle on veut tirer calculer l'efficacité pour la neutralization&#xD;
 </description>
-                <type>
-                    <class name="net.masagroup.military.generic.knowledge.Neutralizing"/>
-                </type>
-            </argument>
-        </method>
-    
+        <type>
+          <class name="net.masagroup.military.generic.knowledge.Neutralizing"/>
+        </type>
+      </argument>
+    </method>
     <method name="firePermitted">
       <description>Retourne vrai si l'autorisation est donnée de tirer sur l'unité. </description>
-        <return>
-          <description>__INTEGRATION. Retourne vrai si l'autorisation est donnée de tirer sur l'unité, faux sinon.</description>
-          <type>
-            <simple name="boolean"/>
-          </type>
-        </return>
+      <return>
+        <description>__INTEGRATION. Retourne vrai si l'autorisation est donnée de tirer sur l'unité, faux sinon.</description>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
     </method>
     <method name="canTakePosition">
       <description>__INTEGRATION</description>
       <return>
         <type>
-          <simple name="boolean" />
+          <simple name="boolean"/>
         </type>
       </return>
     </method>
@@ -214,7 +212,7 @@ sur un objectif target neutralisable à partir d'une position donnée.
       <description>__INTEGRATION</description>
       <return>
         <type>
-          <simple name="numeric" />
+          <simple name="numeric"/>
         </type>
       </return>
     </method>
@@ -227,7 +225,7 @@ sur un objectif target neutralisable à partir d'une position donnée.
         <type>
           <simple name="boolean"/>
         </type>
-      </return>     
+      </return>
     </method>
     <method name="isOccupied">
       <description>__INTEGRATION</description>
@@ -253,29 +251,32 @@ sur un objectif target neutralisable à partir d'une position donnée.
       </return>
     </method>
     <method name="isDetected">
-           <description>__INTEGRATION</description>
-           <return>
-            <type>
-                <simple name="boolean" /></type>
-            </return>
-       </method>
-       <method name="identifyIt">
-           <description>__INTEGRATION</description>
-       </method>
-       <method name="isRecognized">
-           <description>__INTEGRATION</description>
-           <return>
-            <type>
-                <simple name="boolean" /></type>
-            </return>
-       </method>
-        <method name="identificationLevel">
-           <description>__INTEGRATION</description>
-           <return>
-            <type>
-                <simple name="numeric" /></type>
-            </return>
-       </method>
+      <description>__INTEGRATION</description>
+      <return>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
+    </method>
+    <method name="identifyIt">
+      <description>__INTEGRATION</description>
+    </method>
+    <method name="isRecognized">
+      <description>__INTEGRATION</description>
+      <return>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
+    </method>
+    <method name="identificationLevel">
+      <description>__INTEGRATION</description>
+      <return>
+        <type>
+          <simple name="numeric"/>
+        </type>
+      </return>
+    </method>
     <method name="identificationPriority">
             <description>__INTEGRATION</description>
             <return>
@@ -391,15 +392,15 @@ sur un objectif target neutralisable à partir d'une position donnée.
     <method name="illuminationEfficiency">
       <description>Le niveau d'efficacité de la connaissance pour son utilisation dans l'illumination de l'objectif</description>
       <argument name="objective">
-          <description>L'objectif à illuminer.</description>
-          <type>
-              <class name="net.masagroup.sword.military.knowledge.Illuminatable"/>
-          </type>
+        <description>L'objectif à illuminer.</description>
+        <type>
+          <class name="net.masagroup.sword.military.knowledge.Illuminatable"/>
+        </type>
       </argument>
       <return>
-          <type>
-              <simple name="numeric"/>
-          </type>
+        <type>
+          <simple name="numeric"/>
+        </type>
       </return>
     </method>
     <method name="canApplyFireOnIt">
@@ -438,25 +439,27 @@ sur un objectif target neutralisable à partir d'une position donnée.
         </type>
       </return>
     </method>
+    <method name="getPosition">
+      <description>Fonction d'intégration retournant un MT_Vector2D</description>
+    </method>
   </methods>
-
   <predicates>
     <predicate name="isDestroyed">
       <description>Retourne vrai si la connaissance est détruite.</description>
     </predicate>
     <predicate name="isDestroyingFor">
       <description>Retourne vrai si la connaissance est adéquate pour mettre en oeuvre un comportement de destruction sur un objectif</description>
-        <argument name="objectives" >
-          <description>L'objectif que l'agent veut détruire</description>
-          <type>
-            <list>
-              <class name="net.masagroup.military.generic.knowledge.Destroyable"/>
-            </list>
-          </type>
-        </argument>
+      <argument name="objectives">
+        <description>L'objectif que l'agent veut détruire</description>
+        <type>
+          <list>
+            <class name="net.masagroup.military.generic.knowledge.Destroyable"/>
+          </list>
+        </type>
+      </argument>
     </predicate>
     <predicate name="isOperational">
-         <description>Retourne vrai si la connaissance est opérationnelle.</description>
+      <description>Retourne vrai si la connaissance est opérationnelle.</description>
     </predicate>
     <predicate name="isDefinitelyIlluminated">
       <description>Retourne vrai si la connaissance est illuminée définitevement, par une munition traçante par exemple.</description>
@@ -464,12 +467,12 @@ sur un objectif target neutralisable à partir d'une position donnée.
     <predicate name="isIlluminatingFor">
       <description>Retourne vrai si la connaissance est adéquate pour mettre en oeuvre un comportement d'illumination sur un objectif</description>
       <argument name="objectives">
-          <description>L'objectif que l'agent veut illuminer</description>
-          <type>
-              <list>
-                  <class name="net.masagroup.sword.military.knowledge.Illuminatable"/>
-              </list>
-          </type>
+        <description>L'objectif que l'agent veut illuminer</description>
+        <type>
+          <list>
+            <class name="net.masagroup.sword.military.knowledge.Illuminatable"/>
+          </list>
+        </type>
       </argument>
     </predicate>
   </predicates>

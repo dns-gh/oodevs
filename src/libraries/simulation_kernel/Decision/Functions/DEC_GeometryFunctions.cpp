@@ -148,6 +148,17 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CreateOrthoDirection( MT
 // OPERATIONS
 // =============================================================================
 
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeDistance
+// Created: MGD 2010-02-19
+// -----------------------------------------------------------------------------
+float DEC_GeometryFunctions::ComputeDistance( boost::shared_ptr< MT_Vector2D > pos1, boost::shared_ptr< MT_Vector2D > pos2 )
+{
+    return (float)pos1->Distance( *pos2 );
+}
+
+
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ReverseDirection
 // Created: JVT 2005-01-03
@@ -1413,22 +1424,16 @@ float DEC_GeometryFunctions::ComputeDelayFromSchedule( const MIL_Fuseau* pFuseau
 // Name: DEC_GeometryFunctions::GetCrossroads
 // Created: MGD 2009-08-19
 // -----------------------------------------------------------------------------
-void DEC_GeometryFunctions::GetCrossroads( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, float x, float y, float /*z*/, float radius, const directia::ScriptRef& table )
+void DEC_GeometryFunctions::GetCrossroads( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, boost::shared_ptr< MT_Vector2D > center, float radius, const directia::ScriptRef& table )
 {  
-    MT_Vector2D center( x, y );
     std::vector< boost::shared_ptr< MT_Vector2D > > points;
     const MIL_Fuseau& fuseau = pion.GetOrderManager().GetFuseau();
     if( fuseau.IsNull() )
-        points = TER_PathFindManager::GetPathFindManager().FindCrossroadsWithinCircle( center, radius );
+        points = TER_PathFindManager::GetPathFindManager().FindCrossroadsWithinCircle( *center, radius );
     else
-        points = pion.GetOrderManager().GetFuseau().FindCrossroadsWithinCircle( center, radius );
+        points = pion.GetOrderManager().GetFuseau().FindCrossroadsWithinCircle( *center, radius );
 
-    std::vector< std::vector< MT_Float > > positions;
-    for( std::vector< boost::shared_ptr< MT_Vector2D > >::iterator it = points.begin(); it != points.end(); it++ )
-    {
-        positions.push_back( (*it)->ToStdVector() );
-    }
-    knowledgeCreateFunction( table, brain.GetScriptVariable( "net.masagroup.sword.military.world.Point" ), points, positions, true );
+    knowledgeCreateFunction( table, brain.GetScriptVariable( "net.masagroup.sword.military.world.Point" ), points, true );
 }
 
 // -----------------------------------------------------------------------------

@@ -170,6 +170,20 @@ const MT_Vector2D* DEC_KnowledgeAgentFunctions::GetPosition( boost::shared_ptr< 
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::GetPositionPtr
+// Created: MGD 2010-02-19
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MT_Vector2D > DEC_KnowledgeAgentFunctions::GetPositionPtr( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+{
+    boost::shared_ptr< MT_Vector2D > pos;
+    if( pKnowledge.get() && pKnowledge->IsValid() )
+    {
+        pos.reset( new MT_Vector2D( pKnowledge->GetPosition() ) );//@MGD Propaguate refactor with shared_ptr to avoid new
+    }
+    return pos;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::IsFlying
 // Created: JVT 2005-08-23
 // -----------------------------------------------------------------------------

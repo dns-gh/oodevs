@@ -42,6 +42,7 @@ public:
     static float GetDangerosityOnPion                   ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, const DEC_Decision_ABC* pTarget );
     static float GetDangerosityOnKnowledge              ( boost::shared_ptr< DEC_Knowledge_Agent > pSource, boost::shared_ptr< DEC_Knowledge_Agent > pTarget );
     static const MT_Vector2D* GetPosition               ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static boost::shared_ptr< MT_Vector2D > GetPositionPtr( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static float GetOperationalState                    ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static float GetROE                                    ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool  GetMajorOperationalState               ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );

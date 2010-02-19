@@ -58,7 +58,7 @@ void RegisterCommonUserFunctions( directia::Brain& brain, unsigned int id )
     brain.RegisterFunction( "DEC_Geometrie_PositionTranslate",                  &DEC_GeometryFunctions::TranslatePosition );
     brain.RegisterFunction( "DEC_Geometrie_PositionTranslateDir",               &DEC_GeometryFunctions::TranslatePositionInDirection );
     brain.RegisterFunction( "DEC_Geometrie_PositionsEgales",                    &DEC_GeometryFunctions::ComparePositions );
-    brain.RegisterFunction( "DEC_Geometrie_Distance",                           &DEC_GeometryFunctions::Distance );
+    brain.RegisterFunction( "DEC_Geometrie_Distance",                           &DEC_GeometryFunctions::Distance );//@TODO MGD Replace by ComputeDistance on shared_ptr
     brain.RegisterFunction( "DEC_Geometrie_ConvertirPointEnLocalisation",       &DEC_GeometryFunctions::ConvertPointToLocalisation );
     brain.RegisterFunction( "DEC_Geometrie_EstPointDansLocalisation",           &DEC_GeometryFunctions::IsPointInsideLocalisation );
     brain.RegisterFunction( "DEC_Geometrie_CreerLocalisation",                  &DEC_GeometryFunctions::CreateLocalisation );
@@ -84,6 +84,7 @@ void RegisterCommonUserFunctions( directia::Brain& brain, unsigned int id )
     brain.RegisterFunction( "DEC_Geometrie_TrierFuseauxSelonOuvertureTerrain",  &DEC_GeometryFunctions::SortFuseauxAccordingToTerrainOpening );
     brain.RegisterFunction( "DEC_Geometrie_ConvertirFuseauEnLocalisation",      &DEC_GeometryFunctions::ConvertFuseauToLocalisation );
     brain.RegisterFunction( "DEC_Geometrie_ProchainObjectifDansFuseau",         &DEC_GeometryFunctions::GetNextObjectiveInFuseau );
+    brain.RegisterFunction( "DEC_Geometrie_DistanceBetweenPoints",               &DEC_GeometryFunctions::ComputeDistance );
     
     //BMArea
     brain.RegisterFunction( "DEC_BMArea_Barycenter", &DEC_GeometryFunctions::ComputeBarycenter );
@@ -243,7 +244,7 @@ void PointFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowled
     boost::shared_ptr< MT_Vector2D > value;
     if( element.ToPoint( value ) && value.get() )
     {
-        knowledgeCreateFunction( refMission,  brain.GetScriptVariable( "net.masagroup.sword.military.world.Point" ) , name, value, value->ToStdVector(), false );//@TODO MGD fix this ugly        
+        knowledgeCreateFunction( refMission,  brain.GetScriptVariable( "net.masagroup.sword.military.world.Point" ) , name, value, false );     
     }
 }
 void PointListFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
@@ -251,12 +252,7 @@ void PointListFunctionBM( const directia::Brain& brain, directia::ScriptRef& kno
     std::vector< boost::shared_ptr< MT_Vector2D > > value;
     if( element.ToPointList( value ) )
     {
-        std::vector< std::vector< MT_Float > > positions;
-        for( std::vector< boost::shared_ptr< MT_Vector2D > >::iterator it = value.begin(); it!=value.end(); it++ )
-        {
-            positions.push_back( (*it)->ToStdVector() );
-        }
-        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Point" ), name, value, positions, true );
+        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Point" ), name, value, true );
     }
 }
 void PolygonFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
@@ -276,7 +272,7 @@ void AreaFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledg
     boost::shared_ptr< TER_Localisation > value;
     if( element.ToPolygon( value ) && value.get() )
     {
-        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Area" ), name, value, value->ComputeBarycenter().ToStdVector(), false );
+        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Area" ), name, value, false );
     }
 }
 void AreaListFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
@@ -284,12 +280,7 @@ void AreaListFunctionBM( const directia::Brain& brain, directia::ScriptRef& know
     std::vector< boost::shared_ptr< TER_Localisation > > value;
     if( element.ToPolygonList( value ) )
     {
-        std::vector< std::vector< MT_Float > > positions;
-        for( std::vector< boost::shared_ptr< TER_Localisation > >::iterator it = value.begin(); it!=value.end(); it++ )
-        {
-            positions.push_back( (*it)->ComputeBarycenter().ToStdVector() );
-        }
-        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Area" ), name, value, positions, true );
+        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Area" ), name, value, true );
     }
 }
 void LocationFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
@@ -337,9 +328,7 @@ void AutomatFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowl
     DEC_Decision_ABC* value = 0;
     if( element.ToAutomat( value ) )
     {
-        MT_Vector2D pos;
-        value->GetAutomate().GetAlivePionsBarycenter( pos );
-        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Compagnie" ), name, value, pos.ToStdVector(), false );
+        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Compagnie" ), name, value, false );
     }
 }
 void AutomatListFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
@@ -353,14 +342,7 @@ void AutomatListFunctionBM( const directia::Brain& brain, directia::ScriptRef& k
     std::vector< DEC_Decision_ABC* > value;
     if( element.ToAutomatList( value ) )
     {
-        std::vector< std::vector< MT_Float > > positions;
-        for( std::vector< DEC_Decision_ABC* >::iterator it = value.begin(); it!=value.end(); it++ )
-        {
-            MT_Vector2D pos;
-            (*it)->GetAutomate().GetAlivePionsBarycenter( pos );
-            positions.push_back( pos.ToStdVector() );
-        }
-        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Compagnie" ), name, value, positions, true );
+        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Compagnie" ), name, value, true );
     }     
 }
 void AgentFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
@@ -373,7 +355,7 @@ void AgentFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowled
 {
     DEC_Decision_ABC* value = 0; // $$$$ LDC: Parfois on se sert de champs dessus comme eniEnCours_...
     if( element.ToAgent( value ) )
-        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Section" ), name, value, value->GetPosition()->ToStdVector(), false );
+        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Section" ), name, value, false );
 }
 void AgentListFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -386,12 +368,7 @@ void AgentListFunctionBM( const directia::Brain& brain, directia::ScriptRef& kno
     std::vector< DEC_Decision_ABC* > value;
     if( element.ToAgentList( value ) )
     {
-        std::vector< std::vector< MT_Float > > positions;
-        for( std::vector< DEC_Decision_ABC* >::iterator it = value.begin(); it!=value.end(); it++ )
-        {
-            positions.push_back( (*it)->GetPosition()->ToStdVector() );
-        }
-        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Section" ), name, value, positions, true );
+        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Section" ), name, value, true );
     }
 }
 void AgentKnowledgeFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
@@ -404,7 +381,7 @@ void AgentKnowledgeFunctionBM( const directia::Brain& brain, directia::ScriptRef
 {
     boost::shared_ptr< DEC_Knowledge_Agent > value;//@TODO SEE how to bind agent and knowledge agent with the same BM knowledge
     if( element.ToAgentKnowledge( value ) && value.get() )
-        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Section" ), name, value, value->GetPosition().ToStdVector(), false );
+        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Section" ), name, value, false );
 }
 void AgentKnowledgeListFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -417,12 +394,7 @@ void AgentKnowledgeListFunctionBM( const directia::Brain& brain, directia::Scrip
     std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > value;
     if( element.ToAgentKnowledgeList( value ) )
     {
-        std::vector< std::vector< MT_Float > > positions;
-        for( std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >::iterator it = value.begin(); it!=value.end(); it++ )
-        {
-            positions.push_back( (*it)->GetPosition().ToStdVector() );
-        }
-        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Section" ), name, value, positions, true );
+        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Section" ), name, value, true );
     }
 }
 void ObjectKnowledgeFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
@@ -435,7 +407,7 @@ void ObjectKnowledgeFunctionBM( const directia::Brain& brain, directia::ScriptRe
 {
     boost::shared_ptr< DEC_Knowledge_Object > value;
     if( element.ToObjectKnowledge( value ) && value )
-        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Object" ), name, value, value->GetObjectKnown()->GetLocalisation().ComputeBarycenter().ToStdVector(), false );
+        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Object" ), name, value, false );
 }
 void ObjectKnowledgeListFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -448,12 +420,7 @@ void ObjectKnowledgeListFunctionBM( const directia::Brain& brain, directia::Scri
     std::vector< boost::shared_ptr< DEC_Knowledge_Object > > value;
     if( element.ToObjectKnowledgeList( value ) )
     {
-        std::vector< std::vector< MT_Float > > positions;
-        for( std::vector< boost::shared_ptr< DEC_Knowledge_Object > >::iterator it = value.begin(); it!=value.end(); it++ )
-        {
-            positions.push_back( (*it)->GetObjectKnown()->GetLocalisation().ComputeBarycenter().ToStdVector() );
-        }
-        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Object" ), name, value, positions, true );
+        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Object" ), name, value, true );
     }
 }
 void PopulationKnowledgeFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
@@ -474,12 +441,7 @@ void UrbanBlockFunctionBM( const directia::Brain& brain, directia::ScriptRef& kn
     boost::shared_ptr< DEC_Knowledge_Urban > value;
     if( element.ToUrbanBlock( value ) && value )
     {
-        const geometry::Point2f point = value->GetBarycenter();
-        std::vector< float > position;
-        position.push_back( point.X() );
-        position.push_back( point.Y() );
-        position.push_back( 0 );
-        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.UrbanBlock" ), name, value, position, false );  
+        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.UrbanBlock" ), name, value, false );  
     }
 }
 

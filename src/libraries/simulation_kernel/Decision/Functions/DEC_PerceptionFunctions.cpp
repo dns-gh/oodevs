@@ -79,13 +79,12 @@ void DEC_PerceptionFunctions::SetVisionModePoint( MIL_AgentPion& callerAgent, co
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PerceptionFunctions::SetVisionModePoint
+// Name: DEC_PerceptionFunctions::SetVisionModePointPtr
 // Created: SLG 2010-01-28
 // -----------------------------------------------------------------------------
-void DEC_PerceptionFunctions::SetVisionModePoint( MIL_AgentPion& callerAgent, float x, float y )
+void DEC_PerceptionFunctions::SetVisionModePointPtr( MIL_AgentPion& callerAgent, boost::shared_ptr< MT_Vector2D > point )
 {
-    const MT_Vector2D point( x, y );
-    callerAgent.GetRole< PHY_RoleInterface_Perceiver >().SetVisionModePoint( point );
+    callerAgent.GetRole< PHY_RoleInterface_Perceiver >().SetVisionModePoint( *point );
 }
 
 // -----------------------------------------------------------------------------
@@ -232,14 +231,14 @@ void DEC_PerceptionFunctions::DisableRadar( MIL_AgentPion& callerAgent, int nRad
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PerceptionFunctions::EnableRadarOnPointXY
+// Name: DEC_PerceptionFunctions::EnableRadarOnPointPtr
 // Created: LMT 2010-02-04
 // -----------------------------------------------------------------------------
-int DEC_PerceptionFunctions::EnableRadarOnPointXY( MIL_AgentPion& callerAgent, int nRadarClass, const float x, const float y )
+int DEC_PerceptionFunctions::EnableRadarOnPointPtr( MIL_AgentPion& callerAgent, int nRadarClass, boost::shared_ptr< MT_Vector2D > point )
 {
-    T_PointVector point;
-    point.push_back( MT_Vector2D( x , y ) );
-    TER_Localisation localisation ( TER_Localisation::ePoint, point );
+    T_PointVector vector;
+    vector.push_back( *point );
+    TER_Localisation localisation ( TER_Localisation::ePoint, vector );
     return EnableRadarOnLocalisation( callerAgent, nRadarClass, &localisation );
 }
 

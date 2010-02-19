@@ -329,7 +329,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_CreerItineraire",
         boost::function< boost::shared_ptr< DEC_Path_ABC >( MT_Vector2D*, int ) >( boost::bind( &DEC_PathFunctions::CreatePathToPoint, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_CreerItineraireBM",
-        boost::function< boost::shared_ptr< DEC_Path_ABC >( float, float, float, int ) >( boost::bind( &DEC_PathFunctions::CreatePathToPointBM, boost::ref( GetPion() ), _1, _2, _3, _4 ) ) );
+        boost::function< boost::shared_ptr< DEC_Path_ABC >( boost::shared_ptr< MT_Vector2D >, int ) >( boost::bind( &DEC_PathFunctions::CreatePathToPointBM, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_CreerItineraireListe",
         boost::function< boost::shared_ptr< DEC_Path_ABC >( std::vector< boost::shared_ptr< MT_Vector2D > >, int ) >( boost::bind( &DEC_PathFunctions::CreatePathToPointList, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Itineraire_Etat", 
@@ -355,8 +355,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< void( boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_PerceptionFunctions::SetVisionModeDirection, boost::ref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Perception_VisionVerrouilleeSurPoint",
         boost::function< void( const MT_Vector2D* ) >( boost::bind( &DEC_PerceptionFunctions::SetVisionModePoint, boost::ref( GetPion() ), _1 ) ) );
-    brain.RegisterFunction( "DEC_Perception_VisionVerrouilleeSurPointXY",
-        boost::function< void( float, float ) >( boost::bind( &DEC_PerceptionFunctions::SetVisionModePoint, boost::ref( GetPion() ), _1, _2 ) ) );
+    brain.RegisterFunction( "DEC_Perception_VisionVerrouilleeSurPointPtr",
+        boost::function< void( boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_PerceptionFunctions::SetVisionModePointPtr, boost::ref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Perception_VisionNormale",
                             boost::bind( &DEC_PerceptionFunctions::SetVisionModeNormal, boost::ref( GetPion() ) ) );   
     brain.RegisterFunction( "DEC_Perception_ActiverReconnaissanceLocalisation",
@@ -375,8 +375,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
                             boost::function< void( int ) >( boost::bind( &DEC_PerceptionFunctions::EnableRadar, boost::ref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Perception_DesactiverRadar",
                             boost::function< void( int ) >( boost::bind( &DEC_PerceptionFunctions::DisableRadar, boost::ref( GetPion() ), _1 ) ) );
-    brain.RegisterFunction( "DEC_Perception_ActiverRadarSurPointXY",
-        boost::function< int( int, float, float ) >( boost::bind( &DEC_PerceptionFunctions::EnableRadarOnPointXY, boost::ref( GetPion() ), _1, _2, _3 ) ) );
+    brain.RegisterFunction( "DEC_Perception_ActiverRadarSurPointPtr",
+        boost::function< int( int, boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_PerceptionFunctions::EnableRadarOnPointPtr, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Perception_ActiverRadarSurLocalisation",
         boost::function< int( int, const TER_Localisation* ) >( boost::bind( &DEC_PerceptionFunctions::EnableRadarOnLocalisation, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Perception_DesactiverRadarSurLocalisation",
@@ -500,6 +500,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetMajorOperationalState, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_Position",
         boost::function< const MT_Vector2D*( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetPosition, _1 ) ) );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_PositionPtr",
+        boost::function< boost::shared_ptr< MT_Vector2D >( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetPositionPtr, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_EstEnVol", 
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsFlying, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_NatureAtlas", 
@@ -603,7 +605,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     // Urban knowledges accessors
     brain.RegisterFunction( "DEC_ConnaissanceUrbanBlock_NiveauDePerceptionCourant"    , 
             boost::function< int( boost::shared_ptr< DEC_Knowledge_Urban > ) >( boost::bind( &DEC_KnowledgeUrbanFunctions::GetCurrentPerceptionLevel, boost::cref( GetPion() ), _1 ) ) );
-
+    brain.RegisterFunction( "DEC_ConnaissanceUrbanBlock_Barycentre"    , 
+        boost::function< boost::shared_ptr< MT_Vector2D >( boost::shared_ptr< DEC_Knowledge_Urban > ) >( boost::bind( &DEC_KnowledgeUrbanFunctions::GetCurrentBarycenter, _1 ) ) );
 
     // Global knowledge
     brain.RegisterFunction( "DEC_RapportDeForceLocal", boost::bind( &DEC_KnowledgeFunctions::GetRapForLocal, boost::ref( GetPion() ) ) );
@@ -738,7 +741,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
 
     //Keypoint
     brain.RegisterFunction( "DEC_Crossroads", 
-        boost::function< void( float, float, float, float, const directia::ScriptRef& ) >( boost::bind( &DEC_GeometryFunctions::GetCrossroads, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1 , _2, _3, _4, _5 ) ) ) ;
+        boost::function< void( boost::shared_ptr< MT_Vector2D >, float, const directia::ScriptRef& ) >( boost::bind( &DEC_GeometryFunctions::GetCrossroads, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1 , _2, _3 ) ) ) ;
 
     
     // Fire 

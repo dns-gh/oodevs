@@ -3,9 +3,7 @@
 
 --- Bind DIA4 event interface to DIA5 interface
 rawset( getfenv(), "StartEvent", function( task, ... )
-  BreakForDebug( tostring( task ) )
   if not ( task == "BEH_Defaut" ) then -- MGD Avoid BEH_Defaut Exception for DIA5
-    BreakForDebug( tostring( task ) )
     behavior_model.startTask( task, ... )
   end
 end )
@@ -20,15 +18,7 @@ end )
 -- @param knowledgedPosition The knowledge current position
 -- @author MGD
 -- @release 2010-01-22
-function CreateKnowledge( strKnowledgeType, knowledgeSource, knowledgedPosition )
-    return kBase.create( strKnowledgeType, knowledgeSource, { ["sim_pos"] = { x=knowledgedPosition[1], y=knowledgedPosition[2], z=knowledgedPosition[3] } } )
-end
-
---- Create a knowledge
--- @TODO update name 
--- @author DDA
--- @release 2010-02-2
-function CreateKnowledgeWithoutPos( strKnowledgeType, knowledgeSource )
+function CreateKnowledge( strKnowledgeType, knowledgeSource )
     return kBase.create( strKnowledgeType, knowledgeSource )
 end
 
@@ -41,14 +31,14 @@ end
 -- @param list Indicate if the parameter is a list
 -- @author MGD
 -- @release 2010-01-22
-function InitTaskParameter( params, strKnowledgeType, name, knowledgeSource, knowledgedPosition, list )
+function InitTaskParameter( params, strKnowledgeType, name, knowledgeSource, list )
   if list then
     params[name] = {};
     for i = 1, #knowledgeSource do
-      params[name][i] = CreateKnowledge( strKnowledgeType, knowledgeSource[i], knowledgedPosition[i] )
+      params[name][i] = CreateKnowledge( strKnowledgeType, knowledgeSource[i] )
     end
   else
-    params[name] = { CreateKnowledge( strKnowledgeType, knowledgeSource, knowledgedPosition ) }
+    params[name] = { CreateKnowledge( strKnowledgeType, knowledgeSource ) }
   end
 end
 
@@ -60,13 +50,13 @@ end
 -- @param list Indicate if the parameter is a list
 -- @author MGD
 -- @release 2010-01-22
-function InitQueryReturn( params, strKnowledgeType, knowledgeSource, knowledgedPosition, list)
+function InitQueryReturn( params, strKnowledgeType, knowledgeSource, list)
   if list then
     for i = 1, #knowledgeSource do
-      params[ #params + 1 ] = CreateKnowledge( strKnowledgeType, knowledgeSource[i], knowledgedPosition[i] )
+      params[ #params + 1 ] = CreateKnowledge( strKnowledgeType, knowledgeSource[i] )
     end
   else
-    params[1] = CreateKnowledge( strKnowledgeType, knowledgeSource, knowledgedPosition )
+    params[1] = CreateKnowledge( strKnowledgeType, knowledgeSource )
   end
 end
 
@@ -74,15 +64,12 @@ end
 -- @param strKnowledgeType The brain's role type
 -- @param knowledgeSource  The cpp source object  
 -- @param groupName The name of the leader  
--- @param posx, posy, posz The current brain position
 -- @author MGD
 -- @release 2010-01-22
-function UpdateMe( strKnowledgeType, knowledgeSource, groupName, posx, posy ,posz )
+function UpdateMe( strKnowledgeType, knowledgeSource, groupName )
   if not kBase.me.body then
-    kBase.me.body = kBase.create( strKnowledgeType, knowledgeSource, { sim_pos = { x=posx, y=posy, z=posz } } )
+    kBase.me.body = kBase.create( strKnowledgeType, knowledgeSource )
     behavior_model.createGroup( groupName )
-  else
-    kBase.me.body.sim_pos = { x=posx, y=posy, z=posz }
   end
 end
 

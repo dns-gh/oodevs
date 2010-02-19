@@ -47,6 +47,7 @@ public:
     static boost::shared_ptr< MT_Vector2D > CreateDirection     ( MT_Vector2D* pPosSource, MT_Vector2D* pPosDest );
     static boost::shared_ptr< MT_Vector2D > CreateOrthoDirection( MT_Vector2D* pDir, bool bCounterClockwise );
 
+    static float ComputeDistance( boost::shared_ptr< MT_Vector2D > pos1, boost::shared_ptr< MT_Vector2D > pos2 );
     static void ReverseDirection                    ( boost::shared_ptr< MT_Vector2D > pDir );
     static boost::shared_ptr< MT_Vector2D > CopyAndReverseDirection( const MT_Vector2D* );
     static boost::shared_ptr< MT_Vector2D > CopyAndRotateDirection ( const MT_Vector2D*, const MT_Float angle );
@@ -121,7 +122,7 @@ public:
     static bool GetInterceptionPoint   ( const MT_Vector2D& vToInterceptPosition, const MT_Vector2D& vToInterceptSpeed, const MT_Vector2D& vInterceptingPosition, MT_Float rInterceptingSpeed, MT_Vector2D& result );
 
     // Terrain keypoint
-    static void GetCrossroads( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, float x, float y, float z, float radius, const directia::ScriptRef& table ); 
+    static void GetCrossroads( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, boost::shared_ptr< MT_Vector2D > center, float radius, const directia::ScriptRef& table ); 
     // BMArea
     static boost::shared_ptr< MT_Vector2D > ComputeBarycenter( const TER_Localisation* localisation );
     //@}

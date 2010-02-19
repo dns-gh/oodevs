@@ -47,6 +47,9 @@ return
         return self:perceptionLevel() > 25
     end,
     -- REACHABLE
+    getPosition = function( self )
+      return integration.getObjectPosition( self )
+    end,
     computeDistance = function( self, target )
         return integration.normalizedInversedDistance( self, target )
     end,

@@ -34,10 +34,9 @@
 // Name: DEC_PathFunctions::CreatePathToPoint
 // Created: MGD 2009-10-31
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPointBM( MIL_AgentPion& callerAgent, float x, float y, float /*z*/, int pathType )
+boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPointBM( MIL_AgentPion& callerAgent, boost::shared_ptr< MT_Vector2D > end, int pathType )
 {
-    MT_Vector2D end( x, y );
-    return CreatePathToPoint( callerAgent, &end, pathType );
+    return CreatePathToPoint( callerAgent, end.get(), pathType );
 }
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::CreatePathToPoint
