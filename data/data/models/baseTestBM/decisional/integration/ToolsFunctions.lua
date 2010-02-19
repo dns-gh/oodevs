@@ -2,12 +2,16 @@
 
 
 --- Bind DIA4 event interface to DIA5 interface
-rawset( getfenv(), "StartEvent", function( ... )
-  behavior_model.startTask( ... )
+rawset( getfenv(), "StartEvent", function( task, ... )
+  BreakForDebug( tostring( task ) )
+  if not ( task == "BEH_Defaut" ) then -- MGD Avoid BEH_Defaut Exception for DIA5
+    BreakForDebug( tostring( task ) )
+    behavior_model.startTask( task, ... )
+  end
 end )
 
 rawset( getfenv(), "StopEvents", function( ... )
-  pcall( behavior_model.stopTask, select(1,...) )
+  behavior_model.stopTasks() --Stop all tasks, main task and fragOrder
 end )
 
 --- Create a knowledge
