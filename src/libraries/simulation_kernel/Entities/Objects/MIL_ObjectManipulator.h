@@ -62,6 +62,7 @@ public:
     virtual bool CanBeBypassed             () const;
     virtual bool CanBePerceived            () const;
     virtual bool CanBeActivated            () const;
+    virtual bool CanBeOccupiedBy           ( const MIL_Agent_ABC& agent ) const;
     //@}
 
     //! @name 

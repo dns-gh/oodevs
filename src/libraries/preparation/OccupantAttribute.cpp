@@ -3,40 +3,43 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2008 MASA Group
+// Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#include "simulation_kernel_pch.h"
+#include "preparation_pch.h"
 #include "OccupantAttribute.h"
-#include "MIL.h"
+#include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/PropertiesDictionary.h"
+#include "Tools.h"
+#include <xeumeuleu/xml.h>
 
-BOOST_CLASS_EXPORT_IMPLEMENT( OccupantAttribute )
-
-// -----------------------------------------------------------------------------
-// Name: OccupantAttribute constructor
-// Created: JCR 2008-05-30
-// -----------------------------------------------------------------------------
-OccupantAttribute::OccupantAttribute()
-: pOccupant_( 0 )
-{
-    // NOTHING
-}
-
+using namespace kernel;
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: OccupantAttribute constructor
 // Created: MGD 2010-02-18
 // -----------------------------------------------------------------------------
-OccupantAttribute::OccupantAttribute( xml::xistream& /*xis*/ )
-: pOccupant_( 0 )
+OccupantAttribute::OccupantAttribute( kernel::PropertiesDictionary& dico )
+: iMaxSize_( 0 )    
 {
-    // NOTHING @TODO MGD manage other size than 1
+    CreateDictionary( dico );
+}
+
+// -----------------------------------------------------------------------------
+// Name: OccupantAttribute constructor
+// Created: MGD 2010-02-18
+// -----------------------------------------------------------------------------
+OccupantAttribute::OccupantAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico )
+    : iMaxSize_( xis.attribute<int>("max-size") )
+{  
+    CreateDictionary( dico );
 }
 
 // -----------------------------------------------------------------------------
 // Name: OccupantAttribute destructor
-// Created: JCR 2008-05-30
+// Created: MGD 2010-02-18
 // -----------------------------------------------------------------------------
 OccupantAttribute::~OccupantAttribute()
 {
@@ -44,53 +47,40 @@ OccupantAttribute::~OccupantAttribute()
 }
 
 // -----------------------------------------------------------------------------
-// Name: OccupantAttribute::operator=
-// Created: JCR 2008-05-30
+// Name: OccupantAttribute::Display
+// Created: MGD 2010-02-18
 // -----------------------------------------------------------------------------
-OccupantAttribute& OccupantAttribute::operator=( const OccupantAttribute& rhs )
-{
-    pOccupant_ = rhs.pOccupant_;
-    return *this;
+void OccupantAttribute::Display( kernel::Displayer_ABC& displayer ) const
+{    
+    displayer.Group( tools::translate( "Object", "Information" ) )
+             .Display( tools::translate( "Object", "Occupant:" ), iMaxSize_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: OccupantAttribute::serialize
-// Created: JCR 2008-07-03
+// Name: OccupantAttribute::DisplayInTooltip
+// Created: MGD 2010-02-18
 // -----------------------------------------------------------------------------
-template< typename Archive > 
-void OccupantAttribute::serialize( Archive& file, const uint )
+void OccupantAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
-    file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-    // $$$$ _RC_ SBO 2009-06-10: what about occupant?
+    displayer.Display( tools::translate( "Object", "Occupant:" ), iMaxSize_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: OccupantAttribute::AddOccupant
-// Created: JCR 2008-06-05
+// Name: OccupantAttribute::SerializeAttributes
+// Created: MGD 2010-02-18
 // -----------------------------------------------------------------------------
-void OccupantAttribute::AddOccupant( const MIL_Agent_ABC& agent )
+void OccupantAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
-    if( ! pOccupant_ )
-        pOccupant_ = &agent;
-    else
-        throw std::exception( "try to use an object already occupied" );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: OccupantAttribute::ReleaseOccupant
-// Created: JCR 2008-06-05
-// -----------------------------------------------------------------------------
-void OccupantAttribute::ReleaseOccupant( const MIL_Agent_ABC& agent )
-{
-    if( pOccupant_ == &agent )
-        pOccupant_ = 0;
+    xos << start( "max-size" )
+            << attribute( "max-size", iMaxSize_ )                           
+        << end();
 }
 
 // -----------------------------------------------------------------------------
-// Name: OccupantAttribute::GetOccupant
-// Created: JCR 2008-06-05
+// Name: OccupantAttribute::CreateDictionary
+// Created: MGD 2010-02-18
 // -----------------------------------------------------------------------------
-const MIL_Agent_ABC* OccupantAttribute::GetOccupant() const
+void OccupantAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
 {
-    return pOccupant_;
+    dico.Register( *this, tools::translate( "Object", "Info/Occupant attributes/Max Entities" ), iMaxSize_ );
 }

@@ -32,6 +32,7 @@
 #include "MineAttribute.h"
 #include "NBCAttribute.h"
 #include "ObstacleAttribute.h"
+#include "OccupantAttribute.h"
 #include "SupplyRouteAttribute.h"
 
 #include "ObjectAttributesContainer.h"
@@ -163,7 +164,8 @@ void TeamFactory::Initialize()
     factory->Register( "obstacle"           , BIND_ATTACH_ATTRIBUTE( ObstacleAttribute, _1, _2, _3 ) );
     factory->Register( "supply-route"       , BIND_ATTACH_ATTRIBUTE( SupplyRouteAttribute, _1, _2, _3 ) );
     factory->Register( "tc2"                , BIND_ATTACH_ATTRIBUTE_HELPER( LogisticAttribute, kernel::Automat_ABC, _1, _2, boost::cref( model_.agents_ ), _3 ) );
-    
+    factory->Register( "max-size"           , BIND_ATTACH_ATTRIBUTE( OccupantAttribute, _1, _2, _3 ) );
+
     factory_.reset( factory );
 }
 

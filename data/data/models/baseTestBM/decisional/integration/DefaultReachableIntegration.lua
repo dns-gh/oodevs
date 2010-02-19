@@ -28,9 +28,10 @@ end
 
 integration.startMoveToIt = function( reachable )
   -- Leave tactical object
-  --if kBase.me.body.actionOccupy then
-    --DEC_StopAction( kBase.me.body.actionOccupy )
-  --end
+  if kBase.me.body.actionOccupy then
+    DEC_StopAction( kBase.me.body.actionOccupy )
+    BreakForDebug( "unoccuppy")
+  end
   if not reachable.moveAction then
     default_engine.methods.occupyPosition( kBase.me.body, nil ) -- UnOccupyPosition
     it = DEC_CreerItineraireBM( reachable.sim_pos.x, reachable.sim_pos.y, reachable.sim_pos.z, eTypeItiMouvement )

@@ -57,7 +57,6 @@ return
     end,
     -- POSITIONNABLE
     takeUpPosition = function( self )
-        BreakForDebug( "call take up position ")
         return integration.takeUpPositionObject( self )
     end,
     occupationLevel = function()

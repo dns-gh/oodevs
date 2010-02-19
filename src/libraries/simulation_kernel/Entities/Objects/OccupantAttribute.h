@@ -28,6 +28,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              OccupantAttribute();
+    explicit OccupantAttribute( xml::xistream& xis );
     virtual ~OccupantAttribute();
     //@}
 

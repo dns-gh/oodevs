@@ -27,6 +27,7 @@
 #include "BypassAttribute.h"
 #include "MineAttribute.h"
 #include "ObstacleAttribute.h"
+#include "OccupantAttribute.h"
 
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
@@ -271,6 +272,25 @@ bool MIL_ObjectManipulator::CanBeActivated() const
     return !object_.IsMarkedForDestruction() && 
             object_.Retrieve< ActivableCapacity >() && object_.GetAttribute< ObstacleAttribute >().IsActivable() ;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectManipulator::CanBeOccupiedBy
+// Created: MGD 2010-02-18
+// -----------------------------------------------------------------------------
+bool MIL_ObjectManipulator::CanBeOccupiedBy( const MIL_Agent_ABC& agent ) const
+{
+    if( !object_.IsMarkedForDestruction() )
+    {
+        if( OccupantAttribute* occupiedAttribut = object_.RetrieveAttribute< OccupantAttribute >() )
+        {
+            const MIL_Agent_ABC* occupant = occupiedAttribut->GetOccupant();
+            return !occupant || occupant == &agent;
+        }
+    }
+    return false;
+}
+
+
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectManipulator::IsMined

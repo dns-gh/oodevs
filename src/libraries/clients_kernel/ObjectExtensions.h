@@ -36,6 +36,7 @@ namespace kernel
     DECLARE_EXTENSION( FireAttribute_ABC )
     DECLARE_EXTENSION( MedicalTreatmentAttribute_ABC )
     DECLARE_EXTENSION( StockAttribute_ABC )
+    DECLARE_EXTENSION( OccupantAttribute_ABC )
 }
 
 #undef DECLARE_EXTENSION

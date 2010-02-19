@@ -142,11 +142,8 @@ int DEC_KnowledgeObjectFunctions::DamageObject( boost::shared_ptr< DEC_Knowledge
 bool DEC_KnowledgeObjectFunctions::CanBeOccupied( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( pKnowledge && pKnowledge->IsValid() )
-        if( const OccupantAttribute* pAttribute = pKnowledge->GetObjectKnown()->RetrieveAttribute< OccupantAttribute >() )
-        {
-            const MIL_Agent_ABC* occupant = pAttribute->GetOccupant();
-            return !occupant || occupant == &callerAgent;
-        }
+        if( const MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown() )
+            return (*pObject)().CanBeOccupiedBy( callerAgent );
     return false;
 }
 

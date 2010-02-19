@@ -98,6 +98,7 @@ AttributeFactory::AttributeFactory()
     Register( "interaction-height", boost::bind( &AddBuilder< InteractionHeightAttribute >::Add, _1, _2 ) );
     Register( "population-filter", boost::bind( &AddBuilder< PopulationAttribute >::Add, _1, _2 ) );
     Register( "stock", boost::bind( &AddBuilder< StockAttribute >::Add, _1, _2 ) );
+    Register( "max-size", boost::bind( &AddBuilder< OccupantAttribute >::Add, _1, _2 ) );
 }
 
 // -----------------------------------------------------------------------------
