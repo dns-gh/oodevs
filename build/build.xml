@@ -598,15 +598,15 @@
     <target name="test" depends="generate-license,test-scripts.nocrossbow,test-adaptation,3a_test,plugins_test,clients_test,dispatcher_test,application.simulation_kernel_test,application.integration_decisionnal_test" description="run all tests"/>
 
     <target name="3a_test" depends="library.3a">
-        <build-test name="3a" depends="xerces,terrain,boost,mockpp,libprotobuf" 
-            libs="lib${ant.project.name}_3a-${platform}-mt@{suffix},
+        <build-test name="3a" depends="xerces,terrain,boost,mockpp" 
+            libs="lib${ant.project.name}_3a-${platform}-mt@{suffix},libprotobuf,
             lib${ant.project.name}_protocol-${platform}-mt">
         </build-test>
     </target>
 
     <target name="plugins_test" depends="library.hla_plugin,library.tic_plugin,library.bml_plugin,library.crossbow_plugin">
-        <build-test name="plugins" depends="xerces,terrain,boost,mockpp,libprotobuf"
-            libs="directia-${platform}-mt-4_5,
+        <build-test name="plugins" depends="xerces,terrain,boost,mockpp"
+            libs="directia-${platform}-mt-4_5,libprotobuf,
             lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
             lib${ant.project.name}_hla_plugin-${platform}-mt@{suffix},
             lib${ant.project.name}_tic_plugin-${platform}-mt@{suffix},
@@ -618,8 +618,8 @@
     </target>
 
     <target name="clients_test" depends="library.indicators, library.preparation">
-        <build-test name="clients" depends="terrain,boost,qt,xerces,xalan,mockpp,libprotobuf"
-            libs="svgl,zipstream,zlib1,shapelib,
+        <build-test name="clients" depends="terrain,boost,qt,xerces,xalan,mockpp"
+            libs="svgl,zipstream,zlib1,shapelib,libprotobuf,
             lib${ant.project.name}_tools-${platform}-mt,
             lib${ant.project.name}_ENT-${platform}-mt,
             lib${ant.project.name}_indicators-${platform}-mt,
@@ -632,8 +632,8 @@
     </target>                              
     
     <target name="dispatcher_test">
-        <build-test name="dispatcher" depends="boost,libprotobuf"
-            libs="lib${ant.project.name}_clients_kernel-${platform}-mt
+        <build-test name="dispatcher" depends="boost"
+            libs="lib${ant.project.name}_clients_kernel-${platform}-mt,libprotobuf,
             lib${ant.project.name}_dispatcher-${platform}-mt,
             lib${ant.project.name}_protocol-${platform}-mt">            
         </build-test>
@@ -724,8 +724,8 @@
 
     <target name="application.integration_decisionnal_test" description="build CSword Integration DIA5 test executable" depends="library.simulation_kernel">
         <build-test name="integration_decisionnal"
-            libs="HLA,libFedTime,masalloc,tools,directia-${platform}-mt-4_5,library-${platform}-mt,libprotobuf,
-                  gdal_i,gdal_ogr,geodata,
+            libs="HLA,libFedTime,masalloc,tools,directia-${platform}-mt-4_5,library-${platform}-mt,
+                  gdal_i,gdal_ogr,geodata,libprotobuf,
                   population-${platform}-mt@{suffix},
                   dispatcher-${platform}-mt@{suffix},
                   lib${ant.project.name}_tools-${platform}-mt@{suffix},
