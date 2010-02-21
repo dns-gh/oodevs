@@ -10,7 +10,6 @@
 #ifndef __crossbow_OrderParameterTypeResolver_h_
 #define __crossbow_OrderParameterTypeResolver_h_
 
-#include "game_asn/Simulation.h"
 #include <map>
 
 namespace plugins
